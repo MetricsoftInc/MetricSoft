@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<companies>
+	<company code="dunsQAI">
+		<parts>
+    		<part code="13000">
+      			<part_prefix>PT</part_prefix>
+     			<part_num>13000</part_num>
+     			<part_suffix></part_suffix>
+     			<part_name>Part Part 13000</part_name>
+     			<part_num_separator>-</part_num_separator>
+     			<status>I</status>
+     			<source_system>CMMS</source_system>
+			<relations>
+				<relation>
+					<buyer_code>10</buyer_code>
+					<customer_plant_code>duns0001A</customer_plant_code>
+					<supplier_plant_code>duns0040</supplier_plant_code>
+					<status>A</status>
+				</relation>
+			</relations>
+    		</part>
+    		<part code="14000">
+      			<part_prefix>PT</part_prefix>
+     			<part_num>14000</part_num>
+     			<part_suffix></part_suffix>
+     			<part_name>Part Part 14000</part_name>
+     			<part_num_separator>-</part_num_separator>
+     			<status>I</status>
+     			<source_system>CMMS</source_system>
+			<relations>
+				<relation>
+					<buyer_code>10</buyer_code>
+					<customer_plant_code>duns0001A</customer_plant_code>
+					<supplier_plant_code>duns0040</supplier_plant_code>
+					<status>A</status>
+				</relation>
+			</relations>
+    		</part>
+   		<part code="16000">
+      			<part_prefix>PT</part_prefix>
+     			<part_num>16000</part_num>
+     			<part_suffix></part_suffix>
+     			<part_name>Part Part 16000 MODIFIED</part_name>
+     			<part_num_separator>-</part_num_separator>
+     			<status>I</status>
+     			<source_system>CMMS</source_system>
+			<relations>
+				<relation>
+					<buyer_code>101</buyer_code>
+					<customer_plant_code>duns0001A</customer_plant_code>
+					<supplier_plant_code>duns0040</supplier_plant_code>
+					<status>A</status>
+				</relation>
+				<relation>
+					<buyer_code>101</buyer_code>
+					<customer_plant_code>duns0001A</customer_plant_code>
+					<supplier_plant_code>duns0042</supplier_plant_code>
+					<status>A</status>
+				</relation>
+			</relations>
+    		</part>
+		</parts>
+	</company>
+</companies>

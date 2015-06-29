@@ -1,0 +1,22 @@
+﻿.error_popupdiv
+{
+    background-color: #F2F1EB;
+    border:solid 1px skyblue;
+    width:250px;
+    display:block;
+    font-size: 10pt;
+    font-family: Verdana;
+ }
+ 
+.error_popupdiv td.header
+{
+    background-color: #000066;
+    color: White;
+    font-size: 10pt;
+    font-weight: bold;
+    font-family: Verdana;
+}
+
+.error_popupbg{background-color:gray; filter: alpha(opacity=60); opacity:0.60}
+
+.error_hidelbl{display:none;}
