@@ -42,7 +42,7 @@ namespace SQM.Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
- 
+
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -120,7 +120,7 @@ namespace SQM.Website
                     lnk.Style.Add("margin-left", "12px");
                     lnk.ID = view.VIEW_ID.ToString();
                     lnk.CommandArgument = view.VIEW_ID.ToString();
-                    lnk.OnClientClick = "SetViewOption('" + view.VIEW_ID.ToString() +"');";
+                    lnk.OnClientClick = "SetViewOption('" + view.VIEW_ID.ToString() + "');";
                     lnk.CssClass = ViewModel.GetViewImageStyle(view);
                     pnlOptions.Controls.Add(lnk);
                 }
@@ -168,7 +168,7 @@ namespace SQM.Website
                 PlantSelect = ddlPlantSelect.SelectedItem.Text;
             }
 
-            if (PlantIDS.Length == 0  ||  radDateFrom.SelectedDate == null  ||  radDateTo.SelectedDate == null  ||  radDateFrom.SelectedDate > radDateTo.SelectedDate)
+            if (PlantIDS.Length == 0 || radDateFrom.SelectedDate == null || radDateTo.SelectedDate == null || radDateFrom.SelectedDate > radDateTo.SelectedDate)
             {
                 lblReportTitle.CssClass = "promptAlert";
                 lblReportTitle.Text = hfCriteriaErr.Value;
@@ -225,9 +225,9 @@ namespace SQM.Website
                 DateTime fromDate = (DateTime)radDateFrom.SelectedDate;
                 fromDate = new DateTime(fromDate.Year, fromDate.Month, 1);
                 DateTime toDate = (DateTime)radDateTo.SelectedDate;
-                toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(fromDate.Year, fromDate.Month));
+                toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
 
-                SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "E", fromDate, toDate, PlantIDS); 
+                SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "E", fromDate, toDate, PlantIDS);
                 metricMgr.Load(DateIntervalType.month, DateSpanOption.SelectRange);
                 CalcsResult rslt = metricMgr.CalcsMethods(PlantIDS, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant);
                 EHSModel.GHGResultList ghgTable = (EHSModel.GHGResultList)rslt.ResultObj;
@@ -262,12 +262,12 @@ namespace SQM.Website
             DateTime fromDate = (DateTime)radDateFrom.SelectedDate;
             fromDate = new DateTime(fromDate.Year, fromDate.Month, 1);
             DateTime toDate = (DateTime)radDateTo.SelectedDate;
-            toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(fromDate.Year, fromDate.Month));
+            toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
 
             SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "E", fromDate, toDate, ViewModel.AddFromYear(view), PlantIDS);
             metricMgr.Load(DateIntervalType.month, DateSpanOption.SelectRange);
- 
-            foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.OrderBy(i=> i.ITEM_SEQ).ToList())
+
+            foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.OrderBy(i => i.ITEM_SEQ).ToList())
             {
                 if (vi.STATUS != "I")
                 {
@@ -292,7 +292,7 @@ namespace SQM.Website
             DateTime fromDate = (DateTime)radDateFrom.SelectedDate;
             fromDate = new DateTime(fromDate.Year, fromDate.Month, 1);
             DateTime toDate = (DateTime)radDateTo.SelectedDate;
-            toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(fromDate.Year, fromDate.Month));
+            toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
 
             if (divInputs.Visible)
             {
