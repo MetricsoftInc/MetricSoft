@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <tools name="MainToolbar" enabled="true">
+    <tool name="Bold" />
+    <tool name="Italic" />
+    <tool name="InsertUnorderedList" />
+    <tool name="SetLinkProperties" />
+    <tool name="Unlink" />
+  </tools>
+</root>

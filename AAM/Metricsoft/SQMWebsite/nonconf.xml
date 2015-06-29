@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<prtypes>
+	<prtype code="">
+      		<type_label>Testing</type_label>
+		<status>A</status>
+		<inactivated_by></inactivated_by>
+		<nonconfs>
+			<nonconf>
+				<parent></parent>
+				<non_conf_label>Mechanical</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+			<nonconf>
+				<parent>Mechanical</parent>
+				<non_conf_label>hardness</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+			<nonconf>
+				<parent>Mechanical</parent>
+				<non_conf_label>tensile</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+		</nonconfs>
+    	</prtype>
+	<prtype code="">
+      		<type_label>Reliability</type_label>
+		<status>A</status>
+		<inactivated_by></inactivated_by>
+		<nonconfs>
+			<nonconf>
+				<parent></parent>
+				<non_conf_label>Functional</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+			<nonconf>
+				<parent>Functional</parent>
+				<non_conf_label>premature wear</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+			<nonconf>
+				<parent></parent>
+				<non_conf_label>appearance</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+			<nonconf>
+				<parent>Functional</parent>
+				<non_conf_label>discoloration</non_conf_label>
+				<status>A</status>
+				<inactivated_by></inactivated_by>
+			</nonconf>
+		</nonconfs>
+    	</prtype>
+</prtypes>
+ 

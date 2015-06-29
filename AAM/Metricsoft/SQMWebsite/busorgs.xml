@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<companies>
+	<company code="dunsSUP03">
+		<ult_duns_code>dunsSUP03</ult_duns_code>
+		<company_name>Supplier Co 03</company_name>
+		<sd_id>0</sd_id>
+		<cs_company_over_f>Y</cs_company_over_f>
+		<unique_id_name>thiscoSUP03</unique_id_name>
+		<busorgs>
+   			<busorg code="orgSUP0303">
+     				<duns_code>orgSUP0303</duns_code>
+				<parent_duns_code></parent_duns_code>
+				<org_name>Supplier Organization 0303</org_name>
+      				<preferred_currency_code>USD</preferred_currency_code>
+      				<threshold_amt>1500</threshold_amt>
+				<status>A</status>
+				<depts>
+					<dept code="DEPT0302a">
+						<dept_code>DEPT0302a</dept_code>
+						<dept_name>Department 0302A</dept_name>
+						<status>I</status>
+						<org_duns_codeXX></org_duns_codeXX>
+					</dept>
+					<dept code="DEPT0302b">
+						<dept_code>DEPT0302b</dept_code>
+						<dept_name>Department 0302B</dept_name>
+						<status>I</status>
+					</dept>
+					<dept code="DEPT0302e">
+						<dept_code>DEPT0302e</dept_code>
+						<dept_name>Department 0302E</dept_name>
+						<status>I</status>
+					</dept>
+				</depts>
+				<labors>
+					<labor code="RWK3">
+						<labor_code>RWK3</labor_code>
+						<labor_name>Rework</labor_name>
+						<labor_rate>149.00</labor_rate>
+					</labor>
+					<labor code="ASY3">
+						<labor_code>ASY3</labor_code>
+						<labor_name>Assembly</labor_name>
+						<labor_rate>148.00</labor_rate>
+					</labor>
+					<labor code="FAB3">
+						<labor_code>FAB3</labor_code>
+						<labor_name>Fabricate</labor_name>
+						<labor_rate>147.00</labor_rate>
+						<org_duns_codexx>dunsSUP03</org_duns_codexx>
+					</labor>
+				</labors>
+			</busorg>
+		</busorgs>
+	</company>
+	<company code="dunsSUP02">
+		<ult_duns_code>dunsSUP02</ult_duns_code>
+		<company_name>Supplier Co 02</company_name>
+		<sd_id>0</sd_id>
+		<cs_company_over_f>Y</cs_company_over_f>
+		<unique_id_name>thiscoSUP02</unique_id_name>
+		<busorgs>
+   			<busorg code="orgSUP0202">
+      				<duns_code>orgSUP0202</duns_code>
+				<parent_duns_code></parent_duns_code>
+				<org_name>Supplier Organization 0202</org_name>
+      				<preferred_currency_code>USD</preferred_currency_code>
+      				<threshold_amt>1500</threshold_amt>
+				<status>A</status>
+				<depts>
+					<dept code="DEPT0202A">
+						<dept_code>DEPT0202a</dept_code>
+						<dept_name>Department 0202A</dept_name>
+						<status>A</status>
+					</dept>
+					<dept code="DEPT0202B">
+						<dept_code>DEPT0202b</dept_code>
+						<dept_name>Department 0202B</dept_name>
+						<status>A</status>
+					</dept>
+				</depts>
+				<labors>
+					<labor code="RWK2">
+						<labor_code>RWK2</labor_code>
+						<labor_name>Rework</labor_name>
+						<labor_rate>149.00</labor_rate>
+					</labor>
+					<labor code="ASY2">
+						<labor_code>ASY2</labor_code>
+						<labor_name>Assembly</labor_name>
+						<labor_rate>148.00</labor_rate>
+					</labor>
+					<labor code="FAB2">
+						<labor_code>FAB2</labor_code>
+						<labor_name>Fabricate</labor_name>
+						<labor_rate>147.00</labor_rate>
+					</labor>
+				</labors>
+			</busorg>
+		</busorgs>
+	</company>
+	<company code="dunsQAI">
+	<ult_duns_code>dunsQAI</ult_duns_code>
+		<busorgs>
+   			<busorg code="orgQAI01">
+      				<duns_code>orgQAI01</duns_code>
+				<parent_duns_code></parent_duns_code>
+				<org_name>QAI Organization 01</org_name>
+      				<preferred_currency_code>USD</preferred_currency_code>
+      				<threshold_amt>1500</threshold_amt>
+				<status>A</status>
+			</busorg>
+   			<busorg code="orgQAI02">
+      				<duns_code>orgQAI02</duns_code>
+				<parent_duns_code></parent_duns_code>
+				<org_name>QAI Organization 02</org_name>
+      				<preferred_currency_code>USD</preferred_currency_code>
+      				<threshold_amt>1500</threshold_amt>
+				<status>A</status>
+			</busorg>
+		</busorgs>
+	</company>
+</companies>

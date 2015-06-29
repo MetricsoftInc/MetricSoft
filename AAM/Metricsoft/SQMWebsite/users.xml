@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<users>
+	<person code="user001">
+      		<sso_id>user001</sso_id>
+		<ult_duns_code>dunsQAI</ult_duns_code>
+		<org_duns_code>org0018</org_duns_code>
+		<loc_duns_code>duns0995</loc_duns_code>
+		<first_name>harvey</first_name>
+		<last_name>kapinsky</last_name>
+		<job_title>Mgr</job_title>
+		<email>hakap@kap.net</email>
+		<phone>555-555-5555</phone>
+		<preferred_lang_id>1</preferred_lang_id>
+		<preferred_timezone>EST</preferred_timezone>
+		<old_location_cd></old_location_cd>
+		<new_location_cd>duns0995</new_location_cd>
+		<status>A</status>
+		<roles>
+			<role>
+				<role_label>Worker</role_label>
+				<status>A</status>
+			</role>
+			<role>
+				<role_label>Administrator</role_label>
+				<status>A</status>
+			</role>
+			<role>
+				<role_label>Buyer</role_label>
+				<status>A</status>
+			</role>
+		</roles>
+		<buyer>
+			<buyer_code>015</buyer_code>
+			<status>I</status>
+		</buyer>
+    	</person>
+	<person code="user002">
+      		<sso_id>user002</sso_id>
+		<ult_duns_code>dunsQAI</ult_duns_code>
+		<org_duns_code>org0018</org_duns_code>
+		<loc_duns_code>duns0995</loc_duns_code>
+		<first_name>billy</first_name>
+		<last_name>bart</last_name>
+		<job_title>Mgr</job_title>
+		<email>bbart@kap.net</email>
+		<phone>555-555-2222</phone>
+		<preferred_lang_id>1</preferred_lang_id>
+		<preferred_timezone>EST</preferred_timezone>
+		<old_location_cd></old_location_cd>
+		<new_location_cd>duns0995</new_location_cd>
+		<status>A</status>
+		<buyer>
+			<buyer_code>016</buyer_code>
+			<status>I</status>
+		</buyer>
+    	</person>
+	<person code="user003">
+      		<sso_id>user003</sso_id>
+		<ult_duns_code>dunsQAI</ult_duns_code>
+		<org_duns_code>org0018</org_duns_code>
+		<loc_duns_code>duns0995</loc_duns_code>
+		<first_name>harvey</first_name>
+		<last_name>kapinsky</last_name>
+		<job_title>Mgr</job_title>
+		<email>hakap@kap.net</email>
+		<phone>555-555-7777</phone>
+		<preferred_lang_id>1</preferred_lang_id>
+		<preferred_timezone>EST</preferred_timezone>
+		<old_location_cd></old_location_cd>
+		<new_location_cd>duns0995</new_location_cd>
+		<status>A</status>
+		<roles>
+			<role>
+				<role_label>Buyer</role_label>
+				<status>A</status>
+			</role>
+		</roles>
+		<buyer>
+			<buyer_code>017</buyer_code>
+			<status>I</status>
+		</buyer>
+    	</person>
+</users>
+ 

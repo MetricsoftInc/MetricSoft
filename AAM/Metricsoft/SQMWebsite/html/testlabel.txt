@@ -1,0 +1,44 @@
+<div class=labelDiv style="height:380px;width:580px;">
+<span class="labelTitle">&nbsp;Quality Issue: {IssueID}</span><span CLASS=labelEmphasis style="margin-left:90px;">{PROBLEM_TYPE}</span>
+<table width="99%" align="center">
+<tr>
+<td class="labelBkgd" valign="top" align="center">
+<table cellspacing=0 cellpadding=2 border=0 width="100%">
+<tr>
+<td class=labelData valign=top><SPAN CLASS=labelHeader>Part Number</SPAN><BR><span>{PART_NUM}</span></td>
+<td class=labelData valign=top colspan="2"><SPAN CLASS=labelHeader>Description</SPAN><BR><span>{PART_NAME}</span></td>
+<td class=labelData valign=top><SPAN CLASS=labelHeader>Issue Date</SPAN><BR><span>{LAST_UPD_DT}</span></td>
+<td class=labelData valign=top><SPAN CLASS=labelHeader>Isuued By</SPAN><BR><span>{LAST_UPD_BY}</span></td>
+</tr>
+<tr>
+<td class=labelData valign=top><SPAN CLASS=labelHeader>Container No</SPAN><BR><span>{CONTAINER_NUM}</span></td>
+<td class=labelData valign=top colspan="2"><SPAN CLASS=labelHeader>Supplier</SPAN><BR><span>{COMPANY_NAME}</span></td>
+<td class=labelData valign=top colspan="2"><SPAN CLASS=labelHeader>Plant Location</SPAN><BR><span>{PLANT_NAME}</span></td>
+</tr>
+<tr>
+<td class=labelData valign=top><SPAN CLASS=labelHeader>Observed Non-Conforming</SPAN><BR><span>{INSPECT_NC_QTY}</span></td>
+<td class=labelData valign=top colspan="2"><SPAN CLASS=labelHeader>Est. Total Non-Conforming</SPAN><BR><span>{TOTAL_NC_QTY}</span></td>
+<td class=labelData valign=top colspan="2"><SPAN CLASS=labelHeader>Order/Job No.</SPAN><BR><span>{PO_NUM}</span></td>
+
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<div class=labelDiv style="height:100px;width:565px;margin-left:5px;">
+<SPAN CLASS=labelHeader>Primary Non-Conformance Reason:</SPAN>&nbsp;&nbsp;<SPAN CLASS=labelEmphasis>{PROBLEM_PRIMARY} ({PROBLEM_SECONDARY})</SPAN>
+<BR>
+<SPAN CLASS=labelHeader>{SAMPLE_COMMENTS}</SPAN>
+<BR>
+<BR>
+<SPAN CLASS=labelHeader>Responsibility: {RESPONSIBLE}&nbsp;&nbsp;&nbsp;&nbsp;Corrective Action Required {ACTION_REQD}</SPAN>
+</div>
+<BR>
+<table width="99%" align="center">
+  <tr>
+    <td align="center">
+		<img src="/charts/barcode.gif"/>
+    </td>
+  </tr>
+</table>
+</div>
