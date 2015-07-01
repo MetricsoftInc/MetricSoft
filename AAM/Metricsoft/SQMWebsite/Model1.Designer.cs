@@ -142,6 +142,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSON1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), true)]
 
 #endregion
 
@@ -1760,6 +1762,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<CURRENCY_XREF> _CURRENCY_XREF;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<JOBCODE> JOBCODE
+        {
+            get
+            {
+                if ((_JOBCODE == null))
+                {
+                    _JOBCODE = base.CreateObjectSet<JOBCODE>("JOBCODE");
+                }
+                return _JOBCODE;
+            }
+        }
+        private ObjectSet<JOBCODE> _JOBCODE;
 
         #endregion
 
@@ -2547,6 +2565,14 @@ namespace SQM.Website
         public void AddToCURRENCY_XREF(CURRENCY_XREF cURRENCY_XREF)
         {
             base.AddObject("CURRENCY_XREF", cURRENCY_XREF);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the JOBCODE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToJOBCODE(JOBCODE jOBCODE)
+        {
+            base.AddObject("JOBCODE", jOBCODE);
         }
 
         #endregion
@@ -19080,6 +19106,213 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="JOBCODE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class JOBCODE : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new JOBCODE object.
+        /// </summary>
+        /// <param name="jOBCODE_ID">Initial value of the JOBCODE_ID property.</param>
+        /// <param name="cOMPANY_ID">Initial value of the COMPANY_ID property.</param>
+        /// <param name="jOBCODE_CD">Initial value of the JOBCODE_CD property.</param>
+        public static JOBCODE CreateJOBCODE(global::System.Decimal jOBCODE_ID, global::System.Decimal cOMPANY_ID, global::System.String jOBCODE_CD)
+        {
+            JOBCODE jOBCODE = new JOBCODE();
+            jOBCODE.JOBCODE_ID = jOBCODE_ID;
+            jOBCODE.COMPANY_ID = cOMPANY_ID;
+            jOBCODE.JOBCODE_CD = jOBCODE_CD;
+            return jOBCODE;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal JOBCODE_ID
+        {
+            get
+            {
+                return _JOBCODE_ID;
+            }
+            set
+            {
+                if (_JOBCODE_ID != value)
+                {
+                    OnJOBCODE_IDChanging(value);
+                    ReportPropertyChanging("JOBCODE_ID");
+                    _JOBCODE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("JOBCODE_ID");
+                    OnJOBCODE_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _JOBCODE_ID;
+        partial void OnJOBCODE_IDChanging(global::System.Decimal value);
+        partial void OnJOBCODE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal COMPANY_ID
+        {
+            get
+            {
+                return _COMPANY_ID;
+            }
+            set
+            {
+                OnCOMPANY_IDChanging(value);
+                ReportPropertyChanging("COMPANY_ID");
+                _COMPANY_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPANY_ID");
+                OnCOMPANY_IDChanged();
+            }
+        }
+        private global::System.Decimal _COMPANY_ID;
+        partial void OnCOMPANY_IDChanging(global::System.Decimal value);
+        partial void OnCOMPANY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String JOBCODE_CD
+        {
+            get
+            {
+                return _JOBCODE_CD;
+            }
+            set
+            {
+                OnJOBCODE_CDChanging(value);
+                ReportPropertyChanging("JOBCODE_CD");
+                _JOBCODE_CD = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("JOBCODE_CD");
+                OnJOBCODE_CDChanged();
+            }
+        }
+        private global::System.String _JOBCODE_CD;
+        partial void OnJOBCODE_CDChanging(global::System.String value);
+        partial void OnJOBCODE_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String JOB_DESC
+        {
+            get
+            {
+                return _JOB_DESC;
+            }
+            set
+            {
+                OnJOB_DESCChanging(value);
+                ReportPropertyChanging("JOB_DESC");
+                _JOB_DESC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("JOB_DESC");
+                OnJOB_DESCChanged();
+            }
+        }
+        private global::System.String _JOB_DESC;
+        partial void OnJOB_DESCChanging(global::System.String value);
+        partial void OnJOB_DESCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DEFAULT_ROLE
+        {
+            get
+            {
+                return _DEFAULT_ROLE;
+            }
+            set
+            {
+                OnDEFAULT_ROLEChanging(value);
+                ReportPropertyChanging("DEFAULT_ROLE");
+                _DEFAULT_ROLE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DEFAULT_ROLE");
+                OnDEFAULT_ROLEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DEFAULT_ROLE;
+        partial void OnDEFAULT_ROLEChanging(Nullable<global::System.Int32> value);
+        partial void OnDEFAULT_ROLEChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "PERSON")]
+        public EntityCollection<PERSON> PERSON
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="LABOR_TYPE")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -22191,6 +22424,30 @@ namespace SQM.Website
         private Nullable<global::System.Boolean> _RCV_ESCALATION;
         partial void OnRCV_ESCALATIONChanging(Nullable<global::System.Boolean> value);
         partial void OnRCV_ESCALATIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> JOBCODE_ID
+        {
+            get
+            {
+                return _JOBCODE_ID;
+            }
+            set
+            {
+                OnJOBCODE_IDChanging(value);
+                ReportPropertyChanging("JOBCODE_ID");
+                _JOBCODE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("JOBCODE_ID");
+                OnJOBCODE_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _JOBCODE_ID;
+        partial void OnJOBCODE_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnJOBCODE_IDChanged();
 
         #endregion
 
@@ -22517,6 +22774,120 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE")]
+        public JOBCODE JOBCODE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<JOBCODE> JOBCODEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON1")]
+        public PERSON PERSON1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON1").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON1").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PERSON> PERSON1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON1");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON1", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON")]
+        public PERSON PERSON2
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PERSON> PERSON2Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSON>("PSsqmModel.FK_PERSON_PERSON", "PERSON", value);
                 }
             }
         }
@@ -26518,6 +26889,126 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _FINALIZE_ID;
         partial void OnFINALIZE_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnFINALIZE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> TOTAL_DAYS_RESTRICTED
+        {
+            get
+            {
+                return _TOTAL_DAYS_RESTRICTED;
+            }
+            set
+            {
+                OnTOTAL_DAYS_RESTRICTEDChanging(value);
+                ReportPropertyChanging("TOTAL_DAYS_RESTRICTED");
+                _TOTAL_DAYS_RESTRICTED = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TOTAL_DAYS_RESTRICTED");
+                OnTOTAL_DAYS_RESTRICTEDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _TOTAL_DAYS_RESTRICTED;
+        partial void OnTOTAL_DAYS_RESTRICTEDChanging(Nullable<global::System.Decimal> value);
+        partial void OnTOTAL_DAYS_RESTRICTEDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> FIRST_AID_CASES
+        {
+            get
+            {
+                return _FIRST_AID_CASES;
+            }
+            set
+            {
+                OnFIRST_AID_CASESChanging(value);
+                ReportPropertyChanging("FIRST_AID_CASES");
+                _FIRST_AID_CASES = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FIRST_AID_CASES");
+                OnFIRST_AID_CASESChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _FIRST_AID_CASES;
+        partial void OnFIRST_AID_CASESChanging(Nullable<global::System.Decimal> value);
+        partial void OnFIRST_AID_CASESChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LEADERSHIP_WALKS
+        {
+            get
+            {
+                return _LEADERSHIP_WALKS;
+            }
+            set
+            {
+                OnLEADERSHIP_WALKSChanging(value);
+                ReportPropertyChanging("LEADERSHIP_WALKS");
+                _LEADERSHIP_WALKS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LEADERSHIP_WALKS");
+                OnLEADERSHIP_WALKSChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LEADERSHIP_WALKS;
+        partial void OnLEADERSHIP_WALKSChanging(Nullable<global::System.Decimal> value);
+        partial void OnLEADERSHIP_WALKSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> JOB_SILL_ANALYSIS
+        {
+            get
+            {
+                return _JOB_SILL_ANALYSIS;
+            }
+            set
+            {
+                OnJOB_SILL_ANALYSISChanging(value);
+                ReportPropertyChanging("JOB_SILL_ANALYSIS");
+                _JOB_SILL_ANALYSIS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("JOB_SILL_ANALYSIS");
+                OnJOB_SILL_ANALYSISChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _JOB_SILL_ANALYSIS;
+        partial void OnJOB_SILL_ANALYSISChanging(Nullable<global::System.Decimal> value);
+        partial void OnJOB_SILL_ANALYSISChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SAFETY_TRAIN_SESSIONS
+        {
+            get
+            {
+                return _SAFETY_TRAIN_SESSIONS;
+            }
+            set
+            {
+                OnSAFETY_TRAIN_SESSIONSChanging(value);
+                ReportPropertyChanging("SAFETY_TRAIN_SESSIONS");
+                _SAFETY_TRAIN_SESSIONS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SAFETY_TRAIN_SESSIONS");
+                OnSAFETY_TRAIN_SESSIONSChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SAFETY_TRAIN_SESSIONS;
+        partial void OnSAFETY_TRAIN_SESSIONSChanging(Nullable<global::System.Decimal> value);
+        partial void OnSAFETY_TRAIN_SESSIONSChanged();
 
         #endregion
 

@@ -51,6 +51,7 @@
           <EntitySet Name="INCIDENT_TYPE_COMPANY_QUESTION" EntityType="PSsqmModel.Store.INCIDENT_TYPE_COMPANY_QUESTION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCIDENT_VERIFICATION" EntityType="PSsqmModel.Store.INCIDENT_VERIFICATION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCIDENT_VERIFICATION_COMMENT" EntityType="PSsqmModel.Store.INCIDENT_VERIFICATION_COMMENT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="JOBCODE" EntityType="PSsqmModel.Store.JOBCODE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LABOR_TYPE" EntityType="PSsqmModel.Store.LABOR_TYPE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LOCAL_LANGUAGE" EntityType="PSsqmModel.Store.LOCAL_LANGUAGE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NONCONFORMANCE" EntityType="PSsqmModel.Store.NONCONFORMANCE" store:Type="Tables" Schema="dbo" />
@@ -386,6 +387,14 @@
           <AssociationSet Name="FK_PERSON_ACCESS_PERSON" Association="PSsqmModel.Store.FK_PERSON_ACCESS_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="PERSON_ACCESS" EntitySet="PERSON_ACCESS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.Store.FK_PERSON_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.Store.FK_PERSON_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PERSON1" EntitySet="PERSON" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSON_RESP_PERSON" Association="PSsqmModel.Store.FK_PERSON_RESP_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
@@ -1259,6 +1268,17 @@
           <Property Name="COMMENT" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="COMMENT_DATE" Type="datetime" />
         </EntityType>
+        <EntityType Name="JOBCODE">
+          <Key>
+            <PropertyRef Name="JOBCODE_ID" />
+          </Key>
+          <Property Name="JOBCODE_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
+          <Property Name="COMPANY_ID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="JOBCODE_CD" Type="varchar" Nullable="false" MaxLength="80" />
+          <Property Name="JOB_DESC" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS" Type="varchar" MaxLength="2" />
+          <Property Name="DEFAULT_ROLE" Type="int" />
+        </EntityType>
         <EntityType Name="LABOR_TYPE">
           <Key>
             <PropertyRef Name="LABOR_TYP_ID" />
@@ -1391,6 +1411,7 @@
           <Property Name="NEW_LOCATION_CD" Type="varchar" MaxLength="1000" />
           <Property Name="ROLE" Type="int" />
           <Property Name="RCV_ESCALATION" Type="bit" />
+          <Property Name="JOBCODE_ID" Type="numeric" Precision="35" />
         </EntityType>
         <EntityType Name="PERSON_ACCESS">
           <Key>
@@ -1549,7 +1570,12 @@
           <Property Name="TIME_WORKED" Type="numeric" Precision="20" Scale="5" />
           <Property Name="TIME_LOST" Type="numeric" Precision="25" Scale="5" />
           <Property Name="TIME_LOST_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="TOTAL_DAYS_RESTRICTED" Type="numeric" Precision="25" Scale="5" />
           <Property Name="RECORDED_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="FIRST_AID_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="LEADERSHIP_WALKS" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="JOB_SILL_ANALYSIS" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="SAFETY_TRAIN_SESSIONS" Type="numeric" Precision="25" Scale="5" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="100" />
           <Property Name="APPROVER_ID" Type="numeric" Precision="35" />
@@ -2121,7 +2147,7 @@
           <Property Name="EFM_TYPE" Type="varchar" MaxLength="40" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'Varroc.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="UOM_XREF">
           <Key>
@@ -2962,6 +2988,30 @@
               <PropertyRef Name="PERSON_ID" />
             </Principal>
             <Dependent Role="PERSON_ACCESS">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_JOBCODE">
+          <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
+          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_ID" />
+            </Principal>
+            <Dependent Role="PERSON">
+              <PropertyRef Name="JOBCODE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_PERSON">
+          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="1" />
+          <End Role="PERSON1" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="PERSON1">
               <PropertyRef Name="PERSON_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4095,6 +4145,15 @@
             <End Role="CURRENCY" EntitySet="CURRENCY" />
             <End Role="CURRENCY_XREF" EntitySet="CURRENCY_XREF" />
           </AssociationSet>
+          <EntitySet Name="JOBCODE" EntityType="PSsqmModel.JOBCODE" />
+          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.FK_PERSON_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.FK_PERSON_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PERSON1" EntitySet="PERSON" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -4592,6 +4651,10 @@
           <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" FromRole="PERSON" ToRole="PERSPECTIVE_VIEW" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
           <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
+          <Property Type="Decimal" Name="JOBCODE_ID" Precision="35" Scale="0" />
+          <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
+          <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
+          <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
           </EntityType>
         <EntityType Name="PERSON_ACCESS">
           <Key>
@@ -6013,6 +6076,11 @@
           <Property Type="DateTime" Name="FINALIZE_DT" Precision="3" />
           <Property Type="Decimal" Name="FINALIZE_ID" Precision="35" Scale="0" />
           <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_PLANT_ACCOUNTING_STAGE_PLANT" FromRole="PLANT_ACCOUNTING" ToRole="PLANT" />
+          <Property Type="Decimal" Name="TOTAL_DAYS_RESTRICTED" Precision="25" Scale="5" />
+          <Property Type="Decimal" Name="FIRST_AID_CASES" Precision="25" Scale="5" />
+          <Property Type="Decimal" Name="LEADERSHIP_WALKS" Precision="25" Scale="5" />
+          <Property Type="Decimal" Name="JOB_SILL_ANALYSIS" Precision="25" Scale="5" />
+          <Property Type="Decimal" Name="SAFETY_TRAIN_SESSIONS" Precision="25" Scale="5" />
         </EntityType>
         <Association Name="FK_PLANT_ACCOUNTING_STAGE_PLANT">
           <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="1" />
@@ -7390,6 +7458,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JOBCODE">
+          <Key>
+            <PropertyRef Name="JOBCODE_ID" />
+          </Key>
+          <Property Type="Decimal" Name="JOBCODE_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="JOBCODE_CD" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="JOB_DESC" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DEFAULT_ROLE" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="JOBCODE" ToRole="PERSON" />
+        </EntityType>
+        <Association Name="FK_PERSON_JOBCODE">
+          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="0..1" />
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_ID" />
+            </Principal>
+            <Dependent Role="PERSON">
+              <PropertyRef Name="JOBCODE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
+          <End Type="PSsqmModel.PERSON" Role="PERSON1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="PERSON1">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7821,6 +7925,7 @@
           <EntitySetMapping Name="PERSON">
             <EntityTypeMapping TypeName="PSsqmModel.PERSON">
               <MappingFragment StoreEntitySet="PERSON">
+                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
                 <ScalarProperty Name="RCV_ESCALATION" ColumnName="RCV_ESCALATION" />
                 <ScalarProperty Name="ROLE" ColumnName="ROLE" />
                 <ScalarProperty Name="NEW_LOCATION_CD" ColumnName="NEW_LOCATION_CD" />
@@ -8471,6 +8576,11 @@
           <EntitySetMapping Name="PLANT_ACCOUNTING">
             <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACCOUNTING">
               <MappingFragment StoreEntitySet="PLANT_ACCOUNTING">
+                <ScalarProperty Name="SAFETY_TRAIN_SESSIONS" ColumnName="SAFETY_TRAIN_SESSIONS" />
+                <ScalarProperty Name="JOB_SILL_ANALYSIS" ColumnName="JOB_SILL_ANALYSIS" />
+                <ScalarProperty Name="LEADERSHIP_WALKS" ColumnName="LEADERSHIP_WALKS" />
+                <ScalarProperty Name="FIRST_AID_CASES" ColumnName="FIRST_AID_CASES" />
+                <ScalarProperty Name="TOTAL_DAYS_RESTRICTED" ColumnName="TOTAL_DAYS_RESTRICTED" />
                 <ScalarProperty Name="FINALIZE_ID" ColumnName="FINALIZE_ID" />
                 <ScalarProperty Name="FINALIZE_DT" ColumnName="FINALIZE_DT" />
                 <ScalarProperty Name="APPROVAL_DT" ColumnName="APPROVAL_DT" />
@@ -9013,6 +9123,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="JOBCODE">
+            <EntityTypeMapping TypeName="PSsqmModel.JOBCODE">
+              <MappingFragment StoreEntitySet="JOBCODE">
+                <ScalarProperty Name="DEFAULT_ROLE" ColumnName="DEFAULT_ROLE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="JOB_DESC" ColumnName="JOB_DESC" />
+                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
+                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
+                <ScalarProperty Name="JOBCODE_ID" ColumnName="JOBCODE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9033,7 +9155,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="40">
+      <Diagram Name="Model1" ZoomLevel="101">
         <EntityTypeShape EntityType="PSsqmModel.ADDRESS" Width="1.5" PointX="2.8186148343694466" PointY="31.355532511768644" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT" Width="1.5" PointX="6.5058092691496991" PointY="14.220001942580566" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT_FILE" Width="1.5" PointX="0.99664270924247922" PointY="12.000706320628853" />
@@ -9255,6 +9377,9 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" />
         <EntityTypeShape EntityType="PSsqmModel.CURRENCY_XREF" Width="1.5" PointX="0.31477152757103161" PointY="8.4929721842021557" />
         <AssociationConnector Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY" />
+        <EntityTypeShape EntityType="PSsqmModel.JOBCODE" Width="1.5" PointX="9.5137659262464211" PointY="27.655672712091203" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
         </Diagram>
     </Diagrams>
   </Designer>
