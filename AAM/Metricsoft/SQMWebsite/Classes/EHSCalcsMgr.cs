@@ -1709,55 +1709,55 @@ namespace SQM.Website
             return hrsFactor;
         }
 
-        public EHSModel.GHGResultList CalcGHG(DateTime fromDate, DateTime toDate, decimal plantID, decimal[] measureArray)
-        {
-            PLANT plant = this.GetPlant(plantID);
-            EHSModel.Emissions emc = new EHSModel.Emissions().Initialize(plant.LOCATION_CODE, plant.COMP_INT_ID);
-            string[] ghgCodes = this.SubScope.Split(',');
-            List<WebSiteCommon.DatePeriod> pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.year, this.DateSpanType, "");
+		public EHSModel.GHGResultList CalcGHG(DateTime fromDate, DateTime toDate, decimal plantID, decimal[] measureArray)
+		{
+			PLANT plant = this.GetPlant(plantID);
+			EHSModel.Emissions emc = new EHSModel.Emissions().Initialize(plant.LOCATION_CODE, plant.COMP_INT_ID);
+			string[] ghgCodes = this.SubScope.Split(',');
+			List<WebSiteCommon.DatePeriod> pdList = this.DateInterval == DateIntervalType.span ? WebSiteCommon.CalcDatePeriods(fromDate, toDate, this.DateInterval, this.DateSpanType, "") : WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.year, this.DateSpanType, "");
 
-            EHSModel.GHGResultList ghgTable = new EHSModel.GHGResultList().CreateNew(fromDate, toDate);
+			EHSModel.GHGResultList ghgTable = new EHSModel.GHGResultList().CreateNew(fromDate, toDate);
 
-            foreach (decimal measID in measureArray)
-            {
-                EHS_MEASURE meas = this.MetricHst.Where(l => l.MEASURE_ID == measID).Select(l => l.EHS_MEASURE).FirstOrDefault();
-                if (meas != null  &&  !string.IsNullOrEmpty(meas.EFM_TYPE))
-                {
-                    foreach (WebSiteCommon.DatePeriod pd in pdList)
-                    {
-                        decimal metricQty = this.InitCalc().Calc.Select(pd.FromDate, pd.ToDate, new decimal[1] {plantID}, new decimal[1] { measID }).Select(l => l.MEASURE_VALUE).Sum();
-                        EHS_METRIC_HISTORY hist1 = this.Calc.Metrics.FirstOrDefault();
-                        if (hist1 != null)
-                        {
-                            int gasSeq = 0;
-                            foreach (string ghgCode in ghgCodes)
-                            {
-                                ++gasSeq;
-                                if (ghgCode.ToUpper() == "CO2" || meas.EFM_TYPE != "P")
-                                {
-                                    decimal ghg = emc.LookupGHG(meas.EFM_TYPE, pd.FromDate.Year, ghgCode);
-                                    decimal gwp = emc.GetGWP(ghgCode, this.Calculation);
-                                    decimal ghgQty = metricQty * ghg * gwp;
-                                    ghgTable.SumTotal(ghgQty);
-                                    decimal ghgUOM = 17; // calculated in kg
-                                    try
-                                    {
-                                        EHSModel.GHGResult ghgRrec = new EHSModel.GHGResult().CreateNew(plant, meas, 0, hist1.INPUT_UOM_ID.HasValue ? (decimal)hist1.INPUT_UOM_ID : 0,
-                                            metricQty, hist1.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, metricQty * ghg, ghgCode, gwp, ghgQty, ghgUOM);  
-                                        ghgTable.AddResult(ghgRrec);
-                                    }
-                                    catch
-                                    {
-                                        ;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return ghgTable;
-        }
+			foreach (decimal measID in measureArray)
+			{
+				EHS_MEASURE meas = this.MetricHst.Where(l => l.MEASURE_ID == measID).Select(l => l.EHS_MEASURE).FirstOrDefault();
+				if (meas != null && !string.IsNullOrEmpty(meas.EFM_TYPE))
+				{
+					foreach (WebSiteCommon.DatePeriod pd in pdList)
+					{
+						decimal metricQty = this.InitCalc().Calc.Select(pd.FromDate, pd.ToDate, new decimal[1] { plantID }, new decimal[1] { measID }).Select(l => l.MEASURE_VALUE).Sum();
+						EHS_METRIC_HISTORY hist1 = this.Calc.Metrics.FirstOrDefault();
+						if (hist1 != null)
+						{
+							int gasSeq = 0;
+							foreach (string ghgCode in ghgCodes)
+							{
+								++gasSeq;
+								if (ghgCode.ToUpper() == "CO2" || meas.EFM_TYPE != "P")
+								{
+									decimal ghg = emc.LookupGHG(meas.EFM_TYPE, pd.FromDate.Year, ghgCode);
+									decimal gwp = emc.GetGWP(ghgCode, this.Calculation);
+									decimal ghgQty = metricQty * ghg * gwp;
+									ghgTable.SumTotal(ghgQty);
+									decimal ghgUOM = 17; // calculated in kg
+									try
+									{
+										EHSModel.GHGResult ghgRrec = new EHSModel.GHGResult().CreateNew(plant, meas, 0, hist1.INPUT_UOM_ID.HasValue ? (decimal)hist1.INPUT_UOM_ID : 0,
+											metricQty, hist1.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, metricQty * ghg, ghgCode, gwp, ghgQty, ghgUOM);
+										ghgTable.AddResult(ghgRrec);
+									}
+									catch
+									{
+										;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return ghgTable;
+		}
 
         public int IncidentStat(decimal[] plantArray, decimal[] topicArray, DateTime fromDate, DateTime toDate)
         {
