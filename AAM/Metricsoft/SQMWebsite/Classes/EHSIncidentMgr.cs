@@ -11,12 +11,12 @@ namespace SQM.Website
 		Prevent
 	}
 
-    public class EHSIncidentQuestion
-    {
-        public decimal QuestionId { get; set; }
-        public string QuestionText { get; set; }
-        public EHSIncidentQuestionType QuestionType { get; set; }
-        public bool HasMultipleChoices { get; set; }
+	public class EHSIncidentQuestion
+	{
+		public decimal QuestionId { get; set; }
+		public string QuestionText { get; set; }
+		public EHSIncidentQuestionType QuestionType { get; set; }
+		public bool HasMultipleChoices { get; set; }
 		public List<EHSIncidentAnswerChoice> AnswerChoices { get; set; }
 		public bool IsRequired { get; set; }
 		public bool IsRequiredClose { get; set; }
@@ -24,7 +24,7 @@ namespace SQM.Website
 		public string AnswerText { get; set; }
 		public string StandardType { get; set; }
 		public List<INCIDENT_QUESTION_CONTROL> QuestionControls { get; set; }
-    }
+	}
 
 	public class EHSIncidentAnswerChoice
 	{
@@ -39,134 +39,134 @@ namespace SQM.Website
 		public DateTime CommentDate { get; set; }
 	}
 
-    public class EHSIncidentData
-    {
-        public INCIDENT Incident
-        {
-            get;
-            set;
-        }
-        public PERSON Person
-        {
-            get;
-            set;
-        }
-        public PERSON RespPerson
-        {
-            get;
-            set;
-        }
-        public PLANT Plant
-        {
-            get;
-            set;
-        }
-        public List<INCIDENT_QUESTION> TopicList
-        {
-            get;
-            set;
-        }
-        public List<INCIDENT_ANSWER> EntryList
-        {
-            get;
-            set;
-        }
-        public PROB_CASE ProbCase
-        {
-            get;
-            set;
-        }
-        public List<ATTACHMENT> AttachList
-        {
-            get;
-            set;
-        }
-        public string Status
-        {
-            get;
-            set;
-        }
-        public string DeriveStatus()
-        {
-            this.Status = "A"; // open;
+	public class EHSIncidentData
+	{
+		public INCIDENT Incident
+		{
+			get;
+			set;
+		}
+		public PERSON Person
+		{
+			get;
+			set;
+		}
+		public PERSON RespPerson
+		{
+			get;
+			set;
+		}
+		public PLANT Plant
+		{
+			get;
+			set;
+		}
+		public List<INCIDENT_QUESTION> TopicList
+		{
+			get;
+			set;
+		}
+		public List<INCIDENT_ANSWER> EntryList
+		{
+			get;
+			set;
+		}
+		public PROB_CASE ProbCase
+		{
+			get;
+			set;
+		}
+		public List<ATTACHMENT> AttachList
+		{
+			get;
+			set;
+		}
+		public string Status
+		{
+			get;
+			set;
+		}
+		public string DeriveStatus()
+		{
+			this.Status = "A"; // open;
 
-            if (this.Incident.ISSUE_TYPE_ID == 13)
-            {
-                if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "In Progress").Count() > 0)
-                    this.Status = "P";  // in-progress
-                else if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "Closed").Count() > 0)
-                    this.Status = "C";  // actions complete
-                //if (this.Incident.CLOSE_DATE.HasValue && !this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
-                //    this.Status = "C";  // actions complete
-                if (this.Incident.CLOSE_DATE.HasValue && this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
-                {
-                    this.Status = "U";  // audited and closed
-                    if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
-                        this.Status = "F";
-                }
-            }
-            else
-            {
-                if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE.HasValue)
-                    this.Status = "C";  // incident closed
-                else if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE_8D.HasValue)
-                    this.Status = "C8";  // incident and 8D closed
-                else if (this.Incident.CLOSE_DATE.HasValue)
-                    this.Status = "N";
-                else if (this.Incident.CLOSE_DATE_8D.HasValue)
-                    this.Status = "N";
-            }
-            
-            return this.Status;
-        }
-        public int DaysOpen
-        {
-            get;
-            set;
-        }
-        public int DaysToClose
-        {
-            get;
-            set;
-        }
-        public int DaysElapsed()
-        {
-            int days = 0;
-            if (this.Incident.ISSUE_TYPE_ID == 13)
-            {
-                if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
-                {
-                    DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE_DATA_COMPLETE);
-                    days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
-                    this.DaysOpen = 0;
-                }
-                else
-                {
-                    days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
-                    this.DaysToClose = 0;
-                }
-            }
-            else
-            {
-                if (this.Incident.CLOSE_DATE.HasValue)
-                {
-                    DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE);
-                    days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract(this.Incident.INCIDENT_DT).TotalDays));
-                    this.DaysOpen = 0;
-                }
-                else
-                {
-                    days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(this.Incident.INCIDENT_DT).TotalDays));
-                    this.DaysToClose = 0;
-                }
-            }
+			if (this.Incident.ISSUE_TYPE_ID == 13)
+			{
+				if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "In Progress").Count() > 0)
+					this.Status = "P";  // in-progress
+				else if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "Closed").Count() > 0)
+					this.Status = "C";  // actions complete
+				//if (this.Incident.CLOSE_DATE.HasValue && !this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				//    this.Status = "C";  // actions complete
+				if (this.Incident.CLOSE_DATE.HasValue && this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				{
+					this.Status = "U";  // audited and closed
+					if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
+						this.Status = "F";
+				}
+			}
+			else
+			{
+				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE.HasValue)
+					this.Status = "C";  // incident closed
+				else if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE_8D.HasValue)
+					this.Status = "C8";  // incident and 8D closed
+				else if (this.Incident.CLOSE_DATE.HasValue)
+					this.Status = "N";
+				else if (this.Incident.CLOSE_DATE_8D.HasValue)
+					this.Status = "N";
+			}
 
-            return days;
-        }
-    }
+			return this.Status;
+		}
+		public int DaysOpen
+		{
+			get;
+			set;
+		}
+		public int DaysToClose
+		{
+			get;
+			set;
+		}
+		public int DaysElapsed()
+		{
+			int days = 0;
+			if (this.Incident.ISSUE_TYPE_ID == 13)
+			{
+				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				{
+					DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE_DATA_COMPLETE);
+					days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
+					this.DaysOpen = 0;
+				}
+				else
+				{
+					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
+					this.DaysToClose = 0;
+				}
+			}
+			else
+			{
+				if (this.Incident.CLOSE_DATE.HasValue)
+				{
+					DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE);
+					days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract(this.Incident.INCIDENT_DT).TotalDays));
+					this.DaysOpen = 0;
+				}
+				else
+				{
+					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(this.Incident.INCIDENT_DT).TotalDays));
+					this.DaysToClose = 0;
+				}
+			}
 
-    public static class EHSIncidentMgr
-    {
+			return days;
+		}
+	}
+
+	public static class EHSIncidentMgr
+	{
 		public static INCIDENT SelectIncidentById(PSsqmEntities entities, decimal incidentId)
 		{
 			return (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
@@ -201,39 +201,39 @@ namespace SQM.Website
 			return (decimal)problemCaseId;
 		}
 
-        public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId)
-        {
-            var incidentTypeList = new List<INCIDENT_TYPE>();
+		public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId)
+		{
+			var incidentTypeList = new List<INCIDENT_TYPE>();
 
-            try
-            {
-                var entities = new PSsqmEntities();
+			try
+			{
+				var entities = new PSsqmEntities();
 				//incidentTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
 				//					join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
 				//					where itc.COMPANY_ID == companyId
 				//					orderby itc.SORT_ORDER
 				//					select it).ToList();
 
-                if (companyId > 0)
-                    incidentTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
-                                        join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
-                                        where itc.COMPANY_ID == companyId && itc.SORT_ORDER < 1000
-                                        orderby it.TITLE
-                                        select it).ToList();
-                else
-                {
-                    incidentTypeList = (from itc in entities.INCIDENT_TYPE
-                                        orderby itc.TITLE
-                                        select itc).ToList();
-                }
-            }
-            catch (Exception e)
-            {
-                //SQMLogger.LogException(e);
-            }
+				if (companyId > 0)
+					incidentTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
+										join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
+										where itc.COMPANY_ID == companyId && itc.SORT_ORDER < 1000
+										orderby it.TITLE
+										select it).ToList();
+				else
+				{
+					incidentTypeList = (from itc in entities.INCIDENT_TYPE
+										orderby itc.TITLE
+										select itc).ToList();
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
 
-            return incidentTypeList;
-        }
+			return incidentTypeList;
+		}
 
 		public static List<INCIDENT_TYPE> SelectPreventativeTypeList(decimal companyId)
 		{
@@ -244,10 +244,10 @@ namespace SQM.Website
 				var entities = new PSsqmEntities();
 
 				preventativeTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
-									join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
-									where itc.COMPANY_ID == companyId && itc.SORT_ORDER >= 1000
-									orderby it.TITLE
-									select it).ToList();
+										join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
+										where itc.COMPANY_ID == companyId && itc.SORT_ORDER >= 1000
+										orderby it.TITLE
+										select it).ToList();
 			}
 			catch (Exception e)
 			{
@@ -270,12 +270,15 @@ namespace SQM.Website
 				var entities = new PSsqmEntities();
 				if (plantIdList == null)
 				{
-					incidents = (from i in entities.INCIDENT where i.INCIDENT_TYPE.ToUpper() == "EHS" 
-								 orderby i.INCIDENT_ID descending select i).ToList();
+					incidents = (from i in entities.INCIDENT
+								 where i.INCIDENT_TYPE.ToUpper() == "EHS"
+								 orderby i.INCIDENT_ID descending
+								 select i).ToList();
 				}
 				else
 				{
-					incidents = (from i in entities.INCIDENT where i.INCIDENT_TYPE.ToUpper() == "EHS" 
+					incidents = (from i in entities.INCIDENT
+								 where i.INCIDENT_TYPE.ToUpper() == "EHS"
 									 && plantIdList.Contains((decimal)i.DETECT_PLANT_ID)
 								 orderby i.INCIDENT_ID descending
 								 select i).ToList();
@@ -297,11 +300,12 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				incidents = (from i in entities.INCIDENT where
-							 i.INCIDENT_TYPE.ToUpper() == "EHS" &&
-							 i.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness &&
-							 i.DETECT_PLANT_ID == plantId &&
-							 i.INCIDENT_DT.Year == date.Year && i.INCIDENT_DT.Month == date.Month
+				incidents = (from i in entities.INCIDENT
+							 where
+								 i.INCIDENT_TYPE.ToUpper() == "EHS" &&
+								 i.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness &&
+								 i.DETECT_PLANT_ID == plantId &&
+								 i.INCIDENT_DT.Year == date.Year && i.INCIDENT_DT.Month == date.Month
 							 select i).ToList();
 
 			}
@@ -369,58 +373,67 @@ namespace SQM.Website
 			return (from it in entities.INCIDENT_TYPE where it.INCIDENT_TYPE_ID == selectedTypeId select it.DEFAULT_8D).FirstOrDefault();
 		}
 
-		
+		/// <summary>
+		/// Returns boolean indicating whether a custom form should be used for the incident type
+		/// </summary>
+		public static bool IsUseCustomForm(decimal selectedTypeId)
+		{
+			var entities = new PSsqmEntities();
+			return (from it in entities.INCIDENT_TYPE where it.INCIDENT_TYPE_ID == selectedTypeId select it.USE_CUSTOM_FORM).FirstOrDefault();
+		}
+
+
 		/// <summary>
 		/// Select a list of all incident questions by company and incident type
 		/// </summary>
-        public static List<EHSIncidentQuestion> SelectIncidentQuestionList(decimal incidentTypeId, decimal companyId, int step)
-        {
-            var questionList = new List<EHSIncidentQuestion>();
+		public static List<EHSIncidentQuestion> SelectIncidentQuestionList(decimal incidentTypeId, decimal companyId, int step)
+		{
+			var questionList = new List<EHSIncidentQuestion>();
 
-            try
-            {
-                var entities = new PSsqmEntities();
-                var activeQuestionList = (from q in entities.INCIDENT_TYPE_COMPANY_QUESTION
-                                where q.INCIDENT_TYPE_ID == incidentTypeId && q.COMPANY_ID == companyId && q.STEP == step
-                                orderby q.SORT_ORDER
-                                select q
-                                ).ToList();
+			try
+			{
+				var entities = new PSsqmEntities();
+				var activeQuestionList = (from q in entities.INCIDENT_TYPE_COMPANY_QUESTION
+										  where q.INCIDENT_TYPE_ID == incidentTypeId && q.COMPANY_ID == companyId && q.STEP == step
+										  orderby q.SORT_ORDER
+										  select q
+								).ToList();
 
-                foreach (var aq in activeQuestionList)
-                {
-                    var questionInfo = (from qi in entities.INCIDENT_QUESTION
-                                        where qi.INCIDENT_QUESTION_ID == aq.INCIDENT_QUESTION_ID
-                                        select qi).FirstOrDefault();
+				foreach (var aq in activeQuestionList)
+				{
+					var questionInfo = (from qi in entities.INCIDENT_QUESTION
+										where qi.INCIDENT_QUESTION_ID == aq.INCIDENT_QUESTION_ID
+										select qi).FirstOrDefault();
 
-                    var typeInfo = (from ti in entities.INCIDENT_QUESTION_TYPE
-                                    where questionInfo.INCIDENT_QUESTION_TYPE_ID == ti.INCIDENT_QUESTION_TYPE_ID
-                                    select ti).FirstOrDefault();
+					var typeInfo = (from ti in entities.INCIDENT_QUESTION_TYPE
+									where questionInfo.INCIDENT_QUESTION_TYPE_ID == ti.INCIDENT_QUESTION_TYPE_ID
+									select ti).FirstOrDefault();
 
-                    var newQuestion = new EHSIncidentQuestion()
-                    {
-                        QuestionId = questionInfo.INCIDENT_QUESTION_ID,
-                        QuestionText = questionInfo.QUESTION_TEXT,
-                        QuestionType = (EHSIncidentQuestionType)questionInfo.INCIDENT_QUESTION_TYPE_ID,
-                        HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
+					var newQuestion = new EHSIncidentQuestion()
+					{
+						QuestionId = questionInfo.INCIDENT_QUESTION_ID,
+						QuestionText = questionInfo.QUESTION_TEXT,
+						QuestionType = (EHSIncidentQuestionType)questionInfo.INCIDENT_QUESTION_TYPE_ID,
+						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
 						IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE
-                    };
+					};
 
-                    if (newQuestion.HasMultipleChoices)
-                    {
+					if (newQuestion.HasMultipleChoices)
+					{
 						List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
-												where qc.INCIDENT_QUESTION_ID == questionInfo.INCIDENT_QUESTION_ID
-												orderby qc.SORT_ORDER
-												select new EHSIncidentAnswerChoice
-												{
-													Value = qc.QUESTION_CHOICE_VALUE,
-													IsCategoryHeading = qc.IS_CATEGORY_HEADING
-												}).ToList();
-                        if (choices.Count > 0)
-                            newQuestion.AnswerChoices = choices;
-                    }
+																 where qc.INCIDENT_QUESTION_ID == questionInfo.INCIDENT_QUESTION_ID
+																 orderby qc.SORT_ORDER
+																 select new EHSIncidentAnswerChoice
+																 {
+																	 Value = qc.QUESTION_CHOICE_VALUE,
+																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
+																 }).ToList();
+						if (choices.Count > 0)
+							newQuestion.AnswerChoices = choices;
+					}
 
 					// Question control logic
 					newQuestion.QuestionControls = (from qc in entities.INCIDENT_QUESTION_CONTROL
@@ -430,16 +443,16 @@ namespace SQM.Website
 													orderby qc.PROCESS_ORDER
 													select qc).ToList();
 
-                    questionList.Add(newQuestion);
-                }
-            }
-            catch (Exception e)
-            {
-                //SQMLogger.LogException(e);
-            }
+					questionList.Add(newQuestion);
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
 
-            return questionList;
-        }
+			return questionList;
+		}
 
 		/// <summary>
 		/// Select a list of all possible incident questions
@@ -472,13 +485,13 @@ namespace SQM.Website
 					if (newQuestion.HasMultipleChoices)
 					{
 						List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
-												where qc.INCIDENT_QUESTION_ID == q.INCIDENT_QUESTION_ID
-												orderby qc.SORT_ORDER
-												select new EHSIncidentAnswerChoice
-												{
-													Value = qc.QUESTION_CHOICE_VALUE,
-													IsCategoryHeading = qc.IS_CATEGORY_HEADING
-												}).ToList();
+																 where qc.INCIDENT_QUESTION_ID == q.INCIDENT_QUESTION_ID
+																 orderby qc.SORT_ORDER
+																 select new EHSIncidentAnswerChoice
+																 {
+																	 Value = qc.QUESTION_CHOICE_VALUE,
+																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
+																 }).ToList();
 						if (choices.Count > 0)
 							newQuestion.AnswerChoices = choices;
 					}
@@ -497,28 +510,29 @@ namespace SQM.Website
 			return questionList;
 		}
 
-        public static List<INCIDENT_QUESTION> SelectIncidentQuestionList(decimal[] questionIds)
-        {
-            List<INCIDENT_QUESTION> topicList = new List<INCIDENT_QUESTION>();
-            try
-            {
-                var entities = new PSsqmEntities();
+		public static List<INCIDENT_QUESTION> SelectIncidentQuestionList(decimal[] questionIds)
+		{
+			List<INCIDENT_QUESTION> topicList = new List<INCIDENT_QUESTION>();
+			try
+			{
+				var entities = new PSsqmEntities();
 				topicList = (from q in entities.INCIDENT_QUESTION where questionIds.Contains(q.INCIDENT_QUESTION_ID) select q).ToList();
-            }
-            catch (Exception e)
-            {
-                //SQMLogger.LogException(e);
-            }
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
 
-            return topicList;
-        }
+			return topicList;
+		}
 
 		public static decimal SelectIncidentLocationIdByIncidentId(decimal incidentId)
 		{
 			var entities = new PSsqmEntities();
-			
-			decimal? locationId = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId
-										   select i.DETECT_PLANT_ID).FirstOrDefault();
+
+			decimal? locationId = (from i in entities.INCIDENT
+								   where i.INCIDENT_ID == incidentId
+								   select i.DETECT_PLANT_ID).FirstOrDefault();
 
 			locationId = locationId ?? 0;
 
@@ -560,7 +574,7 @@ namespace SQM.Website
 
 			// start with all data originators for the company
 			List<PERSON> personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).OrderBy(p => p.LAST_NAME).ToList();
-            personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
+			personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
 			// limit the list to those people having access to the plant where the incident (if defined) occurred
 			if (incident != null)
 			{
@@ -655,7 +669,7 @@ namespace SQM.Website
 				{
 				}
 			}
-			
+
 
 			return people;
 		}
@@ -733,7 +747,8 @@ namespace SQM.Website
 					if (probCaseId > 0)
 						status = ProblemCase.DeleteProblemCase(probCaseId);
 
-					List<decimal> attachmentIds = (from a in ctx.ATTACHMENT where a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId
+					List<decimal> attachmentIds = (from a in ctx.ATTACHMENT
+												   where a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId
 												   select a.ATTACHMENT_ID).ToList();
 
 					if (attachmentIds != null && attachmentIds.Count > 0)
@@ -756,11 +771,11 @@ namespace SQM.Website
 		}
 
 
-		
+
 		public static void TryCloseIncident(decimal incidentId)
 		{
 			var entities = new PSsqmEntities();
-			
+
 			INCIDENT incident = SelectIncidentById(entities, incidentId);
 
 			if (ShouldIncidentReportClose(incident))
@@ -772,7 +787,7 @@ namespace SQM.Website
 			{
 				incident.CLOSE_DATE = null;
 			}
-			
+
 			if (ShouldIncidentCloseDataComplete(incident))
 				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
 			else
@@ -808,7 +823,7 @@ namespace SQM.Website
 		public static bool ShouldIncidentCloseDataComplete(INCIDENT incident)
 		{
 			var entities = new PSsqmEntities();
-			
+
 			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 0);
 			var requiredQuestionIds = (from q in questionList where q.IsRequiredClose == true select q.QuestionId).ToList();
 
@@ -862,7 +877,7 @@ namespace SQM.Website
 			{
 				incident.CLOSE_DATE = null;
 			}
-			
+
 			if (ShouldPreventionCloseAudited(incident))
 			{
 				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
@@ -873,7 +888,7 @@ namespace SQM.Website
 			{
 				incident.CLOSE_DATE_DATA_COMPLETE = null;
 			}
-			
+
 			entities.SaveChanges();
 		}
 
@@ -903,7 +918,7 @@ namespace SQM.Website
 			bool shouldClose = false;
 
 			var entities = new PSsqmEntities();
-			
+
 			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 1);
 			foreach (var q in questionList)
 			{
@@ -912,7 +927,7 @@ namespace SQM.Website
 								 select a.ANSWER_VALUE).FirstOrDefault();
 
 				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !string.IsNullOrEmpty(answer))
-					if (answer.ToLower() == "yes"  ||  answer.ToLower().Contains("funding"))
+					if (answer.ToLower() == "yes" || answer.ToLower().Contains("funding"))
 						shouldClose = true;
 			}
 
@@ -924,9 +939,9 @@ namespace SQM.Website
 			string answerText = null;
 			var entities = new PSsqmEntities();
 			answerText = (from a in entities.INCIDENT_ANSWER
-							  where a.INCIDENT_ID == incident.INCIDENT_ID &&
-							  a.INCIDENT_QUESTION_ID == questionId
-							  select a.ANSWER_VALUE).FirstOrDefault();
+						  where a.INCIDENT_ID == incident.INCIDENT_ID &&
+						  a.INCIDENT_QUESTION_ID == questionId
+						  select a.ANSWER_VALUE).FirstOrDefault();
 			return answerText;
 		}
 
@@ -938,5 +953,40 @@ namespace SQM.Website
 						  select p).FirstOrDefault();
 			return person.LAST_NAME + ", " + person.FIRST_NAME;
 		}
-    }
+	}
+
+	public class EHSMetaData
+	{
+		public string Culture { get; set; }
+		public string MetaDataType { get; set; }
+		public string Text { get; set; }
+		public string TextLong { get; set; }
+		public string Value { get; set; }
+		public string Status { get; set; }
+
+	}
+
+	public static class EHSMetaDataMgr
+	{
+
+		public static List<EHSMetaData> SelectMetaDataList(string cultureName, string metaDataType)
+		{
+			var entities = new PSsqmEntities();
+			var metaList = new List<EHSMetaData>();
+			metaList = (from x in entities.XLAT
+						 where x.XLAT_LANGUAGE == cultureName && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
+						orderby x.XLAT_CODE
+						select new EHSMetaData()
+						{
+							Culture = x.XLAT_LANGUAGE,
+							MetaDataType = x.XLAT_GROUP,
+							Text = x.DESCRIPTION_SHORT,
+							TextLong = x.DESCRIPTION,
+							Value = x.XLAT_CODE,
+							Status = x.STATUS
+						}).ToList();
+			return metaList;
+		}
+	
+	}
 }

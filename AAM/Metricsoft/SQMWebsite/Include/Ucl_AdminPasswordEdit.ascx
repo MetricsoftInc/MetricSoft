@@ -4,6 +4,8 @@
 
 <script type="text/javascript">
 
+
+
 	function PasswordValid(txt) {
 		var valid = confirmChange(txt);
 		if (valid == true) {
@@ -28,11 +30,12 @@
 
 </script>
 
-
+<asp:HiddenField ID="wndPercentageValue" runat="server" />
 <asp:HiddenField ID="hfPasswordChangedSucces" runat="server" Value="Your password has been changed - click OK to continue logging in." />
 <asp:HiddenField runat="server" ID="hfForgotPasswordSent" Value="An email has been sent with your new password.  Please return and use the new password to login."></asp:HiddenField>
 
-<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="280" Width="500" Title="Change Password" Behaviors="Move">
+<%--<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="280" Width="500" Title="Change Password" Behaviors="Move">--%>
+<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true"  AutoSize="true" Title="Change Password" Behaviors="Move">
     <ContentTemplate>
         <div runat="server" id="divErrorMsg" visible="false">
 	        <asp:Label runat="server" ID="lblPassMustUpdate" Text="You must reset your password to continue.<br><br>" CssClass="promptAlert" Visible="false"></asp:Label>
@@ -94,7 +97,8 @@
     </ContentTemplate>
 </telerik:RadWindow>
 
-<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Title="Forgot Password" Behaviors="Move">
+<%--<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Title="Forgot Password" Behaviors="Move">--%>
+<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" AutoSize="true" Title="Forgot Password" Behaviors="Move">
     <ContentTemplate>
 		<asp:Panel ID="pnlForgot" runat="server" style="margin-top: 5px;">
 			<table border="0" cellspacing="0" cellpadding="1">

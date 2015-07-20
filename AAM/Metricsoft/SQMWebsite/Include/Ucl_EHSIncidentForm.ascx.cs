@@ -29,6 +29,7 @@ namespace SQM.Website
 
 		protected decimal companyId;
 		protected decimal selectedPlantId = 0;
+		protected bool IsUseCustomForm;
 
 		protected AccessMode accessLevel;
 		bool controlQuestionChanged;
@@ -38,6 +39,7 @@ namespace SQM.Website
 
 		protected Ucl_RadAsyncUpload uploader;
 		protected Ucl_PreventionLocation preventionLocationForm;
+		protected Ucl_INCFORM_PowerOutage powerOutageForm;
 		protected RadDropDownList rddlLocation;
 		protected RadDropDownList rddlFilteredUsers;
 
@@ -52,10 +54,10 @@ namespace SQM.Website
 			get { return uclIncidentDetails; }
 		}
 
-        public void EnableReturnButton(bool bEnabled)
-        {
-            ahReturn.Visible = bEnabled;
-        }
+		public void EnableReturnButton(bool bEnabled)
+		{
+			ahReturn.Visible = bEnabled;
+		}
 
 		// Mode should be "incident" (standard) or "prevent" (RMCAR)
 		public IncidentMode Mode
@@ -101,6 +103,12 @@ namespace SQM.Website
 		{
 			get { return ViewState["SelectedTypeId"] == null ? 0 : (decimal)ViewState["SelectedTypeId"]; }
 			set { ViewState["SelectedTypeId"] = value; }
+		}
+
+		protected string SelectedTypeText
+		{
+			get { return ViewState["SelectedTypeText"] == null ? " " : (string)ViewState["SelectedTypeText"]; }
+			set { ViewState["SelectedTypeText"] = value; }
 		}
 
 		protected decimal SelectedLocationId
@@ -149,7 +157,7 @@ namespace SQM.Website
 		{
 			if (IsPostBack)
 			{
-				UpdateControlledQuestions();
+				//UpdateControlledQuestions();
 			}
 		}
 
@@ -215,30 +223,42 @@ namespace SQM.Website
 			}
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+
+			IsUseCustomForm = EHSIncidentMgr.IsUseCustomForm(typeId);
+
 			if (typeId < 1)
 				return;
+
+			//string typeText = SelectedTypeText;
+			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 			pnlForm.Controls.Clear();
 			pnlForm.Visible = true;
 			lblResults.Visible = false;
 
+			if (IsUseCustomForm)
+			{
+				BuildCustomForm(typeId);
+				return;
+			}
+
 			if (typeId == 10)
 			{
-				preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
-				preventionLocationForm.ID = "plf1";
-				preventionLocationForm.IsEditContext = IsEditContext;
-				preventionLocationForm.IncidentId = EditIncidentId;
+					preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
+					preventionLocationForm.ID = "plf1";
+					preventionLocationForm.IsEditContext = IsEditContext;
+					preventionLocationForm.IncidentId = EditIncidentId;
 
-				preventionLocationForm.BuildCaseComboBox();
-				if (IsEditContext == true)
-					preventionLocationForm.PopulateForm();
+					preventionLocationForm.BuildCaseComboBox();
+					if (IsEditContext == true)
+						preventionLocationForm.PopulateForm();
 
-				pnlForm.Controls.Add(new LiteralControl("<br/>"));
-				pnlForm.Controls.Add(preventionLocationForm);
-				pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-				btnSaveReturn.Visible = false;
-				btnSaveContinue.Visible = false;
-				return;
+					pnlForm.Controls.Add(new LiteralControl("<br/>"));
+					pnlForm.Controls.Add(preventionLocationForm);
+					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+					btnSaveReturn.Visible = false;
+					btnSaveContinue.Visible = false;
+					return;
 			}
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
@@ -433,11 +453,11 @@ namespace SQM.Website
 									INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 									if (incident != null)
 									{
-                                        // mt - due date now based on Incident creation date per TI
+										// mt - due date now based on Incident creation date per TI
 										//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
 										//DateTime parseDate;
 										//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-                                        DateTime parseDate = DateTime.Now;
+										DateTime parseDate = DateTime.Now;
 										//{
 											string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
 											if (answer.ToLower() == "behavioral")
@@ -695,11 +715,560 @@ namespace SQM.Website
 			}
 
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
-			pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+			pnlForm.Controls.Add(new LiteralControl("<br/><br/>")); { }
 
 			UpdateAnswersFromForm();
 
 			UpdateButtonText();
+		}
+
+		public void BuildCustomForm(decimal typeId)
+		{
+
+			switch (Convert.ToInt32(typeId))
+			{
+
+				case 2: //PowerOutage Form
+
+					powerOutageForm = (Ucl_INCFORM_PowerOutage)LoadControl("~/Include/Ucl_INCFORM_PowerOutage.ascx");
+					powerOutageForm.ID = "pof1";
+					powerOutageForm.IsEditContext = IsEditContext;
+					powerOutageForm.IncidentId = EditIncidentId;
+
+					//preventionLocationForm.BuildCaseComboBox();
+					//if (IsEditContext == true)
+					//powerOutageForm.PopulateForm();
+
+					pnlForm.Controls.Add(new LiteralControl("<br/>"));
+					pnlForm.Controls.Add(powerOutageForm);
+					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+
+					btnSaveReturn.Visible = false;
+					btnSaveContinue.Visible = false;
+					btnDelete.Visible = false;
+
+					break;
+			}
+		}
+
+		public void GetForm()
+		{
+			if (accessLevel <= AccessMode.View)
+				return;
+
+			if (Mode == IncidentMode.Prevent)
+			{
+				if (accessLevel <= AccessMode.Plant)
+				{
+					pnlIncidentHeader.Visible = false;
+
+					if (CurrentStep == 0)
+					{
+						if (IsEditContext)
+						{
+							ShowIncidentDetails(EditIncidentId, "Recommendation Details");
+							btnSaveReturn.Visible = false;
+							btnSaveContinue.Visible = false;
+						}
+						return;
+					}
+				}
+				if (CurrentStep == 1)
+				{
+					uclIncidentDetails.Visible = true;
+					var displaySteps = new int[] { 0 };
+					uclIncidentDetails.Refresh(EditIncidentId, displaySteps);
+				}
+			}
+
+			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+			if (typeId < 1)
+				return;
+
+			pnlForm.Controls.Clear();
+			pnlForm.Visible = true;
+			lblResults.Visible = false;
+
+			if (typeId == 10)
+			{
+				preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
+				preventionLocationForm.ID = "plf1";
+				preventionLocationForm.IsEditContext = IsEditContext;
+				preventionLocationForm.IncidentId = EditIncidentId;
+
+				preventionLocationForm.BuildCaseComboBox();
+				if (IsEditContext == true)
+					preventionLocationForm.PopulateForm();
+
+				pnlForm.Controls.Add(new LiteralControl("<br/>"));
+				pnlForm.Controls.Add(preventionLocationForm);
+				pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+				btnSaveReturn.Visible = false;
+				btnSaveContinue.Visible = false;
+				return;
+			}
+
+			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
+
+			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
+
+			foreach (var q in questions)
+			{
+				var validator = new RequiredFieldValidator();
+
+				// Look up answer if edit context
+				var localQuestion = q;
+				if (IsEditContext)
+				{
+					q.AnswerText = (from a in entities.INCIDENT_ANSWER
+									where a.INCIDENT_ID == EditIncidentId
+										&& a.INCIDENT_QUESTION_ID == localQuestion.QuestionId
+									select a.ANSWER_VALUE).FirstOrDefault();
+				}
+				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
+
+				string qid = q.QuestionId.ToString();
+
+				var pnl = new Panel() { ID = "Panel" + qid };
+
+				pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\">"));
+				pnl.Controls.Add(new Label() { ID = "Label" + qid, Text = q.QuestionText, AssociatedControlID = qid });
+				pnl.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px; padding-left: 0 !important;\">"));
+				if (!string.IsNullOrEmpty(q.HelpText))
+					AddToolTip(pnl, q);
+				pnl.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px; padding-left: 0 !important;\">"));
+				if (q.IsRequired)
+					pnl.Controls.Add(new LiteralControl("<span class=\"requiredStar\">&bull;</span>"));
+				if (q.IsRequiredClose)
+					pnl.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
+
+				pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+
+				if (q.QuestionType != EHSIncidentQuestionType.BooleanCheckBox && q.QuestionType != EHSIncidentQuestionType.CheckBox &&
+					q.QuestionType != EHSIncidentQuestionType.Attachment && q.QuestionType != EHSIncidentQuestionType.DocumentAttachment &&
+					q.QuestionType != EHSIncidentQuestionType.ImageAttachment && q.QuestionType != EHSIncidentQuestionType.PageOneAttachment)
+				{
+					if (q.IsRequired)
+					{
+						validator = new RequiredFieldValidator()
+						{
+							ID = "Val" + qid,
+							ControlToValidate = qid,
+							ValidationGroup = "Val",
+							Text = "<span class=\"formRequired\">Required</span>"
+						};
+
+						if (q.QuestionType == EHSIncidentQuestionType.Dropdown || q.QuestionType == EHSIncidentQuestionType.LocationDropdown ||
+						q.QuestionType == EHSIncidentQuestionType.StandardsReferencesDropdown || q.QuestionType == EHSIncidentQuestionType.UsersDropdown ||
+						q.QuestionType == EHSIncidentQuestionType.UsersDropdownLocationFiltered)
+							validator.InitialValue = "[Select One]";
+
+						if (Mode == IncidentMode.Prevent)
+							validator.EnableClientScript = false;
+
+						pnl.Controls.Add(validator);
+					}
+				}
+
+				switch (q.QuestionType)
+				{
+					case EHSIncidentQuestionType.TextField:
+						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							tf.Text = q.AnswerText;
+						else if (q.QuestionId == (decimal)EHSQuestionId.Location) // Location
+							tf.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
+						if (q.QuestionId == (decimal)EHSQuestionId.CompletedBy)
+							tf.Enabled = false;
+						pnl.Controls.Add(tf);
+						break;
+
+					case EHSIncidentQuestionType.TextBox:
+						var tb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							tb.Text = q.AnswerText;
+						pnl.Controls.Add(tb);
+
+						break;
+
+					case EHSIncidentQuestionType.RichTextBox:
+						var re = new RadEditor() { ID = qid, Width = 550, Height = 300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
+						re.EditModes = EditModes.Design;
+						re.ToolsFile = "~/RadEditorToolsFile.xml";
+						re.ContentAreaCssFile = "~/css/RadEditor.css";
+						re.OnClientLoad = "OnEditorClientLoad";
+						if (shouldPopulate)
+							re.Content = q.AnswerText;
+						pnl.Controls.Add(re);
+						pnl.Controls.Add(new Literal() { Text = "<br style=\"clear: both;\"/><span style=\"font-size: 10px;\">Double-click links to preview</a>" });
+						break;
+
+					case EHSIncidentQuestionType.Radio:
+						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						foreach (var choice in q.AnswerChoices)
+						{
+							var li = new ListItem(choice.Value);
+							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+							if (shouldPopulate)
+							{
+								if (choice.Value == q.AnswerText)
+									li.Selected = true;
+							}
+							rbl.Items.Add(li);
+						}
+						if (!shouldPopulate)
+							rbl.SelectedIndex = 0; // Default to first
+						pnl.Controls.Add(rbl);
+						break;
+
+					case EHSIncidentQuestionType.CheckBox:
+						var cbl = new CheckBoxList() { ID = qid, CssClass = "WarnIfChanged" };
+						foreach (var choice in q.AnswerChoices)
+						{
+							var li = new ListItem(choice.Value);
+							if (shouldPopulate)
+							{
+								string[] answers = q.AnswerText.Split('|');
+								if (answers.Contains(choice.Value))
+									li.Selected = true;
+							}
+							cbl.Items.Add(li);
+						}
+						pnl.Controls.Add(cbl);
+						break;
+
+					case EHSIncidentQuestionType.Dropdown:
+						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val" };
+						rddl.Items.Add(new DropDownListItem("[Select One]", ""));
+
+						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
+						{
+							// Check for any category headings
+							var matches = q.AnswerChoices.Where(ac => ac.IsCategoryHeading == true);
+							bool containsCategoryHeadings = (matches.Count() > 0);
+
+							foreach (var choice in q.AnswerChoices)
+							{
+								if (containsCategoryHeadings == true)
+								{
+									if (choice.IsCategoryHeading)
+										rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
+									else
+										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Value, choice.Value));
+								}
+								else
+								{
+									rddl.Items.Add(new DropDownListItem(choice.Value, choice.Value));
+								}
+							}
+
+							rddl.ClearSelection();
+							if (shouldPopulate)
+								if (!string.IsNullOrEmpty(q.AnswerText))
+									rddl.SelectedValue = q.AnswerText;
+						}
+						rddl.AutoPostBack = true;
+						pnl.Controls.Add(rddl);
+						break;
+
+					case EHSIncidentQuestionType.Date:
+						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+						rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						rdp.ShowPopupOnFocus = true;
+						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
+						{
+							rdp.SelectedDate = DateTime.Now;
+						}
+						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate && !IsEditContext) // Default report date if add mode
+						{
+							rdp.SelectedDate = DateTime.Now;
+						}
+
+						if (shouldPopulate)
+						{
+							DateTime parseDate;
+							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+								rdp.SelectedDate = parseDate;
+						}
+						else
+						{
+							// Default projected completion date 30 or 60 days based on previous questions
+							if (q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate)
+							{
+								if (EditIncidentId > 0)
+								{
+									INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+									if (incident != null)
+									{
+										// mt - due date now based on Incident creation date per TI
+										//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
+										//DateTime parseDate;
+										//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+										DateTime parseDate = DateTime.Now;
+										//{
+										string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
+										if (answer.ToLower() == "behavioral")
+											rdp.SelectedDate = parseDate.AddDays(30);
+										else
+											rdp.SelectedDate = parseDate.AddDays(60);
+										//}
+									}
+								}
+							}
+						}
+
+						// Incident report date, completion date, projected completion date are not editable
+						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate ||
+							q.QuestionId == (decimal)EHSQuestionId.CompletionDate ||
+							q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate)
+						{
+							rdp.Enabled = false;
+						}
+
+						pnl.Controls.Add(rdp);
+						break;
+
+					case EHSIncidentQuestionType.Time:
+						var rtp = new RadTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+						rtp.ShowPopupOnFocus = true;
+						rtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						if (shouldPopulate)
+						{
+							TimeSpan parseTime;
+							if (TimeSpan.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), out parseTime))
+								rtp.SelectedTime = parseTime;
+						}
+						pnl.Controls.Add(rtp);
+						break;
+
+					case EHSIncidentQuestionType.DateTime:
+						var rdtp = new RadDateTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+						rdtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						if (shouldPopulate)
+						{
+							DateTime parseDate;
+							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+								rdtp.SelectedDate = parseDate;
+						}
+						pnl.Controls.Add(rdtp);
+						break;
+
+					case EHSIncidentQuestionType.BooleanCheckBox:
+						pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
+						var bcb = new CheckBox() { ID = qid, Text = "Yes", CssClass = "WarnIfChanged" };
+
+						if (shouldPopulate)
+							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
+						else if (q.QuestionId == (decimal)EHSQuestionId.Create8D && EHSIncidentMgr.IsTypeDefault8D(typeId))
+							bcb.Checked = true;
+
+						// If controller question, "close" checkbox, or "create 8d" checkbox, register ajax behavior
+						if ((q.QuestionControls != null && q.QuestionControls.Count > 0) ||
+							q.QuestionId == (decimal)EHSQuestionId.CloseIncident ||
+							q.QuestionId == (decimal)EHSQuestionId.Create8D)
+						{
+							bcb.CheckedChanged += new EventHandler(bcb_CheckedChanged);
+							if (q.QuestionId == (decimal)EHSQuestionId.CloseIncident)
+								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedClose);
+							if (q.QuestionId == (decimal)EHSQuestionId.Create8D)
+								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedCreate8D);
+							bcb.AutoPostBack = true;
+						}
+
+						pnl.Controls.Add(bcb);
+
+						pnl.Controls.Add(new LiteralControl("</div>"));
+						break;
+
+					case EHSIncidentQuestionType.Attachment:
+						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+						uploader.ID = qid;
+						uploader.SetAttachmentRecordStep("2");
+						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						pnl.Controls.Add(uploader);
+						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+						if (IsEditContext)
+							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+						break;
+
+					case EHSIncidentQuestionType.DocumentAttachment:
+						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+						uploader.ID = qid;
+						uploader.SetAttachmentRecordStep("2");
+						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						pnl.Controls.Add(uploader);
+						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+						if (IsEditContext)
+							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+						break;
+
+					case EHSIncidentQuestionType.ImageAttachment:
+						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+						uploader.ID = qid;
+						uploader.SetAttachmentRecordStep("2");
+						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
+						pnl.Controls.Add(uploader);
+						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+						if (IsEditContext)
+							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+						break;
+
+					case EHSIncidentQuestionType.PageOneAttachment:
+						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+						uploader.ID = qid;
+						uploader.SetAttachmentRecordStep("1");
+						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						pnl.Controls.Add(uploader);
+						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+						if (IsEditContext)
+							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+						break;
+
+					case EHSIncidentQuestionType.CurrencyTextBox:
+						var ctb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Number };
+						ctb.NumberFormat.DecimalDigits = 2;
+						if (shouldPopulate)
+							ctb.Text = q.AnswerText;
+
+						if (EditIncidentId > 0 && Mode == IncidentMode.Prevent)
+						{
+							INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+							if (incident != null)
+							{
+								string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
+								if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
+								{
+									ctb.Enabled = false;
+									pnl.Visible = false;
+								}
+							}
+						}
+
+						pnl.Controls.Add(ctb);
+						break;
+
+					case EHSIncidentQuestionType.PercentTextBox:
+						var ptb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Percent };
+						if (shouldPopulate)
+							ptb.Text = q.AnswerText;
+						pnl.Controls.Add(ptb);
+						break;
+
+					case EHSIncidentQuestionType.StandardsReferencesDropdown:
+						RadComboBox rcb = CreateReferencesDropdown(q.StandardType);
+						rcb.ID = qid;
+						rcb.Skin = "Metro";
+						rcb.CssClass = "WarnIfChanged";
+						rcb.Font.Size = 8;
+						rcb.Width = 320;
+						rcb.DropDownWidth = 400;
+						rcb.Height = 300;
+						if (shouldPopulate)
+							rcb.SelectedValue = q.AnswerText;
+						pnl.Controls.Add(rcb);
+						break;
+
+					case EHSIncidentQuestionType.LocationDropdown:
+						rddlLocation = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+						var plantIdList = SelectPlantIdsByAccessLevel();
+						if (plantIdList.Count > 1)
+							rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
+						foreach (decimal pid in plantIdList)
+						{
+							string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
+							rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
+						}
+						if (shouldPopulate)
+						{
+							rddlLocation.SelectedValue = q.AnswerText;
+							this.SelectedLocationId = Convert.ToDecimal(q.AnswerText);
+						}
+						rddlLocation.SelectedIndexChanged += rddlLocation_SelectedIndexChanged;
+						rddlLocation.AutoPostBack = true;
+
+						pnl.Controls.Add(rddlLocation);
+						break;
+
+					case EHSIncidentQuestionType.UsersDropdown:
+						var rddl3 = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+						rddl3.Items.Add(new DropDownListItem("[Select One]", ""));
+
+						var personList = new List<PERSON>();
+						if (CurrentStep == 1)
+							personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+						else if (CurrentStep == 0)
+							personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+
+						foreach (PERSON p in personList)
+						{
+							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+							rddl3.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						}
+
+						if (shouldPopulate)
+							rddl3.SelectedValue = q.AnswerText;
+						pnl.Controls.Add(rddl3);
+						break;
+
+					case EHSIncidentQuestionType.RequiredYesNoRadio:
+						var rblYN = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						rblYN.RepeatDirection = RepeatDirection.Horizontal;
+						rblYN.RepeatColumns = 2;
+						rblYN.AutoPostBack = true;
+						var choices = new string[] { "Yes", "No" };
+						foreach (var choice in choices)
+						{
+							var li = new ListItem(choice);
+							rblYN.Items.Add(li);
+						}
+						if (shouldPopulate)
+							rblYN.SelectedValue = q.AnswerText;
+						if (q.QuestionControls != null && q.QuestionControls.Count > 0)
+						{
+							rblYN.SelectedIndexChanged += rblYN_SelectedIndexChanged;
+						}
+						pnl.Controls.Add(rblYN);
+						break;
+
+					case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
+						rddlFilteredUsers = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+						BuildFilteredUsersDropdownList();
+
+						if (shouldPopulate)
+							rddlFilteredUsers.SelectedValue = q.AnswerText;
+
+						if (rddlFilteredUsers.Items.Count() == 1)
+							validator.InitialValue = rddlFilteredUsers.Items[0].Text;
+
+						pnl.Controls.Add(rddlFilteredUsers);
+						break;
+
+				}
+
+				pnl.Controls.Add(new LiteralControl("</td></tr>"));
+
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && accessLevel < AccessMode.Admin)
+					pnl.Visible = false;
+
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && accessLevel < AccessMode.Admin)
+					pnl.Visible = false;
+
+				pnlForm.Controls.Add(pnl);
+			}
+
+			pnlForm.Controls.Add(new LiteralControl("</table>"));
+			pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+
+			UpdateAnswersFromForm();
+
+			UpdateButtonText();		
+		
+		
 		}
 		
 		void rddlLocation_SelectedIndexChanged(object sender, EventArgs e)
@@ -719,6 +1288,7 @@ namespace SQM.Website
 
 		void UpdateButtonText()
 		{
+
 			btnSaveReturn.Text = "Save & Return";
 
 			int chInt = (int)EHSQuestionId.Create8D;
@@ -871,33 +1441,33 @@ namespace SQM.Website
 			foreach (int fId in requiredToCloseFields)
 			{
 				var field = pnlForm.FindControl(fId.ToString());
-                if (field == null)   //mt - need to enable close if field was not included in the incident meta-data
-                {
-                    score++;
-                }
-                else 
-                {
-                    if (field is RadTextBox)
-                    {
-                        if (!String.IsNullOrEmpty((field as RadTextBox).Text))
-                            score++;
-                    }
-                    else if (field is RadDatePicker)
-                    {
-                        if ((field as RadDatePicker).SelectedDate != null)
-                            score++;
-                    }
-                    else if (field is DropDownList)
-                    {
-                        if (!String.IsNullOrEmpty((field as DropDownList).SelectedValue))
-                            score++;
-                    }
-                    else if (field is RadDropDownList)
-                    {
-                        if (!String.IsNullOrEmpty((field as RadDropDownList).SelectedValue))
-                            score++;
-                    }
-                }
+				if (field == null)   //mt - need to enable close if field was not included in the incident meta-data
+				{
+					score++;
+				}
+				else 
+				{
+					if (field is RadTextBox)
+					{
+						if (!String.IsNullOrEmpty((field as RadTextBox).Text))
+							score++;
+					}
+					else if (field is RadDatePicker)
+					{
+						if ((field as RadDatePicker).SelectedDate != null)
+							score++;
+					}
+					else if (field is DropDownList)
+					{
+						if (!String.IsNullOrEmpty((field as DropDownList).SelectedValue))
+							score++;
+					}
+					else if (field is RadDropDownList)
+					{
+						if (!String.IsNullOrEmpty((field as RadDropDownList).SelectedValue))
+							score++;
+					}
+				}
 			}
 
 			return (score == requiredToCloseFields.Length);
@@ -1152,6 +1722,7 @@ namespace SQM.Website
 			if (!string.IsNullOrEmpty(selectedTypeId))
 			{
 				SelectedTypeId = Convert.ToDecimal(selectedTypeId);
+				SelectedTypeText = rddlIncidentType.SelectedText;
 				IsEditContext = false;
 				BuildForm();
 			}
@@ -1208,7 +1779,7 @@ namespace SQM.Website
 
 		protected void Save(bool shouldReturn)
 		{
-            INCIDENT theIncident = null;
+			INCIDENT theIncident = null;
 			decimal incidentId = 0;
 			bool shouldCreate8d = false;
 			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
@@ -1252,7 +1823,7 @@ namespace SQM.Website
 				{
 					// Add context - step 0
 					theIncident = CreateNewIncident();
-                    incidentId = theIncident.INCIDENT_ID;
+					incidentId = theIncident.INCIDENT_ID;
 					EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 				}
 				else
@@ -1262,10 +1833,10 @@ namespace SQM.Website
 					if (incidentId > 0)
 					{
 						theIncident = UpdateIncident(incidentId);
-                        if (Mode == IncidentMode.Incident)
-                        {
-                            EHSIncidentMgr.TryCloseIncident(incidentId);
-                        }
+						if (Mode == IncidentMode.Incident)
+						{
+							EHSIncidentMgr.TryCloseIncident(incidentId);
+						}
 					}
 				}
 				if (incidentId > 0)
@@ -1275,7 +1846,7 @@ namespace SQM.Website
 				}
 
 				if (Mode == IncidentMode.Prevent)
-                    UpdateTaskInfo(questions, incidentId, (DateTime)theIncident.CREATE_DT);
+					UpdateTaskInfo(questions, incidentId, (DateTime)theIncident.CREATE_DT);
 			}
 			else if (CurrentStep == 1)
 			{
@@ -1289,7 +1860,7 @@ namespace SQM.Website
 
 					if (Mode == IncidentMode.Incident)
 					{
-                        UpdateTaskInfo(questions, incidentId, DateTime.Now);
+						UpdateTaskInfo(questions, incidentId, DateTime.Now);
 						EHSIncidentMgr.TryCloseIncident(incidentId);
 					}
 					else
@@ -1313,7 +1884,7 @@ namespace SQM.Website
 			thread.Start();
 
 			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
-            //obj.IsBackground = true;
+			//obj.IsBackground = true;
 
 
 			if (shouldCreate8d == true && shouldReturn == false)
@@ -1559,7 +2130,7 @@ namespace SQM.Website
 				entities.SaveChanges();
 			}
 
-            return incident;
+			return incident;
 
 		}
 
@@ -1607,7 +2178,7 @@ namespace SQM.Website
 					{
 						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate)
 							dueDate = createDate.AddDays(30);  // mt - per TI the due date should be based on the incident CREATE date instead of the inspection date
-                            // dueDate = DateTime.Parse(incidentAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US")).AddDays(30);
+							// dueDate = DateTime.Parse(incidentAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US")).AddDays(30);
 						else if (q.QuestionId == (decimal)EHSQuestionId.AssignToPerson) 
 							responsiblePersonId = Convert.ToDecimal(incidentAnswer.ANSWER_VALUE);
 					}

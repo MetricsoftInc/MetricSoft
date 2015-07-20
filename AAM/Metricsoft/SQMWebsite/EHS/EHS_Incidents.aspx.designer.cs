@@ -40,15 +40,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblViewEHSRezTitle;
         
         /// <summary>
-        /// lblPageInstructions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageInstructions;
-        
-        /// <summary>
         /// rbNew control.
         /// </summary>
         /// <remarks>
@@ -56,6 +47,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton rbNew;
+        
+        /// <summary>
+        /// lblPageInstructions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPageInstructions;
         
         /// <summary>
         /// RadPersistenceManager1 control.

@@ -170,7 +170,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="bin\SanitizerProviders.dll" />
-    <Content Include="bin\Settings.xml" />
+    <Content Include="bin\Settings.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="bin\Telerik.Web.Design.dll" />
     <Content Include="bin\Telerik.Web.UI.dll" />
     <Content Include="bin\Telerik.Web.UI.Skins.dll" />
@@ -182,7 +184,12 @@
     <Content Include="charts\NC_OCCUR.jpg" />
     <Content Include="charts\PN15000-ProblemType.png" />
     <Content Include="charts\PT_OCCUR.jpg" />
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.min.css" />
     <Content Include="css\MetroThemeOverride.css" />
+    <Content Include="css\normalize.css" />
     <Content Include="css\PIE.htc" />
     <Content Include="css\PSSQM_Default.css" />
     <Content Include="css\RadEditor.css" />
@@ -203,8 +210,8 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
-    <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents.aspx" />
+    <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents_Questions.aspx" />
     <Content Include="EHS\EHS_MetricExport.aspx" />
     <Content Include="EHS\EHS_Reports.aspx" />
@@ -1664,6 +1671,7 @@
     <Content Include="images\tabInactiveLeftSquare.gif" />
     <Content Include="images\tabInactiveRight.gif" />
     <Content Include="images\tableDataHdrBg2.gif" />
+    <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
     <Content Include="Include\Ucl_PreventionLocation.ascx" />
     <Content Include="Include\Ucl_RadAsyncUpload.ascx" />
@@ -1697,8 +1705,8 @@
     <Content Include="Include\Ucl_EHSReport.ascx" />
     <Content Include="Include\Ucl_MetricList.ascx" />
     <Content Include="Login.aspx" />
-    <Content Include="Problem\Problem_Case.aspx" />
-    <Content Include="Problem\Problem_Rpt.aspx" />
+    <Content Include="images\Problem\Problem_Case.aspx" />
+    <Content Include="images\Problem\Problem_Rpt.aspx" />
     <Content Include="Quality\ControlMethodList.aspx" />
     <Content Include="Quality\QualityIssueList.aspx" />
     <Content Include="Quality\QualityIssue_Label.aspx" />
@@ -1710,11 +1718,15 @@
     <Content Include="RadEditorToolsFile.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="scripts\bootstrap.js" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\common.js" />
     <Content Include="scripts\datepicker.js" />
     <Content Include="css\FileExplorer.css" />
     <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\jquery-ui-1.8.20.custom.min.js" />
+    <Content Include="scripts\npm.js" />
     <Content Include="scripts\prevention_location.js" />
     <Content Include="scripts\ps_admin.js" />
     <Content Include="Settings.xml">
@@ -1868,19 +1880,19 @@
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EHS\EHS_Incident_Verification.aspx.cs">
-      <DependentUpon>EHS_Incident_Verification.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EHS\EHS_Incident_Verification.aspx.designer.cs">
-      <DependentUpon>EHS_Incident_Verification.aspx</DependentUpon>
-    </Compile>
     <Compile Include="EHS\EHS_Incidents.aspx.cs">
       <DependentUpon>EHS_Incidents.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Incidents.aspx.designer.cs">
       <DependentUpon>EHS_Incidents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Incident_Verification.aspx.cs">
+      <DependentUpon>EHS_Incident_Verification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Incident_Verification.aspx.designer.cs">
+      <DependentUpon>EHS_Incident_Verification.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Incidents_Questions.aspx.cs">
       <DependentUpon>EHS_Incidents_Questions.aspx</DependentUpon>
@@ -1997,12 +2009,12 @@
     <Compile Include="Home\Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_EHSIncidentDetails.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSIncidentDetails.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Include\Ucl_EHSIncidentForm.ascx.cs">
       <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Include\Ucl_EHSIncidentForm.ascx.designer.cs">
-      <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_AdminPasswordEdit.ascx.cs">
       <DependentUpon>Ucl_AdminPasswordEdit.ascx</DependentUpon>
@@ -2015,8 +2027,15 @@
       <DependentUpon>Ucl_EHSIncidentDetails.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Include\Ucl_EHSIncidentDetails.ascx.designer.cs">
-      <DependentUpon>Ucl_EHSIncidentDetails.ascx</DependentUpon>
+    <Compile Include="Include\Ucl_EHSIncidentForm.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_PartSearch.ascx.cs">
       <DependentUpon>Ucl_PartSearch.ascx</DependentUpon>
@@ -2249,18 +2268,18 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Problem\Problem_Case.aspx.cs">
+    <Compile Include="images\Problem\Problem_Case.aspx.cs">
       <DependentUpon>Problem_Case.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Problem\Problem_Case.aspx.designer.cs">
+    <Compile Include="images\Problem\Problem_Case.aspx.designer.cs">
       <DependentUpon>Problem_Case.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Problem\Problem_Rpt.aspx.cs">
+    <Compile Include="images\Problem\Problem_Rpt.aspx.cs">
       <DependentUpon>Problem_Rpt.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Problem\Problem_Rpt.aspx.designer.cs">
+    <Compile Include="images\Problem\Problem_Rpt.aspx.designer.cs">
       <DependentUpon>Problem_Rpt.aspx</DependentUpon>
     </Compile>
     <Compile Include="PSMaster.Master.cs">
@@ -2270,12 +2289,19 @@
     <Compile Include="PSMaster.Master.designer.cs">
       <DependentUpon>PSMaster.Master</DependentUpon>
     </Compile>
-    <Compile Include="QAILogin.Master.cs">
-      <DependentUpon>QAILogin.Master</DependentUpon>
+    <Compile Include="RspPSMaster.Master.cs">
+      <DependentUpon>RspPSMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="QAILogin.Master.designer.cs">
-      <DependentUpon>QAILogin.Master</DependentUpon>
+    <Compile Include="RspPSMaster.Master.designer.cs">
+      <DependentUpon>RspPSMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="RspQAILogin.Master.cs">
+      <DependentUpon>RspQAILogin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RspQAILogin.Master.designer.cs">
+      <DependentUpon>RspQAILogin.Master</DependentUpon>
     </Compile>
     <Compile Include="Quality\ControlMethodList.aspx.cs">
       <DependentUpon>ControlMethodList.aspx</DependentUpon>
@@ -2381,12 +2407,6 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PSMaster.Master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="QAILogin.Master" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -2429,6 +2449,9 @@
     <Content Include="ReportMaster.Master" />
     <Content Include="WebResource.axd" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
+    <Content Include="RspQAILogin.Master" />
+    <Content Include="RspPSMaster.Master" />
+    <Content Include="PSMaster.Master" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
@@ -2445,15 +2468,14 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64917</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58822/</IISUrl>
+          <IISUrl>http://localhost:64917/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://localhost:64917/login.aspx</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -10,222 +10,168 @@
 namespace SQM.Website {
     
     
-    public partial class Login {
+    public partial class Ucl_INCFORM_PowerOutage {
         
         /// <summary>
-        /// viewPortWidth control.
+        /// lblRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField viewPortWidth;
+        protected global::System.Web.UI.WebControls.Label lblRequired;
         
         /// <summary>
-        /// pnlLogin control.
+        /// lblSubmitted control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlLogin;
+        protected global::System.Web.UI.WebControls.Label lblSubmitted;
         
         /// <summary>
-        /// lblMainInfo control.
+        /// pnlSelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMainInfo;
+        protected global::System.Web.UI.WebControls.Panel pnlSelect;
         
         /// <summary>
-        /// Label1 control.
+        /// rdpIncidentDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::Telerik.Web.UI.RadDatePicker rdpIncidentDate;
         
         /// <summary>
-        /// tbUsername control.
+        /// rfvIncidentDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbUsername;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvIncidentDate;
         
         /// <summary>
-        /// Label2 control.
+        /// rdpReportDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::Telerik.Web.UI.RadDatePicker rdpReportDate;
         
         /// <summary>
-        /// tbPassword control.
+        /// rddlLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbPassword;
+        protected global::Telerik.Web.UI.RadDropDownList rddlLocation;
         
         /// <summary>
-        /// btnLogin control.
+        /// rfvLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocation;
         
         /// <summary>
-        /// lnkForgotPassword control.
+        /// tbDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkForgotPassword;
+        protected global::System.Web.UI.WebControls.TextBox tbDescription;
         
         /// <summary>
-        /// lblLoginError_out control.
+        /// rfvDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoginError_out;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescription;
         
         /// <summary>
-        /// lblLoginAttemptError_out control.
+        /// rtpIncidentTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoginAttemptError_out;
+        protected global::Telerik.Web.UI.RadTimePicker rtpIncidentTime;
         
         /// <summary>
-        /// lblSessionError_out control.
+        /// rfvIncidentTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSessionError_out;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvIncidentTime;
         
         /// <summary>
-        /// pnlLoginPasswordEdit control.
+        /// rddlShift control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlLoginPasswordEdit;
+        protected global::Telerik.Web.UI.RadDropDownList rddlShift;
         
         /// <summary>
-        /// uclPassEdit control.
+        /// rvfShift control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_AdminPasswordEdit uclPassEdit;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfShift;
         
         /// <summary>
-        /// divLinks control.
+        /// tbProdImpact control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLinks;
+        protected global::System.Web.UI.WebControls.TextBox tbProdImpact;
         
         /// <summary>
-        /// divAnnouncements control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAnnouncements;
+        protected global::Telerik.Web.UI.RadButton btnSave;
         
         /// <summary>
-        /// divLoginMessage control.
+        /// btnPrev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLoginMessage;
+        protected global::Telerik.Web.UI.RadButton btnPrev;
         
         /// <summary>
-        /// lblLoginMessage control.
+        /// btnNext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoginMessage;
-        
-        /// <summary>
-        /// pnlPosting control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPosting;
-        
-        /// <summary>
-        /// divTicker control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTicker;
-        
-        /// <summary>
-        /// lblStats control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStats;
-        
-        /// <summary>
-        /// uclGauge control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_RadGauge uclGauge;
-        
-        /// <summary>
-        /// imgPostingEHS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgPostingEHS;
-        
-        /// <summary>
-        /// imgPostingQS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgPostingQS;
+        protected global::Telerik.Web.UI.RadButton btnNext;
     }
 }

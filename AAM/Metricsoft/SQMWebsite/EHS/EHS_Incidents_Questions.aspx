@@ -15,7 +15,7 @@
 							<td class="pageTitles">
 								<asp:Label ID="lblViewEHSRezTitle" runat="server" Text="Incident Questions"></asp:Label>
 								<br />
-								<asp:Label ID="lblPageInstructions" runat="server" class="instructText" Text=""></asp:Label>
+								<asp:Label ID="lblPageInstructions" runat="server"  CssClass="instructText" Text=""></asp:Label>
 							</td>
 						</tr>
 					</table>
@@ -24,7 +24,7 @@
 						Skin="Metro" runat="server" />
 					<div id="divPageBody" class="textStd" style="text-align: left; margin: 0 10px;" runat="server">
 						<div class="blueCell" style="padding: 10px; font-size: 13px;">
-							<asp:Label class="textStd" AssociatedControlID="ddlIncidentType" runat="server" Font-Bold="true">Incident Type</asp:Label>
+							<asp:Label CssClass="textStd" AssociatedControlID="ddlIncidentType" runat="server" Font-Bold="true">Incident Type</asp:Label>
 							&nbsp;
 							<asp:DropDownList ID="ddlIncidentType" AutoPostBack="true" OnSelectedIndexChanged="ddlIncidentType_SelectedIndexChanged"
 								runat="server" />

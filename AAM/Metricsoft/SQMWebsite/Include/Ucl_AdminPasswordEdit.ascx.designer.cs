@@ -13,6 +13,15 @@ namespace SQM.Website {
     public partial class Ucl_AdminPasswordEdit {
         
         /// <summary>
+        /// wndPercentageValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField wndPercentageValue;
+        
+        /// <summary>
         /// hfPasswordChangedSucces control.
         /// </summary>
         /// <remarks>

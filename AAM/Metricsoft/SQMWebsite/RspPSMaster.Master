@@ -1,0 +1,259 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="RspPSMaster.master.cs" Inherits="SQM.Website.RspPSMaster" %>
+<%@ Register src="~/Include/Ucl_DocMgr.ascx" TagName="DocList" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AdminPasswordEdit.ascx" TagName="PassEdit" TagPrefix="Ucl" %>
+<%--<%@ Register src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>--%>
+
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<% Response.AppendHeader("Refresh", Convert.ToString((Session.Timeout * 60)) + ";URL=../Login.aspx?a=ex"); %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head id="Head1" runat="server">
+	<title></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device.width, initial-scale=1" />
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="/css/normalize.css" rel="stylesheet" type="text/css" />
+	<link href="//fonts.googleapis.com/css?family=Bitter:400,400italic|Open+Sans:300italic,300" rel="stylesheet" type="text/css" />
+	<link href="/css/PSSQM_Default.css" rel="stylesheet" type="text/css" />
+	<link href="/css/MetroThemeOverride.css" rel="stylesheet" type="text/css" />
+	<link href="/css/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
+	<%--<link href="http://aspnet-skins.telerikstatic.com/ajaxz/2013.2.717/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />--%>
+	<telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+
+	<script src="../scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="/scripts/common.js" type="text/javascript"></script>   
+	<script src="/scripts/bootstrap.min.js" type="text/javascript"></script>
+	<script src="../scripts/ps_admin.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function __doPostBack(eventTarget, eventArgument) {
+			document.getElementById("__EVENTTARGET").value = eventTarget;
+			document.getElementById("__EVENTARGUMENT").value = eventArgument;
+			if (!IsIE())
+				document.submit();
+		}
+
+		function OpenUserPrefsWindow() {
+			//document.getElementById('lblPopupInfo').value = "this is an info block";
+			$find("<%=winUserPrefs.ClientID %>").show();
+		}
+
+		function CloseUserPrefsWindow(changeDesc) {
+			var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+			oWindow.Close();
+		}
+	</script>
+
+<script type="text/javascript">
+
+	var timeout;
+	var menu;
+	var widthIsChanged;
+
+	function ResetTimeout(sender) {
+		menu = sender;
+		window.clearTimeout(timeout);
+		timeout = window.setTimeout(ForceReset, 525);
+	}
+
+	function AdjustWidth(sender) {
+		$('.rmHorizontal').each(function (i, obj) {
+			$(this).width($(this).width() + 1);
+		});
+	}
+
+	function ResetMenu(sender) {
+		menu = sender;
+		senderId = sender.get_id();
+
+		if ($('#' + sender.get_id()).length === 0) {
+			for (var i = 0; i < menu.get_allItems().length; i++) {
+				var item = menu.get_allItems()[i];
+				var currentUrl = window.location.toString();
+				//if (currentUrl.indexOf(item.get_navigateUrl()) !== -1 && item.get_parent() !== menu.get_openedItem()) {
+				if (currentUrl.endsWith(item.get_navigateUrl()) && item.get_parent() !== menu.get_openedItem()) {
+					highlightPath(item);
+					break;
+				}
+			}
+		}
+	}
+
+	function CheckClose(sender) {
+		menu = sender;
+
+		// Cancel the close event if menu is already open to current path and not being hovered
+		for (var i = 0; i < menu.get_allItems().length; i++) {
+			var item = menu.get_allItems()[i];
+			var currentUrl = window.location.toString();
+			if (currentUrl.match(item.get_navigateUrl()) !== null) {
+				if ($('#' + sender.get_id()).length === 0) {
+					if (item.get_parent() === menu.get_openedItem()) {
+						//item.set_cancel(true);
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	function highlightPath(item) {
+		item.set_cssClass("rmFocused");
+		//item.get_parent() is RadMenuItem, not RadMenu
+		if (item.get_parent() !== item.get_menu()) {
+			item.get_parent().open();
+			highlightPath(item.get_parent());
+		}
+	}
+
+	function ForceReset() {
+		window.clearTimeout(timeout);
+		ResetMenu(menu);
+	}
+
+	// Prevent form submit on enter
+	$(document).keypress(function (e) {
+		if (e.which === 13 && e.target.nodeName !== "TEXTAREA") {
+			return false;
+		}
+	});
+
+
+
+</script>
+</telerik:RadCodeBlock>
+
+<telerik:RadCodeBlock ID="rcbWarnNavigate" runat="server">
+<script type="text/javascript">
+
+	var unsaved = false;
+	var submitted = false;
+
+	// Warn when navigating away from page with form data changed
+	$(window).bind('beforeunload', function () {
+		if (unsaved && !submitted) {
+			var prm = Sys.WebForms.PageRequestManager.getInstance();
+			if (!prm._processingRequest) {
+				return "You have unsaved changes on this page. You will lose your changes if you leave this page now.";
+			}
+		}
+	});
+
+	$(document).submit(function (e) {
+		submitted = true;
+	});
+
+	// Monitor dynamic inputs
+	$(document).on('change', '.WarnIfChanged', function () { // triggers change in input fields with WarnOnChanged class
+		unsaved = true;
+	});
+	$(document).on('click', '.UseSubmitAction', function () { // sets submitted for custom submit buttons, etc.
+		submitted = true;
+	});
+
+
+
+</script>
+</telerik:RadCodeBlock>
+
+
+	<asp:ContentPlaceHolder ID="head" runat="server">
+	</asp:ContentPlaceHolder>
+</head>
+
+<body style="background-color: #FFFFFF;" >
+	<form id="form1" runat="server">
+		<%--<asp:ScriptManager ID="ScriptManager1" runat="server"  EnablePartialRendering="true"/>--%>
+		<telerik:RadScriptManager ID="ScriptManager1" runat="server"  EnablePartialRendering="true" EnableEmbeddedjQuery="false" />
+		<asp:HiddenField ID="hdCurrentActiveMenu" runat="server" />
+		<asp:HiddenField ID="hdCurrentActiveTab" runat="server" />
+		<asp:HiddenField ID="hdCurrentActiveSecondaryTab" runat="server" />
+
+		<div style="width:99%; margin: 5px;" >
+			<div style="float: left;" class="noprint">
+				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg"/>
+			</div>
+			<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
+				<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>
+			</div>
+			<div style="float:right; margin: 5px 10px 0 0;" class="noprint">
+				<asp:Panel id="Panel1" runat="server" style="float: right;">
+				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences"></asp:LinkButton>
+				<%-- <asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClick="DisplayUserPrefs" Title="Update my user preferences"></asp:LinkButton>--%>
+					&nbsp;&nbsp;
+					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirmAction('Log Out');" onClick="lbLogout_Click" Title="Logout"></asp:LinkButton>
+				</asp:Panel>
+				<br />
+				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;">
+					<asp:Label ID="lblActiveLocation" runat="server" CssClass="businessCard"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay_out" runat="server" CssClass="instructTextEmphasis" Visible="false"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay" runat="server" CssClass="businessCard" Visible="false" Text=" days without a lost time case"></asp:Label>
+						
+				</asp:Panel>
+			</div>
+
+			<div class="menuContainer noprint" >
+				<telerik:RadMenu ID="RadMenu1" runat="server" OnClientLoad="ResetMenu" OnClientItemOpened="AdjustWidth" OnClientMouseOver="ResetTimeout" OnClientMouseOut="ResetTimeout" OnClientItemClosing="CheckClose" />
+				<span id="pnlReferenceDocSelect" runat="server" style="float: right; margin-top: 5px; margin-right: 3px;">
+					<Ucl:DocList id="uclDocSelect" runat="server"/>
+				</span>
+			</div>
+			<div class="row hidden-xs">
+				<div class="subMenuContainer noprint" />
+			</div>
+		</div>
+		<%--<div style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;">--%>
+		<div class="masterFrame">
+				<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+				</asp:ContentPlaceHolder>
+				<asp:ContentPlaceHolder ID="ContentPlaceHolder_Body" runat="server">
+				</asp:ContentPlaceHolder>
+			<div class="container footer">
+				<div class="footerCopyright noprint">
+				© 2015 Metricsoft Inc.
+				</div>
+			</div>
+		</div>
+  
+	<telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Title="User Preferences"  Behaviors="Close">
+		<ContentTemplate>
+			<div>
+				<center>
+					<br />
+					<table width="99%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
+						<tr>
+							<td class="columnHeader" width="44%">
+								<asp:Label ID="lblUserPhone" runat="server" text="Contact Phone Number"></asp:Label>
+							</td>
+							<td class="tableDataAlt" width="1%">&nbsp;</td>
+							<td class="tableDataAlt" width="55%">
+								<asp:TextBox ID="tbUserPhone" size="20" maxlength="20" runat="server"></asp:TextBox>
+							</td>
+						</tr>
+						<tr>
+							<td class="columnHeader">
+								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
+							</td>
+							<td class="tableDataAlt">&nbsp;</td>
+							<td class="tableDataAlt">
+								<Ucl:PassEdit ID="uclPassEdit" runat="server" strCurrentControl="userPrefsEdit" />
+							</td>
+						</tr>
+					</table>
+					<br />
+					<asp:Button ID="btnUserPrefsCancel" runat="server" text="Cancel"  ToolTip="Close this window without saving" CssClass="buttonStd" OnClientClick="CloseUserPrefsWindow(); return false;" ></asp:Button>
+					<asp:Button ID="btnUserPrefsSave" runat="server" text="Save"  CssClass="buttonEmphasis" ToolTip="Save your user preferences"
+								  OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs"></asp:Button>
+				</center>
+			</div>
+		</ContentTemplate>
+	</telerik:RadWindow>
+
+		<!--#include file="/Include/Inc_Master_Fields.aspx"-->
+  </form>
+
+</body>
+</html>
