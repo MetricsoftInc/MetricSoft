@@ -1727,13 +1727,14 @@ namespace SQM.Website
 					{
 						decimal metricQty = this.InitCalc().Calc.Select(pd.FromDate, pd.ToDate, new decimal[1] { plantID }, new decimal[1] { measID }).Select(l => l.MEASURE_VALUE).Sum();
 						EHS_METRIC_HISTORY hist1 = this.Calc.Metrics.FirstOrDefault();
+
 						if (hist1 != null)
 						{
 							int gasSeq = 0;
 							foreach (string ghgCode in ghgCodes)
 							{
 								++gasSeq;
-								if (ghgCode.ToUpper() == "CO2" || meas.EFM_TYPE != "P")
+								if (ghgCode.ToUpper() == "CO2" || (meas.EFM_TYPE != "P" && meas.EFM_TYPE != "HW"))
 								{
 									decimal ghg = emc.LookupGHG(meas.EFM_TYPE, pd.FromDate.Year, ghgCode);
 									decimal gwp = emc.GetGWP(ghgCode, this.Calculation);

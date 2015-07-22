@@ -43,32 +43,32 @@ namespace SQM.Website
             return 0;
         }
 
-        public void rptCO2Report_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-            {
-                try
-                {
-                    PLANT plant = (PLANT)e.Item.DataItem;
+		public void rptCO2Report_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					PLANT plant = (PLANT)e.Item.DataItem;
 
-                    Label lbl = (Label)e.Item.FindControl("lblLocation");
-                    lbl.Text = plant.PLANT_NAME;
+					Label lbl = (Label)e.Item.FindControl("lblLocation");
+					lbl.Text = plant.PLANT_NAME;
 
-                    Repeater rpt = (Repeater)e.Item.FindControl("rptScope1Fuel");
-                    List<EHSModel.GHGResult> fuelList = LocalGHGResultList().ResultList.Where(l => l.Plant.PLANT_ID == plant.PLANT_ID).ToList();
-                    rpt.DataSource = fuelList.Where(l => l.EFMType != "P" && l.EFMType != "STEAM" &&  l.GasSeq == 1).Distinct().ToList();
-                    rpt.DataBind();
+					Repeater rpt = (Repeater)e.Item.FindControl("rptScope1Fuel");
+					List<EHSModel.GHGResult> fuelList = LocalGHGResultList().ResultList.Where(l => l.Plant.PLANT_ID == plant.PLANT_ID).ToList();
+					rpt.DataSource = fuelList.Where(l => l.EFMType != "P" && l.EFMType != "HW" && l.EFMType != "STEAM" && l.GasSeq == 1).Distinct().ToList();
+					rpt.DataBind();
 
-                    rpt = (Repeater)e.Item.FindControl("rptScope2Fuel");
-                    rpt.DataSource = fuelList.Where(l => l.EFMType == "P" || l.EFMType == "STEAM" && l.GasSeq == 1).Distinct().ToList();
-                    rpt.DataBind();
-                }
-                catch
-                {
-                    ;
-                }
-            }
-        }
+					rpt = (Repeater)e.Item.FindControl("rptScope2Fuel");
+					rpt.DataSource = fuelList.Where(l => l.EFMType == "P" || l.EFMType == "HW" || l.EFMType == "STEAM" && l.GasSeq == 1).Distinct().ToList();
+					rpt.DataBind();
+				}
+				catch
+				{
+					;
+				}
+			}
+		}
 
         public void rptScope1Fuel_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
