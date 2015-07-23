@@ -27,9 +27,9 @@ namespace SQM.Website
 		protected string UIcultureLanguage;
 		protected bool IsFullPagePostback = false;
 		 
-		// PowerOutage Custom Form Fields - general
 		protected int currentFormStep;
 		protected int totalFormSteps;
+		
 		// PowerOutage Custom Form Fields - speicific
 		protected string localDescription;
 		protected string productImpact;
@@ -279,9 +279,9 @@ namespace SQM.Website
 
 					CurrentFormStep = 1;
 
-					btnPrev.Visible = false;
+					//btnPrev.Visible = false;
 
-					lblFormStepNumber.Text = "Step " + CurrentFormStep.ToString() + " of " + totalFormSteps.ToString() + ":";
+					//lblFormStepNumber.Text = "Step " + CurrentFormStep.ToString() + " of " + totalFormSteps.ToString() + ":";
 
 					if (UIcultureLanguage != "en")
 						pnlLocalDesc.Visible = true;
@@ -319,7 +319,7 @@ namespace SQM.Website
 				//gvPreventLocationsList.DataBind();
 			}
 
-			SetFormVisibility(CurrentStep);
+			InitializeForm(CurrentStep);
 		}
 
 		//void SetControlValidators(bool activate, int currentStep)
@@ -355,7 +355,7 @@ namespace SQM.Website
 		//}
 
 
-		void SetFormVisibility(int currentStep)
+		void InitializeForm(int currentStep)
 		{
 
 			int displayStep = currentStep + 1;
@@ -595,8 +595,8 @@ namespace SQM.Website
 				Save(false);
 
 				lblResults.Text = "Incident information was successfully saved";
-				
-				SetFormVisibility(CurrentStep);
+
+				InitializeForm(CurrentStep);
 			}
 			else
 			{
@@ -611,7 +611,7 @@ namespace SQM.Website
 			lblResults.Text = "";
 			//SetControlValidators(false, CurrentStep);
 			CurrentStep = CurrentStep - 1;
-			SetFormVisibility(CurrentStep);
+			InitializeForm(CurrentStep);
 		}
 
 		protected void btnNext_Click(object sender, EventArgs e)
@@ -634,8 +634,9 @@ namespace SQM.Website
 				//Save(false);
 
 				CurrentStep = CurrentStep + 1;
-				//SetControlValidators(true, CurrentStep);
-				SetFormVisibility(CurrentStep);
+					
+					//SetControlValidators(true, CurrentStep);
+				InitializeForm(CurrentStep);
 				
 			}
 			else
@@ -748,9 +749,9 @@ namespace SQM.Website
 			else if (CurrentStep > 0)
 			{
 
-				string nextStepName = GetNextStepInfo(CurrentStep, incidentTypeId);
+				//string nextStepName = GetNextStepInfo(CurrentStep, incidentTypeId);
 
-				SetFormVisibility(CurrentStep);
+				InitializeForm(CurrentStep);
 
 
 
@@ -1162,22 +1163,22 @@ namespace SQM.Website
 		//}
 
 
-		protected String GetNextStepInfo(decimal currentStep, decimal incidentTypeId)
-		{
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+		//protected String GetNextStepInfo(decimal currentStep, decimal incidentTypeId)
+		//{
+		//	formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
 
-			string nextFormStepName = null;
+		//	string nextFormStepName = null;
 
-			int i = Convert.ToInt32(currentStep);
+		//	int i = Convert.ToInt32(currentStep);
 
-			if (i < formSteps.Count())
-			{
-				nextFormStepName = formSteps[i].StepFormName;
-				CurrentFormStep = formSteps[i].StepNumber;
-			}
+		//	if (i < formSteps.Count())
+		//	{
+		//		nextFormStepName = formSteps[i].StepFormName;
+		//		CurrentFormStep = formSteps[i].StepNumber;
+		//	}
 
-			return nextFormStepName;
-		}
+		//	return nextFormStepName;
+		//}
 
 
 		protected void GoToNextStep(decimal incidentId)
