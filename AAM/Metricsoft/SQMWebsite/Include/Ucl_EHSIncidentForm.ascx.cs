@@ -39,10 +39,13 @@ namespace SQM.Website
 
 		protected Ucl_RadAsyncUpload uploader;
 		protected Ucl_PreventionLocation preventionLocationForm;
-		protected Ucl_INCFORM_PowerOutage powerOutageForm;
 		protected RadDropDownList rddlLocation;
 		protected RadDropDownList rddlFilteredUsers;
 
+		// Incident Custom Forms:
+		protected Ucl_INCFORM_PowerOutage powerOutageForm;
+		
+		
 		// Special answers used in INCIDENT table
 		string incidentDescription = "";
 		protected DateTime incidentDate;
@@ -229,7 +232,7 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
-			//string typeText = SelectedTypeText;
+			string typeText = SelectedTypeText;
 			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 			pnlForm.Controls.Clear();
@@ -725,15 +728,23 @@ namespace SQM.Website
 		public void BuildCustomForm(decimal typeId)
 		{
 
-			switch (Convert.ToInt32(typeId))
+			string baseCustomForm = EHSIncidentMgr.SelectBaseFormNameByIncidentTypeId(typeId);
+
+			switch (baseCustomForm)
 			{
 
-				case 2: //PowerOutage Form
+				case "INCFORM_POWEROUTAGE": 
+
 
 					powerOutageForm = (Ucl_INCFORM_PowerOutage)LoadControl("~/Include/Ucl_INCFORM_PowerOutage.ascx");
 					powerOutageForm.ID = "pof1";
 					powerOutageForm.IsEditContext = IsEditContext;
 					powerOutageForm.IncidentId = EditIncidentId;
+					powerOutageForm.EditIncidentId = EditIncidentId;
+					powerOutageForm.SelectedTypeId = SelectedTypeId;
+					powerOutageForm.SelectedTypeText = SelectedTypeText;
+					//powerOutageForm.IsNewIncident = true;
+					
 
 					//preventionLocationForm.BuildCaseComboBox();
 					//if (IsEditContext == true)

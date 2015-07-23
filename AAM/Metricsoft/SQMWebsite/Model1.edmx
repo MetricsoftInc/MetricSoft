@@ -187,6 +187,27 @@
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
           <Property Name="SORT_ORDER" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="AUDIT_TYPE">
+          <Key>
+            <PropertyRef Name="AUDIT_TYPE_ID" />
+          </Key>
+          <Property Name="AUDIT_TYPE_ID" Type="numeric" Precision="35" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="nvarchar" MaxLength="100" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="DEFAULT_8D" Type="bit" Nullable="false" />
+          <Property Name="ADMIN_ONLY" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AUDIT_TYPE_TOPIC_QUESTION">
+          <Key>
+            <PropertyRef Name="AUDIT_TYPE_ID" />
+            <PropertyRef Name="AUDIT_TOPIC_ID" />
+            <PropertyRef Name="AUDIT_QUESTION_ID" />
+          </Key>
+          <Property Name="AUDIT_TYPE_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="AUDIT_TOPIC_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="AUDIT_QUESTION_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="SORT_ORDER" Type="smallint" />
+        </EntityType>
         <EntityType Name="BUSINESS_ORG">
           <Key>
             <PropertyRef Name="BUS_ORG_ID" />
@@ -683,6 +704,16 @@
           <Property Name="SHIFT" Type="nvarchar" MaxLength="4000" />
           <Property Name="PRODUCTION_IMPACT" Type="nvarchar" MaxLength="4000" />
         </EntityType>
+        <EntityType Name="INCFORM_TYPE_CONTROL">
+          <Key>
+            <PropertyRef Name="INCIDENT_TYPE_ID" />
+            <PropertyRef Name="STEP_NUMBER" />
+          </Key>
+          <Property Name="INCIDENT_TYPE_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="STEP_NUMBER" Type="int" Nullable="false" />
+          <Property Name="STEP_FORM" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="STEP_HEADING_TEXT" Type="nchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="INCIDENT">
           <Key>
             <PropertyRef Name="INCIDENT_ID" />
@@ -712,6 +743,7 @@
           <Property Name="CLOSE_DATE_DATA_COMPLETE" Type="datetime" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -1560,6 +1592,12 @@
           <Property Name="REFERENCE_DATA" Type="nvarchar" MaxLength="400" />
           <Property Name="STATUS" Type="varchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="root">
+          <Key>
+            <PropertyRef Name="root" />
+          </Key>
+          <Property Name="root" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="SETTINGS">
           <Key>
             <PropertyRef Name="SETTING_GROUP" />
@@ -1736,6 +1774,38 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
           <Property Name="DESCRIPTION_SHORT" Type="nvarchar" MaxLength="50" />
           <Property Name="STATUS" Type="varchar" MaxLength="4" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_MetricDataByPlant">
+          <Key>
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_MONTH" />
+            <PropertyRef Name="EFF_FROM_DT" />
+            <PropertyRef Name="EFF_TO_DT" />
+            <PropertyRef Name="MEASURE_VALUE" />
+            <PropertyRef Name="PLANT_ID" />
+            <PropertyRef Name="MEASURE_CD" />
+            <PropertyRef Name="MEASURE_NAME" />
+            <PropertyRef Name="MEASURE_ID" />
+          </Key>
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_MONTH" Type="int" Nullable="false" />
+          <Property Name="EFF_FROM_DT" Type="date" Nullable="false" />
+          <Property Name="EFF_TO_DT" Type="date" Nullable="false" />
+          <Property Name="MEASURE_VALUE" Type="numeric" Precision="20" Scale="5" Nullable="false" />
+          <Property Name="UOM" Type="numeric" Precision="35" Scale="0" />
+          <Property Name="PLANT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="PLANT_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="ULT_DUNS_CODE" Type="varchar" MaxLength="100" />
+          <Property Name="DUNS_CODE" Type="varchar" MaxLength="100" />
+          <Property Name="MEASURE_CD" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MEASURE_NAME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UOM_CD" Type="nvarchar" MaxLength="50" />
+          <Property Name="UOM_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="MEASURE_COST" Type="numeric" Precision="20" Scale="2" />
+          <Property Name="CURRENCY_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="MEASURE_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+        </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_COMPANY">
           <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="0..1" />
           <End Role="ADDRESS" Type="Self.ADDRESS" Multiplicity="*" />
@@ -1817,6 +1887,18 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
             </Principal>
             <Dependent Role="AUDIT_QUESTION_CONTROL">
               <PropertyRef Name="ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE">
+          <End Role="AUDIT_TYPE" Type="Self.AUDIT_TYPE" Multiplicity="1" />
+          <End Role="AUDIT_QUESTION_CONTROL" Type="Self.AUDIT_QUESTION_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_TYPE">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="AUDIT_QUESTION_CONTROL">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2456,6 +2538,18 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
               <PropertyRef Name="INCIDENT_TYPE_ID" />
             </Principal>
             <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+          <End Role="INCIDENT_TYPE" Type="Self.INCIDENT_TYPE" Multiplicity="1" />
+          <End Role="INCFORM_TYPE_CONTROL" Type="Self.INCFORM_TYPE_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_TYPE_CONTROL">
               <PropertyRef Name="INCIDENT_TYPE_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3189,6 +3283,8 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
           <EntitySet Name="AUDIT_QUESTION_CONTROL_ACTION" EntityType="Self.AUDIT_QUESTION_CONTROL_ACTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_QUESTION_TYPE" EntityType="Self.AUDIT_QUESTION_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_TOPIC" EntityType="Self.AUDIT_TOPIC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUDIT_TYPE" EntityType="Self.AUDIT_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUDIT_TYPE_TOPIC_QUESTION" EntityType="Self.AUDIT_TYPE_TOPIC_QUESTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BUSINESS_ORG" EntityType="Self.BUSINESS_ORG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BUSINESS_ORG_STD" EntityType="Self.BUSINESS_ORG_STD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMPANY" EntityType="Self.COMPANY" Schema="dbo" store:Type="Tables" />
@@ -3218,6 +3314,7 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
           <EntitySet Name="GHG_FACTOR" EntityType="Self.GHG_FACTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GWP_FACTOR" EntityType="Self.GWP_FACTOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_POWEROUTAGE" EntityType="Self.INCFORM_POWEROUTAGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="Self.INCFORM_TYPE_CONTROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT" EntityType="Self.INCIDENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_ANSWER" EntityType="Self.INCIDENT_ANSWER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_QUESTION" EntityType="Self.INCIDENT_QUESTION" Schema="dbo" store:Type="Tables" />
@@ -3272,6 +3369,7 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
           <EntitySet Name="QI_OCCUR_NC" EntityType="Self.QI_OCCUR_NC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RECEIPT" EntityType="Self.RECEIPT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESPONSE" EntityType="Self.RESPONSE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="root" EntityType="Self.root" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SETTINGS" EntityType="Self.SETTINGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SQM_ACCESS" EntityType="Self.SQM_ACCESS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SQM_MEASURE" EntityType="Self.SQM_MEASURE" Schema="dbo" store:Type="Tables" />
@@ -3291,6 +3389,27 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
 [UOM_XREF].[CONVERSION] AS [CONVERSION], 
 [UOM_XREF].[OPERATOR] AS [OPERATOR]
 FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_MetricDataByPlant" EntityType="Self.vw_MetricDataByPlant" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[vw_MetricDataByPlant].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+[vw_MetricDataByPlant].[PERIOD_MONTH] AS [PERIOD_MONTH], 
+[vw_MetricDataByPlant].[EFF_FROM_DT] AS [EFF_FROM_DT], 
+[vw_MetricDataByPlant].[EFF_TO_DT] AS [EFF_TO_DT], 
+[vw_MetricDataByPlant].[MEASURE_VALUE] AS [MEASURE_VALUE], 
+[vw_MetricDataByPlant].[UOM] AS [UOM], 
+[vw_MetricDataByPlant].[PLANT_ID] AS [PLANT_ID], 
+[vw_MetricDataByPlant].[PLANT_NAME] AS [PLANT_NAME], 
+[vw_MetricDataByPlant].[ULT_DUNS_CODE] AS [ULT_DUNS_CODE], 
+[vw_MetricDataByPlant].[DUNS_CODE] AS [DUNS_CODE], 
+[vw_MetricDataByPlant].[MEASURE_CD] AS [MEASURE_CD], 
+[vw_MetricDataByPlant].[MEASURE_NAME] AS [MEASURE_NAME], 
+[vw_MetricDataByPlant].[UOM_CD] AS [UOM_CD], 
+[vw_MetricDataByPlant].[UOM_NAME] AS [UOM_NAME], 
+[vw_MetricDataByPlant].[MEASURE_COST] AS [MEASURE_COST], 
+[vw_MetricDataByPlant].[CURRENCY_CODE] AS [CURRENCY_CODE], 
+[vw_MetricDataByPlant].[MEASURE_ID] AS [MEASURE_ID]
+FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_ADDRESS_REFERENCE_COMPANY" Association="Self.FK_ADDRESS_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -3318,6 +3437,10 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           </AssociationSet>
           <AssociationSet Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS" Association="Self.FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS">
             <End Role="AUDIT_QUESTION_CONTROL_ACTION" EntitySet="AUDIT_QUESTION_CONTROL_ACTION" />
+            <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" Association="Self.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE">
+            <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
             <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
           </AssociationSet>
           <AssociationSet Name="FK_BUSINESS_ORG_STD_BUSINESS_ORG" Association="Self.FK_BUSINESS_ORG_STD_BUSINESS_ORG">
@@ -3531,6 +3654,10 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" Association="Self.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE">
             <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
             <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" Association="Self.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCFORM_TYPE_CONTROL" EntitySet="INCFORM_TYPE_CONTROL" />
           </AssociationSet>
           <AssociationSet Name="FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY" Association="Self.FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -4399,6 +4526,19 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <AssociationSet Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS" Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS">
             <End Role="AUDIT_QUESTION_CONTROL_ACTION" EntitySet="AUDIT_QUESTION_CONTROL_ACTION" />
             <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
+          </AssociationSet>
+          <EntitySet Name="AUDIT_TYPE" EntityType="PSsqmModel.AUDIT_TYPE" />
+          <EntitySet Name="AUDIT_TYPE_TOPIC_QUESTION" EntityType="PSsqmModel.AUDIT_TYPE_TOPIC_QUESTION" />
+          <EntitySet Name="root" EntityType="PSsqmModel.root" />
+          <EntitySet Name="vw_MetricDataByPlant" EntityType="PSsqmModel.vw_MetricDataByPlant" />
+          <AssociationSet Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE">
+            <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
+            <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" />
+          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCFORM_TYPE_CONTROL" EntitySet="INCFORM_TYPE_CONTROL" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -7131,6 +7271,7 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCFORM_POWEROUTAGE" Relationship="PSsqmModel.FK_INCIDENT_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_POWEROUTAGE" />
+          <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -7226,6 +7367,7 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <NavigationProperty Name="INCIDENT_TYPE_COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY" />
           <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
           <Property Name="USE_CUSTOM_FORM" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="INCFORM_TYPE_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCIDENT_TYPE" ToRole="INCFORM_TYPE_CONTROL" />
         </EntityType>
         <EntityType Name="INCIDENT_TYPE_COMPANY">
           <Key>
@@ -7878,6 +8020,7 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <Property Name="ACTION" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PROCESS_ORDER" Type="Int16" Nullable="false" />
           <NavigationProperty Name="AUDIT_QUESTION_CONTROL_ACTION" Relationship="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS" FromRole="AUDIT_QUESTION_CONTROL" ToRole="AUDIT_QUESTION_CONTROL_ACTION" />
+          <NavigationProperty Name="AUDIT_TYPE" Relationship="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" FromRole="AUDIT_QUESTION_CONTROL" ToRole="AUDIT_TYPE" />
         </EntityType>
         <EntityType Name="AUDIT_QUESTION_CONTROL_ACTION">
           <Key>
@@ -7938,6 +8081,99 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
             </Principal>
             <Dependent Role="AUDIT_QUESTION_CONTROL">
               <PropertyRef Name="ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AUDIT_TYPE">
+          <Key>
+            <PropertyRef Name="AUDIT_TYPE_ID" />
+          </Key>
+          <Property Name="AUDIT_TYPE_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DEFAULT_8D" Type="Boolean" Nullable="false" />
+          <Property Name="ADMIN_ONLY" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AUDIT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" FromRole="AUDIT_TYPE" ToRole="AUDIT_QUESTION_CONTROL" />
+        </EntityType>
+        <EntityType Name="AUDIT_TYPE_TOPIC_QUESTION">
+          <Key>
+            <PropertyRef Name="AUDIT_TYPE_ID" />
+            <PropertyRef Name="AUDIT_TOPIC_ID" />
+            <PropertyRef Name="AUDIT_QUESTION_ID" />
+          </Key>
+          <Property Name="AUDIT_TYPE_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="AUDIT_TOPIC_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="AUDIT_QUESTION_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="SORT_ORDER" Type="Int16" />
+        </EntityType>
+        <EntityType Name="root">
+          <Key>
+            <PropertyRef Name="root1" />
+          </Key>
+          <Property Name="root1" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_MetricDataByPlant">
+          <Key>
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_MONTH" />
+            <PropertyRef Name="EFF_FROM_DT" />
+            <PropertyRef Name="EFF_TO_DT" />
+            <PropertyRef Name="MEASURE_VALUE" />
+            <PropertyRef Name="PLANT_ID" />
+            <PropertyRef Name="MEASURE_CD" />
+            <PropertyRef Name="MEASURE_NAME" />
+            <PropertyRef Name="MEASURE_ID" />
+          </Key>
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_MONTH" Type="Int32" Nullable="false" />
+          <Property Name="EFF_FROM_DT" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EFF_TO_DT" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MEASURE_VALUE" Type="Decimal" Nullable="false" Precision="20" Scale="5" />
+          <Property Name="UOM" Type="Decimal" Precision="35" Scale="0" />
+          <Property Name="PLANT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="PLANT_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ULT_DUNS_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DUNS_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MEASURE_CD" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MEASURE_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UOM_CD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UOM_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MEASURE_COST" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="CURRENCY_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MEASURE_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+        </EntityType>
+        <Association Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE">
+          <End Type="PSsqmModel.AUDIT_TYPE" Role="AUDIT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.AUDIT_QUESTION_CONTROL" Role="AUDIT_QUESTION_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_TYPE">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="AUDIT_QUESTION_CONTROL">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_TYPE_CONTROL">
+          <Key>
+            <PropertyRef Name="INCIDENT_TYPE_ID" />
+            <PropertyRef Name="STEP_NUMBER" />
+          </Key>
+          <Property Name="INCIDENT_TYPE_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="STEP_NUMBER" Type="Int32" Nullable="false" />
+          <Property Name="STEP_FORM" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT_TYPE" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCFORM_TYPE_CONTROL" ToRole="INCIDENT_TYPE" />
+          <Property Name="STEP_HEADING_TEXT" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_TYPE_CONTROL" Role="INCFORM_TYPE_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_TYPE_CONTROL">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9328,6 +9564,7 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           <EntitySetMapping Name="INCIDENT">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT">
               <MappingFragment StoreEntitySet="INCIDENT">
+                <ScalarProperty Name="INCFORM_LAST_STEP_COMPLETED" ColumnName="INCFORM_LAST_STEP_COMPLETED" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
                 <ScalarProperty Name="CLOSE_DATE_DATA_COMPLETE" ColumnName="CLOSE_DATE_DATA_COMPLETE" />
@@ -9731,6 +9968,67 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AUDIT_TYPE">
+            <EntityTypeMapping TypeName="PSsqmModel.AUDIT_TYPE">
+              <MappingFragment StoreEntitySet="AUDIT_TYPE">
+                <ScalarProperty Name="ADMIN_ONLY" ColumnName="ADMIN_ONLY" />
+                <ScalarProperty Name="DEFAULT_8D" ColumnName="DEFAULT_8D" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="AUDIT_TYPE_ID" ColumnName="AUDIT_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AUDIT_TYPE_TOPIC_QUESTION">
+            <EntityTypeMapping TypeName="PSsqmModel.AUDIT_TYPE_TOPIC_QUESTION">
+              <MappingFragment StoreEntitySet="AUDIT_TYPE_TOPIC_QUESTION">
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="AUDIT_QUESTION_ID" ColumnName="AUDIT_QUESTION_ID" />
+                <ScalarProperty Name="AUDIT_TOPIC_ID" ColumnName="AUDIT_TOPIC_ID" />
+                <ScalarProperty Name="AUDIT_TYPE_ID" ColumnName="AUDIT_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="root">
+            <EntityTypeMapping TypeName="PSsqmModel.root">
+              <MappingFragment StoreEntitySet="root">
+                <ScalarProperty Name="root1" ColumnName="root" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_MetricDataByPlant">
+            <EntityTypeMapping TypeName="PSsqmModel.vw_MetricDataByPlant">
+              <MappingFragment StoreEntitySet="vw_MetricDataByPlant">
+                <ScalarProperty Name="MEASURE_ID" ColumnName="MEASURE_ID" />
+                <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
+                <ScalarProperty Name="MEASURE_COST" ColumnName="MEASURE_COST" />
+                <ScalarProperty Name="UOM_NAME" ColumnName="UOM_NAME" />
+                <ScalarProperty Name="UOM_CD" ColumnName="UOM_CD" />
+                <ScalarProperty Name="MEASURE_NAME" ColumnName="MEASURE_NAME" />
+                <ScalarProperty Name="MEASURE_CD" ColumnName="MEASURE_CD" />
+                <ScalarProperty Name="DUNS_CODE" ColumnName="DUNS_CODE" />
+                <ScalarProperty Name="ULT_DUNS_CODE" ColumnName="ULT_DUNS_CODE" />
+                <ScalarProperty Name="PLANT_NAME" ColumnName="PLANT_NAME" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="UOM" ColumnName="UOM" />
+                <ScalarProperty Name="MEASURE_VALUE" ColumnName="MEASURE_VALUE" />
+                <ScalarProperty Name="EFF_TO_DT" ColumnName="EFF_TO_DT" />
+                <ScalarProperty Name="EFF_FROM_DT" ColumnName="EFF_FROM_DT" />
+                <ScalarProperty Name="PERIOD_MONTH" ColumnName="PERIOD_MONTH" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_TYPE_CONTROL">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_TYPE_CONTROL">
+              <MappingFragment StoreEntitySet="INCFORM_TYPE_CONTROL">
+                <ScalarProperty Name="STEP_HEADING_TEXT" ColumnName="STEP_HEADING_TEXT" />
+                <ScalarProperty Name="STEP_FORM" ColumnName="STEP_FORM" />
+                <ScalarProperty Name="STEP_NUMBER" ColumnName="STEP_NUMBER" />
+                <ScalarProperty Name="INCIDENT_TYPE_ID" ColumnName="INCIDENT_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9992,6 +10290,13 @@ FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_ANSWER_AUDIT" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS" />
+        <EntityTypeShape EntityType="PSsqmModel.AUDIT_TYPE" Width="1.5" PointX="13.25" PointY="31.5" />
+        <EntityTypeShape EntityType="PSsqmModel.AUDIT_TYPE_TOPIC_QUESTION" Width="1.5" PointX="18" PointY="3.75" />
+        <EntityTypeShape EntityType="PSsqmModel.root" Width="1.5" PointX="5" PointY="0.75" />
+        <EntityTypeShape EntityType="PSsqmModel.vw_MetricDataByPlant" Width="1.5" PointX="18" PointY="6.75" />
+        <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" Width="1.5" PointX="8.375" PointY="38.25" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" />
         </Diagram>
     </Diagrams>
   </Designer>

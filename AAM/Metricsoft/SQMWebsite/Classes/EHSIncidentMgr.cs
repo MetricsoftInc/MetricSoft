@@ -39,6 +39,14 @@ namespace SQM.Website
 		public DateTime CommentDate { get; set; }
 	}
 
+	public class EHSFormControlStep
+	{
+		public decimal IncidentId { get; set; }
+		public int StepNumber { get; set; }
+		public string StepFormName { get; set; }
+		public string StepHeadingText { get; set; }
+	}
+
 	public class EHSIncidentData
 	{
 		public INCIDENT Incident
@@ -200,6 +208,44 @@ namespace SQM.Website
 				problemCaseId = 0;
 			return (decimal)problemCaseId;
 		}
+
+		public static string SelectBaseFormNameByIncidentTypeId(decimal incidentTypeId)
+		{
+			string baseFormName = "";
+			var entities = new PSsqmEntities();
+			baseFormName = (from itc in entities.INCFORM_TYPE_CONTROL 
+							where itc.INCIDENT_TYPE_ID == incidentTypeId && itc.STEP_NUMBER == 1
+							select itc.STEP_FORM).FirstOrDefault(); 
+			if (baseFormName == null)
+				baseFormName = "";
+			return baseFormName;
+		}
+
+
+		public static List<EHSFormControlStep> GetStepsForincidentTypeId(decimal incidentTypeId)
+		{
+			var formStepList = new List<EHSFormControlStep>();
+
+			try
+			{
+				var entities = new PSsqmEntities();
+				formStepList = (from itc in entities.INCFORM_TYPE_CONTROL
+								where itc.INCIDENT_TYPE_ID == incidentTypeId
+								select new EHSFormControlStep()
+								{	IncidentId = itc.INCIDENT_TYPE_ID,
+									StepNumber = itc.STEP_NUMBER,
+									StepFormName = itc.STEP_FORM,
+									StepHeadingText = itc.STEP_HEADING_TEXT
+								}).ToList();
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return formStepList;
+		}
+
 
 		public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId)
 		{
@@ -953,6 +999,14 @@ namespace SQM.Website
 						  select p).FirstOrDefault();
 			return person.LAST_NAME + ", " + person.FIRST_NAME;
 		}
+
+		public static INCFORM_POWEROUTAGE SelectPowerOurageDetailsById(PSsqmEntities entities, decimal incidentId)
+		{
+			return (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
+		}
+
+
+
 	}
 
 	public class EHSMetaData

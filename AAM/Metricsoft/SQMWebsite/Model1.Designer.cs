@@ -148,6 +148,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_ANSWER_AUDIT", "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT), "AUDIT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
 
 #endregion
 
@@ -1958,6 +1960,86 @@ namespace SQM.Website
             }
         }
         private ObjectSet<AUDIT_TOPIC> _AUDIT_TOPIC;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_TYPE> AUDIT_TYPE
+        {
+            get
+            {
+                if ((_AUDIT_TYPE == null))
+                {
+                    _AUDIT_TYPE = base.CreateObjectSet<AUDIT_TYPE>("AUDIT_TYPE");
+                }
+                return _AUDIT_TYPE;
+            }
+        }
+        private ObjectSet<AUDIT_TYPE> _AUDIT_TYPE;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_TYPE_TOPIC_QUESTION> AUDIT_TYPE_TOPIC_QUESTION
+        {
+            get
+            {
+                if ((_AUDIT_TYPE_TOPIC_QUESTION == null))
+                {
+                    _AUDIT_TYPE_TOPIC_QUESTION = base.CreateObjectSet<AUDIT_TYPE_TOPIC_QUESTION>("AUDIT_TYPE_TOPIC_QUESTION");
+                }
+                return _AUDIT_TYPE_TOPIC_QUESTION;
+            }
+        }
+        private ObjectSet<AUDIT_TYPE_TOPIC_QUESTION> _AUDIT_TYPE_TOPIC_QUESTION;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<root> root
+        {
+            get
+            {
+                if ((_root == null))
+                {
+                    _root = base.CreateObjectSet<root>("root");
+                }
+                return _root;
+            }
+        }
+        private ObjectSet<root> _root;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<vw_MetricDataByPlant> vw_MetricDataByPlant
+        {
+            get
+            {
+                if ((_vw_MetricDataByPlant == null))
+                {
+                    _vw_MetricDataByPlant = base.CreateObjectSet<vw_MetricDataByPlant>("vw_MetricDataByPlant");
+                }
+                return _vw_MetricDataByPlant;
+            }
+        }
+        private ObjectSet<vw_MetricDataByPlant> _vw_MetricDataByPlant;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
+        {
+            get
+            {
+                if ((_INCFORM_TYPE_CONTROL == null))
+                {
+                    _INCFORM_TYPE_CONTROL = base.CreateObjectSet<INCFORM_TYPE_CONTROL>("INCFORM_TYPE_CONTROL");
+                }
+                return _INCFORM_TYPE_CONTROL;
+            }
+        }
+        private ObjectSet<INCFORM_TYPE_CONTROL> _INCFORM_TYPE_CONTROL;
 
         #endregion
 
@@ -2841,6 +2923,46 @@ namespace SQM.Website
         public void AddToAUDIT_TOPIC(AUDIT_TOPIC aUDIT_TOPIC)
         {
             base.AddObject("AUDIT_TOPIC", aUDIT_TOPIC);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_TYPE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_TYPE(AUDIT_TYPE aUDIT_TYPE)
+        {
+            base.AddObject("AUDIT_TYPE", aUDIT_TYPE);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_TYPE_TOPIC_QUESTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_TYPE_TOPIC_QUESTION(AUDIT_TYPE_TOPIC_QUESTION aUDIT_TYPE_TOPIC_QUESTION)
+        {
+            base.AddObject("AUDIT_TYPE_TOPIC_QUESTION", aUDIT_TYPE_TOPIC_QUESTION);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the root EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToroot(root root)
+        {
+            base.AddObject("root", root);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the vw_MetricDataByPlant EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTovw_MetricDataByPlant(vw_MetricDataByPlant vw_MetricDataByPlant)
+        {
+            base.AddObject("vw_MetricDataByPlant", vw_MetricDataByPlant);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_TYPE_CONTROL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_TYPE_CONTROL(INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL)
+        {
+            base.AddObject("INCFORM_TYPE_CONTROL", iNCFORM_TYPE_CONTROL);
         }
 
         #endregion
@@ -6013,6 +6135,44 @@ namespace SQM.Website
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE")]
+        public AUDIT_TYPE AUDIT_TYPE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AUDIT_TYPE> AUDIT_TYPEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -6363,6 +6523,328 @@ namespace SQM.Website
         }
         private global::System.Int16 _SORT_ORDER;
         partial void OnSORT_ORDERChanging(global::System.Int16 value);
+        partial void OnSORT_ORDERChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="AUDIT_TYPE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AUDIT_TYPE : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AUDIT_TYPE object.
+        /// </summary>
+        /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
+        /// <param name="dEFAULT_8D">Initial value of the DEFAULT_8D property.</param>
+        /// <param name="aDMIN_ONLY">Initial value of the ADMIN_ONLY property.</param>
+        public static AUDIT_TYPE CreateAUDIT_TYPE(global::System.Decimal aUDIT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY)
+        {
+            AUDIT_TYPE aUDIT_TYPE = new AUDIT_TYPE();
+            aUDIT_TYPE.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
+            aUDIT_TYPE.DEFAULT_8D = dEFAULT_8D;
+            aUDIT_TYPE.ADMIN_ONLY = aDMIN_ONLY;
+            return aUDIT_TYPE;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TYPE_ID
+        {
+            get
+            {
+                return _AUDIT_TYPE_ID;
+            }
+            set
+            {
+                if (_AUDIT_TYPE_ID != value)
+                {
+                    OnAUDIT_TYPE_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_TYPE_ID");
+                    _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_TYPE_ID");
+                    OnAUDIT_TYPE_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_TYPE_ID;
+        partial void OnAUDIT_TYPE_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TITLE
+        {
+            get
+            {
+                return _TITLE;
+            }
+            set
+            {
+                OnTITLEChanging(value);
+                ReportPropertyChanging("TITLE");
+                _TITLE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TITLE");
+                OnTITLEChanged();
+            }
+        }
+        private global::System.String _TITLE;
+        partial void OnTITLEChanging(global::System.String value);
+        partial void OnTITLEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DESCRIPTION
+        {
+            get
+            {
+                return _DESCRIPTION;
+            }
+            set
+            {
+                OnDESCRIPTIONChanging(value);
+                ReportPropertyChanging("DESCRIPTION");
+                _DESCRIPTION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DESCRIPTION");
+                OnDESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _DESCRIPTION;
+        partial void OnDESCRIPTIONChanging(global::System.String value);
+        partial void OnDESCRIPTIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean DEFAULT_8D
+        {
+            get
+            {
+                return _DEFAULT_8D;
+            }
+            set
+            {
+                OnDEFAULT_8DChanging(value);
+                ReportPropertyChanging("DEFAULT_8D");
+                _DEFAULT_8D = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DEFAULT_8D");
+                OnDEFAULT_8DChanged();
+            }
+        }
+        private global::System.Boolean _DEFAULT_8D;
+        partial void OnDEFAULT_8DChanging(global::System.Boolean value);
+        partial void OnDEFAULT_8DChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ADMIN_ONLY
+        {
+            get
+            {
+                return _ADMIN_ONLY;
+            }
+            set
+            {
+                OnADMIN_ONLYChanging(value);
+                ReportPropertyChanging("ADMIN_ONLY");
+                _ADMIN_ONLY = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ADMIN_ONLY");
+                OnADMIN_ONLYChanged();
+            }
+        }
+        private global::System.Boolean _ADMIN_ONLY;
+        partial void OnADMIN_ONLYChanging(global::System.Boolean value);
+        partial void OnADMIN_ONLYChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_QUESTION_CONTROL")]
+        public EntityCollection<AUDIT_QUESTION_CONTROL> AUDIT_QUESTION_CONTROL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AUDIT_QUESTION_CONTROL>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_QUESTION_CONTROL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AUDIT_QUESTION_CONTROL>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_QUESTION_CONTROL", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="AUDIT_TYPE_TOPIC_QUESTION")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AUDIT_TYPE_TOPIC_QUESTION : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AUDIT_TYPE_TOPIC_QUESTION object.
+        /// </summary>
+        /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
+        /// <param name="aUDIT_TOPIC_ID">Initial value of the AUDIT_TOPIC_ID property.</param>
+        /// <param name="aUDIT_QUESTION_ID">Initial value of the AUDIT_QUESTION_ID property.</param>
+        public static AUDIT_TYPE_TOPIC_QUESTION CreateAUDIT_TYPE_TOPIC_QUESTION(global::System.Decimal aUDIT_TYPE_ID, global::System.Decimal aUDIT_TOPIC_ID, global::System.Decimal aUDIT_QUESTION_ID)
+        {
+            AUDIT_TYPE_TOPIC_QUESTION aUDIT_TYPE_TOPIC_QUESTION = new AUDIT_TYPE_TOPIC_QUESTION();
+            aUDIT_TYPE_TOPIC_QUESTION.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
+            aUDIT_TYPE_TOPIC_QUESTION.AUDIT_TOPIC_ID = aUDIT_TOPIC_ID;
+            aUDIT_TYPE_TOPIC_QUESTION.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
+            return aUDIT_TYPE_TOPIC_QUESTION;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TYPE_ID
+        {
+            get
+            {
+                return _AUDIT_TYPE_ID;
+            }
+            set
+            {
+                if (_AUDIT_TYPE_ID != value)
+                {
+                    OnAUDIT_TYPE_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_TYPE_ID");
+                    _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_TYPE_ID");
+                    OnAUDIT_TYPE_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_TYPE_ID;
+        partial void OnAUDIT_TYPE_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TOPIC_ID
+        {
+            get
+            {
+                return _AUDIT_TOPIC_ID;
+            }
+            set
+            {
+                if (_AUDIT_TOPIC_ID != value)
+                {
+                    OnAUDIT_TOPIC_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_TOPIC_ID");
+                    _AUDIT_TOPIC_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_TOPIC_ID");
+                    OnAUDIT_TOPIC_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_TOPIC_ID;
+        partial void OnAUDIT_TOPIC_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TOPIC_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_QUESTION_ID
+        {
+            get
+            {
+                return _AUDIT_QUESTION_ID;
+            }
+            set
+            {
+                if (_AUDIT_QUESTION_ID != value)
+                {
+                    OnAUDIT_QUESTION_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_QUESTION_ID");
+                    _AUDIT_QUESTION_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_QUESTION_ID");
+                    OnAUDIT_QUESTION_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_QUESTION_ID;
+        partial void OnAUDIT_QUESTION_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_QUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> SORT_ORDER
+        {
+            get
+            {
+                return _SORT_ORDER;
+            }
+            set
+            {
+                OnSORT_ORDERChanging(value);
+                ReportPropertyChanging("SORT_ORDER");
+                _SORT_ORDER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORT_ORDER");
+                OnSORT_ORDERChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _SORT_ORDER;
+        partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
         partial void OnSORT_ORDERChanged();
 
         #endregion
@@ -18441,6 +18923,184 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_TYPE_CONTROL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_TYPE_CONTROL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_TYPE_CONTROL object.
+        /// </summary>
+        /// <param name="iNCIDENT_TYPE_ID">Initial value of the INCIDENT_TYPE_ID property.</param>
+        /// <param name="sTEP_NUMBER">Initial value of the STEP_NUMBER property.</param>
+        /// <param name="sTEP_FORM">Initial value of the STEP_FORM property.</param>
+        public static INCFORM_TYPE_CONTROL CreateINCFORM_TYPE_CONTROL(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Int32 sTEP_NUMBER, global::System.String sTEP_FORM)
+        {
+            INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL = new INCFORM_TYPE_CONTROL();
+            iNCFORM_TYPE_CONTROL.INCIDENT_TYPE_ID = iNCIDENT_TYPE_ID;
+            iNCFORM_TYPE_CONTROL.STEP_NUMBER = sTEP_NUMBER;
+            iNCFORM_TYPE_CONTROL.STEP_FORM = sTEP_FORM;
+            return iNCFORM_TYPE_CONTROL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_TYPE_ID
+        {
+            get
+            {
+                return _INCIDENT_TYPE_ID;
+            }
+            set
+            {
+                if (_INCIDENT_TYPE_ID != value)
+                {
+                    OnINCIDENT_TYPE_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_TYPE_ID");
+                    _INCIDENT_TYPE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_TYPE_ID");
+                    OnINCIDENT_TYPE_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_TYPE_ID;
+        partial void OnINCIDENT_TYPE_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 STEP_NUMBER
+        {
+            get
+            {
+                return _STEP_NUMBER;
+            }
+            set
+            {
+                if (_STEP_NUMBER != value)
+                {
+                    OnSTEP_NUMBERChanging(value);
+                    ReportPropertyChanging("STEP_NUMBER");
+                    _STEP_NUMBER = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("STEP_NUMBER");
+                    OnSTEP_NUMBERChanged();
+                }
+            }
+        }
+        private global::System.Int32 _STEP_NUMBER;
+        partial void OnSTEP_NUMBERChanging(global::System.Int32 value);
+        partial void OnSTEP_NUMBERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String STEP_FORM
+        {
+            get
+            {
+                return _STEP_FORM;
+            }
+            set
+            {
+                OnSTEP_FORMChanging(value);
+                ReportPropertyChanging("STEP_FORM");
+                _STEP_FORM = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("STEP_FORM");
+                OnSTEP_FORMChanged();
+            }
+        }
+        private global::System.String _STEP_FORM;
+        partial void OnSTEP_FORMChanging(global::System.String value);
+        partial void OnSTEP_FORMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STEP_HEADING_TEXT
+        {
+            get
+            {
+                return _STEP_HEADING_TEXT;
+            }
+            set
+            {
+                OnSTEP_HEADING_TEXTChanging(value);
+                ReportPropertyChanging("STEP_HEADING_TEXT");
+                _STEP_HEADING_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STEP_HEADING_TEXT");
+                OnSTEP_HEADING_TEXTChanged();
+            }
+        }
+        private global::System.String _STEP_HEADING_TEXT;
+        partial void OnSTEP_HEADING_TEXTChanging(global::System.String value);
+        partial void OnSTEP_HEADING_TEXTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE")]
+        public INCIDENT_TYPE INCIDENT_TYPE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT_TYPE> INCIDENT_TYPEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCIDENT")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -18455,13 +19115,15 @@ namespace SQM.Website
         /// <param name="dETECT_COMPANY_ID">Initial value of the DETECT_COMPANY_ID property.</param>
         /// <param name="iNCIDENT_TYPE">Initial value of the INCIDENT_TYPE property.</param>
         /// <param name="iNCIDENT_DT">Initial value of the INCIDENT_DT property.</param>
-        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT)
+        /// <param name="iNCFORM_LAST_STEP_COMPLETED">Initial value of the INCFORM_LAST_STEP_COMPLETED property.</param>
+        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT, global::System.Int32 iNCFORM_LAST_STEP_COMPLETED)
         {
             INCIDENT iNCIDENT = new INCIDENT();
             iNCIDENT.INCIDENT_ID = iNCIDENT_ID;
             iNCIDENT.DETECT_COMPANY_ID = dETECT_COMPANY_ID;
             iNCIDENT.INCIDENT_TYPE = iNCIDENT_TYPE;
             iNCIDENT.INCIDENT_DT = iNCIDENT_DT;
+            iNCIDENT.INCFORM_LAST_STEP_COMPLETED = iNCFORM_LAST_STEP_COMPLETED;
             return iNCIDENT;
         }
 
@@ -19071,6 +19733,30 @@ namespace SQM.Website
         private Nullable<global::System.DateTime> _LAST_UPD_DT;
         partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
         partial void OnLAST_UPD_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 INCFORM_LAST_STEP_COMPLETED
+        {
+            get
+            {
+                return _INCFORM_LAST_STEP_COMPLETED;
+            }
+            set
+            {
+                OnINCFORM_LAST_STEP_COMPLETEDChanging(value);
+                ReportPropertyChanging("INCFORM_LAST_STEP_COMPLETED");
+                _INCFORM_LAST_STEP_COMPLETED = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCFORM_LAST_STEP_COMPLETED");
+                OnINCFORM_LAST_STEP_COMPLETEDChanged();
+            }
+        }
+        private global::System.Int32 _INCFORM_LAST_STEP_COMPLETED;
+        partial void OnINCFORM_LAST_STEP_COMPLETEDChanging(global::System.Int32 value);
+        partial void OnINCFORM_LAST_STEP_COMPLETEDChanged();
 
         #endregion
 
@@ -21006,6 +21692,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY_QUESTION>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY_QUESTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL")]
+        public EntityCollection<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL", value);
                 }
             }
         }
@@ -39231,6 +39939,63 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="root")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class root : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new root object.
+        /// </summary>
+        /// <param name="root1">Initial value of the root1 property.</param>
+        public static root Createroot(global::System.String root1)
+        {
+            root root = new root();
+            root.root1 = root1;
+            return root;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String root1
+        {
+            get
+            {
+                return _root1;
+            }
+            set
+            {
+                if (_root1 != value)
+                {
+                    Onroot1Changing(value);
+                    ReportPropertyChanging("root1");
+                    _root1 = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("root1");
+                    Onroot1Changed();
+                }
+            }
+        }
+        private global::System.String _root1;
+        partial void Onroot1Changing(global::System.String value);
+        partial void Onroot1Changed();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="SETTINGS")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -42334,6 +43099,487 @@ namespace SQM.Website
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="vw_MetricDataByPlant")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class vw_MetricDataByPlant : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new vw_MetricDataByPlant object.
+        /// </summary>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        /// <param name="pERIOD_MONTH">Initial value of the PERIOD_MONTH property.</param>
+        /// <param name="eFF_FROM_DT">Initial value of the EFF_FROM_DT property.</param>
+        /// <param name="eFF_TO_DT">Initial value of the EFF_TO_DT property.</param>
+        /// <param name="mEASURE_VALUE">Initial value of the MEASURE_VALUE property.</param>
+        /// <param name="pLANT_ID">Initial value of the PLANT_ID property.</param>
+        /// <param name="mEASURE_CD">Initial value of the MEASURE_CD property.</param>
+        /// <param name="mEASURE_NAME">Initial value of the MEASURE_NAME property.</param>
+        /// <param name="mEASURE_ID">Initial value of the MEASURE_ID property.</param>
+        public static vw_MetricDataByPlant Createvw_MetricDataByPlant(global::System.Int32 pERIOD_YEAR, global::System.Int32 pERIOD_MONTH, global::System.DateTime eFF_FROM_DT, global::System.DateTime eFF_TO_DT, global::System.Decimal mEASURE_VALUE, global::System.Decimal pLANT_ID, global::System.String mEASURE_CD, global::System.String mEASURE_NAME, global::System.Decimal mEASURE_ID)
+        {
+            vw_MetricDataByPlant vw_MetricDataByPlant = new vw_MetricDataByPlant();
+            vw_MetricDataByPlant.PERIOD_YEAR = pERIOD_YEAR;
+            vw_MetricDataByPlant.PERIOD_MONTH = pERIOD_MONTH;
+            vw_MetricDataByPlant.EFF_FROM_DT = eFF_FROM_DT;
+            vw_MetricDataByPlant.EFF_TO_DT = eFF_TO_DT;
+            vw_MetricDataByPlant.MEASURE_VALUE = mEASURE_VALUE;
+            vw_MetricDataByPlant.PLANT_ID = pLANT_ID;
+            vw_MetricDataByPlant.MEASURE_CD = mEASURE_CD;
+            vw_MetricDataByPlant.MEASURE_NAME = mEASURE_NAME;
+            vw_MetricDataByPlant.MEASURE_ID = mEASURE_ID;
+            return vw_MetricDataByPlant;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                if (_PERIOD_YEAR != value)
+                {
+                    OnPERIOD_YEARChanging(value);
+                    ReportPropertyChanging("PERIOD_YEAR");
+                    _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PERIOD_YEAR");
+                    OnPERIOD_YEARChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.Int32 value);
+        partial void OnPERIOD_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_MONTH
+        {
+            get
+            {
+                return _PERIOD_MONTH;
+            }
+            set
+            {
+                if (_PERIOD_MONTH != value)
+                {
+                    OnPERIOD_MONTHChanging(value);
+                    ReportPropertyChanging("PERIOD_MONTH");
+                    _PERIOD_MONTH = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PERIOD_MONTH");
+                    OnPERIOD_MONTHChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PERIOD_MONTH;
+        partial void OnPERIOD_MONTHChanging(global::System.Int32 value);
+        partial void OnPERIOD_MONTHChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime EFF_FROM_DT
+        {
+            get
+            {
+                return _EFF_FROM_DT;
+            }
+            set
+            {
+                if (_EFF_FROM_DT != value)
+                {
+                    OnEFF_FROM_DTChanging(value);
+                    ReportPropertyChanging("EFF_FROM_DT");
+                    _EFF_FROM_DT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EFF_FROM_DT");
+                    OnEFF_FROM_DTChanged();
+                }
+            }
+        }
+        private global::System.DateTime _EFF_FROM_DT;
+        partial void OnEFF_FROM_DTChanging(global::System.DateTime value);
+        partial void OnEFF_FROM_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime EFF_TO_DT
+        {
+            get
+            {
+                return _EFF_TO_DT;
+            }
+            set
+            {
+                if (_EFF_TO_DT != value)
+                {
+                    OnEFF_TO_DTChanging(value);
+                    ReportPropertyChanging("EFF_TO_DT");
+                    _EFF_TO_DT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EFF_TO_DT");
+                    OnEFF_TO_DTChanged();
+                }
+            }
+        }
+        private global::System.DateTime _EFF_TO_DT;
+        partial void OnEFF_TO_DTChanging(global::System.DateTime value);
+        partial void OnEFF_TO_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal MEASURE_VALUE
+        {
+            get
+            {
+                return _MEASURE_VALUE;
+            }
+            set
+            {
+                if (_MEASURE_VALUE != value)
+                {
+                    OnMEASURE_VALUEChanging(value);
+                    ReportPropertyChanging("MEASURE_VALUE");
+                    _MEASURE_VALUE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MEASURE_VALUE");
+                    OnMEASURE_VALUEChanged();
+                }
+            }
+        }
+        private global::System.Decimal _MEASURE_VALUE;
+        partial void OnMEASURE_VALUEChanging(global::System.Decimal value);
+        partial void OnMEASURE_VALUEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UOM
+        {
+            get
+            {
+                return _UOM;
+            }
+            set
+            {
+                OnUOMChanging(value);
+                ReportPropertyChanging("UOM");
+                _UOM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UOM");
+                OnUOMChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UOM;
+        partial void OnUOMChanging(Nullable<global::System.Decimal> value);
+        partial void OnUOMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                if (_PLANT_ID != value)
+                {
+                    OnPLANT_IDChanging(value);
+                    ReportPropertyChanging("PLANT_ID");
+                    _PLANT_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PLANT_ID");
+                    OnPLANT_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _PLANT_ID;
+        partial void OnPLANT_IDChanging(global::System.Decimal value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PLANT_NAME
+        {
+            get
+            {
+                return _PLANT_NAME;
+            }
+            set
+            {
+                OnPLANT_NAMEChanging(value);
+                ReportPropertyChanging("PLANT_NAME");
+                _PLANT_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PLANT_NAME");
+                OnPLANT_NAMEChanged();
+            }
+        }
+        private global::System.String _PLANT_NAME;
+        partial void OnPLANT_NAMEChanging(global::System.String value);
+        partial void OnPLANT_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ULT_DUNS_CODE
+        {
+            get
+            {
+                return _ULT_DUNS_CODE;
+            }
+            set
+            {
+                OnULT_DUNS_CODEChanging(value);
+                ReportPropertyChanging("ULT_DUNS_CODE");
+                _ULT_DUNS_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ULT_DUNS_CODE");
+                OnULT_DUNS_CODEChanged();
+            }
+        }
+        private global::System.String _ULT_DUNS_CODE;
+        partial void OnULT_DUNS_CODEChanging(global::System.String value);
+        partial void OnULT_DUNS_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DUNS_CODE
+        {
+            get
+            {
+                return _DUNS_CODE;
+            }
+            set
+            {
+                OnDUNS_CODEChanging(value);
+                ReportPropertyChanging("DUNS_CODE");
+                _DUNS_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DUNS_CODE");
+                OnDUNS_CODEChanged();
+            }
+        }
+        private global::System.String _DUNS_CODE;
+        partial void OnDUNS_CODEChanging(global::System.String value);
+        partial void OnDUNS_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MEASURE_CD
+        {
+            get
+            {
+                return _MEASURE_CD;
+            }
+            set
+            {
+                if (_MEASURE_CD != value)
+                {
+                    OnMEASURE_CDChanging(value);
+                    ReportPropertyChanging("MEASURE_CD");
+                    _MEASURE_CD = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("MEASURE_CD");
+                    OnMEASURE_CDChanged();
+                }
+            }
+        }
+        private global::System.String _MEASURE_CD;
+        partial void OnMEASURE_CDChanging(global::System.String value);
+        partial void OnMEASURE_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MEASURE_NAME
+        {
+            get
+            {
+                return _MEASURE_NAME;
+            }
+            set
+            {
+                if (_MEASURE_NAME != value)
+                {
+                    OnMEASURE_NAMEChanging(value);
+                    ReportPropertyChanging("MEASURE_NAME");
+                    _MEASURE_NAME = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("MEASURE_NAME");
+                    OnMEASURE_NAMEChanged();
+                }
+            }
+        }
+        private global::System.String _MEASURE_NAME;
+        partial void OnMEASURE_NAMEChanging(global::System.String value);
+        partial void OnMEASURE_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String UOM_CD
+        {
+            get
+            {
+                return _UOM_CD;
+            }
+            set
+            {
+                OnUOM_CDChanging(value);
+                ReportPropertyChanging("UOM_CD");
+                _UOM_CD = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("UOM_CD");
+                OnUOM_CDChanged();
+            }
+        }
+        private global::System.String _UOM_CD;
+        partial void OnUOM_CDChanging(global::System.String value);
+        partial void OnUOM_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String UOM_NAME
+        {
+            get
+            {
+                return _UOM_NAME;
+            }
+            set
+            {
+                OnUOM_NAMEChanging(value);
+                ReportPropertyChanging("UOM_NAME");
+                _UOM_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("UOM_NAME");
+                OnUOM_NAMEChanged();
+            }
+        }
+        private global::System.String _UOM_NAME;
+        partial void OnUOM_NAMEChanging(global::System.String value);
+        partial void OnUOM_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MEASURE_COST
+        {
+            get
+            {
+                return _MEASURE_COST;
+            }
+            set
+            {
+                OnMEASURE_COSTChanging(value);
+                ReportPropertyChanging("MEASURE_COST");
+                _MEASURE_COST = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MEASURE_COST");
+                OnMEASURE_COSTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MEASURE_COST;
+        partial void OnMEASURE_COSTChanging(Nullable<global::System.Decimal> value);
+        partial void OnMEASURE_COSTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CURRENCY_CODE
+        {
+            get
+            {
+                return _CURRENCY_CODE;
+            }
+            set
+            {
+                OnCURRENCY_CODEChanging(value);
+                ReportPropertyChanging("CURRENCY_CODE");
+                _CURRENCY_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CURRENCY_CODE");
+                OnCURRENCY_CODEChanged();
+            }
+        }
+        private global::System.String _CURRENCY_CODE;
+        partial void OnCURRENCY_CODEChanging(global::System.String value);
+        partial void OnCURRENCY_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal MEASURE_ID
+        {
+            get
+            {
+                return _MEASURE_ID;
+            }
+            set
+            {
+                if (_MEASURE_ID != value)
+                {
+                    OnMEASURE_IDChanging(value);
+                    ReportPropertyChanging("MEASURE_ID");
+                    _MEASURE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MEASURE_ID");
+                    OnMEASURE_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _MEASURE_ID;
+        partial void OnMEASURE_IDChanging(global::System.Decimal value);
+        partial void OnMEASURE_IDChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>

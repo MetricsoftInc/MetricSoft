@@ -1,4 +1,4 @@
-﻿<%@ Page Title="EHS Incidents" Language="C#" MasterPageFile="~/RspPSMaster.Master"
+﻿<%@ Page Title="EHS Incidents"  Language="C#" MasterPageFile="~/RspPSMaster.Master"
 	AutoEventWireup="True" EnableEventValidation="false" CodeBehind="EHS_Incidents.aspx.cs" ClientIDMode="AutoID"
 	Inherits="SQM.Website.EHS_Incidents" ValidateRequest="false" %>
 

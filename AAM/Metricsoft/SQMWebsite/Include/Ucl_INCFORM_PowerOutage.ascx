@@ -3,6 +3,7 @@
 	<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 
 <script type="text/javascript">
+
 	function OnEditorClientLoad(editor) {
 		editor.attachEventHandler("ondblclick", function (e) {
 			var sel = editor.getSelection().getParentElement(); //get the currently selected element
@@ -15,6 +16,18 @@
 		}
 		);
 	}
+
+	function StandardConfirm(sender, args) {
+
+		// Some pages will have no validators, so skip
+		if (typeof Page_ClientValidate === "function") {
+			var validated = Page_ClientValidate('Val_PowerOutage');
+
+			if (!validated)
+				alert("Please fill out all of the required fields.");
+		}
+	}
+
 </script>
 
 <%--<asp:Panel ID="pnlCase" Visible="true" runat="server">
@@ -36,10 +49,24 @@
 <asp:Label ID="lblRequired" runat="server" Text="Required Fields Must be Completed." ForeColor="#cc0000" Font-Bold="true" Height="25" Visible="false"></asp:Label>
 <asp:Label ID="lblSubmitted" runat="server" Text="Power Outage submitted." Font-Bold="true" Visible="false"></asp:Label>
 
- <asp:Panel ID="pnlSelect" Visible="true" runat="server">
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12 col-sm-4" style="padding: 3px 1px">
+			<asp:Label ID="lblFormStepNumber" runat="server" Font-Bold="true" CssClass="textStd"></asp:Label>
+		</div>
+		<div class="col-xs-12 col-sm-8">
+			<asp:Label ID="lblFormTitle" runat="server" Font-Bold="true" CssClass="pageTitles"></asp:Label>
+		</div>
+	</div>
+</div>
+
+
+ <asp:Panel ID="pnlBaseForm" Visible="true" runat="server">
+
+	<br />
 
 	<div class="container-fluid">
-
 
 		<%-- INCIDENT DATE question --%>
 		<div class="row">
@@ -52,7 +79,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpIncidentDate" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDatePicker>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvIncidentDate" ControlToValidate="rdpIncidentDate" Display="None" ErrorMessage="Required" ValidationGroup="Val"></asp:RequiredFieldValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvIncidentDate" ControlToValidate="rdpIncidentDate" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -73,6 +100,7 @@
 
 
 		<%-- LOCATION question --%>	
+
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>Location:<span class="requiredStarFloat">*</span></span>
@@ -82,10 +110,11 @@
 				<span>Location:&nbsp;<span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlLocation" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvLocation" ControlToValidate="rddlLocation" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val"></asp:RequiredFieldValidator>
+				<telerik:RadDropDownList ID="rddlLocation" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server" OnSelectedIndexChanged="rddlLocation_SelectedIndexChanged"></telerik:RadDropDownList>
+				<asp:RequiredFieldValidator runat="server" ID="rfvLocation" ControlToValidate="rddlLocation" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 			</div>
 		</div>
+		
 
 		
 		<%-- DESCRIPTION question (MultiLine TEXTBOX) --%>
@@ -98,10 +127,29 @@
 				<span>Description:&nbsp;<span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" Skin="Metro" runat="server"></asp:TextBox>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvDescription" ControlToValidate="tbDescription" Display="None" ErrorMessage="Required"  ValidationGroup="Val"></asp:RequiredFieldValidator>
+				<asp:TextBox ID="tbDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvDescription" ControlToValidate="tbDescription" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 			</div>
 		</div>
+
+
+		<%-- LOCAL DESCRIPTION question (show if local language is not English)  (MultiLine TEXTBOX) --%>
+		<asp:Panel ID="pnlLocalDesc" runat="server" Visible="false">
+			<div class="row" >
+				<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
+					<span class="labelMultiLineText">Local Description:<span class="requiredStarFloat">*</span></span>
+				</div>
+				<div class="col-xs-12 visible-xs text-left-more">
+					<br />
+					<span>Local Description:&nbsp;<span class="requiredStar">*</span></span>
+				</div>
+				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+					<asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+					<asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator1" ControlToValidate="tbDescription" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+				</div>
+			</div>
+		</asp:Panel>
+
 
 
 		<%-- TIME OF INCIDENT question --%>
@@ -115,7 +163,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadTimePicker ID="rtpIncidentTime" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadTimePicker>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvIncidentTime" ControlToValidate="rtpIncidentTime" Display="None" ErrorMessage="Required"  ValidationGroup="Val"></asp:RequiredFieldValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvIncidentTime" ControlToValidate="rtpIncidentTime" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -131,7 +179,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlShift" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-		        <asp:RequiredFieldValidator runat="server" ID="rvfShift" ControlToValidate="rddlShift" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val"></asp:RequiredFieldValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rvfShift" ControlToValidate="rddlShift" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -146,125 +194,172 @@
 				<span>Production Impact:&nbsp;<span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbProdImpact" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" Skin="Metro" runat="server"></asp:TextBox>
+				<asp:TextBox ID="tbProdImpact" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+			</div>
+		</div>
+	
+	</div>
+
+	 	<br /><br />
+
+ </asp:Panel>
+
+
+<asp:Panel ID="pnlContain" Visible="false" runat="server">
+
+	<br />
+
+	<div class="container-fluid">
+
+		<%-- TESTING --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>Due Date:<span class="requiredStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>Due Date:&nbsp;<span class="requiredStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<telerik:RadDatePicker ID="RadDatePicker1" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDatePicker>
+		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator2" ControlToValidate="RadDatePicker1" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+			</div>
+		</div>
+	</div>
+
+</asp:Panel>
+
+<asp:Panel ID="pnlRoot5Y" Visible="false" runat="server">
+
+
+	<br />
+
+
+	<div class="container-fluid">
+
+		<%-- TESTING --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>Why 1:<span class="requiredStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>Why 1:&nbsp;<span class="requiredStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:TextBox ID="TextBox1" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator3" ControlToValidate="TextBox1" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+			</div>
+		</div>
+	</div>
+
+</asp:Panel>
+
+
+
+<asp:Panel ID="pnlAction" Visible="false" runat="server">
+
+
+	<br />
+
+
+	<div class="container-fluid">
+
+		<%-- TESTING --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>Due Date:<span class="requiredStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>Due Date:&nbsp;<span class="requiredStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<telerik:RadDatePicker ID="RadDatePicker2" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDatePicker>
+		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator4" ControlToValidate="RadDatePicker1" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+			</div>
+		</div>
+	</div>
+
+</asp:Panel>
+
+
+<asp:Panel ID="pnlApproval" Visible="false" runat="server">
+
+	<br />
+
+	<div class="container-fluid">
+
+		<%-- TESTING --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>Safety Manager:<span class="requiredStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>Safety Manager:&nbsp;<span class="requiredStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:TextBox ID="TextBox2" Width="50px" SkinID="Metro" runat="server"></asp:TextBox>
+		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator5" ControlToValidate="TextBox2" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+			</div>
+		</div>
+	</div>
+
+</asp:Panel>
+
+
+<asp:Panel ID="pnlButtons" Visible="true" runat="server">
+
+
+<div class="container-fluid">
+
+
+		<div class="row">
+			<div class="col-xs-12" style="padding: 5px">
+				<asp:Label ID="lblResults" runat="server" Font-Bold="true" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
 
-	
-	<br />
-<%--	<asp:GridView runat="server" ID="gvPreventLocationsList" Name="gvPreventLocationsList"
-		CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" CellPadding="5"
-		GridLines="Both" PageSize="20" AllowSorting="false" Width="100%" OnRowDataBound="gvPreventLocationsList_RowDataBound"
-		DataKeyNames="PLANT_ID">
-		<HeaderStyle CssClass="HeadingCellText" />
-		<RowStyle CssClass="DataCell" />
-		<Columns>
-			<asp:TemplateField HeaderText="Select People to Send Verification Notification<br/>(Drag or Ctrl+click to select multiple)">
-				<ItemTemplate>
-					<div style="float: left; font-size: 13px; padding: 8px 0 10px 0;">
-						<asp:Label ID="lblPlant" runat="server" Text='<%#Eval("PLANT_NAME")%>' ClientIDMode="AutoID"
-							Font-Bold="true"></asp:Label>
-					</div>
-					<div style="float: right;">
-						<telerik:RadButton ID="rbSelectAll" runat="server" Text="Select All" Skin="Metro" AutoPostBack="false"
-							 OnClientClicked="PVOnClientClicked">
-						</telerik:RadButton>
-					</div>
-					<br style="clear: both;" />
-					<telerik:RadGrid runat="server" ID="rgPlantContacts" Name="rgPlantContacts" 
-						Skin="Metro" AllowMultiRowSelection="true" AutoGenerateColumns="false" CellPadding="3"
-						GridLines="None" AllowSorting="false" ShowHeader="false" Width="100%">
-						<ClientSettings EnableRowHoverStyle="true">
-							<Selecting AllowRowSelect="True"></Selecting>
-							<ClientEvents OnRowSelected="PVRowSelectedChanged" OnRowDeselected="PVRowSelectedChanged" />
-						</ClientSettings>
-						<MasterTableView DataKeyNames="PERSON_ID" ExpandCollapseColumn-Visible="false">
-							<Columns>
-								<telerik:GridTemplateColumn ItemStyle-Width="45%">
-									<ItemTemplate>
-										<asp:Label ID="lblContact" runat="server" Font-Size="8" Text='<%#Capitalize((string)Eval("FIRST_NAME")) + " " + Capitalize((string)Eval("LAST_NAME")) %>'></asp:Label>
-										<div style="float: right;">
-											<asp:Label ID="lblConfirmed" runat="server" Font-Size="8" ForeColor="Red" BackColor="Wheat" BorderColor="Wheat" BorderWidth="2" Text="Confirmed" Visible="false"></asp:Label>
-										</div>
-									</ItemTemplate>
-								</telerik:GridTemplateColumn>
-								<telerik:GridTemplateColumn ItemStyle-Width="45%">
-									<ItemTemplate>
-										<asp:Label ID="lblEmail" runat="server" Font-Size="8" Text='<%#Eval("JOB_TITLE")%>'></asp:Label>
-									</ItemTemplate>
-								</telerik:GridTemplateColumn>
-								<telerik:GridClientSelectColumn ItemStyle-Width="10%">
-								</telerik:GridClientSelectColumn>
-							</Columns>
-						</MasterTableView>
-					</telerik:RadGrid>
-
-					<asp:Panel ID="pnlComments" runat="server" Visible="false">
-						<div style="padding: 2px 7px 7px;">
-						<p>Comments:</p>
-						<telerik:RadGrid runat="server" ID="rgPlantComments" Name="rgPlantComments" 
-							Skin="Metro" AutoGenerateColumns="false" CellPadding="3"
-							GridLines="None" AllowSorting="false" ShowHeader="false" Width="100%">
-							<MasterTableView ExpandCollapseColumn-Visible="false">
-								<Columns>
-									<telerik:GridTemplateColumn ItemStyle-Width="45%">
-										<ItemTemplate>
-											<asp:Label ID="lblContact" runat="server" Font-Size="8" Text='<%#Eval("PersonName")%>'></asp:Label>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridTemplateColumn ItemStyle-Width="45%">
-										<ItemTemplate>
-											<asp:Label ID="lblComment" runat="server" Font-Size="8" Text='<%#Eval("CommentText")%>'></asp:Label>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridTemplateColumn ItemStyle-Width="45%">
-										<ItemTemplate>
-											<asp:Label ID="lblComment" runat="server" Font-Size="8" Text='<%#((DateTime)Eval("CommentDate")).ToShortDateString()%>'></asp:Label>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-								</Columns>
-								</MasterTableView>
-							</telerik:RadGrid>
-							</div>
-						</asp:Panel>
-				</ItemTemplate>
-			</asp:TemplateField>
-		</Columns>
-	</asp:GridView>--%>
-
-	<br />
+<%--		<div class="clearfix visible-xs"></div>--%>
+		<br class="visible-xs-block" />
 
 		<div class="row">
 
 			<div class="col-xs-12 text-left ">
 
 				<span><telerik:RadButton ID="btnSave" runat="server" Text="Save" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
-					SingleClick="true" SingleClickText="Saving..." OnClick="btnSave_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />&nbsp;&nbsp;</span>
+					OnClick="btnSave_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val_PowerOutage" />&nbsp;&nbsp;</span>
 
 				<div class="clearfix visible-xs"></div>
 				<br class="visible-xs-block" />
 
 
 				<span><telerik:RadButton ID="btnPrev" runat="server" Text="<   Prev" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
-					SingleClick="true" OnClick="btnPrev_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />&nbsp;&nbsp;</span>
+					OnClick="btnPrev_Click" />&nbsp;&nbsp;</span>
 	
 				<div class="clearfix visible-xs"></div>
 				<br class="visible-xs-block" />
 
 	
 				<span><telerik:RadButton ID="btnNext" runat="server" Text="Next   >" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
-					SingleClick="true" OnClick="btnNext_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" /></span>
+					OnClick="btnNext_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val_PowerOutage" /></span>
+
+				
+				<span><telerik:RadButton ID="btnClose" runat="server" Text="Close Incident" Visible="false" CssClass="UseSubmitAction" Skin="Metro" 
+					 OnClientClicking="StandardConfirm" ValidationGroup="Val_PowerOutage" /></span>
 
 
 			</div>
+		</div>
 		
-
+ </div>
 	
-	<%--<asp:Label ID="lblResults" runat="server" />--%>
+	
 
-	</div>
 
  </asp:Panel>
+
 
 
 
