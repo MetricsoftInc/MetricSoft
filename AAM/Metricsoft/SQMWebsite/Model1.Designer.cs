@@ -150,6 +150,18 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCFORM_ACTION), "INCFORM_ACTION_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ACTION_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCFORM_APPROVAL), "INCFORM_APPROVAL_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCFORM_CONTAIN), "INCFORM_CONTAIN_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT_5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT_5Y), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCFORM_ROOT_5Y), "INCFORM_ROOT_5Y_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT_5Y_DETAIL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT_5Y_DETAIL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT_5Y_DETAIL), true)]
 
 #endregion
 
@@ -2040,6 +2052,134 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_TYPE_CONTROL> _INCFORM_TYPE_CONTROL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_ACTION> INCFORM_ACTION
+        {
+            get
+            {
+                if ((_INCFORM_ACTION == null))
+                {
+                    _INCFORM_ACTION = base.CreateObjectSet<INCFORM_ACTION>("INCFORM_ACTION");
+                }
+                return _INCFORM_ACTION;
+            }
+        }
+        private ObjectSet<INCFORM_ACTION> _INCFORM_ACTION;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_ACTION_DETAIL> INCFORM_ACTION_DETAIL
+        {
+            get
+            {
+                if ((_INCFORM_ACTION_DETAIL == null))
+                {
+                    _INCFORM_ACTION_DETAIL = base.CreateObjectSet<INCFORM_ACTION_DETAIL>("INCFORM_ACTION_DETAIL");
+                }
+                return _INCFORM_ACTION_DETAIL;
+            }
+        }
+        private ObjectSet<INCFORM_ACTION_DETAIL> _INCFORM_ACTION_DETAIL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_APPROVAL> INCFORM_APPROVAL
+        {
+            get
+            {
+                if ((_INCFORM_APPROVAL == null))
+                {
+                    _INCFORM_APPROVAL = base.CreateObjectSet<INCFORM_APPROVAL>("INCFORM_APPROVAL");
+                }
+                return _INCFORM_APPROVAL;
+            }
+        }
+        private ObjectSet<INCFORM_APPROVAL> _INCFORM_APPROVAL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_APPROVAL_DETAIL> INCFORM_APPROVAL_DETAIL
+        {
+            get
+            {
+                if ((_INCFORM_APPROVAL_DETAIL == null))
+                {
+                    _INCFORM_APPROVAL_DETAIL = base.CreateObjectSet<INCFORM_APPROVAL_DETAIL>("INCFORM_APPROVAL_DETAIL");
+                }
+                return _INCFORM_APPROVAL_DETAIL;
+            }
+        }
+        private ObjectSet<INCFORM_APPROVAL_DETAIL> _INCFORM_APPROVAL_DETAIL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_CONTAIN> INCFORM_CONTAIN
+        {
+            get
+            {
+                if ((_INCFORM_CONTAIN == null))
+                {
+                    _INCFORM_CONTAIN = base.CreateObjectSet<INCFORM_CONTAIN>("INCFORM_CONTAIN");
+                }
+                return _INCFORM_CONTAIN;
+            }
+        }
+        private ObjectSet<INCFORM_CONTAIN> _INCFORM_CONTAIN;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_CONTAIN_DETAIL> INCFORM_CONTAIN_DETAIL
+        {
+            get
+            {
+                if ((_INCFORM_CONTAIN_DETAIL == null))
+                {
+                    _INCFORM_CONTAIN_DETAIL = base.CreateObjectSet<INCFORM_CONTAIN_DETAIL>("INCFORM_CONTAIN_DETAIL");
+                }
+                return _INCFORM_CONTAIN_DETAIL;
+            }
+        }
+        private ObjectSet<INCFORM_CONTAIN_DETAIL> _INCFORM_CONTAIN_DETAIL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_ROOT_5Y> INCFORM_ROOT_5Y
+        {
+            get
+            {
+                if ((_INCFORM_ROOT_5Y == null))
+                {
+                    _INCFORM_ROOT_5Y = base.CreateObjectSet<INCFORM_ROOT_5Y>("INCFORM_ROOT_5Y");
+                }
+                return _INCFORM_ROOT_5Y;
+            }
+        }
+        private ObjectSet<INCFORM_ROOT_5Y> _INCFORM_ROOT_5Y;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_ROOT_5Y_DETAIL> INCFORM_ROOT_5Y_DETAIL
+        {
+            get
+            {
+                if ((_INCFORM_ROOT_5Y_DETAIL == null))
+                {
+                    _INCFORM_ROOT_5Y_DETAIL = base.CreateObjectSet<INCFORM_ROOT_5Y_DETAIL>("INCFORM_ROOT_5Y_DETAIL");
+                }
+                return _INCFORM_ROOT_5Y_DETAIL;
+            }
+        }
+        private ObjectSet<INCFORM_ROOT_5Y_DETAIL> _INCFORM_ROOT_5Y_DETAIL;
 
         #endregion
 
@@ -2963,6 +3103,70 @@ namespace SQM.Website
         public void AddToINCFORM_TYPE_CONTROL(INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL)
         {
             base.AddObject("INCFORM_TYPE_CONTROL", iNCFORM_TYPE_CONTROL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_ACTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_ACTION(INCFORM_ACTION iNCFORM_ACTION)
+        {
+            base.AddObject("INCFORM_ACTION", iNCFORM_ACTION);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_ACTION_DETAIL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_ACTION_DETAIL(INCFORM_ACTION_DETAIL iNCFORM_ACTION_DETAIL)
+        {
+            base.AddObject("INCFORM_ACTION_DETAIL", iNCFORM_ACTION_DETAIL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_APPROVAL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_APPROVAL(INCFORM_APPROVAL iNCFORM_APPROVAL)
+        {
+            base.AddObject("INCFORM_APPROVAL", iNCFORM_APPROVAL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_APPROVAL_DETAIL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_APPROVAL_DETAIL(INCFORM_APPROVAL_DETAIL iNCFORM_APPROVAL_DETAIL)
+        {
+            base.AddObject("INCFORM_APPROVAL_DETAIL", iNCFORM_APPROVAL_DETAIL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_CONTAIN EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_CONTAIN(INCFORM_CONTAIN iNCFORM_CONTAIN)
+        {
+            base.AddObject("INCFORM_CONTAIN", iNCFORM_CONTAIN);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_CONTAIN_DETAIL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_CONTAIN_DETAIL(INCFORM_CONTAIN_DETAIL iNCFORM_CONTAIN_DETAIL)
+        {
+            base.AddObject("INCFORM_CONTAIN_DETAIL", iNCFORM_CONTAIN_DETAIL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_ROOT_5Y EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_ROOT_5Y(INCFORM_ROOT_5Y iNCFORM_ROOT_5Y)
+        {
+            base.AddObject("INCFORM_ROOT_5Y", iNCFORM_ROOT_5Y);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_ROOT_5Y_DETAIL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_ROOT_5Y_DETAIL(INCFORM_ROOT_5Y_DETAIL iNCFORM_ROOT_5Y_DETAIL)
+        {
+            base.AddObject("INCFORM_ROOT_5Y_DETAIL", iNCFORM_ROOT_5Y_DETAIL);
         }
 
         #endregion
@@ -18728,6 +18932,1653 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_ACTION")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_ACTION : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_ACTION object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_ACTION_ID">Initial value of the INCIDENT_ACTION_ID property.</param>
+        public static INCFORM_ACTION CreateINCFORM_ACTION(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_ACTION_ID)
+        {
+            INCFORM_ACTION iNCFORM_ACTION = new INCFORM_ACTION();
+            iNCFORM_ACTION.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_ACTION.INCIDENT_ACTION_ID = iNCIDENT_ACTION_ID;
+            return iNCFORM_ACTION;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ACTION_ID
+        {
+            get
+            {
+                return _INCIDENT_ACTION_ID;
+            }
+            set
+            {
+                if (_INCIDENT_ACTION_ID != value)
+                {
+                    OnINCIDENT_ACTION_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_ACTION_ID");
+                    _INCIDENT_ACTION_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_ACTION_ID");
+                    OnINCIDENT_ACTION_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_ACTION_ID;
+        partial void OnINCIDENT_ACTION_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_ACTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CREATE_BY
+        {
+            get
+            {
+                return _CREATE_BY;
+            }
+            set
+            {
+                OnCREATE_BYChanging(value);
+                ReportPropertyChanging("CREATE_BY");
+                _CREATE_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CREATE_BY");
+                OnCREATE_BYChanged();
+            }
+        }
+        private global::System.String _CREATE_BY;
+        partial void OnCREATE_BYChanging(global::System.String value);
+        partial void OnCREATE_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LAST_UPD_BY
+        {
+            get
+            {
+                return _LAST_UPD_BY;
+            }
+            set
+            {
+                OnLAST_UPD_BYChanging(value);
+                ReportPropertyChanging("LAST_UPD_BY");
+                _LAST_UPD_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LAST_UPD_BY");
+                OnLAST_UPD_BYChanged();
+            }
+        }
+        private global::System.String _LAST_UPD_BY;
+        partial void OnLAST_UPD_BYChanging(global::System.String value);
+        partial void OnLAST_UPD_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LAST_UPD_DT
+        {
+            get
+            {
+                return _LAST_UPD_DT;
+            }
+            set
+            {
+                OnLAST_UPD_DTChanging(value);
+                ReportPropertyChanging("LAST_UPD_DT");
+                _LAST_UPD_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_UPD_DT");
+                OnLAST_UPD_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LAST_UPD_DT;
+        partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnLAST_UPD_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION_DETAIL")]
+        public EntityCollection<INCFORM_ACTION_DETAIL> INCFORM_ACTION_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ACTION_DETAIL>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ACTION_DETAIL>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_ACTION_DETAIL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_ACTION_DETAIL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_ACTION_DETAIL object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_ACTION_ID">Initial value of the INCIDENT_ACTION_ID property.</param>
+        /// <param name="iTEM_SEQ">Initial value of the ITEM_SEQ property.</param>
+        /// <param name="isCompleted">Initial value of the IsCompleted property.</param>
+        public static INCFORM_ACTION_DETAIL CreateINCFORM_ACTION_DETAIL(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_ACTION_ID, global::System.Int32 iTEM_SEQ, global::System.Boolean isCompleted)
+        {
+            INCFORM_ACTION_DETAIL iNCFORM_ACTION_DETAIL = new INCFORM_ACTION_DETAIL();
+            iNCFORM_ACTION_DETAIL.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_ACTION_DETAIL.INCIDENT_ACTION_ID = iNCIDENT_ACTION_ID;
+            iNCFORM_ACTION_DETAIL.ITEM_SEQ = iTEM_SEQ;
+            iNCFORM_ACTION_DETAIL.IsCompleted = isCompleted;
+            return iNCFORM_ACTION_DETAIL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ACTION_ID
+        {
+            get
+            {
+                return _INCIDENT_ACTION_ID;
+            }
+            set
+            {
+                if (_INCIDENT_ACTION_ID != value)
+                {
+                    OnINCIDENT_ACTION_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_ACTION_ID");
+                    _INCIDENT_ACTION_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_ACTION_ID");
+                    OnINCIDENT_ACTION_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_ACTION_ID;
+        partial void OnINCIDENT_ACTION_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_ACTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ITEM_SEQ
+        {
+            get
+            {
+                return _ITEM_SEQ;
+            }
+            set
+            {
+                if (_ITEM_SEQ != value)
+                {
+                    OnITEM_SEQChanging(value);
+                    ReportPropertyChanging("ITEM_SEQ");
+                    _ITEM_SEQ = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ITEM_SEQ");
+                    OnITEM_SEQChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ITEM_SEQ;
+        partial void OnITEM_SEQChanging(global::System.Int32 value);
+        partial void OnITEM_SEQChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ITEM_DESCRIPTION
+        {
+            get
+            {
+                return _ITEM_DESCRIPTION;
+            }
+            set
+            {
+                OnITEM_DESCRIPTIONChanging(value);
+                ReportPropertyChanging("ITEM_DESCRIPTION");
+                _ITEM_DESCRIPTION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ITEM_DESCRIPTION");
+                OnITEM_DESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _ITEM_DESCRIPTION;
+        partial void OnITEM_DESCRIPTIONChanging(global::System.String value);
+        partial void OnITEM_DESCRIPTIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ASSIGNED_PERSON_ID
+        {
+            get
+            {
+                return _ASSIGNED_PERSON_ID;
+            }
+            set
+            {
+                OnASSIGNED_PERSON_IDChanging(value);
+                ReportPropertyChanging("ASSIGNED_PERSON_ID");
+                _ASSIGNED_PERSON_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ASSIGNED_PERSON_ID");
+                OnASSIGNED_PERSON_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ASSIGNED_PERSON_ID;
+        partial void OnASSIGNED_PERSON_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnASSIGNED_PERSON_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> START_DATE
+        {
+            get
+            {
+                return _START_DATE;
+            }
+            set
+            {
+                OnSTART_DATEChanging(value);
+                ReportPropertyChanging("START_DATE");
+                _START_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("START_DATE");
+                OnSTART_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _START_DATE;
+        partial void OnSTART_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnSTART_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> COMPLETION_DATE
+        {
+            get
+            {
+                return _COMPLETION_DATE;
+            }
+            set
+            {
+                OnCOMPLETION_DATEChanging(value);
+                ReportPropertyChanging("COMPLETION_DATE");
+                _COMPLETION_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPLETION_DATE");
+                OnCOMPLETION_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _COMPLETION_DATE;
+        partial void OnCOMPLETION_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnCOMPLETION_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsCompleted
+        {
+            get
+            {
+                return _IsCompleted;
+            }
+            set
+            {
+                OnIsCompletedChanging(value);
+                ReportPropertyChanging("IsCompleted");
+                _IsCompleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsCompleted");
+                OnIsCompletedChanged();
+            }
+        }
+        private global::System.Boolean _IsCompleted;
+        partial void OnIsCompletedChanging(global::System.Boolean value);
+        partial void OnIsCompletedChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION")]
+        public INCFORM_ACTION INCFORM_ACTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_ACTION> INCFORM_ACTIONReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ACTION_ID", "INCFORM_ACTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_APPROVAL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_APPROVAL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_APPROVAL object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_APPROVAL_ID">Initial value of the INCIDENT_APPROVAL_ID property.</param>
+        public static INCFORM_APPROVAL CreateINCFORM_APPROVAL(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_APPROVAL_ID)
+        {
+            INCFORM_APPROVAL iNCFORM_APPROVAL = new INCFORM_APPROVAL();
+            iNCFORM_APPROVAL.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_APPROVAL.INCIDENT_APPROVAL_ID = iNCIDENT_APPROVAL_ID;
+            return iNCFORM_APPROVAL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_APPROVAL_ID
+        {
+            get
+            {
+                return _INCIDENT_APPROVAL_ID;
+            }
+            set
+            {
+                if (_INCIDENT_APPROVAL_ID != value)
+                {
+                    OnINCIDENT_APPROVAL_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_APPROVAL_ID");
+                    _INCIDENT_APPROVAL_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_APPROVAL_ID");
+                    OnINCIDENT_APPROVAL_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_APPROVAL_ID;
+        partial void OnINCIDENT_APPROVAL_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_APPROVAL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CREATE_BY
+        {
+            get
+            {
+                return _CREATE_BY;
+            }
+            set
+            {
+                OnCREATE_BYChanging(value);
+                ReportPropertyChanging("CREATE_BY");
+                _CREATE_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CREATE_BY");
+                OnCREATE_BYChanged();
+            }
+        }
+        private global::System.String _CREATE_BY;
+        partial void OnCREATE_BYChanging(global::System.String value);
+        partial void OnCREATE_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LAST_UPD_BY
+        {
+            get
+            {
+                return _LAST_UPD_BY;
+            }
+            set
+            {
+                OnLAST_UPD_BYChanging(value);
+                ReportPropertyChanging("LAST_UPD_BY");
+                _LAST_UPD_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LAST_UPD_BY");
+                OnLAST_UPD_BYChanged();
+            }
+        }
+        private global::System.String _LAST_UPD_BY;
+        partial void OnLAST_UPD_BYChanging(global::System.String value);
+        partial void OnLAST_UPD_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LAST_UPD_DT
+        {
+            get
+            {
+                return _LAST_UPD_DT;
+            }
+            set
+            {
+                OnLAST_UPD_DTChanging(value);
+                ReportPropertyChanging("LAST_UPD_DT");
+                _LAST_UPD_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_UPD_DT");
+                OnLAST_UPD_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LAST_UPD_DT;
+        partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnLAST_UPD_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL_DETAIL")]
+        public EntityCollection<INCFORM_APPROVAL_DETAIL> INCFORM_APPROVAL_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL_DETAIL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL_DETAIL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_APPROVAL_DETAIL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_APPROVAL_DETAIL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_APPROVAL_DETAIL object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_APPROVAL_ID">Initial value of the INCIDENT_APPROVAL_ID property.</param>
+        /// <param name="iTEM_SEQ">Initial value of the ITEM_SEQ property.</param>
+        /// <param name="isAccepted">Initial value of the IsAccepted property.</param>
+        public static INCFORM_APPROVAL_DETAIL CreateINCFORM_APPROVAL_DETAIL(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_APPROVAL_ID, global::System.Int32 iTEM_SEQ, global::System.Boolean isAccepted)
+        {
+            INCFORM_APPROVAL_DETAIL iNCFORM_APPROVAL_DETAIL = new INCFORM_APPROVAL_DETAIL();
+            iNCFORM_APPROVAL_DETAIL.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_APPROVAL_DETAIL.INCIDENT_APPROVAL_ID = iNCIDENT_APPROVAL_ID;
+            iNCFORM_APPROVAL_DETAIL.ITEM_SEQ = iTEM_SEQ;
+            iNCFORM_APPROVAL_DETAIL.IsAccepted = isAccepted;
+            return iNCFORM_APPROVAL_DETAIL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_APPROVAL_ID
+        {
+            get
+            {
+                return _INCIDENT_APPROVAL_ID;
+            }
+            set
+            {
+                if (_INCIDENT_APPROVAL_ID != value)
+                {
+                    OnINCIDENT_APPROVAL_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_APPROVAL_ID");
+                    _INCIDENT_APPROVAL_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_APPROVAL_ID");
+                    OnINCIDENT_APPROVAL_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_APPROVAL_ID;
+        partial void OnINCIDENT_APPROVAL_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_APPROVAL_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ITEM_SEQ
+        {
+            get
+            {
+                return _ITEM_SEQ;
+            }
+            set
+            {
+                if (_ITEM_SEQ != value)
+                {
+                    OnITEM_SEQChanging(value);
+                    ReportPropertyChanging("ITEM_SEQ");
+                    _ITEM_SEQ = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ITEM_SEQ");
+                    OnITEM_SEQChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ITEM_SEQ;
+        partial void OnITEM_SEQChanging(global::System.Int32 value);
+        partial void OnITEM_SEQChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String APPROVAL_MESSAGE
+        {
+            get
+            {
+                return _APPROVAL_MESSAGE;
+            }
+            set
+            {
+                OnAPPROVAL_MESSAGEChanging(value);
+                ReportPropertyChanging("APPROVAL_MESSAGE");
+                _APPROVAL_MESSAGE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("APPROVAL_MESSAGE");
+                OnAPPROVAL_MESSAGEChanged();
+            }
+        }
+        private global::System.String _APPROVAL_MESSAGE;
+        partial void OnAPPROVAL_MESSAGEChanging(global::System.String value);
+        partial void OnAPPROVAL_MESSAGEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> APPROVER_PERSON_ID
+        {
+            get
+            {
+                return _APPROVER_PERSON_ID;
+            }
+            set
+            {
+                OnAPPROVER_PERSON_IDChanging(value);
+                ReportPropertyChanging("APPROVER_PERSON_ID");
+                _APPROVER_PERSON_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("APPROVER_PERSON_ID");
+                OnAPPROVER_PERSON_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _APPROVER_PERSON_ID;
+        partial void OnAPPROVER_PERSON_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnAPPROVER_PERSON_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> APPROVAL_DATE
+        {
+            get
+            {
+                return _APPROVAL_DATE;
+            }
+            set
+            {
+                OnAPPROVAL_DATEChanging(value);
+                ReportPropertyChanging("APPROVAL_DATE");
+                _APPROVAL_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("APPROVAL_DATE");
+                OnAPPROVAL_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _APPROVAL_DATE;
+        partial void OnAPPROVAL_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnAPPROVAL_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsAccepted
+        {
+            get
+            {
+                return _IsAccepted;
+            }
+            set
+            {
+                OnIsAcceptedChanging(value);
+                ReportPropertyChanging("IsAccepted");
+                _IsAccepted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAccepted");
+                OnIsAcceptedChanged();
+            }
+        }
+        private global::System.Boolean _IsAccepted;
+        partial void OnIsAcceptedChanging(global::System.Boolean value);
+        partial void OnIsAcceptedChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL")]
+        public INCFORM_APPROVAL INCFORM_APPROVAL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_APPROVAL> INCFORM_APPROVALReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_APPROVAL_ID", "INCFORM_APPROVAL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_CONTAIN")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_CONTAIN : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_CONTAIN object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_CONTAIN_ID">Initial value of the INCIDENT_CONTAIN_ID property.</param>
+        public static INCFORM_CONTAIN CreateINCFORM_CONTAIN(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_CONTAIN_ID)
+        {
+            INCFORM_CONTAIN iNCFORM_CONTAIN = new INCFORM_CONTAIN();
+            iNCFORM_CONTAIN.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_CONTAIN.INCIDENT_CONTAIN_ID = iNCIDENT_CONTAIN_ID;
+            return iNCFORM_CONTAIN;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_CONTAIN_ID
+        {
+            get
+            {
+                return _INCIDENT_CONTAIN_ID;
+            }
+            set
+            {
+                if (_INCIDENT_CONTAIN_ID != value)
+                {
+                    OnINCIDENT_CONTAIN_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_CONTAIN_ID");
+                    _INCIDENT_CONTAIN_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_CONTAIN_ID");
+                    OnINCIDENT_CONTAIN_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_CONTAIN_ID;
+        partial void OnINCIDENT_CONTAIN_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_CONTAIN_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CREATE_BY
+        {
+            get
+            {
+                return _CREATE_BY;
+            }
+            set
+            {
+                OnCREATE_BYChanging(value);
+                ReportPropertyChanging("CREATE_BY");
+                _CREATE_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CREATE_BY");
+                OnCREATE_BYChanged();
+            }
+        }
+        private global::System.String _CREATE_BY;
+        partial void OnCREATE_BYChanging(global::System.String value);
+        partial void OnCREATE_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LAST_UPD_BY
+        {
+            get
+            {
+                return _LAST_UPD_BY;
+            }
+            set
+            {
+                OnLAST_UPD_BYChanging(value);
+                ReportPropertyChanging("LAST_UPD_BY");
+                _LAST_UPD_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LAST_UPD_BY");
+                OnLAST_UPD_BYChanged();
+            }
+        }
+        private global::System.String _LAST_UPD_BY;
+        partial void OnLAST_UPD_BYChanging(global::System.String value);
+        partial void OnLAST_UPD_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LAST_UPD_DT
+        {
+            get
+            {
+                return _LAST_UPD_DT;
+            }
+            set
+            {
+                OnLAST_UPD_DTChanging(value);
+                ReportPropertyChanging("LAST_UPD_DT");
+                _LAST_UPD_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_UPD_DT");
+                OnLAST_UPD_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LAST_UPD_DT;
+        partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnLAST_UPD_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN_DETAIL")]
+        public EntityCollection<INCFORM_CONTAIN_DETAIL> INCFORM_CONTAIN_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CONTAIN_DETAIL>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CONTAIN_DETAIL>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_CONTAIN_DETAIL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_CONTAIN_DETAIL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_CONTAIN_DETAIL object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_CONTAIN_ID">Initial value of the INCIDENT_CONTAIN_ID property.</param>
+        /// <param name="iTEM_SEQ">Initial value of the ITEM_SEQ property.</param>
+        /// <param name="isCompleted">Initial value of the IsCompleted property.</param>
+        public static INCFORM_CONTAIN_DETAIL CreateINCFORM_CONTAIN_DETAIL(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_CONTAIN_ID, global::System.Int32 iTEM_SEQ, global::System.Boolean isCompleted)
+        {
+            INCFORM_CONTAIN_DETAIL iNCFORM_CONTAIN_DETAIL = new INCFORM_CONTAIN_DETAIL();
+            iNCFORM_CONTAIN_DETAIL.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_CONTAIN_DETAIL.INCIDENT_CONTAIN_ID = iNCIDENT_CONTAIN_ID;
+            iNCFORM_CONTAIN_DETAIL.ITEM_SEQ = iTEM_SEQ;
+            iNCFORM_CONTAIN_DETAIL.IsCompleted = isCompleted;
+            return iNCFORM_CONTAIN_DETAIL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_CONTAIN_ID
+        {
+            get
+            {
+                return _INCIDENT_CONTAIN_ID;
+            }
+            set
+            {
+                if (_INCIDENT_CONTAIN_ID != value)
+                {
+                    OnINCIDENT_CONTAIN_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_CONTAIN_ID");
+                    _INCIDENT_CONTAIN_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_CONTAIN_ID");
+                    OnINCIDENT_CONTAIN_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_CONTAIN_ID;
+        partial void OnINCIDENT_CONTAIN_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_CONTAIN_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ITEM_SEQ
+        {
+            get
+            {
+                return _ITEM_SEQ;
+            }
+            set
+            {
+                if (_ITEM_SEQ != value)
+                {
+                    OnITEM_SEQChanging(value);
+                    ReportPropertyChanging("ITEM_SEQ");
+                    _ITEM_SEQ = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ITEM_SEQ");
+                    OnITEM_SEQChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ITEM_SEQ;
+        partial void OnITEM_SEQChanging(global::System.Int32 value);
+        partial void OnITEM_SEQChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ITEM_DESCRIPTION
+        {
+            get
+            {
+                return _ITEM_DESCRIPTION;
+            }
+            set
+            {
+                OnITEM_DESCRIPTIONChanging(value);
+                ReportPropertyChanging("ITEM_DESCRIPTION");
+                _ITEM_DESCRIPTION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ITEM_DESCRIPTION");
+                OnITEM_DESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _ITEM_DESCRIPTION;
+        partial void OnITEM_DESCRIPTIONChanging(global::System.String value);
+        partial void OnITEM_DESCRIPTIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ASSIGNED_PERSON_ID
+        {
+            get
+            {
+                return _ASSIGNED_PERSON_ID;
+            }
+            set
+            {
+                OnASSIGNED_PERSON_IDChanging(value);
+                ReportPropertyChanging("ASSIGNED_PERSON_ID");
+                _ASSIGNED_PERSON_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ASSIGNED_PERSON_ID");
+                OnASSIGNED_PERSON_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ASSIGNED_PERSON_ID;
+        partial void OnASSIGNED_PERSON_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnASSIGNED_PERSON_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> START_DATE
+        {
+            get
+            {
+                return _START_DATE;
+            }
+            set
+            {
+                OnSTART_DATEChanging(value);
+                ReportPropertyChanging("START_DATE");
+                _START_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("START_DATE");
+                OnSTART_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _START_DATE;
+        partial void OnSTART_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnSTART_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> COMPLETION_DATE
+        {
+            get
+            {
+                return _COMPLETION_DATE;
+            }
+            set
+            {
+                OnCOMPLETION_DATEChanging(value);
+                ReportPropertyChanging("COMPLETION_DATE");
+                _COMPLETION_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPLETION_DATE");
+                OnCOMPLETION_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _COMPLETION_DATE;
+        partial void OnCOMPLETION_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnCOMPLETION_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsCompleted
+        {
+            get
+            {
+                return _IsCompleted;
+            }
+            set
+            {
+                OnIsCompletedChanging(value);
+                ReportPropertyChanging("IsCompleted");
+                _IsCompleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsCompleted");
+                OnIsCompletedChanged();
+            }
+        }
+        private global::System.Boolean _IsCompleted;
+        partial void OnIsCompletedChanging(global::System.Boolean value);
+        partial void OnIsCompletedChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN")]
+        public INCFORM_CONTAIN INCFORM_CONTAIN
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_CONTAIN> INCFORM_CONTAINReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_CONTAIN_ID", "INCFORM_CONTAIN", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_POWEROUTAGE")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -18912,6 +20763,465 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_ROOT_5Y")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_ROOT_5Y : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_ROOT_5Y object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_ROOT_5Y_ID">Initial value of the INCIDENT_ROOT_5Y_ID property.</param>
+        public static INCFORM_ROOT_5Y CreateINCFORM_ROOT_5Y(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_ROOT_5Y_ID)
+        {
+            INCFORM_ROOT_5Y iNCFORM_ROOT_5Y = new INCFORM_ROOT_5Y();
+            iNCFORM_ROOT_5Y.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_ROOT_5Y.INCIDENT_ROOT_5Y_ID = iNCIDENT_ROOT_5Y_ID;
+            return iNCFORM_ROOT_5Y;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ROOT_5Y_ID
+        {
+            get
+            {
+                return _INCIDENT_ROOT_5Y_ID;
+            }
+            set
+            {
+                if (_INCIDENT_ROOT_5Y_ID != value)
+                {
+                    OnINCIDENT_ROOT_5Y_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_ROOT_5Y_ID");
+                    _INCIDENT_ROOT_5Y_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_ROOT_5Y_ID");
+                    OnINCIDENT_ROOT_5Y_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_ROOT_5Y_ID;
+        partial void OnINCIDENT_ROOT_5Y_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_ROOT_5Y_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CREATE_BY
+        {
+            get
+            {
+                return _CREATE_BY;
+            }
+            set
+            {
+                OnCREATE_BYChanging(value);
+                ReportPropertyChanging("CREATE_BY");
+                _CREATE_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CREATE_BY");
+                OnCREATE_BYChanged();
+            }
+        }
+        private global::System.String _CREATE_BY;
+        partial void OnCREATE_BYChanging(global::System.String value);
+        partial void OnCREATE_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LAST_UPD_BY
+        {
+            get
+            {
+                return _LAST_UPD_BY;
+            }
+            set
+            {
+                OnLAST_UPD_BYChanging(value);
+                ReportPropertyChanging("LAST_UPD_BY");
+                _LAST_UPD_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LAST_UPD_BY");
+                OnLAST_UPD_BYChanged();
+            }
+        }
+        private global::System.String _LAST_UPD_BY;
+        partial void OnLAST_UPD_BYChanging(global::System.String value);
+        partial void OnLAST_UPD_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LAST_UPD_DT
+        {
+            get
+            {
+                return _LAST_UPD_DT;
+            }
+            set
+            {
+                OnLAST_UPD_DTChanging(value);
+                ReportPropertyChanging("LAST_UPD_DT");
+                _LAST_UPD_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_UPD_DT");
+                OnLAST_UPD_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LAST_UPD_DT;
+        partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnLAST_UPD_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y_DETAIL")]
+        public EntityCollection<INCFORM_ROOT_5Y_DETAIL> INCFORM_ROOT_5Y_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ROOT_5Y_DETAIL>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ROOT_5Y_DETAIL>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y_DETAIL", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_ROOT_5Y_DETAIL")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_ROOT_5Y_DETAIL : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_ROOT_5Y_DETAIL object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_ROOT_5Y_ID">Initial value of the INCIDENT_ROOT_5Y_ID property.</param>
+        /// <param name="iTEM_SEQ">Initial value of the ITEM_SEQ property.</param>
+        public static INCFORM_ROOT_5Y_DETAIL CreateINCFORM_ROOT_5Y_DETAIL(global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_ROOT_5Y_ID, global::System.Int32 iTEM_SEQ)
+        {
+            INCFORM_ROOT_5Y_DETAIL iNCFORM_ROOT_5Y_DETAIL = new INCFORM_ROOT_5Y_DETAIL();
+            iNCFORM_ROOT_5Y_DETAIL.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_ROOT_5Y_DETAIL.INCIDENT_ROOT_5Y_ID = iNCIDENT_ROOT_5Y_ID;
+            iNCFORM_ROOT_5Y_DETAIL.ITEM_SEQ = iTEM_SEQ;
+            return iNCFORM_ROOT_5Y_DETAIL;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ROOT_5Y_ID
+        {
+            get
+            {
+                return _INCIDENT_ROOT_5Y_ID;
+            }
+            set
+            {
+                if (_INCIDENT_ROOT_5Y_ID != value)
+                {
+                    OnINCIDENT_ROOT_5Y_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_ROOT_5Y_ID");
+                    _INCIDENT_ROOT_5Y_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_ROOT_5Y_ID");
+                    OnINCIDENT_ROOT_5Y_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_ROOT_5Y_ID;
+        partial void OnINCIDENT_ROOT_5Y_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_ROOT_5Y_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ITEM_SEQ
+        {
+            get
+            {
+                return _ITEM_SEQ;
+            }
+            set
+            {
+                if (_ITEM_SEQ != value)
+                {
+                    OnITEM_SEQChanging(value);
+                    ReportPropertyChanging("ITEM_SEQ");
+                    _ITEM_SEQ = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ITEM_SEQ");
+                    OnITEM_SEQChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ITEM_SEQ;
+        partial void OnITEM_SEQChanging(global::System.Int32 value);
+        partial void OnITEM_SEQChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ITEM_DESCRIPTION
+        {
+            get
+            {
+                return _ITEM_DESCRIPTION;
+            }
+            set
+            {
+                OnITEM_DESCRIPTIONChanging(value);
+                ReportPropertyChanging("ITEM_DESCRIPTION");
+                _ITEM_DESCRIPTION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ITEM_DESCRIPTION");
+                OnITEM_DESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _ITEM_DESCRIPTION;
+        partial void OnITEM_DESCRIPTIONChanging(global::System.String value);
+        partial void OnITEM_DESCRIPTIONChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y")]
+        public INCFORM_ROOT_5Y INCFORM_ROOT_5Y
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_ROOT_5Y> INCFORM_ROOT_5YReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ROOT_5Y_ID", "INCFORM_ROOT_5Y", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCIDENT", value);
                 }
             }
         }
@@ -19923,6 +22233,182 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION")]
+        public EntityCollection<INCFORM_ACTION> INCFORM_ACTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCFORM_ACTION_DETAIL")]
+        public EntityCollection<INCFORM_ACTION_DETAIL> INCFORM_ACTION_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ACTION_DETAIL>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCFORM_ACTION_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ACTION_DETAIL>("PSsqmModel.FK_INCIDENTACTDETAIL_INCIDENT_ID", "INCFORM_ACTION_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL")]
+        public EntityCollection<INCFORM_APPROVAL> INCFORM_APPROVAL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCFORM_APPROVAL_DETAIL")]
+        public EntityCollection<INCFORM_APPROVAL_DETAIL> INCFORM_APPROVAL_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL_DETAIL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCFORM_APPROVAL_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL_DETAIL>("PSsqmModel.FK_INCIDENTAPPDETAIL_INCIDENT_ID", "INCFORM_APPROVAL_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN")]
+        public EntityCollection<INCFORM_CONTAIN> INCFORM_CONTAIN
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCFORM_CONTAIN_DETAIL")]
+        public EntityCollection<INCFORM_CONTAIN_DETAIL> INCFORM_CONTAIN_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CONTAIN_DETAIL>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCFORM_CONTAIN_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CONTAIN_DETAIL>("PSsqmModel.FK_INCIDENTCONDETAIL_INCIDENT_ID", "INCFORM_CONTAIN_DETAIL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT_5Y")]
+        public EntityCollection<INCFORM_ROOT_5Y> INCFORM_ROOT_5Y
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT_5Y");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ROOT_5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT_5Y", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCFORM_ROOT_5Y_DETAIL")]
+        public EntityCollection<INCFORM_ROOT_5Y_DETAIL> INCFORM_ROOT_5Y_DETAIL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ROOT_5Y_DETAIL>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCFORM_ROOT_5Y_DETAIL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ROOT_5Y_DETAIL>("PSsqmModel.FK_INCIDENTROOTDETAIL_INCIDENT_ID", "INCFORM_ROOT_5Y_DETAIL", value);
                 }
             }
         }

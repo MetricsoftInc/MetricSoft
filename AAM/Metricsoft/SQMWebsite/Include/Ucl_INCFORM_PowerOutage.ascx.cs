@@ -631,7 +631,7 @@ namespace SQM.Website
 					localDescription = tbLocalDescription.Text;
 				productImpact = tbProdImpact.Text;
 
-				//Save(false);
+				Save(false);
 
 				CurrentStep = CurrentStep + 1;
 					
@@ -748,14 +748,28 @@ namespace SQM.Website
 			}
 			else if (CurrentStep > 0)
 			{
+				int i = Convert.ToInt32(CurrentStep);
+				string savingForm = formSteps[i].StepFormName;
 
-				//string nextStepName = GetNextStepInfo(CurrentStep, incidentTypeId);
+				switch (savingForm)
+				{
+					case "INCFORM_CONTAIN":
+						AddUpdateINCFORM_CONTAIN(incidentId);
+						break;
+					case "INCFORM_ROOT_5Y":
+						AddUpdateINCFORM_ROOT_5Y(incidentId);
+						break;
+					case "INCFORM_ACTION":
+						AddUpdateINCFORM_ACTION(incidentId);
+						break;
+					case "INCFORM_APPROVAL":
+						AddUpdateINCFORM_APPROVAL(incidentId);
+						break;
+				}
 
 				InitializeForm(CurrentStep);
 
-
-
-				
+	
 				// Edit context - step 1
 				//incidentId = EditIncidentId;
 				//if (incidentId > 0)
@@ -803,7 +817,63 @@ namespace SQM.Website
 
 		}
 
-		
+
+		protected void AddUpdateINCFORM_CONTAIN(decimal incidentId)
+		{
+			//INCFORM_CONTAIN theContainment = null;
+			// INCFORM_CONTAIN_DETAILS theContainmentDetails = null;
+
+			if (!IsEditContext)   // Add New
+			{
+				var newPowerOutageDetails = new INCFORM_POWEROUTAGE()
+				{
+					INCIDENT_ID = incidentId,
+					PRODUCTION_IMPACT = productImpact,
+					SHIFT = selectedShift,
+					INCIDENT_TIME = incidentTime,
+					DESCRIPTION_LOCAL = localDescription
+				};
+
+				entities.AddToINCFORM_POWEROUTAGE(newPowerOutageDetails);
+
+				entities.SaveChanges();
+			}
+			else
+			{
+				if (incidentId > 0)  // Update
+				{
+
+					INCFORM_POWEROUTAGE powerOutageDetails = (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
+
+					if (powerOutageDetails != null)
+					{
+						powerOutageDetails.PRODUCTION_IMPACT = productImpact;
+						powerOutageDetails.SHIFT = selectedShift;
+						powerOutageDetails.INCIDENT_TIME = incidentTime;
+						powerOutageDetails.DESCRIPTION_LOCAL = localDescription;
+
+						entities.SaveChanges();
+					}
+				}
+			}
+		}
+
+		protected void AddUpdateINCFORM_ROOT_5Y(decimal incidentId)
+		{
+
+		}
+
+		protected void AddUpdateINCFORM_ACTION(decimal incidentId)
+		{
+
+		}
+
+		protected void AddUpdateINCFORM_APPROVAL(decimal incidentId)
+		{
+
+		}
+
+
 
 		#region Save Methods
 
@@ -1022,26 +1092,6 @@ namespace SQM.Website
 			return newIncident;
 		}
 
-		protected INCFORM_POWEROUTAGE CreateNewPowerOutageDetails(decimal incidentId)
-		{
-
-			var newPowerOutageDetails = new INCFORM_POWEROUTAGE()
-			{
-				INCIDENT_ID = incidentId,
-				PRODUCTION_IMPACT = productImpact, 
-				SHIFT = selectedShift, 
-				INCIDENT_TIME = incidentTime,
-				DESCRIPTION_LOCAL = localDescription
-			};
-
-			entities.AddToINCFORM_POWEROUTAGE(newPowerOutageDetails);
-
-			entities.SaveChanges();
-			//incidentId = newIncident.INCIDENT_ID;
-
-			return newPowerOutageDetails;
-		}
-
 		protected INCIDENT UpdateIncident(decimal incidentId)
 		{
 			INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
@@ -1065,6 +1115,26 @@ namespace SQM.Website
 
 		}
 
+		protected INCFORM_POWEROUTAGE CreateNewPowerOutageDetails(decimal incidentId)
+		{
+
+			var newPowerOutageDetails = new INCFORM_POWEROUTAGE()
+			{
+				INCIDENT_ID = incidentId,
+				PRODUCTION_IMPACT = productImpact,
+				SHIFT = selectedShift,
+				INCIDENT_TIME = incidentTime,
+				DESCRIPTION_LOCAL = localDescription
+			};
+
+			entities.AddToINCFORM_POWEROUTAGE(newPowerOutageDetails);
+
+			entities.SaveChanges();
+			//incidentId = newIncident.INCIDENT_ID;
+
+			return newPowerOutageDetails;
+		}
+
 		protected INCFORM_POWEROUTAGE UpdatePowerOutageDetails(decimal incidentId)
 		{
 			INCFORM_POWEROUTAGE powerOutageDetails = (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
@@ -1081,6 +1151,9 @@ namespace SQM.Website
 
 			return powerOutageDetails;
 		}
+
+				// AddUpdateContainment(context, incidentId)
+				// AddUpdateContainmentDetails(context, incidentId);
 
 		protected void SaveAttachments(decimal incidentId)
 		{
@@ -1163,22 +1236,22 @@ namespace SQM.Website
 		//}
 
 
-		//protected String GetNextStepInfo(decimal currentStep, decimal incidentTypeId)
-		//{
-		//	formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+		protected String GetNextStepInfo(decimal currentStep, decimal incidentTypeId)
+		{
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
 
-		//	string nextFormStepName = null;
+			string nextFormStepName = null;
 
-		//	int i = Convert.ToInt32(currentStep);
+			int i = Convert.ToInt32(currentStep);
 
-		//	if (i < formSteps.Count())
-		//	{
-		//		nextFormStepName = formSteps[i].StepFormName;
-		//		CurrentFormStep = formSteps[i].StepNumber;
-		//	}
+			if (i < formSteps.Count())
+			{
+				nextFormStepName = formSteps[i].StepFormName;
+				CurrentFormStep = formSteps[i].StepNumber;
+			}
 
-		//	return nextFormStepName;
-		//}
+			return nextFormStepName;
+		}
 
 
 		protected void GoToNextStep(decimal incidentId)
