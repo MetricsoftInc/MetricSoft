@@ -387,7 +387,7 @@ namespace SQM.Website
 					btnNext.Visible = true;
 					btnClose.Visible = false;
 					break;
-				case "INCFORM_ROOT_5Y":
+				case "INCFORM_ROOT5Y":
 					pnlBaseForm.Visible = false;
 					pnlContain.Visible = false;
 					pnlRoot5Y.Visible = true;
@@ -756,8 +756,8 @@ namespace SQM.Website
 					case "INCFORM_CONTAIN":
 						AddUpdateINCFORM_CONTAIN(incidentId);
 						break;
-					case "INCFORM_ROOT_5Y":
-						AddUpdateINCFORM_ROOT_5Y(incidentId);
+					case "INCFORM_ROOT5Y":
+						AddUpdateINCFORM_ROOT5Y(incidentId);
 						break;
 					case "INCFORM_ACTION":
 						AddUpdateINCFORM_ACTION(incidentId);
@@ -820,8 +820,8 @@ namespace SQM.Website
 
 		protected void AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
-			//INCFORM_CONTAIN theContainment = null;
-			// INCFORM_CONTAIN_DETAILS theContainmentDetails = null;
+			INCFORM_CONTAIN theContainment = null;
+			//INCFORM_CONTAIN_DETAIL theContainmentDetail = null;
 
 			if (!IsEditContext)   // Add New
 			{
@@ -858,7 +858,7 @@ namespace SQM.Website
 			}
 		}
 
-		protected void AddUpdateINCFORM_ROOT_5Y(decimal incidentId)
+		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
 		{
 
 		}
