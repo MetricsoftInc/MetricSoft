@@ -1005,8 +1005,64 @@ namespace SQM.Website
 			return (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 		}
 
+		public static int GetNextContainSequence(decimal incidentId)
+		{
+			var entities = new PSsqmEntities();
+			var lastcontain = new INCFORM_CONTAIN();
+			lastcontain = (from c in entities.INCFORM_CONTAIN where c.INCIDENT_ID == incidentId select c).OrderByDescending(c => c.ITEM_SEQ).First();
+
+			int nextSeq = 1;
+			
+			if (lastcontain != null)
+				nextSeq = lastcontain.ITEM_SEQ + 1;
+
+			return nextSeq;
+		}
+
+		public static int GetNextRoot5YSequence(decimal incidentId)
+		{
+			var entities = new PSsqmEntities();
+			var lastroot5y = new INCFORM_ROOT5Y();
+			lastroot5y = (from r in entities.INCFORM_ROOT5Y where r.INCIDENT_ID == incidentId select r).OrderByDescending(r => r.ITEM_SEQ).First();
+
+			int nextSeq = 1;
+
+			if (lastroot5y != null)
+				nextSeq = lastroot5y.ITEM_SEQ + 1;
+
+			return nextSeq;
+		}
+
+		public static int GetNextActionSequence(decimal incidentId)
+		{
+			var entities = new PSsqmEntities();
+			var lastaction = new INCFORM_ACTION();
+			lastaction = (from a in entities.INCFORM_ACTION where a.INCIDENT_ID == incidentId select a).OrderByDescending(a => a.ITEM_SEQ).First();
+
+			int nextSeq = 1;
+
+			if (lastaction != null)
+				nextSeq = lastaction.ITEM_SEQ + 1;
+
+			return nextSeq;
+		}
+
+		public static int GetNextApprovalSequence(decimal incidentId)
+		{
+			var entities = new PSsqmEntities();
+			var lastapproval = new INCFORM_APPROVAL();
+			lastapproval = (from ap in entities.INCFORM_APPROVAL where ap.INCIDENT_ID == incidentId select ap).OrderByDescending(ap => ap.ITEM_SEQ).First();
+
+			int nextSeq = 1;
+
+			if (lastapproval != null)
+				nextSeq = lastapproval.ITEM_SEQ + 1;
+
+			return nextSeq;
+		}
 
 
+		//OrderByDescending(x => x.Status).First();
 	}
 
 	public class EHSMetaData

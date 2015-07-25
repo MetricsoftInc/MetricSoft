@@ -820,21 +820,24 @@ namespace SQM.Website
 
 		protected void AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
-			INCFORM_CONTAIN theContainment = null;
-			//INCFORM_CONTAIN_DETAIL theContainmentDetail = null;
+			INCFORM_CONTAIN newContainActions = null;
 
 			if (!IsEditContext)   // Add New
 			{
-				var newPowerOutageDetails = new INCFORM_POWEROUTAGE()
+
+				int nextSeq = EHSIncidentMgr.GetNextContainSequence(incidentId);
+
+				newContainActions = new INCFORM_CONTAIN()
 				{
 					INCIDENT_ID = incidentId,
-					PRODUCTION_IMPACT = productImpact,
-					SHIFT = selectedShift,
-					INCIDENT_TIME = incidentTime,
-					DESCRIPTION_LOCAL = localDescription
+					ITEM_SEQ = nextSeq,
+					//PRODUCTION_IMPACT = productImpact,
+					//SHIFT = selectedShift,
+					//INCIDENT_TIME = incidentTime,
+					//DESCRIPTION_LOCAL = localDescription
 				};
 
-				entities.AddToINCFORM_POWEROUTAGE(newPowerOutageDetails);
+				entities.AddToINCFORM_CONTAIN(newContainActions);
 
 				entities.SaveChanges();
 			}
@@ -843,14 +846,14 @@ namespace SQM.Website
 				if (incidentId > 0)  // Update
 				{
 
-					INCFORM_POWEROUTAGE powerOutageDetails = (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
+					INCFORM_CONTAIN containActions = (from po in entities.INCFORM_CONTAIN where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 
-					if (powerOutageDetails != null)
+					if (containActions != null)
 					{
-						powerOutageDetails.PRODUCTION_IMPACT = productImpact;
-						powerOutageDetails.SHIFT = selectedShift;
-						powerOutageDetails.INCIDENT_TIME = incidentTime;
-						powerOutageDetails.DESCRIPTION_LOCAL = localDescription;
+						//powerOutageDetails.PRODUCTION_IMPACT = productImpact;
+						//powerOutageDetails.SHIFT = selectedShift;
+						//powerOutageDetails.INCIDENT_TIME = incidentTime;
+						//powerOutageDetails.DESCRIPTION_LOCAL = localDescription;
 
 						entities.SaveChanges();
 					}

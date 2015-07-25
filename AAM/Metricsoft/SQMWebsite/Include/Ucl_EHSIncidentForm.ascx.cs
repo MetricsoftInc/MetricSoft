@@ -733,10 +733,16 @@ namespace SQM.Website
 			switch (baseCustomForm)
 			{
 
-				case "INCFORM_POWEROUTAGE": 
+				case "INCFORM_POWEROUTAGE":
 
+					try
+					{
+						powerOutageForm = (Ucl_INCFORM_PowerOutage)LoadControl("~/Include/Ucl_INCFORM_PowerOutage.ascx");
+					}
+					catch (Exception e) 
+					{
+					}
 
-					powerOutageForm = (Ucl_INCFORM_PowerOutage)LoadControl("~/Include/Ucl_INCFORM_PowerOutage.ascx");
 					powerOutageForm.ID = "pof1";
 					powerOutageForm.IsEditContext = IsEditContext;
 					powerOutageForm.IncidentId = EditIncidentId;
