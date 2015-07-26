@@ -236,37 +236,34 @@
 	<div class="container-fluid">
 
 <%--		<asp:Repeater runat="server" ID="rptCauseAction" ClientIDMode="AutoID" OnItemDataBound="rptCauseAction_OnItemDataBound">--%>
-		<asp:Repeater runat="server" ID="Repeater1" ClientIDMode="AutoID">
+		<asp:Repeater runat="server" ID="rptRootCause" ClientIDMode="AutoID" OnItemDataBound="rptRootCause_OnItemDataBound" OnItemCommand="rptRootCause_ItemCommand">
 			<HeaderTemplate></HeaderTemplate>
 			<ItemTemplate>
 
 				<div class="row">
-					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-						<asp:Label ID="lblWhy1" runat="server" Text="Why  :"></asp:Label>
+					<div class="col-xs-12 text-left">
+						<span><b>Why&nbsp;<asp:Label ID="lblItemSeq" runat="server"></asp:Label>:</b></span>
 					</div>
-					<div class="col-xs-12 visible-xs text-left-more">
-						<br />
-						<asp:Label ID="lblWhy2" runat="server" Text="Why  :"></asp:Label>
+					<div class="col-xs-12 text-left">
+						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="50%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 					</div>
-
-					<asp:HiddenField ID="hfItemSeq" runat="server" />
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-					</div>
-
 				</div>
-
+				
 			</ItemTemplate>
+			<SeparatorTemplate><br /><br /></SeparatorTemplate>
+			<FooterTemplate>
+				<asp:Button ID="btnAddRootCause" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+			</FooterTemplate>
 		</asp:Repeater>
 
 		<br />
-		<div class="row">
+<%--		<div class="row">
 			<div class="col-xs-12 columnHeader">
 
-<%--				<asp:Button ID="btnCase5AddAction" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" OnClick="btnAdd_Click" CommandArgument="correctiveaction" UseSubmitBehavior="true"></asp:Button>--%>
-				<asp:Button ID="Button1" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" CommandArgument="correctiveaction" UseSubmitBehavior="true"></asp:Button>
+				<asp:Button ID="btnCase5AddAction" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" OnClick="btnAdd_Click" CommandArgument="correctiveaction" UseSubmitBehavior="true"></asp:Button>
+
 			</div>
-		</div>
+		</div>--%>
 
 	</div>
 

@@ -142,16 +142,15 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				// Since this user control is called from another (parent) user control via postback, every Page_Load event here will be a postback.  So we need some way 
+				// Since this user control is called from other (parent) user controls via postback, every Page_Load event here will also be a postback.  So we need some way 
 				// to determine whether or not to refresh the page controls within this user control. Here we are using the "__EVENTTARGET" form event property
-				// to see if the "rddlIncidentType" dropdown list control triggered the load event.  If it did we can assume the postback should be a full
-				// page postback since the "rddlIncidentType" dropdown list is the control defined in the calling (parent) user control that calls this control.
+				// to see if this control is posting back because of parent calls, or because of local control postbacks. 
 				IsFullPagePostback = false;
 				var targetID = Request.Form["__EVENTTARGET"];
 				if (!string.IsNullOrEmpty(targetID))
 				{
 					var targetControl = this.Page.FindControl(targetID);
-					if (this.Page.FindControl(targetID).ID == "rddlIncidentType")
+					if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
 						IsFullPagePostback = true;
 				}
 			}
@@ -165,9 +164,9 @@ namespace SQM.Website
 					
 
 			}
-
-			//if (IsFullPagePostback)
-			PopulateForm();
+		
+			if (IsFullPagePostback)
+				PopulateInitialForm();
 
 
 		}
@@ -205,7 +204,7 @@ namespace SQM.Website
 		//}
 
 
-		public void PopulateForm()
+		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
@@ -358,8 +357,11 @@ namespace SQM.Website
 		void InitializeForm(int currentStep)
 		{
 
+			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+
 			int displayStep = currentStep + 1;
-			lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + totalFormSteps.ToString() + ":";
+			lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
 
 			int i = Convert.ToInt32(currentStep);
 			string currentFormName = formSteps[i].StepFormName;
@@ -396,6 +398,8 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
+					rptRootCause.DataBind();
 					break;
 				case "INCFORM_ACTION":
 					pnlBaseForm.Visible = false;
@@ -552,6 +556,49 @@ namespace SQM.Website
 			}
 		}
 
+
+		public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem; 
+
+					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
+					Label lb = (Label)e.Item.FindControl("lblItemSeq");
+
+					lb.Text = rootCause.ITEM_SEQ.ToString();
+					tb.Text = rootCause.ITEM_DESCRIPTION;
+
+					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
+					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
+					//hf.Value = rootCause.ITERATION_NO.ToString();
+					//Button btn = (Button)e.Item.FindControl("btnCase5AddAction");
+					//btn.CommandArgument = hf.Value;
+
+					//GridView gv = (GridView)e.Item.FindControl("gvActionList");
+					//if (CaseCtl().PageMode == PageUseMode.ViewOnly)
+					//{
+					//	gv.GridLines = GridLines.Both;
+					//	gv.CssClass = "Grid";
+					//}
+					//gv.DataSource = CaseCtl().problemCase.ProbCase.PROB_CAUSE_ACTION.Where(l => l.CAUSE_NO == rootCause.ITERATION_NO).OrderBy(l => l.ACTION_NO).ToList();
+					//gv.DataBind();
+
+				}
+				catch { }
+			}
+		}
+
+
+
+		//public static object DisplayControlValue(object oCtl, string value, string "", string "")
+		//{
+		//	return DisplayControlValue(oCtl, value);
+		//}
+
+
 		void UpdateButtonText()
 		{
 		//	btnSaveReturn.Text = "Save & Return";
@@ -631,6 +678,9 @@ namespace SQM.Website
 					localDescription = tbLocalDescription.Text;
 				productImpact = tbProdImpact.Text;
 
+
+
+
 				Save(false);
 
 				CurrentStep = CurrentStep + 1;
@@ -649,15 +699,13 @@ namespace SQM.Website
 
 		protected void Save(bool shouldReturn)
 		{
-			INCIDENT theIncident = null;
-			INCFORM_POWEROUTAGE thePowerOutageForm = null;
-
-			decimal incidentId = 0;
 
 			bool shouldCreate8d = false;
 			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 			if (Mode == IncidentMode.Prevent)
 				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+
+			decimal incidentId = 0;
 
 			if (shouldReturn == true)
 			{
@@ -680,21 +728,21 @@ namespace SQM.Website
 				lblResults.Visible = true;
 			}
 
-			if (!IsEditContext)
-			{
-				incidentTypeId = SelectedTypeId;
-				incidentType = SelectedTypeText;
-				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
-				currentFormStep = CurrentFormStep;
-			}
-			else
-			{
-				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
-				incidentTypeId = EditIncidentTypeId;
-				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
-			}
+			//if (!IsEditContext)
+			//{
+			//	incidentTypeId = SelectedTypeId;
+			//	incidentType = SelectedTypeText;
+			//	incidentDescription = tbDescription.Text;
+			//	selectedPlantId = SelectedLocationId;
+			//	currentFormStep = CurrentFormStep;
+			//}
+			//else
+			//{
+			//	incidentDescription = tbDescription.Text;
+			//	selectedPlantId = SelectedLocationId;
+			//	incidentTypeId = EditIncidentTypeId;
+			//	incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
+			//}
 			
 			//questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, CurrentStep);
 			//UpdateAnswersFromForm();
@@ -710,33 +758,35 @@ namespace SQM.Website
 				InitialPlantId = selectedPlantId;
 
 
-			if (CurrentStep == 0)
-			{
+			
+			//////////////////////////////  START ////////////////////////////////////////
+			//if (CurrentStep == 0)
+			//{
 				//GetIncidentInfoFromQuestions(questions);
-				if (!IsEditContext)
-				{
+				//if (!IsEditContext)
+				//{
 
-					theIncident = CreateNewIncident();
-					incidentId = theIncident.INCIDENT_ID;
-					thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
+				//	theIncident = CreateNewIncident();
+				//	incidentId = theIncident.INCIDENT_ID;
+				//	thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
 					
-					EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
-				}
-				else
-				{
-					// Edit context - step 0
-					incidentId = EditIncidentId;
-					if (incidentId > 0)
-					{
-						theIncident = UpdateIncident(incidentId);
-						thePowerOutageForm = UpdatePowerOutageDetails(incidentId);
+				//	EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+				//}
+				//else
+				//{
+				//	// Edit context - step 0
+				//	incidentId = EditIncidentId;
+				//	if (incidentId > 0)
+				//	{
+				//		theIncident = UpdateIncident(incidentId);
+				//		thePowerOutageForm = UpdatePowerOutageDetails(incidentId);
 						 
-						if (Mode == IncidentMode.Incident)
-						{
-							EHSIncidentMgr.TryCloseIncident(incidentId);
-						}
-					}
-				}
+				//		if (Mode == IncidentMode.Incident)
+				//		{
+				//			EHSIncidentMgr.TryCloseIncident(incidentId);
+				//		}
+				//	}
+				//}
 				//if (incidentId > 0)
 				//{
 				//	shouldCreate8d = AddOrUpdateAnswers(questions, incidentId);
@@ -745,14 +795,20 @@ namespace SQM.Website
 
 				//if (Mode == IncidentMode.Prevent)
 				//	UpdateTaskInfo(questions, incidentId, (DateTime)theIncident.CREATE_DT);
-			}
-			else if (CurrentStep > 0)
-			{
+			//}
+			//else if (CurrentStep > 0)
+			//{
+				decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+
 				int i = Convert.ToInt32(CurrentStep);
 				string savingForm = formSteps[i].StepFormName;
 
 				switch (savingForm)
 				{
+					case "INCFORM_POWEROUTAGE":
+						AddUpdateINCFORM_POWEROUTAGE(incidentId);
+						break;
 					case "INCFORM_CONTAIN":
 						AddUpdateINCFORM_CONTAIN(incidentId);
 						break;
@@ -788,7 +844,8 @@ namespace SQM.Website
 				//		EHSIncidentMgr.TryClosePrevention(incidentId, SessionManager.UserContext.Person.PERSON_ID);
 				//	}
 				//}
-			}
+			//}
+			//////////////////////////////  ENDT ////////////////////////////////////////
 
 			decimal finalPlantId = 0;
 			var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
@@ -817,6 +874,47 @@ namespace SQM.Website
 
 		}
 
+		protected void AddUpdateINCFORM_POWEROUTAGE(decimal incidentId)
+		{
+
+			INCIDENT theIncident = null;
+			INCFORM_POWEROUTAGE thePowerOutageForm = null;
+
+			if (!IsEditContext)
+			{
+				incidentTypeId = SelectedTypeId;
+				incidentType = SelectedTypeText;
+				incidentDescription = tbDescription.Text;
+				selectedPlantId = SelectedLocationId;
+				currentFormStep = CurrentFormStep;
+
+				theIncident = CreateNewIncident();
+				incidentId = theIncident.INCIDENT_ID;
+				thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
+
+				EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+			}
+			else
+			{
+				incidentDescription = tbDescription.Text;
+				selectedPlantId = SelectedLocationId;
+				incidentTypeId = EditIncidentTypeId;
+				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
+
+				incidentId = EditIncidentId;
+				if (incidentId > 0)
+				{
+					theIncident = UpdateIncident(incidentId);
+					thePowerOutageForm = UpdatePowerOutageDetails(incidentId);
+
+					if (Mode == IncidentMode.Incident)
+					{
+						EHSIncidentMgr.TryCloseIncident(incidentId);
+					}
+				}
+			}
+
+		}
 
 		protected void AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
@@ -1267,6 +1365,61 @@ namespace SQM.Website
 
 
 		#endregion
+
+		protected void rptRootCause_ItemCommand(object source, RepeaterCommandEventArgs e)
+		{
+
+			if (e.CommandArgument == "AddAnother")
+			{
+
+				var itemList = new List<INCFORM_ROOT5Y>();
+
+				int seqnumber = 0;
+
+				foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
+				{
+				
+					var item = new INCFORM_ROOT5Y();
+					
+					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
+					Label lb = (Label)rootcauseitem.FindControl("lblItemSeq");
+
+					seqnumber = Convert.ToInt32(lb.Text);
+
+					item.ITEM_DESCRIPTION = tb.Text;
+					item.ITEM_SEQ = seqnumber;
+
+					itemList.Add(item);
+
+				}
+
+				var emptyItem = new INCFORM_ROOT5Y();
+
+				emptyItem.ITEM_DESCRIPTION = "";
+				emptyItem.ITEM_SEQ = seqnumber + 1;
+
+				itemList.Add(emptyItem);
+
+				rptRootCause.DataSource = itemList;
+
+				rptRootCause.DataBind();
+
+				//return;
+
+			}
+
+			//if (e.CommandName == "UpdateDatabase")
+			//{
+
+			//	string newFirstName = ((TextBox)e.Item.FindControl("TextBox1")).Text;
+
+			//	string newLastName = ((TextBox)e.Item.FindControl("TextBox2")).Text;
+
+			//	// update
+
+			//}
+
+		}
 
 
 

@@ -738,6 +738,21 @@ namespace SQM.Website
 			return comments;
 		}
 
+		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)
+		{
+			var rootcauses = new List<INCFORM_ROOT5Y>();
+			PSsqmEntities entities = new PSsqmEntities();
+
+			rootcauses = (from c in entities.INCFORM_ROOT5Y
+						where c.INCIDENT_ID == incidentId
+						  select c).ToList();
+
+			return rootcauses;
+		}
+
+
+
+
 		public static void CreateOrUpdateTask(decimal incidentId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
 		{
 			var entities = new PSsqmEntities();
