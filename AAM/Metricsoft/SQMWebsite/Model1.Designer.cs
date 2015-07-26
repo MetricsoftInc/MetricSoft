@@ -19146,6 +19146,30 @@ namespace SQM.Website
         private global::System.Boolean _IsCompleted;
         partial void OnIsCompletedChanging(global::System.Boolean value);
         partial void OnIsCompletedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ASSIGNED_PERSON
+        {
+            get
+            {
+                return _ASSIGNED_PERSON;
+            }
+            set
+            {
+                OnASSIGNED_PERSONChanging(value);
+                ReportPropertyChanging("ASSIGNED_PERSON");
+                _ASSIGNED_PERSON = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ASSIGNED_PERSON");
+                OnASSIGNED_PERSONChanged();
+            }
+        }
+        private global::System.String _ASSIGNED_PERSON;
+        partial void OnASSIGNED_PERSONChanging(global::System.String value);
+        partial void OnASSIGNED_PERSONChanged();
 
         #endregion
 
@@ -19491,6 +19515,30 @@ namespace SQM.Website
         private global::System.Boolean _IsAccepted;
         partial void OnIsAcceptedChanging(global::System.Boolean value);
         partial void OnIsAcceptedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String APPROVER_PERSON
+        {
+            get
+            {
+                return _APPROVER_PERSON;
+            }
+            set
+            {
+                OnAPPROVER_PERSONChanging(value);
+                ReportPropertyChanging("APPROVER_PERSON");
+                _APPROVER_PERSON = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("APPROVER_PERSON");
+                OnAPPROVER_PERSONChanged();
+            }
+        }
+        private global::System.String _APPROVER_PERSON;
+        partial void OnAPPROVER_PERSONChanging(global::System.String value);
+        partial void OnAPPROVER_PERSONChanged();
 
         #endregion
 
@@ -19860,6 +19908,30 @@ namespace SQM.Website
         private global::System.Boolean _IsCompleted;
         partial void OnIsCompletedChanging(global::System.Boolean value);
         partial void OnIsCompletedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ASSIGNED_PERSON
+        {
+            get
+            {
+                return _ASSIGNED_PERSON;
+            }
+            set
+            {
+                OnASSIGNED_PERSONChanging(value);
+                ReportPropertyChanging("ASSIGNED_PERSON");
+                _ASSIGNED_PERSON = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ASSIGNED_PERSON");
+                OnASSIGNED_PERSONChanged();
+            }
+        }
+        private global::System.String _ASSIGNED_PERSON;
+        partial void OnASSIGNED_PERSONChanging(global::System.String value);
+        partial void OnASSIGNED_PERSONChanged();
 
         #endregion
 

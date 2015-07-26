@@ -751,6 +751,18 @@ namespace SQM.Website
 		}
 
 
+		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId)
+		{
+			var containments = new List<INCFORM_CONTAIN>();
+			PSsqmEntities entities = new PSsqmEntities();
+
+			containments = (from c in entities.INCFORM_CONTAIN
+						  where c.INCIDENT_ID == incidentId
+						  select c).ToList();
+
+			return containments;
+		}
+
 
 
 		public static void CreateOrUpdateTask(decimal incidentId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)

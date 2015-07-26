@@ -710,6 +710,7 @@
           <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="INCFORM_APPROVAL">
           <Key>
@@ -726,6 +727,7 @@
           <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="APPROVER_PERSON" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="INCFORM_CONTAIN">
           <Key>
@@ -743,6 +745,7 @@
           <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="INCFORM_POWEROUTAGE">
           <Key>
@@ -8349,6 +8352,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="START_DATE" Type="DateTime" Precision="3" />
           <Property Name="COMPLETION_DATE" Type="DateTime" Precision="3" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="ASSIGNED_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
          </EntityType>
         <EntityType Name="INCFORM_APPROVAL">
           <Key>
@@ -8366,6 +8370,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="APPROVER_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="APPROVAL_DATE" Type="DateTime" Precision="3" />
           <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
+          <Property Name="APPROVER_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
          <EntityType Name="INCFORM_CONTAIN">
           <Key>
@@ -8384,6 +8389,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="START_DATE" Type="DateTime" Precision="3" />
           <Property Name="COMPLETION_DATE" Type="DateTime" Precision="3" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+          <Property Name="ASSIGNED_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_INCIDENTACTION_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
@@ -10302,6 +10308,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCFORM_ACTION">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_ACTION">
               <MappingFragment StoreEntitySet="INCFORM_ACTION">
+                <ScalarProperty Name="ASSIGNED_PERSON" ColumnName="ASSIGNED_PERSON" />
                 <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="COMPLETION_DATE" ColumnName="COMPLETION_DATE" />
@@ -10320,6 +10327,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCFORM_APPROVAL">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_APPROVAL">
               <MappingFragment StoreEntitySet="INCFORM_APPROVAL">
+                <ScalarProperty Name="APPROVER_PERSON" ColumnName="APPROVER_PERSON" />
                 <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
                 <ScalarProperty Name="APPROVAL_DATE" ColumnName="APPROVAL_DATE" />
                 <ScalarProperty Name="APPROVER_PERSON_ID" ColumnName="APPROVER_PERSON_ID" />
@@ -10337,6 +10345,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCFORM_CONTAIN">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CONTAIN">
               <MappingFragment StoreEntitySet="INCFORM_CONTAIN">
+                <ScalarProperty Name="ASSIGNED_PERSON" ColumnName="ASSIGNED_PERSON" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="COMPLETION_DATE" ColumnName="COMPLETION_DATE" />
                 <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />

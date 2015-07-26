@@ -388,6 +388,8 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
+					rptContain.DataBind();
 					break;
 				case "INCFORM_ROOT5Y":
 					pnlBaseForm.Visible = false;
@@ -591,6 +593,48 @@ namespace SQM.Website
 			}
 		}
 
+
+		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					INCFORM_CONTAIN contain = (INCFORM_CONTAIN)e.Item.DataItem;
+
+					TextBox tbca = (TextBox)e.Item.FindControl("tbContainAction");
+					TextBox tbcp = (TextBox)e.Item.FindControl("tbContainPerson");
+					Label lb = (Label)e.Item.FindControl("lblItemSeq");
+					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
+					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
+					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
+
+					lb.Text = contain.ITEM_SEQ.ToString();
+					tbca.Text = contain.ITEM_DESCRIPTION;
+					tbcp.Text = contain.ASSIGNED_PERSON;
+					sd.SelectedDate = contain.START_DATE;
+					cd.SelectedDate = contain.COMPLETION_DATE;
+					ic.Checked = contain.IsCompleted;
+
+					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
+					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
+					//hf.Value = rootCause.ITERATION_NO.ToString();
+					//Button btn = (Button)e.Item.FindControl("btnCase5AddAction");
+					//btn.CommandArgument = hf.Value;
+
+					//GridView gv = (GridView)e.Item.FindControl("gvActionList");
+					//if (CaseCtl().PageMode == PageUseMode.ViewOnly)
+					//{
+					//	gv.GridLines = GridLines.Both;
+					//	gv.CssClass = "Grid";
+					//}
+					//gv.DataSource = CaseCtl().problemCase.ProbCase.PROB_CAUSE_ACTION.Where(l => l.CAUSE_NO == rootCause.ITERATION_NO).OrderBy(l => l.ACTION_NO).ToList();
+					//gv.DataBind();
+
+				}
+				catch { }
+			}
+		}
 
 
 		//public static object DisplayControlValue(object oCtl, string value, string "", string "")
@@ -1487,7 +1531,10 @@ namespace SQM.Website
 			//}
 		}
 
+		protected void rptContain_ItemCommand(object source, RepeaterCommandEventArgs e)
+		{
 
+		}
 
 	
 		//////////////////////////////////////////////////////////////////////
