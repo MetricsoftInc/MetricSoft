@@ -235,11 +235,9 @@
 
 	<div class="container-fluid">
 
-<%--		<asp:Repeater runat="server" ID="rptCauseAction" ClientIDMode="AutoID" OnItemDataBound="rptCauseAction_OnItemDataBound">--%>
 		<asp:Repeater runat="server" ID="rptRootCause" ClientIDMode="AutoID" OnItemDataBound="rptRootCause_OnItemDataBound" OnItemCommand="rptRootCause_ItemCommand">
 			<HeaderTemplate></HeaderTemplate>
 			<ItemTemplate>
-
 				<div class="row">
 					<div class="col-xs-12 text-left">
 						<span><b>Why&nbsp;<asp:Label ID="lblItemSeq" runat="server"></asp:Label>:</b></span>
@@ -248,22 +246,26 @@
 						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="50%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 					</div>
 				</div>
-				
 			</ItemTemplate>
 			<SeparatorTemplate><br /><br /></SeparatorTemplate>
 			<FooterTemplate>
-				<asp:Button ID="btnAddRootCause" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<asp:Button ID="btnAddRootCause" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
 			</FooterTemplate>
 		</asp:Repeater>
-
-		<br />
-<%--		<div class="row">
-			<div class="col-xs-12 columnHeader">
-
-				<asp:Button ID="btnCase5AddAction" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" OnClick="btnAdd_Click" CommandArgument="correctiveaction" UseSubmitBehavior="true"></asp:Button>
-
-			</div>
-		</div>--%>
 
 	</div>
 

@@ -728,21 +728,22 @@ namespace SQM.Website
 				lblResults.Visible = true;
 			}
 
-			//if (!IsEditContext)
-			//{
-			//	incidentTypeId = SelectedTypeId;
-			//	incidentType = SelectedTypeText;
-			//	incidentDescription = tbDescription.Text;
-			//	selectedPlantId = SelectedLocationId;
-			//	currentFormStep = CurrentFormStep;
-			//}
-			//else
-			//{
-			//	incidentDescription = tbDescription.Text;
-			//	selectedPlantId = SelectedLocationId;
-			//	incidentTypeId = EditIncidentTypeId;
-			//	incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
-			//}
+			if (!IsEditContext)
+			{
+				incidentTypeId = SelectedTypeId;
+				incidentType = SelectedTypeText;
+				incidentDescription = tbDescription.Text;
+				selectedPlantId = SelectedLocationId;
+				currentFormStep = CurrentFormStep;
+			}
+			else
+			{
+				incidentDescription = tbDescription.Text;
+				selectedPlantId = SelectedLocationId;
+				incidentTypeId = EditIncidentTypeId;
+				incidentId = EditIncidentId;
+				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
+			}
 			
 			//questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, CurrentStep);
 			//UpdateAnswersFromForm();
@@ -961,6 +962,62 @@ namespace SQM.Website
 
 		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
 		{
+
+			//INCFORM_ROOT5Y theRootCauseForm = null;
+
+			var itemList = new List<INCFORM_ROOT5Y>();
+			int seqnumber = 0;
+
+			foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
+			{
+				var item = new INCFORM_ROOT5Y();
+
+				TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
+				Label lb = (Label)rootcauseitem.FindControl("lblItemSeq");
+
+				seqnumber = Convert.ToInt32(lb.Text);
+
+				item.ITEM_DESCRIPTION = tb.Text;
+				item.ITEM_SEQ = seqnumber;
+
+				itemList.Add(item);
+			}
+
+			SaveRootCauses(incidentId, itemList);
+
+//////////////////////////////////////////////////////////
+			//if (!IsEditContext)
+			//{
+			//	incidentTypeId = SelectedTypeId;
+			//	incidentType = SelectedTypeText;
+			//	incidentDescription = tbDescription.Text;
+			//	selectedPlantId = SelectedLocationId;
+			//	currentFormStep = CurrentFormStep;
+
+			//	theIncident = CreateNewIncident();
+			//	incidentId = theIncident.INCIDENT_ID;
+			//	theRootCauseForm = CreateNewPowerOutageDetails(incidentId);
+
+			//	EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+			//}
+			//else
+			//{
+			//	incidentDescription = tbDescription.Text;
+			//	selectedPlantId = SelectedLocationId;
+			//	incidentTypeId = EditIncidentTypeId;
+			//	incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
+
+			//	if (EditIncidentId > 0)
+			//	{
+			//		theIncident = UpdateIncident(EditIncidentId);
+			//		theRootCauseForm = UpdatePowerOutageDetails(incidentId);
+
+			//		if (Mode == IncidentMode.Incident)
+			//		{
+			//			EHSIncidentMgr.TryCloseIncident(incidentId);
+			//		}
+			//	}
+			//}
 
 		}
 
@@ -1253,8 +1310,30 @@ namespace SQM.Website
 			return powerOutageDetails;
 		}
 
-				// AddUpdateContainment(context, incidentId)
-				// AddUpdateContainmentDetails(context, incidentId);
+
+		protected void SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
+		{
+			using (var ctx = new PSsqmEntities())
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID = {0}", incidentId);
+			}
+
+			foreach (INCFORM_ROOT5Y item in itemList)
+			{
+				var newItem = new INCFORM_ROOT5Y();
+
+				newItem.INCIDENT_ID = incidentId;
+				newItem.ITEM_SEQ = item.ITEM_SEQ;
+				newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+				newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+				newItem.CREATE_DT = DateTime.Now;
+				newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+				newItem.LAST_UPD_DT = DateTime.Now;
+
+				entities.AddToINCFORM_ROOT5Y(newItem);
+				entities.SaveChanges();
+			}
+		}
 
 		protected void SaveAttachments(decimal incidentId)
 		{
@@ -1368,17 +1447,14 @@ namespace SQM.Website
 
 		protected void rptRootCause_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
-
 			if (e.CommandArgument == "AddAnother")
 			{
 
 				var itemList = new List<INCFORM_ROOT5Y>();
-
 				int seqnumber = 0;
 
 				foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
 				{
-				
 					var item = new INCFORM_ROOT5Y();
 					
 					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
@@ -1390,35 +1466,25 @@ namespace SQM.Website
 					item.ITEM_SEQ = seqnumber;
 
 					itemList.Add(item);
-
 				}
 
 				var emptyItem = new INCFORM_ROOT5Y();
 
 				emptyItem.ITEM_DESCRIPTION = "";
 				emptyItem.ITEM_SEQ = seqnumber + 1;
-
 				itemList.Add(emptyItem);
 
 				rptRootCause.DataSource = itemList;
-
 				rptRootCause.DataBind();
 
 				//return;
-
 			}
-
 			//if (e.CommandName == "UpdateDatabase")
 			//{
-
 			//	string newFirstName = ((TextBox)e.Item.FindControl("TextBox1")).Text;
-
 			//	string newLastName = ((TextBox)e.Item.FindControl("TextBox2")).Text;
-
 			//	// update
-
 			//}
-
 		}
 
 
