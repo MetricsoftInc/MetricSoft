@@ -397,7 +397,7 @@
 
 		<div class="row">
 			<div class="col-xs-12" style="padding: 5px">
-				<asp:Label ID="lblResults" runat="server" Font-Bold="true" CssClass="textStd"></asp:Label>
+				<asp:Label ID="lblResults" runat="server" ForeColor="ForestGreen" Font-Bold="true" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
 

@@ -408,7 +408,6 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
-					//PopulateRootCauses(IncidentId);
 					rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
 					rptRootCause.DataBind();
 					break;
@@ -590,9 +589,13 @@ namespace SQM.Website
 
 					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
+					RequiredFieldValidator rvf = (RequiredFieldValidator)e.Item.FindControl("rfvRootCause");
 
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
+
+					if (Convert.ToInt32(lb.Text) > 5)
+						rvf.Enabled = false;
 
 					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
 					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
@@ -629,6 +632,10 @@ namespace SQM.Website
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
+					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
+					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rvfContainPerson");
+					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfStartDate");
+
 
 					lb.Text = contain.ITEM_SEQ.ToString();
 					tbca.Text = contain.ITEM_DESCRIPTION;
@@ -636,6 +643,13 @@ namespace SQM.Website
 					sd.SelectedDate = contain.START_DATE;
 					cd.SelectedDate = contain.COMPLETION_DATE;
 					ic.Checked = contain.IsCompleted;
+
+					if (Convert.ToInt32(lb.Text) > 2)
+					{
+						rvfca.Enabled = false;
+						rvfcp.Enabled = false;
+						rvfsd.Enabled = false;
+					}
 
 					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
 					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
@@ -706,7 +720,8 @@ namespace SQM.Website
 
 				Save(false);
 
-				lblResults.Text = "Incident information was successfully saved";
+				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
 
 				InitializeForm(CurrentStep);
 			}
@@ -746,7 +761,8 @@ namespace SQM.Website
 
 				Save(false);
 
-				lblResults.Text = "Incident information was successfully saved";
+				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
 
 				CurrentStep = CurrentStep + 1;
 					
@@ -1568,15 +1584,11 @@ namespace SQM.Website
 					
 					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
 					Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
-					//RequiredFieldValidator rvf = (RequiredFieldValidator)rootcauseitem.FindControl("rfvRootCause");
 
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.ITEM_DESCRIPTION = tb.Text;
 					item.ITEM_SEQ = seqnumber;
-
-					//if (rptRootCause.Items.Count >= 5)
-						//rvf.Enabled = false;
 
 					itemList.Add(item);
 				}
@@ -1619,10 +1631,6 @@ namespace SQM.Website
 					RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
 
-					//RequiredFieldValidator rvfca = (RequiredFieldValidator)containitem.FindControl("rfvContainAction");
-					//RequiredFieldValidator rvfcp = (RequiredFieldValidator)containitem.FindControl("rvfContainPerson");
-					//RequiredFieldValidator rvfsd = (RequiredFieldValidator)containitem.FindControl("rvfStartDate");
-
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.ITEM_DESCRIPTION = tbca.Text;
@@ -1646,18 +1654,6 @@ namespace SQM.Website
 
 
 				itemList.Add(emptyItem);
-
-				//Panel pnl = (Panel)Page.FindControl("pnlContain");
-				//if (rptContain.Items.Count >= 2)
-				//{
-				//	RequiredFieldValidator rvfca = (RequiredFieldValidator)pnl.FindControl("rfvContainAction");
-				//	RequiredFieldValidator rvfcp = (RequiredFieldValidator)pnl.FindControl("rvfContainPerson");
-				//	RequiredFieldValidator rvfsd = (RequiredFieldValidator)pnl.FindControl("rvfStartDate");
-				//	rvfca.Enabled = false;
-				//	rvfcp.Enabled = false;
-				//	rvfsd.Enabled = false;
-				//}
-
 
 				rptContain.DataSource = itemList;
 				rptContain.DataBind();
