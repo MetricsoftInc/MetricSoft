@@ -420,6 +420,8 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
+					rptAction.DataBind();
 					break;
 				case "INCFORM_APPROVAL":
 					pnlBaseForm.Visible = false;
@@ -526,6 +528,16 @@ namespace SQM.Website
 			BuildFilteredUsersDropdownList();
 		}
 
+		protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		{
+			// Add JobCode and any other related logic
+		}
+
+		protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		{
+			// Add JobCode and any other related logic
+		}
+
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			//selectedShift = rddlShift.SelectedValue;
@@ -594,24 +606,8 @@ namespace SQM.Website
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
 
-					if (Convert.ToInt32(lb.Text) > 5)
+					if (rootCause.ITEM_SEQ > 5)
 						rvf.Enabled = false;
-
-					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
-					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
-					//hf.Value = rootCause.ITERATION_NO.ToString();
-					//Button btn = (Button)e.Item.FindControl("btnCase5AddAction");
-					//btn.CommandArgument = hf.Value;
-
-					//GridView gv = (GridView)e.Item.FindControl("gvActionList");
-					//if (CaseCtl().PageMode == PageUseMode.ViewOnly)
-					//{
-					//	gv.GridLines = GridLines.Both;
-					//	gv.CssClass = "Grid";
-					//}
-					//gv.DataSource = CaseCtl().problemCase.ProbCase.PROB_CAUSE_ACTION.Where(l => l.CAUSE_NO == rootCause.ITERATION_NO).OrderBy(l => l.ACTION_NO).ToList();
-					//gv.DataBind();
-
 				}
 				catch { }
 			}
@@ -627,50 +623,98 @@ namespace SQM.Website
 					INCFORM_CONTAIN contain = (INCFORM_CONTAIN)e.Item.DataItem;
 
 					TextBox tbca = (TextBox)e.Item.FindControl("tbContainAction");
-					TextBox tbcp = (TextBox)e.Item.FindControl("tbContainPerson");
+					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlContainPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
 					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
-					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rvfContainPerson");
+					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvContainPerson");
 					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfStartDate");
 
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					var personList = new List<PERSON>();
+					//if (CurrentStep == 1)
+						//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+					//else if (CurrentStep == 0)
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
 
+					if (contain.ASSIGNED_PERSON_ID != null)
+						rddlp.SelectedValue = contain.ASSIGNED_PERSON_ID.ToString();
 					lb.Text = contain.ITEM_SEQ.ToString();
 					tbca.Text = contain.ITEM_DESCRIPTION;
-					tbcp.Text = contain.ASSIGNED_PERSON;
 					sd.SelectedDate = contain.START_DATE;
 					cd.SelectedDate = contain.COMPLETION_DATE;
 					ic.Checked = contain.IsCompleted;
 
-					if (Convert.ToInt32(lb.Text) > 2)
-					{
+					if (contain.ITEM_SEQ > 2)
+					{ 	
 						rvfca.Enabled = false;
+						rvfcp.InitialValue = null;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
-					}
-
-					//SQMBasePage.DisplayControlValue(tb, rootCause.ITEM_DESCRIPTION, "", "");
-					//HiddenField hf = (HiddenField)e.Item.FindControl("hfRelatedCause");
-					//hf.Value = rootCause.ITERATION_NO.ToString();
-					//Button btn = (Button)e.Item.FindControl("btnCase5AddAction");
-					//btn.CommandArgument = hf.Value;
-
-					//GridView gv = (GridView)e.Item.FindControl("gvActionList");
-					//if (CaseCtl().PageMode == PageUseMode.ViewOnly)
-					//{
-					//	gv.GridLines = GridLines.Both;
-					//	gv.CssClass = "Grid";
-					//}
-					//gv.DataSource = CaseCtl().problemCase.ProbCase.PROB_CAUSE_ACTION.Where(l => l.CAUSE_NO == rootCause.ITERATION_NO).OrderBy(l => l.ACTION_NO).ToList();
-					//gv.DataBind();
-
+					} 
+				
 				}
 				catch { }
 			}
 		}
 
+		public void rptAction_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
+
+					TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
+					//TextBox tbcp = (TextBox)e.Item.FindControl("tbFinalPerson");
+					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
+					Label lb = (Label)e.Item.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
+					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
+					CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
+					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
+					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
+					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
+
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					var personList = new List<PERSON>();
+					//if (CurrentStep == 1)
+					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+					//else if (CurrentStep == 0)
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
+
+					if (action.ASSIGNED_PERSON_ID != null)
+						rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+					
+					lb.Text = action.ITEM_SEQ.ToString();
+					tbca.Text = action.ITEM_DESCRIPTION;
+					sd.SelectedDate = action.START_DATE;
+					cd.SelectedDate = action.COMPLETION_DATE;
+					ic.Checked = action.IsCompleted;
+
+					if (action.ITEM_SEQ > 2)
+					{
+						rvfca.Enabled = false;
+						rvfcp.Enabled = false;
+						rvfsd.Enabled = false;
+					}
+				}
+				catch { }
+			}
+		}
 
 		//public static object DisplayControlValue(object oCtl, string value, string "", string "")
 		//{
@@ -1023,25 +1067,60 @@ namespace SQM.Website
 				var item = new INCFORM_CONTAIN();
 
 				TextBox tbca = (TextBox)containtem.FindControl("tbContainAction");
-				TextBox tbcp = (TextBox)containtem.FindControl("tbContainPerson");
+				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlContainPerson");
 				Label lb = (Label)containtem.FindControl("lbItemSeq");
 				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpStartDate");
 				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
 				CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
 
-				seqnumber = Convert.ToInt32(lb.Text);
+					seqnumber = seqnumber + 1;
 
-				item.ITEM_DESCRIPTION = tbca.Text;
-				item.ASSIGNED_PERSON = tbcp.Text;
-				item.ITEM_SEQ = seqnumber;
-				item.START_DATE = sd.SelectedDate;
-				item.COMPLETION_DATE = cd.SelectedDate;
-				item.IsCompleted = ic.Checked;
+					item.ITEM_DESCRIPTION = tbca.Text;
+					item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
+					item.ITEM_SEQ = seqnumber;
+					item.START_DATE = sd.SelectedDate;
+					item.COMPLETION_DATE = cd.SelectedDate;
+					item.IsCompleted = ic.Checked;
 
-				itemList.Add(item);
+					itemList.Add(item);
+				//}
+				
 			}
 
-			SaveContainment(incidentId, itemList);
+			if(itemList.Count > 0 )
+				SaveContainment(incidentId, itemList);
+		}
+
+		protected void AddUpdateINCFORM_ACTION(decimal incidentId)
+		{
+			var itemList = new List<INCFORM_ACTION>();
+			int seqnumber = 0;
+
+			foreach (RepeaterItem containtem in rptAction.Items)
+			{
+				var item = new INCFORM_ACTION();
+
+				TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
+				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlActionPerson");
+				Label lb = (Label)containtem.FindControl("lbItemSeq");
+				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
+				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
+				CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
+
+					seqnumber = seqnumber + 1;
+
+					item.ITEM_DESCRIPTION = tbca.Text;
+					item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
+					item.ITEM_SEQ = seqnumber;
+					item.START_DATE = sd.SelectedDate;
+					item.COMPLETION_DATE = cd.SelectedDate;
+					item.IsCompleted = ic.Checked;
+
+					itemList.Add(item);
+			}
+
+			if (itemList.Count > 0)
+				SaveActions(incidentId, itemList);
 		}
 
 		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
@@ -1059,61 +1138,51 @@ namespace SQM.Website
 				TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
 				Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
 
-				seqnumber = Convert.ToInt32(lb.Text);
+				if (!String.IsNullOrEmpty(tb.Text))
+				{
+					seqnumber = seqnumber + 1;
 
-				item.ITEM_DESCRIPTION = tb.Text;
-				item.ITEM_SEQ = seqnumber;
+					item.ITEM_DESCRIPTION = tb.Text;
+					item.ITEM_SEQ = seqnumber;
 
-				itemList.Add(item);
+					itemList.Add(item);
+				}
 			}
 
 			SaveRootCauses(incidentId, itemList);
-
-//////////////////////////////////////////////////////////
-			//if (!IsEditContext)
-			//{
-			//	incidentTypeId = SelectedTypeId;
-			//	incidentType = SelectedTypeText;
-			//	incidentDescription = tbDescription.Text;
-			//	selectedPlantId = SelectedLocationId;
-			//	currentFormStep = CurrentFormStep;
-
-			//	theIncident = CreateNewIncident();
-			//	incidentId = theIncident.INCIDENT_ID;
-			//	theRootCauseForm = CreateNewPowerOutageDetails(incidentId);
-
-			//	EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
-			//}
-			//else
-			//{
-			//	incidentDescription = tbDescription.Text;
-			//	selectedPlantId = SelectedLocationId;
-			//	incidentTypeId = EditIncidentTypeId;
-			//	incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
-
-			//	if (EditIncidentId > 0)
-			//	{
-			//		theIncident = UpdateIncident(EditIncidentId);
-			//		theRootCauseForm = UpdatePowerOutageDetails(incidentId);
-
-			//		if (Mode == IncidentMode.Incident)
-			//		{
-			//			EHSIncidentMgr.TryCloseIncident(incidentId);
-			//		}
-			//	}
-			//}
-
-		}
-
-		protected void AddUpdateINCFORM_ACTION(decimal incidentId)
-		{
-
 		}
 
 		protected void AddUpdateINCFORM_APPROVAL(decimal incidentId)
 		{
+			//var itemList = new List<INCFORM_ACTION>();
+			//int seqnumber = 0;
 
+			//foreach (RepeaterItem containtem in rptAction.Items)
+			//{
+			//	var item = new INCFORM_ACTION();
+
+			//	TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
+			//	TextBox tbcp = (TextBox)containtem.FindControl("tbFinalPerson");
+			//	Label lb = (Label)containtem.FindControl("lbItemSeq");
+			//	RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
+			//	RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
+			//	CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
+
+			//	seqnumber = Convert.ToInt32(lb.Text);
+
+			//	item.ITEM_DESCRIPTION = tbca.Text;
+			//	item.ASSIGNED_PERSON = tbcp.Text;
+			//	item.ITEM_SEQ = seqnumber;
+			//	item.START_DATE = sd.SelectedDate;
+			//	item.COMPLETION_DATE = cd.SelectedDate;
+			//	item.IsCompleted = ic.Checked;
+
+			//	itemList.Add(item);
+			//}
+
+			//SaveActions(incidentId, itemList);
 		}
+
 
 
 
@@ -1414,7 +1483,7 @@ namespace SQM.Website
 					newItem.INCIDENT_ID = incidentId;
 					newItem.ITEM_SEQ = seq;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					newItem.ASSIGNED_PERSON = item.ASSIGNED_PERSON;
+					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
 					newItem.START_DATE = item.START_DATE;
 					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
 					newItem.IsCompleted = item.IsCompleted;
@@ -1424,6 +1493,42 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = DateTime.Now;
 
 					entities.AddToINCFORM_CONTAIN(newItem);
+					entities.SaveChanges();
+				}
+			}
+		}
+
+
+		private void SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
+		{
+			using (var ctx = new PSsqmEntities())
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID = {0}", incidentId);
+			}
+
+			int seq = 0;
+
+			foreach (INCFORM_ACTION item in itemList)
+			{
+				var newItem = new INCFORM_ACTION();
+
+				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+				{
+					seq = seq + 1;
+
+					newItem.INCIDENT_ID = incidentId;
+					newItem.ITEM_SEQ = seq;
+					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
+					newItem.START_DATE = item.START_DATE;
+					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
+					newItem.IsCompleted = item.IsCompleted;
+					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.CREATE_DT = DateTime.Now;
+					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.LAST_UPD_DT = DateTime.Now;
+
+					entities.AddToINCFORM_ACTION(newItem);
 					entities.SaveChanges();
 				}
 			}
@@ -1625,16 +1730,30 @@ namespace SQM.Website
 					var item = new INCFORM_CONTAIN();
 
 					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
-					TextBox tbcp = (TextBox)containitem.FindControl("tbContainPerson");
+					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
 					RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
 
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					var personList = new List<PERSON>();
+					//if (CurrentStep == 1)
+					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+					//else if (CurrentStep == 0)
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
+
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.ITEM_DESCRIPTION = tbca.Text;
-					item.ASSIGNED_PERSON = tbcp.Text;
 					item.ITEM_SEQ = seqnumber;
 					item.START_DATE = sd.SelectedDate;
 					item.COMPLETION_DATE = cd.SelectedDate;
@@ -1647,7 +1766,70 @@ namespace SQM.Website
 
 				emptyItem.ITEM_DESCRIPTION = "";
 				emptyItem.ITEM_SEQ = seqnumber + 1;
-				emptyItem.ASSIGNED_PERSON = "";
+				emptyItem.ASSIGNED_PERSON_ID = null;
+				emptyItem.START_DATE = null;
+				emptyItem.COMPLETION_DATE = null;
+				emptyItem.IsCompleted = false;
+
+				itemList.Add(emptyItem);
+
+				rptContain.DataSource = itemList;
+				rptContain.DataBind();
+
+				//return;
+			}
+		}
+
+		protected void rptAction_ItemCommand(object source, RepeaterCommandEventArgs e)
+		{
+			if (e.CommandArgument == "AddAnother")
+			{
+
+				var itemList = new List<INCFORM_ACTION>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem actionitem in rptAction.Items)
+				{
+					var item = new INCFORM_ACTION();
+
+					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
+					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
+					Label lb = (Label)actionitem.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
+					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
+					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
+
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					var personList = new List<PERSON>();
+					//if (CurrentStep == 1)
+					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+					//else if (CurrentStep == 0)
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
+
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+
+					seqnumber = Convert.ToInt32(lb.Text);
+
+					item.ITEM_DESCRIPTION = tbca.Text;
+					item.ITEM_SEQ = seqnumber;
+					item.START_DATE = sd.SelectedDate;
+					item.COMPLETION_DATE = cd.SelectedDate;
+					item.IsCompleted = ic.Checked;
+
+					itemList.Add(item);
+				}
+
+				var emptyItem = new INCFORM_ACTION();
+
+				emptyItem.ITEM_DESCRIPTION = "";
+				emptyItem.ITEM_SEQ = seqnumber + 1;
+				emptyItem.ASSIGNED_PERSON_ID = null;
 				emptyItem.START_DATE = null;
 				emptyItem.COMPLETION_DATE = null;
 				emptyItem.IsCompleted = false;
@@ -1655,8 +1837,8 @@ namespace SQM.Website
 
 				itemList.Add(emptyItem);
 
-				rptContain.DataSource = itemList;
-				rptContain.DataBind();
+				rptAction.DataSource = itemList;
+				rptAction.DataBind();
 
 				//return;
 			}

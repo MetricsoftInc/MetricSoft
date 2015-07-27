@@ -246,8 +246,8 @@
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more">
-						<asp:TextBox ID="tbContainPerson" Width="200" SkinID="Metro" runat="server"></asp:TextBox>
-						<asp:RequiredFieldValidator runat="server" ID="rvfContainPerson" ControlToValidate="tbContainPerson" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+						<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" CssClass="WarnIfChanged" Width="198" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged"></telerik:RadDropDownList>
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]"  ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more"> 
@@ -263,9 +263,7 @@
 					<div class="col-xs-12  col-sm-1 text-left-more">
 						<span style="padding-bottom:0"></span><asp:CheckBox ID="cbIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
 					</div>
-
-						<br  />
-
+					<br  />
 				</div>
 			</ItemTemplate>
 			<SeparatorTemplate><br /><br /></SeparatorTemplate>
@@ -339,27 +337,86 @@
 
 <asp:Panel ID="pnlAction" Visible="false" runat="server">
 
-
 	<br />
-
 
 	<div class="container-fluid">
 
-		<%-- TESTING --%>
-		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Due Date:<span class="requiredStarFloat">*</span></span>
-			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
+		<asp:Repeater runat="server" ID="rptAction" ClientIDMode="AutoID" OnItemDataBound="rptAction_OnItemDataBound" OnItemCommand="rptAction_ItemCommand">
+
+			<HeaderTemplate>
+					
+				<div class="row">
+
+					<div class="col-sm-2 text-center">
+						<span><b>Action</b></span>
+					</div>
+
+					<div class="col-sm-3  text-center">
+						<span><b>Assigned To</b></span>
+					</div>
+
+					<div class="col-sm-1 text-left-more">
+						<span><b>Start Date</b></span>
+					</div>
+
+					<div class="col-sm-2 text-center">
+						<span style="padding-left:10px;"><b>&nbsp;&nbsp;Completion Date</b></span>
+					</div>
+
+				</div>
 				<br />
-				<span>Due Date:&nbsp;<span class="requiredStar">*</span></span>
-			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDatePicker ID="RadDatePicker2" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDatePicker>
-		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator4" ControlToValidate="RadDatePicker1" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
-			</div>
-		</div>
-	</div>
+			</HeaderTemplate>
+			<ItemTemplate>
+				<div class="row-fluid">
+
+					<div class="col-xs-12  col-sm-3 text-left-more">
+						<span >Action&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;
+						<asp:TextBox ID="tbFinalAction" Width="275" SkinID="Metro" runat="server"></asp:TextBox></span>
+						<asp:RequiredFieldValidator runat="server" ID="rfvFinalAction" ControlToValidate="tbFinalAction" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 text-left-more">
+						<telerik:RadDropDownList ID="rddlActionPerson" Skin="Metro" CssClass="WarnIfChanged" Width="198" runat="server" OnSelectedIndexChanged="rddlActionPerson_SelectedIndexChanged"></telerik:RadDropDownList>
+						<asp:RequiredFieldValidator runat="server" ID="rfvActionPerson" ControlToValidate="rddlActionPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 text-left-more"> 
+						<telerik:RadDatePicker ID="rdpFinalStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
+						<asp:RequiredFieldValidator runat="server" ID="rvfFinalStartDate" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+					</div>
+
+					<div class="col-xs-12 col-sm-2 text-left-more">
+						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
+					</div>
+
+
+					<div class="col-xs-12  col-sm-1 text-left-more">
+						<span style="padding-bottom:0"></span><asp:CheckBox ID="cbFinalIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
+					</div>
+					<br  />
+				</div>
+			</ItemTemplate>
+			<SeparatorTemplate><br /><br /></SeparatorTemplate>
+			<FooterTemplate>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
+			</FooterTemplate>
+		</asp:Repeater>
+
+	</div>   
 
 </asp:Panel>
 
@@ -401,7 +458,6 @@
 			</div>
 		</div>
 
-<%--		<div class="clearfix visible-xs"></div>--%>
 		<br class="visible-xs-block" />
 
 		<div class="row">
@@ -435,9 +491,6 @@
 		
  </div>
 	
-	
-
-
  </asp:Panel>
 
 

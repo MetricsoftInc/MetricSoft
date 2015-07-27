@@ -772,10 +772,11 @@ namespace SQM.Website
 		}
 
 
+
 		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId)
 		{
-			var containments = new List<INCFORM_CONTAIN>();
 			PSsqmEntities entities = new PSsqmEntities();
+			var containments = new List<INCFORM_CONTAIN>();
 
 			containments = (from c in entities.INCFORM_CONTAIN
 						  where c.INCIDENT_ID == incidentId
@@ -783,17 +784,14 @@ namespace SQM.Website
 
 			if (containments.Count() < 2)
 			{
-
 				int itemsNeeded = 2 - containments.Count();
-
-				INCFORM_CONTAIN contain = null;
-
 				int seq = containments.Count(); ;
+				INCFORM_CONTAIN contain = null;
 
 				for (int i = 1; i < itemsNeeded + 1; i++)
 				{
 					contain = new INCFORM_CONTAIN();
-
+			
 					seq = seq + 1;
 					contain.ITEM_SEQ = seq;
 					contain.ITEM_DESCRIPTION = "";
@@ -806,11 +804,42 @@ namespace SQM.Website
 				}
 			}
 
-
-
 			return containments;
 		}
 
+		public static List<INCFORM_ACTION> GetFinalActionList(decimal incidentId)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+			var actions = new List<INCFORM_ACTION>();
+
+			actions = (from c in entities.INCFORM_ACTION
+							where c.INCIDENT_ID == incidentId
+							select c).ToList();
+
+			if (actions.Count() < 2)
+			{
+				int itemsNeeded = 2 - actions.Count();
+				int seq = actions.Count(); ;
+				INCFORM_ACTION action = null;
+
+				for (int i = 1; i < itemsNeeded + 1; i++)
+				{
+					action = new INCFORM_ACTION();
+
+					seq = seq + 1;
+					action.ITEM_SEQ = seq;
+					action.ITEM_DESCRIPTION = "";
+					action.ASSIGNED_PERSON = "";
+					action.START_DATE = DateTime.Now;
+					action.COMPLETION_DATE = null;
+					action.IsCompleted = false;
+
+					actions.Add(action);
+				}
+			}
+
+			return actions;
+		}
 
 
 		public static void CreateOrUpdateTask(decimal incidentId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
