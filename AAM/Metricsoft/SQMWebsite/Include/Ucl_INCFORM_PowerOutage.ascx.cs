@@ -432,6 +432,8 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = false;
 					btnClose.Visible = true;
+					rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId);
+					rptApprovals.DataBind();
 					break;
 			}
 
@@ -711,6 +713,33 @@ namespace SQM.Website
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
+				}
+				catch { }
+			}
+		}
+
+		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					INCFORM_APPROVAL approval = (INCFORM_APPROVAL)e.Item.DataItem;
+
+					Label lba = (Label)e.Item.FindControl("lbApprover");
+					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
+					Label lb = (Label)e.Item.FindControl("lbItemSeq");
+					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
+					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
+					
+					lb.Text = approval.ITEM_SEQ.ToString();
+					lba.Text = approval.APPROVER_PERSON;
+					lbm.Text = approval.APPROVAL_MESSAGE;
+					cba.Checked = approval.IsAccepted;
+					rda.SelectedDate = approval.APPROVAL_DATE;
+
+					//if (rootCause.ITEM_SEQ > 5)
+					//	rvf.Enabled = false;
 				}
 				catch { }
 			}

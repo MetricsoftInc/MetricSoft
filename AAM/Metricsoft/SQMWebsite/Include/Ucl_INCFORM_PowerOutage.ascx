@@ -427,22 +427,42 @@
 
 	<div class="container-fluid">
 
-		<%-- TESTING --%>
-		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Safety Manager:<span class="requiredStarFloat">*</span></span>
-			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
-				<br />
-				<span>Safety Manager:&nbsp;<span class="requiredStar">*</span></span>
-			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="TextBox2" Width="50px" SkinID="Metro" runat="server"></asp:TextBox>
-		        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator5" ControlToValidate="TextBox2" Display="None" ErrorMessage="Required" ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
-			</div>
-		</div>
-	</div>
+		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound">
+			<HeaderTemplate></HeaderTemplate>
+			<ItemTemplate>
+				<div class="row">
+					<div class="col-xs-12 col-sm-2 text-left">
+						<span><b>Approver&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</b>&nbsp;&nbsp;
+							<asp:Label ID="lbApprover" Width="45%" SkinID="Metro" runat="server"></asp:Label></span>
+					</div>
+					<div class="col-xs-12 col-sm-3  text-left">
+						<asp:Label ID="lbApproveMessage" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:Label>
+					</div>
+					<div class="col-xs-12  col-sm-1 text-left">
+						<span><asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="false" Text="Accepted" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
+					</div>
+					<div class="col-xs-12 col-sm-2 text-left">
+						<span>Date Accepted:&nbsp;
+						<telerik:RadDatePicker ID="rdpAcceptDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="120" runat="server"></telerik:RadDatePicker></span>
+					</div>
+				</div>
+			</ItemTemplate>
+			<SeparatorTemplate><br /><br /></SeparatorTemplate>
+			<FooterTemplate>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<br />
+					</div>
+				</div>
+			</FooterTemplate>
+		</asp:Repeater>
 
+	</div>
 </asp:Panel>
 
 

@@ -841,6 +841,51 @@ namespace SQM.Website
 			return actions;
 		}
 
+				public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
+		{
+
+			var approvals = new List<INCFORM_APPROVAL>();
+			PSsqmEntities entities = new PSsqmEntities();
+
+			approvals = (from c in entities.INCFORM_APPROVAL
+						  where c.INCIDENT_ID == incidentId
+						  select c).ToList();
+
+			if (approvals.Count() < 2)
+			{
+				int itemsNeeded = 2 - approvals.Count();
+
+				INCFORM_APPROVAL approval = null;
+
+				int seq = approvals.Count();
+
+				for (int i = 1; i < itemsNeeded + 1; i++)
+				{
+					approval = new INCFORM_APPROVAL();
+
+					seq = seq + 1;
+					approval.ITEM_SEQ = seq;
+
+					// TESTING ................START......................
+					if (seq ==1)
+						approval.APPROVER_PERSON = "Mathis, Robert";
+					else
+						approval.APPROVER_PERSON = "Williams, Mark";
+					approval.APPROVAL_MESSAGE = "I have reviewed .... Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se..";
+					// TESTING ................END ........................
+
+					//approval.APPROVER_PERSON = "";
+					//approval.APPROVAL_MESSAGE = "";
+					approval.APPROVER_PERSON_ID = null; 
+					approval.IsAccepted = false;
+					approval.APPROVAL_DATE = null;
+					
+					approvals.Add(approval);
+				}
+			}
+
+			return approvals;
+		}
 
 		public static void CreateOrUpdateTask(decimal incidentId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
 		{
