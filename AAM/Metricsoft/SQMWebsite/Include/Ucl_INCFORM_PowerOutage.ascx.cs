@@ -1073,22 +1073,22 @@ namespace SQM.Website
 				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
 				CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
 
-					seqnumber = seqnumber + 1;
+				seqnumber = seqnumber + 1;
 
-					item.ITEM_DESCRIPTION = tbca.Text;
-					item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
-					item.ITEM_SEQ = seqnumber;
-					item.START_DATE = sd.SelectedDate;
-					item.COMPLETION_DATE = cd.SelectedDate;
-					item.IsCompleted = ic.Checked;
+				item.ITEM_DESCRIPTION = tbca.Text;
+				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
+				item.ITEM_SEQ = seqnumber;
+				item.START_DATE = sd.SelectedDate;
+				item.COMPLETION_DATE = cd.SelectedDate;
+				item.IsCompleted = ic.Checked;
 
-					itemList.Add(item);
-				//}
+				itemList.Add(item);
 				
 			}
 
 			if(itemList.Count > 0 )
 				SaveContainment(incidentId, itemList);
+
 		}
 
 		protected void AddUpdateINCFORM_ACTION(decimal incidentId)
@@ -1107,20 +1107,21 @@ namespace SQM.Website
 				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
 				CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
 
-					seqnumber = seqnumber + 1;
+				seqnumber = seqnumber + 1;
 
-					item.ITEM_DESCRIPTION = tbca.Text;
-					item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
-					item.ITEM_SEQ = seqnumber;
-					item.START_DATE = sd.SelectedDate;
-					item.COMPLETION_DATE = cd.SelectedDate;
-					item.IsCompleted = ic.Checked;
+				item.ITEM_DESCRIPTION = tbca.Text;
+				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
+				item.ITEM_SEQ = seqnumber;
+				item.START_DATE = sd.SelectedDate;
+				item.COMPLETION_DATE = cd.SelectedDate;
+				item.IsCompleted = ic.Checked;
 
-					itemList.Add(item);
+				itemList.Add(item);
 			}
 
 			if (itemList.Count > 0)
 				SaveActions(incidentId, itemList);
+
 		}
 
 		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
