@@ -240,20 +240,23 @@
 				<div class="row-fluid">
 
 					<div class="col-xs-12  col-sm-3 text-left-more">
-						<span >Action&nbsp;<asp:Label ID="lblItemSeq" runat="server"></asp:Label>:&nbsp;
+						<span >Action&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;
 						<asp:TextBox ID="tbContainAction" Width="275" SkinID="Metro" runat="server"></asp:TextBox></span>
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more">
 						<asp:TextBox ID="tbContainPerson" Width="200" SkinID="Metro" runat="server"></asp:TextBox>
+						<asp:RequiredFieldValidator runat="server" ID="rvfContainPerson" ControlToValidate="tbContainPerson" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more"> 
-						<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="175" runat="server"></telerik:RadDatePicker>
+						<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
+						<asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more">
-						<telerik:RadDatePicker ID="rdpCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="175" runat="server"></telerik:RadDatePicker>
+						<telerik:RadDatePicker ID="rdpCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
 					</div>
 
 
@@ -300,10 +303,11 @@
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-xs-12 text-left">
-						<span>Why&nbsp;<asp:Label ID="lblItemSeq" runat="server"></asp:Label>:</span>
+						<span>Why&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
 					</div>
 					<div class="col-xs-12 text-left">
 						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="50%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 				</div>
 			</ItemTemplate>

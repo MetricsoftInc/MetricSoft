@@ -740,6 +740,7 @@ namespace SQM.Website
 
 		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)
 		{
+
 			var rootcauses = new List<INCFORM_ROOT5Y>();
 			PSsqmEntities entities = new PSsqmEntities();
 
@@ -747,6 +748,26 @@ namespace SQM.Website
 						where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
+			if (rootcauses.Count() < 5)
+			{
+				int itemsNeeded = 5 - rootcauses.Count();
+
+				INCFORM_ROOT5Y rootcause = null;
+
+				int seq = rootcauses.Count();
+
+				for (int i = 1; i < itemsNeeded + 1; i++)
+				{
+					rootcause = new INCFORM_ROOT5Y();
+
+					seq = seq + 1;
+					rootcause.ITEM_SEQ = seq;
+					rootcause.ITEM_DESCRIPTION = "";
+
+					rootcauses.Add(rootcause);
+				}
+			}
+			
 			return rootcauses;
 		}
 
@@ -759,6 +780,33 @@ namespace SQM.Website
 			containments = (from c in entities.INCFORM_CONTAIN
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
+
+			if (containments.Count() < 2)
+			{
+
+				int itemsNeeded = 2 - containments.Count();
+
+				INCFORM_CONTAIN contain = null;
+
+				int seq = containments.Count(); ;
+
+				for (int i = 1; i < itemsNeeded + 1; i++)
+				{
+					contain = new INCFORM_CONTAIN();
+
+					seq = seq + 1;
+					contain.ITEM_SEQ = seq;
+					contain.ITEM_DESCRIPTION = "";
+					contain.ASSIGNED_PERSON = "";
+					contain.START_DATE = DateTime.Now;
+					contain.COMPLETION_DATE = null;
+					contain.IsCompleted = false;
+
+					containments.Add(contain);
+				}
+			}
+
+
 
 			return containments;
 		}

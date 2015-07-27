@@ -42,7 +42,7 @@ namespace SQM.Website
 		protected DateTime incidentDate;
 		protected decimal incidentTypeId;
 		protected string incidentType;
-
+		
 		PSsqmEntities entities;
 		List<EHSIncidentQuestion> questions;
 		List<EHSFormControlStep> formSteps;
@@ -50,7 +50,9 @@ namespace SQM.Website
 
 		//public bool IsEditContext { get; set; }
 		public decimal IncidentId { get; set; }
+		public decimal theincidentId { get; set; }
 		public RadGrid EditControlGrid { get; set; }
+		
 		//public bool IsNewIncident { get; set; }
 
 		//public Ucl_EHSIncidentDetails IncidentDetails
@@ -108,6 +110,12 @@ namespace SQM.Website
 		{
 			get { return ViewState["SelectedTypeId"] == null ? 0 : (decimal)ViewState["SelectedTypeId"]; }
 			set { ViewState["SelectedTypeId"] = value; }
+		}
+
+		public decimal NewIncidentId
+		{
+			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
+			set { ViewState["NewIncidentId"] = value; }
 		}
 
 		protected decimal EditIncidentTypeId
@@ -400,6 +408,7 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					//PopulateRootCauses(IncidentId);
 					rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
 					rptRootCause.DataBind();
 					break;
@@ -426,6 +435,18 @@ namespace SQM.Website
 			}
 
 		}
+
+		//private void PopulateRootCauses(decimal IncidentId)
+		//{
+		//	var rootcauses = new List<INCFORM_ROOT5Y>();
+		//	PSsqmEntities entities = new PSsqmEntities();
+
+		//	rootcauses = EHSIncidentMgr.GetRootCauseList(IncidentId);
+
+
+		//	rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
+		//	rptRootCause.DataBind();
+		//}
 
 		void PopulateLocationDropDown()
 		{
@@ -568,7 +589,7 @@ namespace SQM.Website
 					INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem; 
 
 					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
-					Label lb = (Label)e.Item.FindControl("lblItemSeq");
+					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
@@ -604,7 +625,7 @@ namespace SQM.Website
 
 					TextBox tbca = (TextBox)e.Item.FindControl("tbContainAction");
 					TextBox tbcp = (TextBox)e.Item.FindControl("tbContainPerson");
-					Label lb = (Label)e.Item.FindControl("lblItemSeq");
+					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
@@ -710,6 +731,7 @@ namespace SQM.Website
 
 			if (Page.IsValid)
 			{
+
 				lblResults.Text = "";
 				entities = new PSsqmEntities();
 
@@ -722,10 +744,9 @@ namespace SQM.Website
 					localDescription = tbLocalDescription.Text;
 				productImpact = tbProdImpact.Text;
 
-
-
-
 				Save(false);
+
+				lblResults.Text = "Incident information was successfully saved";
 
 				CurrentStep = CurrentStep + 1;
 					
@@ -852,18 +873,26 @@ namespace SQM.Website
 				switch (savingForm)
 				{
 					case "INCFORM_POWEROUTAGE":
-						AddUpdateINCFORM_POWEROUTAGE(incidentId);
+						NewIncidentId = AddUpdateINCFORM_POWEROUTAGE(incidentId);
 						break;
 					case "INCFORM_CONTAIN":
+						if (incidentId == 0)
+							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 						AddUpdateINCFORM_CONTAIN(incidentId);
 						break;
 					case "INCFORM_ROOT5Y":
+						if (incidentId == 0)
+							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 						AddUpdateINCFORM_ROOT5Y(incidentId);
 						break;
 					case "INCFORM_ACTION":
+						if (incidentId == 0)
+							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 						AddUpdateINCFORM_ACTION(incidentId);
 						break;
 					case "INCFORM_APPROVAL":
+						if (incidentId == 0)
+							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 						AddUpdateINCFORM_APPROVAL(incidentId);
 						break;
 				}
@@ -919,11 +948,13 @@ namespace SQM.Website
 
 		}
 
-		protected void AddUpdateINCFORM_POWEROUTAGE(decimal incidentId)
+		protected decimal AddUpdateINCFORM_POWEROUTAGE(decimal incidentId)
 		{
 
 			INCIDENT theIncident = null;
 			INCFORM_POWEROUTAGE thePowerOutageForm = null;
+
+			decimal theincidentId = 0;
 
 			if (!IsEditContext)
 			{
@@ -935,6 +966,7 @@ namespace SQM.Website
 
 				theIncident = CreateNewIncident();
 				incidentId = theIncident.INCIDENT_ID;
+				theincidentId = theIncident.INCIDENT_ID;
 				thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
 
 				EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
@@ -957,51 +989,43 @@ namespace SQM.Website
 						EHSIncidentMgr.TryCloseIncident(incidentId);
 					}
 				}
+
+				theincidentId = incidentId;
 			}
+
+			return theincidentId;
 
 		}
 
 		protected void AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
-			INCFORM_CONTAIN newContainActions = null;
+			var itemList = new List<INCFORM_CONTAIN>();
+			int seqnumber = 0;
 
-			if (!IsEditContext)   // Add New
+			foreach (RepeaterItem containtem in rptContain.Items)
 			{
+				var item = new INCFORM_CONTAIN();
 
-				int nextSeq = EHSIncidentMgr.GetNextContainSequence(incidentId);
+				TextBox tbca = (TextBox)containtem.FindControl("tbContainAction");
+				TextBox tbcp = (TextBox)containtem.FindControl("tbContainPerson");
+				Label lb = (Label)containtem.FindControl("lbItemSeq");
+				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpStartDate");
+				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
+				CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
 
-				newContainActions = new INCFORM_CONTAIN()
-				{
-					INCIDENT_ID = incidentId,
-					ITEM_SEQ = nextSeq,
-					//PRODUCTION_IMPACT = productImpact,
-					//SHIFT = selectedShift,
-					//INCIDENT_TIME = incidentTime,
-					//DESCRIPTION_LOCAL = localDescription
-				};
+				seqnumber = Convert.ToInt32(lb.Text);
 
-				entities.AddToINCFORM_CONTAIN(newContainActions);
+				item.ITEM_DESCRIPTION = tbca.Text;
+				item.ASSIGNED_PERSON = tbcp.Text;
+				item.ITEM_SEQ = seqnumber;
+				item.START_DATE = sd.SelectedDate;
+				item.COMPLETION_DATE = cd.SelectedDate;
+				item.IsCompleted = ic.Checked;
 
-				entities.SaveChanges();
+				itemList.Add(item);
 			}
-			else
-			{
-				if (incidentId > 0)  // Update
-				{
 
-					INCFORM_CONTAIN containActions = (from po in entities.INCFORM_CONTAIN where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
-
-					if (containActions != null)
-					{
-						//powerOutageDetails.PRODUCTION_IMPACT = productImpact;
-						//powerOutageDetails.SHIFT = selectedShift;
-						//powerOutageDetails.INCIDENT_TIME = incidentTime;
-						//powerOutageDetails.DESCRIPTION_LOCAL = localDescription;
-
-						entities.SaveChanges();
-					}
-				}
-			}
+			SaveContainment(incidentId, itemList);
 		}
 
 		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
@@ -1017,7 +1041,7 @@ namespace SQM.Website
 				var item = new INCFORM_ROOT5Y();
 
 				TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-				Label lb = (Label)rootcauseitem.FindControl("lblItemSeq");
+				Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
 
 				seqnumber = Convert.ToInt32(lb.Text);
 
@@ -1354,6 +1378,40 @@ namespace SQM.Website
 			return powerOutageDetails;
 		}
 
+		private void SaveContainment(decimal incidentId, List<INCFORM_CONTAIN> itemList)
+		{
+			using (var ctx = new PSsqmEntities())
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID = {0}", incidentId);
+			}
+
+			int seq = 0;
+
+			foreach (INCFORM_CONTAIN item in itemList)
+			{
+				var newItem = new INCFORM_CONTAIN();
+
+				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+				{
+					seq = seq + 1;
+
+					newItem.INCIDENT_ID = incidentId;
+					newItem.ITEM_SEQ = seq;
+					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+					newItem.ASSIGNED_PERSON = item.ASSIGNED_PERSON;
+					newItem.START_DATE = item.START_DATE;
+					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
+					newItem.IsCompleted = item.IsCompleted;
+					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.CREATE_DT = DateTime.Now;
+					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.LAST_UPD_DT = DateTime.Now;
+
+					entities.AddToINCFORM_CONTAIN(newItem);
+					entities.SaveChanges();
+				}
+			}
+		}
 
 		protected void SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
 		{
@@ -1362,20 +1420,27 @@ namespace SQM.Website
 				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID = {0}", incidentId);
 			}
 
+			int seq = 0;
+
 			foreach (INCFORM_ROOT5Y item in itemList)
 			{
 				var newItem = new INCFORM_ROOT5Y();
 
-				newItem.INCIDENT_ID = incidentId;
-				newItem.ITEM_SEQ = item.ITEM_SEQ;
-				newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-				newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-				newItem.CREATE_DT = DateTime.Now;
-				newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-				newItem.LAST_UPD_DT = DateTime.Now;
+				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+				{
+					seq = seq + 1;
 
-				entities.AddToINCFORM_ROOT5Y(newItem);
-				entities.SaveChanges();
+					newItem.INCIDENT_ID = incidentId;
+					newItem.ITEM_SEQ = seq;
+					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.CREATE_DT = DateTime.Now;
+					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.LAST_UPD_DT = DateTime.Now;
+
+					entities.AddToINCFORM_ROOT5Y(newItem);
+					entities.SaveChanges();
+				}
 			}
 		}
 
@@ -1502,16 +1567,20 @@ namespace SQM.Website
 					var item = new INCFORM_ROOT5Y();
 					
 					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-					Label lb = (Label)rootcauseitem.FindControl("lblItemSeq");
+					Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
+					//RequiredFieldValidator rvf = (RequiredFieldValidator)rootcauseitem.FindControl("rfvRootCause");
 
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.ITEM_DESCRIPTION = tb.Text;
 					item.ITEM_SEQ = seqnumber;
 
+					//if (rptRootCause.Items.Count >= 5)
+						//rvf.Enabled = false;
+
 					itemList.Add(item);
 				}
-
+				
 				var emptyItem = new INCFORM_ROOT5Y();
 
 				emptyItem.ITEM_DESCRIPTION = "";
@@ -1533,7 +1602,68 @@ namespace SQM.Website
 
 		protected void rptContain_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
+			if (e.CommandArgument == "AddAnother")
+			{
 
+				var itemList = new List<INCFORM_CONTAIN>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem containitem in rptContain.Items)
+				{
+					var item = new INCFORM_CONTAIN();
+
+					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
+					TextBox tbcp = (TextBox)containitem.FindControl("tbContainPerson");
+					Label lb = (Label)containitem.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
+					RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
+					CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
+
+					//RequiredFieldValidator rvfca = (RequiredFieldValidator)containitem.FindControl("rfvContainAction");
+					//RequiredFieldValidator rvfcp = (RequiredFieldValidator)containitem.FindControl("rvfContainPerson");
+					//RequiredFieldValidator rvfsd = (RequiredFieldValidator)containitem.FindControl("rvfStartDate");
+
+					seqnumber = Convert.ToInt32(lb.Text);
+
+					item.ITEM_DESCRIPTION = tbca.Text;
+					item.ASSIGNED_PERSON = tbcp.Text;
+					item.ITEM_SEQ = seqnumber;
+					item.START_DATE = sd.SelectedDate;
+					item.COMPLETION_DATE = cd.SelectedDate;
+					item.IsCompleted = ic.Checked;
+
+					itemList.Add(item);
+				}
+
+				var emptyItem = new INCFORM_CONTAIN();
+
+				emptyItem.ITEM_DESCRIPTION = "";
+				emptyItem.ITEM_SEQ = seqnumber + 1;
+				emptyItem.ASSIGNED_PERSON = "";
+				emptyItem.START_DATE = null;
+				emptyItem.COMPLETION_DATE = null;
+				emptyItem.IsCompleted = false;
+
+
+				itemList.Add(emptyItem);
+
+				//Panel pnl = (Panel)Page.FindControl("pnlContain");
+				//if (rptContain.Items.Count >= 2)
+				//{
+				//	RequiredFieldValidator rvfca = (RequiredFieldValidator)pnl.FindControl("rfvContainAction");
+				//	RequiredFieldValidator rvfcp = (RequiredFieldValidator)pnl.FindControl("rvfContainPerson");
+				//	RequiredFieldValidator rvfsd = (RequiredFieldValidator)pnl.FindControl("rvfStartDate");
+				//	rvfca.Enabled = false;
+				//	rvfcp.Enabled = false;
+				//	rvfsd.Enabled = false;
+				//}
+
+
+				rptContain.DataSource = itemList;
+				rptContain.DataBind();
+
+				//return;
+			}
 		}
 
 	
