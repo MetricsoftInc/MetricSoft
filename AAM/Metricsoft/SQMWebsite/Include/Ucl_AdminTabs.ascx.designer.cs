@@ -121,15 +121,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton lbDepartment_tab;
         
         /// <summary>
-        /// lbLabor_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbLabor_tab;
-        
-        /// <summary>
         /// lbBUNotify_tab control.
         /// </summary>
         /// <remarks>
@@ -137,15 +128,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbBUNotify_tab;
-        
-        /// <summary>
-        /// lbPartProgram_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPartProgram_tab;
         
         /// <summary>
         /// pnlPlantTabs control.
@@ -166,15 +148,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton lbPLantDetail_tab;
         
         /// <summary>
-        /// lblPlantDocs_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lblPlantDocs_tab;
-        
-        /// <summary>
         /// lbPLantDepartment_tab control.
         /// </summary>
         /// <remarks>
@@ -193,15 +166,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton lbPlantLine_tab;
         
         /// <summary>
-        /// lbPlantLabor_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantLabor_tab;
-        
-        /// <summary>
         /// Td3 control.
         /// </summary>
         /// <remarks>
@@ -218,24 +182,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lbPlantNotify_tab;
-        
-        /// <summary>
-        /// lbPlantCustCode_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantCustCode_tab;
-        
-        /// <summary>
-        /// lbPlantPart_tab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantPart_tab;
         
         /// <summary>
         /// pnlPartTabs control.

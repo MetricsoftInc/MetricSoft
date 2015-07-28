@@ -43,24 +43,24 @@
                             onclick="tab_Click">Departments</asp:LinkButton>
                 </td>
             </tr>
-            <tr align="center" height="24">
+ <%--           <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                     <asp:LinkButton ID="lbLabor_tab" runat="server" class="optNav clickable"  CommandArgument="labor" 
                         onclick="tab_Click">Labor</asp:LinkButton>
                 </td>
-            </tr>
+            </tr>--%>
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                     <asp:LinkButton ID="lbBUNotify_tab" runat="server" class="optNav clickable"  CommandArgument="notify" 
                     onclick="tab_Click">Incident &amp; Task<br />Notifications</asp:LinkButton>
                 </td>
            </tr>
-            <tr align="center" height="24">
+ <%--           <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                         <asp:LinkButton ID="lbPartProgram_tab" runat="server" class="optNav clickable"  CommandArgument="prog" 
                             onclick="tab_Click">Part Programs</asp:LinkButton>
                 </td>
-            </tr>
+            </tr>--%>
             <%--
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
@@ -80,11 +80,11 @@
                         onclick="tab_Click">Details</asp:LinkButton>
                 </td>
             </tr>
-            <tr align="center" height="24">
+<%--            <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                     <asp:LinkButton ID="lblPlantDocs_tab" runat="server" class="optNav clickable"  CommandArgument="docs" onclick="tab_Click">Documents</asp:LinkButton>
                 </td>
-            </tr>
+            </tr>--%>
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                         <asp:LinkButton ID="lbPLantDepartment_tab" runat="server" class="optNav clickable" CommandArgument="dept" 
@@ -97,19 +97,19 @@
                             onclick="tab_Click">Plant Lines</asp:LinkButton>
                 </td>
             </tr>
-            <tr align="center" height="24">
-                <td runat="server"  class="optMenu">
-                    <asp:LinkButton ID="lbPlantLabor_tab" runat="server" class="optNav clickable" CommandArgument="labor" 
-                        onclick="tab_Click">Labor</asp:LinkButton>
-                </td>
-            </tr>
+<%--			<tr align="center" height="24">
+				<td runat="server"  class="optMenu">
+					<asp:LinkButton ID="lbPlantLabor_tab" runat="server" class="optNav clickable" CommandArgument="labor" 
+						onclick="tab_Click">Labor</asp:LinkButton>
+				</td>
+			</tr>--%>
             <tr align="center" height="24">
                 <td id="Td3" runat="server" class="optMenu">
                     <asp:LinkButton ID="lbPlantNotify_tab" runat="server" class="optNav clickable"  CommandArgument="notify" 
                     onclick="tab_Click">Incident &amp; Task<br />Notifications</asp:LinkButton>
                 </td>
            </tr>
-           <tr align="center" height="24">
+ <%--          <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                     <asp:LinkButton ID="lbPlantCustCode_tab" runat="server" class="optNav clickable" CommandArgument="cust" 
 						onclick="tab_Click">Customers</asp:LinkButton>
@@ -120,7 +120,7 @@
                     <asp:LinkButton ID="lbPlantPart_tab" runat="server" class="optNav clickable" CommandArgument="supp" 
 						onclick="tab_Click">Suppliers</asp:LinkButton>
                 </td>
-            </tr>
+            </tr>--%>
         </table>
     </asp:Panel>
  

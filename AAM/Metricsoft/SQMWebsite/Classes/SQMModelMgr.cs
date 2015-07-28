@@ -495,6 +495,23 @@ namespace SQM.Website
 
         #region person
 
+		public static List<JOBCODE> SelectJobcodeList(string status, int roleRange)
+		{
+			List<JOBCODE> jobcodeList = new List<JOBCODE>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				jobcodeList = (from j in ctx.JOBCODE
+							   where (
+								(string.IsNullOrEmpty(status) || j.STATUS == status)
+								&& (roleRange == 0  ||  j.DEFAULT_ROLE > roleRange)
+							   )
+							   select j).ToList();
+			}
+
+			return jobcodeList;
+		}
+
         public static SQM_ACCESS LookupCredentials(SQM.Website.PSsqmEntities ctx, string SSOID, string pwd, bool activeOnly)
         {
             SQM_ACCESS access = null;

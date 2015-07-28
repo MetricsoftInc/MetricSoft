@@ -427,24 +427,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbUserLastName;
         
         /// <summary>
-        /// lblUserTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserTitle;
-        
-        /// <summary>
-        /// tbUserTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbUserTitle;
-        
-        /// <summary>
         /// lblUserPhone control.
         /// </summary>
         /// <remarks>
@@ -479,6 +461,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbUserEmail;
+        
+        /// <summary>
+        /// lblUserTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUserTitle;
+        
+        /// <summary>
+        /// ddlJobCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox ddlJobCode;
         
         /// <summary>
         /// lblUserHRLocation control.
@@ -524,24 +524,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPlantAccess;
-        
-        /// <summary>
-        /// lblCustLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCustLocation;
-        
-        /// <summary>
-        /// ddlCustPlantSelect control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox ddlCustPlantSelect;
         
         /// <summary>
         /// lblUserTimezone control.

@@ -31,7 +31,7 @@ namespace SQM.Website
 		{
 			SetLocalPerson(null);
 			ddlPlantSelect.ClearCheckedItems();
-			ddlCustPlantSelect.ClearCheckedItems();
+			//ddlCustPlantSelect.ClearCheckedItems();
             ddlModuleAccess.ClearCheckedItems();
             lblPlantAccess.Text = "";
             lblModuleAccess.Text = "";
@@ -169,6 +169,17 @@ namespace SQM.Website
 			{
                 ddl.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(1, 50, 10));
 			}
+
+			if (ddlJobCode.Items.Count == 0)
+			{
+				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", 1).OrderBy(j => j.JOB_DESC).ToList())
+				{
+					ddlJobCode.Items.Add(new RadComboBoxItem(jc.JOBCODE_CD + "  /  " + jc.JOB_DESC, jc.JOBCODE_CD));
+				}
+				ddlJobCode.Items.Insert(0, new RadComboBoxItem("System Admin", "1"));
+				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
+			}
+
             ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, false);
             ddlUserLanguage.DataTextField = "LANGUAGE_NAME";
             ddlUserLanguage.DataValueField = "LANGUAGE_ID";
@@ -188,6 +199,7 @@ namespace SQM.Website
             ddlHRLocation.Items.Insert(0, new RadComboBoxItem("", ""));
 			SQMBasePage.SetLocationList(ddlPlantSelect, locationList, 0);
 		   
+			/* quality module reference
 			if (ddlCustPlantSelect.Items.Count < 1)
 			{
 				List<BusinessLocation> customerLocations = SQMModelMgr.SelectBusinessLocationList(0, 0, false, true, true).OrderBy(l => l.Plant.PLANT_NAME).ToList();
@@ -202,6 +214,7 @@ namespace SQM.Website
 					ddlCustPlantSelect.Items.Add(item);
 				}
 			}
+			*/
 		}
 
 		private DropDownList SetStatusList(string ddlName, string currentStatus, bool editEnabled)
@@ -229,7 +242,9 @@ namespace SQM.Website
             
 			divPageBody.Visible = true;
 			ddlPlantSelect.ClearCheckedItems();
+			/* quality module reference
 			ddlCustPlantSelect.ClearCheckedItems();
+						 */
 
             DisplayErrorMessage(null);
 
@@ -271,7 +286,7 @@ namespace SQM.Website
                         }
 					}
 				}
-
+							/* quality module reference
 				if (!string.IsNullOrEmpty(person.OLD_LOCATION_CD))
 				{
 					string[] locs = person.OLD_LOCATION_CD.Split(',');
@@ -281,6 +296,7 @@ namespace SQM.Website
 							ddlCustPlantSelect.Items.FindItemByValue(locid).Checked = true;
 					}
 				}
+							 */
 			}
 
 				// AW20131106 - do not want to be able to change a SSO ID once a person has been added
@@ -289,7 +305,8 @@ namespace SQM.Website
            
 			tbUserFirstName.Text = person.FIRST_NAME;
 			tbUserLastName.Text = person.LAST_NAME;
-			tbUserTitle.Text =  person.JOB_TITLE;
+			if (ddlJobCode.Items.FindItemByValue(person.JOBCODE_CD) != null)
+				ddlJobCode.SelectedValue = person.JOBCODE_CD;
 			tbUserPhone.Text =  person.PHONE;
 			tbUserEmail.Text = person.EMAIL;
 			SetStatusList("ddlUserStatus", person.STATUS, true);
@@ -335,6 +352,7 @@ namespace SQM.Website
                 cbUserRcvEscalation.Checked = true;
             }
 
+						/* quality module reference
 			if (person.ROLE <= 100 || person.PERSON_ACCESS.Where(a => a.ACCESS_PROD == "SQM").Count() > 0)
 			{
 				ddlCustPlantSelect.Enabled = true;
@@ -344,6 +362,7 @@ namespace SQM.Website
 				ddlCustPlantSelect.Enabled = false;
 				ddlCustPlantSelect.SelectedIndex = 0;
 			}
+			*/
 
             List<SysModule> sysmodList = SQMSettings.SystemModuleItems();
             string prod = "";
@@ -386,7 +405,7 @@ namespace SQM.Website
 
             if (!SessionManager.IsEffLocationPrimary())
             {
-                ddlCustPlantSelect.Enabled = false;
+                //ddlCustPlantSelect.Enabled = false;
                 cbUserRcvEscalation.Visible = cbUserRcvEscalation.Checked = false;
             }
 
@@ -417,7 +436,7 @@ namespace SQM.Website
 
             person.FIRST_NAME = string.IsNullOrEmpty(tbUserFirstName.Text) ? "" : tbUserFirstName.Text;
             person.LAST_NAME = string.IsNullOrEmpty(tbUserLastName.Text) ? "" : tbUserLastName.Text;
-            person.JOB_TITLE = tbUserTitle.Text;
+			person.JOBCODE_CD = ddlJobCode.SelectedValue;
             person.PHONE = tbUserPhone.Text;
             person.EMAIL = tbUserEmail.Text;
 
@@ -446,12 +465,13 @@ namespace SQM.Website
 
             person.OLD_LOCATION_CD = "";
 
+						/* quality module reference
             foreach (RadComboBoxItem item in SQMBasePage.GetComboBoxCheckedItems(ddlCustPlantSelect))
             {
                 person.OLD_LOCATION_CD += (item.Value + ",");
             }
             person.OLD_LOCATION_CD = person.OLD_LOCATION_CD.TrimEnd(',');
-
+			*/
             person.STATUS = ddlUserStatus.SelectedValue;
 
             // roles were originally a list - let's keep the logic below just in case we need to restore a multi-role strategy

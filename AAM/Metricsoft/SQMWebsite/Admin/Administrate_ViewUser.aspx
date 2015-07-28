@@ -186,15 +186,6 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblUserTitle" runat="server" text="Job Title"></asp:Label>
-                                                            </td>
-                                                            <td class="tableDataAlt">&nbsp;</td>
-                                                            <td class="tableDataAlt">
-                                                                <asp:TextBox ID="tbUserTitle" size="50" maxlength="60" runat="server"></asp:TextBox>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="columnHeader">
                                                                 <asp:Label ID="lblUserPhone" runat="server" text="Phone"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
@@ -213,6 +204,15 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
+                                                                <asp:Label ID="lblUserTitle" runat="server" text="Job Code/Title"></asp:Label>
+                                                            </td>
+                                                            <td class="tableDataAlt">&nbsp;</td>
+                                                            <td class="tableDataAlt">
+																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="400" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="columnHeader">
                                                                 <asp:Label ID="lblUserHRLocation" runat="server" text="HR Business Location"></asp:Label>
                                                             </td>
                                                              <td class="required">&nbsp;</td>
@@ -222,7 +222,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblPlantSelect" runat="server" Text="Accessible Internal Locations"></asp:Label>
+                                                                <asp:Label ID="lblPlantSelect" runat="server" Text="Accessible Locations"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                              <td class="tableDataAlt">
@@ -232,7 +232,7 @@
                                                                 <asp:Label ID="lblPlantAccess" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                   <%--                     <tr>
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblCustLocation" runat="server" Text="Alternate Partner Working Location"></asp:Label>
                                                             </td>
@@ -242,7 +242,7 @@
                                                                    ToolTip="For Quality System users, you may specifiy a customer location where this user may work and report quality reports">
                                                                 </telerik:RadComboBox>
                                                             </td>
-                                                        </tr>
+                                                        </tr>--%>
                                                         <tr>
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblUserTimezone" runat="server" text="Time Zone"></asp:Label>
