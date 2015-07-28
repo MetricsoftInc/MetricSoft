@@ -32,12 +32,9 @@ namespace SQM.Website
 			SetLocalPerson(null);
 			ddlPlantSelect.ClearCheckedItems();
 			//ddlCustPlantSelect.ClearCheckedItems();
-            ddlModuleAccess.ClearCheckedItems();
             lblPlantAccess.Text = "";
-            lblModuleAccess.Text = "";
             ddlHRLocation.ClearSelection();
             ddlUserTimezone.ClearSelection();
-			ddlUserRole.SelectedIndex = 4;
 
             lblDuplicateSSOId.Visible =  lblDuplicateEmail.Visible = false;
 		}
@@ -321,36 +318,6 @@ namespace SQM.Website
 			if (ddlUserTimezone.Items.FindByValue(person.PREFERRED_TIMEZONE) != null)
 				ddlUserTimezone.SelectedValue = person.PREFERRED_TIMEZONE;
 
-			ddlUserRole.Items.Clear();
-			ddlUserRole.Items.AddRange(WebSiteCommon.PopulateRadListItems("userRole"));
-            for (int i = ddlUserRole.Items.Count - 1; i >= 0; i--)
-            {
-                AccessMode roleMode = SessionManager.RoleAccessMode(Convert.ToInt32(ddlUserRole.Items[i].Value));
-                if (SessionManager.IsEffLocationPrimary() && roleMode == AccessMode.Partner)
-                    ddlUserRole.Items.Remove(i);
-                if (!SessionManager.IsEffLocationPrimary()  &&  roleMode != AccessMode.Partner)             // restrict roles of non-primary company users
-                    ddlUserRole.Items.Remove(i);
-                else if (UserContext.RoleAccess() < AccessMode.SA  && roleMode > AccessMode.Admin)     // only QAI admin may see or edit sys admin role
-				    ddlUserRole.Items.Remove(i); 
-            }
- 
-			string rolesDesc = "";
-            if (ddlUserRole.Items.FindItemByValue(person.ROLE.ToString()) != null)
-            {
-                ddlUserRole.SelectedValue = person.ROLE.ToString();
-            }
-
-            if (sets == null || sets.VALUE.ToUpper() != "Y")      // prompt for user escalation
-            {
-                cbUserRcvEscalation.Visible = true;
-                if (person.RCV_ESCALATION.HasValue)
-                    cbUserRcvEscalation.Checked = (bool)person.RCV_ESCALATION;
-            }
-            else
-            {
-                cbUserRcvEscalation.Visible = false;        // enable escalation for anyone
-                cbUserRcvEscalation.Checked = true;
-            }
 
 						/* quality module reference
 			if (person.ROLE <= 100 || person.PERSON_ACCESS.Where(a => a.ACCESS_PROD == "SQM").Count() > 0)
@@ -367,58 +334,16 @@ namespace SQM.Website
             List<SysModule> sysmodList = SQMSettings.SystemModuleItems();
             string prod = "";
             RadComboBoxItem item = null; RadComboBoxItem itemSep = null;
-            ddlModuleAccess.Items.Clear();
-            lblModuleAccess.Text = "";
 
 			lblPrivScope.Text = "";
 			if (person.JOBCODE != null && person.JOBCODE.JOBPRIV != null)
 			{
 				foreach (JOBPRIV jp in person.JOBCODE.JOBPRIV)
 				{
-					lblPrivScope.Text += (((SysPriv)jp.PRIV).ToString() + ": " + WebSiteCommon.GetXlatValue("privScope", jp.SCOPE) + ", ");
+					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + WebSiteCommon.GetXlatValue("privScope", jp.SCOPE) + ",");
 				}
 			}
-
-
-            foreach (SysModule sysmod in sysmodList.Where(l=> l.prod != "CQM").ToList()) 
-            {
-                if (string.IsNullOrEmpty(sysmod.mod))
-                {
-                    prod = sysmod.prod;
-                    itemSep = new RadComboBoxItem(((HiddenField)pnlUserEdit.FindControl("hf" + prod)).Value, prod);
-                    itemSep.IsSeparator = true;
-                    ddlModuleAccess.Items.Add(itemSep);
-                }
-                else
-                {
-                    item = new RadComboBoxItem(sysmod.desc, sysmod.topic);
-                    ddlModuleAccess.Items.Add(item);
-                    if (GetSelectedUserRole() <= 100)
-                        item.Checked = true;
-                    else if ((sysmod.prod == "SQM" && person.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == "201").Count() > 0)
-                        || (sysmod.prod == "EHS" && person.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == "301").Count() > 0))
-                        item.Checked = true;
-                    else if (person.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == sysmod.topic).Count() > 0)
-                        item.Checked = true;
-                    // exclusions
-                    if (!SessionManager.IsEffLocationPrimary())  // restrict module selections if not primary company user
-                    {
-                        if (sysmod.prod != "SQM")
-                        {
-                            itemSep.Enabled = item.Enabled = item.Checked = false;
-                            ddlModuleAccess.Height = 120;
-                        }
-                    }
-                    if (item.Checked)
-                        lblModuleAccess.Text += lblModuleAccess.Text.Length == 0 ? item.Text : (", " + item.Text);
-                }
-            }
-
-            if (!SessionManager.IsEffLocationPrimary())
-            {
-                //ddlCustPlantSelect.Enabled = false;
-                cbUserRcvEscalation.Visible = cbUserRcvEscalation.Checked = false;
-            }
+			lblPrivScope.Text = lblPrivScope.Text.TrimEnd(',');
 
             string script = "function f(){OpenUserEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
@@ -487,25 +412,13 @@ namespace SQM.Website
 
             // roles were originally a list - let's keep the logic below just in case we need to restore a multi-role strategy
             //person.PERSON_ROLE.Clear();
-            person.ROLE = GetSelectedUserRole();
-            person.RCV_ESCALATION = cbUserRcvEscalation.Checked;
-
-            person.PERSON_ACCESS.Clear();
-            string prod = "";
-            foreach (RadComboBoxItem accessItem in ddlModuleAccess.Items)
-            {
-                if (accessItem.IsSeparator)
-                    prod = accessItem.Value;
-                if (accessItem.Checked || person.ROLE <= 100)
-                {
-                    person = SQMModelMgr.AddPersonAccess(person, prod, accessItem.Value, true);
-                }
-            }
+			person.ROLE = 100; ///// 
+			person.RCV_ESCALATION = true; 
 
             SetLocalPerson(person);
 
             if (string.IsNullOrEmpty(tbUserSSOID.Text) || string.IsNullOrEmpty(tbUserFirstName.Text) || string.IsNullOrEmpty(tbUserLastName.Text)
-                    || string.IsNullOrEmpty(tbUserEmail.Text) || ddlUserRole.SelectedIndex < 0 || string.IsNullOrEmpty(ddlHRLocation.SelectedValue)
+                    || string.IsNullOrEmpty(tbUserEmail.Text) || ddlJobCode.SelectedIndex < 0 || string.IsNullOrEmpty(ddlHRLocation.SelectedValue)
                     || string.IsNullOrEmpty(ddlHRLocation.SelectedValue))
             {
                 lblErrorMessage = lblErrRequiredInputs;
@@ -700,10 +613,10 @@ namespace SQM.Website
 			return true;
 		}
 
-		private int GetSelectedUserRole()
+		private string GetSelectedJobCode()
 		{
-			int  role = Convert.ToInt32(ddlUserRole.SelectedValue);
-			return role;
+			string  jc = ddlJobCode.SelectedValue;
+			return jc;
 		}
 
         private void DisplayErrorMessage(Label lblMessage)

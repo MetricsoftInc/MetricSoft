@@ -24,12 +24,12 @@
     function ConfirmSaveUser(confirmText) {
         var status = confirmChange(confirmText);
   
-        if (status == true) {
-            var ddl = $find('<%=ddlUserRole.ClientID %>');
-            if (ddl.get_selectedItem().get_value() == "1" || ddl.get_selectedItem().get_value() == "100") {
-                status = confirm('Please confirm you wish to grant Administrator Role to this user');
-            }
-        }
+        //if (status == true) {
+        //    var ddl = $find('<%=ddlJobCode.ClientID %>');
+        //    if (ddl.get_selectedItem().get_value() == "1" || ddl.get_selectedItem().get_value() == "100") {
+       //         status = confirm('Please confirm you wish to grant Administrator Role to this user');
+        //    }
+        //}
         return status;
     }
 
@@ -50,25 +50,6 @@
             document.getElementById('lblPlantAccess').innerHTML = str;
         else
             document.getElementById('lblPlantAccess').innerHTML = '';
-    }
-
-    function ModuleCheckedItems() {
-        var str = '';
-        var combo = $find("<%= ddlModuleAccess.ClientID %>");
-        var items = combo.get_items();
-        var count = items.get_count();
-        var checkedCount = 0;
-        for (var i = 0; i < count ; i++) {
-            var item = items.getItem(i);
-            if (item.get_checked()) {
-                str += item.get_text();
-                ++checkedCount;
-            }
-        }
-        if (checkedCount > 3)
-            document.getElementById('lblModuleAccess').innerHTML = str;
-        else 
-            document.getElementById('lblModuleAccess').innerHTML = '';
     }
 
 </script>
@@ -129,7 +110,7 @@
                         <br style="clear: both;" />
                         <Ucl:AdminList id="uclUserList" runat="server"/>
                         
-                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="625" Width="650" Title="User Details" Behaviors="Move">
+                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="525" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
                                 <asp:Panel runat="server" ID="pnlUserEdit" >
                                      <table width="99%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 4px;">
@@ -209,6 +190,8 @@
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
 																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="400" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+																<br />
+																<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -291,34 +274,6 @@
                                                         </tr>
                                                     </table>
                                                 </telerik:RadAjaxPanel>
-
-                                                <asp:Label ID="lblAccessInstruction" runat="server" Text="<b>User Privileges:</b> specify the user's system role and modules that may be accessed." CssClass="instructText"></asp:Label>
-                                                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft" style="margin-top: 4px;">
-                                                    <tr>
-                                                        <td class="columnHeader" width="24%">
-                                                            <asp:Label ID="lblUserRole" runat="server" text="User Role"></asp:Label>
-                                                        </td>
-                                                       <td class="required" width="1%">&nbsp;</td>
-                                                        <td class="tableDataAlt" width="75%">
-                                                            <telerik:RadComboBox ID="ddlUserRole" runat="server" ZIndex="9000" Skin="Metro" width=200 AutoPostBack="false" Font-Names="Verdana"></telerik:RadComboBox>
-                                                            &nbsp;
-                                                            <asp:CheckBox id="cbUserRcvEscalation" runat="server" Visible="false" CssClass="textStd" Text=" May Receive Escalation Notices"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="columnHeader">
-                                                            <asp:Label ID="lblUserAccess" runat="server" text="Module Access"></asp:Label>
-                                                        </td>
-                                                       <td class="tableDataAlt">&nbsp;</td>
-                                                        <td class="tableDataAlt">
-                                                            <telerik:RadComboBox ID="ddlModuleAccess" runat="server" ZIndex="9000" height="120" Style="width: 98%;" Skin="Metro" DropDownCssClass="multipleRowsColumnsNarrow" DropDownWidth="450px" CheckBoxes="true" EnableCheckAllItemsCheckBox="false" AutoPostBack="false" Font-Names="Verdana" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="ModuleCheckedItems"></telerik:RadComboBox>
-                                                            <br />
-                                                            <asp:Label ID="lblModuleAccess" runat="server" CssClass="refText"  Visible="false"></asp:Label>
-															<br />
-															<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
-                                                        </td>
-                                                    </tr>
-                                                </table>
                                             </td>
                                         </tr>
                                     </table>
