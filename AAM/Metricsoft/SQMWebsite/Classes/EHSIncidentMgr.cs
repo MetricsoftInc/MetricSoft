@@ -741,17 +741,19 @@ namespace SQM.Website
 		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)
 		{
 
-			var rootcauses = new List<INCFORM_ROOT5Y>();
 			PSsqmEntities entities = new PSsqmEntities();
+			var rootcauses = new List<INCFORM_ROOT5Y>();
+
+			int minRowsThisForm = 5;
 
 			rootcauses = (from c in entities.INCFORM_ROOT5Y
 						where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			if (rootcauses.Count() < 5)
-			{
-				int itemsNeeded = 5 - rootcauses.Count();
-
+			int itemsNeeded = rootcauses.Count();
+			if (itemsNeeded < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - rootcauses.Count();
+				
 				INCFORM_ROOT5Y rootcause = null;
 
 				int seq = rootcauses.Count();
@@ -766,7 +768,6 @@ namespace SQM.Website
 
 					rootcauses.Add(rootcause);
 				}
-			}
 			
 			return rootcauses;
 		}
@@ -778,13 +779,16 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			var containments = new List<INCFORM_CONTAIN>();
 
+			int minRowsThisForm = 1;
+
 			containments = (from c in entities.INCFORM_CONTAIN
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			if (containments.Count() < 2)
-			{
-				int itemsNeeded = 2 - containments.Count();
+			int itemsNeeded = containments.Count();
+			if (itemsNeeded < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - containments.Count();
+
 				int seq = containments.Count(); ;
 				INCFORM_CONTAIN contain = null;
 
@@ -802,23 +806,26 @@ namespace SQM.Website
 
 					containments.Add(contain);
 				}
-			}
 
 			return containments;
 		}
+
 
 		public static List<INCFORM_ACTION> GetFinalActionList(decimal incidentId)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			var actions = new List<INCFORM_ACTION>();
 
+			int minRowsThisForm = 1;
+
 			actions = (from c in entities.INCFORM_ACTION
 							where c.INCIDENT_ID == incidentId
 							select c).ToList();
 
-			if (actions.Count() < 2)
-			{
-				int itemsNeeded = 2 - actions.Count();
+			int itemsNeeded = actions.Count();
+			if (itemsNeeded < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - actions.Count();
+
 				int seq = actions.Count(); ;
 				INCFORM_ACTION action = null;
 
@@ -836,27 +843,28 @@ namespace SQM.Website
 
 					actions.Add(action);
 				}
-			}
 
 			return actions;
 		}
 
-				public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
+
+		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
 		{
 
-			var approvals = new List<INCFORM_APPROVAL>();
 			PSsqmEntities entities = new PSsqmEntities();
+			var approvals = new List<INCFORM_APPROVAL>();
+
+			int minRowsThisForm = 1;
 
 			approvals = (from c in entities.INCFORM_APPROVAL
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			if (approvals.Count() < 2)
-			{
-				int itemsNeeded = 2 - approvals.Count();
+			int itemsNeeded = approvals.Count();
+			if (itemsNeeded < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - approvals.Count();
 
 				INCFORM_APPROVAL approval = null;
-
 				int seq = approvals.Count();
 
 				for (int i = 1; i < itemsNeeded + 1; i++)
@@ -882,8 +890,6 @@ namespace SQM.Website
 					
 					approvals.Add(approval);
 				}
-			}
-
 			return approvals;
 		}
 

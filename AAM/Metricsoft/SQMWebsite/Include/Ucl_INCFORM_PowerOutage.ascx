@@ -71,11 +71,11 @@
 		<%-- INCIDENT DATE question --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Incident Date:<span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbIncidentDateSM" runat ="server" Text="Incident Date:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Incident Date:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbIncidentDateXS" runat ="server" Text="Incident Date: "></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpIncidentDate" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDatePicker>
@@ -87,11 +87,11 @@
 		<%-- REPORT DATE question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Report Date:<span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbReportDateSM" runat ="server" Text="Report Date:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Report Date:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbReportDateXS" runat ="server" Text="Report Date:"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpReportDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="278" runat="server"></telerik:RadDatePicker>
@@ -103,11 +103,11 @@
 
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Location:<span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbLocationSM" runat ="server" Text="Location:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Location:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbLocationXS" runat ="server" Text="Location:"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlLocation" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server" OnSelectedIndexChanged="rddlLocation_SelectedIndexChanged"></telerik:RadDropDownList>
@@ -120,11 +120,11 @@
 		<%-- DESCRIPTION question (MultiLine TEXTBOX) --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-				<span class="labelMultiLineText">Description:<span class="requiredStarFloat">*</span></span>
+				<span class="labelMultiLineText"><asp:Label ID="lbDescriptionSM" runat ="server" Text="Description:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Description:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbDescriptionXS" runat ="server" Text="Description:"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -137,11 +137,11 @@
 		<asp:Panel ID="pnlLocalDesc" runat="server" Visible="false">
 			<div class="row" >
 				<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-					<span class="labelMultiLineText">Local Description:<span class="requiredStarFloat">*</span></span>
+					<span class="labelMultiLineText"><asp:Label ID="lbLocalDescSM" runat ="server" Text="Local Description:"></asp:Label><span class="requiredStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
-					<span>Local Description:&nbsp;<span class="requiredStar">*</span></span>
+					<span><asp:Label ID="lbLocalDescXS" runat ="server" Text="Local Description:"></asp:Label><span class="requiredStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 					<asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -155,11 +155,11 @@
 		<%-- TIME OF INCIDENT question --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Time of Incident:<span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbIncidentTimeSM" runat ="server" Text="Time of Incident:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Time of Incident:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="bIncidentTimeXS" runat ="server" Text="Time of Incident:"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadTimePicker ID="rtpIncidentTime" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadTimePicker>
@@ -171,11 +171,11 @@
 		<%-- SHIFT question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>Shift:<span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbShiftSM" runat ="server" Text="Shift:"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Shift:&nbsp;<span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbShiftXS" runat ="server" Text="Shift:"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlShift" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
@@ -187,11 +187,11 @@
 		<%-- PRODUCTION IMPACT question (MultiLine TEXTBOX) --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-				<span class="labelMultiLineText">Production Impact:<span class="requiredCloseStarFloat">*</span></span>
+				<span class="labelMultiLineText"><asp:Label ID="lbProdImpactSM" runat ="server" Text="Production Impact:"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span>Production Impact:&nbsp;<span class="requiredCloseStar">*</span></span>
+				<span><asp:Label ID="lbProdImpactXS" runat ="server" Text="Production Impact:"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbProdImpact" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>

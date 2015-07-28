@@ -375,6 +375,7 @@ namespace SQM.Website
 			string currentFormName = formSteps[i].StepFormName;
 			lblFormTitle.Text = formSteps[i].StepHeadingText; ;
 
+
 			switch (currentFormName)
 			{
 				case "INCFORM_POWEROUTAGE":
@@ -597,6 +598,9 @@ namespace SQM.Website
 		{
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
+
+				int minRowsToValidate = 1;
+
 				try
 				{
 					INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem; 
@@ -608,7 +612,7 @@ namespace SQM.Website
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
 
-					if (rootCause.ITEM_SEQ > 5)
+					if (rootCause.ITEM_SEQ > minRowsToValidate)
 						rvf.Enabled = false;
 				}
 				catch { }
@@ -620,6 +624,9 @@ namespace SQM.Website
 		{
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
+
+				int minRowsToValidate = 1;
+
 				try
 				{
 					INCFORM_CONTAIN contain = (INCFORM_CONTAIN)e.Item.DataItem;
@@ -654,7 +661,7 @@ namespace SQM.Website
 					cd.SelectedDate = contain.COMPLETION_DATE;
 					ic.Checked = contain.IsCompleted;
 
-					if (contain.ITEM_SEQ > 2)
+					if (contain.ITEM_SEQ > minRowsToValidate)
 					{ 	
 						rvfca.Enabled = false;
 						rvfcp.InitialValue = null;
@@ -671,6 +678,8 @@ namespace SQM.Website
 		{
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
+				int minRowsToValidate = 1;
+
 				try
 				{
 					INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
@@ -707,7 +716,7 @@ namespace SQM.Website
 					cd.SelectedDate = action.COMPLETION_DATE;
 					ic.Checked = action.IsCompleted;
 
-					if (action.ITEM_SEQ > 2)
+					if (action.ITEM_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
 						rvfcp.Enabled = false;
@@ -722,6 +731,9 @@ namespace SQM.Website
 		{
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
+
+				int minRowsToValidate = 1;
+
 				try
 				{
 					INCFORM_APPROVAL approval = (INCFORM_APPROVAL)e.Item.DataItem;
@@ -738,7 +750,7 @@ namespace SQM.Website
 					cba.Checked = approval.IsAccepted;
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
-					//if (rootCause.ITEM_SEQ > 5)
+					//if (rootCause.ITEM_SEQ > minRowsToValidate)
 					//	rvf.Enabled = false;
 				}
 				catch { }
