@@ -12,6 +12,7 @@ namespace SQM.Website
     public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
     public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
 	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, view=400, report=500, notify=550 }
+	public enum SysScope { system, company, busorg, busloc, user, data, dashboard, envdata, console, incident, incidentIA, prevent, audit }
 
     public class SessionManager
     {
@@ -64,6 +65,26 @@ namespace SQM.Website
 
             return SessionManager.UserContext.LoginStatus;
         }
+
+		public static bool CheckUserPrivilege(SysPriv priv,  SysScope scope )
+		{
+			bool hasPriv = false;
+
+			if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV != null)
+			{
+				if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
+				{
+					hasPriv = true;
+				}
+				else
+				{
+					if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
+						hasPriv = true;
+				}
+			}
+
+			return hasPriv;
+		}
 
         public static int AccessModeRoleXREF(AccessMode mode)
         {

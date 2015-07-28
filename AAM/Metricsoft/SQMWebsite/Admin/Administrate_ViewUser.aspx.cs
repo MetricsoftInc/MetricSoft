@@ -340,7 +340,7 @@ namespace SQM.Website
 			{
 				foreach (JOBPRIV jp in person.JOBCODE.JOBPRIV)
 				{
-					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + WebSiteCommon.GetXlatValue("privScope", jp.SCOPE) + ",");
+					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + jp.SCOPE + ",");
 				}
 			}
 			lblPrivScope.Text = lblPrivScope.Text.TrimEnd(',');
