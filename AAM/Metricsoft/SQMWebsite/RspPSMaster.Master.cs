@@ -101,129 +101,26 @@ namespace SQM.Website
 						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Upload Data", "/Admin/Administrate_FileUpload.aspx"));
 					}
 
-					if (UserContext.CheckAccess("SQM", "") > AccessMode.Limited)
-					{
-						RadMenuItem SQMMenu = new RadMenuItem("Quality");
-						RadMenu1.Items.Add(SQMMenu);
-						if (UserContext.CheckAccess("SQM", "201") > AccessMode.Plant)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/Quality/Quality_Resources.aspx"));
-						if (UserContext.CheckAccess("SQM", "201") > AccessMode.Plant)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Parts", "/Admin/Administrate_ViewPart.aspx"));
-						if (UserContext.CheckAccess("SQM", "211") > AccessMode.Limited)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(SQMSettings.GetSetting("QS", "3").XLAT_SHORT, "/Quality/Quality_Issue.aspx?c=RCV"));
-						if (UserContext.CheckAccess("SQM", "212") > AccessMode.Limited)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(SQMSettings.GetSetting("QS", "4").XLAT_SHORT, "/Quality/Quality_Issue.aspx?c=CST"));
-						if (UserContext.CheckAccess("SQM", "220") > AccessMode.Admin)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Cost Reporting", "/Quality/Quality_CostRecord.aspx"));
-						if (UserContext.CheckAccess("SQM", "221") > AccessMode.Limited)
-							SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Problem Control", "/Problem/Problem_Case.aspx?c=QI"));
-					}
-
 					if (UserContext.CheckAccess("EHS", "") > AccessMode.Limited)
 					{
-						RadMenuItem EHSMenu = new RadMenuItem("Environmental, Health & Safety");
-						RadMenu1.Items.Add(EHSMenu);
+						RadMenuItem EHSMenu1 = new RadMenuItem("Environmental");
+						RadMenu1.Items.Add(EHSMenu1);
 						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
 						if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
 						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
 						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
+						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
+						RadMenu1.Items.Add(EHSMenu2);
 						if (UserContext.CheckAccess("EHS", "312") > AccessMode.Limited)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
 						if (UserContext.CheckAccess("EHS", "313") > AccessMode.Limited)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
 						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
-					}
-
-					/*
-					if (UserContext.CheckAccess("EHS", "") > AccessMode.Limited)
-					{
-						RadMenuItem ENVMenu = new RadMenuItem("Environmental");
-						RadMenu1.Items.Add(ENVMenu);
-						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							ENVMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
-						if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
-							ENVMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
-						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							ENVMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Input", "/EHS/EHS_MetricInput.aspx"));
-						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							ENVMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
-						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							ENVMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
-
-						RadMenuItem EHSMenu = new RadMenuItem("Health & Safety");
-						RadMenu1.Items.Add(EHSMenu);
-						if (UserContext.CheckAccess("EHS", "312") > AccessMode.Limited)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
-						if (UserContext.CheckAccess("EHS", "313") > AccessMode.Limited)
-							 EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
-						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
-					}
-					*/
-
-					string menuQualityActive = System.Configuration.ConfigurationManager.AppSettings["MenuQualityActive"];
-					if (!string.IsNullOrEmpty(menuQualityActive) && menuQualityActive.ToUpper() == "FALSE")
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							if (mi.Text.Contains("Quality"))
-								mi.Visible = false;
-						}
-					}
-
-					string menuEHSActive = System.Configuration.ConfigurationManager.AppSettings["MenuEHSActive"];
-					if (!string.IsNullOrEmpty(menuEHSActive) && menuEHSActive.ToUpper() == "FALSE")
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							if (mi.Text.Contains("Environ"))
-								mi.Visible = false;
-						}
-					}
-
-					string menuENVReportActive = System.Configuration.ConfigurationManager.AppSettings["MenuENVReportActive"];
-					if (!string.IsNullOrEmpty(menuENVReportActive) && menuENVReportActive.ToUpper() == "FALSE")
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							foreach (RadMenuItem ms in mi.Items)
-							{
-								if (ms.NavigateUrl.EndsWith("EHS_ENVReport.aspx"))
-									ms.Visible = false;
-							}
-						}
-					}
-
-					string menuEHSIncidentActive = System.Configuration.ConfigurationManager.AppSettings["MenuEHSIncidentActive"];
-					if (!string.IsNullOrEmpty(menuEHSIncidentActive) && menuEHSIncidentActive.ToUpper() == "FALSE")
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							foreach (RadMenuItem ms in mi.Items)
-							{
-								if (ms.NavigateUrl.EndsWith("EHS_Incidents.aspx"))
-									ms.Visible = false;
-							}
-						}
-					}
-
-					string menuPreventativeActive = System.Configuration.ConfigurationManager.AppSettings["MenuPreventativeActive"];
-					if (string.IsNullOrEmpty(menuPreventativeActive) ||
-						(!string.IsNullOrEmpty(menuPreventativeActive) && menuPreventativeActive.ToUpper() == "FALSE"))
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							foreach (RadMenuItem ms in mi.Items)
-							{
-								if (ms.NavigateUrl.EndsWith("EHS_Incidents.aspx?mode=prevent"))
-									ms.Visible = false;
-							}
-						}
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
 					}
 
 					string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
