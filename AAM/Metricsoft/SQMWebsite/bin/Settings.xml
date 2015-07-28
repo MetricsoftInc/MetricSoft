@@ -543,6 +543,20 @@
     <sys prod="SQM" mod="PRC" topic="221" role="" desc="Problem Control"/>
     <sys prod="EHS" mod="HSN" topic="313" role="" desc="Preventative Actions"/>
   </sysModule>
+<privScope>
+	<xlat code="system" short="System" long="System"/>
+	<xlat code="company" short="Company" long="Company"/>
+	<xlat code="busorg" short="Business Org" long="Business Organization"/>
+	<xlat code="busloc" short="Business Location" long="Business Location"/>
+	<xlat code="user" short="Users" long="Users"/>
+	<xlat code="dashboard" short="Dashboard" long="Dashboard"/>
+	<xlat code="incident" short="Incident" long="Incident"/>
+	<xlat code="incidentIA" short="Injury Accident Incident" long="Injury Accident Incident"/>
+	<xlat code="prevent" short="Preventative Action" long="Preventative Action"/>
+	<xlat code="audit" short="Audit" long="Audit"/>
+	<xlat code="envdata" short="Environmental Data" long="Environmental Data"/>
+	<xlat code="console" short="Console" long="Console"/>
+</privScope>
   <passwordComplexity>
 	<xlat code="0" short="" long="Password must be at least 3 characters."></xlat>
 	<xlat code="1" short="" long="Password must be at least 6 characters, contain at least 1 letter, and contain 1 number or special character."></xlat>

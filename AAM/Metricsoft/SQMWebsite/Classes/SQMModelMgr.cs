@@ -570,11 +570,11 @@ namespace SQM.Website
             try
             {
                 if (personID == 0)
-                    person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP")
+					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                 where (P.SSO_ID.ToUpper() == SSOID.ToUpper())
                                 select P).Single();
                 else
-                    person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP")
+					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                 where (P.PERSON_ID == personID)
                                 select P).Single();
 
@@ -703,11 +703,11 @@ namespace SQM.Website
             using (PSsqmEntities entities = new PSsqmEntities())
             {
                 if (companyID > 0)
-                    personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp")
+					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                               where (P.COMPANY_ID == companyID  &&  P.ROLE > 1)
                               select P).ToList();
                 else if (busOrgID > 0)
-                    personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp")
+					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                   where (P.BUS_ORG_ID == busOrgID && P.ROLE > 1)
                               select P).ToList();
 
@@ -827,22 +827,22 @@ namespace SQM.Website
             if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
             {
                 if (activeOnly)
-                    personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1 && p.STATUS == "A")
                                select p).ToList();
                 else
-                    personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1)
                                select p).ToList();
             }
             else
             {
                 if (activeOnly)
-                    personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1) && (p.STATUS == "A") && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
                 else
-                    personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1) && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
             }

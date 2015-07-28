@@ -313,7 +313,9 @@
                                                         <td class="tableDataAlt">
                                                             <telerik:RadComboBox ID="ddlModuleAccess" runat="server" ZIndex="9000" height="120" Style="width: 98%;" Skin="Metro" DropDownCssClass="multipleRowsColumnsNarrow" DropDownWidth="450px" CheckBoxes="true" EnableCheckAllItemsCheckBox="false" AutoPostBack="false" Font-Names="Verdana" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="ModuleCheckedItems"></telerik:RadComboBox>
                                                             <br />
-                                                            <asp:Label ID="lblModuleAccess" runat="server" CssClass="refText"></asp:Label>
+                                                            <asp:Label ID="lblModuleAccess" runat="server" CssClass="refText"  Visible="false"></asp:Label>
+															<br />
+															<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                         </td>
                                                     </tr>
                                                 </table>

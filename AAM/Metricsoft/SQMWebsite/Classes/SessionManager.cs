@@ -11,6 +11,7 @@ namespace SQM.Website
 {
     public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
     public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
+	public enum SysPriv { sa=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, view=400, report=500, notify=550 }
 
     public class SessionManager
     {

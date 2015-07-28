@@ -369,6 +369,17 @@ namespace SQM.Website
             RadComboBoxItem item = null; RadComboBoxItem itemSep = null;
             ddlModuleAccess.Items.Clear();
             lblModuleAccess.Text = "";
+
+			lblPrivScope.Text = "";
+			if (person.JOBCODE != null && person.JOBCODE.JOBPRIV != null)
+			{
+				foreach (JOBPRIV jp in person.JOBCODE.JOBPRIV)
+				{
+					lblPrivScope.Text += (((SysPriv)jp.PRIV).ToString() + ": " + WebSiteCommon.GetXlatValue("privScope", jp.SCOPE) + ", ");
+				}
+			}
+
+
             foreach (SysModule sysmod in sysmodList.Where(l=> l.prod != "CQM").ToList()) 
             {
                 if (string.IsNullOrEmpty(sysmod.mod))
