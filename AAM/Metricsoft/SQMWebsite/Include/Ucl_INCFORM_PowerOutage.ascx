@@ -218,19 +218,19 @@
 				<div class="row">
 
 					<div class="col-sm-2 text-center">
-						<span><b>Action</b></span>
+						<span><b><asp:Label ID="lbConAction" runat ="server" Text="Action"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-3  text-center">
-						<span><b>Assigned To</b></span>
+						<span><b><asp:Label ID="lbConAssignedTo" runat ="server" Text="Assigned To"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-1 text-left-more">
-						<span><b>Start Date</b></span>
+						<span><b><asp:Label ID="lbConStartDate" runat ="server" Text="Start Date"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-2 text-center">
-						<span style="padding-left:10px;"><b>&nbsp;&nbsp;Completion Date</b></span>
+						<span style="padding-left:10px;"><b><asp:Label ID="lbConCompletionDate" runat ="server" Text="  Completion Date"></asp:Label></b></span>
 					</div>
 
 				</div>
@@ -238,10 +238,10 @@
 			</HeaderTemplate>
 			<ItemTemplate>
 				<div class="row-fluid">
-
+	
 					<div class="col-xs-12  col-sm-3 text-left-more">
-						<span >Action&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;
-						<asp:TextBox ID="tbContainAction" Width="275" SkinID="Metro" runat="server"></asp:TextBox></span>
+						<span><span style="display:inline-block; vertical-align:top;"><asp:Label ID="lbConPrompt" Text="Action " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;</span>
+						<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="300" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox></span>
 						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
@@ -261,12 +261,14 @@
 
 
 					<div class="col-xs-12  col-sm-1 text-left-more">
-						<span style="padding-bottom:0"></span><asp:CheckBox ID="cbIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
+						<asp:CheckBox ID="cbIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox>
 					</div>
-					<br  />
 				</div>
+				<br style="float:left; clear:both;"/><br />
 			</ItemTemplate>
-			<SeparatorTemplate><br /><br /></SeparatorTemplate>
+			<SeparatorTemplate>
+					<br /><br />
+			</SeparatorTemplate>
 			<FooterTemplate>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
@@ -301,7 +303,7 @@
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-xs-12 text-left">
-						<span>Why&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
+						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
 					</div>
 					<div class="col-xs-12 text-left">
 						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="50%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -348,19 +350,19 @@
 				<div class="row">
 
 					<div class="col-sm-2 text-center">
-						<span><b>Action</b></span>
+						<span><b><asp:Label ID="lbFinAction" runat ="server" Text="Action"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-3  text-center">
-						<span><b>Assigned To</b></span>
+						<span><b><asp:Label ID="lbFinAssignedTo" runat ="server" Text="Assigned To"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-1 text-left-more">
-						<span><b>Start Date</b></span>
+						<span><b><asp:Label ID="lbFinStartDate" runat ="server" Text="Start Date"></asp:Label></b></span>
 					</div>
 
 					<div class="col-sm-2 text-center">
-						<span style="padding-left:10px;"><b>&nbsp;&nbsp;Completion Date</b></span>
+						<span style="padding-left:10px;"><b><asp:Label ID="lbFinCompletionDate" runat ="server" Text="  Completion Date"></asp:Label></b></span>
 					</div>
 
 				</div>
@@ -370,8 +372,8 @@
 				<div class="row-fluid">
 
 					<div class="col-xs-12  col-sm-3 text-left-more">
-						<span >Action&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;
-						<asp:TextBox ID="tbFinalAction" Width="275" SkinID="Metro" runat="server"></asp:TextBox></span>
+						<span><span style="display:inline-block; vertical-align:top;"><asp:Label ID="lbActionPrompt" Text="Action " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;</span>
+						<asp:TextBox ID="tbFinalAction" Rows="3" Height="65px" Width="300" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox></span>
 						<asp:RequiredFieldValidator runat="server" ID="rfvFinalAction" ControlToValidate="tbFinalAction" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
 					</div>
 
@@ -389,12 +391,11 @@
 						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
 					</div>
 
-
 					<div class="col-xs-12  col-sm-1 text-left-more">
-						<span style="padding-bottom:0"></span><asp:CheckBox ID="cbFinalIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
+						<asp:CheckBox ID="cbFinalIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox>
 					</div>
-					<br  />
 				</div>
+				<br style="float:left; clear:both;"/><br />
 			</ItemTemplate>
 			<SeparatorTemplate><br /><br /></SeparatorTemplate>
 			<FooterTemplate>

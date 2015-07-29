@@ -351,6 +351,7 @@ namespace SQM.Website
 
 		protected void rbNew_Click(object sender, EventArgs e)
 		{
+			rbNew.Visible = false;
 			UpdateDisplayState(DisplayState.IncidentNotificationNew);
 		}
 

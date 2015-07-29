@@ -365,6 +365,8 @@ namespace SQM.Website
 		void InitializeForm(int currentStep)
 		{
 
+			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 
@@ -821,8 +823,8 @@ namespace SQM.Website
 		protected void btnPrev_Click(object sender, EventArgs e)
 		{
 			lblResults.Text = "";
-			//SetControlValidators(false, CurrentStep);
 			CurrentStep = CurrentStep - 1;
+
 			InitializeForm(CurrentStep);
 		}
 

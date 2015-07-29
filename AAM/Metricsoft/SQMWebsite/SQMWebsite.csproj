@@ -1736,15 +1736,6 @@
     <Content Include="Shared\Shared_Upload.aspx" />
     <Content Include="Shared\Shared_PartSearch.aspx" />
     <Content Include="Shared\Shared_Attach.aspx" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Administrate_DefaultDocuments.aspx.cs">
@@ -2452,6 +2443,9 @@
     <Content Include="RspQAILogin.Master" />
     <Content Include="RspPSMaster.Master" />
     <Content Include="PSMaster.Master" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config" />
+    <None Include="Web.Release.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />

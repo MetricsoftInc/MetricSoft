@@ -750,8 +750,8 @@ namespace SQM.Website
 						where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			int itemsNeeded = rootcauses.Count();
-			if (itemsNeeded < minRowsThisForm)
+			int itemsNeeded = 0;
+			if (rootcauses.Count() < minRowsThisForm)
 				itemsNeeded = minRowsThisForm - rootcauses.Count();
 				
 				INCFORM_ROOT5Y rootcause = null;
@@ -785,9 +785,9 @@ namespace SQM.Website
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			int itemsNeeded = containments.Count();
-			if (itemsNeeded < minRowsThisForm)
-				itemsNeeded = minRowsThisForm - containments.Count();
+			int itemsNeeded = 0;
+			if (containments.Count() < minRowsThisForm)
+				itemsNeeded = minRowsThisForm -containments.Count();
 
 				int seq = containments.Count(); ;
 				INCFORM_CONTAIN contain = null;
@@ -822,8 +822,8 @@ namespace SQM.Website
 							where c.INCIDENT_ID == incidentId
 							select c).ToList();
 
-			int itemsNeeded = actions.Count();
-			if (itemsNeeded < minRowsThisForm)
+			int itemsNeeded = 0;
+			if (actions.Count() < minRowsThisForm)
 				itemsNeeded = minRowsThisForm - actions.Count();
 
 				int seq = actions.Count(); ;
@@ -854,42 +854,43 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			var approvals = new List<INCFORM_APPROVAL>();
 
-			int minRowsThisForm = 1;
+			int minRowsThisForm = 2;  //Testing -- this will probably need to be set to 1 in prod
 
 			approvals = (from c in entities.INCFORM_APPROVAL
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			int itemsNeeded = approvals.Count();
-			if (itemsNeeded < minRowsThisForm)
+			int itemsNeeded = 0;
+			if (approvals.Count() < minRowsThisForm)
 				itemsNeeded = minRowsThisForm - approvals.Count();
 
-				INCFORM_APPROVAL approval = null;
-				int seq = approvals.Count();
+			INCFORM_APPROVAL approval = null;
+			int seq = approvals.Count();
 
-				for (int i = 1; i < itemsNeeded + 1; i++)
-				{
-					approval = new INCFORM_APPROVAL();
+			for (int i = 1; i < itemsNeeded + 1; i++)
+			{
+				approval = new INCFORM_APPROVAL();
 
-					seq = seq + 1;
-					approval.ITEM_SEQ = seq;
+				seq = seq + 1;
+				approval.ITEM_SEQ = seq;
 
-					// TESTING ................START......................
-					if (seq ==1)
-						approval.APPROVER_PERSON = "Mathis, Robert";
-					else
-						approval.APPROVER_PERSON = "Williams, Mark";
-					approval.APPROVAL_MESSAGE = "I have reviewed .... Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se..";
-					// TESTING ................END ........................
+				// TESTING ................START......................
+				if (seq ==1)
+					approval.APPROVER_PERSON = "Mathis, Robert";
+				else
+					approval.APPROVER_PERSON = "Williams, Mark";
+				approval.APPROVAL_MESSAGE = "I have reviewed .... Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se..";
+				// TESTING ................END ........................
 
-					//approval.APPROVER_PERSON = "";
-					//approval.APPROVAL_MESSAGE = "";
-					approval.APPROVER_PERSON_ID = null; 
-					approval.IsAccepted = false;
-					approval.APPROVAL_DATE = null;
+				//approval.APPROVER_PERSON = "";
+				//approval.APPROVAL_MESSAGE = "";
+				approval.APPROVER_PERSON_ID = null; 
+				approval.IsAccepted = false;
+				approval.APPROVAL_DATE = null;
 					
-					approvals.Add(approval);
-				}
+				approvals.Add(approval);
+			}
+
 			return approvals;
 		}
 
