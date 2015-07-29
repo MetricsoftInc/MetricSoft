@@ -377,6 +377,8 @@ namespace SQM.Website
 			string currentFormName = formSteps[i].StepFormName;
 			lblFormTitle.Text = formSteps[i].StepHeadingText; ;
 
+			btnNext.Text = (i + 1 <= formSteps.Count()-1) ? formSteps[i + 1].StepHeadingText.Trim() + "  >" : "Next  >";
+			btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
 
 			switch (currentFormName)
 			{

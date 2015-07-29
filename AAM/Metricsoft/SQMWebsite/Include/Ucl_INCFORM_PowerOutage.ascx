@@ -492,14 +492,14 @@
 				<br class="visible-xs-block" />
 
 
-				<span><telerik:RadButton ID="btnPrev" runat="server" Text="<   Prev" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
+				<span><telerik:RadButton ID="btnPrev" runat="server" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
 					OnClick="btnPrev_Click" />&nbsp;&nbsp;</span>
 	
 				<div class="clearfix visible-xs"></div>
 				<br class="visible-xs-block" />
 
 	
-				<span><telerik:RadButton ID="btnNext" runat="server" Text="Next   >" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
+				<span><telerik:RadButton ID="btnNext" runat="server" Visible="true" CssClass="UseSubmitAction" Skin="Metro" 
 					OnClick="btnNext_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val_PowerOutage" /></span>
 
 				

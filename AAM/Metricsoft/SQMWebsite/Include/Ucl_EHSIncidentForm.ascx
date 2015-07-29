@@ -18,7 +18,7 @@
 </script>
 
 <div id="divIncidentForm" runat="server" visible="false">
-	<div style="width: 100%; text-align: center; margin-bottom: 10px;"><a href="EHS_Incidents.aspx" id="ahReturn" runat="server">
+	<div style="width: 100%; text-align: center; margin-bottom: 10px;"><a href="EHS_Incidents.aspx" id="ahReturn" runat="server" style="font-size:medium;">
 		<img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
 		Return to List</a></div>
 	<table style="width: 100%" class="textStd">
