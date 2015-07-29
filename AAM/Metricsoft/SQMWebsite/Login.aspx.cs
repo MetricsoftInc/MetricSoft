@@ -232,6 +232,7 @@ namespace SQM.Website
 				SessionManager.UserAgent = (string)HttpContext.Current.Request.UserAgent.ToLower();
 
 				//CheckInboxItems();
+
 				string redirectPath = (string)ViewState["RedirectPath"];
 				if (string.IsNullOrEmpty(redirectPath))
 				{

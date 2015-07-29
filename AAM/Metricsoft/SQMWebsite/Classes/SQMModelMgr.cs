@@ -512,6 +512,38 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
+		public static List<PERSON> SelectJobPrivPersonList(SysPriv priv, SysScope scope)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				string privScope = scope.ToString();
+				personList = (from p in ctx.PERSON
+							  join v in ctx.JOBPRIV on p.JOBCODE_CD equals v.JOBCODE_CD
+							  where (v.PRIV == (int)priv && v.SCOPE == privScope)
+							  select p).ToList();
+			}
+
+			return personList;
+		}
+		public static List<PERSON> SelectJobPrivPersonList(SysPriv[] privList, SysScope scope)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				string privScope = scope.ToString();
+				int[] privs = Array.ConvertAll(privList, value => (int)value);
+				personList = (from p in ctx.PERSON
+							  join v in ctx.JOBPRIV on p.JOBCODE_CD equals v.JOBCODE_CD
+							  where (privs.Contains(v.PRIV) && v.SCOPE == privScope)
+							  select p).ToList();
+			}
+
+			return personList;
+		}
+
         public static SQM_ACCESS LookupCredentials(SQM.Website.PSsqmEntities ctx, string SSOID, string pwd, bool activeOnly)
         {
             SQM_ACCESS access = null;
