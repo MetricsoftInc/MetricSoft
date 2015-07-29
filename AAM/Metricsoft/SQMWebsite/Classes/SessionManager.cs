@@ -66,7 +66,7 @@ namespace SQM.Website
             return SessionManager.UserContext.LoginStatus;
         }
 
-		public static bool CheckUserPrivilege(SysPriv priv,  SysScope scope )
+		public static bool CheckUserPrivilege(SysPriv priv,  SysScope scope)
 		{
 			bool hasPriv = false;
 
@@ -84,6 +84,28 @@ namespace SQM.Website
 			}
 
 			return hasPriv;
+		}
+
+		public static List<JOBPRIV> GetScopePrivileges(SysScope scope)
+		{
+			// get all user privs related to the scope/function 
+			List<JOBPRIV> privList = new List<JOBPRIV>();
+
+			if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV != null)
+			{
+				JOBPRIV priv = new JOBPRIV();
+				if ((priv = SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
+				{
+					priv.SCOPE = scope.ToString();
+					privList.Add(priv);
+				}
+				else
+				{
+					privList = SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.SCOPE.ToLower() == scope.ToString()).ToList();
+				}
+			}
+
+			return privList;
 		}
 
         public static int AccessModeRoleXREF(AccessMode mode)
