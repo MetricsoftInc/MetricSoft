@@ -2451,6 +2451,12 @@
     <Folder Include="App_LocalResources\" />
     <Folder Include="Report\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_PowerOutage.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_PowerOutage.ascx.es.resx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
