@@ -119,6 +119,7 @@
   </resheader>
   <data name="bIncidentTimeXSResource1.Text" xml:space="preserve">
     <value>Time of Incident:</value>
+    <comment>Time of Incident:</comment>
   </data>
   <data name="bIncidentTimeXSResource1.ToolTip" xml:space="preserve">
     <value />
@@ -244,13 +245,13 @@
     <value />
   </data>
   <data name="lbDescriptionSMResource1.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Descripción del incidente</value>
   </data>
   <data name="lbDescriptionSMResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lbDescriptionXSResource1.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Descripción del incidente</value>
   </data>
   <data name="lbDescriptionXSResource1.ToolTip" xml:space="preserve">
     <value />
@@ -280,7 +281,7 @@
     <value />
   </data>
   <data name="lbIncidentDateSMResource1.Text" xml:space="preserve">
-    <value>Incident Date:</value>
+    <value>Fecha del incidente</value>
   </data>
   <data name="lbIncidentDateSMResource1.ToolTip" xml:space="preserve">
     <value />
@@ -346,13 +347,13 @@
     <value />
   </data>
   <data name="lbLocationSMResource1.Text" xml:space="preserve">
-    <value>Location:</value>
+    <value>Ubicación</value>
   </data>
   <data name="lbLocationSMResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lbLocationXSResource1.Text" xml:space="preserve">
-    <value>Location:</value>
+    <value>Ubicación</value>
   </data>
   <data name="lbLocationXSResource1.ToolTip" xml:space="preserve">
     <value />
@@ -388,7 +389,7 @@
     <value />
   </data>
   <data name="lbReportDateSMResource1.Text" xml:space="preserve">
-    <value>Report Date:</value>
+    <value>Fecha del informe</value>
   </data>
   <data name="lbReportDateSMResource1.ToolTip" xml:space="preserve">
     <value />
