@@ -229,13 +229,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbLocalDescription;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// rfvLocalDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocalDescription;
         
         /// <summary>
         /// lbIncidentTimeSM control.
@@ -247,13 +247,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbIncidentTimeSM;
         
         /// <summary>
-        /// bIncidentTimeXS control.
+        /// lbIncidentTimeXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label bIncidentTimeXS;
+        protected global::System.Web.UI.WebControls.Label lbIncidentTimeXS;
         
         /// <summary>
         /// rtpIncidentTime control.
@@ -301,13 +301,13 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDropDownList rddlShift;
         
         /// <summary>
-        /// rvfShift control.
+        /// rfvShift control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfShift;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvShift;
         
         /// <summary>
         /// lbProdImpactSM control.

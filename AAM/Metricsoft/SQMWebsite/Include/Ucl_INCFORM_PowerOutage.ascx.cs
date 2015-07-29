@@ -178,7 +178,18 @@ namespace SQM.Website
 
 
 		}
-		
+
+
+		protected override void FrameworkInitialize()
+		{
+			//String selectedLanguage = "es";
+			String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+			Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
+			Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+
+			base.FrameworkInitialize();
+		}
+
 
 
 		// Needed to move javascript to parent page - problem with ajax panel?
@@ -380,6 +391,8 @@ namespace SQM.Website
 			btnNext.Text = (i + 1 <= formSteps.Count()-1) ? formSteps[i + 1].StepHeadingText.Trim() + "  >" : "Next  >";
 			btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
 
+			SetUserAccess(currentFormName);
+
 			switch (currentFormName)
 			{
 				case "INCFORM_POWEROUTAGE":
@@ -436,12 +449,60 @@ namespace SQM.Website
 					pnlApproval.Visible = true;
 					btnPrev.Visible = true;
 					btnNext.Visible = false;
-					btnClose.Visible = true;
 					rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId);
 					rptApprovals.DataBind();
 					break;
 			}
 
+		}
+
+		private void SetUserAccess(string currentFormName)
+		{
+
+			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
+			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
+			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
+
+			//List<JOBPRIV> privList = SessionManager.GetScopePrivileges(SysScope.incident);
+
+			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
+			switch (currentFormName)
+			{
+				case "INCFORM_POWEROUTAGE":
+					rdpIncidentDate.Enabled = updateAccess;
+					rfvIncidentDate.Enabled = updateAccess;
+					rdpReportDate.Enabled = updateAccess;
+					rddlLocation.Enabled = updateAccess;
+					rfvLocation.Enabled = updateAccess;
+					tbDescription.Enabled = updateAccess;
+					rfvDescription.Enabled = updateAccess;
+					tbLocalDescription.Enabled = updateAccess;
+					rfvLocalDescription.Enabled = updateAccess;
+					rtpIncidentTime.Enabled = updateAccess;
+					rfvIncidentTime.Enabled = updateAccess;
+					rddlShift.Enabled = updateAccess;
+					rfvShift.Enabled = updateAccess;
+					tbProdImpact.Enabled = updateAccess;
+					btnSave.Enabled = updateAccess;
+					break;
+				case "INCFORM_CONTAIN":
+					btnSave.Enabled = actionAccess;
+					break;
+				case "INCFORM_ROOT5Y":
+					btnSave.Enabled = actionAccess;
+					break;
+				case "INCFORM_ACTION":
+					btnSave.Enabled = actionAccess;
+					break;
+				case "INCFORM_APPROVAL":
+					btnSave.Enabled = approveAccess;
+					btnClose.Enabled = approveAccess;
+					btnClose.Visible = approveAccess;
+					break;
+			}
 		}
 
 		//private void PopulateRootCauses(decimal IncidentId)
@@ -600,6 +661,8 @@ namespace SQM.Website
 
 		public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
+			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -616,16 +679,29 @@ namespace SQM.Website
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
 
+					// Set user access:
+					tb.Enabled = actionAccess;
+					rvf.Enabled = actionAccess;
+
 					if (rootCause.ITEM_SEQ > minRowsToValidate)
 						rvf.Enabled = false;
 				}
 				catch { }
 			}
+
+			if (e.Item.ItemType == ListItemType.Footer)
+			{
+				Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
+				addanother.Visible = actionAccess;
+			}
+
 		}
 
 
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
+			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -665,21 +741,40 @@ namespace SQM.Website
 					cd.SelectedDate = contain.COMPLETION_DATE;
 					ic.Checked = contain.IsCompleted;
 
+					// Set user access:
+					tbca.Enabled = actionAccess;
+					rddlp.Enabled = actionAccess;
+					sd.Enabled = actionAccess;
+					cd.Enabled = actionAccess;
+					ic.Enabled = actionAccess;
+					rvfca.Enabled = actionAccess;
+					rvfcp.Enabled = actionAccess;
+					rvfsd.Enabled = actionAccess;
+
 					if (contain.ITEM_SEQ > minRowsToValidate)
-					{ 	
+					{
 						rvfca.Enabled = false;
 						rvfcp.InitialValue = null;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
-					} 
-				
+					}
+
 				}
 				catch { }
 			}
+
+			if (e.Item.ItemType == ListItemType.Footer)
+			{
+				Button addanother = (Button)e.Item.FindControl("btnAddContain");
+				addanother.Visible = actionAccess;
+			}
+
 		}
 
 		public void rptAction_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
+			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 				int minRowsToValidate = 1;
@@ -720,19 +815,40 @@ namespace SQM.Website
 					cd.SelectedDate = action.COMPLETION_DATE;
 					ic.Checked = action.IsCompleted;
 
+					// Set user access:
+					tbca.Enabled = actionAccess;
+					rddlp.Enabled = actionAccess;
+					sd.Enabled = actionAccess;
+					cd.Enabled = actionAccess;
+					ic.Enabled = actionAccess;
+					rvfca.Enabled = actionAccess;
+					rvfcp.Enabled = actionAccess;
+					rvfsd.Enabled = actionAccess;
+
 					if (action.ITEM_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
+
 				}
 				catch { }
 			}
+
+			
+			if (e.Item.ItemType == ListItemType.Footer)
+			{
+				Button addanother = (Button)e.Item.FindControl("btnAddFinal");
+				addanother.Visible = actionAccess;
+			}
+
 		}
 
 		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
+			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -754,11 +870,23 @@ namespace SQM.Website
 					cba.Checked = approval.IsAccepted;
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
+					// Set user access:
+					cba.Enabled = approveAccess;
+					rda.Enabled = approveAccess;
+
 					//if (rootCause.ITEM_SEQ > minRowsToValidate)
 					//	rvf.Enabled = false;
+
 				}
 				catch { }
 			}
+
+			if (e.Item.ItemType == ListItemType.Footer)
+			{
+				//Button addanother = (Button)e.Item.FindControl("btnAddApproval");
+				//addanother.Visible = approveAccess;
+			}
+
 		}
 
 		//public static object DisplayControlValue(object oCtl, string value, string "", string "")
@@ -810,7 +938,11 @@ namespace SQM.Website
 				Save(false);
 
 				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
-				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+
+				if (btnSave.Enabled)
+					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+				else
+					lblResults.Text = "";
 
 				InitializeForm(CurrentStep);
 			}
@@ -835,7 +967,6 @@ namespace SQM.Website
 
 			if (Page.IsValid)
 			{
-
 				lblResults.Text = "";
 				entities = new PSsqmEntities();
 
@@ -851,7 +982,12 @@ namespace SQM.Website
 				Save(false);
 
 				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
-				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+
+				if (btnSave.Enabled)
+					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+				else
+					lblResults.Text = "";
+
 
 				CurrentStep = CurrentStep + 1;
 					

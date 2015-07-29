@@ -50,6 +50,18 @@ namespace SQM.Website
             }
         }
 
+		//protected override void FrameworkInitialize()
+		//{
+		//	//String selectedLanguage = "es";
+		//	//String selectedLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.CultureName.Split('-')[0];
+		//	String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+		//	System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(selectedLanguage);
+		//	System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(selectedLanguage);
+
+		//	base.FrameworkInitialize();
+		//}
+
+
         public static string CultureInfo(int option)
         {
             string cultureInfo = "";

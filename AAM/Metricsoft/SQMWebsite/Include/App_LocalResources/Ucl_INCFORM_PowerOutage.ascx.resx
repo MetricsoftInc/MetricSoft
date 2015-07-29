@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="bIncidentTimeXSResource1.Text" xml:space="preserve">
+  <data name="lbIncidentTimeXSResource1.Text" xml:space="preserve">
     <value>Time of Incident:</value>
   </data>
-  <data name="bIncidentTimeXSResource1.ToolTip" xml:space="preserve">
+  <data name="lbIncidentTimeXSResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="btnAddContainResource1.Text" xml:space="preserve">

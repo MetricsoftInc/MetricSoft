@@ -65,9 +65,6 @@ namespace SQM.Website
 				}
 			}
 
-			
-
-
 			uclIncidentForm.Mode = this.Mode;
 		}
 
@@ -75,8 +72,11 @@ namespace SQM.Website
 		{
 
 			accessLevel = UserContext.CheckAccess("EHS", "");
-			if (accessLevel < AccessMode.Update)
-				rbNew.Visible = false;
+			//if (accessLevel < AccessMode.Update)
+			//	rbNew.Visible = false;
+
+			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
+			rbNew.Visible = createIncidentAccess;
 
 			if (IsPostBack)
 			{
