@@ -240,6 +240,8 @@
     <Content Include="images\bg-table-arrow.png" />
     <Content Include="images\btn-edit.png" />
     <Content Include="images\calendar.gif" />
+    <Content Include="images\company\AAMLogo.jpg" />
+    <Content Include="images\company\AAMLogoSmall.jpg" />
     <Content Include="images\company\MetricsoftLogo.png" />
     <Content Include="images\company\MetricsoftLogoSmall.png" />
     <Content Include="images\company\QAILogo.jpg" />

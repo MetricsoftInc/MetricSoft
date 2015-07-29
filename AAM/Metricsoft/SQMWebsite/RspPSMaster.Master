@@ -174,7 +174,7 @@
 
 		<div style="width:99%; margin: 5px;" >
 			<div style="float: left;" class="noprint">
-				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg"/>
+				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;"/>
 			</div>
 			<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
 				<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>

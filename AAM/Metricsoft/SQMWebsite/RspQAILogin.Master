@@ -46,17 +46,18 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 text-left">
-					<span style="float: left; margin: 10px -6px;">
-						<asp:Image ID="imgLogo" Visible="true" runat="server" CssClass="logoImg" />
+					<div style="float: left;" class="noprint">
+						<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;"/>
+					</div>
+					<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
 						<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>
-						<br />
-						<asp:Label ID="lblMainInfo" runat="server" CssClass="instructText" Visible="false"></asp:Label>
-					</span>
+					</div>
+					<br />
+					<asp:Label ID="lblMainInfo" runat="server" CssClass="instructText" Visible="false"></asp:Label>
 					<br />
 				</div>
 			</div>
 		</div>
-
 
 		<div>
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
