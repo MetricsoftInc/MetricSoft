@@ -244,13 +244,13 @@
     <value />
   </data>
   <data name="lbDescriptionSMResource1.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description1:</value>
   </data>
   <data name="lbDescriptionSMResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lbDescriptionXSResource1.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description2:</value>
   </data>
   <data name="lbDescriptionXSResource1.ToolTip" xml:space="preserve">
     <value />
