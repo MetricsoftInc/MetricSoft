@@ -210,6 +210,9 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
+    <Content Include="EHS\EHS_Audits.aspx" />
+    <Content Include="EHS\EHS_Audits_Questions.aspx" />
+    <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents.aspx" />
     <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents_Questions.aspx" />
@@ -1653,6 +1656,10 @@
     <Content Include="images\status\waste-bak.png" />
     <Content Include="images\status\waste.png" />
     <Content Include="images\step_01.gif" />
+    <Content Include="Include\Ucl_AuditList.ascx" />
+    <Content Include="Include\Ucl_EHSAuditAdd.ascx" />
+    <Content Include="Include\Ucl_EHSAuditForm.ascx" />
+    <Content Include="Include\Ucl_EHSAuditDetails.ascx" />
     <Content Include="Include\Ucl_EHSIncidentForm.ascx" />
     <Content Include="Include\Ucl_AdminPasswordEdit.ascx" />
     <Content Include="Include\Ucl_EHSIncidentDetails.ascx" />
@@ -1831,10 +1838,14 @@
     <Compile Include="Automated\SendReminderEmails.aspx.designer.cs">
       <DependentUpon>SendReminderEmails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\EHSAuditTypeId.cs" />
+    <Compile Include="Classes\EHSAuditMgr.cs" />
+    <Compile Include="Classes\EHSAuditQuestionType.cs" />
     <Compile Include="Classes\EHSNotificationMgr.cs" />
     <Compile Include="Classes\EHSIncidentTypeId.cs" />
     <Compile Include="Classes\CurrencyMgr.cs" />
     <Compile Include="Classes\EHSAccountingMgr.cs" />
+    <Compile Include="Classes\EHSAuditQuestionId.cs" />
     <Compile Include="Classes\EHSQuestionId.cs" />
     <Compile Include="Classes\EHSIncidentQuestionType.cs" />
     <Compile Include="Classes\EncryptionManager.cs" />
@@ -1879,6 +1890,20 @@
     </Compile>
     <Compile Include="EHS\EHS_Incidents.aspx.designer.cs">
       <DependentUpon>EHS_Incidents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Audits.aspx.cs">
+      <DependentUpon>EHS_Audits.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Audits.aspx.designer.cs">
+      <DependentUpon>EHS_Audits.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Audits_Questions.aspx.cs">
+      <DependentUpon>EHS_Audits_Questions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Audits_Questions.aspx.designer.cs">
+      <DependentUpon>EHS_Audits_Questions.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Incident_Verification.aspx.cs">
       <DependentUpon>EHS_Incident_Verification.aspx</DependentUpon>
@@ -2002,8 +2027,36 @@
     <Compile Include="Home\Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_EHSAuditAdd.ascx.cs">
+      <DependentUpon>Ucl_EHSAuditAdd.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditAdd.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSAuditAdd.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Include\Ucl_EHSIncidentDetails.ascx.designer.cs">
       <DependentUpon>Ucl_EHSIncidentDetails.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_AuditList.ascx.cs">
+      <DependentUpon>Ucl_AuditList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AuditList.ascx.designer.cs">
+      <DependentUpon>Ucl_AuditList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditForm.ascx.cs">
+      <DependentUpon>Ucl_EHSAuditForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditForm.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSAuditForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditDetails.ascx.cs">
+      <DependentUpon>Ucl_EHSAuditDetails.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditDetails.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSAuditDetails.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_EHSIncidentForm.ascx.cs">
       <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>

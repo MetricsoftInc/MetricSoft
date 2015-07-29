@@ -318,7 +318,12 @@ namespace SQM.Website
             get;
             set;
         }
-        public PSsqmEntities Entities
+		public List<EHSAuditData> AuditHst
+		{
+			get;
+			set;
+		}
+		public PSsqmEntities Entities
         {
             get;
             set;
@@ -1027,7 +1032,54 @@ namespace SQM.Website
 			return this.IncidentHst;
 		}
 
-        public List<GaugeSeries> CalculateIncidentSeries(string option, SStat stat)
+		public List<EHSAuditData> SelectAuditList(List<decimal> plantIdList, List<decimal> auditTypeList, DateTime fromDate, DateTime toDate, string auditStatus)
+		{
+			try
+			{
+				this.AuditHst = (from a in this.Entities.AUDIT
+									join p in this.Entities.PLANT on a.DETECT_PLANT_ID equals p.PLANT_ID
+									join r in this.Entities.PERSON on a.CREATE_PERSON equals r.PERSON_ID
+									where ((a.AUDIT_DT >= fromDate && a.AUDIT_DT <= toDate)
+									&& auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.DETECT_PLANT_ID))
+									select new EHSAuditData
+									{
+										Audit = a,
+										Plant = p,
+										Person = r
+									}).ToList();
+
+				if (this.AuditHst != null)
+				{
+					decimal[] ids = this.AuditHst.Select(a => a.Audit.AUDIT_ID).Distinct().ToArray();
+					var qaList = (from a in this.Entities.AUDIT_ANSWER.Include("AUDIT_QUESTION")
+								  where (ids.Contains(a.AUDIT_ID))
+								  select a).ToList();
+					foreach (EHSAuditData data in this.AuditHst)
+					{
+						data.EntryList = new List<AUDIT_ANSWER>();
+						data.EntryList.AddRange(qaList.Where(l => l.AUDIT_ID == data.Audit.AUDIT_ID).ToList());
+						data.DeriveStatus();
+						data.DaysElapsed();
+					}
+
+					if (auditStatus == "A")  // get open incidents
+						this.AuditHst = this.AuditHst.Where(l => l.Status == "A").ToList();
+					if (auditStatus == "N")  // data incomplete
+						this.AuditHst = this.AuditHst.Where(l => l.Status == "N").ToList();
+					else if (auditStatus == "C")  // get closed incidents
+						this.AuditHst = this.AuditHst.Where(l => l.Status == "C" || l.Status == "C8").ToList();
+
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return this.AuditHst;
+		}
+
+		public List<GaugeSeries> CalculateIncidentSeries(string option, SStat stat)
         {
             this.Results.Initialize();
             GaugeSeries series = new GaugeSeries().CreateNew(0, "", "");
