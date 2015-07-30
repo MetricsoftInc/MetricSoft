@@ -68,7 +68,7 @@ namespace SQM.Website
 		{
 			LinkButton lnk = (LinkButton)sender;
 
-			RadButton rbNew = (RadButton)Parent.FindControl("rbNew");
+			RadButton rbNew = (RadButton)this.Parent.FindControl("rbNew");
 			rbNew.Visible = false;
 
 			SessionManager.ReturnObject = "Notification";
@@ -846,8 +846,8 @@ namespace SQM.Website
 		protected void lbEditReport_Click(object sender, EventArgs e)
 		{
 
-			RadButton rbNew = (RadButton)Parent.FindControl("rbNew");
-			rbNew.Visible = false;
+			//RadButton rbNew = (RadButton)Parent.FindControl("rbNew");
+			//rbNew.Visible = false;
 			
 
 			SessionManager.ReturnStatus = true;

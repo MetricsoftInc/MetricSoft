@@ -44,7 +44,8 @@ namespace SQM.Website
 
 		// Incident Custom Forms:
 		protected Ucl_INCFORM_PowerOutage powerOutageForm;
-		
+		protected Ucl_INCFORM_InjuryIllness injuryIllnessForm;
+
 		
 		// Special answers used in INCIDENT table
 		string incidentDescription = "";
@@ -742,7 +743,6 @@ namespace SQM.Website
 					catch (Exception e) 
 					{
 					}
-
 					powerOutageForm.ID = "pof1";
 					powerOutageForm.IsEditContext = IsEditContext;
 					powerOutageForm.IncidentId = EditIncidentId;
@@ -750,21 +750,45 @@ namespace SQM.Website
 					powerOutageForm.SelectedTypeId = SelectedTypeId;
 					powerOutageForm.SelectedTypeText = SelectedTypeText;
 					//powerOutageForm.IsNewIncident = true;
-					
-
 					//preventionLocationForm.BuildCaseComboBox();
 					//if (IsEditContext == true)
 					//powerOutageForm.PopulateForm();
-
 					pnlForm.Controls.Add(new LiteralControl("<br/>"));
 					pnlForm.Controls.Add(powerOutageForm);
 					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-
 					btnSaveReturn.Visible = false;
 					btnSaveContinue.Visible = false;
 					btnDelete.Visible = false;
-
 					break;
+
+				case "INCFORM_INJURYILLNESS":
+
+					try
+					{
+						injuryIllnessForm = (Ucl_INCFORM_InjuryIllness)LoadControl("~/Include/Ucl_INCFORM_InjuryIllness.ascx");
+					}
+					catch (Exception e)
+					{
+					}
+
+					injuryIllnessForm.ID = "iif1";
+					injuryIllnessForm.IsEditContext = IsEditContext;
+					injuryIllnessForm.IncidentId = EditIncidentId;
+					injuryIllnessForm.EditIncidentId = EditIncidentId;
+					injuryIllnessForm.SelectedTypeId = SelectedTypeId;
+					injuryIllnessForm.SelectedTypeText = SelectedTypeText;
+					//powerOutageForm.IsNewIncident = true;
+					//preventionLocationForm.BuildCaseComboBox();
+					//if (IsEditContext == true)
+					//powerOutageForm.PopulateForm();
+					pnlForm.Controls.Add(new LiteralControl("<br/>"));
+					pnlForm.Controls.Add(injuryIllnessForm);
+					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+					btnSaveReturn.Visible = false;
+					btnSaveContinue.Visible = false;
+					btnDelete.Visible = false;
+					break;
+
 			}
 
 		}

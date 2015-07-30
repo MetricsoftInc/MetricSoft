@@ -76,7 +76,9 @@ namespace SQM.Website
 			//	rbNew.Visible = false;
 
 			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-			rbNew.Visible = createIncidentAccess;
+			if (rbNew.Visible)
+				rbNew.Visible = createIncidentAccess;
+
 
 			if (IsPostBack)
 			{
@@ -179,11 +181,13 @@ namespace SQM.Website
 
 		protected void UpdateDisplayState(DisplayState state)
 		{
+
 			switch (state)
 			{
 				case DisplayState.IncidentList:
 					SearchIncidents();
 					uclIncidentForm.Visible = false;
+					rbNew.Visible = false;
 					break;
 
 				case DisplayState.IncidentNotificationNew:
@@ -191,6 +195,7 @@ namespace SQM.Website
 					uclIncidentForm.Visible = true;
 					uclIncidentForm.IsEditContext = false;
 					uclIncidentForm.ClearControls();
+					rbNew.Visible = false;
 					uclIncidentForm.CheckForSingleType();
 					break;
 
@@ -199,6 +204,7 @@ namespace SQM.Website
 					uclIncidentForm.CurrentStep = 0;
 					uclIncidentForm.IsEditContext = true;
 					uclIncidentForm.Visible = true;
+					rbNew.Visible = false;
 					uclIncidentForm.BuildForm();
 					break;
 
@@ -206,6 +212,7 @@ namespace SQM.Website
 					divIncidentList.Visible = false;
 					uclIncidentForm.CurrentStep = 1;
 					uclIncidentForm.IsEditContext = true;
+					rbNew.Visible = false;
 					uclIncidentForm.Visible = true;
 					uclIncidentForm.BuildForm();
 					break;

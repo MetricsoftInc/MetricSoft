@@ -437,7 +437,7 @@
 							<asp:Label ID="lbApprover" Width="45%" SkinID="Metro" runat="server"></asp:Label></span>
 					</div>
 					<div class="col-xs-12 col-sm-3  text-left">
-						<asp:Label ID="lbApproveMessage" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:Label>
+						<asp:Label ID="lbApproveMessage" Height="95px" Width="95%"  SkinID="Metro" runat="server"></asp:Label>
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span><asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="false" Text="Accepted" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>

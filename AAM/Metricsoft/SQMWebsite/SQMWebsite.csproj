@@ -1680,6 +1680,7 @@
     <Content Include="images\tabInactiveLeftSquare.gif" />
     <Content Include="images\tabInactiveRight.gif" />
     <Content Include="images\tableDataHdrBg2.gif" />
+    <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
     <Content Include="Include\Ucl_PreventionLocation.ascx" />
@@ -2075,6 +2076,13 @@
     </Compile>
     <Compile Include="Include\Ucl_EHSIncidentForm.ascx.designer.cs">
       <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_InjuryIllness.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_InjuryIllness.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_InjuryIllness.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_InjuryIllness.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.cs">
       <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
