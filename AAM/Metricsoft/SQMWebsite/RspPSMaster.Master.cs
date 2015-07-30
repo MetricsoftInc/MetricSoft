@@ -105,22 +105,17 @@ namespace SQM.Website
 					{
 						RadMenuItem EHSMenu1 = new RadMenuItem("Environmental");
 						RadMenu1.Items.Add(EHSMenu1);
-						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
-						if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
-							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
-						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
-						if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
 						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
 						RadMenu1.Items.Add(EHSMenu2);
-						if (UserContext.CheckAccess("EHS", "312") > AccessMode.Limited)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
-						if (UserContext.CheckAccess("EHS", "313") > AccessMode.Limited)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
-						if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
+						// EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Questions ", "/EHS/EHS_Audits_Questions.aspx"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
 					}
 
 					string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
