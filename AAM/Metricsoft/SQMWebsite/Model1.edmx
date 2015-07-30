@@ -739,6 +739,33 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="INCFORM_INJURYILLNESS">
+          <Key>
+            <PropertyRef Name="INCIDENT_ID" />
+          </Key>
+          <Property Name="INCIDENT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPTION_LOCAL" Type="nvarchar" MaxLength="4000" />
+          <Property Name="INCIDENT_TIME" Type="time" Precision="7" />
+          <Property Name="SHIFT" Type="nvarchar" MaxLength="4000" />
+          <Property Name="DEPARTMENT" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OPERATION" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="INCFORM_LOSTTIME_HIST">
+          <Key>
+            <PropertyRef Name="INCIDENT_LOSTTIME_HIST_ID" />
+          </Key>
+          <Property Name="INCIDENT_LOSTTIME_HIST_ID" Type="numeric" Precision="35" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INCIDENT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
+          <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="WORK_STATUS" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BEGIN_DT" Type="datetime" />
+          <Property Name="NEXT_MEDAPPT_DT" Type="datetime" />
+          <Property Name="RETURN_EXPECTED_DT" Type="datetime" />
+          <Property Name="RETURN_TOWORK_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+        </EntityType>
         <EntityType Name="INCFORM_POWEROUTAGE">
           <Key>
             <PropertyRef Name="INCIDENT_ID" />
@@ -2668,6 +2695,18 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_INCIDENTLOSTTIME_INCIDENT_ID">
+          <End Role="INCIDENT" Type="Self.INCIDENT" Multiplicity="1" />
+          <End Role="INCFORM_LOSTTIME_HIST" Type="Self.INCFORM_LOSTTIME_HIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_LOSTTIME_HIST">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_INCIDENTROOT5Y_INCIDENT_ID">
           <End Role="INCIDENT" Type="Self.INCIDENT" Multiplicity="1" />
           <End Role="INCFORM_ROOT5Y" Type="Self.INCFORM_ROOT5Y" Multiplicity="*" />
@@ -2676,6 +2715,18 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
               <PropertyRef Name="INCIDENT_ID" />
             </Principal>
             <Dependent Role="INCFORM_ROOT5Y">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
+          <End Role="INCIDENT" Type="Self.INCIDENT" Multiplicity="1" />
+          <End Role="INCFORM_INJURYILLNESS" Type="Self.INCFORM_INJURYILLNESS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_INJURYILLNESS">
               <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3442,6 +3493,8 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="INCFORM_ACTION" EntityType="Self.INCFORM_ACTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_APPROVAL" EntityType="Self.INCFORM_APPROVAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_CONTAIN" EntityType="Self.INCFORM_CONTAIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="Self.INCFORM_INJURYILLNESS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCFORM_LOSTTIME_HIST" EntityType="Self.INCFORM_LOSTTIME_HIST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_POWEROUTAGE" EntityType="Self.INCFORM_POWEROUTAGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_ROOT5Y" EntityType="Self.INCFORM_ROOT5Y" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="Self.INCFORM_TYPE_CONTROL" Schema="dbo" store:Type="Tables" />
@@ -3806,9 +3859,17 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_CONTAIN" EntitySet="INCFORM_CONTAIN" />
           </AssociationSet>
+          <AssociationSet Name="FK_INCIDENTLOSTTIME_INCIDENT_ID" Association="Self.FK_INCIDENTLOSTTIME_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
+          </AssociationSet>
           <AssociationSet Name="FK_INCIDENTROOT5Y_INCIDENT_ID" Association="Self.FK_INCIDENTROOT5Y_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_ROOT5Y" EntitySet="INCFORM_ROOT5Y" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="Self.FK_INJURYILLNESS_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
           <AssociationSet Name="FK_JOBPRIV_JOBCODE" Association="Self.FK_JOBPRIV_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
@@ -4715,6 +4776,16 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="PSsqmModel.INCFORM_INJURYILLNESS" />
+          <EntitySet Name="INCFORM_LOSTTIME_HIST" EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" />
+          <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENTLOSTTIME_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -7264,6 +7335,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
           <NavigationProperty Name="INCFORM_CONTAIN" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_CONTAIN" />
           <NavigationProperty Name="INCFORM_ROOT5Y" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCIDENT" ToRole="INCFORM_ROOT5Y" />
+          <NavigationProperty Name="INCFORM_INJURYILLNESS" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_INJURYILLNESS" />
+          <NavigationProperty Name="INCFORM_LOSTTIME_HIST" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_LOSTTIME_HIST" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -8486,6 +8559,59 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Principal>
             <Dependent Role="TASK_STATUS">
               <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_INJURYILLNESS">
+          <Key>
+            <PropertyRef Name="INCIDENT_ID" />
+          </Key>
+          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="DESCRIPTION_LOCAL" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="INCIDENT_TIME" Type="Time" Precision="7" />
+          <Property Name="SHIFT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="DEPARTMENT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OPERATION" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCFORM_INJURYILLNESS" ToRole="INCIDENT" />
+        </EntityType>
+        <EntityType Name="INCFORM_LOSTTIME_HIST">
+          <Key>
+            <PropertyRef Name="INCIDENT_LOSTTIME_HIST_ID" />
+          </Key>
+          <Property Name="INCIDENT_LOSTTIME_HIST_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
+          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="WORK_STATUS" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BEGIN_DT" Type="DateTime" Precision="3" />
+          <Property Name="NEXT_MEDAPPT_DT" Type="DateTime" Precision="3" />
+          <Property Name="RETURN_EXPECTED_DT" Type="DateTime" Precision="3" />
+          <Property Name="RETURN_TOWORK_DT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCFORM_LOSTTIME_HIST" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_INJURYILLNESS" Role="INCFORM_INJURYILLNESS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_INJURYILLNESS">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENTLOSTTIME_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_LOSTTIME_HIST" Role="INCFORM_LOSTTIME_HIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_LOSTTIME_HIST">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10410,6 +10536,35 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_INJURYILLNESS">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_INJURYILLNESS">
+              <MappingFragment StoreEntitySet="INCFORM_INJURYILLNESS">
+                <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
+                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+                <ScalarProperty Name="SHIFT" ColumnName="SHIFT" />
+                <ScalarProperty Name="INCIDENT_TIME" ColumnName="INCIDENT_TIME" />
+                <ScalarProperty Name="DESCRIPTION_LOCAL" ColumnName="DESCRIPTION_LOCAL" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_LOSTTIME_HIST">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_LOSTTIME_HIST">
+              <MappingFragment StoreEntitySet="INCFORM_LOSTTIME_HIST">
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="RETURN_TOWORK_DT" ColumnName="RETURN_TOWORK_DT" />
+                <ScalarProperty Name="RETURN_EXPECTED_DT" ColumnName="RETURN_EXPECTED_DT" />
+                <ScalarProperty Name="NEXT_MEDAPPT_DT" ColumnName="NEXT_MEDAPPT_DT" />
+                <ScalarProperty Name="BEGIN_DT" ColumnName="BEGIN_DT" />
+                <ScalarProperty Name="WORK_STATUS" ColumnName="WORK_STATUS" />
+                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
+                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_LOSTTIME_HIST_ID" ColumnName="INCIDENT_LOSTTIME_HIST_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10689,6 +10844,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="4.125" PointY="65.75" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="4.125" PointY="39.75" />
+        <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
         </Diagram>
     </Diagrams>
   </Designer>

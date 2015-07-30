@@ -1669,8 +1669,8 @@ namespace SQM.Website
 					newItem.START_DATE = item.START_DATE;
 					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
 					newItem.IsCompleted = item.IsCompleted;
-					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.CREATE_DT = DateTime.Now;
+					//newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					//newItem.CREATE_DT = DateTime.Now;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = DateTime.Now;
 
@@ -1705,8 +1705,8 @@ namespace SQM.Website
 					newItem.START_DATE = item.START_DATE;
 					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
 					newItem.IsCompleted = item.IsCompleted;
-					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.CREATE_DT = DateTime.Now;
+					//newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					//newItem.CREATE_DT = DateTime.Now;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = DateTime.Now;
 
@@ -1736,8 +1736,8 @@ namespace SQM.Website
 					newItem.INCIDENT_ID = incidentId;
 					newItem.ITEM_SEQ = seq;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.CREATE_DT = DateTime.Now;
+					//newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					//newItem.CREATE_DT = DateTime.Now;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = DateTime.Now;
 
