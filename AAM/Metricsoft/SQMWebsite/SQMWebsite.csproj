@@ -1682,6 +1682,7 @@
     <Content Include="images\tableDataHdrBg2.gif" />
     <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
+    <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
     <Content Include="Include\Ucl_PreventionLocation.ascx" />
     <Content Include="Include\Ucl_RadAsyncUpload.ascx" />
@@ -2090,6 +2091,12 @@
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.designer.cs">
       <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_PartSearch.ascx.cs">
       <DependentUpon>Ucl_PartSearch.ascx</DependentUpon>
