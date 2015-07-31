@@ -698,8 +698,6 @@
           <Property Name="START_DATE" Type="datetime" />
           <Property Name="COMPLETION_DATE" Type="datetime" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
-          <Property Name="CREATE_DT" Type="datetime" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
@@ -715,8 +713,6 @@
           <Property Name="APPROVER_PERSON_ID" Type="numeric" Precision="35" Scale="0" />
           <Property Name="APPROVAL_DATE" Type="datetime" />
           <Property Name="IsAccepted" Type="bit" Nullable="false" />
-          <Property Name="CREATE_DT" Type="datetime" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="APPROVER_PERSON" Type="varchar" MaxLength="100" />
@@ -733,8 +729,6 @@
           <Property Name="START_DATE" Type="datetime" />
           <Property Name="COMPLETION_DATE" Type="datetime" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
-          <Property Name="CREATE_DT" Type="datetime" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
@@ -784,8 +778,6 @@
           <Property Name="INCIDENT_ROOT5Y_ID" Type="numeric" Precision="35" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
           <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="1000" />
-          <Property Name="CREATE_DT" Type="datetime" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
         </EntityType>
@@ -8121,8 +8113,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           </Key>
           <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="INCIDENT_ACTION_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" FromRole="INCFORM_ACTION" ToRole="INCIDENT" />
@@ -8140,8 +8130,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           </Key>
           <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="INCIDENT_APPROVAL_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCFORM_APPROVAL" ToRole="INCIDENT" />
@@ -8158,8 +8146,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           </Key>
           <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="INCIDENT_CONTAIN_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCFORM_CONTAIN" ToRole="INCIDENT" />
@@ -8215,8 +8201,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="INCIDENT_ROOT5Y_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
           <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCFORM_ROOT5Y" ToRole="INCIDENT" />
@@ -10390,7 +10374,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_ACTION">
               <MappingFragment StoreEntitySet="INCFORM_ACTION">
                 <ScalarProperty Name="ASSIGNED_PERSON" ColumnName="ASSIGNED_PERSON" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="COMPLETION_DATE" ColumnName="COMPLETION_DATE" />
                 <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
@@ -10399,7 +10382,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
                 <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
                 <ScalarProperty Name="INCIDENT_ACTION_ID" ColumnName="INCIDENT_ACTION_ID" />
                 <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
               </MappingFragment>
@@ -10416,8 +10398,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
                 <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="INCIDENT_APPROVAL_ID" ColumnName="INCIDENT_APPROVAL_ID" />
                 <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
               </MappingFragment>
@@ -10435,8 +10415,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
                 <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="INCIDENT_CONTAIN_ID" ColumnName="INCIDENT_CONTAIN_ID" />
                 <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
               </MappingFragment>
@@ -10447,8 +10425,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               <MappingFragment StoreEntitySet="INCFORM_ROOT5Y">
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
                 <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
                 <ScalarProperty Name="INCIDENT_ROOT5Y_ID" ColumnName="INCIDENT_ROOT5Y_ID" />

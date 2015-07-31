@@ -18795,54 +18795,6 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CREATE_DT
-        {
-            get
-            {
-                return _CREATE_DT;
-            }
-            set
-            {
-                OnCREATE_DTChanging(value);
-                ReportPropertyChanging("CREATE_DT");
-                _CREATE_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATE_DT");
-                OnCREATE_DTChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CREATE_DT;
-        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
-        partial void OnCREATE_DTChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CREATE_BY
-        {
-            get
-            {
-                return _CREATE_BY;
-            }
-            set
-            {
-                OnCREATE_BYChanging(value);
-                ReportPropertyChanging("CREATE_BY");
-                _CREATE_BY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CREATE_BY");
-                OnCREATE_BYChanged();
-            }
-        }
-        private global::System.String _CREATE_BY;
-        partial void OnCREATE_BYChanging(global::System.String value);
-        partial void OnCREATE_BYChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String LAST_UPD_BY
         {
             get
@@ -19188,54 +19140,6 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CREATE_DT
-        {
-            get
-            {
-                return _CREATE_DT;
-            }
-            set
-            {
-                OnCREATE_DTChanging(value);
-                ReportPropertyChanging("CREATE_DT");
-                _CREATE_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATE_DT");
-                OnCREATE_DTChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CREATE_DT;
-        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
-        partial void OnCREATE_DTChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CREATE_BY
-        {
-            get
-            {
-                return _CREATE_BY;
-            }
-            set
-            {
-                OnCREATE_BYChanging(value);
-                ReportPropertyChanging("CREATE_BY");
-                _CREATE_BY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CREATE_BY");
-                OnCREATE_BYChanged();
-            }
-        }
-        private global::System.String _CREATE_BY;
-        partial void OnCREATE_BYChanging(global::System.String value);
-        partial void OnCREATE_BYChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String LAST_UPD_BY
         {
             get
@@ -19551,54 +19455,6 @@ namespace SQM.Website
         private global::System.Decimal _INCIDENT_CONTAIN_ID;
         partial void OnINCIDENT_CONTAIN_IDChanging(global::System.Decimal value);
         partial void OnINCIDENT_CONTAIN_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CREATE_DT
-        {
-            get
-            {
-                return _CREATE_DT;
-            }
-            set
-            {
-                OnCREATE_DTChanging(value);
-                ReportPropertyChanging("CREATE_DT");
-                _CREATE_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATE_DT");
-                OnCREATE_DTChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CREATE_DT;
-        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
-        partial void OnCREATE_DTChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CREATE_BY
-        {
-            get
-            {
-                return _CREATE_BY;
-            }
-            set
-            {
-                OnCREATE_BYChanging(value);
-                ReportPropertyChanging("CREATE_BY");
-                _CREATE_BY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CREATE_BY");
-                OnCREATE_BYChanged();
-            }
-        }
-        private global::System.String _CREATE_BY;
-        partial void OnCREATE_BYChanging(global::System.String value);
-        partial void OnCREATE_BYChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -20747,54 +20603,6 @@ namespace SQM.Website
         private global::System.String _ITEM_DESCRIPTION;
         partial void OnITEM_DESCRIPTIONChanging(global::System.String value);
         partial void OnITEM_DESCRIPTIONChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CREATE_DT
-        {
-            get
-            {
-                return _CREATE_DT;
-            }
-            set
-            {
-                OnCREATE_DTChanging(value);
-                ReportPropertyChanging("CREATE_DT");
-                _CREATE_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATE_DT");
-                OnCREATE_DTChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CREATE_DT;
-        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
-        partial void OnCREATE_DTChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CREATE_BY
-        {
-            get
-            {
-                return _CREATE_BY;
-            }
-            set
-            {
-                OnCREATE_BYChanging(value);
-                ReportPropertyChanging("CREATE_BY");
-                _CREATE_BY = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CREATE_BY");
-                OnCREATE_BYChanged();
-            }
-        }
-        private global::System.String _CREATE_BY;
-        partial void OnCREATE_BYChanging(global::System.String value);
-        partial void OnCREATE_BYChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
