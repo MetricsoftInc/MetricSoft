@@ -24,7 +24,7 @@ namespace SQM.Website
 		protected decimal selectedPlantId = 0;
 		protected AccessMode accessLevel;
 		protected RadDropDownList rddlFilteredUsers;
-		protected string UIcultureLanguage;
+		//protected string UIcultureLanguage;
 		protected bool IsFullPagePostback = false;
 		 
 		protected int currentFormStep;
@@ -144,8 +144,6 @@ namespace SQM.Website
 			//accessLevel = UserContext.CheckAccess("EHS", "312");
 			accessLevel = UserContext.CheckAccess("EHS", "");
 
-			UIcultureLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.CultureName.Split('-')[0];
-
 			lblResults.Text = "";
 
 			if (IsPostBack)
@@ -242,13 +240,14 @@ namespace SQM.Website
 
 					CurrentFormStep = CurrentStep + 1;  // incident.INCFORM_LAST_STEP_COMPLETED;
 
-					
-					if (UIcultureLanguage != "en")
+
+					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
 
-					rdpIncidentDate.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-					rdpReportDate.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-					rtpIncidentTime.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;		
+					rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
+					rdpReportDate.Culture = rdpIncidentDate.Culture;
+					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
+
 					
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incident.INCIDENT_DT;
@@ -262,6 +261,7 @@ namespace SQM.Website
 					if (poweroutageDetails != null)
 					{
 						rtpIncidentTime.SelectedTime = poweroutageDetails.INCIDENT_TIME;
+
 						rddlShift.SelectedValue = poweroutageDetails.SHIFT;
 
 						if (poweroutageDetails.PRODUCTION_IMPACT != null)
@@ -301,16 +301,16 @@ namespace SQM.Website
 
 					//lblFormStepNumber.Text = "Step " + CurrentFormStep.ToString() + " of " + totalFormSteps.ToString() + ":";
 
-					if (UIcultureLanguage != "en")
+					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
 
-					rdpIncidentDate.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+					rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
 					rdpIncidentDate.SelectedDate = DateTime.Now;
 
-					rdpReportDate.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+					rdpReportDate.Culture = rdpIncidentDate.Culture;
 					rdpReportDate.SelectedDate = DateTime.Now;
 
-					rtpIncidentTime.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
 					PopulateLocationDropDown();
 					PopulateShiftDropDown();
@@ -539,7 +539,7 @@ namespace SQM.Website
 		void PopulateShiftDropDown()
 		{
 
-			List<EHSMetaData> shifts = EHSMetaDataMgr.SelectMetaDataList(System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.CultureName, "SHIFT");
+			List<EHSMetaData> shifts = EHSMetaDataMgr.SelectMetaDataList("SHIFT");
 
 			rddlShift.Items.Add(new DropDownListItem("[Select One]", ""));
 

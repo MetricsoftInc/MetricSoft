@@ -1223,7 +1223,7 @@ namespace SQM.Website
 
 	public class EHSMetaData
 	{
-		public string Culture { get; set; }
+		public string Language { get; set; }
 		public string MetaDataType { get; set; }
 		public string Text { get; set; }
 		public string TextLong { get; set; }
@@ -1235,16 +1235,17 @@ namespace SQM.Website
 	public static class EHSMetaDataMgr
 	{
 
-		public static List<EHSMetaData> SelectMetaDataList(string cultureName, string metaDataType)
+		public static List<EHSMetaData> SelectMetaDataList(string metaDataType)
 		{
 			var entities = new PSsqmEntities();
 			var metaList = new List<EHSMetaData>();
+			string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
 			metaList = (from x in entities.XLAT
-						 where x.XLAT_LANGUAGE == cultureName && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
+						where x.XLAT_LANGUAGE == lang && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
 						orderby x.XLAT_CODE
 						select new EHSMetaData()
 						{
-							Culture = x.XLAT_LANGUAGE,
+							Language = x.XLAT_LANGUAGE,
 							MetaDataType = x.XLAT_GROUP,
 							Text = x.DESCRIPTION_SHORT,
 							TextLong = x.DESCRIPTION,
