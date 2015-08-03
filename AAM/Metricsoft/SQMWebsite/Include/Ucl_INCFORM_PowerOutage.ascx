@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_INCFORM_PowerOutage.ascx.cs"
 	Inherits="SQM.Website.Ucl_INCFORM_PowerOutage" %>
 	<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+	<%@ Register Src="~/Include/Ucl_INCFORM_Root5Y.ascx" TagName="INCFORMRoot5Y" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 
@@ -204,6 +205,7 @@
 
  </asp:Panel>
 
+ <ucl:INCFORMRoot5Y id="uclroot5y" runat="server" />
 
 <asp:Panel ID="pnlContain" Visible="false" runat="server">
 
@@ -292,7 +294,7 @@
 
 </asp:Panel>
 
-<asp:Panel ID="pnlRoot5Y" Visible="false" runat="server">
+<%--<asp:Panel ID="pnlRoot5Y" Visible="false" runat="server">
 
 	<br />
 
@@ -333,7 +335,7 @@
 
 	</div>
 
-</asp:Panel>
+</asp:Panel>--%>
 
 
 

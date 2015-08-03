@@ -26,7 +26,11 @@ namespace SQM.Website
 		protected RadDropDownList rddlFilteredUsers;
 		//protected string UIcultureLanguage;
 		protected bool IsFullPagePostback = false;
-		 
+
+		// Follow-on Forms:
+		public Ucl_INCFORM_Root5Y root5YForm;
+
+
 		protected int currentFormStep;
 		protected int totalFormSteps;
 		
@@ -63,6 +67,11 @@ namespace SQM.Website
 		//public void EnableReturnButton(bool bEnabled)
 		//{
 		//	ahReturn.Visible = bEnabled;
+		//}
+
+		//public Ucl_INCFORM_Root5Y INCFORMRoot5Y
+		//{
+		//	get { return root5YForm; }
 		//}
 
 		// Mode should be "incident" (standard) or "prevent" (RMCAR)
@@ -398,7 +407,8 @@ namespace SQM.Website
 				case "INCFORM_POWEROUTAGE":
 					pnlBaseForm.Visible = true;
 					pnlContain.Visible = false;
-					pnlRoot5Y.Visible = false;
+					//pnlRoot5Y.Visible = false;
+					uclroot5y.Visible = false; // New Control
 					pnlAction.Visible = false;
 					pnlApproval.Visible = false;
 					btnPrev.Visible = false;
@@ -408,7 +418,8 @@ namespace SQM.Website
 				case "INCFORM_CONTAIN":
 					pnlBaseForm.Visible = false;
 					pnlContain.Visible = true;
-					pnlRoot5Y.Visible = false;
+					//pnlRoot5Y.Visible = false;
+					uclroot5y.Visible = false; // New Control
 					pnlAction.Visible = false;
 					pnlApproval.Visible = false;
 					btnPrev.Visible = true;
@@ -418,21 +429,24 @@ namespace SQM.Website
 					rptContain.DataBind();
 					break;
 				case "INCFORM_ROOT5Y":
+					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
-					pnlContain.Visible = false;
-					pnlRoot5Y.Visible = true;
-					pnlAction.Visible = false;
-					pnlApproval.Visible = false;
+					pnlContain.Visible = false;	// remove when testing is completed
+					//pnlRoot5Y.Visible = false;  // *****  remove when testing is completed
+					uclroot5y.Visible = true; // New Control
+					pnlAction.Visible = false;	// remove when testing is completed
+					pnlApproval.Visible = false;// remove when testing is completed
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
-					rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
-					rptRootCause.DataBind();
+					//rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
+					//rptRootCause.DataBind();
 					break;
 				case "INCFORM_ACTION":
 					pnlBaseForm.Visible = false;
 					pnlContain.Visible = false;
-					pnlRoot5Y.Visible = false;
+					//pnlRoot5Y.Visible = false;
+					uclroot5y.Visible = false; // New Control
 					pnlAction.Visible = true;
 					pnlApproval.Visible = false;
 					btnPrev.Visible = true;
@@ -444,7 +458,8 @@ namespace SQM.Website
 				case "INCFORM_APPROVAL":
 					pnlBaseForm.Visible = false;
 					pnlContain.Visible = false;
-					pnlRoot5Y.Visible = false;
+					//pnlRoot5Y.Visible = false;
+					uclroot5y.Visible = false; // New Control
 					pnlAction.Visible = false;
 					pnlApproval.Visible = true;
 					btnPrev.Visible = true;
@@ -455,6 +470,27 @@ namespace SQM.Website
 			}
 
 		}
+
+		public void LoadDependantForm(string formName)
+		{
+
+			//uclroot5y.Controls.Clear();
+
+			switch (formName)
+			{
+				
+				case "INCFORM_ROOT5Y":
+					uclroot5y.IsEditContext = IsEditContext;
+					uclroot5y.IncidentId = EditIncidentId;
+					uclroot5y.EditIncidentId = EditIncidentId;
+					uclroot5y.SelectedTypeId = SelectedTypeId;
+					uclroot5y.NewIncidentId = NewIncidentId;
+					uclroot5y.Visible = true;
+					uclroot5y.PopulateInitialForm();
+					break;
+			}
+		}
+
 
 		private void SetUserAccess(string currentFormName)
 		{
@@ -504,18 +540,6 @@ namespace SQM.Website
 					break;
 			}
 		}
-
-		//private void PopulateRootCauses(decimal IncidentId)
-		//{
-		//	var rootcauses = new List<INCFORM_ROOT5Y>();
-		//	PSsqmEntities entities = new PSsqmEntities();
-
-		//	rootcauses = EHSIncidentMgr.GetRootCauseList(IncidentId);
-
-
-		//	rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
-		//	rptRootCause.DataBind();
-		//}
 
 		void PopulateLocationDropDown()
 		{
@@ -659,43 +683,43 @@ namespace SQM.Website
 		}
 
 
-		public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+		//public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		//{
+		//	bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
-			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-			{
+		//	if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+		//	{
 
-				int minRowsToValidate = 1;
+		//		int minRowsToValidate = 1;
 
-				try
-				{
-					INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem; 
+		//		try
+		//		{
+		//			INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem; 
 
-					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
-					Label lb = (Label)e.Item.FindControl("lbItemSeq");
-					RequiredFieldValidator rvf = (RequiredFieldValidator)e.Item.FindControl("rfvRootCause");
+		//			TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
+		//			Label lb = (Label)e.Item.FindControl("lbItemSeq");
+		//			RequiredFieldValidator rvf = (RequiredFieldValidator)e.Item.FindControl("rfvRootCause");
 
-					lb.Text = rootCause.ITEM_SEQ.ToString();
-					tb.Text = rootCause.ITEM_DESCRIPTION;
+		//			lb.Text = rootCause.ITEM_SEQ.ToString();
+		//			tb.Text = rootCause.ITEM_DESCRIPTION;
 
-					// Set user access:
-					tb.Enabled = actionAccess;
-					rvf.Enabled = actionAccess;
+		//			// Set user access:
+		//			tb.Enabled = actionAccess;
+		//			rvf.Enabled = actionAccess;
 
-					if (rootCause.ITEM_SEQ > minRowsToValidate)
-						rvf.Enabled = false;
-				}
-				catch { }
-			}
+		//			if (rootCause.ITEM_SEQ > minRowsToValidate)
+		//				rvf.Enabled = false;
+		//		}
+		//		catch { }
+		//	}
 
-			if (e.Item.ItemType == ListItemType.Footer)
-			{
-				Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
-				addanother.Visible = actionAccess;
-			}
+		//	if (e.Item.ItemType == ListItemType.Footer)
+		//	{
+		//		Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
+		//		addanother.Visible = actionAccess;
+		//	}
 
-		}
+		//}
 
 
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -1124,7 +1148,7 @@ namespace SQM.Website
 					case "INCFORM_ROOT5Y":
 						if (incidentId == 0)
 							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-						AddUpdateINCFORM_ROOT5Y(incidentId);
+						uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId);
 						break;
 					case "INCFORM_ACTION":
 						if (incidentId == 0)
@@ -1303,35 +1327,6 @@ namespace SQM.Website
 			if (itemList.Count > 0)
 				SaveActions(incidentId, itemList);
 
-		}
-
-		protected void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
-		{
-
-			//INCFORM_ROOT5Y theRootCauseForm = null;
-
-			var itemList = new List<INCFORM_ROOT5Y>();
-			int seqnumber = 0;
-
-			foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
-			{
-				var item = new INCFORM_ROOT5Y();
-
-				TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-				Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
-
-				if (!String.IsNullOrEmpty(tb.Text))
-				{
-					seqnumber = seqnumber + 1;
-
-					item.ITEM_DESCRIPTION = tb.Text;
-					item.ITEM_SEQ = seqnumber;
-
-					itemList.Add(item);
-				}
-			}
-
-			SaveRootCauses(incidentId, itemList);
 		}
 
 		protected void AddUpdateINCFORM_APPROVAL(decimal incidentId)
@@ -1716,37 +1711,6 @@ namespace SQM.Website
 			}
 		}
 
-		protected void SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
-		{
-			using (var ctx = new PSsqmEntities())
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID = {0}", incidentId);
-			}
-
-			int seq = 0;
-
-			foreach (INCFORM_ROOT5Y item in itemList)
-			{
-				var newItem = new INCFORM_ROOT5Y();
-
-				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
-				{
-					seq = seq + 1;
-
-					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
-					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					//newItem.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					//newItem.CREATE_DT = DateTime.Now;
-					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
-
-					entities.AddToINCFORM_ROOT5Y(newItem);
-					entities.SaveChanges();
-				}
-			}
-		}
-
 		protected void SaveAttachments(decimal incidentId)
 		{
 			//if (uploader != null)
@@ -1857,47 +1821,47 @@ namespace SQM.Website
 
 		#endregion
 
-		protected void rptRootCause_ItemCommand(object source, RepeaterCommandEventArgs e)
-		{
-			if (e.CommandArgument == "AddAnother")
-			{
+		//protected void rptRootCause_ItemCommand(object source, RepeaterCommandEventArgs e)
+		//{
+		//	if (e.CommandArgument == "AddAnother")
+		//	{
 
-				var itemList = new List<INCFORM_ROOT5Y>();
-				int seqnumber = 0;
+		//		var itemList = new List<INCFORM_ROOT5Y>();
+		//		int seqnumber = 0;
 
-				foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
-				{
-					var item = new INCFORM_ROOT5Y();
+		//		foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
+		//		{
+		//			var item = new INCFORM_ROOT5Y();
 					
-					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-					Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
+		//			TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
+		//			Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
 
-					seqnumber = Convert.ToInt32(lb.Text);
+		//			seqnumber = Convert.ToInt32(lb.Text);
 
-					item.ITEM_DESCRIPTION = tb.Text;
-					item.ITEM_SEQ = seqnumber;
+		//			item.ITEM_DESCRIPTION = tb.Text;
+		//			item.ITEM_SEQ = seqnumber;
 
-					itemList.Add(item);
-				}
+		//			itemList.Add(item);
+		//		}
 				
-				var emptyItem = new INCFORM_ROOT5Y();
+		//		var emptyItem = new INCFORM_ROOT5Y();
 
-				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.ITEM_SEQ = seqnumber + 1;
-				itemList.Add(emptyItem);
+		//		emptyItem.ITEM_DESCRIPTION = "";
+		//		emptyItem.ITEM_SEQ = seqnumber + 1;
+		//		itemList.Add(emptyItem);
 
-				rptRootCause.DataSource = itemList;
-				rptRootCause.DataBind();
+		//		rptRootCause.DataSource = itemList;
+		//		rptRootCause.DataBind();
 
-				//return;
-			}
-			//if (e.CommandName == "UpdateDatabase")
-			//{
-			//	string newFirstName = ((TextBox)e.Item.FindControl("TextBox1")).Text;
-			//	string newLastName = ((TextBox)e.Item.FindControl("TextBox2")).Text;
-			//	// update
-			//}
-		}
+		//		//return;
+		//	}
+		//	//if (e.CommandName == "UpdateDatabase")
+		//	//{
+		//	//	string newFirstName = ((TextBox)e.Item.FindControl("TextBox1")).Text;
+		//	//	string newLastName = ((TextBox)e.Item.FindControl("TextBox2")).Text;
+		//	//	// update
+		//	//}
+		//}
 
 		protected void rptContain_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
