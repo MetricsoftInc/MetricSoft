@@ -505,15 +505,15 @@ namespace SQM.Website
 			BuildFilteredUsersDropdownList();
 		}
 
-		protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		{
-			// Add JobCode and any other related logic
-		}
+		//protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		//{
+		//	// Add JobCode and any other related logic
+		//}
 
-		protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		{
-			// Add JobCode and any other related logic
-		}
+		//protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		//{
+		//	// Add JobCode and any other related logic
+		//}
 
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
 		{

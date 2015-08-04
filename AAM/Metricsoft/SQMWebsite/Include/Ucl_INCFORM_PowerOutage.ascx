@@ -36,21 +36,6 @@
 
 </script>
 
-<%--<asp:Panel ID="pnlCase" Visible="true" runat="server">
-<table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
-	<tr>
-		<td class="tanCell" style="width: 30%;">
-			Case:
-		</td>
-		<td class="greyCell">
-			<telerik:RadComboBox ID="rcbCases" runat="server" Skin="Metro" OnSelectedIndexChanged="rcbCases_SelectedIndexChanged" 
-				AutoPostBack="true" Width="250" DropDownAutoWidth="Enabled">
-			</telerik:RadComboBox>
-		</td>
-	</tr>
-</table>
-<br />
-</asp:Panel>--%>
 
 <asp:Label ID="lblRequired" runat="server" Text="Required Fields Must be Completed." ForeColor="#cc0000" Font-Bold="true" Height="25" Visible="false"></asp:Label>
 <asp:Label ID="lblSubmitted" runat="server" Text="Power Outage submitted." Font-Bold="true" Visible="false"></asp:Label>

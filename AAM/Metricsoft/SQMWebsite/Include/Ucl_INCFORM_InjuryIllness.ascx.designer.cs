@@ -1093,76 +1093,49 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadButton btnUploadAttach;
         
         /// <summary>
-        /// pnlContain control.
+        /// pnlBaseForm2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContain;
+        protected global::System.Web.UI.WebControls.Panel pnlBaseForm2;
         
         /// <summary>
-        /// rptContain control.
+        /// uclcontain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptContain;
+        protected global::SQM.Website.Ucl_INCFORM_Contain uclcontain;
         
         /// <summary>
-        /// pnlRoot5Y control.
+        /// uclroot5y control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlRoot5Y;
+        protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
         
         /// <summary>
-        /// rptRootCause control.
+        /// uclaction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptRootCause;
+        protected global::SQM.Website.Ucl_INCFORM_Action uclaction;
         
         /// <summary>
-        /// pnlAction control.
+        /// uclapproval control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAction;
-        
-        /// <summary>
-        /// rptAction control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAction;
-        
-        /// <summary>
-        /// pnlApproval control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlApproval;
-        
-        /// <summary>
-        /// rptApprovals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptApprovals;
+        protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
         
         /// <summary>
         /// pnlButtons control.
