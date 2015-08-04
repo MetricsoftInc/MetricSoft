@@ -1680,6 +1680,7 @@
     <Content Include="images\tabInactiveLeftSquare.gif" />
     <Content Include="images\tabInactiveRight.gif" />
     <Content Include="images\tableDataHdrBg2.gif" />
+    <Content Include="Include\Ucl_INCFORM_Contain.ascx" />
     <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
     <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
@@ -2078,6 +2079,13 @@
     <Compile Include="Include\Ucl_EHSIncidentForm.ascx.designer.cs">
       <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Contain.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Contain.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Contain.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Contain.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Include\Ucl_INCFORM_InjuryIllness.ascx.cs">
       <DependentUpon>Ucl_INCFORM_InjuryIllness.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2094,6 +2102,7 @@
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.cs">
       <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.designer.cs">
       <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>

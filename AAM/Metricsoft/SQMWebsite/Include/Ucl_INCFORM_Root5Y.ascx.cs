@@ -24,6 +24,7 @@ namespace SQM.Website
 
 		protected decimal incidentTypeId;
 		protected string incidentType;
+		protected bool IsFullPagePostback = false;
 
 		PSsqmEntities entities;
 		List<EHSFormControlStep> formSteps;
@@ -65,6 +66,13 @@ namespace SQM.Website
 		}
 
 
+		protected void Page_Init(object sender, EventArgs e)
+		{
+			if (IsFullPagePostback)
+				rptRootCause.DataBind();
+		}
+
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
@@ -73,6 +81,21 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
+				// Since IsPostBack is always TRUE for every invocation of this control we need some way 
+				// to determine whether or not to refresh the page controls or just data bind instead.  
+				// Here we are using the "__EVENTTARGET" form event property to see if this control is posting 
+				// back because of parent calls from either of the two SAVE buttons.  If so then that IS a real postback
+				// and we need to retain any data that may have been enetered by the user.  If not then we initialize
+				// all the page controls here.
+
+				IsFullPagePostback = false;
+				var targetID = Request.Form["__EVENTTARGET"];
+				if (!string.IsNullOrEmpty(targetID))
+				{
+					var targetControl = this.Page.FindControl(targetID);
+					if ((this.Page.FindControl(targetID).ID == "btnSave") || (this.Page.FindControl(targetID).ID == "btnNext"))
+						IsFullPagePostback = true;
+				}
 			}
 
 			if (IncidentId != null)
@@ -85,7 +108,8 @@ namespace SQM.Website
 
 			}
 
-			PopulateInitialForm();
+			if (!IsFullPagePostback)
+				PopulateInitialForm();
 		}
 
 
@@ -109,18 +133,7 @@ namespace SQM.Website
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 			totalFormSteps = formSteps.Count();
 
-			//if (IsEditContext == true)
-			//{
-
-			//	var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
-			//	var poweroutageDetails = EHSIncidentMgr.SelectPowerOurageDetailsById(entities, EditIncidentId);
-
-			//}
-			//else
-			//{
-			//}
-
-		InitializeForm();
+			InitializeForm();
 
 		}
 
@@ -280,15 +293,7 @@ namespace SQM.Website
 				rptRootCause.DataSource = itemList;
 				rptRootCause.DataBind();
 
-				//return;
 			}
-			//if (e.CommandName == "UpdateDatabase")
-			//{
-			//	string newFirstName = ((TextBox)e.Item.FindControl("TextBox1")).Text;
-			//	string newLastName = ((TextBox)e.Item.FindControl("TextBox2")).Text;
-			//	// update
-			//}
 		}
-
 	}
 }

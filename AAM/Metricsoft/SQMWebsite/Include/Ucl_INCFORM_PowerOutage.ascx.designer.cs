@@ -337,6 +337,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbProdImpact;
         
         /// <summary>
+        /// uclcontain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Contain uclcontain;
+        
+        /// <summary>
         /// uclroot5y control.
         /// </summary>
         /// <remarks>
@@ -344,24 +353,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
-        
-        /// <summary>
-        /// pnlContain control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContain;
-        
-        /// <summary>
-        /// rptContain control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptContain;
         
         /// <summary>
         /// pnlAction control.
