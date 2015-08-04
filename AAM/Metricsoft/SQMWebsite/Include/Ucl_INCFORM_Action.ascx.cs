@@ -9,11 +9,11 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
-
 namespace SQM.Website
 {
-	public partial class Ucl_INCFORM_Contain : System.Web.UI.UserControl
+	public partial class Ucl_INCFORM_Action : System.Web.UI.UserControl
 	{
+
 		const Int32 MaxTextLength = 4000;
 
 		protected decimal companyId;
@@ -69,7 +69,7 @@ namespace SQM.Website
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			if (IsFullPagePostback)
-				rptContain.DataBind();
+				rptAction.DataBind();
 		}
 
 
@@ -90,13 +90,12 @@ namespace SQM.Website
 				var targetID = Request.Form["__EVENTTARGET"];
 				if (!string.IsNullOrEmpty(targetID))
 				{
-
 					var targetControl = this.Page.FindControl(targetID);
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
 							(this.Page.FindControl(targetID).ID == "btnNext") || 
-							(this.Page.FindControl(targetID).ID == "btnAddContain"))
+							(this.Page.FindControl(targetID).ID == "btnAddFinal"))
 								IsFullPagePostback = true;
 				}
 			}
@@ -113,6 +112,7 @@ namespace SQM.Website
 
 			if (!IsFullPagePostback)
 				PopulateInitialForm();
+
 		}
 
 
@@ -145,11 +145,11 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			SetUserAccess("INCFORM_CONTAIN");
+			SetUserAccess("INCFORM_ACTION");
 
-			pnlContain.Visible = true;
-			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
-			rptContain.DataBind();
+			pnlAction.Visible = true;
+			rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
+			rptAction.DataBind();
 		}
 
 		private void SetUserAccess(string currentFormName)
@@ -165,33 +165,33 @@ namespace SQM.Website
 
 		}
 
-		protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
 			// Add JobCode and any other related logic
 		}
 
-		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+
+		public void rptAction_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
 			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
-
 				int minRowsToValidate = 1;
 
 				try
 				{
-					INCFORM_CONTAIN contain = (INCFORM_CONTAIN)e.Item.DataItem;
+					INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
 
-					TextBox tbca = (TextBox)e.Item.FindControl("tbContainAction");
-					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlContainPerson");
+					TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
+					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
-					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
-					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
-					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
-					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvContainPerson");
-					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfStartDate");
+					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
+					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
+					CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
+					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
+					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
+					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
@@ -205,13 +205,14 @@ namespace SQM.Website
 						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
 					}
 
-					if (contain.ASSIGNED_PERSON_ID != null)
-						rddlp.SelectedValue = contain.ASSIGNED_PERSON_ID.ToString();
-					lb.Text = contain.ITEM_SEQ.ToString();
-					tbca.Text = contain.ITEM_DESCRIPTION;
-					sd.SelectedDate = contain.START_DATE;
-					cd.SelectedDate = contain.COMPLETION_DATE;
-					ic.Checked = contain.IsCompleted;
+					if (action.ASSIGNED_PERSON_ID != null)
+						rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+
+					lb.Text = action.ITEM_SEQ.ToString();
+					tbca.Text = action.ITEM_DESCRIPTION;
+					sd.SelectedDate = action.START_DATE;
+					cd.SelectedDate = action.COMPLETION_DATE;
+					ic.Checked = action.IsCompleted;
 
 					// Set user access:
 					tbca.Enabled = actionAccess;
@@ -223,10 +224,9 @@ namespace SQM.Website
 					rvfcp.Enabled = actionAccess;
 					rvfsd.Enabled = actionAccess;
 
-					if (contain.ITEM_SEQ > minRowsToValidate)
+					if (action.ITEM_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
-						rvfcp.InitialValue = null;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
@@ -235,29 +235,29 @@ namespace SQM.Website
 				catch { }
 			}
 
+
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
-				Button addanother = (Button)e.Item.FindControl("btnAddContain");
+				Button addanother = (Button)e.Item.FindControl("btnAddFinal");
 				addanother.Visible = actionAccess;
 			}
-
 		}
 
-		public void AddUpdateINCFORM_CONTAIN(decimal incidentId)
+		public void AddUpdateINCFORM_ACTION(decimal incidentId)
 		{
-			var itemList = new List<INCFORM_CONTAIN>();
+			var itemList = new List<INCFORM_ACTION>();
 			int seqnumber = 0;
 
-			foreach (RepeaterItem containtem in rptContain.Items)
+			foreach (RepeaterItem containtem in rptAction.Items)
 			{
-				var item = new INCFORM_CONTAIN();
+				var item = new INCFORM_ACTION();
 
-				TextBox tbca = (TextBox)containtem.FindControl("tbContainAction");
-				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlContainPerson");
+				TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
+				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlActionPerson");
 				Label lb = (Label)containtem.FindControl("lbItemSeq");
-				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpStartDate");
-				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
-				CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
+				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
+				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
+				CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
 
 				seqnumber = seqnumber + 1;
 
@@ -269,28 +269,28 @@ namespace SQM.Website
 				item.IsCompleted = ic.Checked;
 
 				itemList.Add(item);
-
 			}
 
 			if (itemList.Count > 0)
-				SaveContainment(incidentId, itemList);
+				SaveActions(incidentId, itemList);
 
 		}
 
-		private void SaveContainment(decimal incidentId, List<INCFORM_CONTAIN> itemList)
+		private void SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
 		{
-			PSsqmEntities entities = new PSsqmEntities();
 
+			PSsqmEntities entities = new PSsqmEntities();
+	
 			using (var ctx = new PSsqmEntities())
 			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID = {0}", incidentId);
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID = {0}", incidentId);
 			}
 
 			int seq = 0;
 
-			foreach (INCFORM_CONTAIN item in itemList)
+			foreach (INCFORM_ACTION item in itemList)
 			{
-				var newItem = new INCFORM_CONTAIN();
+				var newItem = new INCFORM_ACTION();
 
 				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
 				{
@@ -306,31 +306,31 @@ namespace SQM.Website
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = DateTime.Now;
 
-					entities.AddToINCFORM_CONTAIN(newItem);
+					entities.AddToINCFORM_ACTION(newItem);
 					entities.SaveChanges();
 				}
 			}
 		}
 
 
-		protected void rptContain_ItemCommand(object source, RepeaterCommandEventArgs e)
+		protected void rptAction_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
 			if (e.CommandArgument == "AddAnother")
 			{
 
-				var itemList = new List<INCFORM_CONTAIN>();
+				var itemList = new List<INCFORM_ACTION>();
 				int seqnumber = 0;
 
-				foreach (RepeaterItem containitem in rptContain.Items)
+				foreach (RepeaterItem actionitem in rptAction.Items)
 				{
-					var item = new INCFORM_CONTAIN();
+					var item = new INCFORM_ACTION();
 
-					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
-					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
-					Label lb = (Label)containitem.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
-					RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
-					CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
+					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
+					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
+					Label lb = (Label)actionitem.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
+					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
+					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
@@ -358,7 +358,7 @@ namespace SQM.Website
 					itemList.Add(item);
 				}
 
-				var emptyItem = new INCFORM_CONTAIN();
+				var emptyItem = new INCFORM_ACTION();
 
 				emptyItem.ITEM_DESCRIPTION = "";
 				emptyItem.ITEM_SEQ = seqnumber + 1;
@@ -367,13 +367,13 @@ namespace SQM.Website
 				emptyItem.COMPLETION_DATE = null;
 				emptyItem.IsCompleted = false;
 
+
 				itemList.Add(emptyItem);
 
-				rptContain.DataSource = itemList;
-				rptContain.DataBind();
+				rptAction.DataSource = itemList;
+				rptAction.DataBind();
 
 			}
 		}
-
 	}
 }

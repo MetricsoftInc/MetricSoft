@@ -128,26 +128,26 @@ namespace SQM.Website
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
 			accessLevel = UserContext.CheckAccess("EHS", "");
 
 			lblResults.Text = "";
 
 			if (IsPostBack)
 			{
-				// Since IsPostBack is always TRUE for every invocation of this control we need some way 
-				// to determine whether or not to refresh the page controls.  Here we are using the 
-				// "__EVENTTARGET" form event property to see if this control is posting back because 
-				// of parent calls from the rddlIncidentType or lbIncidentId controls. If so then 
-				// thats NOT a real postback and so we need to initialize all the page controls.
+				// Since IsPostBack is always TRUE for every invocation of this user control we need some way 
+				// to determine whether or not to refresh its page controls, or just data bind instead.  
+				// Here we are using the "__EVENTTARGET" form event property to see if this user control is loading 
+				// because of certain parent page control events that are NOT supposed to be fired off as actual postbacks.  
 
 				IsFullPagePostback = true;
 				var targetID = Request.Form["__EVENTTARGET"];
 				if (!string.IsNullOrEmpty(targetID))
 				{
 					var targetControl = this.Page.FindControl(targetID);
-					if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
-						IsFullPagePostback = false;
+
+					if (targetControl != null)
+						if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
+							IsFullPagePostback = false;
 				}
 			}
 
@@ -157,14 +157,10 @@ namespace SQM.Website
 				//if (incident != null)
 					//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
 					//btnClose.Text = "Reopen Power Outage Incident";
-					
-
 			}
 		
 			if (!IsFullPagePostback)
 				PopulateInitialForm();
-
-
 		}
 
 
@@ -287,12 +283,10 @@ namespace SQM.Website
 			{
 				case "INCFORM_POWEROUTAGE":
 					pnlBaseForm.Visible = true;
-					//pnlContain.Visible = false;
-					//pnlRoot5Y.Visible = false;
-					uclroot5y.Visible = false; // New Control
-					uclcontain.Visible = false; // New Control
-					pnlAction.Visible = false;
-					pnlApproval.Visible = false;
+					uclroot5y.Visible = false; 
+					uclcontain.Visible = false; 
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
 					btnPrev.Visible = false;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
@@ -300,59 +294,45 @@ namespace SQM.Website
 				case "INCFORM_CONTAIN":
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
-					//pnlContain.Visible =false;  // remove when done
-					//pnlRoot5Y.Visible = false;
-					uclroot5y.Visible = false; // New Control
-					uclcontain.Visible = true; // New Control
-					pnlAction.Visible = false;
-					pnlApproval.Visible = false;
+					uclroot5y.Visible = false; 
+					uclcontain.Visible = true; 
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
-					//rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
-					//rptContain.DataBind();
 					break;
 				case "INCFORM_ROOT5Y":
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
-					//pnlContain.Visible = false;	// remove when testing is completed
-					//pnlRoot5Y.Visible = false;  // *****  remove when testing is completed
-					uclroot5y.Visible = true; // New Control
-					uclcontain.Visible = false; // New Control
-					pnlAction.Visible = false;	// remove when testing is completed
-					pnlApproval.Visible = false;// remove when testing is completed
+					uclroot5y.Visible = true; 
+					uclcontain.Visible = false; 
+					uclaction.Visible = false;	
+					uclapproval.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
-					//rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
-					//rptRootCause.DataBind();
 					break;
 				case "INCFORM_ACTION":
+					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
-					//pnlContain.Visible = false;
-					//pnlRoot5Y.Visible = false;
-					uclroot5y.Visible = false; // New Control
-					uclcontain.Visible = false; // New Control
-					pnlAction.Visible = true;
-					pnlApproval.Visible = false;
+					uclroot5y.Visible = false; 
+					uclcontain.Visible = false; 
+					uclaction.Visible = true;
+					uclapproval.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
-					rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
-					rptAction.DataBind();
 					break;
 				case "INCFORM_APPROVAL":
+					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
-					//pnlContain.Visible = false;
-					//pnlRoot5Y.Visible = false;
-					uclroot5y.Visible = false; // New Control
-					uclcontain.Visible = false; // New Control
-					pnlAction.Visible = false;
-					pnlApproval.Visible = true;
+					uclroot5y.Visible = false; 
+					uclcontain.Visible = false; 
+					uclaction.Visible = false;
+					uclapproval.Visible = true;
 					btnPrev.Visible = true;
 					btnNext.Visible = false;
-					rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId);
-					rptApprovals.DataBind();
 					break;
 			}
 
@@ -361,12 +341,23 @@ namespace SQM.Website
 		public void LoadDependantForm(string formName)
 		{
 
+			//uclcontain.Controls.Clear();
 			//uclroot5y.Controls.Clear();
-			//ucontain.Controls.Clear();
+			//uclaction.Controls.Clear();
+			//uclapproval.Controls.Clear();
 
 			switch (formName)
 			{
-				
+
+				case "INCFORM_CONTAIN":
+					uclcontain.IsEditContext = IsEditContext;
+					uclcontain.IncidentId = EditIncidentId;
+					uclcontain.EditIncidentId = EditIncidentId;
+					uclcontain.SelectedTypeId = SelectedTypeId;
+					uclcontain.NewIncidentId = NewIncidentId;
+					uclcontain.Visible = true;
+					uclcontain.PopulateInitialForm();
+					break;				
 				case "INCFORM_ROOT5Y":
 					uclroot5y.IsEditContext = IsEditContext;
 					uclroot5y.IncidentId = EditIncidentId;
@@ -376,15 +367,25 @@ namespace SQM.Website
 					uclroot5y.Visible = true;
 					uclroot5y.PopulateInitialForm();
 					break;
-				case "INCFORM_CONTAIN":
-					uclcontain.IsEditContext = IsEditContext;
-					uclcontain.IncidentId = EditIncidentId;
-					uclcontain.EditIncidentId = EditIncidentId;
-					uclcontain.SelectedTypeId = SelectedTypeId;
-					uclcontain.NewIncidentId = NewIncidentId;
-					uclcontain.Visible = true;
-					uclcontain.PopulateInitialForm();
+				case "INCFORM_ACTION":
+					uclaction.IsEditContext = IsEditContext;
+					uclaction.IncidentId = EditIncidentId;
+					uclaction.EditIncidentId = EditIncidentId;
+					uclaction.SelectedTypeId = SelectedTypeId;
+					uclaction.NewIncidentId = NewIncidentId;
+					uclaction.Visible = true;
+					uclaction.PopulateInitialForm();
 					break;
+				case "INCFORM__APPROVAL":
+					uclapproval.IsEditContext = IsEditContext;
+					uclapproval.IncidentId = EditIncidentId;
+					uclapproval.EditIncidentId = EditIncidentId;
+					uclapproval.SelectedTypeId = SelectedTypeId;
+					uclapproval.NewIncidentId = NewIncidentId;
+					uclapproval.Visible = true;
+					uclapproval.PopulateInitialForm();
+					break;
+
 			}
 		}
 
@@ -566,123 +567,6 @@ namespace SQM.Website
 			}
 		}
 
-		public void rptAction_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-
-			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-			{
-				int minRowsToValidate = 1;
-
-				try
-				{
-					INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
-
-					TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
-					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
-					Label lb = (Label)e.Item.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
-					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
-					CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
-					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
-					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
-					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
-
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
-					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-					foreach (PERSON p in personList)
-					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-					}
-
-					if (action.ASSIGNED_PERSON_ID != null)
-						rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
-					
-					lb.Text = action.ITEM_SEQ.ToString();
-					tbca.Text = action.ITEM_DESCRIPTION;
-					sd.SelectedDate = action.START_DATE;
-					cd.SelectedDate = action.COMPLETION_DATE;
-					ic.Checked = action.IsCompleted;
-
-					// Set user access:
-					tbca.Enabled = actionAccess;
-					rddlp.Enabled = actionAccess;
-					sd.Enabled = actionAccess;
-					cd.Enabled = actionAccess;
-					ic.Enabled = actionAccess;
-					rvfca.Enabled = actionAccess;
-					rvfcp.Enabled = actionAccess;
-					rvfsd.Enabled = actionAccess;
-
-					if (action.ITEM_SEQ > minRowsToValidate)
-					{
-						rvfca.Enabled = false;
-						rvfcp.Enabled = false;
-						rvfsd.Enabled = false;
-					}
-
-				}
-				catch { }
-			}
-
-			
-			if (e.Item.ItemType == ListItemType.Footer)
-			{
-				Button addanother = (Button)e.Item.FindControl("btnAddFinal");
-				addanother.Visible = actionAccess;
-			}
-
-		}
-
-		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
-			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-			{
-
-				int minRowsToValidate = 1;
-
-				try
-				{
-					INCFORM_APPROVAL approval = (INCFORM_APPROVAL)e.Item.DataItem;
-
-					Label lba = (Label)e.Item.FindControl("lbApprover");
-					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
-					Label lb = (Label)e.Item.FindControl("lbItemSeq");
-					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
-					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
-					
-					lb.Text = approval.ITEM_SEQ.ToString();
-					lba.Text = approval.APPROVER_PERSON;
-					lbm.Text = approval.APPROVAL_MESSAGE;
-					cba.Checked = approval.IsAccepted;
-					rda.SelectedDate = approval.APPROVAL_DATE;
-
-					// Set user access:
-					cba.Enabled = approveAccess;
-					rda.Enabled = approveAccess;
-
-					//if (rootCause.ITEM_SEQ > minRowsToValidate)
-					//	rvf.Enabled = false;
-
-				}
-				catch { }
-			}
-
-			if (e.Item.ItemType == ListItemType.Footer)
-			{
-				//Button addanother = (Button)e.Item.FindControl("btnAddApproval");
-				//addanother.Visible = approveAccess;
-			}
-
-		}
-
 
 		protected void btnSave_Click(object sender, EventArgs e)
 		{
@@ -847,12 +731,12 @@ namespace SQM.Website
 					case "INCFORM_ACTION":
 						if (incidentId == 0)
 							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-						AddUpdateINCFORM_ACTION(incidentId);
+						uclaction.AddUpdateINCFORM_ACTION(incidentId);
 						break;
 					case "INCFORM_APPROVAL":
 						if (incidentId == 0)
 							incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-						AddUpdateINCFORM_APPROVAL(incidentId);
+						uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
 						break;
 				}
 
@@ -923,70 +807,6 @@ namespace SQM.Website
 
 		}
 
-		protected void AddUpdateINCFORM_ACTION(decimal incidentId)
-		{
-			var itemList = new List<INCFORM_ACTION>();
-			int seqnumber = 0;
-
-			foreach (RepeaterItem containtem in rptAction.Items)
-			{
-				var item = new INCFORM_ACTION();
-
-				TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
-				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlActionPerson");
-				Label lb = (Label)containtem.FindControl("lbItemSeq");
-				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
-				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
-				CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
-
-				seqnumber = seqnumber + 1;
-
-				item.ITEM_DESCRIPTION = tbca.Text;
-				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0: Convert.ToInt32(rddlp.SelectedValue);
-				item.ITEM_SEQ = seqnumber;
-				item.START_DATE = sd.SelectedDate;
-				item.COMPLETION_DATE = cd.SelectedDate;
-				item.IsCompleted = ic.Checked;
-
-				itemList.Add(item);
-			}
-
-			if (itemList.Count > 0)
-				SaveActions(incidentId, itemList);
-
-		}
-
-		protected void AddUpdateINCFORM_APPROVAL(decimal incidentId)
-		{
-			//var itemList = new List<INCFORM_ACTION>();
-			//int seqnumber = 0;
-
-			//foreach (RepeaterItem containtem in rptAction.Items)
-			//{
-			//	var item = new INCFORM_ACTION();
-
-			//	TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
-			//	TextBox tbcp = (TextBox)containtem.FindControl("tbFinalPerson");
-			//	Label lb = (Label)containtem.FindControl("lbItemSeq");
-			//	RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
-			//	RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
-			//	CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
-
-			//	seqnumber = Convert.ToInt32(lb.Text);
-
-			//	item.ITEM_DESCRIPTION = tbca.Text;
-			//	item.ASSIGNED_PERSON = tbcp.Text;
-			//	item.ITEM_SEQ = seqnumber;
-			//	item.START_DATE = sd.SelectedDate;
-			//	item.COMPLETION_DATE = cd.SelectedDate;
-			//	item.IsCompleted = ic.Checked;
-
-			//	itemList.Add(item);
-			//}
-
-			//SaveActions(incidentId, itemList);
-		}
-
 		#region Save Methods
 
 
@@ -1044,7 +864,6 @@ namespace SQM.Website
 
 		protected INCFORM_POWEROUTAGE CreateNewPowerOutageDetails(decimal incidentId)
 		{
-
 			var newPowerOutageDetails = new INCFORM_POWEROUTAGE()
 			{
 				INCIDENT_ID = incidentId,
@@ -1080,39 +899,6 @@ namespace SQM.Website
 		}
 
 
-		private void SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
-		{
-			using (var ctx = new PSsqmEntities())
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID = {0}", incidentId);
-			}
-
-			int seq = 0;
-
-			foreach (INCFORM_ACTION item in itemList)
-			{
-				var newItem = new INCFORM_ACTION();
-
-				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
-				{
-					seq = seq + 1;
-
-					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
-					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
-					newItem.START_DATE = item.START_DATE;
-					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
-					newItem.IsCompleted = item.IsCompleted;
-					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
-
-					entities.AddToINCFORM_ACTION(newItem);
-					entities.SaveChanges();
-				}
-			}
-		}
-
 		protected void SaveAttachments(decimal incidentId)
 		{
 			//if (uploader != null)
@@ -1133,69 +919,5 @@ namespace SQM.Website
 
 	
 		#endregion
-
-
-		protected void rptAction_ItemCommand(object source, RepeaterCommandEventArgs e)
-		{
-			if (e.CommandArgument == "AddAnother")
-			{
-
-				var itemList = new List<INCFORM_ACTION>();
-				int seqnumber = 0;
-
-				foreach (RepeaterItem actionitem in rptAction.Items)
-				{
-					var item = new INCFORM_ACTION();
-
-					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
-					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
-					Label lb = (Label)actionitem.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
-					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
-					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
-
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
-					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-					foreach (PERSON p in personList)
-					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-					}
-
-					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
-						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
-
-					seqnumber = Convert.ToInt32(lb.Text);
-
-					item.ITEM_DESCRIPTION = tbca.Text;
-					item.ITEM_SEQ = seqnumber;
-					item.START_DATE = sd.SelectedDate;
-					item.COMPLETION_DATE = cd.SelectedDate;
-					item.IsCompleted = ic.Checked;
-
-					itemList.Add(item);
-				}
-
-				var emptyItem = new INCFORM_ACTION();
-
-				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.ITEM_SEQ = seqnumber + 1;
-				emptyItem.ASSIGNED_PERSON_ID = null;
-				emptyItem.START_DATE = null;
-				emptyItem.COMPLETION_DATE = null;
-				emptyItem.IsCompleted = false;
-
-
-				itemList.Add(emptyItem);
-
-				rptAction.DataSource = itemList;
-				rptAction.DataBind();
-
-			}
-		}
 	}
 }

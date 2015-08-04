@@ -749,10 +749,6 @@ namespace SQM.Website
 					powerOutageForm.EditIncidentId = EditIncidentId;
 					powerOutageForm.SelectedTypeId = SelectedTypeId;
 					powerOutageForm.SelectedTypeText = SelectedTypeText;
-					//powerOutageForm.IsNewIncident = true;
-					//preventionLocationForm.BuildCaseComboBox();
-					//if (IsEditContext == true)
-					//powerOutageForm.PopulateForm();
 					pnlForm.Controls.Add(new LiteralControl("<br/>"));
 					pnlForm.Controls.Add(powerOutageForm);
 					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
@@ -777,10 +773,6 @@ namespace SQM.Website
 					injuryIllnessForm.EditIncidentId = EditIncidentId;
 					injuryIllnessForm.SelectedTypeId = SelectedTypeId;
 					injuryIllnessForm.SelectedTypeText = SelectedTypeText;
-					//powerOutageForm.IsNewIncident = true;
-					//preventionLocationForm.BuildCaseComboBox();
-					//if (IsEditContext == true)
-					//powerOutageForm.PopulateForm();
 					pnlForm.Controls.Add(new LiteralControl("<br/>"));
 					pnlForm.Controls.Add(injuryIllnessForm);
 					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));

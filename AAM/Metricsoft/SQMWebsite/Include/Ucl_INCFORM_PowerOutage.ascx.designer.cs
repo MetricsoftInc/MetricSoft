@@ -355,40 +355,22 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
         
         /// <summary>
-        /// pnlAction control.
+        /// uclaction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAction;
+        protected global::SQM.Website.Ucl_INCFORM_Action uclaction;
         
         /// <summary>
-        /// rptAction control.
+        /// uclapproval control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAction;
-        
-        /// <summary>
-        /// pnlApproval control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlApproval;
-        
-        /// <summary>
-        /// rptApprovals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptApprovals;
+        protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
         
         /// <summary>
         /// pnlButtons control.

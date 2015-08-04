@@ -9,10 +9,9 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
-
 namespace SQM.Website
 {
-	public partial class Ucl_INCFORM_Root5Y : System.Web.UI.UserControl
+	public partial class Ucl_INCFORM_Approval : System.Web.UI.UserControl
 	{
 
 		const Int32 MaxTextLength = 4000;
@@ -25,6 +24,7 @@ namespace SQM.Website
 		protected decimal incidentTypeId;
 		protected string incidentType;
 		protected bool IsFullPagePostback = false;
+
 
 		PSsqmEntities entities;
 		List<EHSFormControlStep> formSteps;
@@ -69,7 +69,7 @@ namespace SQM.Website
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			if (IsFullPagePostback)
-				rptRootCause.DataBind();
+				rptApprovals.DataBind();
 		}
 
 
@@ -94,8 +94,7 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
-							(this.Page.FindControl(targetID).ID == "btnNext") || 
-							(this.Page.FindControl(targetID).ID == "btnAddRootCause"))
+							(this.Page.FindControl(targetID).ID == "btnNext"))
 								IsFullPagePostback = true;
 				}
 			}
@@ -144,11 +143,11 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			SetUserAccess("INCFORM_ROOT5Y");
+			SetUserAccess("INCFORM_APPROVAL");
 
-			pnlRoot5Y.Visible = true;
-			rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
-			rptRootCause.DataBind();
+			pnlApproval.Visible = true;
+			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId);
+			rptApprovals.DataBind();
 		}
 
 		private void SetUserAccess(string currentFormName)
@@ -164,9 +163,9 @@ namespace SQM.Website
 
 		}
 
-		public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
@@ -175,127 +174,103 @@ namespace SQM.Website
 
 				try
 				{
-					INCFORM_ROOT5Y rootCause = (INCFORM_ROOT5Y)e.Item.DataItem;
+					INCFORM_APPROVAL approval = (INCFORM_APPROVAL)e.Item.DataItem;
 
-					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
+					Label lba = (Label)e.Item.FindControl("lbApprover");
+					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
-					RequiredFieldValidator rvf = (RequiredFieldValidator)e.Item.FindControl("rfvRootCause");
+					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
+					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-					lb.Text = rootCause.ITEM_SEQ.ToString();
-					tb.Text = rootCause.ITEM_DESCRIPTION;
+					lb.Text = approval.ITEM_SEQ.ToString();
+					lba.Text = approval.APPROVER_PERSON;
+					lbm.Text = approval.APPROVAL_MESSAGE;
+					cba.Checked = approval.IsAccepted;
+					rda.SelectedDate = approval.APPROVAL_DATE;
 
 					// Set user access:
-					tb.Enabled = actionAccess;
-					rvf.Enabled = actionAccess;
+					cba.Enabled = approveAccess;
+					rda.Enabled = approveAccess;
 
-					if (rootCause.ITEM_SEQ > minRowsToValidate)
-						rvf.Enabled = false;
+					//if (approval.ITEM_SEQ > minRowsToValidate)
+					//	rvf.Enabled = false;
+
 				}
 				catch { }
 			}
 
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
-				Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
-				addanother.Visible = actionAccess;
+				//Button addanother = (Button)e.Item.FindControl("btnAddApproval");
+				//addanother.Visible = approveAccess;
 			}
 
 		}
 
-		public void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
+		public void AddUpdateINCFORM_APPROVAL(decimal incidentId)
 		{
+			var itemList = new List<INCFORM_APPROVAL>();
+			//int seqnumber = 0;
 
-			var itemList = new List<INCFORM_ROOT5Y>();
-			int seqnumber = 0;
-
-			foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
+			foreach (RepeaterItem containtem in rptApprovals.Items)
 			{
-				var item = new INCFORM_ROOT5Y();
+				var item = new INCFORM_ACTION();
 
-				TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-				Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
+			//	TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
+			//	TextBox tbcp = (TextBox)containtem.FindControl("tbFinalPerson");
+			//	Label lb = (Label)containtem.FindControl("lbItemSeq");
+			//	RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
+			//	RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
+			//	CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
 
-				if (!String.IsNullOrEmpty(tb.Text))
-				{
-					seqnumber = seqnumber + 1;
+			//	seqnumber = Convert.ToInt32(lb.Text);
 
-					item.ITEM_DESCRIPTION = tb.Text;
-					item.ITEM_SEQ = seqnumber;
+			//	item.ITEM_DESCRIPTION = tbca.Text;
+			//	item.ASSIGNED_PERSON = tbcp.Text;
+			//	item.ITEM_SEQ = seqnumber;
+			//	item.START_DATE = sd.SelectedDate;
+			//	item.COMPLETION_DATE = cd.SelectedDate;
+			//	item.IsCompleted = ic.Checked;
 
-					itemList.Add(item);
-				}
+			//	itemList.Add(item);
 			}
 
-			SaveRootCauses(incidentId, itemList);
+			SaveApprovals(incidentId, itemList);
 		}
 
-
-		protected void SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
+		private void SaveApprovals(decimal incidentId, List<INCFORM_APPROVAL> itemList)
 		{
-
 			PSsqmEntities entities = new PSsqmEntities();
 
-			using (var ctx = new PSsqmEntities())
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID = {0}", incidentId);
-			}
+			//using (var ctx = new PSsqmEntities())
+			//{
+			//	ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVE WHERE INCIDENT_ID = {0}", incidentId);
+			//}
 
-			int seq = 0;
+			//int seq = 0;
 
-			foreach (INCFORM_ROOT5Y item in itemList)
-			{
-				var newItem = new INCFORM_ROOT5Y();
+			//foreach (INCFORM_APPROVAL item in itemList)
+			//{
+			//	var newItem = new INCFORM_APPROVAL();
 
-				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
-				{
-					seq = seq + 1;
+			//	if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+			//	{
+			//		seq = seq + 1;
 
-					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
-					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+			//		newItem.INCIDENT_ID = incidentId;
+			//		newItem.ITEM_SEQ = seq;
+			//		newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+			//		newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
+			//		newItem.START_DATE = item.START_DATE;
+			//		newItem.COMPLETION_DATE = item.COMPLETION_DATE;
+			//		newItem.IsCompleted = item.IsCompleted;
+			//		newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+			//		newItem.LAST_UPD_DT = DateTime.Now;
 
-					entities.AddToINCFORM_ROOT5Y(newItem);
-					entities.SaveChanges();
-				}
-			}
-		}
-
-
-		protected void rptRootCause_ItemCommand(object source, RepeaterCommandEventArgs e)
-		{
-			if (e.CommandArgument == "AddAnother")
-			{
-
-				var itemList = new List<INCFORM_ROOT5Y>();
-				int seqnumber = 0;
-
-				foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
-				{
-					var item = new INCFORM_ROOT5Y();
-
-					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
-					Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
-
-					seqnumber = Convert.ToInt32(lb.Text);
-
-					item.ITEM_DESCRIPTION = tb.Text;
-					item.ITEM_SEQ = seqnumber;
-
-					itemList.Add(item);
-				}
-
-				var emptyItem = new INCFORM_ROOT5Y();
-
-				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.ITEM_SEQ = seqnumber + 1;
-				itemList.Add(emptyItem);
-
-				rptRootCause.DataSource = itemList;
-				rptRootCause.DataBind();
-
-			}
+			//		entities.AddToINCFORM_APPROVAL(newItem);
+			//		entities.SaveChanges();
+			//	}
+			//}
 		}
 	}
 }

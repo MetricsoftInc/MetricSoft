@@ -1680,6 +1680,8 @@
     <Content Include="images\tabInactiveLeftSquare.gif" />
     <Content Include="images\tabInactiveRight.gif" />
     <Content Include="images\tableDataHdrBg2.gif" />
+    <Content Include="Include\Ucl_INCFORM_Action.ascx" />
+    <Content Include="Include\Ucl_INCFORM_Approval.ascx" />
     <Content Include="Include\Ucl_INCFORM_Contain.ascx" />
     <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
@@ -2078,6 +2080,20 @@
     </Compile>
     <Compile Include="Include\Ucl_EHSIncidentForm.ascx.designer.cs">
       <DependentUpon>Ucl_EHSIncidentForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Action.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Action.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Action.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Action.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Approval.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Approval.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Approval.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Approval.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Contain.ascx.cs">
       <DependentUpon>Ucl_INCFORM_Contain.ascx</DependentUpon>
