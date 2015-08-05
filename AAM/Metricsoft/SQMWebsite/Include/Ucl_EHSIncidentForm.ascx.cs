@@ -233,6 +233,12 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			INCIDENT incident = null;
+			if (EditIncidentId > 0)
+			{
+				incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+			}
+
 			string typeText = SelectedTypeText;
 			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
@@ -329,6 +335,24 @@ namespace SQM.Website
 
 				switch (q.QuestionType)
 				{
+					case EHSIncidentQuestionType.CurrentUser:
+						var tu = new RadTextBox() { ID = qid, Width = 250, MaxLength = MaxTextLength, Skin = "Metro" };
+						if (shouldPopulate)
+							tu.Text = incident.CREATE_BY;
+						else
+							tu.Text = SQMModelMgr.FormatPersonListItem(SessionManager.UserContext.Person);
+						tu.Enabled = false;
+						pnl.Controls.Add(tu);
+						break;
+					case EHSIncidentQuestionType.CurrentLocation:
+						var tl = new RadTextBox() { ID = qid, Width = 250, MaxLength = MaxTextLength, Skin = "Metro" };
+						if (shouldPopulate)
+							tl.Text = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID).PLANT_NAME;
+						else
+							tl.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
+						tl.Enabled = false;
+						pnl.Controls.Add(tl);
+						break;
 					case EHSIncidentQuestionType.TextField:
 						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
@@ -454,7 +478,7 @@ namespace SQM.Website
 							{
 								if (EditIncidentId > 0)
 								{
-									INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+									//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 									if (incident != null)
 									{
 										// mt - due date now based on Incident creation date per TI
@@ -594,7 +618,7 @@ namespace SQM.Website
 
 						if (EditIncidentId > 0 && Mode == IncidentMode.Prevent)
 						{
-							INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+							//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 							if (incident != null)
 							{
 								string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
@@ -819,6 +843,12 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			INCIDENT incident = null;
+			if (EditIncidentId > 0)
+			{
+				incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+			}
+
 			pnlForm.Controls.Clear();
 			pnlForm.Visible = true;
 			lblResults.Visible = false;
@@ -1031,7 +1061,7 @@ namespace SQM.Website
 							{
 								if (EditIncidentId > 0)
 								{
-									INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+									//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 									if (incident != null)
 									{
 										// mt - due date now based on Incident creation date per TI
@@ -1171,7 +1201,7 @@ namespace SQM.Website
 
 						if (EditIncidentId > 0 && Mode == IncidentMode.Prevent)
 						{
-							INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+							//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 							if (incident != null)
 							{
 								string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);

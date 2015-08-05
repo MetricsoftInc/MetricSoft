@@ -38,6 +38,7 @@ namespace SQM.Website
 		ProjectedCompletionDate = 92,
 		CorrectiveActionsStatus = 93,
 		CostToImplement = 94,
-		RecommendationSummary = 95
+		RecommendationSummary = 95,
+		ReportedBy	= 96
 	}
 }

@@ -25,6 +25,8 @@ namespace SQM.Website
 		RequiredYesNoRadio = 18,
 		PageOneAttachment = 19,
 		UsersDropdownLocationFiltered = 20,
-		RichTextBox = 21
+		RichTextBox = 21,
+		CurrentUser = 22,
+		CurrentLocation =23
 	}
 }
