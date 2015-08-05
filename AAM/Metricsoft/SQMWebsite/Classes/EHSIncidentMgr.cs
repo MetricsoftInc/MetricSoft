@@ -428,6 +428,21 @@ namespace SQM.Website
 			return (from it in entities.INCIDENT_TYPE where it.INCIDENT_TYPE_ID == selectedTypeId select it.USE_CUSTOM_FORM).FirstOrDefault();
 		}
 
+		public static string IncidentQuestionText(INCIDENT_QUESTION question, string nlsLanguage)
+		{
+			string text;
+
+			if (question.INCIDENT_QUESTION_LANG != null && question.INCIDENT_QUESTION_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).FirstOrDefault() != null)
+			{
+				text = question.INCIDENT_QUESTION_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).First().LANG_TEXT;
+			}
+			else 
+			{
+				text = question.QUESTION_TEXT;
+			}
+
+			return text;
+		}
 
 		/// <summary>
 		/// Select a list of all incident questions by company and incident type
@@ -447,7 +462,7 @@ namespace SQM.Website
 
 				foreach (var aq in activeQuestionList)
 				{
-					var questionInfo = (from qi in entities.INCIDENT_QUESTION
+					var questionInfo = (from qi in entities.INCIDENT_QUESTION.Include("INCIDENT_QUESTION_LANG")
 										where qi.INCIDENT_QUESTION_ID == aq.INCIDENT_QUESTION_ID
 										select qi).FirstOrDefault();
 
@@ -458,7 +473,8 @@ namespace SQM.Website
 					var newQuestion = new EHSIncidentQuestion()
 					{
 						QuestionId = questionInfo.INCIDENT_QUESTION_ID,
-						QuestionText = questionInfo.QUESTION_TEXT,
+						//QuestionText = questionInfo.QUESTION_TEXT,
+						QuestionText = IncidentQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 						QuestionType = (EHSIncidentQuestionType)questionInfo.INCIDENT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
@@ -510,7 +526,7 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				var allQuestions = (from q in entities.INCIDENT_QUESTION select q).ToList();
+				var allQuestions = (from q in entities.INCIDENT_QUESTION.Include("INCIDENT_QUESTION_LANG") select q).ToList();
 
 				foreach (var q in allQuestions)
 				{
@@ -562,7 +578,7 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				topicList = (from q in entities.INCIDENT_QUESTION where questionIds.Contains(q.INCIDENT_QUESTION_ID) select q).ToList();
+				topicList = (from q in entities.INCIDENT_QUESTION.Include("INCIDENT_QUESTION_LANG") where questionIds.Contains(q.INCIDENT_QUESTION_ID) select q).ToList();
 			}
 			catch (Exception e)
 			{
