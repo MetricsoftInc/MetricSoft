@@ -209,8 +209,7 @@ namespace SQM.Website
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
 					PopulateShiftDropDown();
-					rdpReportDate.SelectedDate = incident.CREATE_DT;
-
+					
 					if (poweroutageDetails != null)
 					{
 						rtpIncidentTime.SelectedTime = poweroutageDetails.INCIDENT_TIME;

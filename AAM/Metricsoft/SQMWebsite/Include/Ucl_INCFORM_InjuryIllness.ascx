@@ -174,22 +174,6 @@
 		</div>
 
 
-		<%-- REMOVE THIS ===>  Here only for testing  PRODUCTION IMPACT question (MultiLine TEXTBOX) --%>
-		<asp:Panel ID="pnlRemoveMe" runat="server" Visible="false">
-			<div class="row">
-				<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-					<span class="labelMultiLineText"><asp:Label ID="lbProdImpactSM" runat ="server" Text="ProdImpact"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
-				</div>
-				<div class="col-xs-12 visible-xs text-left-more">
-					<br />
-					<span><asp:Label ID="lbProdImpactXS" runat ="server" Text="ProdImpact"></asp:Label><span class="requiredCloseStar">*</span></span>
-				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-					<asp:TextBox ID="tbProdImpact" Rows="5" Height="95px" Visible="false" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-				</div>
-			</div>
-		</asp:Panel>
-
 
 		<%-- DEPARTMENT question --%>	
 		<div class="row">
@@ -201,8 +185,8 @@
 				<span><asp:Label ID="Label2" runat ="server" Text="Department"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlDepartment" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvDepartment" ControlToValidate="rddlDepartment" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<asp:TextBox ID="tbDepartment" Width="278" SkinID="Metro" runat="server"></asp:TextBox>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvDepartment" ControlToValidate="tbDepartment" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -266,7 +250,7 @@
 				<span><asp:Label ID="Label10" runat ="server" Text="Date Supervisor Informed"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDatePicker ID="rddlSupvInformedDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="278" runat="server"></telerik:RadDatePicker>
+				<telerik:RadDatePicker ID="rddlSupvInformedDate" Skin="Metro" CssClass="WarnIfChanged"  Width="278" runat="server"></telerik:RadDatePicker>
 			</div>
 		</div>
 
@@ -282,8 +266,8 @@
 				<span><asp:Label ID="Label12" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbSupervisorName" Width="278" SkinID="Metro" runat="server"></asp:TextBox>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvSupervisorName" ControlToValidate="tbSupervisorName" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<telerik:RadDropDownList ID="rddlSupervisor" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server" OnSelectedIndexChanged="rddlSupervisor_SelectedIndexChanged"></telerik:RadDropDownList>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="rddlSupervisor" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -517,7 +501,7 @@
 				<span><asp:Label ID="Label40" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDatePicker ID="rdpExpectReturnDT" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="278" runat="server"></telerik:RadDatePicker>
+				<telerik:RadDatePicker ID="rdpExpectReturnDT" Skin="Metro" CssClass="WarnIfChanged"  Width="278" runat="server"></telerik:RadDatePicker>
 			</div>
 		</div>
 

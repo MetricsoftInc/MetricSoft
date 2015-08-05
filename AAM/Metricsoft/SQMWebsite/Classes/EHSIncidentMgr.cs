@@ -1239,7 +1239,12 @@ namespace SQM.Website
 		{
 			var entities = new PSsqmEntities();
 			var metaList = new List<EHSMetaData>();
+
 			string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+
+			if (string.IsNullOrEmpty(lang))
+				lang = "en";
+
 			metaList = (from x in entities.XLAT
 						where x.XLAT_LANGUAGE == lang && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
 						orderby x.XLAT_CODE

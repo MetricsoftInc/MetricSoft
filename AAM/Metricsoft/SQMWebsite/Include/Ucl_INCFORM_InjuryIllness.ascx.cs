@@ -208,7 +208,11 @@ namespace SQM.Website
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
 					PopulateShiftDropDown();
-					rdpReportDate.SelectedDate = incident.CREATE_DT;
+					PopulateOperationDropDown();
+					PopulateSupervisorDropDown();
+					PopulateInjuryTypeDropDown();
+					PopulateBodyPartDropDown();
+
 
 					if (poweroutageDetails != null)
 					{
@@ -216,8 +220,8 @@ namespace SQM.Website
 
 						rddlShift.SelectedValue = poweroutageDetails.SHIFT;
 
-						if (poweroutageDetails.PRODUCTION_IMPACT != null)
-							tbProdImpact.Text = poweroutageDetails.PRODUCTION_IMPACT;
+						//if (poweroutageDetails.PRODUCTION_IMPACT != null)
+							//tbProdImpact.Text = poweroutageDetails.PRODUCTION_IMPACT;
 
 						if (poweroutageDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = poweroutageDetails.DESCRIPTION_LOCAL;
@@ -233,7 +237,7 @@ namespace SQM.Website
 					rdpReportDate.Clear();
 					rtpIncidentTime.Clear();
 					tbDescription.Text = "";
-					tbProdImpact.Text = "";
+					//tbProdImpact.Text = "";
 					rddlLocation.Items.Clear();
 					rddlShift.Items.Clear();
 
@@ -252,6 +256,10 @@ namespace SQM.Website
 
 					PopulateLocationDropDown();
 					PopulateShiftDropDown();
+					PopulateOperationDropDown();
+					PopulateSupervisorDropDown();
+					PopulateInjuryTypeDropDown();
+					PopulateBodyPartDropDown();
 				}
 			}
 
@@ -451,7 +459,6 @@ namespace SQM.Website
 
 		void PopulateShiftDropDown()
 		{
-
 			List<EHSMetaData> shifts = EHSMetaDataMgr.SelectMetaDataList("SHIFT");
 
 			rddlShift.Items.Add(new DropDownListItem("[Select One]", ""));
@@ -465,16 +472,89 @@ namespace SQM.Website
 					}
 				}
 			}
-			else
-			{
-				rddlShift.Items.Add(new DropDownListItem("1st Shift", "1"));
-				rddlShift.Items.Add(new DropDownListItem("2nd Shift", "2"));
-				rddlShift.Items.Add(new DropDownListItem("3rd Shift", "3"));
-			}
 
 			rddlShift.SelectedIndexChanged += rddlShift_SelectedIndexChanged;
 			rddlShift.AutoPostBack = true;
 		}
+
+
+		void PopulateOperationDropDown()
+		{
+			List<EHSMetaData> ops = EHSMetaDataMgr.SelectMetaDataList("OPERATION");
+
+			rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
+
+			if (ops != null && ops.Count > 0)
+			{
+				foreach (var s in ops)
+				{
+					{
+						rddlOperation.Items.Add(new DropDownListItem(s.Text, s.Value));
+					}
+				}
+			}
+			
+			rddlOperation.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
+			rddlOperation.AutoPostBack = true;
+		}
+
+
+		void PopulateInjuryTypeDropDown()
+		{
+			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
+
+			rddlInjuryType.Items.Add(new DropDownListItem("[Select One]", ""));
+
+			if (injtype != null && injtype.Count > 0)
+			{
+				foreach (var s in injtype)
+				{
+					{
+						rddlInjuryType.Items.Add(new DropDownListItem(s.Text, s.Value));
+					}
+				}
+			}
+
+			rddlInjuryType.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
+			rddlInjuryType.AutoPostBack = true;
+		}
+
+
+		void PopulateBodyPartDropDown()
+		{
+			List<EHSMetaData> parts = EHSMetaDataMgr.SelectMetaDataList("INJURY_PART");
+
+			rddlBodyPart.Items.Add(new DropDownListItem("[Select One]", ""));
+
+			if (parts != null && parts.Count > 0)
+			{
+				foreach (var s in parts)
+				{
+					{
+						rddlBodyPart.Items.Add(new DropDownListItem(s.Text, s.Value));
+					}
+				}
+			}
+
+			rddlBodyPart.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
+			rddlBodyPart.AutoPostBack = true;
+		}
+
+		void PopulateSupervisorDropDown()
+		{
+			rddlSupervisor.Items.Add(new DropDownListItem("[Select One]", ""));
+			var personList = new List<PERSON>();
+			personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+			foreach (PERSON p in personList)
+			{
+				string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+				rddlSupervisor.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+			}
+
+			//if (action.ASSIGNED_PERSON_ID != null)
+				//rddlSupervisor.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+		}
+
 
 		List<decimal> SelectPlantIdsByAccessLevel()
 		{
@@ -508,12 +588,27 @@ namespace SQM.Website
 		//	// Add JobCode and any other related logic
 		//}
 
-		//protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		//{
-		//	// Add JobCode and any other related logic
-		//}
+		protected void rddlSupervisor_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		{
+			// Add JobCode and any other related logic
+		}
 
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//selectedShift = rddlShift.SelectedValue;
+		}
+
+		void rddlOperation_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//selectedShift = rddlShift.SelectedValue;
+		}
+
+		void rddlInjuryType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//selectedShift = rddlShift.SelectedValue;
+		}
+
+		void rddlBodyPart_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			//selectedShift = rddlShift.SelectedValue;
 		}
@@ -580,7 +675,7 @@ namespace SQM.Website
 				localDescription = "";
 				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
 					localDescription = tbLocalDescription.Text;
-				productImpact = tbProdImpact.Text;
+				//productImpact = tbProdImpact.Text;
 
 				Save(false);
 
@@ -624,7 +719,7 @@ namespace SQM.Website
 				localDescription = "";
 				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
 					localDescription = tbLocalDescription.Text;
-				productImpact = tbProdImpact.Text;
+				//productImpact = tbProdImpact.Text;
 
 				Save(false);
 

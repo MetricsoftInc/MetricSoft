@@ -310,42 +310,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvShift;
         
         /// <summary>
-        /// pnlRemoveMe control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlRemoveMe;
-        
-        /// <summary>
-        /// lbProdImpactSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbProdImpactSM;
-        
-        /// <summary>
-        /// lbProdImpactXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbProdImpactXS;
-        
-        /// <summary>
-        /// tbProdImpact control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbProdImpact;
-        
-        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -364,13 +328,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// rddlDepartment control.
+        /// tbDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlDepartment;
+        protected global::System.Web.UI.WebControls.TextBox tbDepartment;
         
         /// <summary>
         /// rfvDepartment control.
@@ -535,22 +499,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label Label12;
         
         /// <summary>
-        /// tbSupervisorName control.
+        /// rddlSupervisor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSupervisorName;
+        protected global::Telerik.Web.UI.RadDropDownList rddlSupervisor;
         
         /// <summary>
-        /// rfvSupervisorName control.
+        /// rfvSupervisor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSupervisorName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSupervisor;
         
         /// <summary>
         /// Label13 control.
