@@ -1156,9 +1156,14 @@ namespace SQM.Website
 			return person.LAST_NAME + ", " + person.FIRST_NAME;
 		}
 
-		public static INCFORM_POWEROUTAGE SelectPowerOurageDetailsById(PSsqmEntities entities, decimal incidentId)
+		public static INCFORM_POWEROUTAGE SelectPowerOutageDetailsById(PSsqmEntities entities, decimal incidentId)
 		{
 			return (from po in entities.INCFORM_POWEROUTAGE where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
+		}
+
+		public static INCFORM_INJURYILLNESS SelectInjuryIllnessDetailsById(PSsqmEntities entities, decimal incidentId)
+		{
+			return (from po in entities.INCFORM_INJURYILLNESS where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 		}
 
 		public static int GetNextContainSequence(decimal incidentId)

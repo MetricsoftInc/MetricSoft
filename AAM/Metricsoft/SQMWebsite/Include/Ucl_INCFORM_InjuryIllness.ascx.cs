@@ -28,9 +28,9 @@ namespace SQM.Website
 		protected int currentFormStep;
 		protected int totalFormSteps;
 
-		// PowerOutage-specific custom Form Fields 
+		// InjuryIllness-specific custom Form Fields 
 		protected string localDescription;
-		protected string productImpact;
+		//protected string productImpact;
 		protected string selectedShift;
 		protected TimeSpan incidentTime;
 
@@ -185,7 +185,7 @@ namespace SQM.Website
 			{
 
 				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
-				var poweroutageDetails = EHSIncidentMgr.SelectPowerOurageDetailsById(entities, EditIncidentId);
+				var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, EditIncidentId);
 
 				if (incident != null)
 				{
@@ -207,24 +207,45 @@ namespace SQM.Website
 					PopulateLocationDropDown();
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
+					PopulateSupervisorDropDown();
+					rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
+		
 					PopulateShiftDropDown();
 					PopulateOperationDropDown();
-					PopulateSupervisorDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 
 
-					if (poweroutageDetails != null)
+					if (injuryIllnessDetails != null)
 					{
-						rtpIncidentTime.SelectedTime = poweroutageDetails.INCIDENT_TIME;
+						rtpIncidentTime.SelectedTime = injuryIllnessDetails.INCIDENT_TIME;
+						rddlShift.SelectedValue = injuryIllnessDetails.SHIFT;
+						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
+							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
+						tbDepartment.Text = injuryIllnessDetails.DEPARTMENT;
+						rddlOperation.SelectedValue = injuryIllnessDetails.OPERATION;
+						tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
+						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
+						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
+						rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
+						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
+						tbInsideOutside.Text = injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG;
+						rdoDirectSupv.SelectedValue = Convert.ToString(injuryIllnessDetails.COMPANY_SUPERVISED);
+						rdoErgConcern.SelectedValue = Convert.ToString(injuryIllnessDetails.ERGONOMIC_CONCERN);
+						rdoStdProcsFollowed.SelectedValue = Convert.ToString(injuryIllnessDetails.STD_PROCS_FOLLOWED);
+						rdoTrainingProvided.SelectedValue = Convert.ToString(injuryIllnessDetails.TRAINING_PROVIDED);
+						tbTaskYears.Text = injuryIllnessDetails.YEARS_DOING_JOB.ToString();
+						tbTaskMonths.Text = injuryIllnessDetails.MONTHS_DOING_JOB.ToString();
+						tbTaskDays.Text = injuryIllnessDetails.DAYS_DOING_JOB.ToString();
+						rdoFirstAid.SelectedValue = Convert.ToString(injuryIllnessDetails.FIRST_AID);
+						rdoRecordable.SelectedValue = Convert.ToString(injuryIllnessDetails.RECORDABLE);
+						rdoLostTime.SelectedValue = Convert.ToString(injuryIllnessDetails.LOST_TIME);
+						rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
+						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
+						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
 
-						rddlShift.SelectedValue = poweroutageDetails.SHIFT;
-
-						//if (poweroutageDetails.PRODUCTION_IMPACT != null)
-							//tbProdImpact.Text = poweroutageDetails.PRODUCTION_IMPACT;
-
-						if (poweroutageDetails.DESCRIPTION_LOCAL != null)
-							tbLocalDescription.Text = poweroutageDetails.DESCRIPTION_LOCAL;
+						// ToDo:    PopulateWitnesss();
+						
 					}
 				}
 
@@ -237,9 +258,32 @@ namespace SQM.Website
 					rdpReportDate.Clear();
 					rtpIncidentTime.Clear();
 					tbDescription.Text = "";
-					//tbProdImpact.Text = "";
+					tbLocalDescription.Text = "";
 					rddlLocation.Items.Clear();
 					rddlShift.Items.Clear();
+					tbDepartment.Text = "";
+					rddlOperation.Items.Clear();
+					tbInvolvedPerson.Text = "";
+					tbInvPersonStatement.Text = "";
+					rdpSupvInformedDate.Clear();
+					rddlSupervisor.Items.Clear();
+					tbSupervisorStatement.Text = "";
+					tbInsideOutside.Text = "";
+					rdoDirectSupv.Items.Clear();
+					rdoErgConcern.Items.Clear();
+					rdoStdProcsFollowed.Items.Clear();
+					rdoTrainingProvided.Items.Clear();
+					tbTaskYears.Text = "";
+					tbTaskMonths.Text = "";
+					tbTaskDays.Text = "";
+					rdoFirstAid.Items.Clear();
+					rdoRecordable.Items.Clear();
+					rdoLostTime.Items.Clear();
+					rdpExpectReturnDT.Clear();
+					rddlInjuryType.Items.Clear();
+					rddlBodyPart.Items.Clear();
+
+					// ToDo:    clear witness repeater
 
 					CurrentFormStep = 1;
 
@@ -413,17 +457,24 @@ namespace SQM.Website
 				case "INCFORM_INJURYILLNESS":
 					rdpIncidentDate.Enabled = updateAccess;
 					rfvIncidentDate.Enabled = updateAccess;
+					
 					rdpReportDate.Enabled = updateAccess;
+					
 					rddlLocation.Enabled = updateAccess;
 					rfvLocation.Enabled = updateAccess;
+					
 					tbDescription.Enabled = updateAccess;
 					rfvDescription.Enabled = updateAccess;
+					
 					tbLocalDescription.Enabled = updateAccess;
 					rfvLocalDescription.Enabled = updateAccess;
+					
 					rtpIncidentTime.Enabled = updateAccess;
 					rfvIncidentTime.Enabled = updateAccess;
+					
 					rddlShift.Enabled = updateAccess;
 					rfvShift.Enabled = updateAccess;
+
 					btnSave.Enabled = updateAccess;
 					break;
 				case "INCFORM_CONTAIN":
@@ -660,6 +711,141 @@ namespace SQM.Website
 			}
 		}
 
+
+		public void rptWitness_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			//bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+
+			//if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			//{
+			//	int minRowsToValidate = 1;
+
+			//	try
+			//	{
+			//		INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
+
+			//		TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
+			//		RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
+			//		Label lb = (Label)e.Item.FindControl("lbItemSeq");
+			//		RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
+			//		RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
+			//		CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
+			//		RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
+			//		RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
+			//		RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
+
+			//		rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+			//		var personList = new List<PERSON>();
+			//		//if (CurrentStep == 1)
+			//		//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+			//		//else if (CurrentStep == 0)
+			//		personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+			//		foreach (PERSON p in personList)
+			//		{
+			//			string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+			//			rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+			//		}
+
+			//		if (action.ASSIGNED_PERSON_ID != null)
+			//			rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+
+			//		lb.Text = action.ITEM_SEQ.ToString();
+			//		tbca.Text = action.ITEM_DESCRIPTION;
+			//		sd.SelectedDate = action.START_DATE;
+			//		cd.SelectedDate = action.COMPLETION_DATE;
+			//		ic.Checked = action.IsCompleted;
+
+			//		// Set user access:
+			//		tbca.Enabled = actionAccess;
+			//		rddlp.Enabled = actionAccess;
+			//		sd.Enabled = actionAccess;
+			//		cd.Enabled = actionAccess;
+			//		ic.Enabled = actionAccess;
+			//		rvfca.Enabled = actionAccess;
+			//		rvfcp.Enabled = actionAccess;
+			//		rvfsd.Enabled = actionAccess;
+
+			//		if (action.ITEM_SEQ > minRowsToValidate)
+			//		{
+			//			rvfca.Enabled = false;
+			//			rvfcp.Enabled = false;
+			//			rvfsd.Enabled = false;
+			//		}
+
+			//	}
+			//	catch { }
+			//}
+
+
+			//if (e.Item.ItemType == ListItemType.Footer)
+			//{
+				//Button addanother = (Button)e.Item.FindControl("btnAddFinal");
+				//addanother.Visible = actionAccess;
+			//}
+		}
+
+		protected void rptWitness_ItemCommand(object source, RepeaterCommandEventArgs e)
+		{
+			//if (e.CommandArgument == "AddAnother")
+			//{
+
+			//	var itemList = new List<INCFORM_ACTION>();
+			//	int seqnumber = 0;
+
+			//	foreach (RepeaterItem actionitem in rptAction.Items)
+			//	{
+			//		var item = new INCFORM_ACTION();
+
+			//		TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
+			//		RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
+			//		Label lb = (Label)actionitem.FindControl("lbItemSeq");
+			//		RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
+			//		RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
+			//		CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
+
+			//		rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+			//		var personList = new List<PERSON>();
+			//		//if (CurrentStep == 1)
+			//		//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
+			//		//else if (CurrentStep == 0)
+			//		personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+			//		foreach (PERSON p in personList)
+			//		{
+			//			string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+			//			rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+			//		}
+
+			//		if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+			//			item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+
+			//		seqnumber = Convert.ToInt32(lb.Text);
+
+			//		item.ITEM_DESCRIPTION = tbca.Text;
+			//		item.ITEM_SEQ = seqnumber;
+			//		item.START_DATE = sd.SelectedDate;
+			//		item.COMPLETION_DATE = cd.SelectedDate;
+			//		item.IsCompleted = ic.Checked;
+
+			//		itemList.Add(item);
+			//	}
+
+			//	var emptyItem = new INCFORM_ACTION();
+
+			//	emptyItem.ITEM_DESCRIPTION = "";
+			//	emptyItem.ITEM_SEQ = seqnumber + 1;
+			//	emptyItem.ASSIGNED_PERSON_ID = null;
+			//	emptyItem.START_DATE = null;
+			//	emptyItem.COMPLETION_DATE = null;
+			//	emptyItem.IsCompleted = false;
+
+
+			//	itemList.Add(emptyItem);
+
+			//	rptAction.DataSource = itemList;
+			//	rptAction.DataBind();
+
+			//}
+		}
 
 		protected void btnSave_Click(object sender, EventArgs e)
 		{

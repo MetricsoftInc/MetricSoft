@@ -310,22 +310,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvShift;
         
         /// <summary>
-        /// Label1 control.
+        /// lbDepartmentSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lbDepartmentSM;
         
         /// <summary>
-        /// Label2 control.
+        /// lbDepartmentXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lbDepartmentXS;
         
         /// <summary>
         /// tbDepartment control.
@@ -346,22 +346,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDepartment;
         
         /// <summary>
-        /// Label3 control.
+        /// lbOperationSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lbOperationSM;
         
         /// <summary>
-        /// Label4 control.
+        /// lbOperationXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lbOperationXS;
         
         /// <summary>
         /// rddlOperation control.
@@ -382,22 +382,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfOperation;
         
         /// <summary>
-        /// Label5 control.
+        /// lbInvolvedPersonSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label lbInvolvedPersonSM;
         
         /// <summary>
-        /// Label6 control.
+        /// lbInvolvedPersonXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lbInvolvedPersonXS;
         
         /// <summary>
         /// tbInvolvedPerson control.
@@ -418,22 +418,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInvolvedPerson;
         
         /// <summary>
-        /// Label7 control.
+        /// lbInvPersonStatementSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Label lbInvPersonStatementSM;
         
         /// <summary>
-        /// Label8 control.
+        /// lbInvPersonStatementXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label lbInvPersonStatementXS;
         
         /// <summary>
         /// tbInvPersonStatement control.
@@ -454,49 +454,58 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInvPersonStatement;
         
         /// <summary>
-        /// Label9 control.
+        /// lbSupvInformedDateSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label lbSupvInformedDateSM;
         
         /// <summary>
-        /// Label10 control.
+        /// lbSupvInformedDateXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label lbSupvInformedDateXS;
         
         /// <summary>
-        /// rddlSupvInformedDate control.
+        /// rdpSupvInformedDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker rddlSupvInformedDate;
+        protected global::Telerik.Web.UI.RadDatePicker rdpSupvInformedDate;
         
         /// <summary>
-        /// Label11 control.
+        /// rfvSupvInformedDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSupvInformedDate;
         
         /// <summary>
-        /// Label12 control.
+        /// lbSupervisorSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label lbSupervisorSM;
+        
+        /// <summary>
+        /// lbSupervisorXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbSupervisorXS;
         
         /// <summary>
         /// rddlSupervisor control.
@@ -517,22 +526,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSupervisor;
         
         /// <summary>
-        /// Label13 control.
+        /// lbSupervisorStatementSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.Label lbSupervisorStatementSM;
         
         /// <summary>
-        /// Label14 control.
+        /// lbSupervisorStatementXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label14;
+        protected global::System.Web.UI.WebControls.Label lbSupervisorStatementXS;
         
         /// <summary>
         /// tbSupervisorStatement control.
@@ -553,94 +562,40 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSupervisorStatement;
         
         /// <summary>
-        /// Label15 control.
+        /// pnlWitness control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label15;
+        protected global::System.Web.UI.WebControls.Panel pnlWitness;
         
         /// <summary>
-        /// Label16 control.
+        /// rptWitness control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label16;
+        protected global::System.Web.UI.WebControls.Repeater rptWitness;
         
         /// <summary>
-        /// tbWitness1 control.
+        /// lbInsideOutsideSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbWitness1;
+        protected global::System.Web.UI.WebControls.Label lbInsideOutsideSM;
         
         /// <summary>
-        /// rvfWitness1 control.
+        /// lbInsideOutsideXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfWitness1;
-        
-        /// <summary>
-        /// Label17 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label17;
-        
-        /// <summary>
-        /// Label18 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label18;
-        
-        /// <summary>
-        /// tbWiness1Statement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbWiness1Statement;
-        
-        /// <summary>
-        /// rfvWiness1Statement control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvWiness1Statement;
-        
-        /// <summary>
-        /// Label19 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label19;
-        
-        /// <summary>
-        /// Label20 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label20;
+        protected global::System.Web.UI.WebControls.Label lbInsideOutsideXS;
         
         /// <summary>
         /// tbInsideOutside control.
@@ -661,22 +616,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInsideOutside;
         
         /// <summary>
-        /// Label21 control.
+        /// lbDirectSupvSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label21;
+        protected global::System.Web.UI.WebControls.Label lbDirectSupvSM;
         
         /// <summary>
-        /// Label22 control.
+        /// lbDirectSupvXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label22;
+        protected global::System.Web.UI.WebControls.Label lbDirectSupvXS;
         
         /// <summary>
         /// rdoDirectSupv control.
@@ -688,22 +643,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoDirectSupv;
         
         /// <summary>
-        /// Label23 control.
+        /// rfvDirectSupv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label23;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDirectSupv;
         
         /// <summary>
-        /// Label24 control.
+        /// lbErgConcernSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label24;
+        protected global::System.Web.UI.WebControls.Label lbErgConcernSM;
+        
+        /// <summary>
+        /// lbErgConcernXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbErgConcernXS;
         
         /// <summary>
         /// rdoErgConcern control.
@@ -715,22 +679,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoErgConcern;
         
         /// <summary>
-        /// Label25 control.
+        /// rfvErgConcern control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label25;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvErgConcern;
         
         /// <summary>
-        /// Label26 control.
+        /// lbStdProcsFollowedSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label26;
+        protected global::System.Web.UI.WebControls.Label lbStdProcsFollowedSM;
+        
+        /// <summary>
+        /// lbStdProcsFollowedXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbStdProcsFollowedXS;
         
         /// <summary>
         /// rdoStdProcsFollowed control.
@@ -742,22 +715,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoStdProcsFollowed;
         
         /// <summary>
-        /// Label27 control.
+        /// rfvStdProcsFollowed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label27;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStdProcsFollowed;
         
         /// <summary>
-        /// Label28 control.
+        /// lbTrainingProvidedSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label28;
+        protected global::System.Web.UI.WebControls.Label lbTrainingProvidedSM;
+        
+        /// <summary>
+        /// lbTrainingProvidedXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTrainingProvidedXS;
         
         /// <summary>
         /// rdoTrainingProvided control.
@@ -769,22 +751,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoTrainingProvided;
         
         /// <summary>
-        /// Label29 control.
+        /// rfvTrainingProvided control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label29;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTrainingProvided;
         
         /// <summary>
-        /// Label30 control.
+        /// lbTaskYearsSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label30;
+        protected global::System.Web.UI.WebControls.Label lbTaskYearsSM;
+        
+        /// <summary>
+        /// lbTaskYearsXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbTaskYearsXS;
         
         /// <summary>
         /// tbTaskYears control.
@@ -841,22 +832,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbTaskDays;
         
         /// <summary>
-        /// Label31 control.
+        /// rfvTaskDays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label31;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTaskDays;
         
         /// <summary>
-        /// Label32 control.
+        /// lbFirstAidSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label32;
+        protected global::System.Web.UI.WebControls.Label lbFirstAidSM;
+        
+        /// <summary>
+        /// lbFirstAidXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbFirstAidXS;
         
         /// <summary>
         /// rdoFirstAid control.
@@ -868,22 +868,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoFirstAid;
         
         /// <summary>
-        /// Label33 control.
+        /// rfvFirstAid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label33;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirstAid;
         
         /// <summary>
-        /// Label34 control.
+        /// lbRecordableSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label34;
+        protected global::System.Web.UI.WebControls.Label lbRecordableSM;
+        
+        /// <summary>
+        /// lbRecordableXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbRecordableXS;
         
         /// <summary>
         /// rdoRecordable control.
@@ -895,22 +904,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoRecordable;
         
         /// <summary>
-        /// Label35 control.
+        /// rfvRecordable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label35;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRecordable;
         
         /// <summary>
-        /// Label36 control.
+        /// lbLostTimeSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label36;
+        protected global::System.Web.UI.WebControls.Label lbLostTimeSM;
+        
+        /// <summary>
+        /// lbLostTimeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbLostTimeXS;
         
         /// <summary>
         /// rdoLostTime control.
@@ -922,22 +940,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoLostTime;
         
         /// <summary>
-        /// Label39 control.
+        /// rfvLostTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label39;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLostTime;
         
         /// <summary>
-        /// Label40 control.
+        /// lbExpectReturnDTSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label40;
+        protected global::System.Web.UI.WebControls.Label lbExpectReturnDTSM;
+        
+        /// <summary>
+        /// lbExpectReturnDTXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbExpectReturnDTXS;
         
         /// <summary>
         /// rdpExpectReturnDT control.
@@ -949,22 +976,31 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDatePicker rdpExpectReturnDT;
         
         /// <summary>
-        /// Label37 control.
+        /// rfvExpectReturnDT control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label37;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvExpectReturnDT;
         
         /// <summary>
-        /// Label38 control.
+        /// lbInjuryTypeSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label38;
+        protected global::System.Web.UI.WebControls.Label lbInjuryTypeSM;
+        
+        /// <summary>
+        /// lbInjuryTypeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbInjuryTypeXS;
         
         /// <summary>
         /// rddlInjuryType control.
@@ -985,22 +1021,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInjuryType;
         
         /// <summary>
-        /// Label41 control.
+        /// lbBodyPartSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label41;
+        protected global::System.Web.UI.WebControls.Label lbBodyPartSM;
         
         /// <summary>
-        /// Label42 control.
+        /// lbBodyPartXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label42;
+        protected global::System.Web.UI.WebControls.Label lbBodyPartXS;
         
         /// <summary>
         /// rddlBodyPart control.
@@ -1021,22 +1057,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBodyPart;
         
         /// <summary>
-        /// Label43 control.
+        /// lbAttachemntSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label43;
+        protected global::System.Web.UI.WebControls.Label lbAttachemntSM;
         
         /// <summary>
-        /// Label44 control.
+        /// lbAttachemntXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label44;
+        protected global::System.Web.UI.WebControls.Label lbAttachemntXS;
         
         /// <summary>
         /// btnBrowseAttach control.

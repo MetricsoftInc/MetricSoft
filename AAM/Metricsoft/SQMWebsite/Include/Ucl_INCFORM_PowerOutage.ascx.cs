@@ -186,7 +186,7 @@ namespace SQM.Website
 			{
 
 				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
-				var poweroutageDetails = EHSIncidentMgr.SelectPowerOurageDetailsById(entities, EditIncidentId);
+				var poweroutageDetails = EHSIncidentMgr.SelectPowerOutageDetailsById(entities, EditIncidentId);
 
 				if (incident != null)
 				{
