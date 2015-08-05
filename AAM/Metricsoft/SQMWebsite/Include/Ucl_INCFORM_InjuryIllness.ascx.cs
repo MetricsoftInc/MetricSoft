@@ -341,6 +341,8 @@ namespace SQM.Website
 					btnPrev.Visible = false;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
+					rptWitness.DataBind();
 					break;
 				case "INCFORM_CONTAIN":
 					LoadDependantForm(currentFormName);
@@ -480,6 +482,67 @@ namespace SQM.Website
 					rddlShift.Enabled = updateAccess;
 					rfvShift.Enabled = updateAccess;
 
+					tbDepartment.Enabled = updateAccess;
+					rfvDepartment.Enabled = updateAccess;
+
+					rddlOperation.Enabled = updateAccess;
+					rfvOperation.Enabled = updateAccess;
+
+					tbInvolvedPerson.Enabled = updateAccess;
+					rfvInvolvedPerson.Enabled = updateAccess;
+
+					tbInvPersonStatement.Enabled = updateAccess;
+					rfvInvPersonStatement.Enabled = updateAccess;
+
+					rdpSupvInformedDate.Enabled = updateAccess;
+					rfvSupvInformedDate.Enabled = updateAccess;
+
+					rddlSupervisor.Enabled = updateAccess;
+					rfvSupervisor.Enabled = updateAccess;
+
+					tbSupervisorStatement.Enabled = updateAccess;
+					rfvSupervisorStatement.Enabled = updateAccess;
+
+					tbInsideOutside.Enabled = updateAccess;
+					rfvInsideOutside.Enabled = updateAccess;
+
+					rdoDirectSupv.Enabled = updateAccess;
+					rfvDirectSupv.Enabled = updateAccess;
+
+					rdoErgConcern.Enabled = updateAccess;
+					rfvErgConcern.Enabled = updateAccess;
+
+					rdoStdProcsFollowed.Enabled = updateAccess;
+					rfvStdProcsFollowed.Enabled = updateAccess;
+
+					rdoTrainingProvided.Enabled = updateAccess;
+					rfvTrainingProvided.Enabled = updateAccess;
+
+					tbTaskYears.Enabled = updateAccess;
+					tbTaskMonths.Enabled = updateAccess;
+					tbTaskDays.Enabled = updateAccess;
+					rfvTaskDays.Enabled = updateAccess;
+
+					rdoFirstAid.Enabled = updateAccess;
+					rfvFirstAid.Enabled = updateAccess;
+
+					rdoRecordable.Enabled = updateAccess;
+					rfvRecordable.Enabled = updateAccess;
+
+					rdoLostTime.Enabled = updateAccess;
+					rfvLostTime.Enabled = updateAccess;
+
+					rdpExpectReturnDT.Enabled = updateAccess;
+					rfvExpectReturnDT.Enabled = updateAccess;
+
+					rddlInjuryType.Enabled = updateAccess;
+					rfvInjuryType.Enabled = updateAccess;
+
+					rddlBodyPart.Enabled = updateAccess;
+					rfvBodyPart.Enabled = updateAccess;
+
+					// ToDo add Witness repeater user access
+
 					btnSave.Enabled = updateAccess;
 					break;
 				case "INCFORM_CONTAIN":
@@ -606,9 +669,6 @@ namespace SQM.Website
 				string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
 				rddlSupervisor.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
 			}
-
-			//if (action.ASSIGNED_PERSON_ID != null)
-				//rddlSupervisor.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
 		}
 
 
@@ -639,11 +699,6 @@ namespace SQM.Website
 			BuildFilteredUsersDropdownList();
 		}
 
-		//protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		//{
-		//	// Add JobCode and any other related logic
-		//}
-
 		protected void rddlSupervisor_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
 			// Add JobCode and any other related logic
@@ -651,22 +706,22 @@ namespace SQM.Website
 
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//selectedShift = rddlShift.SelectedValue;
+			//
 		}
 
 		void rddlOperation_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//selectedShift = rddlShift.SelectedValue;
+			//
 		}
 
 		void rddlInjuryType_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//selectedShift = rddlShift.SelectedValue;
+			//
 		}
 
 		void rddlBodyPart_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//selectedShift = rddlShift.SelectedValue;
+			//
 		}
 
 		void BuildFilteredUsersDropdownList()
@@ -719,137 +774,113 @@ namespace SQM.Website
 
 		public void rptWitness_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			//bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
 
-			//if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-			//{
-			//	int minRowsToValidate = 1;
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				int minRowsToValidate = 1;
 
-			//	try
-			//	{
-			//		INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
+				try
+				{
+							INCFORM_WITNESS witness = (INCFORM_WITNESS)e.Item.DataItem;
 
-			//		TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
-			//		RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
-			//		Label lb = (Label)e.Item.FindControl("lbItemSeq");
-			//		RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
-			//		RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
-			//		CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
-			//		RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
-			//		RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
-			//		RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
+							TextBox tbw = (TextBox)e.Item.FindControl("tbWitnessName");
+							TextBox tbws = (TextBox)e.Item.FindControl("tbWitnessStatement");
 
-			//		rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-			//		var personList = new List<PERSON>();
-			//		//if (CurrentStep == 1)
-			//		//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-			//		//else if (CurrentStep == 0)
-			//		personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-			//		foreach (PERSON p in personList)
-			//		{
-			//			string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-			//			rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-			//		}
+							Label lb = (Label)e.Item.FindControl("lbItemSeq");
+							Label lb2 = (Label)e.Item.FindControl("lbItemSeq2");
 
-			//		if (action.ASSIGNED_PERSON_ID != null)
-			//			rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+							Label rqd1 = (Label)e.Item.FindControl("lbRqd1");
+							Label rqd2 = (Label)e.Item.FindControl("lbRqd2");
 
-			//		lb.Text = action.ITEM_SEQ.ToString();
-			//		tbca.Text = action.ITEM_DESCRIPTION;
-			//		sd.SelectedDate = action.START_DATE;
-			//		cd.SelectedDate = action.COMPLETION_DATE;
-			//		ic.Checked = action.IsCompleted;
+							RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessName");
+							RequiredFieldValidator rvfws = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessStatement");
 
-			//		// Set user access:
-			//		tbca.Enabled = actionAccess;
-			//		rddlp.Enabled = actionAccess;
-			//		sd.Enabled = actionAccess;
-			//		cd.Enabled = actionAccess;
-			//		ic.Enabled = actionAccess;
-			//		rvfca.Enabled = actionAccess;
-			//		rvfcp.Enabled = actionAccess;
-			//		rvfsd.Enabled = actionAccess;
+							lb.Text = witness.WITNESS_NO.ToString();
+							lb2.Text = witness.WITNESS_NO.ToString();
+							tbw.Text = witness.WITNESS_NAME;
+							tbws.Text = witness.WITNESS_STATEMENT;
 
-			//		if (action.ITEM_SEQ > minRowsToValidate)
-			//		{
-			//			rvfca.Enabled = false;
-			//			rvfcp.Enabled = false;
-			//			rvfsd.Enabled = false;
-			//		}
+							rqd1.Visible = true;
+							rqd2.Visible = true;
 
-			//	}
-			//	catch { }
-			//}
+							if (witness.WITNESS_NO > 1)
+							{
+								rqd1.Visible = false;
+								rqd2.Visible = false;
+							}
+					
+							// Set user access:
 
+							tbw.Enabled = updateAccess;
+							rvfw.Enabled = updateAccess;
+							tbws.Enabled = updateAccess;
+							rvfws.Enabled = updateAccess;
+							
+							if (witness.WITNESS_NO > minRowsToValidate)
+							{
+								rvfw.Enabled = false;
+								rvfws.Enabled = false;
+							}
 
-			//if (e.Item.ItemType == ListItemType.Footer)
-			//{
-				//Button addanother = (Button)e.Item.FindControl("btnAddFinal");
-				//addanother.Visible = actionAccess;
-			//}
+				}
+				catch
+				{
+				}
+
+				if (e.Item.ItemType == ListItemType.Footer)
+				{
+				Button addanother = (Button)e.Item.FindControl("btnAddWitness");
+				addanother.Visible = updateAccess;
+				}
+
+			}
 		}
+		
 
 		protected void rptWitness_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
-			//if (e.CommandArgument == "AddAnother")
-			//{
+			if (e.CommandArgument == "AddAnother")
+			{
 
-			//	var itemList = new List<INCFORM_ACTION>();
-			//	int seqnumber = 0;
+				var itemList = new List<INCFORM_WITNESS>();
+				int seqnumber = 0;
 
-			//	foreach (RepeaterItem actionitem in rptAction.Items)
-			//	{
-			//		var item = new INCFORM_ACTION();
+				foreach (RepeaterItem witnessitem in rptWitness.Items)
+				{
+					var item = new INCFORM_WITNESS();
 
-			//		TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
-			//		RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
-			//		Label lb = (Label)actionitem.FindControl("lbItemSeq");
-			//		RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
-			//		RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
-			//		CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
+					TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+					TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
 
-			//		rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-			//		var personList = new List<PERSON>();
-			//		//if (CurrentStep == 1)
-			//		//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-			//		//else if (CurrentStep == 0)
-			//		personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-			//		foreach (PERSON p in personList)
-			//		{
-			//			string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-			//			rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-			//		}
+					Label lb = (Label)witnessitem.FindControl("lbItemSeq");
+					Label lb2 = (Label)witnessitem.FindControl("lbItemSeq2");
 
-			//		if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
-			//			item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+					Label rqd1 = (Label)witnessitem.FindControl("lbRqd1");
+					Label rqd2 = (Label)witnessitem.FindControl("lbRqd2");
 
-			//		seqnumber = Convert.ToInt32(lb.Text);
+		
+					seqnumber = Convert.ToInt32(lb.Text);
 
-			//		item.ITEM_DESCRIPTION = tbca.Text;
-			//		item.ITEM_SEQ = seqnumber;
-			//		item.START_DATE = sd.SelectedDate;
-			//		item.COMPLETION_DATE = cd.SelectedDate;
-			//		item.IsCompleted = ic.Checked;
+					item.WITNESS_NO = seqnumber;
+					item.WITNESS_NAME = tbSupervisorStatement.Text;
+					item.WITNESS_STATEMENT = tbws.Text;
 
-			//		itemList.Add(item);
-			//	}
+					itemList.Add(item);
+				}
 
-			//	var emptyItem = new INCFORM_ACTION();
+				var emptyItem = new INCFORM_WITNESS();
 
-			//	emptyItem.ITEM_DESCRIPTION = "";
-			//	emptyItem.ITEM_SEQ = seqnumber + 1;
-			//	emptyItem.ASSIGNED_PERSON_ID = null;
-			//	emptyItem.START_DATE = null;
-			//	emptyItem.COMPLETION_DATE = null;
-			//	emptyItem.IsCompleted = false;
+				emptyItem.WITNESS_NO = seqnumber + 1;
+				emptyItem.WITNESS_NAME = "";
+				emptyItem.WITNESS_STATEMENT = "";
+				
+				itemList.Add(emptyItem);
 
+				rptWitness.DataSource = itemList;
+				rptWitness.DataBind();
 
-			//	itemList.Add(emptyItem);
-
-			//	rptAction.DataSource = itemList;
-			//	rptAction.DataBind();
-
-			//}
+			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e)

@@ -826,6 +826,39 @@ namespace SQM.Website
 			return containments;
 		}
 
+		public static List<INCFORM_WITNESS> GetWitnessList(decimal incidentId)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+			var witnesses = new List<INCFORM_WITNESS>();
+
+			int minRowsThisForm = 1;
+
+			witnesses = (from w in entities.INCFORM_WITNESS
+							where w.INCIDENT_ID == incidentId
+							select w).ToList();
+
+			int itemsNeeded = 0;
+			if (witnesses.Count() < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - witnesses.Count();
+
+			int seq = witnesses.Count(); ;
+			INCFORM_WITNESS witness = null;
+
+			for (int i = 1; i < itemsNeeded + 1; i++)
+			{
+				witness = new INCFORM_WITNESS();
+
+				seq = seq + 1;
+				witness.WITNESS_NO = seq;
+				witness.WITNESS_NAME = "";
+				witness.WITNESS_STATEMENT = "";
+
+				witnesses.Add(witness);
+			}
+
+			return witnesses;
+		}
+
 
 		public static List<INCFORM_ACTION> GetFinalActionList(decimal incidentId)
 		{

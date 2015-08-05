@@ -202,7 +202,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlOperation" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-		        <asp:RequiredFieldValidator runat="server" ID="rvfOperation" ControlToValidate="rddlOperation" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvOperation" ControlToValidate="rddlOperation" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -290,70 +290,62 @@
 			</div>
 		</div>
 
-
 		
 		<%-- WITNESSS question --%>
 		<asp:Panel ID="pnlWitness" Visible="true" runat="server">
-			<br />
-<%--			<div class="container-fluid">--%>
+	
+			<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
 
-				<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
-					<HeaderTemplate>
+				<ItemTemplate>
 
-						<div class="row">
-							<div class="col-sm-2 text-center">
-								<span><b>
-									<asp:Label ID="lbWitnessName" runat="server" Text="Witness Name"></asp:Label></b></span>
-							</div>
-							<div class="col-sm-3  text-center">
-								<span><b>
-									<asp:Label ID="lbWitnessStatement" runat="server" Text="Statement"></asp:Label></b></span>
-							</div>
-						</div>
-						<br />
-					</HeaderTemplate>
-					<ItemTemplate>
-						<div class="row-fluid">
+					<div class="row-fluid text-left-more">
 
-							<div class="col-xs-12 col-sm-2 text-left-more">
-								<asp:TextBox ID="tbWitnessName" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-								<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
-							</div>
+						<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
+							<span class="labelMultiLineText">
+								<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness "></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
+						</div>
+						<div class="col-xs-12 visible-xs text-left-more">
+							<br />
+							<span>
+								<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server"></asp:Label></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
+						</div>
 
-							<div class="col-xs-12  col-sm-3 text-left-more">
-								<span><span style="display: inline-block; vertical-align: top;">
-									<asp:Label ID="lbWitnessPrompt" Text="Witness " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;</span>
-									<asp:TextBox ID="tbWitnessStatement" Rows="3" Height="65px" Width="300" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox></span>
-								<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
-							</div>
+						<div class="col-xs-12 col-sm-4 text-left greyControlCol">
+							<span style="display: inline-block; vertical-align: top; height:65px;">
+							<asp:TextBox ID="tbWitnessName" Width="100" SkinID="Metro" runat="server"></asp:TextBox></span>
+							<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+						</div>
 
+						<div class="col-xs-12 col-sm-4 text-left greyControlCol">
+							<asp:TextBox ID="tbWitnessStatement" Height="65px" Width="100" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+							<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 						</div>
-						<br style="float: left; clear: both;" />
-						<br />
-					</ItemTemplate>
-					<SeparatorTemplate>
-						<br />
-						<br />
-					</SeparatorTemplate>
-					<FooterTemplate>
-						<div class="row">
-							<div class="col-xs-12 text-left-more">
-								<br />
-							</div>
+
+					</div>
+					<br style="float: left; clear: both;" />
+					<br />
+				</ItemTemplate>
+				<SeparatorTemplate>
+				</SeparatorTemplate>
+				<FooterTemplate>
+					<div class="row">
+						<div class="col-xs-12 text-left-more">
+							<br />
 						</div>
-						<div class="row">
-							<div class="col-xs-12 text-left-more">
-								<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 text-left-more">
+							<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" ToolTip="Add Another Witness" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
 						</div>
-						<div class="row">
-							<div class="col-xs-12 text-left-more">
-								<br />
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 text-left-more">
+							<br />
 						</div>
-					</FooterTemplate>
-				</asp:Repeater>
-	<%--		</div>--%>
+					</div>
+				</FooterTemplate>
+
+			</asp:Repeater>
 		</asp:Panel>
 
 

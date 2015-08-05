@@ -373,13 +373,13 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDropDownList rddlOperation;
         
         /// <summary>
-        /// rvfOperation control.
+        /// rfvOperation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rvfOperation;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvOperation;
         
         /// <summary>
         /// lbInvolvedPersonSM control.
