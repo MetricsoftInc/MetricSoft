@@ -67,17 +67,17 @@
 					<div class="col-xs-12  col-sm-3 text-left-more">
 						<span><span style="display:inline-block; vertical-align:top;"><asp:Label ID="lbConPrompt" Text="Action " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;</span>
 						<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="300" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox></span>
-						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" ></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more">
 						<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" CssClass="WarnIfChanged" Width="198" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged"></telerik:RadDropDownList>
-						<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]"  ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]"  ErrorMessage="Required"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more"> 
 						<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
-						<asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required"  ValidationGroup="Val_PowerOutage"></asp:RequiredFieldValidator>
+						<asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required"></asp:RequiredFieldValidator>
 					</div>
 
 					<div class="col-xs-12 col-sm-2 text-left-more">

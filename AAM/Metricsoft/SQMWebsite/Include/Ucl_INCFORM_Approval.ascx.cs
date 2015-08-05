@@ -65,6 +65,11 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		public string ValidationGroup
+		{
+			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
+			set { ViewState["ValidationGroup"] = value; }
+		}
 
 		protected void Page_Init(object sender, EventArgs e)
 		{

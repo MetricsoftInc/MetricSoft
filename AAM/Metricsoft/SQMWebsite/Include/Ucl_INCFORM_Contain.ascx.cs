@@ -65,6 +65,11 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		public string ValidationGroup
+		{
+			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
+			set { ViewState["ValidationGroup"] = value; }
+		}
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
@@ -189,9 +194,14 @@ namespace SQM.Website
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
+
 					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
 					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvContainPerson");
 					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfStartDate");
+
+					rvfca.ValidationGroup = ValidationGroup;
+					rvfcp.ValidationGroup = ValidationGroup;
+					rvfsd.ValidationGroup = ValidationGroup;
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();

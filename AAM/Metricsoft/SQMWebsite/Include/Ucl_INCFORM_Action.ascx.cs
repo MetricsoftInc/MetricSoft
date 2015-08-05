@@ -65,6 +65,12 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		public string ValidationGroup
+		{
+			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
+			set { ViewState["ValidationGroup"] = value; }
+		}
+
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
@@ -193,6 +199,10 @@ namespace SQM.Website
 					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
 					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
 
+					rvfca.ValidationGroup = ValidationGroup;
+					rvfcp.ValidationGroup = ValidationGroup;
+					rvfsd.ValidationGroup = ValidationGroup;
+					
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
 					//if (CurrentStep == 1)

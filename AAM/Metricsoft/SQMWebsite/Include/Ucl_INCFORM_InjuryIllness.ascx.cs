@@ -397,6 +397,8 @@ namespace SQM.Website
 			//uclaction.Controls.Clear();
 			//uclapproval.Controls.Clear();
 
+			string validationGroup = "Val_InjuryIllness";
+
 			switch (formName)
 			{
 
@@ -406,6 +408,7 @@ namespace SQM.Website
 					uclcontain.EditIncidentId = EditIncidentId;
 					uclcontain.SelectedTypeId = SelectedTypeId;
 					uclcontain.NewIncidentId = NewIncidentId;
+					uclcontain.ValidationGroup = validationGroup;
 					uclcontain.Visible = true;
 					uclcontain.PopulateInitialForm();
 					break;
@@ -415,6 +418,7 @@ namespace SQM.Website
 					uclroot5y.EditIncidentId = EditIncidentId;
 					uclroot5y.SelectedTypeId = SelectedTypeId;
 					uclroot5y.NewIncidentId = NewIncidentId;
+					uclroot5y.ValidationGroup = validationGroup;
 					uclroot5y.Visible = true;
 					uclroot5y.PopulateInitialForm();
 					break;
@@ -424,6 +428,7 @@ namespace SQM.Website
 					uclaction.EditIncidentId = EditIncidentId;
 					uclaction.SelectedTypeId = SelectedTypeId;
 					uclaction.NewIncidentId = NewIncidentId;
+					uclaction.ValidationGroup = validationGroup;
 					uclaction.Visible = true;
 					uclaction.PopulateInitialForm();
 					break;
@@ -433,10 +438,10 @@ namespace SQM.Website
 					uclapproval.EditIncidentId = EditIncidentId;
 					uclapproval.SelectedTypeId = SelectedTypeId;
 					uclapproval.NewIncidentId = NewIncidentId;
+					uclapproval.ValidationGroup = validationGroup;
 					uclapproval.Visible = true;
 					uclapproval.PopulateInitialForm();
 					break;
-
 			}
 		}
 
