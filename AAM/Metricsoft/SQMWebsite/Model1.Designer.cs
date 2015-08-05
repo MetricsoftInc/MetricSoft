@@ -158,6 +158,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 
 #endregion
 
@@ -2176,6 +2177,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_WITNESS> _INCFORM_WITNESS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCIDENT_QUESTION_LANG> INCIDENT_QUESTION_LANG
+        {
+            get
+            {
+                if ((_INCIDENT_QUESTION_LANG == null))
+                {
+                    _INCIDENT_QUESTION_LANG = base.CreateObjectSet<INCIDENT_QUESTION_LANG>("INCIDENT_QUESTION_LANG");
+                }
+                return _INCIDENT_QUESTION_LANG;
+            }
+        }
+        private ObjectSet<INCIDENT_QUESTION_LANG> _INCIDENT_QUESTION_LANG;
 
         #endregion
 
@@ -3163,6 +3180,14 @@ namespace SQM.Website
         public void AddToINCFORM_WITNESS(INCFORM_WITNESS iNCFORM_WITNESS)
         {
             base.AddObject("INCFORM_WITNESS", iNCFORM_WITNESS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCIDENT_QUESTION_LANG EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCIDENT_QUESTION_LANG(INCIDENT_QUESTION_LANG iNCIDENT_QUESTION_LANG)
+        {
+            base.AddObject("INCIDENT_QUESTION_LANG", iNCIDENT_QUESTION_LANG);
         }
 
         #endregion
@@ -23252,6 +23277,28 @@ namespace SQM.Website
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION_LANG")]
+        public EntityCollection<INCIDENT_QUESTION_LANG> INCIDENT_QUESTION_LANG
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_QUESTION_LANG>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION_LANG");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_QUESTION_LANG>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION_LANG", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -23995,6 +24042,158 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_QUESTION_CONTROL>("PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS", "INCIDENT_QUESTION_CONTROL", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCIDENT_QUESTION_LANG")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCIDENT_QUESTION_LANG : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCIDENT_QUESTION_LANG object.
+        /// </summary>
+        /// <param name="iNCIDENT_QUESTION_ID">Initial value of the INCIDENT_QUESTION_ID property.</param>
+        /// <param name="nLS_LANGUAGE">Initial value of the NLS_LANGUAGE property.</param>
+        public static INCIDENT_QUESTION_LANG CreateINCIDENT_QUESTION_LANG(global::System.Decimal iNCIDENT_QUESTION_ID, global::System.String nLS_LANGUAGE)
+        {
+            INCIDENT_QUESTION_LANG iNCIDENT_QUESTION_LANG = new INCIDENT_QUESTION_LANG();
+            iNCIDENT_QUESTION_LANG.INCIDENT_QUESTION_ID = iNCIDENT_QUESTION_ID;
+            iNCIDENT_QUESTION_LANG.NLS_LANGUAGE = nLS_LANGUAGE;
+            return iNCIDENT_QUESTION_LANG;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_QUESTION_ID
+        {
+            get
+            {
+                return _INCIDENT_QUESTION_ID;
+            }
+            set
+            {
+                if (_INCIDENT_QUESTION_ID != value)
+                {
+                    OnINCIDENT_QUESTION_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_QUESTION_ID");
+                    _INCIDENT_QUESTION_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_QUESTION_ID");
+                    OnINCIDENT_QUESTION_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_QUESTION_ID;
+        partial void OnINCIDENT_QUESTION_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_QUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NLS_LANGUAGE
+        {
+            get
+            {
+                return _NLS_LANGUAGE;
+            }
+            set
+            {
+                if (_NLS_LANGUAGE != value)
+                {
+                    OnNLS_LANGUAGEChanging(value);
+                    ReportPropertyChanging("NLS_LANGUAGE");
+                    _NLS_LANGUAGE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("NLS_LANGUAGE");
+                    OnNLS_LANGUAGEChanged();
+                }
+            }
+        }
+        private global::System.String _NLS_LANGUAGE;
+        partial void OnNLS_LANGUAGEChanging(global::System.String value);
+        partial void OnNLS_LANGUAGEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LANG_TEXT
+        {
+            get
+            {
+                return _LANG_TEXT;
+            }
+            set
+            {
+                OnLANG_TEXTChanging(value);
+                ReportPropertyChanging("LANG_TEXT");
+                _LANG_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LANG_TEXT");
+                OnLANG_TEXTChanged();
+            }
+        }
+        private global::System.String _LANG_TEXT;
+        partial void OnLANG_TEXTChanging(global::System.String value);
+        partial void OnLANG_TEXTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION")]
+        public INCIDENT_QUESTION INCIDENT_QUESTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT_QUESTION> INCIDENT_QUESTIONReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", value);
                 }
             }
         }
