@@ -27,6 +27,7 @@ namespace SQM.Website
 		UsersDropdownLocationFiltered = 20,
 		RichTextBox = 21,
 		CurrentUser = 22,
-		CurrentLocation =23
+		CurrentLocation =23,
+		NativeLangTextBox = 24
 	}
 }

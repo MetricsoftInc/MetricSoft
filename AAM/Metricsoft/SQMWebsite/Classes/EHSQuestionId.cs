@@ -39,6 +39,7 @@ namespace SQM.Website
 		CorrectiveActionsStatus = 93,
 		CostToImplement = 94,
 		RecommendationSummary = 95,
-		ReportedBy	= 96
+		ReportedBy	= 96,
+		NativeLangComment = 107
 	}
 }

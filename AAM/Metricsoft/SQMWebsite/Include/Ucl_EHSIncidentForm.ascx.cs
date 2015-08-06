@@ -288,6 +288,12 @@ namespace SQM.Website
 										&& a.INCIDENT_QUESTION_ID == localQuestion.QuestionId
 									select a.ANSWER_VALUE).FirstOrDefault();
 				}
+
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				{
+					continue;
+				}
+
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
 				string qid = q.QuestionId.ToString();
@@ -353,6 +359,7 @@ namespace SQM.Website
 						tl.Enabled = false;
 						pnl.Controls.Add(tl);
 						break;
+
 					case EHSIncidentQuestionType.TextField:
 						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
@@ -369,7 +376,13 @@ namespace SQM.Website
 						if (shouldPopulate)
 							tb.Text = q.AnswerText;
 						pnl.Controls.Add(tb);
+						break;
 
+					case EHSIncidentQuestionType.NativeLangTextBox:
+						var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							nltb.Text = q.AnswerText;
+						pnl.Controls.Add(nltb);
 						break;
 
 					case EHSIncidentQuestionType.RichTextBox:
@@ -891,6 +904,11 @@ namespace SQM.Website
 				}
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				{
+					continue;
+				}
+
 				string qid = q.QuestionId.ToString();
 
 				var pnl = new Panel() { ID = "Panel" + qid };
@@ -952,7 +970,13 @@ namespace SQM.Website
 						if (shouldPopulate)
 							tb.Text = q.AnswerText;
 						pnl.Controls.Add(tb);
+						break;
 
+					case EHSIncidentQuestionType.NativeLangTextBox:
+						var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							nltb.Text = q.AnswerText;
+						pnl.Controls.Add(nltb);
 						break;
 
 					case EHSIncidentQuestionType.RichTextBox:

@@ -428,6 +428,11 @@ namespace SQM.Website
 			return (from it in entities.INCIDENT_TYPE where it.INCIDENT_TYPE_ID == selectedTypeId select it.USE_CUSTOM_FORM).FirstOrDefault();
 		}
 
+		public static bool EnableNativeLangQuestion(string nlsLanguage)
+		{
+			return string.IsNullOrEmpty(nlsLanguage) || nlsLanguage.Contains("en") ? false : true;
+		}
+
 		public static string IncidentQuestionText(INCIDENT_QUESTION question, string nlsLanguage)
 		{
 			string text;
