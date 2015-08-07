@@ -408,6 +408,11 @@ namespace SQM.Website
 
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 
+
+			// If the user clicked "Yes" on the Lost Time radio button then we must 
+			// leave the Lost Time History form as the next step in this incident,
+			// otherwise remove it from the form steps list.
+
 			if (String.IsNullOrEmpty(rdoLostTime.SelectedValue) ||  rdoLostTime.SelectedValue != "1")
 			{
 				returnList = formSteps.Where(item => item.StepNumber != 2).ToList();
