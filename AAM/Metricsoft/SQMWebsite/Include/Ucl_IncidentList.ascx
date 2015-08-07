@@ -466,7 +466,7 @@
 							</table>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn HeaderText="Incident Date/ Reported By" ShowSortIcon="true" SortExpression="Incident.INCIDENT_DT">
+					<telerik:GridTemplateColumn HeaderText="Incident Date/<br>Reported By" ShowSortIcon="true" SortExpression="Incident.INCIDENT_DT">
 						<ItemTemplate>
 							<asp:Label ID="lblIncidentDT" Text='<%# ((DateTime)Eval("Incident.INCIDENT_DT")).ToShortDateString() %>' runat="server"></asp:Label>
 							<br />
@@ -499,7 +499,7 @@
 							<asp:Label ID="lblIncStatus" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn HeaderText="View Reports">
+					<telerik:GridTemplateColumn UniqueName="ViewReports" HeaderText="View Reports">
 						<ItemTemplate>
 							<span style="white-space: nowrap;">
 								<asp:HyperLink ID="hlReport" runat="server" ForeColor="#000088" Target="_blank" Visible="false">

@@ -614,11 +614,13 @@ namespace SQM.Website
 			lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
 		}
 
-		public void BindIncidentListRepeater(object theList, string appContext, bool showImages)
+		public void BindIncidentListRepeater(object theList, string appContext, bool showImages, bool showReports)
 		{
 			pnlIncidentActionList.Visible = false;
 			pnlIncidentListRepeater.Visible = true;
 			staticAppContext = appContext;
+
+			rgIncidentList.MasterTableView.GetColumn("ViewReports").Display = showReports;
 
 			if (showImages)
 				rgIncidentList.MasterTableView.GetColumn("Attach").Visible = true;
@@ -694,10 +696,12 @@ namespace SQM.Website
 				
 				LinkButton lb8d = (LinkButton)e.Item.FindControl("lb8d");
 				LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
+				lb8d.Visible = lbEditReport.Visible = false;  // mt - for AAM
 
 				HyperLink hlReport = (HyperLink)e.Item.FindControl("hlReport");
 				hlReport.Visible = true;
 
+				/*
 				INCIDENT_ANSWER entry = data.Incident.INCIDENT_ANSWER.Where(l => l.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Create8D).FirstOrDefault();
 				if (entry != null && entry.ANSWER_VALUE == "Yes")
 				{
@@ -727,12 +731,11 @@ namespace SQM.Website
 
 					hlReport.NavigateUrl = "/EHS/EHS_Alert_PDF.aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 				}
+				*/
 
 				if (data.Incident.ISSUE_TYPE_ID == 10) // Prevention Verification
 				{
 					lbEditReport.Visible = false;
-					//HtmlImage imgEditReport = (HtmlImage)e.Item.FindControl("imgEditReport");
-					//imgEditReport.Visible = false;
 				}
 
 				if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
