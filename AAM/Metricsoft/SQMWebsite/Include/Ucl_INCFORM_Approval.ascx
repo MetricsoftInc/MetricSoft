@@ -35,6 +35,8 @@
 
 	<div class="container-fluid">
 
+		<telerik:RadAjaxPanel ID="rapApprovals" runat="server">
+
 		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound">
 			<HeaderTemplate></HeaderTemplate>
 			<ItemTemplate>
@@ -69,6 +71,8 @@
 				</div>
 			</FooterTemplate>
 		</asp:Repeater>
+
+		</telerik:RadAjaxPanel>
 
 	</div>
 </asp:Panel>

@@ -27,6 +27,10 @@
 		}
 	}
 
+	$(function () {
+		$('#tblCustomers').footable();
+	});
+
 </script>
 
 
@@ -37,6 +41,8 @@
 	<div class="container-fluid">
 
 <%--		<span style="display:inline-block;">This is the new ROOT CAUSE user control</span><br />--%>
+
+		<telerik:RadAjaxPanel ID="rapRoot5Y" runat="server">
 
 		<asp:Repeater runat="server" ID="rptRootCause" ClientIDMode="AutoID" OnItemDataBound="rptRootCause_OnItemDataBound" OnItemCommand="rptRootCause_ItemCommand">
 			<HeaderTemplate></HeaderTemplate>
@@ -70,6 +76,8 @@
 				</div>
 			</FooterTemplate>
 		</asp:Repeater>
+
+	</telerik:RadAjaxPanel>
 
 	</div>
 

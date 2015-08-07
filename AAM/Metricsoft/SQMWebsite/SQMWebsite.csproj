@@ -188,6 +188,8 @@
     <Content Include="css\bootstrap-theme.min.css" />
     <Content Include="css\bootstrap.css" />
     <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\footable.core.css" />
+    <Content Include="css\footable.core.min.css" />
     <Content Include="css\MetroThemeOverride.css" />
     <Content Include="css\normalize.css" />
     <Content Include="css\PIE.htc" />
@@ -1737,6 +1739,7 @@
     <Content Include="scripts\common.js" />
     <Content Include="scripts\datepicker.js" />
     <Content Include="css\FileExplorer.css" />
+    <Content Include="scripts\footable.js" />
     <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\jquery-ui-1.8.20.custom.min.js" />

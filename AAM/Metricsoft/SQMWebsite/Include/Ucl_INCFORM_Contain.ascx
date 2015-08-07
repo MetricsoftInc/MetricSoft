@@ -27,6 +27,10 @@
 		}
 	}
 
+	$(function () {
+		$('#tblCustomers').footable();
+	});
+
 </script>
 
 
@@ -36,65 +40,53 @@
 
 	<div class="container-fluid">
 
+		<telerik:RadAjaxPanel ID="rapContain" runat="server">
+
 		<asp:Repeater runat="server" ID="rptContain" ClientIDMode="AutoID" OnItemDataBound="rptContain_OnItemDataBound" OnItemCommand="rptContain_ItemCommand">
 
 			<HeaderTemplate>
-					
-				<div class="row">
-
-					<div class="col-sm-2 text-center">
-						<span><b><asp:Label ID="lbConAction" runat ="server" Text="Action"></asp:Label></b></span>
-					</div>
-
-					<div class="col-sm-3  text-center">
-						<span><b><asp:Label ID="lbConAssignedTo" runat ="server" Text="Assigned To"></asp:Label></b></span>
-					</div>
-
-					<div class="col-sm-1 text-left-more">
-						<span><b><asp:Label ID="lbConStartDate" runat ="server" Text="Start Date"></asp:Label></b></span>
-					</div>
-
-					<div class="col-sm-2 text-center">
-						<span style="padding-left:10px;"><b><asp:Label ID="lbConCompletionDate" runat ="server" Text="  Completion Date"></asp:Label></b></span>
-					</div>
-
-				</div>
-				<br />
+				<div class="table-responsive">
+					<table class="table" border="0" >
+						<thead>
+							<tr>
+								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>
+								<th class="col-sm-4 text-left-more"><b><asp:Label ID="lbhdConAction" runat ="server" Text="Initial Action" /></b></th>
+								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbhdConAssignedTo" runat ="server" Text="Assigned To" /></b></th>
+								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbhdConStartDate" runat ="server" Text="Start Date" /></b></th>
+								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbhdConCmpltDT" runat ="server" Text="Completion Date" /></b></th>
+								<th class="col-sm-1 text-left-more" style="margin-left:-5px;"><b><asp:Label ID="lbhdConComplete" runat ="server" Text="Cmpltd" /></b></th>
+							</tr>
+						</thead>
 			</HeaderTemplate>
 			<ItemTemplate>
-				<div class="row-fluid">
-	
-					<div class="col-xs-12  col-sm-3 text-left-more">
-						<span><span style="display:inline-block; vertical-align:top;"><asp:Label ID="lbConPrompt" Text="Action " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:&nbsp;</span>
-						<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="300" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox></span>
-						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" ></asp:RequiredFieldValidator>
-					</div>
-
-					<div class="col-xs-12 col-sm-2 text-left-more">
-						<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" CssClass="WarnIfChanged" Width="198" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged"></telerik:RadDropDownList>
-						<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]"  ErrorMessage="Required"></asp:RequiredFieldValidator>
-					</div>
-
-					<div class="col-xs-12 col-sm-2 text-left-more"> 
-						<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
-						<asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required"></asp:RequiredFieldValidator>
-					</div>
-
-					<div class="col-xs-12 col-sm-2 text-left-more">
-						<telerik:RadDatePicker ID="rdpCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="175" runat="server"></telerik:RadDatePicker>
-					</div>
-
-
-					<div class="col-xs-12  col-sm-1 text-left-more">
-						<asp:CheckBox ID="cbIsComplete" runat="server" Text="Complete" SkinID="Metro" TextAlign="Right"></asp:CheckBox>
-					</div>
-				</div>
-				<br style="float:left; clear:both;"/><br />
+	        <tbody>
+				<tr>
+					<td class="text-center">
+						<asp:Label ID="lbItemSeq" runat="server" />
+					</td>
+					<td class="text-left-more">
+						<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="100%" TextMode="MultiLine" SkinID="Metro" runat="server" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" />
+					</td>
+					<td class="text-left-more">
+						<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" Width="90%" CssClass="WarnIfChanged" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
+					</td>
+					<td class="text-left-more">
+						<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required" />
+					</td>
+					<td class="text-left-more">
+						<telerik:RadDatePicker ID="rdpCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" runat="server" />
+					</td>
+					<td class="text-left">
+						<asp:CheckBox ID="cbIsComplete" runat="server"  SkinID="Metro" />
+					</td>
+				</tbody>
 			</ItemTemplate>
-			<SeparatorTemplate>
-					<br /><br />
-			</SeparatorTemplate>
 			<FooterTemplate>
+				</table> 
+			</div>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
 						<br />
@@ -112,6 +104,8 @@
 				</div>
 			</FooterTemplate>
 		</asp:Repeater>
+
+			</telerik:RadAjaxPanel>
 
 	</div>   
 
