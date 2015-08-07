@@ -127,7 +127,8 @@ namespace SQM.Website
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			accessLevel = UserContext.CheckAccess("EHS", "");
+			//accessLevel = UserContext.CheckAccess("EHS", "");
+			accessLevel = AccessMode.Admin;  // mt - temporary
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
@@ -213,7 +214,7 @@ namespace SQM.Website
 						{
 							ShowIncidentDetails(EditIncidentId, "Recommendation Details");
 							btnSaveReturn.Visible = false;
-							btnSaveContinue.Visible = false;
+							//btnSaveContinue.Visible = false;
 						}
 						return;
 					}
@@ -243,7 +244,7 @@ namespace SQM.Website
 			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 			pnlForm.Controls.Clear();
-			pnlForm.Visible = true;
+			divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
 			if (IsUseCustomForm)
@@ -863,7 +864,7 @@ namespace SQM.Website
 			}
 
 			pnlForm.Controls.Clear();
-			pnlForm.Visible = true;
+			divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
 			if (typeId == 10)
@@ -1820,11 +1821,8 @@ namespace SQM.Website
 		{
 			if (Page.IsValid)
 			{
-				if (IsEditContext == true)
-				{
-					CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
-					Save(true);
-				}
+				CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
+				Save(true);
 			}
 			else
 			{
@@ -1850,7 +1848,7 @@ namespace SQM.Website
 		{
 			if (EditIncidentId > 0)
 			{
-				pnlForm.Visible = false;
+				divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 				
 				btnSaveReturn.Visible = false;
 				btnSaveContinue.Visible = false;
@@ -1876,7 +1874,7 @@ namespace SQM.Website
 
 			if (shouldReturn == true)
 			{
-				pnlForm.Visible = false;
+				divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
 				pnlAddEdit.Visible = false;
 				btnSaveReturn.Visible = false;
@@ -2340,9 +2338,9 @@ namespace SQM.Website
 				if (!IsEditContext)
 				{
 					// Add
-					btnSaveReturn.Enabled = false;
+					//btnSaveReturn.Enabled = false;
 					btnSaveReturn.Visible = (SelectedTypeId > 0);
-					btnSaveContinue.Visible = (SelectedTypeId > 0);
+					//btnSaveContinue.Visible = (SelectedTypeId > 0);
 					if (Mode == IncidentMode.Incident)
 						typeString = "Incident";
 					else if (Mode == IncidentMode.Prevent)
@@ -2363,7 +2361,7 @@ namespace SQM.Website
 							typeString = " Notification";
 						else if (Mode == IncidentMode.Prevent)
 							typeString = " Recommendations";
-						btnSaveContinue.Visible = true;
+						//btnSaveContinue.Visible = true;
 						btnSaveReturn.CommandArgument = "0";
 					}
 					else if (CurrentStep == 1)
@@ -2426,8 +2424,8 @@ namespace SQM.Website
 		{
 			List<decimal> plantIdList = new List<decimal>();
 
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			accessLevel = UserContext.CheckAccess("EHS", "");
+			accessLevel = UserContext.CheckAccess("EHS", "312");
+			accessLevel = AccessMode.Admin;  // mt - temporary
 
 			if (accessLevel >= AccessMode.Admin)
 			{

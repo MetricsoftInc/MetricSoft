@@ -243,7 +243,6 @@ function SetSection(elementID, option) {
     }
 }
 
-
 function ElementHeight(elementID, addHeight) {
     var element = document.getElementById(elementID);
     return ((element.clientHeight+addHeight) + 'px');

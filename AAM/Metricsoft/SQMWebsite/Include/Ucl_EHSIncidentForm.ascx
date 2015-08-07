@@ -1,6 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="Ucl_EHSIncidentForm.ascx.cs" Inherits="SQM.Website.Ucl_EHSIncidentForm" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/Include/Ucl_EHSIncidentDetails.ascx" TagName="IncidentDetails" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Contain.ascx" TagName="Containment" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Root5Y.ascx" TagName="RootCause" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="Action" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 	function OnEditorClientLoad(editor) {
@@ -14,6 +18,19 @@
 				}
 			}
 		);
+	}
+
+	function ToggleAreaVisible(divID, btnID) {
+		var area = document.getElementById(divID);
+		if (area.style.display == 'none') {
+			area.style.display = 'block';
+			var btn = document.getElementById(btnID);
+			btn.focus();
+			btn.scrollIntoView();
+		}
+		else {
+			area.style.display = 'none';
+		}
 	}
 </script>
 
@@ -67,19 +84,19 @@
 							</asp:Panel>
 						</div>
 
+						<div id="divForm" runat="server" visible="false">
 							<asp:Panel ID="pnlForm" runat="server">
 							</asp:Panel>
-						
 							<table style="width: 100%;">
 								<tr>
 									<td style="width: 33%;">
 										<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
 											CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
-											OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+											OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
 									</td>
 									<td style="width: 33%;">
 										<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
-											 Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
+												Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
 											CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
 											OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
 									</td>
@@ -90,7 +107,31 @@
 									</td>
 								</tr>
 							</table>
-
+							<asp:Panel ID="pnlContainment" runat="server" Visible="false">
+								<a href="#" id="btnContainment" class="buttonLink" onclick="ToggleAreaVisible('divContainment','btnContainment');">Containment</a>
+								<div id="divContainment" class="borderSoft" style="display: none;">
+									<ucl:Containment id="uclContainment" runat="server" />
+								</div>
+							</asp:Panel>
+							<asp:Panel ID="pnlRootCause" runat="server" style="margin-top: 4px;" Visible="false">
+								<a href="#" id="btnRootCause" class="buttonLink" onclick="ToggleAreaVisible('divRootCause','btnRootCause');">Root Cause</a>
+								 <div id="divRootCause" class="borderSoft" style="display: none;">
+									<ucl:RootCause id="uclRootCause" runat="server" />
+								</div>
+							</asp:Panel>
+							<asp:Panel ID="pnlAction" runat="server" style="margin-top: 4px;" Visible="false">
+								<a href="#" id="btnAction" class="buttonLink" onclick="ToggleAreaVisible('divAction','btnAction');">Corrective Actions</a>
+								 <div id="divAction" class="borderSoft" style="display: none;">
+									<ucl:Action id="uclAction" runat="server" />
+								</div>
+							</asp:Panel>
+							<asp:Panel ID="pnlApproval" runat="server" style="margin-top: 4px;" Visible="false">
+								<a href="#" id="btnApproval" class="buttonLink" onclick="ToggleAreaVisible('divApproval','btnApproval');">Approvals</a>
+								<div id="divApproval" class="borderSoft" style="display: none;">
+									<ucl:Approval id="uclApproval" runat="server" />
+								</div>
+							</asp:Panel>
+						</div>
 						
 					</asp:Panel>
 					

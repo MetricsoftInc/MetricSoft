@@ -319,6 +319,15 @@ function SetSection(elementID, option) {
     }
 }
 
+function ToggleAreaVisible(divID) {
+	var area = document.getElementById(divID);
+	if (area.style.display == 'none') {
+		area.style.display = 'block';
+	}
+	else {
+		area.style.display = 'none';
+	}
+}
 
 function ElementHeight(elementID, addHeight) {
     var element = document.getElementById(elementID);
