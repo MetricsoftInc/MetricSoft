@@ -122,6 +122,12 @@ namespace SQM.Website
 			set { ViewState["SelectedLocationId"] = value; }
 		}
 
+		
+		protected void Page_Init(object sender, EventArgs e)
+		{
+			//if (!IsFullPagePostback)
+				//rptWitness.DataBind();
+		}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -178,7 +184,8 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			formSteps = GetFormSteps(typeId);
 			totalFormSteps = formSteps.Count();
 
 			if (IsEditContext == true)
@@ -269,16 +276,16 @@ namespace SQM.Website
 					rddlSupervisor.Items.Clear();
 					tbSupervisorStatement.Text = "";
 					tbInsideOutside.Text = "";
-					rdoDirectSupv.Items.Clear();
-					rdoErgConcern.Items.Clear();
-					rdoStdProcsFollowed.Items.Clear();
-					rdoTrainingProvided.Items.Clear();
+					rdoDirectSupv.SelectedValue = "";
+					rdoErgConcern.SelectedValue = "";
+					rdoStdProcsFollowed.SelectedValue = "";
+					rdoTrainingProvided.SelectedValue = "";
 					tbTaskYears.Text = "";
 					tbTaskMonths.Text = "";
 					tbTaskDays.Text = "";
-					rdoFirstAid.Items.Clear();
-					rdoRecordable.Items.Clear();
-					rdoLostTime.Items.Clear();
+					rdoFirstAid.SelectedValue = "";
+					rdoRecordable.SelectedValue = "";
+					rdoLostTime.SelectedValue = "";
 					rdpExpectReturnDT.Clear();
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
@@ -316,7 +323,8 @@ namespace SQM.Website
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+
+			formSteps = GetFormSteps(typeId);
 
 			int displayStep = currentStep + 1;
 			lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
@@ -330,6 +338,7 @@ namespace SQM.Website
 
 			SetUserAccess(currentFormName);
 
+
 			switch (currentFormName)
 			{
 				case "INCFORM_INJURYILLNESS":
@@ -342,7 +351,8 @@ namespace SQM.Website
 					btnNext.Visible = true;
 					btnClose.Visible = false;
 					rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
-					rptWitness.DataBind();
+					if (!IsFullPagePostback)
+						rptWitness.DataBind();
 					break;
 				case "INCFORM_CONTAIN":
 					LoadDependantForm(currentFormName);
@@ -389,6 +399,26 @@ namespace SQM.Website
 					break;
 			}
 
+		}
+
+		protected List<EHSFormControlStep> GetFormSteps(decimal typeId)
+		{
+
+			var returnList = new List<EHSFormControlStep>();
+
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+
+			if (String.IsNullOrEmpty(rdoLostTime.SelectedValue) ||  rdoLostTime.SelectedValue != "1")
+			{
+				returnList = formSteps.Where(item => item.StepNumber != 2).ToList();
+				return returnList;
+			}
+			else
+			{
+				return formSteps;
+			}
+
+			
 		}
 
 		public void LoadDependantForm(string formName)
@@ -901,7 +931,8 @@ namespace SQM.Website
 
 				Save(false);
 
-				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				formSteps = GetFormSteps(incidentTypeId);
 
 				if (btnSave.Enabled)
 					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
@@ -945,7 +976,9 @@ namespace SQM.Website
 
 				Save(false);
 
-				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+				formSteps = GetFormSteps(incidentTypeId);
+
 
 				if (btnSave.Enabled)
 					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
@@ -1023,7 +1056,8 @@ namespace SQM.Website
 				InitialPlantId = selectedPlantId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			formSteps = GetFormSteps(typeId);
 
 			int i = Convert.ToInt32(CurrentStep);
 			string savingForm = formSteps[i].StepFormName;
@@ -1244,5 +1278,32 @@ namespace SQM.Website
 		{
 
 		}
+
+		protected void rdoLostTime_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// If the user clicked "Yes" on the Lost Time radio button then we must 
+			// present the Expected Return Date control, AND insert the Lost Time History form
+			// as the next step in this incident.
+
+			if (rdoLostTime.SelectedValue == "1")
+			{
+				pnlExpReturnDT.Visible = true;
+				rfvExpectReturnDT.Enabled = true;
+			}
+			else
+			{
+				pnlExpReturnDT.Visible = false;
+				rfvExpectReturnDT.Enabled = false;
+			}
+
+
+			// By re-executinging PopulateInitialForm() we can force a re-calculation 
+			// of the form steps needed for this incident since the GetFormSteps()
+			// method checks the Lost Time control's SelectedValue state.	
+			
+			PopulateInitialForm();
+
+		}
+
 	}
 }

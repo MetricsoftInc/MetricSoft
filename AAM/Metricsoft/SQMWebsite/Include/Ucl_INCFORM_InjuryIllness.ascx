@@ -292,61 +292,52 @@
 
 		
 		<%-- WITNESSS question --%>
-		<asp:Panel ID="pnlWitness" Visible="true" runat="server">
-	
-			<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
+		<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
+			<ItemTemplate>
 
-				<ItemTemplate>
+				<div class="row text-left">
 
-					<div class="row-fluid text-left-more">
-
-						<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-							<span class="labelMultiLineText">
-								<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness "></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
-						</div>
-						<div class="col-xs-12 visible-xs text-left-more">
-							<br />
-							<span>
-								<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server"></asp:Label></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 text-left greyControlCol">
-							<span style="display: inline-block; vertical-align: top; height:65px;">
-							<asp:TextBox ID="tbWitnessName" Width="100" SkinID="Metro" runat="server"></asp:TextBox></span>
-							<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 text-left greyControlCol">
-							<asp:TextBox ID="tbWitnessStatement" Height="65px" Width="100" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-							<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
-						</div>
-
+					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 83px;">
+						<span class="labelMultiLineText">
+							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
 					</div>
-					<br style="float: left; clear: both;" />
-					<br />
-				</ItemTemplate>
-				<SeparatorTemplate>
-				</SeparatorTemplate>
-				<FooterTemplate>
+					<div class="col-xs-12 visible-xs text-left-more">
+						<br /><br />
+						<span>
+							<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server" /></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
+					</div>
+
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:83px;padding-bottom:4px;padding-top:7px;">
+
+							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label><asp:TextBox ID="tbWitnessName" Width="278" SkinID="Metro" runat="server"></asp:TextBox></span>
+							
+
+							<br class="visible-xs" />
+							
+							<span style="float:left; padding-left:10px;"><asp:Label ID="lbWitStmntPrompt" runat="server" Text="Statement:"></asp:Label></span>&nbsp;
+							<br class="visible-xs" />
+							<asp:TextBox ID="tbWitnessStatement" Width="42%" Height="65px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+
+
+							<br class="visible-xs" style="padding-bottom:3px;" />			
+						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+					</div>
+
+				</div>
+			<br class="visible-xs" />
+			</ItemTemplate>
+			<%-- <SeparatorTemplate></SeparatorTemplate> --%>
+			<FooterTemplate>
+				<br class="visible-xs"/>
 					<div class="row">
-						<div class="col-xs-12 text-left-more">
-							<br />
-						</div>
+					<div class="col-sm-4 text-left tanLabelCol">
+						<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server"  Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
 					</div>
-					<div class="row">
-						<div class="col-xs-12 text-left-more">
-							<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" ToolTip="Add Another Witness" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12 text-left-more">
-							<br />
-						</div>
-					</div>
-				</FooterTemplate>
-
-			</asp:Repeater>
-		</asp:Panel>
+					<div class="col-xs-12 col-sm-8 text-left"></div>
+				</div>
+			</FooterTemplate>
+		</asp:Repeater>
 
 
 		<%-- INSIDE OUTSIDE question --%>	
@@ -376,8 +367,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoDirectSupv" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvDirectSupv" ControlToValidate="rdoDirectSupv" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 						
@@ -398,8 +389,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoErgConcern" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+				   <asp:ListItem Value="1"  Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0"  Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>				
 		        <asp:RequiredFieldValidator runat="server" ID="rfvErgConcern" ControlToValidate="rdoErgConcern" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 
@@ -419,8 +410,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoStdProcsFollowed" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="Non-Standard"></asp:ListItem>
+				   <asp:ListItem Value="1"  Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0"  Text="Non-Standard"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvStdProcsFollowed" ControlToValidate="rdoStdProcsFollowed" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 							
@@ -440,8 +431,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoTrainingProvided" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvTrainingProvided" ControlToValidate="rdoTrainingProvided" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -480,8 +471,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoFirstAid" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvFirstAid" ControlToValidate="rdoFirstAid" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -500,8 +491,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoRecordable" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvRecordable" ControlToValidate="rdoRecordable" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -518,9 +509,9 @@
 				<span><asp:Label ID="lbLostTimeXS" runat ="server" Text="Lost Time?"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
-			   <span><asp:RadioButtonList ID="rdoLostTime" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem  Text="No"></asp:ListItem>
+			   <span><asp:RadioButtonList ID="rdoLostTime" OnSelectedIndexChanged="rdoLostTime_SelectedIndexChanged" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true" runat="server">
+				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvLostTime" ControlToValidate="rdoLostTime" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -528,6 +519,7 @@
 
 
 		<%-- EXPECTED RETURN DATE question --%>	
+		<asp:Panel ID="pnlExpReturnDT" runat="server" Visible="false">
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span><asp:Label ID="lbExpectReturnDTSM" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredStarFloat">*</span></span>
@@ -538,9 +530,10 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpExpectReturnDT" Skin="Metro" CssClass="WarnIfChanged"  Width="278" runat="server"></telerik:RadDatePicker>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvExpectReturnDT" ControlToValidate="rdpExpectReturnDT" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvExpectReturnDT" ControlToValidate="rdpExpectReturnDT" Display="None" Enabled="false" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
+		</asp:Panel>
 
 
 
