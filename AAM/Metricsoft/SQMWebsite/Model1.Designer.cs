@@ -28970,6 +28970,78 @@ namespace SQM.Website
         private global::System.String _JOBCODE_CD;
         partial void OnJOBCODE_CDChanging(global::System.String value);
         partial void OnJOBCODE_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MIDDLE_NAME
+        {
+            get
+            {
+                return _MIDDLE_NAME;
+            }
+            set
+            {
+                OnMIDDLE_NAMEChanging(value);
+                ReportPropertyChanging("MIDDLE_NAME");
+                _MIDDLE_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MIDDLE_NAME");
+                OnMIDDLE_NAMEChanged();
+            }
+        }
+        private global::System.String _MIDDLE_NAME;
+        partial void OnMIDDLE_NAMEChanging(global::System.String value);
+        partial void OnMIDDLE_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EMP_ID
+        {
+            get
+            {
+                return _EMP_ID;
+            }
+            set
+            {
+                OnEMP_IDChanging(value);
+                ReportPropertyChanging("EMP_ID");
+                _EMP_ID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EMP_ID");
+                OnEMP_IDChanged();
+            }
+        }
+        private global::System.String _EMP_ID;
+        partial void OnEMP_IDChanging(global::System.String value);
+        partial void OnEMP_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SUPV_EMP_ID
+        {
+            get
+            {
+                return _SUPV_EMP_ID;
+            }
+            set
+            {
+                OnSUPV_EMP_IDChanging(value);
+                ReportPropertyChanging("SUPV_EMP_ID");
+                _SUPV_EMP_ID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SUPV_EMP_ID");
+                OnSUPV_EMP_IDChanged();
+            }
+        }
+        private global::System.String _SUPV_EMP_ID;
+        partial void OnSUPV_EMP_IDChanging(global::System.String value);
+        partial void OnSUPV_EMP_IDChanged();
 
         #endregion
 

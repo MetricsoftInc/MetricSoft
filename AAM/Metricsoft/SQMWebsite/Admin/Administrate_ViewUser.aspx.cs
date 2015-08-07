@@ -302,6 +302,7 @@ namespace SQM.Website
            
 			tbUserFirstName.Text = person.FIRST_NAME;
 			tbUserLastName.Text = person.LAST_NAME;
+			tbUserMiddleName.Text = !string.IsNullOrEmpty(person.MIDDLE_NAME) ? person.MIDDLE_NAME : "";
 			if (ddlJobCode.Items.FindItemByValue(person.JOBCODE_CD) != null)
 				ddlJobCode.SelectedValue = person.JOBCODE_CD;
 			tbUserPhone.Text =  person.PHONE;
@@ -372,6 +373,7 @@ namespace SQM.Website
 
             person.FIRST_NAME = string.IsNullOrEmpty(tbUserFirstName.Text) ? "" : tbUserFirstName.Text;
             person.LAST_NAME = string.IsNullOrEmpty(tbUserLastName.Text) ? "" : tbUserLastName.Text;
+			person.MIDDLE_NAME = string.IsNullOrEmpty(tbUserMiddleName.Text) ? "" : tbUserMiddleName.Text;
 			person.JOBCODE_CD = ddlJobCode.SelectedValue;
             person.PHONE = tbUserPhone.Text;
             person.EMAIL = tbUserEmail.Text;

@@ -167,6 +167,15 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
+                                                                <asp:Label ID="lblUserMiddleName" runat="server" text="Middle Name"></asp:Label>
+                                                            </td>
+                                                            <td class="tableDataAlt">&nbsp;</td>
+                                                            <td class="tableDataAlt">
+                                                                <asp:TextBox ID="tbUserMiddleName" size="50" maxlength="100" runat="server"></asp:TextBox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="columnHeader">
                                                                 <asp:Label ID="lblUserPhone" runat="server" text="Phone"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>

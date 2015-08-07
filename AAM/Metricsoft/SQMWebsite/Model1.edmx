@@ -1806,6 +1806,9 @@
           <Property Name="ROLE" Type="int" />
           <Property Name="RCV_ESCALATION" Type="bit" />
           <Property Name="JOBCODE_CD" Type="varchar" MaxLength="80" />
+          <Property Name="MIDDLE_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="EMP_ID" Type="varchar" MaxLength="80" />
+          <Property Name="SUPV_EMP_ID" Type="varchar" MaxLength="80" />
         </EntityType>
         <EntityType Name="PERSON_ACCESS">
           <Key>
@@ -8441,6 +8444,9 @@
           <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
           <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
+          <Property Type="String" Name="MIDDLE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SUPV_EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -10641,6 +10647,9 @@
           <EntitySetMapping Name="PERSON">
             <EntityTypeMapping TypeName="PSsqmModel.PERSON">
               <MappingFragment StoreEntitySet="PERSON">
+                <ScalarProperty Name="SUPV_EMP_ID" ColumnName="SUPV_EMP_ID" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="MIDDLE_NAME" ColumnName="MIDDLE_NAME" />
                 <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
                 <ScalarProperty Name="RCV_ESCALATION" ColumnName="RCV_ESCALATION" />
                 <ScalarProperty Name="ROLE" ColumnName="ROLE" />

@@ -427,6 +427,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbUserLastName;
         
         /// <summary>
+        /// lblUserMiddleName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUserMiddleName;
+        
+        /// <summary>
+        /// tbUserMiddleName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbUserMiddleName;
+        
+        /// <summary>
         /// lblUserPhone control.
         /// </summary>
         /// <remarks>
