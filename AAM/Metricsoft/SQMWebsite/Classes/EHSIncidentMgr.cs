@@ -901,6 +901,43 @@ namespace SQM.Website
 			return actions;
 		}
 
+		public static List<INCFORM_LOSTTIME_HIST> GetLostTimeList(decimal incidentId)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+			var losttimelist = new List<INCFORM_LOSTTIME_HIST>();
+
+			int minRowsThisForm = 1;
+
+			losttimelist = (from c in entities.INCFORM_LOSTTIME_HIST
+					   where c.INCIDENT_ID == incidentId
+					   select c).ToList();
+
+			int itemsNeeded = 0;
+			if (losttimelist.Count() < minRowsThisForm)
+				itemsNeeded = minRowsThisForm - losttimelist.Count();
+
+			int seq = losttimelist.Count(); ;
+			INCFORM_LOSTTIME_HIST losttime = null;
+
+			for (int i = 1; i < itemsNeeded + 1; i++)
+			{
+				losttime = new INCFORM_LOSTTIME_HIST();
+
+				seq = seq + 1;
+				losttime.ITEM_SEQ = seq;
+				losttime.ITEM_DESCRIPTION = "";
+
+				losttime.WORK_STATUS = "";
+				losttime.BEGIN_DT = null;
+				losttime.NEXT_MEDAPPT_DT = null;
+				losttime.RETURN_EXPECTED_DT = null;
+				losttime.RETURN_TOWORK_DT = null;
+
+				losttimelist.Add(losttime);
+			}
+
+			return losttimelist;
+		}
 
 		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
 		{
@@ -1218,6 +1255,11 @@ namespace SQM.Website
 		public static INCFORM_INJURYILLNESS SelectInjuryIllnessDetailsById(PSsqmEntities entities, decimal incidentId)
 		{
 			return (from po in entities.INCFORM_INJURYILLNESS where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
+		}
+
+		public static INCFORM_LOSTTIME_HIST SelectLostTimeDetailsById(PSsqmEntities entities, decimal incidentId)
+		{
+			return (from po in entities.INCFORM_LOSTTIME_HIST where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 		}
 
 		public static int GetNextContainSequence(decimal incidentId)

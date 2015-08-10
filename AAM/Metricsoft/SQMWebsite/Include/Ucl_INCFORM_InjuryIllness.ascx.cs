@@ -227,8 +227,10 @@ namespace SQM.Website
 					{
 						rtpIncidentTime.SelectedTime = injuryIllnessDetails.INCIDENT_TIME;
 						rddlShift.SelectedValue = injuryIllnessDetails.SHIFT;
+
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
+
 						tbDepartment.Text = injuryIllnessDetails.DEPARTMENT;
 						rddlOperation.SelectedValue = injuryIllnessDetails.OPERATION;
 						tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
@@ -236,23 +238,26 @@ namespace SQM.Website
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
 						rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
-						tbInsideOutside.Text = injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG;
-						rdoDirectSupv.SelectedValue = Convert.ToString(injuryIllnessDetails.COMPANY_SUPERVISED);
-						rdoErgConcern.SelectedValue = Convert.ToString(injuryIllnessDetails.ERGONOMIC_CONCERN);
-						rdoStdProcsFollowed.SelectedValue = Convert.ToString(injuryIllnessDetails.STD_PROCS_FOLLOWED);
-						rdoTrainingProvided.SelectedValue = Convert.ToString(injuryIllnessDetails.TRAINING_PROVIDED);
+
+						if (injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE")
+							rdoInside.SelectedValue = "1";
+						else
+							rdoInside.SelectedValue = "0";
+						
+						rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
+						rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
+						rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
+						rdoTrainingProvided.SelectedValue = (injuryIllnessDetails.TRAINING_PROVIDED == true) ? "1" : "0";
 						tbTaskYears.Text = injuryIllnessDetails.YEARS_DOING_JOB.ToString();
 						tbTaskMonths.Text = injuryIllnessDetails.MONTHS_DOING_JOB.ToString();
 						tbTaskDays.Text = injuryIllnessDetails.DAYS_DOING_JOB.ToString();
-						rdoFirstAid.SelectedValue = Convert.ToString(injuryIllnessDetails.FIRST_AID);
-						rdoRecordable.SelectedValue = Convert.ToString(injuryIllnessDetails.RECORDABLE);
-						rdoLostTime.SelectedValue = Convert.ToString(injuryIllnessDetails.LOST_TIME);
+						rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
+						rdoRecordable.SelectedValue = (injuryIllnessDetails.RECORDABLE == true) ? "1" : "0";
+						rdoLostTime.SelectedValue = (injuryIllnessDetails.LOST_TIME == true) ? "1" : "0";
 						rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
 						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
-
-						// ToDo:    PopulateWitnesss();
-						
+					
 					}
 				}
 
@@ -275,14 +280,14 @@ namespace SQM.Website
 					rdpSupvInformedDate.Clear();
 					rddlSupervisor.Items.Clear();
 					tbSupervisorStatement.Text = "";
-					tbInsideOutside.Text = "";
+					rdoInside.SelectedValue = "";
 					rdoDirectSupv.SelectedValue = "";
 					rdoErgConcern.SelectedValue = "";
 					rdoStdProcsFollowed.SelectedValue = "";
 					rdoTrainingProvided.SelectedValue = "";
-					tbTaskYears.Text = "";
-					tbTaskMonths.Text = "";
-					tbTaskDays.Text = "";
+					tbTaskYears.Text = "0";
+					tbTaskMonths.Text = "0";
+					tbTaskDays.Text = "0";
 					rdoFirstAid.SelectedValue = "";
 					rdoRecordable.SelectedValue = "";
 					rdoLostTime.SelectedValue = "";
@@ -347,6 +352,7 @@ namespace SQM.Website
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
+					ucllosttime.Visible = false;
 					btnPrev.Visible = false;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
@@ -361,6 +367,7 @@ namespace SQM.Website
 					uclcontain.Visible = true;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
+					ucllosttime.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
@@ -372,6 +379,7 @@ namespace SQM.Website
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
+					ucllosttime.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
@@ -383,6 +391,7 @@ namespace SQM.Website
 					uclcontain.Visible = false;
 					uclaction.Visible = true;
 					uclapproval.Visible = false;
+					ucllosttime.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
@@ -394,9 +403,22 @@ namespace SQM.Website
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = true;
+					ucllosttime.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = false;
 					break;
+				case "INCFORM_LOSTTIME_HIST":
+					LoadDependantForm(currentFormName);
+					pnlBaseForm.Visible = false;
+					uclroot5y.Visible = false;
+					uclcontain.Visible = false;
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
+					ucllosttime.Visible = true;
+					btnPrev.Visible = true;
+					btnNext.Visible = false;
+					break;
+
 			}
 
 		}
@@ -433,6 +455,7 @@ namespace SQM.Website
 			//uclroot5y.Controls.Clear();
 			//uclaction.Controls.Clear();
 			//uclapproval.Controls.Clear();
+			//ucllosttime.Controls.Clear();
 
 			string validationGroup = "Val_InjuryIllness";
 
@@ -478,6 +501,16 @@ namespace SQM.Website
 					uclapproval.ValidationGroup = validationGroup;
 					uclapproval.Visible = true;
 					uclapproval.PopulateInitialForm();
+					break;
+				case "INCFORM_LOSTTIME_HIST":
+					ucllosttime.IsEditContext = IsEditContext;
+					ucllosttime.IncidentId = EditIncidentId;
+					ucllosttime.EditIncidentId = EditIncidentId;
+					ucllosttime.SelectedTypeId = SelectedTypeId;
+					ucllosttime.NewIncidentId = NewIncidentId;
+					ucllosttime.ValidationGroup = validationGroup;
+					ucllosttime.Visible = true;
+					ucllosttime.PopulateInitialForm();
 					break;
 			}
 		}
@@ -538,8 +571,8 @@ namespace SQM.Website
 					tbSupervisorStatement.Enabled = updateAccess;
 					rfvSupervisorStatement.Enabled = updateAccess;
 
-					tbInsideOutside.Enabled = updateAccess;
-					rfvInsideOutside.Enabled = updateAccess;
+					rdoInside.Enabled = updateAccess;
+					rfvInside.Enabled = updateAccess;
 
 					rdoDirectSupv.Enabled = updateAccess;
 					rfvDirectSupv.Enabled = updateAccess;
@@ -576,8 +609,6 @@ namespace SQM.Website
 					rddlBodyPart.Enabled = updateAccess;
 					rfvBodyPart.Enabled = updateAccess;
 
-					// ToDo add Witness repeater user access
-
 					btnSave.Enabled = updateAccess;
 					break;
 				case "INCFORM_CONTAIN":
@@ -588,6 +619,9 @@ namespace SQM.Website
 					break;
 				case "INCFORM_ACTION":
 					btnSave.Enabled = actionAccess;
+					break;
+				case "INCFORM_LOSTTIME_HIST":
+					btnSave.Enabled = approveAccess;
 					break;
 				case "INCFORM_APPROVAL":
 					btnSave.Enabled = approveAccess;
@@ -898,7 +932,7 @@ namespace SQM.Website
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.WITNESS_NO = seqnumber;
-					item.WITNESS_NAME = tbSupervisorStatement.Text;
+					item.WITNESS_NAME = tbw.Text;
 					item.WITNESS_STATEMENT = tbws.Text;
 
 					itemList.Add(item);
@@ -1092,6 +1126,11 @@ namespace SQM.Website
 						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 					uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
 					break;
+				case "INCFORM_LOSTTIME_HIST":
+					if (incidentId == 0)
+						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+					ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+					break;
 			}
 
 			InitializeForm(CurrentStep);
@@ -1219,21 +1258,147 @@ namespace SQM.Website
 
 		protected INCFORM_INJURYILLNESS CreateNewInjuryIllnessDetails(decimal incidentId)
 		{
-			var newInjryIllnessDetails = new INCFORM_INJURYILLNESS()
-			{
-				INCIDENT_ID = incidentId,
-				//PRODUCTION_IMPACT = productImpact,
-				SHIFT = selectedShift,
-				INCIDENT_TIME = incidentTime,
-				DESCRIPTION_LOCAL = localDescription
-			};
+			var newInjryIllnessDetails = new INCFORM_INJURYILLNESS();
+			
+			newInjryIllnessDetails.INCIDENT_ID = incidentId;
+			newInjryIllnessDetails.SHIFT = selectedShift;
+			newInjryIllnessDetails.INCIDENT_TIME = incidentTime;
+			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
+			newInjryIllnessDetails.DEPARTMENT = tbDepartment.Text;
+
+			newInjryIllnessDetails.OPERATION = rddlOperation.SelectedValue;
+
+			newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
+			newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+			newInjryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
+			newInjryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+			newInjryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
+
+			if (rdoInside.SelectedValue == "1")
+				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
+			else
+				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
+
+			newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+			newInjryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
+			newInjryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
+			newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+			newInjryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
+			newInjryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
+			newInjryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
+			newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
+			newInjryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
+			newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
+			newInjryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
+			newInjryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue; 
+			newInjryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
 
 			entities.AddToINCFORM_INJURYILLNESS(newInjryIllnessDetails);
 
 			entities.SaveChanges();
-			//incidentId = newIncident.INCIDENT_ID;
+
+			AddUpdate_Witnesses(incidentId);
 
 			return newInjryIllnessDetails;
+		}
+
+
+		public void AddUpdate_Witnesses(decimal incidentId)
+		{
+			var itemList = new List<INCFORM_WITNESS>();
+			int seqnumber = 0;
+
+			foreach (RepeaterItem witnessitem in rptWitness.Items)
+			{
+				var item = new INCFORM_WITNESS();
+
+				seqnumber = seqnumber + 1;
+	
+				TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+				TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
+
+				item.WITNESS_NO = seqnumber;
+				item.WITNESS_NAME = tbw.Text;
+				item.WITNESS_STATEMENT = tbws.Text;
+
+
+				itemList.Add(item);
+			}
+
+			if (itemList.Count > 0)
+				SaveWitnesses(incidentId, itemList);
+
+		}
+
+		private void SaveWitnesses(decimal incidentId, List<INCFORM_WITNESS> itemList)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+
+			using (var ctx = new PSsqmEntities())
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID = {0}", incidentId);
+			}
+
+			int seq = 0;
+
+			foreach (INCFORM_WITNESS item in itemList)
+			{
+				var newItem = new INCFORM_WITNESS();
+
+				if (!String.IsNullOrEmpty(item.WITNESS_NAME))
+				{
+					newItem.INCIDENT_ID = incidentId;
+					newItem.WITNESS_NO = item.WITNESS_NO;
+					newItem.WITNESS_NAME = item.WITNESS_NAME;
+					newItem.WITNESS_STATEMENT = item.WITNESS_STATEMENT;
+
+					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.LAST_UPD_DT = DateTime.Now;
+
+					entities.AddToINCFORM_WITNESS(newItem);
+					entities.SaveChanges();
+				}
+			}
+		}
+
+
+		private void SaveLostTime(decimal incidentId, List<INCFORM_LOSTTIME_HIST> itemList)
+		{
+
+			PSsqmEntities entities = new PSsqmEntities();
+
+			using (var ctx = new PSsqmEntities())
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID = {0}", incidentId);
+			}
+
+			int seq = 0;
+
+			foreach (INCFORM_LOSTTIME_HIST item in itemList)
+			{
+				var newItem = new INCFORM_LOSTTIME_HIST();
+
+				if (item.WORK_STATUS != "[Select One]")
+				{
+					seq = seq + 1;
+
+					newItem.INCIDENT_ID = incidentId;
+					newItem.ITEM_SEQ = seq;
+					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
+
+					newItem.WORK_STATUS = item.WORK_STATUS;
+					newItem.BEGIN_DT = item.BEGIN_DT;
+					newItem.RETURN_TOWORK_DT = item.RETURN_TOWORK_DT;
+					newItem.NEXT_MEDAPPT_DT = item.NEXT_MEDAPPT_DT;
+					newItem.RETURN_EXPECTED_DT = item.RETURN_EXPECTED_DT;
+
+					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+					newItem.LAST_UPD_DT = DateTime.Now;
+
+					entities.AddToINCFORM_LOSTTIME_HIST(newItem);
+					entities.SaveChanges();
+				}
+			}
 		}
 
 		protected INCFORM_INJURYILLNESS UpdateInjuryIllnessDetails(decimal incidentId)
@@ -1247,7 +1412,38 @@ namespace SQM.Website
 				injuryIllnessDetails.INCIDENT_TIME = incidentTime;
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
+				injuryIllnessDetails.DEPARTMENT = tbDepartment.Text;
+
+				injuryIllnessDetails.OPERATION = rddlOperation.SelectedValue;
+
+				injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
+				injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+				injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
+				injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+				injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
+
+				if (rdoInside.SelectedValue == "1")
+					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
+				else
+					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
+				injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+				injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
+				injuryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
+				injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+				injuryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
+				injuryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
+				injuryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
+				injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
+				injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
+				injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
+				injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
+				injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
+				injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+
 				entities.SaveChanges();
+
+				AddUpdate_Witnesses(incidentId);
+
 			}
 
 			return injuryIllnessDetails;

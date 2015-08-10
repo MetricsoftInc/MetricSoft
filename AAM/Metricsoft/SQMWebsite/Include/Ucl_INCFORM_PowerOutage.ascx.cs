@@ -584,6 +584,7 @@ namespace SQM.Website
 				selectedShift = rddlShift.SelectedValue;
 				SelectedLocationId = Convert.ToInt32(rddlLocation.SelectedValue);
 				incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
+
 				localDescription = "";
 				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
 					localDescription = tbLocalDescription.Text;

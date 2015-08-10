@@ -5,6 +5,7 @@
 	<%@ Register Src="~/Include/Ucl_INCFORM_Contain.ascx" TagName="INCFORMContain" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="INCFORMAction" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="INCFORMApproval" TagPrefix="Ucl" %>
+	<%@ Register Src="~/Include/Ucl_INCFORM_LostTime_Hist.ascx" TagName="INCFORMLostTimeHist" TagPrefix="Ucl" %>
 
 
 <script type="text/javascript">
@@ -350,8 +351,11 @@
 				<span><asp:Label ID="lbInsideOutsideXS" runat ="server" Text="Inside or Outside Building"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbInsideOutside" Width="278" SkinID="Metro" runat="server"></asp:TextBox>
-		        <asp:RequiredFieldValidator runat="server" ID="rfvInsideOutside" ControlToValidate="tbInsideOutside" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+			   <span><asp:RadioButtonList ID="rdoInside" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
+				   <asp:ListItem Value=1 Selected="False" Text="Inside&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="Outside"></asp:ListItem>
+			   </asp:RadioButtonList></span>	
+		        <asp:RequiredFieldValidator runat="server" ID="rfvInside" ControlToValidate="rdoInside" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -367,8 +371,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoDirectSupv" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvDirectSupv" ControlToValidate="rdoDirectSupv" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 						
@@ -389,8 +393,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoErgConcern" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1"  Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0"  Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1  Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0  Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>				
 		        <asp:RequiredFieldValidator runat="server" ID="rfvErgConcern" ControlToValidate="rdoErgConcern" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 
@@ -410,8 +414,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoStdProcsFollowed" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1"  Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0"  Text="Non-Standard"></asp:ListItem>
+				   <asp:ListItem Value=1  Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0  Text="Non-Standard"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvStdProcsFollowed" ControlToValidate="rdoStdProcsFollowed" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 							
@@ -431,8 +435,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoTrainingProvided" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
 		        <asp:RequiredFieldValidator runat="server" ID="rfvTrainingProvided" ControlToValidate="rdoTrainingProvided" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -453,10 +457,12 @@
 				<span><span><asp:TextBox ID="tbTaskYears" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskYears" Text="Years" runat="server"></asp:Label></span>&nbsp;&nbsp;
 				<span><asp:TextBox ID="tbTaskMonths" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskMonths" Text="Months" runat="server"></asp:Label></span>&nbsp;&nbsp;
 				<span><asp:TextBox ID="tbTaskDays" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskDays" Text="Days" runat="server"></asp:Label></span></span>&nbsp;&nbsp;
-		        <asp:RequiredFieldValidator runat="server" ID="rfvTaskDays" ControlToValidate="tbTaskDays" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<asp:RegularExpressionValidator ID="revTaskYears" runat="server" ControlToValidate="tbTaskYears" ValidationExpression="[0-9]+" ErrorMessage="Please enter a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
+				<asp:RegularExpressionValidator ID="revTaskMonths" runat="server" ControlToValidate="tbTaskMonths" ValidationExpression="[0-9]+" ErrorMessage="Please enter a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
+				<asp:RegularExpressionValidator ID="revTaskDays" runat="server" ControlToValidate="tbTaskDays" ValidationExpression="[0-9]+" ErrorMessage="Please enter a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
+		        <asp:RequiredFieldValidator runat="server" ID="rfvTaskDays"  ControlToValidate="tbTaskDays" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
-
 
 
 
@@ -471,8 +477,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoFirstAid" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvFirstAid" ControlToValidate="rdoFirstAid" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -491,8 +497,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoRecordable" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
-				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvRecordable" ControlToValidate="rdoRecordable" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -510,8 +516,8 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoLostTime" OnSelectedIndexChanged="rdoLostTime_SelectedIndexChanged" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true" runat="server">
-				   <asp:ListItem Value="1" Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
-				   <asp:ListItem Value="0" Text="No"></asp:ListItem>
+				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
+				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
 		        <asp:RequiredFieldValidator runat="server" ID="rfvLostTime" ControlToValidate="rdoLostTime" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -612,6 +618,9 @@
  <ucl:INCFORMAction id="uclaction" runat="server" />
 
  <ucl:INCFORMApproval id="uclapproval" runat="server" />
+
+ <ucl:INCFORMLostTimeHist id="ucllosttime" runat="server" />
+
 
 
 <asp:Panel ID="pnlButtons" Visible="true" runat="server">

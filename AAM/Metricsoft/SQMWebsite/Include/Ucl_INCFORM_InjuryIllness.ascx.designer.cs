@@ -589,22 +589,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbInsideOutsideXS;
         
         /// <summary>
-        /// tbInsideOutside control.
+        /// rdoInside control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsideOutside;
+        protected global::System.Web.UI.WebControls.RadioButtonList rdoInside;
         
         /// <summary>
-        /// rfvInsideOutside control.
+        /// rfvInside control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInsideOutside;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInside;
         
         /// <summary>
         /// lbDirectSupvSM control.
@@ -821,6 +821,33 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbTaskDays;
+        
+        /// <summary>
+        /// revTaskYears control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskYears;
+        
+        /// <summary>
+        /// revTaskMonths control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskMonths;
+        
+        /// <summary>
+        /// revTaskDays control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskDays;
         
         /// <summary>
         /// rfvTaskDays control.
@@ -1136,6 +1163,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
+        
+        /// <summary>
+        /// ucllosttime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_LostTime_Hist ucllosttime;
         
         /// <summary>
         /// pnlButtons control.
