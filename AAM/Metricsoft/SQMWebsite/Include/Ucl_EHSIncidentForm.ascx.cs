@@ -244,7 +244,8 @@ namespace SQM.Website
 			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 			pnlForm.Controls.Clear();
-			divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+			divForm.Visible = true;
+			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
 			if (IsUseCustomForm)
@@ -864,7 +865,8 @@ namespace SQM.Website
 			}
 
 			pnlForm.Controls.Clear();
-			divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+			divForm.Visible = true;
+			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
 			if (typeId == 10)
@@ -1848,7 +1850,8 @@ namespace SQM.Website
 		{
 			if (EditIncidentId > 0)
 			{
-				divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+				divForm.Visible = false;
+				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 				
 				btnSaveReturn.Visible = false;
 				btnSaveContinue.Visible = false;
@@ -1874,7 +1877,8 @@ namespace SQM.Website
 
 			if (shouldReturn == true)
 			{
-				divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+				divForm.Visible = false;
+				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
 				pnlAddEdit.Visible = false;
 				btnSaveReturn.Visible = false;

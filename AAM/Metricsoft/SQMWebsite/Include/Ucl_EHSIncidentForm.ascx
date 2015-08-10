@@ -107,7 +107,7 @@
 									</td>
 								</tr>
 							</table>
-							<asp:Panel ID="pnlContainment" runat="server" Visible="false">
+<%--							<asp:Panel ID="pnlContainment" runat="server" Visible="false">
 								<a href="#" id="btnContainment" class="buttonLink" onclick="ToggleAreaVisible('divContainment','btnContainment');">Containment</a>
 								<div id="divContainment" class="borderSoft" style="display: none;">
 									<ucl:Containment id="uclContainment" runat="server" />
@@ -130,7 +130,7 @@
 								<div id="divApproval" class="borderSoft" style="display: none;">
 									<ucl:Approval id="uclApproval" runat="server" />
 								</div>
-							</asp:Panel>
+							</asp:Panel>--%>
 						</div>
 						
 					</asp:Panel>
