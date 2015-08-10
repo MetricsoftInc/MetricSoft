@@ -349,7 +349,7 @@ namespace SQM.Website
 								person.SUPV_EMP_ID = supvEmpID;
 								try
 								{
-									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID);
+									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.SSO_ID);
 								}
 								catch (Exception ex)
 								{

@@ -468,7 +468,7 @@ namespace SQM.Website
 			{
                 List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", ""); // ABW 20140805
                 SETTINGS setting = new SETTINGS(); // ABW 20140805
-				SetLocalPerson(SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(),false, currentSSOID));
+				SetLocalPerson(SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(),false, currentSSOID, ""));
 				//selectedUser = SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(), Convert.ToBoolean(GetFindControlValue("cbIsBuyer", hfBase, out success)), GetFindControlValue("tbBuyerCode", hfBase, out success));
 				// AW20131106 - send an email for new users with random password generation
 

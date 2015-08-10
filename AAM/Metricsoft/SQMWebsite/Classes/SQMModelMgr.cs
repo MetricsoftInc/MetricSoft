@@ -932,7 +932,7 @@ namespace SQM.Website
             return updatedPerson;
         }
 
-        public static PERSON UpdatePerson(SQM.Website.PSsqmEntities ctx, PERSON person, string updateBy, bool isBuyer, string currentSSOID)
+        public static PERSON UpdatePerson(SQM.Website.PSsqmEntities ctx, PERSON person, string updateBy, bool isBuyer, string currentSSOID, string defaultPwd)
         {
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, updateBy, person.EntityState);
 
@@ -940,6 +940,7 @@ namespace SQM.Website
                 ctx.AddToPERSON(person);
 
             SQM_ACCESS access = null;
+			string key = "";
 
             // todo check if person SSOID has changed 
             access = LookupCredentials(ctx, person.SSO_ID, "", false);
@@ -948,11 +949,20 @@ namespace SQM.Website
             {
                 access = new SQM_ACCESS();
                 access.SSO_ID = person.SSO_ID;
-                //access.PASSWORD = person.SSO_ID;    // temporary !! need to set up random password
-                string key = GetPasswordKey();
-                access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
+				key = GetPasswordKey();
+				if (string.IsNullOrEmpty(defaultPwd))
+				{
+					access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
+					access.STATUS = "P"; // force password update on login
+				}
+				else 
+				{
+					access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
+					access.STATUS = "A"; 
+				}
+
                 access.RECOVERY_EMAIL = person.EMAIL;
-                access.STATUS = "P"; // force password update on login
+
                 ctx.SQM_ACCESS.AddObject(access);
             }
             else
