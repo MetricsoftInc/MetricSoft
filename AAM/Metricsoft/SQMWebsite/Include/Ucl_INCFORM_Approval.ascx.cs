@@ -184,10 +184,25 @@ namespace SQM.Website
 					Label lba = (Label)e.Item.FindControl("lbApprover");
 					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
+					Label lbjobd = (Label)e.Item.FindControl("lbApproverJob");
 					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-					lb.Text = approval.ITEM_SEQ.ToString();
+					//lb.Text = approval.ITEM_SEQ.ToString();
+					lb.Visible = false;
+					switch (approval.ITEM_SEQ)
+					{
+						case 1:
+							lbjobd.Text = "EHS Manager: ";
+							break;
+						case 2:
+							lbjobd.Text = "Plant Manager: ";
+							break;
+						default:
+							lbjobd.Text = "Approver: ";
+							break;
+					}
+						
 					lba.Text = approval.APPROVER_PERSON;
 					lbm.Text = approval.APPROVAL_MESSAGE;
 					cba.Checked = approval.IsAccepted;
@@ -276,6 +291,14 @@ namespace SQM.Website
 			//		entities.SaveChanges();
 			//	}
 			//}
+		}
+
+
+		protected void rptApprovals_ItemCommand(object source, RepeaterCommandEventArgs e)
+		{
+			if (e.CommandArgument == "AddAnother")
+			{
+			}
 		}
 	}
 }

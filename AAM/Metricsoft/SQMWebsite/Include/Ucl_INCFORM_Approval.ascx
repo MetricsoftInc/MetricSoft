@@ -35,15 +35,15 @@
 
 	<div class="container-fluid">
 
-		<telerik:RadAjaxPanel ID="rapApprovals" runat="server">
+		<telerik:RadAjaxPanel ID="rapApprovals" runat="server">  
 
-		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound">
+		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound" OnItemCommand="rptApprovals_ItemCommand">
 			<HeaderTemplate></HeaderTemplate>
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 text-left">
-						<span><b>Approver&nbsp;<asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</b>&nbsp;&nbsp;
-							<asp:Label ID="lbApprover" Width="45%" SkinID="Metro" runat="server"></asp:Label></span>
+						<span><b><asp:Label ID="lbApproverJob" SkinID="Metro" runat="server" /><asp:Label ID="lbItemSeq" runat="server"></asp:Label></b>&nbsp;&nbsp;
+							<asp:Label ID="lbApprover" Width="75%" SkinID="Metro" runat="server"></asp:Label></span>
 					</div>
 					<div class="col-xs-12 col-sm-3  text-left">
 						<asp:Label ID="lbApproveMessage" Height="95px" Width="95%"  SkinID="Metro" runat="server"></asp:Label>
@@ -76,4 +76,6 @@
 
 	</div>
 </asp:Panel>
+
+
 

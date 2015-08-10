@@ -192,8 +192,8 @@ namespace SQM.Website
 					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlContainPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
-					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
-					CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
+					//RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
+					//CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
 
 					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
 					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvContainPerson");
@@ -220,15 +220,15 @@ namespace SQM.Website
 					lb.Text = contain.ITEM_SEQ.ToString();
 					tbca.Text = contain.ITEM_DESCRIPTION;
 					sd.SelectedDate = contain.START_DATE;
-					cd.SelectedDate = contain.COMPLETION_DATE;
-					ic.Checked = contain.IsCompleted;
+					//cd.SelectedDate = contain.COMPLETION_DATE;
+					//ic.Checked = contain.IsCompleted;
 
 					// Set user access:
 					tbca.Enabled = actionAccess;
 					rddlp.Enabled = actionAccess;
 					sd.Enabled = actionAccess;
-					cd.Enabled = actionAccess;
-					ic.Enabled = actionAccess;
+					//cd.Enabled = actionAccess;
+					//ic.Enabled = actionAccess;
 					rvfca.Enabled = actionAccess;
 					rvfcp.Enabled = actionAccess;
 					rvfsd.Enabled = actionAccess;
@@ -266,8 +266,8 @@ namespace SQM.Website
 				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlContainPerson");
 				Label lb = (Label)containtem.FindControl("lbItemSeq");
 				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpStartDate");
-				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
-				CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
+				//RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpCompleteDate");
+				//CheckBox ic = (CheckBox)containtem.FindControl("cbIsComplete");
 
 				seqnumber = seqnumber + 1;
 
@@ -275,8 +275,8 @@ namespace SQM.Website
 				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
 				item.ITEM_SEQ = seqnumber;
 				item.START_DATE = sd.SelectedDate;
-				item.COMPLETION_DATE = cd.SelectedDate;
-				item.IsCompleted = ic.Checked;
+				//item.COMPLETION_DATE = cd.SelectedDate;
+				//item.IsCompleted = ic.Checked;
 
 				itemList.Add(item);
 
@@ -311,8 +311,8 @@ namespace SQM.Website
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
 					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
 					newItem.START_DATE = item.START_DATE;
-					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
-					newItem.IsCompleted = item.IsCompleted;
+					//newItem.COMPLETION_DATE = item.COMPLETION_DATE;
+					//newItem.IsCompleted = item.IsCompleted;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = DateTime.Now;
 
@@ -339,8 +339,8 @@ namespace SQM.Website
 					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
-					RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
-					CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
+					//RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
+					//CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
@@ -362,8 +362,8 @@ namespace SQM.Website
 					item.ITEM_DESCRIPTION = tbca.Text;
 					item.ITEM_SEQ = seqnumber;
 					item.START_DATE = sd.SelectedDate;
-					item.COMPLETION_DATE = cd.SelectedDate;
-					item.IsCompleted = ic.Checked;
+					//item.COMPLETION_DATE = cd.SelectedDate;
+					//item.IsCompleted = ic.Checked;
 
 					itemList.Add(item);
 				}
@@ -374,8 +374,8 @@ namespace SQM.Website
 				emptyItem.ITEM_SEQ = seqnumber + 1;
 				emptyItem.ASSIGNED_PERSON_ID = null;
 				emptyItem.START_DATE = null;
-				emptyItem.COMPLETION_DATE = null;
-				emptyItem.IsCompleted = false;
+				//emptyItem.COMPLETION_DATE = null;
+				//emptyItem.IsCompleted = false;
 
 				itemList.Add(emptyItem);
 

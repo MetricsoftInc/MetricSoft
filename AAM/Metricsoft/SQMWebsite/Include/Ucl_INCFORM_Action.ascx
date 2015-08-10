@@ -35,8 +35,6 @@
 
 <asp:Panel ID="pnlAction" Visible="false" runat="server">
 
-	<br />
-
 	<div class="container-fluid">
 
 		<telerik:RadAjaxPanel ID="rapAction" runat="server">
@@ -44,7 +42,6 @@
 		<asp:Repeater runat="server" ID="rptAction" ClientIDMode="AutoID" OnItemDataBound="rptAction_OnItemDataBound" OnItemCommand="rptAction_ItemCommand">
 
 			<HeaderTemplate>
-				<div class="table-responsive">
 					<table class="table" border="0" >
 						<thead>
 							<tr>
@@ -85,26 +82,15 @@
 			</ItemTemplate>
 			<FooterTemplate>
 				</table> 
-			</div>
-			<div class="row">
-					<div class="col-xs-12 text-left-more">
-						<br />
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
 						<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-12 text-left-more">
-						<br />
-					</div>
-				</div>
 			</FooterTemplate>
 		</asp:Repeater>
 
-			</telerik:RadAjaxPanel>
+	</telerik:RadAjaxPanel>
 
 	</div>   
 
