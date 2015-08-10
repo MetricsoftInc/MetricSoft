@@ -1976,14 +1976,16 @@ namespace SQM.Website
 			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
 			//obj.IsBackground = true;
 
+			Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
 
+			/*
 			if (shouldCreate8d == true && shouldReturn == false)
 				Create8dAndRedirect(incidentId);
 			else if (CurrentStep == 0 && shouldReturn == false)
 				GoToNextStep(incidentId);
 			else
 				ShowIncidentDetails(incidentId, result);
-
+			*/
 		}
 
 		#endregion
