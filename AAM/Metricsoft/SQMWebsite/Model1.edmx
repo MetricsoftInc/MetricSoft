@@ -1809,6 +1809,7 @@
           <Property Name="MIDDLE_NAME" Type="varchar" MaxLength="100" />
           <Property Name="EMP_ID" Type="varchar" MaxLength="80" />
           <Property Name="SUPV_EMP_ID" Type="varchar" MaxLength="80" />
+          <Property Name="PHONE2" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PERSON_ACCESS">
           <Key>
@@ -8447,6 +8448,7 @@
           <Property Type="String" Name="MIDDLE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SUPV_EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PHONE2" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -10647,6 +10649,7 @@
           <EntitySetMapping Name="PERSON">
             <EntityTypeMapping TypeName="PSsqmModel.PERSON">
               <MappingFragment StoreEntitySet="PERSON">
+                <ScalarProperty Name="PHONE2" ColumnName="PHONE2" />
                 <ScalarProperty Name="SUPV_EMP_ID" ColumnName="SUPV_EMP_ID" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
                 <ScalarProperty Name="MIDDLE_NAME" ColumnName="MIDDLE_NAME" />

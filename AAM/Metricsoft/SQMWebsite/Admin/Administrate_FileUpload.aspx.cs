@@ -59,12 +59,6 @@ namespace SQM.Website
             gvErrorList.Visible = gvUpdateList.Visible = false;
             lblSummaryList.Visible = false;
             fileReader = null;
-
-            if (ddlPlantSelect.Items.Count == 0)
-            {
-                SQMBasePage.SetLocationList(ddlPlantSelect, SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true), 0);
-                ddlPlantSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("", ""));
-            }
         }
 
         public void gvList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
@@ -94,10 +88,6 @@ namespace SQM.Website
 			{
 				SetStatusMessage("You must select a data type from the drop down list");
 			}
-			else if (ddlPlantSelect.SelectedIndex == 0 && ddlDataType.SelectedValue.Equals("RECEIPT"))
-			{
-				SetStatusMessage("You must select a Receiving Location to upload a receipt record");
-			}
 			else
 			{
 				// validate the date in the select control
@@ -108,7 +98,6 @@ namespace SQM.Website
 
                 int primaryCompany = Convert.ToInt32(sets.Find(x => x.SETTING_CD == "CompanyID").VALUE);
 				PSsqmEntities Entities = new PSsqmEntities();
-				BUSINESS_ORG busOrg = SQMModelMgr.LookupBusOrg(Entities, primaryCompany, "", true, false);
 				string fileName = "";
 				lblSummaryList.Visible = false;
 
@@ -140,12 +129,7 @@ namespace SQM.Website
 						return;
 					}
 					//fileReader = new SQMFileReader().InitializeCSV(1, flUpload.PostedFile.FileName, fileContent, fileDelimiter, plantDataMultiplier);
-					fileReader = new SQMFileReader().InitializeCSV(primaryCompany, fileName, fileContent, fileDelimiter, plantDataMultiplier, periodYear, periodMonth, busOrg.PREFERRED_CURRENCY_CODE);
-                    if (ddlDataType.SelectedValue.Equals("RECEIPT"))
-                    {
-                        fileReader.LocationCode = SQMModelMgr.LookupPlant(Convert.ToDecimal(ddlPlantSelect.SelectedValue)).DUNS_CODE;
-                    }
-                    
+					fileReader = new SQMFileReader().InitializeCSV(primaryCompany, fileName, fileContent, fileDelimiter, plantDataMultiplier, periodYear, periodMonth, "USD");
                   
                     if (fileReader.Status < 0)
 					{
@@ -154,11 +138,6 @@ namespace SQM.Website
 					}
 				
 					ProcessFile();
-
-					if (ddlDataType.SelectedValue.Equals("RECEIPT"))
-					{
-						dvPlantSelect.Style.Add("display", "inline");
-					}
 
 				}
 				else
@@ -197,10 +176,6 @@ namespace SQM.Website
 			{
 				SetStatusMessage("You must select a file type from the drop down list");
 			}
-			else if (ddlPlantSelect.SelectedIndex == 0 && ddlDataType.SelectedValue.Equals("RECEIPT"))
-			{
-				SetStatusMessage("You must select a Receiving Location to upload a receipt record");
-			}
 			else
 			{
 				// validate the date in the select control
@@ -222,7 +197,7 @@ namespace SQM.Website
 				plantDataMultiplier = 1;
 				
 				//fileReader = new SQMFileReader().InitializeCSV(1, flUpload.PostedFile.FileName, fileContent, fileDelimiter, plantDataMultiplier);
-				fileReader = new SQMFileReader().InitializeCSV(primaryCompany, fileName, fileContent, fileDelimiter, plantDataMultiplier, periodYear, periodMonth, busOrg.PREFERRED_CURRENCY_CODE);
+				fileReader = new SQMFileReader().InitializeCSV(primaryCompany, fileName, fileContent, fileDelimiter, plantDataMultiplier, periodYear, periodMonth, "USD");
 				using (StreamReader sr = new StreamReader(fileReader.FileStream))
 				{
 					string line;
@@ -239,11 +214,6 @@ namespace SQM.Website
 				}
 			
 			}
-			if (ddlDataType.SelectedValue.Equals("RECEIPT"))
-			{
-				dvPlantSelect.Style.Add("display", "inline");
-			}
-
 		}
 
         public void gvPreview_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)

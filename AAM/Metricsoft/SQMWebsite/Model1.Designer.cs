@@ -29042,6 +29042,30 @@ namespace SQM.Website
         private global::System.String _SUPV_EMP_ID;
         partial void OnSUPV_EMP_IDChanging(global::System.String value);
         partial void OnSUPV_EMP_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PHONE2
+        {
+            get
+            {
+                return _PHONE2;
+            }
+            set
+            {
+                OnPHONE2Changing(value);
+                ReportPropertyChanging("PHONE2");
+                _PHONE2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PHONE2");
+                OnPHONE2Changed();
+            }
+        }
+        private global::System.String _PHONE2;
+        partial void OnPHONE2Changing(global::System.String value);
+        partial void OnPHONE2Changed();
 
         #endregion
 

@@ -642,6 +642,23 @@ namespace SQM.Website
 			return person;
 		}
 
+		public static PERSON LookupPersonByEmpID(SQM.Website.PSsqmEntities ctx, string empID)
+		{
+			PERSON person = null;
+
+			try
+			{
+				person = (from P in ctx.PERSON
+						  where (P.EMP_ID == empID)
+						  select P).Single();
+			}
+			catch
+			{
+			}
+
+			return person;
+		}
+
 		public static PERSON NewPerson(string SSOID, decimal companyID)
         {
             PERSON person = new PERSON();

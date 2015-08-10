@@ -230,6 +230,8 @@ namespace SQM.Website
                         PLANT suppPlant = null;
                         PLANT custPlant = null;
                         ADDRESS adr = null;
+						PERSON person = null;
+						JOBCODE jobcode = null;
                         PART part = null;
                         STREAM stream = null;
                         RECEIPT receipt = null;
@@ -265,6 +267,104 @@ namespace SQM.Website
 
 						switch (this.FileName)
 						{
+							case "REFERENCE":
+								string reftype = fldArray[0];
+								string itemCD = fldArray[1];
+								string itemDesc = fldArray[2];
+								bool doSave = false;
+								switch (reftype)
+								{
+									case "JOBCODE":
+										jobcode = (from j in Entities.JOBCODE where j.JOBCODE_CD == itemCD select j).SingleOrDefault();
+										if (jobcode == null)
+										{
+											jobcode = new JOBCODE();
+											jobcode.JOBCODE_CD = itemCD;
+											jobcode.JOB_DESC = itemDesc;
+											jobcode.DEFAULT_ROLE = 0;
+											Entities.AddToJOBCODE(jobcode);
+										}
+										else
+										{
+											jobcode.JOB_DESC = itemDesc;
+										}
+										doSave = true;
+										break;
+									case "LOCATION":
+										doSave = true;
+										break;
+									default:
+										break;
+								}
+								try
+								{
+									Entities.SaveChanges();
+								}
+								catch
+								{
+									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "REFERENCE", "Reference item update error: " + itemCD, itemDesc, 1, line));
+									break;
+								}
+								break;
+							case "PERSON":
+								string empID = fldArray[0];
+								string status = fldArray[1];
+								string firstName = fldArray[2];
+								string lastName = fldArray[3];
+								string middleName = fldArray[4];
+								string emailAddress = fldArray[5];
+								string phone1 = fldArray[6];
+								string phone2 = fldArray[7];
+								string jobCode = fldArray[8];
+								string HRLocation = fldArray[9];
+								string supvEmpID = fldArray[10];
+
+								plant = SQMModelMgr.LookupPlant(Entities, 0, HRLocation);
+								if (plant == null)
+								{
+									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "HR Location does not exist: " + HRLocation, HRLocation, 1, line));
+									break;
+								}
+
+								person = SQMModelMgr.LookupPersonByEmpID(Entities, empID);
+								if (person == null)
+								{
+									person = new PERSON();
+									person.SSO_ID = empID;
+									person.EMP_ID = empID;
+									person.ROLE = (int)SysPriv.view;
+								}
+
+								person.STATUS = status;
+								person.FIRST_NAME = firstName;
+								person.LAST_NAME = lastName;
+								person.MIDDLE_NAME = middleName;
+								person.EMAIL = emailAddress;
+								person.PHONE = phone1;
+								person.PHONE2 = phone2;
+								person.JOBCODE_CD = jobCode;
+								person.COMPANY_ID = (decimal)plant.COMPANY_ID;
+								person.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
+								person.PLANT_ID = (decimal)plant.PLANT_ID;
+								person.SUPV_EMP_ID = supvEmpID;
+								try
+								{
+									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID);
+								}
+								catch (Exception ex)
+								{
+									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "update failure: " + empID + "; " + ex.InnerException.Message, empID, 1, line));
+									break;
+								}
+								if (person == null)
+								{
+									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "update failure: " + empID, empID, 1, line));
+									break;
+								}
+								state = plant.EntityState;
+								CreateUpdateRecord("PERSON", person.EMP_ID + ": " + line, state);
+								break;
+
                             case "INSPECT":
                                 string inspectNo = fldArray[0];
                                 string rcvPoNumber = fldArray[1];

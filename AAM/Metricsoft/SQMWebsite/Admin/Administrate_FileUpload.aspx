@@ -46,40 +46,32 @@
                     <table width="99%" border="0" cellspacing="1" cellpadding="3" class="lightBorder">
                         <tr>
                             <td class="columnHeader" width="15%">
-                                <b>Upload File</b>
+                                <b>Data File Type</b>
 		                    </td>
 							<!-- AW20140113 - Add file type and reporting month -->
 							<td class="tableDataAlt">
-								<div style="position: relative;">
-									<div style="float: left">
-										<asp:DropDownList runat="server" ID="ddlDataType" onchange="DisplayPlantSelector(this);">
-											<asp:ListItem Text="select a data type" Value=""></asp:ListItem>
-											<%--<asp:ListItem Text="Currency" Value="CURRENCY_DATA"></asp:ListItem>--%>
-											<asp:ListItem Text="Company" Value="COMPANY"></asp:ListItem>
-											<asp:ListItem Text="Plant" Value="PLANT"></asp:ListItem>
-											<asp:ListItem Text="Part" Value="PART"></asp:ListItem>
-											<asp:ListItem Text="Plant Data" Value="PLANT_DATA"></asp:ListItem>
-                                            <asp:ListItem Text="Material Receipts" Value="RECEIPT"></asp:ListItem>
-                                            <asp:ListItem Text="Inspection Results" Value="INSPECT"></asp:ListItem>
-										</asp:DropDownList>
-									</div>
-									<div id="dvPlantSelect" style="display: none;" runat="server">
-                                        <br />
-                                         <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="false" ZIndex=9000 Skin="Metro" Width="250" EmptyMessage="select receiving location" ></telerik:RadComboBox>
-									</div>
-								</div>
-
+								<asp:DropDownList runat="server" ID="ddlDataType" onchange="DisplayPlantSelector(this);">
+									<asp:ListItem Text="select a data type" Value=""></asp:ListItem>
+									<%--<asp:ListItem Text="Currency" Value="CURRENCY_DATA"></asp:ListItem>--%>
+									<asp:ListItem Text="References" Value="REFERENCE"></asp:ListItem>
+									<asp:ListItem Text="Person" Value="PERSON"></asp:ListItem>
+									<asp:ListItem Text="Plant" Value="PLANT"></asp:ListItem>
+									<asp:ListItem Text="Plant Data" Value="PLANT_DATA"></asp:ListItem>
+								</asp:DropDownList>
 							</td>
-<%--							<td id="tdPeriodSelect" runat="server" style="display: none;" class="tableDataAlt" width="20%">
-							</td>--%>
+						</tr>
+						<tr>
+							<td class="columnHeader" width="15%">
+                                <b>Process File</b>
+		                    </td>
 							<td class="tableDataAlt">
                                 <asp:FileUpload ID="flUpload" runat="server" Width="200" onchange="DisplaySelectedFileName(this);" />
                                 <br />
-                                <asp:Button ID="btnPreview" runat="server" Text="Preview File" CssClass="buttonStd" onclick="PreviewFile"></asp:Button>
+                                <asp:Button ID="btnPreview" runat="server" Text="Preview File" CssClass="buttonStd" onclick="PreviewFile" style="margin-top: 4px;"></asp:Button>
                                 &nbsp;&nbsp
                                  <asp:TextBox ID="tbFileSelected" runat="server" Columns="40" ReadOnly="true" style="border:0px;background-color:transparent;" /> 
                                 <br />
-                                <asp:Button ID="btnUpload" runat="server" Text="Process File"  CssClass="buttonEmphasis" onclick="btnUploadFile_Click"></asp:Button>
+                                <asp:Button ID="btnUpload" runat="server" Text="Process File"  CssClass="buttonEmphasis" onclick="btnUploadFile_Click" style="margin-top: 4px;"></asp:Button>
                             </td>
                         </tr>
                     </table>
