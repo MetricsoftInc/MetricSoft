@@ -73,7 +73,6 @@
           <EntitySet Name="INCIDENT_VERIFICATION" EntityType="PSsqmModel.Store.INCIDENT_VERIFICATION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCIDENT_VERIFICATION_COMMENT" EntityType="PSsqmModel.Store.INCIDENT_VERIFICATION_COMMENT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="JOBCODE" EntityType="PSsqmModel.Store.JOBCODE" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="JOBPRIV" EntityType="PSsqmModel.Store.JOBPRIV" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LABOR_TYPE" EntityType="PSsqmModel.Store.LABOR_TYPE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LOCAL_LANGUAGE" EntityType="PSsqmModel.Store.LOCAL_LANGUAGE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NONCONFORMANCE" EntityType="PSsqmModel.Store.NONCONFORMANCE" store:Type="Tables" Schema="dbo" />
@@ -91,6 +90,7 @@
           <EntitySet Name="PLANT" EntityType="PSsqmModel.Store.PLANT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLANT_ACCOUNTING" EntityType="PSsqmModel.Store.PLANT_ACCOUNTING" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLANT_LINE" EntityType="PSsqmModel.Store.PLANT_LINE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PRIVGROUP" EntityType="PSsqmModel.Store.PRIVGROUP" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PROB_CASE" EntityType="PSsqmModel.Store.PROB_CASE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PROB_CASE_STEP" EntityType="PSsqmModel.Store.PROB_CASE_STEP" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PROB_CAUSE" EntityType="PSsqmModel.Store.PROB_CAUSE" store:Type="Tables" Schema="dbo" />
@@ -441,9 +441,9 @@
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
-          <AssociationSet Name="FK_JOBPRIV_JOBCODE" Association="PSsqmModel.Store.FK_JOBPRIV_JOBCODE">
+          <AssociationSet Name="FK_JOBCODE_JOBCODE" Association="PSsqmModel.Store.FK_JOBCODE_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="JOBPRIV" EntitySet="JOBPRIV" />
+            <End Role="JOBCODE1" EntitySet="JOBCODE" />
           </AssociationSet>
           <AssociationSet Name="FK_LABOR_TY_REFERENCE_COMPANY" Association="PSsqmModel.Store.FK_LABOR_TY_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -1662,16 +1662,7 @@
           <Property Name="JOB_DESC" Type="varchar" MaxLength="200" />
           <Property Name="STATUS" Type="varchar" MaxLength="2" />
           <Property Name="DEFAULT_ROLE" Type="int" />
-        </EntityType>
-        <EntityType Name="JOBPRIV">
-          <Key>
-            <PropertyRef Name="JOBCODE_CD" />
-            <PropertyRef Name="PRIV" />
-            <PropertyRef Name="SCOPE" />
-          </Key>
-          <Property Name="JOBCODE_CD" Type="varchar" Nullable="false" MaxLength="80" />
-          <Property Name="PRIV" Type="int" Nullable="false" />
-          <Property Name="SCOPE" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="PRIV_GROUP" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="LABOR_TYPE">
           <Key>
@@ -1992,6 +1983,16 @@
           <Property Name="STATUS" Type="varchar" MaxLength="1" />
           <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PRIVGROUP">
+          <Key>
+            <PropertyRef Name="PRIV_GROUP" />
+            <PropertyRef Name="PRIV" />
+            <PropertyRef Name="SCOPE" />
+          </Key>
+          <Property Name="PRIV_GROUP" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="PRIV" Type="int" Nullable="false" />
+          <Property Name="SCOPE" Type="varchar" Nullable="false" MaxLength="40" />
         </EntityType>
         <EntityType Name="PROB_CASE">
           <Key>
@@ -3466,14 +3467,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JOBPRIV_JOBCODE">
+        <Association Name="FK_JOBCODE_JOBCODE">
           <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="1" />
-          <End Role="JOBPRIV" Type="PSsqmModel.Store.JOBPRIV" Multiplicity="*" />
+          <End Role="JOBCODE1" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="JOBCODE">
               <PropertyRef Name="JOBCODE_CD" />
             </Principal>
-            <Dependent Role="JOBPRIV">
+            <Dependent Role="JOBCODE1">
               <PropertyRef Name="JOBCODE_CD" />
             </Dependent>
           </ReferentialConstraint>
@@ -4769,11 +4770,6 @@
             <End Role="INCFORM_ROOT5Y" EntitySet="INCFORM_ROOT5Y" />
           </AssociationSet>
           <EntitySet Name="JOBCODE" EntityType="PSsqmModel.JOBCODE" />
-          <EntitySet Name="JOBPRIV" EntityType="PSsqmModel.JOBPRIV" />
-          <AssociationSet Name="FK_JOBPRIV_JOBCODE" Association="PSsqmModel.FK_JOBPRIV_JOBCODE">
-            <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="JOBPRIV" EntitySet="JOBPRIV" />
-          </AssociationSet>
           <EntitySet Name="AUDIT" EntityType="PSsqmModel.AUDIT" />
           <EntitySet Name="AUDIT_ANSWER" EntityType="PSsqmModel.AUDIT_ANSWER" />
           <AssociationSet Name="FK_AUDIT_ANSWER_AUDIT" Association="PSsqmModel.FK_AUDIT_ANSWER_AUDIT">
@@ -4868,6 +4864,11 @@
           <AssociationSet Name="FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION" Association="PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION">
             <End Role="INCIDENT_QUESTION" EntitySet="INCIDENT_QUESTION" />
             <End Role="INCIDENT_QUESTION_LANG" EntitySet="INCIDENT_QUESTION_LANG" />
+          </AssociationSet>
+          <EntitySet Name="PRIVGROUP" EntityType="PSsqmModel.PRIVGROUP" />
+          <AssociationSet Name="FK_JOBCODE_JOBCODE" Association="PSsqmModel.FK_JOBCODE_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="JOBCODE1" EntitySet="JOBCODE" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -8317,32 +8318,11 @@
           <Property Type="String" Name="JOB_DESC" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="DEFAULT_ROLE" />
-          <NavigationProperty Name="JOBPRIV" Relationship="PSsqmModel.FK_JOBPRIV_JOBCODE" FromRole="JOBCODE" ToRole="JOBPRIV" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="JOBCODE" ToRole="PERSON" />
+          <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="JOBCODE1" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE" ToRole="JOBCODE1" />
+          <NavigationProperty Name="JOBCODE2" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE1" ToRole="JOBCODE" />
         </EntityType>
-        <EntityType Name="JOBPRIV">
-          <Key>
-            <PropertyRef Name="JOBCODE_CD" />
-            <PropertyRef Name="PRIV" />
-            <PropertyRef Name="SCOPE" />
-          </Key>
-          <Property Type="String" Name="JOBCODE_CD" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="PRIV" Nullable="false" />
-          <Property Type="String" Name="SCOPE" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_JOBPRIV_JOBCODE" FromRole="JOBPRIV" ToRole="JOBCODE" />
-        </EntityType>
-        <Association Name="FK_JOBPRIV_JOBCODE">
-          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="1" />
-          <End Type="PSsqmModel.JOBPRIV" Role="JOBPRIV" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JOBCODE">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Principal>
-            <Dependent Role="JOBPRIV">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="AUDIT">
           <Key>
             <PropertyRef Name="AUDIT_ID" />
@@ -8758,6 +8738,28 @@
             </Principal>
             <Dependent Role="INCIDENT_QUESTION_LANG">
               <PropertyRef Name="INCIDENT_QUESTION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PRIVGROUP">
+          <Key>
+            <PropertyRef Name="PRIV_GROUP" />
+            <PropertyRef Name="PRIV" />
+            <PropertyRef Name="SCOPE" />
+          </Key>
+          <Property Type="String" Name="PRIV_GROUP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PRIV" Nullable="false" />
+          <Property Type="String" Name="SCOPE" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_JOBCODE_JOBCODE">
+          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="1" />
+          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Principal>
+            <Dependent Role="JOBCODE1">
+              <PropertyRef Name="JOBCODE_CD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10597,18 +10599,10 @@
           <EntitySetMapping Name="JOBCODE">
             <EntityTypeMapping TypeName="PSsqmModel.JOBCODE">
               <MappingFragment StoreEntitySet="JOBCODE">
+                <ScalarProperty Name="PRIV_GROUP" ColumnName="PRIV_GROUP" />
                 <ScalarProperty Name="DEFAULT_ROLE" ColumnName="DEFAULT_ROLE" />
                 <ScalarProperty Name="STATUS" ColumnName="STATUS" />
                 <ScalarProperty Name="JOB_DESC" ColumnName="JOB_DESC" />
-                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JOBPRIV">
-            <EntityTypeMapping TypeName="PSsqmModel.JOBPRIV">
-              <MappingFragment StoreEntitySet="JOBPRIV">
-                <ScalarProperty Name="SCOPE" ColumnName="SCOPE" />
-                <ScalarProperty Name="PRIV" ColumnName="PRIV" />
                 <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -10745,6 +10739,15 @@
                 <ScalarProperty Name="LANG_TEXT" ColumnName="LANG_TEXT" />
                 <ScalarProperty Name="NLS_LANGUAGE" ColumnName="NLS_LANGUAGE" />
                 <ScalarProperty Name="INCIDENT_QUESTION_ID" ColumnName="INCIDENT_QUESTION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRIVGROUP">
+            <EntityTypeMapping TypeName="PSsqmModel.PRIVGROUP">
+              <MappingFragment StoreEntitySet="PRIVGROUP">
+                <ScalarProperty Name="SCOPE" ColumnName="SCOPE" />
+                <ScalarProperty Name="PRIV" ColumnName="PRIV" />
+                <ScalarProperty Name="PRIV_GROUP" ColumnName="PRIV_GROUP" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11004,8 +11007,6 @@
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_ROOT5Y" Width="1.5" PointX="4.375" PointY="61.875" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" />
         <EntityTypeShape EntityType="PSsqmModel.JOBCODE" Width="1.5" PointX="4.43985641581931" PointY="17.410786517621386" />
-        <EntityTypeShape EntityType="PSsqmModel.JOBPRIV" Width="1.5" PointX="10.18596291643845" PointY="24.883533295655404" />
-        <AssociationConnector Association="PSsqmModel.FK_JOBPRIV_JOBCODE" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT" Width="1.5" PointX="6.7684012366311634" PointY="20.3012708520057" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_ANSWER" Width="1.5" PointX="0.08080276478119322" PointY="25.50224968488433" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_ANSWER_AUDIT" />
@@ -11035,6 +11036,8 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_LANG" Width="1.5" PointX="7.08285738112538" PointY="22.51668953453968" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION" />
+        <EntityTypeShape EntityType="PSsqmModel.PRIVGROUP" Width="1.5" PointX="0.64343073994081035" PointY="3.0298105343383788" />
+        <AssociationConnector Association="PSsqmModel.FK_JOBCODE_JOBCODE" />
         </Diagram>
     </Diagrams>
   </Designer>

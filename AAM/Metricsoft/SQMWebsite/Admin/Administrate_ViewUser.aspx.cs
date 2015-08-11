@@ -320,26 +320,14 @@ namespace SQM.Website
 				ddlUserTimezone.SelectedValue = person.PREFERRED_TIMEZONE;
 
 
-						/* quality module reference
-			if (person.ROLE <= 100 || person.PERSON_ACCESS.Where(a => a.ACCESS_PROD == "SQM").Count() > 0)
-			{
-				ddlCustPlantSelect.Enabled = true;
-			}
-			else
-			{
-				ddlCustPlantSelect.Enabled = false;
-				ddlCustPlantSelect.SelectedIndex = 0;
-			}
-			*/
-
             List<SysModule> sysmodList = SQMSettings.SystemModuleItems();
             string prod = "";
             RadComboBoxItem item = null; RadComboBoxItem itemSep = null;
 
 			lblPrivScope.Text = "";
-			if (person.JOBCODE != null && person.JOBCODE.JOBPRIV != null)
+			if (person.JOBCODE != null)
 			{
-				foreach (JOBPRIV jp in person.JOBCODE.JOBPRIV)
+				foreach (PRIVGROUP jp in SQMModelMgr.SelectPrivGroupJobcode(person.JOBCODE_CD).ToList())
 				{
 					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + jp.SCOPE + ",");
 				}

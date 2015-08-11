@@ -110,7 +110,7 @@
                         <br style="clear: both;" />
                         <Ucl:AdminList id="uclUserList" runat="server"/>
                         
-                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="525" Width="650" Title="User Details" Behaviors="Move">
+                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="555" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
                                 <asp:Panel runat="server" ID="pnlUserEdit" >
                                      <table width="99%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 4px;">

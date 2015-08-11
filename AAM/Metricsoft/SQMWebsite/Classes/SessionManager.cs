@@ -70,15 +70,15 @@ namespace SQM.Website
 		{
 			bool hasPriv = false;
 
-			if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV != null)
+			if (SessionManager.UserContext.PrivList != null)
 			{
-				if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
+				if (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
 				{
 					hasPriv = true;
 				}
 				else
 				{
-					if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
+					if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
 						hasPriv = true;
 				}
 			}
@@ -87,22 +87,22 @@ namespace SQM.Website
 
 		}
 
-		public static List<JOBPRIV> GetScopePrivileges(SysScope scope)
+		public static List<PRIVGROUP> GetScopePrivileges(SysScope scope)
 		{
 			// get all user privs related to the scope/function 
-			List<JOBPRIV> privList = new List<JOBPRIV>();
+			List<PRIVGROUP> privList = new List<PRIVGROUP>();
 
-			if (SessionManager.UserContext.Person.JOBCODE.JOBPRIV != null)
+			if (SessionManager.UserContext.PrivList != null)
 			{
-				JOBPRIV priv = new JOBPRIV();
-				if ((priv = SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
+				PRIVGROUP priv = new PRIVGROUP();
+				if ((priv = SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
 				{
 					priv.SCOPE = scope.ToString();
 					privList.Add(priv);
 				}
 				else
 				{
-					privList = SessionManager.UserContext.Person.JOBCODE.JOBPRIV.Where(p => p.SCOPE.ToLower() == scope.ToString()).ToList();
+					privList = SessionManager.UserContext.PrivList.Where(p => p.SCOPE.ToLower() == scope.ToString()).ToList();
 				}
 			}
 
@@ -733,6 +733,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public List<PRIVGROUP> PrivList
+		{
+			get;
+			set;
+		}
 		public BusinessLocation HRLocation
 		{
 			get;
@@ -824,6 +829,9 @@ namespace SQM.Website
 						}
 						else
 						{
+
+							this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD);
+
 							SessionManager.EffLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
 
 							if (this.Person.PERSON_RESP.ALT_COMPANY_ID > 0)

@@ -512,7 +512,7 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
-		public static List<PERSON> SelectJobPrivPersonList(SysPriv priv, SysScope scope)
+		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
@@ -520,14 +520,15 @@ namespace SQM.Website
 			{
 				string privScope = scope.ToString();
 				personList = (from p in ctx.PERSON
-							  join v in ctx.JOBPRIV on p.JOBCODE_CD equals v.JOBCODE_CD
-							  where (v.PRIV == (int)priv && v.SCOPE == privScope)
+							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD 
+							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
+							  where (j.JOBCODE_CD == p.JOBCODE_CD && v.PRIV == (int)priv && v.SCOPE == privScope)
 							  select p).ToList();
 			}
 
 			return personList;
 		}
-		public static List<PERSON> SelectJobPrivPersonList(SysPriv[] privList, SysScope scope)
+		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
@@ -536,8 +537,9 @@ namespace SQM.Website
 				string privScope = scope.ToString();
 				int[] privs = Array.ConvertAll(privList, value => (int)value);
 				personList = (from p in ctx.PERSON
-							  join v in ctx.JOBPRIV on p.JOBCODE_CD equals v.JOBCODE_CD
-							  where (privs.Contains(v.PRIV) && v.SCOPE == privScope)
+							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD
+							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
+							  where (j.JOBCODE_CD == p.JOBCODE_CD && privs.Contains(v.PRIV) && v.SCOPE == privScope)
 							  select p).ToList();
 			}
 
@@ -602,11 +604,11 @@ namespace SQM.Website
             try
             {
                 if (personID == 0)
-					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE")
                                 where (P.SSO_ID.ToUpper() == SSOID.ToUpper())
                                 select P).Single();
                 else
-					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE")
                                 where (P.PERSON_ID == personID)
                                 select P).Single();
 
@@ -657,6 +659,23 @@ namespace SQM.Website
 			}
 
 			return person;
+		}
+
+		public static List<PRIVGROUP> SelectPrivGroup(string privGroup)
+		{
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				return (from v in ctx.PRIVGROUP where (v.PRIV_GROUP == privGroup) select v).ToList();
+			}
+		}
+		public static List<PRIVGROUP> SelectPrivGroupJobcode(string jobCode)
+		{
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				return (from v in ctx.PRIVGROUP 
+						join j in ctx.JOBCODE on v.PRIV_GROUP equals j.PRIV_GROUP
+						where (j.JOBCODE_CD == jobCode) select v).ToList();
+			}
 		}
 
 		public static PERSON NewPerson(string SSOID, decimal companyID)
@@ -752,11 +771,11 @@ namespace SQM.Website
             using (PSsqmEntities entities = new PSsqmEntities())
             {
                 if (companyID > 0)
-					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE")
                               where (P.COMPANY_ID == companyID  &&  P.ROLE > 1)
                               select P).ToList();
                 else if (busOrgID > 0)
-					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE")
                                   where (P.BUS_ORG_ID == busOrgID && P.ROLE > 1)
                               select P).ToList();
 
@@ -876,22 +895,22 @@ namespace SQM.Website
             if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1 && p.STATUS == "A")
                                select p).ToList();
                 else
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1)
                                select p).ToList();
             }
             else
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1) && (p.STATUS == "A") && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
                 else
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE").Include("JOBCODE.JOBPRIV")
+					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1) && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
             }
