@@ -2540,6 +2540,7 @@
     <Content Include="images\fonts\Oswald-Bold.ttf" />
     <Content Include="images\fonts\Oswald-Regular.ttf" />
     <Content Include="images\fonts\Ubuntu-Regular.ttf" />
+    <Content Include="Documents\GHGReferences.xlsx" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - Web Deploy.pubxml" />

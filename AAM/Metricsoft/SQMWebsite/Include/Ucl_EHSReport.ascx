@@ -147,4 +147,5 @@
     <asp:Label ID="lblGWPLegend" runat="server" CssClass="refTextSmall" Text="<sup>1</sup> 100 year Global Warming potential (KG/KWH)"></asp:Label>
     <br />
     <asp:Label ID="lblGHGLegend" runat="server" CssClass="refTextSmall" Text="<sup>2</sup> Regional energy source emissions factor (KG/KWH)"></asp:Label>
+	<p class="refTextSmall">  Download <a class="refTextSmall" href="/Documents/GHGReferences.xlsx">GHG References And Factors</a> used to produce this report</p>
 </asp:Panel>

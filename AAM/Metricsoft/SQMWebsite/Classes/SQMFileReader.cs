@@ -187,11 +187,6 @@ namespace SQM.Website
 				this.PeriodMonth = month;
 				this.DefaultCurrency = currency;
 				this.FileType = fileName.Substring(fileName.IndexOf('.'));
-
-				//string fileType = flUpload.PostedFile.ContentType;
-				//fileContent = new byte[Convert.ToInt32(fileLen)];
-				//int nBytes = flUpload.PostedFile.InputStream.Read(fileContent, 0, Convert.ToInt32(fileLen));
-
 				this.FileName = fileName.Substring(0, fileName.IndexOf('.'));
 				this.FileStream = fileContent;
 			}

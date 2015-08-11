@@ -436,7 +436,7 @@
 			OnPageIndexChanged="rgIncidentList_PageIndexChanged" OnPageSizeChanged="rgIncidentList_PageSizeChanged" GridLines="None" Width="100%">
 			<MasterTableView ExpandCollapseColumn-Visible="false">
 				<Columns>
-					<telerik:GridTemplateColumn HeaderText="Incident/<br>Report" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Incident.INCIDENT_ID">
+					<telerik:GridTemplateColumn HeaderText="Incident ID" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Incident.INCIDENT_ID">
 						<ItemTemplate>
 							<table class="innerTable">
 								<tr>
