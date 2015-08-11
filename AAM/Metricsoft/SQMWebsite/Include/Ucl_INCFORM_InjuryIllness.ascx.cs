@@ -211,6 +211,8 @@ namespace SQM.Website
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incident.INCIDENT_DT;
 
+					rdpReportDate.SelectedDate = incident.CREATE_DT;
+
 					PopulateLocationDropDown();
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
@@ -416,7 +418,7 @@ namespace SQM.Website
 					uclapproval.Visible = false;
 					ucllosttime.Visible = true;
 					btnPrev.Visible = true;
-					btnNext.Visible = false;
+					btnNext.Visible = true;
 					break;
 
 			}
@@ -533,7 +535,7 @@ namespace SQM.Website
 					rdpIncidentDate.Enabled = updateAccess;
 					rfvIncidentDate.Enabled = updateAccess;
 					
-					rdpReportDate.Enabled = updateAccess;
+					//rdpReportDate.Enabled = updateAccess;
 					
 					rddlLocation.Enabled = updateAccess;
 					rfvLocation.Enabled = updateAccess;
@@ -1283,9 +1285,11 @@ namespace SQM.Website
 			newInjryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
 			newInjryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
 			newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
-			newInjryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
-			newInjryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
-			newInjryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
+
+			newInjryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
+			newInjryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
+			newInjryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
+			
 			newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
 			newInjryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
 			newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));

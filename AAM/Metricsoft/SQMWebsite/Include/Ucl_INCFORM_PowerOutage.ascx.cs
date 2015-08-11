@@ -205,6 +205,8 @@ namespace SQM.Website
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incident.INCIDENT_DT;
 
+					rdpReportDate.SelectedDate = incident.CREATE_DT;
+
 					PopulateLocationDropDown();
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
@@ -411,7 +413,7 @@ namespace SQM.Website
 				case "INCFORM_POWEROUTAGE":
 					rdpIncidentDate.Enabled = updateAccess;
 					rfvIncidentDate.Enabled = updateAccess;
-					rdpReportDate.Enabled = updateAccess;
+					//rdpReportDate.Enabled = updateAccess;
 					rddlLocation.Enabled = updateAccess;
 					rfvLocation.Enabled = updateAccess;
 					tbDescription.Enabled = updateAccess;

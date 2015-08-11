@@ -39,17 +39,17 @@
 
 		<telerik:RadAjaxPanel ID="rapLostTime" runat="server">
 
-		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound" OnItemCommand="rptLostTime_ItemCommand">
+		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound" OnItemCreated="rptLostTime_ItemCreated" OnItemCommand="rptLostTime_ItemCommand">
 
 			<HeaderTemplate>
 					<table class="table" border="0" >
 						<thead>
-							<tr>
+							<tr class="row">
 								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>
-								<th class="col-sm-1 text-left-more"><b><asp:Label ID="lbWorkStatus" runat="server" Text="Status" /></b></th>
-								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Restriction Desc." /></b></th>
+								<th class="col-sm-1 text-left-more"><b><asp:Label ID="lbWorkStatus" runat="server" Text="Work Status" /></b></th>
+								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Description" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbBeginDate" runat="server" Text="Begin Date" /></b></th>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date: " /></b></th>
+								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbNextMedDate" runat="server" Text="Next Medical Appt." /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbExpectedReturnDT" runat="server" Text="Expected Return Date" /></b></th>
 							</tr>
@@ -57,32 +57,32 @@
 			</HeaderTemplate>
 			<ItemTemplate>
 	        <tbody>
-				<tr>
+				<tr class="row">
 					<td class="text-center">
 						<asp:Label ID="lbItemSeq" runat="server" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" CssClass="WarnIfChanged" Width="90%" runat="server"></telerik:RadDropDownList>
+						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" CssClass="WarnIfChanged" Width="100%"  AutoPostBack="true" runat="server"></telerik:RadDropDownList>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<asp:TextBox ID="tbRestrictDesc" Rows="3" Height="65px" Width="100%" TextMode="MultiLine" SkinID="Metro" runat="server" />
+						<asp:TextBox ID="tbRestrictDesc" Rows="3" Height="65px" Width="90%" TextMode="MultiLine" SkinID="Metro" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvRestrictDesc" ControlToValidate="tbRestrictDesc" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" Width="90%" CssClass="WarnIfChanged" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rvfBeginDate" ControlToValidate="rdpBeginDate" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvReturnDate" ControlToValidate="rdpReturnDate" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvNextMedDate" ControlToValidate="rdpNextMedDate" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left">
-						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT" Display="None" ErrorMessage="Required" />
 					</td>
 				</tbody>
