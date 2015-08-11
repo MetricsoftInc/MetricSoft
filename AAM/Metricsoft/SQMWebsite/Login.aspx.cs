@@ -214,7 +214,7 @@ namespace SQM.Website
 					}
 				}
 			}
-			else if (SessionManager.UserContext.Credentials.STATUS == "P") // AW 201310 - force password reset if forgot password
+			else if (SessionManager.UserContext.Credentials.STATUS == "P" || SessionManager.UserContext.Credentials.STATUS == "N") // AW 201310 - force password reset if forgot password
 			{
 				pnlLogin.Visible = false;
 				pnlLoginPasswordEdit.Visible = true;

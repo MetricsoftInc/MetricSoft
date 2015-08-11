@@ -89,19 +89,19 @@
                                     <telerik:RadComboBoxItem Text="Any Status" Value="0" />
                                     <telerik:RadComboBoxItem Text="Active Only" Value="A" />
                                     <telerik:RadComboBoxItem Text="Inactive Only" Value="I" />
-                                    <telerik:RadComboBoxItem Text="Plant Admin Role" Value="PA" />
-                                    <telerik:RadComboBoxItem Text="Company Admin Role" Value="CA" />
+                                    <telerik:RadComboBoxItem Text="Plant Admin Role" Value="150" />
+                                    <telerik:RadComboBoxItem Text="Company Admin Role" Value="100" />
                                 </Items>
                             </telerik:RadComboBox>
                             &nbsp;
-                            <telerik:RadComboBox id="ddlListModule" runat="server" Skin="Metro" ZIndex="9000" AutoPostBack="true" EmptyMessage="by module access" OnSelectedIndexChanged="UserStatusSelect">
+ <%--                           <telerik:RadComboBox id="ddlListModule" runat="server" Skin="Metro" ZIndex="9000" AutoPostBack="true" EmptyMessage="by module access" OnSelectedIndexChanged="UserStatusSelect">
                                 <Items>
                                     <telerik:RadComboBoxItem Text="" Value="" />
                                     <telerik:RadComboBoxItem Text="Any Modules" Value="0" />
                                     <telerik:RadComboBoxItem Text="EH & S Modules" Value="EHS" />
                                     <telerik:RadComboBoxItem Text="Quality Modules" Value="SQM" />
                                 </Items>
-                            </telerik:RadComboBox>
+                            </telerik:RadComboBox>--%>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <asp:Label ID="lblUserCount" runat="server" CssClass="prompt" Text="Count = "></asp:Label>
                             <asp:Label ID="lblUserCount_out" runat="server" CssClass="textStd" ></asp:Label>

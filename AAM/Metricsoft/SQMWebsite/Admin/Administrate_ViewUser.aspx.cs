@@ -72,32 +72,29 @@ namespace SQM.Website
 		{
 			SetLocalPerson(null);
 			isNew = false;
-            List<PERSON> userList;
+
+            List<PERSON> personList;
 
             if (ddlListStatus.SelectedValue == "A")
-                userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", true);
+				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", true).Where(l => l.STATUS == "A").ToList();
 			else if  (ddlListStatus.SelectedValue == "I")
-				userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l=> l.STATUS == "I").ToList();
-            else if (ddlListStatus.SelectedValue == "PA")
-                userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.ROLE == 150).ToList();
-            else if (ddlListStatus.SelectedValue == "CA")
-                userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.ROLE <= 100).ToList();
+				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l=> l.STATUS == "I").ToList();
+            else if (ddlListStatus.SelectedValue == "150")
+				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.busloc);
+               // userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.ROLE == 150).ToList();
+            else if (ddlListStatus.SelectedValue == "100")
+				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system);
+                //userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.JOBCODE_CD == "admin").ToList();
 			else
-                userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
+				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
 
-			string selectedModule = ddlListModule.SelectedValue;
-			if (selectedModule == "EHS"  ||  selectedModule == "SQM")
+			if (personList.Count > 0)
 			{
-				for (int n = userList.Count-1; n>=0;  n--)
-				{
-					PERSON person = userList[n];
-					if (SQMModelMgr.CheckProductModuleAccess(person, selectedModule) == false)
-						userList.Remove(person);
-				}
+				personList = personList.Where(l => SQMModelMgr.SearchUserList(new string[2] {"A","P"}).Select(u => u.SSO_ID).ToList().Contains(l.SSO_ID)).ToList();
 			}
 
-            uclUserList.BindUserList(userList.Where(l => l.ROLE > 1).OrderBy(l => l.LAST_NAME).ToList(), SessionManager.EffLocation.Company.COMPANY_ID);
-            lblUserCount_out.Text = userList.Count.ToString();
+			uclUserList.BindUserList(personList.Where(l => l.ROLE > 1).OrderBy(l => l.LAST_NAME).ToList(), SessionManager.EffLocation.Company.COMPANY_ID);
+			lblUserCount_out.Text = personList.Count.ToString();
 		}
 
 		private void uclSearchBar_OnReturnClick()
@@ -169,7 +166,7 @@ namespace SQM.Website
 
 			if (ddlJobCode.Items.Count == 0)
 			{
-				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", 1).OrderBy(j => j.JOB_DESC).ToList())
+				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", "").OrderBy(j => j.JOB_DESC).ToList())
 				{
 					ddlJobCode.Items.Add(new RadComboBoxItem(jc.JOBCODE_CD + "  /  " + jc.JOB_DESC, jc.JOBCODE_CD));
 				}
@@ -239,9 +236,6 @@ namespace SQM.Website
             
 			divPageBody.Visible = true;
 			ddlPlantSelect.ClearCheckedItems();
-			/* quality module reference
-			ddlCustPlantSelect.ClearCheckedItems();
-						 */
 
             DisplayErrorMessage(null);
 
@@ -283,17 +277,6 @@ namespace SQM.Website
                         }
 					}
 				}
-							/* quality module reference
-				if (!string.IsNullOrEmpty(person.OLD_LOCATION_CD))
-				{
-					string[] locs = person.OLD_LOCATION_CD.Split(',');
-					foreach (string locid in locs)
-					{
-						if (ddlCustPlantSelect.Items.FindItemByValue(locid) != null)
-							ddlCustPlantSelect.Items.FindItemByValue(locid).Checked = true;
-					}
-				}
-							 */
 			}
 
 				// AW20131106 - do not want to be able to change a SSO ID once a person has been added
@@ -305,6 +288,9 @@ namespace SQM.Website
 			tbUserMiddleName.Text = !string.IsNullOrEmpty(person.MIDDLE_NAME) ? person.MIDDLE_NAME : "";
 			if (ddlJobCode.Items.FindItemByValue(person.JOBCODE_CD) != null)
 				ddlJobCode.SelectedValue = person.JOBCODE_CD;
+			else
+				ddlJobCode.SelectedValue = "";
+
 			tbUserPhone.Text =  person.PHONE;
 			tbUserEmail.Text = person.EMAIL;
 			SetStatusList("ddlUserStatus", person.STATUS, true);

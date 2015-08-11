@@ -495,7 +495,7 @@ namespace SQM.Website
 
         #region person
 
-		public static List<JOBCODE> SelectJobcodeList(string status, int roleRange)
+		public static List<JOBCODE> SelectJobcodeList(string status, string privGroup)
 		{
 			List<JOBCODE> jobcodeList = new List<JOBCODE>();
 
@@ -504,7 +504,7 @@ namespace SQM.Website
 				jobcodeList = (from j in ctx.JOBCODE
 							   where (
 								(string.IsNullOrEmpty(status) || j.STATUS == status)
-								&& (roleRange == 0  ||  j.DEFAULT_ROLE > roleRange)
+								&& (string.IsNullOrEmpty(privGroup)  ||  !string.IsNullOrEmpty(j.PRIV_GROUP))
 							   )
 							   select j).ToList();
 			}
@@ -544,6 +544,18 @@ namespace SQM.Website
 			}
 
 			return personList;
+		}
+
+		public static List<SQM_ACCESS> SearchUserList(string[] statusList)
+		{
+			List<SQM_ACCESS> userList = new List<SQM_ACCESS>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				userList = (from u in ctx.SQM_ACCESS where (statusList.Count() == 0 ||  statusList.Contains(u.STATUS)) select u).ToList();
+			}
+
+			return userList;
 		}
 
         public static SQM_ACCESS LookupCredentials(SQM.Website.PSsqmEntities ctx, string SSOID, string pwd, bool activeOnly)
@@ -977,7 +989,7 @@ namespace SQM.Website
 				else 
 				{
 					access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
-					access.STATUS = "A"; 
+					access.STATUS = "N"; // force password update on login BUT person may be a self-serve user
 				}
 
                 access.RECOVERY_EMAIL = person.EMAIL;
