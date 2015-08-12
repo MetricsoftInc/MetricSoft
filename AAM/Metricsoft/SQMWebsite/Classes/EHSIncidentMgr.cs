@@ -636,8 +636,9 @@ namespace SQM.Website
 
 			INCIDENT incident = SelectIncidentById(entities, incidentId);
 			decimal companyId = 0;
-			if (incident.DETECT_COMPANY_ID != null)
-				companyId = incident.DETECT_COMPANY_ID;
+			if (incident != null)
+				if (incident.DETECT_COMPANY_ID != null)
+					companyId = incident.DETECT_COMPANY_ID;
 
 			// start with all data originators for the company
 			List<PERSON> personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).OrderBy(p => p.LAST_NAME).ToList();

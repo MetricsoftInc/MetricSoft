@@ -100,7 +100,9 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
-							(this.Page.FindControl(targetID).ID == "btnNext") || 
+							(this.Page.FindControl(targetID).ID == "btnNext") ||
+							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
+							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
 							(this.Page.FindControl(targetID).ID == "btnAddRootCause"))
 								IsFullPagePostback = true;
 				}

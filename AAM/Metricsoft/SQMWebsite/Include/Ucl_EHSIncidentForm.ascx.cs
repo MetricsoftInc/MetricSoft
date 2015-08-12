@@ -30,11 +30,13 @@ namespace SQM.Website
 		protected decimal companyId;
 		protected decimal selectedPlantId = 0;
 		protected bool IsUseCustomForm;
+		protected int totalFormSteps;
 
 		protected AccessMode accessLevel;
 		bool controlQuestionChanged;
 
 		List<EHSIncidentQuestion> questions;
+		protected List<EHSFormControlStep> formSteps;
 		PSsqmEntities entities;
 
 		protected Ucl_RadAsyncUpload uploader;
@@ -91,6 +93,13 @@ namespace SQM.Website
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
 			set { ViewState["EditIncidentId"] = value; }
 		}
+
+		public decimal NewIncidentId
+		{
+			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
+			set { ViewState["NewIncidentId"] = value; }
+		}
+
 
 		public decimal InitialPlantId
 		{
@@ -254,6 +263,7 @@ namespace SQM.Website
 				return;
 			}
 
+
 			if (typeId == 10)
 			{
 					preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
@@ -272,6 +282,12 @@ namespace SQM.Website
 					btnSaveContinue.Visible = false;
 					return;
 			}
+
+			InitializeForm(CurrentStep);
+
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			if (CurrentStep > 0 && formSteps.Count > 0)
+				return;
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -762,7 +778,7 @@ namespace SQM.Website
 
 			UpdateAnswersFromForm();
 
-			UpdateButtonText();
+			//UpdateButtonText();
 		}
 
 		public void BuildCustomForm(decimal typeId)
@@ -1357,7 +1373,7 @@ namespace SQM.Website
 
 			UpdateAnswersFromForm();
 
-			UpdateButtonText();		
+			//UpdateButtonText();		
 		
 		
 		}
@@ -1404,7 +1420,7 @@ namespace SQM.Website
 
 		void bcb_CheckedChangedCreate8D(object sender, EventArgs e)
 		{
-			UpdateButtonText();
+			//UpdateButtonText();
 		}
 
 		void bcb_CheckedChangedClose(object sender, EventArgs e)
@@ -1603,7 +1619,7 @@ namespace SQM.Website
 					ProcessQuestionControls(q, 0);
 			}
 
-			UpdateButtonText(); // One last check to fix 8d button text
+			//UpdateButtonText(); // One last check to fix 8d button text
 		}
 
 		protected void ProcessQuestionControls(EHSIncidentQuestion question, int depth)
@@ -1838,6 +1854,16 @@ namespace SQM.Website
 			if (Page.IsValid)
 			{
 				Save(false);
+
+				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(incidentTypeId);
+
+				if (btnSaveReturn.Enabled)
+					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+				else
+					lblResults.Text = "";
+
+				CurrentStep = CurrentStep + 1;
+				InitializeForm(CurrentStep);
 			}
 			else
 			{
@@ -1845,6 +1871,15 @@ namespace SQM.Website
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 		}
+
+		protected void btnPrevious_Click(object sender, EventArgs e)
+		{
+			lblResults.Text = "";
+			CurrentStep = CurrentStep - 1;
+
+			InitializeForm(CurrentStep);
+		}
+
 
 		protected void btnDelete_Click(object sender, EventArgs e)
 		{
@@ -1914,6 +1949,7 @@ namespace SQM.Website
 					// Add context - step 0
 					theIncident = CreateNewIncident();
 					incidentId = theIncident.INCIDENT_ID;
+					NewIncidentId = incidentId;
 					EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 				}
 				else
@@ -1960,6 +1996,43 @@ namespace SQM.Website
 				}
 			}
 
+			//$$///////////////////////////////////////////////////////
+			formSteps = GetFormSteps(incidentTypeId);
+
+			int i = Convert.ToInt32(CurrentStep);
+			string savingForm = formSteps[i].StepFormName;
+
+			switch (savingForm)
+			{
+				case "*":
+					break;
+				case "INCFORM_CONTAIN":
+					if (incidentId == 0)
+						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+					uclcontain.AddUpdateINCFORM_CONTAIN(incidentId);
+					break;
+				case "INCFORM_ROOT5Y":
+					if (incidentId == 0)
+						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+					uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId);
+					break;
+				case "INCFORM_ACTION":
+					if (incidentId == 0)
+						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+					uclaction.AddUpdateINCFORM_ACTION(incidentId);
+					break;
+				case "INCFORM_APPROVAL":
+					if (incidentId == 0)
+						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+					uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
+					break;
+			}
+
+			InitializeForm(CurrentStep);
+
+
+			//$$//////////////////////////////////////////////////////
+
 			decimal finalPlantId = 0;
 			var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
 			if (finalIncident != null)
@@ -1976,7 +2049,7 @@ namespace SQM.Website
 			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
 			//obj.IsBackground = true;
 
-			Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
+			//////////////Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
 
 			/*
 			if (shouldCreate8d == true && shouldReturn == false)
@@ -1990,6 +2063,184 @@ namespace SQM.Website
 
 		#endregion
 
+		void InitializeForm(int currentStep)
+		{
+
+			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+
+			int displayStep = currentStep + 1;
+			//lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
+
+			int i = Convert.ToInt32(currentStep);
+			string currentFormName = formSteps[i].StepFormName;
+			//lblFormTitle.Text = formSteps[i].StepHeadingText; ;
+
+			btnSaveContinue.Text = (i + 1 <= formSteps.Count() - 1) ? formSteps[i + 1].StepHeadingText.Trim() + "  " : "Next  ";
+			btnPrevious.Text = (i - 1 >= 0) ? "  " + formSteps[i - 1].StepHeadingText.Trim() : "  Prev";
+			
+
+			SetUserAccess(currentFormName);
+
+			//var sourceId = Page.Request[Page.postEventSourceID];
+
+			switch (currentFormName)
+			{
+				case "*":
+					pnlForm.Visible = true;
+					uclroot5y.Visible = false;
+					uclcontain.Visible = false;
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
+					btnPrevious.Visible = false;
+					btnSaveContinue.Visible = true;
+					//btnClose.Visible = false;
+					break;
+				case "INCFORM_CONTAIN":
+					//LoadDependantForm(currentFormName);
+					pnlForm.Visible = false;
+					uclroot5y.Visible = false;
+					uclcontain.Visible = true;
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
+					btnPrevious.Visible = true;
+					btnSaveContinue.Visible = true;
+					//btnClose.Visible = false;
+					break;
+				case "INCFORM_ROOT5Y":
+					//LoadDependantForm(currentFormName);
+					pnlForm.Visible = false;
+					uclroot5y.Visible = true;
+					uclcontain.Visible = false;
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
+					btnPrevious.Visible = true;
+					btnSaveContinue.Visible = true;
+					//btnClose.Visible = false;
+					break;
+				case "INCFORM_ACTION":
+					//LoadDependantForm(currentFormName);
+					pnlForm.Visible = false;
+					uclroot5y.Visible = false;
+					uclcontain.Visible = false;
+					uclaction.Visible = true;
+					uclapproval.Visible = false;
+					btnPrevious.Visible = true;
+					btnSaveContinue.Visible = true;
+					//btnClose.Visible = false;
+					break;
+				case "INCFORM_APPROVAL":
+					//LoadDependantForm(currentFormName);
+					pnlForm.Visible = false;
+					uclroot5y.Visible = false;
+					uclcontain.Visible = false;
+					uclaction.Visible = false;
+					uclapproval.Visible = true;
+					btnPrevious.Visible = true;
+					btnSaveContinue.Visible = false;
+					break;
+			}
+
+		}
+
+		public void LoadDependantForm(string formName)
+		{
+
+			//uclcontain.Controls.Clear();
+			//uclroot5y.Controls.Clear();
+			//uclaction.Controls.Clear();
+			//uclapproval.Controls.Clear();
+
+			string validationGroup = "Val_" + formName;
+
+			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+
+			switch (formName)
+			{
+
+				case "INCFORM_CONTAIN":
+					uclcontain.IsEditContext = IsEditContext;
+					uclcontain.IncidentId = EditIncidentId;
+					uclcontain.EditIncidentId = EditIncidentId;
+					uclcontain.SelectedTypeId = typeId;
+					//uclcontain.NewIncidentId = NewIncidentId;
+					uclcontain.ValidationGroup = validationGroup;
+					uclcontain.Visible = true;
+					uclcontain.PopulateInitialForm();
+					break;
+				case "INCFORM_ROOT5Y":
+					uclroot5y.IsEditContext = IsEditContext;
+					uclroot5y.IncidentId = EditIncidentId;
+					uclroot5y.EditIncidentId = EditIncidentId;
+					uclroot5y.SelectedTypeId = typeId;
+					//uclroot5y.NewIncidentId = NewIncidentId;
+					uclroot5y.ValidationGroup = validationGroup;
+					uclroot5y.Visible = true;
+					uclroot5y.PopulateInitialForm();
+					break;
+				case "INCFORM_ACTION":
+					uclaction.IsEditContext = IsEditContext;
+					uclaction.IncidentId = EditIncidentId;
+					uclaction.EditIncidentId = EditIncidentId;
+					uclaction.SelectedTypeId = typeId;
+					//uclaction.NewIncidentId = NewIncidentId;
+					uclaction.ValidationGroup = validationGroup;
+					uclaction.Visible = true;
+					uclaction.PopulateInitialForm();
+					break;
+				case "INCFORM__APPROVAL":
+					uclapproval.IsEditContext = IsEditContext;
+					uclapproval.IncidentId = EditIncidentId;
+					uclapproval.EditIncidentId = EditIncidentId;
+					uclapproval.SelectedTypeId = typeId;
+					//uclapproval.NewIncidentId = NewIncidentId;
+					uclapproval.ValidationGroup = validationGroup;
+					uclapproval.Visible = true;
+					uclapproval.PopulateInitialForm();
+					break;
+
+			}
+		}
+
+
+		private void SetUserAccess(string currentFormName)
+		{
+
+			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
+			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
+			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
+
+			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
+			switch (currentFormName)
+			{
+				case "*":
+					btnSaveReturn.Enabled = updateAccess;
+					break;
+				case "INCFORM_CONTAIN":
+					btnSaveReturn.Enabled = actionAccess;
+					break;
+				case "INCFORM_ROOT5Y":
+					btnSaveReturn.Enabled = actionAccess;
+					break;
+				case "INCFORM_ACTION":
+					btnSaveReturn.Enabled = actionAccess;
+					break;
+				case "INCFORM_APPROVAL":
+					btnSaveReturn.Enabled = approveAccess;
+					//btnClose.Enabled = approveAccess;
+					//btnClose.Visible = approveAccess;
+					break;
+			}
+		}
+
+		protected List<EHSFormControlStep> GetFormSteps(decimal typeId)
+		{
+			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			return formSteps;
+		}
 
 		#region Save Methods
 
@@ -2399,7 +2650,7 @@ namespace SQM.Website
 				}
 
 				UpdateControlledQuestions();
-				UpdateButtonText();
+				//UpdateButtonText();
 
 				if (CurrentStep == 1)
 				{

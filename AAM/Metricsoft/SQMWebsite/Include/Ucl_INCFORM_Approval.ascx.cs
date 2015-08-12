@@ -98,7 +98,9 @@ namespace SQM.Website
 					var targetControl = this.Page.FindControl(targetID);
 
 					if (targetControl != null)
-						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
+						if ((this.Page.FindControl(targetID).ID == "btnSave") ||
+							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
+							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
 							(this.Page.FindControl(targetID).ID == "btnNext"))
 								IsFullPagePostback = true;
 				}

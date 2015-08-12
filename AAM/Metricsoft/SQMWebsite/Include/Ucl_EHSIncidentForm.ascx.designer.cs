@@ -130,6 +130,42 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlForm;
         
         /// <summary>
+        /// uclcontain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Contain uclcontain;
+        
+        /// <summary>
+        /// uclroot5y control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
+        
+        /// <summary>
+        /// uclaction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Action uclaction;
+        
+        /// <summary>
+        /// uclapproval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
+        
+        /// <summary>
         /// btnSaveReturn control.
         /// </summary>
         /// <remarks>
@@ -137,6 +173,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton btnSaveReturn;
+        
+        /// <summary>
+        /// btnPrevious control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnPrevious;
         
         /// <summary>
         /// btnSaveContinue control.

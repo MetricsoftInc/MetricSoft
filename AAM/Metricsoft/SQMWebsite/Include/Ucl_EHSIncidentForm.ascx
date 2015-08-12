@@ -84,23 +84,40 @@
 							</asp:Panel>
 						</div>
 
+ 
 						<div id="divForm" runat="server" visible="false">
 							<asp:Panel ID="pnlForm" runat="server">
 							</asp:Panel>
+
+					<ucl:Containment id="uclcontain" Visible="false" runat="server" />
+
+					<ucl:RootCause id="uclroot5y" Visible="false"  runat="server" />
+
+					<ucl:Action id="uclaction"  Visible="false"  runat="server" />
+
+					<ucl:Approval id="uclapproval"  Visible="false"  runat="server" />
+
+
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 33%;">
+									<td style="width: 22%;">
 										<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
 											CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
 											OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
 									</td>
-									<td style="width: 33%;">
+									<td style="width: 22%;">
+										<telerik:RadButton ID="btnPrevious" runat="server" Text="Save &amp; Create Report" Visible="false"
+												Icon-SecondaryIconUrl="/images/ico-arr-left-red.png" SingleClick="true" SingleClickText="Saving..."
+											CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
+											OnClick="btnPrevious_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+									</td>
+									<td style="width: 22%;">
 										<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
 												Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
 											CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
 											OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
 									</td>
-									<td style="width: 33%; text-align: center;">
+									<td style="width: 22%; text-align: center;">
 										<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
 											Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
 											OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />

@@ -64,11 +64,11 @@
 									<asp:Label ID="lbItemSeq" runat="server" />
 								</td>
 								<td class="text-left-more">
-									<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="90%" TextMode="MultiLine" SkinID="Metro" runat="server" />
+									<asp:TextBox ID="tbContainAction" Rows="3" Height="65px" Width="90%" TextMode="MultiLine" Enabled="true" SkinID="Metro" runat="server" />
 									<asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" />
 								</td>
 								<td class="text-left-more">
-									<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" Width="70%" CssClass="WarnIfChanged" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged" />
+									<telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" Width="70%" CssClass="WarnIfChanged" runat="server" Enabled="true" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged" />
 									<asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 								</td>
 								<td class="text-left-more">
