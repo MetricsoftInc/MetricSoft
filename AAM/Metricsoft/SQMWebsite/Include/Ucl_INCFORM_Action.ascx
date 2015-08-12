@@ -16,6 +16,7 @@
 		);
 	}
 
+
 	function StandardConfirm(sender, args) {
 
 		// Some pages will have no validators, so skip

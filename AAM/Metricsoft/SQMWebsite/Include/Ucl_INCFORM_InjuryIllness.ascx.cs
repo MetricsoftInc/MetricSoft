@@ -241,7 +241,7 @@ namespace SQM.Website
 						rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 
-						if (injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE")
+						if (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE")
 							rdoInside.SelectedValue = "1";
 						else
 							rdoInside.SelectedValue = "0";

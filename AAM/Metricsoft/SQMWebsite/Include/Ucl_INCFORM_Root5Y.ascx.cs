@@ -9,7 +9,6 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
-
 namespace SQM.Website
 {
 	public partial class Ucl_INCFORM_Root5Y : System.Web.UI.UserControl
@@ -100,9 +99,7 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
-							(this.Page.FindControl(targetID).ID == "btnNext") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
+							(this.Page.FindControl(targetID).ID == "btnNext") || 
 							(this.Page.FindControl(targetID).ID == "btnAddRootCause"))
 								IsFullPagePostback = true;
 				}
@@ -118,8 +115,8 @@ namespace SQM.Website
 
 			}
 
-			if (!IsFullPagePostback)
-				PopulateInitialForm();
+			//if (!IsFullPagePostback)
+			//	PopulateInitialForm();
 		}
 
 
@@ -212,11 +209,12 @@ namespace SQM.Website
 
 		}
 
-		public void AddUpdateINCFORM_ROOT5Y(decimal incidentId)
+		public int AddUpdateINCFORM_ROOT5Y(decimal incidentId)
 		{
 
 			var itemList = new List<INCFORM_ROOT5Y>();
 			int seqnumber = 0;
+			int status = 0;
 
 			foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
 			{
@@ -236,14 +234,16 @@ namespace SQM.Website
 				}
 			}
 
-			SaveRootCauses(incidentId, itemList);
+			status = SaveRootCauses(incidentId, itemList);
+			return status;
 		}
 
 
-		protected void SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
+		protected int SaveRootCauses(decimal incidentId, List<INCFORM_ROOT5Y> itemList)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
 
 			using (var ctx = new PSsqmEntities())
 			{
@@ -267,9 +267,10 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = DateTime.Now;
 
 					entities.AddToINCFORM_ROOT5Y(newItem);
-					entities.SaveChanges();
+					status = entities.SaveChanges();
 				}
 			}
+			return status;
 		}
 
 

@@ -9,7 +9,6 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
-
 namespace SQM.Website
 {
 	public partial class Ucl_INCFORM_Contain : System.Web.UI.UserControl
@@ -100,9 +99,7 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
-							(this.Page.FindControl(targetID).ID == "btnNext") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
+							(this.Page.FindControl(targetID).ID == "btnNext") || 
 							(this.Page.FindControl(targetID).ID == "btnAddContain"))
 								IsFullPagePostback = true;
 				}
@@ -118,8 +115,8 @@ namespace SQM.Website
 
 			}
 
-			if (!IsFullPagePostback)
-				PopulateInitialForm();
+			//if (!IsFullPagePostback)
+			//	PopulateInitialForm();
 		}
 
 
@@ -255,10 +252,11 @@ namespace SQM.Website
 
 		}
 
-		public void AddUpdateINCFORM_CONTAIN(decimal incidentId)
+		public int AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
 			var itemList = new List<INCFORM_CONTAIN>();
 			int seqnumber = 0;
+			int status = 0;
 
 			foreach (RepeaterItem containtem in rptContain.Items)
 			{
@@ -285,13 +283,15 @@ namespace SQM.Website
 			}
 
 			if (itemList.Count > 0)
-				SaveContainment(incidentId, itemList);
+				status = SaveContainment(incidentId, itemList);
 
+			return status;
 		}
 
-		private void SaveContainment(decimal incidentId, List<INCFORM_CONTAIN> itemList)
+		private int SaveContainment(decimal incidentId, List<INCFORM_CONTAIN> itemList)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
 
 			using (var ctx = new PSsqmEntities())
 			{
@@ -303,6 +303,7 @@ namespace SQM.Website
 			foreach (INCFORM_CONTAIN item in itemList)
 			{
 				var newItem = new INCFORM_CONTAIN();
+
 
 				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
 				{
@@ -319,9 +320,10 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = DateTime.Now;
 
 					entities.AddToINCFORM_CONTAIN(newItem);
-					entities.SaveChanges();
+					status = entities.SaveChanges();
 				}
 			}
+			return status;
 		}
 
 

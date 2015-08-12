@@ -24154,6 +24154,30 @@ namespace SQM.Website
         private global::System.String _LANG_TEXT;
         partial void OnLANG_TEXTChanging(global::System.String value);
         partial void OnLANG_TEXTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String HELP_TEXT
+        {
+            get
+            {
+                return _HELP_TEXT;
+            }
+            set
+            {
+                OnHELP_TEXTChanging(value);
+                ReportPropertyChanging("HELP_TEXT");
+                _HELP_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("HELP_TEXT");
+                OnHELP_TEXTChanged();
+            }
+        }
+        private global::System.String _HELP_TEXT;
+        partial void OnHELP_TEXTChanging(global::System.String value);
+        partial void OnHELP_TEXTChanged();
 
         #endregion
 

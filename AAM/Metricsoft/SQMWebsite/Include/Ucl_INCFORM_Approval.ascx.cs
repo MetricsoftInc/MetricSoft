@@ -9,6 +9,7 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
+
 namespace SQM.Website
 {
 	public partial class Ucl_INCFORM_Approval : System.Web.UI.UserControl
@@ -98,9 +99,7 @@ namespace SQM.Website
 					var targetControl = this.Page.FindControl(targetID);
 
 					if (targetControl != null)
-						if ((this.Page.FindControl(targetID).ID == "btnSave") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
+						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
 							(this.Page.FindControl(targetID).ID == "btnNext"))
 								IsFullPagePostback = true;
 				}
@@ -116,8 +115,8 @@ namespace SQM.Website
 
 			}
 
-			if (!IsFullPagePostback)
-				PopulateInitialForm();
+			//if (!IsFullPagePostback)
+			//	PopulateInitialForm();
 		}
 
 
@@ -229,9 +228,10 @@ namespace SQM.Website
 
 		}
 
-		public void AddUpdateINCFORM_APPROVAL(decimal incidentId)
+		public int AddUpdateINCFORM_APPROVAL(decimal incidentId)
 		{
 			var itemList = new List<INCFORM_APPROVAL>();
+			int status = 0;
 			//int seqnumber = 0;
 
 			foreach (RepeaterItem containtem in rptApprovals.Items)
@@ -257,12 +257,14 @@ namespace SQM.Website
 			//	itemList.Add(item);
 			}
 
-			SaveApprovals(incidentId, itemList);
+			status = SaveApprovals(incidentId, itemList);
+			return status;
 		}
 
-		private void SaveApprovals(decimal incidentId, List<INCFORM_APPROVAL> itemList)
+		private int SaveApprovals(decimal incidentId, List<INCFORM_APPROVAL> itemList)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
 
 			//using (var ctx = new PSsqmEntities())
 			//{
@@ -293,6 +295,8 @@ namespace SQM.Website
 			//		entities.SaveChanges();
 			//	}
 			//}
+
+			return status;
 		}
 
 

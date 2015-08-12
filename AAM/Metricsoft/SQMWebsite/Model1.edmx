@@ -441,10 +441,6 @@
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
-          <AssociationSet Name="FK_JOBCODE_JOBCODE" Association="PSsqmModel.Store.FK_JOBCODE_JOBCODE">
-            <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="JOBCODE1" EntitySet="JOBCODE" />
-          </AssociationSet>
           <AssociationSet Name="FK_LABOR_TY_REFERENCE_COMPANY" Association="PSsqmModel.Store.FK_LABOR_TY_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="LABOR_TYPE" EntitySet="LABOR_TYPE" />
@@ -1589,6 +1585,7 @@
           <Property Name="INCIDENT_QUESTION_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="NLS_LANGUAGE" Type="varchar" Nullable="false" MaxLength="12" />
           <Property Name="LANG_TEXT" Type="nvarchar" MaxLength="400" />
+          <Property Name="HELP_TEXT" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="INCIDENT_QUESTION_TYPE">
           <Key>
@@ -3464,18 +3461,6 @@
             </Principal>
             <Dependent Role="INCFORM_INJURYILLNESS">
               <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JOBCODE_JOBCODE">
-          <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="1" />
-          <End Role="JOBCODE1" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="JOBCODE">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Principal>
-            <Dependent Role="JOBCODE1">
-              <PropertyRef Name="JOBCODE_CD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8728,6 +8713,7 @@
           <Property Type="String" Name="NLS_LANGUAGE" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="LANG_TEXT" MaxLength="400" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="INCIDENT_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION" FromRole="INCIDENT_QUESTION_LANG" ToRole="INCIDENT_QUESTION" />
+          <Property Type="String" Name="HELP_TEXT" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION">
           <End Type="PSsqmModel.INCIDENT_QUESTION" Role="INCIDENT_QUESTION" Multiplicity="1" />
@@ -10736,6 +10722,7 @@
           <EntitySetMapping Name="INCIDENT_QUESTION_LANG">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_QUESTION_LANG">
               <MappingFragment StoreEntitySet="INCIDENT_QUESTION_LANG">
+                <ScalarProperty Name="HELP_TEXT" ColumnName="HELP_TEXT" />
                 <ScalarProperty Name="LANG_TEXT" ColumnName="LANG_TEXT" />
                 <ScalarProperty Name="NLS_LANGUAGE" ColumnName="NLS_LANGUAGE" />
                 <ScalarProperty Name="INCIDENT_QUESTION_ID" ColumnName="INCIDENT_QUESTION_ID" />

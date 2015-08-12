@@ -19,19 +19,6 @@
 			}
 		);
 	}
-
-	function ToggleAreaVisible(divID, btnID) {
-		var area = document.getElementById(divID);
-		if (area.style.display == 'none') {
-			area.style.display = 'block';
-			var btn = document.getElementById(btnID);
-			btn.focus();
-			btn.scrollIntoView();
-		}
-		else {
-			area.style.display = 'none';
-		}
-	}
 </script>
 
 <div id="divIncidentForm" runat="server" visible="false">
@@ -84,70 +71,52 @@
 							</asp:Panel>
 						</div>
 
- 
 						<div id="divForm" runat="server" visible="false">
 							<asp:Panel ID="pnlForm" runat="server">
 							</asp:Panel>
-
-					<ucl:Containment id="uclcontain" Visible="false" runat="server" />
-
-					<ucl:RootCause id="uclroot5y" Visible="false"  runat="server" />
-
-					<ucl:Action id="uclaction"  Visible="false"  runat="server" />
-
-					<ucl:Approval id="uclapproval"  Visible="false"  runat="server" />
-
-
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: 22%;">
+									<td style="width: 33%;">
 										<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
 											CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
 											OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
 									</td>
-									<td style="width: 22%;">
-										<telerik:RadButton ID="btnPrevious" runat="server" Text="Save &amp; Create Report" Visible="false"
-												Icon-SecondaryIconUrl="/images/ico-arr-left-red.png" SingleClick="true" SingleClickText="Saving..."
-											CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
-											OnClick="btnPrevious_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
-									</td>
-									<td style="width: 22%;">
+									<td style="width: 33%;">
 										<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
 												Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
 											CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
 											OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
 									</td>
-									<td style="width: 22%; text-align: center;">
+									<td style="width: 33%; text-align: center;">
 										<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
 											Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
 											OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
 									</td>
 								</tr>
 							</table>
-<%--							<asp:Panel ID="pnlContainment" runat="server" Visible="false">
-								<a href="#" id="btnContainment" class="buttonLink" onclick="ToggleAreaVisible('divContainment','btnContainment');">Containment</a>
-								<div id="divContainment" class="borderSoft" style="display: none;">
-									<ucl:Containment id="uclContainment" runat="server" />
+							<div id="divSubnav" runat="server" visible="true">
+								<div id="divSubnavPage" runat="server" class="borderSoft" visible="false">
+									<ucl:Containment id="uclContainment" runat="server" Visible="false" />
+									<ucl:RootCause id="uclRootCause" runat="server" Visible="false"/>
+									<ucl:Action id="uclAction" runat="server" Visible="false"/>
+									<ucl:Approval id="uclApproval" runat="server" Visible="false"/>
 								</div>
-							</asp:Panel>
-							<asp:Panel ID="pnlRootCause" runat="server" style="margin-top: 4px;" Visible="false">
-								<a href="#" id="btnRootCause" class="buttonLink" onclick="ToggleAreaVisible('divRootCause','btnRootCause');">Root Cause</a>
-								 <div id="divRootCause" class="borderSoft" style="display: none;">
-									<ucl:RootCause id="uclRootCause" runat="server" />
+
+								<div style="margin-top: 5px;">
+									<telerik:RadButton ID="btnSubnavSave" runat="server" Text="Save" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
+										OnClick="btnSubnavSave_Click" CommandArgument="0"/>
+									<telerik:RadButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="UseSubmitAction" Skin="Metro" 
+										OnClick="btnSubnav_Click" CommandArgument="0" />
+									<telerik:RadButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="UseSubmitAction" Skin="Metro" 
+										OnClick="btnSubnav_Click" CommandArgument="C"/>
+									<telerik:RadButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="UseSubmitAction" Skin="Metro"
+										OnClick="btnSubnav_Click" CommandArgument="R"/>
+									<telerik:RadButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="UseSubmitAction" Skin="Metro"
+										OnClick="btnSubnav_Click" CommandArgument="A"/>
+									<telerik:RadButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="UseSubmitAction" Skin="Metro"
+										OnClick="btnSubnav_Click" CommandArgument="V"/>
 								</div>
-							</asp:Panel>
-							<asp:Panel ID="pnlAction" runat="server" style="margin-top: 4px;" Visible="false">
-								<a href="#" id="btnAction" class="buttonLink" onclick="ToggleAreaVisible('divAction','btnAction');">Corrective Actions</a>
-								 <div id="divAction" class="borderSoft" style="display: none;">
-									<ucl:Action id="uclAction" runat="server" />
-								</div>
-							</asp:Panel>
-							<asp:Panel ID="pnlApproval" runat="server" style="margin-top: 4px;" Visible="false">
-								<a href="#" id="btnApproval" class="buttonLink" onclick="ToggleAreaVisible('divApproval','btnApproval');">Approvals</a>
-								<div id="divApproval" class="borderSoft" style="display: none;">
-									<ucl:Approval id="uclApproval" runat="server" />
-								</div>
-							</asp:Panel>--%>
+							</div>
 						</div>
 						
 					</asp:Panel>

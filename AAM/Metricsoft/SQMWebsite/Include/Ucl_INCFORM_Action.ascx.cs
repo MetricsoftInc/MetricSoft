@@ -10,6 +10,7 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 
+
 namespace SQM.Website
 {
 	public partial class Ucl_INCFORM_Action : System.Web.UI.UserControl
@@ -101,9 +102,7 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "btnSave") || 
-							(this.Page.FindControl(targetID).ID == "btnNext") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveContinue") ||
-							(this.Page.FindControl(targetID).ID == "btnSaveReturn") || 
+							(this.Page.FindControl(targetID).ID == "btnNext") || 
 							(this.Page.FindControl(targetID).ID == "btnAddFinal"))
 								IsFullPagePostback = true;
 				}
@@ -119,8 +118,8 @@ namespace SQM.Website
 
 			}
 
-			if (!IsFullPagePostback)
-				PopulateInitialForm();
+			//if (!IsFullPagePostback)
+			//	PopulateInitialForm();
 
 		}
 
@@ -256,10 +255,11 @@ namespace SQM.Website
 			}
 		}
 
-		public void AddUpdateINCFORM_ACTION(decimal incidentId)
+		public int AddUpdateINCFORM_ACTION(decimal incidentId)
 		{
 			var itemList = new List<INCFORM_ACTION>();
 			int seqnumber = 0;
+			int status = 0;
 
 			foreach (RepeaterItem containtem in rptAction.Items)
 			{
@@ -285,14 +285,17 @@ namespace SQM.Website
 			}
 
 			if (itemList.Count > 0)
-				SaveActions(incidentId, itemList);
+				status  = SaveActions(incidentId, itemList);
+
+			return status;
 
 		}
 
-		private void SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
+		private int SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
 	
 			using (var ctx = new PSsqmEntities())
 			{
@@ -320,9 +323,10 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = DateTime.Now;
 
 					entities.AddToINCFORM_ACTION(newItem);
-					entities.SaveChanges();
+					status = entities.SaveChanges();
 				}
 			}
+			return status;
 		}
 
 
