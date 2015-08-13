@@ -108,13 +108,13 @@
 									<telerik:RadButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="UseSubmitAction" Skin="Metro" 
 										OnClick="btnSubnav_Click" CommandArgument="0" />
 									<telerik:RadButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="UseSubmitAction" Skin="Metro" 
-										OnClick="btnSubnav_Click" CommandArgument="C"/>
+										OnClick="btnSubnav_Click" CommandArgument="2"/>
 									<telerik:RadButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="UseSubmitAction" Skin="Metro"
-										OnClick="btnSubnav_Click" CommandArgument="R"/>
+										OnClick="btnSubnav_Click" CommandArgument="3"/>
 									<telerik:RadButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="UseSubmitAction" Skin="Metro"
-										OnClick="btnSubnav_Click" CommandArgument="A"/>
+										OnClick="btnSubnav_Click" CommandArgument="4"/>
 									<telerik:RadButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="UseSubmitAction" Skin="Metro"
-										OnClick="btnSubnav_Click" CommandArgument="V"/>
+										OnClick="btnSubnav_Click" CommandArgument="5"/>
 								</div>
 							</div>
 						</div>

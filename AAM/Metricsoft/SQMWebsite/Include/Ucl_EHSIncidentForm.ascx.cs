@@ -2373,19 +2373,19 @@ namespace SQM.Website
 			int status = 0;
 			switch (CurrentSubnav)
 			{
-				case "C":
+				case "2":
 					status = uclContainment.AddUpdateINCFORM_CONTAIN(EditIncidentId);
 					btnSubnav_Click(btnSubnavContainment, null);
 					break;
-				case "R":
+				case "3":
 					status = uclRootCause.AddUpdateINCFORM_ROOT5Y(EditIncidentId);
 					btnSubnav_Click(btnSubnavRootCause, null);
 					break;
-				case "A":
+				case "4":
 					status = uclAction.AddUpdateINCFORM_ACTION(EditIncidentId);
 					btnSubnav_Click(btnSubnavAction, null);
 					break;
-				case "V":
+				case "5":
 					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);
 					btnSubnav_Click(btnSubnavApproval, null);
 					break;
@@ -2414,35 +2414,35 @@ namespace SQM.Website
 			CurrentSubnav = btn.CommandArgument;
 			switch (btn.CommandArgument)
 			{
-				case "C":
+				case "2":
 					btnSubnavContainment.Visible = false;
 					uclContainment.Visible = divSubnavPage.Visible = true;
 					uclContainment.IsEditContext = true;
 					uclContainment.EditIncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
 					break;
-				case "R":
+				case "3":
 					btnSubnavRootCause.Visible = false;
 					uclRootCause.Visible = divSubnavPage.Visible = true;
 					uclRootCause.IsEditContext = true;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
 					break;
-				case "A":
+				case "4":
 					btnSubnavAction.Visible = false;
 					uclAction.Visible = divSubnavPage.Visible = true;
 					uclAction.IsEditContext = true;
 					uclAction.EditIncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
 					break;
-				case "V":
+				case "5":
 					btnSubnavApproval.Visible = false;
 					uclApproval.Visible = divSubnavPage.Visible = true;
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
 					uclApproval.PopulateInitialForm();
 					break;
-				case "I":
+				case "0":
 				default:
 					btnSubnavIncident.Visible = false;
 					pnlForm.Visible = true;
