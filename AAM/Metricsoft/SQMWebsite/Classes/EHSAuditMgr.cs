@@ -64,6 +64,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public AUDIT_TYPE AuditType
+		{
+			get;
+			set;
+		}
 		public List<AUDIT_QUESTION> TopicList
 		{
 			get;

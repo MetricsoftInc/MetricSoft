@@ -145,7 +145,7 @@
             OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" GridLines="None" Width="100%">
             <MasterTableView ExpandCollapseColumn-Visible="false">
                 <Columns>
-                    <telerik:GridTemplateColumn HeaderText="Audit/<br>Report" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
+                    <telerik:GridTemplateColumn HeaderText="Audit" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
                         <ItemTemplate>
                             <table class="innerTable">
                                 <tr>
@@ -185,9 +185,9 @@
                             <asp:Label ID="lblLocation" runat="server" Text='<%#Eval("Plant.PLANT_NAME") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
-                    <telerik:GridTemplateColumn HeaderText="Type" ShowSortIcon="true" SortExpression="Audit.AUDIT_TYPE">
+                    <telerik:GridTemplateColumn HeaderText="Type" ShowSortIcon="true" SortExpression="AuditType.TITLE">
                         <ItemTemplate>
-                            <asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("Audit.AUDIT_TYPE") %>'></asp:Label>
+                            <asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn HeaderText="Audit By" ShowSortIcon="true" SortExpression="Audit.AUDIT_PERSON">

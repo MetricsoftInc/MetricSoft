@@ -59,9 +59,10 @@
                                         </td>
                                         <td class="required" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt">
-								<telerik:RadComboBox ID="ddlScheduleScope" runat="server" Skin="Metro" Width="280" ZIndex="10" Font-Size="Small"
-									AutoPostBack="true" ToolTip="select an accesible business location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="ScheduleScope_Select" ></telerik:RadComboBox>
-								<telerik:RadMenu ID="mnuScheduleScope" runat="server" Skin="Default" Width="280" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="ScheduleScope_Select"></telerik:RadMenu>
+                                            <asp:Label runat="server" ID="lblAuditLocation" Visible="false"></asp:Label>
+								<telerik:RadComboBox ID="ddlAuditLocation" runat="server" Skin="Metro" Width="280" ZIndex="10" Font-Size="Small"
+									AutoPostBack="true" ToolTip="select an accesible business location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="AuditLocation_Select" ></telerik:RadComboBox>
+								<telerik:RadMenu ID="mnuAuditLocation" runat="server" Skin="Default" Width="280" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="AuditLocation_Select"></telerik:RadMenu>
                                             <asp:HiddenField runat="server" ID="hdnAuditLocation" />
                                         </td>
                                     </tr>
@@ -71,6 +72,7 @@
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
                                         <td class="tableDataAlt" width="75%">
+                                            <asp:Label runat="server" ID="lblAuditDescription" Visible="false"></asp:Label>
                                             <asp:TextBox ID="tbDescription" TextMode="MultiLine" Rows="2" Columns="50" MaxLength="4050" runat="server"></asp:TextBox>
                                         </td>
                                     </tr>
@@ -80,6 +82,7 @@
                                         </td>
                                         <td class="required" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="75%">
+                                            <asp:Label runat="server" ID="lblAuditPersonName" Visible="false"></asp:Label>
                                             <telerik:RadDropDownList ID="rddlAuditUsers" runat="server" CausesValidation="false" Skin="Metro" Width="400px"></telerik:RadDropDownList>
                                         </td>
                                     </tr>
@@ -89,6 +92,7 @@
                                         </td>
                                         <td class="required" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="75%">
+                                            <asp:Label runat="server" ID="lblAuditDueDate" Visible="false"></asp:Label>
                                             <telerik:RadDatePicker ID="dmAuditDate" runat="server" CssClass="textStd" Width=145 Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
                                         </td>
                                     </tr>
@@ -96,6 +100,7 @@
 
                             </div>
                         </asp:Panel>
+                        <div id="divForm" runat="server">
                             <asp:Panel ID="pnlForm" runat="server">
                             </asp:Panel>
                         
@@ -120,7 +125,7 @@
                                 </tr>
                             </table>
 
-                        
+                        </div>
                     </asp:Panel>
                     
                     </telerik:RadAjaxPanel>

@@ -1038,14 +1038,16 @@ namespace SQM.Website
 			{
 				this.AuditHst = (from a in this.Entities.AUDIT
 									join p in this.Entities.PLANT on a.DETECT_PLANT_ID equals p.PLANT_ID
-									join r in this.Entities.PERSON on a.CREATE_PERSON equals r.PERSON_ID
+									join r in this.Entities.PERSON on a.AUDIT_PERSON equals r.PERSON_ID
+									join t in this.Entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID
 									where ((a.AUDIT_DT >= fromDate && a.AUDIT_DT <= toDate)
 									&& auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.DETECT_PLANT_ID))
 									select new EHSAuditData
 									{
 										Audit = a,
 										Plant = p,
-										Person = r
+										Person = r,
+										AuditType = t
 									}).ToList();
 
 				if (this.AuditHst != null)

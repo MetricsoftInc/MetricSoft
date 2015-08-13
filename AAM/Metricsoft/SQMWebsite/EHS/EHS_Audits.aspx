@@ -1,4 +1,4 @@
-﻿<%@ Page Title="EHS Audits" Language="C#" MasterPageFile="~/PSMaster.Master"
+﻿<%@ Page Title="EHS Audits" Language="C#" MasterPageFile="~/RspPSMaster.Master"
     AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_Audits.aspx.cs" ClientIDMode="AutoID"
     Inherits="SQM.Website.EHS_Audits" ValidateRequest="false" %>
 
@@ -195,8 +195,8 @@
                                     <asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt"></asp:Label>
                                     <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width=145 Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
                                     <span style="margin-left: 10px;" class="noprint">
-                                        <asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
-                                        <asp:CheckBox id="cbShowImage" runat="server" Checked="false"/>
+                                        <%--<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
+                                        <asp:CheckBox id="cbShowImage" runat="server" Checked="false"/>--%>
                                         <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List audits" OnClick="btnAuditsSearchClick" />
                                     </span>
                                 </td>

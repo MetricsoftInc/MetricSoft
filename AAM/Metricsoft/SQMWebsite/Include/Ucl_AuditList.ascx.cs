@@ -605,7 +605,7 @@ namespace SQM.Website
 			lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
 		}
 
-		public void BindAuditListRepeater(object theList, string appContext, bool showImages)
+		public void BindAuditListRepeater(object theList, string appContext)
 		{
 			pnlAuditListRepeater.Visible = true;
 			staticAppContext = appContext;

@@ -121,22 +121,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblLocation;
         
         /// <summary>
-        /// ddlScheduleScope control.
+        /// lblAuditLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox ddlScheduleScope;
+        protected global::System.Web.UI.WebControls.Label lblAuditLocation;
         
         /// <summary>
-        /// mnuScheduleScope control.
+        /// ddlAuditLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadMenu mnuScheduleScope;
+        protected global::Telerik.Web.UI.RadComboBox ddlAuditLocation;
+        
+        /// <summary>
+        /// mnuAuditLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMenu mnuAuditLocation;
         
         /// <summary>
         /// hdnAuditLocation control.
@@ -157,6 +166,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
+        /// lblAuditDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAuditDescription;
+        
+        /// <summary>
         /// tbDescription control.
         /// </summary>
         /// <remarks>
@@ -173,6 +191,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAuditPerson;
+        
+        /// <summary>
+        /// lblAuditPersonName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAuditPersonName;
         
         /// <summary>
         /// rddlAuditUsers control.
@@ -193,6 +220,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblAuditDate;
         
         /// <summary>
+        /// lblAuditDueDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAuditDueDate;
+        
+        /// <summary>
         /// dmAuditDate control.
         /// </summary>
         /// <remarks>
@@ -200,6 +236,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker dmAuditDate;
+        
+        /// <summary>
+        /// divForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
         /// pnlForm control.

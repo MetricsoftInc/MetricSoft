@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Web.UI;
 using Telerik.Web.UI;
+using System.Globalization;
+using System.Threading;
 
 namespace SQM.Website
 {
@@ -68,8 +70,13 @@ namespace SQM.Website
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
 			accessLevel = UserContext.CheckAccess("EHS", "");
-			if (accessLevel < AccessMode.Update)
-				rbNew.Visible = false;
+			//if (accessLevel < AccessMode.Update)
+			//	rbNew.Visible = false;
+
+			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.audit);
+			if (rbNew.Visible)
+				rbNew.Visible = createAuditAccess;
+
 
 			if (IsPostBack)
 			{
@@ -177,6 +184,7 @@ namespace SQM.Website
 				case DisplayState.AuditList:
 					SearchAudits();
 					uclAuditForm.Visible = false;
+					rbNew.Visible = false;
 					break;
 
 				case DisplayState.AuditNotificationNew:
@@ -184,6 +192,7 @@ namespace SQM.Website
 					uclAuditForm.Visible = true;
 					uclAuditForm.IsEditContext = false;
 					uclAuditForm.ClearControls();
+					rbNew.Visible = false;
 					uclAuditForm.CheckForSingleType();
 					break;
 
@@ -192,6 +201,7 @@ namespace SQM.Website
 					uclAuditForm.CurrentStep = 0;
 					uclAuditForm.IsEditContext = true;
 					uclAuditForm.Visible = true;
+						rbNew.Visible = false;
 					uclAuditForm.BuildForm();
 					break;
 
@@ -199,6 +209,7 @@ namespace SQM.Website
 					divAuditList.Visible = false;
 					uclAuditForm.CurrentStep = 1;
 					uclAuditForm.IsEditContext = true;
+					rbNew.Visible = false;
 					uclAuditForm.Visible = true;
 					uclAuditForm.BuildForm();
 					break;
@@ -344,6 +355,7 @@ namespace SQM.Website
 
 		protected void rbNew_Click(object sender, EventArgs e)
 		{
+			rbNew.Visible = false;
 			UpdateDisplayState(DisplayState.AuditNotificationNew);
 		}
 
@@ -446,7 +458,7 @@ namespace SQM.Website
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
-			HSCalcs().ObjAny = cbShowImage.Checked;
+			//HSCalcs().ObjAny = cbShowImage.Checked;
 
 			HSCalcs().ehsCtl.SelectAuditList(plantIDS, typeList, fromDate, toDate, selectedValue);
 
@@ -457,7 +469,7 @@ namespace SQM.Website
 			if (HSCalcs().ehsCtl.AuditHst != null)
 			{
 				HSCalcs().ehsCtl.AuditHst.OrderByDescending(x => x.Audit.AUDIT_DT);
-				uclAuditList.BindAuditListRepeater(HSCalcs().ehsCtl.AuditHst, "EHS", cbShowImage.Checked);
+				uclAuditList.BindAuditListRepeater(HSCalcs().ehsCtl.AuditHst, "EHS");
 			}
 			//}
 
@@ -525,7 +537,8 @@ namespace SQM.Website
 			//if (Mode == AuditMode.Prevent)
 			//	uclExport.GeneratePreventativeActionExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
 			//else
-			//	uclExport.GenerateAuditExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
+
+			//uclExport.GenerateAuditExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
 		}
 		protected void lnkExportClick(object sender, EventArgs e)
 		{
