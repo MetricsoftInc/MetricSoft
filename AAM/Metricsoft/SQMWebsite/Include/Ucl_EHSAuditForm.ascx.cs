@@ -147,10 +147,10 @@ namespace SQM.Website
 			if (IsPostBack)
 			{
 					divAuditForm.Visible = true;
-					if (!returnFromClick)
-					{
+					//if (!returnFromClick)
+					//{
 						LoadHeaderInformation();
-					}
+					//}
 					BuildForm();
 			}
 			else
@@ -208,9 +208,6 @@ namespace SQM.Website
 			// set up for adding the header info
 			AccessMode accessmode = UserContext.RoleAccess();
 
-			ddlAuditLocation.Items.Clear();
-			mnuAuditLocation.Items.Clear();
-
 			if (IsEditContext)
 			{
 				// in edit mode, load the header field values and make all fields display only
@@ -248,24 +245,33 @@ namespace SQM.Website
 					locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
 					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
 					{
-						ddlAuditLocation.Visible = false;
-						mnuAuditLocation.Visible = true;
-						mnuAuditLocation.Enabled = true;
-						SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "Select a Location", "", true);
-						//RadMenuItem mi = new RadMenuItem();
-						//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
-						//mi.Value = "0";
-						//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-						//mnuScheduleScope.Items[0].Items.Insert(0, mi);
+						if (mnuAuditLocation.Items.Count == 0)
+						{
+							mnuAuditLocation.Items.Clear();
+
+							ddlAuditLocation.Visible = false;
+							mnuAuditLocation.Visible = true;
+							mnuAuditLocation.Enabled = true;
+							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "Select a Location", "", true);
+							//RadMenuItem mi = new RadMenuItem();
+							//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
+							//mi.Value = "0";
+							//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+							//mnuScheduleScope.Items[0].Items.Insert(0, mi);
+						}
 					}
 					else
 					{
-						ddlAuditLocation.Visible = true;
-						ddlAuditLocation.Enabled = true;
-						mnuAuditLocation.Visible = false;
-						SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
-						//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
-						ddlAuditLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+						if (ddlAuditLocation.Items.Count == 0)
+						{
+							ddlAuditLocation.Items.Clear();
+							ddlAuditLocation.Visible = true;
+							ddlAuditLocation.Enabled = true;
+							mnuAuditLocation.Visible = false;
+							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
+							//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
+							ddlAuditLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+						}
 					}
 				}
 				// set defaults for add mode
@@ -281,7 +287,8 @@ namespace SQM.Website
 				dmAuditDate.Visible = true;
 				dmAuditDate.Enabled = true;
 				dmAuditDate.ShowPopupOnFocus = true;
-				dmAuditDate.SelectedDate = DateTime.Now;
+				if (!dmAuditDate.SelectedDate.HasValue)
+					dmAuditDate.SelectedDate = DateTime.Now;
 
 			}
 		}
@@ -1878,7 +1885,14 @@ namespace SQM.Website
 			if (Page.IsValid)
 			{
 				//CurrentSubnav = (sender as RadButton).CommandArgument;
-				CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
+				try
+				{
+					CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
+				}
+				catch
+				{
+					CurrentStep = 0;
+				}
 				Save(true);
 			}
 			else
@@ -2265,13 +2279,13 @@ namespace SQM.Website
 			{
 				DETECT_COMPANY_ID = Convert.ToDecimal(auditPlant.COMPANY_ID),
 				DETECT_BUS_ORG_ID = auditPlant.BUS_ORG_ID,
-				DETECT_PLANT_ID = auditPlantId,
+				DETECT_PLANT_ID = auditPlant.PLANT_ID,
 				AUDIT_TYPE = "EHS",
 				CREATE_DT = DateTime.Now,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
-				DESCRIPTION = auditDescription,
+				DESCRIPTION = tbDescription.Text.ToString(),
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
-				AUDIT_DT = auditDate,
+				AUDIT_DT = (DateTime)dmAuditDate.SelectedDate,
 				AUDIT_TYPE_ID = auditTypeId,
 				AUDIT_PERSON = Convert.ToDecimal(rddlAuditUsers.SelectedValue)
 			};
