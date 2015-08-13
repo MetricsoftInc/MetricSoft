@@ -1053,7 +1053,7 @@ namespace SQM.Website
 				if (this.AuditHst != null)
 				{
 					decimal[] ids = this.AuditHst.Select(a => a.Audit.AUDIT_ID).Distinct().ToArray();
-					var qaList = (from a in this.Entities.AUDIT_ANSWER.Include("AUDIT_QUESTION")
+					var qaList = (from a in this.Entities.AUDIT_ANSWER
 								  where (ids.Contains(a.AUDIT_ID))
 								  select a).ToList();
 					foreach (EHSAuditData data in this.AuditHst)

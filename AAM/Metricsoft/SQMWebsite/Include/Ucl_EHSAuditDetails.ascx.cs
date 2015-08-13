@@ -87,7 +87,18 @@ namespace SQM.Website
 
 							}
 						}
-						sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td></tr>", q.QuestionText, answer));
+						// Add a comment box that hides/shows via a link to certain field types
+						if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
+							q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
+							q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+						{
+							comment = Server.HtmlEncode(comment);
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td><td>{2}</td></tr>", q.QuestionText, answer, comment));
+						}
+						else
+						{
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td><td></td></tr>", q.QuestionText, answer));
+						}
 					}
 				}
 				sb.AppendLine("</table>");

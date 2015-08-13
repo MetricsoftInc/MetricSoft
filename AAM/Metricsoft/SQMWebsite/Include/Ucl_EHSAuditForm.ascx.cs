@@ -361,19 +361,8 @@ namespace SQM.Website
 				if (!previousTopic.Equals(tid)) // add a topic header
 				{
 					var pnlTopic = new Panel() { ID = "Panel" + tid };
-					pnlTopic.Controls.Add(new LiteralControl("<tr><td colspan=\"4\" class=\"blueCell\" style=\"width: 100%;\">"));
-					//pnlTopic.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\">"));
+					pnlTopic.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"blueCell\" style=\"width: 100%;\">"));
 					pnlTopic.Controls.Add(new Label() { ID = "Label" + tid, Text = q.TopicTitle });
-				//	pnlTopic.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px; padding-left: 0 !important;\">"));
-				//	//if (!string.IsNullOrEmpty(q.HelpText))
-				//	//	AddToolTip(pnlTopic, q);
-				//	pnlTopic.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px; padding-left: 0 !important;\">"));
-				//	//if (q.IsRequired)
-				//	//	pnlTopic.Controls.Add(new LiteralControl("<span class=\"requiredStar\">&bull;</span>"));
-				//	//if (q.IsRequiredClose)
-				//	//	pnlTopic.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
-
-				//	pnlTopic.Controls.Add(new LiteralControl("</td><td class=\"tanCell\">"));
 					pnlTopic.Controls.Add(new LiteralControl("</td></tr>"));
 					pnlForm.Controls.Add(pnlTopic);
 					previousTopic = tid;
@@ -798,6 +787,8 @@ namespace SQM.Website
 
 				}
 
+				pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+
 				// Add a comment box that hides/shows via a link to certain field types
 				if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 					q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
@@ -805,7 +796,10 @@ namespace SQM.Website
 				{
 					string cid = "Comment" + qid;
 					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+					comment.TextMode = InputMode.MultiLine;
 					comment.Rows = 2;
+					comment.Resize = ResizeMode.Both;
+					comment.Text = q.AnswerComment;
 					pnl.Controls.Add(comment);
 				}
 
@@ -859,31 +853,6 @@ namespace SQM.Website
 			if (accessLevel <= AccessMode.View)
 				return;
 
-			if (Mode == AuditMode.Prevent)
-			{
-				if (accessLevel <= AccessMode.Plant)
-				{
-					pnlAuditHeader.Visible = false;
-
-					if (CurrentStep == 0)
-					{
-						if (IsEditContext)
-						{
-							ShowAuditDetails(EditAuditId, "Recommendation Details");
-							btnSaveReturn.Visible = false;
-							btnSaveContinue.Visible = false;
-						}
-						return;
-					}
-				}
-				if (CurrentStep == 1)
-				{
-					uclAuditDetails.Visible = true;
-					var displaySteps = new int[] { 0 };
-					uclAuditDetails.Refresh(EditAuditId, displaySteps);
-				}
-			}
-
 			decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
 			if (typeId < 1)
 				return;
@@ -899,29 +868,10 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
-			//if (typeId == 10)
-			//{
-			//	preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
-			//	preventionLocationForm.ID = "plf1";
-			//	preventionLocationForm.IsEditContext = IsEditContext;
-			//	preventionLocationForm.IncidentId = EditAuditId;
-
-			//	preventionLocationForm.BuildCaseComboBox();
-			//	if (IsEditContext == true)
-			//		preventionLocationForm.PopulateForm();
-
-			//	pnlForm.Controls.Add(new LiteralControl("<br/>"));
-			//	pnlForm.Controls.Add(preventionLocationForm);
-			//	pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-			//	btnSaveReturn.Visible = false;
-			//	btnSaveContinue.Visible = false;
-			//	return;
-			//}
-
 			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0);
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
-
+			string previousTopic = "";
 			foreach (var q in questions)
 			{
 				var validator = new RequiredFieldValidator();
@@ -930,10 +880,12 @@ namespace SQM.Website
 				var localQuestion = q;
 				if (IsEditContext)
 				{
-					q.AnswerText = (from a in entities.AUDIT_ANSWER
-									where a.AUDIT_ID == EditAuditId
-										&& a.AUDIT_QUESTION_ID == localQuestion.QuestionId
-									select a.ANSWER_VALUE).FirstOrDefault();
+					var auditAnswer = (from a in entities.AUDIT_ANSWER
+									   where a.AUDIT_ID == EditAuditId
+										   && a.AUDIT_QUESTION_ID == localQuestion.QuestionId
+									   select a).FirstOrDefault();
+					q.AnswerText = auditAnswer.ANSWER_VALUE;
+					q.AnswerComment = auditAnswer.COMMENT;
 				}
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
@@ -943,6 +895,17 @@ namespace SQM.Website
 				//}
 
 				string qid = q.QuestionId.ToString();
+				string tid = "T" + q.TopicId.ToString();
+
+				if (!previousTopic.Equals(tid)) // add a topic header
+				{
+					var pnlTopic = new Panel() { ID = "Panel" + tid };
+					pnlTopic.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"blueCell\" style=\"width: 100%;\">"));
+					pnlTopic.Controls.Add(new Label() { ID = "Label" + tid, Text = q.TopicTitle });
+					pnlTopic.Controls.Add(new LiteralControl("</td></tr>"));
+					pnlForm.Controls.Add(pnlTopic);
+					previousTopic = tid;
+				}
 
 				var pnl = new Panel() { ID = "Panel" + qid };
 
@@ -1037,8 +1000,8 @@ namespace SQM.Website
 							}
 							rbl.Items.Add(li);
 						}
-						if (!shouldPopulate)
-							rbl.SelectedIndex = 0; // Default to first
+						//if (!shouldPopulate)
+						//	rbl.SelectedIndex = 0; // Default to first
 						pnl.Controls.Add(rbl);
 						break;
 
@@ -1114,28 +1077,28 @@ namespace SQM.Website
 						else
 						{
 							// Default projected completion date 30 or 60 days based on previous questions
-							if (q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate)
-							{
-								if (EditAuditId > 0)
-								{
-									//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
-									if (audit != null)
-									{
-										// mt - due date now based on Incident creation date per TI
-										//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
-										//DateTime parseDate;
-										//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-										DateTime parseDate = DateTime.Now;
-										//{
-										string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.RecommendationType);
-										if (answer.ToLower() == "behavioral")
-											rdp.SelectedDate = parseDate.AddDays(30);
-										else
-											rdp.SelectedDate = parseDate.AddDays(60);
-										//}
-									}
-								}
-							}
+							//if (q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate)
+							//{
+							//	if (EditAuditId > 0)
+							//	{
+							//		//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+							//		if (audit != null)
+							//		{
+							//			// mt - due date now based on Incident creation date per TI
+							//			//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
+							//			//DateTime parseDate;
+							//			//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+							//			DateTime parseDate = DateTime.Now;
+							//			//{
+							//			string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.RecommendationType);
+							//			if (answer.ToLower() == "behavioral")
+							//				rdp.SelectedDate = parseDate.AddDays(30);
+							//			else
+							//				rdp.SelectedDate = parseDate.AddDays(60);
+							//			//}
+							//		}
+							//	}
+							//}
 						}
 
 						// Incident report date, completion date, projected completion date are not editable
@@ -1180,8 +1143,8 @@ namespace SQM.Website
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
-						else if (q.QuestionId == (decimal)EHSQuestionId.Create8D && EHSIncidentMgr.IsTypeDefault8D(typeId))
-							bcb.Checked = true;
+						//else if (q.QuestionId == (decimal)EHSQuestionId.Create8D && EHSIncidentMgr.IsTypeDefault8D(typeId))
+						//	bcb.Checked = true;
 
 						// If controller question, "close" checkbox, or "create 8d" checkbox, register ajax behavior
 						if ((q.QuestionControls != null && q.QuestionControls.Count > 0) ||
@@ -1250,28 +1213,28 @@ namespace SQM.Website
 							uploader.GetUploadedFiles(40, EditAuditId, "1");
 						break;
 
-					case EHSAuditQuestionType.CurrencyTextBox:
-						var ctb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Number };
-						ctb.NumberFormat.DecimalDigits = 2;
-						if (shouldPopulate)
-							ctb.Text = q.AnswerText;
+					//case EHSAuditQuestionType.CurrencyTextBox:
+					//	var ctb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Number };
+					//	ctb.NumberFormat.DecimalDigits = 2;
+					//	if (shouldPopulate)
+					//		ctb.Text = q.AnswerText;
 
-						if (EditAuditId > 0 && Mode == AuditMode.Prevent)
-						{
-							//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
-							if (audit != null)
-							{
-								string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSQuestionId.RecommendationType);
-								if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
-								{
-									ctb.Enabled = false;
-									pnl.Visible = false;
-								}
-							}
-						}
+					//	if (EditAuditId > 0 && Mode == AuditMode.Prevent)
+					//	{
+					//		//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+					//		if (audit != null)
+					//		{
+					//			string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSQuestionId.RecommendationType);
+					//			if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
+					//			{
+					//				ctb.Enabled = false;
+					//				pnl.Visible = false;
+					//			}
+					//		}
+					//	}
 
-						pnl.Controls.Add(ctb);
-						break;
+					//	pnl.Controls.Add(ctb);
+					//	break;
 
 					case EHSAuditQuestionType.PercentTextBox:
 						var ptb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Percent };
@@ -1369,6 +1332,23 @@ namespace SQM.Website
 						pnl.Controls.Add(rddlFilteredUsers);
 						break;
 
+				}
+
+				pnl.Controls.Add(new LiteralControl("</td> class=\"greyCell\">"));
+
+				// Add a comment box that hides/shows via a link to certain field types
+				if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
+					q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
+					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+				{
+					string cid = "Comment" + qid;
+					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+					comment.TextMode = InputMode.MultiLine;
+					comment.Rows = 2;
+					comment.Resize = ResizeMode.Both;
+					comment.Text = q.AnswerComment;
+					comment.Text = q.AnswerComment;
+					pnl.Controls.Add(comment);
 				}
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
