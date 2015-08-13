@@ -292,7 +292,7 @@
 		</div>
 
 		
-		<%-- WITNESSS question --%>
+	<%-- WITNESSS question --%>
 		<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
 			<ItemTemplate>
 
@@ -302,6 +302,7 @@
 						<span class="labelMultiLineText">
 							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
 					</div>
+
 					<div class="col-xs-12 visible-xs text-left-more">
 						<br /><br />
 						<span>
@@ -310,17 +311,18 @@
 
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:83px;padding-bottom:4px;padding-top:7px;">
 
-							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label><asp:TextBox ID="tbWitnessName" Width="278" SkinID="Metro" runat="server"></asp:TextBox></span>
+							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label><asp:TextBox ID="tbWitnessName" Width="50%" SkinID="Metro" runat="server"></asp:TextBox></span>
 							
 
-							<br class="visible-xs" />
+							<%--<br class="visible-xs" />--%>
 							
 							<span style="float:left; padding-left:10px;"><asp:Label ID="lbWitStmntPrompt" runat="server" Text="Statement:"></asp:Label></span>&nbsp;
 							<br class="visible-xs" />
-							<asp:TextBox ID="tbWitnessStatement" Width="42%" Height="65px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+							<asp:TextBox ID="tbWitnessStatement" Width="40%" Height="65px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 
 
-							<br class="visible-xs" style="padding-bottom:3px;" />			
+							<br class="visible-xs" style="padding-bottom:3px;" />	
+								
 						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 					</div>

@@ -229,7 +229,7 @@
 						<span style="float: left; margin-top: 4px;">
 							<asp:Label runat="server" ID="lblIncidentDate" Text="Incident Date From:" CssClass="prompt"></asp:Label>
 							<asp:Label runat="server" ID="lblInspectionDate" Text="Inspection Date From:" CssClass="prompt"></asp:Label>
-							<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textSmall" Width="105" Height="20" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Smaller"></telerik:RadDatePicker>
+							<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="105" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
 						</span>
 
 						<div class="clearfix visible-xs"></div>
@@ -237,7 +237,7 @@
 
 						<span>
 							<asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt"></asp:Label>
-							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textSmall" Width="105" Height="20" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Smaller"></telerik:RadDatePicker>
+							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="105" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
 						</span>
 
 						<div class="clearfix visible-xs"></div>
