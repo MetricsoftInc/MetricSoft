@@ -314,7 +314,7 @@ namespace SQM.Website
 								string HRLocation = fldArray[9];
 								string supvEmpID = fldArray[10];
 
-								plant = SQMModelMgr.LookupPlant(Entities, 0, HRLocation);
+								plant = SQMModelMgr.LookupPlant(Entities, HRLocation, HRLocation);
 								if (plant == null)
 								{
 									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "HR Location does not exist: " + HRLocation, HRLocation, 1, line));
@@ -344,7 +344,7 @@ namespace SQM.Website
 								person.SUPV_EMP_ID = supvEmpID;
 								try
 								{
-									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.SSO_ID);
+									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.LAST_NAME);
 								}
 								catch (Exception ex)
 								{

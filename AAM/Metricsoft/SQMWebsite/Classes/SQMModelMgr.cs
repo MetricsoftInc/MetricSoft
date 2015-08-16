@@ -1559,6 +1559,24 @@ namespace SQM.Website
             return plant;
         }
 
+		public static PLANT LookupPlant(SQM.Website.PSsqmEntities ctx, string dunsCode, string altDunsCode)
+		{
+			PLANT plant = null;
+
+			try
+			{
+				plant = (from pl in ctx.PLANT.Include("Address")
+							where ((!string.IsNullOrEmpty(dunsCode)  &&  pl.DUNS_CODE == dunsCode)  ||  (!string.IsNullOrEmpty(altDunsCode) &&  pl.ALT_DUNS_CODE == altDunsCode))
+							select pl).Single();
+			}
+			catch (Exception e)
+			{
+				//  SQMLogger.LogException(e);
+			}
+
+			return plant;
+		}
+
         public static List<PLANT> LoadPlantList(BUSINESS_ORG busOrg)
         {
             List<PLANT> plantList = null;

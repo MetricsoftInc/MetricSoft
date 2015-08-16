@@ -1939,6 +1939,7 @@
           <Property Name="LOCATION_CODE" Type="varchar" MaxLength="40" />
           <Property Name="TRACK_FIN_DATA" Type="bit" />
           <Property Name="TRACK_EW_DATA" Type="bit" />
+          <Property Name="ALT_DUNS_CODE" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PLANT_ACCOUNTING">
           <Key>
@@ -6503,6 +6504,7 @@
           <NavigationProperty Name="BUSINESS_ORG" Relationship="PSsqmModel.FK_PLANT_REFERENCE_BUSINESS" FromRole="PLANT" ToRole="BUSINESS_ORG" />
           <NavigationProperty Name="RECEIPT" Relationship="PSsqmModel.FK_RECEIPT_PLANT" FromRole="PLANT" ToRole="RECEIPT" />
           <NavigationProperty Name="RECEIPT1" Relationship="PSsqmModel.FK_RECEIPT_PLANT1" FromRole="PLANT" ToRole="RECEIPT" />
+          <Property Type="String" Name="ALT_DUNS_CODE" MaxLength="100" FixedLength="false" Unicode="false" />
           </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PLANT">
           <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="0..1" />
@@ -9763,6 +9765,7 @@
           <EntitySetMapping Name="PLANT">
             <EntityTypeMapping TypeName="PSsqmModel.PLANT">
               <MappingFragment StoreEntitySet="PLANT">
+                <ScalarProperty Name="ALT_DUNS_CODE" ColumnName="ALT_DUNS_CODE" />
                 <ScalarProperty Name="TRACK_EW_DATA" ColumnName="TRACK_EW_DATA" />
                 <ScalarProperty Name="TRACK_FIN_DATA" ColumnName="TRACK_FIN_DATA" />
                 <ScalarProperty Name="LOCATION_CODE" ColumnName="LOCATION_CODE" />

@@ -32625,6 +32625,30 @@ namespace SQM.Website
         private Nullable<global::System.Boolean> _TRACK_EW_DATA;
         partial void OnTRACK_EW_DATAChanging(Nullable<global::System.Boolean> value);
         partial void OnTRACK_EW_DATAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ALT_DUNS_CODE
+        {
+            get
+            {
+                return _ALT_DUNS_CODE;
+            }
+            set
+            {
+                OnALT_DUNS_CODEChanging(value);
+                ReportPropertyChanging("ALT_DUNS_CODE");
+                _ALT_DUNS_CODE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ALT_DUNS_CODE");
+                OnALT_DUNS_CODEChanged();
+            }
+        }
+        private global::System.String _ALT_DUNS_CODE;
+        partial void OnALT_DUNS_CODEChanging(global::System.String value);
+        partial void OnALT_DUNS_CODEChanged();
 
         #endregion
 
