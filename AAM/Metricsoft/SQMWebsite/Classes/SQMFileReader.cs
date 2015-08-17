@@ -207,6 +207,8 @@ namespace SQM.Website
             List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("FILE_UPLOAD", ""); // ABW 20140805
             List<SETTINGS> recpts = SQMSettings.SelectSettingsGroup("IMPORT_RECEIPT", ""); // ABW 20140805
 
+			SETTINGS dfltPlant = sets.Where(s=> s.SETTING_CD  == "PlantCode").FirstOrDefault();
+
             try
             {
                 using (StreamReader sr = new StreamReader(this.FileStream))
@@ -302,17 +304,22 @@ namespace SQM.Website
 								}
 								break;
 							case "PERSON":
-								string empID = fldArray[0];
-								string status = fldArray[1];
-								string firstName = fldArray[2];
-								string lastName = fldArray[3];
-								string middleName = fldArray[4];
-								string emailAddress = fldArray[5];
-								string phone1 = fldArray[6];
-								string phone2 = fldArray[7];
-								string jobCode = fldArray[8];
-								string HRLocation = fldArray[9];
-								string supvEmpID = fldArray[10];
+								string empID = fldArray[0].Trim();
+								string status = fldArray[1].Trim();
+								string firstName = fldArray[2].Trim();
+								string lastName = fldArray[3].Trim();
+								string middleName = !string.IsNullOrEmpty(fldArray[4].Trim()) ? fldArray[4].Trim() : "";
+								string emailAddress = !string.IsNullOrEmpty(fldArray[5].Trim()) ? fldArray[5].Trim() : "";
+								string phone1 = !string.IsNullOrEmpty(fldArray[6].Trim()) ? fldArray[6].Trim() : "";
+								string phone2 = !string.IsNullOrEmpty(fldArray[7].Trim()) ? fldArray[7].Trim() : "";
+								string jobCode = !string.IsNullOrEmpty(fldArray[8].Trim()) ? fldArray[8].Trim() : "";
+								string HRLocation = fldArray[9].Trim();
+								string supvEmpID = !string.IsNullOrEmpty(fldArray[10].Trim()) ? fldArray[10].Trim() : "";
+
+								if (dfltPlant != null && HRLocation != dfltPlant.VALUE)  // check if a default plant is assigned if skip person if hr location is not that plant
+								{
+									break;
+								}
 
 								plant = SQMModelMgr.LookupPlant(Entities, HRLocation, HRLocation);
 								if (plant == null)

@@ -1566,8 +1566,8 @@ namespace SQM.Website
 			try
 			{
 				plant = (from pl in ctx.PLANT.Include("Address")
-							where ((!string.IsNullOrEmpty(dunsCode)  &&  pl.DUNS_CODE == dunsCode)  ||  (!string.IsNullOrEmpty(altDunsCode) &&  pl.ALT_DUNS_CODE == altDunsCode))
-							select pl).Single();
+							where (pl.DUNS_CODE == dunsCode  || pl.ALT_DUNS_CODE == altDunsCode)
+							select pl).SingleOrDefault();
 			}
 			catch (Exception e)
 			{
