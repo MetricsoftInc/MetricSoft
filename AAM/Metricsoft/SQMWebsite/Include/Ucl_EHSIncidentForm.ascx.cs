@@ -587,13 +587,13 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Attachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep("1");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, "1");
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
@@ -601,7 +601,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("2");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
@@ -613,7 +613,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("2");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
@@ -626,7 +626,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("1");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
@@ -1184,13 +1184,13 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Attachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep("1");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, "1");
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
@@ -1198,7 +1198,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("2");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
@@ -1210,7 +1210,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("2");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
@@ -1223,7 +1223,7 @@ namespace SQM.Website
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("1");
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-						uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
