@@ -52,6 +52,7 @@
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbNextMedDate" runat="server" Text="Next Medical Appt." /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbExpectedReturnDT" runat="server" Text="Expected Return Date" /></b></th>
+								<th class="text-left-more"/></th>
 							</tr>
 						</thead>
 			</HeaderTemplate>

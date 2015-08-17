@@ -48,10 +48,11 @@
 							<tr>
 								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>
 								<th class="col-sm-4 text-left-more"><b><asp:Label ID="lbhdFinAction" runat ="server" Text="Final Action" /></b></th>
-								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbhdFinAssignTo" runat ="server" Text="Assigned To" /></b></th>
+								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbhdFinAssignTo" runat ="server" Text="Assigned To" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbhdFinStartDT" runat ="server" Text="Start Date" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbhdFinCompltDT" runat ="server" Text="Completion Date" /></b></th>
 								<th class="col-sm-1 text-left-more" style="margin-left:-5px;"><b><asp:Label ID="lbhdFinComplete" runat ="server" Text="Cmpltd" /></b></th>
+								<th class="col-sm-1 text-left-more"></th>
 							</tr>
 						</thead>
 			</HeaderTemplate>
@@ -70,14 +71,14 @@
 						<asp:RequiredFieldValidator runat="server" ID="rfvActionPerson" ControlToValidate="rddlActionPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpFinalStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  runat="server" />
+						<telerik:RadDatePicker ID="rdpFinalStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" Width="90%"  runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rvfFinalStartDate" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" runat="server" />
+						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Width="90%" Enabled="true" runat="server" />
 					</td>
 					<td class="text-left">
-						<asp:CheckBox ID="cbFinalIsComplete" runat="server"  SkinID="Metro" />
+						<asp:CheckBox ID="cbFinalIsComplete" runat="server" Width="90%" SkinID="Metro" />
 					</td>
 					<td class="text-left-more">
 						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 

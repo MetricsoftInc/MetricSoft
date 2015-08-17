@@ -450,19 +450,19 @@
 			</div>
 		</div>
 
-
+		     
 
 		<%-- HOW LONG DOING TASK question --%>	
 		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height:37px;">
 				<span><asp:Label ID="lbTaskYearsSM" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
+			<div class="col-xs-12 visible-xs text-left-more" style="height:37px;" >
 				<br />
 				<span><asp:Label ID="lbTaskYearsXS" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="padding-bottom:5px;padding-top:6px;">
-				<span><span><asp:TextBox ID="tbTaskYears" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskYears" Text="Years" runat="server"></asp:Label></span>&nbsp;&nbsp;
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:37px;" >
+				<span style="display:inline-block;"><span><asp:TextBox ID="tbTaskYears" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskYears" Text="Years" runat="server"></asp:Label></span>&nbsp;&nbsp;
 				<span><asp:TextBox ID="tbTaskMonths" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskMonths" Text="Months" runat="server"></asp:Label></span>&nbsp;&nbsp;
 				<span><asp:TextBox ID="tbTaskDays" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskDays" Text="Days" runat="server"></asp:Label></span></span>&nbsp;&nbsp;
 				<asp:RegularExpressionValidator ID="revTaskYears" runat="server" ControlToValidate="tbTaskYears" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Years must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
