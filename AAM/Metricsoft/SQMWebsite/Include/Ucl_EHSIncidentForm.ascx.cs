@@ -157,6 +157,10 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
+				if (uclContainment.Visible == true || uclRootCause.Visible == true  ||  uclAction.Visible == true  ||  uclApproval.Visible == true)
+				{
+					return;
+				}
 				divIncidentForm.Visible = true;
 				BuildForm();
 			}
@@ -2445,7 +2449,11 @@ namespace SQM.Website
 				case "0":
 				default:
 					btnSubnavIncident.Visible = false;
-					pnlForm.Visible = true;
+					if (pnlForm.Visible == false)
+					{
+						pnlForm.Visible = true;
+						BuildForm();
+					}
 					//RefreshPageContext();
 					break;
 			}
