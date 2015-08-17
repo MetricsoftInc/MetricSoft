@@ -188,8 +188,15 @@ namespace SQM.Website
 			formSteps = GetFormSteps(typeId);
 			totalFormSteps = formSteps.Count();
 
+
+			uploader.SetAttachmentRecordStep("1");
+			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
+
 			if (IsEditContext == true)
 			{
+
+				uploader.GetUploadedFiles(40, EditIncidentId, "1");
 
 				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, EditIncidentId);

@@ -6,6 +6,9 @@
 	<%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="INCFORMAction" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="INCFORMApproval" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_INCFORM_LostTime_Hist.ascx" TagName="INCFORMLostTimeHist" TagPrefix="Ucl" %>
+	<%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
+
+
 
 
 <script type="text/javascript">
@@ -581,20 +584,15 @@
 
 		<%-- ATTACHMENTS --%>	
 		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height:43px;">
 				<span><asp:Label ID="lbAttachemntSM" runat ="server" Text="Attachments"></asp:Label></span>
 			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
+			<div class="col-xs-12 visible-xs text-left-more" style="height:43px;"" >
 				<br />
-				<span><asp:Label ID="lbAttachemntXS" runat ="server" Text="Attachments"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbAttachemntXS" runat ="server" Text="Attachments"></asp:Label></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<span><telerik:RadButton ID="btnBrowseAttach" runat="server" Text="Browse" Visible="true"  CssClass="UseSubmitAction" 
-						OnClick="btnBrowseAttach_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val_InjuryIllness" />&nbsp;&nbsp;
-					<telerik:RadButton ID="btnUploadAttach" runat="server" Text="Upload" Visible="true" CssClass="UseSubmitAction"  
-						OnClick="btnUploadAttach_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val_InjuryIllness" /></span>
-				
-
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:43px">
+				<span style="border:0 none !important;padding-top:-15px;"><ucl:UploadAttachment id="uploader" runat="server" /></span>
 			</div>
 		</div>
 	</div>

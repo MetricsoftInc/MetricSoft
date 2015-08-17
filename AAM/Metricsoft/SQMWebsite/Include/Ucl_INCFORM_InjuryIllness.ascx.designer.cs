@@ -1102,22 +1102,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbAttachemntXS;
         
         /// <summary>
-        /// btnBrowseAttach control.
+        /// uploader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnBrowseAttach;
-        
-        /// <summary>
-        /// btnUploadAttach control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnUploadAttach;
+        protected global::SQM.Website.Ucl_RadAsyncUpload uploader;
         
         /// <summary>
         /// pnlBaseForm2 control.
