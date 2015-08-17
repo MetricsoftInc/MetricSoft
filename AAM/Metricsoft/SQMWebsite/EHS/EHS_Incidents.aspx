@@ -41,6 +41,10 @@
 			args.set_cancel(!confirm("Delete incident - are you sure?  Incidents cannot be undeleted."));
 		}
 
+		function DeleteConfirmItem(button, args) {
+			args.set_cancel(!confirm("Delete item - are you sure?  Items cannot be undeleted."));
+		}
+
 		// For prevention verification
 
 		function PVOnClientClicked(sender, eventArgs) {

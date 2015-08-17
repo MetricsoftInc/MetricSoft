@@ -56,7 +56,7 @@
 						</thead>
 			</HeaderTemplate>
 			<ItemTemplate>
-	        <tbody>
+			<tbody>
 				<tr>
 					<td class="text-center">
 						<asp:Label ID="lbItemSeq" runat="server" />
@@ -78,6 +78,10 @@
 					</td>
 					<td class="text-left">
 						<asp:CheckBox ID="cbFinalIsComplete" runat="server"  SkinID="Metro" />
+					</td>
+					<td class="text-left-more">
+						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
+							Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" />
 					</td>
 				</tbody>
 			</ItemTemplate>

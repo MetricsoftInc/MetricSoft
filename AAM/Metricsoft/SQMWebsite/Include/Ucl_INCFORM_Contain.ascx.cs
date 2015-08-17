@@ -193,6 +193,7 @@ namespace SQM.Website
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					//RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					//CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
+					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 
 					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvContainAction");
 					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvContainPerson");
@@ -203,10 +204,8 @@ namespace SQM.Website
 					rvfsd.ValidationGroup = ValidationGroup;
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+
 					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
 					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
 					foreach (PERSON p in personList)
 					{
@@ -228,6 +227,8 @@ namespace SQM.Website
 					sd.Enabled = actionAccess;
 					//cd.Enabled = actionAccess;
 					//ic.Enabled = actionAccess;
+					itmdel.Visible = actionAccess;
+
 					rvfca.Enabled = actionAccess;
 					rvfcp.Enabled = actionAccess;
 					rvfsd.Enabled = actionAccess;
@@ -235,7 +236,6 @@ namespace SQM.Website
 					if (contain.ITEM_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
-						rvfcp.InitialValue = null;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
@@ -348,9 +348,7 @@ namespace SQM.Website
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
+
 					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
 					foreach (PERSON p in personList)
 					{
@@ -386,6 +384,54 @@ namespace SQM.Website
 				rptContain.DataSource = itemList;
 				rptContain.DataBind();
 
+			}
+			else if (e.CommandArgument.ToString() == "Delete")
+			{
+				int delId = e.Item.ItemIndex; 
+				var itemList = new List<INCFORM_CONTAIN>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem containitem in rptContain.Items)
+				{
+					var item = new INCFORM_CONTAIN();
+
+					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
+					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
+					Label lb = (Label)containitem.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
+					//RadDatePicker cd = (RadDatePicker)containitem.FindControl("rdpCompleteDate");
+					//CheckBox ic = (CheckBox)containitem.FindControl("cbIsComplete");
+
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+
+					var personList = new List<PERSON>();
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
+
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+
+					if (Convert.ToInt32(lb.Text) != delId + 1)
+					{
+						seqnumber = seqnumber + 1;
+						item.ITEM_DESCRIPTION = tbca.Text;
+						item.ITEM_SEQ = seqnumber;
+						item.START_DATE = sd.SelectedDate;
+						//item.COMPLETION_DATE = cd.SelectedDate;
+						//item.IsCompleted = ic.Checked;
+						itemList.Add(item);
+					}
+				}
+
+				rptContain.DataSource = itemList;
+				rptContain.DataBind();
+
+				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				int status = SaveContainment(incidentId, itemList);
 			}
 		}
 

@@ -184,6 +184,7 @@ namespace SQM.Website
 
 					TextBox tb = (TextBox)e.Item.FindControl("tbRootCause");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
+					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 					RequiredFieldValidator rvf = (RequiredFieldValidator)e.Item.FindControl("rfvRootCause");
 
 					rvf.ValidationGroup = ValidationGroup;
@@ -193,6 +194,7 @@ namespace SQM.Website
 
 					// Set user access:
 					tb.Enabled = actionAccess;
+					itmdel.Visible = actionAccess;
 					rvf.Enabled = actionAccess;
 
 					if (rootCause.ITEM_SEQ > minRowsToValidate)
@@ -306,6 +308,36 @@ namespace SQM.Website
 				rptRootCause.DataSource = itemList;
 				rptRootCause.DataBind();
 
+			}
+			else if (e.CommandArgument.ToString() == "Delete")
+			{
+				int delId = e.Item.ItemIndex;
+				var itemList = new List<INCFORM_ROOT5Y>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem rootcauseitem in rptRootCause.Items)
+				{
+					var item = new INCFORM_ROOT5Y();
+
+					TextBox tb = (TextBox)rootcauseitem.FindControl("tbRootCause");
+					Label lb = (Label)rootcauseitem.FindControl("lbItemSeq");
+
+
+					if (Convert.ToInt32(lb.Text) != delId + 1)
+					{
+						seqnumber = seqnumber + 1;
+						item.ITEM_DESCRIPTION = tb.Text;
+						item.ITEM_SEQ = seqnumber;
+						itemList.Add(item);
+					}
+				}
+
+				rptRootCause.DataSource = itemList;
+				rptRootCause.DataBind();
+
+				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				int status = SaveRootCauses(incidentId, itemList);
+	
 			}
 		}
 	}

@@ -201,6 +201,8 @@ namespace SQM.Website
 					RadDatePicker rd = (RadDatePicker)e.Item.FindControl("rdpReturnDate");
 					RadDatePicker md = (RadDatePicker)e.Item.FindControl("rdpNextMedDate");
 					RadDatePicker ed = (RadDatePicker)e.Item.FindControl("rdpExpectedReturnDT");
+					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
+
 
 					RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWorkStatus");
 					RequiredFieldValidator rvfr = (RequiredFieldValidator)e.Item.FindControl("rfvRestrictDesc");
@@ -244,6 +246,7 @@ namespace SQM.Website
 					rd.Enabled = approveAccess;
 					md.Enabled = approveAccess;
 					ed.Enabled = approveAccess;
+					itmdel.Visible = approveAccess;
 
 
 					rvfw.Enabled = approveAccess;
@@ -486,11 +489,54 @@ namespace SQM.Website
 					lbResultsCtl.Text = "";
 			}
 
-			else if (e.CommandArgument == "rddlWorkStatus_ItemSelected")
+			//else if (e.CommandArgument == "rddlWorkStatus_ItemSelected")
+			//{
+			//	var itemList = new List<INCFORM_LOSTTIME_HIST>();
+				
+			//	foreach (RepeaterItem losttimeitem in rptLostTime.Items)
+			//	{
+			//		var item = new INCFORM_LOSTTIME_HIST();
+
+			//		Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
+
+			//		RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
+			//		TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
+			//		RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
+			//		RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
+			//		RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
+			//		RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
+
+			//		rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+			//		List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
+			//		foreach (var s in statuses)
+			//		{
+			//			rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
+			//		}
+
+			//		if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+			//			item.WORK_STATUS = rddlw.SelectedValue;
+
+			//		seqnumber = Convert.ToInt32(lb.Text);
+
+			//		item.ITEM_DESCRIPTION = tbr.Text;
+			//		item.ITEM_SEQ = seqnumber;
+			//		item.BEGIN_DT = bd.SelectedDate;
+			//		item.RETURN_TOWORK_DT = rd.SelectedDate;
+			//		item.NEXT_MEDAPPT_DT = md.SelectedDate;
+			//		item.RETURN_EXPECTED_DT = ed.SelectedDate;
+
+			//		itemList.Add(item);
+			//	}
+
+			//	rptLostTime.DataSource = itemList;
+			//	rptLostTime.DataBind();
+			//}
+
+			else if (e.CommandArgument.ToString() == "Delete")
 			{
-				
+				int delId = e.Item.ItemIndex;
 				var itemList = new List<INCFORM_LOSTTIME_HIST>();
-				
+
 				foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 				{
 					var item = new INCFORM_LOSTTIME_HIST();
@@ -498,6 +544,8 @@ namespace SQM.Website
 					Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
 
 					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
+					rddlw.SelectedIndexChanged += rddlw_SelectedIndexChanged;
+
 					TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
 					RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
@@ -514,21 +562,24 @@ namespace SQM.Website
 					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
-					seqnumber = Convert.ToInt32(lb.Text);
-
-					item.ITEM_DESCRIPTION = tbr.Text;
-					item.ITEM_SEQ = seqnumber;
-					item.BEGIN_DT = bd.SelectedDate;
-					item.RETURN_TOWORK_DT = rd.SelectedDate;
-					item.NEXT_MEDAPPT_DT = md.SelectedDate;
-					item.RETURN_EXPECTED_DT = ed.SelectedDate;
-
-					itemList.Add(item);
+					if (Convert.ToInt32(lb.Text) != delId + 1)
+					{
+						seqnumber = seqnumber + 1;
+						item.ITEM_DESCRIPTION = tbr.Text;
+						item.ITEM_SEQ = seqnumber;
+						item.BEGIN_DT = bd.SelectedDate;
+						item.RETURN_TOWORK_DT = rd.SelectedDate;
+						item.NEXT_MEDAPPT_DT = md.SelectedDate;
+						item.RETURN_EXPECTED_DT = ed.SelectedDate;
+						itemList.Add(item);
+					}
 				}
 
 				rptLostTime.DataSource = itemList;
 				rptLostTime.DataBind();
 
+				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				SaveLostTime(incidentId, itemList);
 
 			}
 		}
@@ -548,7 +599,7 @@ namespace SQM.Website
 		protected void rddlw_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
 			RadDropDownList rddlw = (RadDropDownList)sender;
-    
+	
 			// Cast the parent to type RepeaterItem
 			RepeaterItem repeaterRow = (RepeaterItem)rddlw.Parent;
 
@@ -616,7 +667,7 @@ namespace SQM.Website
 					rvfed.Enabled = true;
 					break;
 			}
-	    
+		
 		}
 
 		//protected void rddlWorkStatus_SelectedIndexChanged(object sender, DropDownListEventArgs e)

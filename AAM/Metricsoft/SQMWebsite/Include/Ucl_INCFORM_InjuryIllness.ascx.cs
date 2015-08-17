@@ -857,13 +857,14 @@ namespace SQM.Website
 
 							TextBox tbw = (TextBox)e.Item.FindControl("tbWitnessName");
 							TextBox tbws = (TextBox)e.Item.FindControl("tbWitnessStatement");
+							RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 
 							Label lb = (Label)e.Item.FindControl("lbItemSeq");
 							Label lb2 = (Label)e.Item.FindControl("lbItemSeq2");
 
 							Label rqd1 = (Label)e.Item.FindControl("lbRqd1");
 							Label rqd2 = (Label)e.Item.FindControl("lbRqd2");
-
+					
 							RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessName");
 							RequiredFieldValidator rvfws = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessStatement");
 
@@ -886,6 +887,7 @@ namespace SQM.Website
 							tbw.Enabled = updateAccess;
 							rvfw.Enabled = updateAccess;
 							tbws.Enabled = updateAccess;
+							itmdel.Visible = updateAccess;
 							rvfws.Enabled = updateAccess;
 							
 							if (witness.WITNESS_NO > minRowsToValidate)
@@ -952,6 +954,44 @@ namespace SQM.Website
 				rptWitness.DataBind();
 
 			}
+			else if (e.CommandArgument.ToString() == "Delete")
+			{
+				int delId = e.Item.ItemIndex;
+				var itemList = new List<INCFORM_WITNESS>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem witnessitem in rptWitness.Items)
+				{
+					var item = new INCFORM_WITNESS();
+
+					TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+					TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
+
+					Label lb = (Label)witnessitem.FindControl("lbItemSeq");
+					Label lb2 = (Label)witnessitem.FindControl("lbItemSeq2");
+
+					Label rqd1 = (Label)witnessitem.FindControl("lbRqd1");
+					Label rqd2 = (Label)witnessitem.FindControl("lbRqd2");
+
+
+					if (Convert.ToInt32(lb.Text) != delId + 1)
+					{
+						seqnumber = seqnumber + 1;
+						item.WITNESS_NO = seqnumber;
+						item.WITNESS_NAME = tbw.Text;
+						item.WITNESS_STATEMENT = tbws.Text;
+						itemList.Add(item);
+					}
+				}
+
+				rptWitness.DataSource = itemList;
+				rptWitness.DataBind();
+
+				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				SaveWitnesses(incidentId, itemList);
+
+			}
+
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e)

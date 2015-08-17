@@ -85,6 +85,10 @@
 						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT" Display="None" ErrorMessage="Required" />
 					</td>
+                    <td class="col-xs-12 text-left-more">
+                        <telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
+                            Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" />
+                    </td>
 				</tbody>
 			</ItemTemplate>
 			<FooterTemplate>

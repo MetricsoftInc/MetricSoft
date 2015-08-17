@@ -49,12 +49,16 @@
 			<HeaderTemplate></HeaderTemplate>
 			<ItemTemplate>
 				<div class="row">
-					<div class="col-xs-12 text-left">
+					<div class="col-sm-1 text-left">
 						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
 					</div>
-					<div class="col-xs-12 text-left">
-						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="50%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+					<div class="col-sm-5 text-left">
+						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required"></asp:RequiredFieldValidator>
+					</div>
+					<div class="col-sm-2 text-left-more">
+						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
+							Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" />
 					</div>
 				</div>
 			</ItemTemplate>

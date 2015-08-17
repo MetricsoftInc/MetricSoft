@@ -197,6 +197,8 @@ namespace SQM.Website
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
+					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
+
 					RequiredFieldValidator rvfca = (RequiredFieldValidator)e.Item.FindControl("rfvFinalAction");
 					RequiredFieldValidator rvfcp = (RequiredFieldValidator)e.Item.FindControl("rfvActionPerson");
 					RequiredFieldValidator rvfsd = (RequiredFieldValidator)e.Item.FindControl("rvfFinalStartDate");
@@ -207,9 +209,7 @@ namespace SQM.Website
 					
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
+
 					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
 					foreach (PERSON p in personList)
 					{
@@ -232,6 +232,8 @@ namespace SQM.Website
 					sd.Enabled = actionAccess;
 					cd.Enabled = actionAccess;
 					ic.Enabled = actionAccess;
+					itmdel.Visible = actionAccess;
+		
 					rvfca.Enabled = actionAccess;
 					rvfcp.Enabled = actionAccess;
 					rvfsd.Enabled = actionAccess;
@@ -350,10 +352,8 @@ namespace SQM.Website
 					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
 
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+
 					var personList = new List<PERSON>();
-					//if (CurrentStep == 1)
-					//personList = EHSIncidentMgr.SelectIncidentPersonList(EditIncidentId);
-					//else if (CurrentStep == 0)
 					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
 					foreach (PERSON p in personList)
 					{
@@ -389,8 +389,58 @@ namespace SQM.Website
 
 				rptAction.DataSource = itemList;
 				rptAction.DataBind();
-
 			}
+			else if (e.CommandArgument.ToString() == "Delete")
+			{
+				int delId = e.Item.ItemIndex;
+				var itemList = new List<INCFORM_ACTION>();
+				int seqnumber = 0;
+
+				foreach (RepeaterItem actionitem in rptAction.Items)
+				{
+					var item = new INCFORM_ACTION();
+
+					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
+					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
+					Label lb = (Label)actionitem.FindControl("lbItemSeq");
+					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
+					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
+					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
+
+					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+
+					var personList = new List<PERSON>();
+					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					foreach (PERSON p in personList)
+					{
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					}
+
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
+
+					if (Convert.ToInt32(lb.Text) != delId + 1)
+					{
+						seqnumber = seqnumber + 1;
+						item.ITEM_DESCRIPTION = tbca.Text;
+						item.ITEM_SEQ = seqnumber;
+						item.START_DATE = sd.SelectedDate;
+						item.COMPLETION_DATE = cd.SelectedDate;
+						item.IsCompleted = ic.Checked;
+
+						itemList.Add(item);
+					}
+				}
+
+				rptAction.DataSource = itemList;
+				rptAction.DataBind();
+
+				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				int status = SaveActions(incidentId, itemList);
+			
+			}
+
 		}
 	}
 }
