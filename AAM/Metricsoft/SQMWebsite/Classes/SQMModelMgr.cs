@@ -1915,7 +1915,7 @@ namespace SQM.Website
             {
                 if (plantID > 0)
                         deptList = (from d in ctx.DEPARTMENT
-                                    where (d.COMPANY_ID == companyID) && (d.PLANT_ID == plantID)
+                                    where (d.PLANT_ID == plantID)
                                     select d).ToList();
                 else 
                     deptList = (from d in ctx.DEPARTMENT

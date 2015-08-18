@@ -109,6 +109,23 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		protected bool UpdateAccess
+		{
+			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
+			set { ViewState["UpdateAccess"] = value; }
+		}
+
+		protected bool ActionAccess
+		{
+			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
+			set { ViewState["ActionAccess"] = value; }
+		}
+
+		protected bool ApproveAccess
+		{
+			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
+			set { ViewState["ApproveAccess"] = value; }
+		}
 
 		public string SelectedTypeText
 		{
@@ -125,8 +142,9 @@ namespace SQM.Website
 		
 		protected void Page_Init(object sender, EventArgs e)
 		{
-			//if (!IsFullPagePostback)
-				//rptWitness.DataBind();
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -181,6 +199,7 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
+
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
@@ -227,7 +246,8 @@ namespace SQM.Website
 					rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
 		
 					PopulateShiftDropDown();
-					PopulateOperationDropDown();
+					PopulateOperationDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
+					PopulateDepartmentDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 
@@ -240,7 +260,7 @@ namespace SQM.Website
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
 
-						tbDepartment.Text = injuryIllnessDetails.DEPARTMENT;
+						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPARTMENT;
 						rddlOperation.SelectedValue = injuryIllnessDetails.OPERATION;
 						tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
@@ -282,7 +302,7 @@ namespace SQM.Website
 					tbLocalDescription.Text = "";
 					rddlLocation.Items.Clear();
 					rddlShift.Items.Clear();
-					tbDepartment.Text = "";
+					rddlDepartment.Items.Clear();
 					rddlOperation.Items.Clear();
 					tbInvolvedPerson.Text = "";
 					tbInvPersonStatement.Text = "";
@@ -321,7 +341,8 @@ namespace SQM.Website
 
 					PopulateLocationDropDown();
 					PopulateShiftDropDown();
-					PopulateOperationDropDown();
+					PopulateOperationDropDown(0);
+					PopulateDepartmentDropDown(0);
 					PopulateSupervisorDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
@@ -528,114 +549,109 @@ namespace SQM.Website
 		private void SetUserAccess(string currentFormName)
 		{
 
-			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
-			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
-			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
-
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+			// Privilege "UpdateAccess"	= Main incident description (1st page) can be maintained/upadted to db
+			// Privilege "ActionAccess"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
+			// Privilege "ApproveAccess"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
 
 			switch (currentFormName)
 			{
 				case "INCFORM_INJURYILLNESS":
-					rdpIncidentDate.Enabled = updateAccess;
-					rfvIncidentDate.Enabled = updateAccess;
+					rdpIncidentDate.Enabled = UpdateAccess;
+					rfvIncidentDate.Enabled = UpdateAccess;
 					
-					//rdpReportDate.Enabled = updateAccess;
 					
-					rddlLocation.Enabled = updateAccess;
-					rfvLocation.Enabled = updateAccess;
+					rddlLocation.Enabled = UpdateAccess;
+					rfvLocation.Enabled = UpdateAccess;
 					
-					tbDescription.Enabled = updateAccess;
-					rfvDescription.Enabled = updateAccess;
+					tbDescription.Enabled = UpdateAccess;
+					rfvDescription.Enabled = UpdateAccess;
 					
-					tbLocalDescription.Enabled = updateAccess;
-					rfvLocalDescription.Enabled = updateAccess;
+					tbLocalDescription.Enabled = UpdateAccess;
+					rfvLocalDescription.Enabled = UpdateAccess;
 					
-					rtpIncidentTime.Enabled = updateAccess;
-					rfvIncidentTime.Enabled = updateAccess;
-					
-					rddlShift.Enabled = updateAccess;
-					rfvShift.Enabled = updateAccess;
+					rtpIncidentTime.Enabled = UpdateAccess;
+					rfvIncidentTime.Enabled = UpdateAccess;
 
-					tbDepartment.Enabled = updateAccess;
-					rfvDepartment.Enabled = updateAccess;
+					rddlShift.Enabled = UpdateAccess;
+					rfvShift.Enabled = UpdateAccess;
 
-					rddlOperation.Enabled = updateAccess;
-					rfvOperation.Enabled = updateAccess;
+					//tbDepartment.Enabled = UpdateAccess;
+					//rfvDepartment.Enabled = UpdateAccess;
 
-					tbInvolvedPerson.Enabled = updateAccess;
-					rfvInvolvedPerson.Enabled = updateAccess;
+					//rddlOperation.Enabled = UpdateAccess;
+					//rfvOperation.Enabled = UpdateAccess;
 
-					tbInvPersonStatement.Enabled = updateAccess;
-					rfvInvPersonStatement.Enabled = updateAccess;
+					tbInvolvedPerson.Enabled = UpdateAccess;
+					rfvInvolvedPerson.Enabled = UpdateAccess;
 
-					rdpSupvInformedDate.Enabled = updateAccess;
-					rfvSupvInformedDate.Enabled = updateAccess;
+					tbInvPersonStatement.Enabled = UpdateAccess;
+					rfvInvPersonStatement.Enabled = UpdateAccess;
 
-					rddlSupervisor.Enabled = updateAccess;
-					rfvSupervisor.Enabled = updateAccess;
+					rdpSupvInformedDate.Enabled = UpdateAccess;
+					rfvSupvInformedDate.Enabled = UpdateAccess;
 
-					tbSupervisorStatement.Enabled = updateAccess;
-					rfvSupervisorStatement.Enabled = updateAccess;
+					rddlSupervisor.Enabled = UpdateAccess;
+					rfvSupervisor.Enabled = UpdateAccess;
 
-					rdoInside.Enabled = updateAccess;
-					rfvInside.Enabled = updateAccess;
+					tbSupervisorStatement.Enabled = UpdateAccess;
+					rfvSupervisorStatement.Enabled = UpdateAccess;
 
-					rdoDirectSupv.Enabled = updateAccess;
-					rfvDirectSupv.Enabled = updateAccess;
+					rdoInside.Enabled = UpdateAccess;
+					rfvInside.Enabled = UpdateAccess;
 
-					rdoErgConcern.Enabled = updateAccess;
-					rfvErgConcern.Enabled = updateAccess;
+					rdoDirectSupv.Enabled = UpdateAccess;
+					rfvDirectSupv.Enabled = UpdateAccess;
 
-					rdoStdProcsFollowed.Enabled = updateAccess;
-					rfvStdProcsFollowed.Enabled = updateAccess;
+					rdoErgConcern.Enabled = UpdateAccess;
+					rfvErgConcern.Enabled = UpdateAccess;
 
-					rdoTrainingProvided.Enabled = updateAccess;
-					rfvTrainingProvided.Enabled = updateAccess;
+					rdoStdProcsFollowed.Enabled = UpdateAccess;
+					rfvStdProcsFollowed.Enabled = UpdateAccess;
 
-					tbTaskYears.Enabled = updateAccess;
-					tbTaskMonths.Enabled = updateAccess;
-					tbTaskDays.Enabled = updateAccess;
-					rfvTaskDays.Enabled = updateAccess;
+					rdoTrainingProvided.Enabled = UpdateAccess;
+					rfvTrainingProvided.Enabled = UpdateAccess;
 
-					rdoFirstAid.Enabled = updateAccess;
-					rfvFirstAid.Enabled = updateAccess;
+					tbTaskYears.Enabled = UpdateAccess;
+					tbTaskMonths.Enabled = UpdateAccess;
+					tbTaskDays.Enabled = UpdateAccess;
+					rfvTaskDays.Enabled = UpdateAccess;
 
-					rdoRecordable.Enabled = updateAccess;
-					rfvRecordable.Enabled = updateAccess;
+					rdoFirstAid.Enabled = UpdateAccess;
+					rfvFirstAid.Enabled = UpdateAccess;
 
-					rdoLostTime.Enabled = updateAccess;
-					rfvLostTime.Enabled = updateAccess;
+					rdoRecordable.Enabled = UpdateAccess;
+					rfvRecordable.Enabled = UpdateAccess;
 
-					rdpExpectReturnDT.Enabled = updateAccess;
-					rfvExpectReturnDT.Enabled = updateAccess;
+					rdoLostTime.Enabled = UpdateAccess;
+					rfvLostTime.Enabled = UpdateAccess;
 
-					rddlInjuryType.Enabled = updateAccess;
-					rfvInjuryType.Enabled = updateAccess;
+					rdpExpectReturnDT.Enabled = UpdateAccess;
+					rfvExpectReturnDT.Enabled = UpdateAccess;
 
-					rddlBodyPart.Enabled = updateAccess;
-					rfvBodyPart.Enabled = updateAccess;
+					rddlInjuryType.Enabled = UpdateAccess;
+					rfvInjuryType.Enabled = UpdateAccess;
 
-					btnSave.Enabled = updateAccess;
+					rddlBodyPart.Enabled = UpdateAccess;
+					rfvBodyPart.Enabled = UpdateAccess;
+
+					btnSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_CONTAIN":
-					btnSave.Enabled = actionAccess;
+					btnSave.Enabled = ActionAccess;
 					break;
 				case "INCFORM_ROOT5Y":
-					btnSave.Enabled = actionAccess;
+					btnSave.Enabled = ActionAccess;
 					break;
 				case "INCFORM_ACTION":
-					btnSave.Enabled = actionAccess;
+					btnSave.Enabled = ActionAccess;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
-					btnSave.Enabled = approveAccess;
+					btnSave.Enabled = ApproveAccess;
 					break;
 				case "INCFORM_APPROVAL":
-					btnSave.Enabled = approveAccess;
-					btnClose.Enabled = approveAccess;
-					btnClose.Visible = approveAccess;
+					btnSave.Enabled = ApproveAccess;
+					btnClose.Enabled = ApproveAccess;
+					btnClose.Visible = ApproveAccess;
 					break;
 			}
 		}
@@ -675,24 +691,74 @@ namespace SQM.Website
 		}
 
 
-		void PopulateOperationDropDown()
+		void PopulateOperationDropDown(decimal plantId)
 		{
-			List<EHSMetaData> ops = EHSMetaDataMgr.SelectMetaDataList("OPERATION");
+			rddlOperation.Items.Clear();
 
-			rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
-
-			if (ops != null && ops.Count > 0)
+			if (plantId > 0)
 			{
-				foreach (var s in ops)
+				PSsqmEntities entities = new PSsqmEntities();
+				List<PLANT_LINE> ops = SQMModelMgr.SelectPlantLineList(entities, plantId);
+
+				rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
+
+				if (ops != null && ops.Count > 0)
 				{
+					foreach (var s in ops)
 					{
-						rddlOperation.Items.Add(new DropDownListItem(s.Text, s.Value));
+						{
+							rddlOperation.Items.Add(new DropDownListItem(s.PLANT_LINE_NAME, s.PLANT_LINE_ID.ToString()));
+						}
 					}
 				}
+
+				rddlOperation.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
+				rddlOperation.Enabled = UpdateAccess;
+				rfvOperation.Enabled = UpdateAccess;
+				rddlOperation.AutoPostBack = true;
 			}
-			
-			rddlOperation.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
-			rddlOperation.AutoPostBack = true;
+			else
+			{
+				rddlOperation.Enabled = false;
+				rfvOperation.Enabled = false;
+			}
+		}
+
+
+
+		void PopulateDepartmentDropDown(decimal plantId)
+		{
+			rddlDepartment.Items.Clear();
+
+			if (plantId > 0)
+			{
+				PSsqmEntities entities = new PSsqmEntities();
+				List<DEPARTMENT> depts = SQMModelMgr.SelectDepartmentList(entities, plantId);
+
+				rddlDepartment.Items.Add(new DropDownListItem("[Select One]", ""));
+
+				if (depts != null && depts.Count > 0)
+				{
+					foreach (var s in depts)
+					{
+						{
+							rddlDepartment.Items.Add(new DropDownListItem(s.DEPT_NAME, s.DEPT_ID.ToString()));
+						}
+					}
+				}
+
+				rddlDepartment.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
+				rddlDepartment.Enabled = UpdateAccess;
+				rddlDepartment.AutoPostBack = true;
+
+				rfvDepartment.Enabled = UpdateAccess;	
+			}
+			else
+			{
+				rddlDepartment.Enabled = false;
+
+				rfvDepartment.Enabled = false;
+			}
 		}
 
 
@@ -847,12 +913,14 @@ namespace SQM.Website
 					rddlFilteredUsers.Items[0].Text = "[No valid users - please change location]";
 				}
 			}
+
+			PopulateOperationDropDown(SelectedLocationId);
+			PopulateDepartmentDropDown(SelectedLocationId);
 		}
 
 
 		public void rptWitness_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
 
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
@@ -891,11 +959,11 @@ namespace SQM.Website
 					
 							// Set user access:
 
-							tbw.Enabled = updateAccess;
-							rvfw.Enabled = updateAccess;
-							tbws.Enabled = updateAccess;
-							itmdel.Visible = updateAccess;
-							rvfws.Enabled = updateAccess;
+							tbw.Enabled = UpdateAccess;
+							rvfw.Enabled = UpdateAccess;
+							tbws.Enabled = UpdateAccess;
+							itmdel.Visible = UpdateAccess;
+							rvfws.Enabled = UpdateAccess;
 							
 							if (witness.WITNESS_NO > minRowsToValidate)
 							{
@@ -911,7 +979,7 @@ namespace SQM.Website
 				if (e.Item.ItemType == ListItemType.Footer)
 				{
 				Button addanother = (Button)e.Item.FindControl("btnAddWitness");
-				addanother.Visible = updateAccess;
+				addanother.Visible = UpdateAccess;
 				}
 
 			}
@@ -1313,9 +1381,12 @@ namespace SQM.Website
 			newInjryIllnessDetails.SHIFT = selectedShift;
 			newInjryIllnessDetails.INCIDENT_TIME = incidentTime;
 			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
-			newInjryIllnessDetails.DEPARTMENT = tbDepartment.Text;
 
-			newInjryIllnessDetails.OPERATION = rddlOperation.SelectedValue;
+			newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
+			newInjryIllnessDetails.DEPARTMENT = "";
+
+			newInjryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
+			newInjryIllnessDetails.OPERATION = "";
 
 			newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
 			newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
@@ -1463,9 +1534,12 @@ namespace SQM.Website
 				injuryIllnessDetails.INCIDENT_TIME = incidentTime;
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
-				injuryIllnessDetails.DEPARTMENT = tbDepartment.Text;
 
-				injuryIllnessDetails.OPERATION = rddlOperation.SelectedValue;
+				injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
+				injuryIllnessDetails.DEPARTMENT = "";
+
+				injuryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
+				injuryIllnessDetails.OPERATION = "";
 
 				injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
 				injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;

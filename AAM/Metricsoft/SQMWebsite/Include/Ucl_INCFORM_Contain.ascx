@@ -100,6 +100,7 @@
                     </div>
                 </FooterTemplate>
             </asp:Repeater>
+        	&nbsp;
         </telerik:RadAjaxPanel>
     </div>
 </asp:Panel>

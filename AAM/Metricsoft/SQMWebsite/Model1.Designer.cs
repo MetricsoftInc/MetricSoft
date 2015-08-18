@@ -20410,6 +20410,78 @@ namespace SQM.Website
         private global::System.String _INJURY_BODY_PART;
         partial void OnINJURY_BODY_PARTChanging(global::System.String value);
         partial void OnINJURY_BODY_PARTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DEPT_ID
+        {
+            get
+            {
+                return _DEPT_ID;
+            }
+            set
+            {
+                OnDEPT_IDChanging(value);
+                ReportPropertyChanging("DEPT_ID");
+                _DEPT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DEPT_ID");
+                OnDEPT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DEPT_ID;
+        partial void OnDEPT_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnDEPT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLANT_LINE_ID
+        {
+            get
+            {
+                return _PLANT_LINE_ID;
+            }
+            set
+            {
+                OnPLANT_LINE_IDChanging(value);
+                ReportPropertyChanging("PLANT_LINE_ID");
+                _PLANT_LINE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLANT_LINE_ID");
+                OnPLANT_LINE_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLANT_LINE_ID;
+        partial void OnPLANT_LINE_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLANT_LINE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> INVOLVED_PERSON_ID
+        {
+            get
+            {
+                return _INVOLVED_PERSON_ID;
+            }
+            set
+            {
+                OnINVOLVED_PERSON_IDChanging(value);
+                ReportPropertyChanging("INVOLVED_PERSON_ID");
+                _INVOLVED_PERSON_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INVOLVED_PERSON_ID");
+                OnINVOLVED_PERSON_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _INVOLVED_PERSON_ID;
+        partial void OnINVOLVED_PERSON_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnINVOLVED_PERSON_IDChanged();
 
         #endregion
 
