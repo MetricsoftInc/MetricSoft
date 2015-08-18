@@ -6,6 +6,7 @@ using Telerik.Web.UI;
 using System.Web.UI;
 using System.Text;
 using System.Web;
+using SQM.Shared;
 using System.Globalization;
 using System.Threading;
 
@@ -260,8 +261,8 @@ namespace SQM.Website
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
 
-						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPARTMENT;
-						rddlOperation.SelectedValue = injuryIllnessDetails.OPERATION;
+						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
+						rddlOperation.SelectedValue = injuryIllnessDetails.PLANT_LINE_ID.ToString();
 						tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
@@ -1389,31 +1390,62 @@ namespace SQM.Website
 			newInjryIllnessDetails.OPERATION = "";
 
 			newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
-			newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
-			newInjryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
-			newInjryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
-			newInjryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
+			
+			if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
+				newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+
+			if (rdpSupvInformedDate.SelectedDate != null)
+				newInjryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
+
+			if (!String.IsNullOrEmpty(rddlSupervisor.SelectedValue))
+				newInjryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+
+			if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
+				newInjryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
 			if (rdoInside.SelectedValue == "1")
 				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
 			else
 				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
 
-			newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
-			newInjryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
-			newInjryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
-			newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+			if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
+				newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
 
-			newInjryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
-			newInjryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
-			newInjryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
-			
-			newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
-			newInjryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
-			newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
-			newInjryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
-			newInjryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue; 
-			newInjryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+			if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
+				newInjryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
+
+			if (!String.IsNullOrEmpty(rdoStdProcsFollowed.SelectedValue))
+				newInjryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
+
+			if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
+				newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+
+			if (!String.IsNullOrEmpty(tbTaskYears.Text))
+				newInjryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
+
+			if (!String.IsNullOrEmpty(tbTaskMonths.Text))
+				newInjryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
+
+			if (!String.IsNullOrEmpty(tbTaskDays.Text))
+				newInjryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
+
+			if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
+				newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
+
+			if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))
+				newInjryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
+
+			if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
+				newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
+
+			if (rdpExpectReturnDT.SelectedDate != null)
+				newInjryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
+
+			if (!String.IsNullOrEmpty(rddlInjuryType.SelectedValue))
+				newInjryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
+
+			if (!String.IsNullOrEmpty(rddlBodyPart.SelectedValue))
+				newInjryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
 
 			entities.AddToINCFORM_INJURYILLNESS(newInjryIllnessDetails);
 
@@ -1542,28 +1574,85 @@ namespace SQM.Website
 				injuryIllnessDetails.OPERATION = "";
 
 				injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
-				injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
-				injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
-				injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
-				injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
+
+				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
+					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+
+				if (rdpSupvInformedDate.SelectedDate != null)
+					injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
+
+				if (!String.IsNullOrEmpty(rddlSupervisor.SelectedValue))
+					injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+
+				if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
+					injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
 				if (rdoInside.SelectedValue == "1")
 					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
 				else
 					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
-				injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
-				injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
-				injuryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
-				injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
-				injuryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
-				injuryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
-				injuryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
-				injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
-				injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
-				injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
-				injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
-				injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
-				injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+
+				if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
+					injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
+					injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(rdoStdProcsFollowed.SelectedValue))
+					injuryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
+					injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(tbTaskYears.Text))
+					injuryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
+
+				if (!String.IsNullOrEmpty(tbTaskMonths.Text))
+					injuryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
+
+				if (!String.IsNullOrEmpty(tbTaskDays.Text))
+					injuryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
+
+				if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
+					injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))
+					injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
+
+				if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
+					injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
+
+				if (rdpExpectReturnDT.SelectedDate != null)
+					injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
+
+				if (!String.IsNullOrEmpty(rddlInjuryType.SelectedValue))
+					injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
+
+				if (!String.IsNullOrEmpty(rddlBodyPart.SelectedValue))
+					injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+
+				//injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+				//injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
+				//injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+				//injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
+
+				//if (rdoInside.SelectedValue == "1")
+				//	injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
+				//else
+				//	injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
+				//injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+				//injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
+				//injuryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
+				//injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
+				//injuryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
+				//injuryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
+				//injuryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
+				//injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
+				//injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
+				//injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
+				//injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
+				//injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
+				//injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
 
 				entities.SaveChanges();
 
@@ -1577,20 +1666,20 @@ namespace SQM.Website
 
 		protected void SaveAttachments(decimal incidentId)
 		{
-			//if (uploader != null)
-			//{
-			//	string recordStep = (this.CurrentStep + 1).ToString();
+			if (uploader != null)
+			{
+				string recordStep = (this.CurrentStep + 1).ToString();
 
-			//	// Add files to database
-			//	SessionManager.DocumentContext = new DocumentScope().CreateNew(
-			//		SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, "BLI", 0, "",
-			//		SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID, "", 0
-			//		);
-			//	SessionManager.DocumentContext.RecordType = 40;
-			//	SessionManager.DocumentContext.RecordID = incidentId;
-			//	SessionManager.DocumentContext.RecordStep = recordStep;
-			//	uploader.SaveFiles();
-			//}
+				// Add files to database
+				SessionManager.DocumentContext = new DocumentScope().CreateNew(
+					SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, "BLI", 0, "",
+					SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID, "", 0
+					);
+				SessionManager.DocumentContext.RecordType = 40;
+				SessionManager.DocumentContext.RecordID = incidentId;
+				SessionManager.DocumentContext.RecordStep = recordStep;
+				uploader.SaveFiles();
+			}
 		}
 
 		#endregion
