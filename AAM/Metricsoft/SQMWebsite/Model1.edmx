@@ -824,6 +824,7 @@
           <Property Name="WITNESS_STATEMENT" Type="varchar" MaxLength="4000" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="WITNESS_PERSON" Type="numeric" Precision="35" Scale="0" />
         </EntityType>
         <EntityType Name="INCIDENT">
           <Key>
@@ -8697,6 +8698,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" FromRole="INCFORM_WITNESS" ToRole="INCIDENT" />
+          <Property Name="WITNESS_PERSON" Type="Decimal" Precision="35" Scale="0" />
         </EntityType>
         <Association Name="FK_INCIDENTWITNESS_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
@@ -10719,6 +10721,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCFORM_WITNESS">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_WITNESS">
               <MappingFragment StoreEntitySet="INCFORM_WITNESS">
+                <ScalarProperty Name="WITNESS_PERSON" ColumnName="WITNESS_PERSON" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
                 <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
                 <ScalarProperty Name="WITNESS_STATEMENT" ColumnName="WITNESS_STATEMENT" />

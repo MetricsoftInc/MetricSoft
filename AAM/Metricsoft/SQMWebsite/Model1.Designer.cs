@@ -21668,6 +21668,30 @@ namespace SQM.Website
         private Nullable<global::System.DateTime> _LAST_UPD_DT;
         partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
         partial void OnLAST_UPD_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> WITNESS_PERSON
+        {
+            get
+            {
+                return _WITNESS_PERSON;
+            }
+            set
+            {
+                OnWITNESS_PERSONChanging(value);
+                ReportPropertyChanging("WITNESS_PERSON");
+                _WITNESS_PERSON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("WITNESS_PERSON");
+                OnWITNESS_PERSONChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _WITNESS_PERSON;
+        partial void OnWITNESS_PERSONChanging(Nullable<global::System.Decimal> value);
+        partial void OnWITNESS_PERSONChanged();
 
         #endregion
 

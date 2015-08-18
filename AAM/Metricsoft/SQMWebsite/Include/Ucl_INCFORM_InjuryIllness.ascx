@@ -561,7 +561,7 @@
 				<span><asp:Label ID="lbInjuryTypeXS" runat ="server" Text="Type of Injury"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ExpandDirection="Up" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
+				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ExpandDirection="Up" CssClass="WarnIfChanged" Width="278" DropDownHeight="300" runat="server"></telerik:RadDropDownList>
 				<asp:RequiredFieldValidator runat="server" ID="rfvInjuryType" ControlToValidate="rddlInjuryType" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
@@ -577,7 +577,7 @@
 				<span><asp:Label ID="lbBodyPartXS" runat ="server" Text="Body Part"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ExpandDirection="Up" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
+				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ExpandDirection="Up" DropDownHeight="300" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
 				<asp:RequiredFieldValidator runat="server" ID="rfvBodyPart" ControlToValidate="rddlBodyPart" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
