@@ -181,7 +181,7 @@
 					<asp:Button ID="btnLineCancel" CSSclass="buttonStd" runat="server" text="Cancel" 
 						onclick="btnCancel_Click" CommandArgument="line"></asp:Button>
 					<asp:Button ID="btnLineSave" CSSclass="buttonEmphasis" runat="server" text="Save" 
-						OnClientClick="return confirmChange('Plant Line');" onclick="btnSave_Click" CommandArgument="line"></asp:Button>
+						OnClientClick="return confirmChange('Line/Operation');" onclick="btnSave_Click" CommandArgument="line"></asp:Button>
 				</td>
 			</tr>
 			<tr>
@@ -189,7 +189,7 @@
 					<table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
 						<tr>
 							<td class="columnHeader" width="39%">
-								<asp:Label ID="lblLineName" runat="server" text="Line Name"></asp:Label>
+								<asp:Label ID="lblLineName" runat="server" text="Line/Operation Name"></asp:Label>
 							</td>
 							<td class="required" width="1%">&nbsp;</td>
 							<td CLASS="tableDataAlt" width="60%">

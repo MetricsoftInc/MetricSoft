@@ -94,7 +94,7 @@
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                         <asp:LinkButton ID="lbPlantLine_tab" runat="server" class="optNav clickable" CommandArgument="line" 
-                            onclick="tab_Click">Plant Lines</asp:LinkButton>
+                            onclick="tab_Click">Plant Lines/Operations</asp:LinkButton>
                 </td>
             </tr>
 <%--			<tr align="center" height="24">

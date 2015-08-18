@@ -300,7 +300,7 @@
     <table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
         <tr>
             <td align="left">
-                <asp:Button ID="btnLineAdd" CSSclass="buttonStd" runat="server" text="Add Plant Line" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;" 
+                <asp:Button ID="btnLineAdd" CSSclass="buttonStd" runat="server" text="Add Line/Operation" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;" 
                 onclick="btnLineAdd_Click" CommandArgument="add"></asp:Button>
             </td>
         </tr>
@@ -313,7 +313,7 @@
                 	    <Columns>
                             <asp:BoundField  DataField="PLANT_ID" Visible="False"/>
                             <asp:BoundField  DataField="PLANT_LINE_ID" Visible="False"/>
-                            <asp:TemplateField HeaderText="Line Name" ItemStyle-Width="60%">
+                            <asp:TemplateField HeaderText="Line/Operation Name" ItemStyle-Width="60%">
 							    <ItemTemplate>
 								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("PLANT_LINE_ID") %>' CSSClass="linkUnderline" 
 										Text='<%#Eval("PLANT_LINE_NAME") %>' OnClick="lnkLineList_Click"></asp:LinkButton>
@@ -328,7 +328,7 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                    <asp:Label runat="server" ID="lblLineListEmpty" Text="There are currently no Plant Lines defined." class="GridEmpty" Visible="false"></asp:Label>
+                    <asp:Label runat="server" ID="lblLineListEmpty" Text="There are currently no Lines/Operations defined." class="GridEmpty" Visible="false"></asp:Label>
                 </div>
             </td>
         </tr>

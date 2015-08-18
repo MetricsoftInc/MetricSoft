@@ -231,7 +231,7 @@
                                 <table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">                     
                                     <tr >
                                         <td class="columnHeader" width="25%">
-                                            <asp:Label ID="lblCRPlantLine" runat="server" text="Plant Line"></asp:Label>
+                                            <asp:Label ID="lblCRPlantLine" runat="server" text="Plant Line/Operation"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="20%">
