@@ -246,7 +246,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblUserLanguage" runat="server" text="Date/Number Culture"></asp:Label>
+                                                                <asp:Label ID="lblUserLanguage" runat="server" text="Language/Culture"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">

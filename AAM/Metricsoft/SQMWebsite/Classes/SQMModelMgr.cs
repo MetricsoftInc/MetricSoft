@@ -512,6 +512,11 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
+		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
+		{
+			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
+		}
+
 		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID)
 		{
 			List<PERSON> personList = new List<PERSON>();
@@ -989,7 +994,7 @@ namespace SQM.Website
 				else 
 				{
 					access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
-					access.STATUS = "N"; // force password update on login BUT person may be a self-serve user
+					access.STATUS = "A"; // assume user is enabled
 				}
 
                 access.RECOVERY_EMAIL = person.EMAIL;

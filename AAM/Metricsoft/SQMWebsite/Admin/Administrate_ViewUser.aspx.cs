@@ -174,7 +174,7 @@ namespace SQM.Website
 				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
 			}
 
-            ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, false);
+            ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
             ddlUserLanguage.DataTextField = "LANGUAGE_NAME";
             ddlUserLanguage.DataValueField = "LANGUAGE_ID";
             ddlUserLanguage.DataBind();

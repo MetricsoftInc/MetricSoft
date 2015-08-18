@@ -490,7 +490,11 @@ namespace SQM.Website
                         lbl.Text = WebSiteCommon.GetXlatValue("statusCodeDelete", lbl.Text);
 
                         lbl = (Label)e.Item.FindControl("lblUserRole");
-                        lbl.Text = WebSiteCommon.GetXlatValue("userRole", user.ROLE.ToString());
+						if (user.JOBCODE != null)
+						{
+							lbl.Text = (user.JOBCODE_CD + " / "+user.JOBCODE.JOB_DESC);
+						}
+                        //lbl.Text = WebSiteCommon.GetXlatValue("userRole", user.ROLE.ToString());
 
                         LinkButton lnk = (LinkButton)e.Item.FindControl("lnkHRLocation");
                         lnk.ToolTip = "";
