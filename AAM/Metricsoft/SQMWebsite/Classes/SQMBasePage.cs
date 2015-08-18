@@ -40,11 +40,15 @@ namespace SQM.Website
             {
                 if (SessionManager.SessionContext != null)
                 {
-                    string lang = SessionManager.SessionContext.Language().NLS_LANGUAGE;
-                    UICulture = lang;
-                    Culture = lang;
-                    System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
-                    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+					try
+					{
+						string lang = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+						UICulture = lang;
+						Culture = lang;
+						System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
+						System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+					}
+					catch { }
                 }
                 base.InitializeCulture();
             }
