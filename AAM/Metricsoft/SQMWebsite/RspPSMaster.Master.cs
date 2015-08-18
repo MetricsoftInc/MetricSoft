@@ -114,7 +114,7 @@ namespace SQM.Website
 						// EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Layouts", "/EHS/EHS_Audits_Questions.aspx"));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
+						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
 					}
 

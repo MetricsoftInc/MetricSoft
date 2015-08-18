@@ -72,69 +72,43 @@ namespace SQM.Website
                     RadMenu1.CollapseAnimation.Duration = 20;
                     RadMenu1.DefaultGroupSettings.Flow = Telerik.Web.UI.ItemFlow.Horizontal;
 
-                    if (UserContext.RoleAccess() > AccessMode.None)
-                    {
-                        RadMenuItem HomeMenu = new RadMenuItem("Home");
-                        RadMenu1.Items.Add(HomeMenu);
-                        if (UserContext.RoleAccess() != AccessMode.Partner)
-                            HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Dashboard", "/Home/Dashboard.aspx"));
-                         HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Calendar", "/Home/Calendar.aspx"));
-                        // HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(inboxLabel, "/Home/Inbox.aspx"));
-                    }
-                
-                    if (UserContext.CheckAccess("CQM", "101") >= AccessMode.Admin)
-                    {
-                        RadMenuItem OrgMenu = new RadMenuItem("Organization");
-                        RadMenu1.Items.Add(OrgMenu);
-                        OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Business Structure", "/Admin/Administrate_ViewBusOrg.aspx"));
-                        OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Exchange Rates", "/Admin/Administrate_CurrencyInput.aspx"));
-                        //if (UserContext.RoleAccess() == AccessMode.SA)
-                        OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Settings", "/Admin/Administrate_SettingInput.aspx"));
-                        OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Upload Data", "/Admin/Administrate_FileUpload.aspx"));
-                    }
+					if (UserContext.RoleAccess() > AccessMode.None)
+					{
+						RadMenuItem HomeMenu = new RadMenuItem("Home");
+						RadMenu1.Items.Add(HomeMenu);
+						if (UserContext.RoleAccess() != AccessMode.Partner)
+							HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Dashboard", "/Home/Dashboard.aspx"));
+						HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Calendar", "/Home/Calendar.aspx"));
+						// HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(inboxLabel, "/Home/Inbox.aspx"));
+					}
 
-					/*
-                    if (UserContext.CheckAccess("SQM", "") > AccessMode.Limited)
-                    {
-                        RadMenuItem SQMMenu = new RadMenuItem("Quality");
-                        RadMenu1.Items.Add(SQMMenu);
-                        if (UserContext.CheckAccess("SQM", "201") > AccessMode.Plant)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/Quality/Quality_Resources.aspx"));
-                        if (UserContext.CheckAccess("SQM", "201") > AccessMode.Plant)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Parts", "/Admin/Administrate_ViewPart.aspx"));
-                        if (UserContext.CheckAccess("SQM", "211") > AccessMode.Limited)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(SQMSettings.GetSetting("QS", "3").XLAT_SHORT, "/Quality/Quality_Issue.aspx?c=RCV"));
-                        if (UserContext.CheckAccess("SQM", "212") > AccessMode.Limited)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(SQMSettings.GetSetting("QS", "4").XLAT_SHORT, "/Quality/Quality_Issue.aspx?c=CST"));
-                        if (UserContext.CheckAccess("SQM", "220") > AccessMode.Admin)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Cost Reporting", "/Quality/Quality_CostRecord.aspx"));
-                        if (UserContext.CheckAccess("SQM", "221") > AccessMode.Limited)
-                            SQMMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Problem Control", "/Problem/Problem_Case.aspx?c=QI"));
-                    }
-					*/
+					if (UserContext.CheckAccess("CQM", "101") >= AccessMode.Admin)
+					{
+						RadMenuItem OrgMenu = new RadMenuItem("Organization");
+						RadMenu1.Items.Add(OrgMenu);
+						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Business Structure", "/Admin/Administrate_ViewBusOrg.aspx"));
+						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Exchange Rates", "/Admin/Administrate_CurrencyInput.aspx"));
+						//if (UserContext.RoleAccess() == AccessMode.SA)
+						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Settings", "/Admin/Administrate_SettingInput.aspx"));
+						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Upload Data", "/Admin/Administrate_FileUpload.aspx"));
+					}
 
-                    if (UserContext.CheckAccess("EHS", "") > AccessMode.Limited)
-                    {
-                        RadMenuItem EHSMenu = new RadMenuItem("Environmental");
-                        RadMenu1.Items.Add(EHSMenu);
-                        if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-                            EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
-                        if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
-                            EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
-                        if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-                            EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
-                        if (UserContext.CheckAccess("EHS", "311") > AccessMode.Limited)
-                            EHSMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
-
+					if (UserContext.CheckAccess("EHS", "") > AccessMode.Limited)
+					{
+						RadMenuItem EHSMenu1 = new RadMenuItem("Environmental");
+						RadMenu1.Items.Add(EHSMenu1);
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
+						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
 						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
 						RadMenu1.Items.Add(EHSMenu2);
-                        if (UserContext.CheckAccess("EHS", "312") > AccessMode.Limited)
-                            EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
-                        if (UserContext.CheckAccess("EHS", "313") > AccessMode.Limited)
-                            EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
-                        if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
-                            EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
-                    }
+						// EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Layouts", "/EHS/EHS_Audits_Questions.aspx"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
+						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
+					}
 
                     string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
                     if (!string.IsNullOrEmpty(menu8DActive)  &&  menu8DActive.ToUpper() == "FALSE")
