@@ -211,30 +211,39 @@
             <div>
                 <center>
                     <br />
-                    <table width="99%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
-			            <tr>
-				            <td class="columnHeader" width="44%">
-					            <asp:Label ID="lblUserPhone" runat="server" text="Contact Phone Number"></asp:Label>
-				            </td>
-				            <td class="tableDataAlt" width="1%">&nbsp;</td>
-				            <td class="tableDataAlt" width="55%">
-					            <asp:TextBox ID="tbUserPhone" size="20" maxlength="20" runat="server"></asp:TextBox>
-				            </td>
-			            </tr>
-                        <tr>
-				            <td class="columnHeader">
-					            <asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
-				            </td>
-				            <td class="tableDataAlt">&nbsp;</td>
-				            <td class="tableDataAlt">
-			                    <Ucl:PassEdit ID="uclPassEdit" runat="server" strCurrentControl="userPrefsEdit" />
-				            </td>
-			            </tr>
-                    </table>
-                    <br />
-                    <asp:Button ID="btnUserPrefsCancel" runat="server" text="Cancel"  ToolTip="Close this window without saving" CssClass="buttonStd" OnClientClick="CloseUserPrefsWindow(); return false;" ></asp:Button>
-                    <asp:Button ID="btnUserPrefsSave" runat="server" text="Save"  CssClass="buttonEmphasis" ToolTip="Save your user preferences"
-					              OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs"></asp:Button>
+ 					<table width="99%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
+						<tr>
+							<td class="columnHeader" width="44%">
+								<asp:Label ID="lblUserPhone" runat="server" text="Contact Phone Number"></asp:Label>
+							</td>
+							<td class="tableDataAlt" width="1%">&nbsp;</td>
+							<td class="tableDataAlt" width="55%">
+								<asp:TextBox ID="tbUserPhone" size="24" maxlength="20" runat="server"></asp:TextBox>
+							</td>
+						</tr>
+						<tr>
+							<td class="columnHeader" width="44%">
+								<asp:Label ID="lblUserLang" runat="server" text="Language/Culture"></asp:Label>
+							</td>
+							<td class="tableDataAlt" width="1%">&nbsp;</td>
+							<td class="tableDataAlt" width="55%">
+								<telerik:RadComboBox ID="ddlUserLang" runat="server" Skin="Metro" Width=200 ZIndex=9000 Font-Size=Small ></telerik:RadComboBox>
+							</td>
+						</tr>
+						<tr>
+							<td class="columnHeader">
+								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
+							</td>
+							<td class="tableDataAlt">&nbsp;</td>
+							<td class="tableDataAlt">
+								<Ucl:PassEdit ID="uclPassEdit" runat="server" strCurrentControl="userPrefsEdit" />
+							</td>
+						</tr>
+					</table>
+					<br />
+					<asp:Button ID="btnUserPrefsCancel" runat="server" text="Cancel"  ToolTip="Close this window without saving" CssClass="buttonStd" OnClientClick="CloseUserPrefsWindow(); return false;" ></asp:Button>
+					<asp:Button ID="btnUserPrefsSave" runat="server" text="Save"  CssClass="buttonEmphasis" ToolTip="Save your user preferences"
+								  OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs"></asp:Button>
                 </center>
             </div>
         </ContentTemplate>
