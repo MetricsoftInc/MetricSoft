@@ -512,7 +512,7 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope)
+		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
@@ -522,13 +522,13 @@ namespace SQM.Website
 				personList = (from p in ctx.PERSON
 							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD 
 							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where (j.JOBCODE_CD == p.JOBCODE_CD && v.PRIV == (int)priv && v.SCOPE == privScope)
+							  where (j.JOBCODE_CD == p.JOBCODE_CD && v.PRIV == (int)priv && v.SCOPE == privScope  &&  (plantID == 0  || p.PLANT_ID == plantID))
 							  select p).ToList();
 			}
 
 			return personList;
 		}
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope)
+		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope, decimal[] plantIDList)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
@@ -539,7 +539,7 @@ namespace SQM.Website
 				personList = (from p in ctx.PERSON
 							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD
 							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where (j.JOBCODE_CD == p.JOBCODE_CD && privs.Contains(v.PRIV) && v.SCOPE == privScope)
+							  where (j.JOBCODE_CD == p.JOBCODE_CD && privs.Contains(v.PRIV) && v.SCOPE == privScope  &&  (plantIDList.Count() == 0  ||  plantIDList.Contains(p.PLANT_ID)))
 							  select p).ToList();
 			}
 

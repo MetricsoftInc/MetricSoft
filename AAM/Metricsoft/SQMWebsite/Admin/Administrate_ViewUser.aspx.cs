@@ -80,10 +80,10 @@ namespace SQM.Website
 			else if  (ddlListStatus.SelectedValue == "I")
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l=> l.STATUS == "I").ToList();
             else if (ddlListStatus.SelectedValue == "150")
-				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.busloc);
+				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.busloc, 0);
                // userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.ROLE == 150).ToList();
             else if (ddlListStatus.SelectedValue == "100")
-				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system);
+				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0);
                 //userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.JOBCODE_CD == "admin").ToList();
 			else
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
