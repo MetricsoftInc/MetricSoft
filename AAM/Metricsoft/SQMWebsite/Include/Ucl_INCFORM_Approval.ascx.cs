@@ -66,6 +66,24 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		protected bool UpdateAccess
+		{
+			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
+			set { ViewState["UpdateAccess"] = value; }
+		}
+
+		protected bool ActionAccess
+		{
+			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
+			set { ViewState["ActionAccess"] = value; }
+		}
+
+		protected bool ApproveAccess
+		{
+			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
+			set { ViewState["ApproveAccess"] = value; }
+		}
+
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -74,6 +92,10 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
 			if (IsFullPagePostback)
 				rptApprovals.DataBind();
 		}
@@ -163,16 +185,14 @@ namespace SQM.Website
 			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
 			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
 
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+			//bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			//bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			//bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
 		}
 
 		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -210,8 +230,8 @@ namespace SQM.Website
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
 					// Set user access:
-					cba.Enabled = approveAccess;
-					rda.Enabled = approveAccess;
+					cba.Enabled = ApproveAccess;
+					rda.Enabled = ApproveAccess;
 
 					//if (approval.ITEM_SEQ > minRowsToValidate)
 					//	rvf.Enabled = false;
@@ -223,7 +243,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				//Button addanother = (Button)e.Item.FindControl("btnAddApproval");
-				//addanother.Visible = approveAccess;
+				//addanother.Visible = ApproveAccess;
 			}
 
 		}

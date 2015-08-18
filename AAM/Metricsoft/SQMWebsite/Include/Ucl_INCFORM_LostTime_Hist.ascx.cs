@@ -66,6 +66,25 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		protected bool UpdateAccess
+		{
+			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
+			set { ViewState["UpdateAccess"] = value; }
+		}
+
+		protected bool ActionAccess
+		{
+			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
+			set { ViewState["ActionAccess"] = value; }
+		}
+
+		protected bool ApproveAccess
+		{
+			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
+			set { ViewState["ApproveAccess"] = value; }
+		}
+
+
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -75,6 +94,10 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
 			if (IsFullPagePostback)
 				rptLostTime.DataBind();
 		}
@@ -153,25 +176,25 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			SetUserAccess("INCFORM_LOSTTIME_HIST");
+			//SetUserAccess("INCFORM_LOSTTIME_HIST");
 
 			pnlLostTime.Visible = true;
 			rptLostTime.DataSource = EHSIncidentMgr.GetLostTimeList(IncidentId);
 			rptLostTime.DataBind();
 		}
 
-		private void SetUserAccess(string currentFormName)
-		{
+		//private void SetUserAccess(string currentFormName)
+		//{
 
 			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
 			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
 			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
 
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+			//bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			//bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			//bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
-		}
+		//}
 
 		//protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		//{
@@ -181,8 +204,6 @@ namespace SQM.Website
 
 		public void rptLostTime_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 				//int minRowsToValidate = 1;
@@ -240,21 +261,21 @@ namespace SQM.Website
 
 
 					// Set user access:
-					rddlw.Enabled = approveAccess;
-					tbr.Enabled = approveAccess;
-					bd.Enabled = approveAccess;
-					rd.Enabled = approveAccess;
-					md.Enabled = approveAccess;
-					ed.Enabled = approveAccess;
-					itmdel.Visible = approveAccess;
+					rddlw.Enabled = ApproveAccess;
+					tbr.Enabled = ApproveAccess;
+					bd.Enabled = ApproveAccess;
+					rd.Enabled = ApproveAccess;
+					md.Enabled = ApproveAccess;
+					ed.Enabled = ApproveAccess;
+					itmdel.Visible = ApproveAccess;
 
 
-					rvfw.Enabled = approveAccess;
-					rvfr.Enabled = approveAccess;
-					rvfbd.Enabled = approveAccess;
-					rvfrd.Enabled = approveAccess;
-					rvfmd.Enabled = approveAccess;
-					rvfed.Enabled = approveAccess;
+					rvfw.Enabled = ApproveAccess;
+					rvfr.Enabled = ApproveAccess;
+					rvfbd.Enabled = ApproveAccess;
+					rvfrd.Enabled = ApproveAccess;
+					rvfmd.Enabled = ApproveAccess;
+					rvfed.Enabled = ApproveAccess;
 
 
 					//if (String.IsNullOrEmpty(rddlw.SelectedValue))
@@ -344,7 +365,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddLostTime");
-				addanother.Visible = approveAccess;
+				addanother.Visible = ApproveAccess;
 			}
 		}
 

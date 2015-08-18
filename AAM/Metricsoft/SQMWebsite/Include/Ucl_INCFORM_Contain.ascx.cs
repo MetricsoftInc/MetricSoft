@@ -64,6 +64,24 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		protected bool UpdateAccess
+		{
+			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
+			set { ViewState["UpdateAccess"] = value; }
+		}
+
+		protected bool ActionAccess
+		{
+			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
+			set { ViewState["ActionAccess"] = value; }
+		}
+
+		protected bool ApproveAccess
+		{
+			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
+			set { ViewState["ApproveAccess"] = value; }
+		}
+
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -72,6 +90,11 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
+
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
 			if (IsFullPagePostback)
 				rptContain.DataBind();
 		}
@@ -149,25 +172,11 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			SetUserAccess("INCFORM_CONTAIN");
-
 			pnlContain.Visible = true;
 			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
 			rptContain.DataBind();
 		}
 
-		private void SetUserAccess(string currentFormName)
-		{
-
-			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
-			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
-			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
-
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
-		}
 
 		protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
@@ -176,8 +185,6 @@ namespace SQM.Website
 
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -222,16 +229,16 @@ namespace SQM.Website
 					//ic.Checked = contain.IsCompleted;
 
 					// Set user access:
-					tbca.Enabled = actionAccess;
-					rddlp.Enabled = actionAccess;
-					sd.Enabled = actionAccess;
-					//cd.Enabled = actionAccess;
-					//ic.Enabled = actionAccess;
-					itmdel.Visible = actionAccess;
+					tbca.Enabled = ActionAccess;
+					rddlp.Enabled = ActionAccess;
+					sd.Enabled = ActionAccess;
+					//cd.Enabled = ActionAccess;
+					//ic.Enabled = ActionAccess;
+					itmdel.Visible = ActionAccess;
 
-					rvfca.Enabled = actionAccess;
-					rvfcp.Enabled = actionAccess;
-					rvfsd.Enabled = actionAccess;
+					rvfca.Enabled = ActionAccess;
+					rvfcp.Enabled = ActionAccess;
+					rvfsd.Enabled = ActionAccess;
 
 					if (contain.ITEM_SEQ > minRowsToValidate)
 					{
@@ -247,7 +254,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddContain");
-				addanother.Visible = actionAccess;
+				addanother.Visible = ActionAccess;
 			}
 
 		}

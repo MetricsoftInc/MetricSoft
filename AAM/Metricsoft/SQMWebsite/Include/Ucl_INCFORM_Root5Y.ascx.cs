@@ -64,6 +64,25 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
+		protected bool UpdateAccess
+		{
+			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
+			set { ViewState["UpdateAccess"] = value; }
+		}
+
+		protected bool ActionAccess
+		{
+			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
+			set { ViewState["ActionAccess"] = value; }
+		}
+
+		protected bool ApproveAccess
+		{
+			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
+			set { ViewState["ApproveAccess"] = value; }
+		}
+
+
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -73,6 +92,10 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+
 			if (IsFullPagePostback)
 				rptRootCause.DataBind();
 		}
@@ -149,30 +172,13 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			SetUserAccess("INCFORM_ROOT5Y");
-
 			pnlRoot5Y.Visible = true;
 			rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
 			rptRootCause.DataBind();
 		}
 
-		private void SetUserAccess(string currentFormName)
-		{
-
-			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
-			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
-			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
-
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
-		}
-
 		public void rptRootCause_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
-			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
 
@@ -193,9 +199,9 @@ namespace SQM.Website
 					tb.Text = rootCause.ITEM_DESCRIPTION;
 
 					// Set user access:
-					tb.Enabled = actionAccess;
-					itmdel.Visible = actionAccess;
-					rvf.Enabled = actionAccess;
+					tb.Enabled = ActionAccess;
+					itmdel.Visible = ActionAccess;
+					rvf.Enabled = ActionAccess;
 
 					if (rootCause.ITEM_SEQ > minRowsToValidate)
 						rvf.Enabled = false;
@@ -206,7 +212,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
-				addanother.Visible = actionAccess;
+				addanother.Visible = ActionAccess;
 			}
 
 		}
