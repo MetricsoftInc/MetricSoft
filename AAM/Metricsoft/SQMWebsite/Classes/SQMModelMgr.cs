@@ -1903,6 +1903,11 @@ namespace SQM.Website
             return dept;
         }
 
+		public static List<DEPARTMENT> SelectDepartmentList(SQM.Website.PSsqmEntities ctx, decimal plantID)
+		{
+			return SelectDepartmentList(ctx, 0, 0, plantID);
+		}
+
         public static List<DEPARTMENT> SelectDepartmentList(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal busOrgID, decimal plantID)
         {
             List<DEPARTMENT> deptList = null;
