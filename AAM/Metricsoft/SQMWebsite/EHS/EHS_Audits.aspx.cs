@@ -184,7 +184,7 @@ namespace SQM.Website
 				case DisplayState.AuditList:
 					SearchAudits();
 					uclAuditForm.Visible = false;
-					rbNew.Visible = false;
+					rbNew.Visible = true;
 					break;
 
 				case DisplayState.AuditNotificationNew:

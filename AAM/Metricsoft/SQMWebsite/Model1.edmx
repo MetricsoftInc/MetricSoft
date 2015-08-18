@@ -160,6 +160,16 @@
           </Key>
           <Property Name="ACTION" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="AUDIT_QUESTION_LANG">
+          <Key>
+            <PropertyRef Name="AUDIT_QUESTION_ID" />
+            <PropertyRef Name="NLS_LANGUAGE" />
+          </Key>
+          <Property Name="AUDIT_QUESTION_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="NLS_LANGUAGE" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="LANG_TEXT" Type="nvarchar" MaxLength="400" />
+          <Property Name="HELP_TEXT" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="AUDIT_QUESTION_TYPE">
           <Key>
             <PropertyRef Name="AUDIT_QUESTION_TYPE_ID" />
@@ -2038,6 +2048,18 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION">
+          <End Role="AUDIT_QUESTION" Type="Self.AUDIT_QUESTION" Multiplicity="1" />
+          <End Role="AUDIT_QUESTION_LANG" Type="Self.AUDIT_QUESTION_LANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_QUESTION">
+              <PropertyRef Name="AUDIT_QUESTION_ID" />
+            </Principal>
+            <Dependent Role="AUDIT_QUESTION_LANG">
+              <PropertyRef Name="AUDIT_QUESTION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BUSINESS_ORG_STD_BUSINESS_ORG">
           <End Role="BUSINESS_ORG" Type="Self.BUSINESS_ORG" Multiplicity="1" />
           <End Role="BUSINESS_ORG_STD" Type="Self.BUSINESS_ORG_STD" Multiplicity="0..1" />
@@ -3513,6 +3535,7 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="AUDIT_QUESTION_CHOICE" EntityType="Self.AUDIT_QUESTION_CHOICE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_QUESTION_CONTROL" EntityType="Self.AUDIT_QUESTION_CONTROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_QUESTION_CONTROL_ACTION" EntityType="Self.AUDIT_QUESTION_CONTROL_ACTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUDIT_QUESTION_LANG" EntityType="Self.AUDIT_QUESTION_LANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_QUESTION_TYPE" EntityType="Self.AUDIT_QUESTION_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_TOPIC" EntityType="Self.AUDIT_TOPIC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUDIT_TYPE" EntityType="Self.AUDIT_TYPE" Schema="dbo" store:Type="Tables" />
@@ -3683,6 +3706,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" Association="Self.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE">
             <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
             <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" Association="Self.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION">
+            <End Role="AUDIT_QUESTION" EntitySet="AUDIT_QUESTION" />
+            <End Role="AUDIT_QUESTION_LANG" EntitySet="AUDIT_QUESTION_LANG" />
           </AssociationSet>
           <AssociationSet Name="FK_BUSINESS_ORG_STD_BUSINESS_ORG" Association="Self.FK_BUSINESS_ORG_STD_BUSINESS_ORG">
             <End Role="BUSINESS_ORG" EntitySet="BUSINESS_ORG" />
@@ -4857,6 +4884,11 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_JOBCODE_JOBCODE" Association="PSsqmModel.FK_JOBCODE_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
             <End Role="JOBCODE1" EntitySet="JOBCODE" />
+          </AssociationSet>
+          <EntitySet Name="AUDIT_QUESTION_LANG" EntityType="PSsqmModel.AUDIT_QUESTION_LANG" />
+          <AssociationSet Name="FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" Association="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION">
+            <End Role="AUDIT_QUESTION" EntitySet="AUDIT_QUESTION" />
+            <End Role="AUDIT_QUESTION_LANG" EntitySet="AUDIT_QUESTION_LANG" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -8026,6 +8058,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="IS_REQUIRED_CLOSE" Type="Boolean" Nullable="false" />
           <Property Name="HELP_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="STANDARD_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AUDIT_QUESTION_LANG" Relationship="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" FromRole="AUDIT_QUESTION" ToRole="AUDIT_QUESTION_LANG" />
         </EntityType>
         <EntityType Name="AUDIT_QUESTION_CHOICE">
           <Key>
@@ -8754,6 +8787,29 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Principal>
             <Dependent Role="JOBCODE1">
               <PropertyRef Name="JOBCODE_CD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AUDIT_QUESTION_LANG">
+          <Key>
+            <PropertyRef Name="AUDIT_QUESTION_ID" />
+            <PropertyRef Name="NLS_LANGUAGE" />
+          </Key>
+          <Property Name="AUDIT_QUESTION_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="NLS_LANGUAGE" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="LANG_TEXT" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="HELP_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AUDIT_QUESTION" Relationship="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" FromRole="AUDIT_QUESTION_LANG" ToRole="AUDIT_QUESTION" />
+        </EntityType>
+        <Association Name="FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION">
+          <End Type="PSsqmModel.AUDIT_QUESTION" Role="AUDIT_QUESTION" Multiplicity="1" />
+          <End Type="PSsqmModel.AUDIT_QUESTION_LANG" Role="AUDIT_QUESTION_LANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_QUESTION">
+              <PropertyRef Name="AUDIT_QUESTION_ID" />
+            </Principal>
+            <Dependent Role="AUDIT_QUESTION_LANG">
+              <PropertyRef Name="AUDIT_QUESTION_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10751,6 +10807,16 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AUDIT_QUESTION_LANG">
+            <EntityTypeMapping TypeName="PSsqmModel.AUDIT_QUESTION_LANG">
+              <MappingFragment StoreEntitySet="AUDIT_QUESTION_LANG">
+                <ScalarProperty Name="HELP_TEXT" ColumnName="HELP_TEXT" />
+                <ScalarProperty Name="LANG_TEXT" ColumnName="LANG_TEXT" />
+                <ScalarProperty Name="NLS_LANGUAGE" ColumnName="NLS_LANGUAGE" />
+                <ScalarProperty Name="AUDIT_QUESTION_ID" ColumnName="AUDIT_QUESTION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11038,6 +11104,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION" />
         <EntityTypeShape EntityType="PSsqmModel.PRIVGROUP" Width="1.5" PointX="0.64343073994081035" PointY="3.0298105343383788" />
         <AssociationConnector Association="PSsqmModel.FK_JOBCODE_JOBCODE" />
+        <EntityTypeShape EntityType="PSsqmModel.AUDIT_QUESTION_LANG" Width="1.5" PointX="17.5" PointY="15" />
+        <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" />
         </Diagram>
     </Diagrams>
   </Designer>

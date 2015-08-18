@@ -185,11 +185,6 @@ namespace SQM.Website
 					auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId);
 					selectString = "[Select An Audit Type]";
 				}
-				//else if (Mode == AuditMode.Prevent)
-				//{
-				//	auditTypeList = EHSAuditMgr.SelectPreventativeTypeList(companyId);
-				//	selectString = "[Select A Preventative Action Type]";
-				//}
 				if (auditTypeList.Count > 1)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
 				
@@ -253,11 +248,6 @@ namespace SQM.Website
 							mnuAuditLocation.Visible = true;
 							mnuAuditLocation.Enabled = true;
 							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "Select a Location", "", true);
-							//RadMenuItem mi = new RadMenuItem();
-							//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
-							//mi.Value = "0";
-							//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-							//mnuScheduleScope.Items[0].Items.Insert(0, mi);
 						}
 					}
 					else
@@ -269,7 +259,6 @@ namespace SQM.Website
 							ddlAuditLocation.Enabled = true;
 							mnuAuditLocation.Visible = false;
 							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
-							//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
 							ddlAuditLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 						}
 					}
@@ -299,30 +288,8 @@ namespace SQM.Website
 			if (accessLevel <= AccessMode.View)
 				return;
 
-			if (Mode == AuditMode.Prevent)
-			{
-				if (accessLevel <= AccessMode.Plant)
-				{
-					pnlAuditHeader.Visible = false;
-
-					if (CurrentStep == 0)
-					{
-						if (IsEditContext)
-						{
-							ShowAuditDetails(EditAuditId, "Recommendation Details");
-							btnSaveReturn.Visible = false;
-							//btnSaveContinue.Visible = false;
-						}
-						return;
-					}
-				}
-				if (CurrentStep == 1)
-				{
-					uclAuditDetails.Visible = true;
-					var displaySteps = new int[] { 0 };
-					uclAuditDetails.Refresh(EditAuditId, displaySteps);
-				}
-			}
+			// Currently, ALL audits will be like the Supervisory Audit example provided.  This is a simple Y/N/NA radio button and a comment box for each question.
+			//    Each positive answer counts towards the percentage of total answers.
 
 			decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
 			if (typeId < 1)
@@ -345,6 +312,10 @@ namespace SQM.Website
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 			string previousTopic = "";
+			string qid = "";
+			string tid = "";
+			string ptid = "";
+
 			foreach (var q in questions)
 			{
 				var validator = new RequiredFieldValidator();
@@ -360,19 +331,35 @@ namespace SQM.Website
 					q.AnswerText = auditAnswer.ANSWER_VALUE;
 					q.AnswerComment = auditAnswer.COMMENT;
 				}
+
+				//if (q.QuestionType == (decimal)EHSAuditQuestionType.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				//{
+				//	continue;
+				//}
+
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
-				string qid = q.QuestionId.ToString();
-				string tid = "T" + q.TopicId.ToString();
+				qid = q.QuestionId.ToString();
+				tid = "T" + q.TopicId.ToString();
+				ptid = "P" + previousTopic;
 
-				if (!previousTopic.Equals(tid)) // add a topic header
+				if (!previousTopic.Equals(q.TopicId.ToString())) // add a topic header
 				{
+					if (!previousTopic.Equals(""))
+					{
+						// need to add a display for the topic percentage
+						var pnlPercent = new Panel() { ID = "Panel" + ptid };
+						pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+						pnlPercent.Controls.Add(new Label() { ID = "Label" + ptid, Text = "0%" }); // we will populate the values later
+						pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
+						pnlForm.Controls.Add(pnlPercent);
+					}
 					var pnlTopic = new Panel() { ID = "Panel" + tid };
-					pnlTopic.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"blueCell\" style=\"width: 100%;\">"));
+					pnlTopic.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"blueCell\" style=\"width: 100%; font-weight: bold;\">"));
 					pnlTopic.Controls.Add(new Label() { ID = "Label" + tid, Text = q.TopicTitle });
 					pnlTopic.Controls.Add(new LiteralControl("</td></tr>"));
 					pnlForm.Controls.Add(pnlTopic);
-					previousTopic = tid;
+					previousTopic = q.TopicId.ToString();
 				}
 
 				var pnl = new Panel() { ID = "Panel" + qid };
@@ -437,6 +424,13 @@ namespace SQM.Website
 
 						break;
 
+					case EHSAuditQuestionType.NativeLangTextBox:
+						var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							nltb.Text = q.AnswerText;
+						pnl.Controls.Add(nltb);
+						break;
+
 					case EHSAuditQuestionType.RichTextBox:
 						var re = new RadEditor() { ID = qid, Width = 550, Height=300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
 						re.EditModes = EditModes.Design;
@@ -466,6 +460,29 @@ namespace SQM.Website
 						//if (!shouldPopulate)
 						//	rbl.SelectedIndex = 0; // Default to first
 						pnl.Controls.Add(rbl);
+						break;
+
+					case EHSAuditQuestionType.RadioPercentage:
+						var rblp = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						rblp.RepeatDirection = RepeatDirection.Horizontal;
+						foreach (var choice in q.AnswerChoices)
+						{
+							var li = new ListItem(choice.Value);
+							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+							if (shouldPopulate)
+							{
+								if (choice.Value == q.AnswerText)
+									li.Selected = true;
+							}
+							rblp.Items.Add(li);
+						}
+						// all RBL will cause the percentages to change
+						rblp.AutoPostBack = true;
+						rblp.SelectedIndexChanged += rblp_SelectedIndexChanged;
+
+						//if (!shouldPopulate)
+						//	rbl.SelectedIndex = 0; // Default to first
+						pnl.Controls.Add(rblp);
 						break;
 
 					case EHSAuditQuestionType.CheckBox:
@@ -799,7 +816,8 @@ namespace SQM.Website
 				// Add a comment box that hides/shows via a link to certain field types
 				if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 					q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
-					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+					q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					string cid = "Comment" + qid;
 					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
@@ -821,12 +839,30 @@ namespace SQM.Website
 				pnlForm.Controls.Add(pnl);
 			}
 
+			// add the final topic percent line and then an audit total percent line
+			if (!previousTopic.Equals(""))
+			{
+				// need to add a display for the topic percentage
+				Panel pnlPercent = new Panel() { ID = "PanelP" + previousTopic };
+				pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				pnlPercent.Controls.Add(new Label() { ID = "LabelP" + previousTopic, Text = "0%" }); // we will populate the values later
+				pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				pnlForm.Controls.Add(pnlPercent);
+			}
+			Panel pnlTotalPercent = new Panel() { ID = "PanelTotalPercent" };
+			pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+			pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Score:  0%" }); // we will populate the values later
+			pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+			pnlForm.Controls.Add(pnlTotalPercent);
+
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
 			pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
 
 			UpdateAnswersFromForm();
 
 			UpdateButtonText();
+
+			CalculatePercentages(questions);
 		}
 
 		protected void AuditLocation_Select(object sender, EventArgs e)
@@ -894,6 +930,12 @@ namespace SQM.Website
 					q.AnswerText = auditAnswer.ANSWER_VALUE;
 					q.AnswerComment = auditAnswer.COMMENT;
 				}
+
+				//if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				//{
+				//	continue;
+				//}
+
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
 				//if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSAuditMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
@@ -975,12 +1017,12 @@ namespace SQM.Website
 						pnl.Controls.Add(tb);
 						break;
 
-					//case EHSAuditQuestionType.NativeLangTextBox:
-					//	var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
-					//	if (shouldPopulate)
-					//		nltb.Text = q.AnswerText;
-					//	pnl.Controls.Add(nltb);
-					//	break;
+					case EHSAuditQuestionType.NativeLangTextBox:
+						var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						if (shouldPopulate)
+							nltb.Text = q.AnswerText;
+						pnl.Controls.Add(nltb);
+						break;
 
 					case EHSAuditQuestionType.RichTextBox:
 						var re = new RadEditor() { ID = qid, Width = 550, Height = 300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
@@ -1010,6 +1052,29 @@ namespace SQM.Website
 						//if (!shouldPopulate)
 						//	rbl.SelectedIndex = 0; // Default to first
 						pnl.Controls.Add(rbl);
+						break;
+
+					case EHSAuditQuestionType.RadioPercentage:
+						var rblp = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						rblp.RepeatDirection = RepeatDirection.Horizontal;
+						foreach (var choice in q.AnswerChoices)
+						{
+							var li = new ListItem(choice.Value);
+							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+							if (shouldPopulate)
+							{
+								if (choice.Value == q.AnswerText)
+									li.Selected = true;
+							}
+							rblp.Items.Add(li);
+						}
+						// all RBL will cause the percentages to change
+						rblp.AutoPostBack = true;
+						rblp.SelectedIndexChanged += rblp_SelectedIndexChanged;
+
+						//if (!shouldPopulate)
+						//	rbl.SelectedIndex = 0; // Default to first
+						pnl.Controls.Add(rblp);
 						break;
 
 					case EHSAuditQuestionType.CheckBox:
@@ -1346,7 +1411,8 @@ namespace SQM.Website
 				// Add a comment box that hides/shows via a link to certain field types
 				if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 					q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
-					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+					q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					string cid = "Comment" + qid;
 					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
@@ -1809,6 +1875,16 @@ namespace SQM.Website
 			}
 		}
 
+		void rblp_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
+			if (typeId < 1)
+				return;
+			// add the logic to recalculate the percentages
+			UpdateAnswersFromForm();
+			CalculatePercentages(questions);
+		}
+
 		protected RadComboBox CreateReferencesDropdown(string standard)
 		{
 			List<STANDARDS_REFERENCES> srList = SQMStandardsReferencesMgr.SelectReferencesByStandard("IMS");
@@ -2045,7 +2121,11 @@ namespace SQM.Website
             //obj.IsBackground = true;
 
 			if (shouldReturn)
+			{
+				SessionManager.ReturnStatus = false;
+				SessionManager.ReturnObject = "DisplayAudits";
 				Response.Redirect("/EHS/EHS_Audits.aspx");  // mt - temporary
+			}
 
 			//if (shouldCreate8d == true && shouldReturn == false)
 			//	Create8dAndRedirect(auditId);
@@ -2093,6 +2173,10 @@ namespace SQM.Website
 							break;
 
 						case EHSAuditQuestionType.Radio:
+							answer = (control as RadioButtonList).SelectedValue;
+							break;
+
+						case EHSAuditQuestionType.RadioPercentage:
 							answer = (control as RadioButtonList).SelectedValue;
 							break;
 
@@ -2182,7 +2266,8 @@ namespace SQM.Website
 				string comment = "";
 				if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 					q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
-					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+					q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+					q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					try
 					{
@@ -2230,6 +2315,74 @@ namespace SQM.Website
 			//	if (auditDescription.Length > MaxTextLength)
 			//		auditDescription = auditDescription.Substring(0, MaxTextLength);
 			//}
+		}
+
+		protected void CalculatePercentages(List<EHSAuditQuestion> questions)
+		{
+			string previousTopic = "";
+			decimal totalQuestions = 0;
+			decimal totalTopicQuestions = 0;
+			decimal totalPositive = 0;
+			decimal totalTopicPositive = 0;
+			decimal totalPercent = 0;
+			bool answerIsPositive = false;
+
+			foreach (var q in questions)
+			{
+
+				string tid = q.TopicId.ToString();
+
+				string answer = "";
+				if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
+				{
+					// first set topic percent display if the topic has changed
+					if (!previousTopic.Equals(tid))
+					{
+						if (!previousTopic.Equals(""))
+						{
+							Label topicTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
+							if (topicTotal != null)
+							{
+								totalPercent = totalTopicPositive / totalTopicQuestions;
+								topicTotal.Text = string.Format("{0:0%}", totalPercent);
+							}
+							totalTopicQuestions = 0;
+							totalTopicPositive = 0;
+						}
+						previousTopic = tid;
+					}
+
+					// next, add to totals is the response is a positive one
+					totalQuestions += 1;
+					totalTopicQuestions += 1;
+					answer = q.AnswerText;
+					answerIsPositive = false;
+					foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+					{
+						if (choice.Value.Equals(q.AnswerText) && choice.ChoicePositive)
+							answerIsPositive = true;
+					}
+					if (answerIsPositive)
+					{
+						totalPositive += 1;
+						totalTopicPositive += 1;
+					}
+				}
+			}
+			// update the last topic total
+			Label topicLastTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
+			if (topicLastTotal != null)
+			{
+				totalPercent = totalTopicPositive / totalTopicQuestions;
+				topicLastTotal.Text = string.Format("{0:0%}", totalPercent);
+			}
+			// update the audit total
+			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPercent");
+			if (topicLastTotal != null)
+			{
+				totalPercent = totalPositive / totalQuestions;
+				topicLastTotal.Text = string.Format("Total Score:   {0:0%}", totalPercent);
+			}
 		}
 
 		protected bool AddOrUpdateAnswers(List<EHSAuditQuestion> questions, decimal auditId)

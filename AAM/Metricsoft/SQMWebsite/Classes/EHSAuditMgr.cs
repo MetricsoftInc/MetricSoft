@@ -33,6 +33,8 @@ namespace SQM.Website
 	{
 		public string Value { get; set; }
 		public bool IsCategoryHeading { get; set; }
+		public decimal ChoiceWeight { get; set; }
+		public bool ChoicePositive { get; set; }
 	}
 
 	public class EHSAuditComment
@@ -347,6 +349,27 @@ namespace SQM.Website
 			}
 		}
 
+		public static bool EnableNativeLangQuestion(string nlsLanguage)
+		{
+			return string.IsNullOrEmpty(nlsLanguage) || nlsLanguage.Contains("en") ? false : true;
+		}
+
+		public static string AuditQuestionText(AUDIT_QUESTION question, string nlsLanguage)
+		{
+			string text;
+
+			if (question.AUDIT_QUESTION_LANG != null && question.AUDIT_QUESTION_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).FirstOrDefault() != null)
+			{
+				text = question.AUDIT_QUESTION_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).First().LANG_TEXT;
+			}
+			else
+			{
+				text = question.QUESTION_TEXT;
+			}
+
+			return text;
+		}
+
 		/// <summary>
 		/// Returns boolean indicating whether 8D should be selected for audit type by default
 		/// </summary>
@@ -455,7 +478,7 @@ namespace SQM.Website
 
 				foreach (var aq in activeQuestionList)
 				{
-					var questionInfo = (from qi in entities.AUDIT_QUESTION
+					var questionInfo = (from qi in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG")
 										where qi.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
 										select qi).FirstOrDefault();
 
@@ -470,7 +493,8 @@ namespace SQM.Website
 					var newQuestion = new EHSAuditQuestion()
 					{
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
-						QuestionText = questionInfo.QUESTION_TEXT,
+						//QuestionText = questionInfo.QUESTION_TEXT,
+						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 						QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
@@ -489,7 +513,9 @@ namespace SQM.Website
 															  select new EHSAuditAnswerChoice
 															  {
 																  Value = qc.QUESTION_CHOICE_VALUE,
-																  IsCategoryHeading = qc.IS_CATEGORY_HEADING
+																  IsCategoryHeading = qc.IS_CATEGORY_HEADING,
+																  ChoiceWeight = qc.CHOICE_WEIGHT,
+																  ChoicePositive = qc.CHOICE_POSITIVE
 															  }).ToList();
 						if (choices.Count > 0)
 							newQuestion.AnswerChoices = choices;
@@ -524,7 +550,7 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				var allQuestions = (from q in entities.AUDIT_QUESTION select q).ToList();
+				var allQuestions = (from q in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG") select q).ToList();
 
 				foreach (var q in allQuestions)
 				{
@@ -576,7 +602,7 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				topicList = (from q in entities.AUDIT_QUESTION where questionIds.Contains(q.AUDIT_QUESTION_ID) select q).ToList();
+				topicList = (from q in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG") where questionIds.Contains(q.AUDIT_QUESTION_ID) select q).ToList();
 			}
 			catch (Exception e)
 			{

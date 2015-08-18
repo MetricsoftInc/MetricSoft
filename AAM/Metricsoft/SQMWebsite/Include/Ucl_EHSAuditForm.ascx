@@ -29,77 +29,88 @@
                         <asp:Label ID="lblResults" runat="server" />
                     <ucl:AuditDetails id="uclAuditDetails" runat="server" />
                     <asp:Panel ID="pnlAddEdit" runat="server">
-                        <asp:Panel ID="pnlAuditHeader" runat="server">
-                            <div class="blueCell" style="padding: 7px;">
-                                <table style="width: 100%;" cellpadding="0" cellspacing="3">
-                                    <tr>
-                                        <td>
+
+						<div class="container-fluid blueCell" style="padding: 7px;"">
+
+                            <asp:Panel ID="pnlAuditHeader" runat="server">
+                                <div class="blueCell" style="padding: 7px;">
+
+                                    <div class="row-fluid">
+
+                                        <div class="col-xs-12  text-left">
+
+
                                             <asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Audit:</strong></asp:Label>
-                                        </td>
-                                        <td style="width: 160px;">
-                                            <span class="requiredStar">&bull;</span> - Required to Create
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
+
+                                            <span class="hidden-xs" style="float: right; width: 160px; margin-right: 6px;">
+                                                <span class="requiredStar">&bull;</span> - Required to Create
+                                            </span>
+
+                                            <div class="clearfix visible-xs-block"></div>
+                                            <br style="clear: both;" />
+
+
                                             <asp:Label ID="lblAuditType" class="textStd" runat="server">Audit Type:</asp:Label>
                                             <telerik:RadDropDownList ID="rddlAuditType" runat="server" Width="450" AutoPostBack="true" CausesValidation="false"
                                                 OnSelectedIndexChanged="rddlAuditType_SelectedIndexChanged" Skin="Metro">
                                             </telerik:RadDropDownList>
-                                        </td>
-                                        <td style="width: 160px;">
-                                            <span class="requiredCloseStar">&bull;</span> - Required to Close
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
-                                    <tr runat="server">
-                                        <td class="columnHeader">
-                                            <asp:Label ID="lblLocation" runat="server" Text="Business Location"></asp:Label>
-                                        </td>
-                                        <td class="required" width="1%">&nbsp;</td>
-                                        <td class="tableDataAlt">
-                                            <asp:Label runat="server" ID="lblAuditLocation" Visible="false"></asp:Label>
-								<telerik:RadComboBox ID="ddlAuditLocation" runat="server" Skin="Metro" Width="280" ZIndex="10" Font-Size="Small"
-									AutoPostBack="true" ToolTip="select an accesible business location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="AuditLocation_Select" EnableViewState="true"></telerik:RadComboBox>
-								<telerik:RadMenu ID="mnuAuditLocation" runat="server" Skin="Default" Width="280" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="AuditLocation_Select" EnableViewState="true"></telerik:RadMenu>
-                                            <asp:HiddenField runat="server" ID="hdnAuditLocation" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="columnHeader" width="24%">
-                                            <asp:Label ID="lblDescription" runat="server" Text="Description"></asp:Label>
-                                        </td>
-                                        <td class="tableDataAlt">&nbsp;</td>
-                                        <td class="tableDataAlt" width="75%">
-                                            <asp:Label runat="server" ID="lblAuditDescription" Visible="false"></asp:Label>
-                                            <asp:TextBox ID="tbDescription" TextMode="MultiLine" Rows="2" Columns="50" MaxLength="4050" runat="server"></asp:TextBox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="columnHeader" width="24%">
-                                            <asp:Label ID="lblAuditPerson" runat="server" Text="Audit Person"></asp:Label>
-                                        </td>
-                                        <td class="required" width="1%">&nbsp;</td>
-                                        <td class="tableDataAlt" width="75%">
-                                            <asp:Label runat="server" ID="lblAuditPersonName" Visible="false"></asp:Label>
-                                            <telerik:RadDropDownList ID="rddlAuditUsers" runat="server" CausesValidation="false" Skin="Metro" Width="400px"></telerik:RadDropDownList>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="columnHeader" width="24%">
-                                            <asp:Label ID="lblAuditDate" runat="server" Text="Audit Due Date"></asp:Label>
-                                        </td>
-                                        <td class="required" width="1%">&nbsp;</td>
-                                        <td class="tableDataAlt" width="75%">
-                                            <asp:Label runat="server" ID="lblAuditDueDate" Visible="false"></asp:Label>
-                                            <telerik:RadDatePicker ID="dmAuditDate" runat="server" CssClass="textStd" Width=145 Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
-                                        </td>
-                                    </tr>
-                               </table>
 
-                            </div>
-                        </asp:Panel>
+
+                                            <span class="hidden-xs" style="float: right; width: 160px;">
+                                                <span class="requiredCloseStar">&bull;</span> - Required to Close
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
+                                        <tr runat="server">
+                                            <td class="columnHeader">
+                                                <asp:Label ID="lblLocation" runat="server" Text="Business Location"></asp:Label>
+                                            </td>
+                                            <td class="required" width="1%">&nbsp;</td>
+                                            <td class="tableDataAlt">
+                                                <asp:Label runat="server" ID="lblAuditLocation" Visible="false"></asp:Label>
+                                                <telerik:RadComboBox ID="ddlAuditLocation" runat="server" Skin="Metro" Width="280" ZIndex="10" Font-Size="Small"
+                                                    AutoPostBack="true" ToolTip="select an accesible business location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="AuditLocation_Select" EnableViewState="true">
+                                                </telerik:RadComboBox>
+                                                <telerik:RadMenu ID="mnuAuditLocation" runat="server" Skin="Default" Width="280" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="AuditLocation_Select" EnableViewState="true"></telerik:RadMenu>
+                                                <asp:HiddenField runat="server" ID="hdnAuditLocation" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="columnHeader" width="24%">
+                                                <asp:Label ID="lblDescription" runat="server" Text="Description"></asp:Label>
+                                            </td>
+                                            <td class="tableDataAlt">&nbsp;</td>
+                                            <td class="tableDataAlt" width="75%">
+                                                <asp:Label runat="server" ID="lblAuditDescription" Visible="false"></asp:Label>
+                                                <asp:TextBox ID="tbDescription" TextMode="MultiLine" Rows="2" Columns="50" MaxLength="4050" runat="server"></asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="columnHeader" width="24%">
+                                                <asp:Label ID="lblAuditPerson" runat="server" Text="Audit Person"></asp:Label>
+                                            </td>
+                                            <td class="required" width="1%">&nbsp;</td>
+                                            <td class="tableDataAlt" width="75%">
+                                                <asp:Label runat="server" ID="lblAuditPersonName" Visible="false"></asp:Label>
+                                                <telerik:RadDropDownList ID="rddlAuditUsers" runat="server" CausesValidation="false" Skin="Metro" Width="400px"></telerik:RadDropDownList>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="columnHeader" width="24%">
+                                                <asp:Label ID="lblAuditDate" runat="server" Text="Audit Due Date"></asp:Label>
+                                            </td>
+                                            <td class="required" width="1%">&nbsp;</td>
+                                            <td class="tableDataAlt" width="75%">
+                                                <asp:Label runat="server" ID="lblAuditDueDate" Visible="false"></asp:Label>
+                                                <telerik:RadDatePicker ID="dmAuditDate" runat="server" CssClass="textStd" Width="145" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </asp:Panel>
+                        </div>
                         <div id="divForm" runat="server">
                             <asp:Panel ID="pnlForm" runat="server">
                             </asp:Panel>
