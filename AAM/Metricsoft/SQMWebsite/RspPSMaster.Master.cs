@@ -157,7 +157,16 @@ namespace SQM.Website
 			}
 			pnlStatOfTheDay.Visible = true;
 
+			if (ddlUserLang.Items.Count == 0)
+			{
+				foreach (LOCAL_LANGUAGE lang in SQMModelMgr.SelectLanguageList(new PSsqmEntities(), true))
+				{
+					ddlUserLang.Items.Add(new RadComboBoxItem(lang.LANGUAGE_NAME, lang.LANGUAGE_ID.ToString()));
+				}
+			}
 			tbUserPhone.Text = SessionManager.UserContext.Person.PHONE;
+			if (ddlUserLang.FindItemByValue(SessionManager.UserContext.Person.PREFERRED_LANG_ID.ToString()) != null)
+				ddlUserLang.SelectedValue = SessionManager.UserContext.Person.PREFERRED_LANG_ID.ToString();
 		}
 
 		protected void menu_Click(object sender, EventArgs e)
@@ -198,6 +207,11 @@ namespace SQM.Website
 			PSsqmEntities ctx = new PSsqmEntities();
 			PERSON user = SQMModelMgr.LookupPerson(ctx, SessionManager.UserContext.Person.PERSON_ID, "", false);
 			user.PHONE = tbUserPhone.Text;
+			if (!string.IsNullOrEmpty(ddlUserLang.SelectedValue))
+			{
+				user.PREFERRED_LANG_ID = Convert.ToInt32(ddlUserLang.SelectedValue);
+				SessionManager.SessionContext.SetLanguage((int)user.PREFERRED_LANG_ID);
+			}
 			user = SQMModelMgr.UpdatePerson(ctx, user, SessionManager.UserContext.UserName());
 			if (user != null)
 				SessionManager.UserContext.Person = user;  // ??

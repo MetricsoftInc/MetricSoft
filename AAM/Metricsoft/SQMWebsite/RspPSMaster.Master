@@ -232,7 +232,16 @@
 							</td>
 							<td class="tableDataAlt" width="1%">&nbsp;</td>
 							<td class="tableDataAlt" width="55%">
-								<asp:TextBox ID="tbUserPhone" size="20" maxlength="20" runat="server"></asp:TextBox>
+								<asp:TextBox ID="tbUserPhone" size="24" maxlength="20" runat="server"></asp:TextBox>
+							</td>
+						</tr>
+						<tr>
+							<td class="columnHeader" width="44%">
+								<asp:Label ID="lblUserLang" runat="server" text="Language/Culture"></asp:Label>
+							</td>
+							<td class="tableDataAlt" width="1%">&nbsp;</td>
+							<td class="tableDataAlt" width="55%">
+								<telerik:RadComboBox ID="ddlUserLang" runat="server" Skin="Metro" Width=200 ZIndex=9000 Font-Size=Small ></telerik:RadComboBox>
 							</td>
 						</tr>
 						<tr>
