@@ -585,54 +585,54 @@ namespace SQM.Website
 					rfvInvolvedPerson.Enabled = UpdateAccess;
 
 					tbInvPersonStatement.Enabled = UpdateAccess;
-					rfvInvPersonStatement.Enabled = UpdateAccess;
+					//rfvInvPersonStatement.Enabled = UpdateAccess;
 
 					rdpSupvInformedDate.Enabled = UpdateAccess;
-					rfvSupvInformedDate.Enabled = UpdateAccess;
+					//rfvSupvInformedDate.Enabled = UpdateAccess;
 
 					rddlSupervisor.Enabled = UpdateAccess;
-					rfvSupervisor.Enabled = UpdateAccess;
+					//rfvSupervisor.Enabled = UpdateAccess;
 
 					tbSupervisorStatement.Enabled = UpdateAccess;
-					rfvSupervisorStatement.Enabled = UpdateAccess;
+					//rfvSupervisorStatement.Enabled = UpdateAccess;
 
 					rdoInside.Enabled = UpdateAccess;
-					rfvInside.Enabled = UpdateAccess;
+					//rfvInside.Enabled = UpdateAccess;
 
 					rdoDirectSupv.Enabled = UpdateAccess;
-					rfvDirectSupv.Enabled = UpdateAccess;
+					//rfvDirectSupv.Enabled = UpdateAccess;
 
 					rdoErgConcern.Enabled = UpdateAccess;
-					rfvErgConcern.Enabled = UpdateAccess;
+					//rfvErgConcern.Enabled = UpdateAccess;
 
 					rdoStdProcsFollowed.Enabled = UpdateAccess;
-					rfvStdProcsFollowed.Enabled = UpdateAccess;
+					//rfvStdProcsFollowed.Enabled = UpdateAccess;
 
 					rdoTrainingProvided.Enabled = UpdateAccess;
-					rfvTrainingProvided.Enabled = UpdateAccess;
+					//rfvTrainingProvided.Enabled = UpdateAccess;
 
 					tbTaskYears.Enabled = UpdateAccess;
 					tbTaskMonths.Enabled = UpdateAccess;
 					tbTaskDays.Enabled = UpdateAccess;
-					rfvTaskDays.Enabled = UpdateAccess;
+					//rfvTaskDays.Enabled = UpdateAccess;
 
 					rdoFirstAid.Enabled = UpdateAccess;
-					rfvFirstAid.Enabled = UpdateAccess;
+					//rfvFirstAid.Enabled = UpdateAccess;
 
 					rdoRecordable.Enabled = UpdateAccess;
-					rfvRecordable.Enabled = UpdateAccess;
+					//rfvRecordable.Enabled = UpdateAccess;
 
 					rdoLostTime.Enabled = UpdateAccess;
-					rfvLostTime.Enabled = UpdateAccess;
+					//rfvLostTime.Enabled = UpdateAccess;
 
 					rdpExpectReturnDT.Enabled = UpdateAccess;
-					rfvExpectReturnDT.Enabled = UpdateAccess;
+					//rfvExpectReturnDT.Enabled = UpdateAccess;
 
 					rddlInjuryType.Enabled = UpdateAccess;
-					rfvInjuryType.Enabled = UpdateAccess;
+					//rfvInjuryType.Enabled = UpdateAccess;
 
 					rddlBodyPart.Enabled = UpdateAccess;
-					rfvBodyPart.Enabled = UpdateAccess;
+					//rfvBodyPart.Enabled = UpdateAccess;
 
 					btnSave.Enabled = UpdateAccess;
 					break;
@@ -940,8 +940,8 @@ namespace SQM.Website
 							Label rqd1 = (Label)e.Item.FindControl("lbRqd1");
 							Label rqd2 = (Label)e.Item.FindControl("lbRqd2");
 					
-							RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessName");
-							RequiredFieldValidator rvfws = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessStatement");
+							//RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessName");
+							//RequiredFieldValidator rvfws = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessStatement");
 
 							lb.Text = witness.WITNESS_NO.ToString();
 							lb2.Text = witness.WITNESS_NO.ToString();
@@ -960,15 +960,15 @@ namespace SQM.Website
 							// Set user access:
 
 							tbw.Enabled = UpdateAccess;
-							rvfw.Enabled = UpdateAccess;
+							//rvfw.Enabled = UpdateAccess;
 							tbws.Enabled = UpdateAccess;
 							itmdel.Visible = UpdateAccess;
-							rvfws.Enabled = UpdateAccess;
+							//rvfws.Enabled = UpdateAccess;
 							
 							if (witness.WITNESS_NO > minRowsToValidate)
 							{
-								rvfw.Enabled = false;
-								rvfws.Enabled = false;
+								//rvfw.Enabled = false;
+								//rvfws.Enabled = false;
 							}
 
 				}
@@ -1614,12 +1614,12 @@ namespace SQM.Website
 			if (rdoLostTime.SelectedValue == "1")
 			{
 				pnlExpReturnDT.Visible = true;
-				rfvExpectReturnDT.Enabled = true;
+				//rfvExpectReturnDT.Enabled = true;
 			}
 			else
 			{
 				pnlExpReturnDT.Visible = false;
-				rfvExpectReturnDT.Enabled = false;
+				//rfvExpectReturnDT.Enabled = false;
 			}
 
 

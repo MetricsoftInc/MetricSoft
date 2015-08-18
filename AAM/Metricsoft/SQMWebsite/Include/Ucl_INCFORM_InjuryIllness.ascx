@@ -231,15 +231,15 @@
 		<%-- Involved Person's Statement question (MultiLine TEXTBOX) --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-				<span class="labelMultiLineText"><asp:Label ID="lbInvPersonStatementSM" runat ="server" Text="Involved Person's Statement"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span class="labelMultiLineText"><asp:Label ID="lbInvPersonStatementSM" runat ="server" Text="Involved Person's Statement"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbInvPersonStatementXS" runat ="server" Text="Involved Person's Statement"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbInvPersonStatementXS" runat ="server" Text="Involved Person's Statement"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbInvPersonStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-				<asp:RequiredFieldValidator runat="server" ID="rfvInvPersonStatement" ControlToValidate="tbInvPersonStatement" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvInvPersonStatement" ControlToValidate="tbInvPersonStatement" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -247,15 +247,15 @@
 		<%-- SUPERVISOR INFORMED DATE question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbSupvInformedDateSM" runat ="server" Text="Date Supervisor Informed"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbSupvInformedDateSM" runat ="server" Text="Date Supervisor Informed"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbSupvInformedDateXS" runat ="server" Text="Date Supervisor Informed"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbSupvInformedDateXS" runat ="server" Text="Date Supervisor Informed"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpSupvInformedDate" Skin="Metro" CssClass="WarnIfChanged"  Width="278" runat="server"></telerik:RadDatePicker>
-				<asp:RequiredFieldValidator runat="server" ID="rfvSupvInformedDate" ControlToValidate="rdpSupvInformedDate" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupvInformedDate" ControlToValidate="rdpSupvInformedDate" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 
 			</div>
 		</div>
@@ -265,15 +265,15 @@
 		<%-- SUPERVISOR NAME question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbSupervisorSM" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbSupervisorSM" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbSupervisorXS" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbSupervisorXS" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlSupervisor" Skin="Metro" CssClass="WarnIfChanged" Width="278" runat="server" OnSelectedIndexChanged="rddlSupervisor_SelectedIndexChanged"></telerik:RadDropDownList>
-				<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="rddlSupervisor" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="rddlSupervisor" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -282,15 +282,15 @@
 		<%-- SUPERVISOR'S Statement question (MultiLine TEXTBOX) --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
-				<span class="labelMultiLineText"><asp:Label ID="lbSupervisorStatementSM" runat ="server" Text="Supervisor's Statement"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span class="labelMultiLineText"><asp:Label ID="lbSupervisorStatementSM" runat ="server" Text="Supervisor's Statement"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbSupervisorStatementXS" runat ="server" Text="Supervisor's Statement"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbSupervisorStatementXS" runat ="server" Text="Supervisor's Statement"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbSupervisorStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-				<asp:RequiredFieldValidator runat="server" ID="rfvSupervisorStatement" ControlToValidate="tbSupervisorStatement" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisorStatement" ControlToValidate="tbSupervisorStatement" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -303,13 +303,13 @@
 
 					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 83px;">
 						<span class="labelMultiLineText">
-							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
+							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredCloseStarFloat" runat="server"></asp:Label></span>
 					</div>
 
 					<div class="col-xs-12 visible-xs text-left-more">
 						<br /><br />
 						<span>
-							<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server" /></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredStarFloat" runat="server"></asp:Label></span>
+							<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server" /></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredCloseStar" runat="server"></asp:Label></span>
 					</div>
 
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:83px;padding-bottom:4px;padding-top:7px;">
@@ -329,8 +329,8 @@
 
 							<br class="visible-xs" style="padding-bottom:3px;" />	
 								
-						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
-						<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+						<%--<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
+						<%--<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 					</div>
 
 				</div>
@@ -352,18 +352,18 @@
 		<%-- INSIDE OUTSIDE question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbInsideOutsideSM" runat ="server" Text="Inside or Outside Building"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbInsideOutsideSM" runat ="server" Text="Inside or Outside Building"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbInsideOutsideXS" runat ="server" Text="Inside or Outside Building"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbInsideOutsideXS" runat ="server" Text="Inside or Outside Building"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoInside" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Inside&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="Outside"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
-				<asp:RequiredFieldValidator runat="server" ID="rfvInside" ControlToValidate="rdoInside" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvInside" ControlToValidate="rdoInside" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -371,18 +371,18 @@
 		<%-- DIRECTLY SUPERVISED by AAM question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbDirectSupvSM" runat ="server" Text="Directly Supervised by AAM"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbDirectSupvSM" runat ="server" Text="Directly Supervised by AAM"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbDirectSupvXS" runat ="server" Text="Directly Supervised by AAM"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbDirectSupvXS" runat ="server" Text="Directly Supervised by AAM"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoDirectSupv" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
-				<asp:RequiredFieldValidator runat="server" ID="rfvDirectSupv" ControlToValidate="rdoDirectSupv" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvDirectSupv" ControlToValidate="rdoDirectSupv" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 						
 			</div>
 		</div>
@@ -393,18 +393,18 @@
 		<%-- ERGONOMIC CONCERNS question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbErgConcernSM" runat ="server" Text="Ergonomic Concerns"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbErgConcernSM" runat ="server" Text="Ergonomic Concerns"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbErgConcernXS" runat ="server" Text="Ergonomic Concerns"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbErgConcernXS" runat ="server" Text="Ergonomic Concerns"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoErgConcern" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1  Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0  Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>				
-				<asp:RequiredFieldValidator runat="server" ID="rfvErgConcern" ControlToValidate="rdoErgConcern" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvErgConcern" ControlToValidate="rdoErgConcern" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 
 			</div>
 		</div>
@@ -414,18 +414,18 @@
 		<%-- STD WORK PROCEDURES FOLLOWED question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbStdProcsFollowedSM" runat ="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbStdProcsFollowedSM" runat ="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbStdProcsFollowedXS" runat ="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbStdProcsFollowedXS" runat ="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoStdProcsFollowed" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1  Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0  Text="Non-Standard"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
-				<asp:RequiredFieldValidator runat="server" ID="rfvStdProcsFollowed" ControlToValidate="rdoStdProcsFollowed" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvStdProcsFollowed" ControlToValidate="rdoStdProcsFollowed" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 							
 			</div>
 		</div>
@@ -435,18 +435,18 @@
 		<%-- TRAINING PROVIDED question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbTrainingProvidedSM" runat ="server" Text="Was Training for this Task Provided?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbTrainingProvidedSM" runat ="server" Text="Was Training for this Task Provided?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbTrainingProvidedXS" runat ="server" Text="Was Training for this Task Provided?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbTrainingProvidedXS" runat ="server" Text="Was Training for this Task Provided?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoTrainingProvided" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>	
-				<asp:RequiredFieldValidator runat="server" ID="rfvTrainingProvided" ControlToValidate="rdoTrainingProvided" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvTrainingProvided" ControlToValidate="rdoTrainingProvided" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -455,11 +455,11 @@
 		<%-- HOW LONG DOING TASK question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height:37px;">
-				<span><asp:Label ID="lbTaskYearsSM" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbTaskYearsSM" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more" style="height:37px;" >
 				<br />
-				<span><asp:Label ID="lbTaskYearsXS" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbTaskYearsXS" runat ="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:37px;" >
 				<span style="display:inline-block;"><span><asp:TextBox ID="tbTaskYears" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskYears" Text="Years" runat="server"></asp:Label></span>&nbsp;&nbsp;
@@ -468,7 +468,7 @@
 				<asp:RegularExpressionValidator ID="revTaskYears" runat="server" ControlToValidate="tbTaskYears" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Years must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
 				<asp:RegularExpressionValidator ID="revTaskMonths" runat="server" ControlToValidate="tbTaskMonths" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Months must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
 				<asp:RegularExpressionValidator ID="revTaskDays" runat="server" ControlToValidate="tbTaskDays" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Days must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>
-				<asp:RequiredFieldValidator runat="server" ID="rfvTaskDays"  ControlToValidate="tbTaskDays" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvTaskDays"  ControlToValidate="tbTaskDays" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -477,18 +477,18 @@
 		<%-- FIRST AID question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbFirstAidSM" runat ="server" Text="First Aid?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbFirstAidSM" runat ="server" Text="First Aid?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbFirstAidXS" runat ="server" Text="First Aid?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbFirstAidXS" runat ="server" Text="First Aid?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoFirstAid" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
-				<asp:RequiredFieldValidator runat="server" ID="rfvFirstAid" ControlToValidate="rdoFirstAid" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvFirstAid" ControlToValidate="rdoFirstAid" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -497,18 +497,18 @@
 		<%-- RECORDABLE question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbRecordableSM" runat ="server" Text="Recordable?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbRecordableSM" runat ="server" Text="Recordable?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbRecordableXS" runat ="server" Text="Recordable?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbRecordableXS" runat ="server" Text="Recordable?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoRecordable" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
-				<asp:RequiredFieldValidator runat="server" ID="rfvRecordable" ControlToValidate="rdoRecordable" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvRecordable" ControlToValidate="rdoRecordable" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -516,18 +516,18 @@
 		<%-- LOST TIME question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbLostTimeSM" runat ="server" Text="Lost Time?"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbLostTimeSM" runat ="server" Text="Lost Time?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbLostTimeXS" runat ="server" Text="Lost Time?"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbLostTimeXS" runat ="server" Text="Lost Time?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 			   <span><asp:RadioButtonList ID="rdoLostTime" OnSelectedIndexChanged="rdoLostTime_SelectedIndexChanged" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true" runat="server">
 				   <asp:ListItem Value=1 Selected="False" Text="Yes&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
 				   <asp:ListItem Value=0 Text="No"></asp:ListItem>
 			   </asp:RadioButtonList></span>		
-				<asp:RequiredFieldValidator runat="server" ID="rfvLostTime" ControlToValidate="rdoLostTime" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvLostTime" ControlToValidate="rdoLostTime" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -536,15 +536,15 @@
 		<asp:Panel ID="pnlExpReturnDT" runat="server" Visible="false">
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbExpectReturnDTSM" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbExpectReturnDTSM" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbExpectReturnDTXS" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbExpectReturnDTXS" runat ="server" Text="Expected Return Date"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpExpectReturnDT" Skin="Metro" CssClass="WarnIfChanged"  Width="278" runat="server"></telerik:RadDatePicker>
-				<asp:RequiredFieldValidator runat="server" ID="rfvExpectReturnDT" ControlToValidate="rdpExpectReturnDT" Display="None" Enabled="false" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvExpectReturnDT" ControlToValidate="rdpExpectReturnDT" Display="None" Enabled="false" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 		</asp:Panel>
@@ -554,15 +554,15 @@
 		<%-- TYPE OF INJURY question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbInjuryTypeSM" runat ="server" Text="Type of Injury"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbInjuryTypeSM" runat ="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbInjuryTypeXS" runat ="server" Text="Type of Injury"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbInjuryTypeXS" runat ="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ExpandDirection="Up" CssClass="WarnIfChanged" Width="278" DropDownHeight="300" runat="server"></telerik:RadDropDownList>
-				<asp:RequiredFieldValidator runat="server" ID="rfvInjuryType" ControlToValidate="rddlInjuryType" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvInjuryType" ControlToValidate="rddlInjuryType" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -570,15 +570,15 @@
 		<%-- BODY PART question --%>	
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span><asp:Label ID="lbBodyPartSM" runat ="server" Text="Body Part"></asp:Label><span class="requiredStarFloat">*</span></span>
+				<span><asp:Label ID="lbBodyPartSM" runat ="server" Text="Body Part"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
-				<span><asp:Label ID="lbBodyPartXS" runat ="server" Text="Body Part"></asp:Label><span class="requiredStar">*</span></span>
+				<span><asp:Label ID="lbBodyPartXS" runat ="server" Text="Body Part"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ExpandDirection="Up" DropDownHeight="300" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-				<asp:RequiredFieldValidator runat="server" ID="rfvBodyPart" ControlToValidate="rddlBodyPart" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvBodyPart" ControlToValidate="rddlBodyPart" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
