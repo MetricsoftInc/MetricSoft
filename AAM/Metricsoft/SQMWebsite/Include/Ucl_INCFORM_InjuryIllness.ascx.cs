@@ -353,39 +353,27 @@ namespace SQM.Website
 
 		private void GetAttachments(decimal incidentId)
 		{
-			//EditIncidentId
-			//uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
-			//uploader.ID = qid;
 			uploader.SetAttachmentRecordStep("1");
 			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
-			// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
-			if (IsEditContext)
+			
+
+			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
+			int px = 128;
+
+			if (attCnt > 0)
 			{
-				var entities = new PSsqmEntities();
-				var files = (from a in entities.ATTACHMENT
-							 where a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId
-							 orderby a.FILE_NAME
-							 select a).ToList();
-
-				
-				int px = 128;
-				if(files.Count() > 0)
-					px = px + (files.Count() * 30) + 35;
-
-				dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
-				dvAttach.Style.Add("height", px.ToString() + "px !important");
-
-				//dvAttachLbl.Attributes.Add("height", px.ToString() + "px !important;");
-				//dvAttach.Attributes.Add("height", px.ToString() + "px !important;");
-
+				px = px + (attCnt * 30) + 35;
 				uploader.GetUploadedFiles(40, incidentId, "1");
 			}
+
+			// Set the html Div height based on number of attachments to be displayed in the grid:
+			dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+			dvAttach.Style.Add("height", px.ToString() + "px !important");
 		}
 
 		void InitializeForm(int currentStep)
 		{
-
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;

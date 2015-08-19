@@ -760,6 +760,18 @@ namespace SQM.Website
 			return comments;
 		}
 
+		public static int AttachmentCount(decimal incidentId)
+		{
+			int count = 0;
+
+			using (PSsqmEntities entities = new PSsqmEntities())
+			{
+				count = (from a in entities.ATTACHMENT where (a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId) select a).Count();
+			}
+
+			return count;
+		}
+
 		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)
 		{
 
