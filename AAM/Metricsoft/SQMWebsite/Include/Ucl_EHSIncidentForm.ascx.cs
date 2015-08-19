@@ -592,6 +592,7 @@ namespace SQM.Website
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("1");
+						uploader.SetReportOption(false);
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
@@ -1189,6 +1190,7 @@ namespace SQM.Website
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
 						uploader.SetAttachmentRecordStep("1");
+						uploader.SetReportOption(false);
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
@@ -2397,6 +2399,7 @@ namespace SQM.Website
 					if (IsEditContext)
 					{
 						btnSaveContinue_Click(sender, null);
+						BuildForm();
 					}
 					else
 						btnSaveReturn_Click(sender, null);
