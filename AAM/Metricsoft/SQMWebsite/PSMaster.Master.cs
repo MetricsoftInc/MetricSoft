@@ -103,7 +103,6 @@ namespace SQM.Website
 						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
 						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
 						RadMenu1.Items.Add(EHSMenu2);
-						// EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Layouts", "/EHS/EHS_Audits_Questions.aspx"));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
 						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));

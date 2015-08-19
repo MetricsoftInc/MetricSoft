@@ -404,7 +404,7 @@ namespace SQM.Website
 			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
 			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
 
-			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 			bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 			bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 

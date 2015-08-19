@@ -95,7 +95,7 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
-			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
+			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
