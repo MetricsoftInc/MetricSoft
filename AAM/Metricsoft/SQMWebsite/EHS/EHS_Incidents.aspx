@@ -132,7 +132,7 @@
 
 						<span style="float: left; width: 160px;">
 							<asp:Label runat="server" ID="lblPlantSelect" Text="Locations:" CssClass="prompt"></asp:Label>
-						</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
 						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ZIndex="9000" Skin="Metro" Height="350" Width="256" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 
@@ -155,7 +155,8 @@
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" style="margin-top: 7px;" />
 
-							<asp:Label runat="server" ID="lblStatus" Text="Status:" CssClass="prompt"></asp:Label>&nbsp;&nbsp
+							<span style="padding-left:12px;">
+							<asp:Label runat="server" ID="lblStatus" Text="Status: " CssClass="prompt"></asp:Label>
 											<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select incident status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
 												<Items>
 													<telerik:RadComboBoxItem Text="Open" Value="A" />
@@ -165,7 +166,7 @@
 													<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />
 													<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />
 												</Items>
-											</telerik:RadComboBox>
+											</telerik:RadComboBox></span>
 
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" />
@@ -230,27 +231,28 @@
 					<div class="row" style="margin-top: 7px;">
 
 
-						<span style="float: left; margin-top: 4px;">
-							<asp:Label runat="server" ID="lblIncidentDate" Text="Incident Date From:" CssClass="prompt"></asp:Label>
+						<span style="float: left; margin-top: 4px; margin-left: 14px;">
+							<span style="padding-right:44px;"><asp:Label runat="server" ID="lblIncidentDate" Text="Incident Date From:" CssClass="prompt"></asp:Label></span>
 							<asp:Label runat="server" ID="lblInspectionDate" Text="Inspection Date From:" CssClass="prompt"></asp:Label>
-							<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
+							<span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker></span>
 						</span>
 
 						<div class="clearfix visible-xs"></div>
 						<br class="visible-xs-block" />
 
 						<span>
-							<asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt"></asp:Label>
-							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
+							<span style="margin-left: 14px; padding-right:8px;"><asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt"></asp:Label>
+							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115" Height="21" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker></span>
 						</span>
 
 						<div class="clearfix visible-xs"></div>
 						<br class="visible-xs-block" style="margin-top: 7px;" />
 
 						<span class="noprint">
+							<span style="margin-left: 14px;">
 							<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
 							<span style="padding-top: 10px;""><asp:CheckBox ID="cbShowImage" runat="server" Checked="false"  /></span>
-							<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnIncidentsSearchClick" />
+							<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnIncidentsSearchClick" /></span>
 						</span>
 
 					</div>
