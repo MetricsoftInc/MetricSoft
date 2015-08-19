@@ -45,12 +45,13 @@ namespace SQM.Website.Shared
 
 								mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
 								context.Response.ContentType = mimeType;
-								context.Response.BinaryWrite(a.ATTACHMENT_FILE.ATTACHMENT_DATA);
+								//context.Response.BinaryWrite(a.ATTACHMENT_FILE.ATTACHMENT_DATA);  
 								
-								//context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
-								//context.Response.AddHeader("content-length", a.ATTACHMENT_FILE.ATTACHMENT_DATA.Length.ToString());
-								//context.Response.OutputStream.Write(a.ATTACHMENT_FILE.ATTACHMENT_DATA, 0, a.ATTACHMENT_FILE.ATTACHMENT_DATA.Length);
-								//context.Response.Flush();
+								// mt  - use below for video streams ?
+								context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								context.Response.AddHeader("content-length", a.ATTACHMENT_FILE.ATTACHMENT_DATA.Length.ToString());
+								context.Response.OutputStream.Write(a.ATTACHMENT_FILE.ATTACHMENT_DATA, 0, a.ATTACHMENT_FILE.ATTACHMENT_DATA.Length);
+								context.Response.Flush();
                                 break;
                             default: // document
                                 DOCUMENT d = SQMDocumentMgr.GetDocument(doc_id);
