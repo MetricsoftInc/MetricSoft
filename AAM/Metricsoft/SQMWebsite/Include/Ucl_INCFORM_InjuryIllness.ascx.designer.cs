@@ -940,6 +940,15 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDropDownList rddlBodyPart;
         
         /// <summary>
+        /// dvAttachLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAttachLbl;
+        
+        /// <summary>
         /// lbAttachemntSM control.
         /// </summary>
         /// <remarks>
@@ -956,6 +965,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbAttachemntXS;
+        
+        /// <summary>
+        /// dvAttach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAttach;
         
         /// <summary>
         /// uploader control.

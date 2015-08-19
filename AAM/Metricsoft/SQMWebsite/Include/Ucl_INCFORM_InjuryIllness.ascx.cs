@@ -209,14 +209,11 @@ namespace SQM.Website
 			totalFormSteps = formSteps.Count();
 
 
-			uploader.SetAttachmentRecordStep("1");
-			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
-
 			if (IsEditContext == true)
 			{
 
-				uploader.GetUploadedFiles(40, EditIncidentId, "1");
+				//uploader.GetUploadedFiles(40, EditIncidentId, "1");
+				GetAttachments(EditIncidentId);
 
 				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, EditIncidentId);
@@ -347,10 +344,43 @@ namespace SQM.Website
 					PopulateSupervisorDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
+					GetAttachments(0);
 				}
 			}
 
 			InitializeForm(CurrentStep);
+		}
+
+		private void GetAttachments(decimal EditIncidentId)
+		{
+
+			//uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+			//uploader.ID = qid;
+			uploader.SetAttachmentRecordStep("1");
+			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
+			// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+			if (IsEditContext)
+			{
+				var entities = new PSsqmEntities();
+				var files = (from a in entities.ATTACHMENT
+							 where a.RECORD_TYPE == 40 && a.RECORD_ID == EditIncidentId
+							 orderby a.FILE_NAME
+							 select a).ToList();
+
+				
+				int px = 128;
+				if(files.Count() > 0)
+					px = px + (files.Count() * 30) + 35;
+
+				dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+				dvAttach.Style.Add("height", px.ToString() + "px !important");
+
+				//dvAttachLbl.Attributes.Add("height", px.ToString() + "px !important;");
+				//dvAttach.Attributes.Add("height", px.ToString() + "px !important;");
+
+				uploader.GetUploadedFiles(40, EditIncidentId, "1");
+			}
 		}
 
 		void InitializeForm(int currentStep)
@@ -1290,6 +1320,7 @@ namespace SQM.Website
 				theincidentId = theIncident.INCIDENT_ID;
 				//thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
 				theInjuryIllnessForm = CreateNewInjuryIllnessDetails(incidentId);
+				SaveAttachments(incidentId);
 
 				EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 			}
@@ -1305,6 +1336,7 @@ namespace SQM.Website
 				{
 					theIncident = UpdateIncident(incidentId);
 					theInjuryIllnessForm = UpdateInjuryIllnessDetails(incidentId);
+					SaveAttachments(incidentId);
 
 					if (Mode == IncidentMode.Incident)
 					{
