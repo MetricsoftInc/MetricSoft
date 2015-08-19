@@ -377,6 +377,8 @@ namespace SQM.Website
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+			//if (EditIncidentTypeId == 0 && IsEditContext)
+				//typeId = SelectedTypeId;
 
 			formSteps = GetFormSteps(typeId);
 
@@ -1110,9 +1112,16 @@ namespace SQM.Website
 				formSteps = GetFormSteps(incidentTypeId);
 
 				if (btnSave.Enabled)
-					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+					if (!IsEditContext)
+						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+					else
+						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
 				else
 					lblResults.Text = "";
+
+				IsEditContext = true;
+				if (EditIncidentId == 0)
+					EditIncidentId = NewIncidentId;
 
 				InitializeForm(CurrentStep);
 			}
@@ -1156,10 +1165,16 @@ namespace SQM.Website
 
 
 				if (btnSave.Enabled)
-					lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+					if (!IsEditContext)
+						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+					else
+						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
 				else
 					lblResults.Text = "";
 
+				IsEditContext = true;
+				if (EditIncidentId == 0)
+					EditIncidentId = NewIncidentId;
 
 				CurrentStep = CurrentStep + 1;
 				InitializeForm(CurrentStep);
