@@ -226,7 +226,7 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavIncident;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavIncident;
         
         /// <summary>
         /// btnSubnavContainment control.
@@ -235,7 +235,7 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavContainment;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavContainment;
         
         /// <summary>
         /// btnSubnavRootCause control.
@@ -244,7 +244,7 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavRootCause;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavRootCause;
         
         /// <summary>
         /// btnSubnavAction control.
@@ -253,7 +253,7 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavAction;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAction;
         
         /// <summary>
         /// btnSubnavApproval control.
@@ -262,7 +262,7 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavApproval;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
         
         /// <summary>
         /// divIncidentReportForm control.

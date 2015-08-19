@@ -829,8 +829,7 @@ namespace SQM.Website
 						}
 						else
 						{
-
-							this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD);
+							this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD, "COMMON");
 
 							SessionManager.EffLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
 

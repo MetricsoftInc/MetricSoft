@@ -75,7 +75,7 @@
                                     <asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
                                 </td>
                                 <td class="text-left-more">
-                                    <telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" runat="server" />
+                                    <telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" runat="server"  ShowPopupOnFocus="true" />
                                     <asp:RequiredFieldValidator runat="server" ID="rvfStartDate" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required" />
                                 </td>
     <%--							<td class="text-left-more">

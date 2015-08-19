@@ -685,14 +685,30 @@ namespace SQM.Website
 				return (from v in ctx.PRIVGROUP where (v.PRIV_GROUP == privGroup) select v).ToList();
 			}
 		}
-		public static List<PRIVGROUP> SelectPrivGroupJobcode(string jobCode)
+		public static List<PRIVGROUP> SelectPrivGroupJobcode(string jobCode, string commonGroup)
 		{
+			List<PRIVGROUP> privList = new List<PRIVGROUP>();
+
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				return (from v in ctx.PRIVGROUP 
-						join j in ctx.JOBCODE on v.PRIV_GROUP equals j.PRIV_GROUP
-						where (j.JOBCODE_CD == jobCode) select v).ToList();
+				try
+				{
+					privList = (from v in ctx.PRIVGROUP
+								join j in ctx.JOBCODE on v.PRIV_GROUP equals j.PRIV_GROUP
+								where (j.JOBCODE_CD == jobCode)
+								select v).ToList();
+					// append common privs ...
+					if (!string.IsNullOrEmpty(commonGroup))
+					{
+						privList.AddRange((from v in ctx.PRIVGROUP
+										   where (v.PRIV_GROUP == commonGroup)
+										   select v).ToList());
+					}
+				}
+				catch { }
 			}
+
+			return privList;
 		}
 
 		public static PERSON NewPerson(string SSOID, decimal companyID)

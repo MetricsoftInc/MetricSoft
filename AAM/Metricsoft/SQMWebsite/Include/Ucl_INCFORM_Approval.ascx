@@ -54,7 +54,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
 						<span>Date Accepted:&nbsp;
-						<telerik:RadDatePicker ID="rdpAcceptDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="120" runat="server"></telerik:RadDatePicker></span>
+						<telerik:RadDatePicker ID="rdpAcceptDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="120" runat="server" ShowPopupOnFocus="true"></telerik:RadDatePicker></span>
 					</div>
 				</div>
 			</ItemTemplate>

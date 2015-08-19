@@ -2414,7 +2414,9 @@ namespace SQM.Website
 
 		protected void btnSubnav_Click(object sender, EventArgs e)
 		{
-			RadButton btn = (RadButton)sender;
+			//RadButton btn = (RadButton)sender;
+
+			LinkButton btn = (LinkButton)sender;
 
 			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
 			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;

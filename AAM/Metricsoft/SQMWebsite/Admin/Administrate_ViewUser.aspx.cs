@@ -313,7 +313,7 @@ namespace SQM.Website
 			lblPrivScope.Text = "";
 			if (person.JOBCODE != null)
 			{
-				foreach (PRIVGROUP jp in SQMModelMgr.SelectPrivGroupJobcode(person.JOBCODE_CD).ToList())
+				foreach (PRIVGROUP jp in SQMModelMgr.SelectPrivGroupJobcode(person.JOBCODE_CD, "").ToList())
 				{
 					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + jp.SCOPE + ",");
 				}

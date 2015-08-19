@@ -105,15 +105,15 @@
 									<div style="margin-top: 5px;">
 										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="Save" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
 											OnClick="btnSubnavSave_Click" CommandArgument="0"/>
-										<telerik:RadButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="UseSubmitAction" Skin="Metro" 
+										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="0" />
-										<telerik:RadButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="UseSubmitAction" Skin="Metro" 
+										<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="2"/>
-										<telerik:RadButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="UseSubmitAction" Skin="Metro"
+										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="3"/>
-										<telerik:RadButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="UseSubmitAction" Skin="Metro"
+										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="4"/>
-										<telerik:RadButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="UseSubmitAction" Skin="Metro"
+										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="5"/>
 									</div>
 								</div>
