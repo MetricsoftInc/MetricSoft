@@ -583,6 +583,7 @@
 		</div>
 
 		<%-- ATTACHMENTS --%>	
+		<telerik:RadAjaxPanel EnableAJAX="true" ID="rapAttach" runat="server">
 		<div class="row">
 			<div ID="dvAttachLbl" runat="server" class="col-sm-4 hidden-xs text-left tanLabelCol" style="height:128px;">
 				<span><asp:Label ID="lbAttachemntSM" runat ="server" Text="Attachments"></asp:Label></span>
@@ -592,9 +593,10 @@
 				<span><asp:Label ID="lbAttachemntXS" runat ="server" Text="Attachments"></asp:Label></span>
 			</div>
 			<div ID="dvAttach" runat="server" class ="col-xs-12 col-sm-8 text-left greyControlCol"  style="height:128px;">
-				<span style="border:0 none !important;"><ucl:UploadAttachment id="uploader" runat="server" /></span>
+				<span style="border:0 none !important;"><ucl:UploadAttachment id="uploader"  runat="server" /></span>
 			</div>
 		</div>
+		</telerik:RadAjaxPanel>
 	</div>
 
 		<br /><br />

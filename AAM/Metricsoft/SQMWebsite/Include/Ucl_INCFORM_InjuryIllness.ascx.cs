@@ -351,9 +351,9 @@ namespace SQM.Website
 			InitializeForm(CurrentStep);
 		}
 
-		private void GetAttachments(decimal EditIncidentId)
+		private void GetAttachments(decimal incidentId)
 		{
-
+			//EditIncidentId
 			//uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 			//uploader.ID = qid;
 			uploader.SetAttachmentRecordStep("1");
@@ -364,7 +364,7 @@ namespace SQM.Website
 			{
 				var entities = new PSsqmEntities();
 				var files = (from a in entities.ATTACHMENT
-							 where a.RECORD_TYPE == 40 && a.RECORD_ID == EditIncidentId
+							 where a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId
 							 orderby a.FILE_NAME
 							 select a).ToList();
 
@@ -379,7 +379,7 @@ namespace SQM.Website
 				//dvAttachLbl.Attributes.Add("height", px.ToString() + "px !important;");
 				//dvAttach.Attributes.Add("height", px.ToString() + "px !important;");
 
-				uploader.GetUploadedFiles(40, EditIncidentId, "1");
+				uploader.GetUploadedFiles(40, incidentId, "1");
 			}
 		}
 
@@ -1281,6 +1281,10 @@ namespace SQM.Website
 					break;
 			}
 
+			if (incidentId == 0)
+				incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			GetAttachments(incidentId);
+						
 			InitializeForm(CurrentStep);
 
 			decimal finalPlantId = 0;
