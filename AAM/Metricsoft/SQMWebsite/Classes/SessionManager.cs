@@ -12,7 +12,7 @@ namespace SQM.Website
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
 	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, action=350, approve=380, notify=400, view=500 }
-	public enum SysScope { system, busorg, busloc, dashboard, envdata, console, incident, prevent, audit }
+	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit }
 
 	public class SessionManager
 	{
@@ -549,7 +549,7 @@ namespace SQM.Website
 					SessionManager.SessionContext.SetPrimaryCompany(SQMModelMgr.LookupPrimaryCompany(new PSsqmEntities()));   // get the primary company (QAI customer));
 
 					// load the user's preferred language definition
-					SessionManager.SessionContext.SetLanguage((int)userContext.Person.PREFERRED_LANG_ID);
+					SessionManager.SessionContext.SetLanguage(userContext.Person.PREFERRED_LANG_ID.HasValue ?  (int)userContext.Person.PREFERRED_LANG_ID : 1);
 				}
 				catch (Exception e)
 				{
