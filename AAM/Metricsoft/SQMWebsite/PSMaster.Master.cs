@@ -65,62 +65,84 @@ namespace SQM.Website
 
                     SetupPage();
 
-                    RadMenu1.Skin = "Metro";
-                    RadMenu1.ExpandDelay = 225;
-                    RadMenu1.CollapseDelay = 500;
-                    RadMenu1.ExpandAnimation.Duration = 40;
-                    RadMenu1.CollapseAnimation.Duration = 20;
-                    RadMenu1.DefaultGroupSettings.Flow = Telerik.Web.UI.ItemFlow.Horizontal;
+					bool addConsole = false;
+					RadMenu1.Skin = "Metro";
+					RadMenu1.ExpandDelay = 225;
+					RadMenu1.CollapseDelay = 500;
+					RadMenu1.ExpandAnimation.Duration = 40;
+					RadMenu1.CollapseAnimation.Duration = 20;
+					RadMenu1.DefaultGroupSettings.Flow = Telerik.Web.UI.ItemFlow.Horizontal;
 
-					if (UserContext.RoleAccess() > AccessMode.None)
-					{
-						RadMenuItem HomeMenu = new RadMenuItem("Home");
-						RadMenu1.Items.Add(HomeMenu);
-						if (UserContext.RoleAccess() != AccessMode.Partner)
-							HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Dashboard", "/Home/Dashboard.aspx"));
+					RadMenuItem HomeMenu = new RadMenuItem("Home");
+					RadMenu1.Items.Add(HomeMenu);
+					if (UserContext.GetScopePrivileges(SysScope.dashboard).Count() > 0)
+						HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Dashboard", "/Home/Dashboard.aspx"));
+					if (UserContext.GetScopePrivileges(SysScope.inbox).Count() > 0)
 						HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Calendar", "/Home/Calendar.aspx"));
-						// HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(inboxLabel, "/Home/Inbox.aspx"));
-					}
 
-					if (UserContext.CheckAccess("CQM", "101") >= AccessMode.Admin)
+					if (UserContext.GetScopePrivileges(SysScope.system).Count() > 0 || UserContext.GetScopePrivileges(SysScope.busorg).Count() > 0)
 					{
 						RadMenuItem OrgMenu = new RadMenuItem("Organization");
 						RadMenu1.Items.Add(OrgMenu);
 						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Business Structure", "/Admin/Administrate_ViewBusOrg.aspx"));
 						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Exchange Rates", "/Admin/Administrate_CurrencyInput.aspx"));
-						//if (UserContext.RoleAccess() == AccessMode.SA)
-						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Settings", "/Admin/Administrate_SettingInput.aspx"));
-						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Upload Data", "/Admin/Administrate_FileUpload.aspx"));
+						if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
+						{
+							OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Settings", "/Admin/Administrate_SettingInput.aspx"));
+							OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Upload Data", "/Admin/Administrate_FileUpload.aspx"));
+						}
 					}
 
-					if (UserContext.CheckAccess("EHS", "") > AccessMode.Limited)
+					if (UserContext.GetScopePrivileges(SysScope.envdata).Count() > 0)
 					{
 						RadMenuItem EHSMenu1 = new RadMenuItem("Environmental");
 						RadMenu1.Items.Add(EHSMenu1);
-						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
-						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
+
+						if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata))
+						{
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Library", "/EHS/EHS_Resources.aspx"));
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Metric Profiles", "/EHS/EHS_Profile.aspx"));
+						}
 						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Data Input", "/EHS/EHS_MetricInput.aspx"));
 						EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Plant Analytics", "/EHS/EHS_ENVReport.aspx"));
-						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
-						RadMenu1.Items.Add(EHSMenu2);
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
-						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
+						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
+						{
+							EHSMenu1.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
+							addConsole = true;
+						}
 					}
 
-                    string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
-                    if (!string.IsNullOrEmpty(menu8DActive)  &&  menu8DActive.ToUpper() == "FALSE")
-                    {
-                        foreach (RadMenuItem mi in RadMenu1.Items)
-                        {
-                            foreach (RadMenuItem ms in mi.Items)
-                            {
-                                if (ms.NavigateUrl.Contains("Problem_Case.aspx?c=QI"))
-                                    ms.Visible = false;
-                            }
-                        }
-                    }
+					if (UserContext.GetScopePrivileges(SysScope.audit).Count() > 0 || UserContext.GetScopePrivileges(SysScope.incident).Count() > 0)
+					{
+						RadMenuItem EHSMenu2 = new RadMenuItem("Health & Safety");
+						RadMenu1.Items.Add(EHSMenu2);
+
+						if (UserContext.GetScopePrivileges(SysScope.audit).Count() > 0)
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
+						if (UserContext.GetScopePrivileges(SysScope.incident).Count() > 0)
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
+						//if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
+						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
+						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
+						{
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
+						}
+					}
+
+					/*
+					string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
+					if (!string.IsNullOrEmpty(menu8DActive)  &&  menu8DActive.ToUpper() == "FALSE")
+					{
+						foreach (RadMenuItem mi in RadMenu1.Items)
+						{
+							foreach (RadMenuItem ms in mi.Items)
+							{
+								if (ms.NavigateUrl.Contains("Problem_Case.aspx?c=QI"))
+									ms.Visible = false;
+							}
+						}
+					}
+					*/
                 }
             }
 
