@@ -339,8 +339,8 @@ namespace SQM.Website
 
 					PopulateLocationDropDown();
 					PopulateShiftDropDown();
-					PopulateOperationDropDown(0);
-					PopulateDepartmentDropDown(0);
+					//PopulateOperationDropDown(0);
+					//PopulateDepartmentDropDown(0);
 					PopulateSupervisorDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
@@ -689,6 +689,18 @@ namespace SQM.Website
 			}
 
 			rddlLocation.AutoPostBack = true;
+
+			if (plantIdList.Count > 1)
+			{
+				PopulateOperationDropDown(0);
+				PopulateDepartmentDropDown(0);			
+			}
+			else if (plantIdList.Count == 1)
+			{
+				decimal pid = plantIdList[0];
+				PopulateOperationDropDown(pid);
+				PopulateDepartmentDropDown(pid);		
+			}
 		}
 
 		void PopulateShiftDropDown()
