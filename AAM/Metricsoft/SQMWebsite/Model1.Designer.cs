@@ -160,6 +160,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBCODE1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION", "AUDIT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION), "AUDIT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_LANG), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBPRIV_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBPRIV", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.JOBPRIV), true)]
 
 #endregion
 
@@ -2210,6 +2211,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<AUDIT_QUESTION_LANG> _AUDIT_QUESTION_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<JOBPRIV> JOBPRIV
+        {
+            get
+            {
+                if ((_JOBPRIV == null))
+                {
+                    _JOBPRIV = base.CreateObjectSet<JOBPRIV>("JOBPRIV");
+                }
+                return _JOBPRIV;
+            }
+        }
+        private ObjectSet<JOBPRIV> _JOBPRIV;
 
         #endregion
 
@@ -3213,6 +3230,14 @@ namespace SQM.Website
         public void AddToAUDIT_QUESTION_LANG(AUDIT_QUESTION_LANG aUDIT_QUESTION_LANG)
         {
             base.AddObject("AUDIT_QUESTION_LANG", aUDIT_QUESTION_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the JOBPRIV EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToJOBPRIV(JOBPRIV jOBPRIV)
+        {
+            base.AddObject("JOBPRIV", jOBPRIV);
         }
 
         #endregion
@@ -6806,12 +6831,16 @@ namespace SQM.Website
         /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
         /// <param name="dEFAULT_8D">Initial value of the DEFAULT_8D property.</param>
         /// <param name="aDMIN_ONLY">Initial value of the ADMIN_ONLY property.</param>
-        public static AUDIT_TYPE CreateAUDIT_TYPE(global::System.Decimal aUDIT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY)
+        /// <param name="dAYS_TO_COMPLETE">Initial value of the DAYS_TO_COMPLETE property.</param>
+        /// <param name="iNACTIVE">Initial value of the INACTIVE property.</param>
+        public static AUDIT_TYPE CreateAUDIT_TYPE(global::System.Decimal aUDIT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY, global::System.Int32 dAYS_TO_COMPLETE, global::System.Boolean iNACTIVE)
         {
             AUDIT_TYPE aUDIT_TYPE = new AUDIT_TYPE();
             aUDIT_TYPE.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
             aUDIT_TYPE.DEFAULT_8D = dEFAULT_8D;
             aUDIT_TYPE.ADMIN_ONLY = aDMIN_ONLY;
+            aUDIT_TYPE.DAYS_TO_COMPLETE = dAYS_TO_COMPLETE;
+            aUDIT_TYPE.INACTIVE = iNACTIVE;
             return aUDIT_TYPE;
         }
 
@@ -6941,6 +6970,54 @@ namespace SQM.Website
         private global::System.Boolean _ADMIN_ONLY;
         partial void OnADMIN_ONLYChanging(global::System.Boolean value);
         partial void OnADMIN_ONLYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DAYS_TO_COMPLETE
+        {
+            get
+            {
+                return _DAYS_TO_COMPLETE;
+            }
+            set
+            {
+                OnDAYS_TO_COMPLETEChanging(value);
+                ReportPropertyChanging("DAYS_TO_COMPLETE");
+                _DAYS_TO_COMPLETE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DAYS_TO_COMPLETE");
+                OnDAYS_TO_COMPLETEChanged();
+            }
+        }
+        private global::System.Int32 _DAYS_TO_COMPLETE;
+        partial void OnDAYS_TO_COMPLETEChanging(global::System.Int32 value);
+        partial void OnDAYS_TO_COMPLETEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean INACTIVE
+        {
+            get
+            {
+                return _INACTIVE;
+            }
+            set
+            {
+                OnINACTIVEChanging(value);
+                ReportPropertyChanging("INACTIVE");
+                _INACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INACTIVE");
+                OnINACTIVEChanged();
+            }
+        }
+        private global::System.Boolean _INACTIVE;
+        partial void OnINACTIVEChanging(global::System.Boolean value);
+        partial void OnINACTIVEChanged();
 
         #endregion
 
@@ -6989,12 +7066,14 @@ namespace SQM.Website
         /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
         /// <param name="aUDIT_TOPIC_ID">Initial value of the AUDIT_TOPIC_ID property.</param>
         /// <param name="aUDIT_QUESTION_ID">Initial value of the AUDIT_QUESTION_ID property.</param>
-        public static AUDIT_TYPE_TOPIC_QUESTION CreateAUDIT_TYPE_TOPIC_QUESTION(global::System.Decimal aUDIT_TYPE_ID, global::System.Decimal aUDIT_TOPIC_ID, global::System.Decimal aUDIT_QUESTION_ID)
+        /// <param name="iNACTIVE">Initial value of the INACTIVE property.</param>
+        public static AUDIT_TYPE_TOPIC_QUESTION CreateAUDIT_TYPE_TOPIC_QUESTION(global::System.Decimal aUDIT_TYPE_ID, global::System.Decimal aUDIT_TOPIC_ID, global::System.Decimal aUDIT_QUESTION_ID, global::System.Boolean iNACTIVE)
         {
             AUDIT_TYPE_TOPIC_QUESTION aUDIT_TYPE_TOPIC_QUESTION = new AUDIT_TYPE_TOPIC_QUESTION();
             aUDIT_TYPE_TOPIC_QUESTION.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
             aUDIT_TYPE_TOPIC_QUESTION.AUDIT_TOPIC_ID = aUDIT_TOPIC_ID;
             aUDIT_TYPE_TOPIC_QUESTION.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
+            aUDIT_TYPE_TOPIC_QUESTION.INACTIVE = iNACTIVE;
             return aUDIT_TYPE_TOPIC_QUESTION;
         }
 
@@ -7106,6 +7185,30 @@ namespace SQM.Website
         private Nullable<global::System.Int16> _SORT_ORDER;
         partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
         partial void OnSORT_ORDERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean INACTIVE
+        {
+            get
+            {
+                return _INACTIVE;
+            }
+            set
+            {
+                OnINACTIVEChanging(value);
+                ReportPropertyChanging("INACTIVE");
+                _INACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INACTIVE");
+                OnINACTIVEChanged();
+            }
+        }
+        private global::System.Boolean _INACTIVE;
+        partial void OnINACTIVEChanging(global::System.Boolean value);
+        partial void OnINACTIVEChanged();
 
         #endregion
 
@@ -26092,6 +26195,185 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<JOBCODE>("PSsqmModel.FK_JOBCODE_JOBCODE", "JOBCODE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_JOBPRIV_JOBCODE", "JOBPRIV")]
+        public EntityCollection<JOBPRIV> JOBPRIV
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<JOBPRIV>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBPRIV");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<JOBPRIV>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBPRIV", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="JOBPRIV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class JOBPRIV : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new JOBPRIV object.
+        /// </summary>
+        /// <param name="jOBCODE_CD">Initial value of the JOBCODE_CD property.</param>
+        /// <param name="pRIV">Initial value of the PRIV property.</param>
+        /// <param name="sCOPE">Initial value of the SCOPE property.</param>
+        public static JOBPRIV CreateJOBPRIV(global::System.String jOBCODE_CD, global::System.Int32 pRIV, global::System.String sCOPE)
+        {
+            JOBPRIV jOBPRIV = new JOBPRIV();
+            jOBPRIV.JOBCODE_CD = jOBCODE_CD;
+            jOBPRIV.PRIV = pRIV;
+            jOBPRIV.SCOPE = sCOPE;
+            return jOBPRIV;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String JOBCODE_CD
+        {
+            get
+            {
+                return _JOBCODE_CD;
+            }
+            set
+            {
+                if (_JOBCODE_CD != value)
+                {
+                    OnJOBCODE_CDChanging(value);
+                    ReportPropertyChanging("JOBCODE_CD");
+                    _JOBCODE_CD = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("JOBCODE_CD");
+                    OnJOBCODE_CDChanged();
+                }
+            }
+        }
+        private global::System.String _JOBCODE_CD;
+        partial void OnJOBCODE_CDChanging(global::System.String value);
+        partial void OnJOBCODE_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PRIV
+        {
+            get
+            {
+                return _PRIV;
+            }
+            set
+            {
+                if (_PRIV != value)
+                {
+                    OnPRIVChanging(value);
+                    ReportPropertyChanging("PRIV");
+                    _PRIV = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PRIV");
+                    OnPRIVChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PRIV;
+        partial void OnPRIVChanging(global::System.Int32 value);
+        partial void OnPRIVChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SCOPE
+        {
+            get
+            {
+                return _SCOPE;
+            }
+            set
+            {
+                if (_SCOPE != value)
+                {
+                    OnSCOPEChanging(value);
+                    ReportPropertyChanging("SCOPE");
+                    _SCOPE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("SCOPE");
+                    OnSCOPEChanged();
+                }
+            }
+        }
+        private global::System.String _SCOPE;
+        partial void OnSCOPEChanging(global::System.String value);
+        partial void OnSCOPEChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_JOBPRIV_JOBCODE", "JOBCODE")]
+        public JOBCODE JOBCODE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBCODE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBCODE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<JOBCODE> JOBCODEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBCODE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<JOBCODE>("PSsqmModel.FK_JOBPRIV_JOBCODE", "JOBCODE", value);
                 }
             }
         }

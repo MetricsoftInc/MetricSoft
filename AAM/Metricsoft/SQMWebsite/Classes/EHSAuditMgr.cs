@@ -100,28 +100,13 @@ namespace SQM.Website
 		{
 			this.Status = "A"; // open;
 
-			//if (this.Audit.ISSUE_TYPE_ID == 13)
-			//{
-			//	if (this.EntryList.Where(l => l.AUDIT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "In Progress").Count() > 0)
-			//		this.Status = "P";  // in-progress
-			//	else if (this.EntryList.Where(l => l.AUDIT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "Closed").Count() > 0)
-			//		this.Status = "C";  // actions complete
-			//	//if (this.Audit.CLOSE_DATE.HasValue && !this.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
-			//	//    this.Status = "C";  // actions complete
-			//	if (this.Audit.CLOSE_DATE.HasValue && this.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
-			//	{
-			//		this.Status = "U";  // audited and closed
-			//		if (this.EntryList.Where(l => l.AUDIT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
-			//			this.Status = "F";
-			//	}
-			//}
-			//else
-			//{
-				if (this.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Audit.CLOSE_DATE.HasValue)
-					this.Status = "C";  // audit closed
-				else if (this.Audit.CLOSE_DATE.HasValue)
-					this.Status = "N";
-			//}
+			if (this.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Audit.CLOSE_DATE.HasValue)
+				this.Status = "C";  // audit closed
+
+			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
+
+			if (closeDT.CompareTo(DateTime.Now) < 0)
+				this.Status = "C";
 
 			return this.Status;
 		}
@@ -139,16 +124,19 @@ namespace SQM.Website
 		{
 			int days = 0;
 
-			if (this.Audit.CLOSE_DATE.HasValue)
+			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
+
+			if (closeDT.CompareTo(DateTime.Now) < 0)
 			{
-				DateTime closeDT = Convert.ToDateTime(this.Audit.CLOSE_DATE);
-				days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract(this.Audit.AUDIT_DT).TotalDays));
-				this.DaysOpen = 0;
+				// date has passed
+				//DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
+				//days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract(this.Audit.AUDIT_DT).TotalDays));
+				days = this.DaysOpen = this.DaysToClose = 0;
 			}
-			else
+			else 
 			{
 				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(this.Audit.AUDIT_DT).TotalDays));
-				this.DaysToClose = 0;
+				this.DaysToClose = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(closeDT).TotalDays));
 			}
 
 			return days;
@@ -191,7 +179,7 @@ namespace SQM.Website
 		//	return (decimal)problemCaseId;
 		//}
 
-		public static List<AUDIT_TYPE> SelectAuditTypeList(decimal companyId)
+		public static List<AUDIT_TYPE> SelectAuditTypeList(decimal companyId, bool activeOnly)
 		{
 			var auditTypeList = new List<AUDIT_TYPE>();
 
@@ -199,18 +187,17 @@ namespace SQM.Website
 			{
 				var entities = new PSsqmEntities();
 
-				//if (companyId > 0)
-				//	auditTypeList = (from itc in entities.AUDIT_TYPE_COMPANY
-				//						join it in entities.AUDIT_TYPE on itc.AUDIT_TYPE_ID equals it.AUDIT_TYPE_ID
-				//						where itc.COMPANY_ID == companyId && itc.SORT_ORDER < 1000
-				//						orderby it.TITLE
-				//						select it).ToList();
-				//else
-				//{
+				if (activeOnly)
+					auditTypeList = (from itc in entities.AUDIT_TYPE
+										where !itc.INACTIVE
+										orderby itc.TITLE
+										select itc).ToList();
+				else
+				{
 					auditTypeList = (from itc in entities.AUDIT_TYPE
 										orderby itc.TITLE
 										select itc).ToList();
-				//}
+				}
 			}
 			catch (Exception e)
 			{
@@ -219,29 +206,6 @@ namespace SQM.Website
 
 			return auditTypeList;
 		}
-
-		//public static List<AUDIT_TYPE> SelectPreventativeTypeList(decimal companyId)
-		//{
-		//	var preventativeTypeList = new List<AUDIT_TYPE>();
-
-		//	try
-		//	{
-		//		var entities = new PSsqmEntities();
-
-		//		preventativeTypeList = (from itc in entities.AUDIT_TYPE_COMPANY
-		//								join it in entities.AUDIT_TYPE on itc.AUDIT_TYPE_ID equals it.AUDIT_TYPE_ID
-		//								where itc.COMPANY_ID == companyId && itc.SORT_ORDER >= 1000
-		//								orderby it.TITLE
-		//								select it).ToList();
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		//SQMLogger.LogException(e);
-		//	}
-
-		//	return preventativeTypeList;
-		//}
-
 
 		/// <summary>
 		/// Select a list of all EHS audits by company
@@ -371,90 +335,9 @@ namespace SQM.Website
 		}
 
 		/// <summary>
-		/// Returns boolean indicating whether 8D should be selected for audit type by default
-		/// </summary>
-		//public static bool IsTypeDefault8D(decimal selectedTypeId)
-		//{
-		//	var entities = new PSsqmEntities();
-		//	return (from it in entities.AUDIT_TYPE where it.AUDIT_TYPE_ID == selectedTypeId select it.DEFAULT_8D).FirstOrDefault();
-		//}
-
-
-		/// <summary>
-		/// Select a list of all audit questions by company and audit type
-		/// </summary>
-		//public static List<EHSAuditQuestion> SelectAuditQuestionList(decimal auditTypeId, decimal companyId, int step)
-		//{
-		//	var questionList = new List<EHSAuditQuestion>();
-
-		//	try
-		//	{
-		//		var entities = new PSsqmEntities();
-		//		var activeQuestionList = (from q in entities.AUDIT_TYPE_COMPANY_QUESTION
-		//								  where q.AUDIT_TYPE_ID == auditTypeId && q.COMPANY_ID == companyId && q.STEP == step
-		//								  orderby q.SORT_ORDER
-		//								  select q
-		//						).ToList();
-
-		//		foreach (var aq in activeQuestionList)
-		//		{
-		//			var questionInfo = (from qi in entities.AUDIT_QUESTION
-		//								where qi.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
-		//								select qi).FirstOrDefault();
-
-		//			var typeInfo = (from ti in entities.AUDIT_QUESTION_TYPE
-		//							where questionInfo.AUDIT_QUESTION_TYPE_ID == ti.AUDIT_QUESTION_TYPE_ID
-		//							select ti).FirstOrDefault();
-
-		//			var newQuestion = new EHSAuditQuestion()
-		//			{
-		//				QuestionId = questionInfo.AUDIT_QUESTION_ID,
-		//				QuestionText = questionInfo.QUESTION_TEXT,
-		//				QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
-		//				HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
-		//				IsRequired = questionInfo.IS_REQUIRED,
-		//				IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
-		//				HelpText = questionInfo.HELP_TEXT,
-		//				StandardType = questionInfo.STANDARD_TYPE
-		//			};
-
-		//			if (newQuestion.HasMultipleChoices)
-		//			{
-		//				List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
-		//														 where qc.AUDIT_QUESTION_ID == questionInfo.AUDIT_QUESTION_ID
-		//														 orderby qc.SORT_ORDER
-		//														 select new EHSAuditAnswerChoice
-		//														 {
-		//															 Value = qc.QUESTION_CHOICE_VALUE,
-		//															 IsCategoryHeading = qc.IS_CATEGORY_HEADING
-		//														 }).ToList();
-		//				if (choices.Count > 0)
-		//					newQuestion.AnswerChoices = choices;
-		//			}
-
-		//			// Question control logic
-		//			newQuestion.QuestionControls = (from qc in entities.AUDIT_QUESTION_CONTROL
-		//											where qc.AUDIT_TYPE_ID == auditTypeId &&
-		//											qc.COMPANY_ID == companyId &&
-		//											qc.AUDIT_QUESTION_ID == newQuestion.QuestionId
-		//											orderby qc.PROCESS_ORDER
-		//											select qc).ToList();
-
-		//			questionList.Add(newQuestion);
-		//		}
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		//SQMLogger.LogException(e);
-		//	}
-
-		//	return questionList;
-		//}
-
-		/// <summary>
 		/// Select a list of all audit questions by topic 
 		/// </summary>
-		public static List<EHSAuditQuestion> SelectAuditQuestionList(decimal auditTypeId, decimal auditTopicId)
+		public static List<EHSAuditQuestion> SelectAuditQuestionList(decimal auditTypeId, decimal auditTopicId, decimal auditId)
 		{
 			var questionList = new List<EHSAuditQuestion>();
 
@@ -462,19 +345,55 @@ namespace SQM.Website
 			{
 				var entities = new PSsqmEntities();
 				var activeQuestionList = new List<AUDIT_TYPE_TOPIC_QUESTION>();
+				var auditAnswers = new List<decimal>();
+				if (auditId > 0)
+				{
+					auditAnswers = (from a in entities.AUDIT_ANSWER
+										where a.AUDIT_ID == auditId
+										select a.AUDIT_QUESTION_ID).ToList();
+				}
 				if (auditTopicId > 0)
-					activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-										  where q.AUDIT_TYPE_ID == auditTypeId && q.AUDIT_TOPIC_ID == auditTopicId
-										  orderby q.SORT_ORDER
-										  select q
-								).ToList();
+				{
+					if (auditId == 0)
+					{
+						// no audit id means add mode, so we only want to get active questions
+						activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+											  where q.AUDIT_TYPE_ID == auditTypeId && q.AUDIT_TOPIC_ID == auditTopicId && !q.INACTIVE 
+											  orderby q.SORT_ORDER
+											  select q
+									).ToList();
+					}
+					else
+					{
+						// need to only select questions that appear in the specific audit
+						activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+											  where q.AUDIT_TYPE_ID == auditTypeId && q.AUDIT_TOPIC_ID == auditTopicId && auditAnswers.Contains(q.AUDIT_QUESTION_ID)
+											  orderby q.SORT_ORDER
+											  select q
+									).ToList();
+					}
+				}
 				else
-					activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-										  where q.AUDIT_TYPE_ID == auditTypeId
-										  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
-										  select q
-										  ).ToList();
-
+				{
+					if (auditId == 0)
+					{
+						// no audit id means add mode, so we only want to get active questions
+						activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+											  where q.AUDIT_TYPE_ID == auditTypeId && !q.INACTIVE
+											  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
+											  select q
+											  ).ToList();
+					}
+					else
+					{
+						// need to only select questions that appear in the specific audit
+						activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+											  where q.AUDIT_TYPE_ID == auditTypeId && auditAnswers.Contains(q.AUDIT_QUESTION_ID)
+											  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
+											  select q
+					  ).ToList();
+					}
+				}
 
 				foreach (var aq in activeQuestionList)
 				{
@@ -856,39 +775,12 @@ namespace SQM.Website
 			return status;
 		}
 
-
-
-		public static void TryCloseAudit(decimal auditId)
-		{
-			var entities = new PSsqmEntities();
-
-			AUDIT audit = SelectAuditById(entities, auditId);
-
-			if (ShouldAuditReportClose(audit))
-			{
-				audit.CLOSE_DATE = DateTime.Now;
-				//SetTaskComplete(auditId, 40);
-			}
-			else
-			{
-				audit.CLOSE_DATE = null;
-			}
-
-			if (ShouldAuditCloseDataComplete(audit))
-				audit.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
-			else
-				audit.CLOSE_DATE_DATA_COMPLETE = null;
-
-			entities.SaveChanges();
-		}
-
-
 		public static bool ShouldAuditReportClose(AUDIT audit)
 		{
 			var entities = new PSsqmEntities();
 			int auditClosedScore = 0;
 
-			var questionList = SelectAuditQuestionList((decimal)audit.AUDIT_TYPE_ID, 0);
+			var questionList = SelectAuditQuestionList((decimal)audit.AUDIT_TYPE_ID, 0, audit.AUDIT_ID);
 			foreach (var q in questionList)
 			{
 				string answer = (from a in entities.AUDIT_ANSWER
@@ -903,124 +795,6 @@ namespace SQM.Website
 			}
 
 			return (auditClosedScore >= 2);
-		}
-
-
-		public static bool ShouldAuditCloseDataComplete(AUDIT audit)
-		{
-			//var entities = new PSsqmEntities();
-
-			//var questionList = SelectAuditQuestionList((decimal)audit.ISSUE_TYPE_ID, audit.DETECT_COMPANY_ID, 0);
-			//var requiredQuestionIds = (from q in questionList where q.IsRequiredClose == true select q.QuestionId).ToList();
-
-			//// Remove lost time date questions from required questions if not a lost time case
-			//if (audit.ISSUE_TYPE_ID == (decimal)EHSAuditTypeId.InjuryIllness)
-			//{
-			//	var lostTimeQuestion = (from q in questionList where q.QuestionId == (decimal)EHSQuestionId.LostTimeCase select q).FirstOrDefault();
-			//	if (lostTimeQuestion != null)
-			//	{
-			//		var answerText = SelectAuditAnswer(audit, (decimal)EHSQuestionId.LostTimeCase);
-
-			//		if (answerText != "Yes")
-			//		{
-			//			requiredQuestionIds.Remove((decimal)EHSQuestionId.ExpectedReturnDate);
-			//			requiredQuestionIds.Remove((decimal)EHSQuestionId.ActualReturnDate);
-			//		}
-			//	}
-			//}
-
-			//var answers = (from a in entities.AUDIT_ANSWER
-			//			   where a.AUDIT_ID == audit.AUDIT_ID && requiredQuestionIds.Contains(a.AUDIT_QUESTION_ID)
-			//			   select a.ANSWER_VALUE).ToList();
-
-			//bool shouldClose = true;
-			//foreach (var a in answers)
-			//{
-			//	if (string.IsNullOrEmpty(a))
-			//	{
-			//		shouldClose = false;
-			//		break;
-			//	}
-			//}
-			//return shouldClose;
-			return true; // until we determine if we need this
-		}
-
-		public static void TryClosePrevention(decimal auditId, decimal personId)
-		{
-			var entities = new PSsqmEntities();
-
-			AUDIT audit = SelectAuditById(entities, auditId);
-			bool shouldUpdateAuditPerson = true;
-
-			if (ShouldPreventionClose(audit))
-			{
-				audit.CLOSE_DATE = DateTime.Now;
-				audit.CLOSE_PERSON = personId;
-				//SetTaskComplete(auditId, 45);
-				shouldUpdateAuditPerson = false;
-			}
-			else
-			{
-				audit.CLOSE_DATE = null;
-			}
-
-			if (ShouldPreventionCloseAudited(audit))
-			{
-				audit.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
-				if (shouldUpdateAuditPerson == true)
-					audit.AUDIT_PERSON = personId;
-			}
-			else
-			{
-				audit.CLOSE_DATE_DATA_COMPLETE = null;
-			}
-
-			entities.SaveChanges();
-		}
-
-		public static bool ShouldPreventionClose(AUDIT audit)
-		{
-			//var entities = new PSsqmEntities();
-			//bool shouldClose = false;
-
-			//var questionList = SelectAuditQuestionList((decimal)audit.AUDIT_TYPE_ID, 0);
-			//foreach (var q in questionList)
-			//{
-			//	string answer = (from a in entities.AUDIT_ANSWER
-			//					 where a.AUDIT_ID == audit.AUDIT_ID && a.AUDIT_QUESTION_ID == q.QuestionId
-			//					 select a.ANSWER_VALUE).FirstOrDefault();
-
-			//	if (q.QuestionId == (decimal)EHSQuestionId.CorrectiveActionsStatus && !string.IsNullOrEmpty(answer))
-			//		if (answer.ToLower() == "closed")
-			//			shouldClose = true;
-			//}
-
-			//return shouldClose;
-			return true;
-		}
-
-
-		public static bool ShouldPreventionCloseAudited(AUDIT audit)
-		{
-			//bool shouldClose = false;
-
-			//var entities = new PSsqmEntities();
-
-			//var questionList = SelectAuditQuestionList((decimal)audit.ISSUE_TYPE_ID, audit.DETECT_COMPANY_ID, 1);
-			//foreach (var q in questionList)
-			//{
-			//	string answer = (from a in entities.AUDIT_ANSWER
-			//					 where a.AUDIT_ID == audit.AUDIT_ID && a.AUDIT_QUESTION_ID == q.QuestionId
-			//					 select a.ANSWER_VALUE).FirstOrDefault();
-
-			//	if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !string.IsNullOrEmpty(answer))
-			//		if (answer.ToLower() == "yes" || answer.ToLower().Contains("funding"))
-			//			shouldClose = true;
-			//}
-
-			//return shouldClose;
-			return true;
 		}
 
 		public static string SelectAuditAnswer(AUDIT audit, decimal questionId)

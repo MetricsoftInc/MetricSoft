@@ -7,10 +7,7 @@
 <%@ Register Src="~/Include/Ucl_AuditList.ascx" TagName="AuditList" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_EHSAuditForm.ascx" TagName="AuditForm" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
-<%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
 
-
-<%@ Reference Control="~/Include/Ucl_PreventionLocation.ascx" %>
 <%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
 
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
@@ -40,48 +37,6 @@
             args.set_cancel(!confirm("Delete audit - are you sure?  Audits cannot be undeleted."));
         }
 
-        // For prevention verification
-
-        function PVOnClientClicked(sender, eventArgs) {
-
-            var radGrid = $find(sender.get_id().replace("rbSelectAll", "rgPlantContacts"));
-            var masterTable = radGrid.get_masterTableView();
-            var i;
-
-            if (sender.get_text() === "Select All") {
-                //sender.set_text("Clear All");
-                for (i = 0; i < masterTable.get_dataItems().length; i++) {
-                    masterTable.selectItem(i);
-                }
-            } else {
-                //sender.set_text("Select All");
-                for (i = 0; i < masterTable.get_dataItems().length; i++) {
-                    masterTable.get_dataItems()[i].set_selected(false);
-                }
-            }
-
-        }
-
-        function PVRowSelectedChanged(sender, eventArgs) {
-
-            var radGrid = sender;
-            var masterTable = radGrid.get_masterTableView();
-            var count = 0;
-
-            for (var i = 0; i < masterTable.get_dataItems().length; i++) {
-                if (masterTable.get_dataItems()[i].get_selected() === true)
-                    count++;
-            }
-
-            var radButton = $find(sender.get_id().replace("rgPlantContacts", "rbSelectAll"));
-
-            if (count === 0)
-                radButton.set_text("Select All");
-
-            if (count === masterTable.get_dataItems().length)
-                radButton.set_text("Clear All");
-
-        }
     </script>
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
@@ -154,9 +109,8 @@
                                                 <Items>
                                                     <telerik:RadComboBoxItem Text="Open" Value="A" />
                                                     <telerik:RadComboBoxItem Text="Closed" Value="C" />
-                                                    <%--<telerik:RadComboBoxItem Text="8D Complete" Value="C8" />--%>
                                                     <telerik:RadComboBoxItem Text="All" Value="" />
-                                                    <telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />
+                                                    <%--<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />--%>
                                                     <%--<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />--%>
                                                 </Items>
                                             </telerik:RadComboBox>
@@ -245,8 +199,6 @@
 
                 <div class="noprint">
                     <Ucl:AuditList ID="uclAuditList" runat="server" />
-                    <br />
-                    <Ucl:Export ID="uclExport" runat="server" />
                 </div>
             </div>
 

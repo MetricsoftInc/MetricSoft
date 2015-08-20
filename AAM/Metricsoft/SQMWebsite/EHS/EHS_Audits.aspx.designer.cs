@@ -238,15 +238,6 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_AuditList uclAuditList;
         
         /// <summary>
-        /// uclExport control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_Export uclExport;
-        
-        /// <summary>
         /// uclAuditForm control.
         /// </summary>
         /// <remarks>

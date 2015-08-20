@@ -17,6 +17,7 @@ namespace SQM.Website
 			AuditList,
 			AuditNotificationNew,
 			AuditNotificationEdit,
+			AuditNotificationClosed,
 			AuditReportEdit
 		}
 
@@ -39,7 +40,6 @@ namespace SQM.Website
 		{
 			base.OnInit(e);
 
-			uclExport.OnExportClick += ExportClick;
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -48,8 +48,6 @@ namespace SQM.Website
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
-			//RadPersistenceManager1.PersistenceSettings.AddSetting(rcbFindingsSelect);
-			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclAuditList.AuditListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbAuditType);
 
@@ -60,8 +58,6 @@ namespace SQM.Website
 				{
 					if (mode == "audit")
 						this.Mode = AuditMode.Audit;
-			//		else if (mode == "prevent")
-			//			this.Mode = AuditMode.Prevent;
 				}
 			}
 			uclAuditForm.Mode = this.Mode;
@@ -106,9 +102,14 @@ namespace SQM.Website
 								}
 								break;
 
-							case "Report":
+							case "Closed":
 								uclAuditForm.EditAuditId = SessionManager.ReturnRecordID;
-								UpdateDisplayState(DisplayState.AuditReportEdit);
+								UpdateDisplayState(DisplayState.AuditNotificationClosed);
+								if (isDirected)
+								{
+									rbNew.Visible = false;
+									uclAuditForm.EnableReturnButton(false);
+								}
 								break;
 						}
 					}
@@ -201,17 +202,17 @@ namespace SQM.Website
 					uclAuditForm.CurrentStep = 0;
 					uclAuditForm.IsEditContext = true;
 					uclAuditForm.Visible = true;
-						rbNew.Visible = false;
+					rbNew.Visible = false;
 					uclAuditForm.BuildForm();
 					break;
 
-				case DisplayState.AuditReportEdit:
+				case DisplayState.AuditNotificationClosed:
 					divAuditList.Visible = false;
 					uclAuditForm.CurrentStep = 1;
-					uclAuditForm.IsEditContext = true;
+					uclAuditForm.IsEditContext = false;
 					rbNew.Visible = false;
 					uclAuditForm.Visible = true;
-					uclAuditForm.BuildForm();
+					//uclAuditForm.BuildForm();
 					break;
 
 			}
@@ -227,15 +228,12 @@ namespace SQM.Website
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList, "EHS", ""), 0);
 
 				rcbStatusSelect.SelectedValue = "A";
-				//rcbFindingsSelect.FindItemByValue("A").Checked = true;
 			}
 			divAuditList.Visible = true;
-			//pnlChartSection.Style.Add("display", "none");
-			//lblChartType.Visible = ddlChartType.Visible = false;
 
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
-			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-11);
-			dmToDate.SelectedDate = DateTime.Now;
+			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-1);
+			dmToDate.SelectedDate = DateTime.Now.AddMonths(1);
 
 			if (Mode == AuditMode.Audit)
 			{
@@ -245,8 +243,6 @@ namespace SQM.Website
 				//lblStatus.Text = "Audit Status:";
 				rbNew.Text = "New Audit";
 				lblAuditDate.Visible = true;
-				//lblInspectionDate.Visible = false;
-				//phPrevent.Visible = false;
 				phAudit.Visible = true;
 
 				SETTINGS sets = SQMSettings.GetSetting("EHS", "AUDITSEARCHFROM");
@@ -267,90 +263,14 @@ namespace SQM.Website
 					catch { }
 				}
 
-				foreach (AUDIT_TYPE ip in EHSAuditMgr.SelectAuditTypeList(SessionManager.PrimaryCompany().COMPANY_ID))
+				foreach (AUDIT_TYPE ip in EHSAuditMgr.SelectAuditTypeList(SessionManager.PrimaryCompany().COMPANY_ID, false))
 				{
 					RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.AUDIT_TYPE_ID.ToString());
 					item.Checked = true;
 					rcbAuditType.Items.Add(item);
 				}
 
-				// lookup charts defined for this module & app context
-				//PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
-				//if (view != null)
-				//{
-				//	ddlChartType.Items.Clear();
-				//	ddlChartType.Items.Add(new RadComboBoxItem("", ""));
-				//	foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ).ToList())
-				//	{
-				//		RadComboBoxItem item = new RadComboBoxItem();
-				//		item.Text = vi.TITLE;
-				//		item.Value = vi.ITEM_SEQ.ToString();
-				//		item.ImageUrl = ViewModel.GetViewItemImageURL(vi);
-				//		ddlChartType.Items.Add(item);
-				//	}
-				//}
 			}
-			//else if (Mode == AuditMode.Prevent)
-			//{
-			//	lblViewEHSRezTitle.Text = "Manage Preventative Actions";
-			//	lblPageInstructions.Text = "Add or update preventative actions below.";
-			//	//lblStatus.Text = "Findings Status:";
-			//	rbNew.Text = "New Preventative Action";
-			//	if (accessLevel < AccessMode.Admin)
-			//		rbNew.Visible = false;
-			//	lblAuditDate.Visible = false;
-			//	lblInspectionDate.Visible = true;
-			//	//phPrevent.Visible = true;
-			//	phAudit.Visible = false;
-
-			//	SETTINGS sets = SQMSettings.GetSetting("EHS", "ACTIONSEARCHFROM");
-			//	if (sets != null)
-			//	{
-			//		try
-			//		{
-			//			string[] args = sets.VALUE.Split('-');
-			//			if (args.Length > 1)
-			//			{
-			//				dmFromDate.SelectedDate = new DateTime(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
-			//			}
-			//			else
-			//			{
-			//				dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
-			//			}
-			//		}
-			//		catch { }
-			//	}
-
-			//	// workaround for persistance mgr not supporting raddate controls
-			//	if (HSCalcs() != null)
-			//	{
-			//		dmFromDate.SelectedDate = HSCalcs().FromDate;
-			//		dmToDate.SelectedDate = HSCalcs().ToDate;
-			//		if (HSCalcs().ObjAny != null && HSCalcs().ObjAny is bool)
-			//			cbShowImage.Checked = (bool)HSCalcs().ObjAny;
-			//	}
-
-			//	// lookup charts defined for this module & app context
-			//	PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
-			//	if (view != null)
-			//	{
-			//		ddlChartType.Items.Clear();
-			//		ddlChartType.Items.Add(new RadComboBoxItem("", ""));
-			//		foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ).ToList())
-			//		{
-			//			RadComboBoxItem item = new RadComboBoxItem();
-			//			item.Text = vi.TITLE;
-			//			item.Value = vi.ITEM_SEQ.ToString();
-			//			item.ImageUrl = ViewModel.GetViewItemImageURL(vi);
-			//			ddlChartType.Items.Add(item);
-			//		}
-			//	}
-			//}
-
-			if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
-				uclExport.Visible = true;
-			else
-				uclExport.Visible = false;
 		}
 
 		protected void rbNew_Click(object sender, EventArgs e)
@@ -450,11 +370,6 @@ namespace SQM.Website
 				typeList = rcbAuditType.Items.Where(c => c.Checked).Select(c => Convert.ToDecimal(c.Value)).ToList();
 				selectedValue = rcbStatusSelect.SelectedValue;
 			}
-			//else if (Mode == AuditMode.Prevent)
-			//{
-			//	typeList = EHSAuditMgr.SelectPreventativeTypeList(SessionManager.PrimaryCompany().COMPANY_ID).Select(l => l.AUDIT_TYPE_ID).ToList();
-			//	statusList = SQMBasePage.GetComboBoxCheckedItems(rcbFindingsSelect).Select(l => l.Value).ToList();
-			//}
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
@@ -487,17 +402,6 @@ namespace SQM.Website
 
 
 		#region formatting helpers
-
-		protected string DisplayProblemIcon(decimal auditId)
-		{
-			string content = "";
-
-			//var occurs = entities.PROB_OCCUR.Where(p => p.AUDIT_ID == auditId);
-			//if (occurs.Count() > 0)
-			//	content = "<img src=\"/images/ico-8d.png\" alt=\"Problem Case has been created for this audit\" />";
-
-			return content;
-		}
 
 		protected string GetPlantName(decimal auditId)
 		{

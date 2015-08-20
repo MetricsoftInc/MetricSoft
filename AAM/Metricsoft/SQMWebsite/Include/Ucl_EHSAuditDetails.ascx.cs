@@ -25,11 +25,40 @@ namespace SQM.Website
 			{
 				foreach (int step in steps)
 				{
-					var questions = EHSAuditMgr.SelectAuditQuestionList((decimal)auditTypeId, 0);
+					var questions = EHSAuditMgr.SelectAuditQuestionList((decimal)auditTypeId, 0, auditId);
+
+					string previousTopic = "";
+					string qid = "";
+					string tid = "";
+					string ptid = "";
+					decimal totalQuestions = 0;
+					decimal totalTopicQuestions = 0;
+					decimal totalPositive = 0;
+					decimal totalTopicPositive = 0;
+					decimal totalPercent = 0;
 
 					sb.AppendLine("<table class=\"lightTable\" cellspacing=\"0\" style=\"width: 100%\">");
 					foreach (var q in questions)
 					{
+						qid = q.QuestionId.ToString();
+						tid = q.TopicId.ToString();
+						ptid = previousTopic;
+						bool answerIsPositive = false;
+
+						if (!previousTopic.Equals(tid)) // add a topic header
+						{
+							if (!previousTopic.Equals(""))
+							{
+								// need to add a display for the topic percentage
+								totalPercent = totalTopicPositive / totalTopicQuestions;
+								sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
+								totalTopicQuestions = 0;
+								totalTopicPositive = 0;
+							}
+							sb.AppendLine("<tr><td colspan=\"3\" class=\"blueCell\" style=\"width: 100%; font-weight: bold;\">" + q.TopicTitle + "</td></tr>");
+							previousTopic = tid;
+						}
+
 						//string answer = (from a in entities.AUDIT_ANSWER
 						//				 where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == q.QuestionId
 						//				 select a.ANSWER_VALUE).FirstOrDefault();
@@ -39,6 +68,22 @@ namespace SQM.Website
 						string answer = (auditAnswer.ANSWER_VALUE == null) ? "" : auditAnswer.ANSWER_VALUE;
 						string comment = (auditAnswer.COMMENT == null) ? "" : auditAnswer.COMMENT;
 
+						if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
+						{
+							totalQuestions += 1;
+							totalTopicQuestions += 1;
+							answerIsPositive = false;
+							foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+							{
+								if (choice.Value.Equals(answer) && choice.ChoicePositive)
+									answerIsPositive = true;
+							}
+							if (answerIsPositive)
+							{
+								totalPositive += 1;
+								totalTopicPositive += 1;
+							}
+						}
 						answer = answer.Replace("<a href", "<a target=\"blank\" href");
 
 						if (!string.IsNullOrEmpty(answer) ||
@@ -90,16 +135,23 @@ namespace SQM.Website
 						// Add a comment box that hides/shows via a link to certain field types
 						if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 							q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
-							q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio)
+							q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+							q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 						{
 							comment = Server.HtmlEncode(comment);
-							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td><td>{2}</td></tr>", q.QuestionText, answer, comment));
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, answer, comment));
 						}
 						else
 						{
-							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td><td></td></tr>", q.QuestionText, answer));
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\"></td></tr>", q.QuestionText, answer));
 						}
 					}
+					// add the last topic total
+					totalPercent = totalTopicPositive / totalTopicQuestions;
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
+					// update the audit total
+					totalPercent = totalPositive / totalQuestions;
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Score:   {0:0%}", totalPercent) + "</td></tr>");
 				}
 				sb.AppendLine("</table>");
 			}

@@ -27,9 +27,6 @@
                 <div id="divPageBody" class="textStd" style="text-align: left; margin: 0 0px;" runat="server">
                     <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
                         <asp:Label ID="lblResults" runat="server" />
-                    <ucl:AuditDetails id="uclAuditDetails" runat="server" />
-                    <asp:Panel ID="pnlAddEdit" runat="server">
-
 						<div class="container-fluid blueCell" style="padding: 7px;"">
 
                             <asp:Panel ID="pnlAuditHeader" runat="server">
@@ -111,33 +108,36 @@
                                 </div>
                             </asp:Panel>
                         </div>
-                        <div id="divForm" runat="server">
-                            <asp:Panel ID="pnlForm" runat="server">
-                            </asp:Panel>
-                        
-                            <table style="width: 100%;">
-                                <tr>
-                                    <td style="width: 33%;">
-                                        <telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
-                                            CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
-                                            OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
-                                    </td>
-                                    <td style="width: 33%;">
-                                        <telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
-                                             Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
-                                            CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
-                                            OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
-                                    </td>
-                                    <td style="width: 33%; text-align: center;">
-                                        <telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
-                                            Text="Delete Audit" SingleClick="true" SingleClickText="Deleting..."
-                                            OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
-                                    </td>
-                                </tr>
-                            </table>
+                        <ucl:AuditDetails id="uclAuditDetails" runat="server" />
+                        <asp:Panel ID="pnlAddEdit" runat="server">
 
-                        </div>
-                    </asp:Panel>
+                            <div id="divForm" runat="server">
+                                <asp:Panel ID="pnlForm" runat="server">
+                                </asp:Panel>
+                        
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 33%;">
+                                            <telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
+                                                CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
+                                                OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+                                        </td>
+                                        <td style="width: 33%;">
+                                            <telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
+                                                 Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
+                                                CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
+                                                OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+                                        </td>
+                                        <td style="width: 33%; text-align: center;">
+                                            <telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
+                                                Text="Delete Audit" SingleClick="true" SingleClickText="Deleting..."
+                                                OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </asp:Panel>
                     
                     </telerik:RadAjaxPanel>
                     <br />

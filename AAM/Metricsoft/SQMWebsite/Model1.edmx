@@ -198,6 +198,8 @@
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
           <Property Name="DEFAULT_8D" Type="bit" Nullable="false" />
           <Property Name="ADMIN_ONLY" Type="bit" Nullable="false" />
+          <Property Name="DAYS_TO_COMPLETE" Type="int" Nullable="false" />
+          <Property Name="INACTIVE" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AUDIT_TYPE_TOPIC_QUESTION">
           <Key>
@@ -209,6 +211,7 @@
           <Property Name="AUDIT_TOPIC_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="AUDIT_QUESTION_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="SORT_ORDER" Type="smallint" />
+          <Property Name="INACTIVE" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BUSINESS_ORG">
           <Key>
@@ -1006,6 +1009,16 @@
           <Property Name="DEFAULT_ROLE" Type="int" />
           <Property Name="PRIV_GROUP" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="JOBPRIV">
+          <Key>
+            <PropertyRef Name="JOBCODE_CD" />
+            <PropertyRef Name="PRIV" />
+            <PropertyRef Name="SCOPE" />
+          </Key>
+          <Property Name="JOBCODE_CD" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="PRIV" Type="int" Nullable="false" />
+          <Property Name="SCOPE" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
         <EntityType Name="LABOR_TYPE">
           <Key>
             <PropertyRef Name="LABOR_TYP_ID" />
@@ -1759,6 +1772,32 @@
           <Property Name="EXPOSE_TO_CLIENT" Type="bit" Nullable="false" />
           <Property Name="ENCRYPT_VALUE" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'AAM.dbo.Sheet1$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Sheet1$">
+          <Property Name="PRMR_ID" Type="float" />
+          <Property Name="PERIOD_YEAR" Type="float" />
+          <Property Name="PERIOD_MONTH" Type="float" />
+          <Property Name="INPUT_DT" Type="datetime" />
+          <Property Name="EFF_FROM_DT" Type="datetime" />
+          <Property Name="EFF_TO_DT" Type="datetime" />
+          <Property Name="MEASURE_VALUE" Type="float" />
+          <Property Name="UOM" Type="float" />
+          <Property Name="MEASURE_COST" Type="float" />
+          <Property Name="CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="255" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="255" />
+          <Property Name="CONVERSION_FACTOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="ROLLUP_DT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_EFF_FROM_DT" Type="float" />
+          <Property Name="ORIGINAL_EFF_TO_DT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_MEASURE_VALUE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_MEASURE_COST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_UOM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="UOM_FACTOR" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="SQM_ACCESS">
           <Key>
             <PropertyRef Name="SSO_ID" />
@@ -2820,6 +2859,18 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JOBPRIV_JOBCODE">
+          <End Role="JOBCODE" Type="Self.JOBCODE" Multiplicity="1" />
+          <End Role="JOBPRIV" Type="Self.JOBPRIV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Principal>
+            <Dependent Role="JOBPRIV">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LABOR_TY_REFERENCE_COMPANY">
           <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="0..1" />
           <End Role="LABOR_TYPE" Type="Self.LABOR_TYPE" Multiplicity="*" />
@@ -3591,6 +3642,7 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="INCIDENT_VERIFICATION" EntityType="Self.INCIDENT_VERIFICATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_VERIFICATION_COMMENT" EntityType="Self.INCIDENT_VERIFICATION_COMMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JOBCODE" EntityType="Self.JOBCODE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JOBPRIV" EntityType="Self.JOBPRIV" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LABOR_TYPE" EntityType="Self.LABOR_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCAL_LANGUAGE" EntityType="Self.LOCAL_LANGUAGE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NONCONFORMANCE" EntityType="Self.NONCONFORMANCE" Schema="dbo" store:Type="Tables" />
@@ -3962,6 +4014,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="Self.FK_INJURYILLNESS_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JOBPRIV_JOBCODE" Association="Self.FK_JOBPRIV_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="JOBPRIV" EntitySet="JOBPRIV" />
           </AssociationSet>
           <AssociationSet Name="FK_LABOR_TY_REFERENCE_COMPANY" Association="Self.FK_LABOR_TY_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -4889,6 +4945,11 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" Association="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION">
             <End Role="AUDIT_QUESTION" EntitySet="AUDIT_QUESTION" />
             <End Role="AUDIT_QUESTION_LANG" EntitySet="AUDIT_QUESTION_LANG" />
+          </AssociationSet>
+          <EntitySet Name="JOBPRIV" EntityType="PSsqmModel.JOBPRIV" />
+          <AssociationSet Name="FK_JOBPRIV_JOBCODE" Association="PSsqmModel.FK_JOBPRIV_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="JOBPRIV" EntitySet="JOBPRIV" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -8139,6 +8200,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="DEFAULT_8D" Type="Boolean" Nullable="false" />
           <Property Name="ADMIN_ONLY" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AUDIT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" FromRole="AUDIT_TYPE" ToRole="AUDIT_QUESTION_CONTROL" />
+          <Property Name="DAYS_TO_COMPLETE" Type="Int32" Nullable="false" />
+          <Property Name="INACTIVE" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="AUDIT_TYPE_TOPIC_QUESTION">
           <Key>
@@ -8150,6 +8213,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="AUDIT_TOPIC_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="AUDIT_QUESTION_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="SORT_ORDER" Type="Int16" />
+          <Property Name="INACTIVE" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="root">
           <Key>
@@ -8344,6 +8408,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="JOBCODE1" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE" ToRole="JOBCODE1" />
           <NavigationProperty Name="JOBCODE2" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE1" ToRole="JOBCODE" />
+          <NavigationProperty Name="JOBPRIV" Relationship="PSsqmModel.FK_JOBPRIV_JOBCODE" FromRole="JOBCODE" ToRole="JOBPRIV" />
         </EntityType>
         <EntityType Name="AUDIT">
           <Key>
@@ -8810,6 +8875,29 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Principal>
             <Dependent Role="AUDIT_QUESTION_LANG">
               <PropertyRef Name="AUDIT_QUESTION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="JOBPRIV">
+          <Key>
+            <PropertyRef Name="JOBCODE_CD" />
+            <PropertyRef Name="PRIV" />
+            <PropertyRef Name="SCOPE" />
+          </Key>
+          <Property Name="JOBCODE_CD" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="PRIV" Type="Int32" Nullable="false" />
+          <Property Name="SCOPE" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_JOBPRIV_JOBCODE" FromRole="JOBPRIV" ToRole="JOBCODE" />
+        </EntityType>
+        <Association Name="FK_JOBPRIV_JOBCODE">
+          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="1" />
+          <End Type="PSsqmModel.JOBPRIV" Role="JOBPRIV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Principal>
+            <Dependent Role="JOBPRIV">
+              <PropertyRef Name="JOBCODE_CD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10527,6 +10615,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="AUDIT_TYPE">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT_TYPE">
               <MappingFragment StoreEntitySet="AUDIT_TYPE">
+                <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
+                <ScalarProperty Name="DAYS_TO_COMPLETE" ColumnName="DAYS_TO_COMPLETE" />
                 <ScalarProperty Name="ADMIN_ONLY" ColumnName="ADMIN_ONLY" />
                 <ScalarProperty Name="DEFAULT_8D" ColumnName="DEFAULT_8D" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
@@ -10538,6 +10628,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="AUDIT_TYPE_TOPIC_QUESTION">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT_TYPE_TOPIC_QUESTION">
               <MappingFragment StoreEntitySet="AUDIT_TYPE_TOPIC_QUESTION">
+                <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
                 <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
                 <ScalarProperty Name="AUDIT_QUESTION_ID" ColumnName="AUDIT_QUESTION_ID" />
                 <ScalarProperty Name="AUDIT_TOPIC_ID" ColumnName="AUDIT_TOPIC_ID" />
@@ -10814,6 +10905,15 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
                 <ScalarProperty Name="LANG_TEXT" ColumnName="LANG_TEXT" />
                 <ScalarProperty Name="NLS_LANGUAGE" ColumnName="NLS_LANGUAGE" />
                 <ScalarProperty Name="AUDIT_QUESTION_ID" ColumnName="AUDIT_QUESTION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOBPRIV">
+            <EntityTypeMapping TypeName="PSsqmModel.JOBPRIV">
+              <MappingFragment StoreEntitySet="JOBPRIV">
+                <ScalarProperty Name="SCOPE" ColumnName="SCOPE" />
+                <ScalarProperty Name="PRIV" ColumnName="PRIV" />
+                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11106,6 +11206,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_JOBCODE_JOBCODE" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_QUESTION_LANG" Width="1.5" PointX="17.5" PointY="15" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" />
+        <EntityTypeShape EntityType="PSsqmModel.JOBPRIV" Width="1.5" PointX="6.75" PointY="41.875" />
+        <AssociationConnector Association="PSsqmModel.FK_JOBPRIV_JOBCODE" />
         </Diagram>
     </Diagrams>
   </Designer>

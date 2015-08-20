@@ -8,7 +8,7 @@
 </telerik:RadPersistenceManagerProxy>
 
 
-<asp:Panel ID="pnlCSTIssueSearch" runat="server" Visible="false" Width="99%">
+<asp:Panel ID="pnlCSTAuditSearch" runat="server" Visible="false" Width="99%">
     <asp:HiddenField id="hfCSTPlantSelect" runat="server" value="Responsible Location:"/>
     <asp:HiddenField id="hfRCVPlantSelect" runat="server" value="Detected Location:"/>
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
@@ -19,23 +19,8 @@
             <td class="summaryDataEnd">
                 <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ZIndex="9000" Skin="Metro" Height="350" Width="650" OnClientLoad="DisableComboSeparators" EmptyMessage="Select responsible/supplier locations"></telerik:RadComboBox>
             </td>
-<%--        <tr>
-            <td class="summaryDataEnd" width="150px">
-                <asp:Label runat="server" ID="lblPartSearch" CssClass="prompt" Text="Part Number:"></asp:Label>
-            </td>
-            <td class="summaryDataEnd">
-                <telerik:RadTextBox ID="tbPartSearch" runat="server" Skin="Metro" Width="180" MaxLength="40" EmptyMessage="containing 'string'" EmptyMessageStyle-ForeColor="GrayText"></telerik:RadTextBox>
-                <span style="margin-left: 8px;">
-                    <asp:Label runat="server" ID="lblSeveritySelect" CssClass="prompt" Text="Event Category:"></asp:Label>
-                    <telerik:RadComboBox ID="ddlSeveritySelect" runat="server" ToolTip="" ZIndex="9000" Skin="Metro" width="140" AutoPostBack="false">
-                    </telerik:RadComboBox>
-                 </span>
-                <span style="margin-left: 10px;" class="noprint">
-                    <asp:Label ID="lblShowImage" runat="server" Text="Display Initial Evidence (Images)" CssClass="prompt"></asp:Label>
-                    <asp:CheckBox id="cbShowImage" runat="server" Checked="false"/>
-                </span>
-            </td>
-        </tr>--%>
+
+        </tr>
         <tr>
             <td class="summaryDataEnd" width="150px">
                 <asp:Label runat="server" ID="lblDateSpan" CssClass="prompt" Text="Date Span:"></asp:Label>

@@ -182,7 +182,7 @@ namespace SQM.Website
 				string selectString = "";
 				if (Mode == AuditMode.Audit)
 				{
-					auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId);
+					auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId, true);
 					selectString = "[Select An Audit Type]";
 				}
 				if (auditTypeList.Count > 1)
@@ -203,7 +203,7 @@ namespace SQM.Website
 			// set up for adding the header info
 			AccessMode accessmode = UserContext.RoleAccess();
 
-			if (IsEditContext)
+			if (IsEditContext || CurrentStep > 0)
 			{
 				// in edit mode, load the header field values and make all fields display only
 				AUDIT audit = EHSAuditMgr.SelectAuditById(entities, EditAuditId);
@@ -308,7 +308,7 @@ namespace SQM.Website
 			pnlForm.Visible = true;
 			lblResults.Visible = false;
 
-			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0);
+			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 			string previousTopic = "";
@@ -409,10 +409,6 @@ namespace SQM.Website
 						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
 							tf.Text = q.AnswerText;
-						else if (q.QuestionId == (decimal)EHSAuditQuestionId.Location) // Location
-							tf.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.CompletedBy)
-							tf.Enabled = false;
 						pnl.Controls.Add(tf);
 						break;
 
@@ -539,54 +535,12 @@ namespace SQM.Website
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
 						rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 						rdp.ShowPopupOnFocus = true;
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.AuditDate) // Default audit date
-						{
-							rdp.SelectedDate = DateTime.Now;
-						}
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate && !IsEditContext) // Default report date if add mode
-						{
-							rdp.SelectedDate = DateTime.Now;
-						}
 						
 						if (shouldPopulate)
 						{
 							DateTime parseDate;
 							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
 								rdp.SelectedDate = parseDate;
-						}
-						else
-						{
-							// Default projected completion date 30 or 60 days based on previous questions
-							//if (q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate) 
-							//{
-							//	if (EditAuditId > 0)
-							//	{
-							//		AUDIT audit = (from inc in entities.AUDIT where inc.AUDIT_ID == EditAuditId select inc).FirstOrDefault();
-							//		if (audit != null)
-							//		{
-							//			// mt - due date now based on Audit creation date per TI
-							//			//string dateAnswer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.ReportDate);
-							//			//DateTime parseDate;
-							//			//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-							//			DateTime parseDate = DateTime.Now;
-							//			//{
-							//				string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.RecommendationType);
-							//				if (answer.ToLower() == "behavioral")
-							//					rdp.SelectedDate = parseDate.AddDays(30);
-							//				else
-							//					rdp.SelectedDate = parseDate.AddDays(60);
-							//			//}
-							//		}
-							//	}
-							//}
-						}
-						
-						// Audit report date, completion date, projected completion date are not editable
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate ||
-							q.QuestionId == (decimal)EHSAuditQuestionId.CompletionDate ||
-							q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate) 
-						{
-							rdp.Enabled = false;
 						}
 						
 						pnl.Controls.Add(rdp);
@@ -623,19 +577,7 @@ namespace SQM.Website
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
-						//else if (q.QuestionId == (decimal)EHSAuditQuestionId.Create8D && EHSAuditMgr.IsTypeDefault8D(typeId))
-						//	bcb.Checked = true;
 
-						// If controller question, "close" checkbox, or "create 8d" checkbox, register ajax behavior
-						if ((q.QuestionControls != null && q.QuestionControls.Count > 0) ||
-							q.QuestionId == (decimal)EHSAuditQuestionId.CloseAudit )
-						{
-							bcb.CheckedChanged += new EventHandler(bcb_CheckedChanged);
-							if (q.QuestionId == (decimal)EHSAuditQuestionId.CloseAudit)
-								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedClose);
-							bcb.AutoPostBack = true;
-						}
-						
 						pnl.Controls.Add(bcb);
 						
 						pnl.Controls.Add(new LiteralControl("</div>"));
@@ -830,12 +772,6 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSAuditQuestionId.FinalAuditStepResolved && accessLevel < AccessMode.Admin)
-					pnl.Visible = false;
-
-				if (q.QuestionId == (decimal)EHSAuditQuestionId.CostToImplement && accessLevel < AccessMode.Admin)
-					pnl.Visible = false;
-
 				pnlForm.Controls.Add(pnl);
 			}
 
@@ -911,7 +847,7 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
-			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0);
+			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 			string previousTopic = "";
@@ -1003,10 +939,6 @@ namespace SQM.Website
 						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
 							tf.Text = q.AnswerText;
-						else if (q.QuestionId == (decimal)EHSAuditQuestionId.Location) // Location
-							tf.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.CompletedBy)
-							tf.Enabled = false;
 						pnl.Controls.Add(tf);
 						break;
 
@@ -1131,54 +1063,12 @@ namespace SQM.Website
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
 						rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 						rdp.ShowPopupOnFocus = true;
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.AuditDate) // Default incident date
-						{
-							rdp.SelectedDate = DateTime.Now;
-						}
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate && !IsEditContext) // Default report date if add mode
-						{
-							rdp.SelectedDate = DateTime.Now;
-						}
 
 						if (shouldPopulate)
 						{
 							DateTime parseDate;
 							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
 								rdp.SelectedDate = parseDate;
-						}
-						else
-						{
-							// Default projected completion date 30 or 60 days based on previous questions
-							//if (q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate)
-							//{
-							//	if (EditAuditId > 0)
-							//	{
-							//		//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
-							//		if (audit != null)
-							//		{
-							//			// mt - due date now based on Incident creation date per TI
-							//			//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
-							//			//DateTime parseDate;
-							//			//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-							//			DateTime parseDate = DateTime.Now;
-							//			//{
-							//			string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.RecommendationType);
-							//			if (answer.ToLower() == "behavioral")
-							//				rdp.SelectedDate = parseDate.AddDays(30);
-							//			else
-							//				rdp.SelectedDate = parseDate.AddDays(60);
-							//			//}
-							//		}
-							//	}
-							//}
-						}
-
-						// Incident report date, completion date, projected completion date are not editable
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate ||
-							q.QuestionId == (decimal)EHSAuditQuestionId.CompletionDate ||
-							q.QuestionId == (decimal)EHSAuditQuestionId.ProjectedCompletionDate)
-						{
-							rdp.Enabled = false;
 						}
 
 						pnl.Controls.Add(rdp);
@@ -1464,28 +1354,15 @@ namespace SQM.Website
 		{
 			btnSaveReturn.Text = "Save & Return";
 
-			//int chInt = (int)EHSAuditQuestionId.Create8D;
-			//string chString = chInt.ToString();
-			//CheckBox create8dCh = (CheckBox)pnlForm.FindControl(chString);
+			if (IsEditContext)
+				btnSaveContinue.Text = "Save Audit";
+			else
+				btnSaveContinue.Text = "Create Audit";
 
-			//if (create8dCh != null && create8dCh.Checked == true)
-			//{
-			//	if (IsEditContext)
-			//		btnSaveContinue.Text = "Save & Edit 8D";
-			//	else
-			//		btnSaveContinue.Text = "Save & Create 8D";
-			//}
-			//else
-			//{
-				if (IsEditContext)
-					btnSaveContinue.Text = "Save Audit";
-				else
-					btnSaveContinue.Text = "Create Audit";
-			//}
-				if (IsEditContext)
-					btnSaveReturn.Text = "Save Audit";
-				else
-					btnSaveReturn.Text = "Create Audit";
+			if (IsEditContext)
+				btnSaveReturn.Text = "Save Audit";
+			else
+				btnSaveReturn.Text = "Create Audit";
 		}
 
 		void bcb_CheckedChangedCreate8D(object sender, EventArgs e)
@@ -1558,8 +1435,9 @@ namespace SQM.Website
 					decimal locationId = Convert.ToDecimal(location);
 					if (locationId > 0)
 					{
-						locationPersonList = EHSAuditMgr.SelectEhsDataOriginatorsAtPlant(locationId);
-						locationPersonList.AddRange(EHSAuditMgr.SelectDataOriginatorAdditionalPlantAccess(locationId));
+						//locationPersonList = EHSAuditMgr.SelectEhsDataOriginatorsAtPlant(locationId);
+						//locationPersonList.AddRange(EHSAuditMgr.SelectDataOriginatorAdditionalPlantAccess(locationId));
+						locationPersonList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.originate, SysScope.audit, locationId);
 						locationPersonList = (from p in locationPersonList orderby p.LAST_NAME, p.FIRST_NAME select p).ToList();
 					}
 					//else
@@ -1647,49 +1525,45 @@ namespace SQM.Website
 			}
 		}
 
-		void UpdateClosedQuestionsPrevent()
-		{
-			if (AuditReportRequiredFieldsComplete() == true)
-			{
-			}
-		}
-
 		protected bool AuditReportRequiredFieldsComplete()
 		{
-			int score = 0;
-			foreach (int fId in requiredToCloseFields)
-			{
-				var field = pnlForm.FindControl(fId.ToString());
-                if (field == null)   //mt - need to enable close if field was not included in the audit meta-data
-                {
-                    score++;
-                }
-                else 
-                {
-                    if (field is RadTextBox)
-                    {
-                        if (!String.IsNullOrEmpty((field as RadTextBox).Text))
-                            score++;
-                    }
-                    else if (field is RadDatePicker)
-                    {
-                        if ((field as RadDatePicker).SelectedDate != null)
-                            score++;
-                    }
-                    else if (field is DropDownList)
-                    {
-                        if (!String.IsNullOrEmpty((field as DropDownList).SelectedValue))
-                            score++;
-                    }
-                    else if (field is RadDropDownList)
-                    {
-                        if (!String.IsNullOrEmpty((field as RadDropDownList).SelectedValue))
-                            score++;
-                    }
-                }
-			}
+			// AW20150820 we aren't really using this. need to figure out if we need to 
 
-			return (score == requiredToCloseFields.Length);
+			//int score = 0;
+			//foreach (int fId in requiredToCloseFields)
+			//{
+			//	var field = pnlForm.FindControl(fId.ToString());
+			//	if (field == null)   //mt - need to enable close if field was not included in the audit meta-data
+			//	{
+			//		score++;
+			//	}
+			//	else 
+			//	{
+			//		if (field is RadTextBox)
+			//		{
+			//			if (!String.IsNullOrEmpty((field as RadTextBox).Text))
+			//				score++;
+			//		}
+			//		else if (field is RadDatePicker)
+			//		{
+			//			if ((field as RadDatePicker).SelectedDate != null)
+			//				score++;
+			//		}
+			//		else if (field is DropDownList)
+			//		{
+			//			if (!String.IsNullOrEmpty((field as DropDownList).SelectedValue))
+			//				score++;
+			//		}
+			//		else if (field is RadDropDownList)
+			//		{
+			//			if (!String.IsNullOrEmpty((field as RadDropDownList).SelectedValue))
+			//				score++;
+			//		}
+			//	}
+			//}
+
+			//return (score == requiredToCloseFields.Length);
+			return false;
 		}
 
 		protected void bcb_CheckedChanged(object sender, EventArgs e)
@@ -1709,7 +1583,7 @@ namespace SQM.Website
 			decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
 			if (typeId < 1)
 				return;
-			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0);
+			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
 			EHSAuditQuestion question = questions.Where(q => q.QuestionId == questionId).FirstOrDefault();
 			ProcessQuestionControls(question, 0);
 
@@ -1722,7 +1596,8 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
-			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0);
+			// why do we keep getting the questions?
+			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
 			UpdateAnswersFromForm();
 
 			foreach (var q in questions)
@@ -2045,8 +1920,9 @@ namespace SQM.Website
 				auditTypeId = EditAuditTypeId;
 				auditType = EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 			}
-			
-			questions = EHSAuditMgr.SelectAuditQuestionList(auditTypeId, 0);
+
+			questions = EHSAuditMgr.SelectAuditQuestionList(auditTypeId, 0, EditAuditId);
+
 			UpdateAnswersFromForm();
 			GetAuditInfoFromQuestions(questions);
 
@@ -2067,15 +1943,11 @@ namespace SQM.Website
 					if (auditId > 0)
 					{
 						theAudit = UpdateAudit(auditId);
-                        if (Mode == AuditMode.Audit)
-                        {
-                            EHSAuditMgr.TryCloseAudit(auditId);
-                        }
 					}
 				}
 				if (auditId > 0)
 				{
-					shouldCreate8d = AddOrUpdateAnswers(questions, auditId);
+					AddOrUpdateAnswers(questions, auditId);
 					SaveAttachments(auditId);
 				}
 
@@ -2089,18 +1961,10 @@ namespace SQM.Website
 				if (auditId > 0)
 				{
 					AddOrUpdateAnswers(questions, auditId);
-					shouldCreate8d = false;
 					SaveAttachments(auditId);
 
-					if (Mode == AuditMode.Audit)
-					{
-                        UpdateTaskInfo(questions, auditId, DateTime.Now);
-						EHSAuditMgr.TryCloseAudit(auditId);
-					}
-					else
-					{
-						EHSAuditMgr.TryClosePrevention(auditId, SessionManager.UserContext.Person.PERSON_ID);
-					}
+					// do we need this??
+					UpdateTaskInfo(questions, auditId, DateTime.Now);
 				}
 			}
 
@@ -2126,14 +1990,6 @@ namespace SQM.Website
 				SessionManager.ReturnObject = "DisplayAudits";
 				Response.Redirect("/EHS/EHS_Audits.aspx");  // mt - temporary
 			}
-
-			//if (shouldCreate8d == true && shouldReturn == false)
-			//	Create8dAndRedirect(auditId);
-			//else 
-			//if (CurrentStep == 0 && shouldReturn == false)
-			//	GoToNextStep(auditId);
-			//else
-			//	ShowAuditDetails(auditId, result);
 
 		}
 
@@ -2162,14 +2018,10 @@ namespace SQM.Website
 
 						case EHSAuditQuestionType.TextBox:
 							answer = (control as RadTextBox).Text;
-							if (q.QuestionId == (decimal)EHSAuditQuestionId.Description)
-								auditDescription = answer;
 							break;
 
 						case EHSAuditQuestionType.RichTextBox:
 							answer = (control as RadEditor).Content;
-							if (q.QuestionId == (decimal)EHSAuditQuestionId.RecommendationSummary)
-								auditDescription = answer;
 							break;
 
 						case EHSAuditQuestionType.Radio:
@@ -2195,8 +2047,6 @@ namespace SQM.Website
 							if (fromDate != null)
 							{
 								answer = ((DateTime)fromDate).ToString(CultureInfo.GetCultureInfo("en-US"));
-								if (q.QuestionId == (decimal)EHSAuditQuestionId.AuditDate || q.QuestionId == (decimal)EHSAuditQuestionId.InspectionDate)
-									auditDate = (DateTime)fromDate;
 							}
 							break;
 
@@ -2333,26 +2183,26 @@ namespace SQM.Website
 				string tid = q.TopicId.ToString();
 
 				string answer = "";
+				// first set topic percent display if the topic has changed
+				if (!previousTopic.Equals(tid))
+				{
+					if (!previousTopic.Equals(""))
+					{
+						Label topicTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
+						if (topicTotal != null)
+						{
+							totalPercent = totalTopicPositive / totalTopicQuestions;
+							topicTotal.Text = string.Format("{0:0%}", totalPercent);
+						}
+						totalTopicQuestions = 0;
+						totalTopicPositive = 0;
+					}
+					previousTopic = tid;
+				}
+
+				// next, add to totals is the response is a positive one
 				if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
-					// first set topic percent display if the topic has changed
-					if (!previousTopic.Equals(tid))
-					{
-						if (!previousTopic.Equals(""))
-						{
-							Label topicTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
-							if (topicTotal != null)
-							{
-								totalPercent = totalTopicPositive / totalTopicQuestions;
-								topicTotal.Text = string.Format("{0:0%}", totalPercent);
-							}
-							totalTopicQuestions = 0;
-							totalTopicPositive = 0;
-						}
-						previousTopic = tid;
-					}
-
-					// next, add to totals is the response is a positive one
 					totalQuestions += 1;
 					totalTopicQuestions += 1;
 					answer = q.AnswerText;
@@ -2399,7 +2249,7 @@ namespace SQM.Website
 				if (auditAnswer != null)
 				{
 					auditAnswer.ANSWER_VALUE = q.AnswerText;
-					auditAnswer.ORIGINAL_QUESTION_TEXT = q.QuestionText;
+					//auditAnswer.ORIGINAL_QUESTION_TEXT = q.QuestionText; // don't want to update text after the audit has been created
 					auditAnswer.COMMENT = q.AnswerComment;
 				}
 				else
@@ -2415,9 +2265,6 @@ namespace SQM.Website
 					entities.AddToAUDIT_ANSWER(auditAnswer);
 				}
 
-				// Check if Quality Issue (8D) question set to true
-				if (q.QuestionId == (decimal)EHSAuditQuestionId.Create8D && q.AnswerText == "Yes")
-					shouldCreate8d = true;
 			}
 			entities.SaveChanges();
 
@@ -2493,6 +2340,7 @@ namespace SQM.Website
 
 		protected void UpdateTaskInfo(List<EHSAuditQuestion> questions, decimal auditId, DateTime createDate)
 		{
+			// AW20150820 this still needs to be worked out
 			DateTime dueDate = DateTime.MinValue;
 			decimal responsiblePersonId = 0;
 
@@ -2504,24 +2352,24 @@ namespace SQM.Website
 										  && ia.AUDIT_QUESTION_ID == thisQuestion.QuestionId
 									  select ia).FirstOrDefault();
 
-				if (auditAnswer != null && !String.IsNullOrEmpty(auditAnswer.ANSWER_VALUE))
-				{
-					if (Mode == AuditMode.Audit)
-					{
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.DateDue)
-							dueDate = DateTime.Parse(auditAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US"));
-						else if (q.QuestionId == (decimal)EHSAuditQuestionId.ResponsiblePersonDropdown) 
-							responsiblePersonId = Convert.ToDecimal(auditAnswer.ANSWER_VALUE);
-					}
-					else if (Mode == AuditMode.Prevent)
-					{
-						if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate)
-							dueDate = createDate.AddDays(30);  // mt - per TI the due date should be based on the audit CREATE date instead of the inspection date
-                            // dueDate = DateTime.Parse(auditAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US")).AddDays(30);
-						else if (q.QuestionId == (decimal)EHSAuditQuestionId.AssignToPerson) 
-							responsiblePersonId = Convert.ToDecimal(auditAnswer.ANSWER_VALUE);
-					}
-				}
+				//if (auditAnswer != null && !String.IsNullOrEmpty(auditAnswer.ANSWER_VALUE))
+				//{
+				//	if (Mode == AuditMode.Audit)
+				//	{
+				//		if (q.QuestionId == (decimal)EHSAuditQuestionId.DateDue)
+				//			dueDate = DateTime.Parse(auditAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US"));
+				//		else if (q.QuestionId == (decimal)EHSAuditQuestionId.ResponsiblePersonDropdown) 
+				//			responsiblePersonId = Convert.ToDecimal(auditAnswer.ANSWER_VALUE);
+				//	}
+				//	else if (Mode == AuditMode.Prevent)
+				//	{
+				//		if (q.QuestionId == (decimal)EHSAuditQuestionId.ReportDate)
+				//			dueDate = createDate.AddDays(30);  // mt - per TI the due date should be based on the audit CREATE date instead of the inspection date
+				//			// dueDate = DateTime.Parse(auditAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US")).AddDays(30);
+				//		else if (q.QuestionId == (decimal)EHSAuditQuestionId.AssignToPerson) 
+				//			responsiblePersonId = Convert.ToDecimal(auditAnswer.ANSWER_VALUE);
+				//	}
+				//}
 			}
 			
 			//if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
@@ -2532,26 +2380,6 @@ namespace SQM.Website
 		}
 
 		
-
-		//protected void Create8dAndRedirect(decimal auditId)
-		//{
-		//	SessionManager.ReturnStatus = true;
-
-		//	PROB_CASE probCase = ProblemCase.LookupCaseByAudit(auditId);
-		//	if (probCase != null)
-		//	{
-		//		// If 8D problem case exists, redirect with problem case ID
-		//		SessionManager.ReturnObject = probCase.PROBCASE_ID;
-		//	}
-		//	else
-		//	{
-		//		// Otherwise, redirect with the intent of creating a new problem case
-		//		var entities = new PSsqmEntities();
-		//		SessionManager.ReturnObject = EHSAuditMgr.SelectAuditById(entities, auditId);
-		//	}
-
-		//	Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
-		//}
 
 		protected void GoToNextStep(decimal auditId)
 		{
@@ -2586,8 +2414,9 @@ namespace SQM.Website
 			uclAuditDetails.Clear();
 			string typeString = "";
 
-			if (accessLevel > AccessMode.View)
+			if (accessLevel > AccessMode.View && CurrentStep == 0)
 			{
+				pnlAddEdit.Visible = true;
 				if (!IsEditContext)
 				{
 					// Add
@@ -2598,26 +2427,16 @@ namespace SQM.Website
 					//btnSaveContinue.Visible = (SelectedTypeId > 0);
 					rddlAuditType.Visible = (rddlAuditType.Items.Count == 1) ? false : true;
 					lblAddOrEditAudit.Text = "<strong>Add a New Audit:</strong>";
-					
+
 					lblAuditType.Visible = false;
 					btnDelete.Visible = false;
 				}
 				else
 				{
 					// Edit
-					if (CurrentStep == 0)
-					{
-						typeString = " Audit";
-						//btnSaveContinue.Visible = true;
-						btnSaveReturn.CommandArgument = "0";
-					}
-					else if (CurrentStep == 1)
-					{
-						typeString = " Audit";
-						//btnSaveContinue.Visible = false;
-						btnSaveReturn.CommandArgument = "1";
-					}
-
+					typeString = " Audit";
+					//btnSaveContinue.Visible = true;
+					btnSaveReturn.CommandArgument = "0";
 					SelectedTypeId = 0;
 					btnSaveReturn.Enabled = true;
 					btnSaveReturn.Visible = true;
@@ -2626,10 +2445,10 @@ namespace SQM.Website
 
 					rddlAuditType.Visible = false;
 					//if (Mode == AuditMode.Audit)
-						lblAuditType.Text = "Audit Type: ";
+					lblAuditType.Text = "Audit Type: ";
 					//else if (Mode == AuditMode.Prevent)
 					//	lblAuditType.Text = "Type: ";
-					
+
 					lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 					lblAuditType.Visible = true;
 					btnDelete.Visible = true;
@@ -2640,13 +2459,6 @@ namespace SQM.Website
 				UpdateControlledQuestions();
 				UpdateButtonText();
 
-				if (CurrentStep == 1)
-				{
-					if (Mode == AuditMode.Audit)
-						UpdateClosedQuestions();
-					else if (Mode == AuditMode.Prevent)
-						UpdateClosedQuestionsPrevent();
-				}
 				
 				// Only plant admin and higher can view closed audits
 				//if (accessLevel < AccessMode.Plant)
@@ -2659,8 +2471,23 @@ namespace SQM.Website
 			else
 			{
 				// View only
+				typeString = " Audit";
+				SelectedTypeId = 0;
+				btnSaveReturn.Enabled = false;
+				btnSaveReturn.Visible = false;
+
+				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + " Closed</strong><br/>";
+
+				rddlAuditType.Visible = false;
+				lblAuditType.Text = "Audit Type: ";
+
+				lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
+				lblAuditType.Visible = true;
+				btnDelete.Visible = false;
+				LoadHeaderInformation();
 				var displaySteps = new int[] { CurrentStep };
 				uclAuditDetails.Refresh(EditAuditId, displaySteps);
+				pnlAddEdit.Visible = false;
 			}
 
 		}
