@@ -988,8 +988,16 @@ namespace SQM.Website
         {
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, updateBy, person.EntityState);
 
-            if (person.EntityState == EntityState.Detached)
-                ctx.AddToPERSON(person);
+			if (person.EntityState == EntityState.Detached  || person.EntityState == EntityState.Added)
+			{
+				if (!person.PREFERRED_LANG_ID.HasValue)
+					person.PREFERRED_LANG_ID = 1;
+				if (string.IsNullOrEmpty(person.PREFERRED_TIMEZONE))
+					person.PREFERRED_TIMEZONE = "035";
+				if (string.IsNullOrEmpty(person.STATUS))
+					person.STATUS = "A";
+				ctx.AddToPERSON(person);
+			}
 
             SQM_ACCESS access = null;
 			string key = "";

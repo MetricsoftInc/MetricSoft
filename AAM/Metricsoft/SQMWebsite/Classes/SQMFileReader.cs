@@ -335,7 +335,6 @@ namespace SQM.Website
 									person.SSO_ID = empID;
 									person.EMP_ID = empID;
 									person.ROLE = (int)SysPriv.view;
-									person.PREFERRED_LANG_ID = 1;
 								}
 
 								person.STATUS = status;
