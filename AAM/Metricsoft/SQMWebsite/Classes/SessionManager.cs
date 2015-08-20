@@ -68,45 +68,12 @@ namespace SQM.Website
 
 		public static bool CheckUserPrivilege(SysPriv priv,  SysScope scope)
 		{
-			bool hasPriv = false;
-
-			if (SessionManager.UserContext.PrivList != null)
-			{
-				if (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
-				{
-					hasPriv = true;
-				}
-				else
-				{
-					if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
-						hasPriv = true;
-				}
-			}
-
-			return hasPriv;
-
+			return UserContext.CheckUserPrivilege(priv, scope);
 		}
 
 		public static List<PRIVGROUP> GetScopePrivileges(SysScope scope)
 		{
-			// get all user privs related to the scope/function 
-			List<PRIVGROUP> privList = new List<PRIVGROUP>();
-
-			if (SessionManager.UserContext.PrivList != null)
-			{
-				PRIVGROUP priv = new PRIVGROUP();
-				if ((priv = SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
-				{
-					priv.SCOPE = scope.ToString();
-					privList.Add(priv);
-				}
-				else
-				{
-					privList = SessionManager.UserContext.PrivList.Where(p => p.SCOPE.ToLower() == scope.ToString()).ToList();
-				}
-			}
-
-			return privList;
+			return UserContext.GetScopePrivileges(scope);
 		}
 
 		public static int AccessModeRoleXREF(AccessMode mode)
@@ -887,6 +854,51 @@ namespace SQM.Website
 			return SessionManager.UserContext.HRLocation;
 		}
 
+		public static bool CheckUserPrivilege(SysPriv priv, SysScope scope)
+		{
+			bool hasPriv = false;
+
+			if (SessionManager.UserContext.PrivList != null)
+			{
+				if (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
+				{
+					hasPriv = true;
+				}
+				else
+				{
+					if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
+						hasPriv = true;
+				}
+			}
+
+			return hasPriv;
+
+		}
+
+		public static List<PRIVGROUP> GetScopePrivileges(SysScope scope)
+		{
+			// get all user privs related to the scope/function 
+			List<PRIVGROUP> privList = new List<PRIVGROUP>();
+
+			if (SessionManager.UserContext.PrivList != null)
+			{
+				PRIVGROUP priv = new PRIVGROUP();
+				if ((priv = SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
+				{
+					PRIVGROUP adminPriv = new PRIVGROUP();
+					adminPriv.PRIV_GROUP = priv.PRIV_GROUP;
+					adminPriv.PRIV = priv.PRIV;
+					adminPriv.SCOPE = scope.ToString();
+					privList.Add(adminPriv);
+				}
+				else
+				{
+					privList = SessionManager.UserContext.PrivList.Where(p => p.SCOPE.ToLower() == scope.ToString()).ToList();
+				}
+			}
+
+			return privList;
+		}
 
 		public static AccessMode RoleAccess()
 		{
