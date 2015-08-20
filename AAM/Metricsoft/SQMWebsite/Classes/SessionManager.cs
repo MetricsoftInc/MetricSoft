@@ -843,13 +843,14 @@ namespace SQM.Website
 								//this.WorkingLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
 
 							this.PlantAccessList = new List<decimal>();
+							this.PlantAccessList.Add(this.WorkingLocation.Plant.PLANT_ID);
 							if (!string.IsNullOrEmpty(Person.NEW_LOCATION_CD))
 							{
 								decimal plantID;
 								 string[] locs = Person.NEW_LOCATION_CD.Split(',');
 								 foreach (string locid in locs)
 								 {
-									 if (decimal.TryParse(locid, out plantID))
+									 if (decimal.TryParse(locid, out plantID)  &&  plantID != this.WorkingLocation.Plant.PLANT_ID)
 										this.PlantAccessList.Add(plantID);
 								 }
 							}
