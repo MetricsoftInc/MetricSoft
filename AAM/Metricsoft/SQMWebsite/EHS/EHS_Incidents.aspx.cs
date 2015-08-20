@@ -187,7 +187,7 @@ namespace SQM.Website
 				case DisplayState.IncidentList:
 					SearchIncidents();
 					uclIncidentForm.Visible = false;
-					rbNew.Visible = false;
+					//rbNew.Visible = false;
 					break;
 
 				case DisplayState.IncidentNotificationNew:

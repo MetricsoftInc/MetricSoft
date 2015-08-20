@@ -874,6 +874,8 @@ namespace SQM.Website
 		{
 			SessionManager.ReturnStatus = true;
 			SessionManager.ReturnObject = "DisplayIncidents";
+			RadButton rbNew = (RadButton)this.Parent.FindControl("rbNew");
+			rbNew.Visible = true;
 		}
 		protected void rgIncidentList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
 		{
