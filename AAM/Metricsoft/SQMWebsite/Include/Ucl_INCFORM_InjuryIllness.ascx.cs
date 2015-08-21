@@ -243,7 +243,6 @@ namespace SQM.Website
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
 					PopulateInvolvedPersonDropDown();
-					rddlInvolvedPerson.SelectedValue = Convert.ToString(injuryIllnessDetails.INVOLVED_PERSON_ID);
 
 					PopulateShiftDropDown();
 					PopulateOperationDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
@@ -259,6 +258,7 @@ namespace SQM.Website
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
 
+						rddlInvolvedPerson.SelectedValue = Convert.ToString(injuryIllnessDetails.INVOLVED_PERSON_ID);
 						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						rddlOperation.SelectedValue = injuryIllnessDetails.PLANT_LINE_ID.ToString();
 						rddlInvolvedPerson.SelectedValue = injuryIllnessDetails.INVOLVED_PERSON_ID.ToString();
@@ -895,6 +895,12 @@ namespace SQM.Website
 
 		}
 
+		protected void rddlWitnessName_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		{
+			//RadDropDownList rddlw = (RadDropDownList)sender;
+			//decimal wittnessId = Convert.ToInt32(rddlw.SelectedValue);
+		}
+
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			//
@@ -999,9 +1005,11 @@ namespace SQM.Website
 				{
 							INCFORM_WITNESS witness = (INCFORM_WITNESS)e.Item.DataItem;
 
-							TextBox tbw = (TextBox)e.Item.FindControl("tbWitnessName");
+							RadDropDownList rddlw = (RadDropDownList)e.Item.FindControl("rddlWitnessName");
+
 							TextBox tbws = (TextBox)e.Item.FindControl("tbWitnessStatement");
 							RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
+
 
 							Label lb = (Label)e.Item.FindControl("lbItemSeq");
 							Label lb2 = (Label)e.Item.FindControl("lbItemSeq2");
@@ -1009,12 +1017,25 @@ namespace SQM.Website
 							Label rqd1 = (Label)e.Item.FindControl("lbRqd1");
 							Label rqd2 = (Label)e.Item.FindControl("lbRqd2");
 					
-							//RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessName");
 							//RequiredFieldValidator rvfws = (RequiredFieldValidator)e.Item.FindControl("rfvWitnessStatement");
+
+							var personList = new List<PERSON>();
+							personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+							if (personList != null)
+							{
+								rddlw.Items.Add(new DropDownListItem("[Select One]", ""));		
+
+								foreach (PERSON p in personList)
+								{
+									string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+									rddlw.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+								}
+							}
 
 							lb.Text = witness.WITNESS_NO.ToString();
 							lb2.Text = witness.WITNESS_NO.ToString();
-							tbw.Text = witness.WITNESS_NAME;
+							itmdel.Text = "Delete Item";
+							rddlw.SelectedValue = witness.WITNESS_PERSON.ToString();
 							tbws.Text = witness.WITNESS_STATEMENT;
 
 							rqd1.Visible = true;
@@ -1028,7 +1049,7 @@ namespace SQM.Website
 					
 							// Set user access:
 
-							tbw.Enabled = UpdateAccess;
+							rddlw.Enabled = UpdateAccess;
 							//rvfw.Enabled = UpdateAccess;
 							tbws.Enabled = UpdateAccess;
 							itmdel.Visible = UpdateAccess;
@@ -1067,7 +1088,7 @@ namespace SQM.Website
 				{
 					var item = new INCFORM_WITNESS();
 
-					TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+					RadDropDownList rddlw = (RadDropDownList)witnessitem.FindControl("rddlWitnessName");
 					TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
 
 					Label lb = (Label)witnessitem.FindControl("lbItemSeq");
@@ -1076,11 +1097,24 @@ namespace SQM.Website
 					Label rqd1 = (Label)witnessitem.FindControl("lbRqd1");
 					Label rqd2 = (Label)witnessitem.FindControl("lbRqd2");
 
-		
+					var personList = new List<PERSON>();
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+					if (personList != null)
+					{
+						rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+						foreach (PERSON p in personList)
+						{
+							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+							rddlw.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						}
+					}
+
+					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+						item.WITNESS_PERSON = Convert.ToInt32(rddlw.SelectedValue);		
+
 					seqnumber = Convert.ToInt32(lb.Text);
 
 					item.WITNESS_NO = seqnumber;
-					item.WITNESS_NAME = tbw.Text;
 					item.WITNESS_STATEMENT = tbws.Text;
 
 					itemList.Add(item);
@@ -1089,7 +1123,7 @@ namespace SQM.Website
 				var emptyItem = new INCFORM_WITNESS();
 
 				emptyItem.WITNESS_NO = seqnumber + 1;
-				emptyItem.WITNESS_NAME = "";
+				emptyItem.WITNESS_PERSON = null;
 				emptyItem.WITNESS_STATEMENT = "";
 				
 				itemList.Add(emptyItem);
@@ -1108,7 +1142,7 @@ namespace SQM.Website
 				{
 					var item = new INCFORM_WITNESS();
 
-					TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+					RadDropDownList rddlw = (RadDropDownList)witnessitem.FindControl("rddlWitnessName");
 					TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
 
 					Label lb = (Label)witnessitem.FindControl("lbItemSeq");
@@ -1122,7 +1156,7 @@ namespace SQM.Website
 					{
 						seqnumber = seqnumber + 1;
 						item.WITNESS_NO = seqnumber;
-						item.WITNESS_NAME = tbw.Text;
+						item.WITNESS_PERSON = Convert.ToInt32(rddlw.SelectedValue);	
 						item.WITNESS_STATEMENT = tbws.Text;
 						itemList.Add(item);
 					}
@@ -1556,17 +1590,18 @@ namespace SQM.Website
 			{
 				var item = new INCFORM_WITNESS();
 
-				seqnumber = seqnumber + 1;
-	
-				TextBox tbw = (TextBox)witnessitem.FindControl("tbWitnessName");
+				RadDropDownList rddlw = (RadDropDownList)witnessitem.FindControl("rddlWitnessName");
 				TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
 
-				item.WITNESS_NO = seqnumber;
-				item.WITNESS_NAME = tbw.Text;
-				item.WITNESS_STATEMENT = tbws.Text;
+				if (!String.IsNullOrEmpty(rddlw.SelectedValue))
+				{
+					seqnumber = seqnumber + 1;
+					item.WITNESS_NO = seqnumber;
+					item.WITNESS_PERSON = Convert.ToInt32(rddlw.SelectedValue);
+					item.WITNESS_STATEMENT = tbws.Text;
 
-
-				itemList.Add(item);
+					itemList.Add(item);
+				}
 			}
 
 			if (itemList.Count > 0)
@@ -1589,11 +1624,12 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_WITNESS();
 
-				if (!String.IsNullOrEmpty(item.WITNESS_NAME))
+				if (item.WITNESS_PERSON != null)
 				{
 					newItem.INCIDENT_ID = incidentId;
 					newItem.WITNESS_NO = item.WITNESS_NO;
-					newItem.WITNESS_NAME = item.WITNESS_NAME;
+					newItem.WITNESS_PERSON = item.WITNESS_PERSON;
+					//newItem.WITNESS_NAME = item.WITNESS_NAME;
 					newItem.WITNESS_STATEMENT = item.WITNESS_STATEMENT;
 
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;

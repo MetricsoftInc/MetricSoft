@@ -282,7 +282,6 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:Label ID="lbSupervisor" Width="400" runat="server" Height="23" />
-				<%--<asp:TextBox ID="tbSupervisor" Width="278" SkinID="Metro" Enabled="false" runat="server"></asp:TextBox>--%>
 				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="tbSupervisor" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
@@ -311,7 +310,7 @@
 
 				<div class="row text-left">
 
-					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 83px;">
+					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 90px;">
 						<span class="labelMultiLineText">
 							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredCloseStarFloat" runat="server"></asp:Label></span>
 					</div>
@@ -322,10 +321,11 @@
 							<asp:Label ID="lbWitnessColXS" runat="server" Text="Witness "><asp:Label ID="lbItemSeq2" runat="server" /></asp:Label><asp:Label ID="lbRqd2" Text="*" CssClass="requiredCloseStar" runat="server"></asp:Label></span>
 					</div>
 
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:83px;padding-bottom:4px;padding-top:7px;">
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:90px;padding-bottom:4px;padding-top:7px;">
 
-							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label>
-								<asp:TextBox ID="tbWitnessName" Width="50%" SkinID="Metro" runat="server"></asp:TextBox></span>
+							<span style="float:left;padding-right:16px;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label>
+								<telerik:RadDropDownList ID="rddlWitnessName" Skin="Metro" CssClass="WarnIfChanged" DropDownHeight="300" Width="160" runat="server" OnSelectedIndexChanged="rddlWitnessName_SelectedIndexChanged" />
+							</span>
 							
 
 							<%--<br class="visible-xs" />--%>
@@ -333,15 +333,14 @@
 							<span style="float:left; padding-left:10px;"><asp:Label ID="lbWitStmntPrompt" runat="server" Text="Statement:"></asp:Label></span>&nbsp;
 							<br class="visible-xs" />
 
-							<asp:TextBox ID="tbWitnessStatement" Width="40%" Height="65px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+							<asp:TextBox ID="tbWitnessStatement" Width="35%" Height="60px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 
-							<span style="float:right; padding-right:4%;"><telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
-								Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" /></span>
+							<br class="visible-xs" />
+
+							<span style="float:right;padding-right:10px;"><telerik:RadButton ID="btnItemDelete"  CssClass="buttonWrapText" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
+								SingleClick="true" OnClientClicking="DeleteConfirmItem" /></span>
 
 							<br class="visible-xs" style="padding-bottom:3px;" />	
-								
-						<%--<asp:RequiredFieldValidator runat="server" ID="rfvWitnessName" ControlToValidate="tbWitnessName" Display="None" InitialValue="[Select One]" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
-						<%--<asp:RequiredFieldValidator runat="server" ID="rfvWitnessStatement" ControlToValidate="tbWitnessStatement" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 					</div>
 
 				</div>
