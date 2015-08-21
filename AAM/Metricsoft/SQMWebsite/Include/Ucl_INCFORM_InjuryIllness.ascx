@@ -7,6 +7,8 @@
 	<%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="INCFORMApproval" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_INCFORM_LostTime_Hist.ascx" TagName="INCFORMLostTimeHist" TagPrefix="Ucl" %>
 	<%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
+	<%@ Register src="~/Include/Ucl_PersonSearch.ascx" TagName="PersonSearch" TagPrefix="Ucl" %>
+
 
 
 
@@ -221,8 +223,15 @@
 				<span><asp:Label ID="lbInvolvedPersonXS" runat ="server" Text="Involved Person's Name"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbInvolvedPerson" Width="278" SkinID="Metro" runat="server"></asp:TextBox>
-				<asp:RequiredFieldValidator runat="server" ID="rfvInvolvedPerson" ControlToValidate="tbInvolvedPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
+<%--				<telerik:RadAjaxPanel ID="ajx2" runat="server">
+					<span>
+						<Ucl:PersonSearch id="uclPartSearch1" runat="server" />
+							&nbsp;
+						<asp:Label ID="lblPartDesc" runat="server" CssClass="refText"></asp:Label>
+					</span>
+				</telerik:RadAjaxPanel>--%>
+				<telerik:RadDropDownList ID="rddlInvolvedPerson" Skin="Metro" CssClass="WarnIfChanged" DropDownHeight="300" Width="278" runat="server" OnSelectedIndexChanged="rddlInvolvedPerson_SelectedIndexChanged"></telerik:RadDropDownList>
+				<asp:RequiredFieldValidator runat="server" ID="rfvInvolvedPerson" ControlToValidate="rddlInvolvedPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
 
@@ -272,8 +281,9 @@
 				<span><asp:Label ID="lbSupervisorXS" runat ="server" Text="Supervisor's Name"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlSupervisor" Skin="Metro" CssClass="WarnIfChanged" DropDownHeight="300" Width="278" runat="server" OnSelectedIndexChanged="rddlSupervisor_SelectedIndexChanged"></telerik:RadDropDownList>
-				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="rddlSupervisor" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
+				<asp:Label ID="lbSupervisor" Width="400" runat="server" Height="23" />
+				<%--<asp:TextBox ID="tbSupervisor" Width="278" SkinID="Metro" Enabled="false" runat="server"></asp:TextBox>--%>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="tbSupervisor" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
 
@@ -314,7 +324,8 @@
 
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height:83px;padding-bottom:4px;padding-top:7px;">
 
-							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label><asp:TextBox ID="tbWitnessName" Width="50%" SkinID="Metro" runat="server"></asp:TextBox></span>
+							<span style="float:left;"><asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: "></asp:Label>
+								<asp:TextBox ID="tbWitnessName" Width="50%" SkinID="Metro" runat="server"></asp:TextBox></span>
 							
 
 							<%--<br class="visible-xs" />--%>
@@ -450,7 +461,7 @@
 			</div>
 		</div>
 
-		     
+			 
 
 		<%-- HOW LONG DOING TASK question --%>	
 		<div class="row">

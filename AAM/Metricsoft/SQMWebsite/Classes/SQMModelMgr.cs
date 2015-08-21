@@ -896,6 +896,19 @@ namespace SQM.Website
             return personList.Distinct().ToList();
         }
 
+        public static List<PERSON> SelectPlantPersonList(decimal companyID, decimal plantID)
+        {
+            List<PERSON> personList = new List<PERSON>();
+
+            foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
+            {
+ 				if (person.PLANT_ID == plantID)
+					personList.Add(person);
+            }
+
+            return personList;
+        }
+
         public static bool PersonPlantAccess(PERSON person, decimal plantID)
         {
             bool canAccess = person.ROLE <= 100 ||  person.PLANT_ID == plantID ? true : false;    // company admin and person's hr location have access automatically

@@ -215,12 +215,14 @@ namespace SQM.Website
 					
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 					var personList = new List<PERSON>();
-
-					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)
 					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						if (!String.IsNullOrEmpty(p.EMAIL))
+						{
+							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						}
 					}
 
 					if (action.ASSIGNED_PERSON_ID != null)
@@ -360,11 +362,14 @@ namespace SQM.Website
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 
 					var personList = new List<PERSON>();
-					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)
 					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						if (!String.IsNullOrEmpty(p.EMAIL))
+						{
+							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						}
 					}
 
 					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
@@ -416,11 +421,14 @@ namespace SQM.Website
 					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
 
 					var personList = new List<PERSON>();
-					personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)
 					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						if (!String.IsNullOrEmpty(p.EMAIL))
+						{
+							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+						}
 					}
 
 					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))

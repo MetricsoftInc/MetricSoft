@@ -1690,6 +1690,8 @@
     <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
     <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
+    <Content Include="Include\Ucl_PersonList.ascx" />
+    <Content Include="Include\Ucl_PersonSearch.ascx" />
     <Content Include="Include\Ucl_PreventionLocation.ascx" />
     <Content Include="Include\Ucl_RadAsyncUpload.ascx" />
     <Content Include="Include\Ucl_SearchBar.ascx" />
@@ -2140,6 +2142,20 @@
     </Compile>
     <Compile Include="Include\Ucl_PartSearch.ascx.designer.cs">
       <DependentUpon>Ucl_PartSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PersonList.ascx.cs">
+      <DependentUpon>Ucl_PersonList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PersonList.ascx.designer.cs">
+      <DependentUpon>Ucl_PersonList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PersonSearch.ascx.cs">
+      <DependentUpon>Ucl_PersonSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PersonSearch.ascx.designer.cs">
+      <DependentUpon>Ucl_PersonSearch.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_PreventionLocation.ascx.cs">
       <DependentUpon>Ucl_PreventionLocation.ascx</DependentUpon>

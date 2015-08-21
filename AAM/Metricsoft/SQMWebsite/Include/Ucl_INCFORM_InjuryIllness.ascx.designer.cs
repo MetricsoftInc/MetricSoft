@@ -400,13 +400,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbInvolvedPersonXS;
         
         /// <summary>
-        /// tbInvolvedPerson control.
+        /// rddlInvolvedPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInvolvedPerson;
+        protected global::Telerik.Web.UI.RadDropDownList rddlInvolvedPerson;
         
         /// <summary>
         /// rfvInvolvedPerson control.
@@ -490,13 +490,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbSupervisorXS;
         
         /// <summary>
-        /// rddlSupervisor control.
+        /// lbSupervisor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlSupervisor;
+        protected global::System.Web.UI.WebControls.Label lbSupervisor;
         
         /// <summary>
         /// lbSupervisorStatementSM control.

@@ -21,6 +21,7 @@ namespace SQM.Website
 		static List<PERSON> personList;
 
 		protected decimal companyId;
+		protected decimal plantId;
 		protected decimal selectedPlantId = 0;
 		protected AccessMode accessLevel;
 		protected RadDropDownList rddlFilteredUsers;
@@ -140,6 +141,12 @@ namespace SQM.Website
 			set { ViewState["SelectedLocationId"] = value; }
 		}
 
+		protected override void OnInit(EventArgs e)
+		{
+			base.OnInit(e);
+
+			//uclPartSearch1.OnSearchItemSelect += OnPartSelect;
+		}
 		
 		protected void Page_Init(object sender, EventArgs e)
 		{
@@ -211,8 +218,6 @@ namespace SQM.Website
 
 			if (IsEditContext == true)
 			{
-
-				//uploader.GetUploadedFiles(40, EditIncidentId, "1");
 				GetAttachments(EditIncidentId);
 
 				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
@@ -220,9 +225,7 @@ namespace SQM.Website
 
 				if (incident != null)
 				{
-
-					CurrentFormStep = CurrentStep + 1;  // incident.INCFORM_LAST_STEP_COMPLETED;
-
+					CurrentFormStep = CurrentStep + 1;  
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
@@ -230,7 +233,6 @@ namespace SQM.Website
 					rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
 					rdpReportDate.Culture = rdpIncidentDate.Culture;
 					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
-
 
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incident.INCIDENT_DT;
@@ -240,15 +242,14 @@ namespace SQM.Website
 					PopulateLocationDropDown();
 					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
 
-					PopulateSupervisorDropDown();
-					rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
-		
+					PopulateInvolvedPersonDropDown();
+					rddlInvolvedPerson.SelectedValue = Convert.ToString(injuryIllnessDetails.INVOLVED_PERSON_ID);
+
 					PopulateShiftDropDown();
 					PopulateOperationDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
 					PopulateDepartmentDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
-
 
 					if (injuryIllnessDetails != null)
 					{
@@ -260,17 +261,22 @@ namespace SQM.Website
 
 						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						rddlOperation.SelectedValue = injuryIllnessDetails.PLANT_LINE_ID.ToString();
-						tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
+						rddlInvolvedPerson.SelectedValue = injuryIllnessDetails.INVOLVED_PERSON_ID.ToString();
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
-						rddlSupervisor.SelectedValue = Convert.ToString(injuryIllnessDetails.SUPERVISOR_PERSON_ID);
-						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
+						
+						PERSON supv = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.SUPERVISOR_PERSON_ID select p).FirstOrDefault();
+						if (supv != null)
+							lbSupervisor.Text = string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL);
+						else
+							lbSupervisor.Text = "[ supervisor not found ]";
 
 						if (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE")
 							rdoInside.SelectedValue = "1";
 						else
 							rdoInside.SelectedValue = "0";
-						
+
+						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 						rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
 						rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
 						rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
@@ -284,10 +290,8 @@ namespace SQM.Website
 						rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
 						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
-					
 					}
 				}
-
 			}
 			else
 			{
@@ -302,10 +306,9 @@ namespace SQM.Website
 					rddlShift.Items.Clear();
 					rddlDepartment.Items.Clear();
 					rddlOperation.Items.Clear();
-					tbInvolvedPerson.Text = "";
 					tbInvPersonStatement.Text = "";
 					rdpSupvInformedDate.Clear();
-					rddlSupervisor.Items.Clear();
+					lbSupervisor.Text = "";
 					tbSupervisorStatement.Text = "";
 					rdoInside.SelectedValue = "";
 					rdoDirectSupv.SelectedValue = "";
@@ -322,8 +325,6 @@ namespace SQM.Website
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 
-					// ToDo:    clear witness repeater
-
 					CurrentFormStep = 1;
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
@@ -339,9 +340,7 @@ namespace SQM.Website
 
 					PopulateLocationDropDown();
 					PopulateShiftDropDown();
-					//PopulateOperationDropDown(0);
-					//PopulateDepartmentDropDown(0);
-					PopulateSupervisorDropDown();
+					PopulateInvolvedPersonDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 					GetAttachments(0);
@@ -351,26 +350,6 @@ namespace SQM.Website
 			InitializeForm(CurrentStep);
 		}
 
-		private void GetAttachments(decimal incidentId)
-		{
-			uploader.SetAttachmentRecordStep("1");
-			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
-			
-
-			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
-			int px = 128;
-
-			if (attCnt > 0)
-			{
-				px = px + (attCnt * 30) + 35;
-				uploader.GetUploadedFiles(40, incidentId, "1");
-			}
-
-			// Set the html Div height based on number of attachments to be displayed in the grid:
-			dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
-			dvAttach.Style.Add("height", px.ToString() + "px !important");
-		}
 
 		void InitializeForm(int currentStep)
 		{
@@ -602,7 +581,7 @@ namespace SQM.Website
 					//rddlOperation.Enabled = UpdateAccess;
 					//rfvOperation.Enabled = UpdateAccess;
 
-					tbInvolvedPerson.Enabled = UpdateAccess;
+					rddlInvolvedPerson.Enabled = UpdateAccess;
 					rfvInvolvedPerson.Enabled = UpdateAccess;
 
 					tbInvPersonStatement.Enabled = UpdateAccess;
@@ -611,10 +590,10 @@ namespace SQM.Website
 					rdpSupvInformedDate.Enabled = UpdateAccess;
 					//rfvSupvInformedDate.Enabled = UpdateAccess;
 
-					rddlSupervisor.Enabled = UpdateAccess;
+					//rddlSupervisor.Enabled = UpdateAccess;
 					//rfvSupervisor.Enabled = UpdateAccess;
 
-					tbSupervisorStatement.Enabled = UpdateAccess;
+					//tbSupervisorStatement.Enabled = UpdateAccess;
 					//rfvSupervisorStatement.Enabled = UpdateAccess;
 
 					rdoInside.Enabled = UpdateAccess;
@@ -707,10 +686,10 @@ namespace SQM.Website
 		{
 			List<EHSMetaData> shifts = EHSMetaDataMgr.SelectMetaDataList("SHIFT");
 
-			rddlShift.Items.Add(new DropDownListItem("[Select One]", ""));
-
 			if (shifts != null && shifts.Count > 0)
 			{
+				rddlShift.Items.Add(new DropDownListItem("[Select One]", ""));
+
 				foreach (var s in shifts)
 				{
 					{
@@ -733,10 +712,10 @@ namespace SQM.Website
 				PSsqmEntities entities = new PSsqmEntities();
 				List<PLANT_LINE> ops = SQMModelMgr.SelectPlantLineList(entities, plantId);
 
-				rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
-
 				if (ops != null && ops.Count > 0)
 				{
+					rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
+		
 					foreach (var s in ops)
 					{
 						{
@@ -768,10 +747,10 @@ namespace SQM.Website
 				PSsqmEntities entities = new PSsqmEntities();
 				List<DEPARTMENT> depts = SQMModelMgr.SelectDepartmentList(entities, plantId);
 
-				rddlDepartment.Items.Add(new DropDownListItem("[Select One]", ""));
-
 				if (depts != null && depts.Count > 0)
 				{
+					rddlDepartment.Items.Add(new DropDownListItem("[Select One]", ""));
+		
 					foreach (var s in depts)
 					{
 						{
@@ -799,10 +778,10 @@ namespace SQM.Website
 		{
 			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
 
-			rddlInjuryType.Items.Add(new DropDownListItem("[Select One]", ""));
-
 			if (injtype != null && injtype.Count > 0)
 			{
+				rddlInjuryType.Items.Add(new DropDownListItem("[Select One]", ""));	
+
 				foreach (var s in injtype)
 				{
 					{
@@ -820,10 +799,10 @@ namespace SQM.Website
 		{
 			List<EHSMetaData> parts = EHSMetaDataMgr.SelectMetaDataList("INJURY_PART");
 
-			rddlBodyPart.Items.Add(new DropDownListItem("[Select One]", ""));
-
 			if (parts != null && parts.Count > 0)
 			{
+				rddlBodyPart.Items.Add(new DropDownListItem("[Select One]", ""));
+
 				foreach (var s in parts)
 				{
 					{
@@ -836,16 +815,42 @@ namespace SQM.Website
 			rddlBodyPart.AutoPostBack = true;
 		}
 
-		void PopulateSupervisorDropDown()
+
+
+		void PopulateInvolvedPersonDropDown()
 		{
-			rddlSupervisor.Items.Add(new DropDownListItem("[Select One]", ""));
+
 			var personList = new List<PERSON>();
-			personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-			foreach (PERSON p in personList)
+			personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+
+			if (personList != null && personList.Count > 0)
 			{
-				string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-				rddlSupervisor.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+				rddlInvolvedPerson.Items.Add(new DropDownListItem("[Select One]", ""));
+
+				foreach (PERSON p in personList)
+				{
+					string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+					rddlInvolvedPerson.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+					
+				}
 			}
+
+			rddlInvolvedPerson.SelectedIndexChanged += rddlInvolvedPerson_SelectedIndexChanged;
+			rddlInvolvedPerson.AutoPostBack = true;
+
+		}
+
+		PERSON GetSupervisor(decimal invPersonId)
+		{
+
+			PSsqmEntities entities = new PSsqmEntities();
+			var empID = (from p in entities.PERSON where p.PERSON_ID == invPersonId select p.SUPV_EMP_ID).FirstOrDefault();		
+
+			var supv = new PERSON();
+			supv = SQMModelMgr.LookupPersonByEmpID(entities, empID);
+
+			return supv;
+
 		}
 
 
@@ -876,9 +881,18 @@ namespace SQM.Website
 			BuildFilteredUsersDropdownList();
 		}
 
-		protected void rddlSupervisor_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+		protected void rddlInvolvedPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
-			// Add JobCode and any other related logic
+			RadDropDownList rddli = (RadDropDownList)sender;
+			decimal invPrsnId = Convert.ToInt32(rddli.SelectedValue);	
+		
+			PERSON supv = (PERSON)GetSupervisor(invPrsnId);
+
+			if (supv != null)
+				lbSupervisor.Text = string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL);
+			else
+				lbSupervisor.Text = "[ supervisor not found ]";
+
 		}
 
 		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
@@ -949,6 +963,28 @@ namespace SQM.Website
 
 			PopulateOperationDropDown(SelectedLocationId);
 			PopulateDepartmentDropDown(SelectedLocationId);
+		}
+
+
+		private void GetAttachments(decimal incidentId)
+		{
+			uploader.SetAttachmentRecordStep("1");
+			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
+
+
+			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
+			int px = 128;
+
+			if (attCnt > 0)
+			{
+				px = px + (attCnt * 30) + 35;
+				uploader.GetUploadedFiles(40, incidentId, "1");
+			}
+
+			// Set the html Div height based on number of attachments to be displayed in the grid:
+			dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+			dvAttach.Style.Add("height", px.ToString() + "px !important");
 		}
 
 
@@ -1337,7 +1373,7 @@ namespace SQM.Website
 				theIncident = CreateNewIncident();
 				incidentId = theIncident.INCIDENT_ID;
 				theincidentId = theIncident.INCIDENT_ID;
-				//thePowerOutageForm = CreateNewPowerOutageDetails(incidentId);
+
 				theInjuryIllnessForm = CreateNewInjuryIllnessDetails(incidentId);
 				SaveAttachments(incidentId);
 
@@ -1440,17 +1476,20 @@ namespace SQM.Website
 			newInjryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
 			newInjryIllnessDetails.OPERATION = "";
 
-			newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
-			
-			if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
-				newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+			if (!String.IsNullOrEmpty(rddlInvolvedPerson.SelectedValue))
+			{
+				newInjryIllnessDetails.INVOLVED_PERSON_ID = Convert.ToInt32(rddlInvolvedPerson.SelectedValue);
+
+				PERSON supv = (PERSON)GetSupervisor(Convert.ToInt32(rddlInvolvedPerson.SelectedValue));
+				if (supv != null)
+					newInjryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
+			}
+
+			newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
 			if (rdpSupvInformedDate.SelectedDate != null)
 				newInjryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
-
-			if (!String.IsNullOrEmpty(rddlSupervisor.SelectedValue))
-				newInjryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
-
+			
 			if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
 				newInjryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
@@ -1612,7 +1651,6 @@ namespace SQM.Website
 
 			if (injuryIllnessDetails != null)
 			{
-				//injuryIllnessDetails.PRODUCTION_IMPACT = productImpact;
 				injuryIllnessDetails.SHIFT = selectedShift;
 				injuryIllnessDetails.INCIDENT_TIME = incidentTime;
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
@@ -1624,17 +1662,23 @@ namespace SQM.Website
 				injuryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
 				injuryIllnessDetails.OPERATION = "";
 
-				injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text;
-
 				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
 					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
 				if (rdpSupvInformedDate.SelectedDate != null)
 					injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
 
-				if (!String.IsNullOrEmpty(rddlSupervisor.SelectedValue))
-					injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
+				if (!String.IsNullOrEmpty(rddlInvolvedPerson.SelectedValue))
+				{
+					injuryIllnessDetails.INVOLVED_PERSON_ID = Convert.ToInt32(rddlInvolvedPerson.SelectedValue);
 
+					PERSON supv = (PERSON)GetSupervisor(Convert.ToInt32(rddlInvolvedPerson.SelectedValue));
+					if (supv != null)
+						injuryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
+				}
+
+				injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
+				
 				if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
 					injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
@@ -1682,35 +1726,9 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(rddlBodyPart.SelectedValue))
 					injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
 
-				//injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
-				//injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
-				//injuryIllnessDetails.SUPERVISOR_PERSON_ID = Convert.ToInt32(rddlSupervisor.SelectedValue);
-				//injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
-
-				//if (rdoInside.SelectedValue == "1")
-				//	injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
-				//else
-				//	injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
-				//injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
-				//injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
-				//injuryIllnessDetails.STD_PROCS_FOLLOWED = Convert.ToBoolean((Convert.ToInt32(rdoStdProcsFollowed.SelectedValue)));
-				//injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
-				//injuryIllnessDetails.YEARS_DOING_JOB = Convert.ToInt32(tbTaskYears.Text);
-				//injuryIllnessDetails.MONTHS_DOING_JOB = Convert.ToInt32(tbTaskMonths.Text);
-				//injuryIllnessDetails.DAYS_DOING_JOB = Convert.ToInt32(tbTaskDays.Text);
-				//injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
-				//injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
-				//injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
-				//injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
-				//injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
-				//injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
-
 				entities.SaveChanges();
-
 				AddUpdate_Witnesses(incidentId);
-
 			}
-
 			return injuryIllnessDetails;
 		}
 
@@ -1754,22 +1772,48 @@ namespace SQM.Website
 			if (rdoLostTime.SelectedValue == "1")
 			{
 				pnlExpReturnDT.Visible = true;
-				//rfvExpectReturnDT.Enabled = true;
 			}
 			else
 			{
 				pnlExpReturnDT.Visible = false;
-				//rfvExpectReturnDT.Enabled = false;
 			}
-
 
 			// By re-executinging PopulateInitialForm() we can force a re-calculation 
 			// of the form steps needed for this incident since the GetFormSteps()
 			// method checks the Lost Time control's SelectedValue state.	
-			
+	
 			PopulateInitialForm();
 
 		}
 
+		private void OnPartSelect(string partID)
+		{
+			//PART part = SQMModelMgr.LookupPart(new PSsqmEntities(), Convert.ToDecimal(partID), "", SessionManager.PrimaryCompany().COMPANY_ID, false);
+			//if (part != null)
+			//{
+			//	IssueCtl().qualityIssue.IssueOccur.PART_ID = part.PART_ID;
+			//	PartData partData = SQMModelMgr.LookupPartData(new PSsqmEntities(), SessionManager.PrimaryCompany().COMPANY_ID, part.PART_ID);
+			//	partData.Locations();
+			//	IssueCtl().qualityIssue.AddPartInfo(partData);
+			//	lblPartDesc.Text = part.PART_NAME;
+			//	ddlResponsibleLocation.Items.Clear();
+			//	ddlResponsibleLocation.Items.Add(new RadComboBoxItem(IssueCtl().qualityIssue.DetectedLocation.Company.COMPANY_NAME + ", " + IssueCtl().qualityIssue.DetectedLocation.Plant.PLANT_NAME, IssueCtl().qualityIssue.DetectedLocation.Plant.PLANT_ID.ToString()));
+			//	if (IssueCtl().qualityIssue.Partdata.B2BList != null)
+			//	{
+			//		foreach (BusinessLocation location in IssueCtl().qualityIssue.Partdata.B2BList)
+			//		{
+			//			if (ddlResponsibleLocation.Items.FindItemByValue(location.Plant.PLANT_ID.ToString()) == null)
+			//				ddlResponsibleLocation.Items.Add(new RadComboBoxItem(location.Company.COMPANY_NAME + ", " + location.Plant.PLANT_NAME, location.Plant.PLANT_ID.ToString()));
+			//		}
+			//		if (IssueCtl().qualityIssue.Incident.RESP_PLANT_ID.HasValue)
+			//			ddlResponsibleLocation.SelectedValue = IssueCtl().qualityIssue.Incident.RESP_PLANT_ID.ToString();
+			//		else if (ddlResponsibleLocation.Items.Count > 0)
+			//			ddlResponsibleLocation.SelectedIndex = 0;
+
+			//		GetResponsibleList();
+			//	}
+			//	updResponsible.Update();
+			//}
+		}
 	}
 }
