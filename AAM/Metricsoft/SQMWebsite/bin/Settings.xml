@@ -31,6 +31,11 @@
     <xlat code="N" short="Data Incomplete" long="Data Incomplete"/>
     <xlat code="C8" short="8D Complete" long="8D Complete"/>
   </incidentStatus>
+  <auditStatus>
+	<xlat code="A" short="Open" long="Open"/>
+	<xlat code="I" short="In Progress" long="In Progress"/>
+	<xlat code="C" short="Closed" long="Closed"/>
+  </auditStatus>
 	<effDates>
 		<xlat code="MIN" short="01/01/1900" long="01/01/1900"/>
 		<xlat code="MAX" short="01/01/3000" long="01/01/3000"/>

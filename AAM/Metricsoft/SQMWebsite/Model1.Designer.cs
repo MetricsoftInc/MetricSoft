@@ -4560,7 +4560,9 @@ namespace SQM.Website
         /// <param name="aUDIT_TYPE">Initial value of the AUDIT_TYPE property.</param>
         /// <param name="aUDIT_DT">Initial value of the AUDIT_DT property.</param>
         /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
-        public static AUDIT CreateAUDIT(global::System.Decimal aUDIT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String aUDIT_TYPE, global::System.DateTime aUDIT_DT, global::System.Decimal aUDIT_TYPE_ID)
+        /// <param name="pERCENT_COMPLETE">Initial value of the PERCENT_COMPLETE property.</param>
+        /// <param name="tOTAL_SCORE">Initial value of the TOTAL_SCORE property.</param>
+        public static AUDIT CreateAUDIT(global::System.Decimal aUDIT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String aUDIT_TYPE, global::System.DateTime aUDIT_DT, global::System.Decimal aUDIT_TYPE_ID, global::System.Decimal pERCENT_COMPLETE, global::System.Decimal tOTAL_SCORE)
         {
             AUDIT aUDIT = new AUDIT();
             aUDIT.AUDIT_ID = aUDIT_ID;
@@ -4568,6 +4570,8 @@ namespace SQM.Website
             aUDIT.AUDIT_TYPE = aUDIT_TYPE;
             aUDIT.AUDIT_DT = aUDIT_DT;
             aUDIT.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
+            aUDIT.PERCENT_COMPLETE = pERCENT_COMPLETE;
+            aUDIT.TOTAL_SCORE = tOTAL_SCORE;
             return aUDIT;
         }
 
@@ -4961,6 +4965,78 @@ namespace SQM.Website
         private global::System.Decimal _AUDIT_TYPE_ID;
         partial void OnAUDIT_TYPE_IDChanging(global::System.Decimal value);
         partial void OnAUDIT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal PERCENT_COMPLETE
+        {
+            get
+            {
+                return _PERCENT_COMPLETE;
+            }
+            set
+            {
+                OnPERCENT_COMPLETEChanging(value);
+                ReportPropertyChanging("PERCENT_COMPLETE");
+                _PERCENT_COMPLETE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERCENT_COMPLETE");
+                OnPERCENT_COMPLETEChanged();
+            }
+        }
+        private global::System.Decimal _PERCENT_COMPLETE;
+        partial void OnPERCENT_COMPLETEChanging(global::System.Decimal value);
+        partial void OnPERCENT_COMPLETEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CURRENT_STATUS
+        {
+            get
+            {
+                return _CURRENT_STATUS;
+            }
+            set
+            {
+                OnCURRENT_STATUSChanging(value);
+                ReportPropertyChanging("CURRENT_STATUS");
+                _CURRENT_STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CURRENT_STATUS");
+                OnCURRENT_STATUSChanged();
+            }
+        }
+        private global::System.String _CURRENT_STATUS;
+        partial void OnCURRENT_STATUSChanging(global::System.String value);
+        partial void OnCURRENT_STATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TOTAL_SCORE
+        {
+            get
+            {
+                return _TOTAL_SCORE;
+            }
+            set
+            {
+                OnTOTAL_SCOREChanging(value);
+                ReportPropertyChanging("TOTAL_SCORE");
+                _TOTAL_SCORE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TOTAL_SCORE");
+                OnTOTAL_SCOREChanged();
+            }
+        }
+        private global::System.Decimal _TOTAL_SCORE;
+        partial void OnTOTAL_SCOREChanging(global::System.Decimal value);
+        partial void OnTOTAL_SCOREChanged();
 
         #endregion
 
