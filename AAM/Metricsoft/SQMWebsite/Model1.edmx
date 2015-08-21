@@ -195,6 +195,10 @@ warning 6002: The table/view 'AAM.dbo.AUDIT_SCHEDULER' does not have a primary k
           <Property Name="PLANT_ID" Type="numeric" Precision="35" Scale="0" />
           <Property Name="JOBCODE_CD" Type="varchar" MaxLength="80" />
           <Property Name="INACTIVE" Type="bit" Nullable="false" />
+          <Property Name="CREATE_PERSON" Type="numeric" Precision="35" Scale="0" />
+          <Property Name="CREATE_DT" Type="datetime" />
+          <Property Name="UPDATE_PERSON" Type="numeric" Precision="35" Scale="0" />
+          <Property Name="UPDATE_DT" Type="datetime" />
         </EntityType>
         <EntityType Name="AUDIT_TOPIC">
           <Key>
@@ -3674,7 +3678,11 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
 [AUDIT_SCHEDULER].[AUDIT_TYPE_ID] AS [AUDIT_TYPE_ID], 
 [AUDIT_SCHEDULER].[PLANT_ID] AS [PLANT_ID], 
 [AUDIT_SCHEDULER].[JOBCODE_CD] AS [JOBCODE_CD], 
-[AUDIT_SCHEDULER].[INACTIVE] AS [INACTIVE]
+[AUDIT_SCHEDULER].[INACTIVE] AS [INACTIVE], 
+[AUDIT_SCHEDULER].[CREATE_PERSON] AS [CREATE_PERSON], 
+[AUDIT_SCHEDULER].[CREATE_DT] AS [CREATE_DT], 
+[AUDIT_SCHEDULER].[UPDATE_PERSON] AS [UPDATE_PERSON], 
+[AUDIT_SCHEDULER].[UPDATE_DT] AS [UPDATE_DT]
 FROM [dbo].[AUDIT_SCHEDULER] AS [AUDIT_SCHEDULER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UOM_XREF" EntityType="Self.UOM_XREF" store:Type="Tables" store:Schema="dbo">
@@ -8863,6 +8871,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="PLANT_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="JOBCODE_CD" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="INACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="CREATE_PERSON" Type="Decimal" Precision="35" Scale="0" />
+          <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+          <Property Name="UPDATE_PERSON" Type="Decimal" Precision="35" Scale="0" />
+          <Property Name="UPDATE_DT" Type="DateTime" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -10877,6 +10889,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="AUDIT_SCHEDULER">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT_SCHEDULER">
               <MappingFragment StoreEntitySet="AUDIT_SCHEDULER">
+                <ScalarProperty Name="UPDATE_DT" ColumnName="UPDATE_DT" />
+                <ScalarProperty Name="UPDATE_PERSON" ColumnName="UPDATE_PERSON" />
+                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+                <ScalarProperty Name="CREATE_PERSON" ColumnName="CREATE_PERSON" />
                 <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
                 <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
                 <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />

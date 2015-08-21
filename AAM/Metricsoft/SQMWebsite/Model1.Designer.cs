@@ -6911,6 +6911,102 @@ namespace SQM.Website
         private global::System.Boolean _INACTIVE;
         partial void OnINACTIVEChanging(global::System.Boolean value);
         partial void OnINACTIVEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CREATE_PERSON
+        {
+            get
+            {
+                return _CREATE_PERSON;
+            }
+            set
+            {
+                OnCREATE_PERSONChanging(value);
+                ReportPropertyChanging("CREATE_PERSON");
+                _CREATE_PERSON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_PERSON");
+                OnCREATE_PERSONChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CREATE_PERSON;
+        partial void OnCREATE_PERSONChanging(Nullable<global::System.Decimal> value);
+        partial void OnCREATE_PERSONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UPDATE_PERSON
+        {
+            get
+            {
+                return _UPDATE_PERSON;
+            }
+            set
+            {
+                OnUPDATE_PERSONChanging(value);
+                ReportPropertyChanging("UPDATE_PERSON");
+                _UPDATE_PERSON = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UPDATE_PERSON");
+                OnUPDATE_PERSONChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UPDATE_PERSON;
+        partial void OnUPDATE_PERSONChanging(Nullable<global::System.Decimal> value);
+        partial void OnUPDATE_PERSONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> UPDATE_DT
+        {
+            get
+            {
+                return _UPDATE_DT;
+            }
+            set
+            {
+                OnUPDATE_DTChanging(value);
+                ReportPropertyChanging("UPDATE_DT");
+                _UPDATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UPDATE_DT");
+                OnUPDATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _UPDATE_DT;
+        partial void OnUPDATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnUPDATE_DTChanged();
 
         #endregion
 
