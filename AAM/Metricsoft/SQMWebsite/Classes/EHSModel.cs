@@ -841,6 +841,10 @@ namespace SQM.Website
 
             try
             {
+				if (theProfile.Profile.EntityState == EntityState.Detached || theProfile.Profile.EntityState == EntityState.Added)
+				{
+					theProfile.Entities.AddToEHS_PROFILE(theProfile.Profile);
+				}
                 theProfile.Profile = (EHS_PROFILE)SQMModelMgr.SetObjectTimestamp(theProfile.Profile, SessionManager.UserContext.UserName(), theProfile.Profile.EntityState);
                 /*
                 for (int n = 0; n < theProfile.Profile.EHS_PROFILE_MEASURE.Count; n++ )

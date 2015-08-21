@@ -59,7 +59,7 @@ namespace SQM.Website
             ToggleVisible(pnlProfileSelectHdr);
 
             List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(companyID, busOrgID, true).Where(l => l.Plant.TRACK_EW_DATA == true).ToList();
-            locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
+            locationList = UserContext.FilterPlantAccessList(locationList);
 
             if (showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1)
             {

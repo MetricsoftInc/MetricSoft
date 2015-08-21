@@ -40,7 +40,7 @@ namespace SQM.Website
 
                 uclSearchBar.SetButtonsVisible(false, false, false, false, false, false);
                 uclSearchBar.PageTitle.Text = lblTitle.Text;
-                btnMetricSave.Enabled = lnkMeasureAdd.Enabled = btnMetricCancel.Enabled = UserContext.CheckAccess("EHS", "311") >= AccessMode.Plant ? true : false; 
+				btnMetricSave.Enabled = lnkMeasureAdd.Enabled = btnMetricCancel.Enabled = UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata);
             }
         }
 
@@ -55,11 +55,12 @@ namespace SQM.Website
             {
                 List<BusinessLocation> locationList = new List<BusinessLocation>();
                 locationList.Add(new BusinessLocation().Initialize(plantID));
-                List<PERSON> responsibleList = SQMModelMgr.SelectPlantPersonList(locationList, "311", AccessMode.Update);
-                   
-                SQMBasePage.SetPersonList(ddlMetricResponsible, responsibleList, "");
-                SQMBasePage.SetPersonList(ddlFinalApprover, responsibleList.Where(l => l.ROLE < SessionManager.AccessModeRoleXREF(AccessMode.Update)).ToList(), "");
-                    
+
+				List<PERSON> responsibleList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.approve, SysScope.envdata, plant.PLANT_ID);
+				responsibleList.AddRange(SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0));  // append any system administrators to the approval list
+				SQMBasePage.SetPersonList(ddlFinalApprover, responsibleList, "", true);
+				SQMBasePage.SetPersonList(ddlMetricResponsible, SQMModelMgr.SelectPrivGroupPersonList(SysPriv.originate, SysScope.envdata, plant.PLANT_ID), "", true);
+      
                 LoadPlantProfile(plant);
 
                 if (LocalProfile() != null && (LocalProfile().Profile.EHS_PROFILE_MEASURE == null || LocalProfile().Profile.EHS_PROFILE_MEASURE.Count == 0))
@@ -69,15 +70,9 @@ namespace SQM.Website
                         List<EHS_PROFILE> profileList = EHSModel.SelectPlantProfileList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID);
                         SQMBasePage.SetLocationList(ddlCopyProfile, SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true).Where(l => profileList.Select(p => p.PLANT_ID).ToArray().Contains(l.Plant.PLANT_ID)).ToList(), 0);
                         ddlCopyProfile.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("", ""));
-                        responsibleList = SQMModelMgr.SelectPersonList((decimal)plant.COMPANY_ID, (decimal)plant.BUS_ORG_ID, true, false).Where(p => p.ROLE >= SessionManager.AccessModeRoleXREF(AccessMode.Admin) && p.ROLE < SessionManager.AccessModeRoleXREF(AccessMode.View)).OrderBy(l => l.LAST_NAME).ToList();
-                        ddlDefaultResponsible.Items.Clear();
-                        foreach (PERSON person in responsibleList)
-                        {
-                            if (SQMModelMgr.PersonPlantAccess(person, plant.PLANT_ID))
-                            {
-                                ddlDefaultResponsible.Items.Add(new Telerik.Web.UI.RadComboBoxItem(SQMModelMgr.FormatPersonListItem(person), person.PERSON_ID.ToString()));
-                            }
-                        }
+
+						responsibleList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.originate, SysScope.envdata, plant.PLANT_ID);
+						SQMBasePage.SetPersonList(ddlDefaultResponsible, responsibleList, "");
                         ddlDefaultResponsible.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("", ""));
                         pnlCopyProfile.Visible = true;
                     }
@@ -142,7 +137,7 @@ namespace SQM.Website
                     ddlMetricCurrency.SelectedValue = LocalProfile().Plant.CURRENCY_CODE;
 
                 pnlMetricEdit.Enabled = btnMetricCancel.Enabled = btnMetricSave.Enabled = false;
-                lnkMeasureAdd.Enabled = btnMetricSave.Enabled = UserContext.CheckAccess("EHS", "311") >= AccessMode.Plant ? true : false; 
+				lnkMeasureAdd.Enabled = btnMetricSave.Enabled = UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata); 
 
                 UpdateMetricList(profile);
 
@@ -195,7 +190,7 @@ namespace SQM.Website
                 ddlMetricCost.Items.AddRange(WebSiteCommon.PopulateDropDownListItems("costType", "long"));
                 ddlMetricCost.Items.Insert(0, "");
 
-                if (UserContext.CheckAccess("EHS", "") >= AccessMode.Admin)
+                if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata))
                     ddlMetricStatus.Items.AddRange(WebSiteCommon.PopulateDropDownListItems("statusCodeDelete"));
                 else
                     ddlMetricStatus.Items.AddRange(WebSiteCommon.PopulateDropDownListItems("statusCode"));
@@ -327,10 +322,7 @@ namespace SQM.Website
         {
             DropDownList ddlSender = (DropDownList)sender;
             string key = ddlSender.SelectedValue;
-            bool enableDefaults = false;
-            SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTDEFAULT");
-            if (sets != null && sets.VALUE.ToUpper() == "Y")
-                enableDefaults = true;
+            bool enableDefaults = true;
 
             ddlMetricID.Enabled = ddlMetricResponsible.Enabled = true;
             // disable country waste code for non-waste measure categories
@@ -395,6 +387,7 @@ namespace SQM.Website
                     tdRegStatus.Attributes.Remove("Class");
                     ddlMetricDisposalCode.Visible = ddlMetricRegStatus.Visible = tbWasteCode.Visible = false;
                     tdRegStatusHdr.Visible = tdWasteCodeHdr.Visible = tdDisposalHdr.Visible = false;
+					phMetricExt.Visible = enableDefaults;
                     break;
                 default:        // wastes
                     phMetricExt.Visible = enableDefaults;
@@ -619,7 +612,7 @@ namespace SQM.Website
             }
 
             UpdateListTitles();
-            pnlMetricEdit.Enabled = btnMetricCancel.Enabled = btnMetricSave.Enabled = UserContext.CheckAccess("EHS", "311") >= AccessMode.Plant ? true : false;
+			pnlMetricEdit.Enabled = btnMetricCancel.Enabled = btnMetricSave.Enabled = UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata);
 
             string script = "function f(){OpenMetricEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);

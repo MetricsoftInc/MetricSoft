@@ -532,25 +532,9 @@ namespace SQM.Website
 				personList = (from p in ctx.PERSON
 							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD
 							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where (j.JOBCODE_CD == p.JOBCODE_CD && v.PRIV == (int)priv && v.SCOPE == privScope && (plantID == 0 || p.PLANT_ID == plantID))
-									&& (!activeOnly || p.STATUS == "A")
-							  select p).ToList();
-			}
-
-			return personList;
-		}
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope, decimal[] plantIDList, bool activeOnly)
-		{
-			List<PERSON> personList = new List<PERSON>();
-
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				string privScope = scope.ToString();
-				int[] privs = Array.ConvertAll(privList, value => (int)value);
-				personList = (from p in ctx.PERSON
-							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD
-							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where (j.JOBCODE_CD == p.JOBCODE_CD && privs.Contains(v.PRIV) && v.SCOPE == privScope  &&  (plantIDList.Count() == 0  ||  plantIDList.Contains(p.PLANT_ID)))
+							  where j.JOBCODE_CD == p.JOBCODE_CD 
+									&& (v.PRIV == (int)priv && v.SCOPE == privScope) 
+									&& (plantID == 0 || p.PLANT_ID == plantID)
 									&& (!activeOnly || p.STATUS == "A")
 							  select p).ToList();
 			}
@@ -745,11 +729,20 @@ namespace SQM.Website
 
         public static string FormatPersonListItem(PERSON person)
         {
-            if (person != null)
-                return (person.LAST_NAME + ", " + person.FIRST_NAME);
-            else
-                return "";
+			return FormatPersonListItem(person, false);
         }
+		public static string FormatPersonListItem(PERSON person, bool fullName)
+		{
+			if (person != null)
+			{
+				if (fullName)
+					return (person.FIRST_NAME + " " + person.MIDDLE_NAME + " " + person.LAST_NAME);
+				else
+					return (person.LAST_NAME + ", " + person.FIRST_NAME);
+			}
+			else
+				return "";
+		}
 
         public static bool CheckProductModuleAccess(PERSON person, string module)
         {

@@ -153,7 +153,7 @@
                                 </td>
                                 <td class="required">&nbsp;</td>
                                 <td CLASS="tableDataAlt">
-                                    <asp:DropDownList ID="ddlFinalApprover" runat="server" CssClass="WarnIfChanged" onchange="ProfileChanged(this);"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddlFinalApprover" runat="server" CssClass="WarnIfChanged" Width="250" onchange="ProfileChanged(this);"></asp:DropDownList>
                                 </td>
                             </tr>
                             <asp:PlaceHolder ID="phNormFact" runat="server">
@@ -229,7 +229,7 @@
                                                 </td>
                                                 <td class="required">&nbsp;</td>
                                                 <td class="tableDataAlt">
-                                                    <asp:DropDownList ID="ddlMetricResponsible" runat="server" CssClass="WarnIfChanged"></asp:DropDownList>
+                                                    <asp:DropDownList ID="ddlMetricResponsible" runat="server" CssClass="WarnIfChanged" Width="250"></asp:DropDownList>
                                                 </td>
                                             </tr>
                                             <asp:PlaceHolder ID="phCostWaste" runat="server">

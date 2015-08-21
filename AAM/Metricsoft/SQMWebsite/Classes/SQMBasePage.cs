@@ -245,13 +245,13 @@ namespace SQM.Website
                 ddl.SelectedValue = defaultCode;
         }
 
-        public static DropDownList SetPersonList(DropDownList ddl, List<PERSON> personSelectList, string personID)
+        public static DropDownList SetPersonList(DropDownList ddl, List<PERSON> personSelectList, string personID, bool fullName)
         {
             ddl.Items.Clear();
             ListItem item = null;
             foreach (PERSON person in personSelectList)
             {
-                item = new ListItem(SQMModelMgr.FormatPersonListItem(person), person.PERSON_ID.ToString());
+                item = new ListItem(SQMModelMgr.FormatPersonListItem(person, fullName), person.PERSON_ID.ToString());
                 ddl.Items.Add(item);
             }
      
@@ -267,16 +267,19 @@ namespace SQM.Website
 
         public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID)
         {
-            return SetPersonList(ddl, personSelectList, personID, 0);
+            return SetPersonList(ddl, personSelectList, personID, 0, false);
         }
-
-        public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit)
+		public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit)
+		{
+			return SetPersonList(ddl, personSelectList, personID, rowLimit, false);
+		}
+        public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit, bool fullName)
         {
             ddl.Items.Clear();
             RadComboBoxItem item = null;
             foreach (PERSON person in personSelectList)
             {
-                item = new RadComboBoxItem(SQMModelMgr.FormatPersonListItem(person), person.PERSON_ID.ToString());
+                item = new RadComboBoxItem(SQMModelMgr.FormatPersonListItem(person, fullName), person.PERSON_ID.ToString());
                 item.ToolTip = person.EMAIL;
                 if (ddl.CheckBoxes)
                 {

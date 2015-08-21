@@ -979,6 +979,18 @@ namespace SQM.Website
 			return access;
 		}
 
+
+		public static List<BusinessLocation> FilterPlantAccessList(List<BusinessLocation> locList)
+		{
+			for (int n = locList.Count - 1; n >= 0; n--)
+			{
+				if (CheckPlantAdmin(locList[n].Plant.PLANT_ID) == false)
+					locList.RemoveAt(n);
+			}
+
+			return locList;
+		}
+
 		public static List<BusinessLocation> FilterPlantAccessList(List<BusinessLocation> locList, string prod, string topic)
 		{
 			for (int n = locList.Count - 1; n >= 0; n--)
@@ -996,6 +1008,15 @@ namespace SQM.Website
 
 			AccessMode mode = CheckAccess(prod, topic);
 			if (mode >= AccessMode.Admin || SessionManager.PlantAccess(plantID))
+				access = true;
+
+			return access;
+		}
+
+		public static bool CheckPlantAdmin(decimal plantID)
+		{
+			bool access = false;
+			if (CheckUserPrivilege(SysPriv.admin, SysScope.system) || SessionManager.PlantAccess(plantID))
 				access = true;
 
 			return access;
