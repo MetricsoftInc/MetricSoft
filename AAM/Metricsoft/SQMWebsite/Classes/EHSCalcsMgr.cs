@@ -1048,7 +1048,7 @@ namespace SQM.Website
 										Plant = p,
 										Person = r,
 										AuditType = t
-									}).ToList();
+									}).OrderByDescending(l => l.Audit.AUDIT_DT).ToList();
 
 				if (this.AuditHst != null)
 				{

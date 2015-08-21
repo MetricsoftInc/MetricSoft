@@ -34,7 +34,6 @@ namespace SQM.Website
 		}
 
 		protected AccessMode accessLevel;
-		decimal companyId;
 
 		protected override void OnInit(EventArgs e)
 		{
@@ -44,7 +43,6 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);

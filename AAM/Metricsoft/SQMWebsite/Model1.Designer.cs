@@ -2210,6 +2210,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<AUDIT_QUESTION_LANG> _AUDIT_QUESTION_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_SCHEDULER> AUDIT_SCHEDULER
+        {
+            get
+            {
+                if ((_AUDIT_SCHEDULER == null))
+                {
+                    _AUDIT_SCHEDULER = base.CreateObjectSet<AUDIT_SCHEDULER>("AUDIT_SCHEDULER");
+                }
+                return _AUDIT_SCHEDULER;
+            }
+        }
+        private ObjectSet<AUDIT_SCHEDULER> _AUDIT_SCHEDULER;
 
         #endregion
 
@@ -3213,6 +3229,14 @@ namespace SQM.Website
         public void AddToAUDIT_QUESTION_LANG(AUDIT_QUESTION_LANG aUDIT_QUESTION_LANG)
         {
             base.AddObject("AUDIT_QUESTION_LANG", aUDIT_QUESTION_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_SCHEDULER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_SCHEDULER(AUDIT_SCHEDULER aUDIT_SCHEDULER)
+        {
+            base.AddObject("AUDIT_SCHEDULER", aUDIT_SCHEDULER);
         }
 
         #endregion
@@ -6700,6 +6724,193 @@ namespace SQM.Website
         private global::System.Boolean _HAS_MULTIPLE_CHOICES;
         partial void OnHAS_MULTIPLE_CHOICESChanging(global::System.Boolean value);
         partial void OnHAS_MULTIPLE_CHOICESChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="AUDIT_SCHEDULER")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AUDIT_SCHEDULER : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AUDIT_SCHEDULER object.
+        /// </summary>
+        /// <param name="aUDIT_SCHEDULER_ID">Initial value of the AUDIT_SCHEDULER_ID property.</param>
+        /// <param name="dAY_OF_WEEK">Initial value of the DAY_OF_WEEK property.</param>
+        /// <param name="iNACTIVE">Initial value of the INACTIVE property.</param>
+        public static AUDIT_SCHEDULER CreateAUDIT_SCHEDULER(global::System.Decimal aUDIT_SCHEDULER_ID, global::System.Int32 dAY_OF_WEEK, global::System.Boolean iNACTIVE)
+        {
+            AUDIT_SCHEDULER aUDIT_SCHEDULER = new AUDIT_SCHEDULER();
+            aUDIT_SCHEDULER.AUDIT_SCHEDULER_ID = aUDIT_SCHEDULER_ID;
+            aUDIT_SCHEDULER.DAY_OF_WEEK = dAY_OF_WEEK;
+            aUDIT_SCHEDULER.INACTIVE = iNACTIVE;
+            return aUDIT_SCHEDULER;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_SCHEDULER_ID
+        {
+            get
+            {
+                return _AUDIT_SCHEDULER_ID;
+            }
+            set
+            {
+                if (_AUDIT_SCHEDULER_ID != value)
+                {
+                    OnAUDIT_SCHEDULER_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_SCHEDULER_ID");
+                    _AUDIT_SCHEDULER_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_SCHEDULER_ID");
+                    OnAUDIT_SCHEDULER_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_SCHEDULER_ID;
+        partial void OnAUDIT_SCHEDULER_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_SCHEDULER_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DAY_OF_WEEK
+        {
+            get
+            {
+                return _DAY_OF_WEEK;
+            }
+            set
+            {
+                if (_DAY_OF_WEEK != value)
+                {
+                    OnDAY_OF_WEEKChanging(value);
+                    ReportPropertyChanging("DAY_OF_WEEK");
+                    _DAY_OF_WEEK = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DAY_OF_WEEK");
+                    OnDAY_OF_WEEKChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DAY_OF_WEEK;
+        partial void OnDAY_OF_WEEKChanging(global::System.Int32 value);
+        partial void OnDAY_OF_WEEKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AUDIT_TYPE_ID
+        {
+            get
+            {
+                return _AUDIT_TYPE_ID;
+            }
+            set
+            {
+                OnAUDIT_TYPE_IDChanging(value);
+                ReportPropertyChanging("AUDIT_TYPE_ID");
+                _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDIT_TYPE_ID");
+                OnAUDIT_TYPE_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AUDIT_TYPE_ID;
+        partial void OnAUDIT_TYPE_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnAUDIT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                OnPLANT_IDChanging(value);
+                ReportPropertyChanging("PLANT_ID");
+                _PLANT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLANT_ID");
+                OnPLANT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLANT_ID;
+        partial void OnPLANT_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String JOBCODE_CD
+        {
+            get
+            {
+                return _JOBCODE_CD;
+            }
+            set
+            {
+                OnJOBCODE_CDChanging(value);
+                ReportPropertyChanging("JOBCODE_CD");
+                _JOBCODE_CD = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("JOBCODE_CD");
+                OnJOBCODE_CDChanged();
+            }
+        }
+        private global::System.String _JOBCODE_CD;
+        partial void OnJOBCODE_CDChanging(global::System.String value);
+        partial void OnJOBCODE_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean INACTIVE
+        {
+            get
+            {
+                return _INACTIVE;
+            }
+            set
+            {
+                if (_INACTIVE != value)
+                {
+                    OnINACTIVEChanging(value);
+                    ReportPropertyChanging("INACTIVE");
+                    _INACTIVE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INACTIVE");
+                    OnINACTIVEChanged();
+                }
+            }
+        }
+        private global::System.Boolean _INACTIVE;
+        partial void OnINACTIVEChanging(global::System.Boolean value);
+        partial void OnINACTIVEChanged();
 
         #endregion
 

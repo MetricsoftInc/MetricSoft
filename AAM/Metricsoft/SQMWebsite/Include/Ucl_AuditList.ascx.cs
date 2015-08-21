@@ -355,11 +355,14 @@ namespace SQM.Website
 				if (data.Status == "C")
 				{
 					DateTime clsDate = data.Audit.AUDIT_DT.AddDays(data.AuditType.DAYS_TO_COMPLETE);
-					lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", "C") + " " + SQMBasePage.FormatDate(clsDate, "d", false);
+					lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "C") + " " + SQMBasePage.FormatDate(clsDate, "d", false);
 				}
 				else
 				{
-					lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", "A") + "<br/>(" + data.DaysToClose + ")";
+					if (data.Audit.PERCENT_COMPLETE > 0)
+						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "I") + "<br/>(" + data.DaysToClose + ")";
+					else
+						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "A") + "<br/>(" + data.DaysToClose + ")";
 				}
 
 				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditId");

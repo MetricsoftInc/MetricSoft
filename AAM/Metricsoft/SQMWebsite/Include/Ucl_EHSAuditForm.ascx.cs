@@ -1889,7 +1889,6 @@ namespace SQM.Website
 		{
             AUDIT theAudit = null;
 			decimal auditId = 0;
-			bool shouldCreate8d = false;
 			string result = "<h3>EHS Audit " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 			if (Mode == AuditMode.Prevent)
 				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
@@ -1921,68 +1920,31 @@ namespace SQM.Website
 				auditType = EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 			}
 
-			questions = EHSAuditMgr.SelectAuditQuestionList(auditTypeId, 0, EditAuditId);
+			//questions = EHSAuditMgr.SelectAuditQuestionList(auditTypeId, 0, EditAuditId);  // do we really need to get these again??
 
 			UpdateAnswersFromForm();
-			GetAuditInfoFromQuestions(questions);
 
-			if (CurrentStep == 0)
+			if (!IsEditContext)
 			{
-				GetAuditInfoFromQuestions(questions);
-				if (!IsEditContext)
-				{
-					// Add context - step 0
-					theAudit = CreateNewAudit();
-                    auditId = theAudit.AUDIT_ID;
-					EHSNotificationMgr.NotifyOnCreate(auditId, selectedPlantId);
-				}
-				else
-				{
-					// Edit context - step 0
-					auditId = EditAuditId;
-					if (auditId > 0)
-					{
-						theAudit = UpdateAudit(auditId);
-					}
-				}
-				if (auditId > 0)
-				{
-					AddOrUpdateAnswers(questions, auditId);
-					SaveAttachments(auditId);
-				}
-
-				if (Mode == AuditMode.Prevent)
-                    UpdateTaskInfo(questions, auditId, (DateTime)theAudit.CREATE_DT);
+				// Add context
+				theAudit = CreateNewAudit();
+				auditId = theAudit.AUDIT_ID;
+				EHSNotificationMgr.NotifyOnCreate(auditId, selectedPlantId);
 			}
-			else if (CurrentStep == 1)
+			else
 			{
-				// Edit context - step 1
+				// Edit context
 				auditId = EditAuditId;
 				if (auditId > 0)
 				{
-					AddOrUpdateAnswers(questions, auditId);
-					SaveAttachments(auditId);
-
-					// do we need this??
-					UpdateTaskInfo(questions, auditId, DateTime.Now);
+					theAudit = UpdateAudit(auditId);
 				}
 			}
-
-			decimal finalPlantId = 0;
-			var finalAudit = EHSAuditMgr.SelectAuditById(entities, auditId);
-			if (finalAudit != null)
-				finalPlantId = (decimal)finalAudit.DETECT_PLANT_ID;
-			else
-				finalPlantId = selectedPlantId;
-
-			// Start plant accounting rollup in a background thread
-
-			Thread thread = new Thread(() => EHSAccountingMgr.RollupPlantAccounting(InitialPlantId, finalPlantId));
-			thread.IsBackground = true;
-			thread.Start();
-
-			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
-            //obj.IsBackground = true;
+			if (auditId > 0)
+			{
+				AddOrUpdateAnswers(questions, auditId);
+				SaveAttachments(auditId);
+			}
 
 			if (shouldReturn)
 			{
@@ -2144,29 +2106,6 @@ namespace SQM.Website
 				InitialPlantId = selectedPlantId;
 		}
 
-		protected void GetAuditInfoFromQuestions(List<EHSAuditQuestion> questions)
-		{
-			// ABW - this was already commented out in incidents!!
-			//foreach (var q in questions)
-			//{
-			//	string answer = q.AnswerText;
-
-			//	if (answer != null)
-			//	{
-			//		// Special case values to populate in audit table
-			//		if (q.QuestionType == EHSAuditQuestionType.TextBox && q.QuestionId == (decimal)EHSAuditQuestionId.Description)
-			//			auditDescription = answer;
-			//		if (q.QuestionType == EHSAuditQuestionType.Date && q.QuestionId == (decimal)EHSAuditQuestionId.AuditDate)
-			//			auditDate = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US"));
-			//	}
-
-			//	if (answer.Length > MaxTextLength)
-			//		answer = answer.Substring(0, MaxTextLength);
-			//	if (auditDescription.Length > MaxTextLength)
-			//		auditDescription = auditDescription.Substring(0, MaxTextLength);
-			//}
-		}
-
 		protected void CalculatePercentages(List<EHSAuditQuestion> questions)
 		{
 			string previousTopic = "";
@@ -2200,7 +2139,7 @@ namespace SQM.Website
 					previousTopic = tid;
 				}
 
-				// next, add to totals is the response is a positive one
+				// next, add to totals if the response is a positive one
 				if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					totalQuestions += 1;
@@ -2238,6 +2177,11 @@ namespace SQM.Website
 		protected bool AddOrUpdateAnswers(List<EHSAuditQuestion> questions, decimal auditId)
 		{
 			bool shouldCreate8d = false;
+			decimal totalQuestions = 0;
+			decimal totalAnswered = 0;
+			decimal totalPositive = 0;
+			decimal totalPercent = 0;
+			bool answerIsPositive = false;
 
 			foreach (var q in questions)
 			{
@@ -2264,8 +2208,50 @@ namespace SQM.Website
 					};
 					entities.AddToAUDIT_ANSWER(auditAnswer);
 				}
-
+				// calculate the total percentages
+				if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
+				{
+					totalQuestions += 1;
+					answerIsPositive = false;
+					if (!q.AnswerText.ToString().Equals(""))
+					{
+						totalAnswered += 1;
+						foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+						{
+							if (choice.Value.Equals(q.AnswerText) && choice.ChoicePositive)
+								answerIsPositive = true;
+						}
+						if (answerIsPositive)
+						{
+							totalPositive += 1;
+						}
+					}
+				}
 			}
+			// now update the header info
+			AUDIT audit = (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
+			totalPercent = Math.Round((totalAnswered / totalQuestions),2) * 100;
+			audit.PERCENT_COMPLETE = totalPercent;
+			if (totalPercent >= 100)
+			{
+				audit.CURRENT_STATUS = "C";
+				if (!audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				{
+					audit.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
+					audit.CLOSE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
+				}
+			}
+			else if (totalPercent > 0)
+			{
+				audit.CURRENT_STATUS = "I";
+			}
+			else
+				audit.CURRENT_STATUS = "A";
+
+			totalPercent = Math.Round((totalPositive / totalQuestions),2) * 100;
+			audit.TOTAL_SCORE = totalPercent;
+
+			// save all the changes
 			entities.SaveChanges();
 
 			return shouldCreate8d;

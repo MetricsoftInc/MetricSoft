@@ -95,7 +95,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblAuditDate" runat="server" Text="Audit Due Date"></asp:Label>
+                                                <asp:Label ID="lblAuditDate" runat="server" Text="Audit Date"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">

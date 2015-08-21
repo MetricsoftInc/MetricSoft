@@ -181,6 +181,21 @@
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="HAS_MULTIPLE_CHOICES" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AAM.dbo.AUDIT_SCHEDULER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AUDIT_SCHEDULER">
+          <Key>
+            <PropertyRef Name="AUDIT_SCHEDULER_ID" />
+            <PropertyRef Name="DAY_OF_WEEK" />
+            <PropertyRef Name="INACTIVE" />
+          </Key>
+          <Property Name="AUDIT_SCHEDULER_ID" Type="numeric" Precision="35" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DAY_OF_WEEK" Type="int" Nullable="false" />
+          <Property Name="AUDIT_TYPE_ID" Type="numeric" Precision="35" Scale="0" />
+          <Property Name="PLANT_ID" Type="numeric" Precision="35" Scale="0" />
+          <Property Name="JOBCODE_CD" Type="varchar" MaxLength="80" />
+          <Property Name="INACTIVE" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="AUDIT_TOPIC">
           <Key>
             <PropertyRef Name="AUDIT_TOPIC_ID" />
@@ -1765,32 +1780,6 @@
           <Property Name="EXPOSE_TO_CLIENT" Type="bit" Nullable="false" />
           <Property Name="ENCRYPT_VALUE" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'AAM.dbo.Sheet1$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Sheet1$">
-          <Property Name="PRMR_ID" Type="float" />
-          <Property Name="PERIOD_YEAR" Type="float" />
-          <Property Name="PERIOD_MONTH" Type="float" />
-          <Property Name="INPUT_DT" Type="datetime" />
-          <Property Name="EFF_FROM_DT" Type="datetime" />
-          <Property Name="EFF_TO_DT" Type="datetime" />
-          <Property Name="MEASURE_VALUE" Type="float" />
-          <Property Name="UOM" Type="float" />
-          <Property Name="MEASURE_COST" Type="float" />
-          <Property Name="CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
-          <Property Name="LAST_UPD_DT" Type="datetime" />
-          <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="255" />
-          <Property Name="STATUS" Type="nvarchar" MaxLength="255" />
-          <Property Name="CONVERSION_FACTOR" Type="nvarchar" MaxLength="255" />
-          <Property Name="ROLLUP_DT" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_EFF_FROM_DT" Type="float" />
-          <Property Name="ORIGINAL_EFF_TO_DT" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_MEASURE_VALUE" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_MEASURE_COST" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_UOM" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
-          <Property Name="UOM_FACTOR" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="SQM_ACCESS">
           <Key>
             <PropertyRef Name="SSO_ID" />
@@ -3678,6 +3667,16 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="UN_DISPOSAL" EntityType="Self.UN_DISPOSAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UOM" EntityType="Self.UOM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XLAT" EntityType="Self.XLAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUDIT_SCHEDULER" EntityType="Self.AUDIT_SCHEDULER" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[AUDIT_SCHEDULER].[AUDIT_SCHEDULER_ID] AS [AUDIT_SCHEDULER_ID], 
+[AUDIT_SCHEDULER].[DAY_OF_WEEK] AS [DAY_OF_WEEK], 
+[AUDIT_SCHEDULER].[AUDIT_TYPE_ID] AS [AUDIT_TYPE_ID], 
+[AUDIT_SCHEDULER].[PLANT_ID] AS [PLANT_ID], 
+[AUDIT_SCHEDULER].[JOBCODE_CD] AS [JOBCODE_CD], 
+[AUDIT_SCHEDULER].[INACTIVE] AS [INACTIVE]
+FROM [dbo].[AUDIT_SCHEDULER] AS [AUDIT_SCHEDULER]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="UOM_XREF" EntityType="Self.UOM_XREF" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [UOM_XREF].[UOM_FROM] AS [UOM_FROM], 
@@ -4922,6 +4921,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="AUDIT_QUESTION" EntitySet="AUDIT_QUESTION" />
             <End Role="AUDIT_QUESTION_LANG" EntitySet="AUDIT_QUESTION_LANG" />
           </AssociationSet>
+          <EntitySet Name="AUDIT_SCHEDULER" EntityType="PSsqmModel.AUDIT_SCHEDULER" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -8851,6 +8851,19 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AUDIT_SCHEDULER">
+          <Key>
+            <PropertyRef Name="AUDIT_SCHEDULER_ID" />
+            <PropertyRef Name="DAY_OF_WEEK" />
+            <PropertyRef Name="INACTIVE" />
+          </Key>
+          <Property Name="AUDIT_SCHEDULER_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DAY_OF_WEEK" Type="Int32" Nullable="false" />
+          <Property Name="AUDIT_TYPE_ID" Type="Decimal" Precision="35" Scale="0" />
+          <Property Name="PLANT_ID" Type="Decimal" Precision="35" Scale="0" />
+          <Property Name="JOBCODE_CD" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="INACTIVE" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10861,6 +10874,18 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AUDIT_SCHEDULER">
+            <EntityTypeMapping TypeName="PSsqmModel.AUDIT_SCHEDULER">
+              <MappingFragment StoreEntitySet="AUDIT_SCHEDULER">
+                <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
+                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="AUDIT_TYPE_ID" ColumnName="AUDIT_TYPE_ID" />
+                <ScalarProperty Name="DAY_OF_WEEK" ColumnName="DAY_OF_WEEK" />
+                <ScalarProperty Name="AUDIT_SCHEDULER_ID" ColumnName="AUDIT_SCHEDULER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11150,6 +11175,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_JOBCODE_JOBCODE" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_QUESTION_LANG" Width="1.5" PointX="17.5" PointY="15" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION" />
+        <EntityTypeShape EntityType="PSsqmModel.AUDIT_SCHEDULER" Width="1.5" PointX="14.375" PointY="17.75" />
         </Diagram>
     </Diagrams>
   </Designer>
