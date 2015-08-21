@@ -512,6 +512,23 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
+		public static List<JOBCODE> SelectPrivGroupJobcodeList(SysPriv priv, SysScope scope)
+		{
+			List<JOBCODE> jobcodeList = new List<JOBCODE>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				string privScope = scope.ToString();
+				jobcodeList = (from j in ctx.JOBCODE 
+							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
+							  where j.PRIV_GROUP == v.PRIV_GROUP 
+									&& (v.PRIV == (int)priv && v.SCOPE == privScope)
+							  select j).ToList();
+			}
+
+			return jobcodeList;
+		}
+
 		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
 		{
 			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
