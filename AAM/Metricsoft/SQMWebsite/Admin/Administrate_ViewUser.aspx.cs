@@ -444,12 +444,30 @@ namespace SQM.Website
 
 			if (updateUser)
 			{
-                List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", ""); // ABW 20140805
-                SETTINGS setting = new SETTINGS(); // ABW 20140805
-				SetLocalPerson(SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(),false, currentSSOID, ""));
+				string defaultPwd = "";
+				if (isNew)
+				{
+					SETTINGS pwdInitial = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "PasswordDefault");
+					if (pwdInitial != null) 
+					{
+						switch (pwdInitial.VALUE.ToUpper())
+						{
+							case "LASTNAME":
+								defaultPwd = person.LAST_NAME;
+								break;
+							case "EMPID":
+								defaultPwd = person.EMP_ID;
+								break;
+							default:
+								break;
+						}
+					}
+				}
+				SetLocalPerson(SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(),false, currentSSOID, defaultPwd));
 				//selectedUser = SQMModelMgr.UpdatePerson(entities, person, SessionManager.UserContext.UserName(), Convert.ToBoolean(GetFindControlValue("cbIsBuyer", hfBase, out success)), GetFindControlValue("tbBuyerCode", hfBase, out success));
 				// AW20131106 - send an email for new users with random password generation
-
+				List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", ""); // ABW 20140805
+				SETTINGS setting = new SETTINGS(); // ABW 20140805
 				setting = MailSettings.Find(x => x.SETTING_CD == "MailFromSystem"); // ABW 20140805
 				string strEmailCompanyName = ""; // ABW 20140805
 				if (setting != null) // ABW 20140805
