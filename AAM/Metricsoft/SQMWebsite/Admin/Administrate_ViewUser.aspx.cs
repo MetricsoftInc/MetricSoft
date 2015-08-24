@@ -293,6 +293,8 @@ namespace SQM.Website
 
 			tbUserPhone.Text =  person.PHONE;
 			tbUserEmail.Text = person.EMAIL;
+			tbEmpID.Text = person.EMP_ID;
+			tbSupvEmpID.Text = person.SUPV_EMP_ID;
 			SetStatusList("ddlUserStatus", person.STATUS, true);
             if (sysAccess != null && sysAccess.LAST_LOGON_DT.HasValue)
                 lblUserLoginDate_out.Text = SQMBasePage.FormatDate(WebSiteCommon.LocalTime((DateTime)sysAccess.LAST_LOGON_DT, WebSiteCommon.GetXlatValue("timeZone", person.PREFERRED_TIMEZONE)), "g", true);
@@ -351,6 +353,8 @@ namespace SQM.Website
 			person.JOBCODE_CD = ddlJobCode.SelectedValue;
             person.PHONE = tbUserPhone.Text;
             person.EMAIL = tbUserEmail.Text;
+			person.EMP_ID = tbEmpID.Text;
+			person.SUPV_EMP_ID = tbSupvEmpID.Text;
 
             if (!string.IsNullOrEmpty(ddlUserLanguage.SelectedValue))
                 person.PREFERRED_LANG_ID = Convert.ToInt32(ddlUserLanguage.SelectedValue);

@@ -472,6 +472,33 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbUserEmail;
         
         /// <summary>
+        /// lblEmpID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpID;
+        
+        /// <summary>
+        /// tbEmpID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbEmpID;
+        
+        /// <summary>
+        /// tbSupvEmpID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSupvEmpID;
+        
+        /// <summary>
         /// lblUserTitle control.
         /// </summary>
         /// <remarks>

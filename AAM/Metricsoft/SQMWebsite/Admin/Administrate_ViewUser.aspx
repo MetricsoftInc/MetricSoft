@@ -194,7 +194,19 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblUserTitle" runat="server" text="Job Code/Title"></asp:Label>
+                                                                <asp:Label ID="lblEmpID" runat="server" text="Employee ID / Supervisor ID" ></asp:Label>
+                                                            </td>
+                                                            <td class="tableDataAlt">&nbsp;</td>
+                                                            <td class="tableDataAlt">
+																<span>
+																	<asp:TextBox ID="tbEmpID" size="16" maxlength="16" runat="server"></asp:TextBox>&nbsp;&nbsp;
+																	<asp:TextBox ID="tbSupvEmpID" size="16" maxlength="16" runat="server"></asp:TextBox>
+																</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="columnHeader">
+                                                                <asp:Label ID="lblUserTitle" runat="server" text="Job Code"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
