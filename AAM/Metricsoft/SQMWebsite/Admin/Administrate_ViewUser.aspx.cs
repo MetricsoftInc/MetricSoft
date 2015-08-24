@@ -473,7 +473,7 @@ namespace SQM.Website
 				if (setting != null) // ABW 20140805
 					strEmailCompanyName = setting.VALUE; 
 
-				if (isNew)
+				if (isNew  &&  string.IsNullOrEmpty(defaultPwd))  // send email notice only when a default password was not set
 				{
 					// send a confirmation email
 					// string strength = WebConfigurationManager.AppSettings["PasswordComplexity"]; // ABW 20140805
