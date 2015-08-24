@@ -879,19 +879,19 @@ namespace SQM.Website
                 return this.Profile.EHS_PROFILE_MEASURE.ToList();
         }
 
-        public List<EHS_PROFILE_MEASURE> MeasureList(bool applyFilters, AccessMode accessMode)
+        public List<EHS_PROFILE_MEASURE> MeasureList(bool applyFilters, List<PRIVGROUP> privList)
         {
             if (applyFilters)
             {
                 if (this.FilterByResponsibleID > 0)
                 {
-                    if (accessMode == AccessMode.View)
-                        return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I").ToList();
-                    else
-                        return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I" && l.RESPONSIBLE_ID == this.FilterByResponsibleID).ToList();
+					if (privList.Where(p => p.PRIV == (int)SysPriv.originate).Count() > 0)
+						return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I" && l.RESPONSIBLE_ID == this.FilterByResponsibleID).ToList();
+					else
+						return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I").ToList();
                 }
-                else
-                    return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I").ToList();
+				else
+					return this.Profile.EHS_PROFILE_MEASURE.Where(l => l.STATUS != "I").ToList();
             }
             else
                 return this.Profile.EHS_PROFILE_MEASURE.ToList();

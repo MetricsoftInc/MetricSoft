@@ -91,7 +91,7 @@ namespace SQM.Website
         {
             ClearInput();
 
-            if (directedPlantID > 0)  // override plant select ddl when directed from inbox, etc...
+            if (directedPlantID > 0)  // override plant select ddl when directed from inbox, etc..
                 SetLocalProfile(new EHSProfile().Load(directedPlantID, false, true));
             else
                 SetLocalProfile(new EHSProfile().Load(plantID, false, true));
@@ -102,8 +102,7 @@ namespace SQM.Website
                 return;  
             }
 
-            AccessMode accessMode = UserContext.CheckAccess("EHS", "311");
-            if (accessMode > AccessMode.Update)
+			if (UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.originate)  // allow approvers and admins to see all metrics
             {
                 LocalProfile().FilterByResponsibleID = 0;
                 LocalProfile().MinPeriodDate = new DateTime(2001, 1, 1);
@@ -199,17 +198,17 @@ namespace SQM.Website
 
         public void LoadProfileInput(DateTime targetDate, EHSProfileStatus selectStatus)
         {
-            AccessMode accessMode = UserContext.CheckAccess("EHS", "311");
+			UserContext.CheckUserPrivilege(SysPriv.originate, SysScope.envdata);
             LocalProfile().LoadPeriod(targetDate);
             if (LocalProfile().InputPeriod != null)
             {
                 LocalProfile().MapPlantAccountingInputs(true, false);
 
                 uclInputHdr.BindProfileInputHdr(LocalProfile());
-                EHSProfileStatus status = BindProfileInputList(LocalProfile().MeasureList(true, accessMode).ToList(), LocalProfile().Profile);
+				EHSProfileStatus status = BindProfileInputList(LocalProfile().MeasureList(true, UserContext.GetScopePrivileges(SysScope.envdata)).ToList(), LocalProfile().Profile);
                 if (status == EHSProfileStatus.Normal)
                 {
-                    if (LocalProfile().Profile.APPROVER_ID == SessionManager.UserContext.Person.PERSON_ID || accessMode >= AccessMode.Admin)
+                    if (LocalProfile().Profile.APPROVER_ID == SessionManager.UserContext.Person.PERSON_ID || UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.envdata))
                     {
                         cbFinalApproval.Enabled = true;
                     }
@@ -227,7 +226,7 @@ namespace SQM.Website
                     }
                 }
                 MessageDisplay(selectStatus == EHSProfileStatus.Normal ? status : selectStatus);
-                btnSave1.Enabled = btnSave2.Enabled = btnCancel1.Enabled = btnCancel2.Enabled = UserContext.CheckAccess("EHS", "311") >= AccessMode.Update ? true : false;
+                btnSave1.Enabled = btnSave2.Enabled = btnCancel1.Enabled = btnCancel2.Enabled = UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.notify ? true : false;
             }
             else
             {
@@ -268,7 +267,7 @@ namespace SQM.Website
         {
             uclExport.BindExport("", false, hfExportText.Value);
 
-            btnSave1.Enabled = btnSave2.Enabled = UserContext.CheckAccess("EHS", "311") >= AccessMode.Update ? true : false;
+            btnSave1.Enabled = btnSave2.Enabled = UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.notify ? true : false;
             if (LocalProfile() == null || IsCurrentPage() == false)
             {
                 btnSave1.Enabled = btnSave2.Enabled = false;

@@ -11,7 +11,7 @@ namespace SQM.Website
 {
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
-	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, action=350, approve=380, notify=400, view=500 }
+	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, action=350, approve=380, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit }
 
 	public class SessionManager
@@ -898,6 +898,19 @@ namespace SQM.Website
 			}
 
 			return privList;
+		}
+
+		public static SysPriv GetMaxScopePrivilege(SysScope scope)
+		{
+			SysPriv maxPriv = SysPriv.none;
+
+			foreach (PRIVGROUP priv in SessionManager.UserContext.PrivList)
+			{
+				if (priv.PRIV < (int)maxPriv)
+					maxPriv = (SysPriv)priv.PRIV;
+			}
+
+			return maxPriv;
 		}
 
 		public static AccessMode RoleAccess()
