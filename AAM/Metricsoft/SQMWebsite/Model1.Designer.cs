@@ -160,6 +160,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBCODE1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION", "AUDIT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION), "AUDIT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_LANG), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.BUSINESS_ORG), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PLANT), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 
 #endregion
 
@@ -2226,6 +2228,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<AUDIT_SCHEDULER> _AUDIT_SCHEDULER;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<NOTIFYACTION> NOTIFYACTION
+        {
+            get
+            {
+                if ((_NOTIFYACTION == null))
+                {
+                    _NOTIFYACTION = base.CreateObjectSet<NOTIFYACTION>("NOTIFYACTION");
+                }
+                return _NOTIFYACTION;
+            }
+        }
+        private ObjectSet<NOTIFYACTION> _NOTIFYACTION;
 
         #endregion
 
@@ -3237,6 +3255,14 @@ namespace SQM.Website
         public void AddToAUDIT_SCHEDULER(AUDIT_SCHEDULER aUDIT_SCHEDULER)
         {
             base.AddObject("AUDIT_SCHEDULER", aUDIT_SCHEDULER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the NOTIFYACTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToNOTIFYACTION(NOTIFYACTION nOTIFYACTION)
+        {
+            base.AddObject("NOTIFYACTION", nOTIFYACTION);
         }
 
         #endregion
@@ -8052,6 +8078,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PRODUCT_LINE>("PSsqmModel.FK_PRODUCT_LINE_BUSINESS_ORG", "PRODUCT_LINE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "NOTIFYACTION")]
+        public EntityCollection<NOTIFYACTION> NOTIFYACTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<NOTIFYACTION>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "NOTIFYACTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<NOTIFYACTION>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "NOTIFYACTION", value);
                 }
             }
         }
@@ -28010,6 +28058,389 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="NOTIFYACTION")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class NOTIFYACTION : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new NOTIFYACTION object.
+        /// </summary>
+        /// <param name="nOTIFYACTION_ID">Initial value of the NOTIFYACTION_ID property.</param>
+        /// <param name="nOTIFY_SCOPE">Initial value of the NOTIFY_SCOPE property.</param>
+        /// <param name="sCOPE_TASK">Initial value of the SCOPE_TASK property.</param>
+        /// <param name="tASK_STATUS">Initial value of the TASK_STATUS property.</param>
+        public static NOTIFYACTION CreateNOTIFYACTION(global::System.Decimal nOTIFYACTION_ID, global::System.String nOTIFY_SCOPE, global::System.String sCOPE_TASK, global::System.String tASK_STATUS)
+        {
+            NOTIFYACTION nOTIFYACTION = new NOTIFYACTION();
+            nOTIFYACTION.NOTIFYACTION_ID = nOTIFYACTION_ID;
+            nOTIFYACTION.NOTIFY_SCOPE = nOTIFY_SCOPE;
+            nOTIFYACTION.SCOPE_TASK = sCOPE_TASK;
+            nOTIFYACTION.TASK_STATUS = tASK_STATUS;
+            return nOTIFYACTION;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal NOTIFYACTION_ID
+        {
+            get
+            {
+                return _NOTIFYACTION_ID;
+            }
+            set
+            {
+                if (_NOTIFYACTION_ID != value)
+                {
+                    OnNOTIFYACTION_IDChanging(value);
+                    ReportPropertyChanging("NOTIFYACTION_ID");
+                    _NOTIFYACTION_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("NOTIFYACTION_ID");
+                    OnNOTIFYACTION_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _NOTIFYACTION_ID;
+        partial void OnNOTIFYACTION_IDChanging(global::System.Decimal value);
+        partial void OnNOTIFYACTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> BUS_ORG_ID
+        {
+            get
+            {
+                return _BUS_ORG_ID;
+            }
+            set
+            {
+                OnBUS_ORG_IDChanging(value);
+                ReportPropertyChanging("BUS_ORG_ID");
+                _BUS_ORG_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BUS_ORG_ID");
+                OnBUS_ORG_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _BUS_ORG_ID;
+        partial void OnBUS_ORG_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnBUS_ORG_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                OnPLANT_IDChanging(value);
+                ReportPropertyChanging("PLANT_ID");
+                _PLANT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLANT_ID");
+                OnPLANT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLANT_ID;
+        partial void OnPLANT_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NOTIFY_SCOPE
+        {
+            get
+            {
+                return _NOTIFY_SCOPE;
+            }
+            set
+            {
+                OnNOTIFY_SCOPEChanging(value);
+                ReportPropertyChanging("NOTIFY_SCOPE");
+                _NOTIFY_SCOPE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("NOTIFY_SCOPE");
+                OnNOTIFY_SCOPEChanged();
+            }
+        }
+        private global::System.String _NOTIFY_SCOPE;
+        partial void OnNOTIFY_SCOPEChanging(global::System.String value);
+        partial void OnNOTIFY_SCOPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SCOPE_TASK
+        {
+            get
+            {
+                return _SCOPE_TASK;
+            }
+            set
+            {
+                OnSCOPE_TASKChanging(value);
+                ReportPropertyChanging("SCOPE_TASK");
+                _SCOPE_TASK = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SCOPE_TASK");
+                OnSCOPE_TASKChanged();
+            }
+        }
+        private global::System.String _SCOPE_TASK;
+        partial void OnSCOPE_TASKChanging(global::System.String value);
+        partial void OnSCOPE_TASKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TASK_STATUS
+        {
+            get
+            {
+                return _TASK_STATUS;
+            }
+            set
+            {
+                OnTASK_STATUSChanging(value);
+                ReportPropertyChanging("TASK_STATUS");
+                _TASK_STATUS = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TASK_STATUS");
+                OnTASK_STATUSChanged();
+            }
+        }
+        private global::System.String _TASK_STATUS;
+        partial void OnTASK_STATUSChanging(global::System.String value);
+        partial void OnTASK_STATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> NOTIFY_TIMING
+        {
+            get
+            {
+                return _NOTIFY_TIMING;
+            }
+            set
+            {
+                OnNOTIFY_TIMINGChanging(value);
+                ReportPropertyChanging("NOTIFY_TIMING");
+                _NOTIFY_TIMING = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NOTIFY_TIMING");
+                OnNOTIFY_TIMINGChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _NOTIFY_TIMING;
+        partial void OnNOTIFY_TIMINGChanging(Nullable<global::System.Int32> value);
+        partial void OnNOTIFY_TIMINGChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NOTIFY_DIST_TYPE
+        {
+            get
+            {
+                return _NOTIFY_DIST_TYPE;
+            }
+            set
+            {
+                OnNOTIFY_DIST_TYPEChanging(value);
+                ReportPropertyChanging("NOTIFY_DIST_TYPE");
+                _NOTIFY_DIST_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NOTIFY_DIST_TYPE");
+                OnNOTIFY_DIST_TYPEChanged();
+            }
+        }
+        private global::System.String _NOTIFY_DIST_TYPE;
+        partial void OnNOTIFY_DIST_TYPEChanging(global::System.String value);
+        partial void OnNOTIFY_DIST_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NOTIFY_DIST
+        {
+            get
+            {
+                return _NOTIFY_DIST;
+            }
+            set
+            {
+                OnNOTIFY_DISTChanging(value);
+                ReportPropertyChanging("NOTIFY_DIST");
+                _NOTIFY_DIST = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NOTIFY_DIST");
+                OnNOTIFY_DISTChanged();
+            }
+        }
+        private global::System.String _NOTIFY_DIST;
+        partial void OnNOTIFY_DISTChanging(global::System.String value);
+        partial void OnNOTIFY_DISTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> NOTIFY_DT
+        {
+            get
+            {
+                return _NOTIFY_DT;
+            }
+            set
+            {
+                OnNOTIFY_DTChanging(value);
+                ReportPropertyChanging("NOTIFY_DT");
+                _NOTIFY_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NOTIFY_DT");
+                OnNOTIFY_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _NOTIFY_DT;
+        partial void OnNOTIFY_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnNOTIFY_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG")]
+        public BUSINESS_ORG BUSINESS_ORG
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BUSINESS_ORG>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BUSINESS_ORG>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<BUSINESS_ORG> BUSINESS_ORGReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BUSINESS_ORG>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BUSINESS_ORG>("PSsqmModel.FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT")]
+        public PLANT PLANT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "PLANT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "PLANT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PLANT> PLANTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "PLANT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PLANT>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "PLANT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="PART")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -33807,6 +34238,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RECEIPT>("PSsqmModel.FK_RECEIPT_PLANT1", "RECEIPT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "NOTIFYACTION")]
+        public EntityCollection<NOTIFYACTION> NOTIFYACTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<NOTIFYACTION>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "NOTIFYACTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<NOTIFYACTION>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "NOTIFYACTION", value);
                 }
             }
         }

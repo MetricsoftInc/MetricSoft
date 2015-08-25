@@ -168,7 +168,7 @@ namespace SQM.Website
 			{
 				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", "").OrderBy(j => j.JOB_DESC).ToList())
 				{
-					ddlJobCode.Items.Add(new RadComboBoxItem(jc.JOBCODE_CD + "  /  " + jc.JOB_DESC, jc.JOBCODE_CD));
+					ddlJobCode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
 				}
 				ddlJobCode.Items.Insert(0, new RadComboBoxItem("System Admin", "1"));
 				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));

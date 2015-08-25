@@ -1116,6 +1116,25 @@ namespace SQM.Website
         }
 
         #endregion
-    }
+
+		#region XLATS
+		public static List<XLAT> SelectXLATList(string[] XLATGroupArray)
+		{
+			List<XLAT> XLATList = new List<XLAT>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+				string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+
+				XLATList = (from x in ctx.XLAT
+							where x.XLAT_LANGUAGE == language && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+							orderby x.XLAT_GROUP, x.XLAT_CODE
+							select x).ToList();
+			}
+			return XLATList;
+		}
+		#endregion
+	}
 
 }

@@ -534,6 +534,10 @@ namespace SQM.Website
 			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
 		}
 
+		public static string FormatJobcode(JOBCODE jobcode)
+		{
+			return (jobcode.JOBCODE_CD + "  /  " + jobcode.JOB_DESC);
+		}
 
 		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID)
 		{
@@ -2325,6 +2329,41 @@ namespace SQM.Website
         #endregion
 
         #region teams
+
+		public static List<NOTIFYACTION> SelectNotifyActionList(SQM.Website.PSsqmEntities ctx, decimal ? busorgID, decimal ? plantID)
+		{
+			List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
+
+			notifyList = (from n in ctx.NOTIFYACTION 
+						  where ((busorgID.HasValue && n.BUS_ORG_ID == busorgID)  || (plantID.HasValue  &&  n.PLANT_ID == plantID))
+						  select n).ToList();
+
+			return notifyList;
+		}
+
+		public static NOTIFYACTION LookupNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
+		{
+			NOTIFYACTION notifyAction = (from n in ctx.NOTIFYACTION where n.NOTIFYACTION_ID == notifyActionID select n).SingleOrDefault();
+
+			return notifyAction;
+		}
+
+		public static NOTIFYACTION UpdateNotifyAction(SQM.Website.PSsqmEntities ctx, NOTIFYACTION notifyAction)
+		{
+			NOTIFYACTION retAction = null;
+			if (notifyAction.EntityState == EntityState.Detached)
+			{
+				notifyAction.STATUS = "A";
+				ctx.AddToNOTIFYACTION(notifyAction);
+			}
+
+			if (ctx.SaveChanges() >= 0)
+			{
+				retAction = notifyAction;
+			}
+
+			return retAction;
+		}
 
         public static List<NOTIFY> SelectNotifyList(SQM.Website.PSsqmEntities ctx, decimal busorgID, decimal plantID, decimal b2bID, List<string> scopeList)
         {

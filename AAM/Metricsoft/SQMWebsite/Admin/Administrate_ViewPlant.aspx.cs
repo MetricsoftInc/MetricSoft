@@ -36,6 +36,8 @@ namespace SQM.Website
             uclAdminEdit.OnEditSaveClick += uclAdminEdit_OnSaveClick;
             uclAdminEdit.OnEditCancelClick += uclAdminEdit_OnCancelClick;
 
+			uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
+
         }
 
         private void uclAdminTabs_OnTabClick(string tabID, string cmdArg)
@@ -233,22 +235,23 @@ namespace SQM.Website
                     case "notify":
                         pnlEscalation.Visible = true;
                         List<TaskRecordType> recordTypeList = new List<TaskRecordType>();
-                        if (UserContext.CheckAccess("SQM", "") >= AccessMode.Update)
-                        {
-                            recordTypeList.Add(TaskRecordType.InternalQualityIncident);
-                            recordTypeList.Add(TaskRecordType.CustomerQualityIncident);
-                            recordTypeList.Add(TaskRecordType.SupplierQualityIncident);
-                        }
-                        if (UserContext.CheckAccess("EHS", "") >= AccessMode.Admin)
-                        {
-                            recordTypeList.Add(TaskRecordType.ProfileInput);
-                            recordTypeList.Add(TaskRecordType.ProfileInputApproval);
-                            recordTypeList.Add(TaskRecordType.HealthSafetyIncident);
-                            recordTypeList.Add(TaskRecordType.PreventativeAction);
-                        }
-                        if (recordTypeList.Count > 0  &&  !recordTypeList.Contains(TaskRecordType.ProblemCase))
-                            recordTypeList.Add(TaskRecordType.ProblemCase);
-                        uclNotifyList.BindNotifyList(entities, SessionManager.EffLocation.Company.COMPANY_ID, 0, SessionManager.EffLocation.Plant.PLANT_ID, recordTypeList);
+						//if (UserContext.CheckAccess("SQM", "") >= AccessMode.Update)
+						//{
+						//	recordTypeList.Add(TaskRecordType.InternalQualityIncident);
+						//	recordTypeList.Add(TaskRecordType.CustomerQualityIncident);
+						//	recordTypeList.Add(TaskRecordType.SupplierQualityIncident);
+						//}
+ 
+                        recordTypeList.Add(TaskRecordType.ProfileInput);
+                        recordTypeList.Add(TaskRecordType.ProfileInputApproval);
+                        recordTypeList.Add(TaskRecordType.HealthSafetyIncident);
+                        recordTypeList.Add(TaskRecordType.PreventativeAction);
+ 
+                       // if (recordTypeList.Count > 0  &&  !recordTypeList.Contains(TaskRecordType.ProblemCase))
+                        //    recordTypeList.Add(TaskRecordType.ProblemCase);
+                        
+						uclNotifyList.BindNotifyList(entities, SessionManager.EffLocation.Company.COMPANY_ID, 0, SessionManager.EffLocation.Plant.PLANT_ID, recordTypeList);
+						UpdateNotifyActionList("");
                         break;
                     case "docs":
                         pnlPlantDocs.Visible = true;
@@ -262,6 +265,11 @@ namespace SQM.Website
                 }
             }
         }
+
+		private void UpdateNotifyActionList(string cmd)
+		{
+			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, null, SessionManager.EffLocation.Plant.PLANT_ID), SessionManager.EffLocation, "plant");
+		}
 
         private void uclAdminEdit_OnSaveClick(string cmd)
         {

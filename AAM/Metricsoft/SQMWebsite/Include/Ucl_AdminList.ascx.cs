@@ -11,7 +11,7 @@ using Telerik.Web.UI;
 
 namespace SQM.Website
 {
-
+	public delegate void GridActionCommand(string cmd);
     public delegate void GridItemClick(decimal id);
     public delegate void GridItemClick2(decimal id, decimal id2);
     public delegate void ItemUpdateID(decimal id);
