@@ -66,7 +66,7 @@ namespace SQM.Website
 			if (ddlNotifyJobcode.Items.Count == 0)
 			{
 				ddlNotifyJobcode.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("A", "").OrderBy(j => j.JOB_DESC).ToList())
+				foreach (JOBCODE jc in SQMModelMgr.SelectPersonJobcodeList(true).OrderBy(j => j.JOB_DESC).ToList())
 				{
 					ddlNotifyJobcode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
 				}
@@ -156,8 +156,14 @@ namespace SQM.Website
 						ddlScopeStatus.SelectedValue = notifyAction.TASK_STATUS;
 					if (ddlScopeTiming.FindItemByValue(notifyAction.NOTIFY_TIMING.ToString()) != null)
 						ddlScopeTiming.SelectedValue = notifyAction.NOTIFY_TIMING.ToString();
-					if (ddlNotifyJobcode.FindItemByValue(notifyAction.NOTIFY_DIST) != null)
-						ddlNotifyJobcode.SelectedValue = notifyAction.NOTIFY_DIST;
+
+					ddlNotifyJobcode.ClearCheckedItems();
+					RadComboBoxItem ri = null;
+					foreach (string sv in notifyAction.NOTIFY_DIST.Split(','))
+					{
+						if (!string.IsNullOrEmpty(sv)  &&  (ri = ddlNotifyJobcode.FindItemByValue(sv)) != null)
+							ri.Checked = true;
+					}
 
 					ddlEdit_OnIndexChanged(null, null);
 				}
@@ -173,19 +179,19 @@ namespace SQM.Website
 		protected void ddlEdit_OnIndexChanged(object sender, EventArgs e)
 		{
 
-			if (new string[2] { "ACT", "CPLT" }.Contains(ddlScopeTask.SelectedValue))
+			if (new string[2] { "350", "380" }.Contains(ddlScopeTask.SelectedValue))
 			{
 				ddlScopeStatus.Enabled = true;
 			}
 			else
 			{
-				ddlScopeStatus.SelectedValue = "DONE";
+				ddlScopeStatus.SelectedValue = "380";
 				ddlScopeStatus.Enabled = false;
 				ddlScopeTiming.SelectedValue = "0";
 				ddlScopeTiming.Enabled = false;
 			}
 
-			if (new string[1] { "OVER" }.Contains(ddlScopeStatus.SelectedValue))
+			if (new string[1] { "400" }.Contains(ddlScopeStatus.SelectedValue))
 			{
 				ddlScopeTiming.Enabled = true;
 			}
@@ -224,7 +230,11 @@ namespace SQM.Website
 			notifyAction.SCOPE_TASK = ddlScopeTask.SelectedValue;
 			notifyAction.TASK_STATUS = ddlScopeStatus.SelectedValue;
 			notifyAction.NOTIFY_TIMING = Convert.ToInt32(ddlScopeTiming.SelectedValue);
-			notifyAction.NOTIFY_DIST = ddlNotifyJobcode.SelectedValue;
+			notifyAction.NOTIFY_DIST = "";
+			foreach (string sv in SQMBasePage.GetComboBoxSelectedValues(ddlNotifyJobcode))
+			{
+				notifyAction.NOTIFY_DIST += (string.IsNullOrEmpty(notifyAction.NOTIFY_DIST) ? "" : ",") + sv;
+			}
 
 			if ((notifyAction = SQMModelMgr.UpdateNotifyAction(ctx, notifyAction)) != null)
 			{

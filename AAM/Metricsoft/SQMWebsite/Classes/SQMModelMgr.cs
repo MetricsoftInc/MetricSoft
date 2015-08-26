@@ -529,6 +529,22 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
+		public static List<JOBCODE> SelectPersonJobcodeList(bool emailsOnly)
+		{
+			List<JOBCODE> jobcodeList = new List<JOBCODE>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				jobcodeList = (from j in ctx.JOBCODE
+							   join p in ctx.PERSON on j.JOBCODE_CD equals p.JOBCODE_CD
+							   where j.JOBCODE_CD == p.JOBCODE_CD
+									 && (emailsOnly == false  ||  !string.IsNullOrEmpty(p.EMAIL))
+							   select j).Distinct().ToList();
+			}
+
+			return jobcodeList;
+		}
+
 		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
 		{
 			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();

@@ -67,7 +67,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlNotifyScope" runat="server" Skin="Metro" ZIndex="9000" EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlNotifyScope" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                 <tr>
@@ -76,7 +76,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeTask" runat="server" Skin="Metro" ZIndex="9000" EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeTask" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                 <tr>
@@ -85,7 +85,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeStatus" runat="server" Skin="Metro" ZIndex="9000" EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeStatus" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                <tr>
@@ -94,7 +94,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeTiming" runat="server" Skin="Metro" ZIndex="9000" EmptyMessage="Select"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeTiming" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select"></telerik:RadComboBox>
                     </td>
                 </tr>
                <tr>
@@ -103,7 +103,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlNotifyJobcode" runat="server" Skin="Metro" ZIndex="9000" width=300 Height="400" EmptyMessage="Select Jobcode"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlNotifyJobcode" runat="server" Skin="Metro" ZIndex="9000" width=300 Height=400 EmptyMessage="Select Jobcode" CheckBoxes="true" EnableCheckAllItemsCheckBox="false"></telerik:RadComboBox>
                     </td>
                 </tr>
 			</table>

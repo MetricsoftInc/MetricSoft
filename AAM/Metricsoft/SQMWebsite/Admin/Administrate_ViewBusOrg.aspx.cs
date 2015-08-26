@@ -264,7 +264,7 @@ namespace SQM.Website
 
 		private void UpdateNotifyActionList(string cmd)
 		{
-			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, null).OrderBy(n => n.NOTIFY_SCOPE).ToList(), SessionManager.EffLocation, "busorg");
+			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, null).OrderBy(n => n.NOTIFY_SCOPE).ThenBy(n=> n.SCOPE_TASK).ToList(), SessionManager.EffLocation, "busorg");
 		}
 
         private void uclAdminEdit_OnSaveClick(string cmd)
