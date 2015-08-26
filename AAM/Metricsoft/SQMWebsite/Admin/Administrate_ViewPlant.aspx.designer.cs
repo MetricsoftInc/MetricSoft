@@ -508,24 +508,6 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_AdminEdit uclAdminEdit;
         
         /// <summary>
-        /// pnlEscalation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlEscalation;
-        
-        /// <summary>
-        /// uclNotifyList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_NotifyList uclNotifyList;
-        
-        /// <summary>
         /// pnlPlantDocs control.
         /// </summary>
         /// <remarks>
@@ -560,5 +542,23 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_B2BList uclCustList;
+        
+        /// <summary>
+        /// pnlEscalation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEscalation;
+        
+        /// <summary>
+        /// uclNotifyList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_NotifyList uclNotifyList;
     }
 }

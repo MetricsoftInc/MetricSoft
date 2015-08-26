@@ -52,7 +52,7 @@
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                     <asp:LinkButton ID="lbBUNotify_tab" runat="server" class="optNav clickable"  CommandArgument="notify" 
-                    onclick="tab_Click">Incident &amp; Task<br />Notifications</asp:LinkButton>
+                    onclick="tab_Click">Notifications</asp:LinkButton>
                 </td>
            </tr>
  <%--           <tr align="center" height="24">
@@ -94,7 +94,7 @@
             <tr align="center" height="24">
                 <td runat="server" class="optMenu">
                         <asp:LinkButton ID="lbPlantLine_tab" runat="server" class="optNav clickable" CommandArgument="line" 
-                            onclick="tab_Click">Plant Lines/Operations</asp:LinkButton>
+                            onclick="tab_Click">Lines / Operations</asp:LinkButton>
                 </td>
             </tr>
 <%--			<tr align="center" height="24">
@@ -106,7 +106,7 @@
             <tr align="center" height="24">
                 <td id="Td3" runat="server" class="optMenu">
                     <asp:LinkButton ID="lbPlantNotify_tab" runat="server" class="optNav clickable"  CommandArgument="notify" 
-                    onclick="tab_Click">Incident &amp; Task<br />Notifications</asp:LinkButton>
+                    onclick="tab_Click">Notifications</asp:LinkButton>
                 </td>
            </tr>
  <%--          <tr align="center" height="24">

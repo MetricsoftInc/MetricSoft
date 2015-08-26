@@ -146,24 +146,23 @@
                                             </td>
                                         </tr>
                                     </asp:Panel>
-
-                                    <asp:Panel runat="server" ID="pnlSubLists">
-                                        <Ucl:AdminList id="uclSubLists" runat="server"/>
-                                    </asp:Panel>
-
-                                    <asp:Panel runat="server" ID="pnlAdminEdit"> 
-                                        <Ucl:AdminEdit id="uclAdminEdit" runat="server"/>
-                                    </asp:Panel>
-
-                                    <asp:Panel runat="server" ID="pnlPartProgram">
-                                        <Ucl:PartList ID="uclProgramList" runat="server" />
-                                    </asp:Panel>
-
-                                    <asp:Panel runat="server" ID="pnlEscalation">
-                                        <Ucl:NotifyList id="uclNotifyList" runat="server"/>
-                                    </asp:Panel>
                                 </div>
                             </table>
+	                        <asp:Panel runat="server" ID="pnlSubLists">
+                                <Ucl:AdminList id="uclSubLists" runat="server"/>
+                            </asp:Panel>
+
+                            <asp:Panel runat="server" ID="pnlAdminEdit"> 
+                                <Ucl:AdminEdit id="uclAdminEdit" runat="server"/>
+                            </asp:Panel>
+
+                            <asp:Panel runat="server" ID="pnlPartProgram">
+                                <Ucl:PartList ID="uclProgramList" runat="server" />
+                            </asp:Panel>
+
+                            <asp:Panel runat="server" ID="pnlEscalation">
+                                <Ucl:NotifyList id="uclNotifyList" runat="server"/>
+                            </asp:Panel>
                        </div>
                     </form>
                 </td>

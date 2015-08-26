@@ -162,15 +162,6 @@
                                             <td class="tableDataAlt">&nbsp;</td>
                                             <td class="tableDataAlt"><asp:DropDownList ID="ddlPowerSourcedRegion" runat="server"></asp:DropDownList></td>
                                         </tr>
-                                        <%--<tr>
-                                            <td class="columnHeader">
-                                                <asp:Label ID="lblPlantLanguage" runat="server" text="Preferred Language"></asp:Label>
-                                            </td>
-                                            <td class="required">&nbsp;</td>
-                                            <td class="tableDataAlt">
-                                                <asp:DropDownList ID="ddlPlantLanguage" runat="server"></asp:DropDownList>
-                                            </td>
-                                        </tr>--%>
                                         <tr>
                                             <td class="columnHeader">
                                                 <asp:Label ID="lblPlantCurrencyCode" runat="server" text="Default Currency"></asp:Label>
@@ -219,16 +210,13 @@
                                  </tr>
                             </asp:Panel>
 
+                            </table>
                             <asp:Panel runat="server" ID="pnlSubLists">
                                 <Ucl:AdminList id="uclSubLists" runat="server"/>
                             </asp:Panel>
 
                             <asp:Panel runat="server" ID="pnlAdminEdit">
                                 <Ucl:AdminEdit id="uclAdminEdit" runat="server"/>
-                            </asp:Panel>
-
-                            <asp:Panel runat="server" ID="pnlEscalation">
-                                 <Ucl:NotifyList id="uclNotifyList" runat="server"/>
                             </asp:Panel>
 
                             <asp:Panel runat="server" ID="pnlPlantDocs">
@@ -239,7 +227,9 @@
                                 <Ucl:B2BList id="uclCustList" runat="server"/>
                             </asp:Panel>
 
-                            </table>
+						    <asp:Panel runat="server" ID="pnlEscalation">
+                                 <Ucl:NotifyList id="uclNotifyList" runat="server"/>
+                            </asp:Panel>
                         </div>
                     </form>
                 </td>

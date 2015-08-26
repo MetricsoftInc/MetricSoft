@@ -42,6 +42,8 @@ namespace SQM.Website
  
             uclAdminEdit.OnEditSaveClick += uclAdminEdit_OnSaveClick;
             uclAdminEdit.OnEditCancelClick += uclAdminEdit_OnCancelClick;
+
+			uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
         }
 
         private void uclAdminTabs_OnTabClick(string tabID, string cmdArg)
@@ -250,23 +252,7 @@ namespace SQM.Website
                         break;
                     case "notify":
                         pnlEscalation.Visible = true;
-                        List<TaskRecordType> recordTypeList = new List<TaskRecordType>();
-                        if (UserContext.CheckAccess("SQM", "") >= AccessMode.Update)
-                        {
-                            recordTypeList.Add(TaskRecordType.InternalQualityIncident);
-                            recordTypeList.Add(TaskRecordType.CustomerQualityIncident);
-                            recordTypeList.Add(TaskRecordType.SupplierQualityIncident);
-                        }
-                        if (UserContext.CheckAccess("EHS", "") >= AccessMode.Admin)
-                        {
-                            recordTypeList.Add(TaskRecordType.ProfileInput);
-                            recordTypeList.Add(TaskRecordType.ProfileInputApproval);
-                            recordTypeList.Add(TaskRecordType.HealthSafetyIncident);
-                            recordTypeList.Add(TaskRecordType.PreventativeAction);
-                        }
-                        if (recordTypeList.Count > 0 && !recordTypeList.Contains(TaskRecordType.ProblemCase))
-                            recordTypeList.Add(TaskRecordType.ProblemCase);
-                        uclNotifyList.BindNotifyList(entities, SessionManager.EffLocation.Company.COMPANY_ID, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, 0, recordTypeList);
+						UpdateNotifyActionList("");
                         break;
                     default:
                         pnlBusOrgEdit.Visible = true;
@@ -275,6 +261,11 @@ namespace SQM.Website
                 }
             }
         }
+
+		private void UpdateNotifyActionList(string cmd)
+		{
+			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, null).OrderBy(n => n.NOTIFY_SCOPE).ToList(), SessionManager.EffLocation, "busorg");
+		}
 
         private void uclAdminEdit_OnSaveClick(string cmd)
         {
