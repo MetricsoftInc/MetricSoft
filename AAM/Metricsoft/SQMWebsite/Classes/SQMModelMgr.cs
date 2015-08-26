@@ -529,16 +529,18 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
-		public static List<JOBCODE> SelectPersonJobcodeList(bool emailsOnly)
+		public static List<JOBCODE> SelectPersonJobcodeList(bool emailsOnly, bool includeAdmin)
 		{
 			List<JOBCODE> jobcodeList = new List<JOBCODE>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
+				string admin = SysPriv.admin.ToString();
 				jobcodeList = (from j in ctx.JOBCODE
 							   join p in ctx.PERSON on j.JOBCODE_CD equals p.JOBCODE_CD
 							   where j.JOBCODE_CD == p.JOBCODE_CD
-									 && (emailsOnly == false  ||  !string.IsNullOrEmpty(p.EMAIL))
+									 && (emailsOnly == false  || !string.IsNullOrEmpty(p.EMAIL))
+									 && (includeAdmin  ||  p.JOBCODE_CD != admin)
 							   select j).Distinct().ToList();
 			}
 
