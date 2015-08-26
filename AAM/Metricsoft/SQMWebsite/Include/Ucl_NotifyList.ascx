@@ -45,7 +45,7 @@
 						<asp:Label ID="lblNotifyTiming" runat="server" Text='<%# Eval("NOTIFY_TIMING") %>'></asp:Label>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
-				<telerik:GridTemplateColumn HeaderText="Notify To Jobcode">
+				<telerik:GridTemplateColumn HeaderText="Notify To Jobcode(s)">
 					<ItemTemplate>
 						<asp:Label ID="lblNotifyDist" runat="server" Text='<%# Eval("NOTIFY_DIST") %>'></asp:Label>
 					</ItemTemplate>
@@ -99,11 +99,11 @@
                 </tr>
                <tr>
                     <td class="columnHeader" width="24%">
-                        <asp:Label ID="lblNotifyDist" runat="server" text="Notify To Jobcode"></asp:Label>
+                        <asp:Label ID="lblNotifyDist" runat="server" text="Notify To Jobcode(s)"></asp:Label>
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlNotifyJobcode" runat="server" Skin="Metro" ZIndex="9000" width=300 Height=400 EmptyMessage="Select Jobcode" CheckBoxes="true" EnableCheckAllItemsCheckBox="false"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlNotifyJobcode" runat="server" Skin="Metro" ZIndex="9000" width=300 Height=300 EmptyMessage="Select Jobcode" CheckBoxes="true" EnableCheckAllItemsCheckBox="false"></telerik:RadComboBox>
                     </td>
                 </tr>
 			</table>

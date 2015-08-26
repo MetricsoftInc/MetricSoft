@@ -54,8 +54,8 @@ namespace SQM.Website
 
 			if (ddlNotifyJobcode.Items.Count == 0)
 			{
-				ddlNotifyJobcode.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (JOBCODE jc in SQMModelMgr.SelectPersonJobcodeList(true).OrderBy(j => j.JOB_DESC).ToList())
+				//ddlNotifyJobcode.Items.Insert(0, new RadComboBoxItem("", ""));
+				foreach (JOBCODE jc in SQMModelMgr.SelectPersonJobcodeList(true, false).OrderBy(j => j.JOB_DESC).ToList())
 				{
 					ddlNotifyJobcode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
 				}
