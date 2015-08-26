@@ -15,17 +15,6 @@ namespace SQM.Website
 		public event GridActionCommand OnNotifyActionCommand;
 		public event GridItemClick OnNotifyActionClick;
 
-
-        private List<string> scopeList
-        {
-            get { return ViewState["scopeList"] == null ? new List<string>() : (List<string>)ViewState["scopeList"]; }
-            set { ViewState["scopeList"] = value; }
-        }
-        private List<PERSON> staticPersonList
-        {
-            get { return ViewState["notifyPersonList"] == null ? new List<PERSON>() : (List<PERSON>)ViewState["notifyPersonList"]; }
-            set { ViewState["notifyPersonList"] = value; }
-        }
 		private List<XLAT> XLATList
 		{
 			get { return ViewState["XLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["XLATList"]; }
