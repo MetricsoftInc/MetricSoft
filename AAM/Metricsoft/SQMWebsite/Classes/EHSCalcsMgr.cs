@@ -323,6 +323,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public List<EHSAuditSchedulerData> AuditSchedulerHst
+		{
+			get;
+			set;
+		}
 		public PSsqmEntities Entities
         {
             get;
@@ -1079,6 +1084,41 @@ namespace SQM.Website
 			}
 
 			return this.AuditHst;
+		}
+
+		public List<EHSAuditSchedulerData> SelectAuditSchedulerList(List<decimal> plantIdList, List<decimal> auditTypeList, List<int> daysOfWeekList, string auditSchedulerStatus)
+		{
+			var entities = new PSsqmEntities();
+			try
+			{
+				this.AuditSchedulerHst = (from a in entities.AUDIT_SCHEDULER
+										  join p in entities.PLANT on a.PLANT_ID equals p.PLANT_ID
+										  join t in entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID
+										  join j in entities.JOBCODE on a.JOBCODE_CD equals j.JOBCODE_CD
+										  where (daysOfWeekList.Contains((int)a.DAY_OF_WEEK)
+										  && auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.PLANT_ID))
+										  select new EHSAuditSchedulerData
+										  {
+											  AuditScheduler = a,
+											  Plant = p,
+											  AuditType = t,
+											  Jobcode = j
+										  }).ToList();
+
+				if (this.AuditSchedulerHst != null)
+				{
+					if (auditSchedulerStatus == "A")  // get open incidents
+						this.AuditSchedulerHst = this.AuditSchedulerHst.Where(l => l.AuditScheduler.INACTIVE == false).ToList();
+					else if (auditSchedulerStatus == "I")  // data incomplete
+						this.AuditSchedulerHst = this.AuditSchedulerHst.Where(l => l.AuditScheduler.INACTIVE == true).ToList();
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return this.AuditSchedulerHst;
 		}
 
 		public List<GaugeSeries> CalculateIncidentSeries(string option, SStat stat)

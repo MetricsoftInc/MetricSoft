@@ -143,6 +143,30 @@ namespace SQM.Website
 		}
 	}
 
+	public class EHSAuditSchedulerData
+	{
+		public AUDIT_SCHEDULER AuditScheduler
+		{
+			get;
+			set;
+		}
+		public PLANT Plant
+		{
+			get;
+			set;
+		}
+		public AUDIT_TYPE AuditType
+		{
+			get;
+			set;
+		}
+		public JOBCODE Jobcode
+		{
+			get;
+			set;
+		}
+	}
+
 	public static class EHSAuditMgr
 	{
 		public static AUDIT SelectAuditById(PSsqmEntities entities, decimal auditId)
@@ -169,15 +193,10 @@ namespace SQM.Website
 			return auditType;
 		}
 
-		//public static decimal SelectProblemCaseIdByAuditId(decimal auditId)
-		//{
-		//	decimal? problemCaseId;
-		//	var entities = new PSsqmEntities();
-		//	problemCaseId = (from po in entities.PROB_OCCUR where po.AUDIT_ID == auditId select po.PROBCASE_ID).FirstOrDefault();
-		//	if (problemCaseId == null)
-		//		problemCaseId = 0;
-		//	return (decimal)problemCaseId;
-		//}
+		public static AUDIT_TYPE SelectAuditTypeById(PSsqmEntities entities, decimal auditTypeId)
+		{
+			return (from i in entities.AUDIT_TYPE where i.AUDIT_TYPE_ID == auditTypeId select i).FirstOrDefault();
+		}
 
 		public static List<AUDIT_TYPE> SelectAuditTypeList(decimal companyId, bool activeOnly)
 		{
@@ -240,31 +259,6 @@ namespace SQM.Website
 
 			return audits;
 		}
-
-
-		//public static List<AUDIT> SelectInjuryIllnessAudits(decimal plantId, DateTime date)
-		//{
-		//	var audits = new List<AUDIT>();
-
-		//	try
-		//	{
-		//		var entities = new PSsqmEntities();
-		//		audits = (from i in entities.AUDIT
-		//					 where
-		//						 i.AUDIT_TYPE.ToUpper() == "EHS" &&
-		//						 i.ISSUE_TYPE_ID == (decimal)EHSAuditTypeId.InjuryIllness &&
-		//						 i.DETECT_PLANT_ID == plantId &&
-		//						 i.AUDIT_DT.Year == date.Year && i.AUDIT_DT.Month == date.Month
-		//					 select i).ToList();
-
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		//SQMLogger.LogException(e);
-		//	}
-
-		//	return audits;
-		//}
 
 		/// <summary>
 		/// Select a list of open EHS audits by company
@@ -596,7 +590,6 @@ namespace SQM.Website
 			return personSelectList;
 		}
 
-
 		public static List<PERSON> SelectCompanyPersonList(decimal companyId)
 		{
 			var personList = new List<PERSON>();
@@ -697,47 +690,6 @@ namespace SQM.Website
 			return comments;
 		}
 
-		//public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
-		//{
-		//	var entities = new PSsqmEntities();
-
-		//	AUDIT audit = SelectAuditById(entities, auditId);
-
-		//	var taskMgr = new TaskStatusMgr();
-		//	taskMgr.Initialize(recordTypeId, auditId);
-		//	taskMgr.LoadTaskList(recordTypeId, auditId);
-		//	TASK_STATUS task = taskMgr.FindTask("0", "T", 0);
-
-		//	if (task == null)
-		//	{
-		//		task = taskMgr.CreateTask("0", "T", 0, audit.ISSUE_TYPE, dueDate, responsiblePersonId);
-		//		task.STATUS = ((int)TaskMgr.CalculateTaskStatus(task)).ToString();
-		//	}
-		//	else
-		//	{
-		//		task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, audit.ISSUE_TYPE);
-		//	}
-
-		//	taskMgr.UpdateTaskList(auditId);
-
-		//}
-
-		//public static void SetTaskComplete(decimal auditId, int recordTypeId)
-		//{
-		//	var taskMgr = new TaskStatusMgr();
-		//	taskMgr.Initialize(recordTypeId, auditId);
-		//	taskMgr.LoadTaskList(recordTypeId, auditId);
-		//	TASK_STATUS task = taskMgr.FindTask("0", "T", 0);
-
-		//	if (task != null)
-		//	{
-		//		taskMgr.UpdateTaskStatus(task, TaskMgr.CalculateTaskStatus(task));
-		//		taskMgr.SetTaskComplete("0", "T", 0, true);
-		//		taskMgr.UpdateTaskList(auditId);
-		//	}
-		//}
-
-
 		public static int DeleteAudit(decimal auditId)
 		{
 			int status = 0;
@@ -816,5 +768,109 @@ namespace SQM.Website
 						  select p).FirstOrDefault();
 			return person.LAST_NAME + ", " + person.FIRST_NAME;
 		}
+
+		public static AUDIT_SCHEDULER SelectAuditSchedulerById(PSsqmEntities entities, decimal auditScheduleId)
+		{
+			return (from i in entities.AUDIT_SCHEDULER where i.AUDIT_SCHEDULER_ID == auditScheduleId select i).FirstOrDefault();
+		}
+
+		public static decimal SelectAuditTypeIdByAuditScheduleId(decimal auditScheduleId)
+		{
+			decimal? auditTypeId;
+			var entities = new PSsqmEntities();
+			auditTypeId = (from i in entities.AUDIT_SCHEDULER where i.AUDIT_SCHEDULER_ID == auditScheduleId select i.AUDIT_TYPE_ID).FirstOrDefault();
+			if (auditTypeId == null)
+				auditTypeId = 0;
+			return (decimal)auditTypeId;
+		}
+
+		public static string SelectAuditTypeByAuditScheduleId(decimal auditScheduleId)
+		{
+			string auditType = "";
+			var entities = new PSsqmEntities();
+			decimal auditTypeId = SelectAuditTypeIdByAuditScheduleId(auditScheduleId);
+			auditType = (from it in entities.AUDIT_TYPE where it.AUDIT_TYPE_ID == auditTypeId select it.TITLE).FirstOrDefault();
+			return auditType;
+		}
+
+		/// <summary>
+		/// Select a list of all EHS audits by company
+		/// </summary>
+		public static List<AUDIT_SCHEDULER> SelectActiveAuditSchedulers(decimal companyId, List<decimal> plantIdList)
+		{
+			var auditschedules = new List<AUDIT_SCHEDULER>();
+
+			try
+			{
+				var entities = new PSsqmEntities();
+				if (plantIdList == null)
+				{
+					auditschedules = (from i in entities.AUDIT_SCHEDULER
+							  where i.INACTIVE == false
+							  orderby i.AUDIT_SCHEDULER_ID descending
+							  select i).ToList();
+				}
+				else
+				{
+					auditschedules = (from i in entities.AUDIT_SCHEDULER
+									  where i.INACTIVE == false
+								  && plantIdList.Contains((decimal)i.PLANT_ID)
+							  orderby i.AUDIT_SCHEDULER_ID descending
+							  select i).ToList();
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return auditschedules;
+		}
+
+		public static int DeleteAuditScheduler(decimal auditScheduleId)
+		{
+			int status = 0;
+			string delCmd = " IN (" + auditScheduleId + ") ";
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				try
+				{
+					status = ctx.ExecuteStoreCommand("DELETE FROM AUDIT_SCHEDULER WHERE AUDIT_SCHEDULER_ID" + delCmd);
+				}
+				catch (Exception ex)
+				{
+					SQMLogger.LogException(ex);
+				}
+			}
+
+			return status;
+		}
+
+		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
+		{
+			var entities = new PSsqmEntities();
+
+			AUDIT audit = SelectAuditById(entities, auditId);
+			AUDIT_TYPE type = SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+			var taskMgr = new TaskStatusMgr();
+			taskMgr.Initialize(recordTypeId, auditId);
+			taskMgr.LoadTaskList(recordTypeId, auditId);
+			TASK_STATUS task = taskMgr.FindTask("0", "T", 0);
+
+			if (task == null)
+			{
+				task = taskMgr.CreateTask("0", "T", 0, type.TITLE.ToString(), dueDate, responsiblePersonId);
+				task.STATUS = ((int)TaskMgr.CalculateTaskStatus(task)).ToString();
+			}
+			else
+			{
+				task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, audit.AUDIT_TYPE_ID.ToString());
+			}
+
+			taskMgr.UpdateTaskList(auditId);
+
+		}
+
 	}
 }

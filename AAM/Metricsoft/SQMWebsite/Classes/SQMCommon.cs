@@ -1031,6 +1031,16 @@ namespace SQM.Website
             bool _mailEnableSsl = true;
             int _mailSmtpPort = 587;
 
+			// ABW 20150826 send emails to a default email if this is a development environment
+			string environment = "";
+			string altEmail = "";
+			try
+			{
+				environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
+				altEmail = System.Configuration.ConfigurationManager.AppSettings["altEmail"].ToString();
+			}
+			catch { }
+
 			// ABW 20140805 - get the parameters from the SETTINGS table instead of Web or App Config
 			//if (context == "web")
 			//{
@@ -1081,9 +1091,17 @@ namespace SQM.Website
             try
             {
                 MailMessage msg = new MailMessage();
-                msg.To.Add(emailAddress.Trim());
-                if (!string.IsNullOrEmpty(cc))
-                    msg.CC.Add(cc.Trim());
+				// ABW 20150826 send emails to a default email if this is a development environment
+				if (environment.ToLower().Equals("dev"))
+				{
+					msg.To.Add(altEmail.Trim());
+				}
+				else
+				{
+					msg.To.Add(emailAddress.Trim());
+					if (!string.IsNullOrEmpty(cc))
+						msg.CC.Add(cc.Trim());
+				}
                 msg.From = new MailAddress(_mailFrom);
                 msg.Subject = emailSubject;
                 msg.Body = emailBody;

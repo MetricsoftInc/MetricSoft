@@ -2216,22 +2216,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<AUDIT_SCHEDULER> AUDIT_SCHEDULER
-        {
-            get
-            {
-                if ((_AUDIT_SCHEDULER == null))
-                {
-                    _AUDIT_SCHEDULER = base.CreateObjectSet<AUDIT_SCHEDULER>("AUDIT_SCHEDULER");
-                }
-                return _AUDIT_SCHEDULER;
-            }
-        }
-        private ObjectSet<AUDIT_SCHEDULER> _AUDIT_SCHEDULER;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<NOTIFYACTION> NOTIFYACTION
         {
             get
@@ -2244,6 +2228,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<NOTIFYACTION> _NOTIFYACTION;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_SCHEDULER> AUDIT_SCHEDULER
+        {
+            get
+            {
+                if ((_AUDIT_SCHEDULER == null))
+                {
+                    _AUDIT_SCHEDULER = base.CreateObjectSet<AUDIT_SCHEDULER>("AUDIT_SCHEDULER");
+                }
+                return _AUDIT_SCHEDULER;
+            }
+        }
+        private ObjectSet<AUDIT_SCHEDULER> _AUDIT_SCHEDULER;
 
         #endregion
 
@@ -3250,19 +3250,19 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AUDIT_SCHEDULER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToAUDIT_SCHEDULER(AUDIT_SCHEDULER aUDIT_SCHEDULER)
-        {
-            base.AddObject("AUDIT_SCHEDULER", aUDIT_SCHEDULER);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the NOTIFYACTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToNOTIFYACTION(NOTIFYACTION nOTIFYACTION)
         {
             base.AddObject("NOTIFYACTION", nOTIFYACTION);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_SCHEDULER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_SCHEDULER(AUDIT_SCHEDULER aUDIT_SCHEDULER)
+        {
+            base.AddObject("AUDIT_SCHEDULER", aUDIT_SCHEDULER);
         }
 
         #endregion
@@ -6815,7 +6815,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 DAY_OF_WEEK
         {
@@ -6825,14 +6825,11 @@ namespace SQM.Website
             }
             set
             {
-                if (_DAY_OF_WEEK != value)
-                {
-                    OnDAY_OF_WEEKChanging(value);
-                    ReportPropertyChanging("DAY_OF_WEEK");
-                    _DAY_OF_WEEK = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("DAY_OF_WEEK");
-                    OnDAY_OF_WEEKChanged();
-                }
+                OnDAY_OF_WEEKChanging(value);
+                ReportPropertyChanging("DAY_OF_WEEK");
+                _DAY_OF_WEEK = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DAY_OF_WEEK");
+                OnDAY_OF_WEEKChanged();
             }
         }
         private global::System.Int32 _DAY_OF_WEEK;
@@ -6914,7 +6911,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean INACTIVE
         {
@@ -6924,14 +6921,11 @@ namespace SQM.Website
             }
             set
             {
-                if (_INACTIVE != value)
-                {
-                    OnINACTIVEChanging(value);
-                    ReportPropertyChanging("INACTIVE");
-                    _INACTIVE = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("INACTIVE");
-                    OnINACTIVEChanged();
-                }
+                OnINACTIVEChanging(value);
+                ReportPropertyChanging("INACTIVE");
+                _INACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INACTIVE");
+                OnINACTIVEChanged();
             }
         }
         private global::System.Boolean _INACTIVE;
@@ -28071,14 +28065,12 @@ namespace SQM.Website
         /// <param name="nOTIFYACTION_ID">Initial value of the NOTIFYACTION_ID property.</param>
         /// <param name="nOTIFY_SCOPE">Initial value of the NOTIFY_SCOPE property.</param>
         /// <param name="sCOPE_TASK">Initial value of the SCOPE_TASK property.</param>
-        /// <param name="tASK_STATUS">Initial value of the TASK_STATUS property.</param>
-        public static NOTIFYACTION CreateNOTIFYACTION(global::System.Decimal nOTIFYACTION_ID, global::System.String nOTIFY_SCOPE, global::System.String sCOPE_TASK, global::System.String tASK_STATUS)
+        public static NOTIFYACTION CreateNOTIFYACTION(global::System.Decimal nOTIFYACTION_ID, global::System.String nOTIFY_SCOPE, global::System.String sCOPE_TASK)
         {
             NOTIFYACTION nOTIFYACTION = new NOTIFYACTION();
             nOTIFYACTION.NOTIFYACTION_ID = nOTIFYACTION_ID;
             nOTIFYACTION.NOTIFY_SCOPE = nOTIFY_SCOPE;
             nOTIFYACTION.SCOPE_TASK = sCOPE_TASK;
-            nOTIFYACTION.TASK_STATUS = tASK_STATUS;
             return nOTIFYACTION;
         }
 
@@ -28236,7 +28228,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String TASK_STATUS
         {
@@ -28248,7 +28240,7 @@ namespace SQM.Website
             {
                 OnTASK_STATUSChanging(value);
                 ReportPropertyChanging("TASK_STATUS");
-                _TASK_STATUS = StructuralObject.SetValidValue(value, false);
+                _TASK_STATUS = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("TASK_STATUS");
                 OnTASK_STATUSChanged();
             }

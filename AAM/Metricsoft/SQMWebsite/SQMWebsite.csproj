@@ -144,6 +144,7 @@
     <Content Include="Admin\Administrate_SettingInput.aspx" />
     <Content Include="Automated\CheckCurrency.aspx" />
     <Content Include="Automated\MailTest.aspx" />
+    <Content Include="Automated\ScheduleAudits.aspx" />
     <Content Include="Automated\SendReminderEmails.aspx" />
     <Content Include="bin\AjaxControlToolkit.dll" />
     <Content Include="bin\ComponentArt.Web.UI.dll" />
@@ -212,6 +213,7 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
+    <Content Include="EHS\EHS_Audit_Scheduler.aspx" />
     <Content Include="EHS\EHS_Audits.aspx" />
     <Content Include="EHS\EHS_Audits_Questions.aspx" />
     <Content Include="EHS\EHS_Incident_Verification.aspx" />
@@ -1658,8 +1660,10 @@
     <Content Include="images\status\waste-bak.png" />
     <Content Include="images\status\waste.png" />
     <Content Include="images\step_01.gif" />
+    <Content Include="Include\Ucl_AuditScheduleList.ascx" />
     <Content Include="Include\Ucl_AuditList.ascx" />
     <Content Include="Include\Ucl_EHSAuditAdd.ascx" />
+    <Content Include="Include\Ucl_EHSAuditScheduleDetail.ascx" />
     <Content Include="Include\Ucl_EHSAuditForm.ascx" />
     <Content Include="Include\Ucl_EHSAuditDetails.ascx" />
     <Content Include="Include\Ucl_EHSIncidentForm.ascx" />
@@ -1842,6 +1846,13 @@
     <Compile Include="Automated\MailTest.aspx.designer.cs">
       <DependentUpon>MailTest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Automated\ScheduleAudits.aspx.cs">
+      <DependentUpon>ScheduleAudits.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Automated\ScheduleAudits.aspx.designer.cs">
+      <DependentUpon>ScheduleAudits.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Automated\SendReminderEmails.aspx.cs">
       <DependentUpon>SendReminderEmails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1894,6 +1905,13 @@
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Audit_Scheduler.aspx.cs">
+      <DependentUpon>EHS_Audit_Scheduler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Audit_Scheduler.aspx.designer.cs">
+      <DependentUpon>EHS_Audit_Scheduler.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Incidents.aspx.cs">
       <DependentUpon>EHS_Incidents.aspx</DependentUpon>
@@ -2038,12 +2056,26 @@
     <Compile Include="Home\Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_AuditScheduleList.ascx.cs">
+      <DependentUpon>Ucl_AuditScheduleList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AuditScheduleList.ascx.designer.cs">
+      <DependentUpon>Ucl_AuditScheduleList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Include\Ucl_EHSAuditAdd.ascx.cs">
       <DependentUpon>Ucl_EHSAuditAdd.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_EHSAuditAdd.ascx.designer.cs">
       <DependentUpon>Ucl_EHSAuditAdd.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditScheduleDetail.ascx.cs">
+      <DependentUpon>Ucl_EHSAuditScheduleDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAuditScheduleDetail.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSAuditScheduleDetail.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_EHSIncidentDetails.ascx.designer.cs">
       <DependentUpon>Ucl_EHSIncidentDetails.ascx</DependentUpon>

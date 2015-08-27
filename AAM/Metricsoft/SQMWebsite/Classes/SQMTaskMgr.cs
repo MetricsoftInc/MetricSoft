@@ -17,7 +17,8 @@ namespace SQM.Website
     public enum TaskRecordType { InternalQualityIncident = 10, CustomerQualityIncident = 11, SupplierQualityIncident = 12,
                                     QualityIssue = 20, ProblemCase = 21,
                                     ProfileInput = 30, ProfileInputApproval = 31, ProfileInputFinalize = 33, CurrencyInput = 36, 
-                                    HealthSafetyIncident = 40, PreventativeAction = 45 }
+                                    HealthSafetyIncident = 40, PreventativeAction = 45, 
+									Audit = 50 }
 
 
     public class ResponseItem
