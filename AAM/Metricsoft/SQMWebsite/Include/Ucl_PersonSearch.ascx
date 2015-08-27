@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_PersonSearch.ascx.cs" Inherits="SQM.Website.Ucl_PersonSearch" %>
-<%@ Register src="~/Include/Ucl_PartList.ascx" TagName="PartList" TagPrefix="Ucl" %>
+<%--<%@ Register src="~/Include/Ucl_PersonList.ascx" TagName="PersonList" TagPrefix="Ucl" %>--%>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 
@@ -8,61 +8,68 @@
 		// document.getElementById("btnProfileMeasureNew").disabled = true;
 	}
 
-	function OpenPartListWindow() {
-		$find("<%=winPartList.ClientID %>").show();
-	}
+//	function OpenPersonListWindow() {
+<%--//		$find("<%=winPersonList.ClientID %>").show();--%>
+//	}
 
-	function ClosePartListWindow() {
-		var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
-		oWindow.Close();
-	}
+//	function ClosePersonListWindow() {
+//		var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+//		oWindow.Close();
+//	}
+
 </script>
 
-<asp:Button id="btnOpenPartListWindow" runat="server" CssClass="buttonList" Text="List"
-	 OnClick="OnOpenPartListWindow_Click" ToolTip="list part numbers"/>
+<asp:Button id="btnOpenPersonListWindow" runat="server" CssClass="buttonList" Text=""
+	 OnClick="OnOpenPersonListWindow_Click" ToolTip="list persons" Enabled="false" Visible="false"/>
 
-<telerik:RadSearchBox ID="rsbPart" runat="server"  MaxResultCount="20" EnableAutoComplete="true" Skin="Metro" OnClientSearch="onPartSearch" OnSearch="OnSearchServer" 
-	ShowSearchButton="false" EmptyMessage="Type a part number" Width="220">
+<telerik:RadSearchBox ID="rsbPerson" runat="server"  MaxResultCount="20" EnableAutoComplete="false" DataKeyNames="PersonId" Skin="Metro" OnClientSearch="onPersonSearch" OnSearch="OnSearchServer" 
+	ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="276">
 	<DropDownSettings Height="320" Width="530">
 		<HeaderTemplate>
 			<table cellpadding="0" cellspacing="1" class="searchBoxResults" width="500" style="margin-left: 5px;">
 				<tr>
-					<th style="width: 80px; text-align: left;">
-						Part #
+					<th style="width: 90px; text-align: left;">
+						Name
 					</th>
 					<th style="width: 240px; text-align: left;">
-						Part Description
+						Email
 					</th>
-					<th style="width: 140px; text-align: left;" runat="server" id="thPartProgram" visible="false">
+					<th>
+					</th>
+<%-- 				<th style="width: 140px; text-align: left;" runat="server" id="thPartProgram" visible="false">
 						Program
 					</th>
 					<th style="width: 40px; text-align: center;">
 						Active
-					</th>
+					</th>--%>
 				</tr>
 			</table>
 		</HeaderTemplate>
 		<ItemTemplate>
 			<table cellpadding="0" cellspacing="0" class="searchBoxResults" width="500">
 			<tr>
-				<td style="background: #EEEAE0; width: 80px;">
-					<b><%# DataBinder.Eval(Container.DataItem, "PART_NUM") %></b>
+				<td style="background: #EEEAE0; width: 90px;">
+					<b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b>
 				</td>
 				<td style="background: #fff; width: 240px;">
-					<b><%# DataBinder.Eval(Container.DataItem, "PART_NAME")%></b>
+					<b><%# DataBinder.Eval(Container.DataItem, "PersonEmail")%></b>
 				</td>
-				<td style="background: #fff; width: 140px;" id="tdPartProgram" runat="server" visible="false">
+				<td id="tdPersonID" runat="server" visible="false">
+					<%# DataBinder.Eval(Container.DataItem, "PersonId")%>
+				</td>
+<%--			<td style="background: #fff; width: 140px;" id="tdPartProgram" runat="server" visible="false">
 					<b><%# ReturnProgramName(DataBinder.Eval(Container.DataItem, "PROGRAM_NAME").ToString())%></b>
-				</td>
-				<td style="background: #fff; width: 40px; text-align: center;"">
+				</td>--%>
+<%--				<td style="background: #fff; width: 40px; text-align: center;"">
 					<%# ReturnActiveStatus(DataBinder.Eval(Container.DataItem, "STATUS").ToString())%>
-				</td>
+				</td>--%>
 			</tr>
 			</table>
 		</ItemTemplate>
 	</DropDownSettings>
 </telerik:RadSearchBox>
-<asp:HiddenField id="hfPartNumberPerspective" runat="server"/>
+
+<%--<asp:HiddenField id="hfPartNumberPerspective" runat="server"/>--%>
 <%--<telerik:RadDropDownList ID="rddlProgram" runat="server" Skin="Metro" Width="160" DropDownWidth="180" Font-Size="9" AutoPostBack="true">
 	<Items>
 		<telerik:DropDownListItem Text="Any Program" />
@@ -81,21 +88,15 @@
 </telerik:RadDropDownList>--%>
 
 
-<telerik:RadWindow runat="server" ID="winPartList" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="700" Behaviors="Move,Close" Title="Select Part Number">
+<%--<telerik:RadWindow runat="server" ID="winPersonList" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="700" Behaviors="Move,Close" Title="Select Person">
 	<ContentTemplate>
 		<div style="margin-top: 5px;">
-			<asp:Label ID="lblPartListInstruct" runat="server" CssClass="instructText" Text="Part numbers either produced or consumed by the selected Business Location."></asp:Label>
+			<asp:Label ID="lblPersonListInstruct" runat="server" CssClass="instructText" Text=""></asp:Label>
 			<br />
 			<div style="margin-top: 5px;">
-				<Ucl:PartList id="uclPartList" runat="server"/>
+				<Ucl:PersonList id="uclPersonList" runat="server"/>
 			</div>
 		</div>
 	</ContentTemplate>
-</telerik:RadWindow>
-
-
-
-
-
-
+</telerik:RadWindow>--%>
 

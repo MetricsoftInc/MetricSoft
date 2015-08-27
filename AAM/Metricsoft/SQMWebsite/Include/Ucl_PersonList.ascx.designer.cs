@@ -13,13 +13,13 @@ namespace SQM.Website {
     public partial class Ucl_PersonList {
         
         /// <summary>
-        /// pnlPartList control.
+        /// pnlPersonList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPartList;
+        protected global::System.Web.UI.WebControls.Panel pnlPersonList;
         
         /// <summary>
         /// divPartListScroll control.
@@ -31,13 +31,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPartListScroll;
         
         /// <summary>
-        /// gvPartList control.
+        /// gvPersonList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPartList;
+        protected global::System.Web.UI.WebControls.GridView gvPersonList;
         
         /// <summary>
         /// lblPartListEmpty control.
@@ -47,104 +47,5 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPartListEmpty;
-        
-        /// <summary>
-        /// pnlPartPlantList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPartPlantList;
-        
-        /// <summary>
-        /// divPartPlantGVScroll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPartPlantGVScroll;
-        
-        /// <summary>
-        /// gvPartPlantList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPartPlantList;
-        
-        /// <summary>
-        /// lblPartPlantListEmpty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartPlantListEmpty;
-        
-        /// <summary>
-        /// pnlProgramList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlProgramList;
-        
-        /// <summary>
-        /// divProgramGVScroll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProgramGVScroll;
-        
-        /// <summary>
-        /// gvProgramList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProgramList;
-        
-        /// <summary>
-        /// lblProgramListEmpty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProgramListEmpty;
-        
-        /// <summary>
-        /// pnlProgramPartList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlProgramPartList;
-        
-        /// <summary>
-        /// rptProgramPart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptProgramPart;
-        
-        /// <summary>
-        /// lblProgramPartEmptyRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProgramPartEmptyRepeater;
     }
 }

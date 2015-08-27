@@ -22,10 +22,12 @@ namespace SQM.Website
 
 		protected decimal companyId;
 		protected decimal plantId;
-		protected decimal selectedPlantId = 0;
+		//protected decimal selectedPlantId;
 		protected AccessMode accessLevel;
 		protected RadDropDownList rddlFilteredUsers;
 		protected bool IsFullPagePostback = false;
+
+		protected decimal involvedPersonId;
 
 		protected int currentFormStep;
 		protected int totalFormSteps;
@@ -135,17 +137,37 @@ namespace SQM.Website
 			set { ViewState["SelectedTypeText"] = value; }
 		}
 
-		protected decimal SelectedLocationId
+		protected decimal IncidentLocationId
 		{
-			get { return ViewState["SelectedLocationId"] == null ? 0 : (decimal)ViewState["SelectedLocationId"]; }
-			set { ViewState["SelectedLocationId"] = value; }
+			get { return ViewState["IncidentLocationId"] == null ? 0 : (decimal)ViewState["IncidentLocationId"]; }
+			set { ViewState["IncidentLocationId"] = value; }
 		}
 
 		protected override void OnInit(EventArgs e)
 		{
 			base.OnInit(e);
 
-			//uclPartSearch1.OnSearchItemSelect += OnPartSelect;
+			RadAjaxManager rajaxmgr = null;
+			Control ctl = this.Parent;
+			while (true)
+			{
+				rajaxmgr = (RadAjaxManager)ctl.FindControl("RadAjaxManager1");
+				if (rajaxmgr == null)
+				{
+					ctl = ctl.Parent;
+					if (ctl.Parent == null)
+					{
+						return;
+					}
+					continue;
+				}
+				break;
+			}
+
+			if (rajaxmgr != null)
+				rajaxmgr.AjaxSettings.AddAjaxSetting(uclInvolvedPersonSearch, lbSupervisor);
+
+			uclInvolvedPersonSearch.OnSearchItemSelect += OnInvolvedPersonSelect;
 		}
 		
 		protected void Page_Init(object sender, EventArgs e)
@@ -161,7 +183,11 @@ namespace SQM.Website
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			accessLevel = UserContext.CheckAccess("EHS", "");
 
+			//IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
+
 			lblResults.Text = "";
+
+			//var inctype = Session["IncidentTypeID"];
 
 			if (IsPostBack)
 			{
@@ -211,7 +237,6 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
-			//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 			formSteps = GetFormSteps(typeId);
 			totalFormSteps = formSteps.Count();
 
@@ -239,14 +264,12 @@ namespace SQM.Website
 
 					rdpReportDate.SelectedDate = incident.CREATE_DT;
 
-					PopulateLocationDropDown();
-					rddlLocation.SelectedValue = Convert.ToString(incident.DETECT_PLANT_ID);
+					IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
 
-					PopulateInvolvedPersonDropDown();
-
+					PopulateOperationDropDown(IncidentLocationId);
+					PopulateDepartmentDropDown(IncidentLocationId);
+					PopulateInvolvedPersonRSB(IncidentLocationId);
 					PopulateShiftDropDown();
-					PopulateOperationDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
-					PopulateDepartmentDropDown(Convert.ToInt32(incident.DETECT_PLANT_ID));
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 
@@ -258,23 +281,20 @@ namespace SQM.Website
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
 
-						rddlInvolvedPerson.SelectedValue = Convert.ToString(injuryIllnessDetails.INVOLVED_PERSON_ID);
+						//Involved Person :
+						PERSON invp = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.INVOLVED_PERSON_ID select p).FirstOrDefault();
+						string involvedPerson = (invp != null) ? string.Format("{0}, {1}", invp.LAST_NAME, invp.FIRST_NAME) : "";
+						SQMBasePage.DisplayControlValue(uclInvolvedPersonSearch.PersonTextBox, involvedPerson, PageUseMode.EditEnabled, "textStd");
+
 						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						rddlOperation.SelectedValue = injuryIllnessDetails.PLANT_LINE_ID.ToString();
-						rddlInvolvedPerson.SelectedValue = injuryIllnessDetails.INVOLVED_PERSON_ID.ToString();
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
 						
 						PERSON supv = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.SUPERVISOR_PERSON_ID select p).FirstOrDefault();
-						if (supv != null)
-							lbSupervisor.Text = string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL);
-						else
-							lbSupervisor.Text = "[ supervisor not found ]";
+						lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL) : "[ supervisor not found ]";
 
-						if (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE")
-							rdoInside.SelectedValue = "1";
-						else
-							rdoInside.SelectedValue = "0";
+						rdoInside.SelectedValue = (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE") ? "1" : "0";
 
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 						rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
@@ -302,7 +322,6 @@ namespace SQM.Website
 					rtpIncidentTime.Clear();
 					tbDescription.Text = "";
 					tbLocalDescription.Text = "";
-					rddlLocation.Items.Clear();
 					rddlShift.Items.Clear();
 					rddlDepartment.Items.Clear();
 					rddlOperation.Items.Clear();
@@ -325,6 +344,8 @@ namespace SQM.Website
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 
+					IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
+
 					CurrentFormStep = 1;
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
@@ -338,9 +359,13 @@ namespace SQM.Website
 
 					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
-					PopulateLocationDropDown();
 					PopulateShiftDropDown();
-					PopulateInvolvedPersonDropDown();
+
+					uclInvolvedPersonSearch.Visible = false;
+
+					PopulateOperationDropDown(IncidentLocationId);
+					PopulateDepartmentDropDown(IncidentLocationId);
+					PopulateInvolvedPersonRSB(IncidentLocationId);
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 					GetAttachments(0);
@@ -356,9 +381,7 @@ namespace SQM.Website
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-			//if (EditIncidentTypeId == 0 && IsEditContext)
-				//typeId = SelectedTypeId;
-
+	
 			formSteps = GetFormSteps(typeId);
 
 			int displayStep = currentStep + 1;
@@ -372,7 +395,6 @@ namespace SQM.Website
 			btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
 
 			SetUserAccess(currentFormName);
-
 
 			switch (currentFormName)
 			{
@@ -560,8 +582,8 @@ namespace SQM.Website
 					rfvIncidentDate.Enabled = UpdateAccess;
 					
 					
-					rddlLocation.Enabled = UpdateAccess;
-					rfvLocation.Enabled = UpdateAccess;
+					//rddlLocation.Enabled = UpdateAccess;
+					//rfvLocation.Enabled = UpdateAccess;
 					
 					tbDescription.Enabled = UpdateAccess;
 					rfvDescription.Enabled = UpdateAccess;
@@ -575,14 +597,8 @@ namespace SQM.Website
 					rddlShift.Enabled = UpdateAccess;
 					rfvShift.Enabled = UpdateAccess;
 
-					//tbDepartment.Enabled = UpdateAccess;
-					//rfvDepartment.Enabled = UpdateAccess;
-
-					//rddlOperation.Enabled = UpdateAccess;
-					//rfvOperation.Enabled = UpdateAccess;
-
-					rddlInvolvedPerson.Enabled = UpdateAccess;
-					rfvInvolvedPerson.Enabled = UpdateAccess;
+					uclInvolvedPersonSearch.Access = UpdateAccess;
+					//rfvInvolvedPersonSearch.Enabled = UpdateAccess;
 
 					tbInvPersonStatement.Enabled = UpdateAccess;
 					//rfvInvPersonStatement.Enabled = UpdateAccess;
@@ -593,7 +609,7 @@ namespace SQM.Website
 					//rddlSupervisor.Enabled = UpdateAccess;
 					//rfvSupervisor.Enabled = UpdateAccess;
 
-					//tbSupervisorStatement.Enabled = UpdateAccess;
+					tbSupervisorStatement.Enabled = UpdateAccess;
 					//rfvSupervisorStatement.Enabled = UpdateAccess;
 
 					rdoInside.Enabled = UpdateAccess;
@@ -656,31 +672,6 @@ namespace SQM.Website
 			}
 		}
 
-		void PopulateLocationDropDown()
-		{
-			var plantIdList = SelectPlantIdsByAccessLevel();
-			if (plantIdList.Count > 1)
-				rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
-			foreach (decimal pid in plantIdList)
-			{
-				string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
-				rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
-			}
-
-			rddlLocation.AutoPostBack = true;
-
-			if (plantIdList.Count > 1)
-			{
-				PopulateOperationDropDown(0);
-				PopulateDepartmentDropDown(0);			
-			}
-			else if (plantIdList.Count == 1)
-			{
-				decimal pid = plantIdList[0];
-				PopulateOperationDropDown(pid);
-				PopulateDepartmentDropDown(pid);		
-			}
-		}
 
 		void PopulateShiftDropDown()
 		{
@@ -773,6 +764,18 @@ namespace SQM.Website
 			}
 		}
 
+		void PopulateInvolvedPersonRSB(decimal plantId)
+		{
+			if (plantId > 0)
+			{
+				uclInvolvedPersonSearch.Visible = true;
+				uclInvolvedPersonSearch.Initialize("");
+			}
+			else
+			{
+				uclInvolvedPersonSearch.Visible = false;
+			}
+		}
 
 		void PopulateInjuryTypeDropDown()
 		{
@@ -816,30 +819,6 @@ namespace SQM.Website
 		}
 
 
-
-		void PopulateInvolvedPersonDropDown()
-		{
-
-			var personList = new List<PERSON>();
-			personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
-
-			if (personList != null && personList.Count > 0)
-			{
-				rddlInvolvedPerson.Items.Add(new DropDownListItem("[Select One]", ""));
-
-				foreach (PERSON p in personList)
-				{
-					string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-					rddlInvolvedPerson.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-					
-				}
-			}
-
-			rddlInvolvedPerson.SelectedIndexChanged += rddlInvolvedPerson_SelectedIndexChanged;
-			rddlInvolvedPerson.AutoPostBack = true;
-
-		}
-
 		PERSON GetSupervisor(decimal invPersonId)
 		{
 
@@ -853,47 +832,6 @@ namespace SQM.Website
 
 		}
 
-
-		List<decimal> SelectPlantIdsByAccessLevel()
-		{
-			List<decimal> plantIdList = new List<decimal>();
-
-			accessLevel = UserContext.CheckAccess("EHS", "");
-
-			if (accessLevel >= AccessMode.Admin)
-			{
-				plantIdList = EHSIncidentMgr.SelectPlantIdsByCompanyId(companyId);
-			}
-			else
-			{
-				plantIdList = SessionManager.UserContext.PlantAccessList;
-				if (plantIdList == null || plantIdList.Count == 0)
-				{
-					plantIdList.Add(SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
-				}
-			}
-
-			return plantIdList;
-		}
-
-		protected void rddlLocation_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		{
-			BuildFilteredUsersDropdownList();
-		}
-
-		protected void rddlInvolvedPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		{
-			RadDropDownList rddli = (RadDropDownList)sender;
-			decimal invPrsnId = Convert.ToInt32(rddli.SelectedValue);	
-		
-			PERSON supv = (PERSON)GetSupervisor(invPrsnId);
-
-			if (supv != null)
-				lbSupervisor.Text = string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL);
-			else
-				lbSupervisor.Text = "[ supervisor not found ]";
-
-		}
 
 		protected void rddlWitnessName_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
@@ -919,56 +857,6 @@ namespace SQM.Website
 		void rddlBodyPart_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			//
-		}
-
-		void BuildFilteredUsersDropdownList()
-		{
-			if (rddlLocation != null)
-			{
-				if (!string.IsNullOrEmpty(rddlLocation.SelectedValue))
-					this.SelectedLocationId = Convert.ToDecimal(rddlLocation.SelectedValue);
-				else
-					this.SelectedLocationId = 0;
-			}
-
-			if (rddlFilteredUsers != null)
-			{
-				rddlFilteredUsers.Items.Clear();
-				rddlFilteredUsers.Items.Add(new DropDownListItem("[Select One]", ""));
-
-				var locationPersonList = new List<PERSON>();
-				if (this.SelectedLocationId > 0)
-				{
-					locationPersonList = EHSIncidentMgr.SelectEhsDataOriginatorsAtPlant(this.SelectedLocationId);
-					locationPersonList.AddRange(EHSIncidentMgr.SelectDataOriginatorAdditionalPlantAccess(this.SelectedLocationId));
-					locationPersonList = (from p in locationPersonList orderby p.LAST_NAME, p.FIRST_NAME select p).ToList();
-				}
-				//else
-				//	locationPersonList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-
-				if (locationPersonList.Count > 0)
-				{
-					foreach (PERSON p in locationPersonList)
-					{
-						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-						// Check for duplicate list items
-						var ddli = rddlFilteredUsers.FindItemByValue(Convert.ToString(p.PERSON_ID));
-						if (ddli == null)
-							rddlFilteredUsers.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-					}
-
-					// If only one user, select by default
-					if (rddlFilteredUsers.Items.Count() == 2)
-						rddlFilteredUsers.SelectedIndex = 1;
-				}
-				else
-				{
-					rddlFilteredUsers.Items[0].Text = "[No valid users - please change location]";
-				}
-			}
-
-			PopulateOperationDropDown(SelectedLocationId);
-			PopulateDepartmentDropDown(SelectedLocationId);
 		}
 
 
@@ -1181,7 +1069,7 @@ namespace SQM.Website
 
 				// Get custom form values
 				selectedShift = rddlShift.SelectedValue;
-				SelectedLocationId = Convert.ToInt32(rddlLocation.SelectedValue);
+				//SelectedLocationId = Convert.ToInt32(rddlLocation.SelectedValue);
 				incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
 				localDescription = "";
 				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
@@ -1233,7 +1121,7 @@ namespace SQM.Website
 
 				// Get custom form values
 				selectedShift = rddlShift.SelectedValue;
-				SelectedLocationId = Convert.ToInt32(rddlLocation.SelectedValue);
+				//SelectedLocationId = Convert.ToInt32(rddlLocation.SelectedValue);
 				incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
 				localDescription = "";
 				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
@@ -1306,13 +1194,13 @@ namespace SQM.Website
 				incidentTypeId = SelectedTypeId;
 				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
+				//selectedPlantId = SelectedLocationId;
 				currentFormStep = CurrentFormStep;
 			}
 			else
 			{
 				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
+				//selectedPlantId = SelectedLocationId;
 				incidentTypeId = EditIncidentTypeId;
 				incidentId = EditIncidentId;
 				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
@@ -1325,7 +1213,7 @@ namespace SQM.Website
 				incidentDescription = incidentDescription.Substring(0, MaxTextLength);
 
 			if (InitialPlantId == 0)
-				InitialPlantId = selectedPlantId;
+				InitialPlantId = IncidentLocationId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
@@ -1377,7 +1265,7 @@ namespace SQM.Website
 			if (finalIncident != null)
 				finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
 			else
-				finalPlantId = selectedPlantId;
+				finalPlantId = IncidentLocationId;
 
 			// Start plant accounting rollup in a background thread
 			Thread thread = new Thread(() => EHSAccountingMgr.RollupPlantAccounting(InitialPlantId, finalPlantId));
@@ -1401,7 +1289,7 @@ namespace SQM.Website
 				incidentTypeId = SelectedTypeId;
 				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
+
 				currentFormStep = CurrentFormStep;
 
 				theIncident = CreateNewIncident();
@@ -1411,12 +1299,12 @@ namespace SQM.Website
 				theInjuryIllnessForm = CreateNewInjuryIllnessDetails(incidentId);
 				SaveAttachments(incidentId);
 
-				EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+				EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
 			}
 			else
 			{
 				incidentDescription = tbDescription.Text;
-				selectedPlantId = SelectedLocationId;
+
 				incidentTypeId = EditIncidentTypeId;
 				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
@@ -1450,7 +1338,7 @@ namespace SQM.Website
 			{
 				DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID,
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
-				DETECT_PLANT_ID = selectedPlantId,
+				DETECT_PLANT_ID = IncidentLocationId,
 				INCIDENT_TYPE = "EHS",
 				CREATE_DT = DateTime.Now,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
@@ -1479,7 +1367,7 @@ namespace SQM.Website
 			{
 				incident.DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 				incident.DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID;
-				incident.DETECT_PLANT_ID = selectedPlantId;
+				incident.DETECT_PLANT_ID = IncidentLocationId;
 				incident.INCIDENT_TYPE = "EHS";
 				incident.DESCRIPTION = incidentDescription;
 				incident.INCIDENT_DT = incidentDate;
@@ -1510,11 +1398,12 @@ namespace SQM.Website
 			newInjryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
 			newInjryIllnessDetails.OPERATION = "";
 
-			if (!String.IsNullOrEmpty(rddlInvolvedPerson.SelectedValue))
+			involvedPersonId = uclInvolvedPersonSearch.SelectedPersonID;
+			if (involvedPersonId != null && involvedPersonId != 0)
 			{
-				newInjryIllnessDetails.INVOLVED_PERSON_ID = Convert.ToInt32(rddlInvolvedPerson.SelectedValue);
+				newInjryIllnessDetails.INVOLVED_PERSON_ID = involvedPersonId;
 
-				PERSON supv = (PERSON)GetSupervisor(Convert.ToInt32(rddlInvolvedPerson.SelectedValue));
+				PERSON supv = (PERSON)GetSupervisor(involvedPersonId);
 				if (supv != null)
 					newInjryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
 			}
@@ -1704,11 +1593,12 @@ namespace SQM.Website
 				if (rdpSupvInformedDate.SelectedDate != null)
 					injuryIllnessDetails.SUPERVISOR_INFORMED_DT = rdpSupvInformedDate.SelectedDate;
 
-				if (!String.IsNullOrEmpty(rddlInvolvedPerson.SelectedValue))
+				involvedPersonId = uclInvolvedPersonSearch.SelectedPersonID;
+				if (involvedPersonId != null && involvedPersonId != 0)
 				{
-					injuryIllnessDetails.INVOLVED_PERSON_ID = Convert.ToInt32(rddlInvolvedPerson.SelectedValue);
+					injuryIllnessDetails.INVOLVED_PERSON_ID = involvedPersonId;
 
-					PERSON supv = (PERSON)GetSupervisor(Convert.ToInt32(rddlInvolvedPerson.SelectedValue));
+					PERSON supv = (PERSON)GetSupervisor(involvedPersonId);
 					if (supv != null)
 						injuryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
 				}
@@ -1822,34 +1712,21 @@ namespace SQM.Website
 
 		}
 
-		private void OnPartSelect(string partID)
+		private void OnInvolvedPersonSelect(string personName)
 		{
-			//PART part = SQMModelMgr.LookupPart(new PSsqmEntities(), Convert.ToDecimal(partID), "", SessionManager.PrimaryCompany().COMPANY_ID, false);
-			//if (part != null)
-			//{
-			//	IssueCtl().qualityIssue.IssueOccur.PART_ID = part.PART_ID;
-			//	PartData partData = SQMModelMgr.LookupPartData(new PSsqmEntities(), SessionManager.PrimaryCompany().COMPANY_ID, part.PART_ID);
-			//	partData.Locations();
-			//	IssueCtl().qualityIssue.AddPartInfo(partData);
-			//	lblPartDesc.Text = part.PART_NAME;
-			//	ddlResponsibleLocation.Items.Clear();
-			//	ddlResponsibleLocation.Items.Add(new RadComboBoxItem(IssueCtl().qualityIssue.DetectedLocation.Company.COMPANY_NAME + ", " + IssueCtl().qualityIssue.DetectedLocation.Plant.PLANT_NAME, IssueCtl().qualityIssue.DetectedLocation.Plant.PLANT_ID.ToString()));
-			//	if (IssueCtl().qualityIssue.Partdata.B2BList != null)
-			//	{
-			//		foreach (BusinessLocation location in IssueCtl().qualityIssue.Partdata.B2BList)
-			//		{
-			//			if (ddlResponsibleLocation.Items.FindItemByValue(location.Plant.PLANT_ID.ToString()) == null)
-			//				ddlResponsibleLocation.Items.Add(new RadComboBoxItem(location.Company.COMPANY_NAME + ", " + location.Plant.PLANT_NAME, location.Plant.PLANT_ID.ToString()));
-			//		}
-			//		if (IssueCtl().qualityIssue.Incident.RESP_PLANT_ID.HasValue)
-			//			ddlResponsibleLocation.SelectedValue = IssueCtl().qualityIssue.Incident.RESP_PLANT_ID.ToString();
-			//		else if (ddlResponsibleLocation.Items.Count > 0)
-			//			ddlResponsibleLocation.SelectedIndex = 0;
+			if (!String.IsNullOrEmpty(personName))
+				involvedPersonId = uclInvolvedPersonSearch.SelectedPersonID;
+			else
+				involvedPersonId = 0;
 
-			//		GetResponsibleList();
-			//	}
-			//	updResponsible.Update();
-			//}
+			if (involvedPersonId > 0)
+			{
+				PERSON supv = (PERSON)GetSupervisor(involvedPersonId);
+				lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL) : "[ supervisor not found ]";
+
+			}
+
 		}
+
 	}
 }

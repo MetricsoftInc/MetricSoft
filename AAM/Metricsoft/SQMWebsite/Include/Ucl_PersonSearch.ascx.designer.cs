@@ -13,57 +13,21 @@ namespace SQM.Website {
     public partial class Ucl_PersonSearch {
         
         /// <summary>
-        /// btnOpenPartListWindow control.
+        /// btnOpenPersonListWindow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOpenPartListWindow;
+        protected global::System.Web.UI.WebControls.Button btnOpenPersonListWindow;
         
         /// <summary>
-        /// rsbPart control.
+        /// rsbPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadSearchBox rsbPart;
-        
-        /// <summary>
-        /// hfPartNumberPerspective control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfPartNumberPerspective;
-        
-        /// <summary>
-        /// winPartList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow winPartList;
-        
-        /// <summary>
-        /// lblPartListInstruct control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPartListInstruct;
-        
-        /// <summary>
-        /// uclPartList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_PartList uclPartList;
+        protected global::Telerik.Web.UI.RadSearchBox rsbPerson;
     }
 }

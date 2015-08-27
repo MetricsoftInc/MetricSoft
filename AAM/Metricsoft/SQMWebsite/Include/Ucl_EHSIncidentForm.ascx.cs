@@ -145,6 +145,7 @@ namespace SQM.Website
 			else if (Mode == IncidentMode.Prevent)
 				ahReturn.HRef = "/EHS/EHS_Incidents.aspx?mode=prevent";
 
+
 			UpdateIncidentTypes();
 
 			var sourceId = Page.Request[Page.postEventSourceID];
@@ -162,6 +163,9 @@ namespace SQM.Website
 					return;
 				}
 				divIncidentForm.Visible = true;
+
+				LoadHeaderInformation();
+					
 				BuildForm();
 			}
 			else
@@ -189,7 +193,7 @@ namespace SQM.Website
 				if (Mode == IncidentMode.Incident)
 				{
 					incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId);
-					selectString = "[Select An Incident Type]";
+					selectString = "&nbsp;&nbsp;[Select An Incident Type]";
 				}
 				else if (Mode == IncidentMode.Prevent)
 				{
@@ -201,11 +205,100 @@ namespace SQM.Website
 				
 				if (accessLevel < AccessMode.Admin)
 						incidentTypeList = (from i in incidentTypeList where i.INCIDENT_TYPE_ID != 10 select i).ToList();
-				
+
+				rddlIncidentType.Font.Bold = true;
 				rddlIncidentType.DataSource = incidentTypeList;
 				rddlIncidentType.DataTextField = "TITLE";
 				rddlIncidentType.DataValueField = "INCIDENT_TYPE_ID";
 				rddlIncidentType.DataBind();
+			}
+		}
+
+		protected void LoadHeaderInformation()
+		{
+			// set up for adding the header info
+			AccessMode accessmode = UserContext.RoleAccess();
+
+			if (IsEditContext || CurrentStep > 0)
+			{
+				// in edit mode, load the header field values and make all fields display only
+	
+				var incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+
+			BusinessLocation location = new BusinessLocation().Initialize((decimal)incident.DETECT_PLANT_ID);
+
+			rddlIncidentType.Enabled = false;
+			rddlIncidentType.Visible = false;
+
+			lblIncidentLocation.Text = location.Plant.PLANT_NAME + " " + location.BusinessOrg.ORG_NAME;
+			lblIncidentLocation.Visible = true;
+
+				ddlIncidentLocation.Visible = false;
+				mnuIncidentLocation.Visible = false;
+
+				//lblAuditDescription.Text = audit.DESCRIPTION;
+				//lblAuditDescription.Visible = true;
+				//tbDescription.Visible = false;
+
+				// build the audit user list
+				//lblAuditPersonName.Text = EHSAuditMgr.SelectUserNameById((Decimal)audit.AUDIT_PERSON);
+				//lblAuditPersonName.Visible = true;
+				//rddlAuditUsers.Visible = false;
+
+				//lblAuditDueDate.Text = audit.AUDIT_DT.ToString("MM/dd/yyyy");
+				//lblAuditDueDate.Visible = true;
+				//dmAuditDate.Enabled = false;
+				//dmAuditDate.Visible = false;
+			}
+			else
+			{
+				if (accessmode >= AccessMode.Plant)
+				{
+					// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
+					List<BusinessLocation> locationList = SessionManager.PlantList;
+					locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
+					locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
+					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
+					{
+						if (mnuIncidentLocation.Items.Count == 0)
+						{
+							mnuIncidentLocation.Items.Clear();
+
+							ddlIncidentLocation.Visible = false;
+							mnuIncidentLocation.Visible = true;
+							mnuIncidentLocation.Enabled = true;
+							SQMBasePage.SetLocationList(mnuIncidentLocation, locationList, 0, "[Select a Location]", "", true);
+						}
+					}
+					else
+					{
+						if (ddlIncidentLocation.Items.Count == 0)
+						{
+							ddlIncidentLocation.Items.Clear();
+							ddlIncidentLocation.Visible = true;
+							ddlIncidentLocation.Enabled = true;
+							mnuIncidentLocation.Visible = false;
+							SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
+							ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+						}
+					}
+				}
+				// set defaults for add mode
+				rddlIncidentType.Enabled = false;
+				rddlIncidentType.Visible = false;
+				//lblAuditLocation.Visible = false;
+				//lblAuditDescription.Visible = false;
+				//tbDescription.Visible = true;
+				//rddlAuditUsers.Enabled = true;
+				//rddlAuditUsers.Visible = true;
+				//lblAuditPersonName.Visible = false;
+				//lblAuditDueDate.Visible = false;
+				//dmAuditDate.Visible = true;
+				//dmAuditDate.Enabled = true;
+				//dmAuditDate.ShowPopupOnFocus = true;
+				//if (!dmAuditDate.SelectedDate.HasValue)
+				//	dmAuditDate.SelectedDate = DateTime.Now;
+
 			}
 		}
 
@@ -250,6 +343,7 @@ namespace SQM.Website
 			if (EditIncidentId > 0)
 			{
 				incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+				SessionManager.SetIncidentLocation(Convert.ToDecimal(incident.DETECT_PLANT_ID));
 			}
 
 			string typeText = SelectedTypeText;
@@ -1833,9 +1927,16 @@ namespace SQM.Website
 			string selectedTypeId = rddlIncidentType.SelectedValue;
 			if (!string.IsNullOrEmpty(selectedTypeId))
 			{
+				//Session["IncidentTypeID"] = selectedTypeId;
 				SelectedTypeId = Convert.ToDecimal(selectedTypeId);
 				SelectedTypeText = rddlIncidentType.SelectedText;
 				IsEditContext = false;
+
+				rddlIncidentType.Enabled = false;
+				rddlIncidentType.Visible = true;
+				ddlIncidentLocation.Enabled = false;
+				mnuIncidentLocation.Enabled = false;
+
 				BuildForm();
 			}
 		}
@@ -2492,10 +2593,11 @@ namespace SQM.Website
 						typeString = "Recommendation";
 					}
 				
-					rddlIncidentType.Visible = (rddlIncidentType.Items.Count == 1) ? false : true;
+					//rddlIncidentType.Visible = (rddlIncidentType.Items.Count == 1) ? false : true;
 					lblAddOrEditIncident.Text = "<strong>Add a New " + typeString + ":</strong>";
 					
 					lblIncidentType.Visible = false;
+				
 					btnDelete.Visible = false;
 				}
 				else
@@ -2530,13 +2632,23 @@ namespace SQM.Website
 					lblAddOrEditIncident.Text = "<strong>Editing " + WebSiteCommon.FormatID(EditIncidentId, 6) + typeString + "</strong><br/>";
 
 					rddlIncidentType.Visible = false;
+					ddlIncidentLocation.Visible = false;
+					mnuIncidentLocation.Visible = false;
 					if (Mode == IncidentMode.Incident)
+					{
 						lblIncidentType.Text = "Incident Type: ";
+						lblIncidentLocation.Text = "Incident Location: ";
+					}
 					else if (Mode == IncidentMode.Prevent)
+					{
 						lblIncidentType.Text = "Type: ";
-					
-					lblIncidentType.Text += EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
+						lblIncidentLocation.Text = "Location";
+					}
+
+					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId));
+					lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
 					lblIncidentType.Visible = true;
+					lblIncidentLocation.Visible = true;
 					btnDelete.Visible = true;
 					BuildForm();
 				}
@@ -2592,6 +2704,37 @@ namespace SQM.Website
 			return plantIdList;
 		}
 
+
+		protected void IncidentLocation_Select(object sender, EventArgs e)
+		{
+			string location = "0";
+			if (sender is RadMenu)
+			{
+				location = mnuIncidentLocation.SelectedItem.Value;
+				mnuIncidentLocation.Items[0].Text = mnuIncidentLocation.SelectedItem.Text;
+			}
+			else if (sender is RadSlider)
+			{
+				location = ddlIncidentLocation.SelectedValue;
+			}
+			//BuildAuditUsersDropdownList(location);
+			hdnIncidentLocation.Value = location;
+
+			SessionManager.SetIncidentLocation(Convert.ToDecimal(location));
+
+
+			rddlIncidentType.Enabled = rddlIncidentType.Visible = (rddlIncidentType.Items.Count == 1) ? false : true;
+			
+			// need to rebuild the form
+			string selectedTypeId = rddlIncidentType.SelectedValue;
+			if (!string.IsNullOrEmpty(selectedTypeId))
+			{
+				SelectedTypeId = Convert.ToDecimal(selectedTypeId);
+				IsEditContext = false;
+				//BuildForm();
+			}
+
+		}
 		
 	}
 }

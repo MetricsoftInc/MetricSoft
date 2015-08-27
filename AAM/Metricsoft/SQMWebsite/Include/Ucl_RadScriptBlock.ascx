@@ -7,6 +7,11 @@
             var arrSplit = args.get_text().split("|");
             sender.get_inputElement().value = arrSplit[1];
         }
+        function onPersonSearch(sender, args) {
+        	//alert(args.get_dataItem().PersonId);
+			var arrSplit = args.get_text().split("|");
+        	sender.get_inputElement().value = arrSplit[0];
+         }
         function onQISearch(sender, args) {
             var arrSplit = args.get_text().split("|");
             sender.get_inputElement().value = arrSplit[0] + " - " + arrSplit[1];

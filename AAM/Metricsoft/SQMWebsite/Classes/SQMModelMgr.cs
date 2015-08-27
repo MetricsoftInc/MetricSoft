@@ -296,6 +296,26 @@ namespace SQM.Website
             set;
         }
     }
+
+	
+	public class PersonData
+	{
+		public decimal PersonId
+		{
+			get;
+			set;
+		}
+		public string PersonName
+		{
+			get;
+			set;
+		}
+		public string PersonEmail
+		{
+			get;
+			set;
+		}
+	}
     #endregion
 
 
@@ -930,15 +950,35 @@ namespace SQM.Website
 
         public static List<PERSON> SelectPlantPersonList(decimal companyID, decimal plantID)
         {
+			PSsqmEntities ctx = new PSsqmEntities();
             List<PERSON> personList = new List<PERSON>();
 
-            foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
-            {
- 				if (person.PLANT_ID == plantID)
-					personList.Add(person);
-            }
+			personList = (from p in ctx.PERSON
+						  where p.COMPANY_ID == companyID
+								&& p.PLANT_ID == plantID
+								&& p.STATUS == "A"
+						  select p).ToList();
 
             return personList;
+        }
+
+		public static List<PersonData> SelectPlantPersonDataList(decimal companyID, decimal plantID)
+		{
+			//List<PERSON> personList = new List<PERSON>();
+			List<PersonData> personDataList = new List<PersonData>();
+			
+
+			foreach (PERSON person in SelectPlantPersonList(companyID, plantID))
+            {
+					PersonData prsdta = new PersonData();
+
+					prsdta.PersonId = person.PERSON_ID;
+					prsdta.PersonName = string.Format("{0}, {1}", person.LAST_NAME, person.FIRST_NAME);
+					prsdta.PersonEmail = person.EMAIL;
+
+					personDataList.Add(prsdta);
+            }
+			return personDataList;
         }
 
 		public static List<PERSON> SelectPlantJobcodePersonList(decimal companyID, decimal plantID, string jobcodeCD)
@@ -954,7 +994,7 @@ namespace SQM.Website
 			return personList;
 		}
 
-		public static bool PersonPlantAccess(PERSON person, decimal plantID)
+        public static bool PersonPlantAccess(PERSON person, decimal plantID)
         {
             bool canAccess = person.ROLE <= 100 ||  person.PLANT_ID == plantID ? true : false;    // company admin and person's hr location have access automatically
 

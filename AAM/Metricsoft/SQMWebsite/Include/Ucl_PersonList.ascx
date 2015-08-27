@@ -1,31 +1,33 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_PersonList.ascx.cs" Inherits="SQM.Website.Ucl_PersonList" %>
 
-<asp:Panel ID="pnlPartList" runat="server" Visible="false">
+<asp:Panel ID="pnlPersonList" runat="server" Visible="false">
 	<div id="divPartListScroll" runat="server" class="">
-		<asp:GridView runat="server" ID="gvPartList" Name="gvPartList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvPartList_OnRowDataBound">
+		<asp:GridView runat="server" ID="gvPersonList"  CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvPersonList_OnRowDataBound">
 			<HeaderStyle CssClass="HeadingCellTextLeft" />    
 			<RowStyle CssClass="DataCell" />
 			<AlternatingRowStyle CssClass="DataCellAlt" /> 
 			<Columns>
-				<asp:TemplateField HeaderText="Part Number">
+				<asp:TemplateField HeaderText="Person">
 					<ItemTemplate>
-						<asp:LinkButton ID="lnkViewPart_out" runat="server" CommandArgument='<%#Eval("Part.PART_ID") %>'
-							text='<%#Eval("Part.PART_NUM") %>'  CSSclass="linkUnderline" OnClick="lnkPart_Click"></asp:LinkButton>
+						<asp:LinkButton ID="lnkViewPerson_out" runat="server" CommandArgument='<%#Eval("PersonId") %>'
+							text='<%#Eval("PersonName") %>'  CSSclass="linkUnderline" OnClick="lnkPerson_Click"></asp:LinkButton>
 					</ItemTemplate>
 				</asp:TemplateField>
-				<asp:TemplateField HeaderText="Part Description">
+				<asp:TemplateField HeaderText="Email">
 					<ItemTemplate>
-						<asp:Label ID="lblPartDesc_out" runat="server" text='<%#Eval("Part.PART_NAME") %>'></asp:Label>
+						<asp:Label ID="lblPartDesc_out" runat="server" text='<%#Eval("PersonEmail") %>'></asp:Label>
 					</ItemTemplate>
 				</asp:TemplateField>
 			</Columns>
 		</asp:GridView>
-		<asp:Label runat="server" ID="lblPartListEmpty" Height="40" Text="Part List Is Empty." class="GridEmpty" Visible="false"></asp:Label>
+		<asp:Label runat="server" ID="lblPartListEmpty" Height="40" Text="Person List Is Empty." class="GridEmpty" Visible="false"></asp:Label>
 	</div>
 </asp:Panel>
 
 
-<asp:Panel ID="pnlPartPlantList" runat="server" Visible = "false">
+
+
+<%--<asp:Panel ID="pnlPartPlantList" runat="server" Visible = "false">
 	<table width="99%" border="0" cellspacing="0" cellpadding="1">
 		<tr>
 			<td class=admBkgd align=center>
@@ -68,9 +70,9 @@
 			</td>
 		</tr>
 	</table>
-</asp:Panel>
+</asp:Panel>--%>
 
-<asp:Panel ID="pnlProgramList" runat="server" Visible = "false"  CssClass="admBkgd">
+<%--<asp:Panel ID="pnlProgramList" runat="server" Visible = "false"  CssClass="admBkgd">
 	<table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
 		<tr><td>&nbsp;</td></tr>
 		<tr>
@@ -107,9 +109,9 @@
 			</td>
 		</tr>
 	</table>
-</asp:Panel>
+</asp:Panel>--%>
 
-<asp:Panel ID="pnlProgramPartList" runat="server" Visible="false">
+<%--<asp:Panel ID="pnlProgramPartList" runat="server" Visible="false">
 	<table width="100%">
 		<tr>
 			<td>
@@ -172,5 +174,5 @@
 			</td>
 		</tr>
 	</table>
-</asp:Panel>
+</asp:Panel>--%>
  

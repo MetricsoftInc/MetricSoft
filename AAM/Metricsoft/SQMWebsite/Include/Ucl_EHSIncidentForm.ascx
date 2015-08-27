@@ -38,32 +38,58 @@
 
 								<asp:Panel ID="pnlIncidentHeader" runat="server">
 
-									<div class="row-fluid" >
+                                    <div class="row-fluid" >
 
 										<div class="col-xs-12  text-left">
-
-
 											<asp:Label ID="lblAddOrEditIncident" class="textStd" runat="server"><strong>Add a New Incident:</strong></asp:Label>
-
-											<span  class="hidden-xs"  style="float:right; width: 160px; margin-right:6px;">
-												<span class="requiredStar">&bull;</span> - Required to Create
-											</span>
-
-											<div class="clearfix visible-xs-block"></div>
-											<br style="clear:both;"/>
-
-
-												<asp:Label ID="lblIncidentType" class="textStd" runat="server">Incident Type:</asp:Label>
-												<telerik:RadDropDownList ID="rddlIncidentType" runat="server" Width="268" AutoPostBack="true" CausesValidation="false"
-													OnSelectedIndexChanged="rddlIncidentType_SelectedIndexChanged" Skin="Metro">
-												</telerik:RadDropDownList>
+										
+	
+											<span class="hidden-xs"  style="float:right; width: 160px; margin-right:6px;">
+												<span class="requiredStar">&bull;</span> - Required to Create</span>												
 	
 
-											<span class="hidden-xs" style="float:right; width: 160px;">
-												<span class="requiredCloseStar">&bull;</span> - Required to Close
-											</span>
-										
-											<div class="clearfix visible-xs-block"></div>
+											<div style="clear:both;"></div>
+											
+											<span class="hidden-xs" style="float:right; width: 160px; margin-right:6px;">
+												<span class="requiredCloseStar">&bull;</span> - Required to Close</span>
+
+										</div>
+									</div>
+									
+									<br class="clearfix" style="clear:both;"/>
+
+									<div class="row-fluid" style="margin-top:-80px;" >
+										<div class="col-xs-12 text-left">
+											<asp:Label runat="server" ID="lblIncidentLocation" class="textStd" Visible="false"></asp:Label>
+											<br />
+											<asp:Label ID="lblIncidentType" class="textStd"  Visible="false" runat="server">Type:  </asp:Label>
+										</div>
+									</div>
+								    
+									<div class="row-fluid" >
+
+										<div class="col-xs-12 text-left">
+
+												<%--<span><asp:Label ID="lblLocation" runat="server" Text="Location"></asp:Label>&nbsp;&nbsp;</span>--%>
+                                            
+                                                <telerik:RadComboBox ID="ddlIncidentLocation" runat="server" Skin="Metro" Width="265" ZIndex="10" Font-Bold="false" Font-Size="Small"
+                                                    AutoPostBack="true" ToolTip="select an incident location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="IncidentLocation_Select" EnableViewState="true">
+                                                </telerik:RadComboBox>
+                                                <telerik:RadMenu ID="mnuIncidentLocation" runat="server" Skin="Default" Width="265" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="IncidentLocation_Select" EnableViewState="true"></telerik:RadMenu>
+                                                <asp:HiddenField runat="server" ID="hdnIncidentLocation" />
+ 
+										 </div>
+									</div>
+									
+									<br />
+									
+									<div class="row-fluid" >
+
+										<div class="col-xs-12">
+											<br />
+												<telerik:RadDropDownList ID="rddlIncidentType" runat="server" Width="265" Height="28" AutoPostBack="true" Visible="false" CausesValidation="false"
+													OnSelectedIndexChanged="rddlIncidentType_SelectedIndexChanged" Skin="Metro">
+												</telerik:RadDropDownList>
 
 										</div>
 									</div>

@@ -243,6 +243,12 @@ namespace SQM.Website
 			set { HttpContext.Current.Session["B2B_LOCATION"] = value; }
 		}
 
+		public static BusinessLocation IncidentLocation
+		{
+			get { return ((BusinessLocation)HttpContext.Current.Session["IncidentLocation"]); }
+			set { HttpContext.Current.Session["IncidentLocation"] = value; }
+		}
+
 		public static BUSINESS_ORG ParentBusinessOrg
 		{
 			get { return ((BUSINESS_ORG)HttpContext.Current.Session["PARENT_BUSINESS_ORG"]); }
@@ -601,11 +607,24 @@ namespace SQM.Website
 			PLANT plant = SQMModelMgr.LookupPlant(plantID);
 			return SetB2BLocation(plant);
 		}
+
+		public static BusinessLocation SetIncidentLocation(decimal plantID)
+		{
+			PLANT plant = SQMModelMgr.LookupPlant(plantID);
+			return SetIncidentLocation(plant);
+		}
+
+
 		public static BusinessLocation SetB2BLocation(PLANT plant)
 		{
 			return (SessionManager.B2BLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)plant.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)plant.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)plant.PLANT_ID)));
 		}
-		
+
+		public static BusinessLocation SetIncidentLocation(PLANT plant)
+		{
+			return (SessionManager.IncidentLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)plant.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)plant.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)plant.PLANT_ID)));
+		}
+
 		public static COMPANY PrimaryCompany()
 		{
 			return SessionManager.SessionContext.PrimaryCompany;

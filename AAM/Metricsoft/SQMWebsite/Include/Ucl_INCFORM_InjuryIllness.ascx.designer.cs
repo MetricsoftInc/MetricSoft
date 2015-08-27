@@ -58,6 +58,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm;
         
         /// <summary>
+        /// uclRadScript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_RadScriptBlock uclRadScript;
+        
+        /// <summary>
         /// lbIncidentDateSM control.
         /// </summary>
         /// <remarks>
@@ -119,42 +128,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker rdpReportDate;
-        
-        /// <summary>
-        /// lbLocationSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbLocationSM;
-        
-        /// <summary>
-        /// lbLocationXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbLocationXS;
-        
-        /// <summary>
-        /// rddlLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlLocation;
-        
-        /// <summary>
-        /// rfvLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLocation;
         
         /// <summary>
         /// lbDescriptionSM control.
@@ -400,22 +373,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbInvolvedPersonXS;
         
         /// <summary>
-        /// rddlInvolvedPerson control.
+        /// ajx2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlInvolvedPerson;
+        protected global::Telerik.Web.UI.RadAjaxPanel ajx2;
         
         /// <summary>
-        /// rfvInvolvedPerson control.
+        /// uclInvolvedPersonSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvInvolvedPerson;
+        protected global::SQM.Website.Ucl_PersonSearch uclInvolvedPersonSearch;
+        
+        /// <summary>
+        /// lblPartDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPartDesc;
         
         /// <summary>
         /// lbInvPersonStatementSM control.
@@ -488,6 +470,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbSupervisorXS;
+        
+        /// <summary>
+        /// rapSupervisor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel rapSupervisor;
         
         /// <summary>
         /// lbSupervisor control.
