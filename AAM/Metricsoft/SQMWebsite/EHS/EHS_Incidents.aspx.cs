@@ -501,9 +501,9 @@ namespace SQM.Website
 				{
 					//HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_DT);
 					if (Mode == IncidentMode.Incident)
-						uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_DT).ToList(), "EHS", cbShowImage.Checked, false);
+						uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
 					else if (Mode == IncidentMode.Prevent)
-						uclIncidentList.BindPreventativeListRepeater(HSCalcs().ehsCtl.IncidentHst, "EHS", cbShowImage.Checked);
+						uclIncidentList.BindPreventativeListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked);
 				}
 			}
 
