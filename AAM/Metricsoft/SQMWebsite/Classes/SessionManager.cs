@@ -249,6 +249,15 @@ namespace SQM.Website
 			set { HttpContext.Current.Session["IncidentLocation"] = value; }
 		}
 
+		public static void ClearIncidentLocation()
+		{
+			try
+			{
+				HttpContext.Current.Session["IncidentLocation"] = null;
+			}
+			catch { }
+		}
+
 		public static BUSINESS_ORG ParentBusinessOrg
 		{
 			get { return ((BUSINESS_ORG)HttpContext.Current.Session["PARENT_BUSINESS_ORG"]); }

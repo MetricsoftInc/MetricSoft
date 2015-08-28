@@ -777,15 +777,26 @@ namespace SQM.Website
 						break;
 
 					case EHSIncidentQuestionType.LocationDropdown:
+					case EHSIncidentQuestionType.IncidentLocation:
 						rddlLocation = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						var plantIdList = SelectPlantIdsByAccessLevel();
-						if (plantIdList.Count > 1)
-							rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
-						foreach (decimal pid in plantIdList)
+
+						if (SessionManager.IncidentLocation != null)
 						{
-							string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
-							rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
+							rddlLocation.Items.Add(new DropDownListItem(SessionManager.IncidentLocation.Plant.PLANT_NAME, Convert.ToString(SessionManager.IncidentLocation.Plant.PLANT_ID)));
+							rddlLocation.Enabled = false;
 						}
+						else
+						{
+							var plantIdList = SelectPlantIdsByAccessLevel();
+							if (plantIdList.Count > 1)
+								rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
+							foreach (decimal pid in plantIdList)
+							{
+								string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
+								rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
+							}
+						}
+
 						if (shouldPopulate)
 						{
 							rddlLocation.SelectedValue = q.AnswerText;
@@ -1997,6 +2008,8 @@ namespace SQM.Website
 			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 			if (Mode == IncidentMode.Prevent)
 				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+
+			SessionManager.ClearIncidentLocation();
 
 			if (shouldReturn == true)
 			{

@@ -28,6 +28,7 @@ namespace SQM.Website
 		RichTextBox = 21,
 		CurrentUser = 22,
 		CurrentLocation =23,
-		NativeLangTextBox = 24
+		NativeLangTextBox = 24,
+		IncidentLocation = 25
 	}
 }
