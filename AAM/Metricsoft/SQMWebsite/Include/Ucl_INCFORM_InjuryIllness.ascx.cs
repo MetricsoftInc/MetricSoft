@@ -1716,7 +1716,7 @@ namespace SQM.Website
 				}
 			}
 
-			SelectInvolvedPersonId = involvedPersonId;
+			SelectInvolvedPersonId = involvedPersonId; 
 	
 		}
 
