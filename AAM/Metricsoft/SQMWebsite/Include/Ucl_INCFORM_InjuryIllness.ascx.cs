@@ -323,10 +323,12 @@ namespace SQM.Website
 						tbTaskDays.Text = injuryIllnessDetails.DAYS_DOING_JOB.ToString();
 						rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
 						rdoRecordable.SelectedValue = (injuryIllnessDetails.RECORDABLE == true) ? "1" : "0";
-						rdoLostTime.SelectedValue = (injuryIllnessDetails.LOST_TIME == true) ? "1" : "0";
-						rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
+
 						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
+
+						SetLostTime(IsFullPagePostback);
+
 					}
 				}
 			}
@@ -381,6 +383,8 @@ namespace SQM.Website
 					PopulateOperationDropDown(IncidentLocationId);
 					PopulateDepartmentDropDown(IncidentLocationId);
 
+					SetLostTime(IsFullPagePostback);
+
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 					GetAttachments(0);
@@ -390,6 +394,59 @@ namespace SQM.Website
 			InitializeForm(CurrentStep);
 		}
 
+		void SetLostTime(bool isPostBack)
+		{
+
+			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+	
+			PSsqmEntities entities = new PSsqmEntities();
+			var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, incidentId);
+
+			int lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
+
+			if (!isPostBack)
+			{
+
+				rdoLostTime.SelectedValue = "0";
+				rdpExpectReturnDT.Clear();
+				pnlExpReturnDT.Visible = false;
+
+				if (injuryIllnessDetails != null)
+				{
+					if (injuryIllnessDetails.LOST_TIME == true)
+					{
+						rdoLostTime.SelectedValue = "1";
+						pnlExpReturnDT.Visible = true;
+						if (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null)
+							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
+						else
+							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+					}
+				}
+
+			}
+			else
+			{
+				rdpExpectReturnDT.Clear();
+				pnlExpReturnDT.Visible = false;
+
+				if (rdoLostTime.SelectedValue == "1")
+				{
+					pnlExpReturnDT.Visible = true;
+
+					if (injuryIllnessDetails != null)
+					{
+
+						if (injuryIllnessDetails.LOST_TIME == true)
+							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
+						else
+							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+					}
+				}
+			}
+
+			rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
+		}
 
 		void InitializeForm(int currentStep)
 		{
@@ -423,6 +480,7 @@ namespace SQM.Website
 					btnPrev.Visible = false;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					btnDeleteInc.Visible = true;
 					rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
 					if (!IsFullPagePostback)
 						rptWitness.DataBind();
@@ -438,6 +496,7 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ROOT5Y":
 					LoadDependantForm(currentFormName);
@@ -450,6 +509,7 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ACTION":
 					LoadDependantForm(currentFormName);
@@ -462,6 +522,7 @@ namespace SQM.Website
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
 					btnClose.Visible = false;
+					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_APPROVAL":
 					LoadDependantForm(currentFormName);
@@ -473,6 +534,7 @@ namespace SQM.Website
 					ucllosttime.Visible = false;
 					btnPrev.Visible = true;
 					btnNext.Visible = false;
+					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
 					LoadDependantForm(currentFormName);
@@ -484,6 +546,7 @@ namespace SQM.Website
 					ucllosttime.Visible = true;
 					btnPrev.Visible = true;
 					btnNext.Visible = true;
+					btnDeleteInc.Visible = false;
 					break;
 
 			}
@@ -635,7 +698,7 @@ namespace SQM.Website
 					rdoRecordable.Enabled = UpdateAccess;
 					//rfvRecordable.Enabled = UpdateAccess;
 
-					rdoLostTime.Enabled = UpdateAccess;
+					//rdoLostTime.Enabled = UpdateAccess;
 					//rfvLostTime.Enabled = UpdateAccess;
 
 					rdpExpectReturnDT.Enabled = UpdateAccess;
@@ -1106,6 +1169,7 @@ namespace SQM.Website
 			CurrentStep = CurrentStep - 1;
 
 			InitializeForm(CurrentStep);
+			SetLostTime(true);
 		}
 
 		protected void btnNext_Click(object sender, EventArgs e)
@@ -1713,19 +1777,10 @@ namespace SQM.Website
 			// present the Expected Return Date control, AND insert the Lost Time History form
 			// as the next step in this incident.
 
-			if (rdoLostTime.SelectedValue == "1")
-			{
-				pnlExpReturnDT.Visible = true;
-			}
-			else
-			{
-				pnlExpReturnDT.Visible = false;
-			}
-
 			// By re-executinging PopulateInitialForm() we can force a re-calculation 
 			// of the form steps needed for this incident since the GetFormSteps()
 			// method checks the Lost Time control's SelectedValue state.	
-	
+
 			PopulateInitialForm();
 
 		}
