@@ -10,7 +10,7 @@ namespace SQM.Website
 {
 	//public delegate void EditPersonClick(string cmd);
 
-	public partial class Ucl_PersonSearch : System.Web.UI.UserControl
+	public partial class Ucl_PersonSearch : System.Web.UI.UserControl 
 	{
 		static PSsqmEntities _entities;
 	

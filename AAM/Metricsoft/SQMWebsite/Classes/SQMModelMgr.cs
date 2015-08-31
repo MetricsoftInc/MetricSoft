@@ -973,7 +973,7 @@ namespace SQM.Website
 					PersonData prsdta = new PersonData();
 
 					prsdta.PersonId = person.PERSON_ID;
-					prsdta.PersonName = string.Format("{0}, {1}", person.LAST_NAME, person.FIRST_NAME);
+					prsdta.PersonName = string.Format("{0}-{1}, {2}", Convert.ToString(person.PERSON_ID), person.LAST_NAME, person.FIRST_NAME);
 					prsdta.PersonEmail = person.EMAIL;
 
 					personDataList.Add(prsdta);
