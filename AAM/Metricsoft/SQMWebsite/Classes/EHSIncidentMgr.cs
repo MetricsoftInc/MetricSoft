@@ -1086,74 +1086,26 @@ namespace SQM.Website
 			{
 				try
 				{
-					int count = 0;
-					count = (from row in ctx.INCFORM_CONTAIN where row.INCIDENT_ID == incidentId select row).Count();
-					if (count > 0)
-						status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID" + delCmd);
 
-					count = 0;
-					count = (from row in ctx.INCFORM_ACTION where row.INCIDENT_ID == incidentId select row).Count();
-					if (count > 0)
-						status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
+					string customFormName = (from it in ctx.INCFORM_TYPE_CONTROL where it.INCIDENT_TYPE_ID == typeId && it.STEP_NUMBER == 1 select it.STEP_FORM ).FirstOrDefault();
 
-					count = 0;
-					count = (from row in ctx.INCFORM_ROOT5Y where row.INCIDENT_ID == incidentId select row).Count();
-					if (count > 0)
-						status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID" + delCmd);
-
-
-					count = 0;
-					count = (from row in ctx.INCFORM_APPROVAL where row.INCIDENT_ID == incidentId select row).Count();
-					if (count > 0)
-						status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID" + delCmd);
-
-
-					string stepForm = (from it in ctx.INCFORM_TYPE_CONTROL where it.INCIDENT_TYPE_ID == typeId && it.STEP_NUMBER == 1 select it.STEP_FORM ).FirstOrDefault();
-
-					if (!String.IsNullOrEmpty(stepForm))
+					if (!String.IsNullOrEmpty(customFormName))
 					{
-						switch (stepForm)
+						switch (customFormName)
 						{
 							case "INCFORM_INJURYILLNESS":
-
-								count = 0;
-								count = (from row in ctx.INCFORM_LOSTTIME_HIST where row.INCIDENT_ID == incidentId select row).Count();
-								if (count > 0)
-									status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
-
-								count = 0;
-								count = (from row in ctx.INCFORM_WITNESS where row.INCIDENT_ID == incidentId select row).Count();
-								if (count > 0)
-									status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID" + delCmd);
-
-
-								count = 0;
-								count = (from row in ctx.INCFORM_INJURYILLNESS where row.INCIDENT_ID == incidentId select row).Count();
-								if (count > 0)
-									status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
+								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
+								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID" + delCmd);
+								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
 								break;
 						}
 					}
 
-					decimal probCaseId = (from po in ctx.PROB_OCCUR where po.INCIDENT_ID == incidentId select po.PROBCASE_ID).FirstOrDefault();
-
-					if (probCaseId > 0)
-						status = ProblemCase.DeleteProblemCase(probCaseId);
-
-					List<decimal> attachmentIds = (from a in ctx.ATTACHMENT
-												   where a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId
-												   select a.ATTACHMENT_ID).ToList();
-
-					if (attachmentIds != null && attachmentIds.Count > 0)
-					{
-						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT_FILE WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
-						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
-					}
-
-					if (probCaseId > 0)
-						status = ctx.ExecuteStoreCommand("DELETE FROM PROB_OCCUR WHERE INCIDENT_ID" + delCmd);
-					
-					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);
+					DeleteIncident(incidentId);
 
 				}
 				catch (Exception ex)
