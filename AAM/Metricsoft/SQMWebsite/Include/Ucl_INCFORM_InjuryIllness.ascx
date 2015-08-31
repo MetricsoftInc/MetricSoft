@@ -392,6 +392,9 @@
 
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 90px; padding-bottom: 4px; padding-top: 7px;">
 
+
+<%--			testing		<div class="row text-left">--%>
+
 						<span style="float: left; padding-right: 5px;display:inline;">
 							<asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: " />
 
@@ -774,6 +777,11 @@
 						OnClientClicking="StandardConfirm" ValidationGroup="Val_InjuryIllness" />
 				</span>
 
+				<span style="float:right">
+					<telerik:RadButton ID="btnDeleteInc" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
+						Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
+						OnClick="btnDeleteInc_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
+				</span>
 
 			</div>
 		</div>

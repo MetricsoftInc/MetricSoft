@@ -289,6 +289,8 @@ namespace SQM.Website
 
 					if (injuryIllnessDetails != null)
 					{
+						btnDeleteInc.Visible = true;
+
 						rtpIncidentTime.SelectedTime = injuryIllnessDetails.INCIDENT_TIME;
 						rddlShift.SelectedValue = injuryIllnessDetails.SHIFT;
 
@@ -360,6 +362,8 @@ namespace SQM.Website
 					rddlBodyPart.Items.Clear();
 
 					CurrentFormStep = 1;
+
+					btnDeleteInc.Visible = false;
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
@@ -1145,6 +1149,32 @@ namespace SQM.Website
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 
+		}
+
+		protected void btnDeleteInc_Click(object sender, EventArgs e)
+		{
+			if (EditIncidentId > 0)
+			{
+
+				decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+
+				pnlBaseForm.Visible = false;
+				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+
+				btnSave.Visible = false;
+				btnPrev.Visible = false;
+				btnNext.Visible = false;
+				btnClose.Visible = false;
+				btnDeleteInc.Visible = false;
+				lblResults.Visible = true;
+				int delStatus = EHSIncidentMgr.DeleteCustomIncident(EditIncidentId, typeId);
+				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
+				lblResults.Text += (delStatus == 1) ? "Incident deleted." : "Error deleting incident.";
+				lblResults.Text += "</div>";
+			}
+
+			RadDropDownList rddlInc = (RadDropDownList)this.Parent.FindControl("rddlIncidentType");
+			rddlInc.SelectedIndex = 0;
 		}
 
 		protected void Save(bool shouldReturn)
