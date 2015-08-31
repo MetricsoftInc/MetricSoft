@@ -394,59 +394,6 @@ namespace SQM.Website
 			InitializeForm(CurrentStep);
 		}
 
-		void SetLostTime(bool isPostBack)
-		{
-
-			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-	
-			PSsqmEntities entities = new PSsqmEntities();
-			var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, incidentId);
-
-			int lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
-
-			if (!isPostBack)
-			{
-
-				rdoLostTime.SelectedValue = "0";
-				rdpExpectReturnDT.Clear();
-				pnlExpReturnDT.Visible = false;
-
-				if (injuryIllnessDetails != null)
-				{
-					if (injuryIllnessDetails.LOST_TIME == true)
-					{
-						rdoLostTime.SelectedValue = "1";
-						pnlExpReturnDT.Visible = true;
-						if (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null)
-							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
-						else
-							rdpExpectReturnDT.SelectedDate = DateTime.Now;
-					}
-				}
-
-			}
-			else
-			{
-				rdpExpectReturnDT.Clear();
-				pnlExpReturnDT.Visible = false;
-
-				if (rdoLostTime.SelectedValue == "1")
-				{
-					pnlExpReturnDT.Visible = true;
-
-					if (injuryIllnessDetails != null)
-					{
-
-						if (injuryIllnessDetails.LOST_TIME == true)
-							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
-						else
-							rdpExpectReturnDT.SelectedDate = DateTime.Now;
-					}
-				}
-			}
-
-			rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
-		}
 
 		void InitializeForm(int currentStep)
 		{
@@ -633,6 +580,57 @@ namespace SQM.Website
 			}
 		}
 
+
+		void SetLostTime(bool isPostBack)
+		{
+			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			PSsqmEntities entities = new PSsqmEntities();
+			var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, incidentId);
+
+			int lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
+
+			if (!isPostBack)
+			{
+				rdoLostTime.SelectedValue = "0";
+				rdpExpectReturnDT.Clear();
+				pnlExpReturnDT.Visible = false;
+
+				if (injuryIllnessDetails != null)
+				{
+					if (injuryIllnessDetails.LOST_TIME == true)
+					{
+						rdoLostTime.SelectedValue = "1";
+						pnlExpReturnDT.Visible = true;
+						if (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null)
+							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
+						else
+							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+					}
+				}
+
+			}
+			else
+			{
+				rdpExpectReturnDT.Clear();
+				pnlExpReturnDT.Visible = false;
+
+				if (rdoLostTime.SelectedValue == "1")
+				{
+					pnlExpReturnDT.Visible = true;
+
+					if (injuryIllnessDetails != null)
+					{
+						if (injuryIllnessDetails.LOST_TIME == true)
+							rdpExpectReturnDT.SelectedDate = (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null) ? injuryIllnessDetails.EXPECTED_RETURN_WORK_DT : null;
+						else
+							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+					}
+				}
+			}
+
+			rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
+		}
 
 		private void SetUserAccess(string currentFormName)
 		{
