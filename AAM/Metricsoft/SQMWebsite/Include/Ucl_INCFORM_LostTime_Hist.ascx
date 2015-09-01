@@ -64,27 +64,27 @@
 					</td>
 					<td class="text-left-more">
 						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" CssClass="WarnIfChanged" Width="100%"  AutoPostBack="true" runat="server"></telerik:RadDropDownList>
-						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
 						<asp:TextBox ID="tbRestrictDesc" Rows="3" Height="65px" Width="90%" TextMode="MultiLine" SkinID="Metro" runat="server" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvRestrictDesc" ControlToValidate="tbRestrictDesc" Display="None" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvRestrictDesc" ControlToValidate="tbRestrictDesc"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
 						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" Width="90%" CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rvfBeginDate" ControlToValidate="rdpBeginDate" Display="None" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rvfBeginDate" ControlToValidate="rdpBeginDate"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
 						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvReturnDate" ControlToValidate="rdpReturnDate" Display="None" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvReturnDate" ControlToValidate="rdpReturnDate"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
 						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvNextMedDate" ControlToValidate="rdpNextMedDate" Display="None" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvNextMedDate" ControlToValidate="rdpNextMedDate"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left">
 						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true"/>
-						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT" Display="None" ErrorMessage="Required" />
+						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="col-xs-12 text-left-more">
 						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 

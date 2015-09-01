@@ -270,12 +270,18 @@ namespace SQM.Website
 					itmdel.Visible = ApproveAccess;
 
 
-					rvfw.Enabled = ApproveAccess;
-					rvfr.Enabled = ApproveAccess;
-					rvfbd.Enabled = ApproveAccess;
-					rvfrd.Enabled = ApproveAccess;
-					rvfmd.Enabled = ApproveAccess;
-					rvfed.Enabled = ApproveAccess;
+					//rvfw.Enabled = ApproveAccess;
+					//rvfr.Enabled = ApproveAccess;
+					//rvfbd.Enabled = ApproveAccess;
+					//rvfrd.Enabled = ApproveAccess;
+					//rvfmd.Enabled = ApproveAccess;
+					//rvfed.Enabled = ApproveAccess;
+					rvfw.Enabled = false;
+					rvfr.Enabled = false;
+					rvfbd.Enabled = false;
+					rvfrd.Enabled = false;
+					rvfmd.Enabled = false;
+					rvfed.Enabled = false;
 
 
 					//if (String.IsNullOrEmpty(rddlw.SelectedValue))
@@ -315,10 +321,13 @@ namespace SQM.Website
 							rd.Visible = false;
 							md.Visible = true;
 							ed.Visible = false;
-							rvfr.Enabled = true;
-							rvfbd.Enabled = true;
+							//rvfr.Enabled = true;
+							rvfr.Enabled = false;
+							//rvfbd.Enabled = true;
+							rvfbd.Enabled = false;
 							rvfrd.Enabled = false;
-							rvfmd.Enabled = true;
+							//rvfmd.Enabled = true;
+							rvfmd.Enabled = false;
 							rvfed.Enabled = false;
 							break;
 						case "02":      // Return to Work
@@ -329,7 +338,8 @@ namespace SQM.Website
 							ed.Visible = false;
 							rvfr.Enabled = false;
 							rvfbd.Enabled = false;
-							rvfrd.Enabled = true;
+							//rvfrd.Enabled = true;
+							rvfrd.Enabled = false;
 							rvfmd.Enabled = false;
 							rvfed.Enabled = false;
 							break;
@@ -339,11 +349,14 @@ namespace SQM.Website
 							rd.Visible = false;
 							md.Visible = true;
 							ed.Visible = true;
-							rvfr.Enabled = true;
+							//rvfr.Enabled = true;
+							rvfr.Enabled = false;
 							rvfbd.Enabled = false;
 							rvfrd.Enabled = false;
-							rvfmd.Enabled = true;
-							rvfed.Enabled = true;
+							//rvfmd.Enabled = true;
+							rvfmd.Enabled = false;
+							//rvfed.Enabled = true;
+							rvfed.Enabled = false;
 							break;
 					}
 
@@ -657,10 +670,13 @@ namespace SQM.Website
 					rd.Visible = false;
 					md.Visible = true;
 					ed.Visible = false;
-					rvfr.Enabled = true;
-					rvfbd.Enabled = true;
+					//rvfr.Enabled = true;
+					rvfr.Enabled = false;
+					//rvfbd.Enabled = true;
+					rvfbd.Enabled = false;
 					rvfrd.Enabled = false;
-					rvfmd.Enabled = true;
+					//rvfmd.Enabled = true;
+					rvfmd.Enabled = false;
 					rvfed.Enabled = false;
 					break;
 				case "02":      // Return to Work
@@ -671,7 +687,8 @@ namespace SQM.Website
 					ed.Visible = false;
 					rvfr.Enabled = false;
 					rvfbd.Enabled = false;
-					rvfrd.Enabled = true;
+					//rvfrd.Enabled = true;
+					rvfrd.Enabled = false;
 					rvfmd.Enabled = false;
 					rvfed.Enabled = false;
 					break;
@@ -681,11 +698,14 @@ namespace SQM.Website
 					rd.Visible = false;
 					md.Visible = true;
 					ed.Visible = true;
-					rvfr.Enabled = true;
+					//rvfr.Enabled = true;
+					rvfr.Enabled = false;
 					rvfbd.Enabled = false;
 					rvfrd.Enabled = false;
-					rvfmd.Enabled = true;
-					rvfed.Enabled = true;
+					//rvfmd.Enabled = true;
+					rvfmd.Enabled = false;
+					//rvfed.Enabled = true;
+					rvfed.Enabled = false;
 					break;
 			}
 		
