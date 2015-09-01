@@ -38,7 +38,7 @@
 
 								<asp:Panel ID="pnlIncidentHeader" runat="server">
 
-                                    <div class="row-fluid" >
+									<div class="row-fluid" >
 
 										<div class="col-xs-12  text-left">
 											<asp:Label ID="lblAddOrEditIncident" class="textStd" runat="server"><strong>Add a New Incident:</strong></asp:Label>
@@ -65,18 +65,18 @@
 											<asp:Label ID="lblIncidentType" class="textStd"  Visible="false" runat="server">Type:  </asp:Label>
 										</div>
 									</div>
-								    
+									
 									<div class="row-fluid" >
 
 										<div class="col-xs-12 text-left">
 
 												<%--<span><asp:Label ID="lblLocation" runat="server" Text="Location"></asp:Label>&nbsp;&nbsp;</span>--%>
-                                            
-                                                <telerik:RadComboBox ID="ddlIncidentLocation" runat="server" Skin="Metro" Width="265" ZIndex="10" Font-Bold="false" Font-Size="Small"
-                                                    AutoPostBack="true" ToolTip="select an incident location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="IncidentLocation_Select" EnableViewState="true">
-                                                </telerik:RadComboBox>
-                                                <telerik:RadMenu ID="mnuIncidentLocation" runat="server" Skin="Default" Width="265" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="IncidentLocation_Select" EnableViewState="true"></telerik:RadMenu>
-                                                <asp:HiddenField runat="server" ID="hdnIncidentLocation" />
+											
+												<telerik:RadComboBox ID="ddlIncidentLocation" runat="server" Skin="Metro" Width="265" ZIndex="10" Font-Bold="false" Font-Size="Small"
+													AutoPostBack="true" ToolTip="select an incident location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="IncidentLocation_Select" EnableViewState="true">
+												</telerik:RadComboBox>
+												<telerik:RadMenu ID="mnuIncidentLocation" runat="server" Skin="Default" Width="265" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="IncidentLocation_Select" EnableViewState="true"></telerik:RadMenu>
+												<asp:HiddenField runat="server" ID="hdnIncidentLocation" />
  
 										 </div>
 									</div>
@@ -98,6 +98,13 @@
 							</div>
 
 							<div id="divForm" runat="server" visible="false">
+
+									<div class="row" style="padding-top:6px;padding-bottom:6px;">
+										<div class="col-sm-12 text-center">
+											<asp:Label ID="lblFormTitle" runat="server" Text="Incident" Font-Bold ="true" CssClass="pageTitles"></asp:Label>
+										</div>
+									</div>
+
 								<asp:Panel ID="pnlForm" runat="server">
 								</asp:Panel>
 								<table style="width: 100%;">

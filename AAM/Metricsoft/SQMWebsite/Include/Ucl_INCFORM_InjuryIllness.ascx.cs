@@ -612,19 +612,28 @@ namespace SQM.Website
 			}
 			else
 			{
-				rdpExpectReturnDT.Clear();
-				pnlExpReturnDT.Visible = false;
 
-				if (rdoLostTime.SelectedValue == "1")
+				if (lthCount != null && lthCount > 0)
 				{
-					pnlExpReturnDT.Visible = true;
 
-					if (injuryIllnessDetails != null)
+				}
+				else
+				{
+
+					rdpExpectReturnDT.Clear();
+					pnlExpReturnDT.Visible = false;
+
+					if (rdoLostTime.SelectedValue == "1")
 					{
-						if (injuryIllnessDetails.LOST_TIME == true)
-							rdpExpectReturnDT.SelectedDate = (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null) ? injuryIllnessDetails.EXPECTED_RETURN_WORK_DT : null;
-						else
-							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+						pnlExpReturnDT.Visible = true;
+
+						if (injuryIllnessDetails != null)
+						{
+							if (injuryIllnessDetails.LOST_TIME == true)
+								rdpExpectReturnDT.SelectedDate = (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null) ? injuryIllnessDetails.EXPECTED_RETURN_WORK_DT : null;
+							else
+								rdpExpectReturnDT.SelectedDate = DateTime.Now;
+						}
 					}
 				}
 			}

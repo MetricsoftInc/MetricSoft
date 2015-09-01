@@ -2484,7 +2484,9 @@ namespace SQM.Website
 			{
 				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
 				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
-				btnSubnavIncident.Visible = false;
+				btnSubnavIncident.Visible = true;
+				btnSubnavIncident.Enabled = false;
+				btnSubnavIncident.CssClass = "buttonLinkDisabled";
 			}
 		}
 
@@ -2535,31 +2537,53 @@ namespace SQM.Website
 			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
 			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
+
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+
+			lblFormTitle.Text = "Incident";
+
 			switch (btn.CommandArgument)
 			{
 				case "2":
-					btnSubnavContainment.Visible = false;
+					btnDelete.Visible = false;
+					//btnSubnavContainment.Visible = false;
+					lblFormTitle.Text = "Containment";
+					btnSubnavContainment.Enabled = false;
+					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					uclContainment.Visible = divSubnavPage.Visible = true;
 					uclContainment.IsEditContext = true;
 					uclContainment.EditIncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
 					break;
 				case "3":
-					btnSubnavRootCause.Visible = false;
+					btnDelete.Visible = false;
+					//btnSubnavRootCause.Visible = false;
+					lblFormTitle.Text = "Root Cause";
+					btnSubnavRootCause.Enabled = false;
+					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					uclRootCause.Visible = divSubnavPage.Visible = true;
 					uclRootCause.IsEditContext = true;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
 					break;
 				case "4":
-					btnSubnavAction.Visible = false;
+					btnDelete.Visible = false;
+					//btnSubnavAction.Visible = false;
+					lblFormTitle.Text = "Corrective Action";
+					btnSubnavAction.Enabled = false;
+					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					uclAction.Visible = divSubnavPage.Visible = true;
 					uclAction.IsEditContext = true;
 					uclAction.EditIncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
 					break;
 				case "5":
-					btnSubnavApproval.Visible = false;
+					btnDelete.Visible = false;
+					//btnSubnavApproval.Visible = false;
+					lblFormTitle.Text = "Approval";
+					btnSubnavApproval.Enabled = false;
+					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					uclApproval.Visible = divSubnavPage.Visible = true;
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
@@ -2567,7 +2591,11 @@ namespace SQM.Website
 					break;
 				case "0":
 				default:
-					btnSubnavIncident.Visible = false;
+					lblFormTitle.Text = "Incident";
+					btnDelete.Visible = true;
+					btnSubnavIncident.Visible = true;
+					btnSubnavIncident.Enabled = false;
+					btnSubnavIncident.CssClass = "buttonLinkDisabled";
 					if (pnlForm.Visible == false)
 					{
 						pnlForm.Visible = true;
