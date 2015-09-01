@@ -293,7 +293,6 @@
 		</div>
 
 
-
 		<%-- Involved Person's Statement question (MultiLine TEXTBOX) --%>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
@@ -376,7 +375,7 @@
 
 				<div class="row text-left">
 
-					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 90px;">
+					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 100px;">
 						<span class="labelMultiLineText">
 							<asp:Label ID="lbWitnessColSM" runat="server" Text="Witness " /><asp:Label ID="lbItemSeq" runat="server"></asp:Label><asp:Label ID="lbRqd1" Text="*" CssClass="requiredCloseStarFloat" runat="server"></asp:Label></span>
 					</div>
@@ -390,74 +389,76 @@
 						</span>
 					</div>
 
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 90px; padding-bottom: 4px; padding-top: 7px;">
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
 
+						<div class="row">
 
-<%--			testing		<div class="row text-left">--%>
+							<div class="col-xs-12 col-sm-4 text-left">
 
-						<span style="float: left; padding-right: 5px;display:inline;">
-							<asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: " />
+								<asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: " />&nbsp;&nbsp;
 
-							 <telerik:RadAjaxPanel ID="rajx200" runat="server">
-									<telerik:RadSearchBox  ID="rsbWitnessName" runat="server"  EnableAutoComplete="true" MaxResultCount="20" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbWitnessName_Search"
-										ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="180"  CssClass="NoBorders">
-										<DropDownSettings Height="320" Width="510" >
+								<telerik:RadAjaxPanel ID="rajx200" runat="server">
+									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" EnableAutoComplete="true" MaxResultCount="20" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbWitnessName_Search"
+										ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="100%" CssClass="NoBorders">
+										<DropDownSettings Height="320" Width="510">
 											<HeaderTemplate>
 												<table cellpadding="0" cellspacing="1" class="searchBoxResults" width="500" style="margin-left: 5px;">
 													<tr>
-														<th style="width: 110px; text-align: left;">
-															Name
+														<th style="width: 110px; text-align: left;">Name
 														</th>
-														<th style="width: 200px; text-align: left;">
-															Email
+														<th style="width: 200px; text-align: left;">Email
 														</th>
 														<th></th>
 													</tr>
 												</table>
 											</HeaderTemplate>
 											<ItemTemplate>
-												<table cellpadding="0" cellspacing="0" class="searchBoxResults"  width="500" style="margin-left: 5px;">
-												<tr>
-													<td style="background: #EEEAE0; width: 110px;">
-														<b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b>
-													</td>
-													<td style="background: #fff; width: 200px;">
-														<b><%# DataBinder.Eval(Container.DataItem, "PersonEmail")%></b>
-													</td>
-													<td id="tdPersonID" runat="server" visible="false">
-														<%# DataBinder.Eval(Container.DataItem, "PersonId")%>
-													</td>
-												</tr>
+												<table cellpadding="0" cellspacing="0" class="searchBoxResults" width="500" style="margin-left: 5px;">
+													<tr>
+														<td style="background: #EEEAE0; width: 110px;">
+															<b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b>
+														</td>
+														<td style="background: #fff; width: 200px;">
+															<b><%# DataBinder.Eval(Container.DataItem, "PersonEmail")%></b>
+														</td>
+														<td id="tdPersonID" runat="server" visible="false">
+															<%# DataBinder.Eval(Container.DataItem, "PersonId")%>
+														</td>
+													</tr>
 												</table>
 											</ItemTemplate>
 										</DropDownSettings>
 									</telerik:RadSearchBox>
-							</telerik:RadAjaxPanel>
-						</span>
+								</telerik:RadAjaxPanel>
+							</div>
 
-						<%--<br class="visible-xs" />--%>
-						<br class="clearfix" />
-						<span style="float: left; padding-left: 5px;">
-							<asp:Label ID="lbWitStmntPrompt" runat="server" Text="Statement:"></asp:Label></span>&nbsp;
-						<br class="visible-xs" />
-						<asp:TextBox ID="tbWitnessStatement" Width="35%" Height="60px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox><br class="visible-xs" />
-						<span style="float: right; padding-right: 10px;">
-							<telerik:RadButton ID="btnItemDelete" CssClass="buttonWrapText" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed" CommandArgument="Delete"
-								SingleClick="true" OnClientClicking="DeleteConfirmItem" />
-						</span>
+							<div class="col-xs-12 col-sm-4 text-left">
 
-						<br class="visible-xs" style="padding-bottom: 3px;" />
+								<asp:Label ID="lbWitStmntPrompt" runat="server" Text="Statement:"></asp:Label>&nbsp;&nbsp;
+								<asp:TextBox ID="tbWitnessStatement" Width="100%" Height="60px" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
+
+							</div>
+
+							<div class="col-xs-12 col-sm-3 text-left">
+
+								<span style="display: inline-block; padding-top:3px;">
+									<telerik:RadButton ID="btnItemDelete" runat="server" Width="100%" Height="10px" CssClass="buttonWrapText" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed" CommandArgument="Delete"
+										SingleClick="true" OnClientClicking="DeleteConfirmItem" />
+								</span>
+							</div>
+
+						</div>
+
 					</div>
-
 				</div>
-				<br class="visible-xs" />
+				<br class="visible-xs" style="padding-top: 5px;" />
 			</ItemTemplate>
-			<%-- <SeparatorTemplate></SeparatorTemplate> --%>
+			<%--<SeparatorTemplate></SeparatorTemplate>--%>
 			<FooterTemplate>
-				<br class="visible-xs" />
+				<br class="visible-xs" style="padding-top: 5px;" />
 				<div class="row">
 					<div class="col-sm-4 text-left tanLabelCol">
-						<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller"  ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
+						<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true"></asp:Button>
 					</div>
 					<div class="col-xs-12 col-sm-8 text-left"></div>
 				</div>
