@@ -132,15 +132,14 @@ namespace SQM.Website
   
             SessionManager.UserContext.TaskList.Clear();
             SessionManager.UserContext.TaskList = new List<TaskItem>();
-            AccessMode accessmode;
 
             DateTime fromDate = DateTime.Now.AddMonths(-6);
-               
-            if ((accessmode = UserContext.RoleAccess()) > AccessMode.Limited)
+
+			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
             {
                 SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments));
                 SessionManager.UserContext.TaskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, SessionManager.UserContext.EscalationAssignments, true));
-                if (accessmode == AccessMode.Admin && SessionManager.UserContext.EscalationAssignments.Count > 0)
+                if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.envdata))
                 {
                     SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileFinalizeStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments, SessionManager.UserContext.Person));
                 }

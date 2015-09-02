@@ -85,10 +85,9 @@ namespace SQM.Website
 
         private void SetupPage()
         {
-            AccessMode accessmode = UserContext.RoleAccess();
             ddlScheduleScope.Items.Clear();
 
-            if (accessmode >= AccessMode.Plant)
+			if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.busloc))
             {
                // List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
                 List<BusinessLocation> locationList = SessionManager.PlantList;
@@ -131,11 +130,11 @@ namespace SQM.Website
                
             DateTime fromDate = DateTime.Now.AddMonths(-6);
 
-            if (accessmode >= AccessMode.Limited)
+			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
             {
                 SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments));
                 SessionManager.UserContext.TaskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, SessionManager.UserContext.EscalationAssignments, true));
-                if (accessmode == AccessMode.Admin && SessionManager.UserContext.EscalationAssignments.Count > 0)
+				if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.envdata))
                 {
                     SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileFinalizeStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments, SessionManager.UserContext.Person));
                 }
