@@ -248,6 +248,20 @@ namespace SQM.Website
                             ucl.LinksDisabled = true;
                             ucl.BindIncidentListHeader(EHSAction, item);
                             break;
+						case TaskRecordType.Audit:   // Audits
+							lnk = (LinkButton)e.Item.FindControl("lnkTask");
+							lnk.Text = item.Title;
+							lnk.CommandArgument = item.RecordKey;
+							lbl = (Label)e.Item.FindControl("lblDueDate");
+							lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
+							img = (Image)e.Item.FindControl("imgTaskStatus");
+							img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
+							img.ToolTip = item.Taskstatus.ToString();
+							AUDIT AuditAction = (AUDIT)item.Detail;
+							ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
+							ucl.LinksDisabled = true;
+							ucl.BindAuditListHeader(AuditAction, item);
+							break;
                         default:
                             break;
                     }

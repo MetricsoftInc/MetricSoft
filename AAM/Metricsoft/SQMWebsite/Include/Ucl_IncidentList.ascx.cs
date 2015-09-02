@@ -614,6 +614,20 @@ namespace SQM.Website
 			lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
 		}
 
+		public void BindAuditListHeader(AUDIT audit, TaskItem taskItem)
+		{
+			pnlIncidentTaskHdr.Visible = true;
+			lblCaseDescription.Visible = lblIncidentDescription.Visible = lblActionDescription.Visible = false;
+
+			lblIncidentDescription.Visible = true;
+
+			if (taskItem.Plant != null)
+				lblCasePlant_out.Text = taskItem.Plant.PLANT_NAME;
+			lblResponsible_out.Text = SQMModelMgr.FormatPersonListItem(taskItem.Person);
+			lblCase2ID_out.Text = WebSiteCommon.FormatID(audit.AUDIT_ID, 6);
+			lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
+		}
+
 		public void BindIncidentListRepeater(object theList, string appContext, bool showImages, bool showReports)
 		{
 			pnlIncidentActionList.Visible = false;
