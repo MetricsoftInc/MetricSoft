@@ -493,6 +493,8 @@ namespace SQM.Website
         public static List<TaskItem> IncidentTaskSchedule(decimal companyID, DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, decimal[] plantIDS, bool addProblemCases)
         {
             List<TaskItem> taskList = new List<TaskItem>();
+			INCIDENT incident;
+
             try
             {
                 using (PSsqmEntities entities = new PSsqmEntities())
@@ -520,19 +522,36 @@ namespace SQM.Website
                                     Reference = q
                                 }).OrderBy(l => l.RecordID).ToList();
 
+					taskList.AddRange((from t in entities.TASK_STATUS
+									   join i in entities.AUDIT on t.RECORD_ID equals i.AUDIT_ID
+									   join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
+									   join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
+									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT > fromDate && t.DUE_DT <= toDate) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
+									   from p in p_t.DefaultIfEmpty()
+									   from l in l_i.DefaultIfEmpty()
+									   select new TaskItem
+									   {
+										   Task = t,
+										   RecordType = t.RECORD_TYPE,
+										   RecordID = t.RECORD_ID,
+										   Person = p,
+										   Detail = i,
+										   Plant = l,
+										   PlantResponsible = l
+									   }).OrderBy(l => l.RecordID).ToList());
+
                     decimal recordID = 0;
                     List<PLANT> plantList = new List<PLANT>();
                     foreach (TaskItem taskItem in taskList)
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-                        INCIDENT incident = (INCIDENT)taskItem.Detail;
-
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
                         switch (recordType)
                         {
                             case TaskRecordType.QualityIssue:
                                 if (taskItem.Reference != null)
                                 {
+									incident = (INCIDENT)taskItem.Detail;
                                     try
                                     {
                                         if (((QI_OCCUR)taskItem.Reference).QS_ACTIVITY == "CST")
@@ -558,11 +577,19 @@ namespace SQM.Website
                                 break;
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
+								incident = (INCIDENT)taskItem.Detail;
                                 taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
                                 taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
                                 break;
+							case TaskRecordType.Audit:
+								AUDIT audit = (AUDIT)taskItem.Detail;
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+								taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
+								break;
                             default:
                                 break;
                         }
@@ -1223,6 +1250,7 @@ namespace SQM.Website
             string[] statusIDS = { ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
             decimal[] plantIDS = escalationAssigmments.Where(l=> l.PLANT_ID != null).Select(l => (decimal)l.PLANT_ID).Distinct().ToArray();
             DateTime forwardDate = DateTime.Now;
+			INCIDENT incident;
 
             List<TaskItem> taskList = new List<TaskItem>();
             try
@@ -1252,19 +1280,38 @@ namespace SQM.Website
                                     Reference = q
                                 }).OrderBy(l => l.RecordID).ToList();
 
+					taskList.AddRange((from t in entities.TASK_STATUS
+								join i in entities.AUDIT on t.RECORD_ID equals i.AUDIT_ID
+								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
+								join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
+								where (t.RECORD_TYPE == (int)TaskRecordType.Audit && statusIDS.Contains(t.STATUS) && t.DUE_DT <= forwardDate && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)(i.DETECT_PLANT_ID))))
+								from p in p_t.DefaultIfEmpty()
+								from l in l_i.DefaultIfEmpty()
+								select new TaskItem
+								{
+									Task = t,
+									RecordType = t.RECORD_TYPE,
+									RecordID = t.RECORD_ID,
+									Person = p,
+									Detail = i,
+									Plant = l,
+									PlantResponsible = l
+								}).OrderBy(l => l.RecordID).ToList());
+
                     decimal recordID = 0;
                     List<PLANT> plantList = new List<PLANT>();
+
                     foreach (TaskItem taskItem in taskList)
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
                         taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem, escalationAssigmments, new string[2] { Convert.ToInt32(TaskRecordType.HealthSafetyIncident).ToString(), Convert.ToInt32(TaskRecordType.PreventativeAction).ToString() });
                         taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
-                        INCIDENT incident = (INCIDENT)taskItem.Detail;
 
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
                         switch (recordType)
                         {
                             case TaskRecordType.QualityIssue:
+								incident = (INCIDENT)taskItem.Detail;
                                 if (taskItem.Reference != null)
                                 {
                                     try
@@ -1292,11 +1339,19 @@ namespace SQM.Website
                                 break;
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
+								incident = (INCIDENT)taskItem.Detail;
                                 taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
                                 taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
                                 break;
+							case TaskRecordType.Audit:
+								AUDIT audit = (AUDIT)taskItem.Detail;
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+                                taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+                                taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
+								break;
                             default:
                                 break;
                         }

@@ -362,6 +362,7 @@
   <EHSIncidentActivity>
     <xlat code="40" short="Health &amp; Safety Incident" long ="Health &amp; Safety Incident Closure"/>
     <xlat code="45" short="Preventative Action" long = "Preventative Action Closure"/>
+	<xlat code="50" short="Plant Audit" long = "Audit Completion"/>
   </EHSIncidentActivity>
   <problemArea>
     <xlat code="" short="All" long ="All"/>

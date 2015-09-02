@@ -114,6 +114,12 @@ namespace SQM.Website
                         SessionManager.ReturnPath = Request.Url.PathAndQuery;
                         Response.Redirect("/EHS/EHS_Incidents.aspx?mode=prevent");
                         break;
+					case TaskRecordType.Audit:
+						SessionManager.ReturnObject = args[1];
+						SessionManager.ReturnStatus = true;
+						SessionManager.ReturnPath = Request.Url.PathAndQuery;
+						Response.Redirect("/EHS/EHS_Audits.aspx");
+						break;
                     case TaskRecordType.CurrencyInput:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
