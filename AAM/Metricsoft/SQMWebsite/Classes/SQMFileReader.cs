@@ -335,6 +335,9 @@ namespace SQM.Website
 									person.SSO_ID = empID;
 									person.EMP_ID = empID;
 									person.ROLE = (int)SysPriv.view;
+									jobcode = SQMModelMgr.LookupJobcode(Entities, jobCode);  // apply default privgroup for the person's jobcode, if defined
+									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))
+										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 								}
 
 								person.STATUS = status;
