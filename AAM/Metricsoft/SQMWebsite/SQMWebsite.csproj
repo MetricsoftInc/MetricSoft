@@ -239,7 +239,6 @@
     <Content Include="Global.asax" />
     <Content Include="Home\Dashboard.aspx" />
     <Content Include="Home\Error404.aspx" />
-    <Content Include="Home\Inbox.aspx" />
     <Content Include="Home\Calendar.aspx" />
     <Content Include="html\testlabel.txt" />
     <Content Include="images\arr-rt-grey.png" />
@@ -2045,13 +2044,6 @@
     </Compile>
     <Compile Include="Home\Error404.aspx.designer.cs">
       <DependentUpon>Error404.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Home\Inbox.aspx.cs">
-      <DependentUpon>Inbox.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Home\Inbox.aspx.designer.cs">
-      <DependentUpon>Inbox.aspx</DependentUpon>
     </Compile>
     <Compile Include="Home\Calendar.aspx.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>

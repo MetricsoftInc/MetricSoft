@@ -122,12 +122,12 @@ namespace SQM.Website
                 ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
             }
  
+			// get tasks - due or escalated
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
             respForList.AddRange(SessionManager.UserContext.DelegateList);
             SessionManager.UserContext.TaskList.Clear();
             SessionManager.UserContext.TaskList = new List<TaskItem>();
-               
             DateTime fromDate = DateTime.Now.AddMonths(-6);
 
 			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
@@ -155,6 +155,7 @@ namespace SQM.Website
 
             bool enableItemLinks = false;
 
+			// get scheduled tasks
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
             respForList.AddRange(SessionManager.UserContext.DelegateList);
@@ -172,7 +173,7 @@ namespace SQM.Website
             {
                 taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now).ToList());
                 taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, new decimal[0] { }, true));
-                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, new decimal[0] { }, UserContext.RoleAccess() >= AccessMode.Admin ? true : false));
+                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, new decimal[0] { }, SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
                 enableItemLinks = true;
             }
             else
@@ -206,11 +207,12 @@ namespace SQM.Website
                 {   // specific plant
                     plantIDS.Add(Convert.ToDecimal(selectedValue));
                 }
+
                 taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now &&
                     (plantIDS.Contains(l.Plant.PLANT_ID) || (l.PlantResponsible != null  &&  plantIDS.Contains((decimal)l.PlantResponsible.PLANT_ID)))));
                 taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, new List<decimal>(), plantIDS.ToArray(), true));
                 taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, new List<decimal>(), plantIDS.ToArray(), false));
-                if (UserContext.RoleAccess() >= AccessMode.Plant)
+                if (SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.busorg))
                     enableItemLinks = true;
             }
 
