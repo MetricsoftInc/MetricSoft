@@ -112,6 +112,7 @@ namespace SQM.Website
 				DateTime fromDate = DateTime.Now.AddMonths(-6);
 				List<TaskItem> taskList = new List<TaskItem>();
 				List<decimal> respForList = new List<decimal>();
+				List<decimal> respPlantList = new List<decimal>();
 
 				List<UserContext> assignedUserList = TaskMgr.AssignedUserList();
 
@@ -124,11 +125,11 @@ namespace SQM.Website
 
 					respForList.Clear();
 					respForList.Add(assignedUser.Person.PERSON_ID);
-					respForList.AddRange(assignedUser.DelegateList);
+					//respForList.AddRange(assignedUser.DelegateList);
 
 					taskList.Clear();
-					taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, assignedUser.EscalationAssignments));
-					taskList.AddRange(TaskMgr.IncidentTaskStatus(1, respForList, assignedUser.EscalationAssignments, true));
+					taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
+					taskList.AddRange(TaskMgr.IncidentTaskStatus(1, respForList, respPlantList, true));
 					WriteLine(taskList.Count.ToString());
 
 					TaskMgr.MailTaskList(taskList, assignedUser.Person.EMAIL, "exe");

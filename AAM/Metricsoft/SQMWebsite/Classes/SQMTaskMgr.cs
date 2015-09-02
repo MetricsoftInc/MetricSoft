@@ -908,18 +908,16 @@ namespace SQM.Website
             return notifyType;
         }
 
-        public static TaskStatus SetEscalation(decimal inboxID, TaskItem taskItem, List<NOTIFY> escalationAssigmments, string[] scopeArray)
+        public static TaskStatus SetEscalation(decimal inboxID, TaskItem taskItem)
         {
             TaskStatus status = taskItem.Taskstatus;
-            //decimal[] plantIDS = escalationAssigmments.Select(l => (decimal)l.PLANT_ID).Distinct().ToArray();
 
-            NOTIFY notify = escalationAssigmments.Where(a => scopeArray.Contains(a.NOTIFY_SCOPE)  && ((a.PLANT_ID == null  && a.BUS_ORG_ID == taskItem.Plant.BUS_ORG_ID)  ||  a.PLANT_ID == taskItem.Plant.PLANT_ID)).FirstOrDefault();
             TimeSpan delta = DateTime.Now - Convert.ToDateTime(taskItem.Task.DUE_DT);
-            if (notify != null && notify.ESCALATE_PERSON1 == inboxID && delta.Days >= notify.ESCALATE_DAYS1)
+            if (delta.Days >= 1)
             {
                 status = TaskStatus.EscalationLevel1;
             }
-            if (notify != null && notify.ESCALATE_PERSON2 == inboxID && delta.Days >= notify.ESCALATE_DAYS2)
+            if (delta.Days >= 2)
             {
                 status = TaskStatus.EscalationLevel2;
             }
@@ -927,80 +925,12 @@ namespace SQM.Website
             return status;
         }
 
-        public static List<TaskItem> ProfileFinalizeStatus(DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, List<NOTIFY> escalationAssigmments, PERSON responsiblePerson)
-        {
-            List<TaskItem> taskList = new List<TaskItem>();
-            if (escalationAssigmments.Where(l => l.NOTIFY_SCOPE == Convert.ToInt32(TaskRecordType.ProfileInput).ToString()).Count() < 1)
-                return taskList;
-            
-            decimal[] plantIDS = escalationAssigmments.Where(l=> l.PLANT_ID != null).Select(l => (decimal)l.PLANT_ID).Distinct().ToArray();
-
-            try
-            {
-                using (PSsqmEntities entities = new PSsqmEntities())
-                {
-                    var profileList = (from a in entities.PLANT_ACCOUNTING
-                                       where (plantIDS.Contains(a.PLANT_ID))
-                                       join p in entities.PLANT on a.PLANT_ID equals p.PLANT_ID
-                                       join e in entities.EHS_PROFILE on a.PLANT_ID equals e.PLANT_ID into e_a
-                                       from e in e_a.DefaultIfEmpty()
-                                       where ((EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= toDate) && (a.APPROVAL_DT != null && a.FINALIZE_DT != null && a.FINALIZE_DT < a.APPROVAL_DT))
-                                       select new
-                                       {
-                                           Accounting = a,
-                                           Plant = p,
-                                           Profile = e
-                                       }).Distinct().ToList();
-
-                    if (profileList.Count() == 0)
-                        return taskList;
-
-                    foreach (var o in profileList)
-                    {
-                        PLANT_ACCOUNTING accounting = (PLANT_ACCOUNTING)o.Accounting;
-                        PLANT plant = (PLANT)o.Plant;
-                        EHS_PROFILE profile = (EHS_PROFILE)o.Profile;
-                        TaskStatus periodStatus = TaskStatus.Due;
-
-                        DateTime recordDate = new DateTime(accounting.PERIOD_YEAR, accounting.PERIOD_MONTH, profile.DAY_DUE);
-                        DateTime dueDate = recordDate;
-
-                        TaskItem taskItem = new TaskItem();
-                        taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInputFinalize);
-                        taskItem.TaskDate = recordDate;
-                        taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plant.PLANT_ID + "~" + dueDate.Year + "~" + dueDate.Month;
-                        taskItem.Taskstatus = periodStatus;
-                        taskItem.Plant = plant;
-                        taskItem.Title = "Finalize Environmental Data Inputs";
-                        taskItem.LongTitle = plant.PLANT_NAME + " - " + taskItem.Title;
-                        taskItem.Description = "Finalize Data Inputs";
-                        taskItem.Detail = SQMModelMgr.FormatPersonListItem(responsiblePerson);
-                        taskItem.Task = new TASK_STATUS();
-                        taskItem.Task.DUE_DT = dueDate;
-                        taskItem.Task.COMPLETE_ID = 0;
-                        taskItem.Task.STATUS = "0";
-                        taskItem.Task.TASK_TYPE = "C";
-                        taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)accounting.APPROVER_ID, taskItem.Taskstatus);
-                        taskList.Add(taskItem);
-                    }
-                }
-
-                taskList.AddRange(ProfileInputStatus(fromDate, toDate, responsibleIDS, escalationAssigmments));
-            }
-            catch (Exception ex)
-            {
-              //  SQMLogger.LogException(ex);
-            }
-
-            return taskList;
-        }
-
-        public static List<TaskItem> ProfileInputStatus(DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, List<NOTIFY> escalationAssigmments)
+        public static List<TaskItem> ProfileInputStatus(DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, List<decimal> plantIDS)
         {
             List<TaskItem> taskList = new List<TaskItem>();
             List<EHSProfile> plantProfileList = new List<EHSProfile>();
             List<EHS_PROFILE_MEASURE> reqList = new List<EHS_PROFILE_MEASURE>();
-            decimal[] plantIDS = escalationAssigmments.Where(l=> l.PLANT_ID != null).Select(l => (decimal)l.PLANT_ID).Distinct().ToArray();
+
             try
             {
                 using (PSsqmEntities entities = new PSsqmEntities())
@@ -1039,13 +969,13 @@ namespace SQM.Website
                                     reqMeasures += (pm.EHS_MEASURE.MEASURE_NAME.Trim() + ",");
                                 else
                                     reqMeasures += (pm.MEASURE_PROMPT.Trim() + ",");    // use measure prompt if exists
-                                if (responsibleIDS.Contains((decimal)pm.RESPONSIBLE_ID))   // determine if user is responsible or is an escalation for required inputs
+                                if (responsibleIDS[0] == pm.RESPONSIBLE_ID)   // determine if user is responsible or is an escalation for required inputs
                                     isReqResponsible = true;
                             }
                         
                             if (string.IsNullOrEmpty(reqResponsible) || !reqResponsible.Contains(SQMModelMgr.FormatPersonListItem(pm.PERSON)))
                                 reqResponsible += (SQMModelMgr.FormatPersonListItem(pm.PERSON) + ",");
-                            if (responsibleIDS.Contains((decimal)pm.RESPONSIBLE_ID))   // determine if user is responsible
+                            if (responsibleIDS[0] == pm.RESPONSIBLE_ID)   // determine if user is responsible
                                 isResponsible = true;
                         }
                     }
@@ -1069,7 +999,6 @@ namespace SQM.Website
                             string[] args = item.Text.Split('/');
                             DateTime recordDate = new DateTime(int.Parse(args[0]), int.Parse(args[1]), profile.Profile.DAY_DUE);
                             DateTime dueDate =  recordDate; // recordDate.AddMonths(1);
-                            //DateTime dueDate = new DateTime(int.Parse(args[0]), int.Parse(args[1]), profile.Profile.DAY_DUE);
                             decimal numReq = reqList.Where(l => l.PLANT_ID == plantID  &&  l.IS_REQUIRED == true).Count();   // get num of required inputs for this plant
 
                             if (item.YValue < numReq) 
@@ -1100,13 +1029,12 @@ namespace SQM.Website
                                     else
                                     {
                                         // if user not responsible, check if the user receives notification escalations for the plant
-                                        NOTIFY notify = escalationAssigmments.Where(a => a.NOTIFY_SCOPE == Convert.ToInt32(TaskRecordType.ProfileInput).ToString() && a.PLANT_ID == plantID).FirstOrDefault();
-                                        if (notify != null && notify.ESCALATE_PERSON1 == responsibleIDS[0] && dueDate.AddDays(Convert.ToDouble(notify.ESCALATE_DAYS1)) <= toDate)
+                                        if (dueDate.AddDays(1) <= toDate)
                                         {
                                             alertPeriod = true;
                                             periodStatus = TaskStatus.EscalationLevel1;
                                         }
-                                        if (notify != null && notify.ESCALATE_PERSON2 == responsibleIDS[0] && dueDate.AddDays((int)notify.ESCALATE_DAYS2) <= toDate)
+                                        if (dueDate.AddDays(2) <= toDate)
                                         {
                                             alertPeriod = true;
                                             periodStatus = TaskStatus.EscalationLevel2;
@@ -1123,6 +1051,7 @@ namespace SQM.Website
                                     taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + profile.Plant.PLANT_ID + "~" + dueDate.Year + "~" + dueDate.Month;
                                     taskItem.Taskstatus = periodStatus;
                                     taskItem.Plant = profile.Plant;
+									//taskItem.Person = person;
                                     taskItem.Title = "Environmental Data Input";
                                     taskItem.LongTitle = profile.Plant.PLANT_NAME + " - " + taskItem.Title;
                                     taskItem.Description = reqMeasures.TrimEnd(',');
@@ -1183,34 +1112,33 @@ namespace SQM.Website
                         //DateTime dueDate = recordDate.AddMonths(1);
                         DateTime dueDate = recordDate;
 
-                        if (!responsibleIDS.Contains((decimal)profile.APPROVER_ID))   // determine if user is responsible or is an escalation
+                        if (responsibleIDS[0] == ((decimal)profile.APPROVER_ID))   // user is responsible 
                         {
-                            NOTIFY notify = escalationAssigmments.Where(a => a.NOTIFY_SCOPE == Convert.ToInt32(TaskRecordType.ProfileInput).ToString() && a.PLANT_ID == plant.PLANT_ID).FirstOrDefault();
-                            if (notify != null && notify.ESCALATE_PERSON1 == responsibleIDS[0] && dueDate.AddDays(Convert.ToDouble(notify.ESCALATE_DAYS1)) <= toDate)
-                            {
-                                alertPeriod = true;
-                                periodStatus = TaskStatus.EscalationLevel1;
-                            }
-                            if (notify != null && notify.ESCALATE_PERSON2 == responsibleIDS[0] && dueDate.AddDays(Convert.ToDouble(notify.ESCALATE_DAYS2)) <= toDate)
-                            {
-                                alertPeriod = true;
-                                periodStatus = TaskStatus.EscalationLevel2;
-                            }
+							alertPeriod = true;
+							if (dueDate.Year == toDate.Year && dueDate.Month == toDate.Month)
+							{
+								// need to factor the plant profile due day if in the current month
+								if (toDate.Date <= dueDate.Date)
+								{
+									if (toDate.Date < dueDate.AddDays(profile.REMINDER_DAYS * -1).Date)
+										alertPeriod = false;
+									else
+										periodStatus = TaskStatus.Due;
+								}
+							}
                         }
                         else
-                        {
-                            alertPeriod = true;
-                            if (dueDate.Year == toDate.Year && dueDate.Month == toDate.Month)
-                            {
-                                // need to factor the plant profile due day if in the current month
-                                if (toDate.Date <= dueDate.Date)
-                                {
-                                    if (toDate.Date < dueDate.AddDays(profile.REMINDER_DAYS * -1).Date)
-                                        alertPeriod = false;
-                                    else
-                                        periodStatus = TaskStatus.Due;
-                                }
-                            }
+                        {	// is an escallation
+							if (dueDate.AddDays(1) <= toDate)
+							{
+								alertPeriod = true;
+								periodStatus = TaskStatus.EscalationLevel1;
+							}
+							if (dueDate.AddDays(2) <= toDate)
+							{
+								alertPeriod = true;
+								periodStatus = TaskStatus.EscalationLevel2;
+							}
                         }
 
                         if (alertPeriod)
@@ -1221,6 +1149,7 @@ namespace SQM.Website
                             taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plant.PLANT_ID + "~" + dueDate.Year + "~" + dueDate.Month;
                             taskItem.Taskstatus = periodStatus;
                             taskItem.Plant = plant;
+							taskItem.Person = person;
                             taskItem.Title = "Environmental Data Input Approval";
                             taskItem.LongTitle = plant.PLANT_NAME + " - " + taskItem.Title;
                             taskItem.Description = "Local Approval";
@@ -1245,10 +1174,9 @@ namespace SQM.Website
             return taskList;
         }
 
-        public static List<TaskItem> IncidentTaskStatus(decimal companyID, List<decimal> responsibleIDS, List<NOTIFY> escalationAssigmments, bool addProblemCases)
+        public static List<TaskItem> IncidentTaskStatus(decimal companyID, List<decimal> responsibleIDS, List<decimal> plantIDS, bool addProblemCases)
         {
             string[] statusIDS = { ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
-            decimal[] plantIDS = escalationAssigmments.Where(l=> l.PLANT_ID != null).Select(l => (decimal)l.PLANT_ID).Distinct().ToArray();
             DateTime forwardDate = DateTime.Now;
 			INCIDENT incident;
 
@@ -1304,7 +1232,7 @@ namespace SQM.Website
                     foreach (TaskItem taskItem in taskList)
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-                        taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem, escalationAssigmments, new string[2] { Convert.ToInt32(TaskRecordType.HealthSafetyIncident).ToString(), Convert.ToInt32(TaskRecordType.PreventativeAction).ToString() });
+                        taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
                         taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
 
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
@@ -1417,7 +1345,7 @@ namespace SQM.Website
                             if (plantList != null)
                             {
                                 taskItem.Plant = plantList.FirstOrDefault();
-                                taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem, escalationAssigmments, new string[1] { Convert.ToInt32(TaskRecordType.ProblemCase).ToString() });
+                                taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
                             }
                             taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
                             taskItem.Title = taskItem.LongTitle = "Problem Case " + WebSiteCommon.GetXlatValue("caseStep", taskItem.Task.TASK_STEP);
@@ -1474,41 +1402,10 @@ namespace SQM.Website
                                    select new UserContext { Person = p }).Distinct().ToList());
 
                 userList = userList.GroupBy(g => new { g.Person.PERSON_ID }).Select(l => l.FirstOrDefault()).ToList();
-
-                foreach (UserContext user in userList)
-                {
-                    user.DelegateList = SQMModelMgr.SelectDelegateList(entities, user.Person.PERSON_ID).Select(l => l.PERSON_ID).ToList();
-                    user.EscalationAssignments = SQMModelMgr.SelectPersonEscalationList(entities, user.Person.PERSON_ID);
-                }
             }
 
             return userList;
         }
-        /*
-        public static List<UserContext> AssignedUserList()
-        {
-            // get list of users assigned to various transactions (data input, incidents,  approvals, ...)
-            List<UserContext> assignedUserList = new List<UserContext>();
-
-            using (PSsqmEntities entities = new PSsqmEntities())
-            {
-                assignedUserList = (from p in entities.PERSON
-                                    where (from o in entities.EHS_PROFILE where o.APPROVER_ID != null select (decimal)o.APPROVER_ID)
-                                   .Union(from m in entities.EHS_PROFILE_MEASURE where m.RESPONSIBLE_ID != null select (decimal)m.RESPONSIBLE_ID)
-                                      .Union(from e in entities.ESCALATION where e.L1_PERSON != null select e.L1_PERSON)
-                                          .Union(from e in entities.ESCALATION where e.LN_PERSON != null select (decimal)e.LN_PERSON).Distinct().Contains(p.PERSON_ID)
-                                    select new UserContext { Person = p }).ToList();
-
-                foreach (UserContext user in assignedUserList)
-                {
-                    user.DelegateList = SQMModelMgr.SelectDelegateList(entities, user.Person.PERSON_ID).Select(l => l.PERSON_ID).ToList();
-                    user.EscalationAssignments = SQMModelMgr.SelectPersonEscalationList(entities, user.Person.PERSON_ID);
-                }
-            }
-
-            return assignedUserList;
-        }
-        */
 
         public static int MailTaskList(List<TaskItem> taskList, string mailAddress, string context)
         {

@@ -768,11 +768,6 @@ namespace SQM.Website
 			get;
 			set;
 		}
-		public List<NOTIFY> EscalationAssignments
-		{
-			get;
-			set;
-		}
 		public List<decimal> DelegateList
 		{
 			get;
@@ -857,9 +852,8 @@ namespace SQM.Website
 							this.Credentials = access;
 							this.TimeZoneID = WebSiteCommon.GetXlatValue("timeZone", this.Person.PREFERRED_TIMEZONE);
 
-							this.DelegateList = new List<decimal>();
-							this.DelegateList = SQMModelMgr.SelectDelegateList(ctx, this.Person.PERSON_ID).Select(l => l.PERSON_ID).ToList();
-							this.EscalationAssignments = SQMModelMgr.SelectPersonEscalationList(ctx, this.Person.PERSON_ID);
+							//this.DelegateList = new List<decimal>();
+							//this.DelegateList = SQMModelMgr.SelectDelegateList(ctx, this.Person.PERSON_ID).Select(l => l.PERSON_ID).ToList();
 
 							if (SessionManager.CreateSessionContext(this) == null)
 							{

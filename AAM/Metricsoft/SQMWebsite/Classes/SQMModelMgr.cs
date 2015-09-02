@@ -742,6 +742,14 @@ namespace SQM.Website
 			return person;
 		}
 
+		public static List<PERSON> SelectPersonListBySupvID(string supvEmpID)
+		{
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				return (from p in ctx.PERSON where (p.SUPV_EMP_ID == supvEmpID) select p).ToList();
+			}
+		}
+
 		public static List<PRIVLIST> SelectPrivList(string privGroup)
 		{
 			using (PSsqmEntities ctx = new PSsqmEntities())

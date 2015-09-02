@@ -15,6 +15,7 @@ namespace SQM.Website
     {
         private List<BusinessLocation> locationList;
         private List<decimal> respForList;
+		private List<decimal> respPlantList;
         private int pageWidth;
 
         /*
@@ -125,19 +126,18 @@ namespace SQM.Website
 			// get tasks - due or escalated
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-            respForList.AddRange(SessionManager.UserContext.DelegateList);
+			respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l=> l.PERSON_ID).ToList());
+			respPlantList = new List<decimal>();
+
+
             SessionManager.UserContext.TaskList.Clear();
             SessionManager.UserContext.TaskList = new List<TaskItem>();
             DateTime fromDate = DateTime.Now.AddMonths(-6);
 
 			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
             {
-                SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments));
-                SessionManager.UserContext.TaskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, SessionManager.UserContext.EscalationAssignments, true));
-				if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.envdata))
-                {
-                    SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileFinalizeStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, SessionManager.UserContext.EscalationAssignments, SessionManager.UserContext.Person));
-                }
+                SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
+                SessionManager.UserContext.TaskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, true));
             }
 
             ++SessionManager.UserContext.InboxReviews;
@@ -158,7 +158,7 @@ namespace SQM.Website
 			// get scheduled tasks
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-            respForList.AddRange(SessionManager.UserContext.DelegateList);
+            //respForList.AddRange(SessionManager.UserContext.DelegateList);
             DateTime toDate = DateTime.Now.AddMonths(Convert.ToInt32(sldScheduleRange.Value));
 
             string selectedValue = "0";
