@@ -433,7 +433,7 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_LOSTTIME_HIST();
 
-				if (item.WORK_STATUS != "[Select One]")
+				if (!String.IsNullOrEmpty(item.WORK_STATUS) && item.WORK_STATUS != "[Select One]")
 				{
 					seq = seq + 1;
 
