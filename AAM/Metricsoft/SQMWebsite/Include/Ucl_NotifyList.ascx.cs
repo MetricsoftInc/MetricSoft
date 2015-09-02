@@ -93,7 +93,6 @@ namespace SQM.Website
 
 					lbl = (Label)item.FindControl("lblNotifyDist");
 					lbl.Text = notifyAction.NOTIFY_DIST;
-
 				}
 				catch
 				{

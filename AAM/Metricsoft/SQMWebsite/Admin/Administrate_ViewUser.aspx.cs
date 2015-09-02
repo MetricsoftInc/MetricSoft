@@ -166,17 +166,16 @@ namespace SQM.Website
 
 			if (ddlJobCode.Items.Count == 0)
 			{
+				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
 				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", "").OrderBy(j => j.JOB_DESC).ToList())
 				{
 					ddlJobCode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
 				}
-				ddlJobCode.Items.Insert(0, new RadComboBoxItem("System Admin", "1"));
-				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
 
+				ddlPrivGroup.Items.Insert(0, new RadComboBoxItem("", ""));
 				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList("", true).OrderBy(g => g.DESCRIPTION).ToList())
 				{
 					ddlPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
-					ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
 				}
 			}
 
