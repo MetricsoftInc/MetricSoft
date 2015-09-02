@@ -53,12 +53,12 @@
 <asp:Label ID="lblSubmitted" runat="server" Text="Power Outage submitted." Font-Bold="true" Visible="false"></asp:Label>
 
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-xs-12 col-sm-4" style="padding: 3px 1px">
+<div class="container">
+	<div class="row text_center">
+<%--		<div class="col-xs-12 col-sm-4" style="padding: 3px 1px">
 			<asp:Label ID="lblFormStepNumber" runat="server" Font-Bold="true" CssClass="textStd"></asp:Label>
-		</div>
-		<div class="col-xs-12 col-sm-8">
+		</div>--%>
+		<div class="col-xs-12 col-sm-12 text-center">
 			<asp:Label ID="lblFormTitle" runat="server" Font-Bold="true" CssClass="pageTitles"></asp:Label>
 		</div>
 	</div>
@@ -747,7 +747,39 @@
 			</div>
 		</div>
 		<br class="visible-xs-block" />
+
+
 		<div class="row">
+			<div class="col-xs-12 text-left ">
+				<span style="margin-top: 5px;">
+					<telerik:RadButton ID="btnSubnavSave" runat="server" Text="Save" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
+						OnClick="btnSubnavSave_Click" CommandArgument="0"/>
+					<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="0" />
+					<asp:LinkButton ID="btnSubnavLostTime" runat="server" Text="Lost time History" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="6"/>
+					<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="2"/>
+					<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="3"/>
+					<asp:LinkButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="4"/>
+					<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="5"/>
+					<span style="float:right">
+						<telerik:RadButton ID="btnDeleteInc" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
+							Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
+							OnClick="btnDeleteInc_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
+					</span>
+				</span>
+			</div>
+		</div>
+
+
+
+		<br />
+
+	<%--	<div class="row">
 
 			<div class="col-xs-12 text-left ">
 
@@ -785,7 +817,7 @@
 				</span>
 
 			</div>
-		</div>
+		</div>--%>
 
 	</div>
 

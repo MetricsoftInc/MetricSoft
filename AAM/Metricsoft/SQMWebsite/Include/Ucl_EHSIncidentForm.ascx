@@ -101,7 +101,7 @@
 
 									<div class="row" style="padding-top:6px;padding-bottom:6px;">
 										<div class="col-sm-12 text-center">
-											<asp:Label ID="lblFormTitle" runat="server" Text="Incident" Font-Bold ="true" CssClass="pageTitles"></asp:Label>
+											<asp:Label ID="lblPageTitle" runat="server" Text="Incident" Font-Bold ="true" CssClass="pageTitles"></asp:Label>
 										</div>
 									</div>
 

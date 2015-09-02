@@ -157,13 +157,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
-        /// lblFormTitle control.
+        /// lblPageTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFormTitle;
+        protected global::System.Web.UI.WebControls.Label lblPageTitle;
         
         /// <summary>
         /// pnlForm control.

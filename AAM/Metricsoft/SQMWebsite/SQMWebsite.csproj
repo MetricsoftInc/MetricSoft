@@ -1866,6 +1866,7 @@
     <Compile Include="Classes\EHSAuditTypeId.cs" />
     <Compile Include="Classes\EHSAuditMgr.cs" />
     <Compile Include="Classes\EHSAuditQuestionType.cs" />
+    <Compile Include="Classes\EHSFormId.cs" />
     <Compile Include="Classes\EHSNotificationMgr.cs" />
     <Compile Include="Classes\EHSIncidentTypeId.cs" />
     <Compile Include="Classes\CurrencyMgr.cs" />

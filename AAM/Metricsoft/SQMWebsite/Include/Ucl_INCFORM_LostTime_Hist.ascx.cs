@@ -382,10 +382,11 @@ namespace SQM.Website
 			}
 		}
 
-		public void AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
+		public int AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
 		{
 			var itemList = new List<INCFORM_LOSTTIME_HIST>();
 			int seqnumber = 0;
+			int status = 0;
 
 			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 			{
@@ -413,12 +414,16 @@ namespace SQM.Website
 			}
 
 			if (itemList.Count > 0)
-				SaveLostTime(incidentId, itemList);
+				status = SaveLostTime(incidentId, itemList);
+
+			return status;
 
 		}
 
-		private void SaveLostTime(decimal incidentId, List<INCFORM_LOSTTIME_HIST> itemList)
+		private int SaveLostTime(decimal incidentId, List<INCFORM_LOSTTIME_HIST> itemList)
 		{
+
+			int status = 0;
 
 			PSsqmEntities entities = new PSsqmEntities();
 
@@ -451,9 +456,11 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = DateTime.Now;
 
 					entities.AddToINCFORM_LOSTTIME_HIST(newItem);
-					entities.SaveChanges();
+					status = entities.SaveChanges();
 				}
 			}
+
+			return status;
 		}
 
 

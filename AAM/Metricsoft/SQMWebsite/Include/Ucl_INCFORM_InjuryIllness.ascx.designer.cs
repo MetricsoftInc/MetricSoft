@@ -31,15 +31,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblSubmitted;
         
         /// <summary>
-        /// lblFormStepNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFormStepNumber;
-        
-        /// <summary>
         /// lblFormTitle control.
         /// </summary>
         /// <remarks>
@@ -1048,40 +1039,67 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblResults;
         
         /// <summary>
-        /// btnSave control.
+        /// btnSubnavSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSave;
+        protected global::Telerik.Web.UI.RadButton btnSubnavSave;
         
         /// <summary>
-        /// btnPrev control.
+        /// btnSubnavIncident control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnPrev;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavIncident;
         
         /// <summary>
-        /// btnNext control.
+        /// btnSubnavLostTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnNext;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavLostTime;
         
         /// <summary>
-        /// btnClose control.
+        /// btnSubnavContainment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnClose;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavContainment;
+        
+        /// <summary>
+        /// btnSubnavRootCause control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavRootCause;
+        
+        /// <summary>
+        /// btnSubnavAction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAction;
+        
+        /// <summary>
+        /// btnSubnavApproval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
         
         /// <summary>
         /// btnDeleteInc control.

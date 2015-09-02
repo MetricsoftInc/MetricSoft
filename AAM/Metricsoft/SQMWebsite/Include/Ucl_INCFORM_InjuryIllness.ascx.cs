@@ -31,8 +31,8 @@ namespace SQM.Website
 		protected decimal involvedPersonId;
 		protected decimal witnessPersonId;
 
-		protected int currentFormStep;
-		protected int totalFormSteps;
+		//protected int currentFormStep;
+		//protected int totalFormSteps;
 
 		// InjuryIllness-specific custom Form Fields 
 		protected string localDescription;
@@ -80,11 +80,11 @@ namespace SQM.Website
 			set { ViewState["CurrentStep"] = value; }
 		}
 
-		public int CurrentFormStep
-		{
-			get { return ViewState["CurrentFormStep"] == null ? 0 : (int)ViewState["CurrentFormStep"]; }
-			set { ViewState["CurrentFormStep"] = value; }
-		}
+		//public int CurrentFormStep
+		//{
+		//	get { return ViewState["CurrentFormStep"] == null ? 0 : (int)ViewState["CurrentFormStep"]; }
+		//	set { ViewState["CurrentFormStep"] = value; }
+		//}
 
 		public decimal EditIncidentId
 		{
@@ -108,6 +108,12 @@ namespace SQM.Website
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
 			set { ViewState["NewIncidentId"] = value; }
+		}
+
+		public string CurrentSubnav
+		{
+			get { return ViewState["CurrentSubnav"] == null ? "I" : (string)ViewState["CurrentSubnav"]; }
+			set { ViewState["CurrentSubnav"] = value; }
 		}
 
 		protected decimal EditIncidentTypeId
@@ -193,6 +199,9 @@ namespace SQM.Website
 
 			lblResults.Text = "";
 
+			Label lbTitle = (Label)this.Parent.FindControl("lblPageTitle");
+			lbTitle.Visible = false;
+
 			//var inctype = Session["IncidentTypeID"];
 
 			if (IsPostBack)
@@ -251,8 +260,8 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
-			formSteps = GetFormSteps(typeId);
-			totalFormSteps = formSteps.Count();
+			//formSteps = GetFormSteps(typeId);
+			//totalFormSteps = formSteps.Count();
 
 
 			if (IsEditContext == true)
@@ -264,7 +273,7 @@ namespace SQM.Website
 
 				if (incident != null)
 				{
-					CurrentFormStep = CurrentStep + 1;  
+					//CurrentFormStep = CurrentStep + 1;  
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
@@ -363,7 +372,7 @@ namespace SQM.Website
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 
-					CurrentFormStep = 1;
+					//CurrentFormStep = 1;
 
 					btnDeleteInc.Visible = false;
 
@@ -391,27 +400,33 @@ namespace SQM.Website
 				}
 			}
 
+			CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
 			InitializeForm(CurrentStep);
 		}
 
 
 		void InitializeForm(int currentStep)
 		{
+
+			PSsqmEntities entities = new PSsqmEntities();
+			
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+
+			string currentFormName = (from tc in entities.INCFORM_TYPE_CONTROL where tc.INCIDENT_TYPE_ID == typeId && tc.STEP_NUMBER == currentStep select tc.STEP_FORM).FirstOrDefault();
 	
-			formSteps = GetFormSteps(typeId);
+			//formSteps = GetFormSteps(typeId);
 
-			int displayStep = currentStep + 1;
-			lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
+			//int displayStep = currentStep + 1;
+			//lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
 
-			int i = Convert.ToInt32(currentStep);
-			string currentFormName = formSteps[i].StepFormName;
-			lblFormTitle.Text = formSteps[i].StepHeadingText; ;
+			//int i = Convert.ToInt32(currentStep);
+			//string currentFormName = formSteps[i].StepFormName;
+			//lblFormTitle.Text = formSteps[i].StepHeadingText; ;
 
-			btnNext.Text = (i + 1 <= formSteps.Count() - 1) ? formSteps[i + 1].StepHeadingText.Trim() + "  >" : "Next  >";
-			btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
+			//btnNext.Text = (i + 1 <= formSteps.Count() - 1) ? formSteps[i + 1].StepHeadingText.Trim() + "  >" : "Next  >";
+			//btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
 
 			SetUserAccess(currentFormName);
 
@@ -424,12 +439,15 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnPrev.Visible = false;
-					btnNext.Visible = true;
-					btnClose.Visible = false;
+					//btnPrev.Visible = false;
+					//btnNext.Visible = true;
+					//btnClose.Visible = false;
 					btnDeleteInc.Visible = true;
+					lblFormTitle.Text = "Incident";
+					btnSubnavIncident.Enabled = false;
+					btnSubnavIncident.CssClass = "buttonLinkDisabled";
 					rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
-					if (!IsFullPagePostback)
+					//if (!IsFullPagePostback)
 						rptWitness.DataBind();
 					break;
 				case "INCFORM_CONTAIN":
@@ -440,9 +458,9 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnPrev.Visible = true;
-					btnNext.Visible = true;
-					btnClose.Visible = false;
+					//btnPrev.Visible = true;
+					//btnNext.Visible = true;
+					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ROOT5Y":
@@ -453,9 +471,9 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnPrev.Visible = true;
-					btnNext.Visible = true;
-					btnClose.Visible = false;
+					//btnPrev.Visible = true;
+					//btnNext.Visible = true;
+					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ACTION":
@@ -466,9 +484,9 @@ namespace SQM.Website
 					uclaction.Visible = true;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnPrev.Visible = true;
-					btnNext.Visible = true;
-					btnClose.Visible = false;
+					//btnPrev.Visible = true;
+					//btnNext.Visible = true;
+					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_APPROVAL":
@@ -479,8 +497,8 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = true;
 					ucllosttime.Visible = false;
-					btnPrev.Visible = true;
-					btnNext.Visible = false;
+					//btnPrev.Visible = true;
+					//btnNext.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
@@ -491,8 +509,8 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = true;
-					btnPrev.Visible = true;
-					btnNext.Visible = true;
+					//btnPrev.Visible = true;
+					//btnNext.Visible = true;
 					btnDeleteInc.Visible = false;
 					break;
 
@@ -500,26 +518,26 @@ namespace SQM.Website
 
 		}
 
-		protected List<EHSFormControlStep> GetFormSteps(decimal typeId)
-		{
-			var returnList = new List<EHSFormControlStep>();
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+		//protected List<EHSFormControlStep> GetFormSteps(decimal typeId)
+		//{
+		//	var returnList = new List<EHSFormControlStep>();
+		//	formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 
-			// If the user clicked "Yes" on the Lost Time radio button then we must 
-			// leave the Lost Time History form as the next step in this incident,
-			// otherwise remove it from the form steps list.
-			if (String.IsNullOrEmpty(rdoLostTime.SelectedValue) ||  rdoLostTime.SelectedValue != "1")
-			{
-				returnList = formSteps.Where(item => item.StepNumber != 2).ToList();
-				return returnList;
-			}
-			else
-			{
-				return formSteps;
-			}
+		//	// If the user clicked "Yes" on the Lost Time radio button then we must 
+		//	// leave the Lost Time History form as the next step in this incident,
+		//	// otherwise remove it from the form steps list.
+		//	if (String.IsNullOrEmpty(rdoLostTime.SelectedValue) ||  rdoLostTime.SelectedValue != "1")
+		//	{
+		//		returnList = formSteps.Where(item => item.StepNumber != 2).ToList();
+		//		return returnList;
+		//	}
+		//	else
+		//	{
+		//		return formSteps;
+		//	}
 
 			
-		}
+		//}
 
 		public void LoadDependantForm(string formName)
 		{
@@ -717,24 +735,30 @@ namespace SQM.Website
 					rddlBodyPart.Enabled = UpdateAccess;
 					//rfvBodyPart.Enabled = UpdateAccess;
 
-					btnSave.Enabled = UpdateAccess;
+					//btnSave.Enabled = UpdateAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_CONTAIN":
-					btnSave.Enabled = ActionAccess;
+					//btnSave.Enabled = ActionAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_ROOT5Y":
-					btnSave.Enabled = ActionAccess;
+					//btnSave.Enabled = ActionAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_ACTION":
-					btnSave.Enabled = ActionAccess;
+					//btnSave.Enabled = ActionAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
-					btnSave.Enabled = ApproveAccess;
+					//btnSave.Enabled = ApproveAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_APPROVAL":
-					btnSave.Enabled = ApproveAccess;
-					btnClose.Enabled = ApproveAccess;
-					btnClose.Visible = ApproveAccess;
+					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSave.Enabled = ApproveAccess;
+					//btnClose.Enabled = ApproveAccess;
+					//btnClose.Visible = ApproveAccess;
 					break;
 			}
 		}
@@ -950,7 +974,7 @@ namespace SQM.Website
 		{
 			uploader.SetAttachmentRecordStep("1");
 			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnSave", "btnNext", "btnPrev", "btnClose" };
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavLostTime", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval"};
 
 
 			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
@@ -1130,112 +1154,123 @@ namespace SQM.Website
 
 		}
 
-		protected void btnSave_Click(object sender, EventArgs e)
-		{
+		//protected void btnSave_Click(object sender, EventArgs e)
+		//{
 
-			if (Page.IsValid)
-			{
-				entities = new PSsqmEntities();
+		//	if (Page.IsValid)
+		//	{
+		//		entities = new PSsqmEntities();
 
-				// Get custom form values
-				selectedShift = rddlShift.SelectedValue;
-				incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
-				localDescription = "";
-				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
-					localDescription = tbLocalDescription.Text;
+		//		// Get custom form values
+		//		selectedShift = rddlShift.SelectedValue;
+		//		incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
+		//		localDescription = "";
+		//		if (!string.IsNullOrEmpty(tbLocalDescription.Text))
+		//			localDescription = tbLocalDescription.Text;
 
-				Save(false);
+		//		Save(false);
 
-				formSteps = GetFormSteps(incidentTypeId);
+		//		formSteps = GetFormSteps(incidentTypeId);
 
-				if (btnSave.Enabled)
-					if (!IsEditContext)
-						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
-					else
-						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
-				else
-					lblResults.Text = "";
+		//		if (btnSave.Enabled)
+		//			if (!IsEditContext)
+		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+		//			else
+		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
+		//		else
+		//			lblResults.Text = "";
 
-				IsEditContext = true;
-				if (EditIncidentId == 0)
-					EditIncidentId = NewIncidentId;
+		//		IsEditContext = true;
+		//		if (EditIncidentId == 0)
+		//			EditIncidentId = NewIncidentId;
 
-				InitializeForm(CurrentStep);
-			}
-			else
-			{
-				string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
-				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-			}
+		//		InitializeForm(CurrentStep);
+		//	}
+		//	else
+		//	{
+		//		string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+		//		ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+		//	}
 
-		}
+		//}
 
-		protected void btnPrev_Click(object sender, EventArgs e)
-		{
-			lblResults.Text = "";
-			CurrentStep = CurrentStep - 1;
+		//protected void btnPrev_Click(object sender, EventArgs e)
+		//{
+		//	lblResults.Text = "";
+		//	CurrentStep = CurrentStep - 1;
 
-			InitializeForm(CurrentStep);
-			SetLostTime(true);
-		}
+		//	InitializeForm(CurrentStep);
+		//	SetLostTime(true);
+		//}
 
-		protected void btnNext_Click(object sender, EventArgs e)
-		{
+		//protected void btnNext_Click(object sender, EventArgs e)
+		//{
 
-			if (Page.IsValid)
-			{
-				lblResults.Text = "";
-				entities = new PSsqmEntities();
+		//	if (Page.IsValid)
+		//	{
+		//		lblResults.Text = "";
+		//		entities = new PSsqmEntities();
 
-				// Get custom form values
-				selectedShift = rddlShift.SelectedValue;
-				incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
-				localDescription = "";
-				if (!string.IsNullOrEmpty(tbLocalDescription.Text))
-					localDescription = tbLocalDescription.Text;
+		//		// Get custom form values
+		//		selectedShift = rddlShift.SelectedValue;
+		//		incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
+		//		localDescription = "";
+		//		if (!string.IsNullOrEmpty(tbLocalDescription.Text))
+		//			localDescription = tbLocalDescription.Text;
 
-				Save(false);
+		//		Save(false);
 
-				formSteps = GetFormSteps(incidentTypeId);
+		//		formSteps = GetFormSteps(incidentTypeId);
 
-				if (btnSave.Enabled)
-					if (!IsEditContext)
-						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
-					else
-						lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
-				else
-					lblResults.Text = "";
+		//		if (btnSave.Enabled)
+		//			if (!IsEditContext)
+		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
+		//			else
+		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
+		//		else
+		//			lblResults.Text = "";
 
-				IsEditContext = true;
-				if (EditIncidentId == 0)
-					EditIncidentId = NewIncidentId;
+		//		IsEditContext = true;
+		//		if (EditIncidentId == 0)
+		//			EditIncidentId = NewIncidentId;
 
-				CurrentStep = CurrentStep + 1;
-				InitializeForm(CurrentStep);
+		//		CurrentStep = CurrentStep + 1;
+		//		InitializeForm(CurrentStep);
 
-			}
-			else
-			{
-				string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
-				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-			}
+		//	}
+		//	else
+		//	{
+		//		string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+		//		ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+		//	}
 
-		}
+		//}
 
 		protected void btnDeleteInc_Click(object sender, EventArgs e)
 		{
 			if (EditIncidentId > 0)
 			{
 
+
+
 				decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 				pnlBaseForm.Visible = false;
 				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
-				btnSave.Visible = false;
-				btnPrev.Visible = false;
-				btnNext.Visible = false;
-				btnClose.Visible = false;
+				//btnSave.Visible = false;
+				//btnPrev.Visible = false;
+				//btnNext.Visible = false;
+				//btnClose.Visible = false;
+
+				btnSubnavSave.Visible = false;
+				btnSubnavIncident.Visible = false;
+				btnSubnavLostTime.Visible = false;
+				btnSubnavContainment.Visible = false;
+				btnSubnavRootCause.Visible = false;
+				btnSubnavAction.Visible = false;
+				btnSubnavApproval.Visible = false;
+
 				btnDeleteInc.Visible = false;
 				lblResults.Visible = true;
 				int delStatus = EHSIncidentMgr.DeleteCustomIncident(EditIncidentId, typeId);
@@ -1248,13 +1283,167 @@ namespace SQM.Website
 			rddlInc.SelectedIndex = 0;
 		}
 
+		protected void btnSubnavSave_Click(object sender, EventArgs e)
+		{
+			int status = 0;
+
+
+			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			switch (CurrentSubnav)
+			{
+				case "2":
+					//status = uclcontain.AddUpdateINCFORM_CONTAIN(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
+					Save(false);
+					btnSubnav_Click(btnSubnavContainment, null);
+					break;
+				case "3":
+					//status = uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
+					Save(false);
+					btnSubnav_Click(btnSubnavRootCause, null);
+					break;
+				case "4":
+					//status = uclaction.AddUpdateINCFORM_ACTION(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
+					Save(false);
+					btnSubnav_Click(btnSubnavAction, null);
+					break;
+				case "5":
+					//status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
+					Save(false);
+					btnSubnav_Click(btnSubnavApproval, null);
+					break;
+				case "6":
+					//status = ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
+					Save(false);
+					btnSubnav_Click(btnSubnavLostTime, null);
+					break;
+				default:
+					CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
+					Save(false);
+					//if (IsEditContext)
+					//{
+					//	btnSaveContinue_Click(sender, null);
+					//	BuildForm();
+					//	PopulateInitialForm();
+					//}
+					//else
+					//	btnSaveReturn_Click(sender, null);
+					break;
+			}
+			if (status >= 0)
+			{
+				string script = string.Format("alert('{0}');", "Your updates have been saved.");
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+			}
+		}
+
+		protected void btnSubnav_Click(object sender, EventArgs e)
+		{
+			//RadButton btn = (RadButton)sender;
+
+			LinkButton btn = (LinkButton)sender;
+
+			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;   //divSubnavPage.Visible =
+			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+			CurrentSubnav = btn.CommandArgument;
+
+			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+
+			lblFormTitle.Text = "Incident";
+
+			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			switch (btn.CommandArgument)
+			{
+				case "2":
+					btnDeleteInc.Visible = false;
+					lblFormTitle.Text = "Containment";
+					btnSubnavContainment.Enabled = false;
+					btnSubnavContainment.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
+					InitializeForm(CurrentStep);
+					//uclcontain.Visible = divSubnavPage.Visible = true;
+					//uclcontain.IsEditContext = true;
+					//uclcontain.EditIncidentId = incidentId;
+					//uclcontain.PopulateInitialForm();
+					break;
+				case "3":
+					btnDeleteInc.Visible = false;
+					lblFormTitle.Text = "Root Cause";
+					btnSubnavRootCause.Enabled = false;
+					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
+					InitializeForm(CurrentStep);
+					//uclroot5y.Visible = divSubnavPage.Visible = true;
+					//uclroot5y.IsEditContext = true;
+					//uclroot5y.EditIncidentId = incidentId;
+					//uclroot5y.PopulateInitialForm();
+					break;
+				case "4":
+					btnDeleteInc.Visible = false;
+					lblFormTitle.Text = "Corrective Action";
+					btnSubnavAction.Enabled = false;
+					btnSubnavAction.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
+					InitializeForm(CurrentStep);
+					//uclaction.Visible = divSubnavPage.Visible = true;
+					//uclaction.IsEditContext = true;
+					//uclaction.EditIncidentId = incidentId;
+					//uclaction.PopulateInitialForm();
+					break;
+				case "5":
+					btnDeleteInc.Visible = false;
+					lblFormTitle.Text = "Approval";
+					btnSubnavApproval.Enabled = false;
+					btnSubnavApproval.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
+					InitializeForm(CurrentStep);
+					//uclapproval.Visible = divSubnavPage.Visible = true;
+					//uclapproval.IsEditContext = true;
+					//uclapproval.EditIncidentId = incidentId;
+					//uclapproval.PopulateInitialForm();
+					break;
+				case "6":
+					btnDeleteInc.Visible = false;
+					lblFormTitle.Text = "Lost Time History";
+					btnSubnavLostTime.Enabled = false;
+					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
+					InitializeForm(CurrentStep);
+					//uclapproval.Visible = divSubnavPage.Visible = true;
+					//ucllosttime.IsEditContext = true;
+					//ucllosttime.EditIncidentId = incidentId;
+					//ucllosttime.PopulateInitialForm();
+					break;
+				case "0":
+				default:
+					lblFormTitle.Text = "Incident";
+					btnDeleteInc.Visible = true;
+					btnSubnavIncident.Visible = true;
+					btnSubnavIncident.Enabled = false;
+					btnSubnavIncident.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
+					if (pnlBaseForm.Visible == false)
+						pnlBaseForm.Visible = true;
+					PopulateInitialForm();
+					break;
+			}
+
+		}
+
 		protected void Save(bool shouldReturn)
 		{
 
-			bool shouldCreate8d = false;
-			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-			if (Mode == IncidentMode.Prevent)
-				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+			//bool shouldCreate8d = false;
+			//string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+			//if (Mode == IncidentMode.Prevent)
+			//	result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
 			decimal incidentId = 0;
 
@@ -1284,7 +1473,7 @@ namespace SQM.Website
 				incidentTypeId = SelectedTypeId;
 				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
-				currentFormStep = CurrentFormStep;
+				//currentFormStep = CurrentFormStep;
 			}
 			else
 			{
@@ -1303,11 +1492,16 @@ namespace SQM.Website
 			if (InitialPlantId == 0)
 				InitialPlantId = IncidentLocationId;
 
-			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-			formSteps = GetFormSteps(typeId);
+//			formSteps = GetFormSteps(typeId);
+//			int i = Convert.ToInt32(CurrentStep);
+//			string savingForm = formSteps[i].StepFormName;
 
-			int i = Convert.ToInt32(CurrentStep);
-			string savingForm = formSteps[i].StepFormName;
+			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+	
+			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			PSsqmEntities entities = new PSsqmEntities();
+			string savingForm = (from tc in entities.INCFORM_TYPE_CONTROL where tc.INCIDENT_TYPE_ID == typeId && tc.STEP_NUMBER == CurrentStep select tc.STEP_FORM).FirstOrDefault();
 
 			switch (savingForm)
 			{
@@ -1377,7 +1571,7 @@ namespace SQM.Website
 				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
 
-				currentFormStep = CurrentFormStep;
+				//currentFormStep = CurrentFormStep;
 
 				theIncident = CreateNewIncident();
 				incidentId = theIncident.INCIDENT_ID;
@@ -1420,6 +1614,8 @@ namespace SQM.Website
 
 		protected INCIDENT CreateNewIncident()
 		{
+			PSsqmEntities entities = new PSsqmEntities();
+
 			decimal incidentId = 0;
 			var newIncident = new INCIDENT()
 			{
@@ -1436,7 +1632,7 @@ namespace SQM.Website
 				INCIDENT_DT = incidentDate,
 				ISSUE_TYPE = incidentType,
 				ISSUE_TYPE_ID = incidentTypeId,
-				INCFORM_LAST_STEP_COMPLETED = currentFormStep
+				INCFORM_LAST_STEP_COMPLETED = CurrentStep //currentFormStep
 			};
 
 			entities.AddToINCIDENT(newIncident);
@@ -1449,6 +1645,8 @@ namespace SQM.Website
 
 		protected INCIDENT UpdateIncident(decimal incidentId)
 		{
+			PSsqmEntities entities = new PSsqmEntities();
+
 			INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 			if (incident != null)
 			{
@@ -1472,6 +1670,9 @@ namespace SQM.Website
 
 		protected INCFORM_INJURYILLNESS CreateNewInjuryIllnessDetails(decimal incidentId)
 		{
+
+			PSsqmEntities entities = new PSsqmEntities();
+
 			var newInjryIllnessDetails = new INCFORM_INJURYILLNESS();
 			
 			newInjryIllnessDetails.INCIDENT_ID = incidentId;
@@ -1661,6 +1862,8 @@ namespace SQM.Website
 
 		protected INCFORM_INJURYILLNESS UpdateInjuryIllnessDetails(decimal incidentId)
 		{
+			PSsqmEntities entities = new PSsqmEntities();
+
 			INCFORM_INJURYILLNESS injuryIllnessDetails = (from po in entities.INCFORM_INJURYILLNESS where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 
 			if (injuryIllnessDetails != null)

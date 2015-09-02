@@ -2541,14 +2541,14 @@ namespace SQM.Website
 			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
 			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
-			lblFormTitle.Text = "Incident";
+			lblPageTitle.Text = "Incident";
 
 			switch (btn.CommandArgument)
 			{
 				case "2":
 					btnDelete.Visible = false;
 					//btnSubnavContainment.Visible = false;
-					lblFormTitle.Text = "Containment";
+					lblPageTitle.Text = "Containment";
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					uclContainment.Visible = divSubnavPage.Visible = true;
@@ -2559,7 +2559,7 @@ namespace SQM.Website
 				case "3":
 					btnDelete.Visible = false;
 					//btnSubnavRootCause.Visible = false;
-					lblFormTitle.Text = "Root Cause";
+					lblPageTitle.Text = "Root Cause";
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					uclRootCause.Visible = divSubnavPage.Visible = true;
@@ -2570,7 +2570,7 @@ namespace SQM.Website
 				case "4":
 					btnDelete.Visible = false;
 					//btnSubnavAction.Visible = false;
-					lblFormTitle.Text = "Corrective Action";
+					lblPageTitle.Text = "Corrective Action";
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					uclAction.Visible = divSubnavPage.Visible = true;
@@ -2581,7 +2581,7 @@ namespace SQM.Website
 				case "5":
 					btnDelete.Visible = false;
 					//btnSubnavApproval.Visible = false;
-					lblFormTitle.Text = "Approval";
+					lblPageTitle.Text = "Approval";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					uclApproval.Visible = divSubnavPage.Visible = true;
@@ -2591,7 +2591,7 @@ namespace SQM.Website
 					break;
 				case "0":
 				default:
-					lblFormTitle.Text = "Incident";
+					lblPageTitle.Text = "Incident";
 					btnDelete.Visible = true;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
