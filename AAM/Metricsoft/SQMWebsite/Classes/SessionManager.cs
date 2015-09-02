@@ -71,7 +71,7 @@ namespace SQM.Website
 			return UserContext.CheckUserPrivilege(priv, scope);
 		}
 
-		public static List<PRIVGROUP> GetScopePrivileges(SysScope scope)
+		public static List<PRIVLIST> GetScopePrivileges(SysScope scope)
 		{
 			return UserContext.GetScopePrivileges(scope);
 		}
@@ -728,7 +728,7 @@ namespace SQM.Website
 			get;
 			set;
 		}
-		public List<PRIVGROUP> PrivList
+		public List<PRIVLIST> PrivList
 		{
 			get;
 			set;
@@ -824,7 +824,8 @@ namespace SQM.Website
 						}
 						else
 						{
-							this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD, "COMMON");
+							//this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD, "COMMON");
+							this.PrivList = SQMModelMgr.SelectPrivGroupPerson(this.Person.PRIV_GROUP, "COMMON");
 
 							SessionManager.EffLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
 
@@ -903,17 +904,17 @@ namespace SQM.Website
 
 		}
 
-		public static List<PRIVGROUP> GetScopePrivileges(SysScope scope)
+		public static List<PRIVLIST> GetScopePrivileges(SysScope scope)
 		{
 			// get all user privs related to the scope/function 
-			List<PRIVGROUP> privList = new List<PRIVGROUP>();
+			List<PRIVLIST> privList = new List<PRIVLIST>();
 
 			if (SessionManager.UserContext.PrivList != null)
 			{
-				PRIVGROUP priv = new PRIVGROUP();
+				PRIVLIST priv = new PRIVLIST();
 				if ((priv = SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault()) != null)  // system admon or company admin has privs to any resource
 				{
-					PRIVGROUP adminPriv = new PRIVGROUP();
+					PRIVLIST adminPriv = new PRIVLIST();
 					adminPriv.PRIV_GROUP = priv.PRIV_GROUP;
 					adminPriv.PRIV = priv.PRIV;
 					adminPriv.SCOPE = scope.ToString();
@@ -932,7 +933,7 @@ namespace SQM.Website
 		{
 			SysPriv maxPriv = SysPriv.none;
 
-			foreach (PRIVGROUP priv in SessionManager.UserContext.PrivList)
+			foreach (PRIVLIST priv in SessionManager.UserContext.PrivList)
 			{
 				if (priv.PRIV < (int)maxPriv)
 					maxPriv = (SysPriv)priv.PRIV;

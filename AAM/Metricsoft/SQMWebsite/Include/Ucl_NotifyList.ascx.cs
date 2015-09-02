@@ -52,13 +52,9 @@ namespace SQM.Website
 			ddlScopeTiming.DataTextField = "DESCRIPTION";
 			ddlScopeTiming.DataBind();
 
-			if (ddlNotifyJobcode.Items.Count == 0)
+			foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList(new SysPriv[2] { SysPriv.admin, SysPriv.notify }, SysScope.incident, "A").ToList())
 			{
-				//ddlNotifyJobcode.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (JOBCODE jc in SQMModelMgr.SelectPersonJobcodeList(true, false).OrderBy(j => j.JOB_DESC).ToList())
-				{
-					ddlNotifyJobcode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
-				}
+				ddlNotifyPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
 			}
 
 			pnlNotifyAction.Visible = true;
@@ -146,11 +142,11 @@ namespace SQM.Website
 					if (ddlScopeTiming.FindItemByValue(notifyAction.NOTIFY_TIMING.ToString()) != null)
 						ddlScopeTiming.SelectedValue = notifyAction.NOTIFY_TIMING.ToString();
 
-					ddlNotifyJobcode.ClearCheckedItems();
+					ddlNotifyPrivGroup.ClearCheckedItems();
 					RadComboBoxItem ri = null;
 					foreach (string sv in notifyAction.NOTIFY_DIST.Split(','))
 					{
-						if (!string.IsNullOrEmpty(sv)  &&  (ri = ddlNotifyJobcode.FindItemByValue(sv)) != null)
+						if (!string.IsNullOrEmpty(sv)  &&  (ri = ddlNotifyPrivGroup.FindItemByValue(sv)) != null)
 							ri.Checked = true;
 					}
 
@@ -220,7 +216,7 @@ namespace SQM.Website
 			notifyAction.TASK_STATUS = ddlScopeStatus.SelectedValue;
 			notifyAction.NOTIFY_TIMING = Convert.ToInt32(ddlScopeTiming.SelectedValue);
 			notifyAction.NOTIFY_DIST = "";
-			foreach (string sv in SQMBasePage.GetComboBoxSelectedValues(ddlNotifyJobcode))
+			foreach (string sv in SQMBasePage.GetComboBoxSelectedValues(ddlNotifyPrivGroup))
 			{
 				notifyAction.NOTIFY_DIST += (string.IsNullOrEmpty(notifyAction.NOTIFY_DIST) ? "" : ",") + sv;
 			}

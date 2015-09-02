@@ -165,13 +165,13 @@ namespace SQM.Website
 			// set up for adding the header info
 			AccessMode accessmode = UserContext.RoleAccess();
 
-			List<JOBCODE> jl = SQMModelMgr.SelectPrivGroupJobcodeList(SysPriv.originate, SysScope.audit);
+			List<PRIVGROUP> pl = SQMModelMgr.SelectPrivGroupList(new SysPriv[1] { SysPriv.originate }, SysScope.audit, ""); // SQMModelMgr.SelectPrivGroupJobcodeList(SysPriv.originate, SysScope.audit);
 			DropDownListItem item = new DropDownListItem();
 			UpdateAuditTypes();
 
 			if (rddlAuditJobcodes.Items.Count == 0)
 			{
-				rddlAuditJobcodes.DataSource = jl;
+				rddlAuditJobcodes.DataSource = pl;
 				rddlAuditJobcodes.DataTextField = "JOB_DESC";
 				rddlAuditJobcodes.DataValueField = "JOBCODE_CD";
 				rddlAuditJobcodes.DataBind();
@@ -212,8 +212,8 @@ namespace SQM.Website
 				cbInactive.Checked = scheduler.INACTIVE;
 
 				// build the audit jobcode list
-				JOBCODE jc = jl.Where(i => i.JOBCODE_CD.ToString() == scheduler.JOBCODE_CD).FirstOrDefault();
-				lblAuditJobcode.Text = jc.JOB_DESC;
+				PRIVGROUP pv = pl.Where(i => i.PRIV_GROUP.ToString() == scheduler.JOBCODE_CD).FirstOrDefault();
+				lblAuditJobcode.Text = pv.DESCRIPTION;
 				lblAuditJobcode.Visible = true;
 				rddlAuditJobcodes.SelectedValue = scheduler.JOBCODE_CD.ToString();
 				rddlAuditJobcodes.Visible = false;

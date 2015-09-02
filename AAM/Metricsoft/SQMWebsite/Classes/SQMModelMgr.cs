@@ -532,39 +532,41 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
-		public static List<JOBCODE> SelectPrivGroupJobcodeList(SysPriv priv, SysScope scope)
+		public static List<PRIVGROUP> SelectPrivGroupList(string status, bool includeAdmin)
 		{
-			List<JOBCODE> jobcodeList = new List<JOBCODE>();
+			List<PRIVGROUP> groupList = new List<PRIVGROUP>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				groupList = (from g in ctx.PRIVGROUP 
+							 where ((string.IsNullOrEmpty(status) || g.STATUS == status) && (includeAdmin || g.PRIV_GROUP != "admin"))
+							 select g).ToList();
+			}
+
+			return groupList;
+		}
+
+		public static List<PRIVGROUP> SelectPrivGroupList(SysPriv[] priv, SysScope scope, string status)
+		{
+			List<PRIVGROUP> groupList = new List<PRIVGROUP>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				string privScope = scope.ToString();
-				jobcodeList = (from j in ctx.JOBCODE 
-							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where j.PRIV_GROUP == v.PRIV_GROUP 
-									&& (v.PRIV == (int)priv && v.SCOPE == privScope)
-							  select j).ToList();
+				groupList = (from g in ctx.PRIVGROUP
+							  join v in ctx.PRIVLIST on g.PRIV_GROUP equals v.PRIV_GROUP
+							   where 
+								(string.IsNullOrEmpty(status) || g.STATUS == status)
+								&& (priv.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
+							   select g).ToList();
 			}
 
-			return jobcodeList;
+			return groupList;
 		}
 
-		public static List<JOBCODE> SelectPersonJobcodeList(bool emailsOnly, bool includeAdmin)
+		public static string FormatPrivGroup(PRIVGROUP privGroup)
 		{
-			List<JOBCODE> jobcodeList = new List<JOBCODE>();
-
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				string admin = SysPriv.admin.ToString();
-				jobcodeList = (from j in ctx.JOBCODE
-							   join p in ctx.PERSON on j.JOBCODE_CD equals p.JOBCODE_CD
-							   where j.JOBCODE_CD == p.JOBCODE_CD
-									 && (emailsOnly == false  || !string.IsNullOrEmpty(p.EMAIL))
-									 && (includeAdmin  ||  p.JOBCODE_CD != admin)
-							   select j).Distinct().ToList();
-			}
-
-			return jobcodeList;
+			return (privGroup.PRIV_GROUP + "  /  " + privGroup.DESCRIPTION);
 		}
 
 		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
@@ -589,13 +591,25 @@ namespace SQM.Website
 			{
 				string privScope = scope.ToString();
 				personList = (from p in ctx.PERSON
-							  join j in ctx.JOBCODE on p.JOBCODE_CD equals j.JOBCODE_CD
-							  join v in ctx.PRIVGROUP on j.PRIV_GROUP equals v.PRIV_GROUP
-							  where j.JOBCODE_CD == p.JOBCODE_CD 
+							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
+							  join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
+							  where g.PRIV_GROUP == p.PRIV_GROUP
 									&& (v.PRIV == (int)priv && v.SCOPE == privScope) 
 									&& (plantID == 0 || p.PLANT_ID == plantID)
 									&& (!activeOnly || p.STATUS == "A")
 							  select p).ToList();
+			}
+
+			return personList;
+		}
+
+		public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
 			}
 
 			return personList;
@@ -728,29 +742,29 @@ namespace SQM.Website
 			return person;
 		}
 
-		public static List<PRIVGROUP> SelectPrivGroup(string privGroup)
+		public static List<PRIVLIST> SelectPrivList(string privGroup)
 		{
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				return (from v in ctx.PRIVGROUP where (v.PRIV_GROUP == privGroup) select v).ToList();
+				return (from v in ctx.PRIVLIST where (v.PRIV_GROUP == privGroup) select v).ToList();
 			}
 		}
-		public static List<PRIVGROUP> SelectPrivGroupJobcode(string jobCode, string commonGroup)
+
+		public static List<PRIVLIST> SelectPrivGroupPerson(string privGroup, string commonGroup)
 		{
-			List<PRIVGROUP> privList = new List<PRIVGROUP>();
+			List<PRIVLIST> privList = new List<PRIVLIST>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				try
 				{
-					privList = (from v in ctx.PRIVGROUP
-								join j in ctx.JOBCODE on v.PRIV_GROUP equals j.PRIV_GROUP
-								where (j.JOBCODE_CD == jobCode)
+					privList = (from v in ctx.PRIVLIST
+								where (v.PRIV_GROUP == privGroup)
 								select v).ToList();
 					// append common privs ...
 					if (!string.IsNullOrEmpty(commonGroup))
 					{
-						privList.AddRange((from v in ctx.PRIVGROUP
+						privList.AddRange((from v in ctx.PRIVLIST
 										   where (v.PRIV_GROUP == commonGroup)
 										   select v).ToList());
 					}
@@ -981,18 +995,6 @@ namespace SQM.Website
 			return personDataList;
         }
 
-		public static List<PERSON> SelectPlantJobcodePersonList(decimal companyID, decimal plantID, string jobcodeCD)
-		{
-			List<PERSON> personList = new List<PERSON>();
-
-			foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
-			{
-				if (person.PLANT_ID == plantID && person.JOBCODE_CD == jobcodeCD)
-					personList.Add(person);
-			}
-
-			return personList;
-		}
 
         public static bool PersonPlantAccess(PERSON person, decimal plantID)
         {

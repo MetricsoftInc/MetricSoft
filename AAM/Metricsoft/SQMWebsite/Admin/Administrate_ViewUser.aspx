@@ -110,7 +110,7 @@
                         <br style="clear: both;" />
                         <Ucl:AdminList id="uclUserList" runat="server"/>
                         
-                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="555" Width="650" Title="User Details" Behaviors="Move">
+                        <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="565" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
                                 <asp:Panel runat="server" ID="pnlUserEdit" >
                                      <table width="99%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 4px;">
@@ -210,7 +210,16 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="400" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="350" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="columnHeader">
+                                                                <asp:Label ID="Label1" runat="server" text="Privilege Group"></asp:Label>
+                                                            </td>
+                                                            <td class="tableDataAlt">&nbsp;</td>
+                                                            <td class="tableDataAlt">
+																<telerik:RadComboBox ID="ddlPrivGroup" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="300" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select privilege group"></telerik:RadComboBox>
 																<br />
 																<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                             </td>

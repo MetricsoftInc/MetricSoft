@@ -172,6 +172,12 @@ namespace SQM.Website
 				}
 				ddlJobCode.Items.Insert(0, new RadComboBoxItem("System Admin", "1"));
 				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
+
+				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList("", true).OrderBy(g => g.DESCRIPTION).ToList())
+				{
+					ddlPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+					ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
+				}
 			}
 
             ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
@@ -291,6 +297,11 @@ namespace SQM.Website
 			else
 				ddlJobCode.SelectedValue = "";
 
+			if (ddlPrivGroup.Items.FindItemByValue(person.PRIV_GROUP) != null)
+				ddlPrivGroup.SelectedValue = person.PRIV_GROUP;
+			else
+				ddlPrivGroup.SelectedValue = "";
+
 			tbUserPhone.Text =  person.PHONE;
 			tbUserEmail.Text = person.EMAIL;
 			tbEmpID.Text = person.EMP_ID;
@@ -313,9 +324,9 @@ namespace SQM.Website
             RadComboBoxItem item = null; RadComboBoxItem itemSep = null;
 
 			lblPrivScope.Text = "";
-			if (person.JOBCODE != null)
+			if (person.PRIV_GROUP != null)
 			{
-				foreach (PRIVGROUP jp in SQMModelMgr.SelectPrivGroupJobcode(person.JOBCODE_CD, "").ToList())
+				foreach (PRIVLIST jp in SQMModelMgr.SelectPrivList(person.PRIV_GROUP).ToList())
 				{
 					lblPrivScope.Text += (" " + ((SysPriv)jp.PRIV).ToString() + ": " + jp.SCOPE + ",");
 				}
@@ -351,6 +362,7 @@ namespace SQM.Website
             person.LAST_NAME = string.IsNullOrEmpty(tbUserLastName.Text) ? "" : tbUserLastName.Text;
 			person.MIDDLE_NAME = string.IsNullOrEmpty(tbUserMiddleName.Text) ? "" : tbUserMiddleName.Text;
 			person.JOBCODE_CD = ddlJobCode.SelectedValue;
+			person.PRIV_GROUP = ddlPrivGroup.SelectedValue;
             person.PHONE = tbUserPhone.Text;
             person.EMAIL = tbUserEmail.Text;
 			person.EMP_ID = tbEmpID.Text;

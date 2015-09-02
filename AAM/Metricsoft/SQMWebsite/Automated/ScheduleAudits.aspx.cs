@@ -63,7 +63,7 @@ namespace SQM.Website.Automated
 						// get the plant
 						PLANT auditPlant = SQMModelMgr.LookupPlant((decimal)schedule.PLANT_ID);
 						// for the location, select all people that should get the audit
-						List<PERSON> auditors = SQMModelMgr.SelectPlantJobcodePersonList((decimal)auditPlant.COMPANY_ID, auditPlant.PLANT_ID, schedule.JOBCODE_CD);
+						List<PERSON> auditors = SQMModelMgr.SelectPlantPrivgroupPersonList(auditPlant.PLANT_ID, new string[1] { schedule.JOBCODE_CD });
 						foreach (PERSON person in auditors)
 						{
 							// create audit header

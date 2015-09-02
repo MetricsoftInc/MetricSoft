@@ -162,6 +162,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION", "AUDIT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION), "AUDIT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.BUSINESS_ORG), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PLANT), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PRIVGROUP), "PRIVLIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PRIVLIST), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PRIVGROUP), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
 
 #endregion
 
@@ -2184,22 +2186,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PRIVGROUP> PRIVGROUP
-        {
-            get
-            {
-                if ((_PRIVGROUP == null))
-                {
-                    _PRIVGROUP = base.CreateObjectSet<PRIVGROUP>("PRIVGROUP");
-                }
-                return _PRIVGROUP;
-            }
-        }
-        private ObjectSet<PRIVGROUP> _PRIVGROUP;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<AUDIT_QUESTION_LANG> AUDIT_QUESTION_LANG
         {
             get
@@ -2244,6 +2230,38 @@ namespace SQM.Website
             }
         }
         private ObjectSet<AUDIT_SCHEDULER> _AUDIT_SCHEDULER;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PRIVGROUP> PRIVGROUP
+        {
+            get
+            {
+                if ((_PRIVGROUP == null))
+                {
+                    _PRIVGROUP = base.CreateObjectSet<PRIVGROUP>("PRIVGROUP");
+                }
+                return _PRIVGROUP;
+            }
+        }
+        private ObjectSet<PRIVGROUP> _PRIVGROUP;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PRIVLIST> PRIVLIST
+        {
+            get
+            {
+                if ((_PRIVLIST == null))
+                {
+                    _PRIVLIST = base.CreateObjectSet<PRIVLIST>("PRIVLIST");
+                }
+                return _PRIVLIST;
+            }
+        }
+        private ObjectSet<PRIVLIST> _PRIVLIST;
 
         #endregion
 
@@ -3234,14 +3252,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PRIVGROUP EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPRIVGROUP(PRIVGROUP pRIVGROUP)
-        {
-            base.AddObject("PRIVGROUP", pRIVGROUP);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the AUDIT_QUESTION_LANG EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAUDIT_QUESTION_LANG(AUDIT_QUESTION_LANG aUDIT_QUESTION_LANG)
@@ -3263,6 +3273,22 @@ namespace SQM.Website
         public void AddToAUDIT_SCHEDULER(AUDIT_SCHEDULER aUDIT_SCHEDULER)
         {
             base.AddObject("AUDIT_SCHEDULER", aUDIT_SCHEDULER);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PRIVGROUP EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPRIVGROUP(PRIVGROUP pRIVGROUP)
+        {
+            base.AddObject("PRIVGROUP", pRIVGROUP);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PRIVLIST EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPRIVLIST(PRIVLIST pRIVLIST)
+        {
+            base.AddObject("PRIVLIST", pRIVLIST);
         }
 
         #endregion
@@ -30218,6 +30244,30 @@ namespace SQM.Website
         private global::System.String _PHONE2;
         partial void OnPHONE2Changing(global::System.String value);
         partial void OnPHONE2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PRIV_GROUP
+        {
+            get
+            {
+                return _PRIV_GROUP;
+            }
+            set
+            {
+                OnPRIV_GROUPChanging(value);
+                ReportPropertyChanging("PRIV_GROUP");
+                _PRIV_GROUP = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PRIV_GROUP");
+                OnPRIV_GROUPChanged();
+            }
+        }
+        private global::System.String _PRIV_GROUP;
+        partial void OnPRIV_GROUPChanging(global::System.String value);
+        partial void OnPRIV_GROUPChanged();
 
         #endregion
 
@@ -30658,6 +30708,44 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP")]
+        public PRIVGROUP PRIVGROUP
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PRIVGROUP> PRIVGROUPReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP", value);
                 }
             }
         }
@@ -35132,15 +35220,168 @@ namespace SQM.Website
         /// Create a new PRIVGROUP object.
         /// </summary>
         /// <param name="pRIV_GROUP">Initial value of the PRIV_GROUP property.</param>
-        /// <param name="pRIV">Initial value of the PRIV property.</param>
-        /// <param name="sCOPE">Initial value of the SCOPE property.</param>
-        public static PRIVGROUP CreatePRIVGROUP(global::System.String pRIV_GROUP, global::System.Int32 pRIV, global::System.String sCOPE)
+        public static PRIVGROUP CreatePRIVGROUP(global::System.String pRIV_GROUP)
         {
             PRIVGROUP pRIVGROUP = new PRIVGROUP();
             pRIVGROUP.PRIV_GROUP = pRIV_GROUP;
-            pRIVGROUP.PRIV = pRIV;
-            pRIVGROUP.SCOPE = sCOPE;
             return pRIVGROUP;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PRIV_GROUP
+        {
+            get
+            {
+                return _PRIV_GROUP;
+            }
+            set
+            {
+                if (_PRIV_GROUP != value)
+                {
+                    OnPRIV_GROUPChanging(value);
+                    ReportPropertyChanging("PRIV_GROUP");
+                    _PRIV_GROUP = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PRIV_GROUP");
+                    OnPRIV_GROUPChanged();
+                }
+            }
+        }
+        private global::System.String _PRIV_GROUP;
+        partial void OnPRIV_GROUPChanging(global::System.String value);
+        partial void OnPRIV_GROUPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DESCRIPTION
+        {
+            get
+            {
+                return _DESCRIPTION;
+            }
+            set
+            {
+                OnDESCRIPTIONChanging(value);
+                ReportPropertyChanging("DESCRIPTION");
+                _DESCRIPTION = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DESCRIPTION");
+                OnDESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _DESCRIPTION;
+        partial void OnDESCRIPTIONChanging(global::System.String value);
+        partial void OnDESCRIPTIONChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVLIST")]
+        public EntityCollection<PRIVLIST> PRIVLIST
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PRIVLIST>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVLIST");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PRIVLIST>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVLIST", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PERSON")]
+        public EntityCollection<PERSON> PERSON
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_PRIVGROUP", "PERSON");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_PRIVGROUP", "PERSON", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="PRIVLIST")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PRIVLIST : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PRIVLIST object.
+        /// </summary>
+        /// <param name="pRIV_GROUP">Initial value of the PRIV_GROUP property.</param>
+        /// <param name="pRIV">Initial value of the PRIV property.</param>
+        /// <param name="sCOPE">Initial value of the SCOPE property.</param>
+        public static PRIVLIST CreatePRIVLIST(global::System.String pRIV_GROUP, global::System.Int32 pRIV, global::System.String sCOPE)
+        {
+            PRIVLIST pRIVLIST = new PRIVLIST();
+            pRIVLIST.PRIV_GROUP = pRIV_GROUP;
+            pRIVLIST.PRIV = pRIV;
+            pRIVLIST.SCOPE = sCOPE;
+            return pRIVLIST;
         }
 
         #endregion
@@ -35231,6 +35472,48 @@ namespace SQM.Website
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVGROUP")]
+        public PRIVGROUP PRIVGROUP
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVGROUP").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVGROUP").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PRIVGROUP> PRIVGROUPReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVGROUP");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PRIVGROUP>("PSsqmModel.FK_PRIVLIST_PRIVGROUP", "PRIVGROUP", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>

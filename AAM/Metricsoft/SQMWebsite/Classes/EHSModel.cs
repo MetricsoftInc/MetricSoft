@@ -879,7 +879,7 @@ namespace SQM.Website
                 return this.Profile.EHS_PROFILE_MEASURE.ToList();
         }
 
-        public List<EHS_PROFILE_MEASURE> MeasureList(bool applyFilters, List<PRIVGROUP> privList)
+        public List<EHS_PROFILE_MEASURE> MeasureList(bool applyFilters, List<PRIVLIST> privList)
         {
             if (applyFilters)
             {
