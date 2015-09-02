@@ -433,6 +433,7 @@ namespace SQM.Website
     #region taskmgr
     public class TaskMgr
     {
+		private static List<SETTINGS> notifySettings; 
 
         public static TaskStatus CalculateTaskStatus(TASK_STATUS task)
         {
@@ -910,14 +911,20 @@ namespace SQM.Website
 
         public static TaskStatus SetEscalation(decimal inboxID, TaskItem taskItem)
         {
-            TaskStatus status = taskItem.Taskstatus;
+			if (notifySettings == null || notifySettings.Count == 0)
+			{
+				notifySettings = SQMSettings.SelectSettingsGroup("NOTIFY", ""); 
+			}
+			SETTINGS sets = null;
 
+            TaskStatus status = taskItem.Taskstatus;
             TimeSpan delta = DateTime.Now - Convert.ToDateTime(taskItem.Task.DUE_DT);
-            if (delta.Days >= 1)
+
+            if ((sets = notifySettings.Where(s => s.SETTING_CD == "LEVEL1_DAYS").FirstOrDefault()) != null  &&  delta.Days >= Convert.ToInt32(sets.VALUE))
             {
                 status = TaskStatus.EscalationLevel1;
             }
-            if (delta.Days >= 2)
+			if ((sets = notifySettings.Where(s => s.SETTING_CD == "LEVEL2_DAYS").FirstOrDefault()) != null && delta.Days >= Convert.ToInt32(sets.VALUE))
             {
                 status = TaskStatus.EscalationLevel2;
             }
@@ -1022,24 +1029,7 @@ namespace SQM.Website
                                 if (dueDate.Date < DateTime.Now.Date)
                                 {
                                     periodStatus = TaskStatus.Overdue;
-                                    if (isReqResponsible)
-                                    {
-                                        alertPeriod = true;
-                                    }
-                                    else
-                                    {
-                                        // if user not responsible, check if the user receives notification escalations for the plant
-                                        if (dueDate.AddDays(1) <= toDate)
-                                        {
-                                            alertPeriod = true;
-                                            periodStatus = TaskStatus.EscalationLevel1;
-                                        }
-                                        if (dueDate.AddDays(2) <= toDate)
-                                        {
-                                            alertPeriod = true;
-                                            periodStatus = TaskStatus.EscalationLevel2;
-                                        }
-                                    }
+									alertPeriod = true;
                                 }
 
                                 if (alertPeriod)
@@ -1061,6 +1051,7 @@ namespace SQM.Website
                                     taskItem.Task.COMPLETE_ID = 0;
                                     taskItem.Task.STATUS = "0";
                                     taskItem.Task.TASK_TYPE = "C";
+									taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
                                     taskItem.NotifyType = SetNotifyType(responsibleIDS[0], responsibleID, taskItem.Taskstatus);
                                     taskList.Add(taskItem);
                                 }
@@ -1159,7 +1150,8 @@ namespace SQM.Website
                             taskItem.Task.COMPLETE_ID = 0;
                             taskItem.Task.STATUS = "0";
                             taskItem.Task.TASK_TYPE = "C";
-                            taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)profile.APPROVER_ID, taskItem.Taskstatus);
+							taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
+                            taskItem.NotifyType = SetNotifyType(responsibleIDS[0], person.PERSON_ID, taskItem.Taskstatus);
                             taskList.Add(taskItem);
                         }
                     }
