@@ -72,6 +72,9 @@ namespace SQM.Website
 						RadMenu1.RenderMode = RenderMode.Mobile;
 					}
 
+
+					//EHSNotificationMgr.NotifyIncidentStatus(EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), 135), "IN-0", "300");
+
 					bool addConsole = false;
 					RadMenu1.Skin = "Metro";
 					RadMenu1.ExpandDelay = 225;

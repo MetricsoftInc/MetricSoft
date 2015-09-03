@@ -1098,9 +1098,18 @@ namespace SQM.Website
 				}
 				else
 				{
-					msg.To.Add(emailAddress.Trim());
+					foreach (string mailto in emailAddress.Split(','))
+					{
+						msg.To.Add(mailto.Trim());
+					}
+
 					if (!string.IsNullOrEmpty(cc))
-						msg.CC.Add(cc.Trim());
+					{
+						foreach (string ccto in cc.Split(','))
+						{
+							msg.CC.Add(ccto.Trim());
+						}
+					}
 				}
                 msg.From = new MailAddress(_mailFrom);
                 msg.Subject = emailSubject;

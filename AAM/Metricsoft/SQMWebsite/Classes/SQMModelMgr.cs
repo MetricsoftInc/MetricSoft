@@ -603,6 +603,20 @@ namespace SQM.Website
 			return personList;
 		}
 
+		public static List<PERSON> SelectBusOrgPrivgroupPersonList(decimal orgID, string[] privGroups)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				personList = (from p in ctx.PERSON 
+							  join l in ctx.PLANT on p.PLANT_ID equals l.PLANT_ID 
+							  where l.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+			}
+
+			return personList;
+		}
+
 		public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups)
 		{
 			List<PERSON> personList = new List<PERSON>();
