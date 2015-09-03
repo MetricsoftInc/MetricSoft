@@ -39,7 +39,7 @@
 
 		<telerik:RadAjaxPanel ID="rapLostTime" runat="server">
 
-		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound" OnItemCreated="rptLostTime_ItemCreated" OnItemCommand="rptLostTime_ItemCommand">
+		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound"  OnItemCommand="rptLostTime_ItemCommand">
 
 			<HeaderTemplate>
 					<table class="table" border="0" >
@@ -63,7 +63,7 @@
 						<asp:Label ID="lbItemSeq" runat="server" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" CssClass="WarnIfChanged" Width="100%"  AutoPostBack="true" runat="server"></telerik:RadDropDownList>
+						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" Width="100%" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">

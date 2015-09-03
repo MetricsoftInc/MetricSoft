@@ -219,7 +219,15 @@ namespace SQM.Website
 
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
+						{
 							IsFullPagePostback = false;
+
+							if (this.Page.FindControl(targetID).ID == "rddlIncidentType")
+							{
+								btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = false;
+								btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLinkDisabled";
+							}
+						}
 				}
 			}
 
@@ -606,7 +614,10 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, incidentId);
 
-			int lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
+
+			int lthCount = 0;
+			if (injuryIllnessDetails != null)
+				lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
 
 			if (!isPostBack)
 			{
@@ -1287,6 +1298,8 @@ namespace SQM.Website
 		{
 			int status = 0;
 
+			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
 			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
