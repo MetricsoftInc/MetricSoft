@@ -1694,7 +1694,6 @@
     <Content Include="Include\Ucl_INCFORM_Contain.ascx" />
     <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_LostTime_Hist.ascx" />
-    <Content Include="Include\Ucl_INCFORM_PowerOutage.ascx" />
     <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
     <Content Include="Include\Ucl_PersonList.ascx" />
@@ -2150,13 +2149,6 @@
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_LostTime_Hist.ascx.designer.cs">
       <DependentUpon>Ucl_INCFORM_LostTime_Hist.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.cs">
-      <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Include\Ucl_INCFORM_PowerOutage.ascx.designer.cs">
-      <DependentUpon>Ucl_INCFORM_PowerOutage.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.cs">
       <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>

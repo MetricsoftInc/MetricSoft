@@ -43,7 +43,6 @@ namespace SQM.Website
 		protected RadDropDownList rddlFilteredUsers;
 
 		// Incident Custom Forms:
-		protected Ucl_INCFORM_PowerOutage powerOutageForm;
 		protected Ucl_INCFORM_InjuryIllness injuryIllnessForm;
 
 		
@@ -890,30 +889,6 @@ namespace SQM.Website
 
 			switch (baseCustomForm)
 			{
-
-				case "INCFORM_POWEROUTAGE":
-
-					try
-					{
-						powerOutageForm = (Ucl_INCFORM_PowerOutage)LoadControl("~/Include/Ucl_INCFORM_PowerOutage.ascx");
-					}
-					catch (Exception e) 
-					{
-					}
-					powerOutageForm.ID = "pof1";
-					powerOutageForm.IsEditContext = IsEditContext;
-					powerOutageForm.IncidentId = EditIncidentId;
-					powerOutageForm.EditIncidentId = EditIncidentId;
-					powerOutageForm.SelectedTypeId = SelectedTypeId;
-					powerOutageForm.SelectedTypeText = SelectedTypeText;
-					pnlForm.Controls.Add(new LiteralControl("<br/>"));
-					pnlForm.Controls.Add(powerOutageForm);
-					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-					btnSaveReturn.Visible = false;
-					btnSaveContinue.Visible = false;
-					btnDelete.Visible = false;
-					break;
-
 				case "INCFORM_INJURYILLNESS":
 
 					try
@@ -2050,7 +2025,8 @@ namespace SQM.Website
 					// Add context - step 0
 					theIncident = CreateNewIncident();
 					incidentId = theIncident.INCIDENT_ID;
-					EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
+					EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-0", ((int)SysPriv.originate).ToString());
 				}
 				else
 				{

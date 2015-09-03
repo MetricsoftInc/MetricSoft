@@ -1589,7 +1589,8 @@ namespace SQM.Website
 				theInjuryIllnessForm = CreateNewInjuryIllnessDetails(incidentId);
 				SaveAttachments(incidentId);
 
-				EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
+				//EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-8", ((int)SysPriv.originate).ToString());
 			}
 			else
 			{

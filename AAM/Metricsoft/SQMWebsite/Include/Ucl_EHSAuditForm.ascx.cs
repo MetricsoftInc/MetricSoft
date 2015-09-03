@@ -1929,7 +1929,6 @@ namespace SQM.Website
 				// Add context
 				theAudit = CreateNewAudit();
 				auditId = theAudit.AUDIT_ID;
-				EHSNotificationMgr.NotifyOnCreate(auditId, selectedPlantId);
 			}
 			else
 			{

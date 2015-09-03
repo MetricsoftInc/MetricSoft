@@ -398,7 +398,6 @@ namespace SQM.Website
 				// Add context
 				scheduler = CreateNewAuditScheduler();
 				auditScheduleId = scheduler.AUDIT_SCHEDULER_ID;
-				//EHSNotificationMgr.NotifyOnCreate(auditScheduleId, selectedPlantId);
 			}
 			else
 			{
