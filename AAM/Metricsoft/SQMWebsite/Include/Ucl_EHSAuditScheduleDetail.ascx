@@ -80,7 +80,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblJobcode" runat="server" Text="Audit Job Code"></asp:Label>
+                                                <asp:Label ID="lblJobcode" runat="server" Text="Audit Group"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">

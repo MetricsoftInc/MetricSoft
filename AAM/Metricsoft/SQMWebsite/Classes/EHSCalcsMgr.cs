@@ -1094,7 +1094,7 @@ namespace SQM.Website
 				this.AuditSchedulerHst = (from a in entities.AUDIT_SCHEDULER
 										  join p in entities.PLANT on a.PLANT_ID equals p.PLANT_ID
 										  join t in entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID
-										  join j in entities.JOBCODE on a.JOBCODE_CD equals j.JOBCODE_CD
+										  join j in entities.PRIVGROUP on a.JOBCODE_CD equals j.PRIV_GROUP
 										  where (daysOfWeekList.Contains((int)a.DAY_OF_WEEK)
 										  && auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.PLANT_ID))
 										  select new EHSAuditSchedulerData
@@ -1102,7 +1102,7 @@ namespace SQM.Website
 											  AuditScheduler = a,
 											  Plant = p,
 											  AuditType = t,
-											  Jobcode = j
+											  Privgroup = j
 										  }).ToList();
 
 				if (this.AuditSchedulerHst != null)

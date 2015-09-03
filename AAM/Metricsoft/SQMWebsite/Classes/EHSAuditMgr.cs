@@ -160,7 +160,7 @@ namespace SQM.Website
 			get;
 			set;
 		}
-		public JOBCODE Jobcode
+		public PRIVGROUP Privgroup
 		{
 			get;
 			set;
@@ -172,6 +172,12 @@ namespace SQM.Website
 		public static AUDIT SelectAuditById(PSsqmEntities entities, decimal auditId)
 		{
 			return (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
+		}
+
+		public static AUDIT SelectAuditForSchedule(decimal plantId, decimal typeId, decimal personId, DateTime date)
+		{
+			var entities = new PSsqmEntities();
+			return (from i in entities.AUDIT where i.DETECT_PLANT_ID == plantId && i.AUDIT_TYPE_ID == typeId && i.AUDIT_PERSON == personId && i.AUDIT_DT == date select i).FirstOrDefault();
 		}
 
 		public static decimal SelectAuditTypeIdByAuditId(decimal auditId)
@@ -434,13 +440,13 @@ namespace SQM.Website
 							newQuestion.AnswerChoices = choices;
 					}
 
-					// Question control logic
-					newQuestion.QuestionControls = (from qc in entities.AUDIT_QUESTION_CONTROL
-													where qc.AUDIT_TYPE_ID == auditTypeId &&
-													qc.AUDIT_TOPIC_ID == auditTopicId &&
-													qc.AUDIT_QUESTION_ID == newQuestion.QuestionId
-													orderby qc.PROCESS_ORDER
-													select qc).ToList();
+					//// Question control logic
+					//newQuestion.QuestionControls = (from qc in entities.AUDIT_QUESTION_CONTROL
+					//								where qc.AUDIT_TYPE_ID == auditTypeId &&
+					//								qc.AUDIT_TOPIC_ID == auditTopicId &&
+					//								qc.AUDIT_QUESTION_ID == newQuestion.QuestionId
+					//								orderby qc.PROCESS_ORDER
+					//								select qc).ToList();
 
 					questionList.Add(newQuestion);
 				}

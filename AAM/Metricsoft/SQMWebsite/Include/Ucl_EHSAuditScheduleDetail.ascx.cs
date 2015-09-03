@@ -172,10 +172,10 @@ namespace SQM.Website
 			if (rddlAuditJobcodes.Items.Count == 0)
 			{
 				rddlAuditJobcodes.DataSource = pl;
-				rddlAuditJobcodes.DataTextField = "JOB_DESC";
-				rddlAuditJobcodes.DataValueField = "JOBCODE_CD";
+				rddlAuditJobcodes.DataTextField = "DESCRIPTION";
+				rddlAuditJobcodes.DataValueField = "PRIV_GROUP";
 				rddlAuditJobcodes.DataBind();
-				item = new DropDownListItem("[Select a Jobcode]", "");
+				item = new DropDownListItem("[Select a Group]", "");
 				rddlAuditJobcodes.Items.Insert(0, item);
 			}
 

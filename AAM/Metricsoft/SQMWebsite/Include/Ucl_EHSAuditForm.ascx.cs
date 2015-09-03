@@ -364,7 +364,7 @@ namespace SQM.Website
 
 				var pnl = new Panel() { ID = "Panel" + qid };
 
-				pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\">"));
+				pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell auditquestion\" style=\"width: 30%;\">"));
 				pnl.Controls.Add(new Label() { ID = "Label" + qid, Text = q.QuestionText, AssociatedControlID = qid });
 				pnl.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px; padding-left: 0 !important;\">"));
 				if (!string.IsNullOrEmpty(q.HelpText))
@@ -459,7 +459,7 @@ namespace SQM.Website
 						break;
 
 					case EHSAuditQuestionType.RadioPercentage:
-						var rblp = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						var rblp = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged auditanswer" };
 						rblp.RepeatDirection = RepeatDirection.Horizontal;
 						foreach (var choice in q.AnswerChoices)
 						{

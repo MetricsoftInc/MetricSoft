@@ -55,7 +55,7 @@ namespace SQM.Website.Automated
 						WriteLine("");
 						WriteLine("The following " + type.TITLE + " audits were created for Audit Scheduler " + schedule.AUDIT_SCHEDULER_ID + ": ");
 						// determine the date to schedule, by finding the next occurance of the selected day of the week after the current day
-						DateTime auditDate = DateTime.Now;
+						DateTime auditDate = DateTime.Today;
 						while ((int)auditDate.DayOfWeek != schedule.DAY_OF_WEEK)
 						{
 							auditDate = auditDate.AddDays(1);
@@ -66,52 +66,61 @@ namespace SQM.Website.Automated
 						List<PERSON> auditors = SQMModelMgr.SelectPlantPrivgroupPersonList(auditPlant.PLANT_ID, new string[1] { schedule.JOBCODE_CD });
 						foreach (PERSON person in auditors)
 						{
-							// create audit header
-							auditId = 0;
-							audit = new AUDIT()
+							// check to see if there is already an audit for this plant/type/date/person
+							audit = EHSAuditMgr.SelectAuditForSchedule(auditPlant.PLANT_ID, type.AUDIT_TYPE_ID, person.PERSON_ID, auditDate);
+							if (audit == null)
 							{
-								DETECT_COMPANY_ID = Convert.ToDecimal(auditPlant.COMPANY_ID),
-								DETECT_BUS_ORG_ID = auditPlant.BUS_ORG_ID,
-								DETECT_PLANT_ID = auditPlant.PLANT_ID,
-								AUDIT_TYPE = "EHS",
-								CREATE_DT = DateTime.Now,
-								CREATE_BY = "Automated Scheduler",
-								DESCRIPTION = type.TITLE,
-								// CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID, // do we want to set this to admin?
-								AUDIT_DT = auditDate,
-								AUDIT_TYPE_ID = type.AUDIT_TYPE_ID,
-								AUDIT_PERSON = person.PERSON_ID,
-								CURRENT_STATUS = "A",
-								PERCENT_COMPLETE = 0,
-								TOTAL_SCORE = 0
-							};
-
-							entities.AddToAUDIT(audit);
-							entities.SaveChanges();
-							auditId = audit.AUDIT_ID;
-
-							// create audit answer records
-							questions = EHSAuditMgr.SelectAuditQuestionList(type.AUDIT_TYPE_ID, 0, 0); // do not specify the audit ID
-							foreach (var q in questions)
-							{
-								answer = new AUDIT_ANSWER()
+								// create audit header
+								auditId = 0;
+								audit = new AUDIT()
 								{
-									AUDIT_ID = auditId,
-									AUDIT_QUESTION_ID = q.QuestionId,
-									ANSWER_VALUE = q.AnswerText,
-									ORIGINAL_QUESTION_TEXT = q.QuestionText,
-									COMMENT = q.AnswerComment
+									DETECT_COMPANY_ID = Convert.ToDecimal(auditPlant.COMPANY_ID),
+									DETECT_BUS_ORG_ID = auditPlant.BUS_ORG_ID,
+									DETECT_PLANT_ID = auditPlant.PLANT_ID,
+									AUDIT_TYPE = "EHS",
+									CREATE_DT = DateTime.Now,
+									CREATE_BY = "Automated Scheduler",
+									DESCRIPTION = type.TITLE,
+									// CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID, // do we want to set this to admin?
+									AUDIT_DT = auditDate,
+									AUDIT_TYPE_ID = type.AUDIT_TYPE_ID,
+									AUDIT_PERSON = person.PERSON_ID,
+									CURRENT_STATUS = "A",
+									PERCENT_COMPLETE = 0,
+									TOTAL_SCORE = 0
 								};
-								entities.AddToAUDIT_ANSWER(answer);
+
+								entities.AddToAUDIT(audit);
+								entities.SaveChanges();
+								auditId = audit.AUDIT_ID;
+
+								// create audit answer records
+								questions = EHSAuditMgr.SelectAuditQuestionList(type.AUDIT_TYPE_ID, 0, 0); // do not specify the audit ID
+								foreach (var q in questions)
+								{
+									answer = new AUDIT_ANSWER()
+									{
+										AUDIT_ID = auditId,
+										AUDIT_QUESTION_ID = q.QuestionId,
+										ANSWER_VALUE = q.AnswerText,
+										ORIGINAL_QUESTION_TEXT = q.QuestionText,
+										COMMENT = q.AnswerComment
+									};
+									entities.AddToAUDIT_ANSWER(answer);
+								}
+								entities.SaveChanges();
+								// create task record for their calendar
+								EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE));
+
+								// send an email
+								EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);
+
+								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - audit added");
 							}
-							entities.SaveChanges();
-							// create task record for their calendar
-							EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE));
-
-							// send an email
-							EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);
-
-							WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME);
+							else
+							{
+								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - audit already exists for this date");
+							}
 						}
 					}
 					else

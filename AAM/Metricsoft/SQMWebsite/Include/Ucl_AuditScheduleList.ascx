@@ -139,7 +139,7 @@
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn HeaderText="Privilege Group" ShowSortIcon="true" SortExpression="AuditScheduler.JOBCODE_CD">
                         <ItemTemplate>
-                            <asp:Label ID="lblJobcode" runat="server" Text='<%# (string)Eval("Jobcode.JOB_DESC") %>'></asp:Label>
+                            <asp:Label ID="lblJobcode" runat="server" Text='<%# (string)Eval("Privgroup.DESCRIPTION") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn HeaderText="Status">
