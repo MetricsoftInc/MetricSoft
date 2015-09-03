@@ -56,7 +56,7 @@
 		<asp:Image ID="Image1" runat="server" ImageUrl="~/images/status/warning.png"  Style="margin: 0px 3px 1px 3px; vertical-align: middle; border: 0px;"/>
 		<asp:Label ID="lblTaskStripCount" runat="server" CssClass="textSmall"></asp:Label>
 	</div>
-	<div id="divTaskStripRepeater" runat="server" class="scrollArea" style="border-style: none; margin-top: 7px;">
+	<div id="divTaskStripRepeater" runat="server"  style="border-style: none; margin-top: 7px;">
 		<asp:Repeater runat="server" ID="rptTaskStrip" ClientIDMode="AutoID" OnItemDataBound="rptTaskStrip_OnItemDataBound" OnItemCreated="rptTaskStrip_OnItemCreate">
 			<HeaderTemplate>
 				<table  cellspacing="0" cellpadding="1" border="0" width="100%" >
