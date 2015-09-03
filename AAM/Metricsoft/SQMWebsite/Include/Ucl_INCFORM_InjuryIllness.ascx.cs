@@ -222,11 +222,8 @@ namespace SQM.Website
 						{
 							IsFullPagePostback = false;
 
-							if (this.Page.FindControl(targetID).ID == "rddlIncidentType")
-							{
-								btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = false;
-								btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLinkDisabled";
-							}
+							if (this.Page.FindControl(targetID).ID == "rddlIncidentType") // This is a new incident
+								btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = false;
 						}
 				}
 			}
@@ -1298,8 +1295,7 @@ namespace SQM.Website
 		{
 			int status = 0;
 
-			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
-			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = true;
 
 			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
