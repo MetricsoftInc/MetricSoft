@@ -49,42 +49,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.HiddenField hfScheduleScope;
         
         /// <summary>
-        /// pnlTaskList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlTaskList;
-        
-        /// <summary>
-        /// divGVTaskListRepeater control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGVTaskListRepeater;
-        
-        /// <summary>
-        /// rptTaskList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTaskList;
-        
-        /// <summary>
-        /// lblTaskListEmpty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaskListEmpty;
-        
-        /// <summary>
         /// pnlTaskStrip control.
         /// </summary>
         /// <remarks>

@@ -45,13 +45,10 @@
 				<asp:Label ID="lblPageInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
 				<br />
 			</div>
-			<div id="divCalendar" runat="server" class="calendarSectionLeft" style="margin-top: 4px;">
+			<div id="divCalendar" runat="server" style="margin-top: 4px;">
 				<div class="container-fluid">
-
-
 					<div class="row">
 						<div class="col-xs-12  text-left">
-
 							<span style="float: left; margin-left: -7px; padding-top: 5px; padding-right: 5px;">
 								<asp:Label ID="lblScheduleScope" runat="server" Text="Display Calendar For:" CssClass="prompt"></asp:Label>
 								&nbsp;&nbsp;
@@ -70,12 +67,14 @@
 							</span>
 
 						</div>
-						<div style="float: left; margin: 5px;">
+						<div style="float: left; margin: 5px; width: 98%;">
 							<Ucl:TaskList ID="uclTaskSchedule" runat="server" />
 						</div>
 					</div>
-					<div id="divTasks" runat="server" class="calendarSectionRight noprint" style="margin-top: 49px;">
-						<Ucl:TaskList ID="uclTaskStrip" runat="server" />
+					<div class="row">
+						<div id="divTasks" runat="server" class="noprint" style="float: left; margin: 5px; width: 98%;">
+							<Ucl:TaskList ID="uclTaskStrip" runat="server" />
+						</div>
 					</div>
 				</div>
 			</div>

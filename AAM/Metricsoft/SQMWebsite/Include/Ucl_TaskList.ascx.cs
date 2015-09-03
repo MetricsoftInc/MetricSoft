@@ -12,12 +12,6 @@ namespace SQM.Website
 
     public partial class Ucl_TaskList : System.Web.UI.UserControl
     {
-
-        public Repeater TaskListRepeater
-        {
-            get { return rptTaskList; }
-        }
-
         public DateTime TaskScheduleSelectedDate
         {
             get { return Convert.ToDateTime(scdTaskSchedule.SelectedDate); }
@@ -133,167 +127,12 @@ namespace SQM.Website
         }
 
 
-        public void BindTaskList(object taskList)
-        {
-            pnlTaskList.Visible = true;
-            pnlTaskSchedule.Visible = false;
-            rptTaskList.DataSource = taskList;
-            rptTaskList.DataBind();
-            SetRepeaterDisplay(rptTaskList, lblTaskListEmpty, divGVTaskListRepeater, 12, rptTaskList.Items.Count*2, "scrollArea");
-        }
 
-        public void rptTaskList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-            {
-                try
-                {
-                    TaskItem item = (TaskItem)e.Item.DataItem;
-                    Ucl_IncidentList ucl;
-                    Ucl_EHSList ecl;
-                    LinkButton lnk;
-                    Label lbl;
-                    Image img;
-                    //TaskStatus status;
-                    TaskRecordType taskType = (TaskRecordType)item.RecordType;
-                    switch (taskType)
-                    {
-                        case TaskRecordType.QualityIssue:    // quality issue
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            if (!string.IsNullOrEmpty(item.Task.DESCRIPTION))
-                                lnk.Text = item.Title + "<br>(" + item.Task.DESCRIPTION + ")";
-                            else
-                                lnk.Text = item.Title;
-                          
-                            INCIDENT incident = (INCIDENT)item.Detail;
-                            QI_OCCUR qiIssue = (QI_OCCUR)item.Reference;
-                            lnk.CommandArgument = item.RecordKey;
-                            lbl = (Label)e.Item.FindControl("lblDueDate");
-                            lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-                            img = (Image)e.Item.FindControl("imgTaskStatus");
-                            img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-                            img.ToolTip = item.Taskstatus.ToString();
-                            QualityIncidentData issue = new QualityIncidentData();
-                            issue.Incident = incident;
-                            issue.QIIssue = qiIssue;
-                            issue.Plant = item.Plant;
-                            issue.PlantResponsible = item.PlantResponsible;
-                            issue.Person = item.Person;
-                            issue.Part = item.Part;
-                            List<QualityIncidentData> incidentList = new List<QualityIncidentData>();
-                            ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
-                            ucl.LinksDisabled = true;
-                            ucl.BindQualityIncidentHeader(issue, true);
-                            break;
-
-                        case TaskRecordType.ProblemCase:    // 8D problem case
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            lnk.Text = item.Title;
-                            PROB_CASE probCase = (PROB_CASE)item.Detail;
-                            lnk.CommandArgument = item.RecordKey;
-                            lbl = (Label)e.Item.FindControl("lblDueDate");
-                            lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-                            img = (Image)e.Item.FindControl("imgTaskStatus");
-                            img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-                            img.ToolTip = item.Taskstatus.ToString();
-                            ProblemCase theCase = new ProblemCase();
-                            theCase.ProbCase = probCase;
-                            theCase.SetAliasID();
-                            ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
-                            ucl.LinksDisabled = true;
-                            ucl.BindProblemCaseHeader(theCase, item);
-                            break;
-
-                        case TaskRecordType.ProfileInput:    // Profile inputs
-                        case TaskRecordType.ProfileInputApproval:   // approval
-                        case TaskRecordType.ProfileInputFinalize:   // finalize
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            lnk.Text = item.Title;
-                            lnk.CommandArgument = item.RecordKey;
-                            lbl = (Label)e.Item.FindControl("lblDueDate");
-                            lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-                            img = (Image)e.Item.FindControl("imgTaskStatus");
-                            img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-                            img.ToolTip = item.Taskstatus.ToString();
-                            ecl = (Ucl_EHSList)e.Item.FindControl("uclEHSPeriod");
-                            ecl.BindProfilePeriodHdr(item);
-                            break;
-
-                        case TaskRecordType.HealthSafetyIncident:    // Health & safety incidents
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            lnk.Text = item.Title;
-                            lnk.CommandArgument = item.RecordKey;
-                            lbl = (Label)e.Item.FindControl("lblDueDate");
-                            lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-                            img = (Image)e.Item.FindControl("imgTaskStatus");
-                            img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-                            img.ToolTip = item.Taskstatus.ToString();
-                            INCIDENT EHSIncident = (INCIDENT)item.Detail;
-                            ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
-                            ucl.LinksDisabled = true;
-                            ucl.BindIncidentListHeader(EHSIncident, item);
-                            break;
-
-                        case TaskRecordType.PreventativeAction:   // preventative action
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            lnk.Text = item.Title;
-                            lnk.CommandArgument = item.RecordKey;
-                            lbl = (Label)e.Item.FindControl("lblDueDate");
-                            lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-                            img = (Image)e.Item.FindControl("imgTaskStatus");
-                            img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-                            img.ToolTip = item.Taskstatus.ToString();
-                            INCIDENT EHSAction = (INCIDENT)item.Detail;
-                            ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
-                            ucl.LinksDisabled = true;
-                            ucl.BindIncidentListHeader(EHSAction, item);
-                            break;
-						case TaskRecordType.Audit:   // Audits
-							lnk = (LinkButton)e.Item.FindControl("lnkTask");
-							lnk.Text = item.Title;
-							lnk.CommandArgument = item.RecordKey;
-							lbl = (Label)e.Item.FindControl("lblDueDate");
-							lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
-							img = (Image)e.Item.FindControl("imgTaskStatus");
-							img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
-							img.ToolTip = item.Taskstatus.ToString();
-							AUDIT AuditAction = (AUDIT)item.Detail;
-							ucl = (Ucl_IncidentList)e.Item.FindControl("uclIssueList");
-							ucl.LinksDisabled = true;
-							ucl.BindAuditListHeader(AuditAction, item);
-							break;
-                        default:
-                            break;
-                    }
-
-                    if (item.Taskstatus == TaskStatus.EscalationLevel1 || item.Taskstatus == TaskStatus.EscalationLevel2)
-                    {
-                        if (UserContext.RoleAccess() < AccessMode.Admin)
-                        {
-                            lnk = (LinkButton)e.Item.FindControl("lnkTask");
-                            lbl = (Label)e.Item.FindControl("lblTask");
-                            lbl.Text = lnk.Text;
-                            lnk.Visible = false;
-                            lbl.Visible = true;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-        }
-       
-        protected void rptTaskList_OnItemCreate(object sender, RepeaterItemEventArgs e)
-        {
-            ;
-        }
         #endregion
 
         #region scehedule
         public void BindTaskSchedule(List<TaskItem> taskList, DateTime selectedDate, bool enableItemLinks)
         {
-            pnlTaskList.Visible = false;
             pnlTaskSchedule.Visible = true;
             hfScheduleScope.Value = enableItemLinks.ToString().ToLower();
 
