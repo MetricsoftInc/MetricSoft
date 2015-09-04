@@ -334,6 +334,8 @@ namespace SQM.Website
 
 					entities.AddToINCFORM_ACTION(newItem);
 					status = entities.SaveChanges();
+
+					EHSIncidentMgr.CreateOrUpdateTask(incidentId, (decimal)item.ASSIGNED_PERSON_ID, 40, (DateTime)item.COMPLETION_DATE, item.ITEM_DESCRIPTION);
 				}
 			}
 			return status;

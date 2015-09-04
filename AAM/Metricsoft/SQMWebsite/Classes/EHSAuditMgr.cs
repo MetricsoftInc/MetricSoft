@@ -862,7 +862,7 @@ namespace SQM.Website
 			var taskMgr = new TaskStatusMgr();
 			taskMgr.Initialize(recordTypeId, auditId);
 			taskMgr.LoadTaskList(recordTypeId, auditId);
-			TASK_STATUS task = taskMgr.FindTask("0", "T", 0);
+			TASK_STATUS task = taskMgr.FindTask("0", "T", responsiblePersonId);
 
 			if (task == null)
 			{

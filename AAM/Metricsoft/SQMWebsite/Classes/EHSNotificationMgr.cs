@@ -33,39 +33,85 @@ namespace SQM.Website
 
 		#endregion
 
-		public static int NotifyIncidentStatus(INCIDENT incident, string notifyScope, string notifyOnTask)
+		public static int NotifyIncidentStatus(INCIDENT incident, string notifyScope, string scopeAction)
 		{
 			int status = 0;
-			//List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "NOTIFY_TIMING" });
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, scopeAction);
 
-			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, notifyOnTask);
-
-			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
-			if (string.IsNullOrEmpty(appUrl))
-				appUrl = "the website";
-
-			string emailSubject = "Health/Safety Incident Created: " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-			string emailBody = "A new Health/Safety incident has been created:<br/>" +
-							"<br/>" +
-							plant.PLANT_NAME + "<br/>" +
-							incident.ISSUE_TYPE + "<br/>" +
-							"<br/>" +
-							incident.DESCRIPTION + "<br/>" +
-							"<br/>" +
-							"Please log in to " + appUrl + " to view this incident.";
-
-			string emailTo = "";
-			foreach (PERSON person in notifyPersonList.Where(l=> !string.IsNullOrEmpty(l.EMAIL)).ToList())
+			if (notifyPersonList.Count > 0)
 			{
-				emailTo += string.IsNullOrEmpty(emailTo) ? person.EMAIL : (","+person.EMAIL);
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				if (string.IsNullOrEmpty(appUrl))
+					appUrl = "the website";
+
+				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
+				string emailSubject = "Health/Safety Incident " + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+				string emailBody = "A new Health/Safety incident has been " + actionText + " :<br/>" +
+								"<br/>" +
+								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incident.ISSUE_TYPE + "<br/>" +
+								"<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"On : " + DateTime.Now.ToString() +
+								"<br/>" +
+								"By : " + incident.LAST_UPD_BY +
+								"<br/>" +
+								"Please log in to " + appUrl + " to view this incident.";
+
+				string emailTo = "";
+				foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())
+				{
+					emailTo += string.IsNullOrEmpty(emailTo) ? person.EMAIL : ("," + person.EMAIL);
+				}
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
 			}
 
-			Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
-			thread.IsBackground = true;
-			thread.Start();
-
 			//WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null);
+
+			return status;
+		}
+
+		public static int NotifyIncidentTaskAssigment(INCIDENT incident, TASK_STATUS theTask, string scopeAction)
+		{
+			int status = 0;
+			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+
+			if (person != null  &&  !string.IsNullOrEmpty(person.EMAIL))
+			{
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				if (string.IsNullOrEmpty(appUrl))
+					appUrl = "the website";
+
+				string emailTo = person.EMAIL;
+				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
+				string emailSubject = "Health/Safety Incident " + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+				string emailBody = "You have been assigned to one or more tasks regarding the following Incident: <br/>" +
+								"<br/>" +
+								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incident.ISSUE_TYPE + "<br/>" +
+								"<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								theTask.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Due : " + theTask.DUE_DT.ToString() + "<br/>" +
+								"<br/>" +
+								"Please log in to " + appUrl + " to view this incident.";
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
 
 			return status;
 		}

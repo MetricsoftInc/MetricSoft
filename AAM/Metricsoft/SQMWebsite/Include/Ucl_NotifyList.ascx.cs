@@ -80,16 +80,16 @@ namespace SQM.Website
 					hf.Value = notifyAction.NOTIFYACTION_ID.ToString();
 
 					LinkButton lnk = (LinkButton)item.FindControl("lnkNotifyItem");
-					lnk.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE" && x.XLAT_CODE == notifyAction.NOTIFY_SCOPE).FirstOrDefault().DESCRIPTION;
+					lnk.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE" && x.XLAT_CODE == notifyAction.NOTIFY_SCOPE).FirstOrDefault().DESCRIPTION_SHORT;
 
 					lbl = (Label)item.FindControl("lblScopeTask");
-					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == notifyAction.SCOPE_TASK).FirstOrDefault().DESCRIPTION;
+					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == notifyAction.SCOPE_TASK).FirstOrDefault().DESCRIPTION_SHORT;
 
 					lbl = (Label)item.FindControl("lblScopeStatus");
-					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS" && x.XLAT_CODE == notifyAction.TASK_STATUS).FirstOrDefault().DESCRIPTION;
+					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS" && x.XLAT_CODE == notifyAction.TASK_STATUS).FirstOrDefault().DESCRIPTION_SHORT;
 
 					lbl = (Label)item.FindControl("lblNotifyTiming");
-					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING" && x.XLAT_CODE == notifyAction.NOTIFY_TIMING.ToString()).FirstOrDefault().DESCRIPTION;
+					lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING" && x.XLAT_CODE == notifyAction.NOTIFY_TIMING.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 
 					lbl = (Label)item.FindControl("lblNotifyDist");
 					lbl.Text = notifyAction.NOTIFY_DIST;
@@ -236,16 +236,16 @@ namespace SQM.Website
 						LinkButton lnk = (LinkButton)item.FindControl("lnkNotifyItem");
 						if (lnk.CommandArgument == hfNotifyActionID.Value)
 						{
-							lnk.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE" && x.XLAT_CODE == notifyAction.NOTIFY_SCOPE).FirstOrDefault().DESCRIPTION;
+							lnk.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE" && x.XLAT_CODE == notifyAction.NOTIFY_SCOPE).FirstOrDefault().DESCRIPTION_SHORT;
 							
 							Label lbl = (Label)item.FindControl("lblScopeTask");
-							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == notifyAction.SCOPE_TASK).FirstOrDefault().DESCRIPTION;
+							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == notifyAction.SCOPE_TASK).FirstOrDefault().DESCRIPTION_SHORT;
 
 							lbl = (Label)item.FindControl("lblScopeStatus");
-							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS" && x.XLAT_CODE == notifyAction.TASK_STATUS).FirstOrDefault().DESCRIPTION;
+							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS" && x.XLAT_CODE == notifyAction.TASK_STATUS).FirstOrDefault().DESCRIPTION_SHORT;
 
 							lbl = (Label)item.FindControl("lblNotifyTiming");
-							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING" && x.XLAT_CODE == notifyAction.NOTIFY_TIMING.ToString()).FirstOrDefault().DESCRIPTION;
+							lbl.Text = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING" && x.XLAT_CODE == notifyAction.NOTIFY_TIMING.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 
 							lbl = (Label)item.FindControl("lblNotifyDist");
 							lbl.Text = notifyAction.NOTIFY_DIST;

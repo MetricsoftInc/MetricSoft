@@ -2304,6 +2304,8 @@ namespace SQM.Website
 				INCIDENT_TYPE = "EHS",
 				CREATE_DT = DateTime.Now,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
+				LAST_UPD_DT = DateTime.Now,
+				LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				INCIDENT_DT = incidentDate,
@@ -2332,6 +2334,8 @@ namespace SQM.Website
 				incident.INCIDENT_DT = incidentDate;
 				incident.ISSUE_TYPE = incidentType;
 				incident.ISSUE_TYPE_ID = incidentTypeId;
+				incident.LAST_UPD_DT = DateTime.Now;
+				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 
 				entities.SaveChanges();
 			}
@@ -2394,11 +2398,9 @@ namespace SQM.Website
 			if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
 			{
 				int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
-				EHSIncidentMgr.CreateOrUpdateTask(incidentId, responsiblePersonId, recordTypeId, dueDate);
+				EHSIncidentMgr.CreateOrUpdateTask(incidentId, responsiblePersonId, recordTypeId, dueDate, "");
 			}
 		}
-
-		
 
 		protected void Create8dAndRedirect(decimal incidentId)
 		{

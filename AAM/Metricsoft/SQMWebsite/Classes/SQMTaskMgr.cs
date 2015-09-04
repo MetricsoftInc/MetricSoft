@@ -493,6 +493,7 @@ namespace SQM.Website
 
         public static List<TaskItem> IncidentTaskSchedule(decimal companyID, DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, decimal[] plantIDS, bool addProblemCases)
         {
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
             List<TaskItem> taskList = new List<TaskItem>();
 			INCIDENT incident;
 
@@ -547,6 +548,8 @@ namespace SQM.Website
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
+						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+
                         switch (recordType)
                         {
                             case TaskRecordType.QualityIssue:
@@ -580,15 +583,15 @@ namespace SQM.Website
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;
                                 taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
-                                taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-                                taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+								taskItem.Title = taskItem.Task.DESCRIPTION;
+                                taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
                                 break;
 							case TaskRecordType.Audit:
 								AUDIT audit = (AUDIT)taskItem.Detail;
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
 								taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
 								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
 								break;
                             default:
