@@ -214,11 +214,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public NOTIFY Notify
-        {
-            get;
-            set;
-        }
+
         public string PartDisplayNum(string partPerspective)
         {
             if (partPerspective == "CST"  &&  !string.IsNullOrEmpty(this.Part.DRAWING_REF))
@@ -2460,180 +2456,6 @@ namespace SQM.Website
 			return retAction;
 		}
 
-        public static List<NOTIFY> SelectNotifyList(SQM.Website.PSsqmEntities ctx, decimal busorgID, decimal plantID, decimal b2bID, List<string> scopeList)
-        {
-            List<NOTIFY> notifyList = new List<NOTIFY>();
-            try
-            {
-                if (plantID > 0)
-                {
-                    if (b2bID > 0)
-                        notifyList = (from m in ctx.NOTIFY
-                                      where (m.PLANT_ID == plantID && m.B2B_ID == b2bID && scopeList.Contains(m.NOTIFY_SCOPE))
-                                      select m).ToList();
-                    else
-                        notifyList = (from m in ctx.NOTIFY
-                                      where (m.PLANT_ID == plantID && m.B2B_ID == null && scopeList.Contains(m.NOTIFY_SCOPE))
-                                      select m).ToList();
-                }
-                else
-                {
-                    notifyList = (from m in ctx.NOTIFY
-                                  where (m.BUS_ORG_ID == busorgID && m.PLANT_ID == null && scopeList.Contains(m.NOTIFY_SCOPE))
-                                  select m).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
-            return notifyList;
-        }
-
-        public static NOTIFY CreateNotifyRecord(decimal companyID, decimal busorgID, decimal plantID, TaskRecordType scope, decimal b2bID)
-        {
-            NOTIFY notify = new NOTIFY();
-            notify.STATUS = "A";
-            notify.COMPANY_ID = companyID;
-            if (busorgID > 0)
-                notify.BUS_ORG_ID = busorgID;
-            if (plantID > 0)
-                notify.PLANT_ID = plantID;
-            if (b2bID > 0)
-                notify.B2B_ID = b2bID;
-            notify.NOTIFY_SCOPE = ((int)scope).ToString();
-
-            return notify;
-        }
-
-
-        public static NOTIFY LookupNotifyRecord(SQM.Website.PSsqmEntities ctx, decimal notifyID)
-        {
-            NOTIFY notify = null;
-
-            try
-            {
-                notify = (from m in ctx.NOTIFY where m.NOTIFY_ID == notifyID select m).SingleOrDefault();
-            }
-            catch { }
-
-            return notify;
-        }
-
-        public static List<NOTIFY> SelectNotifyHierarchy(decimal companyID, decimal busorgID, decimal plantID, decimal b2bID, TaskRecordType scope)
-        {
-            List<NOTIFY> notificationList = new List<NOTIFY>();
-            NOTIFY notify = null;
-
-            using (PSsqmEntities ctx = new PSsqmEntities())
-            {
-                try
-                {
-                    string notifyScope = ((int)scope).ToString();
-                    if (busorgID > 0)
-                    {   // get bus org level assignments
-                        notify = (from m in ctx.NOTIFY where m.BUS_ORG_ID == busorgID && m.PLANT_ID == null && m.NOTIFY_SCOPE == notifyScope select m).SingleOrDefault();
-                        if (notify != null)
-                            notificationList.Add(notify);
-                    }
-                    if (plantID > 0)
-                    {   // get plant level assignments
-                        notify = (from m in ctx.NOTIFY where m.PLANT_ID == plantID && m.B2B_ID == null && m.NOTIFY_SCOPE == notifyScope select m).SingleOrDefault();
-                        if (notify != null)
-                            notificationList.Add(notify);
-                    }
-                    if (b2bID > 0)
-                    {   // get trading partner assignments
-                        notify = (from m in ctx.NOTIFY where m.PLANT_ID == plantID && m.B2B_ID == b2bID && m.NOTIFY_SCOPE == notifyScope select m).SingleOrDefault();
-                        if (notify != null)
-                            notificationList.Add(notify);
-                    }
-                }
-                catch { }
-            }
-
-            return notificationList;
-        }
-
-        public static HashSet<string> DistinctNotifyEmailList(List<NOTIFY> notifyList)
-        {
-            var hashList = new HashSet<string>();
-            foreach (NOTIFY notify in notifyList)
-            {
-                try
-                {
-                    hashList.Add(SQMModelMgr.LookupPerson((decimal)notify.NOTIFY_PERSON1, "").EMAIL);
-                    hashList.Add(SQMModelMgr.LookupPerson((decimal)notify.NOTIFY_PERSON2, "").EMAIL);
-                }
-                catch { }
-            }
-
-            return hashList;
-        }
-
-        public static int UpdateNotifyRecord(SQM.Website.PSsqmEntities ctx, NOTIFY notify)
-        {
-            int status = 0;
-
-            NOTIFY srcNotify = (from m in ctx.NOTIFY where m.NOTIFY_ID == notify.NOTIFY_ID select m).SingleOrDefault();
-
-            if (srcNotify == null)
-            {
-                srcNotify = new NOTIFY();
-                ctx.AddToNOTIFY(srcNotify);
-            }
-
-            srcNotify = (NOTIFY)CopyObjectValues(srcNotify, notify, false);
-
-            status = ctx.SaveChanges();
-      
-            return status;
-        }
-
-        public static int UpdateNotifyList(SQM.Website.PSsqmEntities ctx, List<NOTIFY> notifyList)
-        {
-            int status = 0;
-
-            try
-            {
-                for (int n = 0; n < notifyList.Count; n++)
-                {
-                    NOTIFY notify = notifyList.ElementAt(n);
-                    if (notify.STATUS == "D")
-                        ctx.DeleteObject(notify);
-                    else if (notify.EntityState == EntityState.Added || notify.EntityState == EntityState.Detached)
-                        ctx.AddToNOTIFY(notify);
-                }
-
-                status = ctx.SaveChanges();
-            }
-
-            catch (Exception ex)
-            {
-               // SQMLogger.LogException(ex);
-                status = -1;
-            }
-
-            return status;
-        }
-
-        public static List<NOTIFY> SelectPersonEscalationList(SQM.Website.PSsqmEntities ctx, decimal personID)
-        {
-            // get all escalations that the person is assigned to
-            List<NOTIFY> escalateList = new List<NOTIFY>();
-            try
-            {
-                escalateList = (from m in ctx.NOTIFY 
-                                where (m.ESCALATE_PERSON1 == personID  ||  m.ESCALATE_PERSON2 == personID)
-                                select m).ToList();
-            }
-            catch (Exception ex)
-            {
-                ;
-            }
-            return escalateList;
-        }
-
         #endregion
 
         #region part
@@ -2748,16 +2570,13 @@ namespace SQM.Website
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
                                     from c in c_l.DefaultIfEmpty()
-                                    join n in entities.NOTIFY on new { u.PLANT_ID, cust = u.CUST_PLANT_ID } equals new { n.PLANT_ID, cust = n.B2B_ID } into tmp
-                                    from nu in tmp.DefaultIfEmpty() 
                                     select new PartData
                                     {
                                         Part = p,
                                         Program = m,
                                         Used = u,
                                         CustomerPlant = l,
-                                        PartnerCompany = c,
-                                        Notify = nu
+                                        PartnerCompany = c
                                     }).ToList();
                     else
                         partList = (from p in entities.PART
@@ -2771,16 +2590,13 @@ namespace SQM.Website
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
                                     from c in c_l.DefaultIfEmpty()
-                                    join n in entities.NOTIFY on new { u.PLANT_ID, cust =u.CUST_PLANT_ID } equals new {n.PLANT_ID, cust = n.B2B_ID } into tmp 
-                                    from nu in tmp.DefaultIfEmpty() 
                                     select new PartData
                                     {
                                         Part = p,
                                         Program = m,
                                         Used = u,
                                         CustomerPlant = l,
-                                        PartnerCompany = c,
-                                        Notify = nu
+                                        PartnerCompany = c
                                     }).GroupBy(g => new { g.Used.CUST_PLANT_ID }).Select(l => l.FirstOrDefault()).ToList();
                     break;
                 case 2:
@@ -2796,16 +2612,13 @@ namespace SQM.Website
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
                                     from c in c_l.DefaultIfEmpty()
-                                    join n in entities.NOTIFY on new { u.PLANT_ID, cust = u.SUPP_PLANT_ID } equals new { n.PLANT_ID, cust = n.B2B_ID } into tmp
-                                    from nu in tmp.DefaultIfEmpty() 
                                     select new PartData
                                     {
                                         Part = p,
                                         Program = m,
                                         Used = u,
                                         SupplierPlant = l,
-                                        PartnerCompany = c,
-                                        Notify = nu 
+                                        PartnerCompany = c
                                     }).ToList();
                     else
                         partList = (from p in entities.PART
@@ -2819,16 +2632,13 @@ namespace SQM.Website
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
                                     from c in c_l.DefaultIfEmpty()
-                                    join n in entities.NOTIFY on new { u.PLANT_ID, cust = u.SUPP_PLANT_ID } equals new { n.PLANT_ID, cust = n.B2B_ID } into tmp
-                                    from nu in tmp.DefaultIfEmpty() 
                                     select new PartData
                                     {
                                         Part = p,
                                         Program = m,
                                         Used = u,
                                         SupplierPlant = l,
-                                        PartnerCompany = c,
-                                        Notify = nu 
+                                        PartnerCompany = c
                                     }).GroupBy(g => new { g.Used.SUPP_PLANT_ID }).Select(l => l.FirstOrDefault()).ToList();
                     break;
                 default:

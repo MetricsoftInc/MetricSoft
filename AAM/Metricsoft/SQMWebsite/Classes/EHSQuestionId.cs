@@ -11,6 +11,10 @@ namespace SQM.Website
 		ReportDate = 2,
 		ExpectedReturnDate = 3,
 		TimeOfDay = 5,
+		Department = 7,
+		InjuryType = 12,
+		BodyPart = 13,
+		FirstAid = 16,
 		Description = 17,
 		RootCause = 24,
 		CorrectiveActions = 27,
@@ -40,6 +44,7 @@ namespace SQM.Website
 		CostToImplement = 94,
 		RecommendationSummary = 95,
 		ReportedBy	= 96,
-		NativeLangComment = 107
+		NativeLangComment = 107,
+		Operation = 109
 	}
 }

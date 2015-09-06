@@ -1691,10 +1691,10 @@ namespace SQM.Website
 			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
 			newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
-			newInjryIllnessDetails.DEPARTMENT = "";
+			newInjryIllnessDetails.DEPARTMENT = rddlDepartment.SelectedText;
 
 			newInjryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
-			newInjryIllnessDetails.OPERATION = "";
+			newInjryIllnessDetails.OPERATION = rddlOperation.SelectedText;
 
 			involvedPersonId = SelectInvolvedPersonId;
 			if (involvedPersonId != null && involvedPersonId != 0)
@@ -1763,6 +1763,8 @@ namespace SQM.Website
 			entities.SaveChanges();
 
 			AddUpdate_Witnesses(incidentId);
+
+			UpdateInicidentAnswers(incidentId, newInjryIllnessDetails);
 
 			return newInjryIllnessDetails;
 		}
@@ -1884,10 +1886,10 @@ namespace SQM.Website
 
 
 				injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
-				injuryIllnessDetails.DEPARTMENT = "";
+				injuryIllnessDetails.DEPARTMENT = rddlDepartment.SelectedText;
 
 				injuryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
-				injuryIllnessDetails.OPERATION = "";
+				injuryIllnessDetails.OPERATION = rddlOperation.SelectedText;
 
 				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
 					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
@@ -1956,10 +1958,87 @@ namespace SQM.Website
 
 				entities.SaveChanges();
 				AddUpdate_Witnesses(incidentId);
+
+				UpdateInicidentAnswers(incidentId, injuryIllnessDetails);
 			}
 			return injuryIllnessDetails;
 		}
 
+		protected int UpdateInicidentAnswers(decimal incidentId, INCFORM_INJURYILLNESS injuryIllnessDetail)
+		{
+			// capture key values from the custom form to save in the 'standard' question/answer data structure
+			// we do this to maintain commonality of dowstream analytics and graphing methods
+			int status = 0;
+
+			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
+			List<EHSMetaData> injPart = EHSMetaDataMgr.SelectMetaDataList("INJURY_PART");
+
+			using (PSsqmEntities entities = new PSsqmEntities())
+			{
+				try
+				{
+					List<decimal> iqList = (from q in entities.INCIDENT_TYPE_COMPANY_QUESTION where q.INCIDENT_TYPE_ID == (int)EHSIncidentTypeId.InjuryIllness select q.INCIDENT_QUESTION_ID).ToList();
+					List<INCIDENT_QUESTION> qList = (from q in entities.INCIDENT_QUESTION where iqList.Contains(q.INCIDENT_QUESTION_ID) select q).ToList();
+
+					INCIDENT_ANSWER ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.InjuryType);
+					ia.ANSWER_VALUE = injtype.Where(m=> m.Value == injuryIllnessDetail.INJURY_TYPE).Select(m=> m.Text).FirstOrDefault();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.BodyPart);
+					ia.ANSWER_VALUE = injPart.Where(m => m.Value == injuryIllnessDetail.INJURY_BODY_PART).Select(m => m.Text).FirstOrDefault();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Recordable);
+					ia.ANSWER_VALUE = injuryIllnessDetail.RECORDABLE.ToString();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.LostTimeCase);
+					ia.ANSWER_VALUE = injuryIllnessDetail.LOST_TIME.ToString();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.FirstAid);
+					ia.ANSWER_VALUE = injuryIllnessDetail.FIRST_AID.ToString();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Department);
+					ia.ANSWER_VALUE = injuryIllnessDetail.DEPARTMENT;
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Operation);
+					ia.ANSWER_VALUE = injuryIllnessDetail.OPERATION;
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					entities.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID = {0}", incidentId);  // clear any existing values
+					status = entities.SaveChanges();
+				}
+				catch
+				{
+				}
+			}
+
+			return status;
+		}
 
 		protected void SaveAttachments(decimal incidentId)
 		{

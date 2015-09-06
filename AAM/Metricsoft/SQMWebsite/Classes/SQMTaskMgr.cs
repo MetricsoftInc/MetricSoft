@@ -1385,16 +1385,6 @@ namespace SQM.Website
                                    from mp in tmp.DefaultIfEmpty()
                                    where (p.PERSON_ID == mp.RESPONSIBLE_ID)
                                     select new UserContext { Person = p }).Distinct().ToList());
-                userList.AddRange((from p in entities.PERSON
-                                   join m in entities.NOTIFY on p.PERSON_ID equals m.ESCALATE_PERSON1 into tmp
-                                   from mp in tmp.DefaultIfEmpty() 
-                                   where(p.PERSON_ID == mp.ESCALATE_PERSON1)
-                                   select new UserContext { Person = p }).Distinct().ToList());
-                userList.AddRange((from p in entities.PERSON
-                                   join m in entities.NOTIFY on p.PERSON_ID equals m.ESCALATE_PERSON2 into tmp
-                                   from mp in tmp.DefaultIfEmpty()
-                                   where (p.PERSON_ID == mp.ESCALATE_PERSON2)
-                                   select new UserContext { Person = p }).Distinct().ToList());
 
                 userList = userList.GroupBy(g => new { g.Person.PERSON_ID }).Select(l => l.FirstOrDefault()).ToList();
             }

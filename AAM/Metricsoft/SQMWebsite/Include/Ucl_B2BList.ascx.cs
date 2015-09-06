@@ -71,14 +71,6 @@ namespace SQM.Website
                 SQMBasePage.SetPersonList(ddl1, staticPersonList, "", 20);
                 RadComboBox ddl2 = (RadComboBox)rpt.Items[0].FindControl("ddlQSNotify2");
                 SQMBasePage.SetPersonList(ddl2, staticPersonList, "", 20);
-                if (partData.Notify != null)
-                {
-                    hf.Value = partData.Notify.NOTIFY_ID.ToString();
-                    if (ddl1.Items.FindItemByValue(partData.Notify.NOTIFY_PERSON1.ToString()) != null)
-                        ddl1.SelectedValue = partData.Notify.NOTIFY_PERSON1.ToString();
-                    if (ddl2.Items.FindItemByValue(partData.Notify.NOTIFY_PERSON2.ToString()) != null)
-                        ddl2.SelectedValue = partData.Notify.NOTIFY_PERSON2.ToString();
-                }
             }
         }
 
@@ -116,7 +108,6 @@ namespace SQM.Website
             LinkButton lnk = (LinkButton)sender;
             string cmdID = lnk.CommandArgument;
             PSsqmEntities ctx = new PSsqmEntities();
-            NOTIFY notify = null;
 
             foreach (RepeaterItem r in rptCustPartHeader.Items)
             {
@@ -127,24 +118,6 @@ namespace SQM.Website
                     RadComboBox ddl1 = (RadComboBox)rd.Items[0].FindControl("ddlQSNotify1");
                     RadComboBox ddl2 = (RadComboBox)rd.Items[0].FindControl("ddlQSNotify2");
                     HiddenField hf = (HiddenField)rd.Items[0].FindControl("hfQSNotify");
-                    notify = null;
-                    if (!string.IsNullOrEmpty(hf.Value))
-                        notify = SQMModelMgr.LookupNotifyRecord(ctx, Convert.ToDecimal(hf.Value));
-                    if (notify == null)
-                    {
-                        notify = SQMModelMgr.CreateNotifyRecord(SessionManager.EffLocation.Company.COMPANY_ID, 0, SessionManager.EffLocation.Plant.PLANT_ID, TaskRecordType.CustomerQualityIncident, Convert.ToDecimal(cmdID));
-                    }
-                    if (ddl1.SelectedIndex < 1)
-                        notify.NOTIFY_PERSON1 = null;
-                    else 
-                        notify.NOTIFY_PERSON1 = Convert.ToDecimal(ddl1.SelectedValue);
-
-                    if (ddl2.SelectedIndex < 1)
-                        notify.NOTIFY_PERSON2 = null;
-                    else 
-                        notify.NOTIFY_PERSON2 = Convert.ToDecimal(ddl2.SelectedValue);
-
-                    int status = SQMModelMgr.UpdateNotifyRecord(ctx, notify);
                 }
             }
         }
@@ -194,14 +167,6 @@ namespace SQM.Website
                     SQMBasePage.SetPersonList(ddl1, staticPersonList, "", 20);
                     RadComboBox ddl2 = (RadComboBox)rpt.Items[0].FindControl("ddlQSNotify2");
                     SQMBasePage.SetPersonList(ddl2, staticPersonList, "", 20);
-                    if (partData.Notify != null)
-                    {
-                        hf.Value = partData.Notify.NOTIFY_ID.ToString();
-                        if (ddl1.Items.FindItemByValue(partData.Notify.NOTIFY_PERSON1.ToString()) != null)
-                            ddl1.SelectedValue = partData.Notify.NOTIFY_PERSON1.ToString();
-                        if (ddl2.Items.FindItemByValue(partData.Notify.NOTIFY_PERSON2.ToString()) != null)
-                            ddl2.SelectedValue = partData.Notify.NOTIFY_PERSON2.ToString();
-                    }
                 }
                 catch { }
             }
@@ -213,7 +178,6 @@ namespace SQM.Website
             LinkButton lnk = (LinkButton)sender;
             string cmdID = lnk.CommandArgument;
             PSsqmEntities ctx = new PSsqmEntities();
-            NOTIFY notify = null;
 
             foreach (RepeaterItem r in rptCustPartHeader.Items)
             {
@@ -224,24 +188,6 @@ namespace SQM.Website
                     RadComboBox ddl1 = (RadComboBox)rd.Items[0].FindControl("ddlQSNotify1");
                     RadComboBox ddl2 = (RadComboBox)rd.Items[0].FindControl("ddlQSNotify2");
                     HiddenField hf = (HiddenField)rd.Items[0].FindControl("hfQSNotify");
-                    notify = null;
-                    if (!string.IsNullOrEmpty(hf.Value))
-                        notify = SQMModelMgr.LookupNotifyRecord(ctx, Convert.ToDecimal(hf.Value));
-                    if (notify == null)
-                    {
-                        notify = SQMModelMgr.CreateNotifyRecord(SessionManager.EffLocation.Company.COMPANY_ID, 0, SessionManager.EffLocation.Plant.PLANT_ID, TaskRecordType.SupplierQualityIncident, Convert.ToDecimal(cmdID));
-                    }
-                    if (ddl1.SelectedIndex < 1)
-                        notify.NOTIFY_PERSON1 = null;
-                    else
-                        notify.NOTIFY_PERSON1 = Convert.ToDecimal(ddl1.SelectedValue);
-
-                    if (ddl2.SelectedIndex < 1)
-                        notify.NOTIFY_PERSON2 = null;
-                    else
-                        notify.NOTIFY_PERSON2 = Convert.ToDecimal(ddl2.SelectedValue);
-
-                    int status = SQMModelMgr.UpdateNotifyRecord(ctx, notify);
                 }
             }
         }

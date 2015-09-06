@@ -78,7 +78,6 @@
           <EntitySet Name="LABOR_TYPE" EntityType="PSsqmModel.Store.LABOR_TYPE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LOCAL_LANGUAGE" EntityType="PSsqmModel.Store.LOCAL_LANGUAGE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NONCONFORMANCE" EntityType="PSsqmModel.Store.NONCONFORMANCE" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="NOTIFY" EntityType="PSsqmModel.Store.NOTIFY" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NOTIFYACTION" EntityType="PSsqmModel.Store.NOTIFYACTION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PART" EntityType="PSsqmModel.Store.PART" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PART_ATTRIBUTE" EntityType="PSsqmModel.Store.PART_ATTRIBUTE" store:Type="Tables" Schema="dbo" />
@@ -461,26 +460,6 @@
             <End Role="QI_OCCUR" EntitySet="QI_OCCUR" />
             <End Role="QI_OCCUR_ITEM" EntitySet="QI_OCCUR_ITEM" />
           </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_COMPANY" Association="PSsqmModel.Store.FK_NOTIFY_COMPANY">
-            <End Role="COMPANY" EntitySet="COMPANY" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON" Association="PSsqmModel.Store.FK_NOTIFY_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON1" Association="PSsqmModel.Store.FK_NOTIFY_PERSON1">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON2" Association="PSsqmModel.Store.FK_NOTIFY_PERSON2">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON3" Association="PSsqmModel.Store.FK_NOTIFY_PERSON3">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
           <AssociationSet Name="FK_NOTIFY_PLAN_BUSINESS_ORG" Association="PSsqmModel.Store.FK_NOTIFY_PLAN_BUSINESS_ORG">
             <End Role="BUSINESS_ORG" EntitySet="BUSINESS_ORG" />
             <End Role="NOTIFYACTION" EntitySet="NOTIFYACTION" />
@@ -488,10 +467,6 @@
           <AssociationSet Name="FK_NOTIFY_PLAN_PLANT" Association="PSsqmModel.Store.FK_NOTIFY_PLAN_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="NOTIFYACTION" EntitySet="NOTIFYACTION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PLANT" Association="PSsqmModel.Store.FK_NOTIFY_PLANT">
-            <End Role="PLANT" EntitySet="PLANT" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
           </AssociationSet>
           <AssociationSet Name="FK_PART_PROGRAM_COMPANY" Association="PSsqmModel.Store.FK_PART_PROGRAM_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -1760,24 +1735,6 @@
           <Property Name="NONCONF_NAME" Type="varchar" MaxLength="100" />
           <Property Name="NONCONF_DESC" Type="varchar" MaxLength="200" />
           <Property Name="STATUS" Type="varchar" Nullable="false" MaxLength="2" />
-        </EntityType>
-        <EntityType Name="NOTIFY">
-          <Key>
-            <PropertyRef Name="NOTIFY_ID" />
-          </Key>
-          <Property Name="NOTIFY_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
-          <Property Name="COMPANY_ID" Type="numeric" Nullable="false" Precision="35" />
-          <Property Name="BUS_ORG_ID" Type="numeric" Precision="35" />
-          <Property Name="PLANT_ID" Type="numeric" Precision="35" />
-          <Property Name="B2B_ID" Type="numeric" Precision="35" />
-          <Property Name="NOTIFY_SCOPE" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="NOTIFY_PERSON1" Type="numeric" Precision="35" />
-          <Property Name="ESCALATE_PERSON1" Type="numeric" Precision="35" />
-          <Property Name="ESCALATE_DAYS1" Type="int" />
-          <Property Name="NOTIFY_PERSON2" Type="numeric" Precision="35" />
-          <Property Name="ESCALATE_PERSON2" Type="numeric" Precision="35" />
-          <Property Name="ESCALATE_DAYS2" Type="int" />
-          <Property Name="STATUS" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="NOTIFYACTION">
           <Key>
@@ -3597,66 +3554,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NOTIFY_COMPANY">
-          <End Role="COMPANY" Type="PSsqmModel.Store.COMPANY" Multiplicity="1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COMPANY">
-              <PropertyRef Name="COMPANY_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="COMPANY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON">
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="NOTIFY_PERSON1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON1">
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="NOTIFY_PERSON2" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON2">
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="ESCALATE_PERSON1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON3">
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="ESCALATE_PERSON2" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NOTIFY_PLAN_BUSINESS_ORG">
           <End Role="BUSINESS_ORG" Type="PSsqmModel.Store.BUSINESS_ORG" Multiplicity="0..1" />
           <End Role="NOTIFYACTION" Type="PSsqmModel.Store.NOTIFYACTION" Multiplicity="*" />
@@ -3677,18 +3574,6 @@
               <PropertyRef Name="PLANT_ID" />
             </Principal>
             <Dependent Role="NOTIFYACTION">
-              <PropertyRef Name="PLANT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PLANT">
-          <End Role="PLANT" Type="PSsqmModel.Store.PLANT" Multiplicity="0..1" />
-          <End Role="NOTIFY" Type="PSsqmModel.Store.NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PLANT">
-              <PropertyRef Name="PLANT_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
               <PropertyRef Name="PLANT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4646,15 +4531,6 @@
             <End Role="PROB_CAUSE_STEP" EntitySet="PROB_CAUSE_STEP" />
           </AssociationSet>
           <EntitySet Name="ACTIVE_CUSTOMER" EntityType="PSsqmModel.ACTIVE_CUSTOMER" />
-          <EntitySet Name="NOTIFY" EntityType="PSsqmModel.NOTIFY" />
-          <AssociationSet Name="FK_NOTIFY_COMPANY" Association="PSsqmModel.FK_NOTIFY_COMPANY">
-            <End Role="COMPANY" EntitySet="COMPANY" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PLANT" Association="PSsqmModel.FK_NOTIFY_PLANT">
-            <End Role="PLANT" EntitySet="PLANT" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
           <EntitySet Name="PERSPECTIVE_VIEW" EntityType="PSsqmModel.PERSPECTIVE_VIEW" />
           <AssociationSet Name="FK_PERSPECTIVE_VIEW_COMPANY" Association="PSsqmModel.FK_PERSPECTIVE_VIEW_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -4930,22 +4806,6 @@
           <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.FK_PERSON_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
             <End Role="PERSON" EntitySet="PERSON" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON" Association="PSsqmModel.FK_NOTIFY_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON1" Association="PSsqmModel.FK_NOTIFY_PERSON1">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON2" Association="PSsqmModel.FK_NOTIFY_PERSON2">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NOTIFY_PERSON3" Association="PSsqmModel.FK_NOTIFY_PERSON3">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="NOTIFY" EntitySet="NOTIFY" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSON_ACCESS_PERSON" Association="PSsqmModel.FK_PERSON_ACCESS_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
@@ -6324,7 +6184,6 @@
           <NavigationProperty Name="PRODUCT_LINE" Relationship="PSsqmModel.FK_PRODUCT_LINE_COMPANY" FromRole="COMPANY" ToRole="PRODUCT_LINE" />
           <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_CUST_PLA_REFERENCE_CUST_COM" FromRole="COMPANY" ToRole="PLANT" />
           <NavigationProperty Name="PROB_CASE" Relationship="PSsqmModel.FK_PROB_CASE_COMPANY" FromRole="COMPANY" ToRole="PROB_CASE" />
-          <NavigationProperty Name="NOTIFY" Relationship="PSsqmModel.FK_NOTIFY_COMPANY" FromRole="COMPANY" ToRole="NOTIFY" />
           <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_COMPANY" FromRole="COMPANY" ToRole="PERSPECTIVE_VIEW" />
           <NavigationProperty Name="COMPANY_ACTIVITY" Relationship="PSsqmModel.FK_COMPANY_ACTIVITY_COMPANY" FromRole="COMPANY" ToRole="COMPANY_ACTIVITY" />
           <NavigationProperty Name="BUSINESS_ORG" Relationship="PSsqmModel.FK_BUSINESS_REFERENCE_CUST_COM" FromRole="COMPANY" ToRole="BUSINESS_ORG" />
@@ -6668,7 +6527,6 @@
           <NavigationProperty Name="PLANT_LINE" Relationship="PSsqmModel.FK_CUS_PLAN_REFERENCE_CUST_PLA" FromRole="PLANT" ToRole="PLANT_LINE" />
           <NavigationProperty Name="LOCAL_LANGUAGE1" Relationship="PSsqmModel.FK_PLANT_LOCAL_LANGUAGE" FromRole="PLANT" ToRole="LOCAL_LANGUAGE" />
           <NavigationProperty Name="PLANT_ACCOUNTING" Relationship="PSsqmModel.FK_PLANT_ACCOUNTING_STAGE_PLANT" FromRole="PLANT" ToRole="PLANT_ACCOUNTING" />
-          <NavigationProperty Name="NOTIFY" Relationship="PSsqmModel.FK_NOTIFY_PLANT" FromRole="PLANT" ToRole="NOTIFY" />
           <NavigationProperty Name="BUSINESS_ORG" Relationship="PSsqmModel.FK_PLANT_REFERENCE_BUSINESS" FromRole="PLANT" ToRole="BUSINESS_ORG" />
           <NavigationProperty Name="RECEIPT" Relationship="PSsqmModel.FK_RECEIPT_PLANT" FromRole="PLANT" ToRole="RECEIPT" />
           <NavigationProperty Name="RECEIPT1" Relationship="PSsqmModel.FK_RECEIPT_PLANT1" FromRole="PLANT" ToRole="RECEIPT" />
@@ -7125,54 +6983,6 @@
           <Property Type="String" Name="COMPANY_NAME" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="STATUS" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="NOTIFY">
-          <Key>
-            <PropertyRef Name="NOTIFY_ID" />
-          </Key>
-          <Property Type="Decimal" Name="NOTIFY_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="BUS_ORG_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="PLANT_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="B2B_ID" Precision="35" Scale="0" />
-          <Property Type="String" Name="NOTIFY_SCOPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="NOTIFY_PERSON1" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="ESCALATE_PERSON1" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="ESCALATE_DAYS1" />
-          <Property Type="Decimal" Name="NOTIFY_PERSON2" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="ESCALATE_PERSON2" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="ESCALATE_DAYS2" />
-          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="COMPANY" Relationship="PSsqmModel.FK_NOTIFY_COMPANY" FromRole="NOTIFY" ToRole="COMPANY" />
-          <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_NOTIFY_PLANT" FromRole="NOTIFY" ToRole="PLANT" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_NOTIFY_PERSON" FromRole="NOTIFY" ToRole="PERSON" />
-          <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_NOTIFY_PERSON1" FromRole="NOTIFY" ToRole="PERSON" />
-          <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_NOTIFY_PERSON2" FromRole="NOTIFY" ToRole="PERSON" />
-          <NavigationProperty Name="PERSON3" Relationship="PSsqmModel.FK_NOTIFY_PERSON3" FromRole="NOTIFY" ToRole="PERSON" />
-        </EntityType>
-        <Association Name="FK_NOTIFY_COMPANY">
-          <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COMPANY">
-              <PropertyRef Name="COMPANY_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="COMPANY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PLANT">
-          <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="0..1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PLANT">
-              <PropertyRef Name="PLANT_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="PLANT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="PERSPECTIVE_VIEW">
           <Key>
             <PropertyRef Name="VIEW_ID" />
@@ -8577,10 +8387,6 @@
           <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE" />
           <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
           <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
-          <NavigationProperty Name="NOTIFY" Relationship="PSsqmModel.FK_NOTIFY_PERSON" FromRole="PERSON" ToRole="NOTIFY" />
-          <NavigationProperty Name="NOTIFY1" Relationship="PSsqmModel.FK_NOTIFY_PERSON1" FromRole="PERSON" ToRole="NOTIFY" />
-          <NavigationProperty Name="NOTIFY2" Relationship="PSsqmModel.FK_NOTIFY_PERSON2" FromRole="PERSON" ToRole="NOTIFY" />
-          <NavigationProperty Name="NOTIFY3" Relationship="PSsqmModel.FK_NOTIFY_PERSON3" FromRole="PERSON" ToRole="NOTIFY" />
           <NavigationProperty Name="PERSON_ACCESS" Relationship="PSsqmModel.FK_PERSON_ACCESS_PERSON" FromRole="PERSON" ToRole="PERSON_ACCESS" />
           <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
           <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
@@ -8653,54 +8459,6 @@
             </Principal>
             <Dependent Role="PERSON">
               <PropertyRef Name="JOBCODE_CD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="NOTIFY_PERSON1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON1">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="NOTIFY_PERSON2" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON2">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="ESCALATE_PERSON1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NOTIFY_PERSON3">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.NOTIFY" Role="NOTIFY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="NOTIFY">
-              <PropertyRef Name="ESCALATE_PERSON2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10245,25 +10003,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NOTIFY">
-            <EntityTypeMapping TypeName="PSsqmModel.NOTIFY">
-              <MappingFragment StoreEntitySet="NOTIFY">
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="ESCALATE_DAYS2" ColumnName="ESCALATE_DAYS2" />
-                <ScalarProperty Name="ESCALATE_PERSON2" ColumnName="ESCALATE_PERSON2" />
-                <ScalarProperty Name="NOTIFY_PERSON2" ColumnName="NOTIFY_PERSON2" />
-                <ScalarProperty Name="ESCALATE_DAYS1" ColumnName="ESCALATE_DAYS1" />
-                <ScalarProperty Name="ESCALATE_PERSON1" ColumnName="ESCALATE_PERSON1" />
-                <ScalarProperty Name="NOTIFY_PERSON1" ColumnName="NOTIFY_PERSON1" />
-                <ScalarProperty Name="NOTIFY_SCOPE" ColumnName="NOTIFY_SCOPE" />
-                <ScalarProperty Name="B2B_ID" ColumnName="B2B_ID" />
-                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
-                <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
-                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
-                <ScalarProperty Name="NOTIFY_ID" ColumnName="NOTIFY_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PERSPECTIVE_VIEW">
             <EntityTypeMapping TypeName="PSsqmModel.PERSPECTIVE_VIEW">
               <MappingFragment StoreEntitySet="PERSPECTIVE_VIEW">
@@ -11259,9 +10998,6 @@
         <AssociationConnector Association="PSsqmModel.FK_PROB_CAUSE_PROB_CASE" />
         <AssociationConnector Association="PSsqmModel.FK_PROB_CAUSE_STEP_PROB_CAUSE" />
         <EntityTypeShape EntityType="PSsqmModel.ACTIVE_CUSTOMER" Width="1.5" PointX="10.23499881580239" PointY="18.321010806747253" />
-        <EntityTypeShape EntityType="PSsqmModel.NOTIFY" Width="1.5" PointX="8.56414086025401" PointY="3.5572744922513491" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_COMPANY" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_VIEW" Width="1.5" PointX="5.5612036052910625" PointY="11.852784162318699" />
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW" />
@@ -11368,10 +11104,6 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_PERSON1" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_PERSON2" />
-        <AssociationConnector Association="PSsqmModel.FK_NOTIFY_PERSON3" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_ACCESS_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_RESP_PERSON" />
