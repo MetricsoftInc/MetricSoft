@@ -506,10 +506,8 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                join q in entities.QI_OCCUR on i.INCIDENT_ID equals q.INCIDENT_ID into q_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.QualityIssue || t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT > fromDate  &&  t.DUE_DT <= toDate) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
+                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT > fromDate  &&  t.DUE_DT <= toDate) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
                                 from p in p_t.DefaultIfEmpty()
-                                from q in q_i.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()
                                 select new TaskItem
@@ -520,8 +518,7 @@ namespace SQM.Website
                                     Person = p,
                                     Detail = i,
                                     Plant = l,
-                                    PlantResponsible = r,
-                                    Reference = q
+                                    PlantResponsible = r
                                 }).OrderBy(l => l.RecordID).ToList();
 
 					taskList.AddRange((from t in entities.TASK_STATUS
@@ -552,33 +549,6 @@ namespace SQM.Website
 
                         switch (recordType)
                         {
-                            case TaskRecordType.QualityIssue:
-                                if (taskItem.Reference != null)
-                                {
-									incident = (INCIDENT)taskItem.Detail;
-                                    try
-                                    {
-                                        if (((QI_OCCUR)taskItem.Reference).QS_ACTIVITY == "CST")
-                                        {
-                                            taskItem.Title = WebSiteCommon.GetXlatValueLong("qualityActivity", ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY);
-                                            if (!string.IsNullOrEmpty(taskItem.Task.DESCRIPTION))
-                                                taskItem.Title += (" (" + taskItem.Task.DESCRIPTION + ")");
-                                            taskItem.LongTitle = taskItem.PlantResponsible.PLANT_NAME + " - " + taskItem.Title;
-                                        }
-                                        else
-                                        {
-                                            taskItem.Title = WebSiteCommon.GetXlatValueLong("qualityActivity", ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY);
-                                            if (!string.IsNullOrEmpty(taskItem.Task.DESCRIPTION))
-                                                taskItem.Title += (" (" + taskItem.Task.DESCRIPTION + ")");
-                                            taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
-                                        }
-                                        taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY;
-                                        taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Issue ") + ": " + incident.DESCRIPTION;
-                                        taskItem.Part = SQMModelMgr.LookupPart(entities, ((QI_OCCUR)taskItem.Reference).PART_ID, "", 1, false);
-                                    }
-                                    catch { }
-                                }
-                                break;
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;
@@ -1185,10 +1155,8 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                join q in entities.QI_OCCUR on i.INCIDENT_ID equals q.INCIDENT_ID into q_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.QualityIssue || t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && statusIDS.Contains(t.STATUS) &&  t.DUE_DT <= forwardDate  && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)(i.DETECT_PLANT_ID))))
+                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && statusIDS.Contains(t.STATUS) &&  t.DUE_DT <= forwardDate  && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)(i.DETECT_PLANT_ID))))
                                 from p in p_t.DefaultIfEmpty()
-                                from q in q_i.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()
                                 select new TaskItem
@@ -1199,8 +1167,7 @@ namespace SQM.Website
                                     Person = p,
                                     Detail = i,
                                     Plant = l,
-                                    PlantResponsible = r,
-                                    Reference = q
+                                    PlantResponsible = r
                                 }).OrderBy(l => l.RecordID).ToList();
 
 					taskList.AddRange((from t in entities.TASK_STATUS
@@ -1233,33 +1200,6 @@ namespace SQM.Website
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
                         switch (recordType)
                         {
-                            case TaskRecordType.QualityIssue:
-								incident = (INCIDENT)taskItem.Detail;
-                                if (taskItem.Reference != null)
-                                {
-                                    try
-                                    {
-                                        if (((QI_OCCUR)taskItem.Reference).QS_ACTIVITY == "CST")
-                                        {
-                                            taskItem.Title = WebSiteCommon.GetXlatValueLong("qualityActivity", ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY);
-                                            if (!string.IsNullOrEmpty(taskItem.Task.DESCRIPTION))
-                                                taskItem.Title += (" ("+taskItem.Task.DESCRIPTION+")");
-                                            taskItem.LongTitle = taskItem.PlantResponsible.PLANT_NAME + " - " + taskItem.Title;
-                                        }
-                                        else
-                                        {
-                                            taskItem.Title = WebSiteCommon.GetXlatValueLong("qualityActivity", ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY);
-                                            if (!string.IsNullOrEmpty(taskItem.Task.DESCRIPTION))
-                                                taskItem.Title += (" (" + taskItem.Task.DESCRIPTION + ")");
-                                            taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
-                                        }
-                                        taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + ((QI_OCCUR)taskItem.Reference).QS_ACTIVITY;
-                                        taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Issue ") + ": " + incident.DESCRIPTION;
-                                        taskItem.Part = SQMModelMgr.LookupPart(entities, ((QI_OCCUR)taskItem.Reference).PART_ID, "", 1, false);
-                                    }
-                                    catch { } 
-                                }
-                                break;
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;

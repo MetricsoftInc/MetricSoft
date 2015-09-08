@@ -305,7 +305,7 @@ namespace SQM.Website
 								break;
 							case "PERSON":
 								string empID = fldArray[0].Trim();
-								string status = fldArray[1].Trim();
+								string status = fldArray[1].Trim().ToUpper();
 								string firstName = fldArray[2].Trim();
 								string lastName = fldArray[3].Trim();
 								string middleName = !string.IsNullOrEmpty(fldArray[4].Trim()) ? fldArray[4].Trim() : "";
@@ -331,6 +331,10 @@ namespace SQM.Website
 								person = SQMModelMgr.LookupPersonByEmpID(Entities, empID);
 								if (person == null)
 								{
+									if (status != "A")  // don't create person if inactive
+									{
+										break;
+									}
 									person = new PERSON();
 									person.SSO_ID = empID;
 									person.EMP_ID = empID;

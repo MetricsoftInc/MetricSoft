@@ -129,7 +129,7 @@ namespace SQM.Website
 
 					taskList.Clear();
 					taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
-					taskList.AddRange(TaskMgr.IncidentTaskStatus(1, respForList, respPlantList, true));
+					taskList.AddRange(TaskMgr.IncidentTaskStatus(1, respForList, respPlantList, false));
 					WriteLine(taskList.Count.ToString());
 
 					TaskMgr.MailTaskList(taskList, assignedUser.Person.EMAIL, "exe");
