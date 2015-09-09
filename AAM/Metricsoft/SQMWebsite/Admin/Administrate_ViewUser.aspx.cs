@@ -98,7 +98,8 @@ namespace SQM.Website
 
 			if (personList.Count > 0)
 			{
-				personList = personList.Where(l => (plantID == 0  ||  l.PLANT_ID == plantID) &&  SQMModelMgr.SearchUserList(new string[2] {"A","P"}).Select(u => u.SSO_ID).ToList().Contains(l.SSO_ID)).ToList();
+				//personList = personList.Where(l => (plantID == 0  ||  l.PLANT_ID == plantID) &&  SQMModelMgr.SearchUserList(new string[2] {"A","P"}).Select(u => u.SSO_ID).ToList().Contains(l.SSO_ID)).ToList();
+				//personList = personList.Where(l => (plantID == 0 || l.PLANT_ID == plantID) && !string.IsNullOrEmpty(l.EMAIL)).ToList();
 			}
 
 			uclUserList.BindUserList(personList.Where(l => l.ROLE > 1).OrderBy(l => l.LAST_NAME).ToList(), SessionManager.EffLocation.Company.COMPANY_ID);
