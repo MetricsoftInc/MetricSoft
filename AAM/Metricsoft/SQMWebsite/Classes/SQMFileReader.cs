@@ -216,6 +216,12 @@ namespace SQM.Website
                 {
                     string line;
                     int lineNo = 0;
+
+					List<JOBCODE> jobcodeList = new List<JOBCODE>();
+					if (this.FileName == "PERSON")
+					{
+						jobcodeList = SQMModelMgr.SelectJobcodeList("A", "");
+					}
  
                     while ((line = sr.ReadLine()) != null)
                     {
@@ -340,9 +346,6 @@ namespace SQM.Website
 									person.SSO_ID = empID;
 									person.EMP_ID = empID;
 									person.ROLE = (int)SysPriv.view;
-									jobcode = SQMModelMgr.LookupJobcode(Entities, jobCode);  // apply default privgroup for the person's jobcode, if defined
-									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))
-										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 								}
 
 								person.STATUS = status;
@@ -357,6 +360,12 @@ namespace SQM.Website
 								person.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
 								person.PLANT_ID = (decimal)plant.PLANT_ID;
 								person.SUPV_EMP_ID = supvEmpID;
+								if (string.IsNullOrEmpty(person.PRIV_GROUP))
+								{
+									jobcode = jobcodeList.Where(l => l.JOBCODE_CD == jobCode).FirstOrDefault();  // apply default privgroup for the person's jobcode, if defined
+									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))
+										person.PRIV_GROUP = jobcode.PRIV_GROUP;
+								}
 								try
 								{
 									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.LAST_NAME);
