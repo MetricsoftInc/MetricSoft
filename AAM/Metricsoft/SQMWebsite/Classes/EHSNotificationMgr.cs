@@ -31,13 +31,40 @@ namespace SQM.Website
 			return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
 		}
 
+		public static List<PERSON> InvolvedPersonList(INCIDENT incident)
+		{
+			List<PERSON> involvedList = new List<PERSON>();
+
+			if (incident.ISSUE_TYPE_ID == (int)EHSIncidentTypeId.InjuryIllness)
+			{
+				PSsqmEntities ctx = new PSsqmEntities();
+				INCFORM_INJURYILLNESS iiDetail = EHSIncidentMgr.SelectInjuryIllnessDetailsById(ctx, incident.INCIDENT_ID);
+				if (iiDetail != null && iiDetail.INVOLVED_PERSON_ID.HasValue)
+				{
+					PERSON person = SQMModelMgr.LookupPerson(ctx, (decimal)iiDetail.INVOLVED_PERSON_ID, "", false);
+					if (person != null && !string.IsNullOrEmpty(person.SUPV_EMP_ID))
+					{
+						PERSON supvPerson = SQMModelMgr.LookupPersonByEmpID(ctx, person.SUPV_EMP_ID);
+						if (supvPerson != null)
+						{
+							involvedList.Add(supvPerson);
+						}
+					}
+				}
+			}
+
+			return involvedList;
+		}
+
 		#endregion
 
 		public static int NotifyIncidentStatus(INCIDENT incident, string notifyScope, string scopeAction)
 		{
 			int status = 0;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
-			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, scopeAction);
+			
+			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
+			notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeAction));
 
 			if (notifyPersonList.Count > 0)
 			{
