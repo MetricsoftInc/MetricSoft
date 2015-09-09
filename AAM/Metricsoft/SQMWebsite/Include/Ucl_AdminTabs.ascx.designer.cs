@@ -148,6 +148,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton lbPLantDetail_tab;
         
         /// <summary>
+        /// lbPlantUsers_tab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbPlantUsers_tab;
+        
+        /// <summary>
         /// lbPLantDepartment_tab control.
         /// </summary>
         /// <remarks>

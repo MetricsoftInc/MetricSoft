@@ -211,6 +211,9 @@ namespace SQM.Website
 
                 switch (cmdArg)
                 {
+					case "user":
+						Response.Redirect("/Admin/Administrate_ViewUser.aspx?loc=" + SessionManager.EffLocation.Plant.PLANT_ID.ToString());
+						break;
                     case "dept":
                         DoDeptList();
                         pnlSubLists.Visible = true;

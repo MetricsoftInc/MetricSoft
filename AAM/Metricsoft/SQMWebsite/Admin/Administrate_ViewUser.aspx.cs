@@ -72,8 +72,18 @@ namespace SQM.Website
 		{
 			SetLocalPerson(null);
 			isNew = false;
+			decimal plantID = 0;
 
             List<PERSON> personList;
+
+			if (Request.QueryString["loc"] != null)
+			{
+				string loc = Request.QueryString["loc"].ToString().ToLower();
+				if (!string.IsNullOrEmpty(loc))
+				{
+					decimal.TryParse(loc, out plantID);
+				}
+			}
 
             if (ddlListStatus.SelectedValue == "A")
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", true).Where(l => l.STATUS == "A").ToList();
@@ -81,16 +91,14 @@ namespace SQM.Website
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l=> l.STATUS == "I").ToList();
             else if (ddlListStatus.SelectedValue == "150")
 				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.busloc, 0);
-               // userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.ROLE == 150).ToList();
             else if (ddlListStatus.SelectedValue == "100")
 				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0);
-                //userList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l => l.JOBCODE_CD == "admin").ToList();
 			else
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
 
 			if (personList.Count > 0)
 			{
-				personList = personList.Where(l => SQMModelMgr.SearchUserList(new string[2] {"A","P"}).Select(u => u.SSO_ID).ToList().Contains(l.SSO_ID)).ToList();
+				personList = personList.Where(l => (plantID == 0  ||  l.PLANT_ID == plantID) &&  SQMModelMgr.SearchUserList(new string[2] {"A","P"}).Select(u => u.SSO_ID).ToList().Contains(l.SSO_ID)).ToList();
 			}
 
 			uclUserList.BindUserList(personList.Where(l => l.ROLE > 1).OrderBy(l => l.LAST_NAME).ToList(), SessionManager.EffLocation.Company.COMPANY_ID);

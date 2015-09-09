@@ -28,8 +28,6 @@ namespace SQM.Website
 		{
 			SETTINGS sets = null;
 
-			 
-
 			if (IsPostBack)
 			{
 				
