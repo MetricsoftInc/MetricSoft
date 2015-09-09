@@ -62,7 +62,7 @@ namespace SQM.Website
         {
             base.OnPreRender(e);
             if (SessionManager.UserContext != null && SessionManager.UserContext.HRLocation != null)
-                ddlSelectLocation.Items[1].Text = SessionManager.UserContext.HRLocation.Company.COMPANY_NAME;
+                ddlSelectLocation.Items[0].Text = SessionManager.UserContext.HRLocation.Company.COMPANY_NAME;
         }
 
         public void BindBusinessLocation(BusinessLocation businessLocation, bool bindAll, bool allowChange, bool showLocationInputs, bool showHeader)
@@ -73,8 +73,6 @@ namespace SQM.Website
             if (allowChange)
             {
                 pnlBusinessLocEdit.Visible = true;
-                if (newLocation.Company != null)
-                    lblSelCompany.Text = newLocation.Company.COMPANY_NAME;
                 if (bindAll)
                 {
                     if (newLocation.BusinessOrg != null)
@@ -103,32 +101,13 @@ namespace SQM.Website
 
             if (showLocationInputs)
             {
-                lblSelCompany.Visible = pnlLocationText.Visible = btnCancel.Visible = true;
+                pnlLocationText.Visible = btnCancel.Visible = true;
                 //btnReset.Visible = true;
             }
         }
 
         protected void ddlSelectLocation_Change(object sender, EventArgs e)
         {
-            pnlSelectCompany.Visible = true;
-            switch (ddlSelectLocation.SelectedValue)
-            {
-                case "2":
-                    uclCompanyList.BindCompanyList(SQMModelMgr.SelectCompanyList(new PSsqmEntities(), false, true, false));
-                    btnCancel.Enabled = true;
-                    break;
-                case "3":
-                    uclCompanyList.BindCompanyList(SQMModelMgr.SelectCompanyList(new PSsqmEntities(), true, false, false));
-                    btnCancel.Enabled = true;
-                    break;
-                default:
-                    SelectCompany(SessionManager.UserContext.HRLocation.Company.COMPANY_ID);
-                    return;
-                    break;
-            }
-            uclItemHdr.ToggleVisible(null);
-            uclCompanyList.CloseCompanyListButton.Visible = false;
-            ddlSelectLocation.Focus();
         }
 
         protected void btnListCompanies_Click(object sender, EventArgs e)
@@ -138,31 +117,10 @@ namespace SQM.Website
             switch (btn.CommandArgument)
             {
                 case "prime":
+				default:
                     SelectCompany(SessionManager.UserContext.HRLocation.Company.COMPANY_ID);
                     return;
                     break;
-                case "cust":
-                    uclCompanyList.BindCompanyList(SQMModelMgr.SelectCompanyList(new PSsqmEntities(), true, false, false));
-                    btnCancel.Enabled = true;
-                    break;
-                case "supp":
-                    uclCompanyList.BindCompanyList(SQMModelMgr.SelectCompanyList(new PSsqmEntities(), false, true, false));
-                    btnCancel.Enabled = true;
-                    break;
-                case "reset":
-                    pnlSelectCompany.Visible = btnCancel.Enabled = false;
-                    newLocation = null;
-                    lblSelCompany.Text = lblSelBusOrg.Text = lblSelPlant.Text = "";
-                    break;
-                default:    // cancel
-                    pnlSelectCompany.Visible = btnCancel.Enabled = false;
-                    BindBusinessLocation(currentLocation, true, true, true, false);
-                    if (OnBusinessLocationChange != null)
-                    {
-                        OnBusinessLocationChange(currentLocation);
-                    }
-                    break;
-
             }
             uclCompanyList.CloseCompanyListButton.Visible = false;
             btn.Focus();
@@ -180,7 +138,6 @@ namespace SQM.Website
             {
                 newLocation = new BusinessLocation();
                 newLocation.Company = (COMPANY)SQMModelMgr.LookupCompany(companyID);
-                lblSelCompany.Text = newLocation.Company.COMPANY_NAME;
                 lblSelBusOrg.Text = lblSelPlant.Text = "";
                 if (staticShowHeader)
                     uclItemHdr.DisplayCompanyData(newLocation.Company, SQMModelMgr.PersonCount(companyID));

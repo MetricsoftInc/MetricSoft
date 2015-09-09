@@ -93,7 +93,6 @@ namespace SQM.Website
 
         protected void uclBusLocOnCompanyClick(decimal companyID)
         {
-          //  Response.Redirect("/Admin/Administrate_GlobalSettings.aspx");
             Response.Redirect("/Admin/Administrate_Company.aspx");
         }
 

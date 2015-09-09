@@ -64,26 +64,6 @@
                                                 </asp:PlaceHolder>  
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="1">
                                                     <tr>
-                                                        <td class="columnHeader" width="40%">
-                                                            <asp:Label ID="lblIsCustomer" runat="server" text="Company may be a customer"></asp:Label>
-                                                            &nbsp;
-                                                            <asp:Image ID="imgIsCustomer" Visible="true" runat="server" ImageUrl = "~/images/icon_customer2.gif"/>
-                                                        </td>
-                                                        <td CLASS="tableDataAlt">
-                                                            <asp:CheckBox ID="cbIsCustomer" runat="server"/>
-                                                        </td>      
-			                                        </tr>
-                                                    <tr>
-                                                        <td class="columnHeader">
-                                                            <asp:Label ID="lblIsSupplier" runat="server" text="Company may be a supplier"></asp:Label>
-                                                            &nbsp;
-                                                            <asp:Image ID="Image1" Visible="true" runat="server" ImageUrl = "~/images/icon_supplier2.gif"/>
-                                                        </td>
-                                                        <td CLASS="tableDataAlt">
-                                                            <asp:CheckBox ID="cbIsSupplier" runat="server"/>
-                                                        </td>      
-			                                        </tr>
-                                                    <tr>
                                                         <td class="columnHeader">
                                                             <asp:Label ID="lblCompanyStatus" runat="server" text="Status"></asp:Label>
                                                         </td>

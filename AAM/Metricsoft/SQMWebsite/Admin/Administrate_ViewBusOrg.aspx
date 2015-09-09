@@ -6,8 +6,8 @@
 <%@ Register src="~/Include/Ucl_AdminEdit.ascx" TagName="AdminEdit" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_PartList.ascx" TagName="PartList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_NotifyList.ascx" TagName="NotifyList" TagPrefix="Ucl" %>
-
 <%@ Register src="~/Include/Ucl_BusinessLoc.ascx" TagName="BusLoc" TagPrefix="Ucl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
  
      <div class="admin_tabs">
@@ -32,14 +32,12 @@
                         </tr>
                         <tr>
                             <td align="left">
-                                <%-- <br />--%>
                                 <asp:Panel ID="pnlSearchList" runat="server" Visible="false">
                                     <Ucl:BusLoc id="uclBusLoc" runat="server"/>
                                 </asp:Panel>
                             </td>
                         </tr>
                     </table>
-                   <%-- <br />--%>
                     
                     <div id="divPageBody" runat="server">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">

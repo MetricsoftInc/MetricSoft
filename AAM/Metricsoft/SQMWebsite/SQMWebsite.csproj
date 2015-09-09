@@ -138,7 +138,6 @@
   <ItemGroup>
     <Content Include="Admin\Administrate_DefaultDocuments.aspx" />
     <Content Include="Admin\Administrate_FileUpload.aspx" />
-    <Content Include="Admin\Administrate_GlobalSettings.aspx" />
     <Content Include="Admin\Administrate_ViewBusOrg.aspx" />
     <Content Include="Admin\Administrate_ViewPart.aspx" />
     <Content Include="Admin\Administrate_ViewPlant.aspx" />
@@ -1777,13 +1776,6 @@
     </Compile>
     <Compile Include="Admin\Administrate_FileUpload.aspx.designer.cs">
       <DependentUpon>Administrate_FileUpload.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Administrate_GlobalSettings.aspx.cs">
-      <DependentUpon>Administrate_GlobalSettings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Administrate_GlobalSettings.aspx.designer.cs">
-      <DependentUpon>Administrate_GlobalSettings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Administrate_ViewBusOrg.aspx.cs">
       <DependentUpon>Administrate_ViewBusOrg.aspx</DependentUpon>

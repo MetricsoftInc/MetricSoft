@@ -81,14 +81,12 @@ namespace SQM.Website
                 {
                     case "lbCompanyDetail_tab":
                         pnlDetails.Visible = true;
-                        cbIsCustomer.Checked = (bool)company.IS_CUSTOMER;
-                        cbIsSupplier.Checked = (bool)company.IS_SUPPLIER;
                         if (ddlStatus.Items.FindByValue(company.STATUS) != null)
                             ddlStatus.SelectedValue = company.STATUS;
                         if (SessionManager.IsEffLocationPrimary() == true)
                         {
                             phUpdateCompany.Visible = false;
-                            cbIsCustomer.Enabled = cbIsSupplier.Enabled = ddlStatus.Enabled = false;
+                            ddlStatus.Enabled = false;
                         }
                         break;
                     case "lbUomStds_tab":
@@ -146,8 +144,8 @@ namespace SQM.Website
             COMPANY company = SQMModelMgr.LookupCompany(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
             if (company != null)
             {
-                company.IS_CUSTOMER = cbIsCustomer.Checked;
-                company.IS_SUPPLIER = cbIsSupplier.Checked;
+				company.IS_CUSTOMER = true;
+				company.IS_SUPPLIER = true;
                 company.STATUS = ddlStatus.SelectedValue;
                 if (entities.SaveChanges() > 0)
                 {
