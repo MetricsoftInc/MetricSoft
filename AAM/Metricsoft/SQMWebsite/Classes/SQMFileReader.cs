@@ -207,7 +207,8 @@ namespace SQM.Website
             List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("FILE_UPLOAD", ""); // ABW 20140805
             List<SETTINGS> recpts = SQMSettings.SelectSettingsGroup("IMPORT_RECEIPT", ""); // ABW 20140805
 
-			SETTINGS dfltPlant = sets.Where(s=> s.SETTING_CD  == "PlantCode").FirstOrDefault();
+			SETTINGS dfltPlant = sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault() == null ? new SETTINGS() : sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault();
+			string[] dfltPlantList = string.IsNullOrEmpty(dfltPlant.VALUE) ? new string[0] : dfltPlant.VALUE.Split('|');
 
             try
             {
@@ -316,7 +317,7 @@ namespace SQM.Website
 								string HRLocation = fldArray[9].Trim();
 								string supvEmpID = !string.IsNullOrEmpty(fldArray[10].Trim()) ? fldArray[10].Trim() : "";
 
-								if (dfltPlant != null && HRLocation != dfltPlant.VALUE)  // check if a default plant is assigned if skip person if hr location is not that plant
+								if (dfltPlantList.Length > 0  && !dfltPlantList.Contains(HRLocation))  // check if a default plant is assigned if skip person if hr location is not that plant
 								{
 									break;
 								}
