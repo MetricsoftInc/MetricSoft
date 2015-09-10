@@ -41,15 +41,7 @@ namespace SQM.Website
 				INCFORM_INJURYILLNESS iiDetail = EHSIncidentMgr.SelectInjuryIllnessDetailsById(ctx, incident.INCIDENT_ID);
 				if (iiDetail != null && iiDetail.INVOLVED_PERSON_ID.HasValue)
 				{
-					PERSON person = SQMModelMgr.LookupPerson(ctx, (decimal)iiDetail.INVOLVED_PERSON_ID, "", false);
-					if (person != null && !string.IsNullOrEmpty(person.SUPV_EMP_ID))
-					{
-						PERSON supvPerson = SQMModelMgr.LookupPersonByEmpID(ctx, person.SUPV_EMP_ID);
-						if (supvPerson != null)
-						{
-							involvedList.Add(supvPerson);
-						}
-					}
+					involvedList = SQMModelMgr.GetSupvHierarchy(ctx, SQMModelMgr.LookupPerson(ctx, (decimal)iiDetail.INVOLVED_PERSON_ID, "", false), 2, true);
 				}
 			}
 

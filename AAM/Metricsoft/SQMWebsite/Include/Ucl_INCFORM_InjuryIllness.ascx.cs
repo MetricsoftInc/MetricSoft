@@ -1613,6 +1613,7 @@ namespace SQM.Website
 				}
 
 				theincidentId = incidentId;
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-8", ((int)SysPriv.originate).ToString());
 			}
 
 			return theincidentId;

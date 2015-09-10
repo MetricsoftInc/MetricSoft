@@ -752,6 +752,34 @@ namespace SQM.Website
 			return person;
 		}
 
+		public static List<PERSON> GetSupvHierarchy(PERSON empPerson, int numLevels, bool includeEmpPerson)
+		{
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				return GetSupvHierarchy(ctx, empPerson, numLevels, includeEmpPerson);
+			}
+		}
+
+		public static List<PERSON> GetSupvHierarchy(PSsqmEntities ctx, PERSON empPerson, int numLevels, bool includeEmpPerson)
+		{
+			List<PERSON> empChain = new List<PERSON>();
+			if (includeEmpPerson)
+				empChain.Add(empPerson);
+
+			PERSON person = empPerson;
+			int level = 0;
+			while (person != null  &&  ++level <= numLevels)
+			{
+				person = (from p in ctx.PERSON where p.EMP_ID == person.SUPV_EMP_ID select p).FirstOrDefault();
+				if (person != null)
+				{
+					empChain.Add(person);
+				}
+			}
+
+			return empChain;
+		}
+
 		public static List<PERSON> SelectPersonListBySupvID(string supvEmpID)
 		{
 			using (PSsqmEntities ctx = new PSsqmEntities())
