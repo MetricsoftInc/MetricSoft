@@ -336,6 +336,11 @@ namespace SQM.Website
 								}
 
 								person = SQMModelMgr.LookupPersonByEmpID(Entities, empID);
+
+								empID = WebSiteCommon.FormatID(Convert.ToDecimal(empID), 6);
+								if (!string.IsNullOrEmpty(supvEmpID))
+									supvEmpID = WebSiteCommon.FormatID(Convert.ToDecimal(empID), 6);
+
 								if (person == null)
 								{
 									if (status != "A")  // don't create person if inactive
@@ -343,8 +348,8 @@ namespace SQM.Website
 										break;
 									}
 									person = new PERSON();
-									person.SSO_ID = empID;
 									person.EMP_ID = empID;
+									person.SSO_ID = empID;
 									person.ROLE = (int)SysPriv.view;
 								}
 
