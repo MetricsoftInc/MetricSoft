@@ -337,10 +337,6 @@ namespace SQM.Website
 
 								person = SQMModelMgr.LookupPersonByEmpID(Entities, empID);
 
-								empID = WebSiteCommon.FormatID(Convert.ToDecimal(empID), 6);
-								if (!string.IsNullOrEmpty(supvEmpID))
-									supvEmpID = WebSiteCommon.FormatID(Convert.ToDecimal(empID), 6);
-
 								if (person == null)
 								{
 									if (status != "A")  // don't create person if inactive
