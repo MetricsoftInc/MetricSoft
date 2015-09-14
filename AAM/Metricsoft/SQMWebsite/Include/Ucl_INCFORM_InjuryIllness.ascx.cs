@@ -229,10 +229,11 @@ namespace SQM.Website
 			}
 
 			IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
-	
+
+			INCIDENT incident = null;
 			if (IncidentId != null)
 			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
+				incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
 				//if (incident != null)
 				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
 				//btnClose.Text = "Reopen Power Outage Incident";
@@ -245,7 +246,10 @@ namespace SQM.Website
 			PopulateWitnessNameRSB(IncidentLocationId);
 
 			if (!IsFullPagePostback)
+			{
 				PopulateInitialForm();
+				btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
+			}
 		}
 
 
@@ -420,18 +424,7 @@ namespace SQM.Website
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 			string currentFormName = (from tc in entities.INCFORM_TYPE_CONTROL where tc.INCIDENT_TYPE_ID == typeId && tc.STEP_NUMBER == currentStep select tc.STEP_FORM).FirstOrDefault();
-	
-			//formSteps = GetFormSteps(typeId);
 
-			//int displayStep = currentStep + 1;
-			//lblFormStepNumber.Text = "Step " + displayStep.ToString() + " of " + formSteps.Count().ToString() + ":";
-
-			//int i = Convert.ToInt32(currentStep);
-			//string currentFormName = formSteps[i].StepFormName;
-			//lblFormTitle.Text = formSteps[i].StepHeadingText; ;
-
-			//btnNext.Text = (i + 1 <= formSteps.Count() - 1) ? formSteps[i + 1].StepHeadingText.Trim() + "  >" : "Next  >";
-			//btnPrev.Text = (i - 1 >= 0) ? "<  " + formSteps[i - 1].StepHeadingText.Trim() : "<  Prev";
 
 			SetUserAccess(currentFormName);
 
@@ -444,9 +437,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					//btnPrev.Visible = false;
-					//btnNext.Visible = true;
-					//btnClose.Visible = false;
 					btnDeleteInc.Visible = true;
 					lblFormTitle.Text = "Incident";
 					btnSubnavIncident.Enabled = false;
@@ -463,9 +453,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					//btnPrev.Visible = true;
-					//btnNext.Visible = true;
-					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ROOT5Y":
@@ -476,9 +463,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					//btnPrev.Visible = true;
-					//btnNext.Visible = true;
-					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ACTION":
@@ -489,9 +473,6 @@ namespace SQM.Website
 					uclaction.Visible = true;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					//btnPrev.Visible = true;
-					//btnNext.Visible = true;
-					//btnClose.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_APPROVAL":
@@ -502,8 +483,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = true;
 					ucllosttime.Visible = false;
-					//btnPrev.Visible = true;
-					//btnNext.Visible = false;
 					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
@@ -514,35 +493,12 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = true;
-					//btnPrev.Visible = true;
-					//btnNext.Visible = true;
 					btnDeleteInc.Visible = false;
 					break;
 
 			}
 
 		}
-
-		//protected List<EHSFormControlStep> GetFormSteps(decimal typeId)
-		//{
-		//	var returnList = new List<EHSFormControlStep>();
-		//	formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
-
-		//	// If the user clicked "Yes" on the Lost Time radio button then we must 
-		//	// leave the Lost Time History form as the next step in this incident,
-		//	// otherwise remove it from the form steps list.
-		//	if (String.IsNullOrEmpty(rdoLostTime.SelectedValue) ||  rdoLostTime.SelectedValue != "1")
-		//	{
-		//		returnList = formSteps.Where(item => item.StepNumber != 2).ToList();
-		//		return returnList;
-		//	}
-		//	else
-		//	{
-		//		return formSteps;
-		//	}
-
-			
-		//}
 
 		public void LoadDependantForm(string formName)
 		{
@@ -744,26 +700,26 @@ namespace SQM.Website
 					//rfvBodyPart.Enabled = UpdateAccess;
 
 					//btnSave.Enabled = UpdateAccess;
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_CONTAIN":
 					//btnSave.Enabled = ActionAccess;
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_ROOT5Y":
 					//btnSave.Enabled = ActionAccess;
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_ACTION":
 					//btnSave.Enabled = ActionAccess;
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
 					//btnSave.Enabled = ApproveAccess;
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_APPROVAL":
-					btnSubnavSave.Enabled = UpdateAccess;
+					//btnSubnavSave.Enabled = UpdateAccess;
 					//btnSave.Enabled = ApproveAccess;
 					//btnClose.Enabled = ApproveAccess;
 					//btnClose.Visible = ApproveAccess;
@@ -1368,6 +1324,7 @@ namespace SQM.Website
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
 					InitializeForm(CurrentStep);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
 					btnDeleteInc.Visible = false;
@@ -1376,6 +1333,7 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
 					InitializeForm(CurrentStep);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
 					btnDeleteInc.Visible = false;
@@ -1384,6 +1342,7 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
 					InitializeForm(CurrentStep);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
 					btnDeleteInc.Visible = false;
@@ -1392,6 +1351,8 @@ namespace SQM.Website
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
 					InitializeForm(CurrentStep);
+					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1)) == false)
+						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2);
 					break;
 				case "6":
 					btnDeleteInc.Visible = false;
@@ -1400,6 +1361,7 @@ namespace SQM.Website
 					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
 					InitializeForm(CurrentStep);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "0":
 				default:

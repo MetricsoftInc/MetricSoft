@@ -234,20 +234,6 @@ namespace SQM.Website
 
 				ddlIncidentLocation.Visible = false;
 				mnuIncidentLocation.Visible = false;
-
-				//lblAuditDescription.Text = audit.DESCRIPTION;
-				//lblAuditDescription.Visible = true;
-				//tbDescription.Visible = false;
-
-				// build the audit user list
-				//lblAuditPersonName.Text = EHSAuditMgr.SelectUserNameById((Decimal)audit.AUDIT_PERSON);
-				//lblAuditPersonName.Visible = true;
-				//rddlAuditUsers.Visible = false;
-
-				//lblAuditDueDate.Text = audit.AUDIT_DT.ToString("MM/dd/yyyy");
-				//lblAuditDueDate.Visible = true;
-				//dmAuditDate.Enabled = false;
-				//dmAuditDate.Visible = false;
 			}
 			else
 			{
@@ -285,19 +271,6 @@ namespace SQM.Website
 				// set defaults for add mode
 				rddlIncidentType.Enabled = false;
 				rddlIncidentType.Visible = false;
-				//lblAuditLocation.Visible = false;
-				//lblAuditDescription.Visible = false;
-				//tbDescription.Visible = true;
-				//rddlAuditUsers.Enabled = true;
-				//rddlAuditUsers.Visible = true;
-				//lblAuditPersonName.Visible = false;
-				//lblAuditDueDate.Visible = false;
-				//dmAuditDate.Visible = true;
-				//dmAuditDate.Enabled = true;
-				//dmAuditDate.ShowPopupOnFocus = true;
-				//if (!dmAuditDate.SelectedDate.HasValue)
-				//	dmAuditDate.SelectedDate = DateTime.Now;
-
 			}
 		}
 
@@ -377,6 +350,8 @@ namespace SQM.Website
 					btnSaveContinue.Visible = false;
 					return;
 			}
+
+			btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -2532,10 +2507,10 @@ namespace SQM.Website
 					uclContainment.IsEditContext = true;
 					uclContainment.EditIncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
 					btnDelete.Visible = false;
-					//btnSubnavRootCause.Visible = false;
 					lblPageTitle.Text = "Root Cause";
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
@@ -2543,10 +2518,10 @@ namespace SQM.Website
 					uclRootCause.IsEditContext = true;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
 					btnDelete.Visible = false;
-					//btnSubnavAction.Visible = false;
 					lblPageTitle.Text = "Corrective Action";
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
@@ -2554,10 +2529,10 @@ namespace SQM.Website
 					uclAction.IsEditContext = true;
 					uclAction.EditIncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
 					btnDelete.Visible = false;
-					//btnSubnavApproval.Visible = false;
 					lblPageTitle.Text = "Approvals";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
@@ -2565,6 +2540,8 @@ namespace SQM.Website
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
 					uclApproval.PopulateInitialForm();
+					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1)) == false)
+						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2);
 					break;
 				case "0":
 				default:
@@ -2578,7 +2555,6 @@ namespace SQM.Website
 						pnlForm.Visible = true;
 						BuildForm();
 					}
-					//RefreshPageContext();
 					break;
 			}
 

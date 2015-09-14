@@ -163,7 +163,6 @@ namespace SQM.Website
 			totalFormSteps = formSteps.Count();
 
 			InitializeForm();
-
 		}
 
 

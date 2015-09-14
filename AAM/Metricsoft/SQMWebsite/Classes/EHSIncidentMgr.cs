@@ -300,6 +300,25 @@ namespace SQM.Website
 			return preventativeTypeList;
 		}
 
+		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded)
+		{
+			bool canUpdate = false;
+
+			if (IsEditContext)
+			{
+				if ((incident != null  && incident.CREATE_PERSON == SessionManager.UserContext.Person.PERSON_ID) || SessionManager.CheckUserPrivilege(privNeeded, SysScope.incident))
+				{
+					canUpdate = true;
+				}
+			}
+			else
+			{
+				canUpdate = true;
+			}
+
+			return canUpdate;
+		}
+
 
 		/// <summary>
 		/// Select a list of all EHS incidents by company
