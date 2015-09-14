@@ -25202,15 +25202,13 @@ namespace SQM.Website
         /// <param name="dEFAULT_8D">Initial value of the DEFAULT_8D property.</param>
         /// <param name="aDMIN_ONLY">Initial value of the ADMIN_ONLY property.</param>
         /// <param name="uSE_CUSTOM_FORM">Initial value of the USE_CUSTOM_FORM property.</param>
-        /// <param name="sTATUS">Initial value of the STATUS property.</param>
-        public static INCIDENT_TYPE CreateINCIDENT_TYPE(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY, global::System.Boolean uSE_CUSTOM_FORM, global::System.String sTATUS)
+        public static INCIDENT_TYPE CreateINCIDENT_TYPE(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY, global::System.Boolean uSE_CUSTOM_FORM)
         {
             INCIDENT_TYPE iNCIDENT_TYPE = new INCIDENT_TYPE();
             iNCIDENT_TYPE.INCIDENT_TYPE_ID = iNCIDENT_TYPE_ID;
             iNCIDENT_TYPE.DEFAULT_8D = dEFAULT_8D;
             iNCIDENT_TYPE.ADMIN_ONLY = aDMIN_ONLY;
             iNCIDENT_TYPE.USE_CUSTOM_FORM = uSE_CUSTOM_FORM;
-            iNCIDENT_TYPE.STATUS = sTATUS;
             return iNCIDENT_TYPE;
         }
 
@@ -25368,7 +25366,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String STATUS
         {
@@ -25380,7 +25378,7 @@ namespace SQM.Website
             {
                 OnSTATUSChanging(value);
                 ReportPropertyChanging("STATUS");
-                _STATUS = StructuralObject.SetValidValue(value, false);
+                _STATUS = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("STATUS");
                 OnSTATUSChanged();
             }

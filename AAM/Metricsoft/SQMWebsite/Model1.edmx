@@ -1632,7 +1632,7 @@
           <Property Name="DEFAULT_8D" Type="bit" Nullable="false" />
           <Property Name="ADMIN_ONLY" Type="bit" Nullable="false" />
           <Property Name="USE_CUSTOM_FORM" Type="bit" Nullable="false" />
-          <Property Name="STATUS" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="STATUS" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="INCIDENT_TYPE_COMPANY">
           <Key>
@@ -8659,7 +8659,7 @@
           <Property Type="Boolean" Name="DEFAULT_8D" Nullable="false" />
           <Property Type="Boolean" Name="ADMIN_ONLY" Nullable="false" />
           <Property Type="Boolean" Name="USE_CUSTOM_FORM" Nullable="false" />
-          <Property Type="String" Name="STATUS" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="INCFORM_TYPE_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCIDENT_TYPE" ToRole="INCFORM_TYPE_CONTROL" />
           <NavigationProperty Name="INCIDENT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_QUESTION_CONTROL" />
           <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
