@@ -1372,15 +1372,11 @@ namespace SQM.Website
 			{
 				case "2":
 					btnDeleteInc.Visible = false;
-					lblFormTitle.Text = "Containment";
+					lblFormTitle.Text = "Initial Corrective Actions";
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
 					InitializeForm(CurrentStep);
-					//uclcontain.Visible = divSubnavPage.Visible = true;
-					//uclcontain.IsEditContext = true;
-					//uclcontain.EditIncidentId = incidentId;
-					//uclcontain.PopulateInitialForm();
 					break;
 				case "3":
 					btnDeleteInc.Visible = false;

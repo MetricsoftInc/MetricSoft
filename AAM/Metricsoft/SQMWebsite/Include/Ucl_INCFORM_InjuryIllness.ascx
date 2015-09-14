@@ -758,7 +758,7 @@
 						OnClick="btnSubnav_Click" CommandArgument="0" />
 					<asp:LinkButton ID="btnSubnavLostTime" runat="server" Text="Lost time History" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 						OnClick="btnSubnav_Click" CommandArgument="6"/>
-					<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Containment" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Initial Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 						OnClick="btnSubnav_Click" CommandArgument="2"/>
 					<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 						OnClick="btnSubnav_Click" CommandArgument="3"/>

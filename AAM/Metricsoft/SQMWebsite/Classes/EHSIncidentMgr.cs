@@ -255,21 +255,17 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				//incidentTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
-				//					join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
-				//					where itc.COMPANY_ID == companyId
-				//					orderby itc.SORT_ORDER
-				//					select it).ToList();
 
 				if (companyId > 0)
 					incidentTypeList = (from itc in entities.INCIDENT_TYPE_COMPANY
 										join it in entities.INCIDENT_TYPE on itc.INCIDENT_TYPE_ID equals it.INCIDENT_TYPE_ID
-										where itc.COMPANY_ID == companyId && itc.SORT_ORDER < 1000
+										where itc.COMPANY_ID == companyId && itc.STATUS != "I"  && itc.SORT_ORDER < 1000
 										orderby it.TITLE
 										select it).ToList();
 				else
 				{
-					incidentTypeList = (from itc in entities.INCIDENT_TYPE
+					incidentTypeList = (from itc in entities.INCIDENT_TYPE 
+										where itc.STATUS  != "I" 
 										orderby itc.TITLE
 										select itc).ToList();
 				}

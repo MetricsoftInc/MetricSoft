@@ -2525,8 +2525,7 @@ namespace SQM.Website
 			{
 				case "2":
 					btnDelete.Visible = false;
-					//btnSubnavContainment.Visible = false;
-					lblPageTitle.Text = "Containment";
+					lblPageTitle.Text = "Initial Corrective Actions";
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					uclContainment.Visible = divSubnavPage.Visible = true;

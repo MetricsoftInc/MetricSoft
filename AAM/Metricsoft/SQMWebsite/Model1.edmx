@@ -316,14 +316,6 @@
             <End Role="EFM_REFERENCE" EntitySet="EFM_REFERENCE" />
             <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
           </AssociationSet>
-          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE">
-            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
-            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE1" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE1">
-            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
-            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
-          </AssociationSet>
           <AssociationSet Name="FK_EHS_METRIC_HISTORY_CURRENCY" Association="PSsqmModel.Store.FK_EHS_METRIC_HISTORY_CURRENCY">
             <End Role="CURRENCY" EntitySet="CURRENCY" />
             <End Role="EHS_METRIC_HISTORY" EntitySet="EHS_METRIC_HISTORY" />
@@ -1639,6 +1631,7 @@
           <Property Name="DEFAULT_8D" Type="bit" Nullable="false" />
           <Property Name="ADMIN_ONLY" Type="bit" Nullable="false" />
           <Property Name="USE_CUSTOM_FORM" Type="bit" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" Nullable="false" MaxLength="2" />
         </EntityType>
         <EntityType Name="INCIDENT_TYPE_COMPANY">
           <Key>
@@ -1648,6 +1641,7 @@
           <Property Name="INCIDENT_TYPE_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="COMPANY_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="SORT_ORDER" Type="smallint" />
+          <Property Name="STATUS" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="INCIDENT_TYPE_COMPANY_QUESTION">
           <Key>
@@ -3120,30 +3114,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EHS_MEASURE_EHS_MEASURE">
-          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
-          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Principal>
-            <Dependent Role="EHS_MEASURE1">
-              <PropertyRef Name="MEASURE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_MEASURE_EHS_MEASURE1">
-          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
-          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Principal>
-            <Dependent Role="EHS_MEASURE1">
-              <PropertyRef Name="MEASURE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EHS_METRIC_HISTORY_CURRENCY">
           <End Role="CURRENCY" Type="PSsqmModel.Store.CURRENCY" Multiplicity="0..1" />
           <End Role="EHS_METRIC_HISTORY" Type="PSsqmModel.Store.EHS_METRIC_HISTORY" Multiplicity="*" />
@@ -4256,8 +4226,8 @@
           <EntitySet Name="STREAM_REC" EntityType="PSsqmModel.STREAM_REC" />
           <EntitySet Name="UN_DISPOSAL" EntityType="PSsqmModel.UN_DISPOSAL" />
           <AssociationSet Name="FK_ATTACHMENTS_DATA_ATTACHMENTS" Association="PSsqmModel.FK_ATTACHMENTS_DATA_ATTACHMENTS">
-            <End Role="ATTACHMENT" EntitySet="ATTACHMENT" />
-            <End Role="ATTACHMENT_FILE" EntitySet="ATTACHMENT_FILE" />
+            <End EntitySet="ATTACHMENT" Role="ATTACHMENT" />
+            <End EntitySet="ATTACHMENT_FILE" Role="ATTACHMENT_FILE" />
           </AssociationSet>
           <AssociationSet Name="FK_DOCUMENT_FK_DOC_TY_ATTACHME" Association="PSsqmModel.FK_DOCUMENT_FK_DOC_TY_ATTACHME">
             <End Role="ATTACHMENT_TYPE" EntitySet="ATTACHMENT_TYPE" />
@@ -4614,8 +4584,6 @@
           <EntitySet Name="INCIDENT_QUESTION_CONTROL" EntityType="PSsqmModel.INCIDENT_QUESTION_CONTROL" />
           <EntitySet Name="INCIDENT_QUESTION_CONTROL_ACTION" EntityType="PSsqmModel.INCIDENT_QUESTION_CONTROL_ACTION" />
           <EntitySet Name="INCIDENT_QUESTION_TYPE" EntityType="PSsqmModel.INCIDENT_QUESTION_TYPE" />
-          <EntitySet Name="INCIDENT_TYPE" EntityType="PSsqmModel.INCIDENT_TYPE" />
-          <EntitySet Name="INCIDENT_TYPE_COMPANY" EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY" />
           <EntitySet Name="INCIDENT_TYPE_COMPANY_QUESTION" EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" />
           <EntitySet Name="INCIDENT_VERIFICATION" EntityType="PSsqmModel.INCIDENT_VERIFICATION" />
           <EntitySet Name="INCIDENT_VERIFICATION_COMMENT" EntityType="PSsqmModel.INCIDENT_VERIFICATION_COMMENT" />
@@ -4626,10 +4594,6 @@
           <AssociationSet Name="FK_INCIDENT_QUESTION_CONTROL_COMPANY" Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="INCIDENT_QUESTION_CONTROL" EntitySet="INCIDENT_QUESTION_CONTROL" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY">
-            <End Role="COMPANY" EntitySet="COMPANY" />
-            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
           </AssociationSet>
           <AssociationSet Name="FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -4683,22 +4647,6 @@
             <End Role="INCIDENT_QUESTION_CONTROL_ACTION" EntitySet="INCIDENT_QUESTION_CONTROL_ACTION" />
             <End Role="INCIDENT_QUESTION_CONTROL" EntitySet="INCIDENT_QUESTION_CONTROL" />
           </AssociationSet>
-          <AssociationSet Name="FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE">
-            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
-            <End Role="INCIDENT_QUESTION_CONTROL" EntitySet="INCIDENT_QUESTION_CONTROL" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE">
-            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
-            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE">
-            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
-            <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY">
-            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
-            <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
-          </AssociationSet>
           <EntitySet Name="GWP_FACTOR" EntityType="PSsqmModel.GWP_FACTOR" />
           <EntitySet Name="GHG_FACTOR" EntityType="PSsqmModel.GHG_FACTOR" />
           <EntitySet Name="RESPONSE" EntityType="PSsqmModel.RESPONSE" />
@@ -4751,10 +4699,6 @@
             <End Role="AUDIT_QUESTION_CONTROL" EntitySet="AUDIT_QUESTION_CONTROL" />
           </AssociationSet>
           <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" />
-          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
-            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
-            <End Role="INCFORM_TYPE_CONTROL" EntitySet="INCFORM_TYPE_CONTROL" />
-          </AssociationSet>
           <EntitySet Name="INCFORM_ACTION" EntityType="PSsqmModel.INCFORM_ACTION" />
           <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.INCFORM_APPROVAL" />
           <EntitySet Name="INCFORM_CONTAIN" EntityType="PSsqmModel.INCFORM_CONTAIN" />
@@ -4883,6 +4827,32 @@
           <AssociationSet Name="FK_PERSON_PRIVGROUP" Association="PSsqmModel.FK_PERSON_PRIVGROUP">
             <End Role="PRIVGROUP" EntitySet="PRIVGROUP" />
             <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
+          <EntitySet Name="INCIDENT_TYPE" EntityType="PSsqmModel.INCIDENT_TYPE" />
+          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCFORM_TYPE_CONTROL" EntitySet="INCFORM_TYPE_CONTROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCIDENT_QUESTION_CONTROL" EntitySet="INCIDENT_QUESTION_CONTROL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
+          </AssociationSet>
+          <EntitySet Name="INCIDENT_TYPE_COMPANY" EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY" />
+          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY">
+            <End Role="COMPANY" EntitySet="COMPANY" />
+            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE">
+            <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
+            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY">
+            <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
+            <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -5841,8 +5811,8 @@
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ATTACHMENTS_DATA_ATTACHMENTS">
-          <End Type="PSsqmModel.ATTACHMENT" Role="ATTACHMENT" Multiplicity="1" />
-          <End Type="PSsqmModel.ATTACHMENT_FILE" Role="ATTACHMENT_FILE" Multiplicity="0..1" />
+          <End Type="PSsqmModel.ATTACHMENT" Multiplicity="1" Role="ATTACHMENT" />
+          <End Type="PSsqmModel.ATTACHMENT_FILE" Multiplicity="0..1" Role="ATTACHMENT_FILE" />
           <ReferentialConstraint>
             <Principal Role="ATTACHMENT">
               <PropertyRef Name="ATTACHMENT_ID" />
@@ -6189,9 +6159,9 @@
           <NavigationProperty Name="BUSINESS_ORG" Relationship="PSsqmModel.FK_BUSINESS_REFERENCE_CUST_COM" FromRole="COMPANY" ToRole="BUSINESS_ORG" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENT_COMPANY" FromRole="COMPANY" ToRole="INCIDENT" />
           <NavigationProperty Name="INCIDENT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_COMPANY" FromRole="COMPANY" ToRole="INCIDENT_QUESTION_CONTROL" />
-          <NavigationProperty Name="INCIDENT_TYPE_COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" FromRole="COMPANY" ToRole="INCIDENT_TYPE_COMPANY" />
           <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY" FromRole="COMPANY" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
           <NavigationProperty Name="AUDIT" Relationship="PSsqmModel.FK_AUDIT_COMPANY" FromRole="COMPANY" ToRole="AUDIT" />
+          <NavigationProperty Name="INCIDENT_TYPE_COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" FromRole="COMPANY" ToRole="INCIDENT_TYPE_COMPANY" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_COMPANY">
           <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="0..1" />
@@ -7471,33 +7441,6 @@
           <Property Type="Boolean" Name="HAS_MULTIPLE_CHOICES" Nullable="false" />
           <NavigationProperty Name="INCIDENT_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE" FromRole="INCIDENT_QUESTION_TYPE" ToRole="INCIDENT_QUESTION" />
         </EntityType>
-        <EntityType Name="INCIDENT_TYPE">
-          <Key>
-            <PropertyRef Name="INCIDENT_TYPE_ID" />
-          </Key>
-          <Property Type="Decimal" Name="INCIDENT_TYPE_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="TITLE" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="DEFAULT_8D" Nullable="false" />
-          <Property Type="Boolean" Name="ADMIN_ONLY" Nullable="false" />
-          <NavigationProperty Name="INCIDENT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_QUESTION_CONTROL" />
-          <NavigationProperty Name="INCIDENT_TYPE_COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY" />
-          <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
-          <Property Name="USE_CUSTOM_FORM" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="INCFORM_TYPE_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCIDENT_TYPE" ToRole="INCFORM_TYPE_CONTROL" />
-        </EntityType>
-        <EntityType Name="INCIDENT_TYPE_COMPANY">
-          <Key>
-            <PropertyRef Name="INCIDENT_TYPE_ID" />
-            <PropertyRef Name="COMPANY_ID" />
-          </Key>
-          <Property Type="Decimal" Name="INCIDENT_TYPE_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Int16" Name="SORT_ORDER" />
-          <NavigationProperty Name="COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" FromRole="INCIDENT_TYPE_COMPANY" ToRole="COMPANY" />
-          <NavigationProperty Name="INCIDENT_TYPE" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" FromRole="INCIDENT_TYPE_COMPANY" ToRole="INCIDENT_TYPE" />
-          <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" FromRole="INCIDENT_TYPE_COMPANY" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
-        </EntityType>
         <EntityType Name="INCIDENT_TYPE_COMPANY_QUESTION">
           <Key>
             <PropertyRef Name="INCIDENT_TYPE_ID" />
@@ -7558,18 +7501,6 @@
               <PropertyRef Name="COMPANY_ID" />
             </Principal>
             <Dependent Role="INCIDENT_QUESTION_CONTROL">
-              <PropertyRef Name="COMPANY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENT_TYPE_COMPANY_COMPANY">
-          <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="1" />
-          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COMPANY">
-              <PropertyRef Name="COMPANY_ID" />
-            </Principal>
-            <Dependent Role="INCIDENT_TYPE_COMPANY">
               <PropertyRef Name="COMPANY_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7727,56 +7658,6 @@
             </Principal>
             <Dependent Role="INCIDENT_QUESTION_CONTROL">
               <PropertyRef Name="ACTION" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE">
-          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
-          <End Type="PSsqmModel.INCIDENT_QUESTION_CONTROL" Role="INCIDENT_QUESTION_CONTROL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT_TYPE">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Principal>
-            <Dependent Role="INCIDENT_QUESTION_CONTROL">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE">
-          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
-          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT_TYPE">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Principal>
-            <Dependent Role="INCIDENT_TYPE_COMPANY">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE">
-          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
-          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" Role="INCIDENT_TYPE_COMPANY_QUESTION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT_TYPE">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Principal>
-            <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY">
-          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="1" />
-          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" Role="INCIDENT_TYPE_COMPANY_QUESTION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT_TYPE_COMPANY">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-              <PropertyRef Name="COMPANY_ID" />
-            </Principal>
-            <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-              <PropertyRef Name="COMPANY_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8156,21 +8037,9 @@
           <Property Name="INCIDENT_TYPE_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="STEP_NUMBER" Type="Int32" Nullable="false" />
           <Property Name="STEP_FORM" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="INCIDENT_TYPE" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCFORM_TYPE_CONTROL" ToRole="INCIDENT_TYPE" />
           <Property Name="STEP_HEADING_TEXT" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="INCIDENT_TYPE" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCFORM_TYPE_CONTROL" ToRole="INCIDENT_TYPE" />
         </EntityType>
-        <Association Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
-          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_TYPE_CONTROL" Role="INCFORM_TYPE_CONTROL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT_TYPE">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_TYPE_CONTROL">
-              <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="INCFORM_ACTION">
           <Key>
             <PropertyRef Name="INCIDENT_ACTION_ID" />
@@ -8804,6 +8673,109 @@
             </Principal>
             <Dependent Role="PERSON">
               <PropertyRef Name="PRIV_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCIDENT_TYPE">
+          <Key>
+            <PropertyRef Name="INCIDENT_TYPE_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_TYPE_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TITLE" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="DEFAULT_8D" Nullable="false" />
+          <Property Type="Boolean" Name="ADMIN_ONLY" Nullable="false" />
+          <Property Type="Boolean" Name="USE_CUSTOM_FORM" Nullable="false" />
+          <Property Type="String" Name="STATUS" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INCFORM_TYPE_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" FromRole="INCIDENT_TYPE" ToRole="INCFORM_TYPE_CONTROL" />
+          <NavigationProperty Name="INCIDENT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_QUESTION_CONTROL" />
+          <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
+          <NavigationProperty Name="INCIDENT_TYPE_COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" FromRole="INCIDENT_TYPE" ToRole="INCIDENT_TYPE_COMPANY" />
+        </EntityType>
+        <Association Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
+          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_TYPE_CONTROL" Role="INCFORM_TYPE_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_TYPE_CONTROL">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE">
+          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_QUESTION_CONTROL" Role="INCIDENT_QUESTION_CONTROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_QUESTION_CONTROL">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE">
+          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" Role="INCIDENT_TYPE_COMPANY_QUESTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCIDENT_TYPE_COMPANY">
+          <Key>
+            <PropertyRef Name="INCIDENT_TYPE_ID" />
+            <PropertyRef Name="COMPANY_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_TYPE_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int16" Name="SORT_ORDER" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="COMPANY" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" FromRole="INCIDENT_TYPE_COMPANY" ToRole="COMPANY" />
+          <NavigationProperty Name="INCIDENT_TYPE" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" FromRole="INCIDENT_TYPE_COMPANY" ToRole="INCIDENT_TYPE" />
+          <NavigationProperty Name="INCIDENT_TYPE_COMPANY_QUESTION" Relationship="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" FromRole="INCIDENT_TYPE_COMPANY" ToRole="INCIDENT_TYPE_COMPANY_QUESTION" />
+        </EntityType>
+        <Association Name="FK_INCIDENT_TYPE_COMPANY_COMPANY">
+          <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMPANY">
+              <PropertyRef Name="COMPANY_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TYPE_COMPANY">
+              <PropertyRef Name="COMPANY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE">
+          <End Type="PSsqmModel.INCIDENT_TYPE" Role="INCIDENT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TYPE_COMPANY">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY">
+          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY" Role="INCIDENT_TYPE_COMPANY" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" Role="INCIDENT_TYPE_COMPANY_QUESTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT_TYPE_COMPANY">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+              <PropertyRef Name="COMPANY_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
+              <PropertyRef Name="INCIDENT_TYPE_ID" />
+              <PropertyRef Name="COMPANY_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10242,27 +10214,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCIDENT_TYPE">
-            <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TYPE">
-              <MappingFragment StoreEntitySet="INCIDENT_TYPE">
-                <ScalarProperty Name="USE_CUSTOM_FORM" ColumnName="USE_CUSTOM_FORM" />
-                <ScalarProperty Name="ADMIN_ONLY" ColumnName="ADMIN_ONLY" />
-                <ScalarProperty Name="DEFAULT_8D" ColumnName="DEFAULT_8D" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
-                <ScalarProperty Name="INCIDENT_TYPE_ID" ColumnName="INCIDENT_TYPE_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="INCIDENT_TYPE_COMPANY">
-            <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TYPE_COMPANY">
-              <MappingFragment StoreEntitySet="INCIDENT_TYPE_COMPANY">
-                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
-                <ScalarProperty Name="INCIDENT_TYPE_ID" ColumnName="INCIDENT_TYPE_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCIDENT_TYPE_COMPANY_QUESTION">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION">
               <MappingFragment StoreEntitySet="INCIDENT_TYPE_COMPANY_QUESTION">
@@ -10841,6 +10792,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="INCIDENT_TYPE">
+            <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TYPE">
+              <MappingFragment StoreEntitySet="INCIDENT_TYPE">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="USE_CUSTOM_FORM" ColumnName="USE_CUSTOM_FORM" />
+                <ScalarProperty Name="ADMIN_ONLY" ColumnName="ADMIN_ONLY" />
+                <ScalarProperty Name="DEFAULT_8D" ColumnName="DEFAULT_8D" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="INCIDENT_TYPE_ID" ColumnName="INCIDENT_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCIDENT_TYPE_COMPANY">
+            <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TYPE_COMPANY">
+              <MappingFragment StoreEntitySet="INCIDENT_TYPE_COMPANY">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
+                <ScalarProperty Name="INCIDENT_TYPE_ID" ColumnName="INCIDENT_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11030,14 +11004,11 @@
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_CONTROL" Width="1.5" PointX="10.018984804870089" PointY="5.5106239046485275" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_CONTROL_ACTION" Width="1.5" PointX="11.463286896917637" PointY="7.6093333846001574" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_TYPE" Width="1.5" PointX="6.7955204149687294" PointY="15.29577263411869" />
-        <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE" Width="1.5" PointX="5.8194034890362083" PointY="13.614805302403312" />
-        <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY" Width="1.5" PointX="5.7919815451800742" PointY="21.362768540793457" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY_QUESTION" Width="1.5" PointX="0.997873021754377" PointY="17.826021977619277" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_VERIFICATION" Width="1.5" PointX="5.3287856119353254" PointY="31.667499452674527" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_VERIFICATION_COMMENT" Width="1.5" PointX="5.9279800699688394" PointY="5.1433058107007792" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_COMPANY" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_COST_REPORT_ITEM_INCIDENT" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT" />
@@ -11051,10 +11022,6 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_QUESTION" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" />
         <EntityTypeShape EntityType="PSsqmModel.GWP_FACTOR" Width="1.5" PointX="3.9002086016816122" PointY="3.6589711474529332" />
         <EntityTypeShape EntityType="PSsqmModel.GHG_FACTOR" Width="1.5" PointX="9.5280224091969536" PointY="8.39453277382745" />
         <EntityTypeShape EntityType="PSsqmModel.RESPONSE" Width="1.5" PointX="9.84928527374253" PointY="28.042111990992964" />
@@ -11083,7 +11050,6 @@
         <EntityTypeShape EntityType="PSsqmModel.vw_MetricDataByPlant" Width="1.5" PointX="18" PointY="6.75" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" Width="1.5" PointX="8.375" PointY="38.25" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_ACTION" Width="1.5" PointX="4.125" PointY="53.5" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="4.125" PointY="56.75" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_CONTAIN" Width="1.5" PointX="4.125" PointY="46.875" />
@@ -11130,6 +11096,14 @@
         <EntityTypeShape EntityType="PSsqmModel.PRIVLIST" Width="1.5" PointX="9.66180584284561" PointY="27.939867524402153" />
         <AssociationConnector Association="PSsqmModel.FK_PRIVLIST_PRIVGROUP" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_PRIVGROUP" />
+        <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE" Width="1.5" PointX="1.8991645639292734" PointY="21.297161410235411" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE" />
+        <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE_COMPANY" Width="1.5" PointX="2.9836023054009315" PointY="16.5499602782307" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" />
         </Diagram>
     </Diagrams>
   </Designer>

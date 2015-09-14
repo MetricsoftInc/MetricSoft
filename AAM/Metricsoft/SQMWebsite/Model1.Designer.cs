@@ -103,7 +103,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RECEIPT_PLANT1", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "RECEIPT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RECEIPT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_ITEM_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "COST_REPORT_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT_ITEM), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
@@ -117,10 +116,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE", "INCIDENT_QUESTION_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_TYPE), "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS", "INCIDENT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL_ACTION), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY", "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_INPUT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_INPUT), true)]
@@ -129,7 +124,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_POWEROUTAGE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_POWEROUTAGE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
@@ -158,6 +152,12 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PLANT), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PRIVGROUP), "PRIVLIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PRIVLIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PRIVGROUP), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY", "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 
 #endregion
 
@@ -1572,38 +1572,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCIDENT_TYPE> INCIDENT_TYPE
-        {
-            get
-            {
-                if ((_INCIDENT_TYPE == null))
-                {
-                    _INCIDENT_TYPE = base.CreateObjectSet<INCIDENT_TYPE>("INCIDENT_TYPE");
-                }
-                return _INCIDENT_TYPE;
-            }
-        }
-        private ObjectSet<INCIDENT_TYPE> _INCIDENT_TYPE;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
-        {
-            get
-            {
-                if ((_INCIDENT_TYPE_COMPANY == null))
-                {
-                    _INCIDENT_TYPE_COMPANY = base.CreateObjectSet<INCIDENT_TYPE_COMPANY>("INCIDENT_TYPE_COMPANY");
-                }
-                return _INCIDENT_TYPE_COMPANY;
-            }
-        }
-        private ObjectSet<INCIDENT_TYPE_COMPANY> _INCIDENT_TYPE_COMPANY;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCIDENT_TYPE_COMPANY_QUESTION> INCIDENT_TYPE_COMPANY_QUESTION
         {
             get
@@ -2240,6 +2208,38 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PRIVLIST> _PRIVLIST;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCIDENT_TYPE> INCIDENT_TYPE
+        {
+            get
+            {
+                if ((_INCIDENT_TYPE == null))
+                {
+                    _INCIDENT_TYPE = base.CreateObjectSet<INCIDENT_TYPE>("INCIDENT_TYPE");
+                }
+                return _INCIDENT_TYPE;
+            }
+        }
+        private ObjectSet<INCIDENT_TYPE> _INCIDENT_TYPE;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
+        {
+            get
+            {
+                if ((_INCIDENT_TYPE_COMPANY == null))
+                {
+                    _INCIDENT_TYPE_COMPANY = base.CreateObjectSet<INCIDENT_TYPE_COMPANY>("INCIDENT_TYPE_COMPANY");
+                }
+                return _INCIDENT_TYPE_COMPANY;
+            }
+        }
+        private ObjectSet<INCIDENT_TYPE_COMPANY> _INCIDENT_TYPE_COMPANY;
 
         #endregion
 
@@ -2926,22 +2926,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCIDENT_TYPE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCIDENT_TYPE(INCIDENT_TYPE iNCIDENT_TYPE)
-        {
-            base.AddObject("INCIDENT_TYPE", iNCIDENT_TYPE);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the INCIDENT_TYPE_COMPANY EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCIDENT_TYPE_COMPANY(INCIDENT_TYPE_COMPANY iNCIDENT_TYPE_COMPANY)
-        {
-            base.AddObject("INCIDENT_TYPE_COMPANY", iNCIDENT_TYPE_COMPANY);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCIDENT_TYPE_COMPANY_QUESTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCIDENT_TYPE_COMPANY_QUESTION(INCIDENT_TYPE_COMPANY_QUESTION iNCIDENT_TYPE_COMPANY_QUESTION)
@@ -3259,6 +3243,22 @@ namespace SQM.Website
         public void AddToPRIVLIST(PRIVLIST pRIVLIST)
         {
             base.AddObject("PRIVLIST", pRIVLIST);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCIDENT_TYPE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCIDENT_TYPE(INCIDENT_TYPE iNCIDENT_TYPE)
+        {
+            base.AddObject("INCIDENT_TYPE", iNCIDENT_TYPE);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCIDENT_TYPE_COMPANY EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCIDENT_TYPE_COMPANY(INCIDENT_TYPE_COMPANY iNCIDENT_TYPE_COMPANY)
+        {
+            base.AddObject("INCIDENT_TYPE_COMPANY", iNCIDENT_TYPE_COMPANY);
         }
 
         #endregion
@@ -9070,28 +9070,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY")]
-        public EntityCollection<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY_QUESTION")]
         public EntityCollection<INCIDENT_TYPE_COMPANY_QUESTION> INCIDENT_TYPE_COMPANY_QUESTION
         {
@@ -9126,6 +9104,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AUDIT>("PSsqmModel.FK_AUDIT_COMPANY", "AUDIT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY")]
+        public EntityCollection<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY", value);
                 }
             }
         }
@@ -25178,13 +25178,15 @@ namespace SQM.Website
         /// <param name="dEFAULT_8D">Initial value of the DEFAULT_8D property.</param>
         /// <param name="aDMIN_ONLY">Initial value of the ADMIN_ONLY property.</param>
         /// <param name="uSE_CUSTOM_FORM">Initial value of the USE_CUSTOM_FORM property.</param>
-        public static INCIDENT_TYPE CreateINCIDENT_TYPE(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY, global::System.Boolean uSE_CUSTOM_FORM)
+        /// <param name="sTATUS">Initial value of the STATUS property.</param>
+        public static INCIDENT_TYPE CreateINCIDENT_TYPE(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Boolean dEFAULT_8D, global::System.Boolean aDMIN_ONLY, global::System.Boolean uSE_CUSTOM_FORM, global::System.String sTATUS)
         {
             INCIDENT_TYPE iNCIDENT_TYPE = new INCIDENT_TYPE();
             iNCIDENT_TYPE.INCIDENT_TYPE_ID = iNCIDENT_TYPE_ID;
             iNCIDENT_TYPE.DEFAULT_8D = dEFAULT_8D;
             iNCIDENT_TYPE.ADMIN_ONLY = aDMIN_ONLY;
             iNCIDENT_TYPE.USE_CUSTOM_FORM = uSE_CUSTOM_FORM;
+            iNCIDENT_TYPE.STATUS = sTATUS;
             return iNCIDENT_TYPE;
         }
 
@@ -25338,11 +25340,57 @@ namespace SQM.Website
         private global::System.Boolean _USE_CUSTOM_FORM;
         partial void OnUSE_CUSTOM_FORMChanging(global::System.Boolean value);
         partial void OnUSE_CUSTOM_FORMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
 
         #endregion
 
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL")]
+        public EntityCollection<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -25362,28 +25410,6 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_QUESTION_CONTROL>("PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE", "INCIDENT_QUESTION_CONTROL", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY")]
-        public EntityCollection<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY", value);
                 }
             }
         }
@@ -25416,18 +25442,18 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL")]
-        public EntityCollection<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY")]
+        public EntityCollection<INCIDENT_TYPE_COMPANY> INCIDENT_TYPE_COMPANY
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE_COMPANY", value);
                 }
             }
         }
@@ -25540,6 +25566,30 @@ namespace SQM.Website
         private Nullable<global::System.Int16> _SORT_ORDER;
         partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
         partial void OnSORT_ORDERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
 
         #endregion
 
