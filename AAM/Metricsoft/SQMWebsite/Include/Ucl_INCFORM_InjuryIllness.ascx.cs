@@ -248,7 +248,7 @@ namespace SQM.Website
 			if (!IsFullPagePostback)
 			{
 				PopulateInitialForm();
-				btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
+				pnlBaseForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
 			}
 		}
 

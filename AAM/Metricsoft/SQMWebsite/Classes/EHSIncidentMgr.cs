@@ -311,7 +311,7 @@ namespace SQM.Website
 					canUpdate = true;
 				}
 			}
-			else
+			else  // assume edit context will be false for new incidents an any user can create/save a new incident
 			{
 				canUpdate = true;
 			}
