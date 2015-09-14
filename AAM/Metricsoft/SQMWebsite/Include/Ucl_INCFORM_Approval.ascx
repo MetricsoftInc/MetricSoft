@@ -43,6 +43,8 @@
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 text-left">
+						<asp:HiddenField id="hfItemSeq" runat="server"/>
+						<asp:HiddenField ID="hfPersonID" runat="server" />
 						<span><b><asp:Label ID="lbApproverJob" SkinID="Metro" runat="server" /><asp:Label ID="lbItemSeq" runat="server"></asp:Label></b>&nbsp;&nbsp;
 							<asp:Label ID="lbApprover" Width="75%" SkinID="Metro" runat="server"></asp:Label></span>
 					</div>
@@ -50,11 +52,11 @@
 						<asp:Label ID="lbApproveMessage" Height="95px" Width="95%"  SkinID="Metro" runat="server"></asp:Label>
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
-						<span><asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="false" Text="Accepted" SkinID="Metro" TextAlign="Right"></asp:CheckBox></span>
+						<span><asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="false" SkinID="Metro"></asp:CheckBox></span>
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
-						<span>Date Accepted:&nbsp;
-						<telerik:RadDatePicker ID="rdpAcceptDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true"  Width="120" runat="server" ShowPopupOnFocus="true"></telerik:RadDatePicker></span>
+						<span>Date&nbsp;
+						<telerik:RadDatePicker ID="rdpAcceptDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="false"  Width="120" runat="server" ShowPopupOnFocus="true"></telerik:RadDatePicker></span>
 					</div>
 				</div>
 			</ItemTemplate>

@@ -181,14 +181,6 @@ namespace SQM.Website
 		private void SetUserAccess(string currentFormName)
 		{
 
-			// Privilege "update"	= Main incident description (1st page) can be maintained/upadted to db
-			// Privilege "action"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
-			// Privilege "approve"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
-
-			//bool updateAccess = SessionManager.CheckUserPrivilege(SysPriv.update, SysScope.incident);
-			//bool actionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			//bool approveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 		}
 
 		public void rptApprovals_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -202,6 +194,7 @@ namespace SQM.Website
 				{
 					INCFORM_APPROVAL approval = (INCFORM_APPROVAL)e.Item.DataItem;
 
+					HiddenField hf = (HiddenField)e.Item.FindControl("hfItemSeq");
 					Label lba = (Label)e.Item.FindControl("lbApprover");
 					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
@@ -209,32 +202,26 @@ namespace SQM.Website
 					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-					//lb.Text = approval.ITEM_SEQ.ToString();
+					hf.Value = approval.ITEM_SEQ.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfPersonID");
+					hf.Value = approval.APPROVER_PERSON_ID.ToString();
 					lb.Visible = false;
-					switch (approval.ITEM_SEQ)
-					{
-						case 1:
-							lbjobd.Text = "EHS Manager: ";
-							break;
-						case 2:
-							lbjobd.Text = "Plant Manager: ";
-							break;
-						default:
-							lbjobd.Text = "Approver: ";
-							break;
-					}
-						
-					lba.Text = approval.APPROVER_PERSON;
+					lbjobd.Text = approval.APPROVER_TITLE;
+					lba.Text = !string.IsNullOrEmpty(approval.APPROVER_PERSON) ? approval.APPROVER_PERSON : "";
 					lbm.Text = approval.APPROVAL_MESSAGE;
 					cba.Checked = approval.IsAccepted;
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
 					// Set user access:
-					cba.Enabled = ApproveAccess;
-					rda.Enabled = ApproveAccess;
-
-					//if (approval.ITEM_SEQ > minRowsToValidate)
-					//	rvf.Enabled = false;
+					if (SessionManager.CheckUserPrivilege((SysPriv)approval.ITEM_SEQ, SysScope.incident))
+					{
+						lba.Text = SessionManager.UserContext.UserName();
+						cba.Enabled = true;
+					}
+					else
+					{
+						cba.Enabled = false;
+					}
 
 				}
 				catch { }
@@ -252,73 +239,50 @@ namespace SQM.Website
 		{
 			var itemList = new List<INCFORM_APPROVAL>();
 			int status = 0;
-			//int seqnumber = 0;
 
-			foreach (RepeaterItem containtem in rptApprovals.Items)
+			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				var item = new INCFORM_ACTION();
+				status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString());
 
-			//	TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
-			//	TextBox tbcp = (TextBox)containtem.FindControl("tbFinalPerson");
-			//	Label lb = (Label)containtem.FindControl("lbItemSeq");
-			//	RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpFinalStartDate");
-			//	RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
-			//	CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
+				foreach (RepeaterItem item in rptApprovals.Items)
+				{
+					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
+					Label lba = (Label)item.FindControl("lbApprover");
+					Label lbm = (Label)item.FindControl("lbApproveMessage");
+					Label lb = (Label)item.FindControl("lbItemSeq");
+					Label lbjobd = (Label)item.FindControl("lbApproverJob");
+					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
+					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
 
-			//	seqnumber = Convert.ToInt32(lb.Text);
+					if (cba.Checked == true)
+					{
+						INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
+						approval.INCIDENT_ID = incidentId;
+						approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
+						approval.IsAccepted = true;
+						approval.APPROVAL_MESSAGE = lbm.Text;
+						approval.APPROVER_TITLE = lbjobd.Text;
+						approval.APPROVAL_DATE = rda.SelectedDate;
+						hf = (HiddenField)item.FindControl("hfPersonID");
+						if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
+						{
+							approval.APPROVER_PERSON_ID = SessionManager.UserContext.Person.PERSON_ID;
+							approval.APPROVER_PERSON = SessionManager.UserContext.UserName();
+						}
+						else
+						{
+							approval.APPROVER_PERSON_ID = Convert.ToDecimal(hf.Value);
+							approval.APPROVER_PERSON = lba.Text;
+						}
+						ctx.AddToINCFORM_APPROVAL(approval);
+					}
+				}
 
-			//	item.ITEM_DESCRIPTION = tbca.Text;
-			//	item.ASSIGNED_PERSON = tbcp.Text;
-			//	item.ITEM_SEQ = seqnumber;
-			//	item.START_DATE = sd.SelectedDate;
-			//	item.COMPLETION_DATE = cd.SelectedDate;
-			//	item.IsCompleted = ic.Checked;
-
-			//	itemList.Add(item);
+				status = ctx.SaveChanges();
 			}
 
-			status = SaveApprovals(incidentId, itemList);
 			return status;
 		}
-
-		private int SaveApprovals(decimal incidentId, List<INCFORM_APPROVAL> itemList)
-		{
-			PSsqmEntities entities = new PSsqmEntities();
-			int status = 0;
-
-			//using (var ctx = new PSsqmEntities())
-			//{
-			//	ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVE WHERE INCIDENT_ID = {0}", incidentId);
-			//}
-
-			//int seq = 0;
-
-			//foreach (INCFORM_APPROVAL item in itemList)
-			//{
-			//	var newItem = new INCFORM_APPROVAL();
-
-			//	if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
-			//	{
-			//		seq = seq + 1;
-
-			//		newItem.INCIDENT_ID = incidentId;
-			//		newItem.ITEM_SEQ = seq;
-			//		newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-			//		newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
-			//		newItem.START_DATE = item.START_DATE;
-			//		newItem.COMPLETION_DATE = item.COMPLETION_DATE;
-			//		newItem.IsCompleted = item.IsCompleted;
-			//		newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-			//		newItem.LAST_UPD_DT = DateTime.Now;
-
-			//		entities.AddToINCFORM_APPROVAL(newItem);
-			//		entities.SaveChanges();
-			//	}
-			//}
-
-			return status;
-		}
-
 
 		protected void rptApprovals_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{

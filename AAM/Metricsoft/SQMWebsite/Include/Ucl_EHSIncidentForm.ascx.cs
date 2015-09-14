@@ -2558,7 +2558,7 @@ namespace SQM.Website
 				case "5":
 					btnDelete.Visible = false;
 					//btnSubnavApproval.Visible = false;
-					lblPageTitle.Text = "Approval";
+					lblPageTitle.Text = "Approvals";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					uclApproval.Visible = divSubnavPage.Visible = true;

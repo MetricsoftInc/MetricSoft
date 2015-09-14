@@ -952,43 +952,28 @@ namespace SQM.Website
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
+
+			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[1] {"INCIDENT_APPROVALS"});
+
 			var approvals = new List<INCFORM_APPROVAL>();
-
-			int minRowsThisForm = 2;  //Testing -- this will probably need to be set to 1 in prod
-
 			approvals = (from c in entities.INCFORM_APPROVAL
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			int itemsNeeded = 0;
-			if (approvals.Count() < minRowsThisForm)
-				itemsNeeded = minRowsThisForm - approvals.Count();
-
-			INCFORM_APPROVAL approval = null;
-			int seq = approvals.Count();
-
-			for (int i = 1; i < itemsNeeded + 1; i++)
+			foreach (string approveLevel in sets.VALUE.Split(','))
 			{
-				approval = new INCFORM_APPROVAL();
-
-				seq = seq + 1;
-				approval.ITEM_SEQ = seq;
-
-				// TESTING ................START......................
-				if (seq ==1)
-					approval.APPROVER_PERSON = "Mathis, Robert";
-				else
-					approval.APPROVER_PERSON = "Williams, Mark";
-				approval.APPROVAL_MESSAGE = "I have reviewed .... Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se veld dilce. Delaeus, heuls ffshufbubf. Lorem ipso sum dolores. Quices fel unpe retular. Jecular se..";
-				// TESTING ................END ........................
-
-				//approval.APPROVER_PERSON = "";
-				//approval.APPROVAL_MESSAGE = "";
-				approval.APPROVER_PERSON_ID = null; 
-				approval.IsAccepted = false;
-				approval.APPROVAL_DATE = null;
-					
-				approvals.Add(approval);
+				if (approvals.Where(l => l.ITEM_SEQ.ToString() == approveLevel).FirstOrDefault() == null)
+				{
+					INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
+					approval.INCIDENT_APPROVAL_ID = incidentId;
+					approval.ITEM_SEQ = Convert.ToInt32(approveLevel);
+					approval.APPROVAL_MESSAGE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION;
+					approval.APPROVER_TITLE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION_SHORT;
+					approval.APPROVAL_DATE = DateTime.Now;
+					approval.IsAccepted = false;
+					approvals.Add(approval);
+				}
 			}
 
 			return approvals;

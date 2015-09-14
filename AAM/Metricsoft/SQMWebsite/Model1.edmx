@@ -1400,13 +1400,14 @@
           <Property Name="INCIDENT_APPROVAL_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
-          <Property Name="APPROVAL_MESSAGE" Type="varchar" MaxLength="1000" />
+          <Property Name="APPROVAL_MESSAGE" Type="nvarchar" MaxLength="1000" />
           <Property Name="APPROVER_PERSON_ID" Type="numeric" Precision="35" />
           <Property Name="APPROVAL_DATE" Type="datetime" />
           <Property Name="IsAccepted" Type="bit" Nullable="false" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="APPROVER_PERSON" Type="varchar" MaxLength="100" />
+          <Property Name="APPROVER_TITLE" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="INCFORM_CONTAIN">
           <Key>
@@ -4700,15 +4701,10 @@
           </AssociationSet>
           <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" />
           <EntitySet Name="INCFORM_ACTION" EntityType="PSsqmModel.INCFORM_ACTION" />
-          <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.INCFORM_APPROVAL" />
           <EntitySet Name="INCFORM_CONTAIN" EntityType="PSsqmModel.INCFORM_CONTAIN" />
            <AssociationSet Name="FK_INCIDENTACTION_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_ACTION" EntitySet="INCFORM_ACTION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENTAPPROVAL_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_APPROVAL" EntitySet="INCFORM_APPROVAL" />
           </AssociationSet>
           <AssociationSet Name="FK_INCIDENTCONTAIN_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
@@ -4853,6 +4849,11 @@
           <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY">
             <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
             <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.INCFORM_APPROVAL" />
+          <AssociationSet Name="FK_INCIDENTAPPROVAL_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_APPROVAL" EntitySet="INCFORM_APPROVAL" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -7352,12 +7353,12 @@
           <NavigationProperty Name="INCFORM_POWEROUTAGE" Relationship="PSsqmModel.FK_INCIDENT_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_POWEROUTAGE" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="Int32" Nullable="false" />
           <NavigationProperty Name="INCFORM_ACTION" Relationship="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_ACTION" />
-          <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
           <NavigationProperty Name="INCFORM_CONTAIN" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_CONTAIN" />
           <NavigationProperty Name="INCFORM_ROOT5Y" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCIDENT" ToRole="INCFORM_ROOT5Y" />
           <NavigationProperty Name="INCFORM_INJURYILLNESS" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_INJURYILLNESS" />
           <NavigationProperty Name="INCFORM_LOSTTIME_HIST" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_LOSTTIME_HIST" />
           <NavigationProperty Name="INCFORM_WITNESS" Relationship="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_WITNESS" />
+          <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -8057,22 +8058,6 @@
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
           <Property Name="ASSIGNED_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
          </EntityType>
-        <EntityType Name="INCFORM_APPROVAL">
-          <Key>
-            <PropertyRef Name="INCIDENT_APPROVAL_ID" />
-          </Key>
-          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
-          <Property Name="INCIDENT_APPROVAL_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCFORM_APPROVAL" ToRole="INCIDENT" />
-          <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="APPROVAL_MESSAGE" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="APPROVER_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
-          <Property Name="APPROVAL_DATE" Type="DateTime" Precision="3" />
-          <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
-          <Property Name="APPROVER_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
          <EntityType Name="INCFORM_CONTAIN">
           <Key>
             <PropertyRef Name="INCIDENT_CONTAIN_ID" />
@@ -8098,18 +8083,6 @@
               <PropertyRef Name="INCIDENT_ID" />
             </Principal>
             <Dependent Role="INCFORM_ACTION">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-         <Association Name="FK_INCIDENTAPPROVAL_INCIDENT_ID">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_APPROVAL" Role="INCFORM_APPROVAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_APPROVAL">
               <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8776,6 +8749,35 @@
             <Dependent Role="INCIDENT_TYPE_COMPANY_QUESTION">
               <PropertyRef Name="INCIDENT_TYPE_ID" />
               <PropertyRef Name="COMPANY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_APPROVAL">
+          <Key>
+            <PropertyRef Name="INCIDENT_APPROVAL_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_APPROVAL_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="ITEM_SEQ" Nullable="false" />
+          <Property Type="String" Name="APPROVAL_MESSAGE" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="APPROVER_PERSON_ID" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="APPROVAL_DATE" Precision="3" />
+          <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="String" Name="APPROVER_PERSON" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="APPROVER_TITLE" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCFORM_APPROVAL" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENTAPPROVAL_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_APPROVAL" Role="INCFORM_APPROVAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_APPROVAL">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10531,22 +10533,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_APPROVAL">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_APPROVAL">
-              <MappingFragment StoreEntitySet="INCFORM_APPROVAL">
-                <ScalarProperty Name="APPROVER_PERSON" ColumnName="APPROVER_PERSON" />
-                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-                <ScalarProperty Name="APPROVAL_DATE" ColumnName="APPROVAL_DATE" />
-                <ScalarProperty Name="APPROVER_PERSON_ID" ColumnName="APPROVER_PERSON_ID" />
-                <ScalarProperty Name="APPROVAL_MESSAGE" ColumnName="APPROVAL_MESSAGE" />
-                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="INCIDENT_APPROVAL_ID" ColumnName="INCIDENT_APPROVAL_ID" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCFORM_CONTAIN">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CONTAIN">
               <MappingFragment StoreEntitySet="INCFORM_CONTAIN">
@@ -10815,6 +10801,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_APPROVAL">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_APPROVAL">
+              <MappingFragment StoreEntitySet="INCFORM_APPROVAL">
+                <ScalarProperty Name="APPROVER_TITLE" ColumnName="APPROVER_TITLE" />
+                <ScalarProperty Name="APPROVER_PERSON" ColumnName="APPROVER_PERSON" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="APPROVAL_DATE" ColumnName="APPROVAL_DATE" />
+                <ScalarProperty Name="APPROVER_PERSON_ID" ColumnName="APPROVER_PERSON_ID" />
+                <ScalarProperty Name="APPROVAL_MESSAGE" ColumnName="APPROVAL_MESSAGE" />
+                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_APPROVAL_ID" ColumnName="INCIDENT_APPROVAL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11051,10 +11054,8 @@
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" Width="1.5" PointX="8.375" PointY="38.25" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_ACTION" Width="1.5" PointX="4.125" PointY="53.5" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="4.125" PointY="56.75" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_CONTAIN" Width="1.5" PointX="4.125" PointY="46.875" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" />
-         <AssociationConnector Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_ROOT5Y" Width="1.5" PointX="4.375" PointY="61.875" />
@@ -11104,6 +11105,8 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="1.9836781704722335" PointY="26.67922688772866" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" />
         </Diagram>
     </Diagrams>
   </Designer>

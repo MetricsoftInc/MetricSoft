@@ -146,7 +146,7 @@
 											OnClick="btnSubnav_Click" CommandArgument="3"/>
 										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="4"/>
-										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approval" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approvals" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="5"/>
 									</div>
 								</div>

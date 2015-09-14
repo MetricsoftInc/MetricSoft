@@ -580,7 +580,7 @@ namespace SQM.Website
 					uclaction.Visible = true;
 					uclaction.PopulateInitialForm();
 					break;
-				case "INCFORM__APPROVAL":
+				case "INCFORM_APPROVAL":
 					uclapproval.IsEditContext = IsEditContext;
 					uclapproval.IncidentId = EditIncidentId;
 					uclapproval.EditIncidentId = EditIncidentId;
@@ -1258,18 +1258,9 @@ namespace SQM.Website
 		{
 			if (EditIncidentId > 0)
 			{
-
-
-
 				decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 				pnlBaseForm.Visible = false;
-				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
-
-				//btnSave.Visible = false;
-				//btnPrev.Visible = false;
-				//btnNext.Visible = false;
-				//btnClose.Visible = false;
 
 				btnSubnavSave.Visible = false;
 				btnSubnavIncident.Visible = false;
@@ -1385,10 +1376,6 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
 					InitializeForm(CurrentStep);
-					//uclroot5y.Visible = divSubnavPage.Visible = true;
-					//uclroot5y.IsEditContext = true;
-					//uclroot5y.EditIncidentId = incidentId;
-					//uclroot5y.PopulateInitialForm();
 					break;
 				case "4":
 					btnDeleteInc.Visible = false;
@@ -1397,22 +1384,14 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
 					InitializeForm(CurrentStep);
-					//uclaction.Visible = divSubnavPage.Visible = true;
-					//uclaction.IsEditContext = true;
-					//uclaction.EditIncidentId = incidentId;
-					//uclaction.PopulateInitialForm();
 					break;
 				case "5":
 					btnDeleteInc.Visible = false;
-					lblFormTitle.Text = "Approval";
+					lblFormTitle.Text = "Approvals";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
 					InitializeForm(CurrentStep);
-					//uclapproval.Visible = divSubnavPage.Visible = true;
-					//uclapproval.IsEditContext = true;
-					//uclapproval.EditIncidentId = incidentId;
-					//uclapproval.PopulateInitialForm();
 					break;
 				case "6":
 					btnDeleteInc.Visible = false;
@@ -1421,10 +1400,6 @@ namespace SQM.Website
 					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
 					InitializeForm(CurrentStep);
-					//uclapproval.Visible = divSubnavPage.Visible = true;
-					//ucllosttime.IsEditContext = true;
-					//ucllosttime.EditIncidentId = incidentId;
-					//ucllosttime.PopulateInitialForm();
 					break;
 				case "0":
 				default:
