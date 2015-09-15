@@ -763,16 +763,16 @@ namespace SQM.Website
 					q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					string cid = "Comment" + qid;
-					bool answerIsPositive = false;
-					if (!q.AnswerText.ToString().Equals(""))
+					bool answerIsPositive = true;
+					if (q.AnswerText != null && !q.AnswerText.ToString().Equals(""))
 					{
 						foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
 						{
-							if (choice.Value.Equals(q.AnswerText) && choice.ChoicePositive)
-								answerIsPositive = true;
+							if (choice.Value.Equals(q.AnswerText) && !choice.ChoicePositive)
+								answerIsPositive = false;
 						}
 					}
-					if (!answerIsPositive && q.AnswerComment.Trim().Length == 0)
+					if (!answerIsPositive && (q.AnswerComment == null || q.AnswerComment.Trim().Length == 0))
 					{
 						var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, CssClass = "audittextrequired" };
 						comment.TextMode = InputMode.MultiLine;
