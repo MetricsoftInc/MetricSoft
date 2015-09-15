@@ -71,7 +71,7 @@
                                     <asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" />
                                 </td>
                                 <td class="text-left-more">
-                                    <telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" Width="70%" CssClass="WarnIfChanged" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged" />
+                                    <telerik:RadDropDownList ID="rddlContainPerson" Skin="Metro" Width="70%" CssClass="WarnIfChanged" ZIndex="9000" DropDownHeight="350" ExpandDirection="Up" runat="server" OnSelectedIndexChanged="rddlContainPerson_SelectedIndexChanged" />
                                     <asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
                                 </td>
                                 <td class="text-left-more">
