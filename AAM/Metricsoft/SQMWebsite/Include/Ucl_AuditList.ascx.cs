@@ -69,6 +69,8 @@ namespace SQM.Website
 			string[] args = lnk.CommandArgument.ToString().Split('~');
 			if (args[1].Equals("C"))
 				SessionManager.ReturnObject = "Closed";
+			else if (args[1].Equals("D"))
+				SessionManager.ReturnObject = "DisplayOnly";
 			else
 				SessionManager.ReturnObject = "Notification";
 			SessionManager.ReturnRecordID = Convert.ToDecimal(args[0]);
@@ -366,7 +368,13 @@ namespace SQM.Website
 				}
 
 				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditId");
-				lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;
+
+				if (SessionManager.UserContext.Person.PERSON_ID == data.Person.PERSON_ID)
+					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;
+				else if (!data.Status.Equals("C"))
+					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~D";
+				else
+					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~C";
 
 			}
 		}

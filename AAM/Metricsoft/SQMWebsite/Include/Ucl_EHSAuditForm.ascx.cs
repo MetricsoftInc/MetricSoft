@@ -1890,24 +1890,8 @@ namespace SQM.Website
             AUDIT theAudit = null;
 			decimal auditId = 0;
 			string result = "<h3>EHS Audit " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-			if (Mode == AuditMode.Prevent)
-				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-
-			if (shouldReturn == true)
-			{
-				divForm.Visible = false;
-				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
-
-				pnlAddEdit.Visible = false;
-				btnSaveReturn.Visible = false;
-				//btnSaveContinue.Visible = false;
-
-				RadCodeBlock rcbWarnNavigate = (RadCodeBlock)this.Parent.Parent.FindControl("rcbWarnNavigate");
-				if (rcbWarnNavigate != null)
-					rcbWarnNavigate.Visible = false;
-
-				lblResults.Visible = true;
-			}
+			//if (Mode == AuditMode.Prevent)
+			//	result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
 			if (!IsEditContext)
 			{
@@ -1941,8 +1925,26 @@ namespace SQM.Website
 			}
 			if (auditId > 0)
 			{
+				//shouldReturn = AddOrUpdateAnswers(questions, auditId);
 				AddOrUpdateAnswers(questions, auditId);
 				SaveAttachments(auditId);
+			}
+
+
+			if (shouldReturn == true)
+			{
+				divForm.Visible = false;
+				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+
+				pnlAddEdit.Visible = false;
+				btnSaveReturn.Visible = false;
+				//btnSaveContinue.Visible = false;
+
+				RadCodeBlock rcbWarnNavigate = (RadCodeBlock)this.Parent.Parent.FindControl("rcbWarnNavigate");
+				if (rcbWarnNavigate != null)
+					rcbWarnNavigate.Visible = false;
+
+				lblResults.Visible = true;
 			}
 
 			if (shouldReturn)
@@ -2175,7 +2177,7 @@ namespace SQM.Website
 
 		protected bool AddOrUpdateAnswers(List<EHSAuditQuestion> questions, decimal auditId)
 		{
-			bool shouldCreate8d = false;
+			bool negativeTextComplete = true;
 			decimal totalQuestions = 0;
 			decimal totalAnswered = 0;
 			decimal totalPositive = 0;
@@ -2224,6 +2226,11 @@ namespace SQM.Website
 						{
 							totalPositive += 1;
 						}
+						else
+						{
+							if (q.AnswerComment.ToString().Trim().Length == 0)
+								negativeTextComplete = false;
+						}
 					}
 				}
 			}
@@ -2253,7 +2260,7 @@ namespace SQM.Website
 			// save all the changes
 			entities.SaveChanges();
 
-			return shouldCreate8d;
+			return negativeTextComplete;
 		}
 
 		protected AUDIT CreateNewAudit()
@@ -2461,7 +2468,8 @@ namespace SQM.Website
 				btnSaveReturn.Enabled = false;
 				btnSaveReturn.Visible = false;
 
-				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + " Closed</strong><br/>";
+				//lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + " Closed</strong><br/>";
+				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + "</strong><br/>";
 
 				rddlAuditType.Visible = false;
 				lblAuditType.Text = "Audit Type: ";

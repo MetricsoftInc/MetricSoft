@@ -18,6 +18,7 @@ namespace SQM.Website
 			AuditNotificationNew,
 			AuditNotificationEdit,
 			AuditNotificationClosed,
+			AuditNotificationDisplay,
 			AuditReportEdit
 		}
 
@@ -103,6 +104,15 @@ namespace SQM.Website
 							case "Closed":
 								uclAuditForm.EditAuditId = SessionManager.ReturnRecordID;
 								UpdateDisplayState(DisplayState.AuditNotificationClosed);
+								if (isDirected)
+								{
+									rbNew.Visible = false;
+									uclAuditForm.EnableReturnButton(false);
+								}
+								break;
+							case "DisplayOnly":
+								uclAuditForm.EditAuditId = SessionManager.ReturnRecordID;
+								UpdateDisplayState(DisplayState.AuditNotificationDisplay);
 								if (isDirected)
 								{
 									rbNew.Visible = false;
@@ -204,6 +214,7 @@ namespace SQM.Website
 					uclAuditForm.BuildForm();
 					break;
 
+				case DisplayState.AuditNotificationDisplay:
 				case DisplayState.AuditNotificationClosed:
 					divAuditList.Visible = false;
 					uclAuditForm.CurrentStep = 1;
@@ -378,6 +389,9 @@ namespace SQM.Website
 			// may want to access only the ones assigned to that person
 			//if (accessLevel < AccessMode.Admin)
 			//	HSCalcs().ehsCtl.AuditHst = (from i in HSCalcs().ehsCtl.AuditHst where i.Audit.ISSUE_TYPE_ID != 10 select i).ToList();
+			bool allAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
+			if (!allAuditAccess)
+				HSCalcs().ehsCtl.AuditHst = (from i in HSCalcs().ehsCtl.AuditHst where i.Audit.AUDIT_PERSON == SessionManager.UserContext.Person.PERSON_ID select i).ToList();
 
 			if (HSCalcs().ehsCtl.AuditHst != null)
 			{
