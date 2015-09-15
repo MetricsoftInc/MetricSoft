@@ -525,7 +525,7 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT > fromDate  &&  t.DUE_DT <= toDate) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
+                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT > fromDate  &&  t.DUE_DT <= toDate &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
                                 from p in p_t.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()
@@ -544,7 +544,7 @@ namespace SQM.Website
 									   join i in entities.AUDIT on t.RECORD_ID equals i.AUDIT_ID
 									   join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
 									   join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
-									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT > fromDate && t.DUE_DT <= toDate) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
+									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT > fromDate && t.DUE_DT <= toDate  &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
 									   from p in p_t.DefaultIfEmpty()
 									   from l in l_i.DefaultIfEmpty()
 									   select new TaskItem
@@ -592,103 +592,6 @@ namespace SQM.Website
             catch (Exception ex)
             {
                 //SQMLogger.LogException(ex);
-            }
-
-            if (addProblemCases)
-            {
-                List<TaskItem> probTaskList = new List<TaskItem>();
-                try
-                {
-                    using (PSsqmEntities entities = new PSsqmEntities())
-                    {
-                        if (plantIDS.Length > 0)
-                        {
-                            // get cases for specific plants
-                            probTaskList = (from t in entities.TASK_STATUS
-                                            join c in entities.PROB_CASE on t.RECORD_ID equals c.PROBCASE_ID
-                                            join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
-                                            where (t.RECORD_TYPE == (int)TaskRecordType.ProblemCase && (t.DUE_DT > fromDate &&  t.DUE_DT <= toDate))
-                                            from p in p_t.DefaultIfEmpty()
-                                            select new TaskItem
-                                            {
-                                                Task = t,
-                                                RecordType = t.RECORD_TYPE,
-                                                RecordID = t.RECORD_ID,
-                                                Person = p,
-                                                Detail = c
-                                            }).OrderBy(l => l.RecordID).ToList();
-
-                            List<decimal> caseList = probTaskList.Select(l=> l.RecordID).Distinct().ToList();
-                            List<PROB_OCCUR> occurList = (from o in entities.PROB_OCCUR.Include("INCIDENT")
-                                                          where (caseList.Contains(o.PROBCASE_ID))
-                                                          select o).ToList();
-                            probTaskList = probTaskList.Where(l => occurList.Where(o => plantIDS.Contains((decimal)o.INCIDENT.DETECT_PLANT_ID) || plantIDS.Contains((decimal)o.INCIDENT.RESP_PLANT_ID)).Select(o => o.PROBCASE_ID).ToList().Contains(l.RecordID)).ToList();
-                        }
-                        else
-                        {
-                            probTaskList = (from t in entities.TASK_STATUS
-                                            join c in entities.PROB_CASE on t.RECORD_ID equals c.PROBCASE_ID
-                                            join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
-                                            where (t.RECORD_TYPE == (int)TaskRecordType.ProblemCase && responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) && (t.DUE_DT > fromDate &&  t.DUE_DT <= toDate))
-                                            from p in p_t.DefaultIfEmpty()
-                                            select new TaskItem
-                                            {
-                                                Task = t,
-                                                RecordType = t.RECORD_TYPE,
-                                                RecordID = t.RECORD_ID,
-                                                Person = p,
-                                                Detail = c
-                                            }).OrderBy(l => l.RecordID).ToList();
-                        }
-                        
-                        decimal recordID = 0;
-                        List<PLANT> plantList = new List<PLANT>();
-                        foreach (TaskItem taskItem in probTaskList)
-                        {
-                            taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-                            if (taskItem.RecordID != recordID)
-                            {
-                                recordID = taskItem.RecordID;
-                                //taskItem.RecordKey = taskItem.Task.RECORD_ID.ToString();
-                                PROB_CASE theCase = (PROB_CASE)taskItem.Detail;
-                                try
-                                {
-                                    if (theCase.PROBCASE_TYPE == "EHS")     // EHS cases only track detected location
-                                        plantList = (from o in entities.PROB_OCCUR
-                                                     where (o.PROBCASE_ID == taskItem.RecordID)
-                                                     join i in entities.INCIDENT on o.INCIDENT_ID equals i.INCIDENT_ID
-                                                     join p in entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
-                                                     select p).ToList();
-                                    else     // quality cases track both detected and responsible  locations - report responsible location here
-                                        plantList = (from o in entities.PROB_OCCUR
-                                                     where (o.PROBCASE_ID == taskItem.RecordID)
-                                                     join i in entities.INCIDENT on o.INCIDENT_ID equals i.INCIDENT_ID
-                                                     join p in entities.PLANT on i.RESP_PLANT_ID equals p.PLANT_ID
-                                                     select p).ToList();
-                                }
-                                catch
-                                {
-                                    plantList = null;
-                                }
-                            }
-                            if (plantList != null)
-                            {
-                                taskItem.Plant = plantList.FirstOrDefault();
-                            }
-                            taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
-                            taskItem.Title = taskItem.LongTitle = "Problem Case " + WebSiteCommon.GetXlatValue("caseStep", taskItem.Task.TASK_STEP);
-                            if (taskItem.Plant != null)
-                                taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
-                            taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Case ") + ": " + ((PROB_CASE)taskItem.Detail).DESC_SHORT;
-                        }
-                    }
-
-                    taskList.AddRange(probTaskList);
-                }
-                catch (Exception ex)
-                {
-                    //SQMLogger.LogException(ex);
-                }
             }
 
             return taskList;
