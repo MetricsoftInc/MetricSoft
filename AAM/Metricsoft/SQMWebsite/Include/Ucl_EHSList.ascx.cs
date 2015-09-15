@@ -204,7 +204,7 @@ namespace SQM.Website
             if (loadPlants && ddlPlantSelect.Items.Count == 0)
             {
                 List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true).Where(l => l.Plant.TRACK_EW_DATA == true).ToList();
-                locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
+                locationList = UserContext.FilterPlantAccessList(locationList);
 
                 if (locationList.Count > 1 && showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1)
                 {

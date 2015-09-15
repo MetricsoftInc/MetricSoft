@@ -72,9 +72,6 @@ namespace SQM.Website
 						RadMenu1.RenderMode = RenderMode.Mobile;
 					}
 
-
-					//EHSNotificationMgr.NotifyIncidentStatus(EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), 135), "IN-0", "300");
-
 					bool addConsole = false;
 					RadMenu1.Skin = "Metro";
 					RadMenu1.ExpandDelay = 225;
@@ -170,7 +167,7 @@ namespace SQM.Website
 
 			lbBusinessCard1_out.Text = SessionManager.UserContext.UserName(); // +": " + SessionManager.UserContext.HRLocation.Company.COMPANY_NAME + ", " + SessionManager.UserContext.HRLocation.Plant.PLANT_NAME;
 			lblActiveLocation.Text = SessionManager.UserContext.HRLocation.Company.COMPANY_NAME + ", " + SessionManager.UserContext.HRLocation.Plant.PLANT_NAME;
-			if (SessionManager.StatOfTheDay != null  &&  UserContext.RoleAccess() != AccessMode.Partner)
+			if (SessionManager.StatOfTheDay != null)
 			{
 				lblActiveLocation.Text = SessionManager.UserContext.HRLocation.Company.COMPANY_NAME + ", " + SessionManager.UserContext.HRLocation.Plant.PLANT_NAME + ": ";
 				lblStatOfTheDay_out.Text = SQMBasePage.FormatValue(SessionManager.StatOfTheDay.Value, 0);

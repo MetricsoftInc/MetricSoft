@@ -11,7 +11,7 @@ namespace SQM.Website
 {
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
-	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, action=350, approve=380, approve1=381, approve2=382, notify=400, view=500, none=900 }
+	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit }
 
 	public class SessionManager
@@ -76,73 +76,7 @@ namespace SQM.Website
 			return UserContext.GetScopePrivileges(scope);
 		}
 
-		public static int AccessModeRoleXREF(AccessMode mode)
-		{
-			int role = 99999;
 
-			switch (mode)
-			{
-				case AccessMode.SA:
-					role = 1;
-					break;
-				case AccessMode.Admin:
-					role = 100;
-					break;
-				case AccessMode.Plant:
-					role = 150;
-					break;
-				case AccessMode.Update:
-					role = 300;
-					break;
-				case AccessMode.Partner:
-					role = 400;
-					break;
-				case AccessMode.View:
-					role = 500;
-					break;
-				case AccessMode.Limited:
-					role = 600;
-					break;
-				default:
-					break;
-			}
-
-			return role;
-		}
-
-		public static AccessMode RoleAccessMode(int role)
-		{
-			AccessMode mode = AccessMode.None;
-
-			switch (role)
-			{
-				case 1:
-					mode = AccessMode.SA;
-					break;
-				case 100:
-					mode = AccessMode.Admin;
-					break;
-				case 150:
-					mode = AccessMode.Plant;
-					break;
-				case 300:
-					mode = AccessMode.Update;
-					break;
-				case 400:
-					mode = AccessMode.Partner;
-					break;
-				case 500:
-					mode = AccessMode.View;
-					break;
-				case 600:
-					mode = AccessMode.Limited;
-					break;
-				default:
-					break;
-			}
-
-			return mode;
-		}
 	   
 		public SessionManager()
 		{
@@ -883,7 +817,7 @@ namespace SQM.Website
 
 			if (SessionManager.UserContext.PrivList != null)
 			{
-				if (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault() != null)  // system admon or company admin has privs to any resource
+				if (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100 && p.SCOPE.ToLower() == SysScope.system.ToString()).FirstOrDefault() != null)  // system admim or company admin has privs to any resource
 				{
 					hasPriv = true;
 				}
@@ -895,7 +829,6 @@ namespace SQM.Website
 			}
 
 			return hasPriv;
-
 		}
 
 		public static List<PRIVLIST> GetScopePrivileges(SysScope scope)
@@ -926,95 +859,23 @@ namespace SQM.Website
 		public static SysPriv GetMaxScopePrivilege(SysScope scope)
 		{
 			SysPriv maxPriv = SysPriv.none;
+			PRIVLIST adminPriv = null;
 
-			foreach (PRIVLIST priv in SessionManager.UserContext.PrivList)
+			if ((adminPriv = SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100 && p.SCOPE.ToLower() == SysScope.system.ToString()).FirstOrDefault()) != null)  // system admim or company admin has privs to any resource
 			{
-				if (priv.PRIV < (int)maxPriv)
-					maxPriv = (SysPriv)priv.PRIV;
+				maxPriv = (SysPriv)adminPriv.PRIV;
+			}
+			else 
+			{
+				foreach (PRIVLIST priv in SessionManager.UserContext.PrivList.Where(l=> l.SCOPE.ToLower() == scope.ToString()).ToList())
+				{
+					if (priv.PRIV < (int)maxPriv)
+						maxPriv = (SysPriv)priv.PRIV;
+				}
 			}
 
 			return maxPriv;
 		}
-
-		public static AccessMode RoleAccess()
-		{
-			AccessMode mode = AccessMode.None;
-
-			switch (SessionManager.UserContext.Person.ROLE)
-			{
-				case 1:
-					mode = AccessMode.SA;
-					break;
-				case 100:
-					mode = AccessMode.Admin;
-					break;
-				case 150:
-					mode = AccessMode.Plant;
-					break;
-				case 300:
-					mode = AccessMode.Update;
-					break;
-				case 400:
-					mode = AccessMode.Partner;
-					break;
-				case 500:
-					mode = AccessMode.View;
-					break;
-				default:
-					break;
-			}
-
-			return mode;
-		}
-
-		public static AccessMode CheckAccess(string prod, string topic)
-		{
-			AccessMode mode = AccessMode.None;
-			// administrator roles - don't need to check specific page access
-			if (SessionManager.UserContext.Person.ROLE <= 100)
-			{
-				if (SessionManager.UserContext.Person.ROLE == 1)
-					mode = AccessMode.SA;
-				else
-					mode = AccessMode.Admin;
-			}
-			else
-			{
-				string baseTopic = string.IsNullOrEmpty(topic) ? "" :  topic.Substring(0, 1) + "01";  // do this for backwards compatibility with single product access settings
-				if ((string.IsNullOrEmpty(baseTopic)  &&  SessionManager.UserContext.Person.PERSON_ACCESS.FirstOrDefault(a => a.ACCESS_PROD.ToUpper() == prod.ToUpper()) != null) 
-					|| (!string.IsNullOrEmpty(baseTopic) && SessionManager.UserContext.Person.PERSON_ACCESS.FirstOrDefault(a => a.ACCESS_PROD.ToUpper() == prod.ToUpper() && (a.ACCESS_TOPIC.ToUpper() == topic.ToUpper()  ||  a.ACCESS_TOPIC.ToUpper() == baseTopic.ToUpper())) != null))
-				{
-					if (SessionManager.UserContext.Person.ROLE >= 600) // limited
-						mode = AccessMode.Limited;
-					if (SessionManager.UserContext.Person.ROLE < 600)  // report viewer
-					{
-						if (SessionManager.UserContext.Person.ROLE < 500)
-							mode = AccessMode.Partner;
-						else
-							mode = AccessMode.View;
-					}
-					if (SessionManager.UserContext.Person.ROLE < 400)  // originator
-						mode = AccessMode.Update;
-					if (SessionManager.UserContext.Person.ROLE < 200)   // plant admin
-						mode = AccessMode.Plant;
-				}
-			}
-
-			return mode;
-		}
-
-		public static bool ProdTopicAccess(string prod, string topic)
-		{
-			bool access = false;
-
-			if (SessionManager.UserContext.Person.PERSON_ACCESS.FirstOrDefault(a => a.ACCESS_PROD.ToUpper() == prod.ToUpper() && a.ACCESS_TOPIC.ToUpper() == topic.ToUpper()) != null || topic == "")
-			{
-				access = true;
-			}
-
-			return access;
-		}
-
 
 		public static List<BusinessLocation> FilterPlantAccessList(List<BusinessLocation> locList)
 		{
@@ -1025,28 +886,6 @@ namespace SQM.Website
 			}
 
 			return locList;
-		}
-
-		public static List<BusinessLocation> FilterPlantAccessList(List<BusinessLocation> locList, string prod, string topic)
-		{
-			for (int n = locList.Count - 1; n >= 0; n--)
-			{
-				if (CheckPlantAdmin(prod, topic, locList[n].Plant.PLANT_ID) == false)
-					locList.RemoveAt(n);
-			}
-
-			return locList;
-		}
-
-		public static bool CheckPlantAdmin(string prod, string topic, decimal plantID)
-		{
-			bool access = false;
-
-			AccessMode mode = CheckAccess(prod, topic);
-			if (mode >= AccessMode.Admin || SessionManager.PlantAccess(plantID))
-				access = true;
-
-			return access;
 		}
 
 		public static bool CheckPlantAdmin(decimal plantID)

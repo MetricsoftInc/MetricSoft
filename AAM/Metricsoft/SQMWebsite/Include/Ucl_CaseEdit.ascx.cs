@@ -209,7 +209,7 @@ namespace SQM.Website
   
             uclStatus0.BindTaskComplete(CaseCtl().problemCase.TeamTask.FindTask("0", "C", 0));
 
-            if (UserContext.RoleAccess() <= AccessMode.Admin  &&  isEhsCase == false)
+			if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.action && isEhsCase == false)
             {
                 btnCase0Delete.Visible = btnCase0Delete.Enabled = true;
                 phCase0InActive.Visible = true;

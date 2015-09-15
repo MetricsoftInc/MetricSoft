@@ -86,7 +86,7 @@ namespace SQM.Website
                 if (uclIssueSearch.DDLPlantSelect.Items.Count == 0)
                 {
                     List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
-                    SQMBasePage.SetLocationList(uclIssueSearch.DDLPlantSelect, UserContext.FilterPlantAccessList(locationList, "SQM", ""), -1);
+                    SQMBasePage.SetLocationList(uclIssueSearch.DDLPlantSelect, UserContext.FilterPlantAccessList(locationList), -1);
                 }
 
                 PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, appContext, appContext, 0);
@@ -204,14 +204,14 @@ namespace SQM.Website
             divSearchList.Visible = true;
             uclSearchBar1.TitleItem.Text = "";
             uclIssueList.LinksDisabled = false;
-            uclSearchBar1.SetButtonsVisible(false, false, UserContext.CheckAccess("SQM", "") >= AccessMode.Update ? true : false, false, false, false);
+            uclSearchBar1.SetButtonsVisible(false, false, true, false, false, false);
             uclSearchBar1.SetButtonsEnabled(false, false, true, false, false, false);
             uclSearchBar1.NewButton.Text = "New Issue ";
             uclSearchBar2.SetButtonsVisible(false, false, false, false, false, false);
             uclSearchBar2.SetButtonsEnabled(false, false, false, false, false, false);
 
             uclIssueSearch.BindCSTIssueSearch(true, IssueCtl().Context, entities);
-            uclIssueSearch.BTNReceiptSearch.Visible = UserContext.CheckAccess("SQM", "") == AccessMode.Partner ? false : true;
+            uclIssueSearch.BTNReceiptSearch.Visible = true;
            
             SearchList("");
         }
@@ -219,7 +219,7 @@ namespace SQM.Website
         protected void OnIssue_Click(decimal issueID)
         {
             IssueCtl().Load(issueID);
-            IssueCtl().UserPageMode(SessionManager.UserContext.Person, UserContext.CheckAccess("SQM", ""));
+            //IssueCtl().UserPageMode(SessionManager.UserContext.Person, UserContext.CheckAccess("SQM", ""));
            
             divSearchList.Visible = false;
             uclQualityIssue.ToggleDisplay(true);
@@ -244,7 +244,7 @@ namespace SQM.Website
         private void uclSearchBar_OnNewClick()
         {
             IssueCtl().CreateNew(Session.SessionID, IssueCtl().Context, SessionManager.UserContext.Person.PERSON_ID);
-            IssueCtl().UserPageMode(SessionManager.UserContext.Person, UserContext.CheckAccess("SQM", ""));
+            //IssueCtl().UserPageMode(SessionManager.UserContext.Person, UserContext.CheckAccess("SQM", ""));
            
             uclSearchBar1.TitleItem.Text = "";
             uclSearchBar1.SetButtonsVisible(false, false, false, true, false, true, lblReturnLabel.Text);

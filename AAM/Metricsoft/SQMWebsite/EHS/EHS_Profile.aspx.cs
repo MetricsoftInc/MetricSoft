@@ -65,7 +65,7 @@ namespace SQM.Website
 
                 if (LocalProfile() != null && (LocalProfile().Profile.EHS_PROFILE_MEASURE == null || LocalProfile().Profile.EHS_PROFILE_MEASURE.Count == 0))
                 {
-                    if (UserContext.RoleAccess() > AccessMode.Plant)
+                    if (UserContext.GetMaxScopePrivilege(SysScope.envdata) <= SysPriv.config)
                     {
                         List<EHS_PROFILE> profileList = EHSModel.SelectPlantProfileList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID);
                         SQMBasePage.SetLocationList(ddlCopyProfile, SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true).Where(l => profileList.Select(p => p.PLANT_ID).ToArray().Contains(l.Plant.PLANT_ID)).ToList(), 0);

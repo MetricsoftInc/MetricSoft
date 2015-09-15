@@ -88,12 +88,11 @@ namespace SQM.Website
         {
             ddlScheduleScope.Items.Clear();
 
-			if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.busloc))
+			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
             {
-               // List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
                 List<BusinessLocation> locationList = SessionManager.PlantList;
-                locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
-                locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
+                locationList = UserContext.FilterPlantAccessList(locationList);
 
                 if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1  &&  SessionManager.IsUserAgentType("ipad,iphone") == false)
                 {

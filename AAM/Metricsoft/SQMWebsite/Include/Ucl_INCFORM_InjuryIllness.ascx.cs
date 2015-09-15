@@ -24,7 +24,6 @@ namespace SQM.Website
 		protected decimal companyId;
 		protected decimal plantId;
 		//protected decimal selectedPlantId;
-		protected AccessMode accessLevel;
 		protected RadDropDownList rddlFilteredUsers;
 		protected bool IsFullPagePostback = false;
 
@@ -195,8 +194,6 @@ namespace SQM.Website
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			accessLevel = UserContext.CheckAccess("EHS", "");
-
 			lblResults.Text = "";
 
 			Label lbTitle = (Label)this.Parent.FindControl("lblPageTitle");
@@ -1523,7 +1520,7 @@ namespace SQM.Website
 				SaveAttachments(incidentId);
 
 				//EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-8", ((int)SysPriv.originate).ToString());
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString());
 			}
 			else
 			{
@@ -1546,7 +1543,7 @@ namespace SQM.Website
 				}
 
 				theincidentId = incidentId;
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-8", ((int)SysPriv.originate).ToString());
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.update).ToString());
 			}
 
 			return theincidentId;

@@ -205,7 +205,7 @@ namespace SQM.Website
                     break;
                 case "RCV":
                     ddlReportedLocation.Items.Clear();
-                    List<BusinessLocation> locationList = UserContext.FilterPlantAccessList(SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true), "SQM","");
+                    List<BusinessLocation> locationList = UserContext.FilterPlantAccessList(SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true));
                     SQMBasePage.SetLocationList(ddlReportedLocation, locationList, 0);
                     break;
                 default:

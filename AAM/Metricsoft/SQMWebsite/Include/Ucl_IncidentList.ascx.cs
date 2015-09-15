@@ -457,9 +457,6 @@ namespace SQM.Website
 					Label lbl = (Label)e.Item.FindControl("lblCaseID");
 					lbl.Text = WebSiteCommon.FormatID(probCase.ProbCase.PROBCASE_ID, 6);
 					LinkButton lnk = (LinkButton)e.Item.FindControl("lbCaseId");
-					if (lnk != null && UserContext.RoleAccess() < AccessMode.Partner)
-						lnk.Enabled = false;
-						
 
 					lbl = (Label)e.Item.FindControl("lblIncidentID");
 					if (probCase.IncidentList != null && probCase.IncidentList.Count > 0)
@@ -956,8 +953,6 @@ namespace SQM.Website
 					}
 
 					LinkButton lb8d = (LinkButton)e.Item.FindControl("lb8d");
-					if (lb8d != null  &&  UserContext.RoleAccess() <= AccessMode.Partner)
-						lb8d.Visible = false;
 				}
 
 				catch

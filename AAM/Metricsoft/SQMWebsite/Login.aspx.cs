@@ -229,15 +229,10 @@ namespace SQM.Website
 				SessionManager.Browser = (object)browser;
 				SessionManager.UserAgent = (string)HttpContext.Current.Request.UserAgent.ToLower();
 
-				//CheckInboxItems();
-
 				string redirectPath = (string)ViewState["RedirectPath"];
 				if (string.IsNullOrEmpty(redirectPath))
 				{
-					if (UserContext.RoleAccess() == AccessMode.Limited)
-						Response.Redirect("/Home/Dashboard.aspx");
-					else
-						Response.Redirect("/Home/Calendar.aspx");
+					Response.Redirect("/Home/Calendar.aspx");
 				}
 				else
 					Response.Redirect(redirectPath);

@@ -31,7 +31,6 @@ namespace SQM.Website
 		protected decimal selectedPlantId = 0;
 		protected decimal auditPlantId = 0;
 
-		protected AccessMode accessLevel;
 		bool controlQuestionChanged;
 
 		List<EHSAuditQuestion> questions;
@@ -122,9 +121,6 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			//accessLevel = UserContext.CheckAccess("EHS", "");
-			accessLevel = AccessMode.Admin;  // mt - temporary
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
@@ -189,9 +185,6 @@ namespace SQM.Website
 				if (auditTypeList.Count > 1)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
 				
-				if (accessLevel < AccessMode.Admin)
-						auditTypeList = (from i in auditTypeList where i.AUDIT_TYPE_ID != 10 select i).ToList();
-				
 				rddlAuditType.DataSource = auditTypeList;
 				rddlAuditType.DataTextField = "TITLE";
 				rddlAuditType.DataValueField = "AUDIT_TYPE_ID";
@@ -202,7 +195,6 @@ namespace SQM.Website
 		protected void LoadHeaderInformation()
 		{
 			// set up for adding the header info
-			AccessMode accessmode = UserContext.RoleAccess();
 
 			if (IsEditContext || CurrentStep > 0)
 			{
@@ -233,12 +225,11 @@ namespace SQM.Website
 			}
 			else
 			{
-				if (accessmode >= AccessMode.Plant)
+				if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
 				{
 					// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
 					List<BusinessLocation> locationList = SessionManager.PlantList;
-					locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
-					locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
+					locationList = UserContext.FilterPlantAccessList(locationList);
 					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
 					{
 						if (mnuAuditLocation.Items.Count == 0)
@@ -286,9 +277,6 @@ namespace SQM.Website
 
 		public void BuildForm()
 		{
-			if (accessLevel <= AccessMode.View)
-				return;
-
 			// Currently, ALL audits will be like the Supervisory Audit example provided.  This is a simple Y/N/NA radio button and a comment box for each question.
 			//    Each positive answer counts towards the percentage of total answers.
 
@@ -851,9 +839,6 @@ namespace SQM.Website
 
 		public void GetForm()
 		{
-			if (accessLevel <= AccessMode.View)
-				return;
-
 			decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
 			if (typeId < 1)
 				return;
@@ -1338,10 +1323,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved)
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement)
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
@@ -2449,7 +2434,7 @@ namespace SQM.Website
 			uclAuditDetails.Clear();
 			string typeString = "";
 
-			if (accessLevel > AccessMode.View && CurrentStep == 0)
+			if (UserContext.GetMaxScopePrivilege(SysScope.audit) < SysPriv.view && CurrentStep == 0)
 			{
 				pnlAddEdit.Visible = true;
 				if (!IsEditContext)
@@ -2526,10 +2511,7 @@ namespace SQM.Website
 		{
 			List<decimal> plantIdList = new List<decimal>();
 
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			accessLevel = UserContext.CheckAccess("EHS", "");
-
-			if (accessLevel >= AccessMode.Admin)
+			if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
 			{
 				plantIdList = EHSAuditMgr.SelectPlantIdsByCompanyId(companyId);
 			}

@@ -161,7 +161,7 @@
 												<Items>
 													<telerik:RadComboBoxItem Text="Open" Value="A" />
 													<telerik:RadComboBoxItem Text="Closed" Value="C" />
-													<telerik:RadComboBoxItem Text="8D Complete" Value="C8" />
+													<%--<telerik:RadComboBoxItem Text="8D Complete" Value="C8" />--%>
 													<telerik:RadComboBoxItem Text="All" Value="" />
 													<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />
 													<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />

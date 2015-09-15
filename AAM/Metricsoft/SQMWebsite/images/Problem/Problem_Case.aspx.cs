@@ -96,11 +96,11 @@ namespace SQM.Website
 
             if (CaseCtl().Context == "EHS")
             {
-                uclCaseList.LinksDisabled = UserContext.CheckAccess("EHS", "321") < AccessMode.Update ? true : false;
+				uclCaseList.LinksDisabled = false; // UserContext.CheckAccess("EHS", "321") < AccessMode.Update ? true : false;
             }
             else
             {
-                uclCaseList.LinksDisabled = UserContext.CheckAccess("SQM", "221") < AccessMode.Update ? true : false;
+				uclCaseList.LinksDisabled = false; // UserContext.CheckAccess("SQM", "221") < AccessMode.Update ? true : false;
                 uclSearchBar.NewButton.Visible = true;
             }
 
@@ -401,8 +401,8 @@ namespace SQM.Website
                 SetCaseCtl(new ProblemCaseCtl().Initialize(null, appContext));
 
                 IsCurrentPage();
-                uclSearchBar.SetButtonsVisible(false, false, (UserContext.CheckAccess("SQM", "221") >= AccessMode.Update || UserContext.CheckAccess("EHS", "321") >= AccessMode.Update) && CaseCtl().Context != "EHS" ? true : false, false, false, false);
-				uclSearchBar.SetButtonsEnabled(false, false, CaseCtl().Context == "EHS" ? false : true, false, false, false);
+                uclSearchBar.SetButtonsVisible(false, false, true, false, false, false);
+				uclSearchBar.SetButtonsEnabled(false, false, false, false, false, false);
 
                 lblProbCaseInstructions.Visible = (CaseCtl().Context == "EHS") ? false : true;
                 lblProbCaseInstructionsEHS.Visible = (CaseCtl().Context == "EHS") ? true : false;

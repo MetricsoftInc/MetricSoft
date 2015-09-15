@@ -256,7 +256,7 @@ namespace SQM.Website
                     HtmlGenericControl div = (HtmlGenericControl)e.Item.FindControl("divPlantGVScroll");
                     SetGridViewDisplay(gv, divLabel, div, 20, gv.Rows.Count, "scrollArea");
 
-                    if (UserContext.RoleAccess() >= AccessMode.Admin)
+					if (UserContext.GetMaxScopePrivilege(SysScope.busloc) <= SysPriv.admin)
                     {
                         if (busOrg.PLANT.Count > 0)
                         {

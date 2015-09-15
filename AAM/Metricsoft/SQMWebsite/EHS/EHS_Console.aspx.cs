@@ -166,7 +166,7 @@ namespace SQM.Website
             rptProfile.DataSource = LocalProfileList();
             rptProfile.DataBind();
 
-            if (UserContext.CheckAccess("EHS", "301") > AccessMode.Plant)
+            if (UserContext.GetMaxScopePrivilege(SysScope.envdata) <= SysPriv.config)
                 btnRollupAll.Visible = true;
         }
 
@@ -264,7 +264,7 @@ namespace SQM.Website
         {
             List<BusinessLocation> locationList = new List<BusinessLocation>();
             locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true).ToList();
-            locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
+            locationList = UserContext.FilterPlantAccessList(locationList);
             return locationList;
         }
 

@@ -45,7 +45,7 @@ namespace SQM.Website
         {
             if (!Page.IsPostBack)
             {
-                uclSearchBar.SetButtonsVisible(true, false, UserContext.CheckAccess("SQM", "201") >= AccessMode.Update ? true : false, UserContext.CheckAccess("SQM", "201") >= AccessMode.Update ? true : false, false, false);
+                //uclSearchBar.SetButtonsVisible(true, false, UserContext.CheckAccess("SQM", "201") >= AccessMode.Update ? true : false, UserContext.CheckAccess("SQM", "201") >= AccessMode.Update ? true : false, false, false);
                 uclSearchBar.SetButtonsEnabled(true, false, true, false, false, false);
             }
         }

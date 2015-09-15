@@ -397,11 +397,7 @@ namespace SQM.Website
 
             uclExport.BindExport("", false, "");
 
-            AccessMode accessMode = UserContext.CheckAccess("CQM", "");
-            if (accessMode < AccessMode.Admin)
-            {
-                btnNewView.Visible = btnViewLayout.Visible = false;
-            }
+            btnNewView.Visible = btnViewLayout.Visible = false;
 
             if (!displaySelects)
                 divPerspective.Visible = divDashboardSelects.Visible = false;
@@ -655,7 +651,7 @@ namespace SQM.Website
                 default:
                      metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray);
                      metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
-                    if (UserContext.RoleAccess() >= AccessMode.Plant)
+                    //if (UserContext.RoleAccess() >= AccessMode.Plant)
                           lnkExport.Visible = true;
                      if (context == "export")
                      {

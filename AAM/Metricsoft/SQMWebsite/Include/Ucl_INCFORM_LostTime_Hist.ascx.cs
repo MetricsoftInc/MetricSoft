@@ -18,7 +18,6 @@ namespace SQM.Website
 		const Int32 MaxTextLength = 4000;
 
 		protected decimal companyId;
-		protected AccessMode accessLevel;
 
 		protected int totalFormSteps;
 
@@ -107,7 +106,6 @@ namespace SQM.Website
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			accessLevel = UserContext.CheckAccess("EHS", "");
 
 			if (IsPostBack)
 			{

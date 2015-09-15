@@ -32,7 +32,6 @@ namespace SQM.Website
 			set { ViewState["isDirected"] = value; }
 		}
 
-		protected AccessMode accessLevel;
 		decimal companyId;
 
 		protected override void OnInit(EventArgs e)
@@ -70,11 +69,6 @@ namespace SQM.Website
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
-
-			accessLevel = UserContext.CheckAccess("EHS", "");
-			//if (accessLevel < AccessMode.Update)
-			//	rbNew.Visible = false;
-
 			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 			if (rbNew.Visible)
 				rbNew.Visible = createIncidentAccess;
@@ -227,7 +221,7 @@ namespace SQM.Website
 			if (ddlPlantSelect.Items.Count < 1)
 			{
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
-				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList, "EHS", ""), 0);
+				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 			 
 				rcbStatusSelect.SelectedValue = "A";
 				rcbFindingsSelect.FindItemByValue("A").Checked = true;
@@ -299,8 +293,6 @@ namespace SQM.Website
 				lblPageInstructions.Text = "Add or update preventative actions below.";
 				//lblStatus.Text = "Findings Status:";
 				rbNew.Text = "New Preventative Action";
-				if (accessLevel < AccessMode.Admin)
-					rbNew.Visible = false;
 				lblIncidentDate.Visible = false;
 				lblInspectionDate.Visible = true;
 				phPrevent.Visible = true;
@@ -350,7 +342,7 @@ namespace SQM.Website
 				}
 			}
 
-			if (UserContext.CheckAccess("EHS", "301") >= AccessMode.Plant)
+			if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.action)
 				uclExport.Visible = true;
 			else
 				uclExport.Visible = false;
@@ -437,7 +429,6 @@ namespace SQM.Website
 
 			toDate = new DateTime(toDate.Year, toDate.Month, toDate.Day, 23, 59, 59);
 		   
-			accessLevel = UserContext.CheckAccess("EHS", "");
 			List<decimal>  plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
 			
 			var typeList = new List<decimal>();
@@ -475,7 +466,7 @@ namespace SQM.Website
 				}
 				HSCalcs().ehsCtl.IncidentHst = actionList;
 				
-				if (accessLevel < AccessMode.Admin)
+				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					actionList = HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
 
 				if (actionList != null)
@@ -494,7 +485,7 @@ namespace SQM.Website
 					HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked);
 				}
 				
-				if (accessLevel < AccessMode.Admin)
+				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
 
 				if (HSCalcs().ehsCtl.IncidentHst != null)

@@ -29,7 +29,7 @@ namespace SQM.Website
 			{
                 uclIssueSearch.BindCSTIssueSearch(true, "CST", new PSsqmEntities());
                 List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
-                SQMBasePage.SetLocationList(uclIssueSearch.DDLPlantSelect, UserContext.FilterPlantAccessList(locationList, "SQM", ""), -1);
+                SQMBasePage.SetLocationList(uclIssueSearch.DDLPlantSelect, UserContext.FilterPlantAccessList(locationList), -1);
 			}
            
 		}

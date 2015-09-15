@@ -19,7 +19,6 @@ namespace SQM.Website
 		protected decimal selectedPlantId = 0;
 		protected decimal auditPlantId = 0;
 
-		protected AccessMode accessLevel;
 		bool controlQuestionChanged;
 
 		List<EHSAuditQuestion> questions;
@@ -91,9 +90,6 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			//accessLevel = UserContext.CheckAccess("EHS", "");
-			accessLevel = AccessMode.Admin;  // mt - temporary
 			entities = new PSsqmEntities();
 
 			bool returnFromClick = false;
@@ -150,9 +146,6 @@ namespace SQM.Website
 				if (auditTypeList.Count > 1)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
 
-				if (accessLevel < AccessMode.Admin)
-					auditTypeList = (from i in auditTypeList where i.AUDIT_TYPE_ID != 10 select i).ToList();
-
 				rddlAuditType.DataSource = auditTypeList;
 				rddlAuditType.DataTextField = "TITLE";
 				rddlAuditType.DataValueField = "AUDIT_TYPE_ID";
@@ -163,7 +156,6 @@ namespace SQM.Website
 		protected void LoadInformation()
 		{
 			// set up for adding the header info
-			AccessMode accessmode = UserContext.RoleAccess();
 
 			List<PRIVGROUP> pl = SQMModelMgr.SelectPrivGroupList(new SysPriv[1] { SysPriv.originate }, SysScope.audit, ""); // SQMModelMgr.SelectPrivGroupJobcodeList(SysPriv.originate, SysScope.audit);
 			DropDownListItem item = new DropDownListItem();
@@ -220,11 +212,10 @@ namespace SQM.Website
 			}
 			else
 			{
-				if (accessmode >= AccessMode.Plant)
+				if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
 				{
 					List<BusinessLocation> locationList = SessionManager.PlantList;
-					locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
-					locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
+					locationList = UserContext.FilterPlantAccessList(locationList);
 					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
 					{
 						if (mnuAuditLocation.Items.Count == 0)
@@ -492,7 +483,7 @@ namespace SQM.Website
 		protected void RefreshPageContext()
 		{
 			string typeString = "";
-			if (accessLevel > AccessMode.View && CurrentStep == 0)
+			if (UserContext.GetMaxScopePrivilege(SysScope.audit) < SysPriv.view && CurrentStep == 0)
 			{
 				pnlAddEdit.Visible = true;
 				if (!IsEditContext)
@@ -523,7 +514,7 @@ namespace SQM.Website
 				UpdateButtonText();
 
 				// Only admin and higher can delete audits
-				if (accessLevel < AccessMode.Admin)
+				if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
 					btnDelete.Visible = false;
 			}
 			else
@@ -549,10 +540,7 @@ namespace SQM.Website
 		{
 			List<decimal> plantIdList = new List<decimal>();
 
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			accessLevel = UserContext.CheckAccess("EHS", "");
-
-			if (accessLevel >= AccessMode.Admin)
+			if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
 			{
 				plantIdList = EHSAuditMgr.SelectPlantIdsByCompanyId(companyId);
 			}

@@ -20,8 +20,6 @@ namespace SQM.Website
 			AuditScheduleEdit,
 		}
 
-		protected AccessMode accessLevel;
-
 		protected override void OnInit(EventArgs e)
 		{
 			base.OnInit(e);
@@ -40,9 +38,6 @@ namespace SQM.Website
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
-			accessLevel = UserContext.CheckAccess("EHS", "");
-			//if (accessLevel < AccessMode.Update)
-			//	rbNew.Visible = false;
 
 			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.audit);
 			if (rbNew.Visible)
@@ -184,7 +179,7 @@ namespace SQM.Website
 			if (ddlPlantSelect.Items.Count < 1)
 			{
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
-				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList, "EHS", ""), 0);
+				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 
 				rcbStatusSelect.SelectedValue = "A";
 			}
@@ -244,7 +239,6 @@ namespace SQM.Website
 		private void SearchAuditSchedulers()
 		{
 			string selectedValue = "";
-			accessLevel = UserContext.CheckAccess("EHS", "");
 			List<decimal> plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
 
 			var typeList = new List<decimal>();

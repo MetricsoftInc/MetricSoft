@@ -996,11 +996,8 @@ namespace SQM.Website
                 {
                     if (PersonPlantAccess(person, location.Plant.PLANT_ID) && (string.IsNullOrEmpty(appContext) || SQMModelMgr.CheckModuleTopicAccess(person, appContext)))
                     {
-                        if (minRoleAccess == null || person.ROLE <= SessionManager.AccessModeRoleXREF(minRoleAccess))
-                        {
                             if (!personList.Contains(person))
                                 personList.Add(person);
-                        }
                     }
                 }
             }

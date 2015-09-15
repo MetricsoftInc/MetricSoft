@@ -34,8 +34,6 @@ namespace SQM.Website
 			set { ViewState["isDirected"] = value; }
 		}
 
-		protected AccessMode accessLevel;
-
 		protected override void OnInit(EventArgs e)
 		{
 			base.OnInit(e);
@@ -64,9 +62,6 @@ namespace SQM.Website
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
-			accessLevel = UserContext.CheckAccess("EHS", "");
-			//if (accessLevel < AccessMode.Update)
-			//	rbNew.Visible = false;
 
 			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
 			rbNew.Visible = createAuditAccess;
@@ -233,7 +228,7 @@ namespace SQM.Website
 			if (ddlPlantSelect.Items.Count < 1)
 			{
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
-				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList, "EHS", ""), 0);
+				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 
 				rcbStatusSelect.SelectedValue = "A";
 			}
@@ -362,7 +357,6 @@ namespace SQM.Website
 
 			toDate = new DateTime(toDate.Year, toDate.Month, toDate.Day, 23, 59, 59);
 
-			accessLevel = UserContext.CheckAccess("EHS", "");
 			List<decimal> plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
 
 			var typeList = new List<decimal>();

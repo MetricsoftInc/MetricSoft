@@ -7,6 +7,7 @@ namespace SQM.Website
 {
 	public enum EHSIncidentTypeId
 	{
+		Any = 0,
 		PropertyDamage = 1,
 		PowerOutage = 2,
 		Fire = 3,

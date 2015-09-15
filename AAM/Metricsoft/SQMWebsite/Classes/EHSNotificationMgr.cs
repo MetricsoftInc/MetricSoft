@@ -50,11 +50,16 @@ namespace SQM.Website
 
 		#endregion
 
-		public static int NotifyIncidentStatus(INCIDENT incident, string notifyScope, string scopeAction)
+		public static int NotifyIncidentStatus(INCIDENT incident, string scopeAction)
 		{
 			int status = 0;
+			string notifyScope;
+			if ((EHSIncidentTypeId)incident.ISSUE_TYPE_ID == EHSIncidentTypeId.InjuryIllness)
+				notifyScope = "IN-" + incident.ISSUE_TYPE_ID.ToString();
+			else
+				notifyScope = "IN-" + EHSIncidentTypeId.Any.ToString();
+
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
-			
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
 			notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeAction));
 

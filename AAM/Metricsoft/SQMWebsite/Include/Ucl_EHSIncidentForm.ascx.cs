@@ -31,7 +31,6 @@ namespace SQM.Website
 		protected decimal selectedPlantId = 0;
 		protected bool IsUseCustomForm;
 
-		protected AccessMode accessLevel;
 		bool controlQuestionChanged;
 
 		List<EHSIncidentQuestion> questions;
@@ -130,9 +129,6 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			//accessLevel = UserContext.CheckAccess("EHS", "312");
-			//accessLevel = UserContext.CheckAccess("EHS", "");
-			accessLevel = AccessMode.Admin;  // mt - temporary
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
@@ -202,8 +198,8 @@ namespace SQM.Website
 				if (incidentTypeList.Count > 1)
 					incidentTypeList.Insert(0, new INCIDENT_TYPE() { INCIDENT_TYPE_ID = 0, TITLE = selectString });
 				
-				if (accessLevel < AccessMode.Admin)
-						incidentTypeList = (from i in incidentTypeList where i.INCIDENT_TYPE_ID != 10 select i).ToList();
+				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
+					incidentTypeList = (from i in incidentTypeList where i.INCIDENT_TYPE_ID != 10 select i).ToList();
 
 				rddlIncidentType.Font.Bold = true;
 				rddlIncidentType.DataSource = incidentTypeList;
@@ -216,7 +212,6 @@ namespace SQM.Website
 		protected void LoadHeaderInformation()
 		{
 			// set up for adding the header info
-			AccessMode accessmode = UserContext.RoleAccess();
 
 			if (IsEditContext || CurrentStep > 0)
 			{
@@ -237,37 +232,34 @@ namespace SQM.Website
 			}
 			else
 			{
-				if (accessmode >= AccessMode.Plant)
+				// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
+				List<BusinessLocation> locationList = SessionManager.PlantList;
+				locationList = UserContext.FilterPlantAccessList(locationList);
+				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
 				{
-					// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
-					List<BusinessLocation> locationList = SessionManager.PlantList;
-					locationList = UserContext.FilterPlantAccessList(locationList, "EHS", "");
-					locationList = UserContext.FilterPlantAccessList(locationList, "SQM", "");
-					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
+					if (mnuIncidentLocation.Items.Count == 0)
 					{
-						if (mnuIncidentLocation.Items.Count == 0)
-						{
-							mnuIncidentLocation.Items.Clear();
+						mnuIncidentLocation.Items.Clear();
 
-							ddlIncidentLocation.Visible = false;
-							mnuIncidentLocation.Visible = true;
-							mnuIncidentLocation.Enabled = true;
-							SQMBasePage.SetLocationList(mnuIncidentLocation, locationList, 0, "[Select a Location]", "", true);
-						}
-					}
-					else
-					{
-						if (ddlIncidentLocation.Items.Count == 0)
-						{
-							ddlIncidentLocation.Items.Clear();
-							ddlIncidentLocation.Visible = true;
-							ddlIncidentLocation.Enabled = true;
-							mnuIncidentLocation.Visible = false;
-							SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
-							ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-						}
+						ddlIncidentLocation.Visible = false;
+						mnuIncidentLocation.Visible = true;
+						mnuIncidentLocation.Enabled = true;
+						SQMBasePage.SetLocationList(mnuIncidentLocation, locationList, 0, "[Select a Location]", "", true);
 					}
 				}
+				else
+				{
+					if (ddlIncidentLocation.Items.Count == 0)
+					{
+						ddlIncidentLocation.Items.Clear();
+						ddlIncidentLocation.Visible = true;
+						ddlIncidentLocation.Enabled = true;
+						mnuIncidentLocation.Visible = false;
+						SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
+						ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+					}
+				}
+
 				// set defaults for add mode
 				rddlIncidentType.Enabled = false;
 				rddlIncidentType.Visible = false;
@@ -276,12 +268,9 @@ namespace SQM.Website
 
 		public void BuildForm()
 		{
-			if (accessLevel <= AccessMode.View)
-				return;
-
 			if (Mode == IncidentMode.Prevent)
 			{
-				if (accessLevel <= AccessMode.Plant)
+				if (UserContext.GetMaxScopePrivilege(SysScope.incident) > SysPriv.config)
 				{
 					pnlIncidentHeader.Visible = false;
 
@@ -840,10 +829,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
@@ -896,12 +885,9 @@ namespace SQM.Website
 
 		public void GetForm()
 		{
-			if (accessLevel <= AccessMode.View)
-				return;
-
 			if (Mode == IncidentMode.Prevent)
 			{
-				if (accessLevel <= AccessMode.Plant)
+				if (UserContext.GetMaxScopePrivilege(SysScope.incident) > SysPriv.config)
 				{
 					pnlIncidentHeader.Visible = false;
 
@@ -1414,10 +1400,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && accessLevel < AccessMode.Admin)
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
@@ -2001,7 +1987,7 @@ namespace SQM.Website
 					theIncident = CreateNewIncident();
 					incidentId = theIncident.INCIDENT_ID;
 					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
-					EHSNotificationMgr.NotifyIncidentStatus(theIncident, "IN-0", ((int)SysPriv.originate).ToString());
+					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString());
 				}
 				else
 				{
@@ -2571,7 +2557,7 @@ namespace SQM.Website
 			uclIncidentDetails.Clear();
 			string typeString = "";
 
-			if (accessLevel > AccessMode.View)
+			if (UserContext.GetMaxScopePrivilege(SysScope.incident) < SysPriv.view)
 			{
 				if (!IsEditContext)
 				{
@@ -2663,7 +2649,7 @@ namespace SQM.Website
 				//pnlShowClosed.Visible = false;
 
 				// Only admin and higher can delete incidents
-				if (accessLevel < AccessMode.Admin)
+				if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					btnDelete.Visible = false;
 			}
 			else
@@ -2679,10 +2665,7 @@ namespace SQM.Website
 		{
 			List<decimal> plantIdList = new List<decimal>();
 
-			accessLevel = UserContext.CheckAccess("EHS", "312");
-			accessLevel = AccessMode.Admin;  // mt - temporary
-
-			if (accessLevel >= AccessMode.Admin)
+			if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.admin)
 			{
 				plantIdList = EHSIncidentMgr.SelectPlantIdsByCompanyId(companyId);
 			}
