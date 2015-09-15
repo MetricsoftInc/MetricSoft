@@ -34,7 +34,8 @@
   <auditStatus>
 	<xlat code="A" short="Open" long="Open"/>
 	<xlat code="I" short="In Progress" long="In Progress"/>
-	<xlat code="C" short="Closed" long="Closed"/>
+	<xlat code="C" short="Complete" long="Complete"/>
+	<xlat code="X" short="Closed" long="Closed"/>
   </auditStatus>
 	<effDates>
 		<xlat code="MIN" short="01/01/1900" long="01/01/1900"/>

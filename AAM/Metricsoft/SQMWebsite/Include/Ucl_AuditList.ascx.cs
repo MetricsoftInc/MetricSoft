@@ -343,8 +343,8 @@ namespace SQM.Website
 					lbl.Text = data.Audit.DESCRIPTION.Substring(0, 117) + "...";
 				}
 
-				lbl = (Label)e.Item.FindControl("lblDescription");
-				lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
+				//lbl = (Label)e.Item.FindControl("lblDescription");
+				//lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
 
 				if (data.Person != null)
 				{
@@ -354,14 +354,19 @@ namespace SQM.Website
 
 				lbl = (Label)e.Item.FindControl("lblAuditStatus");
 
-				if (data.Status == "C")
+				if (data.Audit.CURRENT_STATUS == "C")
 				{
-					DateTime clsDate = data.Audit.AUDIT_DT.AddDays(data.AuditType.DAYS_TO_COMPLETE);
+					DateTime clsDate = (DateTime)data.Audit.CLOSE_DATE_DATA_COMPLETE;
 					lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "C") + " " + SQMBasePage.FormatDate(clsDate, "d", false);
 				}
 				else
 				{
-					if (data.Audit.PERCENT_COMPLETE > 0)
+					if (data.DaysToClose == 0)
+					{
+						DateTime tmp = ((DateTime)data.Audit.AUDIT_DT).AddDays(data.AuditType.DAYS_TO_COMPLETE);
+						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "X") + "<br/>(" + SQMBasePage.FormatDate(tmp, "d", false) + ")";
+					}
+					else if (data.Audit.PERCENT_COMPLETE > 0)
 						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "I") + "<br/>(" + data.DaysToClose + ")";
 					else
 						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "A") + "<br/>(" + data.DaysToClose + ")";

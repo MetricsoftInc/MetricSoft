@@ -47,6 +47,7 @@ namespace SQM.Website
 		protected DateTime auditDate;
 		protected decimal auditTypeId;
 		protected string auditType;
+		protected bool allQuestionsAnswered;
 
 		public Ucl_EHSAuditDetails AuditDetails
 		{
@@ -762,12 +763,33 @@ namespace SQM.Website
 					q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
 					string cid = "Comment" + qid;
-					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
-					comment.TextMode = InputMode.MultiLine;
-					comment.Rows = 2;
-					comment.Resize = ResizeMode.Both;
-					comment.Text = q.AnswerComment;
-					pnl.Controls.Add(comment);
+					bool answerIsPositive = false;
+					if (!q.AnswerText.ToString().Equals(""))
+					{
+						foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+						{
+							if (choice.Value.Equals(q.AnswerText) && choice.ChoicePositive)
+								answerIsPositive = true;
+						}
+					}
+					if (!answerIsPositive && q.AnswerComment.Trim().Length == 0)
+					{
+						var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, CssClass = "audittextrequired" };
+						comment.TextMode = InputMode.MultiLine;
+						comment.Rows = 2;
+						comment.Resize = ResizeMode.Both;
+						comment.Text = q.AnswerComment;
+						pnl.Controls.Add(comment);
+					}
+					else
+					{
+						var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+						comment.TextMode = InputMode.MultiLine;
+						comment.Rows = 2;
+						comment.Resize = ResizeMode.Both;
+						comment.Text = q.AnswerComment;
+						pnl.Controls.Add(comment);
+					}
 				}
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
@@ -1877,6 +1899,11 @@ namespace SQM.Website
 				btnDelete.Visible = false;
 				lblResults.Visible = true;
 				int delStatus = EHSAuditMgr.DeleteAudit(EditAuditId);
+				// delete the task
+				if (delStatus == 1)
+				{
+					EHSAuditMgr.DeleteAuditTask(EditAuditId, 50);
+				}
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
 				lblResults.Text += (delStatus == 1) ? "Audit deleted." : "Error deleting audit.";
 				lblResults.Text += "</div>";
@@ -1925,8 +1952,7 @@ namespace SQM.Website
 			}
 			if (auditId > 0)
 			{
-				//shouldReturn = AddOrUpdateAnswers(questions, auditId);
-				AddOrUpdateAnswers(questions, auditId);
+				shouldReturn = AddOrUpdateAnswers(questions, auditId);
 				SaveAttachments(auditId);
 			}
 
@@ -1945,6 +1971,14 @@ namespace SQM.Website
 					rcbWarnNavigate.Visible = false;
 
 				lblResults.Visible = true;
+			}
+			else
+			{
+				// need to redraw the page with text boxes highlighted
+				BuildForm();
+				// and send a message that the field need to be entered
+				string script = string.Format("alert('{0}');", "You must complete all required text fields on this page to save. Complete the fields lined with red.");
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 
 			if (shouldReturn)
@@ -2238,7 +2272,7 @@ namespace SQM.Website
 			AUDIT audit = (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
 			totalPercent = Math.Round((totalAnswered / totalQuestions),2) * 100;
 			audit.PERCENT_COMPLETE = totalPercent;
-			if (totalPercent >= 100)
+			if (totalPercent >= 100 && negativeTextComplete)
 			{
 				audit.CURRENT_STATUS = "C";
 				if (!audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
@@ -2260,6 +2294,11 @@ namespace SQM.Website
 			// save all the changes
 			entities.SaveChanges();
 
+			if (audit.CURRENT_STATUS.Equals("C"))
+			{
+				AUDIT_TYPE audittype = EHSAuditMgr.SelectAuditTypeById(entities, auditTypeId);
+				EHSAuditMgr.CreateOrUpdateTask(auditId, SessionManager.UserContext.Person.PERSON_ID, 50, audit.AUDIT_DT.AddDays(audittype.DAYS_TO_COMPLETE), "C");
+			}
 			return negativeTextComplete;
 		}
 
@@ -2284,7 +2323,11 @@ namespace SQM.Website
 			entities.AddToAUDIT(newAudit);
 			entities.SaveChanges();
 			auditId = newAudit.AUDIT_ID;
-			
+
+			// create task record for their calendar
+			AUDIT_TYPE audittype = EHSAuditMgr.SelectAuditTypeById(entities, auditTypeId);
+			EHSAuditMgr.CreateOrUpdateTask(auditId, Convert.ToDecimal(rddlAuditUsers.SelectedValue), 50, ((DateTime)dmAuditDate.SelectedDate).AddDays(audittype.DAYS_TO_COMPLETE), "A");
+
 			return newAudit;
 		}
 
@@ -2443,22 +2486,14 @@ namespace SQM.Website
 
 					lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 					lblAuditType.Visible = true;
-					btnDelete.Visible = true;
+					bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
+					btnDelete.Visible = createAuditAccess;
 					LoadHeaderInformation();
 					BuildForm();
 				}
 
 				UpdateControlledQuestions();
 				UpdateButtonText();
-
-				
-				// Only plant admin and higher can view closed audits
-				//if (accessLevel < AccessMode.Plant)
-				//pnlShowClosed.Visible = false;
-
-				// Only admin and higher can delete audits
-				if (accessLevel < AccessMode.Admin)
-					btnDelete.Visible = false;
 			}
 			else
 			{
@@ -2469,6 +2504,7 @@ namespace SQM.Website
 				btnSaveReturn.Visible = false;
 
 				//lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + " Closed</strong><br/>";
+				// should we look up the closed date to determine if the label should include "Closed"?
 				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + "</strong><br/>";
 
 				rddlAuditType.Visible = false;
@@ -2476,7 +2512,8 @@ namespace SQM.Website
 
 				lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 				lblAuditType.Visible = true;
-				btnDelete.Visible = false;
+				bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
+				btnDelete.Visible = createAuditAccess;
 				LoadHeaderInformation();
 				var displaySteps = new int[] { CurrentStep };
 				uclAuditDetails.Refresh(EditAuditId, displaySteps);

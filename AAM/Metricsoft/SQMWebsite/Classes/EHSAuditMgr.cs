@@ -853,7 +853,7 @@ namespace SQM.Website
 			return status;
 		}
 
-		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate)
+		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string status)
 		{
 			var entities = new PSsqmEntities();
 
@@ -871,11 +871,25 @@ namespace SQM.Website
 			}
 			else
 			{
-				task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, audit.AUDIT_TYPE_ID.ToString());
+				switch (status)
+				{
+					case "C":
+						task.STATUS = ((int)TaskStatus.Complete).ToString();
+						taskMgr.SetTaskComplete(task, responsiblePersonId);
+						break;
+				}
+				//task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, audit.AUDIT_TYPE_ID.ToString());
 			}
 
 			taskMgr.UpdateTaskList(auditId);
 
+		}
+
+		public static void DeleteAuditTask(decimal auditId, int recordTypeId)
+		{
+			var entities = new PSsqmEntities();
+			var taskMgr = new TaskStatusMgr();
+			taskMgr.DeleteTask(recordTypeId, auditId);
 		}
 
 	}

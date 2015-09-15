@@ -68,9 +68,8 @@ namespace SQM.Website
 			//if (accessLevel < AccessMode.Update)
 			//	rbNew.Visible = false;
 
-			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.audit);
-			if (rbNew.Visible)
-				rbNew.Visible = createAuditAccess;
+			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
+			rbNew.Visible = createAuditAccess;
 
 
 			if (IsPostBack)

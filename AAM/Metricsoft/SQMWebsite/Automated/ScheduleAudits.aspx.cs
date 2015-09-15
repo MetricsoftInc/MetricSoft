@@ -110,7 +110,7 @@ namespace SQM.Website.Automated
 								}
 								entities.SaveChanges();
 								// create task record for their calendar
-								EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE));
+								EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE), "A");
 
 								// send an email
 								EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);

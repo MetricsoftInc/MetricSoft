@@ -180,9 +180,9 @@
                             <asp:Label ID="lblAuditBy" runat="server"></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
-                    <telerik:GridTemplateColumn HeaderText="Description" ShowSortIcon="true" SortExpression="Audit.DESCRIPTION">
+                    <telerik:GridTemplateColumn HeaderText="Score" ShowSortIcon="true" SortExpression="Audit.TOTAL_SCORE">
                         <ItemTemplate>
-                            <asp:Label ID="lblDescription" runat="server" Text='<%# HttpUtility.HtmlEncode((string)Eval("Audit.DESCRIPTION")) %>'></asp:Label>
+                            <asp:Label ID="lblScore" runat="server" Text='<%#Eval("Audit.TOTAL_SCORE") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn HeaderText="Status">

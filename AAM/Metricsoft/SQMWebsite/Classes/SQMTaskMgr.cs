@@ -427,7 +427,26 @@ namespace SQM.Website
             return this;
         }
 
-    }
+		public int DeleteTask(int recordType, decimal recordID)
+		{
+			int status = 0;
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				try
+				{
+					status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE RECORD_TYPE = " + recordType + " and RECORD_ID = " + recordID);
+				}
+				catch (Exception ex)
+				{
+					SQMLogger.LogException(ex);
+				}
+			}
+
+			return status;
+		}
+
+	}
     #endregion
 
     #region taskmgr
