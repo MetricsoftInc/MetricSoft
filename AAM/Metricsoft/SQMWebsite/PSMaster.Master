@@ -164,46 +164,51 @@
 		<asp:HiddenField ID="hdCurrentActiveTab" runat="server" />
 		<asp:HiddenField ID="hdCurrentActiveSecondaryTab" runat="server" />
 
-       	<div style="width:99%; margin: 5px;" >
-            <div style="float: left;" class="noprint">
-                <asp:Image ID="imgLogo" runat="server" CssClass="logoImg"/>
-            </div>
-            <div style="float: left; margin: 12px 0 0 20px;" class="noprint">
-                <asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>
-            </div>
-            <div style="float:right; margin: 5px 10px 0 0;" class="noprint">
-                <asp:Panel id="Panel1" runat="server" style="float: right;">
-                <asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences"></asp:LinkButton>
-                <%-- <asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClick="DisplayUserPrefs" Title="Update my user preferences"></asp:LinkButton>--%>
-                    &nbsp;&nbsp;
-                    <asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirmAction('Log Out');" onClick="lbLogout_Click" Title="Logout"></asp:LinkButton>
-                </asp:Panel>
-                <br />
-                <asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;">
-                    <asp:Label ID="lblActiveLocation" runat="server" CssClass="businessCard"></asp:Label>
-                    <asp:Label ID="lblStatOfTheDay_out" runat="server" CssClass="instructTextEmphasis" Visible="false"></asp:Label>
-                    <asp:Label ID="lblStatOfTheDay" runat="server" CssClass="businessCard" Visible="false" Text=" days without a lost time case"></asp:Label>
-                        
-                </asp:Panel>
-            </div>
+ 		<div style="width:99%; margin: 5px;" >
+			<div style="float: left;" class="noprint">
+				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;"/>
+			</div>
+			<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
+				<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>
+			</div>
+			<div style="float:right; margin: 5px 10px 0 0;" class="noprint">
+				<asp:Panel id="Panel1" runat="server" style="float: right;">
+				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences"></asp:LinkButton>
+				<%-- <asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClick="DisplayUserPrefs" Title="Update my user preferences"></asp:LinkButton>--%>
+					&nbsp;&nbsp;
+					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirmAction('Log Out');" onClick="lbLogout_Click" Title="Logout"></asp:LinkButton>
+				</asp:Panel>
+				<br />
+				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;">
+					<asp:Label ID="lblActiveLocation" runat="server" CssClass="businessCard"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay_out" runat="server" CssClass="instructTextEmphasis" Visible="false"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay" runat="server" CssClass="businessCard" Visible="false" Text=" days without a lost time case"></asp:Label>
+						
+				</asp:Panel>
+			</div>
 
-            <div class="menuContainer noprint">
-                <telerik:RadMenu ID="RadMenu1" runat="server" OnClientLoad="ResetMenu" OnClientItemOpened="AdjustWidth" OnClientMouseOver="ResetTimeout" OnClientMouseOut="ResetTimeout" OnClientItemClosing="CheckClose" />
-                <span id="pnlReferenceDocSelect" runat="server" style="float: right; margin-top: 5px; margin-right: 3px;">
-                    <Ucl:DocList id="uclDocSelect" runat="server"/>
-                </span>
-            </div>
-            <div class="subMenuContainer noprint" />
-        </div>
-        <%--<div style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;">--%>
-        <div class="masterFrame">
-                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                </asp:ContentPlaceHolder>
+			<div class="menuContainer noprint" >
+				<telerik:RadMenu ID="RadMenu1" runat="server" OnClientLoad="ResetMenu" OnClientItemOpened="AdjustWidth" OnClientMouseOver="ResetTimeout" OnClientMouseOut="ResetTimeout" OnClientItemClosing="CheckClose" />
+				<span id="pnlReferenceDocSelect" runat="server" style="float: right; margin-top: 5px; margin-right: 3px;">
+					<Ucl:DocList id="uclDocSelect" runat="server"/>
+				</span>
+			</div>
+			<div class="row hidden-xs">
+				<div class="subMenuContainer noprint" />
+			</div>
+		</div>
+		<%--<div style="border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc;">--%>
+		<div class="masterFrame">
+				<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+				</asp:ContentPlaceHolder>
 				<asp:ContentPlaceHolder ID="ContentPlaceHolder_Body" runat="server">
-                </asp:ContentPlaceHolder>
-                <div class="footerCopyright noprint">
-                © 2015 Metricsoft Inc.
-        </div>
+				</asp:ContentPlaceHolder>
+			<div class="container footer">
+				<div class="footerCopyright noprint">
+				© 2015 Metricsoft Inc.
+				</div>
+			</div>
+		</div>
     </div>
 
     <telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Title="User Preferences"  Behaviors="Close">

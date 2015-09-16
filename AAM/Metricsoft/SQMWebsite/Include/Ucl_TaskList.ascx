@@ -25,7 +25,7 @@
 		<telerik:RadScheduler ID="scdTaskSchedule" name="scdTaskSchedule" RenderMode="Auto" runat="server" Font-Size="X-Small" Skin="Metro" 
 			SelectedView="MonthView" OnAppointmentDataBound="scdTaskSchedule_OnDataBound"  OnAppointmentCreated="scdTaskSchedule_OnCreated" TimeLabelRowSpan ="2" 
 			 DataKeyField ="RecordKey" DataSubjectField="LongTitle" DataStartField="StartDate" DataEndField="EndDate" DataDescriptionField="Description"
-			 OnClientAppointmentEditing="OnClientAppointmentEditing" AllowEdit="false" AllowInsert="false" ReadOnly="true" OverflowBehavior="Expand" >
+			 AllowEdit="false" AllowInsert="false" ReadOnly="true" OverflowBehavior="Expand" >
 				<AdvancedForm Modal="true" EnableResourceEditing="false" Enabled="false" ></AdvancedForm>
 				<WeekView UserSelectable="true" />
 				<DayView UserSelectable="true" />

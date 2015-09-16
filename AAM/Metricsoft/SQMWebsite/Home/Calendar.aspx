@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspPSMaster.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="SQM.Website.Calendar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="SQM.Website.Calendar" %>
 <%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_AdminEdit.ascx" TagName="PrefsEdit" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_DocMgr.ascx" TagName="DocList" TagPrefix="Ucl" %>
@@ -28,8 +28,6 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-	<script src="scripts/ps_admin.js" type="text/javascript"></script>
-	<link href="css/PSSQM.css" rel="stylesheet" type="text/css" />
 	<asp:HiddenField ID="hfBase" runat="server" />
 	<asp:HiddenField id="hfTimeout" runat="server"/>
 	<asp:HiddenField ID="hdCurrentActiveTab" runat="server" />
