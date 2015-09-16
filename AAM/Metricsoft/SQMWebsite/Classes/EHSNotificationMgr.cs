@@ -9,6 +9,9 @@ namespace SQM.Website
 {
 	public static class EHSNotificationMgr
 	{
+		public static string incidentPath = ""; //"/EHS/EHS_Incidents.aspx";
+		public static string auditPath = ""; //"/EHS/EHS_Audits.aspx";
+
 		#region helpers
 
 		public static List<PERSON> GetNotifyPersonList(PLANT plant, string notifyScope, string notifyOnTask)
@@ -57,7 +60,7 @@ namespace SQM.Website
 			if ((EHSIncidentTypeId)incident.ISSUE_TYPE_ID == EHSIncidentTypeId.InjuryIllness)
 				notifyScope = "IN-" + incident.ISSUE_TYPE_ID.ToString();
 			else
-				notifyScope = "IN-" + EHSIncidentTypeId.Any.ToString();
+				notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
 
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
@@ -84,7 +87,7 @@ namespace SQM.Website
 								"<br/>" +
 								"By : " + incident.LAST_UPD_BY +
 								"<br/>" +
-								"Please log in to " + appUrl + " to view this incident.";
+								"Please log in to " + (appUrl+incidentPath) + " to view this incident.";
 
 				string emailTo = "";
 				foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())
@@ -130,7 +133,7 @@ namespace SQM.Website
 								"<br/>" +
 								"Due : " + theTask.DUE_DT.ToString() + "<br/>" +
 								"<br/>" +
-								"Please log in to " + appUrl + " to view this incident.";
+								"Please log in to " + (appUrl+incidentPath) + " to view this incident.";
 
 				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
 				thread.IsBackground = true;
@@ -163,7 +166,7 @@ namespace SQM.Website
 								"<br/>" +
 								auditType + "<br/>" +
 								"<br/>" +
-								"Please log in to " + appUrl + " to view the audit.";
+								"Please log in to " + appUrl+auditPath + " to view the audit.";
 
 				foreach (decimal eid in emailIds)
 				{
