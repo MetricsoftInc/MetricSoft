@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<companies>
+	<company code="dunsNEWSUPP">
+		<ult_duns_code>dunsNEWSUPP</ult_duns_code>
+		<plants>
+  			<plant code="duns4001">
+      				<duns_code>duns4001</duns_code>
+      				<ult_duns_code>dunsNEWSUPP</ult_duns_code>
+				<org_duns_code>org0018</org_duns_code>
+				<plant_name>SUPPPlant 4001</plant_name>
+      				<comp_int_id>0</comp_int_id>
+      				<disp_plant_name>SUPPPlant 4001</disp_plant_name>
+      				<currency_code>EUR</currency_code>
+      				<local_timezone>GMT</local_timezone>
+      				<threshold_amt>1200</threshold_amt>
+				<status>A</status>
+				<address type="S" >
+					<street1>14777 1st street</street1>
+					<city>troy</city>
+					<state_prov>MI</state_prov>
+					<postal_code>48310</postal_code>
+					<country>USA</country>
+				</address>
+				<depts>
+					<dept code="DEPT4001A">
+						<dept_code>DEPT4001A</dept_code>
+						<dept_name>DEPT4001A</dept_name>
+						<status>I</status>
+					</dept>
+					<dept code="DEPT4001B">
+						<dept_code>DEPT4001B</dept_code>
+						<dept_name>DEPT4001B</dept_name>
+						<status>I</status>
+					</dept>
+				</depts>
+				<labors>
+					<labor code="RWK4">
+						<labor_code>RWK4</labor_code>
+						<labor_name>Rework</labor_name>
+						<labor_rate>149.00</labor_rate>
+					</labor>
+					<labor code="ASY4">
+						<labor_code>ASY4</labor_code>
+						<labor_name>Assembly</labor_name>
+						<labor_rate>148.00</labor_rate>
+					</labor>
+					<labor code="FAB4">
+						<labor_code>FAB4</labor_code>
+						<labor_name>Fabricate</labor_name>
+						<labor_rate>147.00</labor_rate>
+					</labor>
+				</labors>
+				<lines>
+					<line code="Line 995"> 
+						<plant_line_name>Line 995</plant_line_name>
+						<downtime_rate>275.00</downtime_rate>
+						<status>A</status>
+					</line>
+				</lines>
+    			</plant>
+		</plants>
+	</company>
+</companies>
