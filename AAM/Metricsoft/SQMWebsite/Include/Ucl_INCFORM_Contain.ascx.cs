@@ -63,24 +63,6 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected bool UpdateAccess
-		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
-		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
-		}
-
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -89,13 +71,11 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
-
-			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
-			if (IsFullPagePostback)
-				rptContain.DataBind();
+			if (SessionManager.SessionContext != null)
+			{
+				if (IsFullPagePostback)
+					rptContain.DataBind();
+			}
 		}
 
 
@@ -144,14 +124,15 @@ namespace SQM.Website
 		protected override void FrameworkInitialize()
 		{
 			//String selectedLanguage = "es";
-			String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
-			Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+			if (SessionManager.SessionContext != null)
+			{
+				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
 
-			base.FrameworkInitialize();
+				base.FrameworkInitialize();
+			}
 		}
-
-
 
 		public void PopulateInitialForm()
 		{
@@ -230,16 +211,9 @@ namespace SQM.Website
 					//ic.Checked = contain.IsCompleted;
 
 					// Set user access:
-					tbca.Enabled = ActionAccess;
-					rddlp.Enabled = ActionAccess;
-					sd.Enabled = ActionAccess;
-					//cd.Enabled = ActionAccess;
-					//ic.Enabled = ActionAccess;
-					itmdel.Visible = ActionAccess;
+					tbca.Enabled = rddlp.Enabled = sd.Enabled = itmdel.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
-					rvfca.Enabled = ActionAccess;
-					rvfcp.Enabled = ActionAccess;
-					rvfsd.Enabled = ActionAccess;
+					rvfca.Enabled = rvfcp.Enabled = rvfsd.Enabled = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
 					if (contain.ITEM_SEQ > minRowsToValidate)
 					{
@@ -255,7 +229,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddContain");
-				addanother.Visible = ActionAccess;
+				addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 			}
 
 		}

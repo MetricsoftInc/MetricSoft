@@ -9,8 +9,8 @@ namespace SQM.Website
 {
 	public static class EHSNotificationMgr
 	{
-		public static string incidentPath = ""; //"/EHS/EHS_Incidents.aspx";
-		public static string auditPath = ""; //"/EHS/EHS_Audits.aspx";
+		public static string incidentPath = "/EHS/EHS_Incidents.aspx";
+		public static string auditPath = "/EHS/EHS_Audits.aspx";
 
 		#region helpers
 

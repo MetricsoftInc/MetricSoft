@@ -94,12 +94,15 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
-			UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-			ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-			ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
+			if (SessionManager.SessionContext != null)
+			{
+				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
+				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
-			if (IsFullPagePostback)
-				rptAction.DataBind();
+				if (IsFullPagePostback)
+					rptAction.DataBind();
+			}
 		}
 
 
@@ -148,11 +151,14 @@ namespace SQM.Website
 		protected override void FrameworkInitialize()
 		{
 			//String selectedLanguage = "es";
-			String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
-			Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+			if (SessionManager.SessionContext != null)
+			{
+				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
 
-			base.FrameworkInitialize();
+				base.FrameworkInitialize();
+			}
 		}
 
 
