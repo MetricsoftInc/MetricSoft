@@ -219,6 +219,7 @@
     <Content Include="EHS\EHS_Audit_Scheduler.aspx" />
     <Content Include="EHS\EHS_Audits.aspx" />
     <Content Include="EHS\EHS_Audits_Questions.aspx" />
+    <Content Include="EHS\EHS_DataReport.aspx" />
     <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents.aspx" />
     <Content Include="EHS\EHS_Incident_Verification.aspx" />
@@ -231,6 +232,7 @@
     <Content Include="CurrencyTest.aspx" />
     <Content Include="EHS\EHS_Console.aspx" />
     <Content Include="EHS\EHS_ENVReport.aspx" />
+    <Content Include="EHS\EHS_Data.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="ErrorServer.aspx" />
     <Content Include="GenericError404.aspx" />
@@ -662,7 +664,6 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -673,6 +674,13 @@
     </Compile>
     <Compile Include="EHS\EHS_Audit_Scheduler.aspx.designer.cs">
       <DependentUpon>EHS_Audit_Scheduler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_DataReport.aspx.cs">
+      <DependentUpon>EHS_DataReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_DataReport.aspx.designer.cs">
+      <DependentUpon>EHS_DataReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Incidents.aspx.cs">
       <DependentUpon>EHS_Incidents.aspx</DependentUpon>
@@ -764,6 +772,13 @@
     </Compile>
     <Compile Include="EHS\EHS_ENVReport.aspx.designer.cs">
       <DependentUpon>EHS_ENVReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Data.aspx.cs">
+      <DependentUpon>EHS_Data.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Data.aspx.designer.cs">
+      <DependentUpon>EHS_Data.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
@@ -1071,7 +1086,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1085,7 +1099,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -1344,7 +1357,9 @@
     <Content Include="RspQAILogin.Master" />
     <Content Include="RspPSMaster.Master" />
     <Content Include="PSMaster.Master" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
   </ItemGroup>
