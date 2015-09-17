@@ -605,9 +605,11 @@ namespace SQM.Website
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
+				//personList = (from p in ctx.PERSON 
+				//			  join l in ctx.PLANT on p.PLANT_ID equals l.PLANT_ID 
+				//			  where l.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList()
 				personList = (from p in ctx.PERSON 
-							  join l in ctx.PLANT on p.PLANT_ID equals l.PLANT_ID 
-							  where l.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+							  where p.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
 			}
 
 			return personList;
