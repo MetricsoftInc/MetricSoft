@@ -43,6 +43,7 @@
           <EntitySet Name="DOCUMENT" EntityType="PSsqmModel.Store.DOCUMENT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DOCUMENT_FILE" EntityType="PSsqmModel.Store.DOCUMENT_FILE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EFM_REFERENCE" EntityType="PSsqmModel.Store.EFM_REFERENCE" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EHS_DATA" EntityType="PSsqmModel.Store.EHS_DATA" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EHS_MEASURE" EntityType="PSsqmModel.Store.EHS_MEASURE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EHS_METRIC_HISTORY" EntityType="PSsqmModel.Store.EHS_METRIC_HISTORY" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EHS_PROFILE" EntityType="PSsqmModel.Store.EHS_PROFILE" store:Type="Tables" Schema="dbo" />
@@ -311,6 +312,14 @@
           <AssociationSet Name="fk_document_reference_language" Association="PSsqmModel.Store.fk_document_reference_language">
             <End Role="LOCAL_LANGUAGE" EntitySet="LOCAL_LANGUAGE" />
             <End Role="DOCUMENT" EntitySet="DOCUMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_DATA_EHS_MEASURE" Association="PSsqmModel.Store.FK_EHS_DATA_EHS_MEASURE">
+            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
+            <End Role="EHS_DATA" EntitySet="EHS_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_DATA_PLANT" Association="PSsqmModel.Store.FK_EHS_DATA_PLANT">
+            <End Role="PLANT" EntitySet="PLANT" />
+            <End Role="EHS_DATA" EntitySet="EHS_DATA" />
           </AssociationSet>
           <AssociationSet Name="FK_EHS_MEASURE_EFM_REFERENCE" Association="PSsqmModel.Store.FK_EHS_MEASURE_EFM_REFERENCE">
             <End Role="EFM_REFERENCE" EntitySet="EFM_REFERENCE" />
@@ -1210,6 +1219,17 @@
           <Property Name="EFM_CATEGORY" Type="varchar" Nullable="false" MaxLength="40" />
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="EHS_DATA">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Name="DATA_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
+          <Property Name="MEASURE_ID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="PLANT_ID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="DATE" Type="date" Nullable="false" />
+          <Property Name="VALUE" Type="numeric" Precision="35" />
+          <Property Name="ATTRIBUTE" Type="nvarchar" MaxLength="400" />
+        </EntityType>
         <EntityType Name="EHS_MEASURE">
           <Key>
             <PropertyRef Name="MEASURE_ID" />
@@ -1226,6 +1246,9 @@
           <Property Name="PLANT_ACCT_FIELD" Type="varchar" MaxLength="40" />
           <Property Name="EFM_TYPE" Type="varchar" MaxLength="40" />
           <Property Name="WASTE_CODE" Type="varchar" MaxLength="40" />
+          <Property Name="FREQUENCY" Type="nvarchar" MaxLength="2" />
+          <Property Name="DATA_TYPE" Type="nvarchar" MaxLength="2" />
+          <Property Name="SUMMARY_TYPE" Type="nvarchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="EHS_METRIC_HISTORY">
           <Key>
@@ -3103,6 +3126,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EHS_DATA_EHS_MEASURE">
+          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
+          <End Role="EHS_DATA" Type="PSsqmModel.Store.EHS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Principal>
+            <Dependent Role="EHS_DATA">
+              <PropertyRef Name="MEASURE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_DATA_PLANT">
+          <End Role="PLANT" Type="PSsqmModel.Store.PLANT" Multiplicity="1" />
+          <End Role="EHS_DATA" Type="PSsqmModel.Store.EHS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLANT">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="EHS_DATA">
+              <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EHS_MEASURE_EFM_REFERENCE">
           <End Role="EFM_REFERENCE" Type="PSsqmModel.Store.EFM_REFERENCE" Multiplicity="0..1" />
           <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="*" />
@@ -4855,6 +4902,15 @@
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_APPROVAL" EntitySet="INCFORM_APPROVAL" />
           </AssociationSet>
+          <EntitySet Name="EHS_DATA" EntityType="PSsqmModel.EHS_DATA" />
+          <AssociationSet Name="FK_EHS_DATA_EHS_MEASURE" Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE">
+            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
+            <End Role="EHS_DATA" EntitySet="EHS_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_DATA_PLANT" Association="PSsqmModel.FK_EHS_DATA_PLANT">
+            <End Role="PLANT" EntitySet="PLANT" />
+            <End Role="EHS_DATA" EntitySet="EHS_DATA" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -6326,6 +6382,10 @@
           <NavigationProperty Name="EHS_MEASURE3" Relationship="PSsqmModel.FK_EHS_MEASURE_EHS_MEASURE1" FromRole="EHS_MEASURE1" ToRole="EHS_MEASURE" />
           <NavigationProperty Name="EHS_METRIC_HISTORY" Relationship="PSsqmModel.FK_EHS_METRIC_HISTORY_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_METRIC_HISTORY" />
           <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_PROFILE_MEASURE" />
+          <Property Type="String" Name="FREQUENCY" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DATA_TYPE" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SUMMARY_TYPE" MaxLength="2" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EHS_DATA" Relationship="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_DATA" />
           </EntityType>
         <EntityType Name="EHS_METRIC_HISTORY">
           <Key>
@@ -6503,6 +6563,7 @@
           <NavigationProperty Name="RECEIPT1" Relationship="PSsqmModel.FK_RECEIPT_PLANT1" FromRole="PLANT" ToRole="RECEIPT" />
           <Property Type="String" Name="ALT_DUNS_CODE" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NOTIFYACTION" Relationship="PSsqmModel.FK_NOTIFY_PLAN_PLANT" FromRole="PLANT" ToRole="NOTIFYACTION" />
+          <NavigationProperty Name="EHS_DATA" Relationship="PSsqmModel.FK_EHS_DATA_PLANT" FromRole="PLANT" ToRole="EHS_DATA" />
           </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PLANT">
           <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="0..1" />
@@ -8781,6 +8842,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EHS_DATA">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Type="Decimal" Name="DATA_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="MEASURE_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="DATE" Nullable="false" Precision="0" />
+          <Property Type="Decimal" Name="VALUE" Precision="35" Scale="0" />
+          <Property Type="String" Name="ATTRIBUTE" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EHS_MEASURE" Relationship="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" FromRole="EHS_DATA" ToRole="EHS_MEASURE" />
+          <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_EHS_DATA_PLANT" FromRole="EHS_DATA" ToRole="PLANT" />
+        </EntityType>
+        <Association Name="FK_EHS_DATA_EHS_MEASURE">
+          <End Type="PSsqmModel.EHS_MEASURE" Role="EHS_MEASURE" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_DATA" Role="EHS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Principal>
+            <Dependent Role="EHS_DATA">
+              <PropertyRef Name="MEASURE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_DATA_PLANT">
+          <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_DATA" Role="EHS_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLANT">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="EHS_DATA">
+              <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9733,6 +9831,9 @@
           <EntitySetMapping Name="EHS_MEASURE">
             <EntityTypeMapping TypeName="PSsqmModel.EHS_MEASURE">
               <MappingFragment StoreEntitySet="EHS_MEASURE">
+                <ScalarProperty Name="SUMMARY_TYPE" ColumnName="SUMMARY_TYPE" />
+                <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+                <ScalarProperty Name="FREQUENCY" ColumnName="FREQUENCY" />
                 <ScalarProperty Name="WASTE_CODE" ColumnName="WASTE_CODE" />
                 <ScalarProperty Name="EFM_TYPE" ColumnName="EFM_TYPE" />
                 <ScalarProperty Name="PLANT_ACCT_FIELD" ColumnName="PLANT_ACCT_FIELD" />
@@ -10818,6 +10919,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EHS_DATA">
+            <EntityTypeMapping TypeName="PSsqmModel.EHS_DATA">
+              <MappingFragment StoreEntitySet="EHS_DATA">
+                <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="MEASURE_ID" ColumnName="MEASURE_ID" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11107,6 +11220,9 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="1.9836781704722335" PointY="26.67922688772866" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.EHS_DATA" Width="1.5" PointX="7.7116309105007117" PointY="2.4932833027528987" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
         </Diagram>
     </Diagrams>
   </Designer>

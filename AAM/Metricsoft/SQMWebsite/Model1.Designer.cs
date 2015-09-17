@@ -158,6 +158,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY", "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 
 #endregion
 
@@ -2240,6 +2242,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_APPROVAL> _INCFORM_APPROVAL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                if ((_EHS_DATA == null))
+                {
+                    _EHS_DATA = base.CreateObjectSet<EHS_DATA>("EHS_DATA");
+                }
+                return _EHS_DATA;
+            }
+        }
+        private ObjectSet<EHS_DATA> _EHS_DATA;
 
         #endregion
 
@@ -3259,6 +3277,14 @@ namespace SQM.Website
         public void AddToINCFORM_APPROVAL(INCFORM_APPROVAL iNCFORM_APPROVAL)
         {
             base.AddObject("INCFORM_APPROVAL", iNCFORM_APPROVAL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_DATA(EHS_DATA eHS_DATA)
+        {
+            base.AddObject("EHS_DATA", eHS_DATA);
         }
 
         #endregion
@@ -15633,6 +15659,269 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="EHS_DATA")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EHS_DATA : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EHS_DATA object.
+        /// </summary>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        /// <param name="mEASURE_ID">Initial value of the MEASURE_ID property.</param>
+        /// <param name="pLANT_ID">Initial value of the PLANT_ID property.</param>
+        /// <param name="dATE">Initial value of the DATE property.</param>
+        public static EHS_DATA CreateEHS_DATA(global::System.Decimal dATA_ID, global::System.Decimal mEASURE_ID, global::System.Decimal pLANT_ID, global::System.DateTime dATE)
+        {
+            EHS_DATA eHS_DATA = new EHS_DATA();
+            eHS_DATA.DATA_ID = dATA_ID;
+            eHS_DATA.MEASURE_ID = mEASURE_ID;
+            eHS_DATA.PLANT_ID = pLANT_ID;
+            eHS_DATA.DATE = dATE;
+            return eHS_DATA;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                if (_DATA_ID != value)
+                {
+                    OnDATA_IDChanging(value);
+                    ReportPropertyChanging("DATA_ID");
+                    _DATA_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DATA_ID");
+                    OnDATA_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Decimal value);
+        partial void OnDATA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal MEASURE_ID
+        {
+            get
+            {
+                return _MEASURE_ID;
+            }
+            set
+            {
+                OnMEASURE_IDChanging(value);
+                ReportPropertyChanging("MEASURE_ID");
+                _MEASURE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MEASURE_ID");
+                OnMEASURE_IDChanged();
+            }
+        }
+        private global::System.Decimal _MEASURE_ID;
+        partial void OnMEASURE_IDChanging(global::System.Decimal value);
+        partial void OnMEASURE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                OnPLANT_IDChanging(value);
+                ReportPropertyChanging("PLANT_ID");
+                _PLANT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLANT_ID");
+                OnPLANT_IDChanged();
+            }
+        }
+        private global::System.Decimal _PLANT_ID;
+        partial void OnPLANT_IDChanging(global::System.Decimal value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DATE
+        {
+            get
+            {
+                return _DATE;
+            }
+            set
+            {
+                OnDATEChanging(value);
+                ReportPropertyChanging("DATE");
+                _DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATE");
+                OnDATEChanged();
+            }
+        }
+        private global::System.DateTime _DATE;
+        partial void OnDATEChanging(global::System.DateTime value);
+        partial void OnDATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VALUE
+        {
+            get
+            {
+                return _VALUE;
+            }
+            set
+            {
+                OnVALUEChanging(value);
+                ReportPropertyChanging("VALUE");
+                _VALUE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VALUE");
+                OnVALUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VALUE;
+        partial void OnVALUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnVALUEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ATTRIBUTE
+        {
+            get
+            {
+                return _ATTRIBUTE;
+            }
+            set
+            {
+                OnATTRIBUTEChanging(value);
+                ReportPropertyChanging("ATTRIBUTE");
+                _ATTRIBUTE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ATTRIBUTE");
+                OnATTRIBUTEChanged();
+            }
+        }
+        private global::System.String _ATTRIBUTE;
+        partial void OnATTRIBUTEChanging(global::System.String value);
+        partial void OnATTRIBUTEChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE")]
+        public EHS_MEASURE EHS_MEASURE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EHS_MEASURE>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EHS_MEASURE>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<EHS_MEASURE> EHS_MEASUREReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<EHS_MEASURE>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<EHS_MEASURE>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT")]
+        public PLANT PLANT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_EHS_DATA_PLANT", "PLANT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_EHS_DATA_PLANT", "PLANT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PLANT> PLANTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_EHS_DATA_PLANT", "PLANT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PLANT>("PSsqmModel.FK_EHS_DATA_PLANT", "PLANT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="EHS_MEASURE")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -15953,6 +16242,78 @@ namespace SQM.Website
         private global::System.String _WASTE_CODE;
         partial void OnWASTE_CODEChanging(global::System.String value);
         partial void OnWASTE_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FREQUENCY
+        {
+            get
+            {
+                return _FREQUENCY;
+            }
+            set
+            {
+                OnFREQUENCYChanging(value);
+                ReportPropertyChanging("FREQUENCY");
+                _FREQUENCY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FREQUENCY");
+                OnFREQUENCYChanged();
+            }
+        }
+        private global::System.String _FREQUENCY;
+        partial void OnFREQUENCYChanging(global::System.String value);
+        partial void OnFREQUENCYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DATA_TYPE
+        {
+            get
+            {
+                return _DATA_TYPE;
+            }
+            set
+            {
+                OnDATA_TYPEChanging(value);
+                ReportPropertyChanging("DATA_TYPE");
+                _DATA_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DATA_TYPE");
+                OnDATA_TYPEChanged();
+            }
+        }
+        private global::System.String _DATA_TYPE;
+        partial void OnDATA_TYPEChanging(global::System.String value);
+        partial void OnDATA_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SUMMARY_TYPE
+        {
+            get
+            {
+                return _SUMMARY_TYPE;
+            }
+            set
+            {
+                OnSUMMARY_TYPEChanging(value);
+                ReportPropertyChanging("SUMMARY_TYPE");
+                _SUMMARY_TYPE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SUMMARY_TYPE");
+                OnSUMMARY_TYPEChanged();
+            }
+        }
+        private global::System.String _SUMMARY_TYPE;
+        partial void OnSUMMARY_TYPEChanging(global::System.String value);
+        partial void OnSUMMARY_TYPEChanged();
 
         #endregion
 
@@ -16189,6 +16550,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_DATA")]
+        public EntityCollection<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_DATA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_DATA", value);
                 }
             }
         }
@@ -33669,6 +34052,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<NOTIFYACTION>("PSsqmModel.FK_NOTIFY_PLAN_PLANT", "NOTIFYACTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "EHS_DATA")]
+        public EntityCollection<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA", value);
                 }
             }
         }
