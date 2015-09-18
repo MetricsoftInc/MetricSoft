@@ -133,9 +133,9 @@ namespace SQM.Website
 						//if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
 						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
 						// TODO: Maybe check for scope privileges before adding these
-						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.originate)
+						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.config)
 							EHSMenu2.Items.Add(new RadMenuItem("Data Input", "~/EHS/EHS_Data.aspx"));
-						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.originate)
+						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.config)
 							EHSMenu2.Items.Add(new RadMenuItem("Report", "~/EHS/EHS_DataReport.aspx"));
 						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
 						{
