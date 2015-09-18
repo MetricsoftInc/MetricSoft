@@ -65,25 +65,6 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected bool UpdateAccess
-		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
-		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
-		}
-
-
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -95,10 +76,6 @@ namespace SQM.Website
 		{
 			if (SessionManager.SessionContext != null)
 			{
-				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 				if (IsFullPagePostback)
 					rptLostTime.DataBind();
 			}
@@ -245,16 +222,8 @@ namespace SQM.Website
 					md.SelectedDate = losttime.NEXT_MEDAPPT_DT;
 					ed.SelectedDate = losttime.RETURN_EXPECTED_DT;
 
-
-
 					// Set user access:
-					rddlw.Enabled = ApproveAccess;
-					tbr.Enabled = ApproveAccess;
-					bd.Enabled = ApproveAccess;
-					//rd.Enabled = ApproveAccess;
-					md.Enabled = ApproveAccess;
-					ed.Enabled = ApproveAccess;
-					itmdel.Visible = ApproveAccess;
+					rddlw.Enabled = tbr.Enabled = bd.Enabled = md.Enabled = ed.Enabled = itmdel.Visible = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 
 					rvfw.Enabled = false;
 					rvfr.Enabled = false;
@@ -329,7 +298,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddLostTime");
-				addanother.Visible = ApproveAccess;
+				addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 			}
 		}
 

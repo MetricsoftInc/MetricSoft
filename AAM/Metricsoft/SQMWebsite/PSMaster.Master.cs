@@ -80,7 +80,7 @@ namespace SQM.Website
 					if (UserContext.GetScopePrivileges(SysScope.inbox).Count() > 0)
 						HomeMenu.Items.Add(new Telerik.Web.UI.RadMenuItem("Calendar", "/Home/Calendar.aspx"));
 
-					if (UserContext.GetScopePrivileges(SysScope.system).Count() > 0 || UserContext.GetScopePrivileges(SysScope.busorg).Count() > 0)
+					if (UserContext.GetMaxScopePrivilege(SysScope.busorg) <= SysPriv.admin)
 					{
 						RadMenuItem OrgMenu = new RadMenuItem("Organization");
 						RadMenu1.Items.Add(OrgMenu);

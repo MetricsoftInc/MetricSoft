@@ -593,7 +593,7 @@ namespace SQM.Website
 		{
 			// check if user can access the plant supplied
 			if (plantID != null)
-				return plantID == UserContext.HRLocation.Plant.PLANT_ID || SessionManager.UserContext.PlantAccessList.Contains(plantID) || SessionManager.UserContext.Person.ROLE <= 100 ? true : false;
+				return plantID == UserContext.HRLocation.Plant.PLANT_ID || SessionManager.UserContext.PlantAccessList.Contains(plantID)  ? true : false;
 			else
 				return false;
 		}
