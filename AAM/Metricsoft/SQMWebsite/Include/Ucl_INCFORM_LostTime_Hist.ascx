@@ -47,9 +47,9 @@
 							<tr class="row">
 								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>
 								<th class="col-sm-1 text-left-more"><b><asp:Label ID="lbWorkStatus" runat="server" Text="Work Status" /></b></th>
-								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Description" /></b></th>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbBeginDate" runat="server" Text="Begin Date" /></b></th>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date" /></b></th>
+								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Comments" /></b></th>
+								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbBeginDate" runat="server" Text="Effective Date" /></b></th>
+<%--								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date" /></b></th>--%>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbNextMedDate" runat="server" Text="Next Medical Appt." /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbExpectedReturnDT" runat="server" Text="Expected Return Date" /></b></th>
 								<th class="text-left-more"/></th>
@@ -71,19 +71,19 @@
 						<asp:RequiredFieldValidator runat="server" ID="rfvRestrictDesc" ControlToValidate="tbRestrictDesc"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" Width="90%" CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
+						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" Width="95%" CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
 						<asp:RequiredFieldValidator runat="server" ID="rvfBeginDate" ControlToValidate="rdpBeginDate"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
-					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
+<%--					<td class="text-left-more">
+						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvReturnDate" ControlToValidate="rdpReturnDate"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>
+					</td>--%>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
+						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
 						<asp:RequiredFieldValidator runat="server" ID="rfvNextMedDate" ControlToValidate="rdpNextMedDate"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left">
-						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="90%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true"/>
+						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true"/>
 						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT"  Enabled="false" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="col-xs-12 text-left-more">
