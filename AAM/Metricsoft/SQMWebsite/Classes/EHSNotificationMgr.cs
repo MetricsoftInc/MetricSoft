@@ -16,11 +16,26 @@ namespace SQM.Website
 
 		public static List<PERSON> GetNotifyPersonList(PLANT plant, string notifyScope, string notifyOnTask)
 		{
-			List<NOTIFYACTION> notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), (decimal)plant.BUS_ORG_ID, 0).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask).ToList();
-			notifyList.AddRange(SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), 0, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask).ToList());
+			List<PERSON> notifyPersonList = new List<PERSON>();
+			List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
+			
+			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask).ToList();  // corp level
+			notifyPersonList.AddRange(SQMModelMgr.SelectPrivgroupPersonList(ParseNotifyGroups(notifyList).ToArray()));
 
+			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), (decimal)plant.BUS_ORG_ID, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask).ToList();  // BU level
+			notifyPersonList.AddRange(SQMModelMgr.SelectBusOrgPrivgroupPersonList((decimal)plant.BUS_ORG_ID, ParseNotifyGroups(notifyList).ToArray()));
+
+			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask).ToList();  // plant level
+			notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray()));
+
+			return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
+		}
+
+		static List<string> ParseNotifyGroups(List<NOTIFYACTION> notifyList)
+		{
 			List<string> notifyGroupList = new List<string>();
-			foreach (NOTIFYACTION notify in notifyList.GroupBy(l=> l.NOTIFYACTION_ID).Select(l=> l.First()).ToList())
+
+			foreach (NOTIFYACTION notify in notifyList.GroupBy(l => l.NOTIFYACTION_ID).Select(l => l.First()).ToList())
 			{
 				foreach (string gp in notify.NOTIFY_DIST.Split(','))
 				{
@@ -28,10 +43,7 @@ namespace SQM.Website
 				}
 			}
 
-			List<PERSON> notifyPersonList = SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, notifyGroupList.ToArray());
-			notifyPersonList.AddRange(SQMModelMgr.SelectBusOrgPrivgroupPersonList((decimal)plant.BUS_ORG_ID, notifyGroupList.ToArray()));
-
-			return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
+			return notifyGroupList;
 		}
 
 		public static List<PERSON> InvolvedPersonList(INCIDENT incident)

@@ -30,7 +30,8 @@ namespace SQM.Website
 			XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "NOTIFY_TIMING" });
 
 			hfNotifyActionContext.Value = context;
-			hfNotifyActionBusLoc.Value = context == "plant" ? businessLocation.Plant.PLANT_ID.ToString() : businessLocation.BusinessOrg.BUS_ORG_ID.ToString();
+			if (context != "company")
+				hfNotifyActionBusLoc.Value = context == "plant" ? businessLocation.Plant.PLANT_ID.ToString() : businessLocation.BusinessOrg.BUS_ORG_ID.ToString();
 
 			ddlNotifyScope.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE").ToList();
 			ddlNotifyScope.DataValueField = "XLAT_CODE";
@@ -58,8 +59,6 @@ namespace SQM.Website
 			}
 
 			pnlNotifyAction.Visible = true;
-
-			hfNotifyActionContext.Value = context;
 
 			rgNotifyAction.DataSource = notifyItemList;
 			rgNotifyAction.DataBind();
@@ -150,6 +149,7 @@ namespace SQM.Website
 					}
 
 					ddlEdit_OnIndexChanged(null, null);
+					btnDelete.Visible = true;
 				}
 
 				string script = "function f(){OpenNotifyEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
@@ -199,10 +199,15 @@ namespace SQM.Website
 				{
 					notifyAction.PLANT_ID = Convert.ToDecimal(hfNotifyActionBusLoc.Value);
 				}
-				else
-				{  // plant level
+				else if (hfNotifyActionContext.Value == "busorg")  // org level
+				{  // org level
 					notifyAction.BUS_ORG_ID = Convert.ToDecimal(hfNotifyActionBusLoc.Value);
 				}
+				else
+				{
+					; // assume comany level assignes null for both org and plant
+				}
+
 				isNew = true;
 			}
 			else
@@ -258,6 +263,7 @@ namespace SQM.Website
 		protected void btnNotifyItemAdd_Click(object sender, EventArgs e)
 		{
 			hfNotifyActionID.Value = "";
+			btnDelete.Visible = false;
 
 			string script = "function f(){OpenNotifyEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
@@ -271,6 +277,19 @@ namespace SQM.Website
 		protected void OnSaveNotifyAction_Click(object sender, EventArgs e)
 		{
 			SaveNotifyItem();
+		}
+
+		protected void OnDeleteNotifyAction_Click(object sender, EventArgs e)
+		{
+			if (!string.IsNullOrEmpty(hfNotifyActionID.Value))  // delete if an existing record
+			{
+				SQMModelMgr.DeleteNotifyAction(new PSsqmEntities(), Convert.ToDecimal(hfNotifyActionID.Value));
+				hfNotifyActionID.Value = "";
+				if (OnNotifyActionCommand != null)
+				{
+					OnNotifyActionCommand("delete");
+				}
+			}
 		}
 		#endregion
 

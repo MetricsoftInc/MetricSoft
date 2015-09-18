@@ -133,28 +133,15 @@ namespace SQM.Website
 						//if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
 						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
 						// TODO: Maybe check for scope privileges before adding these
-						EHSMenu2.Items.Add(new RadMenuItem("Data Input", "~/EHS/EHS_Data.aspx"));
-						EHSMenu2.Items.Add(new RadMenuItem("Report", "~/EHS/EHS_DataReport.aspx"));
+						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.config)
+							EHSMenu2.Items.Add(new RadMenuItem("Data Input", "~/EHS/EHS_Data.aspx"));
+						if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.originate)
+							EHSMenu2.Items.Add(new RadMenuItem("Report", "~/EHS/EHS_DataReport.aspx"));
 						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
 						{
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));
 						}
 					}
-
-					/*
-					string menu8DActive = System.Configuration.ConfigurationManager.AppSettings["Menu8DActive"];
-					if (!string.IsNullOrEmpty(menu8DActive)  &&  menu8DActive.ToUpper() == "FALSE")
-					{
-						foreach (RadMenuItem mi in RadMenu1.Items)
-						{
-							foreach (RadMenuItem ms in mi.Items)
-							{
-								if (ms.NavigateUrl.Contains("Problem_Case.aspx?c=QI"))
-									ms.Visible = false;
-							}
-						}
-					}
-					*/
 				}
 			}
 

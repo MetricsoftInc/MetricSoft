@@ -9,6 +9,12 @@
                 </td>
             </tr>
             <tr align="center" height="24">
+                <td id="Td1" runat="server" class="optMenu">
+                    <asp:LinkButton ID="lbCompanyNotify_tab" runat="server" class="optNav clickable"  CommandArgument="notify" 
+                    onclick="tab_Click">Notifications</asp:LinkButton>
+                </td>
+           </tr>
+            <tr align="center" height="24">
                 <td id="tdCompanyStd" runat="server" class="optMenu">
                     <asp:LinkButton ID="lbUomStds_tab" runat="server" class="optNav clickable"  CommandArgument="stds" 
                             onclick="tab_Click">Standard Units</asp:LinkButton>

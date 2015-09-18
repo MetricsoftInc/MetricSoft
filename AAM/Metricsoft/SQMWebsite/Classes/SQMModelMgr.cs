@@ -599,15 +599,25 @@ namespace SQM.Website
 			return personList;
 		}
 
+		public static List<PERSON> SelectPrivgroupPersonList(string[] privGroups)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				personList = (from p in ctx.PERSON
+							  where privGroups.Contains(p.PRIV_GROUP)
+							  select p).ToList();
+			}
+			return personList;
+		}
+
 		public static List<PERSON> SelectBusOrgPrivgroupPersonList(decimal orgID, string[] privGroups)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				//personList = (from p in ctx.PERSON 
-				//			  join l in ctx.PLANT on p.PLANT_ID equals l.PLANT_ID 
-				//			  where l.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList()
 				personList = (from p in ctx.PERSON 
 							  where p.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
 			}
@@ -623,7 +633,6 @@ namespace SQM.Website
 			{
 				personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
 			}
-
 			return personList;
 		}
 
@@ -635,7 +644,6 @@ namespace SQM.Website
 			{
 				userList = (from u in ctx.SQM_ACCESS where (statusList.Count() == 0 ||  statusList.Contains(u.STATUS)) select u).ToList();
 			}
-
 			return userList;
 		}
 
@@ -2452,9 +2460,18 @@ namespace SQM.Website
 		{
 			List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
 
-			notifyList = (from n in ctx.NOTIFYACTION 
-						  where ((busorgID.HasValue && n.BUS_ORG_ID == busorgID)  || (plantID.HasValue  &&  n.PLANT_ID == plantID))
-						  select n).ToList();
+			if (busorgID.HasValue || plantID.HasValue)
+			{
+				notifyList = (from n in ctx.NOTIFYACTION
+							  where ((busorgID.HasValue && n.BUS_ORG_ID == busorgID) || (plantID.HasValue && n.PLANT_ID == plantID))
+							  select n).ToList();
+			}
+			else
+			{
+				notifyList = (from n in ctx.NOTIFYACTION
+							  where (n.BUS_ORG_ID == null && n.PLANT_ID == null)
+							  select n).ToList();
+			}
 
 			return notifyList;
 		}
@@ -2464,6 +2481,22 @@ namespace SQM.Website
 			NOTIFYACTION notifyAction = (from n in ctx.NOTIFYACTION where n.NOTIFYACTION_ID == notifyActionID select n).SingleOrDefault();
 
 			return notifyAction;
+		}
+
+		public static int DeleteNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
+		{
+			int status = 0;
+
+			try
+			{
+				ctx.ExecuteStoreCommand("DELETE FROM NOTIFYACTION WHERE NOTIFYACTION_ID = " + notifyActionID.ToString());
+			}
+			catch
+			{
+				status = -1;
+			}
+
+			return status;
 		}
 
 		public static NOTIFYACTION UpdateNotifyAction(SQM.Website.PSsqmEntities ctx, NOTIFYACTION notifyAction)

@@ -3,6 +3,7 @@
 <%@ Register src="~/Include/Ucl_DocMgr.ascx" TagName="DocMgr" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_ItemHdr.ascx" TagName="ItemHdr" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_SearchBar.ascx" TagName="SearchBar" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_NotifyList.ascx" TagName="NotifyList" TagPrefix="Ucl" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
@@ -73,6 +74,10 @@
                                                     </TR>
                                                 </table>
                                             </asp:Panel>
+
+											<asp:Panel runat="server" ID="pnlEscalation" Visible="false">
+												<Ucl:NotifyList id="uclNotifyList" runat="server"/>
+											</asp:Panel>
 
                                             <asp:Panel ID="pnlUomStd" runat="server" Visible = "false">
 		                                        <table width="99%" class="editArea">

@@ -18,6 +18,7 @@ namespace SQM.Website
             base.OnInit(e);
             uclAdminTabs.OnTabClick += uclAdminTabs_OnTabClick;
             uclSearchBar.OnReturnClick += uclSearchBar_OnReturnClick;
+			uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
         }
 
         private void uclAdminTabs_OnTabClick(string tabID, string cmdArg)
@@ -74,7 +75,7 @@ namespace SQM.Website
                 // setup for ps_admin.js to toggle the tab active/inactive display
                 SetActiveTab(SessionManager.CurrentSecondaryTab = hfActiveTab.Value = tabID);
 
-                pnlDetails.Visible = uclDocMgr.DocMgrPnl.Visible = pnlTargetList.Visible = pnlUomStd.Visible = false;
+				pnlDetails.Visible = uclDocMgr.DocMgrPnl.Visible = pnlTargetList.Visible = pnlUomStd.Visible = pnlEscalation.Visible = false;
                 COMPANY company = SQMModelMgr.LookupCompany(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
 
                 switch (tabID)
@@ -89,6 +90,10 @@ namespace SQM.Website
                             ddlStatus.Enabled = false;
                         }
                         break;
+					case "lbCompanyNotify_tab":
+						pnlEscalation.Visible = true;
+						UpdateNotifyActionList("");
+						break;
                     case "lbUomStds_tab":
                         pnlUomStd.Visible = true;
                         BindStdUnits(SessionManager.EffLocation.Company);
@@ -133,6 +138,11 @@ namespace SQM.Website
         {
 
         }
+
+		private void UpdateNotifyActionList(string cmd)
+		{
+			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, null, null).OrderBy(n => n.NOTIFY_SCOPE).ThenBy(n => n.SCOPE_TASK).ToList(), SessionManager.EffLocation, "company");
+		}
 
         protected void CancelCompany(object sender, EventArgs e)
         {
