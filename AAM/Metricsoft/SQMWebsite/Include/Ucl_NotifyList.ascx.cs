@@ -263,6 +263,13 @@ namespace SQM.Website
 		protected void btnNotifyItemAdd_Click(object sender, EventArgs e)
 		{
 			hfNotifyActionID.Value = "";
+
+			ddlNotifyScope.SelectedIndex = 0;
+			ddlScopeTask.SelectedIndex = 0;
+			ddlScopeStatus.SelectedIndex = 0;
+			ddlScopeTiming.SelectedIndex = 0;
+			ddlNotifyPrivGroup.ClearCheckedItems();
+
 			btnDelete.Visible = false;
 
 			string script = "function f(){OpenNotifyEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
