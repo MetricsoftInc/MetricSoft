@@ -26,15 +26,14 @@ namespace SQM.Website
 
 		public void BindNotfyPlan(List<NOTIFYACTION> notifyItemList, BusinessLocation businessLocation, string context)
 		{
-
-			XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "NOTIFY_TIMING" });
-
 			hfNotifyActionContext.Value = context;
 			if (context != "company")
 				hfNotifyActionBusLoc.Value = context == "plant" ? businessLocation.Plant.PLANT_ID.ToString() : businessLocation.BusinessOrg.BUS_ORG_ID.ToString();
 
 			if (ddlNotifyScope.Items.Count == 0)
 			{
+				XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "NOTIFY_TIMING" });
+
 				ddlNotifyScope.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE").ToList();
 				ddlNotifyScope.DataValueField = "XLAT_CODE";
 				ddlNotifyScope.DataTextField = "DESCRIPTION";
