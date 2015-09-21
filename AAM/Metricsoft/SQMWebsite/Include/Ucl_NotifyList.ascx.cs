@@ -33,29 +33,32 @@ namespace SQM.Website
 			if (context != "company")
 				hfNotifyActionBusLoc.Value = context == "plant" ? businessLocation.Plant.PLANT_ID.ToString() : businessLocation.BusinessOrg.BUS_ORG_ID.ToString();
 
-			ddlNotifyScope.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE").ToList();
-			ddlNotifyScope.DataValueField = "XLAT_CODE";
-			ddlNotifyScope.DataTextField = "DESCRIPTION";
-			ddlNotifyScope.DataBind();
-
-			ddlScopeTask.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK").ToList();
-			ddlScopeTask.DataValueField = "XLAT_CODE";
-			ddlScopeTask.DataTextField = "DESCRIPTION";
-			ddlScopeTask.DataBind();
-
-			ddlScopeStatus.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS").ToList();
-			ddlScopeStatus.DataValueField = "XLAT_CODE";
-			ddlScopeStatus.DataTextField = "DESCRIPTION";
-			ddlScopeStatus.DataBind();
-
-			ddlScopeTiming.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING").ToList();
-			ddlScopeTiming.DataValueField = "XLAT_CODE";
-			ddlScopeTiming.DataTextField = "DESCRIPTION";
-			ddlScopeTiming.DataBind();
-
-			foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList(new SysPriv[2] { SysPriv.admin, SysPriv.notify }, SysScope.incident, "A").ToList())
+			if (ddlNotifyScope.Items.Count == 0)
 			{
-				ddlNotifyPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+				ddlNotifyScope.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE").ToList();
+				ddlNotifyScope.DataValueField = "XLAT_CODE";
+				ddlNotifyScope.DataTextField = "DESCRIPTION";
+				ddlNotifyScope.DataBind();
+
+				ddlScopeTask.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK").ToList();
+				ddlScopeTask.DataValueField = "XLAT_CODE";
+				ddlScopeTask.DataTextField = "DESCRIPTION";
+				ddlScopeTask.DataBind();
+
+				ddlScopeStatus.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_STATUS").ToList();
+				ddlScopeStatus.DataValueField = "XLAT_CODE";
+				ddlScopeStatus.DataTextField = "DESCRIPTION";
+				ddlScopeStatus.DataBind();
+
+				ddlScopeTiming.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TIMING").ToList();
+				ddlScopeTiming.DataValueField = "XLAT_CODE";
+				ddlScopeTiming.DataTextField = "DESCRIPTION";
+				ddlScopeTiming.DataBind();
+
+				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList(new SysPriv[2] { SysPriv.admin, SysPriv.notify }, SysScope.incident, "A").ToList())
+				{
+					ddlNotifyPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+				}
 			}
 
 			pnlNotifyAction.Visible = true;
