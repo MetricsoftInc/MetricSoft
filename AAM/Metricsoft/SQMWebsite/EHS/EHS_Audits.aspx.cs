@@ -266,13 +266,16 @@ namespace SQM.Website
 					catch { }
 				}
 
-				foreach (AUDIT_TYPE ip in EHSAuditMgr.SelectAuditTypeList(SessionManager.PrimaryCompany().COMPANY_ID, false))
+				if (rcbAuditType.Items.Count < 1)
 				{
-					RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.AUDIT_TYPE_ID.ToString());
-					item.Checked = true;
-					rcbAuditType.Items.Add(item);
-				}
 
+					foreach (AUDIT_TYPE ip in EHSAuditMgr.SelectAuditTypeList(SessionManager.PrimaryCompany().COMPANY_ID, false))
+					{
+						RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.AUDIT_TYPE_ID.ToString());
+						item.Checked = true;
+						rcbAuditType.Items.Add(item);
+					}
+				}
 			}
 		}
 
