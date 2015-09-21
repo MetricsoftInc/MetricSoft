@@ -48,6 +48,23 @@ namespace SQM.Website
 		public string StepHeadingText { get; set; }
 	}
 
+	public class EHSIncidentTimeAccounting
+	{
+		public int PeriodYear { get; set; }
+		public int PeriodMonth { get; set; }
+		public decimal LostTime { get; set; }
+		public decimal RestrictedTime { get; set; }
+		public decimal WorkTime { get; set; }
+
+		public EHSIncidentTimeAccounting CreateNew(int periodYear, int periodMonth)
+		{
+			this.PeriodYear = periodYear;
+			this.PeriodMonth = periodMonth;
+			this.LostTime = this.RestrictedTime = this.WorkTime = 0;
+			return this;
+		}
+	}
+
 	public class EHSIncidentData
 	{
 		public INCIDENT Incident
@@ -965,6 +982,60 @@ namespace SQM.Website
 			}
 
 			return losttimelist;
+		}
+
+		public static List<EHSIncidentTimeAccounting> CalculateWorkStatusAccounting(PSsqmEntities ctx, decimal incidentID, DateTime fromDate, DateTime toDate)
+		{
+			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
+
+			List<INCFORM_LOSTTIME_HIST> histList = (from h in ctx.INCFORM_LOSTTIME_HIST
+					   where h.INCIDENT_ID == incidentID
+					   select h).OrderBy(l=> l.BEGIN_DT).ToList();
+
+			if (histList == null || histList.Count == 0)
+			{
+				return periodList;
+			}
+
+			// determine incident time span
+			// assume incident is still open and extend timespan to NOW if last status was not return to work
+			DateTime effFromDate = Convert.ToDateTime(histList.First().BEGIN_DT);
+			DateTime effDate = effFromDate;
+			string workStatus = histList.First().WORK_STATUS;
+			DateTime effToDate = histList.Last().WORK_STATUS == "02" ? Convert.ToDateTime(histList.Last().BEGIN_DT) : DateTime.Now;
+			while (effDate <= effToDate)
+			{
+				periodList.Add(new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month));
+				effDate = effDate.AddMonths(1);
+			}
+
+			EHSIncidentTimeAccounting period;
+			foreach (INCFORM_LOSTTIME_HIST histItem in histList)
+			{
+				effDate = Convert.ToDateTime(histItem.BEGIN_DT);
+				int ndays = Convert.ToInt32((effDate - effFromDate).TotalDays);
+				for (int n = 0; n < ndays; n++)
+				{
+					period = periodList.Where(p => p.PeriodYear == effFromDate.Year && p.PeriodMonth == effFromDate.Month).FirstOrDefault();
+					switch (workStatus)
+					{
+						case "01":
+							++period.LostTime;
+							break;
+						case "03":
+							++period.RestrictedTime;
+							break;
+						default:
+							++period.WorkTime;
+							break;
+					}
+					effFromDate = effFromDate.AddDays(1);
+				}
+				effFromDate = effDate;
+				workStatus = histItem.WORK_STATUS;
+			}
+
+			return periodList;
 		}
 
 		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
