@@ -984,7 +984,7 @@ namespace SQM.Website
 			return losttimelist;
 		}
 
-		public static List<EHSIncidentTimeAccounting> CalculateWorkStatusAccounting(PSsqmEntities ctx, decimal incidentID, DateTime fromDate, DateTime toDate)
+		public static List<EHSIncidentTimeAccounting> CalculateWorkStatusAccounting(PSsqmEntities ctx, decimal incidentID, DateTime ? fromDate, DateTime ? toDate)
 		{
 			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
 
@@ -1009,6 +1009,7 @@ namespace SQM.Website
 				effDate = effDate.AddMonths(1);
 			}
 
+			// accumulate work status times per period
 			EHSIncidentTimeAccounting period;
 			foreach (INCFORM_LOSTTIME_HIST histItem in histList)
 			{
@@ -1035,7 +1036,26 @@ namespace SQM.Website
 				workStatus = histItem.WORK_STATUS;
 			}
 
+			if (fromDate.HasValue && toDate.HasValue)
+			{	// return time slice, if specified
+				periodList = periodList.Where(l => new DateTime(l.PeriodYear, l.PeriodMonth, 1) >= (DateTime)fromDate && new DateTime(l.PeriodYear, l.PeriodMonth, DateTime.DaysInMonth(l.PeriodYear, l.PeriodMonth)) <= (DateTime)toDate).ToList();
+			}
+
 			return periodList;
+		}
+
+		public static EHSIncidentTimeAccounting CalculateWorkStatusSummary(List<EHSIncidentTimeAccounting> periodList)
+		{
+			EHSIncidentTimeAccounting workStatusSummary = new EHSIncidentTimeAccounting().CreateNew(0, 0);
+
+			foreach (EHSIncidentTimeAccounting period in periodList)
+			{
+				workStatusSummary.LostTime += period.LostTime;
+				workStatusSummary.RestrictedTime += period.RestrictedTime;
+				workStatusSummary.WorkTime += period.WorkTime;
+			}
+
+			return workStatusSummary;
 		}
 
 		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
