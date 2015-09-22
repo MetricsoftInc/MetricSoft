@@ -71,11 +71,11 @@
 						<asp:RequiredFieldValidator runat="server" ID="rfvActionPerson" ControlToValidate="rddlActionPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpFinalStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" Width="90%"  runat="server" ShowPopupOnFocus="true" />
+						<telerik:RadDatePicker ID="rdpFinalStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" Width="115"  runat="server" ShowPopupOnFocus="true" />
 						<asp:RequiredFieldValidator runat="server" ID="rvfFinalStartDate" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Width="90%" Enabled="true" runat="server" ShowPopupOnFocus="true" />
+						<telerik:RadDatePicker ID="rdpFinalCompleteDate" Skin="Metro" CssClass="WarnIfChanged" Width="115" Enabled="true" runat="server" ShowPopupOnFocus="true" />
 					</td>
 					<td class="text-left">
 						<asp:CheckBox ID="cbFinalIsComplete" runat="server" Width="90%" SkinID="Metro" />
