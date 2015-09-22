@@ -22,13 +22,13 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadAjaxLoadingPanel radLoading;
         
         /// <summary>
-        /// radAjaxPanel control.
+        /// dataPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxPanel radAjaxPanel;
+        protected global::System.Web.UI.WebControls.Panel dataPanel;
         
         /// <summary>
         /// rcbPlant control.
@@ -40,6 +40,15 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadComboBox rcbPlant;
         
         /// <summary>
+        /// spanEndOfWeek control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanEndOfWeek;
+        
+        /// <summary>
         /// rdpEndOfWeek control.
         /// </summary>
         /// <remarks>
@@ -49,22 +58,49 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadDatePicker rdpEndOfWeek;
         
         /// <summary>
-        /// hfDaysOfWeek control.
+        /// spanMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfDaysOfWeek;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanMonth;
         
         /// <summary>
-        /// rgData control.
+        /// rmypMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgData;
+        protected global::Telerik.Web.UI.RadMonthYearPicker rmypMonth;
+        
+        /// <summary>
+        /// btnDaily control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnDaily;
+        
+        /// <summary>
+        /// btnWeekly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnWeekly;
+        
+        /// <summary>
+        /// btnMonthly control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnMonthly;
         
         /// <summary>
         /// btnSave control.
@@ -73,7 +109,7 @@ namespace SQM.Website.EHS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnSave;
         
         /// <summary>
         /// lblSaved control.
@@ -83,5 +119,14 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSaved;
+        
+        /// <summary>
+        /// radCodeBlock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock radCodeBlock;
     }
 }

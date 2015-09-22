@@ -133,7 +133,13 @@ namespace SQM.Website
 						//if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
 						//EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Preventative Actions", "/EHS/EHS_Incidents.aspx?mode=prevent"));
 						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate)
-							EHSMenu2.Items.Add(new RadMenuItem("Data Input", "~/EHS/EHS_Data.aspx"));
+						{
+							var EHSDataMenu = new RadMenuItem("Data Input");
+							EHSDataMenu.Items.Add(new RadMenuItem("Daily", "~/EHS/EHS_Data.aspx"));
+							EHSDataMenu.Items.Add(new RadMenuItem("Weekly", "~/EHS/EHS_Data.aspx?type=Weekly"));
+							EHSDataMenu.Items.Add(new RadMenuItem("Monthly", "~/EHS/EHS_Data.aspx?type=Monthly"));
+							EHSMenu2.Items.Add(EHSDataMenu);
+						}
 						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.config)
 							EHSMenu2.Items.Add(new RadMenuItem("Report", "~/EHS/EHS_DataReport.aspx"));
 						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
