@@ -161,9 +161,13 @@ namespace SQM.Website
 
 			//SetUserAccess("INCFORM_LOSTTIME_HIST");
 
-			pnlLostTime.Visible = true;
-			rptLostTime.DataSource = EHSIncidentMgr.GetLostTimeList(IncidentId);
-			rptLostTime.DataBind();
+			if (IncidentId > 0)
+			{
+				pnlLostTime.Visible = true;
+				rptLostTime.DataSource = EHSIncidentMgr.GetLostTimeList(IncidentId);
+				rptLostTime.DataBind();
+				EHSIncidentMgr.CalculateWorkStatusSummary(EHSIncidentMgr.CalculateWorkStatusAccounting(new PSsqmEntities(), IncidentId, null, null));
+			}
 		}
 
 		public void rptLostTime_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -175,8 +179,6 @@ namespace SQM.Website
 				try
 				{
 					INCFORM_LOSTTIME_HIST losttime = (INCFORM_LOSTTIME_HIST)e.Item.DataItem;
-
-					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 
 					RadDropDownList rddlw = (RadDropDownList)e.Item.FindControl("rddlWorkStatus");
 					//rddlw.SelectedIndexChanged += rddlw_SelectedIndexChanged;
@@ -212,8 +214,6 @@ namespace SQM.Website
 
 					if (losttime.WORK_STATUS != null)
 						rddlw.SelectedValue = losttime.WORK_STATUS;
-
-					lb.Text = losttime.ITEM_SEQ.ToString();
 
 					rddlw.SelectedValue = losttime.WORK_STATUS;
 					tbr.Text = losttime.ITEM_DESCRIPTION;
@@ -305,7 +305,6 @@ namespace SQM.Website
 		public int AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
 		{
 			var itemList = new List<INCFORM_LOSTTIME_HIST>();
-			int seqnumber = 0;
 			int status = 0;
 
 			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
@@ -320,9 +319,6 @@ namespace SQM.Website
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-				seqnumber = seqnumber + 1;
-				item.ITEM_SEQ = seqnumber;
-				
 				item.WORK_STATUS = rddlw.SelectedValue;
 				item.ITEM_DESCRIPTION = tbr.Text;
 				item.BEGIN_DT = bd.SelectedDate;
@@ -360,12 +356,8 @@ namespace SQM.Website
 
 				if (!String.IsNullOrEmpty(item.WORK_STATUS) && item.WORK_STATUS != "[Select One]")
 				{
-					seq = seq + 1;
-
 					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-
 					newItem.WORK_STATUS = item.WORK_STATUS;
 					newItem.BEGIN_DT = item.BEGIN_DT;
 					newItem.RETURN_TOWORK_DT = item.RETURN_TOWORK_DT;
@@ -386,8 +378,6 @@ namespace SQM.Website
 
 		protected void rptLostTime_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
-			int seqnumber = 0;
-
 			if (e.CommandArgument == "AddAnother")
 			{
 
@@ -418,10 +408,7 @@ namespace SQM.Website
 					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
-					seqnumber = Convert.ToInt32(lb.Text);
-
 					item.ITEM_DESCRIPTION = tbr.Text;
-					item.ITEM_SEQ = seqnumber;
 					item.BEGIN_DT = bd.SelectedDate;
 					//item.RETURN_TOWORK_DT = rd.SelectedDate;
 					item.NEXT_MEDAPPT_DT = md.SelectedDate;
@@ -433,7 +420,6 @@ namespace SQM.Website
 				var emptyItem = new INCFORM_LOSTTIME_HIST();
 
 				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.ITEM_SEQ = seqnumber + 1;
 				emptyItem.WORK_STATUS = null;
 				emptyItem.BEGIN_DT = null;
 				emptyItem.RETURN_TOWORK_DT = null;
@@ -482,9 +468,7 @@ namespace SQM.Website
 
 					if (Convert.ToInt32(lb.Text) != delId + 1)
 					{
-						seqnumber = seqnumber + 1;
 						item.ITEM_DESCRIPTION = tbr.Text;
-						item.ITEM_SEQ = seqnumber;
 						item.BEGIN_DT = bd.SelectedDate;
 						//item.RETURN_TOWORK_DT = rd.SelectedDate;
 						item.NEXT_MEDAPPT_DT = md.SelectedDate;
@@ -542,10 +526,7 @@ namespace SQM.Website
 				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
 					item.WORK_STATUS = rddlw.SelectedValue;
 
-				seqnumber = Convert.ToInt32(lb.Text);
-
 				item.ITEM_DESCRIPTION = tbr.Text;
-				item.ITEM_SEQ = seqnumber;
 				item.BEGIN_DT = bd.SelectedDate;
 				//item.RETURN_TOWORK_DT = rd.SelectedDate;
 				item.NEXT_MEDAPPT_DT = md.SelectedDate;
@@ -591,7 +572,6 @@ namespace SQM.Website
 				seqnumber = Convert.ToInt32(lb.Text);
 
 				item.ITEM_DESCRIPTION = tbr.Text;
-				item.ITEM_SEQ = seqnumber;
 				item.BEGIN_DT = bd.SelectedDate;
 				//item.RETURN_TOWORK_DT = rd.SelectedDate;
 				item.NEXT_MEDAPPT_DT = md.SelectedDate;

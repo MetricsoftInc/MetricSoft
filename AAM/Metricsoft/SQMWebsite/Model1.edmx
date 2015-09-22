@@ -1487,7 +1487,6 @@
           </Key>
           <Property Name="INCIDENT_LOSTTIME_HIST_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
-          <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
           <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="4000" />
           <Property Name="WORK_STATUS" Type="nvarchar" MaxLength="100" />
           <Property Name="BEGIN_DT" Type="datetime" />
@@ -4823,14 +4822,9 @@
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
           </AssociationSet>
           <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="PSsqmModel.INCFORM_INJURYILLNESS" />
-          <EntitySet Name="INCFORM_LOSTTIME_HIST" EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" />
           <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENTLOSTTIME_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
           </AssociationSet>
           <EntitySet Name="INCFORM_WITNESS" EntityType="PSsqmModel.INCFORM_WITNESS" />
           <AssociationSet Name="FK_INCIDENTWITNESS_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID">
@@ -4910,6 +4904,11 @@
           <AssociationSet Name="FK_EHS_DATA_PLANT" Association="PSsqmModel.FK_EHS_DATA_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="EHS_DATA" EntitySet="EHS_DATA" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_LOSTTIME_HIST" EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" />
+          <AssociationSet Name="FK_INCIDENTLOSTTIME_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -7417,9 +7416,9 @@
           <NavigationProperty Name="INCFORM_CONTAIN" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_CONTAIN" />
           <NavigationProperty Name="INCFORM_ROOT5Y" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCIDENT" ToRole="INCFORM_ROOT5Y" />
           <NavigationProperty Name="INCFORM_INJURYILLNESS" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_INJURYILLNESS" />
-          <NavigationProperty Name="INCFORM_LOSTTIME_HIST" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_LOSTTIME_HIST" />
           <NavigationProperty Name="INCFORM_WITNESS" Relationship="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_WITNESS" />
           <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
+          <NavigationProperty Name="INCFORM_LOSTTIME_HIST" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_LOSTTIME_HIST" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -8483,23 +8482,6 @@
           <Property Name="PLANT_LINE_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="INVOLVED_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
         </EntityType>
-        <EntityType Name="INCFORM_LOSTTIME_HIST">
-          <Key>
-            <PropertyRef Name="INCIDENT_LOSTTIME_HIST_ID" />
-          </Key>
-          <Property Name="INCIDENT_LOSTTIME_HIST_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
-          <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
-          <Property Name="WORK_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BEGIN_DT" Type="DateTime" Precision="3" />
-          <Property Name="NEXT_MEDAPPT_DT" Type="DateTime" Precision="3" />
-          <Property Name="RETURN_EXPECTED_DT" Type="DateTime" Precision="3" />
-          <Property Name="RETURN_TOWORK_DT" Type="DateTime" Precision="3" />
-          <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCFORM_LOSTTIME_HIST" ToRole="INCIDENT" />
-        </EntityType>
         <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
           <End Type="PSsqmModel.INCFORM_INJURYILLNESS" Role="INCFORM_INJURYILLNESS" Multiplicity="0..1" />
@@ -8508,18 +8490,6 @@
               <PropertyRef Name="INCIDENT_ID" />
             </Principal>
             <Dependent Role="INCFORM_INJURYILLNESS">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENTLOSTTIME_INCIDENT_ID">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_LOSTTIME_HIST" Role="INCFORM_LOSTTIME_HIST" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_LOSTTIME_HIST">
               <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8876,6 +8846,34 @@
             </Principal>
             <Dependent Role="EHS_DATA">
               <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_LOSTTIME_HIST">
+          <Key>
+            <PropertyRef Name="INCIDENT_LOSTTIME_HIST_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_LOSTTIME_HIST_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="ITEM_DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="WORK_STATUS" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="BEGIN_DT" Precision="3" />
+          <Property Type="DateTime" Name="NEXT_MEDAPPT_DT" Precision="3" />
+          <Property Type="DateTime" Name="RETURN_EXPECTED_DT" Precision="3" />
+          <Property Type="DateTime" Name="RETURN_TOWORK_DT" Precision="3" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCFORM_LOSTTIME_HIST" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENTLOSTTIME_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_LOSTTIME_HIST" Role="INCFORM_LOSTTIME_HIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_LOSTTIME_HIST">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10777,23 +10775,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_LOSTTIME_HIST">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_LOSTTIME_HIST">
-              <MappingFragment StoreEntitySet="INCFORM_LOSTTIME_HIST">
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="RETURN_TOWORK_DT" ColumnName="RETURN_TOWORK_DT" />
-                <ScalarProperty Name="RETURN_EXPECTED_DT" ColumnName="RETURN_EXPECTED_DT" />
-                <ScalarProperty Name="NEXT_MEDAPPT_DT" ColumnName="NEXT_MEDAPPT_DT" />
-                <ScalarProperty Name="BEGIN_DT" ColumnName="BEGIN_DT" />
-                <ScalarProperty Name="WORK_STATUS" ColumnName="WORK_STATUS" />
-                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
-                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-                <ScalarProperty Name="INCIDENT_LOSTTIME_HIST_ID" ColumnName="INCIDENT_LOSTTIME_HIST_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCFORM_WITNESS">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_WITNESS">
               <MappingFragment StoreEntitySet="INCFORM_WITNESS">
@@ -10928,6 +10909,22 @@
                 <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
                 <ScalarProperty Name="MEASURE_ID" ColumnName="MEASURE_ID" />
                 <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_LOSTTIME_HIST">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_LOSTTIME_HIST">
+              <MappingFragment StoreEntitySet="INCFORM_LOSTTIME_HIST">
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="RETURN_TOWORK_DT" ColumnName="RETURN_TOWORK_DT" />
+                <ScalarProperty Name="RETURN_EXPECTED_DT" ColumnName="RETURN_EXPECTED_DT" />
+                <ScalarProperty Name="NEXT_MEDAPPT_DT" ColumnName="NEXT_MEDAPPT_DT" />
+                <ScalarProperty Name="BEGIN_DT" ColumnName="BEGIN_DT" />
+                <ScalarProperty Name="WORK_STATUS" ColumnName="WORK_STATUS" />
+                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_LOSTTIME_HIST_ID" ColumnName="INCIDENT_LOSTTIME_HIST_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11192,9 +11189,7 @@
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="4.125" PointY="65.75" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="4.125" PointY="39.75" />
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_WITNESS" Width="1.5" PointX="4.125" PointY="72.75" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_LANG" Width="1.5" PointX="7.08285738112538" PointY="22.51668953453968" />
@@ -11223,6 +11218,8 @@
         <EntityTypeShape EntityType="PSsqmModel.EHS_DATA" Width="1.5" PointX="7.7116309105007117" PointY="2.4932833027528987" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="5.7409568716496961" PointY="17.823688530281043" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
         </Diagram>
     </Diagrams>
   </Designer>

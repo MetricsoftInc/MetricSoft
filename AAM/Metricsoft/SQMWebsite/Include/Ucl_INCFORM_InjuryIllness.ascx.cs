@@ -1788,10 +1788,7 @@ namespace SQM.Website
 
 				if (item.WORK_STATUS != "[Select One]")
 				{
-					seq = seq + 1;
-
 					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
 
 					newItem.WORK_STATUS = item.WORK_STATUS;

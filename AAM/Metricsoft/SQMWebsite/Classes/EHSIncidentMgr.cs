@@ -955,7 +955,7 @@ namespace SQM.Website
 
 			losttimelist = (from c in entities.INCFORM_LOSTTIME_HIST
 					   where c.INCIDENT_ID == incidentId
-					   select c).ToList();
+					   select c).OrderBy(l=> l.BEGIN_DT).ToList();
 
 			int itemsNeeded = 0;
 			if (losttimelist.Count() < minRowsThisForm)
@@ -968,10 +968,7 @@ namespace SQM.Website
 			{
 				losttime = new INCFORM_LOSTTIME_HIST();
 
-				seq = seq + 1;
-				losttime.ITEM_SEQ = seq;
 				losttime.ITEM_DESCRIPTION = "";
-
 				losttime.WORK_STATUS = "";
 				losttime.BEGIN_DT = null;
 				losttime.NEXT_MEDAPPT_DT = null;

@@ -45,7 +45,7 @@
 					<table class="table" border="0" >
 						<thead>
 							<tr class="row">
-								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>
+<%--								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>--%>
 								<th class="col-sm-1 text-left-more"><b><asp:Label ID="lbWorkStatus" runat="server" Text="Work Status" /></b></th>
 								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Comments" /></b></th>
 								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbBeginDate" runat="server" Text="Effective Date" /></b></th>
@@ -59,9 +59,9 @@
 			<ItemTemplate>
 			<tbody>
 				<tr class="row">
-					<td class="text-center">
+<%--					<td class="text-center">
 						<asp:Label ID="lbItemSeq" runat="server" />
-					</td>
+					</td>--%>
 					<td class="text-left-more">
 						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" Width="100%" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />

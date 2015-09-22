@@ -142,7 +142,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBCODE1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), true)]
@@ -160,6 +159,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 
 #endregion
 
@@ -2070,22 +2070,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
-        {
-            get
-            {
-                if ((_INCFORM_LOSTTIME_HIST == null))
-                {
-                    _INCFORM_LOSTTIME_HIST = base.CreateObjectSet<INCFORM_LOSTTIME_HIST>("INCFORM_LOSTTIME_HIST");
-                }
-                return _INCFORM_LOSTTIME_HIST;
-            }
-        }
-        private ObjectSet<INCFORM_LOSTTIME_HIST> _INCFORM_LOSTTIME_HIST;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_WITNESS> INCFORM_WITNESS
         {
             get
@@ -2258,6 +2242,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<EHS_DATA> _EHS_DATA;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
+        {
+            get
+            {
+                if ((_INCFORM_LOSTTIME_HIST == null))
+                {
+                    _INCFORM_LOSTTIME_HIST = base.CreateObjectSet<INCFORM_LOSTTIME_HIST>("INCFORM_LOSTTIME_HIST");
+                }
+                return _INCFORM_LOSTTIME_HIST;
+            }
+        }
+        private ObjectSet<INCFORM_LOSTTIME_HIST> _INCFORM_LOSTTIME_HIST;
 
         #endregion
 
@@ -3192,14 +3192,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCFORM_LOSTTIME_HIST EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCFORM_LOSTTIME_HIST(INCFORM_LOSTTIME_HIST iNCFORM_LOSTTIME_HIST)
-        {
-            base.AddObject("INCFORM_LOSTTIME_HIST", iNCFORM_LOSTTIME_HIST);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_WITNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_WITNESS(INCFORM_WITNESS iNCFORM_WITNESS)
@@ -3285,6 +3277,14 @@ namespace SQM.Website
         public void AddToEHS_DATA(EHS_DATA eHS_DATA)
         {
             base.AddObject("EHS_DATA", eHS_DATA);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_LOSTTIME_HIST EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_LOSTTIME_HIST(INCFORM_LOSTTIME_HIST iNCFORM_LOSTTIME_HIST)
+        {
+            base.AddObject("INCFORM_LOSTTIME_HIST", iNCFORM_LOSTTIME_HIST);
         }
 
         #endregion
@@ -21656,13 +21656,11 @@ namespace SQM.Website
         /// </summary>
         /// <param name="iNCIDENT_LOSTTIME_HIST_ID">Initial value of the INCIDENT_LOSTTIME_HIST_ID property.</param>
         /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
-        /// <param name="iTEM_SEQ">Initial value of the ITEM_SEQ property.</param>
-        public static INCFORM_LOSTTIME_HIST CreateINCFORM_LOSTTIME_HIST(global::System.Decimal iNCIDENT_LOSTTIME_HIST_ID, global::System.Decimal iNCIDENT_ID, global::System.Int32 iTEM_SEQ)
+        public static INCFORM_LOSTTIME_HIST CreateINCFORM_LOSTTIME_HIST(global::System.Decimal iNCIDENT_LOSTTIME_HIST_ID, global::System.Decimal iNCIDENT_ID)
         {
             INCFORM_LOSTTIME_HIST iNCFORM_LOSTTIME_HIST = new INCFORM_LOSTTIME_HIST();
             iNCFORM_LOSTTIME_HIST.INCIDENT_LOSTTIME_HIST_ID = iNCIDENT_LOSTTIME_HIST_ID;
             iNCFORM_LOSTTIME_HIST.INCIDENT_ID = iNCIDENT_ID;
-            iNCFORM_LOSTTIME_HIST.ITEM_SEQ = iTEM_SEQ;
             return iNCFORM_LOSTTIME_HIST;
         }
 
@@ -21720,30 +21718,6 @@ namespace SQM.Website
         private global::System.Decimal _INCIDENT_ID;
         partial void OnINCIDENT_IDChanging(global::System.Decimal value);
         partial void OnINCIDENT_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ITEM_SEQ
-        {
-            get
-            {
-                return _ITEM_SEQ;
-            }
-            set
-            {
-                OnITEM_SEQChanging(value);
-                ReportPropertyChanging("ITEM_SEQ");
-                _ITEM_SEQ = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ITEM_SEQ");
-                OnITEM_SEQChanged();
-            }
-        }
-        private global::System.Int32 _ITEM_SEQ;
-        partial void OnITEM_SEQChanging(global::System.Int32 value);
-        partial void OnITEM_SEQChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -23790,28 +23764,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST")]
-        public EntityCollection<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS")]
         public EntityCollection<INCFORM_WITNESS> INCFORM_WITNESS
         {
@@ -23846,6 +23798,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST")]
+        public EntityCollection<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST", value);
                 }
             }
         }
