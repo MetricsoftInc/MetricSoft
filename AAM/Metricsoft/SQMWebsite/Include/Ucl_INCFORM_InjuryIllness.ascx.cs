@@ -390,6 +390,8 @@ namespace SQM.Website
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 
+					rdoFatality.Enabled = rdoRecordable.Enabled = rdoLostTime.Enabled = false;  // do this for new incidents
+
 					//CurrentFormStep = 1;
 
 					btnDeleteInc.Visible = false;
@@ -668,7 +670,8 @@ namespace SQM.Website
 				}
 			}
 
-			rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
+			if (IsEditContext)
+				rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
 		}
 
 		private void SetUserAccess(string currentFormName)
@@ -729,10 +732,10 @@ namespace SQM.Website
 					tbTaskDays.Enabled = UpdateAccess;
 					//rfvTaskDays.Enabled = UpdateAccess;
 
-					rdoFirstAid.Enabled = UpdateAccess;
+					//rdoFirstAid.Enabled = UpdateAccess;
 					//rfvFirstAid.Enabled = UpdateAccess;
 
-					rdoRecordable.Enabled = UpdateAccess;
+					//rdoRecordable.Enabled = UpdateAccess;
 					//rfvRecordable.Enabled = UpdateAccess;
 
 					//rdoLostTime.Enabled = UpdateAccess;
