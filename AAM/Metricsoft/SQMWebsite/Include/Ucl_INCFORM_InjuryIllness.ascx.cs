@@ -217,6 +217,11 @@ namespace SQM.Website
 				{
 					var targetControl = this.Page.FindControl(targetID);
 
+					if (targetControl is RadioButtonList)
+					{
+						return;  // we don't want to intercept radio button postbacks
+					}
+
 					if (targetControl != null)
 						if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
 						{
@@ -344,6 +349,7 @@ namespace SQM.Website
 						tbTaskDays.Text = injuryIllnessDetails.DAYS_DOING_JOB.ToString();
 						rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
 						rdoRecordable.SelectedValue = (injuryIllnessDetails.RECORDABLE == true) ? "1" : "0";
+						rdoFatality.SelectedValue = (injuryIllnessDetails.FATALITY == true) ? "1" : "0";
 
 						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
@@ -562,6 +568,45 @@ namespace SQM.Website
 			}
 		}
 
+		protected void Severity_Changed(object sender, EventArgs e)
+		{
+			RadioButtonList rbl = (RadioButtonList)sender;
+
+			switch (rbl.ID)
+			{
+				case "rdoFirstAid":
+					if (rbl.SelectedValue == "1")
+					{
+						rdoRecordable.Enabled = rdoFatality.Enabled = rdoLostTime.Enabled = false;
+						rdoRecordable.SelectedValue = "0";
+						rdoFatality.SelectedValue = "0";
+						rdoLostTime.SelectedValue = "0";
+					}
+					else
+					{
+						rdoRecordable.Enabled = rdoFatality.Enabled = rdoLostTime.Enabled = true;
+					}
+					break;
+				case "rdoRecordable":
+					break;
+				case "rdoFatality":
+					if (rbl.SelectedValue == "1")
+					{
+						rdoLostTime.Enabled = false;
+						rdoLostTime.SelectedValue = "0";
+					}
+					else
+					{
+						rdoLostTime.Enabled = true;
+					}
+					break;
+				case "rdoLostTime":
+					break;
+				default:
+					break;
+			}
+			
+		}
 
 		void SetLostTime(bool isPostBack)
 		{
@@ -1121,98 +1166,6 @@ namespace SQM.Website
 
 		}
 
-		//protected void btnSave_Click(object sender, EventArgs e)
-		//{
-
-		//	if (Page.IsValid)
-		//	{
-		//		entities = new PSsqmEntities();
-
-		//		// Get custom form values
-		//		selectedShift = rddlShift.SelectedValue;
-		//		incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
-		//		localDescription = "";
-		//		if (!string.IsNullOrEmpty(tbLocalDescription.Text))
-		//			localDescription = tbLocalDescription.Text;
-
-		//		Save(false);
-
-		//		formSteps = GetFormSteps(incidentTypeId);
-
-		//		if (btnSave.Enabled)
-		//			if (!IsEditContext)
-		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
-		//			else
-		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
-		//		else
-		//			lblResults.Text = "";
-
-		//		IsEditContext = true;
-		//		if (EditIncidentId == 0)
-		//			EditIncidentId = NewIncidentId;
-
-		//		InitializeForm(CurrentStep);
-		//	}
-		//	else
-		//	{
-		//		string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
-		//		ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-		//	}
-
-		//}
-
-		//protected void btnPrev_Click(object sender, EventArgs e)
-		//{
-		//	lblResults.Text = "";
-		//	CurrentStep = CurrentStep - 1;
-
-		//	InitializeForm(CurrentStep);
-		//	SetLostTime(true);
-		//}
-
-		//protected void btnNext_Click(object sender, EventArgs e)
-		//{
-
-		//	if (Page.IsValid)
-		//	{
-		//		lblResults.Text = "";
-		//		entities = new PSsqmEntities();
-
-		//		// Get custom form values
-		//		selectedShift = rddlShift.SelectedValue;
-		//		incidentTime = (TimeSpan)rtpIncidentTime.SelectedTime;
-		//		localDescription = "";
-		//		if (!string.IsNullOrEmpty(tbLocalDescription.Text))
-		//			localDescription = tbLocalDescription.Text;
-
-		//		Save(false);
-
-		//		formSteps = GetFormSteps(incidentTypeId);
-
-		//		if (btnSave.Enabled)
-		//			if (!IsEditContext)
-		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was saved";
-		//			else
-		//				lblResults.Text = formSteps[CurrentStep].StepHeadingText + " information was updated";
-		//		else
-		//			lblResults.Text = "";
-
-		//		IsEditContext = true;
-		//		if (EditIncidentId == 0)
-		//			EditIncidentId = NewIncidentId;
-
-		//		CurrentStep = CurrentStep + 1;
-		//		InitializeForm(CurrentStep);
-
-		//	}
-		//	else
-		//	{
-		//		string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
-		//		ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-		//	}
-
-		//}
-
 		protected void btnDeleteInc_Click(object sender, EventArgs e)
 		{
 			if (EditIncidentId > 0)
@@ -1683,6 +1636,9 @@ namespace SQM.Website
 			if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))
 				newInjryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
 
+			if (!String.IsNullOrEmpty(rdoFatality.SelectedValue))
+				newInjryIllnessDetails.FATALITY = Convert.ToBoolean((Convert.ToInt32(rdoFatality.SelectedValue)));
+
 			if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
 				newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
 
@@ -1878,6 +1834,9 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))
 					injuryIllnessDetails.RECORDABLE = Convert.ToBoolean((Convert.ToInt32(rdoRecordable.SelectedValue)));
 
+				if (!String.IsNullOrEmpty(rdoFatality.SelectedValue))
+					injuryIllnessDetails.FATALITY = Convert.ToBoolean((Convert.ToInt32(rdoFatality.SelectedValue)));
+
 				if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
 					injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
 
@@ -1932,6 +1891,13 @@ namespace SQM.Website
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Recordable);
 					ia.ANSWER_VALUE = injuryIllnessDetail.RECORDABLE.ToString();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Fatality);
+					ia.ANSWER_VALUE = injuryIllnessDetail.FATALITY.ToString();
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 
@@ -2001,20 +1967,6 @@ namespace SQM.Website
 
 		protected void btnUploadAttach_Click(object sender, EventArgs e)
 		{
-
-		}
-
-		protected void rdoLostTime_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// If the user clicked "Yes" on the Lost Time radio button then we must 
-			// present the Expected Return Date control, AND insert the Lost Time History form
-			// as the next step in this incident.
-
-			// By re-executinging PopulateInitialForm() we can force a re-calculation 
-			// of the form steps needed for this incident since the GetFormSteps()
-			// method checks the Lost Time control's SelectedValue state.	
-
-			PopulateInitialForm();
 
 		}
 

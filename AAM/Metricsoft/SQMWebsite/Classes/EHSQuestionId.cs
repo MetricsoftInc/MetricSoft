@@ -45,6 +45,7 @@ namespace SQM.Website
 		RecommendationSummary = 95,
 		ReportedBy	= 96,
 		NativeLangComment = 107,
-		Operation = 109
+		Operation = 109,
+		Fatality = 110
 	}
 }

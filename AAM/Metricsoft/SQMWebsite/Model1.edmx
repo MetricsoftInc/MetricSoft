@@ -1480,6 +1480,7 @@
           <Property Name="DEPT_ID" Type="numeric" Precision="35" />
           <Property Name="PLANT_LINE_ID" Type="numeric" Precision="35" />
           <Property Name="INVOLVED_PERSON_ID" Type="numeric" Precision="35" />
+          <Property Name="FATALITY" Type="bit" />
         </EntityType>
         <EntityType Name="INCFORM_LOSTTIME_HIST">
           <Key>
@@ -8481,6 +8482,7 @@
           <Property Name="DEPT_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="PLANT_LINE_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="INVOLVED_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
+          <Property Type="Boolean" Name="FATALITY" />
         </EntityType>
         <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
@@ -10744,6 +10746,7 @@
           <EntitySetMapping Name="INCFORM_INJURYILLNESS">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_INJURYILLNESS">
               <MappingFragment StoreEntitySet="INCFORM_INJURYILLNESS">
+                <ScalarProperty Name="FATALITY" ColumnName="FATALITY" />
                 <ScalarProperty Name="INVOLVED_PERSON_ID" ColumnName="INVOLVED_PERSON_ID" />
                 <ScalarProperty Name="PLANT_LINE_ID" ColumnName="PLANT_LINE_ID" />
                 <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />

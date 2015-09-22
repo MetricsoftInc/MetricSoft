@@ -21593,6 +21593,30 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _INVOLVED_PERSON_ID;
         partial void OnINVOLVED_PERSON_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnINVOLVED_PERSON_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> FATALITY
+        {
+            get
+            {
+                return _FATALITY;
+            }
+            set
+            {
+                OnFATALITYChanging(value);
+                ReportPropertyChanging("FATALITY");
+                _FATALITY = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FATALITY");
+                OnFATALITYChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _FATALITY;
+        partial void OnFATALITYChanging(Nullable<global::System.Boolean> value);
+        partial void OnFATALITYChanged();
 
         #endregion
 

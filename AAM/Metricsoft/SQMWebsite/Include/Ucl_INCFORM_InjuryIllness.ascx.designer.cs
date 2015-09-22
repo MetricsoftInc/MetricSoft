@@ -742,6 +742,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskDays;
         
         /// <summary>
+        /// rapSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel rapSeverity;
+        
+        /// <summary>
         /// lbFirstAidSM control.
         /// </summary>
         /// <remarks>
@@ -794,6 +803,33 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdoRecordable;
+        
+        /// <summary>
+        /// lbFatalitySM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbFatalitySM;
+        
+        /// <summary>
+        /// lbFatalityXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbFatalityXS;
+        
+        /// <summary>
+        /// rdoFatality control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdoFatality;
         
         /// <summary>
         /// lbLostTimeSM control.
