@@ -65,7 +65,7 @@ namespace SQM.Website
 
 		#endregion
 
-		public static int NotifyIncidentStatus(INCIDENT incident, string scopeAction)
+		public static int NotifyIncidentStatus(INCIDENT incident, string scopeAction, string comment)
 		{
 			int status = 0;
 			string notifyScope;
@@ -87,14 +87,14 @@ namespace SQM.Website
 
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
 				string emailSubject = "Health/Safety Incident " + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-				string emailBody = "A new Health/Safety incident has been " + actionText + " :<br/>" +
+				string emailBody = "The following Health/Safety incident has been " + actionText + " - <br/>" +
 								"<br/>" +
 								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
 								plant.PLANT_NAME + "<br/>" +
 								incident.ISSUE_TYPE + "<br/>" +
-								"<br/>" +
 								incident.DESCRIPTION + "<br/>" +
-								"<br/>" +
+								(!string.IsNullOrEmpty(comment) ? "<br/>"+comment  : "") + 
+								 "<br/>" +
 								"On : " + DateTime.Now.ToString() +
 								"<br/>" +
 								"By : " + incident.LAST_UPD_BY +

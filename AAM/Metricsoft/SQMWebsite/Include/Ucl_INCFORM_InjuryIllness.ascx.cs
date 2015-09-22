@@ -1526,7 +1526,7 @@ namespace SQM.Website
 				SaveAttachments(incidentId);
 
 				//EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString());
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 			}
 			else
 			{
@@ -1549,7 +1549,7 @@ namespace SQM.Website
 				}
 
 				theincidentId = incidentId;
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.update).ToString());
+				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.update).ToString(), "");
 			}
 
 			return theincidentId;

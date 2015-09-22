@@ -61,6 +61,12 @@ namespace SQM.Website
 			set { ViewState["NewIncidentId"] = value; }
 		}
 
+		public INCIDENT ActionIncident
+		{
+			get { return ViewState["ActionINCIDENT"] == null ? null : (INCIDENT)ViewState["ActionINCIDENT"]; }
+			set { ViewState["ActionINCIDENT"] = value; }
+		}
+
 		protected decimal EditIncidentTypeId
 		{
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
@@ -132,16 +138,6 @@ namespace SQM.Website
 				}
 			}
 
-			if (IncidentId != null)
-			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
-				//if (incident != null)
-				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
-				//btnClose.Text = "Reopen Power Outage Incident";
-
-
-			}
-
 			//if (!IsFullPagePostback)
 			//	PopulateInitialForm();
 
@@ -166,6 +162,15 @@ namespace SQM.Website
 		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
+			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			if (IncidentId > 0)
+				try
+				{
+					ActionIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+				}
+				catch { }
+
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
@@ -322,7 +327,7 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_ACTION();
 
-				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION)  &&  item.ASSIGNED_PERSON_ID.HasValue &&  item.ASSIGNED_PERSON_ID > 0)
 				{
 					seq = seq + 1;
 
@@ -343,6 +348,12 @@ namespace SQM.Website
 					EHSIncidentMgr.CreateOrUpdateTask(incidentId, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION);
 				}
 			}
+
+			if (status > -1)
+			{
+				EHSNotificationMgr.NotifyIncidentStatus(ActionIncident, ((int)SysPriv.update).ToString(), "Corrective action specified");
+			}
+
 			return status;
 		}
 

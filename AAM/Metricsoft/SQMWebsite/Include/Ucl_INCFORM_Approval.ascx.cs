@@ -59,6 +59,12 @@ namespace SQM.Website
 			set { ViewState["NewIncidentId"] = value; }
 		}
 
+		public INCIDENT ApprovalIncident
+		{
+			get { return ViewState["ApprovalINCIDENT"] == null ? null : (INCIDENT)ViewState["ApprovalINCIDENT"]; }
+			set { ViewState["ApprovalINCIDENT"] = value; }
+		}
+
 		protected decimal EditIncidentTypeId
 		{
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
@@ -126,19 +132,6 @@ namespace SQM.Website
 								IsFullPagePostback = true;
 				}
 			}
-
-			if (IncidentId != null)
-			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
-				//if (incident != null)
-				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
-				//btnClose.Text = "Reopen Power Outage Incident";
-
-
-			}
-
-			//if (!IsFullPagePostback)
-			//	PopulateInitialForm();
 		}
 
 
@@ -160,6 +153,15 @@ namespace SQM.Website
 		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
+			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			if (IncidentId > 0)
+				try
+				{
+					ApprovalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+				}
+				catch { }
+
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
@@ -281,6 +283,10 @@ namespace SQM.Website
 				}
 
 				status = ctx.SaveChanges();
+				if (status > -1)
+				{
+					EHSNotificationMgr.NotifyIncidentStatus(ApprovalIncident, ((int)SysPriv.approve).ToString(), "");
+				}
 			}
 
 			return status;

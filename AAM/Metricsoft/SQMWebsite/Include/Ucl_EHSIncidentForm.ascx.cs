@@ -1987,7 +1987,7 @@ namespace SQM.Website
 					theIncident = CreateNewIncident();
 					incidentId = theIncident.INCIDENT_ID;
 					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
-					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString());
+					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 				}
 				else
 				{
