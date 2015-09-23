@@ -70,9 +70,23 @@ namespace SQM.Website
 			int status = 0;
 			string notifyScope;
 			if ((EHSIncidentTypeId)incident.ISSUE_TYPE_ID == EHSIncidentTypeId.InjuryIllness)
+			{
 				notifyScope = "IN-" + incident.ISSUE_TYPE_ID.ToString();
+				INCFORM_INJURYILLNESS injuryIllnessDetail = EHSIncidentMgr.SelectInjuryIllnessDetailsById(new PSsqmEntities(), incident.INCIDENT_ID);
+				if (injuryIllnessDetail != null)
+				{
+					if ((bool)injuryIllnessDetail.FATALITY == true)
+						notifyScope += "-X";
+					else if ((bool)injuryIllnessDetail.LOST_TIME == true)
+						notifyScope += "-T";
+					else if ((bool)injuryIllnessDetail.RECORDABLE == true)
+						notifyScope += "-R";
+				}
+			}
 			else
+			{
 				notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
+			}
 
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
