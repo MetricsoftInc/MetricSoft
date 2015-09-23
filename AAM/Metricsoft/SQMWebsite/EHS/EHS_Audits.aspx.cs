@@ -154,6 +154,10 @@ namespace SQM.Website
 				}
 
 			}
+			// for now, we will only let 'admin' create audits
+			if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
+				rbNew.Visible = false;
+
 		}
 
 		protected void DisplayNonPostback()
@@ -219,6 +223,10 @@ namespace SQM.Website
 					break;
 
 			}
+
+			// for now, we will only let 'admin' create audits
+			if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
+				rbNew.Visible = false;
 
 			SessionManager.ClearReturns();
 		}

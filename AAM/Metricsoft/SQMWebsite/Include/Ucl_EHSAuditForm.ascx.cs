@@ -2255,7 +2255,10 @@ namespace SQM.Website
 			}
 			// now update the header info
 			AUDIT audit = (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
-			totalPercent = Math.Round((totalAnswered / totalQuestions),2) * 100;
+			if (totalQuestions > 0)
+				totalPercent = Math.Round((totalAnswered / totalQuestions), 2) * 100;
+			else
+				totalPercent = 0;
 			audit.PERCENT_COMPLETE = totalPercent;
 			if (totalPercent >= 100 && negativeTextComplete)
 			{
@@ -2273,7 +2276,11 @@ namespace SQM.Website
 			else
 				audit.CURRENT_STATUS = "A";
 
-			totalPercent = Math.Round((totalPositive / totalQuestions),2) * 100;
+			if (totalQuestions > 0)
+				totalPercent = Math.Round((totalPositive / totalQuestions), 2) * 100;
+			else
+				totalPercent = 0;
+
 			audit.TOTAL_SCORE = totalPercent;
 
 			// save all the changes
