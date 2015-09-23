@@ -1894,7 +1894,7 @@ namespace SQM.Website
 			{
 				CurrentSubnav = (sender as RadButton).CommandArgument;
 				CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
-				Save(true);
+				Save(false);
 			}
 			else
 			{
@@ -2051,15 +2051,6 @@ namespace SQM.Website
 
 			if (shouldReturn)
 				Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
-
-			/*
-			if (shouldCreate8d == true && shouldReturn == false)
-				Create8dAndRedirect(incidentId);
-			else if (CurrentStep == 0 && shouldReturn == false)
-				GoToNextStep(incidentId);
-			else
-				ShowIncidentDetails(incidentId, result);
-			*/
 		}
 
 		#endregion
@@ -2197,24 +2188,7 @@ namespace SQM.Website
 
 		protected void GetIncidentInfoFromQuestions(List<EHSIncidentQuestion> questions)
 		{
-			//foreach (var q in questions)
-			//{
-			//	string answer = q.AnswerText;
 
-			//	if (answer != null)
-			//	{
-			//		// Special case values to populate in incident table
-			//		if (q.QuestionType == EHSIncidentQuestionType.TextBox && q.QuestionId == (decimal)EHSQuestionId.Description)
-			//			incidentDescription = answer;
-			//		if (q.QuestionType == EHSIncidentQuestionType.Date && q.QuestionId == (decimal)EHSQuestionId.IncidentDate)
-			//			incidentDate = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US"));
-			//	}
-
-			//	if (answer.Length > MaxTextLength)
-			//		answer = answer.Substring(0, MaxTextLength);
-			//	if (incidentDescription.Length > MaxTextLength)
-			//		incidentDescription = incidentDescription.Substring(0, MaxTextLength);
-			//}
 		}
 
 		protected bool AddOrUpdateAnswers(List<EHSIncidentQuestion> questions, decimal incidentId)
@@ -2464,6 +2438,8 @@ namespace SQM.Website
 			{
 				string script = string.Format("alert('{0}');", "Your updates have been saved.");
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+
+				btnSubnav_Click(btnSubnavContainment, null);
 			}
 		}
 

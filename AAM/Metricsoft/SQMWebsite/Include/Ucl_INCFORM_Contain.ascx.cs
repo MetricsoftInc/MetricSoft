@@ -108,7 +108,7 @@ namespace SQM.Website
 
 			if (IncidentId != null)
 			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
+				//INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
 				//if (incident != null)
 				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
 				//btnClose.Text = "Reopen Power Outage Incident";

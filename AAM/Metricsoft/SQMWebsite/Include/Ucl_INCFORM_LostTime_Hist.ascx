@@ -59,10 +59,8 @@
 			<ItemTemplate>
 			<tbody>
 				<tr class="row">
-<%--					<td class="text-center">
-						<asp:Label ID="lbItemSeq" runat="server" />
-					</td>--%>
 					<td class="text-left-more">
+						<asp:Label ID="lbItemSeq" runat="server" Visible="false" />
 						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" Width="100%" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>

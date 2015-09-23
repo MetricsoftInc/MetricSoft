@@ -109,6 +109,17 @@ namespace SQM.Website
 			set { ViewState["NewIncidentId"] = value; }
 		}
 
+		public INCIDENT TheIncident
+		{
+			get { return ViewState["TheINCIDENT"] == null ? null : (INCIDENT)ViewState["TheINCIDENT"]; }
+			set { ViewState["TheINCIDENT"] = value; }
+		}
+		public INCFORM_INJURYILLNESS TheINCFORM
+		{
+			get { return ViewState["TheINCFORM"] == null ? null : (INCFORM_INJURYILLNESS)ViewState["TheINCFORM"]; }
+			set { ViewState["TheINCFORM"] = value; }
+		}
+
 		public string CurrentSubnav
 		{
 			get { return ViewState["CurrentSubnav"] == null ? "I" : (string)ViewState["CurrentSubnav"]; }
@@ -390,7 +401,8 @@ namespace SQM.Website
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 
-					rdoFatality.Enabled = rdoRecordable.Enabled = rdoLostTime.Enabled = false;  // do this for new incidents
+					rdoFirstAid.SelectedValue = "1";
+					Severity_Changed(rdoFirstAid, null);
 
 					//CurrentFormStep = 1;
 
@@ -730,16 +742,6 @@ namespace SQM.Website
 					tbTaskYears.Enabled = UpdateAccess;
 					tbTaskMonths.Enabled = UpdateAccess;
 					tbTaskDays.Enabled = UpdateAccess;
-					//rfvTaskDays.Enabled = UpdateAccess;
-
-					//rdoFirstAid.Enabled = UpdateAccess;
-					//rfvFirstAid.Enabled = UpdateAccess;
-
-					//rdoRecordable.Enabled = UpdateAccess;
-					//rfvRecordable.Enabled = UpdateAccess;
-
-					//rdoLostTime.Enabled = UpdateAccess;
-					//rfvLostTime.Enabled = UpdateAccess;
 
 					rdpExpectReturnDT.Enabled = UpdateAccess;
 					//rfvExpectReturnDT.Enabled = UpdateAccess;
@@ -1240,20 +1242,20 @@ namespace SQM.Website
 				default:
 					CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
 					Save(false);
-					//if (IsEditContext)
-					//{
-					//	btnSaveContinue_Click(sender, null);
-					//	BuildForm();
-					//	PopulateInitialForm();
-					//}
-					//else
-					//	btnSaveReturn_Click(sender, null);
 					break;
 			}
 			if (status >= 0)
 			{
 				string script = string.Format("alert('{0}');", "Your updates have been saved.");
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+
+				if(CurrentSubnav == "I"  &&  TheINCFORM != null)
+				{
+					if (TheINCFORM.LOST_TIME == true)
+						btnSubnav_Click(btnSubnavLostTime, null);
+					else
+						btnSubnav_Click(btnSubnavContainment, null);
+				}
 			}
 		}
 
@@ -1393,10 +1395,6 @@ namespace SQM.Website
 			if (InitialPlantId == 0)
 				InitialPlantId = IncidentLocationId;
 
-//			formSteps = GetFormSteps(typeId);
-//			int i = Convert.ToInt32(CurrentStep);
-//			string savingForm = formSteps[i].StepFormName;
-
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 	
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
@@ -1460,10 +1458,6 @@ namespace SQM.Website
 
 		protected decimal AddUpdateINCFORM_INJURYILLNESS(decimal incidentId)
 		{
-
-			INCIDENT theIncident = null;
-			INCFORM_INJURYILLNESS theInjuryIllnessForm = null;
-
 			decimal theincidentId = 0;
 
 			if (!IsEditContext)
@@ -1474,15 +1468,15 @@ namespace SQM.Website
 
 				//currentFormStep = CurrentFormStep;
 
-				theIncident = CreateNewIncident();
-				incidentId = theIncident.INCIDENT_ID;
-				theincidentId = theIncident.INCIDENT_ID;
+				TheIncident = CreateNewIncident();
+				incidentId = TheIncident.INCIDENT_ID;
+				theincidentId = TheIncident.INCIDENT_ID;
 
-				theInjuryIllnessForm = CreateNewInjuryIllnessDetails(incidentId);
+				TheINCFORM = CreateNewInjuryIllnessDetails(incidentId);
 				SaveAttachments(incidentId);
 
 				//EHSNotificationMgr.NotifyOnCreate(incidentId, IncidentLocationId);
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
+				EHSNotificationMgr.NotifyIncidentStatus(TheIncident, ((int)SysPriv.originate).ToString(), "");
 			}
 			else
 			{
@@ -1494,8 +1488,8 @@ namespace SQM.Website
 				incidentId = EditIncidentId;
 				if (incidentId > 0)
 				{
-					theIncident = UpdateIncident(incidentId);
-					theInjuryIllnessForm = UpdateInjuryIllnessDetails(incidentId);
+					TheIncident = UpdateIncident(incidentId);
+					TheINCFORM = UpdateInjuryIllnessDetails(incidentId);
 					SaveAttachments(incidentId);
 
 					if (Mode == IncidentMode.Incident)
@@ -1505,7 +1499,7 @@ namespace SQM.Website
 				}
 
 				theincidentId = incidentId;
-				EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.update).ToString(), "");
+				EHSNotificationMgr.NotifyIncidentStatus(TheIncident, ((int)SysPriv.update).ToString(), "");
 			}
 
 			return theincidentId;

@@ -389,7 +389,6 @@ namespace SQM.Website
 		{
 			if (e.CommandArgument == "AddAnother")
 			{
-
 				var itemList = new List<INCFORM_LOSTTIME_HIST>();
 
 				foreach (RepeaterItem losttimeitem in rptLostTime.Items)
@@ -448,12 +447,13 @@ namespace SQM.Website
 			else if (e.CommandArgument.ToString() == "Delete")
 			{
 				int delId = e.Item.ItemIndex;
+				int sequence = -1;
 				var itemList = new List<INCFORM_LOSTTIME_HIST>();
 
 				foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 				{
 					var item = new INCFORM_LOSTTIME_HIST();
-
+					++sequence;
 					Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
 
 					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
@@ -475,7 +475,7 @@ namespace SQM.Website
 					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
-					if (Convert.ToInt32(lb.Text) != delId + 1)
+					if (sequence != delId)
 					{
 						item.ITEM_DESCRIPTION = tbr.Text;
 						item.BEGIN_DT = bd.SelectedDate;
