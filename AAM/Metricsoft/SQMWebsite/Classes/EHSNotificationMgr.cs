@@ -69,6 +69,9 @@ namespace SQM.Website
 		{
 			int status = 0;
 			string notifyScope;
+			string incidentLabel;
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+
 			if ((EHSIncidentTypeId)incident.ISSUE_TYPE_ID == EHSIncidentTypeId.InjuryIllness)
 			{
 				notifyScope = "IN-" + incident.ISSUE_TYPE_ID.ToString();
@@ -82,10 +85,12 @@ namespace SQM.Website
 					else if ((bool)injuryIllnessDetail.RECORDABLE == true)
 						notifyScope += "-R";
 				}
+				incidentLabel = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE" && x.XLAT_CODE == notifyScope).FirstOrDefault().DESCRIPTION;
 			}
 			else
 			{
 				notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
+				incidentLabel = incident.ISSUE_TYPE;
 			}
 
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
@@ -94,18 +99,17 @@ namespace SQM.Website
 
 			if (notifyPersonList.Count > 0)
 			{
-				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
 				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
 
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
-				string emailSubject = "Health/Safety Incident " + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+				string emailSubject = "Health/Safety Incident " + actionText + ": " + incidentLabel + " (" + plant.PLANT_NAME + ")";
 				string emailBody = "The following Health/Safety incident has been " + actionText + " - <br/>" +
 								"<br/>" +
 								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
 								plant.PLANT_NAME + "<br/>" +
-								incident.ISSUE_TYPE + "<br/>" +
+								incidentLabel + "<br/>" +
 								incident.DESCRIPTION + "<br/>" +
 								(!string.IsNullOrEmpty(comment) ? "<br/>"+comment  : "") + 
 								 "<br/>" +
