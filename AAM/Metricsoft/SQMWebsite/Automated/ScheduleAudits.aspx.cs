@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Configuration;
@@ -17,23 +18,55 @@ namespace SQM.Website.Automated
 		{
 			output = new StringBuilder();
 			entities = new PSsqmEntities();
-
+			bool validIP = false;
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 
 			try
 			{
-				ScheduleAllAudits();
+				string currentIP = GetIPAddress();
+				List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
+
+				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
+
+				if (strValidIP.Equals(currentIP))
+					validIP = true;
+				else
+				{
+					WriteLine("Main ScheduleAudits being accessed from invalid IP address " + currentIP);
+					validIP = false;
+				}
 			}
 			catch (Exception ex)
 			{
-				WriteLine("Main ScheduleAudits Error: " + ex.ToString());
-				WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
+				validIP = false;
+				WriteLine("Main ScheduleAudits Error validating IP Address: " + ex.ToString());
 			}
 
+			if (validIP)
+			{
+				try
+				{
+					ScheduleAllAudits();
+				}
+				catch (Exception ex)
+				{
+					WriteLine("Main ScheduleAudits Error: " + ex.ToString());
+					WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
+				}
+			}
 			WriteLine("");
 			WriteLine("Completed: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
+		}
+
+		public string GetIPAddress()
+		{
+			string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+			
+			string myIP = Dns.GetHostByName(hostName).AddressList[0].ToString(); // Get the IP
+
+			return myIP;
 		}
 
 		static void ScheduleAllAudits()
