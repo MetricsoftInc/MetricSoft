@@ -602,6 +602,16 @@ namespace SQM.Website
 					}
 					break;
 				case "rdoRecordable":
+					if (rbl.SelectedValue == "1")
+					{
+						rdoFatality.Enabled = rdoLostTime.Enabled = true;
+					}
+					else
+					{
+						rdoFatality.SelectedValue = "0";
+						rdoLostTime.SelectedValue = "0";
+						rdoFatality.Enabled = rdoLostTime.Enabled = false;
+					}
 					break;
 				case "rdoFatality":
 					if (rbl.SelectedValue == "1")
