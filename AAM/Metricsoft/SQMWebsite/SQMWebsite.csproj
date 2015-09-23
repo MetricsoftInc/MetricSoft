@@ -148,6 +148,7 @@
     <Content Include="Admin\Administrate_SettingInput.aspx" />
     <Content Include="Automated\CheckCurrency.aspx" />
     <Content Include="Automated\MailTest.aspx" />
+    <Content Include="Automated\AutomatedTest.aspx" />
     <Content Include="Automated\ScheduleAudits.aspx" />
     <Content Include="Automated\SendReminderEmails.aspx" />
     <Content Include="bin\AjaxControlToolkit.dll" />
@@ -609,6 +610,13 @@
     </Compile>
     <Compile Include="Automated\MailTest.aspx.designer.cs">
       <DependentUpon>MailTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Automated\AutomatedTest.aspx.cs">
+      <DependentUpon>AutomatedTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Automated\AutomatedTest.aspx.designer.cs">
+      <DependentUpon>AutomatedTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Automated\ScheduleAudits.aspx.cs">
       <DependentUpon>ScheduleAudits.aspx</DependentUpon>
