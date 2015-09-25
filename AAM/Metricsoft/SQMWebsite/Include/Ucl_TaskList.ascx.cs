@@ -126,8 +126,6 @@ namespace SQM.Website
             }
         }
 
-
-
         #endregion
 
         #region scehedule
@@ -140,6 +138,10 @@ namespace SQM.Website
   
             foreach (TaskItem taskItem in taskList)
             {
+				if (Convert.ToDateTime(taskItem.Task.DUE_DT).Date == new DateTime(2015, 10, 5))
+				{
+					;
+				}
                 taskItem.StartDate = Convert.ToDateTime(taskItem.Task.DUE_DT).AddHours(9);  // want task to display at 9 am
                 if (taskItem.Task.STATUS != ((int)TaskStatus.Complete).ToString() && taskItem.Task.STATUS != ((int)TaskStatus.Pending).ToString())
                 {
@@ -164,11 +166,18 @@ namespace SQM.Website
 
 			if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < DateTime.Now.Date)
 			{
+				// past due active link
 				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light pink
+			}
+			else if (string.IsNullOrEmpty(e.Appointment.ID.ToString()))
+			{
+				// inactive link
+				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#F0FFFF");   // azure
 			}
 			else
 			{
-				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFE0"); 
+				// active link
+				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFE0");   // yellow  
 			}
 
             e.Appointment.End = e.Appointment.Start.AddHours(2);
@@ -185,14 +194,16 @@ namespace SQM.Website
                 }
 
                 if (hfScheduleScope.Value == false.ToString().ToLower()  || string.IsNullOrEmpty(e.Appointment.ID.ToString()))       // only enable task link if schedule scope is by USER  (i.e. disable if PLANT view)
-                {
-                    Control div = (Control)e.Container.FindControl("divInactive");
-                    div.Visible = true;
-                    LinkButton lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem");
-                    lnk.Visible = false; 
-                    lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem2");
-                    lnk.Visible = false;
-                }
+					{
+						//Control div = (Control)e.Container.FindControl("divInactive");
+						//div.Visible = true;
+						LinkButton lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem");
+						lnk.Enabled = false;
+						//lnk.Visible = false; 
+						lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem2");
+						//lnk.Visible = false;
+						lnk.Enabled = false;
+					}
             }
             catch { }
         }
