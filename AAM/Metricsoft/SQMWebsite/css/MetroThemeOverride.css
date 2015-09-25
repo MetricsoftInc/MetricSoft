@@ -625,7 +625,6 @@ select, input {
             font-size: 12px;
         } 
 
-
 .RadScheduler .rsMonthView .rsWrap,
     .RadScheduler .rsMonthView .rsApt,
     .RadScheduler .rsMonthView .rsAptOut,
@@ -639,14 +638,18 @@ select, input {
 
     .RadScheduler .rsTopWrap .rsHeader,
     .RadScheduler .rsHeader .rcTitleBar,
-    .RadScheduler .rsHeader .rsToday
+    .RadScheduler .rsHeader .rsToday,
+	.RadScheduler .rsHeader .rsDatePickerWrapper,
+	 .RadScheduler .rsHeader .rsDatePickerActivator
     {
         font-family: Verdana, arial, helvetica, sans-serif;
+		font-size: 14px;
         background-color: #B0C4DE;
         color: black;
         border: none;
     }
-        .RadScheduler .rsTopWrap .rsHeaderMonth  
+
+      .RadScheduler .rsTopWrap .rsHeaderMonth  
     {
         font-family: Verdana, arial, helvetica, sans-serif;
         background-color: #B0C4DE;
@@ -664,8 +667,8 @@ select, input {
     .RadScheduler .rsMonthView .rsWrap
     {
             overflow: hidden;
-            font-size: 0;
-            line-height: 0;
+            font-size: 11px;
+            line-height: 14px;
     }
     .RadScheduler .rsMonthView .rsLastWrap
     {
@@ -693,5 +696,4 @@ select, input {
             margin: 0 1px;
             border-width: 1px 0;
     }
-
 

@@ -162,10 +162,15 @@ namespace SQM.Website
             e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 1000, "...");
             e.Appointment.Description = WebSiteCommon.StripHTML(e.Appointment.Description);
 
-            if (e.Appointment.End.Date > e.Appointment.Start.Date && e.Appointment.Start.Date < DateTime.Now.Date)
-            {
-                e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light yellow  #ffd413  #ffc013
-            }
+			if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < DateTime.Now.Date)
+			{
+				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light pink
+			}
+			else
+			{
+				e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFE0"); 
+			}
+
             e.Appointment.End = e.Appointment.Start.AddHours(2);
         }
 
