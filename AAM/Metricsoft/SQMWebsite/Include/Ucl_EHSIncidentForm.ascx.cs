@@ -2041,11 +2041,11 @@ namespace SQM.Website
 				finalPlantId = selectedPlantId;
 
 			// Start plant accounting rollup in a background thread
-
+			/*
 			Thread thread = new Thread(() => EHSAccountingMgr.RollupPlantAccounting(InitialPlantId, finalPlantId));
 			thread.IsBackground = true;
 			thread.Start();
-
+			*/
 			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
 			//obj.IsBackground = true;
 
