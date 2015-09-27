@@ -53,6 +53,12 @@ namespace SQM.Website
 					}
 
 					System.Web.HttpBrowserCapabilities browser = Request.Browser;
+
+					SETTINGS setsPwdReset = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "PasswordResetEnable");
+					if (setsPwdReset != null && setsPwdReset.VALUE.ToUpper() == "Y")
+					{
+						lnkForgotPassword.Visible = true;
+					}
 					
 					// url format login.aspx/?t=ltc:60&p=EHS
 					// execOverride == override query params to force ticker and image posting 

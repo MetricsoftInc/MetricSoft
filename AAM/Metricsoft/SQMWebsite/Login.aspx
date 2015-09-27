@@ -80,11 +80,10 @@
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 
-
+					<br />
 					<asp:Label ID="Label2" runat="server" class="prompt"  Text="Password:"></asp:Label>
 					<asp:TextBox ID="tbPassword" runat="server" CausesValidation="false" TextMode="Password" 
 						MaxLength="32" Style="width: 170px; margin-top: 8px;  margin: 5px 4px 0 2px;" onblur="ClearMessages();"></asp:TextBox>
-
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
@@ -93,7 +92,7 @@
 					<asp:Button runat="server" Text="Login" ID="btnLogin" CssClass="buttonEmphasis" Style="width: 80px;  margin: 5px 0 0 0;"
 						OnClick="btnLogin_Click" />
 					<asp:LinkButton runat="server" ID="lnkForgotPassword" class="buttonLinkSmall"
-						Text="Forgot Username/Password ?" OnClick="lnkForgotPassword_Click"></asp:LinkButton>
+						Text="Forgot Username/Password ?" OnClick="lnkForgotPassword_Click" Visible="false"></asp:LinkButton>
 				</div>
 
 			</div>

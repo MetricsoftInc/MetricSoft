@@ -295,7 +295,7 @@
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableData"><asp:Label ID="lblUserLastUpdate" runat="server" /></td>
                                                         </tr>
-                                                        <tr>
+                                                        <tr id="trResetPassword" runat="server" visible="false">
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblResetPassword" runat="server" text="Reset Password and Send Email"></asp:Label>
                                                             </td>

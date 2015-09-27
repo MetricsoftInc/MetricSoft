@@ -247,7 +247,7 @@ namespace SQM.Website
 		{
             PERSON person = LocalPerson();
             BusinessLocation businessLocation;
-            SETTINGS sets = SQMSettings.GetSetting("COMPANY", "ESCALATEANYUSER");
+			SETTINGS setsPwdReset = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "PasswordResetEnable");
             SQM_ACCESS sysAccess = SQMModelMgr.LookupCredentials(entities, person.SSO_ID, "", false);
             
 			divPageBody.Visible = true;
@@ -342,6 +342,11 @@ namespace SQM.Website
 				}
 			}
 			lblPrivScope.Text = lblPrivScope.Text.TrimEnd(',');
+
+			if (setsPwdReset != null && setsPwdReset.VALUE.ToUpper() == "Y")
+			{
+				trResetPassword.Visible = true;
+			}
 
             string script = "function f(){OpenUserEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);

@@ -149,7 +149,7 @@ namespace SQM.Website
 					setting = (from s in ctx.SETTINGS
 											where (s.SETTING_GROUP.ToUpper() == settingGroup.ToUpper() && s.SETTING_FAMILY.ToUpper() == settingFamily.ToUpper() && s.SETTING_CD.ToUpper() == settingCode.ToUpper())
 											orderby s.SETTING_GROUP, s.SETTING_CD
-											select s).Single();
+											select s).SingleOrDefault();
 				}
 				catch (Exception ex)
 				{
