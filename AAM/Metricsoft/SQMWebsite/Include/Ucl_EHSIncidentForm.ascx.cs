@@ -180,6 +180,19 @@ namespace SQM.Website
 			}
 		}
 
+		private RadDropDownList HandleDepartmentList(EHSIncidentQuestion q, INCIDENT incident, bool shouldPopulate, RadDropDownList rddl)
+		{
+			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, shouldPopulate ? (decimal)incident.DETECT_PLANT_ID : SessionManager.IncidentLocation.Plant.PLANT_ID);
+			foreach (DEPARTMENT dept in deptList)
+			{
+				rddl.Items.Add(new DropDownListItem(dept.DEPT_NAME, dept.DEPT_ID.ToString()));
+			}
+			if (shouldPopulate && rddl.FindItemByValue(q.AnswerText) != null)
+				rddl.SelectedValue = q.AnswerText;
+
+			return rddl;
+		}
+
 		public void BuildForm()
 		{
 
@@ -364,6 +377,11 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Dropdown:
 						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
 						rddl.Items.Add(new DropDownListItem("[Select One]", ""));
+
+						if (q.QuestionId == (decimal)EHSQuestionId.Department)
+						{
+							rddl = HandleDepartmentList(q, incident, shouldPopulate, rddl);
+						}
 
 						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
 						{

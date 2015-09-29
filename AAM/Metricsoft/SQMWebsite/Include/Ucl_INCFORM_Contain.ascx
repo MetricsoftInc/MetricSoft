@@ -71,8 +71,8 @@
                                     <asp:RequiredFieldValidator runat="server" ID="rfvContainAction" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" />
                                 </td>
                                 <td class="text-left-more">
-                                    <telerik:RadComboBox ID="rddlContainPerson" Skin="Metro" Width="70%" CssClass="WarnIfChanged" ZIndex="9000" DropDownHeight="350" ExpandDirection="Up" runat="server" AutoPostBack="false" />
-                                    <asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
+                                    <telerik:RadComboBox ID="rddlContainPerson" Skin="Metro" CssClass="WarnIfChanged" ZIndex="9000" Width="200" DropDownHeight="350" ExpandDirection="Up" runat="server" AutoPostBack="false" />
+                                    <asp:RequiredFieldValidator runat="server" ID="rfvContainPerson" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="Required" />
                                 </td>
                                 <td class="text-left-more">
                                     <telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" CssClass="WarnIfChanged" Enabled="true" runat="server"  ShowPopupOnFocus="true" />
