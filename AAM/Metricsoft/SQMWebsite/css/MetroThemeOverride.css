@@ -407,11 +407,22 @@ span.RadButton_Metro.rbVerticalButton .rbDecorated
     background-color: #191970;
     padding: 3px 12px;
     text-align: center;
-    height: 26px;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     behavior: url(/css/PIE.htc); /* IE8 rounded corners */
+}
+
+span.RadButton_Metro.rbSkinnedButton,
+span.RadButton_Metro.rbVerticalButton
+{
+	height: 32px;
+}
+
+span.RadButton_Metro .rbDecorated,
+span.RadButton_Metro.rbVerticalButton .rbDecorated
+{
+	height: 26px;
 }
 
 span.RadButton_Metro.rbSkinnedButton:hover,
