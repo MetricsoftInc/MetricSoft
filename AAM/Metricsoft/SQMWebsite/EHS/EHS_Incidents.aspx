@@ -5,8 +5,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %> 
 <%@ Register Src="~/Include/Ucl_IncidentList.ascx" TagName="IncidentList" TagPrefix="Ucl" %>
-<%@ Register Src="~/Include/Ucl_EHSIncidentForm.ascx" TagName="IncidentForm" TagPrefix="Ucl" %>
-<%--<%@ Register Src="~/Include/Ucl_EHSIncidentCustomForm.ascx" TagName="IncidentCustomForm" TagPrefix="Ucl" %>--%>
+
 <%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
 
@@ -26,6 +25,10 @@
 			document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
 			document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
 		});
+
+		function OpenNewIncidentWindow() {
+			$find("<%=winNewIncident.ClientID %>").show();
+		    }
 
 		function StandardConfirm(sender, args) {
 
@@ -145,7 +148,6 @@
 
 						<div class="row-fluid">
 
-
 							<span style="float: left; width: 160px;">
 								<asp:Label runat="server" ID="lblIncidentType" Text="Incident Type:" CssClass="prompt"></asp:Label>
 							</span>&nbsp;&nbsp;
@@ -198,8 +200,6 @@
 						</div>
 
 						<div class="row-fluid">
-
-
 							<span style="clear: both; float: left; width: 160px;">
 								<asp:Label runat="server" ID="lblRecommendType" Text="Recommendation Type:" CssClass="prompt"></asp:Label>
 							</span>
@@ -225,11 +225,9 @@
 							</span>
 
 						</div>
-
 					</asp:PlaceHolder>
 
 					<div class="row" style="margin-top: 7px;">
-
 
 						<span style="float: left; margin-top: 4px; margin-left: 14px;">
 							<span style="padding-right:44px;"><asp:Label runat="server" ID="lblIncidentDate" Text="Incident Date From:" CssClass="prompt"></asp:Label></span>
@@ -259,7 +257,6 @@
 				</div>
 
 				<%--	$$$$$$$$$$$$$$ Incident Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
-
 
 				<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2">
 
@@ -305,26 +302,44 @@
 					</asp:Panel>
 				</telerik:RadAjaxPanel>
 
-
 				<div class="noprint">
 					<Ucl:IncidentList ID="uclIncidentList" runat="server" />
 					<br />
 					<Ucl:Export ID="uclExport" runat="server" />
 				</div>
 			</div>
+		</div>
+	</div>
 
-			<Ucl:IncidentForm ID="uclIncidentForm" runat="server"/>
-<%--			<Ucl:IncidentForm ID="IncidentCustomForm"  Visible="false" runat="server" />--%>
-
-			<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
-			</telerik:RadAjaxManager>
-	</div>
-	</div>
-<%--	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>--%>
+	<telerik:RadWindow runat="server" ID="winNewIncident" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Behaviors="Move,Close" Title="Record A New Incident">
+		<ContentTemplate>
+			<div class="container-fluid" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+						<asp:Label ID="lbIncidentLocation" runat="server" Text="Incident Location" CssClass="prompt"></asp:Label><span class="requiredStarFloat">*</span></span>
+					</div>	
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+						<telerik:RadComboBox ID="ddlIncidentLocation" runat="server" Skin="Metro" ZIndex="9000" Height="300" Width="300" Font-Size="Small"
+							ToolTip="select the location where the incident occured" EmptyMessage="select" AutoPostBack="false"></telerik:RadComboBox>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+						<asp:Label ID="lblNewIncidentType" runat="server" Text="Incident Type" CssClass="prompt"></asp:Label><span class="requiredStarFloat">*</span></span>
+					</div>	
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+						<telerik:RadComboBox ID="rddlNewIncidentType" runat="server" Skin="Metro" ZIndex="9000" Height="250" Width="300" Font-Size="Small" 
+							ToolTip="select the type of incident you wish to report" EmptyMessage="select"  AutoPostBack="false"> </telerik:RadComboBox>
+					</div>
+				</div>
+				<br />
+				<div style="float: right; margin: 5px;">
+					<span>
+						<asp:Button ID="btnNewIncidentCreate" CSSclass="buttonEmphasis" runat="server" text="Create Incident" style="margin: 5px;" onclick="btnNewIncidentCreate_Click"></asp:Button>
+						<asp:Button ID="btnNewIncidentCancel" CSSclass="buttonStd" runat="server" text="Cancel" style="margin: 5px;" OnClick="btnNewIncidentCancel_Click"></asp:Button>
+					</span>
+                </div>					
+			</div>
+		</ContentTemplate>
+	</telerik:RadWindow>
 </asp:Content>

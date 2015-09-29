@@ -61,7 +61,7 @@
 				<tr class="row">
 					<td class="text-left-more">
 						<asp:Label ID="lbItemSeq" runat="server" Visible="false" />
-						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" Width="100%" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
+						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" ZIndex="9000" ExpandDirection="Up" Height="100" Width="180" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
 						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
 					</td>
 					<td class="text-left-more">

@@ -48,13 +48,6 @@ namespace SQM.Website
 		// Special answers used in INCIDENT table
 		string incidentDescription = "";
 		protected DateTime incidentDate;
-		protected decimal incidentTypeId;
-		protected string incidentType;
-
-		public Ucl_EHSIncidentDetails IncidentDetails
-		{
-			get { return uclIncidentDetails; }
-		}
 
 		public void EnableReturnButton(bool bEnabled)
 		{
@@ -101,12 +94,12 @@ namespace SQM.Website
 			set { ViewState["InitialPlantId"] = value; }
 		}
 
-		protected decimal EditIncidentTypeId
+		public decimal EditIncidentTypeId
 		{
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected decimal SelectedTypeId
+		public decimal SelectedTypeId
 		{
 			get { return ViewState["SelectedTypeId"] == null ? 0 : (decimal)ViewState["SelectedTypeId"]; }
 			set { ViewState["SelectedTypeId"] = value; }
@@ -132,16 +125,8 @@ namespace SQM.Website
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
-			if (Mode == IncidentMode.Incident)
-			{
-				ahReturn.HRef = "/EHS/EHS_Incidents.aspx";
-				btnSaveReturn.Visible = btnSaveContinue.Visible = false;
-			}
-			else if (Mode == IncidentMode.Prevent)
-				ahReturn.HRef = "/EHS/EHS_Incidents.aspx?mode=prevent";
-
-
-			UpdateIncidentTypes();
+			ahReturn.HRef = "/EHS/EHS_Incidents.aspx";
+			btnSaveReturn.Visible = btnSaveContinue.Visible = false;
 
 			var sourceId = Page.Request[Page.postEventSourceID];
 			if (sourceId != null && (sourceId.EndsWith("btnSaveContinue") || sourceId.EndsWith("btnSaveReturn")))
@@ -153,19 +138,17 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (uclContainment.Visible == true || uclRootCause.Visible == true  ||  uclAction.Visible == true  ||  uclApproval.Visible == true)
+				if (uclContainment.Visible == true || uclRootCause.Visible == true || uclAction.Visible == true || uclApproval.Visible == true)
 				{
 					return;
 				}
-				divIncidentForm.Visible = true;
 
 				LoadHeaderInformation();
-					
 				BuildForm();
 			}
 			else
 			{
-				RefreshPageContext();
+				//RefreshPageContext();
 			}
 		}
 
@@ -179,35 +162,6 @@ namespace SQM.Website
 
 		#region Form
 
-		protected void UpdateIncidentTypes()
-		{
-			if (!IsEditContext)
-			{
-				var incidentTypeList = new List<INCIDENT_TYPE>();
-				string selectString = "";
-				if (Mode == IncidentMode.Incident)
-				{
-					incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId);
-					selectString = "&nbsp;&nbsp;[Select An Incident Type]";
-				}
-				else if (Mode == IncidentMode.Prevent)
-				{
-					incidentTypeList = EHSIncidentMgr.SelectPreventativeTypeList(companyId);
-					selectString = "[Select A Preventative Action Type]";
-				}
-				if (incidentTypeList.Count > 1)
-					incidentTypeList.Insert(0, new INCIDENT_TYPE() { INCIDENT_TYPE_ID = 0, TITLE = selectString });
-				
-				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
-					incidentTypeList = (from i in incidentTypeList where i.INCIDENT_TYPE_ID != 10 select i).ToList();
-
-				rddlIncidentType.Font.Bold = true;
-				rddlIncidentType.DataSource = incidentTypeList;
-				rddlIncidentType.DataTextField = "TITLE";
-				rddlIncidentType.DataValueField = "INCIDENT_TYPE_ID";
-				rddlIncidentType.DataBind();
-			}
-		}
 
 		protected void LoadHeaderInformation()
 		{
@@ -216,86 +170,20 @@ namespace SQM.Website
 			if (IsEditContext || CurrentStep > 0)
 			{
 				// in edit mode, load the header field values and make all fields display only
-	
+
 				var incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 
-			BusinessLocation location = new BusinessLocation().Initialize((decimal)incident.DETECT_PLANT_ID);
+				BusinessLocation location = new BusinessLocation().Initialize((decimal)incident.DETECT_PLANT_ID);
 
-			rddlIncidentType.Enabled = false;
-			rddlIncidentType.Visible = false;
-
-			lblIncidentLocation.Text = location.Plant.PLANT_NAME + " " + location.BusinessOrg.ORG_NAME;
-			lblIncidentLocation.Visible = true;
-
-				ddlIncidentLocation.Visible = false;
-				mnuIncidentLocation.Visible = false;
-			}
-			else
-			{
-				// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
-				List<BusinessLocation> locationList = SessionManager.PlantList;
-				locationList = UserContext.FilterPlantAccessList(locationList);
-				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
-				{
-					if (mnuIncidentLocation.Items.Count == 0)
-					{
-						mnuIncidentLocation.Items.Clear();
-
-						ddlIncidentLocation.Visible = false;
-						mnuIncidentLocation.Visible = true;
-						mnuIncidentLocation.Enabled = true;
-						SQMBasePage.SetLocationList(mnuIncidentLocation, locationList, 0, "[Select a Location]", "", true);
-					}
-				}
-				else
-				{
-					if (ddlIncidentLocation.Items.Count == 0)
-					{
-						ddlIncidentLocation.Items.Clear();
-						ddlIncidentLocation.Visible = true;
-						ddlIncidentLocation.Enabled = true;
-						mnuIncidentLocation.Visible = false;
-						SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
-						ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-					}
-				}
-
-				// set defaults for add mode
-				rddlIncidentType.Enabled = false;
-				rddlIncidentType.Visible = false;
+				lblIncidentLocation.Text = location.Plant.PLANT_NAME + " " + location.BusinessOrg.ORG_NAME;
+				lblIncidentLocation.Visible = true;
 			}
 		}
 
 		public void BuildForm()
 		{
-			if (Mode == IncidentMode.Prevent)
-			{
-				if (UserContext.GetMaxScopePrivilege(SysScope.incident) > SysPriv.config)
-				{
-					pnlIncidentHeader.Visible = false;
-
-					if (CurrentStep == 0)
-					{
-						if (IsEditContext)
-						{
-							ShowIncidentDetails(EditIncidentId, "Recommendation Details");
-							btnSaveReturn.Visible = false;
-							//btnSaveContinue.Visible = false;
-						}
-						return;
-					}
-				}
-				if (CurrentStep == 1)
-				{
-					uclIncidentDetails.Visible = true;
-					var displaySteps = new int[] { 0 };
-					uclIncidentDetails.Refresh(EditIncidentId, displaySteps);
-				}
-			}
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-
-			IsUseCustomForm = EHSIncidentMgr.IsUseCustomForm(typeId);
 
 			if (typeId < 1)
 				return;
@@ -305,40 +193,14 @@ namespace SQM.Website
 			{
 				incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 				SessionManager.SetIncidentLocation(Convert.ToDecimal(incident.DETECT_PLANT_ID));
+				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
+				SelectedTypeText = incident.ISSUE_TYPE;
 			}
-
-			string typeText = SelectedTypeText;
-			incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 			pnlForm.Controls.Clear();
 			divForm.Visible = true;
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
-
-			if (IsUseCustomForm)
-			{
-				BuildCustomForm(typeId);
-				return;
-			}
-
-			if (typeId == 10)
-			{
-					preventionLocationForm = (Ucl_PreventionLocation)LoadControl("~/Include/Ucl_PreventionLocation.ascx");
-					preventionLocationForm.ID = "plf1";
-					preventionLocationForm.IsEditContext = IsEditContext;
-					preventionLocationForm.IncidentId = EditIncidentId;
-
-					preventionLocationForm.BuildCaseComboBox();
-					if (IsEditContext == true)
-						preventionLocationForm.PopulateForm();
-
-					pnlForm.Controls.Add(new LiteralControl("<br/>"));
-					pnlForm.Controls.Add(preventionLocationForm);
-					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-					btnSaveReturn.Visible = false;
-					btnSaveContinue.Visible = false;
-					return;
-			}
 
 			pnlForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
 
@@ -402,9 +264,6 @@ namespace SQM.Website
 						q.QuestionType == EHSIncidentQuestionType.StandardsReferencesDropdown || q.QuestionType == EHSIncidentQuestionType.UsersDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.UsersDropdownLocationFiltered)
 							validator.InitialValue = "[Select One]";
-
-						if (Mode == IncidentMode.Prevent)
-							validator.EnableClientScript = false;
 
 						pnl.Controls.Add(validator);
 					}
@@ -503,7 +362,7 @@ namespace SQM.Website
 						break;
 
 					case EHSIncidentQuestionType.Dropdown:
-						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val" };
+						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
 						rddl.Items.Add(new DropDownListItem("[Select One]", ""));
 
 						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
@@ -532,7 +391,7 @@ namespace SQM.Website
 								if (!string.IsNullOrEmpty(q.AnswerText))
 									rddl.SelectedValue = q.AnswerText;
 						}
-						rddl.AutoPostBack = true;
+						//rddl.AutoPostBack = true;
 						pnl.Controls.Add(rddl);
 						break;
 
@@ -701,20 +560,6 @@ namespace SQM.Website
 						if (shouldPopulate)
 							ctb.Text = q.AnswerText;
 
-						if (EditIncidentId > 0 && Mode == IncidentMode.Prevent)
-						{
-							//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
-							if (incident != null)
-							{
-								string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
-								if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
-								{
-									ctb.Enabled = false;
-									pnl.Visible = false;
-								}
-							}
-						}
-
 						pnl.Controls.Add(ctb);
 						break;
 
@@ -844,71 +689,12 @@ namespace SQM.Website
 			UpdateAnswersFromForm();
 
 			UpdateButtonText();
-		}
 
-		public void BuildCustomForm(decimal typeId)
-		{
-
-			string baseCustomForm = EHSIncidentMgr.SelectBaseFormNameByIncidentTypeId(typeId);
-
-			switch (baseCustomForm)
-			{
-				case "INCFORM_INJURYILLNESS":
-
-					try
-					{
-						injuryIllnessForm = (Ucl_INCFORM_InjuryIllness)LoadControl("~/Include/Ucl_INCFORM_InjuryIllness.ascx");
-					}
-					catch (Exception e)
-					{
-					}
-
-					injuryIllnessForm.ID = "iif1";
-					injuryIllnessForm.IsEditContext = IsEditContext;
-					injuryIllnessForm.IncidentId = EditIncidentId;
-					injuryIllnessForm.EditIncidentId = EditIncidentId;
-					injuryIllnessForm.SelectedTypeId = SelectedTypeId;
-					injuryIllnessForm.SelectedTypeText = SelectedTypeText;
-					pnlForm.Controls.Add(new LiteralControl("<br/>"));
-					pnlForm.Controls.Add(injuryIllnessForm);
-					pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-					btnSaveReturn.Visible = false;
-					btnSaveContinue.Visible = false;
-					btnDelete.Visible = false;
-					break;
-
-			}
-
-			SetSubnav("custom");
-
+			RefreshPageContext();
 		}
 
 		public void GetForm()
 		{
-			if (Mode == IncidentMode.Prevent)
-			{
-				if (UserContext.GetMaxScopePrivilege(SysScope.incident) > SysPriv.config)
-				{
-					pnlIncidentHeader.Visible = false;
-
-					if (CurrentStep == 0)
-					{
-						if (IsEditContext)
-						{
-							ShowIncidentDetails(EditIncidentId, "Recommendation Details");
-							btnSaveReturn.Visible = false;
-							btnSaveContinue.Visible = false;
-						}
-						return;
-					}
-				}
-				if (CurrentStep == 1)
-				{
-					uclIncidentDetails.Visible = true;
-					var displaySteps = new int[] { 0 };
-					uclIncidentDetails.Refresh(EditIncidentId, displaySteps);
-				}
-			}
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			if (typeId < 1)
@@ -1003,9 +789,6 @@ namespace SQM.Website
 						q.QuestionType == EHSIncidentQuestionType.StandardsReferencesDropdown || q.QuestionType == EHSIncidentQuestionType.UsersDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.UsersDropdownLocationFiltered)
 							validator.InitialValue = "[Select One]";
-
-						if (Mode == IncidentMode.Prevent)
-							validator.EnableClientScript = false;
 
 						pnl.Controls.Add(validator);
 					}
@@ -1282,20 +1065,6 @@ namespace SQM.Website
 						ctb.NumberFormat.DecimalDigits = 2;
 						if (shouldPopulate)
 							ctb.Text = q.AnswerText;
-
-						if (EditIncidentId > 0 && Mode == IncidentMode.Prevent)
-						{
-							//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
-							if (incident != null)
-							{
-								string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
-								if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
-								{
-									ctb.Enabled = false;
-									pnl.Visible = false;
-								}
-							}
-						}
 
 						pnl.Controls.Add(ctb);
 						break;
@@ -1850,43 +1619,30 @@ namespace SQM.Website
 			container.Controls.Add(rttHelp);
 		}
 
-		public void CheckForSingleType()
+		public void InitNewIncident(decimal newTypeID, decimal newLocationID)
 		{
-			if (rddlIncidentType.Items.Count == 1)
+			if (newTypeID > 0)
 			{
-				string selectedTypeId = rddlIncidentType.Items[0].Value;
-				if (!string.IsNullOrEmpty(selectedTypeId))
-				{
-					SelectedTypeId = Convert.ToDecimal(selectedTypeId);
-					IsEditContext = false;
-					BuildForm();
-				}
+				SessionManager.SetIncidentLocation(newLocationID);
+				SelectedTypeId = Convert.ToDecimal(newTypeID);
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				EditIncidentId = 0;
+				IsEditContext = false;
+				BuildForm();
 			}
+		}
+
+		public void BindIncident(decimal incidentID)
+		{
+			IsEditContext = true;
+			EditIncidentId = incidentID;
+			BuildForm();
 		}
 
 		#endregion
 
 
 		#region Form Events
-
-		protected void rddlIncidentType_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			string selectedTypeId = rddlIncidentType.SelectedValue;
-			if (!string.IsNullOrEmpty(selectedTypeId))
-			{
-				//Session["IncidentTypeID"] = selectedTypeId;
-				SelectedTypeId = Convert.ToDecimal(selectedTypeId);
-				SelectedTypeText = rddlIncidentType.SelectedText;
-				IsEditContext = false;
-
-				rddlIncidentType.Enabled = false;
-				rddlIncidentType.Visible = true;
-				ddlIncidentLocation.Enabled = false;
-				mnuIncidentLocation.Enabled = false;
-
-				BuildForm();
-			}
-		}
 
 		protected void btnSaveReturn_Click(object sender, EventArgs e)
 		{
@@ -1932,8 +1688,6 @@ namespace SQM.Website
 				lblResults.Text += (delStatus == 1) ? "Incident deleted." : "Error deleting incident.";
 				lblResults.Text += "</div>";
 			}
-
-			rddlIncidentType.SelectedIndex = 0;
 		}
 
 		protected void Save(bool shouldReturn)
@@ -1942,10 +1696,8 @@ namespace SQM.Website
 			decimal incidentId = 0;
 			bool shouldCreate8d = false;
 			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-			if (Mode == IncidentMode.Prevent)
-				result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
-			SessionManager.ClearIncidentLocation();
+			//SessionManager.ClearIncidentLocation();
 
 			if (shouldReturn == true)
 			{
@@ -1962,19 +1714,8 @@ namespace SQM.Website
 
 				lblResults.Visible = true;
 			}
-
-			if (!IsEditContext)
-			{
-				incidentTypeId = SelectedTypeId;
-				incidentType = rddlIncidentType.SelectedText;
-			}
-			else
-			{
-				incidentTypeId = EditIncidentTypeId;
-				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
-			}
 			
-			questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, CurrentStep);
+			questions = EHSIncidentMgr.SelectIncidentQuestionList(SelectedTypeId, companyId, CurrentStep);
 			UpdateAnswersFromForm();
 			GetIncidentInfoFromQuestions(questions);
 
@@ -2007,9 +1748,6 @@ namespace SQM.Website
 					shouldCreate8d = AddOrUpdateAnswers(questions, incidentId);
 					SaveAttachments(incidentId);
 				}
-
-				if (Mode == IncidentMode.Prevent)
-					UpdateTaskInfo(questions, incidentId, (DateTime)theIncident.CREATE_DT);
 			}
 			else if (CurrentStep == 1)
 			{
@@ -2235,7 +1973,7 @@ namespace SQM.Website
 			{
 				DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID,
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
-				DETECT_PLANT_ID = selectedPlantId,
+				DETECT_PLANT_ID = SessionManager.IncidentLocation.Plant.PLANT_ID,
 				INCIDENT_TYPE = "EHS",
 				CREATE_DT = DateTime.Now,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
@@ -2244,8 +1982,8 @@ namespace SQM.Website
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				INCIDENT_DT = incidentDate,
-				ISSUE_TYPE = incidentType,
-				ISSUE_TYPE_ID = incidentTypeId
+				ISSUE_TYPE = SelectedTypeText,
+				ISSUE_TYPE_ID = SelectedTypeId
 			};
 			entities.AddToINCIDENT(newIncident);
 			entities.SaveChanges();
@@ -2267,8 +2005,8 @@ namespace SQM.Website
 				incident.DESCRIPTION = incidentDescription;
 				//incident.CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
 				incident.INCIDENT_DT = incidentDate;
-				incident.ISSUE_TYPE = incidentType;
-				incident.ISSUE_TYPE_ID = incidentTypeId;
+				incident.ISSUE_TYPE = SelectedTypeText;
+				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_DT = DateTime.Now;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 
@@ -2319,20 +2057,13 @@ namespace SQM.Website
 						else if (q.QuestionId == (decimal)EHSQuestionId.ResponsiblePersonDropdown) 
 							responsiblePersonId = Convert.ToDecimal(incidentAnswer.ANSWER_VALUE);
 					}
-					else if (Mode == IncidentMode.Prevent)
-					{
-						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate)
-							dueDate = createDate.AddDays(30);  // mt - per TI the due date should be based on the incident CREATE date instead of the inspection date
-							// dueDate = DateTime.Parse(incidentAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US")).AddDays(30);
-						else if (q.QuestionId == (decimal)EHSQuestionId.AssignToPerson) 
-							responsiblePersonId = Convert.ToDecimal(incidentAnswer.ANSWER_VALUE);
-					}
 				}
 			}
 			
 			if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
 			{
-				int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
+				//int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
+				int recordTypeId = 40;
 				EHSIncidentMgr.CreateOrUpdateTask(incidentId, responsiblePersonId, recordTypeId, dueDate, "");
 			}
 		}
@@ -2367,14 +2098,10 @@ namespace SQM.Website
 
 		protected void ShowIncidentDetails(decimal incidentId, string result)
 		{
-			rddlIncidentType.SelectedIndex = 0;
-
 			// Display incident details control
 			btnDelete.Visible = false;
 			lblResults.Text = result.ToString();
-			uclIncidentDetails.Visible = true;
 			var displaySteps = new int[] { CurrentStep };
-			uclIncidentDetails.Refresh(incidentId, displaySteps);
 		}
 
 		#endregion
@@ -2386,12 +2113,6 @@ namespace SQM.Website
 			{
 				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
 				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
-			}
-			else if (context == "custom")
-			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
-				btnSubnavSave.Visible = false;
 			}
 			else
 			{
@@ -2530,111 +2251,36 @@ namespace SQM.Website
 
 		protected void RefreshPageContext()
 		{
-			uclIncidentDetails.Clear();
 			string typeString = "";
+			typeString = "Incident";
+			lblPageTitle.Text = typeString;
 
-			if (UserContext.GetMaxScopePrivilege(SysScope.incident) < SysPriv.view)
-			{
 				if (!IsEditContext)
 				{
-					// Add
-					//btnSaveReturn.Enabled = false;
-					//btnSaveReturn.Visible = (SelectedTypeId > 0);
-					//btnSaveContinue.Visible = (SelectedTypeId > 0);
-					if (Mode == IncidentMode.Incident)
-						typeString = "Incident";
-					else if (Mode == IncidentMode.Prevent)
-					{
-						btnSaveReturn.Visible = (SelectedTypeId > 0);
-						typeString = "Recommendation";
-					}
-				
-					//rddlIncidentType.Visible = (rddlIncidentType.Items.Count == 1) ? false : true;
-					lblAddOrEditIncident.Text = "<strong>Add a New " + typeString + ":</strong>";
-					
-					lblIncidentType.Visible = false;
-				
+					lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
+					lblIncidentType.Text = "Incident Type: ";
+					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
+					lblIncidentLocation.Text = "Incident Location: ";
+					lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
 					btnDelete.Visible = false;
 				}
 				else
 				{
-					// Edit
-					if (CurrentStep == 0)
-					{
-						if (Mode == IncidentMode.Incident)
-							typeString = " Notification";
-						else if (Mode == IncidentMode.Prevent)
-							typeString = " Recommendations";
-						//btnSaveContinue.Visible = true;
-						btnSaveReturn.CommandArgument = "0";
-					}
-					else if (CurrentStep == 1)
-					{
-						if (Mode == IncidentMode.Incident)
-							typeString = " Report";
-						else if (Mode == IncidentMode.Prevent)
-							typeString = " Response";
-						btnSaveContinue.Visible = false;
-						btnSaveReturn.CommandArgument = "1";
-					}
 
-					SelectedTypeId = 0;
-					if (Mode != IncidentMode.Incident)
-					{
-						btnSaveReturn.Enabled = true;
-						btnSaveReturn.Visible = true;
-					}
-
-					lblAddOrEditIncident.Text = "<strong>Editing " + WebSiteCommon.FormatID(EditIncidentId, 6) + typeString + "</strong><br/>";
-
-					rddlIncidentType.Visible = false;
-					ddlIncidentLocation.Visible = false;
-					mnuIncidentLocation.Visible = false;
-					if (Mode == IncidentMode.Incident)
-					{
-						lblIncidentType.Text = "Incident Type: ";
-						lblIncidentLocation.Text = "Incident Location: ";
-					}
-					else if (Mode == IncidentMode.Prevent)
-					{
-						lblIncidentType.Text = "Type: ";
-						lblIncidentLocation.Text = "Location";
-					}
-
-					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId));
+					lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
+					lblIncidentType.Text = "Incident Type: ";
+					lblIncidentLocation.Text = "Incident Location: ";
+					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 					lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
-					lblIncidentType.Visible = true;
-					lblIncidentLocation.Visible = true;
 					btnDelete.Visible = true;
-					BuildForm();
+
+					// Only admin and higher can delete incidents
+					if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
+						btnDelete.Visible = false;
 				}
 
 				UpdateControlledQuestions();
 				UpdateButtonText();
-
-				if (CurrentStep == 1)
-				{
-					if (Mode == IncidentMode.Incident)
-						UpdateClosedQuestions();
-					else if (Mode == IncidentMode.Prevent)
-						UpdateClosedQuestionsPrevent();
-				}
-				
-				// Only plant admin and higher can view closed incidents
-				//if (accessLevel < AccessMode.Plant)
-				//pnlShowClosed.Visible = false;
-
-				// Only admin and higher can delete incidents
-				if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
-					btnDelete.Visible = false;
-			}
-			else
-			{
-				// View only
-				var displaySteps = new int[] { CurrentStep };
-				uclIncidentDetails.Refresh(EditIncidentId, displaySteps);
-			}
-
 		}
 
 		List<decimal> SelectPlantIdsByAccessLevel()
@@ -2657,37 +2303,6 @@ namespace SQM.Website
 			return plantIdList;
 		}
 
-
-		protected void IncidentLocation_Select(object sender, EventArgs e)
-		{
-			string location = "0";
-			if (sender is RadMenu)
-			{
-				location = mnuIncidentLocation.SelectedItem.Value;
-				mnuIncidentLocation.Items[0].Text = mnuIncidentLocation.SelectedItem.Text;
-			}
-			else if (sender is RadSlider)
-			{
-				location = ddlIncidentLocation.SelectedValue;
-			}
-			//BuildAuditUsersDropdownList(location);
-			hdnIncidentLocation.Value = location;
-
-			SessionManager.SetIncidentLocation(Convert.ToDecimal(location));
-
-
-			rddlIncidentType.Enabled = rddlIncidentType.Visible = (rddlIncidentType.Items.Count == 1) ? false : true;
-			
-			// need to rebuild the form
-			string selectedTypeId = rddlIncidentType.SelectedValue;
-			if (!string.IsNullOrEmpty(selectedTypeId))
-			{
-				SelectedTypeId = Convert.ToDecimal(selectedTypeId);
-				IsEditContext = false;
-				//BuildForm();
-			}
-
-		}
 		
 	}
 }

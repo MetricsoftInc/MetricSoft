@@ -236,6 +236,8 @@
     <Content Include="EHS\EHS_Console.aspx" />
     <Content Include="EHS\EHS_ENVReport.aspx" />
     <Content Include="EHS\EHS_Data.aspx" />
+    <Content Include="EHS\EHS_IncidentForm.aspx" />
+    <Content Include="EHS\EHS_InjuryIllnessForm.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="ErrorServer.aspx" />
     <Content Include="GenericError404.aspx" />
@@ -674,6 +676,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -796,6 +799,20 @@
     </Compile>
     <Compile Include="EHS\EHS_Data.aspx.designer.cs">
       <DependentUpon>EHS_Data.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_IncidentForm.aspx.cs">
+      <DependentUpon>EHS_IncidentForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_IncidentForm.aspx.designer.cs">
+      <DependentUpon>EHS_IncidentForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_InjuryIllnessForm.aspx.cs">
+      <DependentUpon>EHS_InjuryIllnessForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_InjuryIllnessForm.aspx.designer.cs">
+      <DependentUpon>EHS_InjuryIllnessForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
@@ -1103,6 +1120,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1116,6 +1134,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -1392,6 +1411,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_PowerOutage.ascx.es.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

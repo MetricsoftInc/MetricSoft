@@ -400,21 +400,66 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_Export uclExport;
         
         /// <summary>
-        /// uclIncidentForm control.
+        /// winNewIncident control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_EHSIncidentForm uclIncidentForm;
+        protected global::Telerik.Web.UI.RadWindow winNewIncident;
         
         /// <summary>
-        /// RadAjaxManager1 control.
+        /// lbIncidentLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
+        protected global::System.Web.UI.WebControls.Label lbIncidentLocation;
+        
+        /// <summary>
+        /// ddlIncidentLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox ddlIncidentLocation;
+        
+        /// <summary>
+        /// lblNewIncidentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNewIncidentType;
+        
+        /// <summary>
+        /// rddlNewIncidentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rddlNewIncidentType;
+        
+        /// <summary>
+        /// btnNewIncidentCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNewIncidentCreate;
+        
+        /// <summary>
+        /// btnNewIncidentCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNewIncidentCancel;
     }
 }

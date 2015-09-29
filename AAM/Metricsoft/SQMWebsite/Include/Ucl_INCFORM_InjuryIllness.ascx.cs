@@ -43,8 +43,6 @@ namespace SQM.Website
 		// Special answers used in INCIDENT table
 		string incidentDescription = "";
 		protected DateTime incidentDate;
-		protected decimal incidentTypeId;
-		protected string incidentType;
 
 		PSsqmEntities entities;
 		List<EHSIncidentQuestion> questions;
@@ -131,24 +129,6 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected bool UpdateAccess
-		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
-		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
-		}
-
 		public string SelectedTypeText
 		{
 			get { return ViewState["SelectedTypeText"] == null ? " " : (string)ViewState["SelectedTypeText"]; }
@@ -172,99 +152,81 @@ namespace SQM.Website
 		{
 			base.OnInit(e);
 
-			RadAjaxManager rajaxmgr = null;
-			Control ctl = this.Parent;
-			while (true)
-			{
-				rajaxmgr = (RadAjaxManager)ctl.FindControl("RadAjaxManager1");
-				if (rajaxmgr == null)
-				{
-					ctl = ctl.Parent;
-					if (ctl.Parent == null)
-					{
-						return;
-					}
-					continue;
-				}
-				break;
-			}
+			//try
+			//{
+			//	RadAjaxManager rajaxmgr = null;
+			//	Control ctl = this.Parent;
+			//	while (true)
+			//	{
+			//		rajaxmgr = (RadAjaxManager)ctl.FindControl("RadAjaxManager1");
+			//		if (rajaxmgr == null)
+			//		{
+			//			ctl = ctl.Parent;
+			//			if (ctl.Parent == null)
+			//			{
+			//				return;
+			//			}
+			//			continue;
+			//		}
+			//		break;
+			//	}
 
-			if (rajaxmgr != null)
-				rajaxmgr.AjaxSettings.AddAjaxSetting(rsbInvolvedPerson, lbSupervisor);
-		 
+			//	if (rajaxmgr != null)
+			//		rajaxmgr.AjaxSettings.AddAjaxSetting(rsbInvolvedPerson, lbSupervisor);
+			//}
+			//catch
+			//{
+			//}
 		}
 		
-		protected void Page_Init(object sender, EventArgs e)
-		{
-			if (SessionManager.SessionContext != null)
-			{
-				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-			}
-		}
-
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			PSsqmEntities entities = new PSsqmEntities();
-			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-			lblResults.Text = "";
-
-			Label lbTitle = (Label)this.Parent.FindControl("lblPageTitle");
-			lbTitle.Visible = false;
-
-			//var inctype = Session["IncidentTypeID"];
-
-			if (IsPostBack)
+			try
 			{
-				// Since IsPostBack is always TRUE for every invocation of this user control we need some way 
-				// to determine whether or not to refresh its page controls, or just data bind instead.  
-				// Here we are using the "__EVENTTARGET" form event property to see if this user control is loading 
-				// because of certain parent page control events that are NOT supposed to be fired off as actual postbacks.  
+				PSsqmEntities entities = new PSsqmEntities();
+				companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
+				lblResults.Text = "";
 
-				IsFullPagePostback = true;
-				var targetID = Request.Form["__EVENTTARGET"];
-				if (!string.IsNullOrEmpty(targetID))
+				//Label lbTitle = (Label)this.Parent.FindControl("lblPageTitle");
+				//lbTitle.Visible = false;
+
+				if (IsPostBack)
 				{
-					var targetControl = this.Page.FindControl(targetID);
+					// Since IsPostBack is always TRUE for every invocation of this user control we need some way 
+					// to determine whether or not to refresh its page controls, or just data bind instead.  
+					// Here we are using the "__EVENTTARGET" form event property to see if this user control is loading 
+					// because of certain parent page control events that are NOT supposed to be fired off as actual postbacks.  
 
-					if (targetControl is RadioButtonList)
+					IsFullPagePostback = true;
+					var targetID = Request.Form["__EVENTTARGET"];
+					if (!string.IsNullOrEmpty(targetID))
 					{
-						return;  // we don't want to intercept radio button postbacks
-					}
+						var targetControl = this.Page.FindControl(targetID);
 
-					if (targetControl != null)
-						if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
+						if (targetControl is RadioButtonList)
 						{
-							IsFullPagePostback = false;
-
-							if (this.Page.FindControl(targetID).ID == "rddlIncidentType") // This is a new incident
-								btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = false;
+							return;  // we don't want to intercept radio button postbacks
 						}
+
+						if (targetControl != null)
+							if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
+							{
+								IsFullPagePostback = false;
+
+								if (this.Page.FindControl(targetID).ID == "rddlIncidentType") // This is a new incident
+									btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = false;
+							}
+					}
 				}
+
+				IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
+
+				//RadSearchBox controls must be bound on Page_Load
+				PopulateInvolvedPersonRSB(IncidentLocationId);
+				PopulateWitnessNameRSB(IncidentLocationId);
 			}
-
-			IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
-
-			INCIDENT incident = null;
-			if (IncidentId != null)
+			catch
 			{
-				incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
-				//if (incident != null)
-				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
-				//btnClose.Text = "Reopen Power Outage Incident";
-				if (incident != null && Convert.ToDecimal(incident.DETECT_PLANT_ID) > 0)
-					IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
-			}
-			
-			//RadSearchBox controls must be bound on Page_Load
-			PopulateInvolvedPersonRSB(IncidentLocationId);
-			PopulateWitnessNameRSB(IncidentLocationId);
-
-			if (!IsFullPagePostback)
-			{
-				PopulateInitialForm();
-				pnlBaseForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
 			}
 		}
 
@@ -282,27 +244,43 @@ namespace SQM.Website
 			}
 		}
 
+		public void InitNewIncident(decimal newTypeID, decimal newLocationID)
+		{
+			if (newTypeID > 0)
+			{
+				SessionManager.SetIncidentLocation(newLocationID);
+				SelectedTypeId = Convert.ToDecimal(newTypeID);
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				EditIncidentId = 0;
+				IsEditContext = false;
+				PopulateInitialForm();
+			}
+		}
+
+		public void BindIncident(decimal incidentID)
+		{
+			IsEditContext = true;
+			EditIncidentId = incidentID;
+			PopulateInitialForm();
+		}
+
 		public void PopulateInitialForm()
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-
-			//formSteps = GetFormSteps(typeId);
-			//totalFormSteps = formSteps.Count();
-
+			INCIDENT incident = null;
 
 			if (IsEditContext == true)
 			{
-				GetAttachments(EditIncidentId);
+				incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
+				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
+				SelectedTypeText = incident.ISSUE_TYPE;
 
-				var incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, EditIncidentId);
 
 				if (incident != null)
 				{
-					//CurrentFormStep = CurrentStep + 1;  
-
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
 
@@ -317,8 +295,7 @@ namespace SQM.Website
 
 					IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
 
-					PopulateOperationDropDown(IncidentLocationId);
-					PopulateDepartmentDropDown(IncidentLocationId);
+					PopulateDepartmentDropDown((decimal)incident.DETECT_PLANT_ID);
 
 					PopulateShiftDropDown();
 					PopulateInjuryTypeDropDown();
@@ -329,7 +306,7 @@ namespace SQM.Website
 						btnDeleteInc.Visible = true;
 
 						rtpIncidentTime.SelectedTime = injuryIllnessDetails.INCIDENT_TIME;
-						rddlShift.SelectedValue = injuryIllnessDetails.SHIFT;
+						rddlShiftID.SelectedValue = injuryIllnessDetails.SHIFT;
 
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
@@ -340,8 +317,7 @@ namespace SQM.Website
 						if (!String.IsNullOrEmpty(involvedPerson))
 							rsbInvolvedPerson.Text = involvedPerson;
 
-						rddlDepartment.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
-						rddlOperation.SelectedValue = injuryIllnessDetails.PLANT_LINE_ID.ToString();
+						rddlDeptTest.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
 						
@@ -368,6 +344,7 @@ namespace SQM.Website
 						SetLostTime(IsFullPagePostback);
 
 					}
+					GetAttachments(EditIncidentId);
 				}
 			}
 			else
@@ -379,9 +356,8 @@ namespace SQM.Website
 					rtpIncidentTime.Clear();
 					tbDescription.Text = "";
 					tbLocalDescription.Text = "";
-					rddlShift.Items.Clear();
-					rddlDepartment.Items.Clear();
-					rddlOperation.Items.Clear();
+					rddlShiftID.Items.Clear();
+					rddlDeptTest.Items.Clear();
 					tbInvPersonStatement.Text = "";
 					rdpSupvInformedDate.Clear();
 					lbSupervisor.Text = "";
@@ -404,8 +380,6 @@ namespace SQM.Website
 					rdoFirstAid.SelectedValue = "1";
 					Severity_Changed(rdoFirstAid, null);
 
-					//CurrentFormStep = 1;
-
 					btnDeleteInc.Visible = false;
 
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
@@ -421,7 +395,6 @@ namespace SQM.Website
 
 					PopulateShiftDropDown();
 
-					PopulateOperationDropDown(IncidentLocationId);
 					PopulateDepartmentDropDown(IncidentLocationId);
 
 					SetLostTime(IsFullPagePostback);
@@ -434,6 +407,10 @@ namespace SQM.Website
 
 			CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
 			InitializeForm(CurrentStep);
+
+			RefreshPageContext();
+
+			pnlBaseForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate);
 		}
 
 
@@ -582,6 +559,30 @@ namespace SQM.Website
 			}
 		}
 
+		protected void RefreshPageContext()
+		{
+			string typeString = "";
+			typeString = "Incident";
+
+			if (!IsEditContext)
+			{
+				lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
+				lblIncidentType.Text = "Incident Type: ";
+				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
+				lblIncidentLocation.Text = "Incident Location: ";
+				lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
+			}
+			else
+			{
+
+				lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
+				lblIncidentType.Text = "Incident Type: ";
+				lblIncidentLocation.Text = "Incident Location: ";
+				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
+				lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
+			}
+		}
+
 		protected void Severity_Changed(object sender, EventArgs e)
 		{
 			RadioButtonList rbl = (RadioButtonList)sender;
@@ -693,77 +694,14 @@ namespace SQM.Website
 			}
 
 			if (IsEditContext)
-				rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : UpdateAccess;
+				rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : true;  // ???
 		}
 
 		private void SetUserAccess(string currentFormName)
 		{
-
-			// Privilege "UpdateAccess"	= Main incident description (1st page) can be maintained/upadted to db
-			// Privilege "ActionAccess"	= Initial Actions page, 5-Why's page, and Final Actions page can be maintained/upadted to db
-			// Privilege "ApproveAccess"	= Approval page can be maintained/upadted to db.  "Close Incident" button is enabled.
-
 			switch (currentFormName)
 			{
 				case "INCFORM_INJURYILLNESS":
-					rdpIncidentDate.Enabled = UpdateAccess;
-					rfvIncidentDate.Enabled = UpdateAccess;
-					
-					tbDescription.Enabled = UpdateAccess;
-					rfvDescription.Enabled = UpdateAccess;
-					
-					tbLocalDescription.Enabled = UpdateAccess;
-					rfvLocalDescription.Enabled = UpdateAccess;
-					
-					rtpIncidentTime.Enabled = UpdateAccess;
-					rfvIncidentTime.Enabled = UpdateAccess;
-
-					rddlShift.Enabled = UpdateAccess;
-					rfvShift.Enabled = UpdateAccess;
-
-					rsbInvolvedPerson.Enabled = UpdateAccess;
-					tbInvPersonStatement.Enabled = UpdateAccess;
-					//rfvInvPersonStatement.Enabled = UpdateAccess;
-
-					rdpSupvInformedDate.Enabled = UpdateAccess;
-					//rfvSupvInformedDate.Enabled = UpdateAccess;
-
-					//rddlSupervisor.Enabled = UpdateAccess;
-					//rfvSupervisor.Enabled = UpdateAccess;
-
-					tbSupervisorStatement.Enabled = UpdateAccess;
-					//rfvSupervisorStatement.Enabled = UpdateAccess;
-
-					rdoInside.Enabled = UpdateAccess;
-					//rfvInside.Enabled = UpdateAccess;
-
-					rdoDirectSupv.Enabled = UpdateAccess;
-					//rfvDirectSupv.Enabled = UpdateAccess;
-
-					rdoErgConcern.Enabled = UpdateAccess;
-					//rfvErgConcern.Enabled = UpdateAccess;
-
-					rdoStdProcsFollowed.Enabled = UpdateAccess;
-					//rfvStdProcsFollowed.Enabled = UpdateAccess;
-
-					rdoTrainingProvided.Enabled = UpdateAccess;
-					//rfvTrainingProvided.Enabled = UpdateAccess;
-
-					tbTaskYears.Enabled = UpdateAccess;
-					tbTaskMonths.Enabled = UpdateAccess;
-					tbTaskDays.Enabled = UpdateAccess;
-
-					rdpExpectReturnDT.Enabled = UpdateAccess;
-					//rfvExpectReturnDT.Enabled = UpdateAccess;
-
-					rddlInjuryType.Enabled = UpdateAccess;
-					//rfvInjuryType.Enabled = UpdateAccess;
-
-					rddlBodyPart.Enabled = UpdateAccess;
-					//rfvBodyPart.Enabled = UpdateAccess;
-
-					//btnSave.Enabled = UpdateAccess;
-					//btnSubnavSave.Enabled = UpdateAccess;
 					break;
 				case "INCFORM_CONTAIN":
 					//btnSave.Enabled = ActionAccess;
@@ -797,59 +735,23 @@ namespace SQM.Website
 
 			if (shifts != null && shifts.Count > 0)
 			{
-				rddlShift.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlShiftID.Items.Add(new DropDownListItem("[Select One]", ""));
+
+				//rddlShiftID.Items.Add(new ListItem("select one", ""));
 
 				foreach (var s in shifts)
 				{
 					{
-						rddlShift.Items.Add(new DropDownListItem(s.Text, s.Value));
+						//rddlShift.Items.Add(new ListItem(s.Text, s.Value));
+						rddlShiftID.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
-
-			rddlShift.SelectedIndexChanged += rddlShift_SelectedIndexChanged;
-			rddlShift.AutoPostBack = true;
 		}
-
-
-		void PopulateOperationDropDown(decimal plantId)
-		{
-			rddlOperation.Items.Clear();
-
-			if (plantId > 0)
-			{
-				PSsqmEntities entities = new PSsqmEntities();
-				List<PLANT_LINE> ops = SQMModelMgr.SelectPlantLineList(entities, plantId);
-
-				if (ops != null && ops.Count > 0)
-				{
-					rddlOperation.Items.Add(new DropDownListItem("[Select One]", ""));
-		
-					foreach (var s in ops)
-					{
-						{
-							rddlOperation.Items.Add(new DropDownListItem(s.PLANT_LINE_NAME, s.PLANT_LINE_ID.ToString()));
-						}
-					}
-				}
-
-				rddlOperation.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
-				rddlOperation.Enabled = UpdateAccess;
-				rfvOperation.Enabled = UpdateAccess;
-				rddlOperation.AutoPostBack = true;
-			}
-			else
-			{
-				rddlOperation.Enabled = false;
-				rfvOperation.Enabled = false;
-			}
-		}
-
-
 
 		void PopulateDepartmentDropDown(decimal plantId)
 		{
-			rddlDepartment.Items.Clear();
+			rddlDeptTest.Items.Clear();
 
 			if (plantId > 0)
 			{
@@ -858,26 +760,15 @@ namespace SQM.Website
 
 				if (depts != null && depts.Count > 0)
 				{
-					rddlDepartment.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlDeptTest.Items.Add(new DropDownListItem("[Select One]", ""));
 		
 					foreach (var s in depts)
 					{
 						{
-							rddlDepartment.Items.Add(new DropDownListItem(s.DEPT_NAME, s.DEPT_ID.ToString()));
+							rddlDeptTest.Items.Add(new DropDownListItem(s.DEPT_NAME, s.DEPT_ID.ToString()));
 						}
 					}
 				}
-
-				rddlDepartment.SelectedIndexChanged += rddlOperation_SelectedIndexChanged;
-				rddlDepartment.Enabled = UpdateAccess;
-				rddlDepartment.AutoPostBack = true;
-
-				rfvDepartment.Enabled = UpdateAccess;	
-			}
-			else
-			{
-				rddlDepartment.Enabled = false;
-				rfvDepartment.Enabled = false;
 			}
 		}
 
@@ -916,8 +807,6 @@ namespace SQM.Website
 			searchBox.DataValueField = "PersonID";
 			searchBox.DataTextField = "PersonName";
 			searchBox.DataBind();
-
-			searchBox.Enabled = UpdateAccess;
 		}
 
 		void PopulateInjuryTypeDropDown()
@@ -975,16 +864,6 @@ namespace SQM.Website
 
 		}
 
-
-		void rddlShift_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			//
-		}
-
-		void rddlOperation_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			//
-		}
 
 		void rddlInjuryType_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1061,17 +940,6 @@ namespace SQM.Website
 								rqd1.Visible = false;
 								rqd2.Visible = false;
 							}
-					
-							// Set user access:
-							rsbw.Enabled = UpdateAccess;
-							tbws.Enabled = UpdateAccess;
-							itmdel.Visible = UpdateAccess;
-							//if (witness.WITNESS_NO > minRowsToValidate)
-							//{
-								//rvfw.Enabled = false;
-								//rvfws.Enabled = false;
-							//}
-
 				}
 				catch
 				{
@@ -1080,7 +948,7 @@ namespace SQM.Website
 				if (e.Item.ItemType == ListItemType.Footer)
 				{
 				Button addanother = (Button)e.Item.FindControl("btnAddWitness");
-				addanother.Visible = UpdateAccess;
+				addanother.Visible = addanother.Enabled = true;
 				}
 
 			}
@@ -1352,12 +1220,6 @@ namespace SQM.Website
 
 		protected void Save(bool shouldReturn)
 		{
-
-			//bool shouldCreate8d = false;
-			//string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-			//if (Mode == IncidentMode.Prevent)
-			//	result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
-
 			decimal incidentId = 0;
 
 			if (shouldReturn == true)
@@ -1383,17 +1245,13 @@ namespace SQM.Website
 
 			if (!IsEditContext)
 			{
-				incidentTypeId = SelectedTypeId;
-				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
 				//currentFormStep = CurrentFormStep;
 			}
 			else
 			{
 				incidentDescription = tbDescription.Text;
-				incidentTypeId = EditIncidentTypeId;
 				incidentId = EditIncidentId;
-				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 			}
 
 			if (incidentDate == null || incidentDate < DateTime.Now.AddYears(-100))
@@ -1473,8 +1331,6 @@ namespace SQM.Website
 
 			if (!IsEditContext)
 			{
-				incidentTypeId = SelectedTypeId;
-				incidentType = SelectedTypeText;
 				incidentDescription = tbDescription.Text;
 
 				//currentFormStep = CurrentFormStep;
@@ -1492,9 +1348,6 @@ namespace SQM.Website
 			else
 			{
 				incidentDescription = tbDescription.Text;
-
-				incidentTypeId = EditIncidentTypeId;
-				incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(EditIncidentId);
 
 				incidentId = EditIncidentId;
 				if (incidentId > 0)
@@ -1538,8 +1391,8 @@ namespace SQM.Website
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				INCIDENT_DT = incidentDate,
-				ISSUE_TYPE = incidentType,
-				ISSUE_TYPE_ID = incidentTypeId,
+				ISSUE_TYPE = SelectedTypeText,
+				ISSUE_TYPE_ID = SelectedTypeId,
 				INCFORM_LAST_STEP_COMPLETED = CurrentStep //currentFormStep
 			};
 
@@ -1564,8 +1417,8 @@ namespace SQM.Website
 				incident.INCIDENT_TYPE = "EHS";
 				incident.DESCRIPTION = incidentDescription;
 				incident.INCIDENT_DT = incidentDate;
-				incident.ISSUE_TYPE = incidentType;
-				incident.ISSUE_TYPE_ID = incidentTypeId;
+				incident.ISSUE_TYPE = SelectedTypeText;
+				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 				incident.LAST_UPD_DT = DateTime.Now;
 
@@ -1588,11 +1441,8 @@ namespace SQM.Website
 			newInjryIllnessDetails.INCIDENT_TIME = incidentTime;
 			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
-			newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
-			newInjryIllnessDetails.DEPARTMENT = rddlDepartment.SelectedText;
-
-			newInjryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
-			newInjryIllnessDetails.OPERATION = rddlOperation.SelectedText;
+			newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
+			newInjryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
 
 			involvedPersonId = SelectInvolvedPersonId;
 			if (involvedPersonId != null && involvedPersonId != 0)
@@ -1783,11 +1633,8 @@ namespace SQM.Website
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
 
-				injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDepartment.SelectedValue);
-				injuryIllnessDetails.DEPARTMENT = rddlDepartment.SelectedText;
-
-				injuryIllnessDetails.PLANT_LINE_ID = Convert.ToInt32(rddlOperation.SelectedValue);
-				injuryIllnessDetails.OPERATION = rddlOperation.SelectedText;
+				injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
+				injuryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
 
 				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
 					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
@@ -1929,16 +1776,6 @@ namespace SQM.Website
 					ia.ANSWER_VALUE = injuryIllnessDetail.DEPARTMENT;
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
-
-					ia = new INCIDENT_ANSWER();
-					ia.INCIDENT_ID = incidentId;
-					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Operation);
-					ia.ANSWER_VALUE = injuryIllnessDetail.OPERATION;
-					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
-					entities.AddToINCIDENT_ANSWER(ia);
-
-					entities.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID = {0}", incidentId);  // clear any existing values
-					status = entities.SaveChanges();
 				}
 				catch
 				{

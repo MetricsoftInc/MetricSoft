@@ -156,12 +156,6 @@ namespace SQM.Website
 			rptContain.DataBind();
 		}
 
-
-		protected void rddlContainPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-		{
-			// Add JobCode and any other related logic
-		}
-
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
@@ -174,7 +168,7 @@ namespace SQM.Website
 					INCFORM_CONTAIN contain = (INCFORM_CONTAIN)e.Item.DataItem;
 
 					TextBox tbca = (TextBox)e.Item.FindControl("tbContainAction");
-					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlContainPerson");
+					RadComboBox rddlp = (RadComboBox)e.Item.FindControl("rddlContainPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
 					//RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
@@ -189,7 +183,7 @@ namespace SQM.Website
 					rvfcp.ValidationGroup = ValidationGroup;
 					rvfsd.ValidationGroup = ValidationGroup;
 
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
 
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
@@ -198,7 +192,7 @@ namespace SQM.Website
 						if (!String.IsNullOrEmpty(p.EMAIL))
 						{
 							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+							rddlp.Items.Add(new RadComboBoxItem(displayName, Convert.ToString(p.PERSON_ID)));
 						}
 					}
 
@@ -214,14 +208,14 @@ namespace SQM.Website
 					tbca.Enabled = rddlp.Enabled = sd.Enabled = itmdel.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
 					rvfca.Enabled = rvfcp.Enabled = rvfsd.Enabled = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-
+	
 					if (contain.ITEM_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
-
+	
 				}
 				catch { }
 			}

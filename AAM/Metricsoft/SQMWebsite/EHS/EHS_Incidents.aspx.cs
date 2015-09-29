@@ -52,19 +52,7 @@ namespace SQM.Website
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbIncidentType);
 		  
-			if (Request.QueryString["mode"] != null)
-			{
-				string mode = Request.QueryString["mode"].ToString().ToLower();
-				if (!string.IsNullOrEmpty(mode))
-				{
-					if (mode == "incident")
-						this.Mode = IncidentMode.Incident;
-					else if (mode == "prevent")
-						this.Mode = IncidentMode.Prevent;
-				}
-			}
-
-			uclIncidentForm.Mode = this.Mode;
+			this.Mode = IncidentMode.Incident;
 		}
 
 		protected void Page_PreRender(object sender, EventArgs e)
@@ -76,8 +64,7 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (!uclIncidentForm.IsEditContext)
-					RadPersistenceManager1.SaveState();
+				RadPersistenceManager1.SaveState();
 
 				if (SessionManager.ReturnStatus == true)
 				{
@@ -87,24 +74,17 @@ namespace SQM.Website
 						switch (type)
 						{
 							case "DisplayIncidents":
-								UpdateDisplayState(DisplayState.IncidentList);
+								UpdateDisplayState(DisplayState.IncidentList, 0);
 								break;
 
 							case "Notification":
-								//UpdateDisplayState(DisplayState.IncidentNotificationEdit); 
-								//UpdateDisplayState(DisplayState.IncidentReportEdit);
-								uclIncidentForm.EditIncidentId = SessionManager.ReturnRecordID;
-								UpdateDisplayState(DisplayState.IncidentNotificationEdit);
+								UpdateDisplayState(DisplayState.IncidentNotificationEdit, SessionManager.ReturnRecordID);
 								if (isDirected)
 								{
 									rbNew.Visible = false;
-									uclIncidentForm.EnableReturnButton(false);
 								}
 								break;
-
-							case "Report":
-								uclIncidentForm.EditIncidentId = SessionManager.ReturnRecordID;
-								UpdateDisplayState(DisplayState.IncidentReportEdit);
+							default:
 								break;
 						}
 					}
@@ -173,47 +153,49 @@ namespace SQM.Website
 
 		}
 
-		protected void UpdateDisplayState(DisplayState state)
+		protected void UpdateDisplayState(DisplayState state, decimal incidentID)
 		{
-
+			string key;
 			switch (state)
 			{
 				case DisplayState.IncidentList:
 					SearchIncidents();
-					uclIncidentForm.Visible = false;
-					//rbNew.Visible = false;
+					SessionManager.ClearReturns();
 					break;
-
 				case DisplayState.IncidentNotificationNew:
-					divIncidentList.Visible = false;
-					uclIncidentForm.Visible = true;
-					uclIncidentForm.IsEditContext = false;
-					uclIncidentForm.ClearControls();
-					rbNew.Visible = false;
-					uclIncidentForm.CheckForSingleType();
+					SessionManager.ClearReturns();
+					key = SQMModelMgr.GetPasswordKey();
+					if (rddlNewIncidentType.SelectedItem != null  &&  EHSIncidentMgr.IsUseCustomForm(Convert.ToDecimal(rddlNewIncidentType.SelectedValue)))
+					{
+						Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx?i=0&l=" + WebSiteCommon.Encrypt(ddlIncidentLocation.SelectedValue, key) + "&t=" + WebSiteCommon.Encrypt(rddlNewIncidentType.SelectedValue, key));
+					}
+					else
+					{
+						Response.Redirect("/EHS/EHS_IncidentForm.aspx?i=0&l=" + WebSiteCommon.Encrypt(ddlIncidentLocation.SelectedValue, key) + "&t=" + WebSiteCommon.Encrypt(rddlNewIncidentType.SelectedValue, key));
+					}
 					break;
-
 				case DisplayState.IncidentNotificationEdit:
-					divIncidentList.Visible = false;
-					uclIncidentForm.CurrentStep = 0;
-					uclIncidentForm.IsEditContext = true;
-					uclIncidentForm.Visible = true;
-					rbNew.Visible = false;
-					uclIncidentForm.BuildForm();
-					break;
+					SessionManager.ClearReturns();
+					INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
+					if (theIncident != null)
+					{
+						SessionManager.SetIncidentLocation((decimal)theIncident.DETECT_PLANT_ID);
+						key = SQMModelMgr.GetPasswordKey();
+						if (EHSIncidentMgr.IsUseCustomForm((decimal)theIncident.ISSUE_TYPE_ID))
+						{
+							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx?i=" +  WebSiteCommon.Encrypt(incidentID.ToString(), key));
+						}
+						else
+						{
+							Response.Redirect("/EHS/EHS_IncidentForm.aspx?i=" +  WebSiteCommon.Encrypt(incidentID.ToString(), key));
+						}
+					}
 
-				case DisplayState.IncidentReportEdit:
-					divIncidentList.Visible = false;
-					uclIncidentForm.CurrentStep = 1;
-					uclIncidentForm.IsEditContext = true;
-					rbNew.Visible = false;
-					uclIncidentForm.Visible = true;
-					uclIncidentForm.BuildForm();
 					break;
-
+				default:
+					SessionManager.ClearReturns();
+					break;
 			}
-
-			SessionManager.ClearReturns();
 		}
 		
 		private void SetupPage()
@@ -234,111 +216,54 @@ namespace SQM.Website
 			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-11);
 			dmToDate.SelectedDate = DateTime.Now;
 
-			if (Mode == IncidentMode.Incident)
+
+			lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Incidents";
+			lblPageInstructions.Text = "Add or update EH&amp;S Incidents below.";
+			//lblStatus.Text = "Incident Status:";
+			rbNew.Text = "New Incident";
+			lblIncidentDate.Visible = true;
+			lblInspectionDate.Visible = false;
+			phPrevent.Visible = false;
+			phIncident.Visible = true;
+
+			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENTSEARCHFROM");
+			if (sets != null)
 			{
-				
-				lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Incidents";
-				lblPageInstructions.Text = "Add or update EH&amp;S Incidents below.";
-				//lblStatus.Text = "Incident Status:";
-				rbNew.Text = "New Incident";
-				lblIncidentDate.Visible = true;
-				lblInspectionDate.Visible = false;
-				phPrevent.Visible = false;
-				phIncident.Visible = true;
-
-				SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENTSEARCHFROM");
-				if (sets != null)
+				try
 				{
-					try
+					string[] args = sets.VALUE.Split('-');
+					if (args.Length > 1)
 					{
-						string[] args = sets.VALUE.Split('-');
-						if (args.Length > 1)
-						{
-							dmFromDate.SelectedDate = new DateTime(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
-						}
-						else
-						{
-							dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
-						}
+						dmFromDate.SelectedDate = new DateTime(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
 					}
-					catch { }
-				}
-
-				foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID))
-				{
-					RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.INCIDENT_TYPE_ID.ToString());
-					item.Checked = true;
-					rcbIncidentType.Items.Add(item);
-				}
-
-				// lookup charts defined for this module & app context
-				PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
-				if (view != null)
-				{
-					ddlChartType.Items.Clear();
-					ddlChartType.Items.Add(new RadComboBoxItem("", ""));
-					foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ).ToList())
+					else
 					{
-						RadComboBoxItem item = new RadComboBoxItem();
-						item.Text = vi.TITLE;
-						item.Value = vi.ITEM_SEQ.ToString();
-						item.ImageUrl = ViewModel.GetViewItemImageURL(vi);
-						ddlChartType.Items.Add(item);
+						dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
 					}
 				}
+				catch { }
 			}
-			else if (Mode == IncidentMode.Prevent)
+
+			foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID))
 			{
-				lblViewEHSRezTitle.Text = "Manage Preventative Actions";
-				lblPageInstructions.Text = "Add or update preventative actions below.";
-				//lblStatus.Text = "Findings Status:";
-				rbNew.Text = "New Preventative Action";
-				lblIncidentDate.Visible = false;
-				lblInspectionDate.Visible = true;
-				phPrevent.Visible = true;
-				phIncident.Visible = false;
+				RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.INCIDENT_TYPE_ID.ToString());
+				item.Checked = true;
+				rcbIncidentType.Items.Add(item);
+			}
 
-				SETTINGS sets = SQMSettings.GetSetting("EHS", "ACTIONSEARCHFROM");
-				if (sets != null)
+			// lookup charts defined for this module & app context
+			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
+			if (view != null)
+			{
+				ddlChartType.Items.Clear();
+				ddlChartType.Items.Add(new RadComboBoxItem("", ""));
+				foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ).ToList())
 				{
-					try
-					{
-						string[] args = sets.VALUE.Split('-');
-						if (args.Length > 1)
-						{
-							dmFromDate.SelectedDate = new DateTime(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), Convert.ToInt32(args[2]));
-						}
-						else
-						{
-							dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
-						}
-					}
-					catch { }
-				}
-
-				// workaround for persistance mgr not supporting raddate controls
-				if (HSCalcs() != null)
-				{
-					dmFromDate.SelectedDate = HSCalcs().FromDate;
-					dmToDate.SelectedDate = HSCalcs().ToDate;
-					if (HSCalcs().ObjAny != null && HSCalcs().ObjAny is bool)
-						cbShowImage.Checked = (bool)HSCalcs().ObjAny;
-				}
-
-				// lookup charts defined for this module & app context
-				PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
-				if (view != null)
-				{
-					ddlChartType.Items.Clear();
-					ddlChartType.Items.Add(new RadComboBoxItem("", ""));
-					foreach (PERSPECTIVE_VIEW_ITEM vi in view.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ).ToList())
-					{
-						RadComboBoxItem item = new RadComboBoxItem();
-						item.Text = vi.TITLE;
-						item.Value = vi.ITEM_SEQ.ToString();
-						item.ImageUrl = ViewModel.GetViewItemImageURL(vi);
-						ddlChartType.Items.Add(item);
-					}
+					RadComboBoxItem item = new RadComboBoxItem();
+					item.Text = vi.TITLE;
+					item.Value = vi.ITEM_SEQ.ToString();
+					item.ImageUrl = ViewModel.GetViewItemImageURL(vi);
+					ddlChartType.Items.Add(item);
 				}
 			}
 
@@ -350,8 +275,36 @@ namespace SQM.Website
 
 		protected void rbNew_Click(object sender, EventArgs e)
 		{
-			rbNew.Visible = false;
-			UpdateDisplayState(DisplayState.IncidentNotificationNew);
+			List<BusinessLocation> locationList = SessionManager.PlantList;
+			locationList = UserContext.FilterPlantAccessList(locationList);
+			SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
+			ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+
+			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId);
+			rddlNewIncidentType.Font.Bold = true;
+			rddlNewIncidentType.DataSource = incidentTypeList;
+			rddlNewIncidentType.DataTextField = "TITLE";
+			rddlNewIncidentType.DataValueField = "INCIDENT_TYPE_ID";
+			rddlNewIncidentType.DataBind();
+
+			string script = "function f(){OpenNewIncidentWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+
+		protected void btnNewIncidentCreate_Click(object sender, EventArgs e)
+		{
+			if (ddlIncidentLocation.SelectedItem != null && rddlNewIncidentType.SelectedItem != null)
+			{
+				UpdateDisplayState(DisplayState.IncidentNotificationNew, 0);
+			}
+			else
+			{
+				SearchIncidents();
+			}
+		}
+		protected void btnNewIncidentCancel_Click(object sender, EventArgs e)
+		{
+			SearchIncidents(); 
 		}
 
 		#region incidentaging
@@ -397,10 +350,7 @@ namespace SQM.Website
 				PERSPECTIVE_VIEW view = null;
 				divChart.Controls.Clear();
 
-				if (Mode == IncidentMode.Prevent)
-					view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
-				else
-					view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
+				view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
 
 				if (view != null)
 				{
@@ -434,21 +384,13 @@ namespace SQM.Website
 			var typeList = new List<decimal>();
 			List<string> statusList = new List<string>();
 
-			if (Mode == IncidentMode.Incident)
+			if (HSCalcs() == null)
 			{
-				if (HSCalcs() == null)
-				{
-					foreach (RadComboBoxItem item in rcbIncidentType.Items)
-						item.Checked = true;
-				}
-				typeList = rcbIncidentType.Items.Where(c => c.Checked).Select(c => Convert.ToDecimal(c.Value)).ToList();
-				selectedValue = rcbStatusSelect.SelectedValue;
+				foreach (RadComboBoxItem item in rcbIncidentType.Items)
+					item.Checked = true;
 			}
-			else if (Mode == IncidentMode.Prevent)
-			{
-				typeList = EHSIncidentMgr.SelectPreventativeTypeList(SessionManager.PrimaryCompany().COMPANY_ID).Select(l => l.INCIDENT_TYPE_ID).ToList();
-				statusList = SQMBasePage.GetComboBoxCheckedItems(rcbFindingsSelect).Select(l => l.Value).ToList();
-			}
+			typeList = rcbIncidentType.Items.Where(c => c.Checked).Select(c => Convert.ToDecimal(c.Value)).ToList();
+			selectedValue = rcbStatusSelect.SelectedValue;
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
@@ -474,27 +416,14 @@ namespace SQM.Website
 			}
 			else
 			{
-				if (Mode == IncidentMode.Incident)
-					HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked);
-				else if (Mode == IncidentMode.Prevent)
-				{
-					List<string> inspectionCatetoryList = new List<string>();
-					inspectionCatetoryList.AddRange(rcbInspectCatetory.Items.Where(c => c.Checked).Select(c => c.Value).ToList());
-					List<string> recommendationTypeList = new List<string>();
-					recommendationTypeList.AddRange(rcbRecommendationType.Items.Where(c => c.Checked).Select(c => c.Value).ToList());
-					HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked);
-				}
+				HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked);
 				
 				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 					HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
 
 				if (HSCalcs().ehsCtl.IncidentHst != null)
 				{
-					//HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_DT);
-					if (Mode == IncidentMode.Incident)
-						uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
-					else if (Mode == IncidentMode.Prevent)
-						uclIncidentList.BindPreventativeListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked);
+					uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
 				}
 			}
 
@@ -559,11 +488,9 @@ namespace SQM.Website
 
 		protected void ExportClick(string cmd)
 		{
-			if (Mode == IncidentMode.Prevent)
-				uclExport.GeneratePreventativeActionExportExcel(entities, HSCalcs().ehsCtl.IncidentHst);
-			else
-				uclExport.GenerateIncidentExportExcel(entities, HSCalcs().ehsCtl.IncidentHst);
+			uclExport.GenerateIncidentExportExcel(entities, HSCalcs().ehsCtl.IncidentHst);
 		}
+
 		protected void lnkExportClick(object sender, EventArgs e)
 		{
 			uclExport.GenerateIncidentExportExcel(entities, HSCalcs().ehsCtl.IncidentHst);

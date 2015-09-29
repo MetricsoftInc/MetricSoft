@@ -198,6 +198,14 @@ namespace SQM.Website
 			return (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 		}
 
+		public static INCIDENT_TYPE SelectIncidentType(decimal incidentTypeID)
+		{
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				return (from t in ctx.INCIDENT_TYPE where t.INCIDENT_TYPE_ID == incidentTypeID select t).SingleOrDefault();
+			}
+		}
+
 		public static decimal SelectIncidentTypeIdByIncidentId(decimal incidentId)
 		{
 			decimal? incidentTypeId;

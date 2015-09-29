@@ -31,6 +31,51 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblSubmitted;
         
         /// <summary>
+        /// pnlIncidentHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlIncidentHeader;
+        
+        /// <summary>
+        /// lblAddOrEditIncident control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAddOrEditIncident;
+        
+        /// <summary>
+        /// ahReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ahReturn;
+        
+        /// <summary>
+        /// lblIncidentLocation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIncidentLocation;
+        
+        /// <summary>
+        /// lblIncidentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIncidentType;
+        
+        /// <summary>
         /// lblFormTitle control.
         /// </summary>
         /// <remarks>
@@ -47,15 +92,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm;
-        
-        /// <summary>
-        /// uclRadScript control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_RadScriptBlock uclRadScript;
         
         /// <summary>
         /// lbIncidentDateSM control.
@@ -256,13 +292,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbShiftXS;
         
         /// <summary>
-        /// rddlShift control.
+        /// rddlShiftID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlShift;
+        protected global::Telerik.Web.UI.RadDropDownList rddlShiftID;
         
         /// <summary>
         /// rfvShift control.
@@ -274,76 +310,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvShift;
         
         /// <summary>
-        /// lbDepartmentSM control.
+        /// lblDeptTestSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbDepartmentSM;
+        protected global::System.Web.UI.WebControls.Label lblDeptTestSM;
         
         /// <summary>
-        /// lbDepartmentXS control.
+        /// lblDeptTestXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbDepartmentXS;
+        protected global::System.Web.UI.WebControls.Label lblDeptTestXS;
         
         /// <summary>
-        /// rddlDepartment control.
+        /// rddlDeptTest control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlDepartment;
-        
-        /// <summary>
-        /// rfvDepartment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDepartment;
-        
-        /// <summary>
-        /// lbOperationSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbOperationSM;
-        
-        /// <summary>
-        /// lbOperationXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbOperationXS;
-        
-        /// <summary>
-        /// rddlOperation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlOperation;
-        
-        /// <summary>
-        /// rfvOperation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvOperation;
+        protected global::Telerik.Web.UI.RadDropDownList rddlDeptTest;
         
         /// <summary>
         /// lbInvolvedPersonSM control.

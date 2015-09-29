@@ -74,6 +74,11 @@ namespace SQM.Website
 			SessionManager.ReturnObject = "Notification";
 			SessionManager.ReturnRecordID = Convert.ToDecimal(lnk.CommandArgument);
 			SessionManager.ReturnStatus = true;
+
+			if (OnIncidentClick != null)
+			{
+				OnIncidentClick(Convert.ToDecimal(lnk.CommandArgument));
+			}
 		}
 
 		protected void lnkIncidentRedirect(Object sender, EventArgs e)

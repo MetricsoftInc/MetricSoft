@@ -22,15 +22,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncidentForm;
         
         /// <summary>
-        /// ahReturn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ahReturn;
-        
-        /// <summary>
         /// divPageBody control.
         /// </summary>
         /// <remarks>
@@ -56,15 +47,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblResults;
-        
-        /// <summary>
-        /// uclIncidentDetails control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_EHSIncidentDetails uclIncidentDetails;
         
         /// <summary>
         /// pnlAddEdit control.
@@ -94,6 +76,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblAddOrEditIncident;
         
         /// <summary>
+        /// ahReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ahReturn;
+        
+        /// <summary>
         /// lblIncidentLocation control.
         /// </summary>
         /// <remarks>
@@ -112,40 +103,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblIncidentType;
         
         /// <summary>
-        /// ddlIncidentLocation control.
+        /// lblPageTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox ddlIncidentLocation;
-        
-        /// <summary>
-        /// mnuIncidentLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadMenu mnuIncidentLocation;
-        
-        /// <summary>
-        /// hdnIncidentLocation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnIncidentLocation;
-        
-        /// <summary>
-        /// rddlIncidentType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlIncidentType;
+        protected global::System.Web.UI.WebControls.Label lblPageTitle;
         
         /// <summary>
         /// divForm control.
@@ -155,15 +119,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
-        
-        /// <summary>
-        /// lblPageTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageTitle;
         
         /// <summary>
         /// pnlForm control.
