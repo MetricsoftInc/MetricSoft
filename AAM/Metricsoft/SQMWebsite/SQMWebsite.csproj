@@ -218,6 +218,7 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
+    <Content Include="EHS\EHS_Audit_Exceptions.aspx" />
     <Content Include="EHS\EHS_Audit_Scheduler.aspx" />
     <Content Include="EHS\EHS_Audits.aspx" />
     <Content Include="EHS\EHS_Audits_Questions.aspx" />
@@ -435,6 +436,7 @@
     <Content Include="images\status\waste-bak.png" />
     <Content Include="images\status\waste.png" />
     <Content Include="images\step_01.gif" />
+    <Content Include="Include\Ucl_AuditExceptionList.ascx" />
     <Content Include="Include\Ucl_AuditScheduleList.ascx" />
     <Content Include="Include\Ucl_AuditList.ascx" />
     <Content Include="Include\Ucl_EHSAuditAdd.ascx" />
@@ -681,6 +683,13 @@
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EHS\EHS_Audit_Exceptions.aspx.cs">
+      <DependentUpon>EHS_Audit_Exceptions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Audit_Exceptions.aspx.designer.cs">
+      <DependentUpon>EHS_Audit_Exceptions.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EHS\EHS_Audit_Scheduler.aspx.cs">
       <DependentUpon>EHS_Audit_Scheduler.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -858,6 +867,13 @@
     </Compile>
     <Compile Include="Home\Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_AuditExceptionList.ascx.cs">
+      <DependentUpon>Ucl_AuditExceptionList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AuditExceptionList.ascx.designer.cs">
+      <DependentUpon>Ucl_AuditExceptionList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_AuditScheduleList.ascx.cs">
       <DependentUpon>Ucl_AuditScheduleList.ascx</DependentUpon>
@@ -1370,7 +1386,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admin\App_LocalResources\Administrate_ViewUser.aspx.resx" />
+    <Content Include="Admin\App_LocalResources\Administrate_ViewUser.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Shared\FileHandler.ashx" />

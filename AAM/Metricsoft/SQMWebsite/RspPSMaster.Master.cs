@@ -127,6 +127,8 @@ namespace SQM.Website
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Exceptions", "/EHS/EHS_Audit_Exceptions.aspx"));
+						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Schedules", "/EHS/EHS_Audit_Scheduler.aspx"));
 						if (UserContext.GetScopePrivileges(SysScope.incident).Count() > 0)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));

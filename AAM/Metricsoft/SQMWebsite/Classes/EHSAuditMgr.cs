@@ -409,6 +409,10 @@ namespace SQM.Website
 									 where aq.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 									select tp).FirstOrDefault();
 
+					var auditAnswer = (from a in entities.AUDIT_ANSWER
+									   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
+									   select a).FirstOrDefault();
+
 					var newQuestion = new EHSAuditQuestion()
 					{
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
@@ -506,6 +510,110 @@ namespace SQM.Website
 				questionList.OrderBy(field => field.QuestionText);
 				questionList.OrderBy(field => field.QuestionType);
 
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return questionList;
+		}
+
+		/// <summary>
+		/// Select a list of all audit questions by topic 
+		/// </summary>
+		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId)
+		{
+			var questionList = new List<EHSAuditQuestion>();
+			bool answerIsNegative = false;
+
+			try
+			{
+				var entities = new PSsqmEntities();
+				var activeQuestionList = new List<AUDIT_TYPE_TOPIC_QUESTION>();
+				var auditAnswers = new List<decimal>();
+				if (auditId > 0)
+				{
+					auditAnswers = (from a in entities.AUDIT_ANSWER
+									where a.AUDIT_ID == auditId
+									select a.AUDIT_QUESTION_ID).ToList();
+
+					// need to only select questions that appear in the specific audit
+					activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+										  where auditAnswers.Contains(q.AUDIT_QUESTION_ID)
+										  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
+										  select q
+				  ).ToList();
+				}
+
+				foreach (var aq in activeQuestionList)
+				{
+					var questionInfo = (from qi in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG")
+										where qi.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
+										select qi).FirstOrDefault();
+
+					var typeInfo = (from ti in entities.AUDIT_QUESTION_TYPE
+									where questionInfo.AUDIT_QUESTION_TYPE_ID == ti.AUDIT_QUESTION_TYPE_ID
+									select ti).FirstOrDefault();
+
+					var topicInfo = (from tp in entities.AUDIT_TOPIC
+									 where aq.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
+									 select tp).FirstOrDefault();
+
+					var auditAnswer = (from a in entities.AUDIT_ANSWER
+								  where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
+								  select a).FirstOrDefault();
+
+					var newQuestion = new EHSAuditQuestion()
+					{
+						QuestionId = questionInfo.AUDIT_QUESTION_ID,
+						//QuestionText = questionInfo.QUESTION_TEXT,
+						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
+						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
+						IsRequired = questionInfo.IS_REQUIRED,
+						IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
+						HelpText = questionInfo.HELP_TEXT,
+						StandardType = questionInfo.STANDARD_TYPE,
+						TopicId = topicInfo.AUDIT_TOPIC_ID,
+						TopicTitle = topicInfo.TITLE,
+						AnswerText = auditAnswer.ANSWER_VALUE,
+						AnswerComment = auditAnswer.COMMENT
+					};
+
+					if (newQuestion.HasMultipleChoices)
+					{
+						List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
+															  where qc.AUDIT_QUESTION_ID == questionInfo.AUDIT_QUESTION_ID
+															  orderby qc.SORT_ORDER
+															  select new EHSAuditAnswerChoice
+															  {
+																  Value = qc.QUESTION_CHOICE_VALUE,
+																  IsCategoryHeading = qc.IS_CATEGORY_HEADING,
+																  ChoiceWeight = qc.CHOICE_WEIGHT,
+																  ChoicePositive = qc.CHOICE_POSITIVE
+															  }).ToList();
+						if (choices.Count > 0)
+							newQuestion.AnswerChoices = choices;
+					}
+
+					// only return a list of negative answers
+					if (newQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage)
+					{
+						string answer = (newQuestion.AnswerText == null) ? "" : newQuestion.AnswerText;
+						answerIsNegative = false;
+						foreach (EHSAuditAnswerChoice choice in newQuestion.AnswerChoices)
+						{
+							if (choice.Value.Equals(answer) && !choice.ChoicePositive)
+								answerIsNegative = true;
+						}
+						if (answerIsNegative)
+						{
+							questionList.Add(newQuestion);
+						}
+
+					}
+				}
 			}
 			catch (Exception e)
 			{

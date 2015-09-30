@@ -1069,11 +1069,11 @@ namespace SQM.Website
 						data.DaysElapsed();
 					}
 
-					if (auditStatus == "A")  // get open incidents
+					if (auditStatus == "A")  // get open audits
 						this.AuditHst = this.AuditHst.Where(l => l.Status == "A").ToList();
 					if (auditStatus == "N")  // data incomplete
 						this.AuditHst = this.AuditHst.Where(l => l.Status == "N").ToList();
-					else if (auditStatus == "C")  // get closed incidents
+					else if (auditStatus == "C")  // get closed audits
 						this.AuditHst = this.AuditHst.Where(l => l.Status == "C" || l.Status == "C8").ToList();
 
 				}
@@ -1107,7 +1107,7 @@ namespace SQM.Website
 
 				if (this.AuditSchedulerHst != null)
 				{
-					if (auditSchedulerStatus == "A")  // get open incidents
+					if (auditSchedulerStatus == "A")  // get open audits
 						this.AuditSchedulerHst = this.AuditSchedulerHst.Where(l => l.AuditScheduler.INACTIVE == false).ToList();
 					else if (auditSchedulerStatus == "I")  // data incomplete
 						this.AuditSchedulerHst = this.AuditSchedulerHst.Where(l => l.AuditScheduler.INACTIVE == true).ToList();
@@ -1119,6 +1119,106 @@ namespace SQM.Website
 			}
 
 			return this.AuditSchedulerHst;
+		}
+
+		public List<EHSAuditData> SelectAuditExceptionList(List<decimal> plantIdList, List<decimal> auditTypeList, DateTime fromDate, DateTime toDate)
+		{
+
+			var auditList = new List<EHSAuditData>();
+			EHSAuditQuestionType QuestionType = new EHSAuditQuestionType();
+			bool answerIsNegative = false;
+			try
+			{
+				this.AuditHst = (from a in this.Entities.AUDIT
+								 join p in this.Entities.PLANT on a.DETECT_PLANT_ID equals p.PLANT_ID
+								 join r in this.Entities.PERSON on a.AUDIT_PERSON equals r.PERSON_ID
+								 join t in this.Entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID
+								 where ((a.AUDIT_DT >= fromDate && a.AUDIT_DT <= toDate)
+								 && auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.DETECT_PLANT_ID))
+								 select new EHSAuditData
+								 {
+									 Audit = a,
+									 Plant = p,
+									 Person = r,
+									 AuditType = t
+								 }).OrderByDescending(l => l.Audit.AUDIT_DT).ToList();
+
+				if (this.AuditHst != null)
+				{
+					decimal[] ids = this.AuditHst.Select(a => a.Audit.AUDIT_ID).Distinct().ToArray();
+					var qaList = (from a in this.Entities.AUDIT_ANSWER
+								  where (ids.Contains(a.AUDIT_ID))
+								  select a).ToList();
+					foreach (EHSAuditData data in this.AuditHst)
+					{
+						data.EntryList = new List<AUDIT_ANSWER>();
+						data.EntryList.AddRange(qaList.Where(l => l.AUDIT_ID == data.Audit.AUDIT_ID).ToList());
+						data.DeriveStatus();
+						data.DaysElapsed();
+					}
+
+					// get only closed audits
+					this.AuditHst = this.AuditHst.Where(l => l.Status == "C" || l.Status == "C8").ToList();
+
+					// now we need to build a list of only the Audits that have negative responses
+					foreach (EHSAuditData data in this.AuditHst)
+					{
+						answerIsNegative = false;
+						foreach (AUDIT_ANSWER auditAnswer in data.Audit.AUDIT_ANSWER)
+						{
+							// for each answer in the audit get the answer value
+							string answer = (auditAnswer.ANSWER_VALUE == null) ? "" : auditAnswer.ANSWER_VALUE;
+							if (answer.Length > 0)
+							{
+								// get the original question info for the answer
+								AUDIT_QUESTION question = (from q in this.Entities.AUDIT_QUESTION
+														   where q.AUDIT_QUESTION_ID == auditAnswer.AUDIT_QUESTION_ID
+														   select q).FirstOrDefault();
+								if (question != null)
+								{
+									// if this is a question type that we care about, get the possible choices for an answer
+									QuestionType = (EHSAuditQuestionType)question.AUDIT_QUESTION_TYPE_ID;
+									if (QuestionType == EHSAuditQuestionType.RadioPercentage)
+									{
+										List<EHSAuditAnswerChoice> choices = (from qc in this.Entities.AUDIT_QUESTION_CHOICE
+																			  where qc.AUDIT_QUESTION_ID == question.AUDIT_QUESTION_ID
+																			  orderby qc.SORT_ORDER
+																			  select new EHSAuditAnswerChoice
+																			  {
+																				  Value = qc.QUESTION_CHOICE_VALUE,
+																				  IsCategoryHeading = qc.IS_CATEGORY_HEADING,
+																				  ChoiceWeight = qc.CHOICE_WEIGHT,
+																				  ChoicePositive = qc.CHOICE_POSITIVE
+																			  }).ToList();
+										if (choices.Count > 0)
+										{
+											// set the flag if there are any negative answers
+											foreach (EHSAuditAnswerChoice choice in choices)
+											{
+												if (choice.Value.Equals(answer) && !choice.ChoicePositive)
+													answerIsNegative = true;
+											}
+										}
+									}
+								}
+							}
+						}
+						// add the audit to the list only if there are negative answers
+						if (answerIsNegative)
+						{
+							auditList.Add(data);
+						}
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			this.AuditHst = auditList;
+
+			return this.AuditHst;
 		}
 
 		public List<GaugeSeries> CalculateIncidentSeries(string option, SStat stat)
