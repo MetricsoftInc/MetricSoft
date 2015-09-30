@@ -2178,7 +2178,8 @@ namespace SQM.Website
 				string script = string.Format("alert('{0}');", "Your updates have been saved.");
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 
-				btnSubnav_Click(btnSubnavContainment, null);
+				if(CurrentSubnav == "0"  || CurrentSubnav == "I")
+					btnSubnav_Click(btnSubnavContainment, null);
 			}
 		}
 

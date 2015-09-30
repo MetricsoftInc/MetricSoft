@@ -376,6 +376,11 @@ namespace SQM.Website
 				}
 			}
 
+			if (seq > 0)
+			{
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.workstatus);
+			}
+
 			if (status > -1)
 			{
 				EHSNotificationMgr.NotifyIncidentStatus(WorkStatusIncident, ((int)SysPriv.update).ToString(), "Work status updated");

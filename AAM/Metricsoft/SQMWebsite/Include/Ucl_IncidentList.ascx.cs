@@ -35,6 +35,12 @@ namespace SQM.Website
 			set;
 		}
 
+		private List<XLAT> IncidentXLATList
+		{
+			get { return ViewState["IncidentXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["IncidentXLATList"]; }
+			set { ViewState["IncidentXLATList"] = value; }
+		}
+
 		#region incident
 		public Panel IncidentListPanel
 		{
@@ -636,6 +642,9 @@ namespace SQM.Website
 			pnlIncidentListRepeater.Visible = true;
 			staticAppContext = appContext;
 
+			if (IncidentXLATList == null  ||  IncidentXLATList.Count == 0)
+				IncidentXLATList = SQMBasePage.SelectXLATList(new string[3] { "STATUS", "INCIDENT_STATUS", "WORK_STATUS" });
+
 			rgIncidentList.MasterTableView.GetColumn("ViewReports").Display = showReports;
 
 			if (showImages)
@@ -672,94 +681,51 @@ namespace SQM.Website
 				HiddenField hf;
 				Label lbl;
 
-				EHSIncidentData data = (EHSIncidentData)e.Item.DataItem;
-
-				lbl = (Label)e.Item.FindControl("lblIncidentId");
-				lbl.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
-
-				if (data.Incident.DESCRIPTION.Length > 120)
+				try
 				{
-					lbl = (Label)e.Item.FindControl("lblDescription");
-					lbl.Text = data.Incident.DESCRIPTION.Substring(0, 117) + "...";
-				}
+					EHSIncidentData data = (EHSIncidentData)e.Item.DataItem;
 
-				lbl = (Label)e.Item.FindControl("lblDescription");
-				lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
+					lbl = (Label)e.Item.FindControl("lblIncidentId");
+					lbl.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
 
-				if (data.Person != null)
-				{
-					lbl = (Label)e.Item.FindControl("lblReportedBy");
-					lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
-				}
-
-				lbl = (Label)e.Item.FindControl("lblIncStatus");
-				if (data.Status == "C")
-				{
-					lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", "C") + " " + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "<br/>(" + data.DaysToClose.ToString() + ")";
-				}
-				else if (data.Status == "C8")
-				{
-					lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", "C8") + " " + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE_8D, "d", false) + "<br/>(" + data.DaysToClose.ToString() + ")";
-				}
-				else if (data.Status == "N")
-				{
-					lbl.Text = "<strong>" + WebSiteCommon.GetXlatValue("incidentStatus", "N") + "</strong>";
-				}
-				else
-				{
-					lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", "A") + "<br/>(" + data.DaysOpen + ")";
-				}
-				
-				LinkButton lb8d = (LinkButton)e.Item.FindControl("lb8d");
-				LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
-				lb8d.Visible = lbEditReport.Visible = false;  // mt - for AAM
-
-				HyperLink hlReport = (HyperLink)e.Item.FindControl("hlReport");
-				hlReport.Visible = true;
-
-				/*
-				INCIDENT_ANSWER entry = data.Incident.INCIDENT_ANSWER.Where(l => l.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Create8D).FirstOrDefault();
-				if (entry != null && entry.ANSWER_VALUE == "Yes")
-				{
-					if (UserContext.RoleAccess() > AccessMode.View)
-						lb8d.Visible = true;
-					else
-						lb8d.Visible = false;
-
-					lbEditReport.Visible = false;
-
-					var problemCaseId = EHSIncidentMgr.SelectProblemCaseIdByIncidentId(data.Incident.INCIDENT_ID);
-					if (problemCaseId > 0)
+					if (data.Incident.DESCRIPTION.Length > 120)
 					{
+						lbl = (Label)e.Item.FindControl("lblDescription");
+						lbl.Text = data.Incident.DESCRIPTION.Substring(0, 117) + "...";
+					}
 
-						hlReport.NavigateUrl = "/EHS/EHS_Alert_PDF.aspx?pcid=" + EncryptionManager.Encrypt(problemCaseId.ToString());
+					lbl = (Label)e.Item.FindControl("lblDescription");
+					lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
 
-						LinkButton lbReport = (LinkButton)e.Item.FindControl("lbReport");
-						lbReport.Visible = true;
-						lbReport.CommandArgument = problemCaseId.ToString();
-						lbReport.Attributes.Add("CaseType", data.Incident.INCIDENT_TYPE);
-					}	
+					if (data.Person != null)
+					{
+						lbl = (Label)e.Item.FindControl("lblReportedBy");
+						lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
+					}
+
+					lbl = (Label)e.Item.FindControl("lblIncStatus");
+					lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					if (data.Status == "C")
+						lbl.Text += SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "<br/>(" + data.DaysToClose.ToString() + ")";
+					else
+						lbl.Text += "<br/>(" + data.DaysOpen + ")";
+
+					if (data.Incident.ISSUE_TYPE_ID == 10) // Prevention Verification
+					{
+						LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
+						lbEditReport.Visible = false;
+					}
+
+					if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
+					{
+						lbl = (Label)e.Item.FindControl("lblAttach");
+						Ucl_Attach attch = (Ucl_Attach)Page.LoadControl("/Include/Ucl_Attach.ascx");
+						lbl.Parent.Controls.AddAt(lbl.Parent.Controls.IndexOf(lbl), attch);
+						attch.BindListAttachment(data.AttachList, "", 1);
+					}
 				}
-				else
+				catch
 				{
-					lb8d.Visible = false;
-					lbEditReport.Visible = true;
-
-					hlReport.NavigateUrl = "/EHS/EHS_Alert_PDF.aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
-				}
-				*/
-
-				if (data.Incident.ISSUE_TYPE_ID == 10) // Prevention Verification
-				{
-					lbEditReport.Visible = false;
-				}
-
-				if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
-				{
-					lbl = (Label)e.Item.FindControl("lblAttach");
-					Ucl_Attach attch = (Ucl_Attach)Page.LoadControl("/Include/Ucl_Attach.ascx");
-					lbl.Parent.Controls.AddAt(lbl.Parent.Controls.IndexOf(lbl), attch);
-					attch.BindListAttachment(data.AttachList, "", 1);
 				}
 			}
 		}

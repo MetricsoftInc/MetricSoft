@@ -282,6 +282,12 @@ namespace SQM.Website
 					status = entities.SaveChanges();
 				}
 			}
+
+			if (seq > 0)
+			{
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.rootcause);
+			}
+
 			return status;
 		}
 

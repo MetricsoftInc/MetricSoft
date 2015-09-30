@@ -243,6 +243,8 @@ namespace SQM.Website
 		{
 			var itemList = new List<INCFORM_APPROVAL>();
 			int status = 0;
+			int seq = 150;
+			List<IncidentStepStatus> approvalList = new List<IncidentStepStatus>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
@@ -250,6 +252,7 @@ namespace SQM.Website
 
 				foreach (RepeaterItem item in rptApprovals.Items)
 				{
+					++seq;
 					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
 					Label lba = (Label)item.FindControl("lbApprover");
 					Label lbm = (Label)item.FindControl("lbApproveMessage");
@@ -278,11 +281,23 @@ namespace SQM.Website
 							approval.APPROVER_PERSON_ID = Convert.ToDecimal(hf.Value);
 							approval.APPROVER_PERSON = lba.Text;
 						}
+
+						approvalList.Add((IncidentStepStatus)seq);
+
 						ctx.AddToINCFORM_APPROVAL(approval);
 					}
 				}
 
 				status = ctx.SaveChanges();
+
+				if (approvalList.Count > 0)
+				{
+					foreach (IncidentStepStatus stat in approvalList)
+					{
+						EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat);
+					}
+				}
+
 				if (status > -1)
 				{
 					EHSNotificationMgr.NotifyIncidentStatus(ApprovalIncident, ((int)SysPriv.approve).ToString(), "");

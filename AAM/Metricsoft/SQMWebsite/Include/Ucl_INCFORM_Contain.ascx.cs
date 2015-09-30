@@ -239,7 +239,7 @@ namespace SQM.Website
 				var item = new INCFORM_CONTAIN();
 
 				TextBox tbca = (TextBox)containtem.FindControl("tbContainAction");
-				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlContainPerson");
+				RadComboBox rddlp = (RadComboBox)containtem.FindControl("rddlContainPerson");
 				Label lb = (Label)containtem.FindControl("lbItemSeq");
 				RadDatePicker sd = (RadDatePicker)containtem.FindControl("rdpStartDate");
 
@@ -276,7 +276,6 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_CONTAIN();
 
-
 				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
 				{
 					seq = seq + 1;
@@ -293,6 +292,12 @@ namespace SQM.Website
 					status = entities.SaveChanges();
 				}
 			}
+
+			if (seq > 0)
+			{
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.containment);
+			}
+
 			return status;
 		}
 
@@ -310,11 +315,11 @@ namespace SQM.Website
 					var item = new INCFORM_CONTAIN();
 
 					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
-					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
+					RadComboBox rddlp = (RadComboBox)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
 
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)
@@ -322,7 +327,7 @@ namespace SQM.Website
 						if (!String.IsNullOrEmpty(p.EMAIL))
 						{
 							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+							rddlp.Items.Add(new RadComboBoxItem(displayName, Convert.ToString(p.PERSON_ID)));
 						}
 					}
 
@@ -362,11 +367,11 @@ namespace SQM.Website
 					var item = new INCFORM_CONTAIN();
 
 					TextBox tbca = (TextBox)containitem.FindControl("tbContainAction");
-					RadDropDownList rddlp = (RadDropDownList)containitem.FindControl("rddlContainPerson");
+					RadComboBox rddlp = (RadComboBox)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
 
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
 
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
@@ -375,7 +380,7 @@ namespace SQM.Website
 						if (!String.IsNullOrEmpty(p.EMAIL))
 						{
 							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+							rddlp.Items.Add(new RadComboBoxItem(displayName, Convert.ToString(p.PERSON_ID)));
 						}
 					}
 

@@ -1393,7 +1393,7 @@ namespace SQM.Website
 				INCIDENT_DT = incidentDate,
 				ISSUE_TYPE = SelectedTypeText,
 				ISSUE_TYPE_ID = SelectedTypeId,
-				INCFORM_LAST_STEP_COMPLETED = CurrentStep //currentFormStep
+				INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined
 			};
 
 			entities.AddToINCIDENT(newIncident);
@@ -1421,6 +1421,8 @@ namespace SQM.Website
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 				incident.LAST_UPD_DT = DateTime.Now;
+				if (incident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.defined)
+					incident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined;
 
 				entities.SaveChanges();
 			}

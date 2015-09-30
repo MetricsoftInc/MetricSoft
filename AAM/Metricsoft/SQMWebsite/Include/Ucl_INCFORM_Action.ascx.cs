@@ -349,6 +349,11 @@ namespace SQM.Website
 				}
 			}
 
+			if (seq > 0)
+			{
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.correctiveaction);
+			}
+
 			if (status > -1)
 			{
 				EHSNotificationMgr.NotifyIncidentStatus(ActionIncident, ((int)SysPriv.update).ToString(), "Corrective action specified");

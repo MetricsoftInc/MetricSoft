@@ -11,6 +11,7 @@ namespace SQM.Website
 		Prevent
 	}
 
+	public enum IncidentStepStatus { unknown=0, defined=100, workstatus=105, containment=110, containmentComplete=115,  rootcause=120, rootcauseComplete=125, correctiveaction=130, correctiveactionComplete=135, signoff1=151, signoff2=152, signoffComplete=155}
 
 	public class EHSIncidentQuestion
 	{
@@ -135,12 +136,8 @@ namespace SQM.Website
 			{
 				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE.HasValue)
 					this.Status = "C";  // incident closed
-				else if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE_8D.HasValue)
-					this.Status = "C8";  // incident and 8D closed
-				else if (this.Incident.CLOSE_DATE.HasValue)
-					this.Status = "N";
-				else if (this.Incident.CLOSE_DATE_8D.HasValue)
-					this.Status = "N";
+				else
+					this.Status = "A";  // incident open
 			}
 
 			return this.Status;
@@ -247,6 +244,24 @@ namespace SQM.Website
 			return baseFormName;
 		}
 
+		public static INCIDENT UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus)
+		{
+			INCIDENT incident = null;
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				incident = (from i in ctx.INCIDENT where i.INCIDENT_ID == incidentID select i).SingleOrDefault();
+				if (incident != null)
+				{
+					if ((int)currentStepStatus > incident.INCFORM_LAST_STEP_COMPLETED)
+					{
+						incident.INCFORM_LAST_STEP_COMPLETED = (int)currentStepStatus;
+						ctx.SaveChanges();
+					}
+				}
+			}
+
+			return incident;
+		}
 
 		public static List<EHSFormControlStep> GetStepsForincidentTypeId(decimal incidentTypeId)
 		{

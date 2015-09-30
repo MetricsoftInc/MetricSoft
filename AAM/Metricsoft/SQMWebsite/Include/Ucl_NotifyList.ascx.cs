@@ -21,7 +21,6 @@ namespace SQM.Website
 			set { ViewState["XLATList"] = value; }
 		}
 
-
 		#region notifyaction
 
 		public void BindNotfyPlan(List<NOTIFYACTION> notifyItemList, BusinessLocation businessLocation, string context)
