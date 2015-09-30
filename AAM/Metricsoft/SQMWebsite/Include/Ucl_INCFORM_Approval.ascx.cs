@@ -294,7 +294,10 @@ namespace SQM.Website
 				{
 					foreach (IncidentStepStatus stat in approvalList)
 					{
-						EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat);
+						if (stat == IncidentStepStatus.signoff2  ||  stat == IncidentStepStatus.signoffComplete)  // set status to CLOSED if final sign-off
+							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true);
+						else 
+							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat);
 					}
 				}
 

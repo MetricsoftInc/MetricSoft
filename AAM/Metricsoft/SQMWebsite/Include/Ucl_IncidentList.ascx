@@ -494,7 +494,7 @@
 							<asp:Label ID="lblAttach" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn HeaderText="Status<br/>(Days)">
+					<telerik:GridTemplateColumn HeaderText="Status/<br/>(Days Open)">
 						<ItemTemplate>
 							<asp:Label ID="lblIncStatus" runat="server"></asp:Label>
 						</ItemTemplate>

@@ -281,7 +281,6 @@ namespace SQM.Website
 			ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
 			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId);
-			rddlNewIncidentType.Font.Bold = true;
 			rddlNewIncidentType.DataSource = incidentTypeList;
 			rddlNewIncidentType.DataTextField = "TITLE";
 			rddlNewIncidentType.DataValueField = "INCIDENT_TYPE_ID";

@@ -246,7 +246,14 @@ namespace SQM.Website
 
 		public static INCIDENT UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus)
 		{
+			return UpdateIncidentStatus(incidentID,  currentStepStatus, false);
+		}
+
+
+		public static INCIDENT UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, bool closeIncident)
+		{
 			INCIDENT incident = null;
+			bool isUpdated = false;
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				incident = (from i in ctx.INCIDENT where i.INCIDENT_ID == incidentID select i).SingleOrDefault();
@@ -255,8 +262,15 @@ namespace SQM.Website
 					if ((int)currentStepStatus > incident.INCFORM_LAST_STEP_COMPLETED)
 					{
 						incident.INCFORM_LAST_STEP_COMPLETED = (int)currentStepStatus;
-						ctx.SaveChanges();
+						isUpdated = true;
 					}
+					if (closeIncident  &&  !incident.CLOSE_DATE.HasValue)
+					{
+						incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
+						isUpdated = true;
+					}
+					if (isUpdated)
+						ctx.SaveChanges();
 				}
 			}
 
