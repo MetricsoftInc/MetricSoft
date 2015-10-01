@@ -310,6 +310,7 @@ namespace SQM.Website
             task.TASK_TYPE = taskType;
             task.TASK_SEQ = taskSeq;
             task.DESCRIPTION = description;
+			task.CREATE_DT = DateTime.UtcNow;
             if (dueDate != DateTime.MinValue)
                 task.DUE_DT = dueDate;
             if (responsibleID > 0)
@@ -426,6 +427,22 @@ namespace SQM.Website
             }
             return this;
         }
+
+		public TaskStatusMgr SelectTaskList(int recordType, decimal responsibleID, bool openOnly)
+		{
+			try
+			{
+				this.TaskList = (from t in this.Entities.TASK_STATUS
+								 where (t.RECORD_TYPE == recordType && (responsibleID == 0 || t.RESPONSIBLE_ID == responsibleID)  && (!openOnly || t.COMPLETE_DT == null))
+								 select t).OrderBy(l => l.DUE_DT).ToList();
+			}
+			catch (Exception ex)
+			{
+				;
+			}
+
+			return this;
+		}
 
 		public int DeleteTask(int recordType, decimal recordID)
 		{
