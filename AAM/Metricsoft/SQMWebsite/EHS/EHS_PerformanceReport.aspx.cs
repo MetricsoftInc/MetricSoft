@@ -196,8 +196,6 @@ namespace SQM.Website.EHS
 				dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, SessionManager.UserContext.HRLocation.Company.COMPANY_ID);
 
 				this.rgReport.DataSource = data.data;
-				/*this.rgReport.DataSource = Enumerable.Range(1, 12).Select(i => new Data() { Month = new DateTime(DateTime.Now.Year, i, 1).ToString("MMMM") }).
-					Concat(new[] { new Data() { Month = "YTD" } });*/
 				this.rgReport.DataBind();
 
 				this.UpdateCharts(data);
