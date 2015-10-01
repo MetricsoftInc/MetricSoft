@@ -2585,6 +2585,9 @@
           <Property Name="COMPLETE_DT" Type="datetime" />
           <Property Name="COMPLETE_ID" Type="numeric" Precision="35" />
           <Property Name="NOTIFY_DT" Type="datetime" />
+          <Property Name="RECORD_SUBID" Type="numeric" Precision="35" />
+          <Property Name="COMMENTS" Type="nvarchar" />
+          <Property Name="CREATE_DT" Type="datetime" />
         </EntityType>
         <EntityType Name="UN_DISPOSAL">
           <Key>
@@ -4496,7 +4499,6 @@
           </AssociationSet>
           <EntitySet Name="PROB_RISK" EntityType="PSsqmModel.PROB_RISK" />
           <EntitySet Name="PROB_CAUSE_ACTION" EntityType="PSsqmModel.PROB_CAUSE_ACTION" />
-          <EntitySet Name="TASK_STATUS" EntityType="PSsqmModel.TASK_STATUS" />
           <EntitySet Name="PROB_CASE" EntityType="PSsqmModel.PROB_CASE" />
           <EntitySet Name="PROB_CAUSE_STEP" EntityType="PSsqmModel.PROB_CAUSE_STEP" />
           <AssociationSet Name="FK_PROB_CASE_COMPANY" Association="PSsqmModel.FK_PROB_CASE_COMPANY">
@@ -4818,10 +4820,6 @@
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="RESPONSE" EntitySet="RESPONSE" />
           </AssociationSet>
-          <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
-          </AssociationSet>
           <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="PSsqmModel.INCFORM_INJURYILLNESS" />
           <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
@@ -4910,6 +4908,11 @@
           <AssociationSet Name="FK_INCIDENTLOSTTIME_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
+          </AssociationSet>
+          <EntitySet Name="TASK_STATUS" EntityType="PSsqmModel.TASK_STATUS" />
+          <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -6781,25 +6784,6 @@
           <Property Type="String" Name="PPP_TYPE" MaxLength="4" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PROB_CASE" Relationship="PSsqmModel.FK_PROB_CAUSE_ACTION_PROB_CASE" FromRole="PROB_CAUSE_ACTION" ToRole="PROB_CASE" />
         </EntityType>
-        <EntityType Name="TASK_STATUS">
-          <Key>
-            <PropertyRef Name="TASK_ID" />
-          </Key>
-          <Property Type="Decimal" Name="TASK_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
-          <Property Type="Decimal" Name="RECORD_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="TASK_STEP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TASK_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="TASK_SEQ" />
-          <Property Type="DateTime" Name="DUE_DT" Precision="3" />
-          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
-          <Property Type="String" Name="DESCRIPTION" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="COMPLETE_DT" Precision="3" />
-          <Property Type="Decimal" Name="COMPLETE_ID" Precision="35" Scale="0" />
-          <Property Type="DateTime" Name="NOTIFY_DT" Precision="3" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
-        </EntityType>
         <EntityType Name="PROB_CASE">
           <Key>
             <PropertyRef Name="PROBCASE_ID" />
@@ -8297,13 +8281,13 @@
           <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" FromRole="PERSON" ToRole="PERSPECTIVE_VIEW" />
           <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
-          <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
           <Property Type="String" Name="MIDDLE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SUPV_EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PHONE2" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRIVGROUP" Relationship="PSsqmModel.FK_PERSON_PRIVGROUP" FromRole="PERSON" ToRole="PRIVGROUP" />
+          <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -8434,18 +8418,6 @@
             </Principal>
             <Dependent Role="RESPONSE">
               <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TASK_STATUS_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.TASK_STATUS" Role="TASK_STATUS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="TASK_STATUS">
-              <PropertyRef Name="RESPONSIBLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8876,6 +8848,40 @@
             </Principal>
             <Dependent Role="INCFORM_LOSTTIME_HIST">
               <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TASK_STATUS">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Type="Decimal" Name="TASK_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
+          <Property Type="Decimal" Name="RECORD_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="TASK_STEP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TASK_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="TASK_SEQ" />
+          <Property Type="DateTime" Name="DUE_DT" Precision="3" />
+          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="COMPLETE_DT" Precision="3" />
+          <Property Type="Decimal" Name="COMPLETE_ID" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="NOTIFY_DT" Precision="3" />
+          <Property Type="Decimal" Name="RECORD_SUBID" Precision="35" Scale="0" />
+          <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
+        </EntityType>
+        <Association Name="FK_TASK_STATUS_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.TASK_STATUS" Role="TASK_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="TASK_STATUS">
+              <PropertyRef Name="RESPONSIBLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10000,25 +10006,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TASK_STATUS">
-            <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
-              <MappingFragment StoreEntitySet="TASK_STATUS">
-                <ScalarProperty Name="NOTIFY_DT" ColumnName="NOTIFY_DT" />
-                <ScalarProperty Name="COMPLETE_ID" ColumnName="COMPLETE_ID" />
-                <ScalarProperty Name="COMPLETE_DT" ColumnName="COMPLETE_DT" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
-                <ScalarProperty Name="DUE_DT" ColumnName="DUE_DT" />
-                <ScalarProperty Name="TASK_SEQ" ColumnName="TASK_SEQ" />
-                <ScalarProperty Name="TASK_TYPE" ColumnName="TASK_TYPE" />
-                <ScalarProperty Name="TASK_STEP" ColumnName="TASK_STEP" />
-                <ScalarProperty Name="RECORD_ID" ColumnName="RECORD_ID" />
-                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
-                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PROB_CASE">
             <EntityTypeMapping TypeName="PSsqmModel.PROB_CASE">
               <MappingFragment StoreEntitySet="PROB_CASE">
@@ -10931,6 +10918,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TASK_STATUS">
+            <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
+              <MappingFragment StoreEntitySet="TASK_STATUS">
+                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="RECORD_SUBID" ColumnName="RECORD_SUBID" />
+                <ScalarProperty Name="NOTIFY_DT" ColumnName="NOTIFY_DT" />
+                <ScalarProperty Name="COMPLETE_ID" ColumnName="COMPLETE_ID" />
+                <ScalarProperty Name="COMPLETE_DT" ColumnName="COMPLETE_DT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
+                <ScalarProperty Name="DUE_DT" ColumnName="DUE_DT" />
+                <ScalarProperty Name="TASK_SEQ" ColumnName="TASK_SEQ" />
+                <ScalarProperty Name="TASK_TYPE" ColumnName="TASK_TYPE" />
+                <ScalarProperty Name="TASK_STEP" ColumnName="TASK_STEP" />
+                <ScalarProperty Name="RECORD_ID" ColumnName="RECORD_ID" />
+                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
+                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11071,7 +11080,6 @@
         <AssociationConnector Association="PSsqmModel.FK_PLANT_ACCOUNTING_STAGE_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.PROB_RISK" Width="1.5" PointX="3.587134364800125" PointY="26.931796712303438" />
         <EntityTypeShape EntityType="PSsqmModel.PROB_CAUSE_ACTION" Width="1.5" PointX="0.55841299544945966" PointY="5.1087350571103087" />
-        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="2.4668798066987097" PointY="10.920772334058198" />
         <EntityTypeShape EntityType="PSsqmModel.PROB_CASE" Width="1.5" PointX="8.5196176713889535" PointY="1.9231428363933893" />
         <EntityTypeShape EntityType="PSsqmModel.PROB_CAUSE_STEP" Width="1.5" PointX="4.727202602069454" PointY="15.088554299943407" />
         <AssociationConnector Association="PSsqmModel.FK_PROB_CASE_COMPANY" />
@@ -11190,7 +11198,6 @@
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="4.125" PointY="65.75" />
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_WITNESS" Width="1.5" PointX="4.125" PointY="72.75" />
@@ -11223,6 +11230,8 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="5.7409568716496961" PointY="17.823688530281043" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="11.012981431099112" PointY="0.79960037805121409" />
+        <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         </Diagram>
     </Diagrams>
   </Designer>

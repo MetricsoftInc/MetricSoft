@@ -140,7 +140,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
@@ -160,6 +159,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 
 #endregion
 
@@ -1254,22 +1254,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TASK_STATUS> TASK_STATUS
-        {
-            get
-            {
-                if ((_TASK_STATUS == null))
-                {
-                    _TASK_STATUS = base.CreateObjectSet<TASK_STATUS>("TASK_STATUS");
-                }
-                return _TASK_STATUS;
-            }
-        }
-        private ObjectSet<TASK_STATUS> _TASK_STATUS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<PROB_CASE> PROB_CASE
         {
             get
@@ -2258,6 +2242,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_LOSTTIME_HIST> _INCFORM_LOSTTIME_HIST;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TASK_STATUS> TASK_STATUS
+        {
+            get
+            {
+                if ((_TASK_STATUS == null))
+                {
+                    _TASK_STATUS = base.CreateObjectSet<TASK_STATUS>("TASK_STATUS");
+                }
+                return _TASK_STATUS;
+            }
+        }
+        private ObjectSet<TASK_STATUS> _TASK_STATUS;
 
         #endregion
 
@@ -2784,14 +2784,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TASK_STATUS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToTASK_STATUS(TASK_STATUS tASK_STATUS)
-        {
-            base.AddObject("TASK_STATUS", tASK_STATUS);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the PROB_CASE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPROB_CASE(PROB_CASE pROB_CASE)
@@ -3285,6 +3277,14 @@ namespace SQM.Website
         public void AddToINCFORM_LOSTTIME_HIST(INCFORM_LOSTTIME_HIST iNCFORM_LOSTTIME_HIST)
         {
             base.AddObject("INCFORM_LOSTTIME_HIST", iNCFORM_LOSTTIME_HIST);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TASK_STATUS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTASK_STATUS(TASK_STATUS tASK_STATUS)
+        {
+            base.AddObject("TASK_STATUS", tASK_STATUS);
         }
 
         #endregion
@@ -30550,28 +30550,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "TASK_STATUS")]
-        public EntityCollection<TASK_STATUS> TASK_STATUS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP")]
         public PRIVGROUP PRIVGROUP
         {
@@ -30600,6 +30578,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "TASK_STATUS")]
+        public EntityCollection<TASK_STATUS> TASK_STATUS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS", value);
                 }
             }
         }
