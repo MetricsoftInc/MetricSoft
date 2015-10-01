@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Web.Security;
-using System.Security.Cryptography;
-using System.Runtime.Serialization;
-using System.IO;
-using System.Xml;
-using System.Reflection;
-using System.Data;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
-using System.Web.UI.WebControls;
+using System.Data;
+using System.IO;
+using System.Linq;
 using System.Net.Mail;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 using System.Web.Configuration;
+using System.Web.Security;
+using System.Web.UI.WebControls;
+using System.Xml;
 using Telerik.Web.UI;
 
 namespace SQM.Website
@@ -1439,6 +1439,21 @@ namespace SQM.Website
 			}
 
 			return periodList;
+		}
+
+		/// <summary>
+		/// Replaces multiple values in a string with a single call.
+		/// </summary>
+		/// <typeparam name="T">This can be any type, it should be inferred from the replacements argument.</typeparam>
+		/// <param name="origString">The original string.</param>
+		/// <param name="replacements">A dictionary of replacements with the keys being the string to replace and the values being what to replace with.</param>
+		/// <returns>The string with the replacements made.</returns>
+		public static string Replace<T>(this string origString, Dictionary<string, T> replacements)
+		{
+			string newString = origString;
+			foreach (var replacement in replacements)
+				newString = newString.Replace(replacement.Key, replacement.Value.ToString());
+			return newString;
 		}
 	}
 }

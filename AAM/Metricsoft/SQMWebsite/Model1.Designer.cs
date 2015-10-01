@@ -5109,6 +5109,30 @@ namespace SQM.Website
         private global::System.Decimal _TOTAL_SCORE;
         partial void OnTOTAL_SCOREChanging(global::System.Decimal value);
         partial void OnTOTAL_SCOREChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DEPT_ID
+        {
+            get
+            {
+                return _DEPT_ID;
+            }
+            set
+            {
+                OnDEPT_IDChanging(value);
+                ReportPropertyChanging("DEPT_ID");
+                _DEPT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DEPT_ID");
+                OnDEPT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DEPT_ID;
+        partial void OnDEPT_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnDEPT_IDChanged();
 
         #endregion
 
@@ -5194,11 +5218,13 @@ namespace SQM.Website
         /// </summary>
         /// <param name="aUDIT_ID">Initial value of the AUDIT_ID property.</param>
         /// <param name="aUDIT_QUESTION_ID">Initial value of the AUDIT_QUESTION_ID property.</param>
-        public static AUDIT_ANSWER CreateAUDIT_ANSWER(global::System.Decimal aUDIT_ID, global::System.Decimal aUDIT_QUESTION_ID)
+        /// <param name="cHOICE_POSITIVE">Initial value of the CHOICE_POSITIVE property.</param>
+        public static AUDIT_ANSWER CreateAUDIT_ANSWER(global::System.Decimal aUDIT_ID, global::System.Decimal aUDIT_QUESTION_ID, global::System.Boolean cHOICE_POSITIVE)
         {
             AUDIT_ANSWER aUDIT_ANSWER = new AUDIT_ANSWER();
             aUDIT_ANSWER.AUDIT_ID = aUDIT_ID;
             aUDIT_ANSWER.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
+            aUDIT_ANSWER.CHOICE_POSITIVE = cHOICE_POSITIVE;
             return aUDIT_ANSWER;
         }
 
@@ -5331,6 +5357,102 @@ namespace SQM.Website
         private global::System.String _COMMENT;
         partial void OnCOMMENTChanging(global::System.String value);
         partial void OnCOMMENTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean CHOICE_POSITIVE
+        {
+            get
+            {
+                return _CHOICE_POSITIVE;
+            }
+            set
+            {
+                OnCHOICE_POSITIVEChanging(value);
+                ReportPropertyChanging("CHOICE_POSITIVE");
+                _CHOICE_POSITIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CHOICE_POSITIVE");
+                OnCHOICE_POSITIVEChanged();
+            }
+        }
+        private global::System.Boolean _CHOICE_POSITIVE;
+        partial void OnCHOICE_POSITIVEChanging(global::System.Boolean value);
+        partial void OnCHOICE_POSITIVEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String STATUS
+        {
+            get
+            {
+                return _STATUS;
+            }
+            set
+            {
+                OnSTATUSChanging(value);
+                ReportPropertyChanging("STATUS");
+                _STATUS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("STATUS");
+                OnSTATUSChanged();
+            }
+        }
+        private global::System.String _STATUS;
+        partial void OnSTATUSChanging(global::System.String value);
+        partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> COMPLETE_DATE
+        {
+            get
+            {
+                return _COMPLETE_DATE;
+            }
+            set
+            {
+                OnCOMPLETE_DATEChanging(value);
+                ReportPropertyChanging("COMPLETE_DATE");
+                _COMPLETE_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPLETE_DATE");
+                OnCOMPLETE_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _COMPLETE_DATE;
+        partial void OnCOMPLETE_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnCOMPLETE_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RESOLUTION_COMMENT
+        {
+            get
+            {
+                return _RESOLUTION_COMMENT;
+            }
+            set
+            {
+                OnRESOLUTION_COMMENTChanging(value);
+                ReportPropertyChanging("RESOLUTION_COMMENT");
+                _RESOLUTION_COMMENT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("RESOLUTION_COMMENT");
+                OnRESOLUTION_COMMENTChanged();
+            }
+        }
+        private global::System.String _RESOLUTION_COMMENT;
+        partial void OnRESOLUTION_COMMENTChanging(global::System.String value);
+        partial void OnRESOLUTION_COMMENTChanged();
 
         #endregion
 
@@ -46893,6 +47015,78 @@ namespace SQM.Website
         private Nullable<global::System.DateTime> _NOTIFY_DT;
         partial void OnNOTIFY_DTChanging(Nullable<global::System.DateTime> value);
         partial void OnNOTIFY_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> RECORD_SUBID
+        {
+            get
+            {
+                return _RECORD_SUBID;
+            }
+            set
+            {
+                OnRECORD_SUBIDChanging(value);
+                ReportPropertyChanging("RECORD_SUBID");
+                _RECORD_SUBID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RECORD_SUBID");
+                OnRECORD_SUBIDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _RECORD_SUBID;
+        partial void OnRECORD_SUBIDChanging(Nullable<global::System.Decimal> value);
+        partial void OnRECORD_SUBIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COMMENTS
+        {
+            get
+            {
+                return _COMMENTS;
+            }
+            set
+            {
+                OnCOMMENTSChanging(value);
+                ReportPropertyChanging("COMMENTS");
+                _COMMENTS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMMENTS");
+                OnCOMMENTSChanged();
+            }
+        }
+        private global::System.String _COMMENTS;
+        partial void OnCOMMENTSChanging(global::System.String value);
+        partial void OnCOMMENTSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CREATE_DT
+        {
+            get
+            {
+                return _CREATE_DT;
+            }
+            set
+            {
+                OnCREATE_DTChanging(value);
+                ReportPropertyChanging("CREATE_DT");
+                _CREATE_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_DT");
+                OnCREATE_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CREATE_DT;
+        partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnCREATE_DTChanged();
 
         #endregion
 

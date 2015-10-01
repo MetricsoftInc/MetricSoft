@@ -93,19 +93,23 @@ namespace SQM.Website
             get;
             set;
         }
-        public CalcsResult Initialize()
-        {
-            this.metricSeries = new List<GaugeSeries>();
-            this.ValidResult = true;
-            this.ValidResult2 = false;
-            this.Status = 0;
-            this.Result = this.Result2 = 0;
-            this.Text = this.FactorText = "";
-            this.ResultDate = DateTime.MinValue;
-            this.SummaryTable = new DataTable();
-            this.ResultObj = null;
 
-            return this;
+		public CalcsResult()
+		{
+			this.metricSeries = new List<GaugeSeries>();
+			this.ValidResult = true;
+			this.ValidResult2 = false;
+			this.Status = 0;
+			this.Result = this.Result2 = 0;
+			this.Text = this.FactorText = "";
+			this.ResultDate = DateTime.MinValue;
+			this.SummaryTable = new DataTable();
+			this.ResultObj = null;
+		}
+
+		public CalcsResult Initialize()
+        {
+			return new CalcsResult();
         }
 
         public CalcsResult TrimSeries(decimal valueToTrim)

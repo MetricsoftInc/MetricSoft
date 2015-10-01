@@ -229,6 +229,7 @@
     <Content Include="EHS\EHS_Incident_Verification.aspx" />
     <Content Include="EHS\EHS_Incidents_Questions.aspx" />
     <Content Include="EHS\EHS_MetricExport.aspx" />
+    <Content Include="EHS\EHS_PerformanceReport.aspx" />
     <Content Include="EHS\EHS_Reports.aspx" />
     <Content Include="EHS\EHS_Resources.aspx" />
     <Content Include="EHS\EHS_MetricInput.aspx" />
@@ -678,7 +679,6 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -752,6 +752,13 @@
     </Compile>
     <Compile Include="EHS\EHS_MetricExport.aspx.designer.cs">
       <DependentUpon>EHS_MetricExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_PerformanceReport.aspx.cs">
+      <DependentUpon>EHS_PerformanceReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_PerformanceReport.aspx.designer.cs">
+      <DependentUpon>EHS_PerformanceReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Reports.aspx.cs">
       <DependentUpon>EHS_Reports.aspx</DependentUpon>
@@ -1136,7 +1143,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1150,7 +1156,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>

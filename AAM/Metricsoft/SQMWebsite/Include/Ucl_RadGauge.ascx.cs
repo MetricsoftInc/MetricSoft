@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections;
-using System.Data;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Design;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing.Design;
+using Telerik.Charting;
 using Telerik.Web.UI;
 using Telerik.Web.UI.HtmlChart;
-using Telerik.Charting;
 
 namespace SQM.Website
 {
@@ -51,7 +52,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public decimal ScaleMin
+        public decimal? ScaleMin
         {
             get;
             set;
@@ -121,6 +122,8 @@ namespace SQM.Website
             get;
             set;
         }
+		public ChartLegendPosition LegendPosition { get; set; }
+		public Color LegendBackgroundColor { get; set; }
         public string ValueFormat
         {
             get;
@@ -181,26 +184,35 @@ namespace SQM.Website
             get;
             set;
         }
+		public string OnLoad { get; set; }
 
-        public GaugeDefinition Initialize()
+		public GaugeDefinition()
+		{
+			this.IndicatorList = new List<GaugeIndicator>();
+			this.DefaultScaleColor = "#20B2AA"; // "#008B8B"; // "#191970";
+			this.DefaultPointColor = "#2F4F4F"; //"#CC6600";
+			this.DefaultValueFormat = "#.#";
+			// this.ColorPallete = "chartSeriesColor";
+			this.MinorTics = true;
+			this.DisplayTitle = false;
+			this.DisplayLegend = true;
+			this.LegendPosition = ChartLegendPosition.Bottom;
+			this.LegendBackgroundColor = Color.FromArgb(0, 0, 0, 0);
+			this.NewRow = false;
+			this.DisplayLabel = true;
+			this.Target = null;
+			this.LabelSubList = new Dictionary<string, string>();
+			this.TotalIndicator = false;
+			this.OverlaySeries = 0;
+			this.ContainerHeight = this.ContainerWidth = 0;
+			this.OnLoad = null;
+		}
+
+		public GaugeDefinition Initialize()
         {
-            this.IndicatorList = new List<GaugeIndicator>();
-            this.DefaultScaleColor = "#20B2AA"; // "#008B8B"; // "#191970";
-            this.DefaultPointColor = "#2F4F4F"; //"#CC6600";
-            this.DefaultValueFormat = "#.#";
-           // this.ColorPallete = "chartSeriesColor";
-            this.MinorTics = true;
-            this.DisplayTitle = false;
-            this.DisplayLegend = true;
-            this.NewRow = false;
-            this.DisplayLabel = true;
-            this.Target = null;
-            this.LabelSubList = new Dictionary<string, string>();
-            this.TotalIndicator = false;
-            this.OverlaySeries = 0;
-            this.ContainerHeight = this.ContainerWidth = 0;
-            return this;
+			return new GaugeDefinition();
         }
+
         public int AddIndicator(GaugeIndicator rgi)
         {
             this.IndicatorList.Add(rgi);
@@ -288,7 +300,7 @@ namespace SQM.Website
 
             if (vi.INDICATOR_1_VALUE.HasValue)
             {
-                this.AddIndicator(new GaugeIndicator().CreateNew(this.ScaleMin, (decimal)vi.INDICATOR_1_VALUE, "", vi.INDICATOR_1_COLOR));
+                this.AddIndicator(new GaugeIndicator().CreateNew(this.ScaleMin.HasValue ? this.ScaleMin.Value : 0, (decimal)vi.INDICATOR_1_VALUE, "", vi.INDICATOR_1_COLOR));
                 if (vi.INDICATOR_2_VALUE.HasValue)
                 {
                     this.AddIndicator(new GaugeIndicator().CreateNew((decimal)vi.INDICATOR_1_VALUE, (decimal)vi.INDICATOR_2_VALUE, "", vi.INDICATOR_2_COLOR));
@@ -344,68 +356,79 @@ namespace SQM.Website
         }
     }
 
-    public class GaugeSeriesItem
-    {
-        public int Series
-        {
-            get;
-            set;
-        }
-        public int Item
-        {
-            get;
-            set;
-        }
-        public decimal XValue
-        {
-            get;
-            set;
-        }
-        public decimal YValue
-        {
-            get;
-            set;
-        }
-        public string Text
-        {
-            get;
-            set;
-        }
-        public string Group
-        {
-            get;
-            set;
-        }
-        public string Color
-        {
-            get;
-            set;
-        }
+	public class GaugeSeriesItem
+	{
+		public int Series
+		{
+			get;
+			set;
+		}
+		public int Item
+		{
+			get;
+			set;
+		}
+		public decimal XValue
+		{
+			get;
+			set;
+		}
+		public decimal YValue
+		{
+			get;
+			set;
+		}
+		public string Text
+		{
+			get;
+			set;
+		}
+		public string Group
+		{
+			get;
+			set;
+		}
+		public string Color
+		{
+			get;
+			set;
+		}
 
-        public GaugeSeriesItem CreateNew(int series, int item, string itemText, CalcsResult calcResult)
+		public GaugeSeriesItem()
+		{
+		}
+
+		public GaugeSeriesItem(int series, int item, string itemText, CalcsResult calcResult)
+		{
+			this.Series = series;
+			this.Item = item;
+			this.YValue = calcResult.Result;
+			if (calcResult.ValidResult2)
+				this.XValue = calcResult.Result2;
+			this.Text = itemText;
+			this.Color = "#191970";
+			this.Group = "";
+		}
+
+		public GaugeSeriesItem(int series, int item, decimal xvalue, decimal yvalue, string itemText)
+		{
+			this.Series = series;
+			this.Item = item;
+			this.XValue = xvalue;
+			this.YValue = yvalue;
+			this.Text = itemText;
+			this.Color = "#191970";
+			this.Group = "";
+		}
+
+		public GaugeSeriesItem CreateNew(int series, int item, string itemText, CalcsResult calcResult)
         {
-            this.Series = series;
-            this.Item = item;
-            this.YValue = calcResult.Result;
-            if (calcResult.ValidResult2)
-                this.XValue = calcResult.Result2;
-            this.Text = itemText;
-            this.Color = "#191970";
-            this.Group = "";
-            return this;
+			return new GaugeSeriesItem(series, item, itemText, calcResult);
         }
 
         public GaugeSeriesItem CreateNew(int series, int item, decimal xvalue, decimal yvalue, string itemText)
         {
-            this.Series = series;
-            this.Item = item;
-            this.XValue = xvalue;
-            this.YValue = yvalue;
-            this.Text = itemText;
-            this.Color = "#191970";
-            this.Group = "";
-
-            return this;
+			return new GaugeSeriesItem(series, item, xvalue, yvalue, itemText);
         }
     }
 
@@ -441,17 +464,28 @@ namespace SQM.Website
             get;
             set;
         }
+		public bool DisplayLabels { get; set; }
 
-        public GaugeSeries CreateNew(int seriesNum, string seriesName, string color)
+		public GaugeSeries()
+		{
+		}
+
+		public GaugeSeries(int seriesNum, string seriesName, string color)
+		{
+			this.SeriesNum = seriesNum;
+			this.Name = seriesName;
+			this.Color = color;
+			this.YAxisCount = 1;
+			this.ItemList = new List<GaugeSeriesItem>();
+			this.ObjData = null;
+			this.DisplayLabels = false;
+		}
+
+		public GaugeSeries CreateNew(int seriesNum, string seriesName, string color)
         {
-            this.SeriesNum = seriesNum;
-            this.Name = seriesName;
-            this.Color = color;
-            YAxisCount = 1;
-            this.ItemList = new List<GaugeSeriesItem>();
-            this.ObjData = null;
-            return this;
+			return new GaugeSeries(seriesNum, seriesName, color);
         }
+
         public GaugeSeriesItem AddItem(int itemNum, string itemText, CalcsResult calcResult)
         {
             GaugeSeriesItem seriesItem = new GaugeSeriesItem().CreateNew(this.SeriesNum, itemNum, itemText, calcResult);
@@ -1066,7 +1100,7 @@ namespace SQM.Website
 
             if (rgCfg.ScaleMin != rgCfg.ScaleMax)
             {
-                rad.Scale.Min = rgCfg.ScaleMin;
+                rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
                 rad.Scale.Max = rgCfg.ScaleMax;
                 rad.Scale.MajorUnit = rgCfg.Unit;
             }
@@ -1082,7 +1116,7 @@ namespace SQM.Website
             if (rgCfg.IndicatorList == null || rgCfg.IndicatorList.Count == 0)
             {
                 GaugeRange range = new GaugeRange();
-                range.From = rgCfg.ScaleMin;
+                range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
                 range.To = rgCfg.ScaleMax;
                 range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
                 rad.Scale.Ranges.Add(range);
@@ -1135,7 +1169,7 @@ namespace SQM.Website
                 rad.Width = rgCfg.Width;
             }
 
-            rad.Scale.Min = rgCfg.ScaleMin;
+            rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
             if (rgCfg.ScaleMax == rgCfg.ScaleMin)
                 rad.Scale.Max = (result.Result * 1.10m);
             else 
@@ -1152,7 +1186,7 @@ namespace SQM.Website
             if (rgCfg.IndicatorList == null || rgCfg.IndicatorList.Count == 0)
             {
                 GaugeRange range = new GaugeRange();
-                range.From = rgCfg.ScaleMin;
+                range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
                 range.To = rgCfg.ScaleMax;
                 range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
                 rad.Scale.Ranges.Add(range);
@@ -1201,7 +1235,7 @@ namespace SQM.Website
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
 
-            rad.Scale.Min = rgCfg.ScaleMin;
+            rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
             if (rgCfg.ScaleMax == rgCfg.ScaleMin)
                 rad.Scale.Max = (result.Result * 1.10m);
             else
@@ -1218,7 +1252,7 @@ namespace SQM.Website
             if (rgCfg.IndicatorList == null || rgCfg.IndicatorList.Count == 0)
             {
                 GaugeRange range = new GaugeRange();
-                range.From = rgCfg.ScaleMin;
+                range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
                 range.To = rgCfg.ScaleMax;
                 range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
                 rad.Scale.Ranges.Add(range);
@@ -1282,13 +1316,18 @@ namespace SQM.Website
             int radHeight = Math.Max(seriesData.Count *  24 + 120, rgCfg.Height);
             rad.Height = radHeight;
 
-            if (negScale)
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			if (negScale)
             {
                 PrependBarLabelChart(rgCfg, seriesData, container, radHeight, 0);
                 rgCfg.NewRow = false;
             }
 
-            if (rgCfg.ScaleMax != 0)
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			if (rgCfg.ScaleMax != 0)
                 rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
             
             rad.ChartTitle.Text = rgCfg.Title;
@@ -1334,7 +1373,9 @@ namespace SQM.Website
                 }
             }
 
-            rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
+			rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
 
             if (rgCfg.OverlaySeries > 1 && gaugeSeries.Count > 1)
             {
@@ -1373,7 +1414,12 @@ namespace SQM.Website
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
 
-            if (rgCfg.ScaleMax != 0)
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			if (rgCfg.ScaleMax != 0)
                 rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
           
             rad.ChartTitle.Text = rgCfg.Title;
@@ -1382,8 +1428,9 @@ namespace SQM.Website
             
             rad.Skin = "Metro";
 
-            rad.Legend.Appearance.Position = ChartLegendPosition.Bottom;
-            rad.Legend.Appearance.Visible = true;
+            rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = true;
 
             rad.PlotArea.YAxis.TitleAppearance.Text = rgCfg.LabelV;
             rad.PlotArea.YAxis.LabelsAppearance.TextStyle.FontSize = 11;
@@ -1505,7 +1552,9 @@ namespace SQM.Website
             
             LineSeries targetLine = IndicatorLine(rgCfg, gaugeSeries[0].ItemList.Count, rad);
 
-            rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
+			rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
 
             System.Web.UI.HtmlControls.HtmlGenericControl div = CreateContainer(rgCfg);
             if (negScale)
@@ -1543,7 +1592,12 @@ namespace SQM.Website
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
 
-            if (rgCfg.ScaleMax != 0)
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			if (rgCfg.ScaleMax != 0)
                 rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
 
             rad.ChartTitle.Text = rgCfg.Title;
@@ -1551,8 +1605,9 @@ namespace SQM.Website
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
 
             rad.Skin = "Metro";
-            rad.Legend.Appearance.Position = ChartLegendPosition.Bottom;
-            rad.Legend.Appearance.Visible = true;
+            rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = true;
 
             ColumnSeries series = new ColumnSeries();
             series.LabelsAppearance.Position = BarColumnLabelsPosition.OutsideEnd;
@@ -1631,6 +1686,11 @@ namespace SQM.Website
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
 
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
             if (rgCfg.ScaleMax != 0)
                 rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
 
@@ -1640,8 +1700,9 @@ namespace SQM.Website
             //  rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin;
             rad.Skin = "Metro";
 
-            rad.Legend.Appearance.Position = ChartLegendPosition.Bottom;
-            rad.Legend.Appearance.Visible = true;
+            rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = true;
 
             rad.PlotArea.YAxis.TitleAppearance.Text = rgCfg.LabelV;
             rad.PlotArea.YAxis.LabelsAppearance.TextStyle.FontSize = 11;
@@ -1732,7 +1793,9 @@ namespace SQM.Website
 
             //rad.PlotArea.YAxis.MinorGridLines.Visible = maxY <= 20 ? false : true;
             rad.PlotArea.YAxis.MajorGridLines.Visible = false;
-            rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
+			rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+			rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
+			rad.Legend.Appearance.Visible = rgCfg.DisplayLegend;
 
            // IndicatorLine(rgCfg, gaugeSeries[0].ItemList.Count, rad);
 
@@ -1745,8 +1808,8 @@ namespace SQM.Website
                     IndicatorLine(totals[0].Value, totals[0].Key, gaugeSeries[0].ItemList.Count, rad);
                 }
             }
-            
-            System.Web.UI.HtmlControls.HtmlGenericControl div = CreateContainer(rgCfg);
+
+			System.Web.UI.HtmlControls.HtmlGenericControl div = CreateContainer(rgCfg);
             div.Controls.Add(rad);
            // container.Controls.Add(div);
             BindToContainer(container, div);
@@ -1772,18 +1835,27 @@ namespace SQM.Website
                 rad.Width = rgCfg.Width;
             }
 
-            if (!string.IsNullOrEmpty(rgCfg.Title))
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			if (!string.IsNullOrEmpty(rgCfg.Title))
             {
                 rad.ChartTitle.Text = rgCfg.Title;
                 rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
                 rad.ChartTitle.Appearance.TextStyle.Bold = true;
             }
 
-            rad.Skin = "Metro";
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			if (rgCfg.ScaleMax != 0)
+				rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
+
+			rad.Skin = "Metro";
 
             if (rgCfg.DisplayLegend && rgCfg.ItemVisual != "L")
             {
-                rad.Legend.Appearance.Position = ChartLegendPosition.Bottom;
+                rad.Legend.Appearance.Position = rgCfg.LegendPosition;
+				rad.Legend.Appearance.BackgroundColor = rgCfg.LegendBackgroundColor;
                 rad.Legend.Appearance.Visible = true;
             }
             else
@@ -1812,7 +1884,7 @@ namespace SQM.Website
                 series.MarkersAppearance.Size = 3m;
                 series.MarkersAppearance.BorderWidth = 3;
 
-                series.LabelsAppearance.Visible = false;
+                series.LabelsAppearance.Visible = gs.DisplayLabels;
                 series.Name = gs.Name;
                 ++numItems;
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
@@ -1875,8 +1947,11 @@ namespace SQM.Website
                 rad.Height = rgCfg.Height;
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
-        
-            rad.ChartTitle.Text = rgCfg.Title;
+
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
  
@@ -1929,8 +2004,11 @@ namespace SQM.Website
                 rad.Height = rgCfg.Height;
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
-           
-            rad.ChartTitle.Text = rgCfg.Title;
+
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
+
+			rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
 
@@ -2043,6 +2121,9 @@ namespace SQM.Website
                 rad.Height = rgCfg.Height;
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
+
+			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
+				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
            
             rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
