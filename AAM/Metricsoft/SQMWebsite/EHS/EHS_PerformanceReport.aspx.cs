@@ -102,7 +102,7 @@ namespace SQM.Website.EHS
 					var incidents = y < 2015 || startOfMonth.Month <= DateTime.Today.Month ?
 						allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					var frequency = y > 2013 ? allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20005" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
-					var severity = y > 2013 ? allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					var severity = y > 2013 ? allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 
 					var monthData = new Data()
 					{
@@ -123,7 +123,7 @@ namespace SQM.Website.EHS
 						JSAs = y == 2015 && startOfMonth.Month <= DateTime.Today.Month ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
 						SafetyTraining = y == 2015 && startOfMonth.Month <= DateTime.Today.Month ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0
+							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0
 					};
 
 					if (y < 2015 || startOfMonth.Month <= DateTime.Today.Month)
