@@ -930,13 +930,9 @@ namespace SQM.Website
 
                     if (incidentStatus == "A")  // get open incidents
                         this.IncidentHst = this.IncidentHst.Where(l => l.Status == "A").ToList();
-                    if (incidentStatus == "N")  // data incomplete
-                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "N").ToList();
                     else if (incidentStatus == "C")  // get closed incidents
-                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C"  ||  l.Status == "C8").ToList();
-                    else if (incidentStatus == "C8") // get closed 8d
-                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C8").ToList();
-
+                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C").ToList();
+ 
                     if (selectAttachments)
                     {
                         List<ATTACHMENT> attachList = (from a in this.Entities.ATTACHMENT

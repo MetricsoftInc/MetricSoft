@@ -159,16 +159,13 @@
 
 							<span style="padding-left:12px;">
 							<asp:Label runat="server" ID="lblStatus" Text="Status: " CssClass="prompt"></asp:Label>
-											<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select incident status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
-												<Items>
-													<telerik:RadComboBoxItem Text="Open" Value="A" />
-													<telerik:RadComboBoxItem Text="Closed" Value="C" />
-													<%--<telerik:RadComboBoxItem Text="8D Complete" Value="C8" />--%>
-													<telerik:RadComboBoxItem Text="All" Value="" />
-													<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />
-													<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />
-												</Items>
-											</telerik:RadComboBox></span>
+							<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select incident status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+								<Items>
+									<telerik:RadComboBoxItem Text="All" Value="" />
+									<telerik:RadComboBoxItem Text="All Open" Value="A" />
+									<telerik:RadComboBoxItem Text="All Closed" Value="C" />
+								</Items>
+							</telerik:RadComboBox></span>
 
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" />

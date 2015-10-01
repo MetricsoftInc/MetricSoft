@@ -395,36 +395,17 @@ namespace SQM.Website
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
-			if (selectedValue == "T")
-			{
-				HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, "A", false);
-				List<EHSIncidentData> actionList = new List<EHSIncidentData>();
-				foreach (EHSIncidentData data in HSCalcs().ehsCtl.IncidentHst)
-				{
-					if (data.EntryList.Where(l=> l.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Create8D && l.ANSWER_VALUE != "Yes").Count() > 0)
-				//	if (data.Incident.INCIDENT_ANSWER.Where(l => l.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Create8D && l.ANSWER_VALUE != "Yes").Count() > 0)
-						actionList.Add(data);
-				}
-				HSCalcs().ehsCtl.IncidentHst = actionList;
-				
-				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
-					actionList = HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
 
-				if (actionList != null)
-					uclIncidentList.BindIncidentActionList(actionList, "EHS");
-			}
-			else
-			{
-				HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked);
+			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked);
 				
-				if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
-					HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
+			if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
+				HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();
 
-				if (HSCalcs().ehsCtl.IncidentHst != null)
-				{
-					uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
-				}
+			if (HSCalcs().ehsCtl.IncidentHst != null)
+			{
+				uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
 			}
+
 
 			if (HSCalcs().ehsCtl.IncidentHst != null && HSCalcs().ehsCtl.IncidentHst.Count > 0)
 				lblChartType.Visible = ddlChartType.Visible = true;
