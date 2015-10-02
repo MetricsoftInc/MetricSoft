@@ -946,7 +946,7 @@ namespace SQM.Website
                 {
                     if (setTaskOpen)
                     {
-                        this.TeamTask.SetTaskOpen(task, DateTime.UtcNow.AddDays(responseTime));
+                        this.TeamTask.SetTaskOpen(task, DateTime.UtcNow.AddDays(responseTime), null);
                     }
                 }
             }
@@ -1005,7 +1005,7 @@ namespace SQM.Website
         {
             foreach (TASK_STATUS task in this.TeamTask.TaskList.Where(l => l.TASK_TYPE == taskType).ToList())
             {
-                this.TeamTask.SetTaskOpen(task, newDueDate);
+                this.TeamTask.SetTaskOpen(task, newDueDate, null);
             }
         }
 

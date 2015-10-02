@@ -76,6 +76,33 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.HiddenField hfHeight;
         
         /// <summary>
+        /// btnCalendarView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCalendarView;
+        
+        /// <summary>
+        /// btnTaskView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTaskView;
+        
+        /// <summary>
+        /// btnEscalateView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEscalateView;
+        
+        /// <summary>
         /// pnlCalendar control.
         /// </summary>
         /// <remarks>
@@ -83,6 +110,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlCalendar;
+        
+        /// <summary>
+        /// divCalendar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCalendar;
         
         /// <summary>
         /// lblPageTitle control.
@@ -101,15 +137,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPageInstruct;
-        
-        /// <summary>
-        /// divCalendar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCalendar;
         
         /// <summary>
         /// lblScheduleScope control.
@@ -157,6 +184,15 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_TaskList uclTaskSchedule;
         
         /// <summary>
+        /// divEscalate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEscalate;
+        
+        /// <summary>
         /// divTasks control.
         /// </summary>
         /// <remarks>
@@ -175,6 +211,42 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_TaskList uclTaskStrip;
         
         /// <summary>
+        /// divTaskList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTaskList;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// uclTaskList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_TaskList uclTaskList;
+        
+        /// <summary>
         /// lblScheduleRange control.
         /// </summary>
         /// <remarks>
@@ -191,5 +263,23 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadSlider sldScheduleRange;
+        
+        /// <summary>
+        /// winUpdateTask control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow winUpdateTask;
+        
+        /// <summary>
+        /// uclTask control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_TaskStatus uclTask;
     }
 }

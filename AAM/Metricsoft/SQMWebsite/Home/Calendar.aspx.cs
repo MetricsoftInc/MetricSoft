@@ -18,21 +18,13 @@ namespace SQM.Website
 		private List<decimal> respPlantList;
         private int pageWidth;
 
-        /*
-        protected override void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-
-            hfTimeout.Value = SQMBasePage.GetSessionTimeout().ToString();
-        }
-        */
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-               // if (SessionManager.SessionContext == null)
-              //      throw new UserContextError();
-            }
+			//base.OnInit(e);
+
+			uclTaskList.OnTaskListCommand += UpdateTaskList;
+			uclTaskList.OnTaskListItemClick += UpdateSelectedTask;
+			uclTask.OnTaskUpdate += UpdateTaskList;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -62,6 +54,7 @@ namespace SQM.Website
 
                 SetupPage();
                 DisplayCalendar(DateTime.Now);
+				btnChangeView_Click(btnCalendarView, null);
             }
             else
             {
@@ -70,6 +63,28 @@ namespace SQM.Website
                 
             pnlCalendar.Visible = true;
         }
+		protected void btnChangeView_Click(object sender, EventArgs e)
+		{
+			Button btn = (Button)sender;
+
+			switch (btn.CommandArgument)
+			{
+				case "T":
+					UpdateTaskList("");
+					divCalendar.Visible = divEscalate.Visible = false;
+					divTaskList.Visible = true;
+					break;
+				case "E":
+					divCalendar.Visible = divTaskList.Visible = false;
+					divEscalate.Visible = true;
+					break;
+				default:
+					divTaskList.Visible = divEscalate.Visible = false;
+					divCalendar.Visible = true;
+					break;
+			}
+		}
+
 
         protected void ScheduleScope_Select(object sender, EventArgs e)
         {
@@ -83,6 +98,24 @@ namespace SQM.Website
             else
                 DisplayCalendar(uclTaskSchedule.TaskScheduleSelectedDate);
         }
+
+		private void UpdateTaskList(string cmd)
+		{
+			TaskStatusMgr myTasks = new TaskStatusMgr().CreateNew(0, 0);
+			myTasks.SelectTaskList(0, 0, false);
+			uclTaskList.BindTaskList(myTasks.TaskList, "");
+		}
+
+		private void UpdateSelectedTask(decimal taskID)
+		{
+			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+			TASK_STATUS task = taskMgr.SelectTask(taskID);
+			uclTask.BindTaskUpdate(task, "");
+
+			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+
 
         private void SetupPage()
         {
@@ -207,10 +240,10 @@ namespace SQM.Website
                     plantIDS.Add(Convert.ToDecimal(selectedValue));
                 }
 
-                taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now &&
+                taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now.Date &&
                     (plantIDS.Contains(l.Plant.PLANT_ID) || (l.PlantResponsible != null  &&  plantIDS.Contains((decimal)l.PlantResponsible.PLANT_ID)))));
-                taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, new List<decimal>(), plantIDS.ToArray(), false));
-                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, new List<decimal>(), plantIDS.ToArray(), false));
+                taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now.Date, toDate.Date, new List<decimal>(), plantIDS.ToArray(), false));
+                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now.Date, toDate.Date, new List<decimal>(), plantIDS.ToArray(), false));
                 if (SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.busorg))
                     enableItemLinks = true;
             }

@@ -1123,7 +1123,9 @@ namespace SQM.Website
 			return approvals;
 		}
 
-		public static void CreateOrUpdateTask(decimal incidentId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string taskDescription)
+
+
+		public static void CreateOrUpdateTask(decimal incidentId, int taskSeq, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string taskDescription, string detail)
 		{
 			var entities = new PSsqmEntities();
 
@@ -1132,17 +1134,18 @@ namespace SQM.Website
 			var taskMgr = new TaskStatusMgr();
 			taskMgr.Initialize(recordTypeId, incidentId);
 			taskMgr.LoadTaskList(recordTypeId, incidentId);
-			TASK_STATUS task = taskMgr.FindTask(((int)SysPriv.action).ToString(), "T", responsiblePersonId);
+			TASK_STATUS task = taskMgr.FindTask(((int)SysPriv.action).ToString(), "T", taskSeq, responsiblePersonId);
 
 			if (task == null)
 			{
-				task = taskMgr.CreateTask(((int)SysPriv.action).ToString(), "T", 0, !string.IsNullOrEmpty(taskDescription) ? taskDescription : incident.ISSUE_TYPE, dueDate, responsiblePersonId);
-				task.STATUS = ((int)TaskMgr.CalculateTaskStatus(task)).ToString();
+				task = taskMgr.CreateTask(((int)SysPriv.action).ToString(), "T", taskSeq, !string.IsNullOrEmpty(taskDescription) ? taskDescription : incident.ISSUE_TYPE, dueDate, responsiblePersonId);
+				//task.STATUS = ((int)TaskMgr.CalculateTaskStatus(task)).ToString();
+				task.DETAIL = detail;
 				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
 			}
 			else
 			{
-				task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, incident.ISSUE_TYPE);
+				task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, taskDescription);
 			}
 
 			taskMgr.UpdateTaskList(incidentId);

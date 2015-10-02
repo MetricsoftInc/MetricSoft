@@ -12,6 +12,12 @@ namespace SQM.Website
 
     public partial class Ucl_TaskList : System.Web.UI.UserControl
     {
+		private List<XLAT> TaskXLATList
+		{
+			get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
+			set { ViewState["TaskXLATList"] = value; }
+		}
+
         public DateTime TaskScheduleSelectedDate
         {
             get { return Convert.ToDateTime(scdTaskSchedule.SelectedDate); }
@@ -31,6 +37,8 @@ namespace SQM.Website
         #endregion
 
         public event EditItemClick OnTaskClick;
+		public event GridItemClick OnTaskListItemClick;
+		public event GridActionCommand OnTaskListCommand;
 
         #region task
         protected void lnkTask_Click(object sender, EventArgs e)
@@ -276,8 +284,119 @@ namespace SQM.Website
         }
         #endregion
 
-        #region common
-        public void SetRepeaterDisplay(Repeater rpt, Label lblAlert, System.Web.UI.HtmlControls.HtmlGenericControl divScroll, int rowsToScroll, int gridRowCount, string className)
+		#region tasklist
+
+		public void BindTaskList(List<TASK_STATUS> taskList, string context)
+		{
+			if (TaskXLATList == null || TaskXLATList.Count == 0)
+				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
+
+			pnlTaskSchedule.Visible = pnlTaskStrip.Visible = false;
+			pnlTaskList.Visible = true;
+
+			rgTaskList.DataSource = taskList;
+			rgTaskList.DataBind();
+
+			if (taskList.Count > 0)
+			{
+				rgTaskList.Visible = true;
+				lblTaskListEmpty.Visible = false;
+			}
+			else
+			{
+				rgTaskList.Visible = false;
+				lblTaskListEmpty.Visible = true;
+			}
+		}
+
+		protected void rgTaskList_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item is GridDataItem)
+			{
+				GridDataItem item = (GridDataItem)e.Item;
+				HiddenField hf;
+				Label lbl;
+
+				try
+				{
+					TASK_STATUS task = (TASK_STATUS)e.Item.DataItem;
+
+					lbl = (Label)e.Item.FindControl("lblTaskId");
+					lbl.Text = WebSiteCommon.FormatID(task.TASK_ID, 6);
+
+					if (task.DESCRIPTION.Length > 120)
+					{
+						lbl = (Label)e.Item.FindControl("lblDescription");
+						lbl.Text = task.DESCRIPTION.Substring(0, 117) + "...";
+					}
+
+					lbl = (Label)e.Item.FindControl("lblTaskType");
+
+					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == task.RECORD_TYPE.ToString()).FirstOrDefault().DESCRIPTION;
+					if (task.TASK_STEP == "350")
+					{
+						if (task.RECORD_TYPE == (int)TaskRecordType.Audit && task.RECORD_SUBID > 0)
+						{
+							lbl.Text += ("&nbsp;Exception");
+						}
+						lbl.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == task.TASK_STEP).FirstOrDefault().DESCRIPTION);
+					}
+
+					lbl = (Label)e.Item.FindControl("lblCreateDT");
+					if (task.CREATE_DT.HasValue)
+					{
+						lbl.Text = Convert.ToDateTime(task.CREATE_DT).ToShortDateString();
+					}
+					lbl = (Label)e.Item.FindControl("lblDueDT");
+					if (task.DUE_DT.HasValue)
+					{
+						lbl.Text = Convert.ToDateTime(task.DUE_DT).ToShortDateString();
+					}
+
+					lbl = (Label)e.Item.FindControl("lblStatus");
+					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					//lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == task.STATUS).FirstOrDefault().DESCRIPTION_SHORT;
+				}
+				catch
+				{
+				}
+			}
+		}
+
+		protected void lbTaskListItem_Click(Object sender, EventArgs e)
+		{
+			if (OnTaskListItemClick != null)
+			{
+				LinkButton lnk = (LinkButton)sender;
+				OnTaskListItemClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
+			}
+		}
+
+		protected void rgTaskList_SortCommand(object sender, GridSortCommandEventArgs e)
+		{
+			if (OnTaskListCommand != null)
+			{
+				OnTaskListCommand("sort");
+			}
+		}
+		protected void rgTaskList_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+		{
+			if (OnTaskListCommand != null)
+			{
+				OnTaskListCommand("index");
+			}
+		}
+		protected void rgTaskList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+		{
+			if (OnTaskListCommand != null)
+			{
+				OnTaskListCommand("size");
+			}
+		}
+		#endregion
+
+		#region common
+		public void SetRepeaterDisplay(Repeater rpt, Label lblAlert, System.Web.UI.HtmlControls.HtmlGenericControl divScroll, int rowsToScroll, int gridRowCount, string className)
         {
             if (rpt.Items.Count == 0)
             {

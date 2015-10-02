@@ -79,6 +79,63 @@
 	<asp:Label runat="server" ID="lblTaskStripEmpty" Height="40" Text="Task list is empty." class="GridEmpty" Visible="false"></asp:Label>
 </asp:Panel>
 
+<asp:Panel ID="pnlTaskList" runat="server" Visible="false">
+	<telerik:RadAjaxPanel>
+	<div>
+		<telerik:RadGrid ID="rgTaskList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="50"
+			AutoGenerateColumns="false" OnItemDataBound="rgTaskList_ItemDataBound" OnSortCommand="rgTaskList_SortCommand"
+			OnPageIndexChanged="rgTaskList_PageIndexChanged" OnPageSizeChanged="rgTaskList_PageSizeChanged" GridLines="None" Width="100%">
+			<MasterTableView ExpandCollapseColumn-Visible="false">
+				<Columns>
+					<telerik:GridTemplateColumn HeaderText="Task ID" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="TASK_ID">
+						<ItemTemplate>
+							<table class="innerTable">
+								<tr>
+									<td>
+										<asp:LinkButton ID="lbTaskId" OnClick="lbTaskListItem_Click" CommandArgument='<%#Eval("TASK_ID") %>' runat="server" ToolTip="View or update this Task">
+											<span style="white-space: nowrap;">
+												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label ID="lblTaskId" Font-Bold="true" ForeColor="#000066" Text='<%#string.Format("{0:000000}", Eval("TASK_ID")) %>' runat="server"></asp:Label>
+											</span>
+										</asp:LinkButton>
+									</td>
+								</tr>
+							</table>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn HeaderText="Type" ShowSortIcon="false">
+						<ItemTemplate>
+							<asp:Label ID="lblTaskType" runat="server" Text='<%#Eval("TASK_TYPE") %>'></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn HeaderText="Description" ShowSortIcon="false">
+						<ItemTemplate>
+							<asp:Label ID="lblDescription" runat="server" Text='<%# (string)Eval("DESCRIPTION") %>'></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn HeaderText="Create Date" ShowSortIcon="true" SortExpression="CREATE_DT">
+						<ItemTemplate>
+							<asp:Label ID="lblCreateDT"  runat="server"></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn HeaderText="Due Date" ShowSortIcon="true" SortExpression="DUE_DT">
+						<ItemTemplate>
+							<asp:Label ID="lblDueDT"  runat="server"></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn HeaderText="Status">
+						<ItemTemplate>
+							<asp:Label ID="lblStatus" runat="server"></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+				</Columns>
+			</MasterTableView>
+			<PagerStyle Position="Bottom" AlwaysVisible="true"></PagerStyle>
+		</telerik:RadGrid>
+		<asp:Label runat="server" ID="lblTaskListEmpty" Height="40" Text="Task list is empty." class="GridEmpty" Visible="false"></asp:Label>
+	</div>
+	</telerik:RadAjaxPanel>
+</asp:Panel>
+
 
 <telerik:RadWindow runat="server" ID="RadWindow_TaskDetail" RestrictionZoneID="ContentTemplateZone" Modal="true" Height="300" Width="400" Title="Task Details" >
 	<ContentTemplate>

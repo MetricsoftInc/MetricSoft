@@ -12,7 +12,7 @@ using System.Web.Configuration;
 
 namespace SQM.Website
 {
-    public enum TaskStatus { Pending, Complete, Due, Overdue, EscalationLevel1, EscalationLevel2, unused1, unused2, AwaitingClosure, New, Delete };
+	public enum TaskStatus { New, Pending, Complete, Due, Overdue, EscalationLevel1, EscalationLevel2, unused1, unused2, AwaitingClosure, Delete };
     public enum TaskNotification { Owner, Delegate, Escalation };
     public enum TaskRecordType { InternalQualityIncident = 10, CustomerQualityIncident = 11, SupplierQualityIncident = 12,
                                     QualityIssue = 20, ProblemCase = 21,
@@ -301,15 +301,21 @@ namespace SQM.Website
             return this;
         }
 
-        public TASK_STATUS CreateTask(string taskStep, string taskType, int taskSeq, string description, DateTime dueDate, decimal responsibleID)
+		public TASK_STATUS CreateTask(string taskStep, string taskType, int taskSeq, string description, DateTime dueDate, decimal responsibleID)
+		{
+			return this.CreateTask(0, taskStep, taskType, taskSeq, description, dueDate, responsibleID, "");
+		}
+        public TASK_STATUS CreateTask(decimal recordSubID, string taskStep, string taskType, int taskSeq, string description, DateTime dueDate, decimal responsibleID, string detail)
         {
             TASK_STATUS task = new TASK_STATUS();
             task.RECORD_TYPE = this.RecordType;
             task.RECORD_ID = this.RecordID;
+			task.RECORD_SUBID = recordSubID;
             task.TASK_STEP = taskStep;
             task.TASK_TYPE = taskType;
             task.TASK_SEQ = taskSeq;
             task.DESCRIPTION = description;
+			task.DETAIL = detail;
 			task.CREATE_DT = DateTime.UtcNow;
             if (dueDate != DateTime.MinValue)
                 task.DUE_DT = dueDate;
@@ -320,13 +326,6 @@ namespace SQM.Website
             return task;
         }
 
-        public TASK_STATUS FindTask(string taskStep, string taskType, int taskSeq)
-        {
-            TASK_STATUS task = null;
-            task = this.TaskList.Where(l => l.TASK_STEP == taskStep && l.TASK_TYPE == taskType && l.TASK_SEQ == taskSeq).FirstOrDefault();
-            return task;
-        }
-
         public TASK_STATUS FindTask(string taskStep, string taskType, decimal responsibleID)
         {
             TASK_STATUS task = null;
@@ -334,11 +333,26 @@ namespace SQM.Website
             return task;
         }
 
-        public TASK_STATUS UpdateTask(TASK_STATUS task, DateTime dueDate, decimal responsibleID, string description)
+		public TASK_STATUS FindTask(string taskStep, string taskType, int taskSeq, decimal responsibleID)
+		{
+			TASK_STATUS task = null;
+			task = this.TaskList.Where(l => l.TASK_STEP == taskStep && l.TASK_TYPE == taskType && l.TASK_SEQ == taskSeq &&  l.RESPONSIBLE_ID == responsibleID).FirstOrDefault();
+			return task;
+		}
+
+		public TASK_STATUS UpdateTask(TASK_STATUS task, DateTime dueDate, decimal responsibleID, string description)
+		{
+			return this.UpdateTask(task, dueDate, responsibleID, description, "");
+		}
+
+        public TASK_STATUS UpdateTask(TASK_STATUS task, DateTime dueDate, decimal responsibleID, string description, string comments)
         {
             task.DUE_DT = dueDate;
             task.RESPONSIBLE_ID = responsibleID;
-            task.DESCRIPTION = description;
+			if (!string.IsNullOrEmpty(description))
+				task.DESCRIPTION = description;
+			if (!string.IsNullOrEmpty(comments))
+				task.COMMENTS = comments;
             return task;
         }
 
@@ -348,14 +362,16 @@ namespace SQM.Website
             return task;
         }
 
-        public TASK_STATUS SetTaskOpen(TASK_STATUS task, DateTime? newDueDate)
+        public TASK_STATUS SetTaskOpen(TASK_STATUS task, DateTime? newDueDate, decimal ? responsibleID)
         {
             // re-open closed task
             if (task.COMPLETE_DT != null)
             {
-                task.STATUS = ((int)TaskStatus.Pending).ToString();
+                task.STATUS = ((int)TaskStatus.New).ToString();
                 task.COMPLETE_DT = null;
                 task.COMPLETE_ID = null;
+				if (responsibleID != null)
+					task.RESPONSIBLE_ID = responsibleID;
                 if (newDueDate != null)
                     task.DUE_DT = newDueDate;
             }
@@ -382,6 +398,17 @@ namespace SQM.Website
             return task;
         }
 
+		public int UpdateTask(TASK_STATUS task)
+		{
+			int status = 0;
+
+			if (task.EntityState == EntityState.Detached)
+				this.Entities.AddToTASK_STATUS(task);
+
+			status = this.Entities.SaveChanges();
+			return status;
+		}
+
         public int UpdateTaskList(decimal recordID)
         {
             int status = 0;
@@ -391,12 +418,19 @@ namespace SQM.Website
                 for (int n = 0; n < this.TaskList.Count; n++)
                 {
                     TASK_STATUS task = this.TaskList[n];
-                    if (task.RECORD_ID <= 0)
-                        task.RECORD_ID = recordID;
-                    if (task.EntityState == EntityState.Detached)
-                        this.Entities.AddToTASK_STATUS(task);
-                    if ((TaskStatus)Enum.Parse(typeof(TaskStatus), task.STATUS) >= TaskStatus.New)
-                        this.Entities.DeleteObject(task);
+					if (task.RECORD_ID <= 0)
+					{
+						task.RECORD_ID = recordID;
+					}
+					if (task.EntityState == EntityState.Detached)
+					{
+						this.Entities.AddToTASK_STATUS(task);
+					}
+					else
+					{
+						if ((TaskStatus)Enum.Parse(typeof(TaskStatus), task.STATUS) == TaskStatus.Delete)
+							this.Entities.DeleteObject(task);
+					}
                 }
 
                 status = this.UpdateStatus = this.Entities.SaveChanges();
@@ -409,6 +443,14 @@ namespace SQM.Website
 
             return status;
         }
+
+		public TASK_STATUS SelectTask(decimal taskID)
+		{
+			TASK_STATUS task  = (from t in this.Entities.TASK_STATUS
+								 where (t.TASK_ID == taskID)
+								 select t).SingleOrDefault();
+			return task;
+		}
 
         public TaskStatusMgr LoadTaskList(int recordType, decimal recordID)
         {
@@ -433,7 +475,7 @@ namespace SQM.Website
 			try
 			{
 				this.TaskList = (from t in this.Entities.TASK_STATUS
-								 where (t.RECORD_TYPE == recordType && (responsibleID == 0 || t.RESPONSIBLE_ID == responsibleID)  && (!openOnly || t.COMPLETE_DT == null))
+								 where ((recordType == 0  || t.RECORD_TYPE == recordType) && (responsibleID == 0 || t.RESPONSIBLE_ID == responsibleID)  && (!openOnly || t.COMPLETE_DT == null))
 								 select t).OrderBy(l => l.DUE_DT).ToList();
 			}
 			catch (Exception ex)
@@ -475,15 +517,10 @@ namespace SQM.Website
         {
             TaskStatus status = (TaskStatus)Convert.ToInt32(task.STATUS);
 
-            if (status == TaskStatus.AwaitingClosure)
-            {
-                return status;
-            }
-            else if (task.DUE_DT != null  &&  status != TaskStatus.Complete)
+			if (task.DUE_DT != null  &&  status != TaskStatus.Complete)
             {
                 DateTime duedate = (DateTime)task.DUE_DT;
                 TimeSpan delta = duedate.Subtract(DateTime.UtcNow);
-                status = TaskStatus.Pending;
                 if (delta.Days < 2)
                     status = TaskStatus.Due;
                 if (delta.Days < 0)
@@ -542,7 +579,7 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT > fromDate  &&  t.DUE_DT <= toDate &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
+                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT >= fromDate  &&  t.DUE_DT <= toDate &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
                                 from p in p_t.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()
@@ -561,7 +598,7 @@ namespace SQM.Website
 									   join i in entities.AUDIT on t.RECORD_ID equals i.AUDIT_ID
 									   join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
 									   join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
-									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT > fromDate && t.DUE_DT <= toDate  &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
+									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate  &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
 									   from p in p_t.DefaultIfEmpty()
 									   from l in l_i.DefaultIfEmpty()
 									   select new TaskItem
@@ -1080,7 +1117,7 @@ namespace SQM.Website
 
         public static List<TaskItem> IncidentTaskStatus(decimal companyID, List<decimal> responsibleIDS, List<decimal> plantIDS, bool addProblemCases)
         {
-            string[] statusIDS = { ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
             DateTime forwardDate = DateTime.Now;
 			INCIDENT incident;
 

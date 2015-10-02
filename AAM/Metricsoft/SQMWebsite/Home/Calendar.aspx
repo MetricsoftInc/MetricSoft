@@ -2,6 +2,7 @@
 <%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_AdminEdit.ascx" TagName="PrefsEdit" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_DocMgr.ascx" TagName="DocList" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
@@ -23,6 +24,10 @@
 			//__doPostBack('resize', '');
 		}
 
+		function OpenUpdateTaskWindow() {
+			$find("<%=winUpdateTask.ClientID %>").show();
+				}
+
 	</script> 
 
 </asp:Content>
@@ -35,15 +40,21 @@
 	<asp:HiddenField ID="hfDocviewMessage" runat="server" Value="System Communications"/>
 	<asp:HiddenField ID="hfWidth" runat="server"/>
 	<asp:HiddenField ID="hfHeight" runat="server"/>
-	<FORM name="dummy">
+<%--	<FORM name="dummy">--%>
+	<div style="margin: 8px;">
+		<asp:Button id="btnCalendarView" runat="server" Text="Calendar" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="C"/>
+		<asp:Button id="btnTaskView" runat="server" Text="My Tasks" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T"/>
+		<asp:Button id="btnEscalateView" runat="server" Text="Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E"/>
+	</div>
 		<asp:Panel runat="server" ID="pnlCalendar" Width="100%" Visible="false">
-			<div style="width: 99%; margin: 5px;" class="noprint">
-				<asp:Label ID="lblPageTitle" runat="server"  CssClass="pageTitles" Text="Task Calendar" ></asp:Label>
-				<br />
-				<asp:Label ID="lblPageInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
-				<br />
-			</div>
-			<div id="divCalendar" runat="server" style="margin-top: 4px;">
+
+			<div id="divCalendar" runat="server" style="margin-top: 4px;" visible="false">
+				<div style="width: 99%; margin: 5px;" class="noprint">
+					<asp:Label ID="lblPageTitle" runat="server"  CssClass="pageTitles" Text="Task Calendar" ></asp:Label>
+					<br />
+					<asp:Label ID="lblPageInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
+					<br />
+				</div>
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-xs-12  text-left">
@@ -69,10 +80,29 @@
 							<Ucl:TaskList ID="uclTaskSchedule" runat="server" />
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div id="divEscalate" runat="server" style="margin-top: 4px;" visible="false">
+				<div class="container-fluid">
 					<div class="row">
 						<div id="divTasks" runat="server" class="noprint" style="float: left; margin: 5px; width: 98%;">
 							<Ucl:TaskList ID="uclTaskStrip" runat="server" />
 						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="divTaskList" runat="server" style="margin-top: 4px;" visible="false">
+				<div style="margin: 5px;" class="noprint">
+					<asp:Label ID="Label1" runat="server"  CssClass="pageTitles" Text="My Task List" ></asp:Label>
+					<br />
+					<asp:Label ID="Label2" runat="server" CssClass="instructText" Text="Tasks assigned to you Click on a Task to update status or close."></asp:Label>
+				</div>
+				<br />
+				<div class="container-fluid">
+					<div class="row">
+						<Ucl:TaskList ID="uclTaskList" runat="server" />
 					</div>
 				</div>
 			</div>
@@ -81,6 +111,14 @@
 		<telerik:RadSlider runat="server" ID="sldScheduleRange" visible="false" MinimumValue="3" MaximumValue="12" Value="12" SmallChange="1" LargeChange="3" ItemType="Tick" TrackPosition="TopLeft" Skin="Metro" ShowDragHandle="true" 
 			width="150" Height="37" AutoPostBack="true" OnValueChanged="ScheduleScope_Select" ToolTip="select number of months in the future to populate in the calendar" ></telerik:RadSlider>
 		<br style="clear: both;" />
-	</FORM>
+
+
+		<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="800" Behaviors="Move" Title="View/Update Task">
+			<ContentTemplate>
+				<Ucl:Task ID="uclTask" runat="server" />
+			</ContentTemplate>
+		</telerik:RadWindow>
+
+<%--	</FORM>--%>
 </asp:Content>
 

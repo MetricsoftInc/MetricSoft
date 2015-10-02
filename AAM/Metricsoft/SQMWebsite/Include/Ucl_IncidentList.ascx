@@ -447,10 +447,6 @@
 											</span>
 										</asp:LinkButton>
 									</td>
-									<%--<td>
-										<img alt=">" src="/images/arr-rt-grey.png" runat="server" id="imgEditReport" style="opacity: 0.5;" />
-									</td>--%>
-								   <%-- <td style="width: 50%;">--%>
 								</tr>
 								<tr>
 									<td>

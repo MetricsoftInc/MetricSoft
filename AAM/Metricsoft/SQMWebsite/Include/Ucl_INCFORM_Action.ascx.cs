@@ -180,7 +180,6 @@ namespace SQM.Website
 
 		}
 
-
 		void InitializeForm()
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
@@ -345,7 +344,7 @@ namespace SQM.Website
 					status = entities.SaveChanges();
 
 					DateTime dueDate = newItem.START_DATE.HasValue ? (DateTime)newItem.START_DATE : DateTime.Now.AddDays(2);
-					EHSIncidentMgr.CreateOrUpdateTask(incidentId, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION);
+					EHSIncidentMgr.CreateOrUpdateTask(incidentId, seq, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION, ActionIncident.DESCRIPTION);
 				}
 			}
 

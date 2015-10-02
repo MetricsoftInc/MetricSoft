@@ -2082,7 +2082,7 @@ namespace SQM.Website
 			{
 				//int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
 				int recordTypeId = 40;
-				EHSIncidentMgr.CreateOrUpdateTask(incidentId, responsiblePersonId, recordTypeId, dueDate, "");
+				EHSIncidentMgr.CreateOrUpdateTask(incidentId, 0, responsiblePersonId, recordTypeId, dueDate, "", "");
 			}
 		}
 
