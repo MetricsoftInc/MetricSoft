@@ -47087,6 +47087,30 @@ namespace SQM.Website
         private Nullable<global::System.DateTime> _CREATE_DT;
         partial void OnCREATE_DTChanging(Nullable<global::System.DateTime> value);
         partial void OnCREATE_DTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DETAIL
+        {
+            get
+            {
+                return _DETAIL;
+            }
+            set
+            {
+                OnDETAILChanging(value);
+                ReportPropertyChanging("DETAIL");
+                _DETAIL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DETAIL");
+                OnDETAILChanged();
+            }
+        }
+        private global::System.String _DETAIL;
+        partial void OnDETAILChanging(global::System.String value);
+        partial void OnDETAILChanged();
 
         #endregion
 

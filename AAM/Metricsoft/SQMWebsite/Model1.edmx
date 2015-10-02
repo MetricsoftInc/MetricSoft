@@ -760,6 +760,7 @@
           <Property Name="PERCENT_COMPLETE" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="CURRENT_STATUS" Type="varchar" MaxLength="4" />
           <Property Name="TOTAL_SCORE" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="DEPT_ID" Type="numeric" Precision="35" />
         </EntityType>
         <EntityType Name="AUDIT_ANSWER">
           <Key>
@@ -771,6 +772,10 @@
           <Property Name="ANSWER_VALUE" Type="nvarchar" />
           <Property Name="ORIGINAL_QUESTION_TEXT" Type="nvarchar" MaxLength="500" />
           <Property Name="COMMENT" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CHOICE_POSITIVE" Type="bit" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="4" />
+          <Property Name="COMPLETE_DATE" Type="datetime" />
+          <Property Name="RESOLUTION_COMMENT" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="AUDIT_COMMENT">
           <Key>
@@ -2580,7 +2585,7 @@
           <Property Name="TASK_SEQ" Type="int" />
           <Property Name="DUE_DT" Type="datetime" />
           <Property Name="RESPONSIBLE_ID" Type="numeric" Precision="35" />
-          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="400" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="STATUS" Type="varchar" MaxLength="2" />
           <Property Name="COMPLETE_DT" Type="datetime" />
           <Property Name="COMPLETE_ID" Type="numeric" Precision="35" />
@@ -2588,6 +2593,7 @@
           <Property Name="RECORD_SUBID" Type="numeric" Precision="35" />
           <Property Name="COMMENTS" Type="nvarchar" />
           <Property Name="CREATE_DT" Type="datetime" />
+          <Property Name="DETAIL" Type="nvarchar" />
         </EntityType>
         <EntityType Name="UN_DISPOSAL">
           <Key>
@@ -8206,6 +8212,7 @@
           <Property Name="PERCENT_COMPLETE" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="CURRENT_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="TOTAL_SCORE" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="DEPT_ID" Precision="35" Scale="0" />
         </EntityType>
         <EntityType Name="AUDIT_ANSWER">
           <Key>
@@ -8218,6 +8225,10 @@
           <Property Type="String" Name="ORIGINAL_QUESTION_TEXT" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="COMMENT" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AUDIT" Relationship="PSsqmModel.FK_AUDIT_ANSWER_AUDIT" FromRole="AUDIT_ANSWER" ToRole="AUDIT" />
+          <Property Type="Boolean" Name="CHOICE_POSITIVE" Nullable="false" />
+          <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="COMPLETE_DATE" Precision="3" />
+          <Property Type="String" Name="RESOLUTION_COMMENT" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_AUDIT_ANSWER_AUDIT">
           <End Type="PSsqmModel.AUDIT" Role="AUDIT" Multiplicity="1" />
@@ -8863,7 +8874,7 @@
           <Property Type="Int32" Name="TASK_SEQ" />
           <Property Type="DateTime" Name="DUE_DT" Precision="3" />
           <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
-          <Property Type="String" Name="DESCRIPTION" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="COMPLETE_DT" Precision="3" />
           <Property Type="Decimal" Name="COMPLETE_ID" Precision="35" Scale="0" />
@@ -8871,6 +8882,7 @@
           <Property Type="Decimal" Name="RECORD_SUBID" Precision="35" Scale="0" />
           <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
+          <Property Type="String" Name="DETAIL" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
         </EntityType>
         <Association Name="FK_TASK_STATUS_PERSON">
@@ -10664,6 +10676,7 @@
           <EntitySetMapping Name="AUDIT">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT">
               <MappingFragment StoreEntitySet="AUDIT">
+                <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
                 <ScalarProperty Name="TOTAL_SCORE" ColumnName="TOTAL_SCORE" />
                 <ScalarProperty Name="CURRENT_STATUS" ColumnName="CURRENT_STATUS" />
                 <ScalarProperty Name="PERCENT_COMPLETE" ColumnName="PERCENT_COMPLETE" />
@@ -10689,6 +10702,10 @@
           <EntitySetMapping Name="AUDIT_ANSWER">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT_ANSWER">
               <MappingFragment StoreEntitySet="AUDIT_ANSWER">
+                <ScalarProperty Name="RESOLUTION_COMMENT" ColumnName="RESOLUTION_COMMENT" />
+                <ScalarProperty Name="COMPLETE_DATE" ColumnName="COMPLETE_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="CHOICE_POSITIVE" ColumnName="CHOICE_POSITIVE" />
                 <ScalarProperty Name="COMMENT" ColumnName="COMMENT" />
                 <ScalarProperty Name="ORIGINAL_QUESTION_TEXT" ColumnName="ORIGINAL_QUESTION_TEXT" />
                 <ScalarProperty Name="ANSWER_VALUE" ColumnName="ANSWER_VALUE" />
@@ -10921,6 +10938,7 @@
           <EntitySetMapping Name="TASK_STATUS">
             <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
               <MappingFragment StoreEntitySet="TASK_STATUS">
+                <ScalarProperty Name="DETAIL" ColumnName="DETAIL" />
                 <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
                 <ScalarProperty Name="RECORD_SUBID" ColumnName="RECORD_SUBID" />
@@ -11230,7 +11248,7 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="5.7409568716496961" PointY="17.823688530281043" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
-        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="11.012981431099112" PointY="0.79960037805121409" />
+        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="0.900325784878957" PointY="9.2478672011046985" />
         <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         </Diagram>
     </Diagrams>
