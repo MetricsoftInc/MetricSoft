@@ -26,7 +26,7 @@
 
 		function OpenUpdateTaskWindow() {
 			$find("<%=winUpdateTask.ClientID %>").show();
-				}
+		}
 
 	</script> 
 
@@ -113,12 +113,11 @@
 		<br style="clear: both;" />
 
 
-		<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="800" Behaviors="Move" Title="View/Update Task">
+		<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="700" Behaviors="Move" Title="View/Update Task">
 			<ContentTemplate>
 				<Ucl:Task ID="uclTask" runat="server" />
 			</ContentTemplate>
 		</telerik:RadWindow>
-
 <%--	</FORM>--%>
 </asp:Content>
 

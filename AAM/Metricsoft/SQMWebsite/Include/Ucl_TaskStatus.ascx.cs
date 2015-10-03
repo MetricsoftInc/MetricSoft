@@ -26,7 +26,16 @@ namespace SQM.Website
 				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
 
 			pnlUpdateTask.Visible = true;
-			btnTaskUpdate.CommandArgument = task.TASK_ID.ToString();
+			btnTaskComplete.CommandArgument = task.TASK_ID.ToString();
+			btnTaskAssign.CommandArgument = task.TASK_ID.ToString();
+			if (task.STATUS == ((int)TaskStatus.Complete).ToString())
+			{
+				btnTaskComplete.Visible = btnTaskAssign.Visible = false;
+			}
+			else
+			{
+				btnTaskComplete.Visible = btnTaskAssign.Visible = true;
+			}
 
 			switch ((TaskRecordType)task.RECORD_TYPE)
 			{
@@ -61,15 +70,13 @@ namespace SQM.Website
 			lblTaskDescriptionValue.Text = task.DESCRIPTION;  // command of what to do
 			lblTaskDetailValue.Text = task.DETAIL;				// incident description or audit question 
 			rdpTaskDueDT.SelectedDate = (DateTime)task.DUE_DT;
-			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION; ;
-
+			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION;
 			tbTaskComments.Text = task.COMMENTS;
 		}
 
-		protected void btnTaskUpdate_Click(object sender, EventArgs e)
+		protected void btnTaskComplete_Click(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
-
 			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
 			{
 				return;
@@ -78,17 +85,53 @@ namespace SQM.Website
 			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
 			TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
 			task.COMMENTS = tbTaskComments.Text;
+			task.STATUS = ((int)TaskStatus.Complete).ToString();
+			task = taskMgr.SetTaskComplete(task, SessionManager.UserContext.Person.PERSON_ID);
+			taskMgr.UpdateTask(task);
 
-			if (ddlTaskStatus.SelectedValue == ((int)TaskStatus.Complete).ToString())
+			if (OnTaskUpdate != null)
 			{
-				task.STATUS = ((int)TaskStatus.Complete).ToString();
-				task = taskMgr.SetTaskComplete(task, SessionManager.UserContext.Person.PERSON_ID);
-				taskMgr.UpdateTask(task);
+				OnTaskUpdate("update");
 			}
-			else
+		}
+
+		protected void btnTaskAssign_Click(object sender, EventArgs e)
+		{
+			Button btn = (Button)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
 			{
-				task = taskMgr.SetTaskOpen(task, task.DUE_DT, null);
+				return;
+			}
+
+			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+			TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
+			btnAssignSave.CommandArgument = task.TASK_ID.ToString();
+
+			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, GetTaskLocation(task)).Where(l=> !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l=> l.LAST_NAME).ToList();
+			SQMBasePage.SetPersonList(ddlAssignPerson, personList, "", 0, false, "LF");
+			tbAssignComment.Text = task.COMMENTS;
+
+			string script = "function f(){OpenAssignTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+
+		protected void btnTaskAssignUpdate_Click(object sender, EventArgs e)
+		{
+			Button btn = (Button)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+
+			if (ddlAssignPerson.SelectedItem != null)
+			{
+				TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+				TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
+				task.COMMENTS = tbAssignComment.Text;
+				task.STATUS = ((int)TaskStatus.New).ToString();
+				task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPerson.SelectedValue);
 				taskMgr.UpdateTask(task);
+				// send email ?
 			}
 
 			if (OnTaskUpdate != null)
@@ -103,6 +146,28 @@ namespace SQM.Website
 			{
 				OnTaskUpdate("cancel");
 			}
+		}
+
+		private decimal GetTaskLocation(TASK_STATUS task)
+		{
+			decimal plantID = SessionManager.UserContext.HRLocation.Plant.PLANT_ID;
+
+			switch ((TaskRecordType)task.RECORD_TYPE)
+			{
+				case TaskRecordType.HealthSafetyIncident:
+				case TaskRecordType.PreventativeAction:
+					INCIDENT incident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), task.RECORD_ID);
+					if (incident != null  &&  incident.DETECT_PLANT_ID.HasValue)
+						plantID = (decimal)incident.DETECT_PLANT_ID;
+					break;
+				case TaskRecordType.Audit:
+					AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), task.RECORD_ID);
+					if (audit != null  &&  audit.DETECT_PLANT_ID.HasValue)
+						plantID =(decimal) audit.DETECT_PLANT_ID;
+					break;
+			}
+
+			return plantID;
 		}
 	}
 }

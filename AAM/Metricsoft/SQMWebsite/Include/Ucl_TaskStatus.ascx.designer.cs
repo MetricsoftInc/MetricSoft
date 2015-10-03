@@ -112,24 +112,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblTaskStatusValue;
         
         /// <summary>
-        /// lblSetStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSetStatus;
-        
-        /// <summary>
-        /// ddlTaskStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox ddlTaskStatus;
-        
-        /// <summary>
         /// lblTaskComments control.
         /// </summary>
         /// <remarks>
@@ -148,13 +130,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbTaskComments;
         
         /// <summary>
-        /// btnTaskUpdate control.
+        /// btnTaskComplete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnTaskUpdate;
+        protected global::System.Web.UI.WebControls.Button btnTaskComplete;
+        
+        /// <summary>
+        /// btnTaskAssign control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTaskAssign;
         
         /// <summary>
         /// btnTaskCancel control.
@@ -164,5 +155,68 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnTaskCancel;
+        
+        /// <summary>
+        /// winAssignTask control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow winAssignTask;
+        
+        /// <summary>
+        /// lblAssignPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssignPerson;
+        
+        /// <summary>
+        /// ddlAssignPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox ddlAssignPerson;
+        
+        /// <summary>
+        /// lblAssignComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssignComment;
+        
+        /// <summary>
+        /// tbAssignComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAssignComment;
+        
+        /// <summary>
+        /// btnAssignSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssignSave;
+        
+        /// <summary>
+        /// btnAssignCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssignCancel;
     }
 }

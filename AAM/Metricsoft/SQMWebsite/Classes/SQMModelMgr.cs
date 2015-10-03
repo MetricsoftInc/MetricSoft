@@ -858,16 +858,27 @@ namespace SQM.Website
 
         public static string FormatPersonListItem(PERSON person)
         {
-			return FormatPersonListItem(person, false);
+			return FormatPersonListItem(person, false, "LF");
         }
 		public static string FormatPersonListItem(PERSON person, bool fullName)
+		{
+			return FormatPersonListItem(person, fullName, "FL");
+		}
+		public static string FormatPersonListItem(PERSON person, bool fullName, string nameOrder)
 		{
 			if (person != null)
 			{
 				if (fullName)
+				{
 					return (person.FIRST_NAME + " " + person.MIDDLE_NAME + " " + person.LAST_NAME);
+				}
 				else
-					return (person.LAST_NAME + ", " + person.FIRST_NAME);
+				{
+					if (nameOrder == "LF")
+						return (person.LAST_NAME + ", " + person.FIRST_NAME);
+					else 
+						return (person.FIRST_NAME + ", " + person.LAST_NAME);
+				}
 			}
 			else
 				return "";

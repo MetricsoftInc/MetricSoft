@@ -273,13 +273,17 @@ namespace SQM.Website
 		{
 			return SetPersonList(ddl, personSelectList, personID, rowLimit, false);
 		}
-        public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit, bool fullName)
+		public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit, bool fullName)
+		{
+			return SetPersonList(ddl, personSelectList, personID, rowLimit, fullName, "LF");
+		}
+        public static RadComboBox SetPersonList(RadComboBox ddl, List<PERSON> personSelectList, string personID, int rowLimit, bool fullName, string nameOrder)
         {
             ddl.Items.Clear();
             RadComboBoxItem item = null;
             foreach (PERSON person in personSelectList)
             {
-                item = new RadComboBoxItem(SQMModelMgr.FormatPersonListItem(person, fullName), person.PERSON_ID.ToString());
+                item = new RadComboBoxItem(SQMModelMgr.FormatPersonListItem(person, fullName, nameOrder), person.PERSON_ID.ToString());
                 item.ToolTip = person.EMAIL;
                 if (ddl.CheckBoxes)
                 {
