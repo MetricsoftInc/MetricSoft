@@ -137,10 +137,6 @@ namespace SQM.Website
 								IsFullPagePostback = true;
 				}
 			}
-
-			//if (!IsFullPagePostback)
-			//	PopulateInitialForm();
-
 		}
 
 
@@ -344,7 +340,7 @@ namespace SQM.Website
 					status = entities.SaveChanges();
 
 					DateTime dueDate = newItem.START_DATE.HasValue ? (DateTime)newItem.START_DATE : DateTime.Now.AddDays(2);
-					EHSIncidentMgr.CreateOrUpdateTask(incidentId, seq, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION, ActionIncident.DESCRIPTION);
+					EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.action).ToString(), seq, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION, ActionIncident.DESCRIPTION);
 				}
 			}
 
