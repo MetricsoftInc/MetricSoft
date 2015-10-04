@@ -43,7 +43,7 @@
 <%--	<FORM name="dummy">--%>
 	<div style="margin: 8px;">
 		<asp:Button id="btnCalendarView" runat="server" Text="Calendar" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="C"/>
-		<asp:Button id="btnTaskView" runat="server" Text="My Tasks" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T"/>
+		<asp:Button id="btnTaskView" runat="server" Text="Actions Pending" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T"/>
 		<asp:Button id="btnEscalateView" runat="server" Text="Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E"/>
 	</div>
 		<asp:Panel runat="server" ID="pnlCalendar" Width="100%" Visible="false">

@@ -478,6 +478,21 @@ namespace SQM.Website
             return this;
         }
 
+		public TaskStatusMgr SelectTaskList(int[] recordTypes, string[] taskSteps, decimal responsibleID, bool openOnly)
+		{
+			try
+			{
+				this.TaskList = (from t in this.Entities.TASK_STATUS
+								 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleID == 0 || t.RESPONSIBLE_ID == responsibleID)  && (!openOnly || t.COMPLETE_DT == null))
+								 select t).OrderBy(l => l.DUE_DT).ToList();
+			}
+			catch (Exception ex)
+			{
+				;
+			}
+			return this;
+		}
+
 		public TaskStatusMgr SelectTaskList(int recordType, decimal responsibleID, bool openOnly)
 		{
 			try
