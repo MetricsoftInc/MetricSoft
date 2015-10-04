@@ -72,25 +72,6 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected bool UpdateAccess
-		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
-		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
-		}
-
-
 		public string ValidationGroup
 		{
 			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
@@ -102,10 +83,6 @@ namespace SQM.Website
 		{
 			if (SessionManager.SessionContext != null)
 			{
-				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 				if (IsFullPagePostback)
 					rptAction.DataBind();
 			}
@@ -181,7 +158,8 @@ namespace SQM.Website
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			pnlAction.Visible = true;
-			rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
+			//rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
+			rptAction.DataSource = EHSIncidentMgr.GetCorrectiveActionList(IncidentId);
 			rptAction.DataBind();
 		}
 
@@ -199,7 +177,8 @@ namespace SQM.Website
 
 				try
 				{
-					INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
+					//INCFORM_ACTION action = (INCFORM_ACTION)e.Item.DataItem;
+					TASK_STATUS action = (TASK_STATUS)e.Item.DataItem;
 
 					TextBox tbca = (TextBox)e.Item.FindControl("tbFinalAction");
 					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
@@ -229,28 +208,48 @@ namespace SQM.Website
 						}
 					}
 
-					if (action.ASSIGNED_PERSON_ID != null)
-						rddlp.SelectedValue = action.ASSIGNED_PERSON_ID.ToString();
+					lb.Text = action.TASK_SEQ.ToString();
+					tbca.Text = action.DESCRIPTION;
 
-					lb.Text = action.ITEM_SEQ.ToString();
-					tbca.Text = action.ITEM_DESCRIPTION;
-					sd.SelectedDate = action.START_DATE;
-					cd.SelectedDate = action.COMPLETION_DATE;
-					ic.Checked = action.IsCompleted;
+					if (action.RESPONSIBLE_ID != null)
+						rddlp.SelectedValue = action.RESPONSIBLE_ID.ToString();
+					if (action.DUE_DT.HasValue)
+						sd.SelectedDate = action.DUE_DT;
 
-					// Set user access:
-					tbca.Enabled = ActionAccess;
-					rddlp.Enabled = ActionAccess;
-					sd.Enabled = ActionAccess;
-					cd.Enabled = ActionAccess;
-					ic.Enabled = ActionAccess;
-					itmdel.Visible = ActionAccess;
-		
-					rvfca.Enabled = ActionAccess;
-					rvfcp.Enabled = ActionAccess;
-					rvfsd.Enabled = ActionAccess;
+					HiddenField hf = (HiddenField)e.Item.FindControl("hfTaskStatus");
+					hf.Value = action.STATUS;
+					hf = (HiddenField)e.Item.FindControl("hfTaskID");
+					hf.Value = action.TASK_ID.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfRecordType");
+					hf.Value = action.RECORD_TYPE.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfRecordID");
+					hf.Value = action.RECORD_ID.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfTaskStep");
+					hf.Value = action.TASK_STEP;
+					hf = (HiddenField)e.Item.FindControl("hfTaskType");
+					hf.Value = action.TASK_TYPE;
+					hf = (HiddenField)e.Item.FindControl("hfDetail");
+					hf.Value = action.DETAIL;
+					hf = (HiddenField)e.Item.FindControl("hfComments");
+					hf.Value = action.COMMENTS;
 
-					if (action.ITEM_SEQ > minRowsToValidate)
+					if (action.COMPLETE_DT.HasValue)
+					{
+						cd.SelectedDate = action.COMPLETE_DT;
+						hf = (HiddenField)e.Item.FindControl("hfCompleteID");
+						if (action.COMPLETE_ID.HasValue)
+							hf.Value = action.COMPLETE_ID.ToString();
+						ic.Checked = true;
+					}
+
+					if (action.CREATE_DT.HasValue)
+					{
+						hf = (HiddenField)e.Item.FindControl("hfCreateDT");
+						DateTime dt = Convert.ToDateTime(action.CREATE_DT);
+						hf.Value = dt.ToString("M/d/yyyy");
+					}
+
+					if (action.TASK_SEQ > minRowsToValidate)
 					{
 						rvfca.Enabled = false;
 						rvfcp.Enabled = false;
@@ -265,19 +264,18 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddFinal");
-				addanother.Visible = ActionAccess;
+				//addanother.Visible = ActionAccess;
 			}
 		}
 
-		public int AddUpdateINCFORM_ACTION(decimal incidentId)
+		protected List<TASK_STATUS> GetActionListFromGrid()
 		{
-			var itemList = new List<INCFORM_ACTION>();
+			List<TASK_STATUS> actionList = new List<TASK_STATUS>();
 			int seqnumber = 0;
-			int status = 0;
 
 			foreach (RepeaterItem containtem in rptAction.Items)
 			{
-				var item = new INCFORM_ACTION();
+				TASK_STATUS action = new TASK_STATUS();
 
 				TextBox tbca = (TextBox)containtem.FindControl("tbFinalAction");
 				RadDropDownList rddlp = (RadDropDownList)containtem.FindControl("rddlActionPerson");
@@ -286,61 +284,61 @@ namespace SQM.Website
 				RadDatePicker cd = (RadDatePicker)containtem.FindControl("rdpFinalCompleteDate");
 				CheckBox ic = (CheckBox)containtem.FindControl("cbFinalIsComplete");
 
-				seqnumber = seqnumber + 1;
+				action.DESCRIPTION = tbca.Text;
+				action.RESPONSIBLE_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
+				action.TASK_SEQ = Convert.ToInt32(lb.Text);
+				action.DUE_DT = sd.SelectedDate;
+				action.COMPLETE_DT = cd.SelectedDate;
 
-				item.ITEM_DESCRIPTION = tbca.Text;
-				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
-				item.ITEM_SEQ = seqnumber;
-				item.START_DATE = sd.SelectedDate;
-				item.COMPLETION_DATE = cd.SelectedDate;
-				item.IsCompleted = ic.Checked;
+				HiddenField hf = (HiddenField)containtem.FindControl("hfTaskStatus");
+				action.STATUS = hf.Value;
+				hf = (HiddenField)containtem.FindControl("hfTaskID");
+				action.TASK_ID = Convert.ToDecimal(hf.Value);
+				hf = (HiddenField)containtem.FindControl("hfRecordID");
+				action.RECORD_ID = Convert.ToDecimal(hf.Value);
+				hf = (HiddenField)containtem.FindControl("hfRecordType");
+				action.RECORD_TYPE = Convert.ToInt32(hf.Value);
+				hf = (HiddenField)containtem.FindControl("hfTaskType");
+				action.TASK_TYPE = hf.Value;
+				hf = (HiddenField)containtem.FindControl("hfTaskStep");
+				action.TASK_STEP = hf.Value;
+				hf = (HiddenField)containtem.FindControl("hfDetail");
+				action.DETAIL = hf.Value;
+				hf = (HiddenField)containtem.FindControl("hfComments");
+				action.COMMENTS = hf.Value;
+				if (action.COMPLETE_DT.HasValue)
+				{
+					hf = (HiddenField)containtem.FindControl("hfCompleteID");
+					if (!string.IsNullOrEmpty(hf.Value))
+						action.COMPLETE_ID = Convert.ToDecimal(hf.Value);
+				}
 
-				itemList.Add(item);
+				actionList.Add(action);
 			}
 
-			if (itemList.Count > 0)
-				status  = SaveActions(incidentId, itemList);
 
-			return status;
-
+			return actionList;
 		}
 
-		private int SaveActions(decimal incidentId, List<INCFORM_ACTION> itemList)
+		public int AddUpdateINCFORM_ACTION(decimal incidentId)
+		{
+			List<TASK_STATUS> actionList = GetActionListFromGrid();
+
+			return SaveActions(incidentId, actionList);
+		}
+
+		private int SaveActions(decimal incidentId, List<TASK_STATUS> actionList)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
 			int status = 0;
-	
-			using (var ctx = new PSsqmEntities())
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID = {0}", incidentId);
-			}
-
 			int seq = 0;
 
-			foreach (INCFORM_ACTION item in itemList)
+			foreach (TASK_STATUS action in actionList)
 			{
-				var newItem = new INCFORM_ACTION();
-
-				if (!string.IsNullOrEmpty(item.ITEM_DESCRIPTION)  &&  item.ASSIGNED_PERSON_ID.HasValue &&  item.ASSIGNED_PERSON_ID > 0)
+				if (!string.IsNullOrEmpty(action.DESCRIPTION)  &&  action.DUE_DT.HasValue &&  action.RESPONSIBLE_ID.HasValue)
 				{
-					seq = seq + 1;
-
-					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_SEQ = seq;
-					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
-					newItem.START_DATE = item.START_DATE;
-					newItem.COMPLETION_DATE = item.COMPLETION_DATE;
-					newItem.IsCompleted = item.IsCompleted;
-					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
-
-					entities.AddToINCFORM_ACTION(newItem);
-					status = entities.SaveChanges();
-
-					DateTime dueDate = newItem.START_DATE.HasValue ? (DateTime)newItem.START_DATE : DateTime.Now.AddDays(2);
-					EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.action).ToString(), seq, (decimal)item.ASSIGNED_PERSON_ID, 40, dueDate, item.ITEM_DESCRIPTION, ActionIncident.DESCRIPTION);
+					EHSIncidentMgr.CreateOrUpdateTask(action);
 				}
 			}
 
@@ -360,117 +358,40 @@ namespace SQM.Website
 
 		protected void rptAction_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
+			List<TASK_STATUS> actionList = GetActionListFromGrid();
+
 			if (e.CommandArgument == "AddAnother")
 			{
-
-				var itemList = new List<INCFORM_ACTION>();
-				int seqnumber = 0;
-
-				foreach (RepeaterItem actionitem in rptAction.Items)
-				{
-					var item = new INCFORM_ACTION();
-
-					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
-					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
-					Label lb = (Label)actionitem.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
-					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
-					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
-
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-
-					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
-					foreach (PERSON p in personList)
-					{
-						if (!String.IsNullOrEmpty(p.EMAIL))
-						{
-							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-						}
-					}
-
-					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
-						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
-
-					seqnumber = Convert.ToInt32(lb.Text);
-
-					item.ITEM_DESCRIPTION = tbca.Text;
-					item.ITEM_SEQ = seqnumber;
-					item.START_DATE = sd.SelectedDate;
-					item.COMPLETION_DATE = cd.SelectedDate;
-					item.IsCompleted = ic.Checked;
-
-					itemList.Add(item);
-				}
-
-				var emptyItem = new INCFORM_ACTION();
-
-				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.ITEM_SEQ = seqnumber + 1;
-				emptyItem.ASSIGNED_PERSON_ID = null;
-				emptyItem.START_DATE = null;
-				emptyItem.COMPLETION_DATE = null;
-				emptyItem.IsCompleted = false;
-
-
-				itemList.Add(emptyItem);
-
-				rptAction.DataSource = itemList;
+				int newSeq = actionList.Max(l => l.TASK_SEQ).Value + 1;
+				actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), newSeq));
+				rptAction.DataSource = actionList;
 				rptAction.DataBind();
 			}
 			else if (e.CommandArgument.ToString() == "Delete")
 			{
 				int delId = e.Item.ItemIndex;
-				var itemList = new List<INCFORM_ACTION>();
-				int seqnumber = 0;
 
-				foreach (RepeaterItem actionitem in rptAction.Items)
+				TASK_STATUS action = actionList.ElementAt(delId);
+				if (action != null)
 				{
-					var item = new INCFORM_ACTION();
-
-					TextBox tbca = (TextBox)actionitem.FindControl("tbFinalAction");
-					RadDropDownList rddlp = (RadDropDownList)actionitem.FindControl("rddlActionPerson");
-					Label lb = (Label)actionitem.FindControl("lbItemSeq");
-					RadDatePicker sd = (RadDatePicker)actionitem.FindControl("rdpFinalStartDate");
-					RadDatePicker cd = (RadDatePicker)actionitem.FindControl("rdpFinalCompleteDate");
-					CheckBox ic = (CheckBox)actionitem.FindControl("cbFinalIsComplete");
-
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
-
-					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
-					foreach (PERSON p in personList)
+					if (action.TASK_ID > 0)  // only delete existing actions
 					{
-						if (!String.IsNullOrEmpty(p.EMAIL))
+						using (PSsqmEntities entities = new PSsqmEntities())
 						{
-							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+							entities.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE TASK_ID = " + action.TASK_ID.ToString());
 						}
 					}
-
-					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
-						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
-
-					if (Convert.ToInt32(lb.Text) != delId + 1)
+					actionList.Remove(action);
+					if (actionList.Count == 0)
 					{
-						seqnumber = seqnumber + 1;
-						item.ITEM_DESCRIPTION = tbca.Text;
-						item.ITEM_SEQ = seqnumber;
-						item.START_DATE = sd.SelectedDate;
-						item.COMPLETION_DATE = cd.SelectedDate;
-						item.IsCompleted = ic.Checked;
-
-						itemList.Add(item);
+						actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), 1));
 					}
 				}
 
-				rptAction.DataSource = itemList;
+				rptAction.DataSource = actionList;
 				rptAction.DataBind();
 
 				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-				int status = SaveActions(incidentId, itemList);
-			
 			}
 
 		}

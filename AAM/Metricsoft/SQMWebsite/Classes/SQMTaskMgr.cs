@@ -326,6 +326,14 @@ namespace SQM.Website
             return task;
         }
 
+		public TASK_STATUS CreateTask(TASK_STATUS task)
+		{
+			this.TaskList.Add(task);
+			return task;
+		}
+
+		
+
         public TASK_STATUS FindTask(string taskStep, string taskType, decimal responsibleID)
         {
             TASK_STATUS task = null;

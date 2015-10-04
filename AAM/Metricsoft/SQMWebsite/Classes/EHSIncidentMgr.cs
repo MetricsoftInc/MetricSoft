@@ -947,40 +947,33 @@ namespace SQM.Website
 		}
 
 
-		public static List<INCFORM_ACTION> GetFinalActionList(decimal incidentId)
+		public static List<TASK_STATUS> GetCorrectiveActionList(decimal incidentId)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
-			var actions = new List<INCFORM_ACTION>();
 
-			int minRowsThisForm = 1;
+			List<TASK_STATUS> actionList = (from t in entities.TASK_STATUS
+											where t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && t.RECORD_ID == incidentId
+											select t).ToList();
+			if (actionList.Count == 0)
+			{
+				actionList.Add(CreateEmptyTask(incidentId, ((int)SysPriv.action).ToString(), 1));
+			}
 
-			actions = (from c in entities.INCFORM_ACTION
-							where c.INCIDENT_ID == incidentId
-							select c).ToList();
+			return actionList;
+		}
 
-			int itemsNeeded = 0;
-			if (actions.Count() < minRowsThisForm)
-				itemsNeeded = minRowsThisForm - actions.Count();
+		public static TASK_STATUS CreateEmptyTask(decimal incidentId, string taskStep, int taskSeq)
+		{
+			TASK_STATUS task = new TASK_STATUS();
+			task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
+			task.RECORD_ID = incidentId;
+			task.TASK_STEP = taskStep;
+			task.TASK_TYPE = "T";
+			task.CREATE_DT = DateTime.UtcNow;
+			task.STATUS = ((int)TaskStatus.New).ToString();
+			task.TASK_SEQ = taskSeq;
 
-				int seq = actions.Count(); ;
-				INCFORM_ACTION action = null;
-
-				for (int i = 1; i < itemsNeeded + 1; i++)
-				{
-					action = new INCFORM_ACTION();
-
-					seq = seq + 1;
-					action.ITEM_SEQ = seq;
-					action.ITEM_DESCRIPTION = "";
-					action.ASSIGNED_PERSON = "";
-					action.START_DATE = DateTime.Now;
-					action.COMPLETION_DATE = null;
-					action.IsCompleted = false;
-
-					actions.Add(action);
-				}
-
-			return actions;
+			return task;
 		}
 
 		public static List<INCFORM_LOSTTIME_HIST> GetLostTimeList(decimal incidentId)
@@ -1124,6 +1117,24 @@ namespace SQM.Website
 		}
 
 
+		public static void CreateOrUpdateTask(TASK_STATUS task)
+		{
+			TaskStatusMgr taskMgr = new TaskStatusMgr();
+			taskMgr.Initialize(task.RECORD_TYPE, task.RECORD_ID);
+			TASK_STATUS theTask = taskMgr.SelectTask(task.TASK_ID);
+			if (theTask == null)
+			{
+				taskMgr.CreateTask(task);
+			}
+			else
+			{
+				theTask = (TASK_STATUS)SQMModelMgr.CopyObjectValues(theTask, task, false);
+				taskMgr.CreateTask(theTask);
+			}
+
+			taskMgr.UpdateTaskList(task.RECORD_ID);
+		}
+
 		public static void CreateOrUpdateTask(decimal incidentId, string taskStep, int taskSeq, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string taskDescription, string detail)
 		{
 			var entities = new PSsqmEntities();
@@ -1147,7 +1158,6 @@ namespace SQM.Website
 			}
 
 			taskMgr.UpdateTaskList(incidentId);
-
 		}
 
 		public static void SetTaskComplete(decimal incidentId, int recordTypeId)

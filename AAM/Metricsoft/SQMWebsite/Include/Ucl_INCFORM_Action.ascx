@@ -61,6 +61,16 @@
 				<tr>
 					<td class="text-center">
 						<asp:Label ID="lbItemSeq" runat="server" />
+						<asp:HiddenField id="hfTaskID" runat="server"/>
+						<asp:HiddenField id="hfRecordType" runat="server"/>
+						<asp:HiddenField id="hfRecordID" runat="server"/>
+						<asp:HiddenField id="hfTaskStep" runat="server"/>
+						<asp:HiddenField id="hfTaskType" runat="server"/>
+						<asp:HiddenField id="hfTaskStatus" runat="server"/>
+						<asp:HiddenField id="hfCompleteID" runat="server"/>
+						<asp:HiddenField id="hfCreateDT" runat="server"/>
+						<asp:HiddenField id="hfDetail" runat="server"/>
+						<asp:HiddenField id="hfComments" runat="server"/>
 					</td>
 					<td class="text-left-more">
 						<asp:TextBox ID="tbFinalAction" Rows="3" Height="65px" Width="100%" TextMode="MultiLine" SkinID="Metro" runat="server" />
