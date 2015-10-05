@@ -252,7 +252,7 @@
 
 					</div>
 				</div>
-
+				<br />
 				<%--	$$$$$$$$$$$$$$ Incident Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
 
 				<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2">
@@ -260,7 +260,7 @@
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 
-					<div class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
+					<div id="divChartSelect" runat="server" visible ="false" class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
 
 						<span class="noprint">
 							<asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="View Statistics: "></asp:Label>
