@@ -164,14 +164,21 @@ namespace SQM.Website
 					break;
 				case DisplayState.IncidentNotificationNew:
 					SessionManager.ClearReturns();
-					key = SQMModelMgr.GetPasswordKey();
-					if (rddlNewIncidentType.SelectedItem != null  &&  EHSIncidentMgr.IsUseCustomForm(Convert.ToDecimal(rddlNewIncidentType.SelectedValue)))
+					if (rddlNewIncidentType.SelectedItem != null)
 					{
-						Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx?i=0&l=" + WebSiteCommon.Encrypt(ddlIncidentLocation.SelectedValue, key) + "&t=" + WebSiteCommon.Encrypt(rddlNewIncidentType.SelectedValue, key));
-					}
-					else
-					{
-						Response.Redirect("/EHS/EHS_IncidentForm.aspx?i=0&l=" + WebSiteCommon.Encrypt(ddlIncidentLocation.SelectedValue, key) + "&t=" + WebSiteCommon.Encrypt(rddlNewIncidentType.SelectedValue, key));
+						INCIDENT newIncident = new INCIDENT();
+						newIncident.DETECT_PLANT_ID = Convert.ToDecimal(ddlIncidentLocation.SelectedValue);
+						newIncident.ISSUE_TYPE_ID = Convert.ToDecimal(rddlNewIncidentType.SelectedValue);
+						SessionManager.ReturnObject = newIncident;
+						SessionManager.ReturnStatus = true;
+						if (EHSIncidentMgr.IsUseCustomForm(Convert.ToDecimal(rddlNewIncidentType.SelectedValue)))
+						{
+							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
+						}
+						else
+						{
+							Response.Redirect("/EHS/EHS_IncidentForm.aspx");
+						}
 					}
 					break;
 				case DisplayState.IncidentNotificationEdit:
@@ -179,15 +186,15 @@ namespace SQM.Website
 					INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
 					if (theIncident != null)
 					{
-						SessionManager.SetIncidentLocation((decimal)theIncident.DETECT_PLANT_ID);
-						key = SQMModelMgr.GetPasswordKey();
+						SessionManager.ReturnObject = theIncident;
+						SessionManager.ReturnStatus = true;
 						if (EHSIncidentMgr.IsUseCustomForm((decimal)theIncident.ISSUE_TYPE_ID))
 						{
-							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx?i=" +  WebSiteCommon.Encrypt(incidentID.ToString(), key));
+							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
 						}
 						else
 						{
-							Response.Redirect("/EHS/EHS_IncidentForm.aspx?i=" +  WebSiteCommon.Encrypt(incidentID.ToString(), key));
+							Response.Redirect("/EHS/EHS_IncidentForm.aspx");
 						}
 					}
 

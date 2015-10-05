@@ -207,7 +207,7 @@ namespace SQM.Website
 						{
 							return;  // we don't want to intercept radio button postbacks
 						}
-
+						/*
 						if (targetControl != null)
 							if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
 							{
@@ -216,6 +216,7 @@ namespace SQM.Website
 								if (this.Page.FindControl(targetID).ID == "rddlIncidentType") // This is a new incident
 									btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = false;
 							}
+						*/
 					}
 				}
 
@@ -254,6 +255,7 @@ namespace SQM.Website
 				EditIncidentId = 0;
 				IsEditContext = false;
 				PopulateInitialForm();
+				SetSubnav("new");
 			}
 		}
 
@@ -262,6 +264,7 @@ namespace SQM.Website
 			IsEditContext = true;
 			EditIncidentId = incidentID;
 			PopulateInitialForm();
+			SetSubnav("edit");
 		}
 
 		public void PopulateInitialForm()
@@ -1075,6 +1078,23 @@ namespace SQM.Website
 
 			RadDropDownList rddlInc = (RadDropDownList)this.Parent.FindControl("rddlIncidentType");
 			rddlInc.SelectedIndex = 0;
+		}
+
+		private void SetSubnav(string context)
+		{
+			if (context == "new")
+			{
+				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;
+				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+			}
+			else
+			{
+				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;
+				btnSubnavLostTime.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+				btnSubnavIncident.Visible = true;
+				btnSubnavIncident.Enabled = false;
+				btnSubnavIncident.CssClass = "buttonLinkDisabled";
+			}
 		}
 
 		protected void btnSubnavSave_Click(object sender, EventArgs e)

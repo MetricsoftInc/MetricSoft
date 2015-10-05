@@ -22,38 +22,32 @@ namespace SQM.Website
 		{
 			if (!IsPostBack)
 			{
-				decimal incidentID = 0;
-				string key = SQMModelMgr.GetPasswordKey();
 				uclIncidentForm.Mode = IncidentMode.Incident;
 
 				try
 				{
-					string targetIncident = Request.QueryString["i"];  // INCIDENT ID will be encrypted
-					string newIncidentLocation = Request.QueryString["l"];
-					string newIncidentType = Request.QueryString["t"];
-					if (!string.IsNullOrEmpty(newIncidentLocation) && !string.IsNullOrEmpty(newIncidentType))
+					if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is INCIDENT)
 					{
-						// edit existing incident
-						newIncidentType = WebSiteCommon.Decrypt(newIncidentType, key);
-						newIncidentLocation = WebSiteCommon.Decrypt(newIncidentLocation, key);
-						uclIncidentForm.InitNewIncident(Convert.ToDecimal(newIncidentType), Convert.ToDecimal(newIncidentLocation));
-					}
-					else if (!string.IsNullOrEmpty(targetIncident))
-					{
-						// open existing incident
-						targetIncident = WebSiteCommon.Decrypt(targetIncident, key);
-						uclIncidentForm.BindIncident(Convert.ToDecimal(targetIncident));
-					}
-					else
-					{
-						; // display error
+						INCIDENT incident = SessionManager.ReturnObject as INCIDENT;
+						SessionManager.ClearReturns();
+						SessionManager.SetIncidentLocation((decimal)incident.DETECT_PLANT_ID);
+						if (incident.INCIDENT_ID > 0)
+						{
+							// edit existing incident
+							uclIncidentForm.BindIncident(incident.INCIDENT_ID);
+						}
+						else
+						{
+							// create new
+							uclIncidentForm.InitNewIncident((decimal)incident.ISSUE_TYPE_ID, (decimal)incident.DETECT_PLANT_ID);
+						}
+
+						uclIncidentForm.Visible = true;
 					}
 				}
 				catch
 				{
 				}
-
-				uclIncidentForm.Visible = true;
 			}
 
 		}
