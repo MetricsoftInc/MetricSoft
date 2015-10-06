@@ -1993,7 +1993,7 @@ namespace SQM.Website
             decimal result0 = 0;
             GaugeSeries series = null;
             PLANT plant = null;
-            this.Results.Initialize();
+			this.Results = new CalcsResult();
             string value = ""; int count = 0; int seriesitem = 0;
             List<string> keyList = new List<string>();
             List<WebSiteCommon.DatePeriod> pdList = new List<WebSiteCommon.DatePeriod>();
@@ -2057,10 +2057,6 @@ namespace SQM.Website
                         case "status":
                             keyList = this.IncidentHst.Select(l => l.Status).Distinct().ToList();
                             break;
-                        //case "month":
-                        //    foreach (WebSiteCommon.DatePeriod pd in WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, DateSpanOption.FYEffTimespan, ""))
-                        //        pdList.Add(pd);
-                        //    break;
                         default:
                             break;
                     }

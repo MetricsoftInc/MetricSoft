@@ -139,69 +139,6 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
         
         /// <summary>
-        /// phPrevent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phPrevent;
-        
-        /// <summary>
-        /// lblInspectCategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInspectCategory;
-        
-        /// <summary>
-        /// rcbInspectCatetory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbInspectCatetory;
-        
-        /// <summary>
-        /// lblRecommendType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRecommendType;
-        
-        /// <summary>
-        /// rcbRecommendationType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbRecommendationType;
-        
-        /// <summary>
-        /// lblPreventStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPreventStatus;
-        
-        /// <summary>
-        /// rcbFindingsSelect control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbFindingsSelect;
-        
-        /// <summary>
         /// lblIncidentDate control.
         /// </summary>
         /// <remarks>

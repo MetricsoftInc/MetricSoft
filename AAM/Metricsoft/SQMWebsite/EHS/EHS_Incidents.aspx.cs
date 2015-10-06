@@ -47,8 +47,7 @@ namespace SQM.Website
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
-			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbFindingsSelect);
-			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
+			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbIncidentType);
 		  
@@ -213,7 +212,6 @@ namespace SQM.Website
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 			 
 				rcbStatusSelect.SelectedValue = "A";
-				rcbFindingsSelect.FindItemByValue("A").Checked = true;
 			}
 			divIncidentList.Visible = true;
 			pnlChartSection.Style.Add("display", "none");
@@ -230,7 +228,6 @@ namespace SQM.Website
 			rbNew.Text = "New Incident";
 			lblIncidentDate.Visible = true;
 			lblInspectionDate.Visible = false;
-			phPrevent.Visible = false;
 			phIncident.Visible = true;
 
 			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENTSEARCHFROM");
@@ -420,7 +417,7 @@ namespace SQM.Website
 			pnlIncidentDetails.Visible = lnkIncidentDetailsClose.Visible = false;
 
 			if (ddlChartType.SelectedValue != "")
-				ddlChartTypeChange(null, null);
+				lnkCloseChart(null, null);
 
 		}
 

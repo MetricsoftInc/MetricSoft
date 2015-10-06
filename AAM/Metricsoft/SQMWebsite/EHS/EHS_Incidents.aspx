@@ -173,57 +173,6 @@
 						</div>
 					</asp:PlaceHolder>
 
-					<asp:PlaceHolder ID="phPrevent" runat="server">
-
-						<div class="row-fluid">
-
-							<span style="clear: both; float: left; width: 160px;">
-								<asp:Label runat="server" ID="lblInspectCategory" Text="Inspection Catetory:" CssClass="prompt"></asp:Label>
-							</span>
-
-							<span class="summaryDataEnd">
-								<telerik:RadComboBox ID="rcbInspectCatetory" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select inspection catetories types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false">
-									<Items>
-										<telerik:RadComboBoxItem Text="AGCS Recommendation" Value="AGCS Recommendation" Checked="true" />
-										<telerik:RadComboBoxItem Text="Non-Compliance" Value="Non-Compliance" Checked="true" />
-										<telerik:RadComboBoxItem Text="Non-Conformance" Value="Non-Conformance" Checked="true" />
-										<telerik:RadComboBoxItem Text="Safety Issue" Value="Safety Issue" Checked="true" />
-										<telerik:RadComboBoxItem Text="RMCAR" Value="RMCAR" Checked="true" />
-										<telerik:RadComboBoxItem Text="Other" Value="Other" Checked="true" />
-									</Items>
-								</telerik:RadComboBox>
-							</span>
-
-						</div>
-
-						<div class="row-fluid">
-							<span style="clear: both; float: left; width: 160px;">
-								<asp:Label runat="server" ID="lblRecommendType" Text="Recommendation Type:" CssClass="prompt"></asp:Label>
-							</span>
-
-							<telerik:RadComboBox ID="rcbRecommendationType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select issue recommendation types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false">
-								<Items>
-									<telerik:RadComboBoxItem Text="Behavioral" Value="Behavioral" Checked="true" />
-									<telerik:RadComboBoxItem Text="Infrastructure" Value="Infrastructure" Checked="true" />
-								</Items>
-							</telerik:RadComboBox>
-
-							<span>
-								<asp:Label ID="lblPreventStatus" runat="server" CssClass="prompt" Text="Status: "></asp:Label>
-								<telerik:RadComboBox ID="rcbFindingsSelect" runat="server" ToolTip="Select findings status to list" Width="200" ZIndex="9000" Skin="Metro" AutoPostBack="false" CheckBoxes="true" EnableCheckAllItemsCheckBox="true">
-									<Items>
-										<telerik:RadComboBoxItem Text="Open" Value="A" />
-										<telerik:RadComboBoxItem Text="In Progress" Value="P" />
-										<telerik:RadComboBoxItem Text="Closed" Value="C" />
-										<telerik:RadComboBoxItem Text="Audited" Value="U" />
-										<telerik:RadComboBoxItem Text="Awaiting Funding" Value="F" />
-									</Items>
-								</telerik:RadComboBox>
-							</span>
-
-						</div>
-					</asp:PlaceHolder>
-
 					<div class="row" style="margin-top: 7px;">
 
 						<span style="float: left; margin-top: 4px; margin-left: 14px;">
@@ -260,8 +209,7 @@
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 
-					<div id="divChartSelect" runat="server" visible ="false" class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
-
+					<div id="divChartSelect" runat="server" visible ="true" class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
 						<span class="noprint">
 							<asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="View Statistics: "></asp:Label>
 							<telerik:RadComboBox ID="ddlChartType" runat="server" ZIndex="9000" Width="256" Skin="Metro" EmptyMessage="Select a chart" AutoPostBack="true" OnSelectedIndexChanged="ddlChartTypeChange">
@@ -271,7 +219,6 @@
 								<asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonCancel" Visible="false" OnClick="lnkCloseChart" ToolTip="Close"></asp:LinkButton>
 							</p>
 						</span>
-
 					</div>
 
 					<asp:Panel ID="pnlChartSection" runat="server" Width="100%">
