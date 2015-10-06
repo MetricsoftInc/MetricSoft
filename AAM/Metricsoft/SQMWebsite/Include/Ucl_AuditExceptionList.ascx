@@ -44,49 +44,13 @@
                 </span>
                 <span class="noprint">
                     <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnAuditsSearchClick" />
-                    <asp:Button ID="btnReceiptSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonLink" Text="List Receipts" ToolTip="List material receipts" OnClick="btnReceiptsSearchClick" />
+<%--                    <asp:Button ID="btnReceiptSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonLink" Text="List Receipts" ToolTip="List material receipts" OnClick="btnReceiptsSearchClick" />--%>
                 </span>
             </td>
         </tr>
     </table>
  </asp:Panel>
 
-<asp:Panel ID="pnlAuditList" runat="server" Visible="true">
-    <table width="99%">
-        <tr>
-            <td>
-                <div id="divGVAuditListScroll" runat="server" class="">
-                    <asp:GridView runat="server" ID="gvAuditList" Name="gvAuditList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvAuditList_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellText" />
-                        <RowStyle CssClass="DataCell" />
-                        <Columns>
-                            <asp:TemplateField HeaderText="Issue ID" ItemStyle-Width="20%">
-                                <ItemTemplate>
-                                    <asp:HiddenField ID="hfAuditID" runat="server" Value='<%#Eval("AUDIT_ID") %>' />
-                                    <asp:Label ID="lblAuditID" runat="server"></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Audit Date" ItemStyle-Width="20%">
-                                <ItemTemplate>
-                                    <asp:HiddenField ID="hfAuditDate" runat="server" Value='<%#Eval("AUDIT_DT") %>' />
-                                    <asp:Label ID="lblAuditDate" runat="server"></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Audit Type" ItemStyle-Width="20%">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblAuditType" runat="server" Text='<%#Eval("AUDIT_TYPE") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="DESCRIPTION" HeaderText="Description" HtmlEncode="true" ItemStyle-Width="40%" />
-                        </Columns>
-                    </asp:GridView>
-                    <asp:Label runat="server" ID="lblAuditListEmpty" Height="40" Text="No Audits exist matching your search criteria." class="GridEmpty" Visible="false"></asp:Label>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-</asp:Panel>
 
 <asp:Panel ID="pnlAuditTaskHdr" runat="server" Visible="false">
     <table id="tblAuditTaskHdr" runat="server" cellspacing="0" cellpadding="1" border="0" width="99%" class="">
@@ -127,7 +91,7 @@
     <div>
         <telerik:RadGrid ID="rgAuditList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="20"
             AutoGenerateColumns="false" OnItemDataBound="rgAuditList_ItemDataBound" OnSortCommand="rgAuditList_SortCommand"
-            OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" GridLines="None" Width="100%" OnItemCreated="gvAuditList_ItemCreated" OnItemCommand="rgAuditList_ItemCommand">
+            OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" GridLines="None" Width="100%" OnItemCommand="rgAuditList_ItemCommand">
             <MasterTableView ExpandCollapseColumn-Visible="true" DataKeyNames="Audit.Audit_ID" EnableGroupsExpandAll="false" GroupsDefaultExpanded="false">
                 <Columns>
                     <telerik:GridTemplateColumn HeaderText="Audit" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
@@ -166,21 +130,61 @@
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                 </Columns>
-                <%--<NestedViewSettings>
-                    <ParentTableRelation>
-                        <telerik:GridRelationFields DetailKeyField="Audit_ID" MasterKeyField="Audit.Audit_ID" />
-                    </ParentTableRelation>
-                </NestedViewSettings>--%>
                 <NestedViewTemplate>
                     <%--<asp:Panel runat="server" ID="InnerContainer" Visible="true">--%>
-                        <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="true" AutoGenerateColumns="false">
-                            <MasterTableView DataKeyNames="QuestionId" ExpandCollapseColumn-Visible="false">
+                        <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="true" AutoGenerateColumns="false"
+                             OnItemCommand="rgAuditAnswers_ItemCommand" OnItemDataBound="rgAuditAnswers_ItemDataBound">
+                            <MasterTableView DataKeyNames="QuestionId" ExpandCollapseColumn-Visible="true">
                                 <Columns>
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <asp:HiddenField runat="server" ID="hdnAuditID" Value='<%#Eval("AuditID") %>' />
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
                                     <telerik:GridBoundColumn DataField="TopicTitle" HeaderText="Topic"></telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="QuestionText" HeaderText="Question"></telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="AnswerText" HeaderText="Answer"></telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn DataField="AnswerComment" HeaderText="Comment"></telerik:GridBoundColumn>
+                                    <telerik:GridTemplateColumn  HeaderText="Status">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lblAnswerStatus"></asp:Label>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                     <telerik:GridBoundColumn DataField="ResolutionComment" HeaderText="Resolution"></telerik:GridBoundColumn>
+                                    <telerik:GridTemplateColumn  HeaderText="Completed">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lblResolutionDate"></asp:Label>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                   <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <asp:LinkButton runat="server" ID="lnkAddTask" Text="Assign Task" OnClick="lnkAddTask_Click" ToolTip="Create a Task to complete this exception"></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <asp:LinkButton runat="server" ID="lnkUpdateStatus" Text="Update Status" OnClick="lnkUpdateStatus_Click" ToolTip="Update the status of this exception"></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
                                 </Columns>
+                                <NestedViewTemplate>
+                                    <telerik:RadGrid runat="server" ID="rgTasks" OnNeedDataSource="rgTasks_NeedDataSource" Width="100%" AllowSorting="false" AutoGenerateColumns="false" OnItemDataBound="rgTasks_ItemDataBound">
+                                        <MasterTableView DataKeyNames="Task.TASK_ID" ExpandCollapseColumn-Visible="false">
+                                            <Columns>
+                                                <telerik:GridTemplateColumn HeaderText="Responsible Person">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblTaskAssignedTo" runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Due_Dt" HeaderText="Due Date"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Description" HeaderText="Description"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Taskstatus" HeaderText="Status"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Comments" HeaderText="Comments"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Complete_dt" HeaderText="Complete Date"></telerik:GridBoundColumn>
+                                            </Columns>
+                                        </MasterTableView>
+                                    </telerik:RadGrid>
+                                </NestedViewTemplate>
                             </MasterTableView>
                         </telerik:RadGrid>
                     <%--</asp:Panel>--%>

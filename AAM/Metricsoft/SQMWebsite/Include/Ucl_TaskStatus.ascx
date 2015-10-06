@@ -69,6 +69,66 @@
 	</div>
 </asp:Panel>
 
+<asp:Panel runat="server" ID="pnlAddTask" Visible="false">
+	<div class="container-fluid" style="margin-top: 10px;">
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<asp:Label ID="lblTaskTypeAdd" runat="server" Text="Task" CssClass="prompt"></asp:Label>
+			</div>	
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:Label ID="lblTaskTypeValueAdd" runat="server" CssClass="textStd"></asp:Label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<asp:Label ID="lblTaskDetailAdd" runat="server" Text="Original Details" CssClass="prompt"></asp:Label>
+			</div>	
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:Label ID="lblTaskDetailValueAdd" runat="server" CssClass="textStd"></asp:Label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<asp:Label ID="lblTaskDescriptionAdd" runat="server" Text="Description" CssClass="prompt"></asp:Label>
+			</div>	
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:TextBox ID="tbTaskDescriptionAdd" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:TextBox>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
+				<asp:Label ID="lblTaskDueDTAdd" runat="server" Text="Due Date" CssClass="prompt"></asp:Label>
+			</div>	
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<telerik:RadDatePicker ID="rdpTaskDueDTAdd" Skin="Metro" Width="278" runat="server" ShowPopupOnFocus="true" Enabled="true"></telerik:RadDatePicker>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
+					<asp:Label ID="lblAssignPersonAdd" runat="server" Text="Assign To Person" CssClass="prompt"></asp:Label>
+				</div>	
+				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+					<telerik:RadComboBox ID="ddlAssignPersonAdd" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330" AutoPostBack="false" EmptyMessage="select person"></telerik:RadComboBox>
+				</div>
+			</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
+				<asp:Label ID="lblTaskStatusAdd" runat="server" Text="Current Status" CssClass="prompt"></asp:Label>
+			</div>	
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:Label ID="lblTaskStatusValueAdd" runat="server" CssClass="textEmphasis"></asp:Label>
+			</div>
+		</div>
+		<br />
+		<div style="float: right; margin: 5px;">
+			<span>
+				<asp:Button ID="btnTaskAdd" CSSclass="buttonStd" runat="server" text="Create" style="margin: 5px;" OnClientClick="return confirmAction('create this task as open');" onclick="btnTaskAdd_Click" ToolTip="create this Task as open"></asp:Button>
+				<asp:Button ID="btnTaskCancelAdd" CSSclass="buttonEmphasis" runat="server" text="Cancel" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
+			</span>
+        </div>					
+	</div>
+</asp:Panel>
+
 <telerik:RadWindow runat="server" ID="winAssignTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="300" Width="700" Behaviors="Move" Title="Re-Assign Task">
 	<ContentTemplate>
 		<div class="container-fluid" style="margin-top: 10px;">
@@ -98,3 +158,4 @@
 		</div>
 	</ContentTemplate>
 </telerik:RadWindow>
+

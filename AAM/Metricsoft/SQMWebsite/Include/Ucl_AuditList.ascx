@@ -43,7 +43,7 @@
                     <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=100 Font-Size=Small AutoPostBack="false" Visible="false"></telerik:RadComboBox> 
                 </span>
                 <span class="noprint">
-                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnAuditsSearchClick" />
+                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List audits" OnClick="btnAuditsSearchClick" />
                     <asp:Button ID="btnReceiptSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonLink" Text="List Receipts" ToolTip="List material receipts" OnClick="btnReceiptsSearchClick" />
                 </span>
             </td>
@@ -51,7 +51,7 @@
     </table>
  </asp:Panel>
 
-<asp:Panel ID="pnlAuditList" runat="server" Visible="true">
+<%--<asp:Panel ID="pnlAuditList" runat="server" Visible="true">
     <table width="99%">
         <tr>
             <td>
@@ -77,6 +77,7 @@
                                     <asp:Label ID="lblAuditType" runat="server" Text='<%#Eval("AUDIT_TYPE") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:BoundField DataField="DEPT_NAME" HeaderText="Department" />
                             <asp:BoundField DataField="DESCRIPTION" HeaderText="Description" HtmlEncode="true" ItemStyle-Width="40%" />
                         </Columns>
                     </asp:GridView>
@@ -86,7 +87,7 @@
         </tr>
     </table>
 
-</asp:Panel>
+</asp:Panel>--%>
 
 <asp:Panel ID="pnlAuditTaskHdr" runat="server" Visible="false">
     <table id="tblAuditTaskHdr" runat="server" cellspacing="0" cellpadding="1" border="0" width="99%" class="">
@@ -141,22 +142,7 @@
                                             </span>
                                         </asp:LinkButton>
                                     </td>
-                                    <%--<td>
-                                        <img alt=">" src="/images/arr-rt-grey.png" runat="server" id="imgEditReport" style="opacity: 0.5;" />
-                                    </td>--%>
-                                   <%-- <td style="width: 50%;">--%>
                                 </tr>
-<%--                                <tr>
-                                    <td>
-                                        <asp:LinkButton ID="lb8d" runat="server" OnClick="lnkProblemCaseRedirect" Visible="false" ToolTip="Edit 8D problem case" CommandArgument='<%#Eval("Audit.INCIDENT_ID") %>'>
-                                            <span class="tableLink" style="color: #a00000; white-space: nowrap;">Edit 8D</span>
-                                        </asp:LinkButton>
-                                        <asp:LinkButton ID="lbEditReport" runat="server" OnClick="lbEditReport_Click" Visible="false" ToolTip="Edit Audit Report" CommandArgument='<%#Eval("Audit.INCIDENT_ID") %>'>
-                                            <span class="tableLink" style="color: #006080; white-space: nowrap;">Edit Report</span>
-                                        </asp:LinkButton>
-
-                                    </td>
-                                </tr>--%>
                             </table>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
@@ -168,6 +154,11 @@
                     <telerik:GridTemplateColumn HeaderText="Location" ShowSortIcon="true" SortExpression="Plant.PLANT_NAME">
                         <ItemTemplate>
                             <asp:Label ID="lblLocation" runat="server" Text='<%#Eval("Plant.PLANT_NAME") %>'></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn HeaderText="Department" ShowSortIcon="true" SortExpression="Department.DEPT_NAME">
+                        <ItemTemplate>
+                            <asp:Label ID="lblDepartment" runat="server" Text='<%#Eval("Department.DEPT_NAME") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn HeaderText="Type" ShowSortIcon="true" SortExpression="AuditType.TITLE">

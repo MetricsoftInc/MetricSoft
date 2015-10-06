@@ -12,6 +12,7 @@ namespace SQM.Website
     public partial class Ucl_TaskStatus : System.Web.UI.UserControl
     {
 		public event GridActionCommand OnTaskUpdate;
+		public event GridActionCommand2 OnTaskAdd;
 
 		private List<XLAT> TaskXLATList
 		{
@@ -72,6 +73,78 @@ namespace SQM.Website
 			rdpTaskDueDT.SelectedDate = (DateTime)task.DUE_DT;
 			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION;
 			tbTaskComments.Text = task.COMMENTS;
+		}
+
+		public void BindTaskAdd(int recordType, decimal recordID, decimal recordSubID, string taskStep, string taskType, string originalDetail, decimal plantID, string context)
+		{
+			PSsqmEntities ctx = new PSsqmEntities();
+			if (TaskXLATList == null || TaskXLATList.Count == 0)
+				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
+
+			pnlUpdateTask.Visible = false;
+			pnlAddTask.Visible = true;
+			btnTaskAdd.CommandArgument = recordType.ToString() + "~" + recordID.ToString() + "~" + recordSubID.ToString() + "~" + taskStep + "~" + taskType;
+
+			lblTaskTypeValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == recordType.ToString()).FirstOrDefault().DESCRIPTION;
+
+			switch ((TaskRecordType)recordType)
+			{
+				case TaskRecordType.Audit:
+					if ((recordSubID > 0) || taskStep == "350")
+					{	// action required if subid references a specific audit question
+						lblTaskTypeValueAdd.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == taskStep).FirstOrDefault().DESCRIPTION);
+					}
+					else
+					{
+						lblTaskTypeValueAdd.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == "300").FirstOrDefault().DESCRIPTION);
+					}
+					break;
+				default:
+					return;
+					break;
+			}
+
+			lblTaskDetailValueAdd.Text = originalDetail;  // cause of the requirement
+			rdpTaskDueDTAdd.SelectedDate = DateTime.Today; // default to today?
+			lblTaskStatusValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == (0).ToString()).FirstOrDefault().DESCRIPTION; // default to the "Open" status
+			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
+			SQMBasePage.SetPersonList(ddlAssignPersonAdd, personList, "", 0, false, "LF");
+
+		}
+
+		protected void btnTaskAdd_Click(object sender, EventArgs e)
+		{
+			Button btn = (Button)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+
+			string[] cmd = btn.CommandArgument.Split('~'); // recordType, recordID, recordSubID, taskStep, taskType
+			TaskStatusMgr taskMgr = new TaskStatusMgr();
+			taskMgr.Initialize(Convert.ToInt32(cmd[0]), Convert.ToDecimal(cmd[1]));
+			TASK_STATUS task = new TASK_STATUS();
+			task.RECORD_TYPE = Convert.ToInt32(cmd[0]);
+			task.RECORD_ID = Convert.ToDecimal(cmd[1]);
+			task.RECORD_SUBID = Convert.ToDecimal(cmd[2]);
+			task.TASK_STEP = cmd[3];
+			task.TASK_TYPE = cmd[4];
+			task.TASK_SEQ = 0;
+			task.DUE_DT = rdpTaskDueDTAdd.SelectedDate;
+			task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPersonAdd.SelectedValue.ToString());
+			task.DETAIL = lblTaskDetailValueAdd.Text.ToString();
+			task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
+			task.STATUS = ((int)TaskStatus.New).ToString();
+			task.CREATE_DT = DateTime.Now;
+
+			taskMgr.CreateTask(task);
+			taskMgr.UpdateTaskList(task.RECORD_ID);
+			// send email ?
+
+			if (OnTaskAdd != null)
+			{
+				OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
+			}
 		}
 
 		protected void btnTaskComplete_Click(object sender, EventArgs e)

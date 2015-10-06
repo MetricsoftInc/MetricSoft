@@ -478,6 +478,24 @@ namespace SQM.Website
             return this;
         }
 
+		public TaskStatusMgr LoadTaskList(int recordType, decimal recordID, decimal recordSubID)
+		{
+			this.RecordType = RecordType;
+			this.RecordID = recordID;
+			this.TaskList = new List<TASK_STATUS>();
+			try
+			{
+				this.TaskList = (from t in this.Entities.TASK_STATUS
+								 where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID)
+								 select t).OrderBy(l => l.TASK_STEP).ThenBy(l => l.TASK_SEQ).ToList();
+			}
+			catch (Exception ex)
+			{
+				;
+			}
+			return this;
+		}
+
 		public TaskStatusMgr SelectTaskList(int[] recordTypes, string[] taskSteps, decimal responsibleID, bool openOnly)
 		{
 			try
@@ -1228,7 +1246,67 @@ namespace SQM.Website
             return taskList;
         }
 
-        #endregion
+		public static List<TaskItem> ExceptionTaskListByRecord(int recordType, decimal recordID, decimal recordSubID)
+		{
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
+			DateTime forwardDate = DateTime.Now;
+
+			List<TaskItem> taskList = new List<TaskItem>();
+			try
+			{
+				using (PSsqmEntities entities = new PSsqmEntities())
+				{
+					taskList = (from t in entities.TASK_STATUS
+								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
+								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350")
+								from p in p_t.DefaultIfEmpty()
+								select new TaskItem
+								{
+									Task = t,
+									RecordType = t.RECORD_TYPE,
+									RecordID = t.RECORD_ID,
+									Person = p
+								}).OrderBy(l => l.RecordID).ToList();
+
+					List<PLANT> plantList = new List<PLANT>();
+
+					foreach (TaskItem taskItem in taskList)
+					{
+						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+
+						//TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
+						//switch (recordType)
+						//{
+						//	case TaskRecordType.HealthSafetyIncident:
+						//	case TaskRecordType.PreventativeAction:
+						//		incident = (INCIDENT)taskItem.Detail;
+						//		taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+						//		taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						//		taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						//		taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
+						//		break;
+						//	case TaskRecordType.Audit:
+						//		AUDIT audit = (AUDIT)taskItem.Detail;
+						//		taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+						//		taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						//		taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						//		taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
+						//		break;
+						//	default:
+						//		break;
+						//}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+			}
+
+			return taskList;
+		}
+
+		#endregion
 
         #region sender
 

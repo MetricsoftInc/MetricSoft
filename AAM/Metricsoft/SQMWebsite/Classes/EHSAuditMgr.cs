@@ -13,6 +13,7 @@ namespace SQM.Website
 
 	public class EHSAuditQuestion
 	{
+		public decimal AuditId { get; set; }
 		public decimal QuestionId { get; set; }
 		public string QuestionText { get; set; }
 		public EHSAuditQuestionType QuestionType { get; set; }
@@ -27,6 +28,10 @@ namespace SQM.Website
 		public decimal TopicId { get; set; }
 		public string TopicTitle { get; set; }
 		public string AnswerComment { get; set; }
+		public bool ChoicePositive { get; set; }
+		public string Status { get; set; }
+		public string ResolutionComment { get; set; }
+		public DateTime CompleteDate { get; set; }
 	}
 
 	public class EHSAuditAnswerChoice
@@ -67,6 +72,11 @@ namespace SQM.Website
 			set;
 		}
 		public AUDIT_TYPE AuditType
+		{
+			get;
+			set;
+		}
+		public DEPARTMENT Department
 		{
 			get;
 			set;
@@ -415,6 +425,7 @@ namespace SQM.Website
 
 					var newQuestion = new EHSAuditQuestion()
 					{
+						AuditId = auditId,
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
 						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
@@ -425,8 +436,14 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = topicInfo.TITLE
+						TopicTitle = topicInfo.TITLE,
+						Status = auditAnswer.STATUS,
+						ResolutionComment = auditAnswer.RESOLUTION_COMMENT,
+						ChoicePositive = auditAnswer.CHOICE_POSITIVE
 					};
+
+					if (auditAnswer.COMPLETE_DATE != null)
+						newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
 
 					if (newQuestion.HasMultipleChoices)
 					{
@@ -484,6 +501,7 @@ namespace SQM.Website
 
 					var newQuestion = new EHSAuditQuestion()
 					{
+						AuditId = 0,
 						QuestionId = q.AUDIT_QUESTION_ID,
 						QuestionText = q.QUESTION_TEXT,
 						QuestionType = (EHSAuditQuestionType)q.AUDIT_QUESTION_TYPE_ID,
@@ -564,8 +582,10 @@ namespace SQM.Website
 								  where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
 								  select a).FirstOrDefault();
 
+					// need to redo this logic to only process if the answer is negative
 					var newQuestion = new EHSAuditQuestion()
-					{
+					{ 
+						AuditId = auditAnswer.AUDIT_ID,
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
 						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
@@ -578,8 +598,14 @@ namespace SQM.Website
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
 						TopicTitle = topicInfo.TITLE,
 						AnswerText = auditAnswer.ANSWER_VALUE,
-						AnswerComment = auditAnswer.COMMENT
+						AnswerComment = auditAnswer.COMMENT,
+						Status = auditAnswer.STATUS,
+						ResolutionComment = auditAnswer.RESOLUTION_COMMENT,
+						ChoicePositive = auditAnswer.CHOICE_POSITIVE
 					};
+
+					if (auditAnswer.COMPLETE_DATE != null)
+						newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
 
 					if (newQuestion.HasMultipleChoices)
 					{
@@ -609,6 +635,7 @@ namespace SQM.Website
 						}
 						if (answerIsNegative)
 						{
+							newQuestion.ChoicePositive = false;
 							questionList.Add(newQuestion);
 						}
 
@@ -637,6 +664,86 @@ namespace SQM.Website
 			}
 
 			return topicList;
+		}
+
+		public static EHSAuditQuestion SelectAuditQuestion(decimal auditId, decimal questionID)
+		{
+			var newQuestion = new EHSAuditQuestion();
+			try
+			{
+				var entities = new PSsqmEntities();
+				var audit = (from a in entities.AUDIT
+							 where auditId == a.AUDIT_ID
+							 select a).FirstOrDefault();
+
+				var questionInfo = (from qi in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG")
+									where qi.AUDIT_QUESTION_ID == questionID
+									select qi).FirstOrDefault();
+
+				var typeInfo = (from ti in entities.AUDIT_QUESTION_TYPE
+								where questionInfo.AUDIT_QUESTION_TYPE_ID == ti.AUDIT_QUESTION_TYPE_ID
+								select ti).FirstOrDefault();
+
+				var auditTypeTopic = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+									  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
+									  select q).FirstOrDefault();
+
+				var topicInfo = (from tp in entities.AUDIT_TOPIC
+								 where auditTypeTopic.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
+								 select tp).FirstOrDefault();
+
+				var auditAnswer = (from a in entities.AUDIT_ANSWER
+								   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == questionID
+								   select a).FirstOrDefault();
+
+				newQuestion = new EHSAuditQuestion()
+				{
+					AuditId = auditAnswer.AUDIT_ID,
+					QuestionId = questionInfo.AUDIT_QUESTION_ID,
+					//QuestionText = questionInfo.QUESTION_TEXT,
+					QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+					QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
+					HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
+					IsRequired = questionInfo.IS_REQUIRED,
+					IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
+					HelpText = questionInfo.HELP_TEXT,
+					StandardType = questionInfo.STANDARD_TYPE,
+					TopicId = topicInfo.AUDIT_TOPIC_ID,
+					TopicTitle = topicInfo.TITLE,
+					AnswerText = auditAnswer.ANSWER_VALUE,
+					AnswerComment = auditAnswer.COMMENT,
+					Status = auditAnswer.STATUS,
+					ResolutionComment = auditAnswer.RESOLUTION_COMMENT
+				};
+
+				if (auditAnswer.COMPLETE_DATE != null)
+					newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
+
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return newQuestion;
+		}
+
+		public static int UpdateAnswer(EHSAuditQuestion answer)
+		{
+			int status = 0;
+
+			var entities = new PSsqmEntities();
+
+			var auditAnswer = (from i in entities.AUDIT_ANSWER where i.AUDIT_ID == answer.AuditId && i.AUDIT_QUESTION_ID == answer.QuestionId select i).FirstOrDefault();
+			if (auditAnswer != null)
+			{
+				if (answer.CompleteDate != null && answer.CompleteDate.Year != 1)
+					auditAnswer.COMPLETE_DATE = answer.CompleteDate;
+				auditAnswer.STATUS = answer.Status;
+				auditAnswer.RESOLUTION_COMMENT = answer.ResolutionComment;
+				entities.SaveChanges();
+			}
+			return status;
 		}
 
 		public static decimal SelectAuditLocationIdByAuditId(decimal auditId)

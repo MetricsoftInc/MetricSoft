@@ -192,10 +192,30 @@ namespace SQM.Website
 			}
 		}
 
+		protected void UpdateDepartments(decimal selectedplantID)
+		{
+			rddlDepartment.Items.Clear();
+			var departmentList = new List<DEPARTMENT>();
+			string selectString = "";
+			try
+			{
+				departmentList = SQMModelMgr.SelectDepartmentList(entities, selectedplantID);
+			}
+			catch
+			{ }
+			selectString = "[Select A Department]";
+			departmentList.Insert(0, new DEPARTMENT() { DEPT_ID = 0, DEPT_NAME = "Plant Wide" });
+			departmentList.Insert(0, new DEPARTMENT() { DEPT_ID = -1, DEPT_NAME = selectString });
+
+			rddlDepartment.DataSource = departmentList;
+			rddlDepartment.DataTextField = "DEPT_NAME";
+			rddlDepartment.DataValueField = "DEPT_ID";
+			rddlDepartment.DataBind();
+		}
+
 		protected void LoadHeaderInformation()
 		{
 			// set up for adding the header info
-
 			if (IsEditContext || CurrentStep > 0)
 			{
 				// in edit mode, load the header field values and make all fields display only
@@ -222,6 +242,31 @@ namespace SQM.Website
 				lblAuditDueDate.Visible = true;
 				dmAuditDate.Enabled = false;
 				dmAuditDate.Visible = false;
+
+				if (rddlDepartment.Items.Count == 0)
+				{
+					UpdateDepartments((decimal)audit.DETECT_PLANT_ID);
+					rddlDepartment.SelectedValue = "-1";
+				}
+				
+				if (audit.DEPT_ID != null && rddlDepartment.SelectedIndex == 0)
+				{
+					rddlDepartment.SelectedValue = audit.DEPT_ID.ToString();
+					lblDepartment.Text = rddlDepartment.SelectedText.ToString();
+				}
+
+				if (SessionManager.UserContext.Person.PERSON_ID == audit.AUDIT_PERSON && !audit.CURRENT_STATUS.Equals("C"))
+				{
+					lblDepartment.Visible = false;
+					rddlDepartment.Enabled = true;
+					rddlDepartment.Visible = true;
+				}
+				else
+				{
+					lblDepartment.Visible = true;
+					rddlDepartment.Enabled = false;
+					rddlDepartment.Visible = false;
+				}
 			}
 			else
 			{
@@ -270,6 +315,21 @@ namespace SQM.Website
 				dmAuditDate.ShowPopupOnFocus = true;
 				if (!dmAuditDate.SelectedDate.HasValue)
 					dmAuditDate.SelectedDate = DateTime.Now;
+				//if (rddlDepartment.Items.Count == 0)
+				//{
+				//	UpdateDepartments((decimal)audit.DETECT_PLANT_ID);
+				//}
+				//if (audit.DEPT_ID != null)
+				//{
+				//	rddlDepartment.SelectedValue = audit.DEPT_ID.ToString();
+				//	lblDepartment.Text = rddlDepartment.SelectedText.ToString();
+				//}
+				//else
+				//{
+				//	rddlDepartment.SelectedValue = "-1";
+				//}
+				rddlDepartment.Enabled = true;
+				rddlDepartment.Visible = true;
 
 			}
 		}
@@ -825,6 +885,8 @@ namespace SQM.Website
 			}
 			BuildAuditUsersDropdownList(location);
 			hdnAuditLocation.Value = location;
+			// rebuild the department list
+			UpdateDepartments(Convert.ToDecimal(location));
 
 			// need to rebuild the form
 			string selectedTypeId = rddlAuditType.SelectedValue;
@@ -1851,7 +1913,13 @@ namespace SQM.Website
 				{
 					CurrentStep = 0;
 				}
-				Save(true);
+				if ((hdnAuditLocation.Value.ToString().Trim().Length == 0 && lblAuditLocation.Text.ToString().Length == 0) || (rddlAuditUsers.SelectedIndex <= 0 && lblAuditPersonName.Text.ToString().Length == 0) || (rddlDepartment.SelectedIndex == 0 && lblDepartment.Text.ToString().Length == 0))
+				{
+					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				}
+				else
+					Save(true);
 			}
 			else
 			{
@@ -1864,7 +1932,13 @@ namespace SQM.Website
 		{
 			if (Page.IsValid)
 			{
-				Save(false);
+				if (hdnAuditLocation.Value.ToString().Trim().Length == 0 || rddlAuditUsers.SelectedIndex == 0 || rddlDepartment.SelectedIndex == 0)
+				{
+					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				}
+				else
+					Save(false);
 			}
 			else
 			{
@@ -2210,24 +2284,6 @@ namespace SQM.Website
 									  where ia.AUDIT_ID == auditId
 										  && ia.AUDIT_QUESTION_ID == thisQuestion.QuestionId
 									  select ia).FirstOrDefault();
-				if (auditAnswer != null)
-				{
-					auditAnswer.ANSWER_VALUE = q.AnswerText;
-					//auditAnswer.ORIGINAL_QUESTION_TEXT = q.QuestionText; // don't want to update text after the audit has been created
-					auditAnswer.COMMENT = q.AnswerComment;
-				}
-				else
-				{
-					auditAnswer = new AUDIT_ANSWER()
-					{
-						AUDIT_ID = auditId,
-						AUDIT_QUESTION_ID = q.QuestionId,
-						ANSWER_VALUE = q.AnswerText,
-						ORIGINAL_QUESTION_TEXT = q.QuestionText,
-						COMMENT = q.AnswerComment
-					};
-					entities.AddToAUDIT_ANSWER(auditAnswer);
-				}
 				// calculate the total percentages
 				if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 				{
@@ -2243,14 +2299,46 @@ namespace SQM.Website
 						}
 						if (answerIsPositive)
 						{
+							q.ChoicePositive = true;
 							totalPositive += 1;
 						}
 						else
 						{
+							q.ChoicePositive = false;
 							if (q.AnswerComment.ToString().Trim().Length == 0)
 								negativeTextComplete = false;
 						}
 					}
+				}
+				if (auditAnswer != null)
+				{
+					auditAnswer.ANSWER_VALUE = q.AnswerText;
+					//auditAnswer.ORIGINAL_QUESTION_TEXT = q.QuestionText; // don't want to update text after the audit has been created
+					auditAnswer.COMMENT = q.AnswerComment;
+					auditAnswer.CHOICE_POSITIVE = q.ChoicePositive;
+					if (q.ChoicePositive)
+						auditAnswer.STATUS = "03";
+					else
+						auditAnswer.STATUS = "01";
+				}
+				else
+				{
+					auditAnswer = new AUDIT_ANSWER()
+					{
+						AUDIT_ID = auditId,
+						AUDIT_QUESTION_ID = q.QuestionId,
+						ANSWER_VALUE = q.AnswerText,
+						ORIGINAL_QUESTION_TEXT = q.QuestionText,
+						COMMENT = q.AnswerComment,
+						CHOICE_POSITIVE = q.ChoicePositive
+					};
+
+					if (q.ChoicePositive)
+						auditAnswer.STATUS = "03";
+					else
+						auditAnswer.STATUS = "01";
+
+					entities.AddToAUDIT_ANSWER(auditAnswer);
 				}
 			}
 			// now update the header info
@@ -2283,6 +2371,9 @@ namespace SQM.Website
 
 			audit.TOTAL_SCORE = totalPercent;
 
+			if (rddlDepartment.SelectedIndex > 0)
+				audit.DEPT_ID = Convert.ToDecimal(rddlDepartment.SelectedValue);
+
 			// save all the changes
 			entities.SaveChanges();
 
@@ -2310,7 +2401,8 @@ namespace SQM.Website
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				AUDIT_DT = (DateTime)dmAuditDate.SelectedDate,
 				AUDIT_TYPE_ID = auditTypeId,
-				AUDIT_PERSON = Convert.ToDecimal(rddlAuditUsers.SelectedValue)
+				AUDIT_PERSON = Convert.ToDecimal(rddlAuditUsers.SelectedValue),
+				DEPT_ID = Convert.ToDecimal(rddlDepartment.SelectedValue)
 			};
 			entities.AddToAUDIT(newAudit);
 			entities.SaveChanges();
@@ -2327,7 +2419,8 @@ namespace SQM.Website
 		{
 			// we are not going to let them update any of this info.
 			AUDIT audit = (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
-			//if (audit != null)
+
+			//if (audit != null && rddlDepartment.SelectedIndex > 0)
 			//{
 			//	audit.DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			//	audit.DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID;
@@ -2339,6 +2432,8 @@ namespace SQM.Website
 			//	audit.AUDIT_DT = auditDate;
 			//	//audit.ISSUE_TYPE = auditType;
 			//	audit.AUDIT_TYPE_ID = auditTypeId;
+
+			//	audit.DEPT_ID = Convert.ToDecimal(rddlDepartment.SelectedValue);
 
 			//	entities.SaveChanges();
 			//}

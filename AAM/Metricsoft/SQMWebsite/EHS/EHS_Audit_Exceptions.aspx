@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_AuditExceptionList.ascx" TagName="AuditExceptionList" TagPrefix="Ucl" %>
-<%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 
 <%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
 
@@ -31,6 +31,14 @@
                 if (!validated)
                     alert("Please fill out all required fields.");
             }
+        }
+
+        function OpenUpdateTaskWindow() {
+            $find("<%=winUpdateTask.ClientID %>").show();
+        }
+
+        function OpenUpdateAnswerStatusWindow() {
+            $find("<%=winUpdateAnswerStatus.ClientID %>").show();
         }
 
     </script>
@@ -142,6 +150,42 @@
                     <Ucl:AuditExceptionList ID="uclAuditExceptionList" runat="server" />
                 </div>
             </div>
+
+            <telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="700" Behaviors="Move" Title="Create Task">
+                <ContentTemplate>
+                    <Ucl:Task ID="uclTask" runat="server" />
+                </ContentTemplate>
+            </telerik:RadWindow>
+
+            <telerik:RadWindow runat="server" ID="winUpdateAnswerStatus" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="300" Width="700" Behaviors="Move" Title="Update Status">
+                <ContentTemplate>
+                    <div class="container-fluid" style="margin-top: 10px;">
+                        <div class="row">
+                            <div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
+                                <asp:Label ID="lblAnswerStatus" runat="server" Text="Status" CssClass="prompt"></asp:Label>
+                            </div>
+                            <div class="col-xs-12 col-sm-8 text-left greyControlCol">
+                                <telerik:RadComboBox ID="ddlAnswerStatus" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330" AutoPostBack="false" EmptyMessage="select status"></telerik:RadComboBox>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
+                                <asp:Label ID="lblResolutionComment" runat="server" Text="Comments" CssClass="prompt"></asp:Label>
+                            </div>
+                            <div class="col-xs-12 col-sm-8 text-left greyControlCol">
+                                <asp:TextBox ID="tbResolutionComment" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
+                            </div>
+                        </div>
+                        <br />
+                        <div style="float: right; margin: 5px;">
+                            <span>
+                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="Save" Style="margin: 5px;" OnClientClick="return confirmAction('update the audit exception status');" OnClick="btnStatusSave_Click" ToolTip="update the status of this audit exception"></asp:Button>
+                                <asp:Button ID="btnStatusCancel" CssClass="buttonEmphasis" runat="server" Text="Cancel" Style="margin: 5px;" OnClick="btnStatusCancel_Click"></asp:Button>
+                            </span>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </telerik:RadWindow>
 
             <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
             </telerik:RadAjaxManager>

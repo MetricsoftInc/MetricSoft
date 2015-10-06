@@ -1063,6 +1063,18 @@ namespace SQM.Website
 						data.EntryList.AddRange(qaList.Where(l => l.AUDIT_ID == data.Audit.AUDIT_ID).ToList());
 						data.DeriveStatus();
 						data.DaysElapsed();
+						DEPARTMENT dept = new DEPARTMENT();
+						if (data.Audit.DEPT_ID != null && data.Audit.DEPT_ID > 0)
+						{
+							dept = SQMModelMgr.LookupDepartment(this.Entities, (decimal)data.Plant.COMPANY_ID, (decimal)data.Plant.BUS_ORG_ID, (decimal)data.Plant.PLANT_ID, (decimal)data.Audit.DEPT_ID, "", false);
+						}
+						else
+						{
+							dept.DEPT_ID = 0;
+							dept.DEPT_NAME = "Plant Wide"; // where are we going to store the valid values for language pref??
+						}
+						if (dept != null)
+							data.Department = dept;
 					}
 
 					if (auditStatus == "A")  // get open audits

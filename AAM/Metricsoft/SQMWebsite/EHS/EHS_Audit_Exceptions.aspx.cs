@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using System.Globalization;
 using System.Threading;
@@ -25,10 +26,24 @@ namespace SQM.Website
 			set { ViewState["Mode"] = value; }
 		}
 
+		private List<XLAT> TaskXLATList
+		{
+			get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
+			set { ViewState["TaskXLATList"] = value; }
+		}
+
 		protected override void OnInit(EventArgs e)
 		{
 			base.OnInit(e);
 
+		}
+
+		protected void Page_Init(object sender, EventArgs e)
+		{
+			uclAuditExceptionList.OnExceptionListItemClick += AddTask;
+			uclAuditExceptionList.OnExceptionChangeStatusClick += UpdateAnswerStatus;
+			uclTask.OnTaskAdd += UpdateTaskList;
+			uclTask.OnTaskUpdate += UpdateTaskList;
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -314,6 +329,27 @@ namespace SQM.Website
 
 		}
 
+		private void UpdateTaskList(string cmd)
+		{
+			if (cmd != "cancel")
+				SearchAudits();
+		}
+
+		private void UpdateTaskList(string cmd, decimal recordID, decimal recordSubID)
+		{
+			// update the status when a task is added
+			if (cmd == "added")
+			{
+				EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
+
+				if (auditQuestion != null)
+				{
+					auditQuestion.Status = "02";
+					EHSAuditMgr.UpdateAnswer(auditQuestion);
+				}
+				SearchAudits();
+			}
+		}
 		#endregion
 
 
@@ -350,20 +386,73 @@ namespace SQM.Website
 			return HSCalcs();
 		}
 
-		#region export
+		#region actions
 
-		protected void ExportClick(string cmd)
+		private void AddTask(decimal auditID, decimal questionID)
 		{
-			//if (Mode == AuditMode.Prevent)
-			//	uclExport.GeneratePreventativeActionExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
-			//else
+			int recordType = (int)TaskRecordType.Audit;
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
+			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+			uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
+			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
 
-			//uclExport.GenerateAuditExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
-		}
-		protected void lnkExportClick(object sender, EventArgs e)
+		private void UpdateAnswerStatus(decimal auditID, decimal questionID)
 		{
-			//uclExport.GenerateAuditExportExcel(entities, HSCalcs().ehsCtl.AuditHst);
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
+
+			if (auditQuestion != null)
+			{
+				if (TaskXLATList == null || TaskXLATList.Count == 0)
+					TaskXLATList = SQMBasePage.SelectXLATList(new string[1] { "AUDIT_EXCEPTION_STATUS" });
+				ddlAnswerStatus.DataTextField = "DESCRIPTION";
+				ddlAnswerStatus.DataValueField = "XLAT_CODE";
+				ddlAnswerStatus.DataSource = TaskXLATList;
+				ddlAnswerStatus.DataBind();
+
+				if (auditQuestion.Status == null || auditQuestion.Status == "")
+				{
+					ddlAnswerStatus.SelectedIndex = 0;
+				}
+				else
+					ddlAnswerStatus.SelectedValue = auditQuestion.Status;
+
+				btnStatusSave.CommandArgument = auditID + "~" + questionID;
+
+				string script = "function f(){OpenUpdateAnswerStatusWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
 		}
+
+		protected void btnStatusSave_Click(object sender, EventArgs e)
+		{
+			Button btn = (Button)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+
+			string[] cmd = btn.CommandArgument.Split('~'); // recordType, recordID, recordSubID, taskStep, taskType
+
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(Convert.ToInt32(cmd[0]), Convert.ToDecimal(cmd[1]));
+
+			if (auditQuestion != null)
+			{
+				auditQuestion.Status = ddlAnswerStatus.SelectedValue.ToString();
+				auditQuestion.ResolutionComment = tbResolutionComment.Text.ToString();
+				if (auditQuestion.Status.Equals("03"))
+					auditQuestion.CompleteDate = DateTime.Now;
+				EHSAuditMgr.UpdateAnswer(auditQuestion);
+			}
+			UpdateTaskList("update");
+		}
+
+		protected void btnStatusCancel_Click(object sender, EventArgs e)
+		{
+			UpdateTaskList("cancel");
+		}
+
 		#endregion
 
 	}

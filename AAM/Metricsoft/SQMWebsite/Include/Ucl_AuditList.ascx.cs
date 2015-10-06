@@ -35,10 +35,10 @@ namespace SQM.Website
 		}
 
 		#region audit
-		public Panel AuditListPanel
-		{
-			get { return pnlAuditList; }
-		}
+		//public Panel AuditListPanel
+		//{
+		//	get { return pnlAuditList; }
+		//}
 		//public RadGrid AuditListGrid
 		//{
 		//	get { return rgCaseList; }
@@ -85,48 +85,48 @@ namespace SQM.Website
 			Response.Redirect("/EHS/EHS_Audits.aspx");
 		}
 
-		protected void lnkProblemCaseRedirect(Object sender, EventArgs e)
-		{
-			//try
-			//{
-			//	LinkButton lnk = (LinkButton)sender;
-			//	PROB_CASE probCase = ProblemCase.LookupCaseByAudit(Convert.ToDecimal(lnk.CommandArgument));
-			//	if (probCase != null)
-			//	{
-			//		SessionManager.ReturnObject = probCase.PROBCASE_ID;
-			//		SessionManager.ReturnStatus = true;
-			//		Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
-			//	}
-			//}
-			//catch { ; }
-		}
+		//protected void lnkProblemCaseRedirect(Object sender, EventArgs e)
+		//{
+		//	//try
+		//	//{
+		//	//	LinkButton lnk = (LinkButton)sender;
+		//	//	PROB_CASE probCase = ProblemCase.LookupCaseByAudit(Convert.ToDecimal(lnk.CommandArgument));
+		//	//	if (probCase != null)
+		//	//	{
+		//	//		SessionManager.ReturnObject = probCase.PROBCASE_ID;
+		//	//		SessionManager.ReturnStatus = true;
+		//	//		Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
+		//	//	}
+		//	//}
+		//	//catch { ; }
+		//}
 
-		public void BindAuditList(object theList)
-		{
-			pnlAuditList.Visible = true;
-			gvAuditList.DataSource = theList;
-			gvAuditList.DataBind();
-		}
+		//public void BindAuditList(object theList)
+		//{
+		//	pnlAuditList.Visible = true;
+		//	gvAuditList.DataSource = theList;
+		//	gvAuditList.DataBind();
+		//}
 
-		public void gvAuditList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-		{
-			if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
-			{
-				try
-				{
-					HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditDate");
-					Label lbl = (Label)e.Row.Cells[0].FindControl("lblAuditDate");
-					lbl.Text = SQMBasePage.FormatDate(Convert.ToDateTime(hf.Value), "d", false);
+		//public void gvAuditList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+		//{
+		//	if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
+		//	{
+		//		try
+		//		{
+		//			HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditDate");
+		//			Label lbl = (Label)e.Row.Cells[0].FindControl("lblAuditDate");
+		//			lbl.Text = SQMBasePage.FormatDate(Convert.ToDateTime(hf.Value), "d", false);
 
-					hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditID");
-					lbl = (Label)e.Row.Cells[0].FindControl("lblAuditID");
-					lbl.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
-				}
-				catch
-				{
-				}
-			}
-		}
+		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditID");
+		//			lbl = (Label)e.Row.Cells[0].FindControl("lblAuditID");
+		//			lbl.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
+		//		}
+		//		catch
+		//		{
+		//		}
+		//	}
+		//}
 
 		#endregion
 
@@ -173,13 +173,13 @@ namespace SQM.Website
 			}
 		}
 
-		protected void btnIssueListClose_Click(object sender, EventArgs e)
-		{
-			if (OnQualityIssueListCloseClick != null)
-			{
-				OnQualityIssueListCloseClick(0);
-			}
-		}
+		//protected void btnIssueListClose_Click(object sender, EventArgs e)
+		//{
+		//	if (OnQualityIssueListCloseClick != null)
+		//	{
+		//		OnQualityIssueListCloseClick(0);
+		//	}
+		//}
 
 		protected void ddlDateSpanChange(object sender, EventArgs e)
 		{
@@ -204,115 +204,10 @@ namespace SQM.Website
 			}
 		}
 
-		//protected void lnkIssue_Click(object sender, EventArgs e)
-		//{
-		//	if (OnQualityIssueClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnQualityIssueClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//public void gvIssueList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-		//{
-		//	if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
-		//	{
-		//		try
-		//		{
-		//			Label lbl;
-		//			HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfIssueID");
-
-		//			LinkButton lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkViewIssue_out");
-		//			lnk.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
-
-		//			lbl = (Label)e.Row.Cells[0].FindControl("lblDisposition_Out");
-		//			string tempDisposition = lbl.Text;
-		//			lbl.Text = WebSiteCommon.GetXlatValue("NCDisposition", lbl.Text);
-
-		//			lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkIssueDate_Out");
-		//			lnk.Text = WebSiteCommon.LocalTime(Convert.ToDateTime(lnk.Text), SessionManager.UserContext.TimeZoneID).ToShortDateString();
-
-		//			lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkIssueTask_out");
-		//			lnk.Text = WebSiteCommon.GetXlatValueLong("taskType", lnk.Text);
-
-		//			TASK_STATUS task = new TASK_STATUS();
-		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfTaskStatus");
-		//			task.TASK_ID = Convert.ToDecimal(hf.Value);
-		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfTaskDueDate");
-		//			task.DUE_DT = WebSiteCommon.LocalTime(Convert.ToDateTime(hf.Value), SessionManager.UserContext.TimeZoneID);
-		//			Image img = (Image)e.Row.Cells[0].FindControl("imgTaskStatus");
-		//			TaskStatus status = TaskMgr.CalculateTaskStatus(task);
-		//			img.ImageUrl = TaskMgr.TaskStatusImage(status);
-		//			img.ToolTip = status.ToString();
-		//		}
-		//		catch
-		//		{
-		//		}
-		//	}
-		//}
-
 		#endregion
 
-
-		#region problemcase
-
-		//protected void lbAuditId_Click(Object sender, EventArgs e)
-		//{
-		//	if (OnProblemCaseClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnProblemCaseClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//protected void lnkCase_Click(object sender, EventArgs e)
-		//{
-		//	if (OnProblemCaseClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnProblemCaseClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//protected void lbReport_Click(object sender, EventArgs e)
-		//{
-		//	LinkButton btn = (LinkButton)sender;
-		//	SessionManager.ReturnObject = btn.CommandArgument;
-		//	SessionManager.ReturnStatus = true;
-
-		//	string caseType = btn.Attributes["CaseType"];
-
-		//	Response.Redirect("/Problem/Problem_Rpt.aspx?c=" + caseType);
-		//}
-
-		//protected void btnCaseReport_Click(object sender, EventArgs e)
-		//{
-		//	Button btn = (Button)sender;
-		//	SessionManager.ReturnObject = btn.CommandArgument;
-		//	SessionManager.ReturnStatus = true;
-
-		//	Response.Redirect("/Problem/Problem_Rpt.aspx?c=" + btn.Attributes["ProbCaseType"]);
-		//}
-
-		#endregion
 
 		#region ehsaudit
-
-		//public void BindAuditListHeader(AUDIT audit, TaskItem taskItem)
-		//{
-		//	pnlAuditTaskHdr.Visible = true;
-		//	lblCaseDescription.Visible = lblAuditDescription.Visible = lblActionDescription.Visible = false;
-
-		//	lblAuditDescription.Visible = true;
-
-
-		//	if (taskItem.Plant != null)
-		//		lblCasePlant_out.Text = taskItem.Plant.PLANT_NAME;
-		//	lblResponsible_out.Text = SQMModelMgr.FormatPersonListItem(taskItem.Person);
-		//	lblCase2ID_out.Text = WebSiteCommon.FormatID(audit.AUDIT_ID, 6);
-		//	// lblCase2Desc_out.Text = audit.ISSUE_TYPE;
-		//	lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
-		//}
 
 		public void BindAuditListRepeater(object theList, string appContext)
 		{

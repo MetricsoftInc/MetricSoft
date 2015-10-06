@@ -52,7 +52,6 @@
                                                 OnSelectedIndexChanged="rddlAuditType_SelectedIndexChanged" Skin="Metro">
                                             </telerik:RadDropDownList>
 
-
                                             <span class="hidden-xs" style="float: right; width: 160px;">
                                                 <span class="requiredCloseStar">&bull;</span> - Required to Close
                                             </span>
@@ -103,8 +102,19 @@
                                                 <telerik:RadDatePicker ID="dmAuditDate" runat="server" CssClass="textStd" Width="145" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td  class="columnHeader" width="24%">
+                                                <asp:Label ID="lblDept" runat="server">Department:</asp:Label>
+                                            </td>
+                                            <td class="required" width="1%">&nbsp;</td>
+                                            <td class="tableDataAlt" width="75%">
+                                                <telerik:RadDropDownList ID="rddlDepartment" runat="server" Width="450" AutoPostBack="true" CausesValidation="false" Skin="Metro">
+                                                </telerik:RadDropDownList>
+                                                <asp:RequiredFieldValidator ID="rfv1" runat="server" ControlToValidate="rddlDepartment" InitialValue="-1" ValidationGroup="Val" ErrorMessage="Please select a department" />
+                                                <asp:Label runat="server" ID="lblDepartment" Visible="false"></asp:Label>
+                                            </td>
+                                        </tr>
                                     </table>
-
                                 </div>
                             </asp:Panel>
                         </div>

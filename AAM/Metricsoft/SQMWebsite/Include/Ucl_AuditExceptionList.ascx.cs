@@ -19,14 +19,12 @@ namespace SQM.Website
 
 		RadPersistenceManager persistenceManager;
 
-		public event GridItemClick OnQualityIssueClick;
-		public event GridItemClick OnQualityIssueListCloseClick;
-		public event GridItemClick OnProblemCaseClick;
-		public event GridItemClick OnAuditClick;
+		//public event GridItemClick OnAuditClick;
 		public event EditItemClick OnTaskClick;
-		public event EditItemClick OnCaseTaskClick;
 		public event CommandClick OnSearchClick;
-		public event CommandClick OnSearchReceiptsClick;
+		//public event CommandClick OnSearchReceiptsClick;
+		public event GridItemClick2 OnExceptionListItemClick;
+		public event GridItemClick2 OnExceptionChangeStatusClick;
 
 		public bool LinksDisabled
 		{
@@ -34,16 +32,13 @@ namespace SQM.Website
 			set;
 		}
 
-		#region audit
-		public Panel AuditListPanel
+		private List<XLAT> TaskXLATList
 		{
-			get { return pnlAuditList; }
+			get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
+			set { ViewState["TaskXLATList"] = value; }
 		}
-		//public RadGrid AuditListGrid
-		//{
-		//	get { return rgCaseList; }
-		//}
 
+		#region grids
 		public RadGrid AuditListEhsGrid
 		{
 			get { return rgAuditList; }
@@ -54,122 +49,9 @@ namespace SQM.Website
 			base.OnLoad(e);
 		}
 
-		protected void lbAudit_Click(Object sender, EventArgs e)
-		{
-			if (OnAuditClick != null)
-			{
-				LinkButton lnk = (LinkButton)sender;
-				OnAuditClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-			}
-		}
-
-		protected void lnkEditAudit(Object sender, EventArgs e)
-		{
-			LinkButton lnk = (LinkButton)sender;
-			string[] args = lnk.CommandArgument.ToString().Split('~');
-			if (args[1].Equals("C"))
-				SessionManager.ReturnObject = "Closed";
-			else if (args[1].Equals("D"))
-				SessionManager.ReturnObject = "DisplayOnly";
-			else
-				SessionManager.ReturnObject = "Notification";
-			SessionManager.ReturnRecordID = Convert.ToDecimal(args[0]);
-			SessionManager.ReturnStatus = true;
-		}
-
-		protected void lnkAuditRedirect(Object sender, EventArgs e)
-		{
-			LinkButton lnk = (LinkButton)sender;
-			SessionManager.ReturnObject = lnk.CommandArgument;
-			SessionManager.ReturnStatus = true;
-			Response.Redirect("/EHS/EHS_Audits.aspx");
-		}
-
-		//protected void lnkProblemCaseRedirect(Object sender, EventArgs e)
-		//{
-		//	//try
-		//	//{
-		//	//	LinkButton lnk = (LinkButton)sender;
-		//	//	PROB_CASE probCase = ProblemCase.LookupCaseByAudit(Convert.ToDecimal(lnk.CommandArgument));
-		//	//	if (probCase != null)
-		//	//	{
-		//	//		SessionManager.ReturnObject = probCase.PROBCASE_ID;
-		//	//		SessionManager.ReturnStatus = true;
-		//	//		Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
-		//	//	}
-		//	//}
-		//	//catch { ; }
-		//}
-
-		//public void BindAuditList(object theList)
-		//{
-		//	pnlAuditList.Visible = true;
-		//	gvAuditList.DataSource = theList;
-		//	gvAuditList.DataBind();
-		//}
-
-		public void gvAuditList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-		{
-			if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
-			{
-				try
-				{
-					HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditDate");
-					Label lbl = (Label)e.Row.Cells[0].FindControl("lblAuditDate");
-					lbl.Text = SQMBasePage.FormatDate(Convert.ToDateTime(hf.Value), "d", false);
-
-					hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditID");
-					lbl = (Label)e.Row.Cells[0].FindControl("lblAuditID");
-					lbl.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
-				}
-				catch
-				{
-				}
-			}
-		}
-
-		protected void gvAuditList_ItemCreated(object sender, GridItemEventArgs e)
-		{
-			//if (e.Item is GridNestedViewItem)
-			//{
-			//	(e.Item.FindControl("rgAuditAnswers") as RadGrid).NeedDataSource += new GridNeedDataSourceEventHandler(rgAuditAnswers_NeedDataSource);
-			//}
-		}
-
-		protected void rgAuditList_ItemCommand(object sender, GridCommandEventArgs e)
-		{
-			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
-			{
-				foreach (GridItem item in e.Item.OwnerTableView.Items)
-				{
-					if (item.Expanded && item != e.Item)
-					{
-						item.Expanded = false;
-					}
-				}
-			}
-		}
-
-		protected void rgAuditAnswers_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-		{
-			try
-			{
-				GridDataItem parentItem = ((sender as RadGrid).NamingContainer as GridNestedViewItem).ParentItem as GridDataItem;
-				if (parentItem != null)
-				{
-					// we only want to select the audit answers that were adverse
-					decimal auditID = Convert.ToDecimal(parentItem.GetDataKeyValue("Audit.Audit_ID").ToString());
-					List<EHSAuditQuestion> questions = (List<EHSAuditQuestion>)EHSAuditMgr.SelectAuditQuestionExceptionList(auditID);
-
-					(sender as RadGrid).DataSource = questions;
-				}
-			}
-			catch (Exception ex) {  }
-		} 
-
 		#endregion
 
-		#region qualityissue
+		#region search criteria
 
 		public RadComboBox DDLPlantSelect
 		{
@@ -179,10 +61,10 @@ namespace SQM.Website
 		{
 			get { return btnSearch; }
 		}
-		public Button BTNReceiptSearch
-		{
-			get { return btnReceiptSearch; }
-		}
+		//public Button BTNReceiptSearch
+		//{
+		//	get { return btnReceiptSearch; }
+		//}
 
 		public DateTime FromDate
 		{
@@ -212,14 +94,6 @@ namespace SQM.Website
 			}
 		}
 
-		protected void btnIssueListClose_Click(object sender, EventArgs e)
-		{
-			if (OnQualityIssueListCloseClick != null)
-			{
-				OnQualityIssueListCloseClick(0);
-			}
-		}
-
 		protected void ddlDateSpanChange(object sender, EventArgs e)
 		{
 
@@ -234,124 +108,10 @@ namespace SQM.Website
 			}
 		}
 
-		protected void btnReceiptsSearchClick(object sender, EventArgs e)
-		{
-			if (OnSearchReceiptsClick != null)
-			{
-				Button btn = (Button)sender;
-				OnSearchReceiptsClick(btn.CommandArgument);
-			}
-		}
-
-		//protected void lnkIssue_Click(object sender, EventArgs e)
-		//{
-		//	if (OnQualityIssueClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnQualityIssueClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//public void gvIssueList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-		//{
-		//	if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
-		//	{
-		//		try
-		//		{
-		//			Label lbl;
-		//			HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfIssueID");
-
-		//			LinkButton lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkViewIssue_out");
-		//			lnk.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
-
-		//			lbl = (Label)e.Row.Cells[0].FindControl("lblDisposition_Out");
-		//			string tempDisposition = lbl.Text;
-		//			lbl.Text = WebSiteCommon.GetXlatValue("NCDisposition", lbl.Text);
-
-		//			lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkIssueDate_Out");
-		//			lnk.Text = WebSiteCommon.LocalTime(Convert.ToDateTime(lnk.Text), SessionManager.UserContext.TimeZoneID).ToShortDateString();
-
-		//			lnk = (LinkButton)e.Row.Cells[0].FindControl("lnkIssueTask_out");
-		//			lnk.Text = WebSiteCommon.GetXlatValueLong("taskType", lnk.Text);
-
-		//			TASK_STATUS task = new TASK_STATUS();
-		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfTaskStatus");
-		//			task.TASK_ID = Convert.ToDecimal(hf.Value);
-		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfTaskDueDate");
-		//			task.DUE_DT = WebSiteCommon.LocalTime(Convert.ToDateTime(hf.Value), SessionManager.UserContext.TimeZoneID);
-		//			Image img = (Image)e.Row.Cells[0].FindControl("imgTaskStatus");
-		//			TaskStatus status = TaskMgr.CalculateTaskStatus(task);
-		//			img.ImageUrl = TaskMgr.TaskStatusImage(status);
-		//			img.ToolTip = status.ToString();
-		//		}
-		//		catch
-		//		{
-		//		}
-		//	}
-		//}
-
 		#endregion
 
-
-		#region problemcase
-
-		//protected void lbAuditId_Click(Object sender, EventArgs e)
-		//{
-		//	if (OnProblemCaseClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnProblemCaseClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//protected void lnkCase_Click(object sender, EventArgs e)
-		//{
-		//	if (OnProblemCaseClick != null)
-		//	{
-		//		LinkButton lnk = (LinkButton)sender;
-		//		OnProblemCaseClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-		//	}
-		//}
-
-		//protected void lbReport_Click(object sender, EventArgs e)
-		//{
-		//	LinkButton btn = (LinkButton)sender;
-		//	SessionManager.ReturnObject = btn.CommandArgument;
-		//	SessionManager.ReturnStatus = true;
-
-		//	string caseType = btn.Attributes["CaseType"];
-
-		//	Response.Redirect("/Problem/Problem_Rpt.aspx?c=" + caseType);
-		//}
-
-		//protected void btnCaseReport_Click(object sender, EventArgs e)
-		//{
-		//	Button btn = (Button)sender;
-		//	SessionManager.ReturnObject = btn.CommandArgument;
-		//	SessionManager.ReturnStatus = true;
-
-		//	Response.Redirect("/Problem/Problem_Rpt.aspx?c=" + btn.Attributes["ProbCaseType"]);
-		//}
-
-		#endregion
 
 		#region ehsaudit
-
-		//public void BindAuditListHeader(AUDIT audit, TaskItem taskItem)
-		//{
-		//	pnlAuditTaskHdr.Visible = true;
-		//	lblCaseDescription.Visible = lblAuditDescription.Visible = lblActionDescription.Visible = false;
-
-		//	lblAuditDescription.Visible = true;
-
-
-		//	if (taskItem.Plant != null)
-		//		lblCasePlant_out.Text = taskItem.Plant.PLANT_NAME;
-		//	lblResponsible_out.Text = SQMModelMgr.FormatPersonListItem(taskItem.Person);
-		//	lblCase2ID_out.Text = WebSiteCommon.FormatID(audit.AUDIT_ID, 6);
-		//	// lblCase2Desc_out.Text = audit.ISSUE_TYPE;
-		//	lblCase2Desc_out.Text = taskItem.Task.DESCRIPTION;
-		//}
 
 		public void BindAuditListRepeater(object theList, string appContext)
 		{
@@ -423,6 +183,144 @@ namespace SQM.Website
 			}
 		}
 
+		protected void rgAuditList_ItemCommand(object sender, GridCommandEventArgs e)
+		{
+			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
+			{
+				foreach (GridItem item in e.Item.OwnerTableView.Items)
+				{
+					if (item.Expanded && item != e.Item)
+					{
+						item.Expanded = false;
+					}
+				}
+			}
+		}
+
+		protected void rgAuditAnswers_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+		{
+			try
+			{
+				GridDataItem parentItem = ((sender as RadGrid).NamingContainer as GridNestedViewItem).ParentItem as GridDataItem;
+				if (parentItem != null)
+				{
+					// we only want to select the audit answers that were adverse
+					decimal auditID = Convert.ToDecimal(parentItem.GetDataKeyValue("Audit.Audit_ID").ToString());
+					List<EHSAuditQuestion> questions = (List<EHSAuditQuestion>)EHSAuditMgr.SelectAuditQuestionExceptionList(auditID);
+
+					(sender as RadGrid).DataSource = questions;
+				}
+			}
+			catch (Exception ex) { }
+		}
+
+		protected void rgAuditAnswers_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item is GridDataItem)
+			{
+				GridDataItem item = (GridDataItem)e.Item;
+				HiddenField hf;
+				LinkButton lnk;
+				Label lbl;
+				EHSAuditQuestion data = (EHSAuditQuestion)e.Item.DataItem;
+				lnk = (LinkButton)e.Item.FindControl("lnkAddTask");
+				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+				lnk = (LinkButton)e.Item.FindControl("lnkUpdateStatus");
+				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+
+				if (TaskXLATList == null || TaskXLATList.Count == 0)
+					TaskXLATList = SQMBasePage.SelectXLATList(new string[1] { "AUDIT_EXCEPTION_STATUS" });
+
+				lbl = (Label)e.Item.FindControl("lblAnswerStatus");
+				if (data.Status == null)
+					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_EXCEPTION_STATUS" && l.XLAT_CODE == "01").FirstOrDefault().DESCRIPTION;
+				else
+					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_EXCEPTION_STATUS" && l.XLAT_CODE == data.Status.ToString()).FirstOrDefault().DESCRIPTION;
+
+				lbl = (Label)e.Item.FindControl("lblResolutionDate");
+				if (data.CompleteDate == null || data.CompleteDate.Year == 1)
+					lbl.Text = "";
+				else
+					lbl.Text = data.CompleteDate.ToString("MM/dd/yyyy");
+
+			}
+		}
+
+		protected void rgAuditAnswers_ItemCommand(object sender, GridCommandEventArgs e)
+		{
+			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
+			{
+				foreach (GridItem item in e.Item.OwnerTableView.Items)
+				{
+					if (item.Expanded && item != e.Item)
+					{
+						item.Expanded = false;
+					}
+				}
+			}
+		}
+
+		protected void rgTasks_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+		{
+			try
+			{
+				GridDataItem parentItem = ((sender as RadGrid).NamingContainer as GridNestedViewItem).ParentItem as GridDataItem;
+				if (parentItem != null)
+				{
+					decimal questionID = Convert.ToDecimal(parentItem.GetDataKeyValue("QuestionId").ToString());
+					HiddenField hdn = (HiddenField)parentItem.FindControl("hdnAuditID");
+					decimal auditID = Convert.ToDecimal(hdn.Value.ToString());
+
+					TaskStatusMgr myTasks = new TaskStatusMgr().CreateNew(0, 0);
+
+					//myTasks.LoadTaskList((int)TaskRecordType.Audit, auditID, questionID);
+					List<TaskItem> tasks = TaskMgr.ExceptionTaskListByRecord((int)TaskRecordType.Audit, auditID, questionID);
+
+					(sender as RadGrid).DataSource = tasks;
+				}
+			}
+			catch (Exception ex) { }
+		}
+
+		protected void rgTasks_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item is GridDataItem)
+			{
+				GridDataItem item = (GridDataItem)e.Item;
+				HiddenField hf;
+				Label lbl;
+
+				TaskItem data = (TaskItem)e.Item.DataItem;
+
+				if (data.Person != null)
+				{
+					lbl = (Label)e.Item.FindControl("lblTaskAssignedTo");
+					lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
+				}
+			}
+		}
+
+		protected void lnkAddTask_Click(Object sender, EventArgs e)
+		{
+			if (OnExceptionListItemClick != null)
+			{
+				LinkButton lnk = (LinkButton)sender;
+				string[] cmd = lnk.CommandArgument.Split(',');
+				// call sending AuditID, QuestionID
+				OnExceptionListItemClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
+			}
+		}
+
+		protected void lnkUpdateStatus_Click(object sender, EventArgs e)
+		{
+			if (OnExceptionChangeStatusClick != null)
+			{
+				LinkButton lnk = (LinkButton)sender;
+				string[] cmd = lnk.CommandArgument.Split(',');
+				// call sending AuditID, QuestionID
+				OnExceptionChangeStatusClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
+			}
+		}
 
 		protected void lbEditReport_Click(object sender, EventArgs e)
 		{
@@ -455,101 +353,6 @@ namespace SQM.Website
 		}
 
 
-		//public void BindAuditActionList(object theList, string appContext)
-		//{
-		//	pnlAuditListRepeater.Visible = false;
-		//	pnlAuditActionList.Visible = true;
-		//	staticAppContext = appContext;
-
-		//	rgAuditActionList.DataSource = theList;
-		//	rgAuditActionList.DataBind();
-		//}
-
-		//protected void rgAuditActionList_ItemDataBound(object sender, GridItemEventArgs e)
-		//{
-
-		//	if (e.Item is GridDataItem)
-		//	{
-		//		GridDataItem item = (GridDataItem)e.Item;
-		//		HiddenField hf;
-		//		Label lbl;
-
-		//		EHSAuditData data = (EHSAuditData)e.Item.DataItem;
-
-		//		try
-		//		{
-		//			lbl = (Label)e.Item.FindControl("lblAuditId");
-		//			lbl.Text = WebSiteCommon.FormatID(data.Audit.AUDIT_ID, 6);
-
-
-		//			if (data.Audit.DESCRIPTION.Length > 200)
-		//			{
-		//				lbl = (Label)e.Item.FindControl("lblDescription");
-		//				lbl.Text = data.Audit.DESCRIPTION.Substring(0, 200) + "...";
-		//			}
-
-		//			lbl = (Label)e.Item.FindControl("lblDueDT");
-		//			AUDIT_ANSWER entry = data.Audit.AUDIT_ANSWER.Where(l => l.AUDIT_QUESTION_ID == 65).FirstOrDefault();  // due date
-		//			if (entry != null && !string.IsNullOrEmpty(entry.ANSWER_VALUE))
-		//			{
-		//				lbl.Text = SQMBasePage.FormatDate(Convert.ToDateTime(entry.ANSWER_VALUE), "d", false);
-		//				entry = data.Audit.AUDIT_ANSWER.Where(l => l.AUDIT_QUESTION_ID == 64).FirstOrDefault(); // responsible person
-		//				if (entry != null && !string.IsNullOrEmpty(entry.ANSWER_VALUE))
-		//				{
-		//					lbl = (Label)e.Item.FindControl("lblResponsible");
-		//					lbl.Text = entry.ANSWER_VALUE;
-		//				}
-		//			}
-
-		//			RadGrid gv = (RadGrid)e.Item.FindControl("rgAuditActions");
-		//			List<AUDIT_ANSWER> auditActionList = new List<AUDIT_ANSWER>();
-		//			auditActionList.AddRange(data.Audit.AUDIT_ANSWER.Where(l => l.AUDIT_QUESTION_ID == 24 || l.AUDIT_QUESTION_ID == 27).ToList());
-		//			if (auditActionList.Count > 0)
-		//			{
-		//				baseRowIndex = e.Item.RowIndex;
-		//				gv.DataSource = auditActionList;
-		//				gv.DataBind();
-		//				gv.Visible = true;
-		//			}
-
-		//			LinkButton lb8d = (LinkButton)e.Item.FindControl("lb8d");
-		//			if (lb8d != null && UserContext.RoleAccess() <= AccessMode.Partner)
-		//				lb8d.Visible = false;
-		//		}
-
-		//		catch
-		//		{
-		//		}
-
-		//	}
-		//}
-
-		//protected void rgAuditActions_ItemDataBound(object sender, GridItemEventArgs e)
-		//{
-
-		//	if (e.Item is GridDataItem)
-		//	{
-		//		GridDataItem item = (GridDataItem)e.Item;
-		//		if ((baseRowIndex % 4) == 0)
-		//			e.Item.Cells[0].BackColor = e.Item.Cells[1].BackColor = e.Item.Cells[2].BackColor = System.Drawing.ColorTranslator.FromHtml("#ededed");
-		//	}
-		//}
-
-		//protected void rgAuditActionList_SortCommand(object sender, GridSortCommandEventArgs e)
-		//{
-		//	SessionManager.ReturnStatus = true;
-		//	SessionManager.ReturnObject = "DisplayAudits";
-		//}
-		//protected void rgAuditActionList_PageIndexChanged(object sender, GridPageChangedEventArgs e)
-		//{
-		//	SessionManager.ReturnStatus = true;
-		//	SessionManager.ReturnObject = "DisplayAudits";
-		//}
-		//protected void rgAuditActionList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
-		//{
-		//	SessionManager.ReturnStatus = true;
-		//	SessionManager.ReturnObject = "DisplayAudits";
-		//}
 		#endregion
 
 		#region common
