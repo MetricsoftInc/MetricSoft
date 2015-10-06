@@ -248,6 +248,7 @@
     <Content Include="Home\Dashboard.aspx" />
     <Content Include="Home\Error404.aspx" />
     <Content Include="Home\Calendar.aspx" />
+    <Content Include="Home\TaskAction.aspx" />
     <Content Include="html\testlabel.txt" />
     <Content Include="images\arr-rt-grey.png" />
     <Content Include="images\arrow-down.gif" />
@@ -876,6 +877,13 @@
     </Compile>
     <Compile Include="Home\Calendar.aspx.designer.cs">
       <DependentUpon>Calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\TaskAction.aspx.cs">
+      <DependentUpon>TaskAction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home\TaskAction.aspx.designer.cs">
+      <DependentUpon>TaskAction.aspx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_AuditExceptionList.ascx.cs">
       <DependentUpon>Ucl_AuditExceptionList.ascx</DependentUpon>

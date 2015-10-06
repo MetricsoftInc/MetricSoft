@@ -13,14 +13,12 @@ namespace SQM.Website
 {
     public partial class Calendar : SQMBasePage
     {
-        private List<BusinessLocation> locationList;
         private List<decimal> respForList;
 		private List<decimal> respPlantList;
-        private int pageWidth;
 
-        protected void Page_Init(object sender, EventArgs e)
+		protected override void OnInit(EventArgs e)
         {
-			//base.OnInit(e);
+			base.OnInit(e);
 
 			uclTaskList.OnTaskListCommand += UpdateTaskList;
 			uclTaskList.OnTaskListItemClick += UpdateSelectedTask;
@@ -35,8 +33,6 @@ namespace SQM.Website
                 HiddenField hf = (HiddenField)this.Form.Parent.FindControl("form1").FindControl("hdCurrentActiveMenu");
                 hf.Value = SessionManager.CurrentMenuItem = "lbHomeMain";
                 IsCurrentPage();
-
-                hfWidth.Value = SessionManager.PageWidth > 0 ? SessionManager.PageWidth.ToString() : "";
             }
         }
 
@@ -54,15 +50,20 @@ namespace SQM.Website
 
                 SetupPage();
                 DisplayCalendar(DateTime.Now);
-				btnChangeView_Click(btnCalendarView, null);
+				/*
+				if (SessionManager.ReturnObject is TASK_STATUS)
+				{
+					TASK_STATUS task = SessionManager.ReturnObject as TASK_STATUS;
+					SessionManager.ClearReturns();
+					if (task.TASK_STEP == ((int)SysPriv.action).ToString())
+					{
+						UpdateSelectedTask(task.TASK_ID);
+					}
+				}
+				*/
             }
-            else
-            {
-                ;
-            }
-                
-            pnlCalendar.Visible = true;
         }
+
 		protected void btnChangeView_Click(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
@@ -115,7 +116,6 @@ namespace SQM.Website
 			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}
-
 
         private void SetupPage()
         {
@@ -251,7 +251,9 @@ namespace SQM.Website
             uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
 
             uclTaskStrip.BindTaskStrip(SessionManager.UserContext.TaskList.Where(l=> !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l=> l.Task.DUE_DT).ToList());
-        }
 
+			divTaskList.Visible = divEscalate.Visible = false;
+			divCalendar.Visible = true;
+        }
     }
 }

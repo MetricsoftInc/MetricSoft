@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_TaskList.ascx.cs" Inherits="SQM.Website.Ucl_TaskList" %>
 <%@ Register src="~/Include/Ucl_IncidentList.ascx" TagName="IncidentList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_EHSList.ascx" TagName="EHSInput" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <script type="text/javascript">
 	function OpenTaskDetailWindow(details) {
-		//document.getElementById('lblPopupInfo').value = "this is an info block";
 		$get("<%=lblTaskDetail.ClientID %>").innerHTML = details;
 		$find("<%=RadWindow_TaskDetail.ClientID %>").show();
 	}
@@ -148,5 +148,11 @@
 				<asp:Button runat="server" CssClass="buttonStd" Text="Close" OnClientClick="CloseTaskDetailWindow();"/>
 			</center>
 		</div>
+	</ContentTemplate>
+</telerik:RadWindow>
+
+<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="700" Behaviors="Move,Close" Title="View/Update Task">
+	<ContentTemplate>
+		<Ucl:Task ID="uclTask" runat="server" />
 	</ContentTemplate>
 </telerik:RadWindow>

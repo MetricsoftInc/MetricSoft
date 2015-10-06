@@ -648,14 +648,14 @@ namespace SQM.Website
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;
-                                taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
 								taskItem.Title = taskItem.Task.DESCRIPTION;
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
                                 break;
 							case TaskRecordType.Audit:
 								AUDIT audit = (AUDIT)taskItem.Detail;
-								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
 								taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
 								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
@@ -1202,14 +1202,14 @@ namespace SQM.Website
                             case TaskRecordType.HealthSafetyIncident:
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;
-                                taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
                                 taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
                                 break;
 							case TaskRecordType.Audit:
 								AUDIT audit = (AUDIT)taskItem.Detail;
-								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
+								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
                                 taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
                                 taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
@@ -1223,81 +1223,6 @@ namespace SQM.Website
             catch (Exception ex)
             {
                 //SQMLogger.LogException(ex);
-            }
-
-            if (addProblemCases)
-            {
-                List<TaskItem> probTaskList = new List<TaskItem>();
-                try
-                {
-                    using (PSsqmEntities entities = new PSsqmEntities())
-                    {
-                        probTaskList = (from t in entities.TASK_STATUS
-                                        join c in entities.PROB_CASE on t.RECORD_ID equals c.PROBCASE_ID
-                                        join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
-                                        where (t.RECORD_TYPE  == (int)TaskRecordType.ProblemCase && responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) && statusIDS.Contains(t.STATUS)  &&  t.DUE_DT <= forwardDate)
-                                        from p in p_t.DefaultIfEmpty()
-                                        select new TaskItem
-                                        {
-                                            Task = t,
-                                            RecordType = t.RECORD_TYPE,
-                                            RecordID = t.RECORD_ID,
-                                            Person = p,
-                                            Detail = c
-                                        }).OrderBy(l => l.RecordID).ToList();
-
-                        decimal recordID = 0;
-                        List<PLANT> plantList = new List<PLANT>();
-                        foreach (TaskItem taskItem in probTaskList)
-                        {
-                            taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-                            if (taskItem.RecordID != recordID)
-                            {
-                                recordID = taskItem.RecordID;
-                                //taskItem.RecordKey = taskItem.Task.RECORD_ID.ToString();
-                                PROB_CASE theCase = (PROB_CASE)taskItem.Detail;
-                                try
-                                {
-                                    if (theCase.PROBCASE_TYPE == "EHS")     // EHS cases only track detected location
-                                        plantList = (from o in entities.PROB_OCCUR
-                                                     where (o.PROBCASE_ID == taskItem.RecordID)
-                                                     join i in entities.INCIDENT on o.INCIDENT_ID equals i.INCIDENT_ID
-                                                     join p in entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
-                                                     select p).ToList();
-                                    else     // quality cases track both detected and responsible  locations - report responsible location here
-                                        plantList = (from o in entities.PROB_OCCUR
-                                                     where (o.PROBCASE_ID == taskItem.RecordID)
-                                                     join i in entities.INCIDENT on o.INCIDENT_ID equals i.INCIDENT_ID
-                                                     join p in entities.PLANT on i.RESP_PLANT_ID equals p.PLANT_ID
-                                                     select p).ToList();
-                                }
-                                catch
-                                {
-                                    plantList = null;
-                                }
-                            }
-                            if (plantList != null)
-                            {
-                                taskItem.Plant = plantList.FirstOrDefault();
-                                taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
-                            }
-                            taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
-                            taskItem.Title = taskItem.LongTitle = "Problem Case " + WebSiteCommon.GetXlatValue("caseStep", taskItem.Task.TASK_STEP);
-                            if (taskItem.Plant != null)
-                                taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
-                            //taskItem.Description = ((PROB_CASE)taskItem.Detail).DESC_SHORT;
-                            taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Case ") + ": " + ((PROB_CASE)taskItem.Detail).DESC_SHORT;
-                           
-                            taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
-                        }
-                    }
-
-                    taskList.AddRange(probTaskList);
-                }
-                catch (Exception ex)
-                {
-                    //SQMLogger.LogException(ex);
-                }
             }
 
             return taskList;

@@ -9,9 +9,10 @@ using Telerik.Web.UI;
 
 namespace SQM.Website
 {
-
     public partial class Ucl_TaskList : System.Web.UI.UserControl
     {
+		public event EditItemClick OnTaskListClick;
+
 		private List<XLAT> TaskXLATList
 		{
 			get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
@@ -24,8 +25,6 @@ namespace SQM.Website
         }
 
         #region events
-
-        public event EditItemClick OnTaskListClick;
 
         protected void OnEHSIncident_Click(string cmd)
         {
@@ -63,33 +62,9 @@ namespace SQM.Website
             {
                 string[] args = cmd.Split('|');
                 TaskRecordType taskType = (TaskRecordType)Enum.Parse(typeof(TaskRecordType), args[0]);
+
                 switch (taskType)
                 {
-                    case TaskRecordType.QualityIssue:
-                        QI_OCCUR qiOccur = new QI_OCCUR();
-                        qiOccur.INCIDENT_ID = Convert.ToDecimal(args[1]);
-                        SessionManager.ReturnObject = qiOccur;
-                        SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
-                        Response.Redirect("/Quality/Quality_Issue.aspx?c=" + args[2]);
-                        break;
-                    case TaskRecordType.ProblemCase:
-                        try
-                        {
-                            //string[] datas = args[1].Split('~');
-                            TASK_STATUS task = new TASK_STATUS();
-                            task.RECORD_ID = Convert.ToDecimal(args[1]);
-                            task.TASK_STEP = args[2];
-                            SessionManager.ReturnObject = task;
-                            SessionManager.ReturnStatus = true;
-                            SessionManager.ReturnPath = Request.Url.PathAndQuery;
-                            Response.Redirect("/Problem/Problem_Case.aspx");
-                        }
-                        catch (Exception ex)
-                        {
-                            //SQMLogger.LogException(ex);
-                        }
-                        break;
                     case TaskRecordType.ProfileInput:
                     case TaskRecordType.ProfileInputApproval:
                         SessionManager.ReturnObject = args[1];
@@ -105,10 +80,24 @@ namespace SQM.Website
                         break;
                         break;
                     case TaskRecordType.HealthSafetyIncident:
-                        SessionManager.ReturnObject = args[1];
-                        SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
-                        Response.Redirect("/EHS/EHS_Incidents.aspx");
+						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
+						{
+							TASK_STATUS task = new TASK_STATUS();
+							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.TASK_ID = Convert.ToDecimal(args[2]);
+							task.TASK_STEP = args[3];
+							SessionManager.ReturnObject = task;
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							Response.Redirect("/Home/TaskAction.aspx");
+						}
+						else
+						{
+							SessionManager.ReturnObject = args[1];
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							Response.Redirect("/EHS/EHS_Incidents.aspx");
+						}
                         break;
                     case TaskRecordType.PreventativeAction:
                         SessionManager.ReturnObject = args[1];
@@ -117,10 +106,24 @@ namespace SQM.Website
                         Response.Redirect("/EHS/EHS_Incidents.aspx?mode=prevent");
                         break;
 					case TaskRecordType.Audit:
-						SessionManager.ReturnObject = args[1];
-						SessionManager.ReturnStatus = true;
-						SessionManager.ReturnPath = Request.Url.PathAndQuery;
-						Response.Redirect("/EHS/EHS_Audits.aspx");
+						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // audit action
+						{
+							TASK_STATUS task = new TASK_STATUS();
+							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.TASK_ID = Convert.ToDecimal(args[2]);
+							task.TASK_STEP = args[3];
+							SessionManager.ReturnObject = task;
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							Response.Redirect("/Home/TaskAction.aspx");
+						}
+						else
+						{
+							SessionManager.ReturnObject = args[1];
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							Response.Redirect("/EHS/EHS_Audits.aspx");
+						}
 						break;
                     case TaskRecordType.CurrencyInput:
                         SessionManager.ReturnObject = args[1];
