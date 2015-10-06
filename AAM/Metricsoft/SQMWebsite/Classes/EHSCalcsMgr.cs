@@ -94,8 +94,8 @@ namespace SQM.Website
             set;
         }
 
-		public CalcsResult()
-		{
+		public CalcsResult Initialize()
+        {
 			this.metricSeries = new List<GaugeSeries>();
 			this.ValidResult = true;
 			this.ValidResult2 = false;
@@ -105,11 +105,7 @@ namespace SQM.Website
 			this.ResultDate = DateTime.MinValue;
 			this.SummaryTable = new DataTable();
 			this.ResultObj = null;
-		}
-
-		public CalcsResult Initialize()
-        {
-			return new CalcsResult();
+			return this;
         }
 
         public CalcsResult TrimSeries(decimal valueToTrim)
@@ -1993,7 +1989,7 @@ namespace SQM.Website
             decimal result0 = 0;
             GaugeSeries series = null;
             PLANT plant = null;
-			this.Results = new CalcsResult();
+			this.Results.Initialize();
             string value = ""; int count = 0; int seriesitem = 0;
             List<string> keyList = new List<string>();
             List<WebSiteCommon.DatePeriod> pdList = new List<WebSiteCommon.DatePeriod>();
