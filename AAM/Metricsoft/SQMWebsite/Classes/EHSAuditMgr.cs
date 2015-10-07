@@ -770,6 +770,28 @@ namespace SQM.Website
 			return locationName;
 		}
 
+		public static string SelectAuditStatus(decimal auditId)
+		{
+			string status = "";
+
+			var entities = new PSsqmEntities();
+			var audit = SelectAuditById(entities, auditId);
+			status = audit.CURRENT_STATUS;
+			if (status != "C")
+			{
+				var auditType = SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(auditType.DAYS_TO_COMPLETE));
+
+				if (closeDT.CompareTo(DateTime.Now) < 0)
+					status = "C";
+				else if (audit.PERCENT_COMPLETE > 0)
+					status = "I";
+				else
+					status = "A";
+			}
+			return status;
+		}
+		
 		public static string SelectPlantNameById(decimal plantId)
 		{
 			var entities = new PSsqmEntities();

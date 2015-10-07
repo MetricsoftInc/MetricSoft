@@ -255,7 +255,13 @@ namespace SQM.Website
 					lblDepartment.Text = rddlDepartment.SelectedText.ToString();
 				}
 
-				if (SessionManager.UserContext.Person.PERSON_ID == audit.AUDIT_PERSON && !audit.CURRENT_STATUS.Equals("C"))
+				if (!IsEditContext)
+				{
+					lblDepartment.Visible = true;
+					rddlDepartment.Enabled = false;
+					rddlDepartment.Visible = false;
+				}
+				else if (SessionManager.UserContext.Person.PERSON_ID == audit.AUDIT_PERSON && !audit.CURRENT_STATUS.Equals("C"))
 				{
 					lblDepartment.Visible = false;
 					rddlDepartment.Enabled = true;

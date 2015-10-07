@@ -176,11 +176,11 @@
                                                         <asp:Label ID="lblTaskAssignedTo" runat="server"></asp:Label>
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
-                                                <telerik:GridBoundColumn DataField="Task.Due_Dt" HeaderText="Due Date"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Due_Dt" HeaderText="Due Date" DataFormatString="{0:d}"></telerik:GridBoundColumn>
                                                 <telerik:GridBoundColumn DataField="Task.Description" HeaderText="Description"></telerik:GridBoundColumn>
                                                 <telerik:GridBoundColumn DataField="Taskstatus" HeaderText="Status"></telerik:GridBoundColumn>
                                                 <telerik:GridBoundColumn DataField="Task.Comments" HeaderText="Comments"></telerik:GridBoundColumn>
-                                                <telerik:GridBoundColumn DataField="Task.Complete_dt" HeaderText="Complete Date"></telerik:GridBoundColumn>
+                                                <telerik:GridBoundColumn DataField="Task.Complete_dt" HeaderText="Complete Date" DataFormatString="{0:d}"></telerik:GridBoundColumn>
                                             </Columns>
                                         </MasterTableView>
                                     </telerik:RadGrid>

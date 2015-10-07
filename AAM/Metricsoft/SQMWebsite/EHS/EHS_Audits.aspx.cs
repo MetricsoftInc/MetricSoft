@@ -87,7 +87,12 @@ namespace SQM.Website
 								//UpdateDisplayState(DisplayState.AuditNotificationEdit); 
 								//UpdateDisplayState(DisplayState.AuditReportEdit);
 								uclAuditForm.EditAuditId = SessionManager.ReturnRecordID;
-								UpdateDisplayState(DisplayState.AuditNotificationEdit);
+								// need to determine if the Audit is past due and force it into display mode (probelm when coming from Calendar)
+								string auditStatus = EHSAuditMgr.SelectAuditStatus(SessionManager.ReturnRecordID);
+								if (auditStatus == "C")
+									UpdateDisplayState(DisplayState.AuditNotificationDisplay);
+								else
+									UpdateDisplayState(DisplayState.AuditNotificationEdit);
 								if (isDirected)
 								{
 									rbNew.Visible = false;
