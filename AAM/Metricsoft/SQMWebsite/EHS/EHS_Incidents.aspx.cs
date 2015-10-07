@@ -39,6 +39,7 @@ namespace SQM.Website
 			base.OnInit(e);
 
 			uclExport.OnExportClick += ExportClick;
+			uclIncidentList.OnIncidentClick += IncidentClick;
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -75,14 +76,6 @@ namespace SQM.Website
 							case "DisplayIncidents":
 								UpdateDisplayState(DisplayState.IncidentList, 0);
 								break;
-
-							case "Notification":
-								UpdateDisplayState(DisplayState.IncidentNotificationEdit, SessionManager.ReturnRecordID);
-								if (isDirected)
-								{
-									rbNew.Visible = false;
-								}
-								break;
 							default:
 								break;
 						}
@@ -101,40 +94,20 @@ namespace SQM.Website
 						UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
 					}
 				}
+				else if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
+				{
+					// from inbox ?
+					decimal targetRecID;
+					if (decimal.TryParse(SessionManager.ReturnObject.ToString(), out targetRecID))
+					{
+						SessionManager.ClearReturns();
+						UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
+					}
+
+				}
 				else
 				{
-					if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
-					{
-						try
-						{
-							// from inbox
-							DisplayNonPostback();
-							SessionManager.ReturnRecordID = Convert.ToDecimal(SessionManager.ReturnObject.ToString());
-							SessionManager.ReturnObject = "Notification";
-							SessionManager.ReturnStatus = true;
-							isDirected = true;
-
-							StringBuilder sbScript = new StringBuilder();
-							ClientScriptManager cs = Page.ClientScript;
-
-							sbScript.Append("<script language='JavaScript' type='text/javascript'>\n");
-							sbScript.Append("<!--\n");
-							sbScript.Append(cs.GetPostBackEventReference(this, "PBArg") + ";\n");
-							sbScript.Append("// -->\n");
-							sbScript.Append("</script>\n");
-
-							cs.RegisterStartupScript(this.GetType(), "AutoPostBackScript", sbScript.ToString());
-						}
-						catch
-						{
-							// not a number, parse as type
-							DisplayNonPostback();
-						}
-					}
-					else
-					{
-						DisplayNonPostback();
-					}
+					DisplayNonPostback();
 				}
 			}
 		}
@@ -213,6 +186,11 @@ namespace SQM.Website
 					SessionManager.ClearReturns();
 					break;
 			}
+		}
+
+		private void IncidentClick(decimal incidentID)
+		{
+			UpdateDisplayState(DisplayState.IncidentNotificationEdit, incidentID);
 		}
 		
 		private void SetupPage()
