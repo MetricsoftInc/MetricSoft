@@ -179,8 +179,8 @@ namespace SQM.Website
 		{
 			var entities = new PSsqmEntities();
 
-			decimal companyId = SessionManager.UserContext.HRLocation.Company.COMPANY_ID;
-			decimal busOrgId = SessionManager.UserContext.HRLocation.BusinessOrg.BUS_ORG_ID;
+			//decimal companyId = SessionManager.UserContext.HRLocation.Company.COMPANY_ID;
+			//decimal busOrgId = SessionManager.UserContext.HRLocation.BusinessOrg.BUS_ORG_ID;
 			var emailIds = new HashSet<decimal>();
 
 			AUDIT audit = EHSAuditMgr.SelectAuditById(entities, auditId);
