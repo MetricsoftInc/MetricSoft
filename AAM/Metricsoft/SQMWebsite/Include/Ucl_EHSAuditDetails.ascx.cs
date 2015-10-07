@@ -50,7 +50,10 @@ namespace SQM.Website
 							if (!previousTopic.Equals(""))
 							{
 								// need to add a display for the topic percentage
-								totalPercent = totalTopicPositive / totalTopicQuestions;
+								if (totalTopicQuestions > 0)
+									totalPercent = totalTopicPositive / totalTopicQuestions;
+								else
+									totalPercent = 0;
 								sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
 								totalTopicQuestions = 0;
 								totalTopicPositive = 0;
@@ -147,10 +150,16 @@ namespace SQM.Website
 						}
 					}
 					// add the last topic total
-					totalPercent = totalTopicPositive / totalTopicQuestions;
+					if (totalTopicQuestions > 0)
+						totalPercent = totalTopicPositive / totalTopicQuestions;
+					else
+						totalPercent = 0;
 					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
 					// update the audit total
-					totalPercent = totalPositive / totalQuestions;
+					if (totalQuestions > 0)
+						totalPercent = totalPositive / totalQuestions;
+					else
+						totalPercent = 0;
 					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Score:   {0:0%}", totalPercent) + "</td></tr>");
 				}
 				sb.AppendLine("</table>");

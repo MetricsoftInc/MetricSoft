@@ -2230,7 +2230,10 @@ namespace SQM.Website
 						Label topicTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
 						if (topicTotal != null)
 						{
-							totalPercent = totalTopicPositive / totalTopicQuestions;
+							if (totalTopicQuestions > 0)
+								totalPercent = totalTopicPositive / totalTopicQuestions;
+							else
+								totalPercent = 0;
 							topicTotal.Text = string.Format("{0:0%}", totalPercent);
 						}
 						totalTopicQuestions = 0;
@@ -2262,14 +2265,20 @@ namespace SQM.Website
 			Label topicLastTotal = (Label)pnlForm.FindControl("LabelP" + previousTopic);
 			if (topicLastTotal != null)
 			{
-				totalPercent = totalTopicPositive / totalTopicQuestions;
+				if (totalTopicQuestions > 0)
+					totalPercent = totalTopicPositive / totalTopicQuestions;
+				else
+					totalPercent = 0;
 				topicLastTotal.Text = string.Format("{0:0%}", totalPercent);
 			}
 			// update the audit total
 			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPercent");
 			if (topicLastTotal != null)
 			{
-				totalPercent = totalPositive / totalQuestions;
+				if (totalQuestions > 0)
+					totalPercent = totalPositive / totalQuestions;
+				else
+					totalPercent = 0;
 				topicLastTotal.Text = string.Format("Total Score:   {0:0%}", totalPercent);
 			}
 		}

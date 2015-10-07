@@ -46,12 +46,23 @@ namespace SQM.Website.Automated
 			{
 				try
 				{
+					// Update the status of all audits that have a date past due
+					UpdatePastDueAuditStatus();
+				}
+				catch (Exception ex)
+				{
+					WriteLine("Main UpdatePastDueAuditStatus Error: " + ex.ToString());
+				}
+
+				try
+				{
+					// Schedule new audits
 					ScheduleAllAudits();
 				}
 				catch (Exception ex)
 				{
 					WriteLine("Main ScheduleAudits Error: " + ex.ToString());
-					WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
+					//WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
 				}
 			}
 			WriteLine("");
@@ -167,6 +178,11 @@ namespace SQM.Website.Automated
 				}
 			}
 			
+		}
+
+		static void UpdatePastDueAuditStatus()
+		{
+
 		}
 
 		static void WriteLogFile()
