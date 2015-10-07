@@ -9,7 +9,7 @@ namespace SQM.Website
 {
 	public static class EHSNotificationMgr
 	{
-		public static string incidentPath = "/EHS/EHS_Incidents.aspx";
+		public static string incidentPath = "/EHS/EHS_Incidents.aspx?r=";
 		public static string incidentActionPath = "/Home/Calendar.aspx?v=T";
 		public static string auditPath = "/EHS/EHS_Audits.aspx";
 		public static string auditActionPath = "/Home/Calendar.aspx?v=T";
@@ -119,7 +119,7 @@ namespace SQM.Website
 								"<br/>" +
 								"By : " + incident.LAST_UPD_BY +
 								"<br/>" +
-								"Please log in to " + (appUrl+incidentPath) + " to view this incident.";
+								"Please log in to " + (appUrl+incidentPath+incident.INCIDENT_ID.ToString()) + " to view this incident.";
 
 				string emailTo = "";
 				foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())

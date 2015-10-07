@@ -92,39 +92,50 @@ namespace SQM.Website
 			}
 			else
 			{
-				if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
+				if (!string.IsNullOrEmpty(Request.QueryString["r"]))   // incident Record id is supplied from email notification
 				{
-					try
+					string targetRec = Request.QueryString["r"];
+					decimal targetRecID;
+					if (decimal.TryParse(targetRec, out targetRecID))
 					{
-						// from inbox
-						DisplayNonPostback();
-						SessionManager.ReturnRecordID = Convert.ToDecimal(SessionManager.ReturnObject.ToString());
-						SessionManager.ReturnObject = "Notification";
-						SessionManager.ReturnStatus = true;
-						isDirected = true;
-
-						StringBuilder sbScript = new StringBuilder();
-						ClientScriptManager cs = Page.ClientScript;
-
-						sbScript.Append("<script language='JavaScript' type='text/javascript'>\n");
-						sbScript.Append("<!--\n");
-						sbScript.Append(cs.GetPostBackEventReference(this, "PBArg") + ";\n");
-						sbScript.Append("// -->\n");
-						sbScript.Append("</script>\n");
-
-						cs.RegisterStartupScript(this.GetType(), "AutoPostBackScript", sbScript.ToString());
-					}
-					catch
-					{
-						// not a number, parse as type
-						DisplayNonPostback();
+						UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
 					}
 				}
 				else
 				{
-					DisplayNonPostback();
-				}
+					if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
+					{
+						try
+						{
+							// from inbox
+							DisplayNonPostback();
+							SessionManager.ReturnRecordID = Convert.ToDecimal(SessionManager.ReturnObject.ToString());
+							SessionManager.ReturnObject = "Notification";
+							SessionManager.ReturnStatus = true;
+							isDirected = true;
 
+							StringBuilder sbScript = new StringBuilder();
+							ClientScriptManager cs = Page.ClientScript;
+
+							sbScript.Append("<script language='JavaScript' type='text/javascript'>\n");
+							sbScript.Append("<!--\n");
+							sbScript.Append(cs.GetPostBackEventReference(this, "PBArg") + ";\n");
+							sbScript.Append("// -->\n");
+							sbScript.Append("</script>\n");
+
+							cs.RegisterStartupScript(this.GetType(), "AutoPostBackScript", sbScript.ToString());
+						}
+						catch
+						{
+							// not a number, parse as type
+							DisplayNonPostback();
+						}
+					}
+					else
+					{
+						DisplayNonPostback();
+					}
+				}
 			}
 		}
 
