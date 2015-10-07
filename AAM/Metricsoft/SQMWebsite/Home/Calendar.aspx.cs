@@ -132,7 +132,7 @@ namespace SQM.Website
 
 			SessionManager.ReturnObject = task;
 			SessionManager.ReturnStatus = true;
-			SessionManager.ReturnPath = (Request.Url.ToString() + "?v=T");  // return to action/task view
+			SessionManager.ReturnPath = (Request.Path.ToString() + "?v=T");  // return to action/task view
 			Response.Redirect("/Home/TaskAction.aspx");
 
 			/*
