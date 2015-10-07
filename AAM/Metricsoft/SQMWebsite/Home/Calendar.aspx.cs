@@ -50,6 +50,24 @@ namespace SQM.Website
 
                 SetupPage();
                 DisplayCalendar(DateTime.Now);
+
+				if (!string.IsNullOrEmpty(Request.QueryString["v"]))   // initial view override
+				{
+					string viewOption = Request.QueryString["v"];
+					switch (viewOption.ToUpper())
+					{
+						case "T":
+							btnChangeView_Click(btnTaskView, null);
+							break;
+						case "E":
+							btnChangeView_Click(btnEscalateView, null);
+							break;
+						default:
+							btnChangeView_Click(btnCalendarView, null);
+							break;
+					}
+				}
+
 				/*
 				if (SessionManager.ReturnObject is TASK_STATUS)
 				{
@@ -111,10 +129,17 @@ namespace SQM.Website
 		{
 			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
 			TASK_STATUS task = taskMgr.SelectTask(taskID);
-			uclTask.BindTaskUpdate(task, "");
 
+			SessionManager.ReturnObject = task;
+			SessionManager.ReturnStatus = true;
+			SessionManager.ReturnPath = (Request.Url.ToString() + "?v=T");  // return to action/task view
+			Response.Redirect("/Home/TaskAction.aspx");
+
+			/*
+			uclTask.BindTaskUpdate(task, "");
 			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			*/
 		}
 
         private void SetupPage()

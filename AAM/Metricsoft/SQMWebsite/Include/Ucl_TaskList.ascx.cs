@@ -69,13 +69,13 @@ namespace SQM.Website
                     case TaskRecordType.ProfileInputApproval:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
+						SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_MetricInput.aspx");
                         break;
                     case TaskRecordType.ProfileInputFinalize:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
+						SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_Console.aspx");
                         break;
                         break;
@@ -88,21 +88,21 @@ namespace SQM.Website
 							task.TASK_STEP = args[3];
 							SessionManager.ReturnObject = task;
 							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							SessionManager.ReturnPath = Request.Path.ToString();
 							Response.Redirect("/Home/TaskAction.aspx");
 						}
 						else
 						{
 							SessionManager.ReturnObject = args[1];
 							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							SessionManager.ReturnPath = Request.Path.ToString();
 							Response.Redirect("/EHS/EHS_Incidents.aspx");
 						}
                         break;
                     case TaskRecordType.PreventativeAction:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
+						SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_Incidents.aspx?mode=prevent");
                         break;
 					case TaskRecordType.Audit:
@@ -114,21 +114,21 @@ namespace SQM.Website
 							task.TASK_STEP = args[3];
 							SessionManager.ReturnObject = task;
 							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							SessionManager.ReturnPath = Request.Path.ToString();
 							Response.Redirect("/Home/TaskAction.aspx");
 						}
 						else
 						{
 							SessionManager.ReturnObject = args[1];
 							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Url.PathAndQuery;
+							SessionManager.ReturnPath = Request.Path.ToString();
 							Response.Redirect("/EHS/EHS_Audits.aspx");
 						}
 						break;
                     case TaskRecordType.CurrencyInput:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-                        SessionManager.ReturnPath = Request.Url.PathAndQuery;
+						SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/Admin/Administrate_CurrencyInput.aspx");
                         break;
                     default:

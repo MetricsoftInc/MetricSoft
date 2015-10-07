@@ -103,22 +103,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCalendar;
         
         /// <summary>
-        /// lblPageTitle control.
+        /// lblCalendarTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageTitle;
+        protected global::System.Web.UI.WebControls.Label lblCalendarTitle;
         
         /// <summary>
-        /// lblPageInstruct control.
+        /// lblCalendarInstruct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageInstruct;
+        protected global::System.Web.UI.WebControls.Label lblCalendarInstruct;
         
         /// <summary>
         /// lblScheduleScope control.
@@ -175,6 +175,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEscalate;
         
         /// <summary>
+        /// lblEscalateTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEscalateTitle;
+        
+        /// <summary>
+        /// lblEscalateInstruct control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEscalateInstruct;
+        
+        /// <summary>
         /// divTasks control.
         /// </summary>
         /// <remarks>
@@ -202,22 +220,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTaskList;
         
         /// <summary>
-        /// Label1 control.
+        /// LlblActionsTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LlblActionsTitle;
         
         /// <summary>
-        /// Label2 control.
+        /// lblActionsInstruct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblActionsInstruct;
         
         /// <summary>
         /// uclTaskList control.

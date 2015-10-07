@@ -31,18 +31,18 @@
 
 <%--	<FORM name="dummy">--%>
 	<div style="margin: 8px;">
-		<asp:Button id="btnCalendarView" runat="server" Text="Calendar" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="C"/>
-		<asp:Button id="btnTaskView" runat="server" Text="Actions Pending" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T"/>
-		<asp:Button id="btnEscalateView" runat="server" Text="Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E"/>
+		<asp:Button id="btnCalendarView" runat="server" Text="Calendar View" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="C"/>
+		<asp:Button id="btnTaskView" runat="server" Text="Actions Assigned" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T"/>
+		<asp:Button id="btnEscalateView" runat="server" Text="Task Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E"/>
 	</div>
 
 	<asp:Panel runat="server" ID="pnlCalendar" Width="100%">
 
 		<div id="divCalendar" runat="server" style="margin-top: 4px;" visible="false">
 			<div style="width: 99%; margin: 5px;" class="noprint">
-				<asp:Label ID="lblPageTitle" runat="server"  CssClass="pageTitles" Text="Task Calendar" ></asp:Label>
+				<asp:Label ID="lblCalendarTitle" runat="server"  CssClass="pageTitles" Text="My Calendar View" ></asp:Label>
 				<br />
-				<asp:Label ID="lblPageInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
+				<asp:Label ID="lblCalendarInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
 				<br />
 			</div>
 			<div class="container-fluid">
@@ -74,6 +74,11 @@
 		</div>
 
 		<div id="divEscalate" runat="server" style="margin-top: 4px;" visible="false">
+			<div style="margin: 5px;" class="noprint">
+				<asp:Label ID="lblEscalateTitle" runat="server"  CssClass="pageTitles" Text="Task Escalations" ></asp:Label>
+				<br />
+				<asp:Label ID="lblEscalateInstruct" runat="server" CssClass="instructText" Text="Tasks escalated to your attention."></asp:Label>
+			</div>
 			<div class="container-fluid">
 				<div class="row">
 					<div id="divTasks" runat="server" class="noprint" style="float: left; margin: 5px; width: 98%;">
@@ -85,9 +90,9 @@
 			
 		<div id="divTaskList" runat="server" style="margin-top: 4px;" visible="false">
 			<div style="margin: 5px;" class="noprint">
-				<asp:Label ID="Label1" runat="server"  CssClass="pageTitles" Text="My Task List" ></asp:Label>
+				<asp:Label ID="LlblActionsTitle" runat="server"  CssClass="pageTitles" Text="Actions Assigned To Me" ></asp:Label>
 				<br />
-				<asp:Label ID="Label2" runat="server" CssClass="instructText" Text="Tasks assigned to you Click on a Task to update status or close."></asp:Label>
+				<asp:Label ID="lblActionsInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you click on a Task to view details or to update/close."></asp:Label>
 			</div>
 			<br />
 			<div class="container-fluid">

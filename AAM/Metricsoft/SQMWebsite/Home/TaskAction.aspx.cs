@@ -15,7 +15,7 @@ namespace SQM.Website
 	{
 		public string ReturnURL
 		{
-			get { return ViewState["ReturnURL"] == null ? "/Home/Calendar.aspx" : (string)ViewState["ReturnURL"]; }
+			get { return ViewState["ReturnURL"] == null ? "" : (string)ViewState["ReturnURL"]; }
 			set { ViewState["ReturnURL"] = value; }
 		}
 

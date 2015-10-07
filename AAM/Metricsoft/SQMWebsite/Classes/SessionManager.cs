@@ -335,6 +335,7 @@ namespace SQM.Website
 			{
 				HttpContext.Current.Session["RETURNOBJECT"] = null;
 				HttpContext.Current.Session["RETURNSTATUS"] = false;
+				HttpContext.Current.Session["RETURNPATH"] = null;
 			}
 			catch { }
 		}
