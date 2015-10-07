@@ -10,7 +10,9 @@ namespace SQM.Website
 	public static class EHSNotificationMgr
 	{
 		public static string incidentPath = "/EHS/EHS_Incidents.aspx";
+		public static string incidentActionPath = "/Home/Calendar.aspx?v=T";
 		public static string auditPath = "/EHS/EHS_Audits.aspx";
+		public static string auditActionPath = "/Home/Calendar.aspx?v=T";
 
 		#region helpers
 
@@ -163,7 +165,7 @@ namespace SQM.Website
 								"<br/>" +
 								"Due : " + theTask.DUE_DT.ToString() + "<br/>" +
 								"<br/>" +
-								"Please log in to " + (appUrl+incidentPath) + " to view this incident.";
+								"Please log in to " + (appUrl+incidentActionPath) + " to view this task.";
 
 				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
 				thread.IsBackground = true;

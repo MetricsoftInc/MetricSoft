@@ -338,7 +338,7 @@ namespace SQM.Website
 			{
 				if (!string.IsNullOrEmpty(action.DESCRIPTION)  &&  action.DUE_DT.HasValue &&  action.RESPONSIBLE_ID.HasValue)
 				{
-					EHSIncidentMgr.CreateOrUpdateTask(action);
+					EHSIncidentMgr.CreateOrUpdateTask(ActionIncident, action);
 				}
 			}
 

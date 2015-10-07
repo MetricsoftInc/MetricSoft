@@ -1117,7 +1117,7 @@ namespace SQM.Website
 		}
 
 
-		public static void CreateOrUpdateTask(TASK_STATUS task)
+		public static void CreateOrUpdateTask(INCIDENT incident, TASK_STATUS task)
 		{
 			TaskStatusMgr taskMgr = new TaskStatusMgr();
 			taskMgr.Initialize(task.RECORD_TYPE, task.RECORD_ID);
@@ -1125,6 +1125,7 @@ namespace SQM.Website
 			if (theTask == null)
 			{
 				taskMgr.CreateTask(task);
+				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
 			}
 			else
 			{
