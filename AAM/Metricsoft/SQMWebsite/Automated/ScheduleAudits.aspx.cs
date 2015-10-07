@@ -29,7 +29,10 @@ namespace SQM.Website.Automated
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
 
 				if (strValidIP.Equals(currentIP))
+				{
+					WriteLine("Main ScheduleAudits being accessed from a valid IP address " + currentIP);
 					validIP = true;
+				}
 				else
 				{
 					WriteLine("Main ScheduleAudits being accessed from invalid IP address " + currentIP);
