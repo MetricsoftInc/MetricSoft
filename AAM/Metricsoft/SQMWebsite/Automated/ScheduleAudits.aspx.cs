@@ -45,6 +45,9 @@ namespace SQM.Website.Automated
 				WriteLine("Main ScheduleAudits Error validating IP Address: " + ex.ToString());
 			}
 
+			// make sure this code is NOT moved to production
+			//validIP = true;
+
 			if (validIP)
 			{
 				try
@@ -142,16 +145,16 @@ namespace SQM.Website.Automated
 								auditId = audit.AUDIT_ID;
 
 								// create audit answer records
-								questions = EHSAuditMgr.SelectAuditQuestionList(type.AUDIT_TYPE_ID, 0, 0); // do not specify the audit ID
+								questions = EHSAuditMgr.SelectAuditQuestionListByType(type.AUDIT_TYPE_ID);
 								foreach (var q in questions)
 								{
 									answer = new AUDIT_ANSWER()
 									{
 										AUDIT_ID = auditId,
 										AUDIT_QUESTION_ID = q.QuestionId,
-										ANSWER_VALUE = q.AnswerText,
+										//ANSWER_VALUE = q.AnswerText,
 										ORIGINAL_QUESTION_TEXT = q.QuestionText,
-										COMMENT = q.AnswerComment
+										//COMMENT = q.AnswerComment
 									};
 									entities.AddToAUDIT_ANSWER(answer);
 								}

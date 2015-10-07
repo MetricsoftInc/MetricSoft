@@ -436,14 +436,17 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = topicInfo.TITLE,
-						Status = auditAnswer.STATUS,
-						ResolutionComment = auditAnswer.RESOLUTION_COMMENT,
-						ChoicePositive = auditAnswer.CHOICE_POSITIVE
+						TopicTitle = topicInfo.TITLE
 					};
 
-					if (auditAnswer.COMPLETE_DATE != null)
-						newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
+					if (auditAnswer != null)
+					{
+						newQuestion.Status = auditAnswer.STATUS;
+						newQuestion.ResolutionComment = auditAnswer.RESOLUTION_COMMENT;
+						newQuestion.ChoicePositive = auditAnswer.CHOICE_POSITIVE;
+						if (auditAnswer.COMPLETE_DATE != null)
+							newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
+					}
 
 					if (newQuestion.HasMultipleChoices)
 					{
@@ -522,6 +525,53 @@ namespace SQM.Website
 						if (choices.Count > 0)
 							newQuestion.AnswerChoices = choices;
 					}
+					questionList.Add(newQuestion);
+				}
+
+				questionList.OrderBy(field => field.QuestionText);
+				questionList.OrderBy(field => field.QuestionType);
+
+			}
+			catch (Exception e)
+			{
+				//SQMLogger.LogException(e);
+			}
+
+			return questionList;
+		}
+
+		/// <summary>
+		/// Select a list of all possible audit questions
+		/// </summary>
+		public static List<EHSAuditQuestion> SelectAuditQuestionListByType(decimal auditTypeId)
+		{
+			var questionList = new List<EHSAuditQuestion>();
+
+			try
+			{
+				var entities = new PSsqmEntities();
+				var activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+										  where q.AUDIT_TYPE_ID == auditTypeId && !q.INACTIVE
+										  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
+										  select q
+											  ).ToList();
+
+
+				foreach (var aq in activeQuestionList)
+				{
+
+					var questionInfo = (from qi in entities.AUDIT_QUESTION.Include("AUDIT_QUESTION_LANG")
+										where qi.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
+										select qi).FirstOrDefault();
+
+					var newQuestion = new EHSAuditQuestion()
+					{
+						AuditId = 0,
+						QuestionId = aq.AUDIT_QUESTION_ID,
+						QuestionText = questionInfo.QUESTION_TEXT,
+						QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID
+					};
+
 					questionList.Add(newQuestion);
 				}
 
