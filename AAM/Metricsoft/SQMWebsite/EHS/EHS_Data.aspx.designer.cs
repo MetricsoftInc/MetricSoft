@@ -121,6 +121,15 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.WebControls.Label lblSaved;
         
         /// <summary>
+        /// rwDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow rwDetails;
+        
+        /// <summary>
         /// radCodeBlock control.
         /// </summary>
         /// <remarks>

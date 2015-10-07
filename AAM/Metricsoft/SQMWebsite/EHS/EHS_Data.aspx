@@ -19,8 +19,60 @@
 			transform: translateY(-50%);
 		}
 
+		.flex
+		{
+			display: -moz-box;
+			display: -ms-flexbox;
+			display: -webkit-box;
+			display: flex;
+		}
+		.rwDetails_column
+		{
+			float: left;
+			text-align: center;
+		}
+		.rwDetails_columnHeader
+		{
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+		.rwDetails_row
+		{
+			align-items: center;
+			margin-bottom: 5px;
+		}
+		.rwDetails_rowLabel
+		{
+			display: inline-block;
+			-ms-flex: 1 0 auto;
+			-webkit-flex: 1 0 auto;
+			flex: 1 0 auto;
+		}
+		.rwDetails_rowTextbox
+		{
+			width: 50px;
+			margin-left: 5px;
+			display: inline-block;
+		}
+		.rwDetails_spacing
+		{
+			float: left;
+			position: relative;
+			width: 10px;
+		}
+		.rwDetails_spacing::after
+		{
+			background-color: #000;
+			content: '';
+			height: calc(100% - 10px);
+			top: 5px;
+			width: 1px;
+			left: calc(50% - 1px);
+			position: absolute;
+		}
+
 		/* Simulate the overridden Metro style, as Telerik's RadButton was acting up and not always registering clicks for me. */
-		.frequencyButton
+		.myButton
 		{
 			background-color: #191970;
 			border: 0 none;
@@ -33,11 +85,24 @@
 			padding: 6px 24px;
 			text-align: center;
 		}
-		.frequencyButton:hover
+		.myButtonSmall
+		{
+			background-color: #191970;
+			border: 0 none;
+			border-radius: 4px;
+			color: #fff;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 10px;
+			font-weight: bold;
+			height: 21px;
+			padding: 4px 12px;
+			text-align: center;
+		}
+		.myButton:hover, .myButtonSmall:hover
 		{
 			opacity: 0.6;
 		}
-		.frequencyButtonDisabled
+		.myButtonDisabled
 		{
 			background-color: #ddd !important;
 			border: 0 none !important;
@@ -82,9 +147,41 @@
 			<br />
 			<%-- A Telerik RadGrid for the data, called rgData, is added here via Page_Load --%>
 			<br />
-			<input type="button" id="btnSave" runat="server" value="Save" class="frequencyButton" />
+			<input type="button" id="btnSave" runat="server" value="Save" class="myButton" />
 			<asp:Label ID="lblSaved" runat="server" Text="Data saved!" ForeColor="Green" Font-Size="1.5em" Font-Bold="true" style="display: none; padding-left: 10px" />
 		</asp:Panel>
+		<input type="hidden" id="hfCurrDetails" />
+		<telerik:RadWindow ID="rwDetails" runat="server" Skin="Metro" Modal="true" Width="1200px" Height="600px" VisibleOnPageLoad="false" Behaviors="None">
+			<ContentTemplate>
+				<div class="flex" style="margin-top: 5px; overflow-y: auto; max-height: calc(100% - 47px); justify-content: center">
+					<div class="rwDetails_column">
+						<div class="rwDetails_columnHeader">Type</div>
+						<div id="typeColumn" style="text-align: left"></div>
+					</div>
+					<div class="rwDetails_spacing">&nbsp;</div>
+					<div class="rwDetails_column">
+						<div class="rwDetails_columnHeader">Body Part</div>
+						<div id="bodyPartColumn" style="text-align: left"></div>
+					</div>
+					<div class="rwDetails_spacing">&nbsp;</div>
+					<div class="rwDetails_column">
+						<div class="rwDetails_columnHeader">Root Cause</div>
+						<div id="rootCauseColumn" style="text-align: left"></div>
+					</div>
+					<div class="rwDetails_spacing">&nbsp;</div>
+					<div class="rwDetails_column">
+						<div class="rwDetails_columnHeader">Tenure</div>
+						<div id="tenureColumn" style="text-align: left"></div>
+					</div>
+					<div class="rwDetails_spacing">&nbsp;</div>
+					<div class="rwDetails_column">
+						<div class="rwDetails_columnHeader">Days To Close</div>
+						<div id="daysToCloseColumn" style="text-align: left"></div>
+					</div>
+				</div>
+				<div style="float: right; margin: 5px"><input type="button" class="myButton" value="Save" onclick="rwDetails_close()"></div>
+			</ContentTemplate>
+		</telerik:RadWindow>
 	</div>
 	<telerik:RadCodeBlock ID="radCodeBlock" runat="server">
 		<script type="text/javascript">
@@ -96,6 +193,11 @@
 			var rgData_columns = null;
 			var rgData_data = null;
 			var measureIDs = null;
+
+			var dates = null;
+			var rwDetails = null;
+			var rowsForButtons = {};
+			var hfCurrDetails = $('#hfCurrDetails');
 
 			// This is to get around Telerik's RadGrid applying its own class to the rows, by having jQuery remove the classes when the page loads.
 			$('.rgHeader, .rgRow, .rgAltRow').removeClass('rgHeader rgRow rgAltRow');
@@ -116,6 +218,12 @@
 				});
 
 				<%= this.rcbPlant.OnClientSelectedIndexChanged %>();
+
+				rwDetails = $find('<%= this.rwDetails.ClientID %>');
+				$('[id*="btnDetails"]').each(function()
+				{
+					rowsForButtons[this.id] = $find($(this).parent().parent().attr('id')).get_itemIndex();
+				});
 			});
 
 			$(':button[id^="btn"]:not(#btnSave)').click(function()
@@ -146,6 +254,11 @@
 						// On success, we'll update the plant dropdown and date with whatever the server said.
 						rcbPlant.findItemByValue(data.d.plantID).select();
 						rdpEndOfWeek.set_selectedDate(new Date(data.d.endOfWeek));
+						// Store the date headers in an array for use later.
+						dates = $.map(data.d.dates, function(n, i)
+						{
+							return n
+						});
 						// We then write all the data to the RadGrid, including the headers.
 						for (var day in data.d.dates)
 						{
@@ -159,8 +272,13 @@
 								var cell = $(rgData_data[rowNum].get_cell('gtc' + day));
 								cell.find('input[type="text"]').val(dayData.value);
 								var validator = cell.find('span[id$="cmp' + day + '"]')[0];
-								validator.type = dayData.validatorType;
-								validator.title = dayData.validatorToolTip;
+								if (validator)
+								{
+									validator.type = dayData.validatorType;
+									validator.title = dayData.validatorToolTip;
+								}
+								if (dayData.ordinal)
+									cell.find('input[type="hidden"][name$="hfDetails' + day + '"]').val(JSON.stringify(dayData.ordinal));
 							}
 						}
 					},
@@ -202,8 +320,11 @@
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
 							cell.find('input[type="text"]').val(measureData.value);
 							var validator = cell.find('span[id$="cmpFull"]')[0];
-							validator.type = measureData.validatorType;
-							validator.title = measureData.validatorToolTip;
+							if (validator)
+							{
+								validator.type = measureData.validatorType;
+								validator.title = measureData.validatorToolTip;
+							}
 						}
 					},
 					complete: function()
@@ -244,8 +365,11 @@
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
 							cell.find('input[type="text"]').val(measureData.value);
 							var validator = cell.find('span[id$="cmpFull"]')[0];
-							validator.type = measureData.validatorType;
-							validator.title = measureData.validatorToolTip;
+							if (validator)
+							{
+								validator.type = measureData.validatorType;
+								validator.title = measureData.validatorToolTip;
+							}
 						}
 					},
 					complete: function()
@@ -284,7 +408,17 @@
 				var data = {};
 				for (var dayNum = 0; dayNum < days.length; ++dayNum)
 					for (var rowNum = 0; rowNum < rgData_data.length; ++rowNum)
-						data[days[dayNum] + '|' + measureIDs[rowNum]] = $(rgData_data[rowNum].get_cell('gtc' + days[dayNum])).find('input[type="text"]').val();
+					{
+						var cell = $(rgData_data[rowNum].get_cell('gtc' + days[dayNum]));
+						var dayData =
+						{
+							value: cell.find('input[type="text"]').val()
+						};
+						var hfDetails = cell.find('input[type="hidden"][name$="hfDetails' + days[dayNum] + '"]');
+						if (hfDetails.length > 0)
+							dayData.ordinal = $.parseJSON(hfDetails.val());
+						data[days[dayNum] + '|' + measureIDs[rowNum]] = dayData;
+					}
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/SaveDailyData',
@@ -361,6 +495,96 @@
 						radLoading.hide('<%= this.dataPanel.ClientID %>');
 					}
 				});
+			}
+
+			// From the Mozilla Developer Network website, this is in case a browser is lacking the endsWith prototype on String.
+			if (!String.prototype.endsWith)
+				String.prototype.endsWith = function(searchString, position)
+				{
+					var subjectString = this.toString();
+					if (position === undefined || position > subjectString.length)
+						position = subjectString.length;
+					position -= searchString.length;
+					var lastIndex = subjectString.indexOf(searchString, position);
+					return lastIndex !== -1 && lastIndex === position;
+				};
+
+			function rwDetails_populateAndShow(data)
+			{
+				for (var key1 in data)
+				{
+					var column = $('#' + key1 + 'Column');
+					column.empty();
+					for (var key2 in data[key1])
+					{
+						var value = '';
+						if (data[key1][key2].value)
+							value = ' value="' + data[key1][key2].value + '"';
+						column.append('<div class="flex rwDetails_row"><div class="rwDetails_rowLabel">' + key2 +
+							'</div><div class="riSingle RadInput RadInput_Metro rwDetails_rowTextbox"><input class="riTextBox riEnabled" type="text"' + value + ' size="20"></div></div>');
+					}
+				}
+
+				rwDetails.show();
+			}
+
+			function rwDetails_open(dayOfWeek, button)
+			{
+				var date = $.grep(dates, function(n)
+				{
+					return n.endsWith(dayOfWeek);
+				})[0];
+				var row = rowsForButtons[button.id];
+				rwDetails.set_title($(rgData_data[row].get_cell('MEASURE_NAME')).html() + ' Details for ' + date.substr(0, date.length - 7));
+				hfCurrDetails.val(JSON.stringify({ dayOfWeek: dayOfWeek, row: row }));
+				rwDetails_populateAndShow($.parseJSON($(rgData_data[row].get_element()).find('input[type="hidden"][name$="hfDetails' + dayOfWeek + '"]').val()));
+			}
+
+			var space_regex = /([a-z])([A-Z])/g;
+
+			function rwDetails_close()
+			{
+				var details = $.parseJSON(hfCurrDetails.val());
+				var count = $(rgData_data[details.row].get_cell('gtc' + details.dayOfWeek)).find('input[type="text"]').val();
+				if (!count)
+					count = 0;
+				else
+					count = parseInt(count);
+
+				var errors = '';
+				var newData = {};
+				$('[id$="Column"]').each(function(i, c)
+				{
+					var $c = $(c);
+					var column = $c.attr('id');
+					column = column.substr(0, column.length - 6);
+					newData[column] = {};
+					var sum = 0;
+					$c.find('input[type="text"]').each(function()
+					{
+						var $this = $(this);
+						var type = $this.parent().prev().html();
+						newData[column][type] = {};
+						var val = $this.val();
+						if (!val)
+							val = 0;
+						else
+							newData[column][type].value = val = parseInt(val);
+						sum += val;
+					});
+					if (sum != count)
+					{
+						var column_uppercase = column.substr(0, 1).toUpperCase() + column.substr(1).replace(space_regex, '$1 $2');
+						errors += '\n* ' + column_uppercase + ' (Got ' + sum + ' instead)';
+					}
+				});
+
+				if (errors && !confirm('Number of ' + $(rgData_data[details.row].get_cell('MEASURE_NAME')).html() + ' incidents for this day was ' + count +
+					', but the following totals do not match up:\n' + errors + '\n\nClick OK if this is fine or click Cancel to correct your entries.'))
+					return;
+
+				$(rgData_data[details.row].get_element()).find('input[type="hidden"][name$="hfDetails' + details.dayOfWeek + '"]').val(JSON.stringify(newData));
+				rwDetails.close();
 			}
 		</script>
 	</telerik:RadCodeBlock>

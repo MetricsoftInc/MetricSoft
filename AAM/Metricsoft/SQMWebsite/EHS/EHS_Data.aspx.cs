@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Drawing;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Services;
@@ -60,21 +61,30 @@ namespace SQM.Website.EHS
 					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == startOfWeek.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
+						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
 						string value = "";
+						decimal dataID = -1;
 						if (dayData.Any())
 						{
 							var data = dayData.FirstOrDefault(d => d.MEASURE_ID == measure.MEASURE_ID);
 							if (data != null)
 							{
-								if (measure.DATA_TYPE == "V")
+								dataID = data.DATA_ID;
+								if (measureIsValue)
 									value = data.VALUE.ToString();
 								else if (measure.DATA_TYPE == "A")
 									value = data.ATTRIBUTE;
 							}
 						}
-						string type = measure.DATA_TYPE == "V" ? "Integer" : "String";
-						string toolTip = "Value must be a " + (measure.DATA_TYPE == "V" ? "number" : "string") + ".";
-						allData.Add(dayName + "|" + measure.MEASURE_ID, new { value, validatorType = type, validatorToolTip = toolTip });
+						string type = measureIsValue ? "Integer" : "String";
+						string toolTip = "Value must be a " + (measureIsValue ? "number" : "string") + ".";
+						dynamic dataToAdd = new ExpandoObject();
+						dataToAdd.value = value;
+						dataToAdd.validatorType = type;
+						dataToAdd.validatorToolTip = toolTip;
+						if (measure.DATA_TYPE == "O")
+							dataToAdd.ordinal = GetOrdinalData(entities, dataID);
+						allData.Add(dayName + "|" + measure.MEASURE_ID, ((ExpandoObject)dataToAdd).ToDictionary(x => x.Key, x => x.Value));
 					}
 				}
 				return new
@@ -158,8 +168,95 @@ namespace SQM.Website.EHS
 			}
 		}
 
+		/// <summary>
+		/// Gets all the types for an ordinal from the XLAT table.
+		/// </summary>
+		/// <param name="entities">The entities to get the table from.</param>
+		/// <param name="groupName">The group name to get the types for.</param>
+		/// <returns>An IEnumerable of an anonymous type as a dynamic.</returns>
+		static dynamic GetOrdinalTypes(PSsqmEntities entities, string groupName)
+		{
+			return from x in entities.XLAT
+				   where x.XLAT_GROUP == groupName && x.XLAT_LANGUAGE == "en" && x.STATUS == "A"
+				   select new { x.XLAT_GROUP, x.XLAT_CODE, x.DESCRIPTION };
+		}
+
+		static void AddOrdinalData(PSsqmEntities entities, EHS_DATA ehs_data, dynamic types, Dictionary<string, dynamic> type_data)
+		{
+			foreach (var t in types)
+			{
+				var value = type_data[t.DESCRIPTION];
+				if (value.ContainsKey("value"))
+					entities.EHS_DATA_ORD.AddObject(new EHS_DATA_ORD()
+					{
+						EHS_DATA = ehs_data,
+						XLAT_GROUP = t.XLAT_GROUP,
+						XLAT_CODE = t.XLAT_CODE,
+						VALUE = value["value"]
+					});
+			}
+		}
+
+		static void AddOrdinalData(PSsqmEntities entities, EHS_DATA ehs_data, Dictionary<string, dynamic> data)
+		{
+			// Get the types first.
+			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
+			var bodyParts = GetOrdinalTypes(entities, "INJURY_PART");
+			var rootCauses = GetOrdinalTypes(entities, "INJURY_CAUSE");
+			var tenures = GetOrdinalTypes(entities, "INJURY_TENURE");
+			var daysToCloses = GetOrdinalTypes(entities, "INJURY_DAYS_TO_CLOSE");
+
+			AddOrdinalData(entities, ehs_data, types, data["type"]);
+			AddOrdinalData(entities, ehs_data, bodyParts, data["bodyPart"]);
+			AddOrdinalData(entities, ehs_data, rootCauses, data["rootCause"]);
+			AddOrdinalData(entities, ehs_data, tenures, data["tenure"]);
+			AddOrdinalData(entities, ehs_data, daysToCloses, data["daysToClose"]);
+		}
+
+		static void UpdateOrdinalData(PSsqmEntities entities, decimal dataID, dynamic types, Dictionary<string, dynamic> type_data)
+		{
+			foreach (var t in types)
+			{
+				var group = t.XLAT_GROUP as string;
+				var code = t.XLAT_CODE as string;
+				var data = entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == dataID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
+				var value = type_data[t.DESCRIPTION];
+				if (value.ContainsKey("value"))
+				{
+					if (data == null)
+						entities.EHS_DATA_ORD.AddObject(new EHS_DATA_ORD()
+						{
+							DATA_ID = dataID,
+							XLAT_GROUP = t.XLAT_GROUP,
+							XLAT_CODE = t.XLAT_CODE,
+							VALUE = value["value"]
+						});
+					else
+						data.VALUE = value["value"];
+				}
+				else if (data != null)
+					entities.DeleteObject(data);
+			}
+		}
+
+		static void UpdateOrdinalData(PSsqmEntities entities, decimal dataID, Dictionary<string, dynamic> data)
+		{
+			// Get the types first.
+			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
+			var bodyParts = GetOrdinalTypes(entities, "INJURY_PART");
+			var rootCauses = GetOrdinalTypes(entities, "INJURY_CAUSE");
+			var tenures = GetOrdinalTypes(entities, "INJURY_TENURE");
+			var daysToCloses = GetOrdinalTypes(entities, "INJURY_DAYS_TO_CLOSE");
+
+			UpdateOrdinalData(entities, dataID, types, data["type"]);
+			UpdateOrdinalData(entities, dataID, bodyParts, data["bodyPart"]);
+			UpdateOrdinalData(entities, dataID, rootCauses, data["rootCause"]);
+			UpdateOrdinalData(entities, dataID, tenures, data["tenure"]);
+			UpdateOrdinalData(entities, dataID, daysToCloses, data["daysToClose"]);
+		}
+
 		[WebMethod]
-		public static void SaveDailyData(decimal plantID, DateTime day, Dictionary<string, string> allData)
+		public static void SaveDailyData(decimal plantID, DateTime day, Dictionary<string, Dictionary<string, dynamic>> allData)
 		{
 			using (var entities = new PSsqmEntities())
 			{
@@ -173,7 +270,9 @@ namespace SQM.Website.EHS
 					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == startOfWeek.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
-						string text = allData[dayName + "|" + measure.MEASURE_ID];
+						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
+						var measure_data = allData[dayName + "|" + measure.MEASURE_ID];
+						string text = measure_data["value"];
 						bool hasText = !string.IsNullOrWhiteSpace(text);
 						// We determine if we need to add a new entry into the database by looking for if there is any data.
 						bool addNew = true;
@@ -186,10 +285,12 @@ namespace SQM.Website.EHS
 								// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
 								if (hasText)
 								{
-									if (measure.DATA_TYPE == "V")
+									if (measureIsValue)
 										data.VALUE = decimal.Parse(text);
 									else if (measure.DATA_TYPE == "A")
 										data.ATTRIBUTE = text;
+									if (measure_data.ContainsKey("ordinal"))
+										UpdateOrdinalData(entities, data.DATA_ID, measure_data["ordinal"]);
 								}
 								else
 									entities.DeleteObject(data);
@@ -204,11 +305,13 @@ namespace SQM.Website.EHS
 								PLANT_ID = plantID,
 								DATE = startOfWeek
 							};
-							if (measure.DATA_TYPE == "V")
+							if (measureIsValue)
 								newData.VALUE = decimal.Parse(text);
 							else if (measure.DATA_TYPE == "A")
 								newData.ATTRIBUTE = text;
 							entities.EHS_DATA.AddObject(newData);
+							if (measure_data.ContainsKey("ordinal"))
+								AddOrdinalData(entities, newData, measure_data["ordinal"]);
 						}
 					}
 				}
@@ -320,6 +423,50 @@ namespace SQM.Website.EHS
 			}
 		}
 
+		/// <summary>
+		/// Gets the ordinal data for the types requested for the given data ID.
+		/// </summary>
+		/// <param name="entities">The entities to get the data from.</param>
+		/// <param name="dataID">The data ID to pull data for, -1 if we just want the descriptions with no data.</param>
+		/// <param name="types">The types returned from GetOrdinalTypes.</param>
+		/// <returns>A dictionary of the type descriptions as the key and the value (if any) as the value.</returns>
+		static Dictionary<string, dynamic> GetOrdinalData(PSsqmEntities entities, decimal dataID, dynamic types)
+		{
+			var ret = new Dictionary<string, dynamic>();
+			foreach (var t in types)
+			{
+				var group = t.XLAT_GROUP as string;
+				var code = t.XLAT_CODE as string;
+				var data = dataID == -1 ? null : entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == dataID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
+				var key = t.DESCRIPTION as string;
+				if (data != null)
+					ret.Add(key, new { value = data.VALUE });
+				else
+					ret.Add(key, new { });
+			}
+			return ret;
+		}
+
+		[WebMethod]
+		public static dynamic GetOrdinalData(PSsqmEntities entities, decimal dataID)
+		{
+			// Get the types first.
+			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
+			var bodyParts = GetOrdinalTypes(entities, "INJURY_PART");
+			var rootCauses = GetOrdinalTypes(entities, "INJURY_CAUSE");
+			var tenures = GetOrdinalTypes(entities, "INJURY_TENURE");
+			var daysToCloses = GetOrdinalTypes(entities, "INJURY_DAYS_TO_CLOSE");
+
+			return new
+			{
+				type = GetOrdinalData(entities, dataID, types),
+				bodyPart = GetOrdinalData(entities, dataID, bodyParts),
+				rootCause = GetOrdinalData(entities, dataID, rootCauses),
+				tenure = GetOrdinalData(entities, dataID, tenures),
+				daysToClose = GetOrdinalData(entities, dataID, daysToCloses)
+			};
+		}
+
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			var cal = this.rdpEndOfWeek.Calendar;
@@ -406,7 +553,7 @@ namespace SQM.Website.EHS
 				rgData.DataSource = from m in this.entities.EHS_MEASURE
 									where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == frequency
 									orderby m.MEASURE_CD
-									select new { m.MEASURE_NAME, m.MEASURE_ID };
+									select new { m.MEASURE_NAME, m.MEASURE_ID, m.DATA_TYPE };
 				rgData.DataBind();
 
 				SQMBasePage.SetLocationList(this.rcbPlant,
@@ -424,10 +571,10 @@ namespace SQM.Website.EHS
 					if (frequencyName == freq)
 					{
 						btn.Disabled = true;
-						btn.Attributes.Add("class", "frequencyButtonDisabled");
+						btn.Attributes.Add("class", "myButtonDisabled");
 					}
 					else
-						btn.Attributes.Add("class", "frequencyButton");
+						btn.Attributes.Add("class", "myButton");
 				}
 			}
 		}
@@ -448,23 +595,52 @@ namespace SQM.Website.EHS
 
 			public void InstantiateIn(Control container)
 			{
-				var rtbData = new RadTextBox()
+				dynamic dataItem = (container.Parent as GridDataItem).DataItem;
+				if (dataItem.DATA_TYPE == "O")
 				{
-					ID = "rtb" + this.Suffix,
-					Skin = "Metro",
-					Width = this.Width
-				};
-				container.Controls.Add(rtbData);
-				container.Controls.Add(new CompareValidator()
+					var rtbTotal = new RadTextBox()
+					{
+						ID = "rtb" + this.Suffix,
+						Skin = "Metro",
+						Width = new Unit("35px")
+					};
+					rtbTotal.Style.Add("vertical-align", "middle");
+					rtbTotal.Style.Add("margin-right", "5px");
+					container.Controls.Add(rtbTotal);
+					var btnDetails = new HtmlInputButton("button")
+					{
+						ID = "btnDetails" + this.Suffix,
+						Value = "Details"
+					};
+					btnDetails.Attributes.Add("onclick", "rwDetails_open('" + this.Suffix + "', this)");
+					btnDetails.Attributes.Add("class", "myButtonSmall");
+					container.Controls.Add(btnDetails);
+					var hfDetails = new HiddenField()
+					{
+						ID = "hfDetails" + this.Suffix
+					};
+					container.Controls.Add(hfDetails);
+				}
+				else
 				{
-					ID = "cmp" + this.Suffix,
-					ControlToValidate = rtbData.ID,
-					Display = ValidatorDisplay.Dynamic,
-					Text = "*",
-					ForeColor = Color.Red,
-					Operator = ValidationCompareOperator.DataTypeCheck,
-					EnableClientScript = true
-				});
+					var rtbData = new RadTextBox()
+					{
+						ID = "rtb" + this.Suffix,
+						Skin = "Metro",
+						Width = this.Width
+					};
+					container.Controls.Add(rtbData);
+					container.Controls.Add(new CompareValidator()
+					{
+						ID = "cmp" + this.Suffix,
+						ControlToValidate = rtbData.ID,
+						Display = ValidatorDisplay.Dynamic,
+						Text = "*",
+						ForeColor = Color.Red,
+						Operator = ValidationCompareOperator.DataTypeCheck,
+						EnableClientScript = true
+					});
+				}
 			}
 		}
 	}
