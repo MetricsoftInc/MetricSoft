@@ -33,6 +33,7 @@
   </incidentStatus>
   <auditStatus>
 	<xlat code="A" short="Open" long="Open"/>
+	<xlat code="E" short="Expired" long="Expired"/>
 	<xlat code="I" short="In Progress" long="In Progress"/>
 	<xlat code="C" short="Complete" long="Complete"/>
 	<xlat code="X" short="Closed" long="Closed"/>

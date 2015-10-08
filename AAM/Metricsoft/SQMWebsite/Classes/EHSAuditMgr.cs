@@ -311,14 +311,15 @@ namespace SQM.Website
 			return audits;
 		}
 
-		public static void CloseAudit(decimal auditId)
+		public static void CloseAudit(decimal auditId, string status, DateTime closeDate)
 		{
 			var entities = new PSsqmEntities();
 
 			var audit = (from i in entities.AUDIT where i.AUDIT_ID == auditId select i).FirstOrDefault();
 			if (audit != null)
 			{
-				audit.CLOSE_DATE = DateTime.Now;
+				audit.CLOSE_DATE = closeDate;
+				audit.CURRENT_STATUS = status;
 				entities.SaveChanges();
 			}
 		}
