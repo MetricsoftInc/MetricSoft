@@ -447,8 +447,7 @@ namespace SQM.Website.EHS
 			return ret;
 		}
 
-		[WebMethod]
-		public static dynamic GetOrdinalData(PSsqmEntities entities, decimal dataID)
+		static dynamic GetOrdinalData(PSsqmEntities entities, decimal dataID)
 		{
 			// Get the types first.
 			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
