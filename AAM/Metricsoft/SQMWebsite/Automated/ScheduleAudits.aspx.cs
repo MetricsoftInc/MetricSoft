@@ -32,6 +32,17 @@ namespace SQM.Website.Automated
 				{
 					WriteLine("Main ScheduleAudits being accessed from a valid IP address " + currentIP);
 					validIP = true;
+
+					if (Request.QueryString["validation"] != null)
+					{
+						if (Request.QueryString["validation"].ToString().Equals("Vb12M11a4"))
+							validIP = true;
+					}
+					else
+					{
+						WriteLine("Main ScheduleAudits requested from incorrect source.");
+						validIP = false;
+					}
 				}
 				else
 				{
