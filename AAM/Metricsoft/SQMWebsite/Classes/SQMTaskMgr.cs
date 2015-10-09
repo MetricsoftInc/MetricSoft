@@ -12,7 +12,7 @@ using System.Web.Configuration;
 
 namespace SQM.Website
 {
-	public enum TaskStatus { New, Pending, Complete, Due, Overdue, EscalationLevel1, EscalationLevel2, unused1, unused2, AwaitingClosure, Delete };
+	public enum TaskStatus { New, Pending, Complete, Due, Overdue, EscalationLevel1, EscalationLevel2, Expired, unused2, AwaitingClosure, Delete };
     public enum TaskNotification { Owner, Delegate, Escalation };
     public enum TaskRecordType { InternalQualityIncident = 10, CustomerQualityIncident = 11, SupplierQualityIncident = 12,
                                     QualityIssue = 20, ProblemCase = 21,
