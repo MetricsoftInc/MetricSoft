@@ -1124,6 +1124,7 @@ namespace SQM.Website
 			TASK_STATUS theTask = taskMgr.SelectTask(task.TASK_ID);
 			if (theTask == null)
 			{
+				task.CREATE_DT = DateTime.UtcNow;
 				taskMgr.CreateTask(task);
 				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
 			}

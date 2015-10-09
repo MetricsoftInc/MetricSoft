@@ -294,6 +294,11 @@ namespace SQM.Website
 				action.STATUS = hf.Value;
 				hf = (HiddenField)containtem.FindControl("hfTaskID");
 				action.TASK_ID = Convert.ToDecimal(hf.Value);
+				hf = (HiddenField)containtem.FindControl("hfCreateDT");
+				if (!string.IsNullOrEmpty(hf.Value))
+				{
+					action.CREATE_DT = DateTime.ParseExact(hf.Value, "M/d/yyyy", null);
+				}
 				hf = (HiddenField)containtem.FindControl("hfRecordID");
 				action.RECORD_ID = Convert.ToDecimal(hf.Value);
 				hf = (HiddenField)containtem.FindControl("hfRecordType");

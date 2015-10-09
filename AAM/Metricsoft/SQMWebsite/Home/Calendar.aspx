@@ -42,7 +42,7 @@
 			<div style="width: 99%; margin: 5px;" class="noprint">
 				<asp:Label ID="lblCalendarTitle" runat="server"  CssClass="pageTitles" Text="My Calendar View" ></asp:Label>
 				<br />
-				<asp:Label ID="lblCalendarInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date."></asp:Label>
+				<asp:Label ID="lblCalendarInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you or related to a selected business location, occuring 12 months prior or 12 months beyond today's date. Click on the date item to view task details."></asp:Label>
 				<br />
 			</div>
 			<div class="container-fluid">
@@ -92,7 +92,7 @@
 			<div style="margin: 5px;" class="noprint">
 				<asp:Label ID="LlblActionsTitle" runat="server"  CssClass="pageTitles" Text="Actions Assigned To Me" ></asp:Label>
 				<br />
-				<asp:Label ID="lblActionsInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you click on a Task to view details or to update/close."></asp:Label>
+				<asp:Label ID="lblActionsInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you. Click on the Task ID to view details or to update its status."></asp:Label>
 			</div>
 			<br />
 			<div class="container-fluid">
