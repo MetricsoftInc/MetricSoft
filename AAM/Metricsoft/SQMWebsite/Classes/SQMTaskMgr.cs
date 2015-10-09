@@ -607,7 +607,9 @@ namespace SQM.Website
 
         public static List<TaskItem> IncidentTaskSchedule(decimal companyID, DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, decimal[] plantIDS, bool addProblemCases)
         {
+			// pending TASKS
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+			string newStatus = ((int)TaskStatus.New).ToString();
             List<TaskItem> taskList = new List<TaskItem>();
 			INCIDENT incident;
 
@@ -639,7 +641,7 @@ namespace SQM.Website
 									   join i in entities.AUDIT on t.RECORD_ID equals i.AUDIT_ID
 									   join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
 									   join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
-									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate  &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
+									   where (t.RECORD_TYPE == (int)TaskRecordType.Audit && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate  &&  t.STATUS == newStatus) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID)))
 									   from p in p_t.DefaultIfEmpty()
 									   from l in l_i.DefaultIfEmpty()
 									   select new TaskItem
@@ -1158,7 +1160,8 @@ namespace SQM.Website
 
         public static List<TaskItem> IncidentTaskStatus(decimal companyID, List<decimal> responsibleIDS, List<decimal> plantIDS, bool addProblemCases)
         {
-			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
+			// tasks OVERDUE
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString()};
             DateTime forwardDate = DateTime.Now;
 			INCIDENT incident;
 
