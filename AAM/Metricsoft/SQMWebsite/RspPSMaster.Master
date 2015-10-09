@@ -244,7 +244,7 @@
 								<telerik:RadComboBox ID="ddlUserLang" runat="server" Skin="Metro" Width=200 ZIndex=9000 Font-Size=Small ></telerik:RadComboBox>
 							</td>
 						</tr>
-						<tr>
+						<tr id="trChangePwd" runat="server" visible="false">
 							<td class="columnHeader">
 								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
 							</td>
