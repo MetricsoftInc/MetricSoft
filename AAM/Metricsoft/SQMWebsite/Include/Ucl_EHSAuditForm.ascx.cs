@@ -2424,7 +2424,7 @@ namespace SQM.Website
 			if (audit.CURRENT_STATUS.Equals("C"))
 			{
 				AUDIT_TYPE audittype = EHSAuditMgr.SelectAuditTypeById(entities, auditTypeId);
-				EHSAuditMgr.CreateOrUpdateTask(auditId, SessionManager.UserContext.Person.PERSON_ID, 50, audit.AUDIT_DT.AddDays(audittype.DAYS_TO_COMPLETE), "C");
+				EHSAuditMgr.CreateOrUpdateTask(auditId, SessionManager.UserContext.Person.PERSON_ID, 50, audit.AUDIT_DT.AddDays(audittype.DAYS_TO_COMPLETE), "C", SessionManager.UserContext.Person.PERSON_ID);
 			}
 			return negativeTextComplete;
 		}
@@ -2454,7 +2454,7 @@ namespace SQM.Website
 
 			// create task record for their calendar
 			AUDIT_TYPE audittype = EHSAuditMgr.SelectAuditTypeById(entities, auditTypeId);
-			EHSAuditMgr.CreateOrUpdateTask(auditId, Convert.ToDecimal(rddlAuditUsers.SelectedValue), 50, ((DateTime)dmAuditDate.SelectedDate).AddDays(audittype.DAYS_TO_COMPLETE), "A");
+			EHSAuditMgr.CreateOrUpdateTask(auditId, Convert.ToDecimal(rddlAuditUsers.SelectedValue), 50, ((DateTime)dmAuditDate.SelectedDate).AddDays(audittype.DAYS_TO_COMPLETE), "A", SessionManager.UserContext.Person.PERSON_ID);
 
 			return newAudit;
 		}

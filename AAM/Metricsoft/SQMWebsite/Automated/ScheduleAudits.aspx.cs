@@ -171,7 +171,7 @@ namespace SQM.Website.Automated
 								}
 								entities.SaveChanges();
 								// create task record for their calendar
-								EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE), "A");
+								EHSAuditMgr.CreateOrUpdateTask(auditId, person.PERSON_ID, 50, auditDate.AddDays(type.DAYS_TO_COMPLETE), "A", 0);
 
 								// send an email
 								EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);
@@ -216,7 +216,7 @@ namespace SQM.Website.Automated
 						status = "E";
 					EHSAuditMgr.CloseAudit(audit.AUDIT_ID, status, closeDT.AddDays(-1)); // now take the one day back off so that the close date sets correctly
 					// now mark the Task as expired too!
-					EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status);
+					EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status, 0);
 
 				}
 			}

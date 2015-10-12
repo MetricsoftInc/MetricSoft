@@ -104,10 +104,11 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <br />
+                            </asp:Panel>
+                        </div>
+                        <br />
+                            <asp:Panel ID="pnlDepartment" runat="server">
                                 <div class="blueCell" style="padding: 7px;">
-                                    <div class="row-fluid">
-                                        <div class="col-xs-12  text-left">
                                             <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
                                                 <tr>
                                                     <td  class="columnHeader" width="24%">
@@ -115,18 +116,16 @@
                                                     </td>
                                                     <td class="required" width="1%">&nbsp;</td>
                                                     <td class="tableDataAlt" width="75%">
+                                                        <asp:Label runat="server" ID="lblDepartment" Visible="false"></asp:Label>
                                                         <telerik:RadDropDownList ID="rddlDepartment" runat="server" Width="450" AutoPostBack="true" CausesValidation="false" Skin="Metro">
                                                         </telerik:RadDropDownList>
                                                         <asp:RequiredFieldValidator ID="rfv1" runat="server" ControlToValidate="rddlDepartment" InitialValue="-1" ValidationGroup="Val" ErrorMessage="Please select a department" />
-                                                        <asp:Label runat="server" ID="lblDepartment" Visible="false"></asp:Label>
                                                     </td>
                                                 </tr>
                                             </table>
-                                         </div>
-                                    </div>
                                 </div>
                             </asp:Panel>
-                        </div>
+                        <br />
                         <ucl:AuditDetails id="uclAuditDetails" runat="server" />
                         <asp:Panel ID="pnlAddEdit" runat="server">
 

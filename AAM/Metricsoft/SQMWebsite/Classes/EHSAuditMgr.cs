@@ -1141,7 +1141,7 @@ namespace SQM.Website
 			return status;
 		}
 
-		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string status)
+		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string status, decimal createPersonId)
 		{
 			var entities = new PSsqmEntities();
 
@@ -1156,6 +1156,8 @@ namespace SQM.Website
 			{
 				task = taskMgr.CreateTask("0", "T", 0, type.TITLE.ToString(), dueDate, responsiblePersonId);
 				task.STATUS = ((int)TaskMgr.CalculateTaskStatus(task)).ToString();
+				if (createPersonId > 0)
+					task.CREATE_ID = createPersonId;
 			}
 			else
 			{
