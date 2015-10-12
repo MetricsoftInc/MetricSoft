@@ -678,6 +678,10 @@
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
           </AssociationSet>
+          <AssociationSet Name="FK_TASK_STATUS_PERSON1" Association="PSsqmModel.Store.FK_TASK_STATUS_PERSON1">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ACTIVE_CUSTOMER">
           <Key>
@@ -2609,6 +2613,7 @@
           <Property Name="COMMENTS" Type="nvarchar" />
           <Property Name="CREATE_DT" Type="datetime" />
           <Property Name="DETAIL" Type="nvarchar" />
+          <Property Name="CREATE_ID" Type="numeric" Precision="35" />
         </EntityType>
         <EntityType Name="UN_DISPOSAL">
           <Key>
@@ -4237,6 +4242,18 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TASK_STATUS_PERSON">
+          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
+          <End Role="TASK_STATUS" Type="PSsqmModel.Store.TASK_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="TASK_STATUS">
+              <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_STATUS_PERSON1">
           <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
           <End Role="TASK_STATUS" Type="PSsqmModel.Store.TASK_STATUS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -8919,6 +8936,7 @@
           <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
           <Property Type="String" Name="DETAIL" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
+          <Property Type="Decimal" Name="CREATE_ID" Precision="35" Scale="0" />
         </EntityType>
         <Association Name="FK_TASK_STATUS_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -10998,6 +11016,7 @@
           <EntitySetMapping Name="TASK_STATUS">
             <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
               <MappingFragment StoreEntitySet="TASK_STATUS">
+                <ScalarProperty Name="CREATE_ID" ColumnName="CREATE_ID" />
                 <ScalarProperty Name="DETAIL" ColumnName="DETAIL" />
                 <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />

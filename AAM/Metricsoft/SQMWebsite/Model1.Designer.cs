@@ -47359,6 +47359,30 @@ namespace SQM.Website
         private global::System.String _DETAIL;
         partial void OnDETAILChanging(global::System.String value);
         partial void OnDETAILChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CREATE_ID
+        {
+            get
+            {
+                return _CREATE_ID;
+            }
+            set
+            {
+                OnCREATE_IDChanging(value);
+                ReportPropertyChanging("CREATE_ID");
+                _CREATE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CREATE_ID");
+                OnCREATE_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CREATE_ID;
+        partial void OnCREATE_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnCREATE_IDChanged();
 
         #endregion
 

@@ -136,6 +136,7 @@ namespace SQM.Website
 			task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
 			task.STATUS = ((int)TaskStatus.New).ToString();
 			task.CREATE_DT = DateTime.Now;
+			task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 
 			taskMgr.CreateTask(task);
 			taskMgr.UpdateTaskList(task.RECORD_ID);

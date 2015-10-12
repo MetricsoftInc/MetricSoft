@@ -1125,6 +1125,7 @@ namespace SQM.Website
 			if (theTask == null)
 			{
 				task.CREATE_DT = DateTime.UtcNow;
+				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 				task.DETAIL = incident.DESCRIPTION;
 				taskMgr.CreateTask(task);
 				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
@@ -1154,6 +1155,7 @@ namespace SQM.Website
 			{
 				task = taskMgr.CreateTask(((int)SysPriv.action).ToString(), "T", taskSeq, !string.IsNullOrEmpty(taskDescription) ? taskDescription : incident.ISSUE_TYPE, dueDate, responsiblePersonId);
 				task.DETAIL = detail;
+				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
 			}
 			else
