@@ -26,11 +26,6 @@ namespace SQM.Website
 			get { return ViewState["Mode"] == null ? IncidentMode.Incident : (IncidentMode)ViewState["Mode"]; }
 			set	{ ViewState["Mode"] = value; }
 		}
-		public bool isDirected
-		{
-			get { return ViewState["isDirected"] == null ? false : (bool)ViewState["isDirected"]; }
-			set { ViewState["isDirected"] = value; }
-		}
 
 		decimal companyId;
 
@@ -388,8 +383,7 @@ namespace SQM.Website
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
-
-			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked);
+			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
 				
 			if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 				HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();

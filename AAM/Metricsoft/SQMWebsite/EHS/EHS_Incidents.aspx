@@ -194,11 +194,14 @@
 
 						<span class="noprint">
 							<span style="margin-left: 14px;">
-							<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
-							<span style="padding-top: 10px;""><asp:CheckBox ID="cbShowImage" runat="server" Checked="false"  /></span>
-							<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnIncidentsSearchClick" /></span>
+								<asp:Label ID="lblCreatedByMe" runat="server" Text="Created By Me Only" CssClass="prompt"></asp:Label>
+								<span style="padding-top: 10px;""><asp:CheckBox ID="cbCreatedByMe" runat="server" Checked="false"  /></span>
+								&nbsp;&nbsp;
+								<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt" Visible="false"></asp:Label>
+								<span style="padding-top: 10px;""><asp:CheckBox ID="cbShowImage" runat="server" Checked="false" Visible="false"  /></span>
+								<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnIncidentsSearchClick" CommandArgument="" />
+							</span>
 						</span>
-
 					</div>
 				</div>
 				<br />

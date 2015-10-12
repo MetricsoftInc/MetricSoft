@@ -226,7 +226,7 @@ namespace SQM.Website
 
 			HSCalcs = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", dtFrom, dtTo, new decimal[0]);
 			HSCalcs.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
-            HSCalcs.ehsCtl.SelectIncidentList(plantIDS, typeList, dtFrom, dtTo, ddlExportStatusSelect.SelectedValue, false);
+            HSCalcs.ehsCtl.SelectIncidentList(plantIDS, typeList, dtFrom, dtTo, ddlExportStatusSelect.SelectedValue, false, 0);
 		    GenerateIncidentExportExcel(HSCalcs.ehsCtl.IncidentHst);
             uclProgress.ProgressComplete();
 		}
