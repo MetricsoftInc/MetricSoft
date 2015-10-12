@@ -678,10 +678,6 @@
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
           </AssociationSet>
-          <AssociationSet Name="FK_TASK_STATUS_PERSON1" Association="PSsqmModel.Store.FK_TASK_STATUS_PERSON1">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ACTIVE_CUSTOMER">
           <Key>
@@ -4242,18 +4238,6 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TASK_STATUS_PERSON">
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
-          <End Role="TASK_STATUS" Type="PSsqmModel.Store.TASK_STATUS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="TASK_STATUS">
-              <PropertyRef Name="RESPONSIBLE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TASK_STATUS_PERSON1">
           <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
           <End Role="TASK_STATUS" Type="PSsqmModel.Store.TASK_STATUS" Multiplicity="*" />
           <ReferentialConstraint>
