@@ -1166,7 +1166,9 @@ namespace SQM.Website
 					}
 
 					// get only closed audits
-					this.AuditHst = this.AuditHst.Where(l => l.Status == "C" || l.Status == "C8").ToList();
+					// AW20151011 - we want to include all adverse answers, because audits may not have been completed yet, but we want to see them
+					//		** do we want to only show the ones where all the questions have been completed??
+					//this.AuditHst = this.AuditHst.Where(l => l.Status == "C" || l.Status == "C8").ToList();
 
 					// now we need to build a list of only the Audits that have negative responses
 					foreach (EHSAuditData data in this.AuditHst)

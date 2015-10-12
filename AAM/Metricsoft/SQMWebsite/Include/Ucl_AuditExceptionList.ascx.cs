@@ -149,6 +149,7 @@ namespace SQM.Website
 				{
 					lbl = (Label)e.Item.FindControl("lblAuditBy");
 					lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
+					hdnAuditPerson.Value = data.Person.PERSON_ID.ToString();
 				}
 
 				lbl = (Label)e.Item.FindControl("lblAuditStatus");
@@ -223,10 +224,14 @@ namespace SQM.Website
 				LinkButton lnk;
 				Label lbl;
 				EHSAuditQuestion data = (EHSAuditQuestion)e.Item.DataItem;
+
 				lnk = (LinkButton)e.Item.FindControl("lnkAddTask");
 				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+
 				lnk = (LinkButton)e.Item.FindControl("lnkUpdateStatus");
 				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+				if (!hdnAuditPerson.Value.ToString().Equals(SessionManager.UserContext.Person.PERSON_ID.ToString()))
+					lnk.Visible = false;
 
 				if (TaskXLATList == null || TaskXLATList.Count == 0)
 					TaskXLATList = SQMBasePage.SelectXLATList(new string[1] { "AUDIT_EXCEPTION_STATUS" });

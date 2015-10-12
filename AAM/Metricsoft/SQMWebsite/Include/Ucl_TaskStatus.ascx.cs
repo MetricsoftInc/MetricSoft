@@ -121,14 +121,19 @@ namespace SQM.Website
 			}
 
 			string[] cmd = btn.CommandArgument.Split('~'); // recordType, recordID, recordSubID, taskStep, taskType
+			int recordType = Convert.ToInt32(cmd[0]);
+			decimal recordID = Convert.ToDecimal(cmd[1]);
+			decimal recordSubID = Convert.ToDecimal(cmd[2]);
+			string taskStep = cmd[3];
+			string taskType = cmd[4];
 			TaskStatusMgr taskMgr = new TaskStatusMgr();
-			taskMgr.Initialize(Convert.ToInt32(cmd[0]), Convert.ToDecimal(cmd[1]));
+			taskMgr.Initialize(recordType, recordID);
 			TASK_STATUS task = new TASK_STATUS();
-			task.RECORD_TYPE = Convert.ToInt32(cmd[0]);
-			task.RECORD_ID = Convert.ToDecimal(cmd[1]);
-			task.RECORD_SUBID = Convert.ToDecimal(cmd[2]);
-			task.TASK_STEP = cmd[3];
-			task.TASK_TYPE = cmd[4];
+			task.RECORD_TYPE = recordType;
+			task.RECORD_ID = recordID;
+			task.RECORD_SUBID = recordSubID;
+			task.TASK_STEP = taskStep;
+			task.TASK_TYPE = taskType;
 			task.TASK_SEQ = 0;
 			task.DUE_DT = rdpTaskDueDTAdd.SelectedDate;
 			task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPersonAdd.SelectedValue.ToString());
@@ -140,7 +145,8 @@ namespace SQM.Website
 
 			taskMgr.CreateTask(task);
 			taskMgr.UpdateTaskList(task.RECORD_ID);
-			// send email ?
+			// send email
+			EHSNotificationMgr.NotifyTaskAssigment(task);
 
 			if (OnTaskAdd != null)
 			{
@@ -205,7 +211,8 @@ namespace SQM.Website
 				task.STATUS = ((int)TaskStatus.New).ToString();
 				task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPerson.SelectedValue);
 				taskMgr.UpdateTask(task);
-				// send email ?
+				// send email
+				EHSNotificationMgr.NotifyTaskAssigment(task);
 			}
 
 			if (OnTaskUpdate != null)

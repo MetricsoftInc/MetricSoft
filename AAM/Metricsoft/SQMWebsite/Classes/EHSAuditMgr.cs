@@ -113,7 +113,7 @@ namespace SQM.Website
 			if (this.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Audit.CLOSE_DATE.HasValue)
 				this.Status = "C";  // audit closed
 
-			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
+			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE + 1));  // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
 			if (closeDT.CompareTo(DateTime.Now) < 0)
 				this.Status = "C";
@@ -134,7 +134,7 @@ namespace SQM.Website
 		{
 			int days = 0;
 
-			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
+			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE + 1)); // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
 			if (closeDT.CompareTo(DateTime.Now) < 0)
 			{
@@ -145,8 +145,8 @@ namespace SQM.Website
 			}
 			else 
 			{
-				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(this.Audit.AUDIT_DT).TotalDays));
-				this.DaysToClose = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(closeDT).TotalDays));
+				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Today.Subtract(this.Audit.AUDIT_DT).TotalDays));
+				this.DaysToClose = (int)Math.Abs(Math.Truncate(DateTime.Today.Subtract(closeDT).TotalDays));
 			}
 
 			return days;
@@ -831,7 +831,7 @@ namespace SQM.Website
 			if (status != "C")
 			{
 				var auditType = SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
-				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(auditType.DAYS_TO_COMPLETE));
+				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(auditType.DAYS_TO_COMPLETE + 1)); // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
 				if (closeDT.CompareTo(DateTime.Now) < 0)
 					status = "C";
@@ -1164,6 +1164,10 @@ namespace SQM.Website
 					case "C":
 						task.STATUS = ((int)TaskStatus.Complete).ToString();
 						taskMgr.SetTaskComplete(task, responsiblePersonId);
+						break;
+					case "E":
+						task.STATUS = ((int)TaskStatus.Expired).ToString();
+						taskMgr.UpdateTask(task);
 						break;
 				}
 				//task = taskMgr.UpdateTask(task, dueDate, responsiblePersonId, audit.AUDIT_TYPE_ID.ToString());

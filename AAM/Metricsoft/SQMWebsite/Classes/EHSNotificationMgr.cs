@@ -184,33 +184,78 @@ namespace SQM.Website
 			var emailIds = new HashSet<decimal>();
 
 			AUDIT audit = EHSAuditMgr.SelectAuditById(entities, auditId);
-			string auditType = EHSAuditMgr.SelectAuditTypeByAuditId(auditId);
+			AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+			string auditType = type.TITLE;
 			emailIds.Add((decimal)audit.AUDIT_PERSON);
-
+			DateTime dueDate = audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE);
 			if (emailIds.Count > 0)
 			{
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[1] { "NOTIFY_AUDIT_ASSIGN" });
 				string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
 
-				string emailSubject = "Audit Created: " + auditType;
-				string emailBody = "A new audit has been created:<br/>" +
+				string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_AUDIT_ASSIGN" && x.XLAT_CODE == "EMAIL_SUBJECT").FirstOrDefault().DESCRIPTION + ": " + auditType;
+				string emailBody = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_AUDIT_ASSIGN" && x.XLAT_CODE == "EMAIL_01").FirstOrDefault().DESCRIPTION + " " + dueDate.ToString("dddd MM/dd/yyyy") + ".<br/>" +
 								"<br/>" +
 								auditType + "<br/>" +
 								"<br/>" +
-								"Please log in to " + appUrl+auditPath + " to view the audit.";
+								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_AUDIT_ASSIGN" && x.XLAT_CODE == "EMAIL_02").FirstOrDefault().DESCRIPTION + " (" + appUrl + auditPath + ")";
 
 				foreach (decimal eid in emailIds)
 				{
 					string emailAddress = (from p in entities.PERSON where p.PERSON_ID == eid select p.EMAIL).FirstOrDefault();
 
-					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "", "web"));
-					thread.IsBackground = true;
-					thread.Start();
+					if (!string.IsNullOrEmpty(emailAddress))
+					{
+						Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "", "web"));
+						thread.IsBackground = true;
+						thread.Start();
 
-					//WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "");
+						//WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "");
+					}
 				}
 			}
+		}
+
+		public static int NotifyTaskAssigment(TASK_STATUS task)
+		{
+			int status = 0;
+			int recordType = task.RECORD_TYPE;
+			decimal recordID = task.RECORD_ID;
+			//decimal recordSubID = (decimal)task.RECORD_SUBID;
+			string taskStep = task.TASK_STEP;
+			string taskType = task.TASK_TYPE;
+			decimal personId = (decimal)task.RESPONSIBLE_ID;
+			DateTime dueDate = (DateTime)task.DUE_DT;
+
+			PERSON person = SQMModelMgr.LookupPerson(personId, "");
+
+			if (person != null && !string.IsNullOrEmpty(person.EMAIL))
+			{
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_TASK_ASSIGN", "RECORD_TYPE", "NOTIFY_SCOPE_TASK" });
+				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				if (string.IsNullOrEmpty(appUrl))
+					appUrl = "the website";
+
+				string recordTypeValue = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == recordType.ToString()).FirstOrDefault().DESCRIPTION;
+				string taskStepValue = XLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == taskStep).FirstOrDefault().DESCRIPTION;
+
+				string emailTo = person.EMAIL;
+				string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_SUBJECT").FirstOrDefault().DESCRIPTION + " " + recordTypeValue + " " + taskStepValue;
+				string emailBody = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_01").FirstOrDefault().DESCRIPTION + ":<br/>" +
+					"Task Type: " + recordTypeValue + " " + taskStepValue +
+								"<br/>" +
+					"Due Date: " + dueDate.ToString("dddd MM/dd/yyyy") +
+								"<br/>" +
+								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_02").FirstOrDefault().DESCRIPTION + "(" + appUrl + auditPath + ")";
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
+
+			return status;
 		}
 
 	}

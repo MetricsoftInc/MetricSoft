@@ -892,7 +892,10 @@ namespace SQM.Website
 			BuildAuditUsersDropdownList(location);
 			hdnAuditLocation.Value = location;
 			// rebuild the department list
-			UpdateDepartments(Convert.ToDecimal(location));
+			if (!location.ToLower().Equals("top"))
+			{
+				UpdateDepartments(Convert.ToDecimal(location));
+			}
 
 			// need to rebuild the form
 			string selectedTypeId = rddlAuditType.SelectedValue;
@@ -1921,7 +1924,28 @@ namespace SQM.Website
 				}
 				if ((hdnAuditLocation.Value.ToString().Trim().Length == 0 && lblAuditLocation.Text.ToString().Length == 0) || (rddlAuditUsers.SelectedIndex <= 0 && lblAuditPersonName.Text.ToString().Length == 0) || (rddlDepartment.SelectedIndex == 0 && lblDepartment.Text.ToString().Length == 0))
 				{
-					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+					string requiredFields = "";
+					if ((hdnAuditLocation.Value.ToString().Trim().Length == 0 && lblAuditLocation.Text.ToString().Length == 0))
+					{
+						if (requiredFields.Trim().Length > 0)
+							requiredFields += ", ";
+						requiredFields += "Business Location";
+					}
+					if ((rddlAuditUsers.SelectedIndex <= 0 && lblAuditPersonName.Text.ToString().Length == 0))
+					{
+						if (requiredFields.Trim().Length > 0)
+							requiredFields += ", ";
+						requiredFields += "Audit Person";
+					}
+					if ((rddlDepartment.SelectedIndex == 0 && lblDepartment.Text.ToString().Length == 0))
+					{
+						if (requiredFields.Trim().Length > 0)
+							requiredFields += ", ";
+						requiredFields += "Department";
+					}
+					if (requiredFields.Trim().Length > 0)
+						requiredFields = " (" + requiredFields + ")";
+					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save." + requiredFields);
 					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 				}
 				else
@@ -2019,6 +2043,11 @@ namespace SQM.Website
 			{
 				shouldReturn = AddOrUpdateAnswers(questions, auditId);
 				SaveAttachments(auditId);
+				if (!IsEditContext)
+				{
+					// notify the user of a new audit
+					EHSNotificationMgr.NotifyOnAuditCreate(auditId, (decimal)theAudit.AUDIT_PERSON);
+				}
 			}
 
 

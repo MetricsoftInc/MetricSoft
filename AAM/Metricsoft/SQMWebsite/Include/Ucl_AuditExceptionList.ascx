@@ -11,6 +11,7 @@
 <asp:Panel ID="pnlCSTAuditSearch" runat="server" Visible="false" Width="99%">
     <asp:HiddenField id="hfCSTPlantSelect" runat="server" value="Responsible Location:"/>
     <asp:HiddenField id="hfRCVPlantSelect" runat="server" value="Detected Location:"/>
+    <asp:HiddenField ID="hdnAuditPerson" runat="server" />
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
         <tr>
             <td class="summaryDataEnd" width="150px">

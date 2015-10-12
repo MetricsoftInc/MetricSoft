@@ -199,18 +199,25 @@ namespace SQM.Website.Automated
 
 		static void UpdatePastDueAuditStatus()
 		{
+			string status = "";
 			// get a list of all audits that do not have a close date
 			List<AUDIT> openAudits = EHSAuditMgr.SelectOpenAudits(0, null);
 			foreach (AUDIT audit in openAudits)
 			{
 				AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
-				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE));
+				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE + 1));  // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
 				if (closeDT.CompareTo(DateTime.Now) < 0)
 				{
 					// close the audit
 					// valid status codes... A = active, C = complete, I = incomplete/in-process, E = Expired. We are closing audits that are past due, so Expired.
-					EHSAuditMgr.CloseAudit(audit.AUDIT_ID, "E", closeDT);
+					status = audit.CURRENT_STATUS;
+					if (status != "C")
+						status = "E";
+					EHSAuditMgr.CloseAudit(audit.AUDIT_ID, status, closeDT.AddDays(-1)); // now take the one day back off so that the close date sets correctly
+					// now mark the Task as expired too!
+					EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status);
+
 				}
 			}
 		}
