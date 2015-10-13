@@ -85,49 +85,6 @@ namespace SQM.Website
 			Response.Redirect("/EHS/EHS_Audits.aspx");
 		}
 
-		//protected void lnkProblemCaseRedirect(Object sender, EventArgs e)
-		//{
-		//	//try
-		//	//{
-		//	//	LinkButton lnk = (LinkButton)sender;
-		//	//	PROB_CASE probCase = ProblemCase.LookupCaseByAudit(Convert.ToDecimal(lnk.CommandArgument));
-		//	//	if (probCase != null)
-		//	//	{
-		//	//		SessionManager.ReturnObject = probCase.PROBCASE_ID;
-		//	//		SessionManager.ReturnStatus = true;
-		//	//		Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
-		//	//	}
-		//	//}
-		//	//catch { ; }
-		//}
-
-		//public void BindAuditList(object theList)
-		//{
-		//	pnlAuditList.Visible = true;
-		//	gvAuditList.DataSource = theList;
-		//	gvAuditList.DataBind();
-		//}
-
-		//public void gvAuditList_OnRowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
-		//{
-		//	if ((!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Header.ToString())) & (!e.Row.RowType.ToString().Trim().Equals(System.Web.UI.WebControls.ListItemType.Footer.ToString())))
-		//	{
-		//		try
-		//		{
-		//			HiddenField hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditDate");
-		//			Label lbl = (Label)e.Row.Cells[0].FindControl("lblAuditDate");
-		//			lbl.Text = SQMBasePage.FormatDate(Convert.ToDateTime(hf.Value), "d", false);
-
-		//			hf = (HiddenField)e.Row.Cells[0].FindControl("hfAuditID");
-		//			lbl = (Label)e.Row.Cells[0].FindControl("lblAuditID");
-		//			lbl.Text = WebSiteCommon.FormatID(Convert.ToInt32(hf.Value), 6);
-		//		}
-		//		catch
-		//		{
-		//		}
-		//	}
-		//}
-
 		#endregion
 
 		#region qualityissue
@@ -140,10 +97,10 @@ namespace SQM.Website
 		{
 			get { return btnSearch; }
 		}
-		public Button BTNReceiptSearch
-		{
-			get { return btnReceiptSearch; }
-		}
+		//public Button BTNReceiptSearch
+		//{
+		//	get { return btnReceiptSearch; }
+		//}
 
 		public DateTime FromDate
 		{
@@ -173,14 +130,6 @@ namespace SQM.Website
 			}
 		}
 
-		//protected void btnIssueListClose_Click(object sender, EventArgs e)
-		//{
-		//	if (OnQualityIssueListCloseClick != null)
-		//	{
-		//		OnQualityIssueListCloseClick(0);
-		//	}
-		//}
-
 		protected void ddlDateSpanChange(object sender, EventArgs e)
 		{
 
@@ -195,14 +144,14 @@ namespace SQM.Website
 			}
 		}
 
-		protected void btnReceiptsSearchClick(object sender, EventArgs e)
-		{
-			if (OnSearchReceiptsClick != null)
-			{
-				Button btn = (Button)sender;
-				OnSearchReceiptsClick(btn.CommandArgument);
-			}
-		}
+		//protected void btnReceiptsSearchClick(object sender, EventArgs e)
+		//{
+		//	if (OnSearchReceiptsClick != null)
+		//	{
+		//		Button btn = (Button)sender;
+		//		OnSearchReceiptsClick(btn.CommandArgument);
+		//	}
+		//}
 
 		#endregion
 

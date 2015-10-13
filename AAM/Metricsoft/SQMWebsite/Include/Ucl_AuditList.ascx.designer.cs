@@ -148,15 +148,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// btnReceiptSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReceiptSearch;
-        
-        /// <summary>
         /// pnlAuditTaskHdr control.
         /// </summary>
         /// <remarks>
