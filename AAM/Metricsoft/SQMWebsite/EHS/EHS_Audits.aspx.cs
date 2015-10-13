@@ -69,7 +69,7 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (!uclAuditForm.IsEditContext)
+				//if (!uclAuditForm.IsEditContext)
 					RadPersistenceManager1.SaveState();
 
 				if (SessionManager.ReturnStatus == true)
