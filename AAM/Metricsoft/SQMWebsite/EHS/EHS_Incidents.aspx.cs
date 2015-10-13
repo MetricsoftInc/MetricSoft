@@ -359,6 +359,20 @@ namespace SQM.Website
 		private void SearchIncidents()
 		{
 			string selectedValue = "";
+			// work-around for rad persistence manager being cleared upon re-build ??
+			if (ddlPlantSelect.CheckedItems.Count == 0)
+			{
+				foreach (RadComboBoxItem item in ddlPlantSelect.Items)
+					item.Checked = true;
+			}
+			if (rcbIncidentType.CheckedItems.Count == 0)
+			{
+				foreach (RadComboBoxItem item in rcbIncidentType.Items)
+					item.Checked = true;
+			}
+			if (rcbStatusSelect.SelectedItem == null)
+				rcbStatusSelect.SelectedIndex = 0;
+
 			DateTime fromDate = Convert.ToDateTime(dmFromDate.SelectedDate); 
 			DateTime toDate = Convert.ToDateTime(dmToDate.SelectedDate);
 			if (toDate < fromDate)
