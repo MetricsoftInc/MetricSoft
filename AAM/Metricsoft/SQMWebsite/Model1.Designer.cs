@@ -15980,6 +15980,30 @@ namespace SQM.Website
         private global::System.String _ATTRIBUTE;
         partial void OnATTRIBUTEChanging(global::System.String value);
         partial void OnATTRIBUTEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UPDATE_IND
+        {
+            get
+            {
+                return _UPDATE_IND;
+            }
+            set
+            {
+                OnUPDATE_INDChanging(value);
+                ReportPropertyChanging("UPDATE_IND");
+                _UPDATE_IND = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UPDATE_IND");
+                OnUPDATE_INDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UPDATE_IND;
+        partial void OnUPDATE_INDChanging(Nullable<global::System.Decimal> value);
+        partial void OnUPDATE_INDChanged();
 
         #endregion
 

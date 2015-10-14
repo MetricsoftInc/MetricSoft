@@ -28,7 +28,7 @@ namespace SQM.Website.Automated
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 			DateTime priorPeriod = DateTime.UtcNow.AddMonths(-1);
 			DateTime thisPeriod = DateTime.UtcNow;
-			long sessionID = thisPeriod.Ticks;
+			decimal updateIndicator = thisPeriod.Ticks;
 			decimal locationID = 0;
 
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
@@ -97,7 +97,7 @@ namespace SQM.Website.Automated
 				List<INCIDENT> incidentList = new List<INCIDENT>();
 				incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") 
 								where 
-								i.INCIDENT_DT >= fromDate  &&  i.INCIDENT_ID == 122 
+								i.INCIDENT_DT >= fromDate  
 								select i).ToList();
 
 				// pre allocate monthly periods for the overall accounting span
@@ -125,9 +125,9 @@ namespace SQM.Website.Automated
 						List<EHS_DATA> dataList = new List<EHS_DATA>();
 						foreach (EHSIncidentTimeAccounting period in incidentSpan)
 						{
-							dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, locationID, new DateTime(period.PeriodYear, period.PeriodMonth, 1), measureList.Select(m => m.MEASURE_ID).ToList(), true);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST"), (decimal)period.LostTime);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RESTRICTED_TIME"), (decimal)period.RestrictedTime);
+							dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, locationID, new DateTime(period.PeriodYear, period.PeriodMonth, 1), measureList.Select(m => m.MEASURE_ID).ToList(), true, updateIndicator);
+							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST"), (decimal)period.LostTime, updateIndicator);
+							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RESTRICTED_TIME"), (decimal)period.RestrictedTime, updateIndicator);
 							EHSDataMapping.UpdateEHSDataList(entities, dataList);
 						}
 					}

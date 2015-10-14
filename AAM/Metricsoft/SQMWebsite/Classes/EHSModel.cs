@@ -38,7 +38,7 @@ namespace SQM.Website
 			return dataPeriod;
 		}
 
-		public static List<EHS_DATA> SelectEHSDataPeriodList(PSsqmEntities ctx, decimal plantID, DateTime periodDate, List<decimal> measureList, bool createNew)
+		public static List<EHS_DATA> SelectEHSDataPeriodList(PSsqmEntities ctx, decimal plantID, DateTime periodDate, List<decimal> measureList, bool createNew, decimal updateIndicator)
 		{
 			List<EHS_DATA> dataList = new List<EHS_DATA>();
 
@@ -46,6 +46,17 @@ namespace SQM.Website
 							  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && (measureList.Count == 0  ||  measureList.Contains(d.MEASURE_ID))
 							  select d).ToList();
 
+			// clear the existing data values if they were created via a prior rollup process
+			if (updateIndicator > 0)
+			{
+				foreach (EHS_DATA ehsData in dataList.Where(l=> l.UPDATE_IND > 0  &&  l.UPDATE_IND != updateIndicator).ToList())
+				{
+					ehsData.VALUE = null;
+					ehsData.ATTRIBUTE = null;
+				}
+			}
+
+			// create new data elements as needed to fulfil the Measures we are calculating
 			if (createNew  &&  measureList != null)
 			{
 				EHS_DATA ehsData = null;
@@ -57,20 +68,10 @@ namespace SQM.Website
 						ehsData.MEASURE_ID = measureID;
 						ehsData.PLANT_ID = plantID;
 						ehsData.DATE = periodDate.Date;
+						ehsData.UPDATE_IND = updateIndicator;
 						dataList.Add(ehsData);
 					}
 				}
-			}
-
-			return dataList;
-		}
-
-		public static List<EHS_DATA> ClearEHSDataValues(List<EHS_DATA> dataList)
-		{
-			foreach (EHS_DATA ehsData in dataList)
-			{
-				ehsData.VALUE = null;
-				ehsData.ATTRIBUTE = null;
 			}
 
 			return dataList;
@@ -96,17 +97,19 @@ namespace SQM.Website
 			return status;
 		}
 
-		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal addValue)
+		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal addValue, decimal updateIndicator)
 		{
 			int status = -1;
 
 			EHS_DATA ehsData = GetEHSData(dataList, measureID);
 			if (ehsData != null)
 			{
+				ehsData.UPDATE_IND = updateIndicator;
 				if (ehsData.VALUE.HasValue)
 					ehsData.VALUE += addValue;
 				else
 					ehsData.VALUE = addValue;
+
 				status = 0;
 			}
 

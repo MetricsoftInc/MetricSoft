@@ -1239,6 +1239,7 @@
           <Property Name="DATE" Type="date" Nullable="false" />
           <Property Name="VALUE" Type="numeric" Precision="35" />
           <Property Name="ATTRIBUTE" Type="nvarchar" MaxLength="400" />
+          <Property Name="UPDATE_IND" Type="numeric" Precision="35" />
         </EntityType>
         <EntityType Name="EHS_DATA_ORD">
           <Key>
@@ -8845,6 +8846,7 @@
           <NavigationProperty Name="EHS_MEASURE" Relationship="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" FromRole="EHS_DATA" ToRole="EHS_MEASURE" />
           <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_EHS_DATA_PLANT" FromRole="EHS_DATA" ToRole="PLANT" />
           <NavigationProperty Name="EHS_DATA_ORD" Relationship="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" FromRole="EHS_DATA" ToRole="EHS_DATA_ORD" />
+          <Property Type="Decimal" Name="UPDATE_IND" Precision="35" Scale="0" />
         </EntityType>
         <Association Name="FK_EHS_DATA_EHS_MEASURE">
           <End Type="PSsqmModel.EHS_MEASURE" Role="EHS_MEASURE" Multiplicity="1" />
@@ -10972,6 +10974,7 @@
           <EntitySetMapping Name="EHS_DATA">
             <EntityTypeMapping TypeName="PSsqmModel.EHS_DATA">
               <MappingFragment StoreEntitySet="EHS_DATA">
+                <ScalarProperty Name="UPDATE_IND" ColumnName="UPDATE_IND" />
                 <ScalarProperty Name="ATTRIBUTE" ColumnName="ATTRIBUTE" />
                 <ScalarProperty Name="VALUE" ColumnName="VALUE" />
                 <ScalarProperty Name="DATE" ColumnName="DATE" />
