@@ -60,77 +60,82 @@ namespace SQM.Website
 						lnkForgotPassword.Visible = true;
 					}
 					
-					// url format login.aspx/?t=ltc:60&p=EHS
-					// execOverride == override query params to force ticker and image posting 
-					
-					System.Collections.Specialized.NameValueCollection qry = new System.Collections.Specialized.NameValueCollection();
-					string execOverride = System.Configuration.ConfigurationManager.AppSettings["LoginOverride"];
-					if (execOverride != null && execOverride == "QAI")
+					SETTINGS setsLoginPosting = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "LoginPostingsEnable");
+					if (setsLoginPosting == null || setsLoginPosting.VALUE.ToUpper() == "Y")
 					{
-						qry.Add("t", "ltc");
-						qry.Add("p", "EHS,QS");
-					}
-					else
-					{
-						sets = SQMSettings.GetSetting("ENV", "LOGINIMAGE");  // force login splash page display
-						if (sets != null  &&  sets.VALUE.ToUpper() == "Y")
-						{
-							qry.Add("p", "EHS,QS");
-						}
-						sets = SQMSettings.GetSetting("ENV", "LOGINSTAT");
-						if (sets != null && sets.VALUE.ToUpper() == "LTC")
+
+						// url format login.aspx/?t=ltc:60&p=EHS
+						// execOverride == override query params to force ticker and image posting 
+
+						System.Collections.Specialized.NameValueCollection qry = new System.Collections.Specialized.NameValueCollection();
+						string execOverride = System.Configuration.ConfigurationManager.AppSettings["LoginOverride"];
+						if (execOverride != null && execOverride == "QAI")
 						{
 							qry.Add("t", "ltc");
+							qry.Add("p", "EHS,QS");
 						}
-					}
-
-					sets = SQMSettings.GetSetting("ENV", "LOGINMESSAGE");
-					if (sets != null && !string.IsNullOrEmpty(sets.VALUE))
-					{
-						lblLoginMessage.Text = sets.VALUE;
-						divLoginMessage.Visible = true;
-					}
-
-
-					if (Request.QueryString.Count > 0)
-					{
-						qry = Request.QueryString;
-					}
-
-					if (qry.Get("t") != null)
-					{
-						string[] args = qry.Get("t").ToString().Split(':');
-
-						COMPANY company = new COMPANY();
-						decimal[] plantIDS = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.LOCATION_TYPE == "P").OrderBy(l => l.PLANT_NAME).Select(l => l.PLANT_ID).ToArray();
-						SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(company, "0", DateTime.Now, DateTime.Now, plantIDS);
-						stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1,DateSpanOption.SelectRange);
-						stsmgr.ehsCtl.ElapsedTimeSeries(plantIDS, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
-
-						GaugeDefinition tikCfg = new GaugeDefinition().Initialize();
-						tikCfg.Width = 0;
-						tikCfg.Unit =  args.Length > 1 ? Convert.ToInt32(args[1]) : 80;
-						tikCfg.Position = "none";
-						tikCfg.NewRow = false;
-						pnlPosting.Visible = true;
-						divTicker.Visible = true;
-						uclGauge.CreateTicker(tikCfg, stsmgr.ehsCtl.Results.metricSeries, divTicker);
-					}
-
-					if (qry.Get("p") != null)
-					{
-						string[] args = qry.Get("p").ToString().Split(',');
-						if (args.Contains("EHS"))
+						else
 						{
-							pnlPosting.Visible = true;
-							imgPostingEHS.Style.Add("MARGIN-TOP", "8px");
-							imgPostingEHS.Src = SQM.Website.Classes.SQMDocumentMgr.GetImageSourceString(SQM.Website.Classes.SQMDocumentMgr.FindCurrentDocument("SYS", 31));
+							sets = SQMSettings.GetSetting("ENV", "LOGINIMAGE");  // force login splash page display
+							if (sets != null && sets.VALUE.ToUpper() == "Y")
+							{
+								qry.Add("p", "EHS,QS");
+							}
+							sets = SQMSettings.GetSetting("ENV", "LOGINSTAT");
+							if (sets != null && sets.VALUE.ToUpper() == "LTC")
+							{
+								qry.Add("t", "ltc");
+							}
 						}
-						if (args.Contains("QS"))
+
+						sets = SQMSettings.GetSetting("ENV", "LOGINMESSAGE");
+						if (sets != null && !string.IsNullOrEmpty(sets.VALUE))
 						{
+							lblLoginMessage.Text = sets.VALUE;
+							divLoginMessage.Visible = true;
+						}
+
+
+						if (Request.QueryString.Count > 0)
+						{
+							qry = Request.QueryString;
+						}
+
+						if (qry.Get("t") != null)
+						{
+							string[] args = qry.Get("t").ToString().Split(':');
+
+							COMPANY company = new COMPANY();
+							decimal[] plantIDS = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.LOCATION_TYPE == "P").OrderBy(l => l.PLANT_NAME).Select(l => l.PLANT_ID).ToArray();
+							SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(company, "0", DateTime.Now, DateTime.Now, plantIDS);
+							stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+							stsmgr.ehsCtl.ElapsedTimeSeries(plantIDS, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
+
+							GaugeDefinition tikCfg = new GaugeDefinition().Initialize();
+							tikCfg.Width = 0;
+							tikCfg.Unit = args.Length > 1 ? Convert.ToInt32(args[1]) : 80;
+							tikCfg.Position = "none";
+							tikCfg.NewRow = false;
 							pnlPosting.Visible = true;
-							imgPostingQS.Style.Add("MARGIN-TOP", "8px");
-							imgPostingQS.Src = SQM.Website.Classes.SQMDocumentMgr.GetImageSourceString(SQM.Website.Classes.SQMDocumentMgr.FindCurrentDocument("SYS", 32));
+							divTicker.Visible = true;
+							uclGauge.CreateTicker(tikCfg, stsmgr.ehsCtl.Results.metricSeries, divTicker);
+						}
+
+						if (qry.Get("p") != null)
+						{
+							string[] args = qry.Get("p").ToString().Split(',');
+							if (args.Contains("EHS"))
+							{
+								pnlPosting.Visible = true;
+								imgPostingEHS.Style.Add("MARGIN-TOP", "8px");
+								imgPostingEHS.Src = SQM.Website.Classes.SQMDocumentMgr.GetImageSourceString(SQM.Website.Classes.SQMDocumentMgr.FindCurrentDocument("SYS", 31));
+							}
+							if (args.Contains("QS"))
+							{
+								pnlPosting.Visible = true;
+								imgPostingQS.Style.Add("MARGIN-TOP", "8px");
+								imgPostingQS.Src = SQM.Website.Classes.SQMDocumentMgr.GetImageSourceString(SQM.Website.Classes.SQMDocumentMgr.FindCurrentDocument("SYS", 32));
+							}
 						}
 					}
 
