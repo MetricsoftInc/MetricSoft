@@ -170,7 +170,7 @@ namespace SQM.Website
 				pnlLostTime.Visible = true;
 				rptLostTime.DataSource = EHSIncidentMgr.GetLostTimeList(IncidentId);
 				rptLostTime.DataBind();
-				EHSIncidentMgr.CalculateWorkStatusSummary(EHSIncidentMgr.CalculateWorkStatusAccounting(new PSsqmEntities(), IncidentId, null, null));
+				//EHSIncidentMgr.CalculateWorkStatusSummary(EHSIncidentMgr.CalculateWorkStatusAccounting(new PSsqmEntities(), IncidentId, null, null));
 			}
 		}
 

@@ -53,15 +53,22 @@ namespace SQM.Website
 	{
 		public int PeriodYear { get; set; }
 		public int PeriodMonth { get; set; }
+		public decimal IncidentType { get; set; }
+		public int FirstAidCase { get; set; }
+		public int RecordableCase { get; set; }
+		public int LostTimeCase { get; set; }
+		public int FatalityCase { get; set; }
 		public decimal LostTime { get; set; }
 		public decimal RestrictedTime { get; set; }
 		public decimal WorkTime { get; set; }
 
-		public EHSIncidentTimeAccounting CreateNew(int periodYear, int periodMonth)
+		public EHSIncidentTimeAccounting CreateNew(int periodYear, int periodMonth, decimal incidentType)
 		{
 			this.PeriodYear = periodYear;
 			this.PeriodMonth = periodMonth;
+			this.IncidentType = incidentType;
 			this.LostTime = this.RestrictedTime = this.WorkTime = 0;
+			this.FirstAidCase = this.RecordableCase = LostTimeCase = FatalityCase = 0;
 			return this;
 		}
 	}
@@ -1011,28 +1018,47 @@ namespace SQM.Website
 			return losttimelist;
 		}
 
-		public static List<EHSIncidentTimeAccounting> CalculateWorkStatusAccounting(PSsqmEntities ctx, decimal incidentID, DateTime ? fromDate, DateTime ? toDate)
+		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, DateTime selectFromDate, DateTime selectToDate)
 		{
 			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
 
-			List<INCFORM_LOSTTIME_HIST> histList = (from h in ctx.INCFORM_LOSTTIME_HIST
-					   where h.INCIDENT_ID == incidentID
-					   select h).OrderBy(l=> l.BEGIN_DT).ToList();
+			// basic incident info gets accrued in the month the incident occurred
+			EHSIncidentTimeAccounting period1 = new EHSIncidentTimeAccounting().CreateNew(Convert.ToDateTime(incident.INCIDENT_DT).Year, Convert.ToDateTime(incident.CREATE_DT).Month, (decimal)incident.ISSUE_TYPE_ID);
+			periodList.Add(period1);
 
-			if (histList == null || histList.Count == 0)
+			if (incident.INCFORM_INJURYILLNESS == null)
 			{
-				return periodList;
+				return SelectTimePeriodSpan(periodList, selectFromDate, selectToDate);
+			}
+
+			period1.RecordableCase = incident.INCFORM_INJURYILLNESS.RECORDABLE ? 1 : 0;
+			period1.FirstAidCase = incident.INCFORM_INJURYILLNESS.FIRST_AID ? 1 : 0;
+			period1.LostTimeCase = incident.INCFORM_INJURYILLNESS.LOST_TIME ? 1 : 0;
+			period1.FatalityCase = incident.INCFORM_INJURYILLNESS.FATALITY.HasValue  &&  (bool)incident.INCFORM_INJURYILLNESS.FATALITY ? 1 : 0;
+
+			if (incident.INCFORM_LOSTTIME_HIST == null || incident.INCFORM_LOSTTIME_HIST.Count == 0)
+			{
+				return SelectTimePeriodSpan(periodList, selectFromDate, selectToDate);
 			}
 
 			// determine incident time span
 			// assume incident is still open and extend timespan to NOW if last status was not return to work
-			DateTime effFromDate = Convert.ToDateTime(histList.First().BEGIN_DT);
+			List<INCFORM_LOSTTIME_HIST> histList = incident.INCFORM_LOSTTIME_HIST.OrderBy(h => h.BEGIN_DT).ToList();
+			INCFORM_LOSTTIME_HIST histNow = new INCFORM_LOSTTIME_HIST();
+			histNow.BEGIN_DT = DateTime.UtcNow;
+			histNow.WORK_STATUS = histList.Last().WORK_STATUS;
+			histList.Add(histNow);  // ???
+
+			DateTime effFromDate = Convert.ToDateTime(incident.INCIDENT_DT);
 			DateTime effDate = effFromDate;
 			string workStatus = histList.First().WORK_STATUS;
-			DateTime effToDate = histList.Last().WORK_STATUS == "02" ? Convert.ToDateTime(histList.Last().BEGIN_DT) : DateTime.Now;
+			DateTime effToDate = DateTime.UtcNow.AddMonths(1);
 			while (effDate <= effToDate)
 			{
-				periodList.Add(new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month));
+				if (periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault() == null)
+				{
+					periodList.Add(new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month, (decimal)incident.ISSUE_TYPE_ID));
+				}
 				effDate = effDate.AddMonths(1);
 			}
 
@@ -1063,27 +1089,19 @@ namespace SQM.Website
 				workStatus = histItem.WORK_STATUS;
 			}
 
-			if (fromDate.HasValue && toDate.HasValue)
-			{	// return time slice, if specified
-				periodList = periodList.Where(l => new DateTime(l.PeriodYear, l.PeriodMonth, 1) >= (DateTime)fromDate && new DateTime(l.PeriodYear, l.PeriodMonth, DateTime.DaysInMonth(l.PeriodYear, l.PeriodMonth)) <= (DateTime)toDate).ToList();
+			return SelectTimePeriodSpan(periodList, selectFromDate, selectToDate);
+		}
+
+		public static List<EHSIncidentTimeAccounting> SelectTimePeriodSpan(List<EHSIncidentTimeAccounting> periodList, DateTime selectFromDate, DateTime selectToDate)
+		{
+			if (selectFromDate > DateTime.MinValue)  // return specific time slice, if specified
+			{
+				periodList = periodList.Where(l => new DateTime(l.PeriodYear, l.PeriodMonth, 28) >= new DateTime(selectFromDate.Year, selectFromDate.Month, 1) && new DateTime(l.PeriodYear, l.PeriodMonth, 1) <= new DateTime(selectToDate.Year, selectToDate.Month, 28)).ToList();
 			}
 
 			return periodList;
 		}
 
-		public static EHSIncidentTimeAccounting CalculateWorkStatusSummary(List<EHSIncidentTimeAccounting> periodList)
-		{
-			EHSIncidentTimeAccounting workStatusSummary = new EHSIncidentTimeAccounting().CreateNew(0, 0);
-
-			foreach (EHSIncidentTimeAccounting period in periodList)
-			{
-				workStatusSummary.LostTime += period.LostTime;
-				workStatusSummary.RestrictedTime += period.RestrictedTime;
-				workStatusSummary.WorkTime += period.WorkTime;
-			}
-
-			return workStatusSummary;
-		}
 
 		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
 		{
@@ -1206,7 +1224,6 @@ namespace SQM.Website
 						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
 					}
 
-					status = ctx.ExecuteStoreCommand("DELETE FROM PROB_OCCUR WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);
 				}

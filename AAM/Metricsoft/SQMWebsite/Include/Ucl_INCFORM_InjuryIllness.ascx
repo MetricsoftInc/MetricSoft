@@ -51,6 +51,7 @@
 <%--<script type="text/javascript" src="../scripts/jquery-ui-1.8.20.custom.min.js"></script>--%>
 
 
+<asp:HiddenField id="hfIncidentDeletedMsg" runat="server" Value="The Incident has been Deleted"/>
 <asp:Label ID="lblRequired" runat="server" Text="Required Fields Must be Completed." ForeColor="#cc0000" Font-Bold="true" Height="25" Visible="false"></asp:Label>
 <asp:Label ID="lblSubmitted" runat="server" Text="Power Outage submitted." Font-Bold="true" Visible="false"></asp:Label>
 
@@ -266,6 +267,11 @@
 								</ItemTemplate>
 							</DropDownSettings>
 						</telerik:RadSearchBox>
+						<span>
+							&nbsp;&nbsp;
+							<asp:Label ID="lbSupervisorLabel" runat="server" Text="Supervisor: "></asp:Label>
+							<asp:Label ID="lbSupervisor" runat="server" />
+						</span>
 				</telerik:RadAjaxPanel>
 				<%--<telerik:RadDropDownList ID="rddlInvolvedPerson" Skin="Metro" CssClass="WarnIfChanged" Enabled="false" DropDownHeight="300" Width="278" runat="server" OnSelectedIndexChanged="rddlInvolvedPerson_SelectedIndexChanged" Visible="false"></telerik:RadDropDownList>
 				<asp:RequiredFieldValidator runat="server" ID="rfvInvolvedPersonSearch" ControlToValidate="uclInvolvedPersonSearch" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
@@ -307,28 +313,6 @@
 				<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupvInformedDate" ControlToValidate="rdpSupvInformedDate" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
 			</div>
 		</div>
-
-
-
-		<%-- SUPERVISOR NAME question --%>
-		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>
-					<asp:Label ID="lbSupervisorSM" runat="server" Text="Supervisor's Name"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
-			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
-				<br />
-				<span>
-					<asp:Label ID="lbSupervisorXS" runat="server" Text="Supervisor's Name"></asp:Label><span class="requiredCloseStar">*</span></span>
-			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadAjaxPanel ID="rapSupervisor" runat="server">
-					<asp:Label ID="lbSupervisor" Width="400" runat="server" Height="23" />
-					<%--<asp:RequiredFieldValidator runat="server" ID="rfvSupervisor" ControlToValidate="tbSupervisor" Display="None" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
-				</telerik:RadAjaxPanel>
-			</div>
-		</div>
-
 
 
 		<%-- SUPERVISOR'S Statement question (MultiLine TEXTBOX) --%>
@@ -556,6 +540,40 @@
 			</div>
 		</div>
 
+		<%-- TYPE OF INJURY question --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>
+					<asp:Label ID="lbInjuryTypeSM" runat="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>
+					<asp:Label ID="lbInjuryTypeXS" runat="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278" DropDownHeight="300" runat="server" AutoPostBack="false"></telerik:RadDropDownList>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvInjuryType" ControlToValidate="rddlInjuryType" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
+			</div>
+		</div>
+
+		<%-- BODY PART question --%>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>
+					<asp:Label ID="lbBodyPartSM" runat="server" Text="Body Part"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>
+					<asp:Label ID="lbBodyPartXS" runat="server" Text="Body Part"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300"  Width="278" runat="server" AutoPostBack="false"></telerik:RadDropDownList>
+				<%--<asp:RequiredFieldValidator runat="server" ID="rfvBodyPart" ControlToValidate="rddlBodyPart" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
+			</div>
+		</div>
+
 		<telerik:RadAjaxPanel ID="rapSeverity" runat="server">
 			<%-- FIRST AID question --%>
 			<div class="row">
@@ -653,41 +671,6 @@
 			</asp:Panel>
 		</telerik:RadAjaxPanel>
 
-		<%-- TYPE OF INJURY question --%>
-		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>
-					<asp:Label ID="lbInjuryTypeSM" runat="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
-			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
-				<br />
-				<span>
-					<asp:Label ID="lbInjuryTypeXS" runat="server" Text="Type of Injury"></asp:Label><span class="requiredCloseStar">*</span></span>
-			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ZIndex="9000" ExpandDirection="Up" CssClass="WarnIfChanged" Width="278" DropDownHeight="300" runat="server"></telerik:RadDropDownList>
-				<%--<asp:RequiredFieldValidator runat="server" ID="rfvInjuryType" ControlToValidate="rddlInjuryType" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
-			</div>
-		</div>
-
-
-		<%-- BODY PART question --%>
-		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<span>
-					<asp:Label ID="lbBodyPartSM" runat="server" Text="Body Part"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
-			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
-				<br />
-				<span>
-					<asp:Label ID="lbBodyPartXS" runat="server" Text="Body Part"></asp:Label><span class="requiredCloseStar">*</span></span>
-			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300" CssClass="WarnIfChanged" Width="278" runat="server"></telerik:RadDropDownList>
-				<%--<asp:RequiredFieldValidator runat="server" ID="rfvBodyPart" ControlToValidate="rddlBodyPart" Display="None" InitialValue="[Select One]" ErrorMessage="Required"  ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
-			</div>
-		</div>
-
 		<%-- ATTACHMENTS --%>
 		<telerik:RadAjaxPanel EnableAJAX="true" ID="rapAttach" runat="server">
 			<div class="row">
@@ -774,7 +757,7 @@
 					<span style="float:right">
 						<telerik:RadButton ID="btnDeleteInc" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
 							Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
-							OnClick="btnDeleteInc_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
+							OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDeleteInc_Click" CssClass="UseSubmitAction" />
 					</span>
 				</span>
 			</div>

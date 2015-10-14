@@ -125,6 +125,12 @@ namespace SQM.Website
 			}
 			else
 			{
+				Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
+				if (ucl != null)
+				{
+					ucl.BindDocumentSelect("EHS", 2, true, true, "");
+				}
+
 				if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
 				{
 					try

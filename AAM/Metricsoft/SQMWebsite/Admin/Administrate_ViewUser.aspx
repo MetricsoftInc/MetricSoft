@@ -54,6 +54,7 @@
 
 </script>
    
+	<asp:HiddenField ID="hfDocviewMessage" runat="server" Value="System Communications"/>
      <div class="admin_tabs">
 
         <table width="100%" border="0" cellspacing="0" cellpadding="1">

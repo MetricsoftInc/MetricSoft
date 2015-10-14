@@ -80,6 +80,12 @@ namespace SQM.Website
 			}
 			else
 			{
+				Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
+				if (ucl != null)
+				{
+					ucl.BindDocumentSelect("EHS", 2, true, true, "");
+				}
+
 				if (!string.IsNullOrEmpty(Request.QueryString["r"]))   // incident Record id is supplied from email notification
 				{
 					string targetRec = Request.QueryString["r"];

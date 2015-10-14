@@ -139,14 +139,23 @@ namespace SQM.Website
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            if (Page.IsPostBack)
-            {
-                if (SessionManager.ReturnObject != null  &&  SessionManager.ReturnObject == "DisplayUsers")
-                {
-                    ListUsers();
-                    SessionManager.ClearReturns();
-                }
-            }
+			if (Page.IsPostBack)
+			{
+				if (SessionManager.ReturnObject != null && SessionManager.ReturnObject == "DisplayUsers")
+				{
+					ListUsers();
+					SessionManager.ClearReturns();
+				}
+			}
+			else
+			{
+				Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
+				if (ucl != null)
+				{
+					ucl.BindDocumentSelect("SYS", 10, true, false, hfDocviewMessage.Value);
+					//ucl.BindDocumentSelect("EHS", 2, true, false, hfDocviewMessage.Value);
+				}
+			}
         }
 
 		protected void ddlLocationChange(object sender, EventArgs e)

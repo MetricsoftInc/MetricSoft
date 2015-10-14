@@ -250,6 +250,7 @@ namespace SQM.Website
 			if (newTypeID > 0)
 			{
 				SessionManager.SetIncidentLocation(newLocationID);
+				IncidentLocationId = newLocationID;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
 				EditIncidentId = 0;
@@ -318,14 +319,17 @@ namespace SQM.Website
 						PERSON invp = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.INVOLVED_PERSON_ID select p).FirstOrDefault();
 						string involvedPerson = (invp != null) ? string.Format("{0}, {1}", invp.LAST_NAME, invp.FIRST_NAME) : "";
 						if (!String.IsNullOrEmpty(involvedPerson))
+						{
 							rsbInvolvedPerson.Text = involvedPerson;
+							lbSupervisorLabel.Visible = true;
+						}
 
 						rddlDeptTest.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
 						
 						PERSON supv = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.SUPERVISOR_PERSON_ID select p).FirstOrDefault();
-						lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL) : "[ supervisor not found ]";
+						lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1}", supv.LAST_NAME, supv.FIRST_NAME) : "[ supervisor not found ]";
 
 						rdoInside.SelectedValue = (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE") ? "1" : "0";
 
@@ -379,6 +383,7 @@ namespace SQM.Website
 					rdpExpectReturnDT.Clear();
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
+					lbSupervisorLabel.Visible = false;
 
 					rdoFirstAid.SelectedValue = "1";
 					Severity_Changed(rdoFirstAid, null);
@@ -828,8 +833,8 @@ namespace SQM.Website
 				}
 			}
 
-			rddlInjuryType.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
-			rddlInjuryType.AutoPostBack = true;
+			//rddlInjuryType.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
+			//rddlInjuryType.AutoPostBack = true;
 		}
 
 
@@ -849,8 +854,8 @@ namespace SQM.Website
 				}
 			}
 
-			rddlBodyPart.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
-			rddlBodyPart.AutoPostBack = true;
+			//rddlBodyPart.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
+			//rddlBodyPart.AutoPostBack = true;
 		}
 
 
@@ -1074,10 +1079,10 @@ namespace SQM.Website
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
 				lblResults.Text += (delStatus == 1) ? "Incident deleted." : "Error deleting incident.";
 				lblResults.Text += "</div>";
-			}
 
-			RadDropDownList rddlInc = (RadDropDownList)this.Parent.FindControl("rddlIncidentType");
-			rddlInc.SelectedIndex = 0;
+				ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('" + hfIncidentDeletedMsg.Value + "');", true);
+				Response.Redirect("/EHS/EHS_Incidents.aspx");
+			}
 		}
 
 		private void SetSubnav(string context)
@@ -1848,8 +1853,13 @@ namespace SQM.Website
 
 				if (involvedPersonId != null)
 				{
+					lbSupervisorLabel.Visible = true;
 					PERSON supv = (PERSON)GetSupervisor(involvedPersonId);
-					lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1} ({2})", supv.LAST_NAME, supv.FIRST_NAME, supv.EMAIL) : "[ supervisor not found ]";
+					lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1}", supv.LAST_NAME, supv.FIRST_NAME) : "[ supervisor not found ]";
+				}
+				else
+				{
+					lbSupervisorLabel.Visible = false;
 				}
 			}
 

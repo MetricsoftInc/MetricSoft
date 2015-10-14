@@ -13,6 +13,15 @@ namespace SQM.Website {
     public partial class Administrate_Company {
         
         /// <summary>
+        /// hfDocviewMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDocviewMessage;
+        
+        /// <summary>
         /// hfBase control.
         /// </summary>
         /// <remarks>

@@ -13,6 +13,15 @@ namespace SQM.Website {
     public partial class Ucl_INCFORM_InjuryIllness {
         
         /// <summary>
+        /// hfIncidentDeletedMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIncidentDeletedMsg;
+        
+        /// <summary>
         /// lblRequired control.
         /// </summary>
         /// <remarks>
@@ -373,6 +382,24 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadSearchBox rsbInvolvedPerson;
         
         /// <summary>
+        /// lbSupervisorLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbSupervisorLabel;
+        
+        /// <summary>
+        /// lbSupervisor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbSupervisor;
+        
+        /// <summary>
         /// lbInvPersonStatementSM control.
         /// </summary>
         /// <remarks>
@@ -425,42 +452,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker rdpSupvInformedDate;
-        
-        /// <summary>
-        /// lbSupervisorSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSupervisorSM;
-        
-        /// <summary>
-        /// lbSupervisorXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSupervisorXS;
-        
-        /// <summary>
-        /// rapSupervisor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxPanel rapSupervisor;
-        
-        /// <summary>
-        /// lbSupervisor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSupervisor;
         
         /// <summary>
         /// lbSupervisorStatementSM control.
@@ -733,6 +724,60 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskDays;
         
         /// <summary>
+        /// lbInjuryTypeSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbInjuryTypeSM;
+        
+        /// <summary>
+        /// lbInjuryTypeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbInjuryTypeXS;
+        
+        /// <summary>
+        /// rddlInjuryType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList rddlInjuryType;
+        
+        /// <summary>
+        /// lbBodyPartSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbBodyPartSM;
+        
+        /// <summary>
+        /// lbBodyPartXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbBodyPartXS;
+        
+        /// <summary>
+        /// rddlBodyPart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList rddlBodyPart;
+        
+        /// <summary>
         /// rapSeverity control.
         /// </summary>
         /// <remarks>
@@ -884,60 +929,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker rdpExpectReturnDT;
-        
-        /// <summary>
-        /// lbInjuryTypeSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbInjuryTypeSM;
-        
-        /// <summary>
-        /// lbInjuryTypeXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbInjuryTypeXS;
-        
-        /// <summary>
-        /// rddlInjuryType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlInjuryType;
-        
-        /// <summary>
-        /// lbBodyPartSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbBodyPartSM;
-        
-        /// <summary>
-        /// lbBodyPartXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbBodyPartXS;
-        
-        /// <summary>
-        /// rddlBodyPart control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddlBodyPart;
         
         /// <summary>
         /// rapAttach control.

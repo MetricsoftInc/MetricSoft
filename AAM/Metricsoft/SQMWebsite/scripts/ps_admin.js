@@ -38,6 +38,10 @@ function displayAllCells(classname, addname) {
     $("." + classname).css("visibility", 'visible');
 }
 
+function RadConfirmAction(sender, args, actionDesc) {
+	args.set_cancel(!confirm('Please confirm - do you wish to' + ' ' + actionDesc + ' ?'));
+}
+
 function confirmChange(changeDesc) {
     var xlat = document.getElementById('hfPromptChange').value;
     return confirm(xlat + ' ' + changeDesc + ' ?');

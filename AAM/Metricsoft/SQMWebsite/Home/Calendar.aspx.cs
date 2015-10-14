@@ -44,8 +44,8 @@ namespace SQM.Website
                 Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
                 if (ucl != null)
                 {
-                    ucl.BindDocumentSelect("SQM", 10, true, true, hfDocviewMessage.Value);
-                    ucl.BindDocumentSelect("EHS", 10, true, false, hfDocviewMessage.Value);
+					ucl.BindDocumentSelect("SYS", 10, true, false, hfDocviewMessage.Value);
+                    //ucl.BindDocumentSelect("EHS", 2, true, false, hfDocviewMessage.Value);
                 }
 
                 SetupPage();

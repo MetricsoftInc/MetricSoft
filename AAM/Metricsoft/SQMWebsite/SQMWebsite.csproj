@@ -151,6 +151,7 @@
     <Content Include="Automated\AutomatedTest.aspx" />
     <Content Include="Automated\ScheduleAudits.aspx" />
     <Content Include="Automated\SendReminderEmails.aspx" />
+    <Content Include="Automated\IncidentRollUp.aspx" />
     <Content Include="bin\AjaxControlToolkit.dll" />
     <Content Include="bin\ComponentArt.Web.UI.dll" />
     <Content Include="bin\HtmlAgilityPack.dll" />
@@ -638,6 +639,13 @@
     </Compile>
     <Compile Include="Automated\SendReminderEmails.aspx.designer.cs">
       <DependentUpon>SendReminderEmails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Automated\IncidentRollUp.aspx.cs">
+      <DependentUpon>IncidentRollUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Automated\IncidentRollUp.aspx.designer.cs">
+      <DependentUpon>IncidentRollUp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Classes\EHSAuditTypeId.cs" />
     <Compile Include="Classes\EHSAuditMgr.cs" />

@@ -47,6 +47,13 @@ namespace SQM.Website
         {
             if (!Page.IsPostBack)
             {
+				Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
+				if (ucl != null)
+				{
+					ucl.BindDocumentSelect("SYS", 10, true, false, hfDocviewMessage.Value);
+					//ucl.BindDocumentSelect("EHS", 2, true, false, hfDocviewMessage.Value);
+				}
+
                 COMPANY company = SQMModelMgr.LookupCompany(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
                 uclItemHdr.DisplayCompany(company);
                 if (SessionManager.IsEffLocationPrimary())

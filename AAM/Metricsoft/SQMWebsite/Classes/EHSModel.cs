@@ -13,11 +13,126 @@ using SQM.Shared;
 namespace SQM.Website
 {
     public enum EHSProfileStatus { Normal, NonExist, NoMeasures, NoInputs, InputError, OutOFRange, PeriodLimit, Incomplete};
-    //public enum EHSMetricOption { None, NoValue, NoCost, Empty };
+	//public enum EHSMetricOption { None, NoValue, NoCost, Empty };
 
-    #region ehsmodel
 
-    public class EHSModel
+	#region ehsdata
+	public class EHSDataMapping
+	{
+		public static EHS_DATA LookupEHSDataPeriod(PSsqmEntities ctx, decimal plantID, DateTime periodDate, decimal measureID, bool createNew)
+		{
+			EHS_DATA dataPeriod = null;
+
+			dataPeriod = (from d in ctx.EHS_DATA
+						  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && d.MEASURE_ID == measureID
+						  select d).SingleOrDefault();
+
+			if (dataPeriod == null && createNew)
+			{
+				dataPeriod = new EHS_DATA();
+				dataPeriod.MEASURE_ID = measureID;
+				dataPeriod.PLANT_ID = plantID;
+				dataPeriod.DATE = periodDate.Date;
+			}
+
+			return dataPeriod;
+		}
+
+		public static List<EHS_DATA> SelectEHSDataPeriodList(PSsqmEntities ctx, decimal plantID, DateTime periodDate, List<decimal> measureList, bool createNew)
+		{
+			List<EHS_DATA> dataList = new List<EHS_DATA>();
+
+			dataList = (from d in ctx.EHS_DATA
+							  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && (measureList.Count == 0  ||  measureList.Contains(d.MEASURE_ID))
+							  select d).ToList();
+
+			if (createNew  &&  measureList != null)
+			{
+				EHS_DATA ehsData = null;
+				foreach (decimal measureID in measureList)
+				{
+					if ((ehsData = dataList.Where(l => l.MEASURE_ID == measureID).SingleOrDefault()) == null)
+					{
+						ehsData = new EHS_DATA();
+						ehsData.MEASURE_ID = measureID;
+						ehsData.PLANT_ID = plantID;
+						ehsData.DATE = periodDate.Date;
+						dataList.Add(ehsData);
+					}
+				}
+			}
+
+			return dataList;
+		}
+
+		public static List<EHS_DATA> ClearEHSDataValues(List<EHS_DATA> dataList)
+		{
+			foreach (EHS_DATA ehsData in dataList)
+			{
+				ehsData.VALUE = null;
+				ehsData.ATTRIBUTE = null;
+			}
+
+			return dataList;
+		}
+
+		public static int UpdateEHSDataList(PSsqmEntities ctx, List<EHS_DATA> dataList)
+		{
+			int status = 0;
+
+			foreach (EHS_DATA ehsData in dataList)
+			{
+				if (ehsData.EntityState == EntityState.Added || ehsData.EntityState == EntityState.Detached)
+				{
+					if (ehsData.VALUE.HasValue || !string.IsNullOrEmpty(ehsData.ATTRIBUTE))
+					{
+						ctx.AddToEHS_DATA(ehsData);
+					}
+				}
+			}
+
+			status = ctx.SaveChanges();
+
+			return status;
+		}
+
+		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal addValue)
+		{
+			int status = -1;
+
+			EHS_DATA ehsData = GetEHSData(dataList, measureID);
+			if (ehsData != null)
+			{
+				if (ehsData.VALUE.HasValue)
+					ehsData.VALUE += addValue;
+				else
+					ehsData.VALUE = addValue;
+				status = 0;
+			}
+
+			return status;
+		}
+
+		public static EHS_DATA GetEHSData(List<EHS_DATA> dataPeriodList, decimal measureID)
+		{
+			return dataPeriodList.Where(l => l.MEASURE_ID == measureID).FirstOrDefault();
+		}
+
+		public static decimal GetMappedMeasure(List<EHS_MEASURE> measureList, string mappingFieldName)
+		{
+			decimal measureID = 0;
+			EHS_MEASURE measure = measureList.Where(l => l.PLANT_ACCT_FIELD.ToUpper() == mappingFieldName.ToUpper()).SingleOrDefault();
+			if (measure != null)
+				measureID = measure.MEASURE_ID;
+
+			return measureID;
+		}
+	}
+	#endregion
+
+	#region ehsmodel
+
+	public class EHSModel
     {
         public static List<EFM_REFERENCE> SelectEFMTypeList(string efmCategory)
         {
@@ -1715,8 +1830,4 @@ namespace SQM.Website
             set;
         }
     }
-
- 
-
-
 }

@@ -19,6 +19,12 @@ namespace SQM.Website
 			{
 				uclIncidentForm.Mode = IncidentMode.Incident;
 
+				Ucl_DocMgr ucl = (Ucl_DocMgr)this.Master.FindControl("uclDocSelect");
+				if (ucl != null)
+				{
+					ucl.BindDocumentSelect("EHS", 2, true, true, "");
+				}
+
 				try
 				{
 					if (SessionManager.ReturnStatus == true  &&  SessionManager.ReturnObject is INCIDENT)
