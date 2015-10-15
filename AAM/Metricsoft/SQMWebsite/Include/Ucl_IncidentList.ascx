@@ -614,10 +614,6 @@
 									</td>
 								</tr>
 								<tr>
-									<%--<td>
-										<img alt=">" src="/images/arr-rt-grey.png" runat="server" id="imgEditReport" style="opacity: 0.5;" />
-									</td>
-									<td style="width: 50%;">--%>
 									<td>
 										<asp:LinkButton ID="lb8d" runat="server" OnClick="lnkProblemCaseRedirect" ToolTip="Edit 8D problem case" CommandArgument='<%#Eval("Incident.INCIDENT_ID") %>'>
 										<span class="tableLink" style="color: #a00000">Edit 8D</span>

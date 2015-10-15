@@ -63,7 +63,7 @@ namespace SQM.Website
             DisplayUser();
         }
 
-		protected void UserStatusSelect(object sender, EventArgs e)
+		protected void FilterUsers(object sender, EventArgs e)
 		{
 			ListUsers();
 		}
@@ -82,7 +82,15 @@ namespace SQM.Website
 				if (!string.IsNullOrEmpty(loc))
 				{
 					decimal.TryParse(loc, out plantID);
+					if (plantID > 0)
+					{
+						ddlPlantList.SelectedValue = plantID.ToString();
+					}
 				}
+			}
+			else if (!string.IsNullOrEmpty(ddlPlantList.SelectedValue))
+			{
+				decimal.TryParse(ddlPlantList.SelectedValue, out plantID);
 			}
 
             if (ddlListStatus.SelectedValue == "A")
@@ -132,7 +140,6 @@ namespace SQM.Website
 				uclSearchBar.SetButtonsVisible(false, false, false, false, false, true);
                 uclSearchBar.SetButtonsEnabled(false, false, false, false, false, true);
 				uclSearchBar.ReturnButton.Text = lblViewUserText.Text;
-                uclSearchBar.TitleItem.Text = SessionManager.EffLocation.Company.COMPANY_NAME;
                 ListUsers();
 			 }
 		}
@@ -177,63 +184,55 @@ namespace SQM.Website
 		private void SetupPage()
 		{
 			DropDownList ddl;
- 
-			ddl = (DropDownList)hfBase.FindControl("ddlPrefListSize");
-			if (ddl != null)
-			{
-                ddl.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(1, 50, 10));
-			}
 
-			if (ddlJobCode.Items.Count == 0)
+
+			if (ddlPlantList.Items.Count == 0)
 			{
-				ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", "").OrderBy(j => j.JOB_DESC).ToList())
+				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.EffLocation.Company.COMPANY_ID, 0, false);
+
+				SQMBasePage.SetLocationList(ddlPlantList, locationList, SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
+				ddlPlantList.Items.Insert(0, new RadComboBoxItem("All", ""));
+
+				ddl = (DropDownList)hfBase.FindControl("ddlPrefListSize");
+				if (ddl != null)
 				{
-					ddlJobCode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
+					ddl.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(1, 50, 10));
 				}
 
-				ddlPrivGroup.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList("", true).OrderBy(g => g.DESCRIPTION).ToList())
+				if (ddlJobCode.Items.Count == 0)
 				{
-					ddlPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+					ddlJobCode.Items.Insert(0, new RadComboBoxItem("", ""));
+					foreach (JOBCODE jc in SQMModelMgr.SelectJobcodeList("", "").OrderBy(j => j.JOB_DESC).ToList())
+					{
+						ddlJobCode.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatJobcode(jc), jc.JOBCODE_CD));
+					}
+
+					ddlPrivGroup.Items.Insert(0, new RadComboBoxItem("", ""));
+					foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList("", true).OrderBy(g => g.DESCRIPTION).ToList())
+					{
+						ddlPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+					}
 				}
+
+				ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
+				ddlUserLanguage.DataTextField = "LANGUAGE_NAME";
+				ddlUserLanguage.DataValueField = "LANGUAGE_ID";
+				ddlUserLanguage.DataBind();
+				ddlUserLanguage.SelectedIndex = 0;
+
+				ddlUserTimezone.DataSource = SQMSettings.TimeZone;
+				ddlUserTimezone.DataTextField = "long_desc";
+				ddlUserTimezone.DataValueField = "code";
+				ddlUserTimezone.DataBind();
+				ddlUserTimezone.SelectedValue = "035";
+
+
+				ddlHRLocation.Items.Clear();
+				ddlPlantSelect.Items.Clear();
+				SQMBasePage.SetLocationList(ddlHRLocation, locationList, 0);
+				ddlHRLocation.Items.Insert(0, new RadComboBoxItem("", ""));
+				SQMBasePage.SetLocationList(ddlPlantSelect, locationList, 0);
 			}
-
-            ddlUserLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
-            ddlUserLanguage.DataTextField = "LANGUAGE_NAME";
-            ddlUserLanguage.DataValueField = "LANGUAGE_ID";
-            ddlUserLanguage.DataBind();
-            ddlUserLanguage.SelectedIndex = 0;
-
-            ddlUserTimezone.DataSource = SQMSettings.TimeZone;
-            ddlUserTimezone.DataTextField = "long_desc";
-            ddlUserTimezone.DataValueField = "code";
-            ddlUserTimezone.DataBind();
-            ddlUserTimezone.SelectedValue = "035";
-
-            List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.EffLocation.Company.COMPANY_ID, 0, false);
-			ddlHRLocation.Items.Clear();
-			ddlPlantSelect.Items.Clear();
-			SQMBasePage.SetLocationList(ddlHRLocation, locationList, 0);
-            ddlHRLocation.Items.Insert(0, new RadComboBoxItem("", ""));
-			SQMBasePage.SetLocationList(ddlPlantSelect, locationList, 0);
-		   
-			/* quality module reference
-			if (ddlCustPlantSelect.Items.Count < 1)
-			{
-				List<BusinessLocation> customerLocations = SQMModelMgr.SelectBusinessLocationList(0, 0, false, true, true).OrderBy(l => l.Plant.PLANT_NAME).ToList();
-				RadComboBoxItem item = null;
-				ddlCustPlantSelect.Items.Insert(0, new RadComboBoxItem("", ""));
-				foreach (BusinessLocation cust in customerLocations.GroupBy(l => l.Plant.PLANT_ID).Select(l => l.FirstOrDefault()).ToList())
-				{
-					item = new RadComboBoxItem(cust.Plant.PLANT_NAME, cust.Plant.PLANT_ID.ToString());
-					if (cust.Address != null)
-						item.ToolTip = cust.Address.STREET1 + " " + cust.Address.CITY;
-
-					ddlCustPlantSelect.Items.Add(item);
-				}
-			}
-			*/
 		}
 
 		private DropDownList SetStatusList(string ddlName, string currentStatus, bool editEnabled)

@@ -76,15 +76,18 @@
 			            <tr>
                             <td align="left">
                                 <asp:Label ID="lblPageInstructions" runat="server" class="instructText"  Text="Manage user contact information, application preferences and access privleges. Search for users by first/last name or user ID."></asp:Label>
-                                <asp:Label ID="lblViewUserTitle" runat="server" Text="Manage Users For:" Visible="False" ></asp:Label>
+                                <asp:Label ID="lblViewUserTitle" runat="server" Text="Manage Users" Visible="False" ></asp:Label>
                                 <asp:Label ID="lblViewUserText" runat="server" Text="Return to Organization List" Visible="false"></asp:Label>
                             </td>
                         </tr>
                     </table>
                     <div id="divPageBody" runat="server" style="margin-top: 5px;">
-                        <span style="float: left; margin: 8px;">
-                            <asp:Label ID="lblUserList1" runat="server" CssClass="prompt" Text="Filter User List: "></asp:Label>
-                            <telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" AutoPostBack="true" EmptyMessage="by status or role" OnSelectedIndexChanged="UserStatusSelect">
+						<span style="float: left; margin: 8px;">
+                            <asp:Label ID="lblFilterPlant" runat="server" CssClass="prompt" Text="HR Location: "></asp:Label>
+                            <telerik:RadComboBox id="ddlPlantList" runat="server" Skin="Metro" ZIndex="9000" Width="280" AutoPostBack="true" EmptyMessage="HR Plant Location" OnSelectedIndexChanged="FilterUsers"></telerik:RadComboBox>
+                            &nbsp;&nbsp;
+							<asp:Label ID="lblFilterStatus" runat="server" CssClass="prompt" Text="Status/Role: "></asp:Label>
+                            <telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="true" EmptyMessage="by status or role" OnSelectedIndexChanged="FilterUsers">
                                 <Items>
                                     <telerik:RadComboBoxItem Text="" Value="" />
                                     <telerik:RadComboBoxItem Text="Any Status" Value="0" />
@@ -94,16 +97,7 @@
                                     <telerik:RadComboBoxItem Text="Company Admin Role" Value="100" />
                                 </Items>
                             </telerik:RadComboBox>
-                            &nbsp;
- <%--                           <telerik:RadComboBox id="ddlListModule" runat="server" Skin="Metro" ZIndex="9000" AutoPostBack="true" EmptyMessage="by module access" OnSelectedIndexChanged="UserStatusSelect">
-                                <Items>
-                                    <telerik:RadComboBoxItem Text="" Value="" />
-                                    <telerik:RadComboBoxItem Text="Any Modules" Value="0" />
-                                    <telerik:RadComboBoxItem Text="EH & S Modules" Value="EHS" />
-                                    <telerik:RadComboBoxItem Text="Quality Modules" Value="SQM" />
-                                </Items>
-                            </telerik:RadComboBox>--%>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;
                             <asp:Label ID="lblUserCount" runat="server" CssClass="prompt" Text="Count = "></asp:Label>
                             <asp:Label ID="lblUserCount_out" runat="server" CssClass="textStd" ></asp:Label>
                         </span>
@@ -246,17 +240,6 @@
                                                                 <asp:Label ID="lblPlantAccess" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
                                                         </tr>
-                                   <%--                     <tr>
-                                                            <td class="columnHeader">
-                                                                <asp:Label ID="lblCustLocation" runat="server" Text="Alternate Partner Working Location"></asp:Label>
-                                                            </td>
-                                                            <td class="tableDataAlt">&nbsp;</td>
-                                                             <td class="tableDataAlt">
-                                                                <telerik:RadComboBox ID="ddlCustPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="false" OnClientLoad="DisableComboSeparators" Height="300" Style="width: 98%;" ZIndex="9000" Skin="Metro" Font-Names="Verdana" 
-                                                                   ToolTip="For Quality System users, you may specifiy a customer location where this user may work and report quality reports">
-                                                                </telerik:RadComboBox>
-                                                            </td>
-                                                        </tr>--%>
                                                         <tr>
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblUserTimezone" runat="server" text="Time Zone"></asp:Label>

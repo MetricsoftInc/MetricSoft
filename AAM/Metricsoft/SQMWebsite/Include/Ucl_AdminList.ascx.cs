@@ -464,6 +464,8 @@ namespace SQM.Website
             rgUserList.DataBind();
             if (userList.Count == 0)
                 lblUserListEmpty.Visible = true;
+			else
+				lblUserListEmpty.Visible = false;
 
             return status;
         }
@@ -539,6 +541,16 @@ namespace SQM.Website
             SessionManager.ReturnStatus = true;
             SessionManager.ReturnObject = "DisplayUsers";
         }
+		protected void rgUserList_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+		{
+			SessionManager.ReturnStatus = true;
+			SessionManager.ReturnObject = "DisplayUsers";
+		}
+		protected void rgUserList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+		{
+			SessionManager.ReturnStatus = true;
+			SessionManager.ReturnObject = "DisplayUsers";
+		}
 
         protected void lnkUserView_Click(object sender, EventArgs e)
         {

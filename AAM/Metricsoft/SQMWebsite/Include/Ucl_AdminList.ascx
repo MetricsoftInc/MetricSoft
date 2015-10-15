@@ -340,8 +340,10 @@
         <tr>
             <td class="admBkgd" align="center">
                 <div id="divUserGVScroll" runat="server" class="">
-                    <telerik:RadGrid ID="rgUserList" name="rgUserList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="False" AutoGenerateColumns="false" 
-                        OnItemDataBound="rgUserList_ItemDataBound" OnSortCommand="rgUserList_SortCommand" GridLines="None" Width="99%">
+                    <telerik:RadGrid ID="rgUserList" name="rgUserList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="100" AutoGenerateColumns="false" 
+                        OnItemDataBound="rgUserList_ItemDataBound" OnSortCommand="rgUserList_SortCommand" 
+						OnPageIndexChanged="rgUserList_PageIndexChanged" OnPageSizeChanged="rgUserList_PageSizeChanged" 
+						GridLines="None" Width="99%">
                         <MasterTableView ExpandCollapseColumn-Visible="false">
                             <Columns>
                                 <telerik:GridTemplateColumn HeaderText="User Name" ShowSortIcon="true" SortExpression="LAST_NAME">
