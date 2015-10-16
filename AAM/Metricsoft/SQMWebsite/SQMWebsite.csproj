@@ -102,6 +102,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="NReco.PdfGenerator, Version=1.1.10.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PdfGenerator.1.1.10.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SanitizerProviders">
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\SanitizerProviders\SanitizerProviders.dll</HintPath>
     </Reference>
@@ -116,6 +120,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -527,9 +532,11 @@
     <Content Include="scripts\datepicker.js" />
     <Content Include="css\FileExplorer.css" />
     <Content Include="scripts\footable.js" />
+    <Content Include="scripts\innersvg.js" />
     <Content Include="scripts\jquery-1.9.1.js" />
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\jquery-ui-1.8.20.custom.min.js" />
+    <Content Include="scripts\jquery.copycss.js" />
     <Content Include="scripts\npm.js" />
     <Content Include="scripts\prevention_location.js" />
     <Content Include="scripts\ps_admin.js" />
@@ -689,7 +696,6 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1026,6 +1032,7 @@
     <Compile Include="Include\Ucl_PersonSearch.ascx.designer.cs">
       <DependentUpon>Ucl_PersonSearch.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_PieChart.cs" />
     <Compile Include="Include\Ucl_PreventionLocation.ascx.cs">
       <DependentUpon>Ucl_PreventionLocation.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1161,7 +1168,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1175,7 +1181,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>

@@ -26,6 +26,21 @@ namespace SQM.Website.EHS
 			public decimal Leadership { get; set; }
 			public decimal JSAs { get; set; }
 			public decimal SafetyTraining { get; set; }
+			// Ordinals
+			public Dictionary<string, decimal> OrdinalType { get; set; }
+			public Dictionary<string, decimal> OrdinalBodyPart { get; set; }
+			public Dictionary<string, decimal> OrdinalRootCause { get; set; }
+			public Dictionary<string, decimal> OrdinalTenure { get; set; }
+			public Dictionary<string, decimal> OrdinalDaysToClose { get; set; }
+
+			public Data()
+			{
+				this.OrdinalType = new Dictionary<string, decimal>();
+				this.OrdinalBodyPart = new Dictionary<string, decimal>();
+				this.OrdinalRootCause = new Dictionary<string, decimal>();
+				this.OrdinalTenure = new Dictionary<string, decimal>();
+				this.OrdinalDaysToClose = new Dictionary<string, decimal>();
+			}
 
 			public static Data operator +(Data a, Data b)
 			{
@@ -39,7 +54,32 @@ namespace SQM.Website.EHS
 					FirstAid = a.FirstAid + b.FirstAid,
 					Leadership = a.Leadership + b.Leadership,
 					JSAs = a.JSAs + b.JSAs,
-					SafetyTraining = a.SafetyTraining + b.SafetyTraining
+					SafetyTraining = a.SafetyTraining + b.SafetyTraining,
+					OrdinalType = a.OrdinalType.Keys.Concat(b.OrdinalType.Keys).Distinct().Select(key => new
+					{
+						key = key,
+						value = (a.OrdinalType.ContainsKey(key) ? a.OrdinalType[key] : 0) + (b.OrdinalType.ContainsKey(key) ? b.OrdinalType[key] : 0)
+					}).ToDictionary(x => x.key, x => x.value),
+					OrdinalBodyPart = a.OrdinalBodyPart.Keys.Concat(b.OrdinalBodyPart.Keys).Distinct().Select(key => new
+					{
+						key = key,
+						value = (a.OrdinalBodyPart.ContainsKey(key) ? a.OrdinalBodyPart[key] : 0) + (b.OrdinalBodyPart.ContainsKey(key) ? b.OrdinalBodyPart[key] : 0)
+					}).ToDictionary(x => x.key, x => x.value),
+					OrdinalRootCause = a.OrdinalRootCause.Keys.Concat(b.OrdinalRootCause.Keys).Distinct().Select(key => new
+					{
+						key = key,
+						value = (a.OrdinalRootCause.ContainsKey(key) ? a.OrdinalRootCause[key] : 0) + (b.OrdinalRootCause.ContainsKey(key) ? b.OrdinalRootCause[key] : 0)
+					}).ToDictionary(x => x.key, x => x.value),
+					OrdinalTenure = a.OrdinalTenure.Keys.Concat(b.OrdinalTenure.Keys).Distinct().Select(key => new
+					{
+						key = key,
+						value = (a.OrdinalTenure.ContainsKey(key) ? a.OrdinalTenure[key] : 0) + (b.OrdinalTenure.ContainsKey(key) ? b.OrdinalTenure[key] : 0)
+					}).ToDictionary(x => x.key, x => x.value),
+					OrdinalDaysToClose = a.OrdinalDaysToClose.Keys.Concat(b.OrdinalDaysToClose.Keys).Distinct().Select(key => new
+					{
+						key = key,
+						value = (a.OrdinalDaysToClose.ContainsKey(key) ? a.OrdinalDaysToClose[key] : 0) + (b.OrdinalDaysToClose.ContainsKey(key) ? b.OrdinalDaysToClose[key] : 0)
+					}).ToDictionary(x => x.key, x => x.value)
 				};
 			}
 		}
@@ -50,8 +90,7 @@ namespace SQM.Website.EHS
 			Width = 1500,
 			DisplayLegend = true,
 			LegendPosition = ChartLegendPosition.Right,
-			LegendBackgroundColor = Color.FromArgb(254, 254, 254),
-			OnLoad = "chartOnLoad"
+			LegendBackgroundColor = Color.White
 		};
 
 		static void SetScale(GaugeDefinition gd, List<GaugeSeries> series)
@@ -66,6 +105,32 @@ namespace SQM.Website.EHS
 			gd.ScaleMax = min == 0 && max == 0 ? 1 : 0;
 		}
 
+		/// <summary>
+		/// Gets all the types for an ordinal from the XLAT table.
+		/// </summary>
+		/// <param name="entities">The entities to get the table from.</param>
+		/// <param name="groupName">The group name to get the types for.</param>
+		/// <returns>An IEnumerable of an anonymous type as a dynamic.</returns>
+		static dynamic GetOrdinalTypes(PSsqmEntities entities, string groupName)
+		{
+			return from x in entities.XLAT
+				   where x.XLAT_GROUP == groupName && x.XLAT_LANGUAGE == "en" && x.STATUS == "A"
+				   select new { x.XLAT_GROUP, x.XLAT_CODE, x.DESCRIPTION };
+		}
+
+		static Dictionary<string, decimal> GetOrdinalData(IQueryable<EHS_DATA_ORD> allOrdData, dynamic types)
+		{
+			var ret = new Dictionary<string, decimal>();
+			foreach (var t in types)
+			{
+				var group = t.XLAT_GROUP as string;
+				var code = t.XLAT_CODE as string;
+				var sum = allOrdData.Where(o => o.XLAT_GROUP == group && o.XLAT_CODE == code).Sum(o => o.VALUE) ?? 0;
+				ret.Add(t.DESCRIPTION as string, sum);
+			}
+			return ret;
+		}
+
 		static dynamic PullData(PSsqmEntities entities, string plantID, decimal companyID)
 		{
 			decimal plantID_dec = plantID.StartsWith("BU") ? decimal.Parse(plantID.Substring(2)) : decimal.Parse(plantID);
@@ -78,8 +143,16 @@ namespace SQM.Website.EHS
 			{
 				DisplayLabels = true
 			};
+			var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
 			var frequencyRateSeries = new List<GaugeSeries>();
 			var severityRateSeries = new List<GaugeSeries>();
+
+			// Ordinal types
+			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
+			var bodyParts = GetOrdinalTypes(entities, "INJURY_PART");
+			var rootCauses = GetOrdinalTypes(entities, "INJURY_CAUSE");
+			var tenures = GetOrdinalTypes(entities, "INJURY_TENURE");
+			var daysToCloses = GetOrdinalTypes(entities, "INJURY_DAYS_TO_CLOSE");
 
 			for (int y = 2013; y < 2016; ++y)
 			{
@@ -96,6 +169,10 @@ namespace SQM.Website.EHS
 								  where EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth.Date &&
 								  (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(d.PLANT_ID) : d.PLANT_ID == plantID_dec))
 								  select d;
+					var allOrdData = from o in entities.EHS_DATA_ORD
+									 where EntityFunctions.TruncateTime(o.EHS_DATA.DATE) >= startOfMonth.Date && EntityFunctions.TruncateTime(o.EHS_DATA.DATE) < startOfNextMonth.Date &&
+									 (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(o.EHS_DATA.PLANT_ID) : o.EHS_DATA.PLANT_ID == plantID_dec))
+									 select o;
 
 					var manHours = y < 2015 || startOfMonth.Month <= DateTime.Today.Month ?
 						allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
@@ -123,7 +200,12 @@ namespace SQM.Website.EHS
 						JSAs = y == 2015 && startOfMonth.Month <= DateTime.Today.Month ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
 						SafetyTraining = y == 2015 && startOfMonth.Month <= DateTime.Today.Month ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0
+							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
+						OrdinalType = y == 2015 ? GetOrdinalData(allOrdData, types) : new Dictionary<string, decimal>(),
+						OrdinalBodyPart = y == 2015 ? GetOrdinalData(allOrdData, bodyParts) : new Dictionary<string, decimal>(),
+						OrdinalRootCause = y == 2015 ? GetOrdinalData(allOrdData, rootCauses) : new Dictionary<string, decimal>(),
+						OrdinalTenure = y == 2015 ? GetOrdinalData(allOrdData, tenures) : new Dictionary<string, decimal>(),
+						OrdinalDaysToClose = y == 2015 ? GetOrdinalData(allOrdData, daysToCloses) : new Dictionary<string, decimal>()
 					};
 
 					if (y < 2015 || startOfMonth.Month <= DateTime.Today.Month)
@@ -156,12 +238,39 @@ namespace SQM.Website.EHS
 
 			data.Add(YTD);
 
+			for (int i = 0; i < 5; ++i)
+				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+			for (int i = 5; i < incidentRateSeries.ItemList.Count; ++i)
+				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
+					Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
+
 			return new
 			{
 				data,
 				incidentRateSeries,
+				incidentRateTrendSeries,
 				frequencyRateSeries,
-				severityRateSeries
+				severityRateSeries,
+				ordinalTypeSeries = YTD.OrdinalType.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
+				{
+					Exploded = false
+				}).ToList(),
+				ordinalBodyPartSeries = YTD.OrdinalBodyPart.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
+				{
+					Exploded = false
+				}).ToList(),
+				ordinalRootCauseSeries = YTD.OrdinalRootCause.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
+				{
+					Exploded = false
+				}).ToList(),
+				ordinalTenureSeries = YTD.OrdinalTenure.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
+				{
+					Exploded = false
+				}).ToList(),
+				ordinalDaysToCloseSeries = YTD.OrdinalDaysToClose.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
+				{
+					Exploded = false
+				}).ToList()
 			};
 		}
 
@@ -228,16 +337,27 @@ namespace SQM.Website.EHS
 		void UpdateCharts(dynamic data)
 		{
 			gaugeDef.Title = "TOTAL RECORDABLE INCIDENT RATE";
-			SetScale(gaugeDef, new List<GaugeSeries>() { data.incidentRateSeries });
-			this.uclChart.CreateMultiLineChart(gaugeDef, new List<GaugeSeries>() { data.incidentRateSeries }, this.divTRIR);
+			var series = new List<GaugeSeries>() { data.incidentRateSeries, data.incidentRateTrendSeries };
+			SetScale(gaugeDef, series);
+			this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divTRIR);
+
+			var calcsResult = new CalcsResult().Initialize();
 
 			gaugeDef.Title = "FREQUENCY RATE";
 			SetScale(gaugeDef, data.frequencyRateSeries);
-			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, new CalcsResult() { metricSeries = data.frequencyRateSeries }, this.divFrequencyRate);
+			calcsResult.metricSeries = data.frequencyRateSeries;
+			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divFrequencyRate);
 
 			gaugeDef.Title = "SEVERITY RATE";
 			SetScale(gaugeDef, data.severityRateSeries);
-			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, new CalcsResult() { metricSeries = data.severityRateSeries }, this.divSeverityRate);
+			calcsResult.metricSeries = data.severityRateSeries;
+			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
+
+			this.pieRecordableType.Values = data.ordinalTypeSeries;
+			this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
+			this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
+			this.pieRecordableTenure.Values = data.ordinalTenureSeries;
+			this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
 		}
 	}
 }

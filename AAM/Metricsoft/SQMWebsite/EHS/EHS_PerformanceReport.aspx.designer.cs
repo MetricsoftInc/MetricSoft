@@ -58,15 +58,6 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadComboBox rcbPlant;
         
         /// <summary>
-        /// radButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton radButton;
-        
-        /// <summary>
         /// divExport control.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,51 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSeverityRate;
+        
+        /// <summary>
+        /// pieRecordableType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.PieChart pieRecordableType;
+        
+        /// <summary>
+        /// pieRecordableBodyPart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.PieChart pieRecordableBodyPart;
+        
+        /// <summary>
+        /// pieRecordableRootCause control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.PieChart pieRecordableRootCause;
+        
+        /// <summary>
+        /// pieRecordableTenure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.PieChart pieRecordableTenure;
+        
+        /// <summary>
+        /// pieRecordableDaysToClose control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.PieChart pieRecordableDaysToClose;
         
         /// <summary>
         /// uclChart control.

@@ -124,6 +124,8 @@ namespace SQM.Website
         }
 		public ChartLegendPosition LegendPosition { get; set; }
 		public Color LegendBackgroundColor { get; set; }
+		public bool DisplayTooltip { get; set; }
+		public Color TooltipBackgroundColor { get; set; }
         public string ValueFormat
         {
             get;
@@ -198,6 +200,8 @@ namespace SQM.Website
 			this.DisplayLegend = true;
 			this.LegendPosition = ChartLegendPosition.Bottom;
 			this.LegendBackgroundColor = Color.FromArgb(0, 0, 0, 0);
+			this.DisplayTooltip = true;
+			this.TooltipBackgroundColor = Color.FromArgb(0, 0, 0, 0);
 			this.NewRow = false;
 			this.DisplayLabel = true;
 			this.Target = null;
@@ -393,6 +397,7 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public bool? Exploded { get; set; }
 
 		public GaugeSeriesItem()
 		{
@@ -468,15 +473,15 @@ namespace SQM.Website
 
 		public GaugeSeries()
 		{
+			this.ItemList = new List<GaugeSeriesItem>();
 		}
 
-		public GaugeSeries(int seriesNum, string seriesName, string color)
+		public GaugeSeries(int seriesNum, string seriesName, string color) : this()
 		{
 			this.SeriesNum = seriesNum;
 			this.Name = seriesName;
 			this.Color = color;
 			this.YAxisCount = 1;
-			this.ItemList = new List<GaugeSeriesItem>();
 			this.ObjData = null;
 			this.DisplayLabels = false;
 		}
@@ -1959,7 +1964,8 @@ namespace SQM.Website
             series.StartAngle = 45;// 90;
             series.LabelsAppearance.Position = Telerik.Web.UI.HtmlChart.PieAndDonutLabelsPosition.OutsideEnd;
             series.LabelsAppearance.DataFormatString = "{0} " + rgCfg.LabelV;
-            series.TooltipsAppearance.Visible = false;
+            series.TooltipsAppearance.Visible = rgCfg.DisplayTooltip;
+			series.TooltipsAppearance.BackgroundColor = rgCfg.TooltipBackgroundColor;
 
             foreach (GaugeSeriesItem data in gaugeSeries[0].ItemList)
             {
@@ -1969,7 +1975,7 @@ namespace SQM.Website
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
                     item.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
                 
-                item.Exploded = exploded;
+                item.Exploded = data.Exploded.HasValue ? data.Exploded.Value : exploded;
                 series.Items.Add(item);
             }
 
