@@ -22,7 +22,7 @@
 <asp:Button id="btnOpenPersonListWindow" runat="server" CssClass="buttonList" Text=""
 	 OnClick="OnOpenPersonListWindow_Click" ToolTip="list persons" Enabled="false" Visible="false"/>
 
-<telerik:RadSearchBox ID="rsbPerson" runat="server"  MaxResultCount="20" EnableAutoComplete="false" DataKeyNames="PersonId" Skin="Metro" OnClientSearch="onPersonSearch" OnSearch="OnSearchServer" 
+<telerik:RadSearchBox ID="rsbPerson" runat="server"  MaxResultCount="200" EnableAutoComplete="false" DataKeyNames="PersonId" Skin="Metro" OnClientSearch="onPersonSearch" OnSearch="OnSearchServer" 
 	ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="276">
 	<DropDownSettings Height="320" Width="530">
 		<HeaderTemplate>
