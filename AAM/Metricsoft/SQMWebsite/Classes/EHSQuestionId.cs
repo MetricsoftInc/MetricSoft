@@ -46,6 +46,7 @@ namespace SQM.Website
 		ReportedBy	= 96,
 		NativeLangComment = 107,
 		Operation = 109,
-		Fatality = 110
+		Fatality = 110,
+		JobTenure = 111
 	}
 }

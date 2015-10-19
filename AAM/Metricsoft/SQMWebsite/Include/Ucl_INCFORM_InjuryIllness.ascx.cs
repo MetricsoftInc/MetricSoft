@@ -1799,6 +1799,13 @@ namespace SQM.Website
 					ia.ANSWER_VALUE = injuryIllnessDetail.DEPARTMENT;
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.JobTenure);
+					ia.ANSWER_VALUE = injuryIllnessDetail.JOB_TENURE;
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
 				}
 				catch
 				{
