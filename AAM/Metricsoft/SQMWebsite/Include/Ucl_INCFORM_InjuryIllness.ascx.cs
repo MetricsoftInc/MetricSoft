@@ -1098,8 +1098,11 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				// Only configure priv and higher OR incident creator can delete incidents
-				if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.incident) || SessionManager.UserContext.Person.PERSON_ID == CreatePersonId)
+				// only Admin, Approvers or incident owner can delete 
+				if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
+					UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.incident) ||
+					UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident) || 
+					SessionManager.UserContext.Person.PERSON_ID == CreatePersonId)
 					btnDeleteInc.Visible = true;
 			}
 		}
