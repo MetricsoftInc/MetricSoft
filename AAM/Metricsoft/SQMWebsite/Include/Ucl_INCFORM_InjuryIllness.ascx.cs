@@ -141,6 +141,12 @@ namespace SQM.Website
 			set { ViewState["IncidentLocationId"] = value; }
 		}
 
+		protected decimal CreatePersonId
+		{
+			get { return ViewState["CreatePersonId"] == null ? 0 : (decimal)ViewState["CreatePersonId"]; }
+			set { ViewState["CreatePersonId"] = value; }
+		}
+
 		protected decimal SelectInvolvedPersonId
 		{
 			get { return ViewState["SelectInvolvedPersonId"] == null ? 0 : (decimal)ViewState["SelectInvolvedPersonId"]; }
@@ -253,6 +259,7 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IsEditContext = false;
 				PopulateInitialForm();
@@ -280,6 +287,7 @@ namespace SQM.Website
 				incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
 				SelectedTypeText = incident.ISSUE_TYPE;
+				CreatePersonId = (decimal)incident.CREATE_PERSON;
 
 				var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, EditIncidentId);
 
@@ -307,7 +315,6 @@ namespace SQM.Website
 
 					if (injuryIllnessDetails != null)
 					{
-						btnDeleteInc.Visible = true;
 
 						rtpIncidentTime.SelectedTime = injuryIllnessDetails.INCIDENT_TIME;
 						rddlShiftID.SelectedValue = injuryIllnessDetails.SHIFT;
@@ -388,8 +395,6 @@ namespace SQM.Website
 					rdoFirstAid.SelectedValue = "1";
 					Severity_Changed(rdoFirstAid, null);
 
-					btnDeleteInc.Visible = false;
-
 					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
 						pnlLocalDesc.Visible = true;
 
@@ -445,7 +450,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnDeleteInc.Visible = true;
 					lblFormTitle.Text = "Incident";
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -461,7 +465,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ROOT5Y":
 					LoadDependantForm(currentFormName);
@@ -471,7 +474,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_ACTION":
 					LoadDependantForm(currentFormName);
@@ -481,7 +483,6 @@ namespace SQM.Website
 					uclaction.Visible = true;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_APPROVAL":
 					LoadDependantForm(currentFormName);
@@ -491,7 +492,6 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = true;
 					ucllosttime.Visible = false;
-					btnDeleteInc.Visible = false;
 					break;
 				case "INCFORM_LOSTTIME_HIST":
 					LoadDependantForm(currentFormName);
@@ -501,9 +501,7 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = true;
-					btnDeleteInc.Visible = false;
 					break;
-
 			}
 
 		}
@@ -1091,6 +1089,7 @@ namespace SQM.Website
 			{
 				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;
 				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+				btnDeleteInc.Visible = false;
 			}
 			else
 			{
@@ -1099,6 +1098,9 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
+				// Only configure priv and higher OR incident creator can delete incidents
+				if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.incident) || SessionManager.UserContext.Person.PERSON_ID == CreatePersonId)
+					btnDeleteInc.Visible = true;
 			}
 		}
 
@@ -1182,7 +1184,6 @@ namespace SQM.Website
 			switch (btn.CommandArgument)
 			{
 				case "2":
-					btnDeleteInc.Visible = false;
 					lblFormTitle.Text = "Initial Corrective Actions";
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
@@ -1191,7 +1192,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
-					btnDeleteInc.Visible = false;
 					lblFormTitle.Text = "Root Cause";
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
@@ -1200,7 +1200,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
-					btnDeleteInc.Visible = false;
 					lblFormTitle.Text = "Corrective Action";
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
@@ -1209,7 +1208,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
-					btnDeleteInc.Visible = false;
 					lblFormTitle.Text = "Approvals";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
@@ -1219,7 +1217,6 @@ namespace SQM.Website
 						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2);
 					break;
 				case "6":
-					btnDeleteInc.Visible = false;
 					lblFormTitle.Text = "Lost Time History";
 					btnSubnavLostTime.Enabled = false;
 					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
@@ -1230,7 +1227,6 @@ namespace SQM.Website
 				case "0":
 				default:
 					lblFormTitle.Text = "Incident";
-					btnDeleteInc.Visible = true;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";

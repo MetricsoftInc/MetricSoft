@@ -117,7 +117,11 @@ namespace SQM.Website
 			set { ViewState["SelectedLocationId"] = value; }
 		}
 
-
+		protected decimal CreatePersonId
+		{
+			get { return ViewState["CreatePersonId"] == null ? 0 : (decimal)ViewState["CreatePersonId"]; }
+			set { ViewState["CreatePersonId"] = value; }
+		}
 		
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -208,6 +212,7 @@ namespace SQM.Website
 				SessionManager.SetIncidentLocation(Convert.ToDecimal(incident.DETECT_PLANT_ID));
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
 				SelectedTypeText = incident.ISSUE_TYPE;
+				CreatePersonId = (decimal)incident.CREATE_PERSON;
 			}
 
 			pnlForm.Controls.Clear();
@@ -1644,6 +1649,7 @@ namespace SQM.Website
 				SessionManager.SetIncidentLocation(newLocationID);
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IsEditContext = false;
 				BuildForm();
@@ -2131,6 +2137,7 @@ namespace SQM.Website
 			{
 				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
 				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+				btnDelete.Visible = false;
 			}
 			else
 			{
@@ -2139,6 +2146,9 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
+				// Only configure priv and higher OR incident creator can delete incidents
+				if (UserContext.CheckUserPrivilege(SysPriv.config, SysScope.incident)  ||  SessionManager.UserContext.Person.PERSON_ID == CreatePersonId)
+					btnDelete.Visible = true;
 			}
 		}
 
@@ -2201,7 +2211,6 @@ namespace SQM.Website
 			switch (btn.CommandArgument)
 			{
 				case "2":
-					btnDelete.Visible = false;
 					lblPageTitle.Text = "Initial Corrective Actions";
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
@@ -2212,7 +2221,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
-					btnDelete.Visible = false;
 					lblPageTitle.Text = "Root Cause";
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
@@ -2223,7 +2231,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
-					btnDelete.Visible = false;
 					lblPageTitle.Text = "Corrective Action";
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
@@ -2234,7 +2241,6 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
-					btnDelete.Visible = false;
 					lblPageTitle.Text = "Approvals";
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
@@ -2248,7 +2254,6 @@ namespace SQM.Website
 				case "0":
 				default:
 					lblPageTitle.Text = "Incident";
-					btnDelete.Visible = true;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -2281,7 +2286,6 @@ namespace SQM.Website
 					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 					lblIncidentLocation.Text = "Incident Location: ";
 					lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
-					btnDelete.Visible = false;
 				}
 				else
 				{
@@ -2291,11 +2295,6 @@ namespace SQM.Website
 					lblIncidentLocation.Text = "Incident Location: ";
 					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 					lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
-					btnDelete.Visible = true;
-
-					// Only admin and higher can delete incidents
-					if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
-						btnDelete.Visible = false;
 				}
 
 				UpdateControlledQuestions();

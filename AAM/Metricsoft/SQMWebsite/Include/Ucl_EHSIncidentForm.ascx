@@ -79,11 +79,6 @@
 												CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
 												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
 										</td>
-										<td style="width: 33%; text-align: center;">
-											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
-												Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
-												OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
-										</td>
 									</tr>
 								</table>
 								<div id="divSubnav" runat="server" visible="true">
@@ -107,6 +102,11 @@
 											OnClick="btnSubnav_Click" CommandArgument="4"/>
 										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approvals" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="5"/>
+										<span style="float:right">
+											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
+												Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
+												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" />
+										</span>
 									</div>
 								</div>
 							</div>
