@@ -213,16 +213,6 @@ namespace SQM.Website
 						{
 							return;  // we don't want to intercept radio button postbacks
 						}
-						/*
-						if (targetControl != null)
-							if ((this.Page.FindControl(targetID).ID == "rddlIncidentType") || (this.Page.FindControl(targetID).ID == "lbIncidentId"))
-							{
-								IsFullPagePostback = false;
-
-								if (this.Page.FindControl(targetID).ID == "rddlIncidentType") // This is a new incident
-									btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavContainment.Visible = false;
-							}
-						*/
 					}
 				}
 
@@ -309,6 +299,7 @@ namespace SQM.Website
 
 					PopulateDepartmentDropDown((decimal)incident.DETECT_PLANT_ID);
 
+					PopulateJobTenureDropDown();
 					PopulateShiftDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
@@ -331,7 +322,8 @@ namespace SQM.Website
 							lbSupervisorLabel.Visible = true;
 						}
 
-						rddlDeptTest.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
+						if (rddlDeptTest.FindItemByValue(injuryIllnessDetails.DEPT_ID.ToString()) != null)
+							rddlDeptTest.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
 						tbInvPersonStatement.Text = injuryIllnessDetails.INVOLVED_PERSON_STATEMENT;
 						rdpSupvInformedDate.SelectedDate = injuryIllnessDetails.SUPERVISOR_INFORMED_DT;
 						
@@ -345,9 +337,8 @@ namespace SQM.Website
 						rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
 						rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
 						rdoTrainingProvided.SelectedValue = (injuryIllnessDetails.TRAINING_PROVIDED == true) ? "1" : "0";
-						tbTaskYears.Text = injuryIllnessDetails.YEARS_DOING_JOB.ToString();
-						tbTaskMonths.Text = injuryIllnessDetails.MONTHS_DOING_JOB.ToString();
-						tbTaskDays.Text = injuryIllnessDetails.DAYS_DOING_JOB.ToString();
+						if (rddlJobTenure.FindItemByValue(injuryIllnessDetails.JOB_TENURE) != null)
+							rddlJobTenure.SelectedValue = injuryIllnessDetails.JOB_TENURE;
 						rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
 						rdoRecordable.SelectedValue = (injuryIllnessDetails.RECORDABLE == true) ? "1" : "0";
 						rdoFatality.SelectedValue = (injuryIllnessDetails.FATALITY == true) ? "1" : "0";
@@ -381,13 +372,11 @@ namespace SQM.Website
 					rdoErgConcern.SelectedValue = "";
 					rdoStdProcsFollowed.SelectedValue = "";
 					rdoTrainingProvided.SelectedValue = "";
-					tbTaskYears.Text = "0";
-					tbTaskMonths.Text = "0";
-					tbTaskDays.Text = "0";
 					rdoFirstAid.SelectedValue = "";
 					rdoRecordable.SelectedValue = "";
 					rdoLostTime.SelectedValue = "";
 					rdpExpectReturnDT.Clear();
+					rddlJobTenure.Items.Clear();
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 					lbSupervisorLabel.Visible = false;
@@ -406,6 +395,7 @@ namespace SQM.Website
 
 					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
+					PopulateJobTenureDropDown();
 					PopulateShiftDropDown();
 
 					PopulateDepartmentDropDown(IncidentLocationId);
@@ -743,13 +733,27 @@ namespace SQM.Website
 			{
 				rddlShiftID.Items.Add(new DropDownListItem("[Select One]", ""));
 
-				//rddlShiftID.Items.Add(new ListItem("select one", ""));
+				foreach (var s in shifts)
+				{
+					{
+						rddlShiftID.Items.Add(new DropDownListItem(s.Text, s.Value));
+					}
+				}
+			}
+		}
+
+		void PopulateJobTenureDropDown()
+		{
+			List<EHSMetaData> shifts = EHSMetaDataMgr.SelectMetaDataList("INJURY_TENURE");
+
+			if (shifts != null && shifts.Count > 0)
+			{
+				rddlJobTenure.Items.Add(new DropDownListItem("[Select One]", ""));
 
 				foreach (var s in shifts)
 				{
 					{
-						//rddlShift.Items.Add(new ListItem(s.Text, s.Value));
-						rddlShiftID.Items.Add(new DropDownListItem(s.Text, s.Value));
+						rddlJobTenure.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
@@ -1467,8 +1471,11 @@ namespace SQM.Website
 			newInjryIllnessDetails.INCIDENT_TIME = incidentTime;
 			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
-			newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
-			newInjryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
+			if (!string.IsNullOrEmpty(rddlDeptTest.SelectedValue))
+			{
+				newInjryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
+				newInjryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
+			}
 
 			involvedPersonId = SelectInvolvedPersonId;
 			if (involvedPersonId != null && involvedPersonId != 0)
@@ -1505,14 +1512,8 @@ namespace SQM.Website
 			if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
 				newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
 
-			if (!String.IsNullOrEmpty(tbTaskYears.Text))
-				newInjryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
-
-			if (!String.IsNullOrEmpty(tbTaskMonths.Text))
-				newInjryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
-
-			if (!String.IsNullOrEmpty(tbTaskDays.Text))
-				newInjryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
+			if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
+				newInjryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
 
 			if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
 				newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
@@ -1658,9 +1659,11 @@ namespace SQM.Website
 				injuryIllnessDetails.INCIDENT_TIME = incidentTime;
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
 
-
-				injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
-				injuryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
+				if (!string.IsNullOrEmpty(rddlDeptTest.SelectedValue))
+				{
+					injuryIllnessDetails.DEPT_ID = Convert.ToInt32(rddlDeptTest.SelectedValue);
+					injuryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
+				}
 
 				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
 					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
@@ -1700,14 +1703,8 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
 					injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
 
-				if (!String.IsNullOrEmpty(tbTaskYears.Text))
-					injuryIllnessDetails.YEARS_DOING_JOB = (String.IsNullOrEmpty(tbTaskYears.Text)) ? 0 : Convert.ToInt32(tbTaskYears.Text);
-
-				if (!String.IsNullOrEmpty(tbTaskMonths.Text))
-					injuryIllnessDetails.MONTHS_DOING_JOB = (String.IsNullOrEmpty(tbTaskMonths.Text)) ? 0 : Convert.ToInt32(tbTaskMonths.Text);
-
-				if (!String.IsNullOrEmpty(tbTaskDays.Text))
-					injuryIllnessDetails.DAYS_DOING_JOB = (String.IsNullOrEmpty(tbTaskDays.Text)) ? 0 : Convert.ToInt32(tbTaskDays.Text);
+				if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
+					injuryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
 
 				if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
 					injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));

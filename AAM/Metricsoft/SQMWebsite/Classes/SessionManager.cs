@@ -812,6 +812,19 @@ namespace SQM.Website
 			return SessionManager.UserContext.HRLocation;
 		}
 
+		public static bool CheckUserPrivilege(SysPriv[] privList, SysScope scope)
+		{
+			foreach (SysPriv priv in privList)
+			{
+				if (CheckUserPrivilege(priv, scope) == true)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		public static bool CheckUserPrivilege(SysPriv priv, SysScope scope)
 		{
 			bool hasPriv = false;

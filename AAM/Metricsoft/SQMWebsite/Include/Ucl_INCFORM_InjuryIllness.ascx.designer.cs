@@ -643,85 +643,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbTaskYearsXS;
         
         /// <summary>
-        /// tbTaskYears control.
+        /// rddlJobTenure control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTaskYears;
-        
-        /// <summary>
-        /// lbTaskYears control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTaskYears;
-        
-        /// <summary>
-        /// tbTaskMonths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTaskMonths;
-        
-        /// <summary>
-        /// lbTaskMonths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTaskMonths;
-        
-        /// <summary>
-        /// tbTaskDays control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTaskDays;
-        
-        /// <summary>
-        /// lbTaskDays control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbTaskDays;
-        
-        /// <summary>
-        /// revTaskYears control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskYears;
-        
-        /// <summary>
-        /// revTaskMonths control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskMonths;
-        
-        /// <summary>
-        /// revTaskDays control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revTaskDays;
+        protected global::Telerik.Web.UI.RadDropDownList rddlJobTenure;
         
         /// <summary>
         /// lbInjuryTypeSM control.

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="EHS Incidents"  Language="C#" MasterPageFile="~/RspPSMaster.Master"
 	AutoEventWireup="True" EnableEventValidation="false" CodeBehind="EHS_InjuryIllnessForm.aspx.cs" ClientIDMode="AutoID"
-	Inherits="SQM.Website.EHS_InjuryIllnessForm" ValidateRequest="false" %>
+	Inherits="SQM.Website.EHS_InjuryIllnessForm" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %> 
@@ -39,7 +39,7 @@
 	<div class="pageWrapper">
 		<div class="container-fluid tabActiveTableBg">
 			<Ucl:InjuryIllness ID="uclIncidentForm" runat="server" vislble="false"/>
-			<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+			<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" meta:resourcekey="RadAjaxManager1Resource1">
 			</telerik:RadAjaxManager>
 		</div>
 	</div>

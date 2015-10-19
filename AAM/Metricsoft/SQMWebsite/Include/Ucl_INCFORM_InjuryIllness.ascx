@@ -486,16 +486,16 @@
 			</div>
 		</div>
 		<%-- STD WORK PROCEDURES FOLLOWED question --%><div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
 				<span>
 					<asp:Label ID="lbStdProcsFollowedSM" runat="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
-			<div class="col-xs-12 visible-xs text-left-more">
+			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;">
 				<br />
 				<span>
 					<asp:Label ID="lbStdProcsFollowedXS" runat="server" Text="Standard Work Procedures Followed without Deviation?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 greyControlCol">
+			<div class="col-xs-12 col-sm-8 greyControlCol" style="height: 40px;">
 				<span>
 					<asp:RadioButtonList ID="rdoStdProcsFollowed" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server">
 						<asp:ListItem Value="1" Selected="False" Text="Standard&nbsp;&nbsp;&nbsp;&nbsp;"></asp:ListItem>
@@ -522,21 +522,23 @@
 			</div>
 		</div>
 		<%-- HOW LONG DOING TASK question --%><div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 37px;">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
 				<span>
 					<asp:Label ID="lbTaskYearsSM" runat="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
-			<div class="col-xs-12 visible-xs text-left-more" style="height: 37px;">
+			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;">
 				<br />
 				<span>
 					<asp:Label ID="lbTaskYearsXS" runat="server" Text="How long has associate been doing this job/specific task?"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 37px;">
-				<span style="display: inline-block;"><span>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 40px;">
+				<telerik:RadDropDownList ID="rddlJobTenure" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278" DropDownHeight="300" runat="server" AutoPostBack="false"></telerik:RadDropDownList>
+<%--			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 37px;">--%>
+<%--				<span style="display: inline-block;"><span>
 					<asp:TextBox ID="tbTaskYears" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskYears" Text="Years" runat="server"></asp:Label></span>&nbsp;&nbsp; <span>
 						<asp:TextBox ID="tbTaskMonths" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskMonths" Text="Months" runat="server"></asp:Label></span>&nbsp;&nbsp; <span>
 							<asp:TextBox ID="tbTaskDays" Width="50" SkinID="Metro" runat="server"></asp:TextBox>&nbsp;<asp:Label ID="lbTaskDays" Text="Days" runat="server"></asp:Label></span></span>&nbsp;&nbsp;
-				<asp:RegularExpressionValidator ID="revTaskYears" runat="server" ControlToValidate="tbTaskYears" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Years must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator><asp:RegularExpressionValidator ID="revTaskMonths" runat="server" ControlToValidate="tbTaskMonths" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Months must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator><asp:RegularExpressionValidator ID="revTaskDays" runat="server" ControlToValidate="tbTaskDays" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Days must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator><%--<asp:RequiredFieldValidator runat="server" ID="rfvTaskDays"  ControlToValidate="tbTaskDays" Display="None" ErrorMessage="Required" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>--%>
+				<asp:RegularExpressionValidator ID="revTaskYears" runat="server" ControlToValidate="tbTaskYears" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Years must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator><asp:RegularExpressionValidator ID="revTaskMonths" runat="server" ControlToValidate="tbTaskMonths" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Months must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator><asp:RegularExpressionValidator ID="revTaskDays" runat="server" ControlToValidate="tbTaskDays" ValidationExpression="[0-9]+" SetFocusOnError="true" ForeColor="Red" ErrorMessage="Days must be a valid numeric value" ValidationGroup="Val_InjuryIllness"></asp:RegularExpressionValidator>--%>
 			</div>
 		</div>
 
