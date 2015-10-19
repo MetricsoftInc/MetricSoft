@@ -180,7 +180,7 @@ namespace SQM.Website
 				if (Mode == AuditMode.Audit)
 				{
 					auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId, true);
-					selectString = "[Select An Audit Type]";
+					selectString = "[Select An Assessment Type]";
 				}
 				if (auditTypeList.Count > 1)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
@@ -1433,14 +1433,14 @@ namespace SQM.Website
 			btnSaveReturn.Text = "Save & Return";
 
 			if (IsEditContext)
-				btnSaveContinue.Text = "Save Audit";
+				btnSaveContinue.Text = "Save Assessment";
 			else
-				btnSaveContinue.Text = "Create Audit";
+				btnSaveContinue.Text = "Create Assessment";
 
 			if (IsEditContext)
-				btnSaveReturn.Text = "Save Audit";
+				btnSaveReturn.Text = "Save Assessment";
 			else
-				btnSaveReturn.Text = "Create Audit";
+				btnSaveReturn.Text = "Create Assessment";
 		}
 
 		void bcb_CheckedChangedCreate8D(object sender, EventArgs e)
@@ -1583,7 +1583,7 @@ namespace SQM.Website
 					else
 					{
 						closeCh.Checked = false;
-						string script = string.Format("alert('{0}');", "You must complete all required fields on this page to close the audit.");
+						string script = string.Format("alert('{0}');", "You must complete all required fields on this page to close the assessment.");
 						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 					}
 				}
@@ -1935,7 +1935,7 @@ namespace SQM.Website
 					{
 						if (requiredFields.Trim().Length > 0)
 							requiredFields += ", ";
-						requiredFields += "Audit Person";
+						requiredFields += "Assessment Person";
 					}
 					if ((rddlDepartment.SelectedIndex == 0 && lblDepartment.Text.ToString().Length == 0))
 					{
@@ -1994,7 +1994,7 @@ namespace SQM.Website
 					EHSAuditMgr.DeleteAuditTask(EditAuditId, 50);
 				}
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
-				lblResults.Text += (delStatus == 1) ? "Audit deleted." : "Error deleting audit.";
+				lblResults.Text += (delStatus == 1) ? "Assessment deleted." : "Error deleting assessment.";
 				lblResults.Text += "</div>";
 			}
 
@@ -2005,7 +2005,7 @@ namespace SQM.Website
 		{
             AUDIT theAudit = null;
 			decimal auditId = 0;
-			string result = "<h3>EHS Audit " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+			string result = "<h3>EHS Assessment " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 			//if (Mode == AuditMode.Prevent)
 			//	result = "<h3>Recommendation " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
@@ -2592,7 +2592,7 @@ namespace SQM.Website
 					btnSaveReturn.Visible = true;
 					//btnSaveContinue.Visible = (SelectedTypeId > 0);
 					rddlAuditType.Visible = (rddlAuditType.Items.Count == 1) ? false : true;
-					lblAddOrEditAudit.Text = "<strong>Add a New Audit:</strong>";
+					lblAddOrEditAudit.Text = "<strong>Add a New Assessment:</strong>";
 
 					lblAuditType.Visible = false;
 					btnDelete.Visible = false;
@@ -2600,7 +2600,7 @@ namespace SQM.Website
 				else
 				{
 					// Edit
-					typeString = " Audit";
+					typeString = " Assessment";
 					//btnSaveContinue.Visible = true;
 					btnSaveReturn.CommandArgument = "0";
 					SelectedTypeId = 0;
@@ -2611,7 +2611,7 @@ namespace SQM.Website
 
 					rddlAuditType.Visible = false;
 					//if (Mode == AuditMode.Audit)
-					lblAuditType.Text = "Audit Type: ";
+					lblAuditType.Text = "Assessment Type: ";
 					//else if (Mode == AuditMode.Prevent)
 					//	lblAuditType.Text = "Type: ";
 
@@ -2629,7 +2629,7 @@ namespace SQM.Website
 			else
 			{
 				// View only
-				typeString = " Audit";
+				typeString = " Assessment";
 				SelectedTypeId = 0;
 				btnSaveReturn.Enabled = false;
 				btnSaveReturn.Visible = false;
@@ -2639,7 +2639,7 @@ namespace SQM.Website
 				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + "</strong><br/>";
 
 				rddlAuditType.Visible = false;
-				lblAuditType.Text = "Audit Type: ";
+				lblAuditType.Text = "Assessment Type: ";
 
 				lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 				lblAuditType.Visible = true;

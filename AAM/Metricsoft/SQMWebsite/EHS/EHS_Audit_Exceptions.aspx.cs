@@ -228,9 +228,9 @@ namespace SQM.Website
 			if (Mode == AuditMode.Audit)
 			{
 
-				lblViewEHSRezTitle.Text = "Environmental Health &amp; Safety Audit Exceptions";
-				lblPageInstructions.Text = "Review and update EH&amp;S Audit Exceptions below.";
-				//lblStatus.Text = "Audit Status:";
+				lblViewEHSRezTitle.Text = "Environmental Health &amp; Safety Assessment Exceptions";
+				lblPageInstructions.Text = "Review and update EH&amp;S Assessment Exceptions below.";
+				//lblStatus.Text = "Assessment Status:";
 				lblAuditDate.Visible = true;
 				phAudit.Visible = true;
 

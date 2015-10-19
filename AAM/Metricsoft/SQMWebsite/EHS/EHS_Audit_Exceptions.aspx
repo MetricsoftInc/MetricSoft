@@ -55,11 +55,11 @@
                 <div class="col-xs-12 col-sm-12">
 
                     <span style="float: left; margin-top: 6px;">
-                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Environmental Health &amp; Safety Audit Exceptions"></asp:Label></span>
+                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Environmental Health &amp; Safety Assessment Exceptions"></asp:Label></span>
 
                         <br class="clearfix visible-xs-block" />
 
-                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="View EH&amp;S Audit Exceptions below."></asp:Label>
+                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="View EH&amp;S Assessment Exceptions below."></asp:Label>
                 </div>
             </div>
 
@@ -93,13 +93,13 @@
                                 <asp:Label runat="server" ID="lblAuditType" Text="Audit Type:" CssClass="prompt"></asp:Label>
                             </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select audit types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select assessment types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
 
                             <div class="clearfix visible-xs"></div>
                             <br class="visible-xs-block" style="margin-top: 7px;" />
 
                             <asp:Label runat="server" ID="lblStatus" Text="Status:" CssClass="prompt"></asp:Label>&nbsp;&nbsp;
-                                            <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select audit status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+                                            <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select assessment status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
                                                 <Items>
                                                     <telerik:RadComboBoxItem Text="Open" Value="A" />
                                                     <telerik:RadComboBoxItem Text="Closed" Value="C" />
@@ -119,7 +119,7 @@
 
 
                         <span style="float: left; margin-top: 4px;">
-                            <asp:Label runat="server" ID="lblAuditDate" Text="Audit Date From:" CssClass="prompt"></asp:Label>
+                            <asp:Label runat="server" ID="lblAuditDate" Text="Assessment Date From:" CssClass="prompt"></asp:Label>
                             <telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
                         </span>
 
@@ -137,7 +137,7 @@
                         <span class="noprint">
                             <%--<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
                                         <span style="padding-top: 10px;""><asp:CheckBox id="cbShowImage" runat="server" Checked="false"/></span>--%>
-                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List audits" OnClick="btnAuditsSearchClick" />
+                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessments" OnClick="btnAuditsSearchClick" />
                         </span>
 
                     </div>
@@ -179,7 +179,7 @@
                         <br />
                         <div style="float: right; margin: 5px;">
                             <span>
-                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="Save" Style="margin: 5px;" OnClientClick="return confirmAction('update the audit exception status');" OnClick="btnStatusSave_Click" ToolTip="update the status of this audit exception"></asp:Button>
+                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="Save" Style="margin: 5px;" OnClientClick="return confirmAction('update the assessment exception status');" OnClick="btnStatusSave_Click" ToolTip="update the status of this audit exception"></asp:Button>
                                 <asp:Button ID="btnStatusCancel" CssClass="buttonEmphasis" runat="server" Text="Cancel" Style="margin: 5px;" OnClick="btnStatusCancel_Click"></asp:Button>
                             </span>
                         </div>

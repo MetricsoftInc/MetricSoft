@@ -118,11 +118,11 @@ namespace SQM.Website
 						RadMenu1.Items.Add(EHSMenu2);
 
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audits", "/EHS/EHS_Audits.aspx"));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Assessments", "/EHS/EHS_Audits.aspx"));
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Exceptions", "/EHS/EHS_Audit_Exceptions.aspx"));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Assessment Exceptions", "/EHS/EHS_Audit_Exceptions.aspx"));
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Audit Schedules", "/EHS/EHS_Audit_Scheduler.aspx"));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Assessment Schedules", "/EHS/EHS_Audit_Scheduler.aspx"));
 						if (UserContext.GetScopePrivileges(SysScope.incident).Count() > 0)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Incidents", "/EHS/EHS_Incidents.aspx"));
 						//if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)

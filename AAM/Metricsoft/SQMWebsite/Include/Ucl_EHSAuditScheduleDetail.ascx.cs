@@ -142,7 +142,7 @@ namespace SQM.Website
 				var auditTypeList = new List<AUDIT_TYPE>();
 				string selectString = "";
 				auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId, true);
-				selectString = "[Select An Audit Type]";
+				selectString = "[Select An Assessment Type]";
 				if (auditTypeList.Count > 1)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
 
@@ -287,9 +287,9 @@ namespace SQM.Website
 			btnSaveReturn.Text = "Save & Return";
 
 			if (IsEditContext)
-				btnSaveReturn.Text = "Save Audit Scheduler";
+				btnSaveReturn.Text = "Save Assessment Scheduler";
 			else
-				btnSaveReturn.Text = "Create Audit Scheduler";
+				btnSaveReturn.Text = "Create Assessment Scheduler";
 		}
 
 		#endregion
@@ -346,7 +346,7 @@ namespace SQM.Website
 				lblResults.Visible = true;
 				int delStatus = EHSAuditMgr.DeleteAuditScheduler(EditAuditScheduleId);
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
-				lblResults.Text += (delStatus == 1) ? "Audit Scheduler deleted." : "Error deleting audit scheduler.";
+				lblResults.Text += (delStatus == 1) ? "Assessment Scheduler deleted." : "Error deleting assessment scheduler.";
 				lblResults.Text += "</div>";
 			}
 
@@ -357,7 +357,7 @@ namespace SQM.Website
 		{
 			AUDIT_SCHEDULER scheduler = null;
 			decimal auditScheduleId = 0;
-			string result = "<h3>EHS Audit Scheduler " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
+			string result = "<h3>EHS Assessment Scheduler " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
 			if (shouldReturn == true)
 			{
@@ -492,14 +492,14 @@ namespace SQM.Website
 					btnSaveReturn.Enabled = true;
 					btnSaveReturn.Visible = true;
 					rddlAuditType.Visible = (rddlAuditType.Items.Count == 1) ? false : true;
-					lblAddOrEditAudit.Text = "<strong>Add a New Audit Schedule:</strong>";
+					lblAddOrEditAudit.Text = "<strong>Add a New Assessment Schedule:</strong>";
 
 					btnDelete.Visible = false;
 				}
 				else
 				{
 					// Edit
-					typeString = " Audit Schedule";
+					typeString = " Assessment Schedule";
 					btnSaveReturn.CommandArgument = "0";
 					SelectedTypeId = 0;
 					btnSaveReturn.Enabled = true;
@@ -520,7 +520,7 @@ namespace SQM.Website
 			else
 			{
 				// View only
-				typeString = " Audit Schedule";
+				typeString = " Assessment Schedule";
 				SelectedTypeId = 0;
 				btnSaveReturn.Enabled = false;
 				btnSaveReturn.Visible = false;

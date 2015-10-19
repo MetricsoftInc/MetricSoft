@@ -44,7 +44,7 @@
                     <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=100 Font-Size=Small AutoPostBack="false" Visible="false"></telerik:RadComboBox> 
                 </span>
                 <span class="noprint">
-                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnAuditsSearchClick" />
+                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessment exceptions" OnClick="btnAuditsSearchClick" />
 <%--                    <asp:Button ID="btnReceiptSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonLink" Text="List Receipts" ToolTip="List material receipts" OnClick="btnReceiptsSearchClick" />--%>
                 </span>
             </td>
@@ -95,12 +95,12 @@
             OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" GridLines="None" Width="100%" OnItemCommand="rgAuditList_ItemCommand">
             <MasterTableView ExpandCollapseColumn-Visible="true" DataKeyNames="Audit.Audit_ID" EnableGroupsExpandAll="false" GroupsDefaultExpanded="false">
                 <Columns>
-                    <telerik:GridTemplateColumn HeaderText="Audit" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
+                    <telerik:GridTemplateColumn HeaderText="Assessment" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
                         <ItemTemplate>
                             <asp:Label ID="lblAuditId" Font-Bold="true" ForeColor="#000066" Text='<%#string.Format("{0:000000}", Eval("Audit.AUDIT_ID")) %>' runat="server"></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
-                    <telerik:GridTemplateColumn HeaderText="Audit Date" ShowSortIcon="true" SortExpression="Audit.AUDIT_DT">
+                    <telerik:GridTemplateColumn HeaderText="Assessment Date" ShowSortIcon="true" SortExpression="Audit.AUDIT_DT">
                         <ItemTemplate>
                             <asp:Label ID="lblAuditDT" Text='<%# ((DateTime)Eval("Audit.AUDIT_DT")).ToShortDateString() %>' runat="server"></asp:Label>
                         </ItemTemplate>
@@ -115,7 +115,7 @@
                             <asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
-                    <telerik:GridTemplateColumn HeaderText="Audit By" ShowSortIcon="true" SortExpression="Audit.AUDIT_PERSON">
+                    <telerik:GridTemplateColumn HeaderText="Assessment By" ShowSortIcon="true" SortExpression="Audit.AUDIT_PERSON">
                         <ItemTemplate>
                             <asp:Label ID="lblAuditBy" runat="server"></asp:Label>
                         </ItemTemplate>

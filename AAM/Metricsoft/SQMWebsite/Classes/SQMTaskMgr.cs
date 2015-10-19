@@ -678,7 +678,7 @@ namespace SQM.Website
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
 								taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
+								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Assessment ") + ": " + audit.DESCRIPTION;
 								break;
                             default:
                                 break;
@@ -1236,7 +1236,7 @@ namespace SQM.Website
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
                                 taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
+								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Assessment ") + ": " + audit.DESCRIPTION;
 								break;
                             default:
                                 break;

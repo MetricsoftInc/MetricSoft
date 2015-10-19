@@ -37,7 +37,7 @@
                                         <div class="col-xs-12  text-left">
 
 
-                                            <asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Audit:</strong></asp:Label>
+                                            <asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Assessment:</strong></asp:Label>
 
                                             <span class="hidden-xs" style="float: right; width: 160px; margin-right: 6px;">
                                                 <span class="requiredStar">&bull;</span> - Required to Create
@@ -47,7 +47,7 @@
                                             <br style="clear: both;" />
 
 
-                                            <asp:Label ID="lblAuditType" class="textStd" runat="server">Audit Type:</asp:Label>
+                                            <asp:Label ID="lblAuditType" class="textStd" runat="server">Assessment Type:</asp:Label>
                                             <telerik:RadDropDownList ID="rddlAuditType" runat="server" Width="450" AutoPostBack="true" CausesValidation="false"
                                                 OnSelectedIndexChanged="rddlAuditType_SelectedIndexChanged" Skin="Metro">
                                             </telerik:RadDropDownList>
@@ -84,7 +84,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblAuditPerson" runat="server" Text="Audit Person"></asp:Label>
+                                                <asp:Label ID="lblAuditPerson" runat="server" Text="Assessment Person"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -94,7 +94,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblAuditDate" runat="server" Text="Audit Date"></asp:Label>
+                                                <asp:Label ID="lblAuditDate" runat="server" Text="Assessment Date"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -148,7 +148,7 @@
                                         </td>
                                         <td style="width: 33%; text-align: center;">
                                             <telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
-                                                Text="Delete Audit" SingleClick="true" SingleClickText="Deleting..."
+                                                Text="Delete Assessment" SingleClick="true" SingleClickText="Deleting..."
                                                 OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
                                         </td>
                                     </tr>

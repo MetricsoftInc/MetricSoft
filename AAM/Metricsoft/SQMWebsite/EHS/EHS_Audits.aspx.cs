@@ -260,10 +260,10 @@ namespace SQM.Website
 			if (Mode == AuditMode.Audit)
 			{
 
-				lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Audits";
-				lblPageInstructions.Text = "Add or update EH&amp;S Audits below.";
-				//lblStatus.Text = "Audit Status:";
-				rbNew.Text = "New Audit";
+				lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Assessments";
+				lblPageInstructions.Text = "Add or update EH&amp;S Assessments below.";
+				//lblStatus.Text = "Assessment Status:";
+				rbNew.Text = "New Assessment";
 				lblAuditDate.Visible = true;
 				phAudit.Visible = true;
 

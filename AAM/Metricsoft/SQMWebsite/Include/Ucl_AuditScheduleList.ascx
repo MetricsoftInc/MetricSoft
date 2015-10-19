@@ -43,7 +43,7 @@
                     <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=100 Font-Size=Small AutoPostBack="false" Visible="false"></telerik:RadComboBox> 
                 </span>
                 <span class="noprint">
-                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List incidents" OnClick="btnAuditsSearchClick" />
+                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessment schedules" OnClick="btnAuditsSearchClick" />
                 </span>
             </td>
         </tr>
@@ -63,7 +63,7 @@
         <tr>
             <td class="columnHeader">
                 <asp:Label runat="server" ID="lblCaseDescription" Text="Problem Case"></asp:Label>
-                <asp:Label runat="server" ID="lblAuditDescription" Text="Audit"></asp:Label>
+                <asp:Label runat="server" ID="lblAuditDescription" Text="Assessment"></asp:Label>
                 <asp:Label runat="server" ID="lblActionDescription" Text="Recommendation"></asp:Label>
             </td>
             <td class="tableDataAlt">
@@ -92,12 +92,12 @@
             OnPageIndexChanged="rgAuditScheduleList_PageIndexChanged" OnPageSizeChanged="rgAuditScheduleList_PageSizeChanged" GridLines="None" Width="100%">
             <MasterTableView ExpandCollapseColumn-Visible="false">
                 <Columns>
-                    <telerik:GridTemplateColumn HeaderText="Audit" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
+                    <telerik:GridTemplateColumn HeaderText="Assessment" ItemStyle-Width="100px" ShowSortIcon="true" SortExpression="Audit.AUDIT_ID">
                         <ItemTemplate>
                             <table class="innerTable">
                                 <tr>
                                     <td>
-                                        <asp:LinkButton ID="lbAuditScheduleId" OnClick="lnkEditAuditSchedule" CommandArgument='<%#Eval("AuditScheduler.AUDIT_SCHEDULER_ID") %>' runat="server" ToolTip="Edit audit schedule">
+                                        <asp:LinkButton ID="lbAuditScheduleId" OnClick="lnkEditAuditSchedule" CommandArgument='<%#Eval("AuditScheduler.AUDIT_SCHEDULER_ID") %>' runat="server" ToolTip="Edit assessment schedule">
                                             <span style="white-space: nowrap;">
                                                 <img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label ID="lblAuditScheduleId" Font-Bold="true" ForeColor="#000066" Text='<%#string.Format("{0:000000}", Eval("AuditScheduler.AUDIT_SCHEDULER_ID")) %>' runat="server"></asp:Label>
                                             </span>

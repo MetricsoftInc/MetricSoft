@@ -216,9 +216,9 @@ namespace SQM.Website
 
 			divAuditList.Visible = true;
 
-			lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Audit Schedules";
-			lblPageInstructions.Text = "Add or update EH&amp;S Audit Schedule below.";
-			rbNew.Text = "New Audit Schedule";
+			lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Assessment Schedules";
+			lblPageInstructions.Text = "Add or update EH&amp;S Assessment Schedule below.";
+			rbNew.Text = "New Assessment Schedule";
 			phAudit.Visible = true;
 		}
 

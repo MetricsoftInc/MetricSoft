@@ -30,7 +30,7 @@ namespace SQM.Website.Automated
 
 				if (strValidIP.Equals(currentIP))
 				{
-					WriteLine("Main ScheduleAudits being accessed from a valid IP address " + currentIP);
+					WriteLine("Main ScheduleAssessments being accessed from a valid IP address " + currentIP);
 					validIP = true;
 
 					if (Request.QueryString["validation"] != null)
@@ -40,20 +40,20 @@ namespace SQM.Website.Automated
 					}
 					else
 					{
-						WriteLine("Main ScheduleAudits requested from incorrect source.");
+						WriteLine("Main ScheduleAssessments requested from incorrect source.");
 						validIP = false;
 					}
 				}
 				else
 				{
-					WriteLine("Main ScheduleAudits being accessed from invalid IP address " + currentIP);
+					WriteLine("Main ScheduleAssessments being accessed from invalid IP address " + currentIP);
 					validIP = false;
 				}
 			}
 			catch (Exception ex)
 			{
 				validIP = false;
-				WriteLine("Main ScheduleAudits Error validating IP Address: " + ex.ToString());
+				WriteLine("Main ScheduleAssessments Error validating IP Address: " + ex.ToString());
 			}
 
 			// make sure this code is NOT moved to production
@@ -68,7 +68,7 @@ namespace SQM.Website.Automated
 				}
 				catch (Exception ex)
 				{
-					WriteLine("Main UpdatePastDueAuditStatus Error: " + ex.ToString());
+					WriteLine("Main UpdatePastDueAssessmentStatus Error: " + ex.ToString());
 				}
 
 				try
@@ -78,7 +78,7 @@ namespace SQM.Website.Automated
 				}
 				catch (Exception ex)
 				{
-					WriteLine("Main ScheduleAudits Error: " + ex.ToString());
+					WriteLine("Main ScheduleAssessments Error: " + ex.ToString());
 					//WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
 				}
 			}
@@ -114,7 +114,7 @@ namespace SQM.Website.Automated
 					if (!type.INACTIVE)
 					{
 						WriteLine("");
-						WriteLine("The following " + type.TITLE + " audits were created for Audit Scheduler " + schedule.AUDIT_SCHEDULER_ID + ": ");
+						WriteLine("The following " + type.TITLE + " assessments were created for Assessment Scheduler " + schedule.AUDIT_SCHEDULER_ID + ": ");
 						// determine the date to schedule, by finding the next occurance of the selected day of the week after the current day
 						DateTime auditDate = DateTime.Today;
 						while ((int)auditDate.DayOfWeek != schedule.DAY_OF_WEEK)
@@ -176,22 +176,22 @@ namespace SQM.Website.Automated
 								// send an email
 								EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);
 
-								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - audit added");
+								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - assessment added");
 							}
 							else
 							{
-								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - audit already exists for this date");
+								WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - assessment already exists for this date");
 							}
 						}
 					}
 					else
 					{
-						WriteLine("Adit Type " + schedule.AUDIT_TYPE_ID + " inactive. Audits not created for Scheduler Record " + schedule.AUDIT_SCHEDULER_ID.ToString());
+						WriteLine("Assessment Type " + schedule.AUDIT_TYPE_ID + " inactive. Assessments not created for Scheduler Record " + schedule.AUDIT_SCHEDULER_ID.ToString());
 					}
 				}
 				else
 				{
-					WriteLine("Adit Type " + schedule.AUDIT_TYPE_ID + " not found. Audits not created for Scheduler Record " + schedule.AUDIT_SCHEDULER_ID.ToString());
+					WriteLine("Assessment Type " + schedule.AUDIT_TYPE_ID + " not found. Assessments not created for Scheduler Record " + schedule.AUDIT_SCHEDULER_ID.ToString());
 				}
 			}
 			
