@@ -234,7 +234,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadAjaxPanel ID="rajx100" runat="server">
-						<telerik:RadSearchBox ID="rsbInvolvedPerson" runat="server"  EnableAutoComplete="true" MaxResultCount="200" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbInvolvedPerson_Search"
+						<telerik:RadSearchBox ID="rsbInvolvedPerson" runat="server"  EnableAutoComplete="true" MaxResultCount="400" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbInvolvedPerson_Search"
 							ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="276" >
 							<DropDownSettings Height="320" Width="510">
 								<HeaderTemplate>
@@ -362,7 +362,7 @@
 								<asp:Label ID="lbWitNamePrompt" runat="server" Text="Name: " />&nbsp;&nbsp;
 
 								<telerik:RadAjaxPanel ID="rajx200" runat="server">
-									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" EnableAutoComplete="true" MaxResultCount="200" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbWitnessName_Search"
+									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" EnableAutoComplete="true" MaxResultCount="400" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbWitnessName_Search"
 										ShowSearchButton="false" EmptyMessage="Begin typing (or spacebar)" Width="100%" CssClass="NoBorders">
 										<DropDownSettings Height="320" Width="510">
 											<HeaderTemplate>
