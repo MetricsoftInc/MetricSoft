@@ -208,7 +208,7 @@ namespace SQM.Website
             List<SETTINGS> recpts = SQMSettings.SelectSettingsGroup("IMPORT_RECEIPT", ""); // ABW 20140805
 
 			SETTINGS dfltPlant = sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault() == null ? new SETTINGS() : sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault();
-			string[] dfltPlantList = string.IsNullOrEmpty(dfltPlant.VALUE) ? new string[0] : dfltPlant.VALUE.Split('|');
+			string[] dfltPlantList = string.IsNullOrEmpty(dfltPlant.VALUE) ? new string[0] : dfltPlant.VALUE.Split(',');
 
             try
             {
