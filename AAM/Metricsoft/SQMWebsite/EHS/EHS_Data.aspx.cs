@@ -185,7 +185,7 @@ namespace SQM.Website.EHS
 		{
 			foreach (var t in types)
 			{
-				var value = type_data[t.DESCRIPTION];
+				var value = type_data[t.DESCRIPTION.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")];
 				if (value.ContainsKey("value"))
 					entities.EHS_DATA_ORD.AddObject(new EHS_DATA_ORD()
 					{
@@ -519,8 +519,8 @@ namespace SQM.Website.EHS
 				column.HeaderStyle.Width = column.ItemStyle.Width = new Unit(this.Request.QueryString["type"] == "Weekly" || this.Request.QueryString["type"] == "Monthly" ? "70%" : "10%");
 				column.ItemStyle.CssClass = "greyCell";
 			}
-			// The minus 1 here is because the control before the save button is a <br> literal, we want the grid to be before that.
-			this.dataPanel.Controls.AddAt(this.dataPanel.Controls.IndexOf(this.btnSave) - 1, rgData);
+			// Place the grid just before the <br> literal we have set aside for it.
+			this.dataPanel.Controls.AddAt(this.dataPanel.Controls.IndexOf(this.rgData_placeholder), rgData);
 		}
 
 		// Stores a reference to the entities so it can persist for the entire page's life cycle.
