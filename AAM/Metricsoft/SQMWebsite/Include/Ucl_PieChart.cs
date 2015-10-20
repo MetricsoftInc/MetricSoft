@@ -512,42 +512,7 @@ namespace SQM.Website
 			this.drawLegend(legendInfo, font.Height);
 
 			this.Controls.Add(this.SVG);
-
-			var sw = new StringWriter();
-			var writer = new HtmlTextWriter(sw);
-			this.SVG.RenderControl(writer);
-
-			var img = new HtmlImage()
-			{
-				Width = this.Width.ToPixels(),
-				Height = this.Height.ToPixels(),
-				Src = "data:image/svg+xml;charset=utf-8;base64," + Convert.ToBase64String(Encoding.UTF8.GetBytes(sw.ToString()))
-			};
-			img.Style.Add(HtmlTextWriterStyle.Display, "none");
-			this.Controls.Add(img);
 		}
-
-		/// <summary>
-		/// This will add to the rendered output an img tag that contains a data URI with the base64 encoded data of the pie chart's SVG.
-		/// NOTE: This img tag will NOT be hidden. It must be hidden on the page after-the-fact using any methods, including CSS or Javascript.
-		/// </summary>
-		/// <param name="writer">The writer for the rendering.</param>
-		/*protected override void RenderContents(HtmlTextWriter writer)
-		{
-			base.RenderContents(writer);
-
-			var sw = new StringWriter();
-			var htw = new HtmlTextWriter(sw);
-			this.SVG.RenderControl(htw);
-
-			writer.AddAttribute(HtmlTextWriterAttribute.Width, this.Width.ToString());
-			writer.AddAttribute(HtmlTextWriterAttribute.Height, this.Height.ToString());
-			writer.AddAttribute(HtmlTextWriterAttribute.Src,
-				"data:image/svg+xml;charset=utf-8;base64," + Convert.ToBase64String(Encoding.UTF8.GetBytes(sw.ToString())));
-			writer.AddStyleAttribute(HtmlTextWriterStyle.Display, "none");
-			writer.RenderBeginTag(HtmlTextWriterTag.Img);
-			writer.RenderEndTag();
-		}*/
 
 		protected override void OnPreRender(EventArgs e)
 		{

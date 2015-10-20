@@ -21,28 +21,9 @@
 			margin-top: 1em;
 		}
 
-		.k-pdf-export svg[data-creator="SQM_PieChart"] + img
-		{
-			display: inline !important;
-		}
-		.k-pdf-export svg[data-creator="SQM_PieChart"]
-		{
-			display: none;
-		}
-
 		#divExport
 		{
 			margin: 0 auto;
-			/*display: none;*/
-		}
-		.k-pdf-export #divExport
-		{
-			display: block;
-			-moz-transform: scale(0.5, 0.5) translate(-50%, -50%);
-			-ms-transform: scale(0.5, 0.5) translate(-50%, -50%);
-			-o-transform: scale(0.5, 0.5) translate(-50%, -50%);
-			-webkit-transform: scale(0.5, 0.5) translate(-50%, -50%);
-			transform: scale(0.5, 0.5) translate(-50%, -50%);
 		}
 
 		/* Simulate the overridden Metro style, as Telerik's RadButton was acting up and not always registering clicks for me. */
@@ -66,12 +47,11 @@
 	</style>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../scripts/innersvg.js"></script>
+	<script type="text/javascript" src="../scripts/jquery.copycss.js"></script>
 </asp:Content>
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
 	<asp:HiddenField ID="hfCompanyID" runat="server" />
-	<telerik:RadClientExportManager ID="radExport" runat="server" OnClientPdfExported="clientPDFExported">
-		<PdfSettings FileName="Test.pdf" PaperSize="Letter" Landscape="true" MarginTop="0.25in" MarginLeft="0.25in" MarginBottom="0.25in" MarginRight="0.25in" PageBreakSelector=".pageBreak" />
-	</telerik:RadClientExportManager>
 	<div class="container-fluid">
 		<span class="pageTitles" style="float: left; margin-top: 6px">Health & Safety Performance Report</span>
 		<br class="clear" /><br />
@@ -114,10 +94,10 @@
 					</MasterTableView>
 				</telerik:RadGrid>
 				<div id="divTRIR" runat="server" class="chartMarginTop"></div>
-				<span class="pageBreak" style="display: none"></span>
+				<div style="page-break-after: always"></div>
 				<div id="divFrequencyRate" runat="server" class="chartMarginTop"></div>
 				<div id="divSeverityRate" runat="server" class="chartMarginTop"></div>
-				<span class="pageBreak" style="display: none"></span>
+				<div style="page-break-after: always"></div>
 				<div style="overflow: hidden" class="chartMarginTop">
 					<SQM:PieChart ID="pieRecordableType" runat="server" Title="Recordable Injuries by Type" Width="740" Height="500" StartAngle="45" Style="float: left" CssClass="pieChart" />
 					<SQM:PieChart ID="pieRecordableBodyPart" runat="server" Title="Recordable Injuries by Body Part" Width="740" Height="500" StartAngle="45" Style="float: right"
@@ -127,8 +107,8 @@
 					<SQM:PieChart ID="pieRecordableRootCause" runat="server" Title="Injury Root Causes" Width="740" Height="500" StartAngle="45" Style="float: left" CssClass="pieChart" />
 					<SQM:PieChart ID="pieRecordableTenure" runat="server" Title="Tenure of Injured Associate" Width="740" Height="500" StartAngle="45" Style="float: right" CssClass="pieChart" />
 				</div>
-				<span class="pageBreak" style="display: none"></span>
-				<div class="chartMarginTop">
+				<div style="page-break-after: always"></div>
+				<div class="chartMarginTop" style="page-break-after: avoid">
 					<SQM:PieChart ID="pieRecordableDaysToClose" runat="server" Title="Days to Close Investigations" Width="740" Height="500" StartAngle="45" CssClass="pieChart" />
 				</div>
 			</div>
@@ -137,24 +117,122 @@
 	<Ucl:RadGauge ID="uclChart" runat="server" />
 	<telerik:RadCodeBlock ID="radCodeBlock" runat="server">
 		<script type="text/javascript">
-			var radLoading = null;
-
-			// This will get the controls we need later and then get the initial set of data.
-			Sys.Application.add_load(function ()
-			{
-				radLoading = $find('<%= this.radLoading.ClientID %>');
-			});
-
 			$('#btnExport').click(function ()
 			{
-				radLoading.show('<%= this.radAjaxPanel.ClientID %>');
-				$find('<%= this.radExport.ClientID %>').exportPDF($telerik.$('#divExport'));
+				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx" />');
+				form.append($('<input type="text" name="html" />').val($('#divExport').html()));
+				form.append('<input type="text" name="generator" value="selectpdf" />');
+				$('body').append(form);
+				form[0].submit();
+				form.remove();
 			});
 
-			function clientPDFExported(sender, args)
+			// Sets all the CSS on the RadGrid in its style tag, so it'll export properly to PDF.
+			$(function ()
 			{
-				radLoading.hide('<%= this.radAjaxPanel.ClientID %>');
-			}
+				var radGrid = $('.RadGrid');
+				radGrid.css(radGrid.getStyles([
+					'background-color',
+					'border-bottom-color',
+					'border-bottom-style',
+					'border-bottom-width',
+					'border-left-color',
+					'border-left-style',
+					'border-left-width',
+					'border-right-color',
+					'border-right-style',
+					'border-right-width',
+					'border-top-color',
+					'border-top-style',
+					'border-top-width',
+					'color',
+					'line-height',
+					'overflow'
+				]));
+				var rgMasterTable = $('.rgMasterTable');
+				rgMasterTable.css(rgMasterTable.getStyles([
+					'border-collapse',
+					'border-spacing'
+				]));
+				$('.rgHeader').each(function ()
+				{
+					var $this = $(this);
+					$this.css($this.getStyles([
+						'background-color',
+						'border-bottom-color',
+						'border-bottom-style',
+						'border-bottom-width',
+						'border-left-color',
+						'border-left-style',
+						'border-left-width',
+						'border-right-color',
+						'border-right-style',
+						'border-right-width',
+						'border-top-color',
+						'border-top-style',
+						'border-top-width',
+						'color',
+						'font-family',
+						'font-size',
+						'font-weight',
+						'padding-bottom',
+						'padding-left',
+						'padding-right',
+						'padding-top',
+						'text-align'
+					]));
+				});
+				$('.RadGrid td').each(function ()
+				{
+					var $this = $(this);
+					$this.css($this.getStyles([
+						'border-bottom-color',
+						'border-bottom-style',
+						'border-bottom-width',
+						'border-left-color',
+						'border-left-style',
+						'border-left-width',
+						'border-right-color',
+						'border-right-style',
+						'border-right-width',
+						'border-top-color',
+						'border-top-style',
+						'border-top-width',
+						'font-family',
+						'padding-bottom',
+						'padding-left',
+						'padding-right',
+						'padding-top'
+					]));
+				});
+
+				// Same as above but for the charts.
+				$('.RadHtmlChart, .pieChart').each(function ()
+				{
+					var $this = $(this);
+					$this.css($this.getStyles([
+						'border-bottom-color',
+						'border-bottom-style',
+						'border-bottom-width',
+						'border-left-color',
+						'border-left-style',
+						'border-left-width',
+						'border-right-color',
+						'border-right-style',
+						'border-right-width',
+						'border-top-color',
+						'border-top-style',
+						'border-top-width',
+					]));
+				});
+				$('.chartMarginTop').each(function ()
+				{
+					var $this = $(this);
+					$this.css($this.getStyles([
+						'margin-top'
+					]));
+				});
+			});
 		</script>
 	</telerik:RadCodeBlock>
 </asp:Content>
