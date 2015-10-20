@@ -136,7 +136,10 @@ namespace SQM.Website
 							EHSMenu2.Items.Add(EHSDataMenu);
 						}
 						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.config)
-							EHSMenu2.Items.Add(new RadMenuItem("Report", "~/EHS/EHS_DataReport.aspx"));
+						{
+							EHSMenu2.Items.Add(new RadMenuItem("Monthly Report", "~/EHS/EHS_DataReport.aspx"));
+							EHSMenu2.Items.Add(new RadMenuItem("Performance Report", "~/EHS/EHS_Performancereport.aspx"));
+						}
 						if (addConsole == false && UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
 						{
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem("Console", "/EHS/EHS_Console.aspx?c=EHS"));

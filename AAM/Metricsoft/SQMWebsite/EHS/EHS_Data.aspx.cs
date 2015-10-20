@@ -626,7 +626,7 @@ namespace SQM.Website.EHS
 					{
 						ID = "rtb" + this.Suffix,
 						Skin = "Metro",
-						Width = this.Width
+						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width)
 					};
 					container.Controls.Add(rtbData);
 					container.Controls.Add(new CompareValidator()
