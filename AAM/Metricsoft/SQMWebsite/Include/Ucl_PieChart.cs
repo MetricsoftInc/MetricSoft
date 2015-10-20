@@ -456,8 +456,8 @@ namespace SQM.Website
 			this.SVG.Controls.Add(title);
 
 			// Calculate the angles of each value.
-			decimal sum = this.Values.Sum(i => (decimal?)i.YValue) ?? 1;
-			var angles = this.Values.Select(v => (v.YValue / sum) * 2 * (decimal)Math.PI).ToList();
+			decimal sum = this.Values.Sum(i => (decimal?)i.YValue) ?? 0;
+			var angles = sum == 0 ? new List<decimal>() : this.Values.Select(v => (v.YValue / sum) * 2 * (decimal)Math.PI).ToList();
 
 			// Get the legend information and use that to calculate the pie chart's radius.
 			int longestLabelWidth = (int)(this.Values.MaxOrDefault(v => GetWidthOfString(v.Text, font), 0) + 0.5f);
@@ -469,44 +469,57 @@ namespace SQM.Website
 			var points = this.calculatePiePoints(pieCenter, angles);
 			var textLocations = this.calculatePieTextLocations(pieCenter, angles);
 
-			for (int i = 0; i < this.Values.Count; ++i)
+			if (sum == 0)
 			{
-				if (!this.AllowZeroValues && this.Values[i].YValue == 0)
-					continue;
-
-				var color = this.GetColorAt(i);
-
-				int j = i + 1;
-				if (j == this.Values.Count)
-					j = 0;
-
-				// Create the arc for this pie chart slice.
-				var path = new HtmlGenericControl("path")
-				{
-					ID = "path_" + i
-				};
-				path.Attributes.Add("d", string.Format("M{0} {1} L{2} {3} A{4} {4} 0 {5} 1 {6} {7} z", pieCenter.X, pieCenter.Y, points[i].X, points[i].Y, this.PieRadius,
-					(double)angles[i] > Math.PI ? 1 : 0, points[j].X, points[j].Y));
-				path.Attributes.Add("fill", ColorTranslator.ToHtml(color));
-				path.Attributes.Add("stroke", "#000");
-				path.Attributes.Add("stroke-width", "1px");
-				path.Controls.Add(new HtmlGenericControl("title")
-				{
-					InnerText = this.Values[i].Text
-				});
-				this.SVG.Controls.Add(path);
-
-				// Create the text label to go over the pie chart slice.
 				var text = new HtmlGenericControl("text")
 				{
-					InnerText = this.Values[i].YValue.ToString()
+					InnerText = "There is no data to display."
 				};
-				text.Attributes.Add("x", textLocations[i].X.ToString());
-				text.Attributes.Add("y", textLocations[i].Y.ToString());
+				text.Attributes.Add("x", pieCenter.X.ToString());
+				text.Attributes.Add("y", pieCenter.Y.ToString());
 				text.Attributes.Add("text-anchor", "middle");
-				text.Attributes.Add("fill", ColorTranslator.ToHtml(ContrastColor(color)));
+				text.Attributes.Add("fill", "#000");
 				this.SVG.Controls.Add(text);
 			}
+			else
+				for (int i = 0; i < this.Values.Count; ++i)
+				{
+					if (!this.AllowZeroValues && this.Values[i].YValue == 0)
+						continue;
+
+					var color = this.GetColorAt(i);
+
+					int j = i + 1;
+					if (j == this.Values.Count)
+						j = 0;
+
+					// Create the arc for this pie chart slice.
+					var path = new HtmlGenericControl("path")
+					{
+						ID = "path_" + i
+					};
+					path.Attributes.Add("d", string.Format("M{0} {1} L{2} {3} A{4} {4} 0 {5} 1 {6} {7} z", pieCenter.X, pieCenter.Y, points[i].X, points[i].Y, this.PieRadius,
+						(double)angles[i] > Math.PI ? 1 : 0, points[j].X, points[j].Y));
+					path.Attributes.Add("fill", ColorTranslator.ToHtml(color));
+					path.Attributes.Add("stroke", "#000");
+					path.Attributes.Add("stroke-width", "1px");
+					path.Controls.Add(new HtmlGenericControl("title")
+					{
+						InnerText = this.Values[i].Text
+					});
+					this.SVG.Controls.Add(path);
+
+					// Create the text label to go over the pie chart slice.
+					var text = new HtmlGenericControl("text")
+					{
+						InnerText = this.Values[i].YValue.ToString()
+					};
+					text.Attributes.Add("x", textLocations[i].X.ToString());
+					text.Attributes.Add("y", textLocations[i].Y.ToString());
+					text.Attributes.Add("text-anchor", "middle");
+					text.Attributes.Add("fill", ColorTranslator.ToHtml(ContrastColor(color)));
+					this.SVG.Controls.Add(text);
+				}
 
 			// Add the legend.
 			this.drawLegend(legendInfo, font.Height);

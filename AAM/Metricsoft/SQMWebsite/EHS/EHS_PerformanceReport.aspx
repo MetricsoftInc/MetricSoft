@@ -26,6 +26,12 @@
 			margin: 0 auto;
 		}
 
+		/* Comes from http://www.telerik.com/forums/how-to-display-only-years-in-raddatepicker-or-raddatetimepicker-or-radmonthyearpicker#jJQg4dGOfE2zmjC1lVnQhw */
+		#rcMView_Jan, #rcMView_Feb, #rcMView_Mar, #rcMView_Apr, #rcMView_May, #rcMView_Jun, #rcMView_Jul, #rcMView_Aug, #rcMView_Sep, #rcMView_Oct, #rcMView_Nov, #rcMView_Dec
+		{
+			display: none;
+		}
+
 		/* Simulate the overridden Metro style, as Telerik's RadButton was acting up and not always registering clicks for me. */
 		.myButton
 		{
@@ -60,6 +66,10 @@
 			<div class="container-fluid blueCell" style="position: relative">
 				<telerik:RadComboBox ID="rcbPlant" runat="server" Skin="Metro" Height="350" Width="400" CausesValidation="false" AutoPostBack="true"
 					OnSelectedIndexChanged="rcbPlant_SelectedIndexChanged" />
+				<br /><br />
+				<span class="prompt">Year: </span>
+				<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false" AutoPostBack="true"
+					DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" OnSelectedDateChanged="rmypYear_SelectedDateChanged" />
 				<br /><br />
 				<input type="button" id="btnExport" value="Export to PDF" class="myButton" />
 			</div>
@@ -117,7 +127,7 @@
 	<Ucl:RadGauge ID="uclChart" runat="server" />
 	<telerik:RadCodeBlock ID="radCodeBlock" runat="server">
 		<script type="text/javascript">
-			$('#btnExport').click(function ()
+			$('body').on('click', '#btnExport', function ()
 			{
 				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx" />');
 				form.append($('<input type="text" name="html" />').val($('#divExport').html()));
@@ -127,9 +137,9 @@
 				form.remove();
 			});
 
-			// Sets all the CSS on the RadGrid in its style tag, so it'll export properly to PDF.
-			$(function ()
+			function resetCSS()
 			{
+				// Sets all the CSS on the RadGrid in its style tag, so it'll export properly to PDF.
 				var radGrid = $('.RadGrid');
 				radGrid.css(radGrid.getStyles([
 					'background-color',
@@ -232,7 +242,10 @@
 						'margin-top'
 					]));
 				});
-			});
+			}
+
+			Sys.Application.add_init(resetCSS);
+			Sys.WebForms.PageRequestManager.getInstance().add_endRequest(resetCSS);
 		</script>
 	</telerik:RadCodeBlock>
 </asp:Content>
