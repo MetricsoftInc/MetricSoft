@@ -1431,22 +1431,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<SETTINGS> SETTINGS
-        {
-            get
-            {
-                if ((_SETTINGS == null))
-                {
-                    _SETTINGS = base.CreateObjectSet<SETTINGS>("SETTINGS");
-                }
-                return _SETTINGS;
-            }
-        }
-        private ObjectSet<SETTINGS> _SETTINGS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCIDENT> INCIDENT
         {
             get
@@ -1715,22 +1699,6 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_POWEROUTAGE> _INCFORM_POWEROUTAGE;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<XLAT> XLAT
-        {
-            get
-            {
-                if ((_XLAT == null))
-                {
-                    _XLAT = base.CreateObjectSet<XLAT>("XLAT");
-                }
-                return _XLAT;
-            }
-        }
-        private ObjectSet<XLAT> _XLAT;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2275,6 +2243,38 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SETTINGS> SETTINGS
+        {
+            get
+            {
+                if ((_SETTINGS == null))
+                {
+                    _SETTINGS = base.CreateObjectSet<SETTINGS>("SETTINGS");
+                }
+                return _SETTINGS;
+            }
+        }
+        private ObjectSet<SETTINGS> _SETTINGS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<XLAT> XLAT
+        {
+            get
+            {
+                if ((_XLAT == null))
+                {
+                    _XLAT = base.CreateObjectSet<XLAT>("XLAT");
+                }
+                return _XLAT;
+            }
+        }
+        private ObjectSet<XLAT> _XLAT;
 
         #endregion
 
@@ -2889,14 +2889,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the SETTINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSETTINGS(SETTINGS sETTINGS)
-        {
-            base.AddObject("SETTINGS", sETTINGS);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCIDENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCIDENT(INCIDENT iNCIDENT)
@@ -3030,14 +3022,6 @@ namespace SQM.Website
         public void AddToINCFORM_POWEROUTAGE(INCFORM_POWEROUTAGE iNCFORM_POWEROUTAGE)
         {
             base.AddObject("INCFORM_POWEROUTAGE", iNCFORM_POWEROUTAGE);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the XLAT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToXLAT(XLAT xLAT)
-        {
-            base.AddObject("XLAT", xLAT);
         }
     
         /// <summary>
@@ -3310,6 +3294,22 @@ namespace SQM.Website
         public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
         {
             base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SETTINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSETTINGS(SETTINGS sETTINGS)
+        {
+            base.AddObject("SETTINGS", sETTINGS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the XLAT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToXLAT(XLAT xLAT)
+        {
+            base.AddObject("XLAT", xLAT);
         }
 
         #endregion
@@ -45085,6 +45085,30 @@ namespace SQM.Website
         private global::System.Boolean _ENCRYPT_VALUE;
         partial void OnENCRYPT_VALUEChanging(global::System.Boolean value);
         partial void OnENCRYPT_VALUEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LANGUAGE
+        {
+            get
+            {
+                return _LANGUAGE;
+            }
+            set
+            {
+                OnLANGUAGEChanging(value);
+                ReportPropertyChanging("LANGUAGE");
+                _LANGUAGE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LANGUAGE");
+                OnLANGUAGEChanged();
+            }
+        }
+        private global::System.String _LANGUAGE;
+        partial void OnLANGUAGEChanging(global::System.String value);
+        partial void OnLANGUAGEChanged();
 
         #endregion
 

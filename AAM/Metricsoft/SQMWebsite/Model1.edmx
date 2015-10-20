@@ -2494,6 +2494,7 @@
           <Property Name="SETTING_FAMILY" Type="varchar" Nullable="false" MaxLength="80" />
           <Property Name="EXPOSE_TO_CLIENT" Type="bit" Nullable="false" />
           <Property Name="ENCRYPT_VALUE" Type="bit" Nullable="false" />
+          <Property Name="LANGUAGE" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="SQM_ACCESS">
           <Key>
@@ -2659,7 +2660,7 @@
           <Property Name="XLAT_GROUP" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="DESCRIPTION" Type="nvarchar" />
-          <Property Name="DESCRIPTION_SHORT" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESCRIPTION_SHORT" Type="nvarchar" MaxLength="200" />
           <Property Name="STATUS" Type="varchar" MaxLength="4" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -4664,7 +4665,6 @@
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="RECEIPT" EntitySet="RECEIPT" />
           </AssociationSet>
-          <EntitySet Name="SETTINGS" EntityType="PSsqmModel.SETTINGS" />
           <EntitySet Name="INCIDENT" EntityType="PSsqmModel.INCIDENT" />
           <EntitySet Name="INCIDENT_ANSWER" EntityType="PSsqmModel.INCIDENT_ANSWER" />
           <EntitySet Name="INCIDENT_QUESTION" EntityType="PSsqmModel.INCIDENT_QUESTION" />
@@ -4762,7 +4762,6 @@
             <End Role="CURRENCY_XREF" EntitySet="CURRENCY_XREF" />
           </AssociationSet>
           <EntitySet Name="INCFORM_POWEROUTAGE" EntityType="PSsqmModel.INCFORM_POWEROUTAGE" />
-          <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
           <AssociationSet Name="FK_INCIDENT_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENT_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_POWEROUTAGE" EntitySet="INCFORM_POWEROUTAGE" />
@@ -4957,6 +4956,8 @@
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
+          <EntitySet Name="SETTINGS" EntityType="PSsqmModel.SETTINGS" />
+          <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -7389,21 +7390,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SETTINGS">
-          <Key>
-            <PropertyRef Name="SETTING_GROUP" />
-            <PropertyRef Name="SETTING_CD" />
-            <PropertyRef Name="SETTING_FAMILY" />
-          </Key>
-          <Property Type="String" Name="SETTING_GROUP" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SETTING_CD" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="XLAT_SHORT" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="XLAT_LONG" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="VALUE" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SETTING_FAMILY" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="EXPOSE_TO_CLIENT" Nullable="false" />
-          <Property Type="Boolean" Name="ENCRYPT_VALUE" Nullable="false" />
-        </EntityType>
         <EntityType Name="INCIDENT">
           <Key>
             <PropertyRef Name="INCIDENT_ID" />
@@ -7924,19 +7910,6 @@
           <Property Name="SHIFT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="PRODUCTION_IMPACT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENT_INCIDENT_ID" FromRole="INCFORM_POWEROUTAGE" ToRole="INCIDENT" />
-        </EntityType>
-        <EntityType Name="XLAT">
-          <Key>
-            <PropertyRef Name="XLAT_LANGUAGE" />
-            <PropertyRef Name="XLAT_GROUP" />
-            <PropertyRef Name="XLAT_CODE" />
-          </Key>
-          <Property Name="XLAT_LANGUAGE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="XLAT_GROUP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="XLAT_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DESCRIPTION" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION_SHORT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_INCIDENT_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
@@ -8963,6 +8936,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SETTINGS">
+          <Key>
+            <PropertyRef Name="SETTING_GROUP" />
+            <PropertyRef Name="SETTING_CD" />
+            <PropertyRef Name="SETTING_FAMILY" />
+          </Key>
+          <Property Type="String" Name="SETTING_GROUP" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SETTING_CD" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_SHORT" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_LONG" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VALUE" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SETTING_FAMILY" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="EXPOSE_TO_CLIENT" Nullable="false" />
+          <Property Type="Boolean" Name="ENCRYPT_VALUE" Nullable="false" />
+          <Property Type="String" Name="LANGUAGE" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="XLAT">
+          <Key>
+            <PropertyRef Name="XLAT_LANGUAGE" />
+            <PropertyRef Name="XLAT_GROUP" />
+            <PropertyRef Name="XLAT_CODE" />
+          </Key>
+          <Property Type="String" Name="XLAT_LANGUAGE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_GROUP" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DESCRIPTION_SHORT" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10271,20 +10273,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SETTINGS">
-            <EntityTypeMapping TypeName="PSsqmModel.SETTINGS">
-              <MappingFragment StoreEntitySet="SETTINGS">
-                <ScalarProperty Name="ENCRYPT_VALUE" ColumnName="ENCRYPT_VALUE" />
-                <ScalarProperty Name="EXPOSE_TO_CLIENT" ColumnName="EXPOSE_TO_CLIENT" />
-                <ScalarProperty Name="SETTING_FAMILY" ColumnName="SETTING_FAMILY" />
-                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
-                <ScalarProperty Name="XLAT_LONG" ColumnName="XLAT_LONG" />
-                <ScalarProperty Name="XLAT_SHORT" ColumnName="XLAT_SHORT" />
-                <ScalarProperty Name="SETTING_CD" ColumnName="SETTING_CD" />
-                <ScalarProperty Name="SETTING_GROUP" ColumnName="SETTING_GROUP" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCIDENT">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT">
               <MappingFragment StoreEntitySet="INCIDENT">
@@ -10521,18 +10509,6 @@
                 <ScalarProperty Name="INCIDENT_TIME" ColumnName="INCIDENT_TIME" />
                 <ScalarProperty Name="DESCRIPTION_LOCAL" ColumnName="DESCRIPTION_LOCAL" />
                 <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="XLAT">
-            <EntityTypeMapping TypeName="PSsqmModel.XLAT">
-              <MappingFragment StoreEntitySet="XLAT">
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DESCRIPTION_SHORT" ColumnName="DESCRIPTION_SHORT" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="XLAT_CODE" ColumnName="XLAT_CODE" />
-                <ScalarProperty Name="XLAT_GROUP" ColumnName="XLAT_GROUP" />
-                <ScalarProperty Name="XLAT_LANGUAGE" ColumnName="XLAT_LANGUAGE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11038,6 +11014,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SETTINGS">
+            <EntityTypeMapping TypeName="PSsqmModel.SETTINGS">
+              <MappingFragment StoreEntitySet="SETTINGS">
+                <ScalarProperty Name="LANGUAGE" ColumnName="LANGUAGE" />
+                <ScalarProperty Name="ENCRYPT_VALUE" ColumnName="ENCRYPT_VALUE" />
+                <ScalarProperty Name="EXPOSE_TO_CLIENT" ColumnName="EXPOSE_TO_CLIENT" />
+                <ScalarProperty Name="SETTING_FAMILY" ColumnName="SETTING_FAMILY" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="XLAT_LONG" ColumnName="XLAT_LONG" />
+                <ScalarProperty Name="XLAT_SHORT" ColumnName="XLAT_SHORT" />
+                <ScalarProperty Name="SETTING_CD" ColumnName="SETTING_CD" />
+                <ScalarProperty Name="SETTING_GROUP" ColumnName="SETTING_GROUP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XLAT">
+            <EntityTypeMapping TypeName="PSsqmModel.XLAT">
+              <MappingFragment StoreEntitySet="XLAT">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DESCRIPTION_SHORT" ColumnName="DESCRIPTION_SHORT" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="XLAT_CODE" ColumnName="XLAT_CODE" />
+                <ScalarProperty Name="XLAT_GROUP" ColumnName="XLAT_GROUP" />
+                <ScalarProperty Name="XLAT_LANGUAGE" ColumnName="XLAT_LANGUAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11059,7 +11062,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="64">
+      <Diagram Name="Model1" ZoomLevel="73">
         <EntityTypeShape EntityType="PSsqmModel.ADDRESS" Width="1.5" PointX="2.8186148343694466" PointY="31.355532511768644" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT" Width="1.5" PointX="6.5058092691496991" PointY="14.220001942580566" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT_FILE" Width="1.5" PointX="0.99664270924247922" PointY="12.000706320628853" />
@@ -11218,7 +11221,6 @@
         <AssociationConnector Association="PSsqmModel.FK_RECEIPT_PART" />
         <AssociationConnector Association="PSsqmModel.FK_RECEIPT_PLANT" />
         <AssociationConnector Association="PSsqmModel.FK_RECEIPT_PLANT1" />
-        <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="6.8022457299764483" PointY="5.490228312783981" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT" Width="1.5" PointX="1.8834820510276975" PointY="28.695168076406777" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_ANSWER" Width="1.5" PointX="9.9812095621513244" PointY="15.662740282557317" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION" Width="1.5" PointX="9.7657219291505033" PointY="22.869483734885922" />
@@ -11256,7 +11258,6 @@
         <EntityTypeShape EntityType="PSsqmModel.CURRENCY_XREF" Width="1.5" PointX="0.31477152757103161" PointY="8.4929721842021557" />
         <AssociationConnector Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_POWEROUTAGE" Width="1.5" PointX="4.75" PointY="36.125" />
-        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="12" PointY="0.75" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_COMMENT" Width="1.5" PointX="12.625" PointY="3.75" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_QUESTION" Width="1.5" PointX="14.625" PointY="0.75" />
@@ -11332,6 +11333,8 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="9.4488953265589171" PointY="26.513987017103464" />
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
+        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="5.8573184804326477" PointY="1.2682696139757845" />
         </Diagram>
     </Diagrams>
   </Designer>
