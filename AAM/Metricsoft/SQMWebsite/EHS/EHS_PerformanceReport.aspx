@@ -91,7 +91,7 @@
 							<telerik:GridBoundColumn DataField="TRIR" DataFormatString="{0:F1}" HeaderText="TRIR" ColumnGroupName="None1" />
 							<telerik:GridBoundColumn DataField="FrequencyRate" DataFormatString="{0:F1}" HeaderText="Frequency<br>Rate" ColumnGroupName="None1" />
 							<telerik:GridBoundColumn DataField="SeverityRate" DataFormatString="{0:F1}" HeaderText="Severity<br>Rate" ColumnGroupName="None1" />
-							<telerik:GridBoundColumn DataField="ManHours" HeaderText="Man-hours" ColumnGroupName="None1" />
+							<telerik:GridBoundColumn DataField="ManHours" DataFormatString="{0:N0}" HeaderText="Man-hours" ColumnGroupName="None1" />
 							<telerik:GridBoundColumn DataField="Incidents" HeaderText="Total<br>Recordable<br>Cases" ColumnGroupName="Incidents" />
 							<telerik:GridBoundColumn DataField="Frequency" HeaderText="Total Lost<br>Time Cases" ColumnGroupName="Frequency" />
 							<telerik:GridBoundColumn DataField="Restricted" HeaderText="Total<br>Days<br>Restricted" ColumnGroupName="Restricted" />
