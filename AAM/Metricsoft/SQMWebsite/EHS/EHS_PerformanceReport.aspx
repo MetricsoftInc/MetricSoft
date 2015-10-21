@@ -118,8 +118,12 @@
 					<SQM:PieChart ID="pieRecordableTenure" runat="server" Title="Tenure of Injured Associate" Width="740" Height="500" StartAngle="45" Style="float: right" CssClass="pieChart" />
 				</div>
 				<div style="page-break-after: always"></div>
-				<div class="chartMarginTop" style="page-break-after: avoid">
+				<div style="overflow: hidden" class="chartMarginTop">
 					<SQM:PieChart ID="pieRecordableDaysToClose" runat="server" Title="Days to Close Investigations" Width="740" Height="500" StartAngle="45" CssClass="pieChart" />
+				</div>
+				<div style="overflow: hidden" class="chartMarginTop">
+					<div id="divJSAsAndAudits" runat="server" style="float: left"></div>
+					<div id="divSafetyTrainingHours" runat="server" style="float: right"></div>
 				</div>
 			</div>
 		</telerik:RadAjaxPanel>
@@ -130,7 +134,9 @@
 			$('body').on('click', '#btnExport', function ()
 			{
 				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx" />');
-				form.append($('<input type="text" name="html" />').val($('#divExport').html()));
+				var div = $('#divExport').clone();
+				div.css('transform', 'scale(0.5, 0.5) translate(-50%, -50%)');
+				form.append($('<input type="text" name="html" />').val(div[0].outerHTML));
 				form.append('<input type="text" name="generator" value="selectpdf" />');
 				$('body').append(form);
 				form[0].submit();

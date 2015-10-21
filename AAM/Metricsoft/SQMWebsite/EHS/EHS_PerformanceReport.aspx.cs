@@ -92,6 +92,14 @@ namespace SQM.Website.EHS
 			LegendPosition = ChartLegendPosition.Right,
 			LegendBackgroundColor = Color.White
 		};
+		static GaugeDefinition smallGaugeDef = new GaugeDefinition()
+		{
+			Height = 500,
+			Width = 740,
+			DisplayLegend = true,
+			LegendPosition = ChartLegendPosition.Right,
+			LegendBackgroundColor = Color.White
+		};
 
 		static void SetScale(GaugeDefinition gd, List<GaugeSeries> series)
 		{
@@ -143,9 +151,10 @@ namespace SQM.Website.EHS
 			{
 				DisplayLabels = true
 			};
-			var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
 			var frequencyRateSeries = new List<GaugeSeries>();
 			var severityRateSeries = new List<GaugeSeries>();
+			var jsasSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 1, year), "");
+			var safetyTrainingHoursSeries = new GaugeSeries(0, "Total Safety Training Hours", "");
 
 			// Ordinal types
 			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
@@ -195,9 +204,9 @@ namespace SQM.Website.EHS
 						Severity = severity,
 						FirstAid = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						Leadership = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						JSAs = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						JSAs = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
 						SafetyTraining = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
@@ -215,6 +224,10 @@ namespace SQM.Website.EHS
 						frequencyRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.FrequencyRate, monthData.Month));
 						severityRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SeverityRate, monthData.Month));
 					}
+					if (y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+						jsasSeries.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.Leadership + monthData.JSAs, monthData.Month));
+					if (y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+						safetyTrainingHoursSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.SafetyTraining, monthData.Month));
 
 					if (y == year)
 						data.Add(monthData);
@@ -238,11 +251,16 @@ namespace SQM.Website.EHS
 
 			data.Add(YTD);
 
+			var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
 			for (int i = 0; i < 5; ++i)
 				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
 			for (int i = 5; i < incidentRateSeries.ItemList.Count; ++i)
 				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
 					Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
+			var jsasTrendSeries = new GaugeSeries(0, "Leading Trend", "");
+			jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+			for (int i = 1; i < jsasSeries.ItemList.Count; ++i)
+				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue) / 2m, jsasSeries.ItemList[i].Text));
 
 			return new
 			{
@@ -270,7 +288,10 @@ namespace SQM.Website.EHS
 				ordinalDaysToCloseSeries = YTD.OrdinalDaysToClose.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
 				{
 					Exploded = false
-				}).ToList()
+				}).ToList(),
+				jsasSeries,
+				jsasTrendSeries,
+				safetyTrainingHoursSeries
 			};
 		}
 
@@ -367,6 +388,16 @@ namespace SQM.Website.EHS
 			this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
 			this.pieRecordableTenure.Values = data.ordinalTenureSeries;
 			this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
+
+			smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
+			series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
+			SetScale(smallGaugeDef, series);
+			this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divJSAsAndAudits);
+
+			smallGaugeDef.Title = "Safety Training Hours";
+			series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
+			SetScale(smallGaugeDef, series);
+			this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divSafetyTrainingHours);
 		}
 	}
 }

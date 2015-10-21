@@ -148,6 +148,24 @@ namespace SQM.Website.EHS {
         protected global::SQM.Website.PieChart pieRecordableDaysToClose;
         
         /// <summary>
+        /// divJSAsAndAudits control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJSAsAndAudits;
+        
+        /// <summary>
+        /// divSafetyTrainingHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSafetyTrainingHours;
+        
+        /// <summary>
         /// uclChart control.
         /// </summary>
         /// <remarks>
