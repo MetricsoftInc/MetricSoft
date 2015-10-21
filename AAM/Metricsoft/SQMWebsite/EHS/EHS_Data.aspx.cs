@@ -601,7 +601,8 @@ namespace SQM.Website.EHS
 					{
 						ID = "rtb" + this.Suffix,
 						Skin = "Metro",
-						Width = new Unit("35px")
+						Width = new Unit("35px"),
+						CssClass = "WarnIfChanged"
 					};
 					rtbTotal.Style.Add("vertical-align", "middle");
 					rtbTotal.Style.Add("margin-right", "5px");
@@ -626,7 +627,8 @@ namespace SQM.Website.EHS
 					{
 						ID = "rtb" + this.Suffix,
 						Skin = "Metro",
-						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width)
+						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width),
+						CssClass = "WarnIfChanged"
 					};
 					container.Controls.Add(rtbData);
 					container.Controls.Add(new CompareValidator()

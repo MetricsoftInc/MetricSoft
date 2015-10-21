@@ -147,7 +147,7 @@
 			<br />
 			<%-- A Telerik RadGrid for the data, called rgData, is added here via Page_Load --%>
 			<br id="rgData_placeholder" runat="server" />
-			<input type="button" id="btnSave" runat="server" value="Save" class="myButton" />
+			<input type="button" id="btnSave" runat="server" value="Save" class="myButton UseSubmitAction" />
 			<asp:Label ID="lblSaved" runat="server" Text="Data saved!" ForeColor="Green" Font-Size="1.5em" Font-Bold="true" style="display: none; padding-left: 10px" />
 		</asp:Panel>
 		<input type="hidden" id="hfCurrDetails" />
@@ -433,6 +433,7 @@
 					{
 						// No matter what, always hide the loading panel when done.
 						radLoading.hide('<%= this.dataPanel.ClientID %>');
+						unsaved = submitted = false;
 					}
 				});
 			}
@@ -463,6 +464,7 @@
 					{
 						// No matter what, always hide the loading panel when done.
 						radLoading.hide('<%= this.dataPanel.ClientID %>');
+						unsaved = submitted = false;
 					}
 				});
 			}
@@ -493,6 +495,7 @@
 					{
 						// No matter what, always hide the loading panel when done.
 						radLoading.hide('<%= this.dataPanel.ClientID %>');
+						unsaved = submitted = false;
 					}
 				});
 			}
@@ -521,7 +524,8 @@
 						if (data[key1][key2].value)
 							value = ' value="' + data[key1][key2].value + '"';
 						column.append('<div class="flex rwDetails_row"><div class="rwDetails_rowLabel">' + key2 +
-							'</div><div class="riSingle RadInput RadInput_Metro rwDetails_rowTextbox"><input class="riTextBox riEnabled" type="text"' + value + ' size="20"></div></div>');
+							'</div><div class="riSingle RadInput RadInput_Metro rwDetails_rowTextbox"><input class="riTextBox riEnabled WarnIfChanged" type="text"' + value +
+							' size="20"></div></div>');
 					}
 				}
 
