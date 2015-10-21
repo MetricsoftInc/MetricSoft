@@ -220,7 +220,7 @@ namespace SQM.Website.EHS
 				var group = t.XLAT_GROUP as string;
 				var code = t.XLAT_CODE as string;
 				var data = entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == dataID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
-				var value = type_data[t.DESCRIPTION];
+				var value = type_data[t.DESCRIPTION.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")];
 				if (value.ContainsKey("value"))
 				{
 					if (data == null)
