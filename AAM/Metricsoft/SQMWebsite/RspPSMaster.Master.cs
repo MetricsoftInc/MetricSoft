@@ -159,7 +159,10 @@ namespace SQM.Website
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "12").DESCRIPTION, GetMenu("MENU_DATA", "12").DESCRIPTION_SHORT));
 						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "13").DESCRIPTION, GetMenu("MENU_DATA", "13").DESCRIPTION_SHORT));
 						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.config)
-							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "21").DESCRIPTION, GetMenu("MENU_DATA", "21").DESCRIPTION));
+						{
+							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "21").DESCRIPTION, GetMenu("MENU_DATA", "21").DESCRIPTION_SHORT));
+							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "22").DESCRIPTION, GetMenu("MENU_DATA", "22").DESCRIPTION_SHORT));
+						}
 					}
 				}
 			}
