@@ -196,7 +196,7 @@ namespace SQM.Website
 					rvfcp.ValidationGroup = ValidationGroup;
 					rvfsd.ValidationGroup = ValidationGroup;
 					
-					rddlp.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlp.Items.Add(new DropDownListItem("", ""));
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)

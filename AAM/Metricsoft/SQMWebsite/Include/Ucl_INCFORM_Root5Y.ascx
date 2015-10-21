@@ -35,34 +35,15 @@
 </script>
 
 
- <asp:Panel ID="pnlRoot5Y" Visible="false" runat="server">
+ <asp:Panel ID="pnlRoot5Y" Visible="False" runat="server" meta:resourcekey="pnlRoot5YResource1">
 
 	<br />
 
 	<div class="container-fluid">
 
-<%--		<span style="display:inline-block;">This is the new ROOT CAUSE user control</span><br />--%>
-
-		<telerik:RadAjaxPanel ID="rapRoot5Y" runat="server">
+		<telerik:RadAjaxPanel ID="rapRoot5Y" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapRoot5YResource1">
 
 		<asp:Repeater runat="server" ID="rptRootCause" ClientIDMode="AutoID" OnItemDataBound="rptRootCause_OnItemDataBound" OnItemCommand="rptRootCause_ItemCommand">
-			<HeaderTemplate></HeaderTemplate>
-			<ItemTemplate>
-				<div class="row">
-					<div class="col-sm-1 text-left">
-						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
-					</div>
-					<div class="col-sm-5 text-left">
-						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
-						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required"></asp:RequiredFieldValidator>
-					</div>
-					<div class="col-sm-2 text-left-more">
-						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
-							Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" />
-					</div>
-				</div>
-			</ItemTemplate>
-			<SeparatorTemplate><br /><br /></SeparatorTemplate>
 			<FooterTemplate>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
@@ -71,7 +52,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
-						<asp:Button ID="btnAddRootCause" CssClass="buttonAdd" runat="server" ToolTip="Add Another Root Cause" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+						<asp:Button ID="btnAddRootCause" runat="server" CommandArgument="AddAnother" CssClass="buttonAdd" meta:resourcekey="btnAddRootCauseResource1" Style="margin: 7px;" Text="Add Another" ToolTip="Add Another Root Cause" />
 					</div>
 				</div>
 				<div class="row">
@@ -80,6 +61,23 @@
 					</div>
 				</div>
 			</FooterTemplate>
+			<HeaderTemplate></HeaderTemplate>
+			<ItemTemplate>
+				<div class="row">
+					<div class="col-sm-1 text-left">
+						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server" meta:resourcekey="lbWhyPromptResource1"></asp:Label><asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>:</span>
+					</div>
+					<div class="col-sm-5 text-left">
+						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server" meta:resourcekey="tbRootCauseResource1"></asp:TextBox>
+						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required" meta:resourcekey="rfvRootCauseResource1"></asp:RequiredFieldValidator>
+					</div>
+					<div class="col-sm-2 text-left-more">
+						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
+							Text="Delete Item" SingleClick="True" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" meta:resourcekey="btnItemDeleteResource1" />
+					</div>
+				</div>
+			</ItemTemplate>
+			<SeparatorTemplate><br /><br /></SeparatorTemplate>
 		</asp:Repeater>
 
 	</telerik:RadAjaxPanel>

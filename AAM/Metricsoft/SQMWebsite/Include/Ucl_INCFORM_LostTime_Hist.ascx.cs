@@ -209,7 +209,7 @@ namespace SQM.Website
 					rvfmd.ValidationGroup = ValidationGroup;
 					rvfed.ValidationGroup = ValidationGroup;
 
-					rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 					foreach (var s in statuses)
 					{
@@ -358,7 +358,7 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_LOSTTIME_HIST();
 
-				if (!String.IsNullOrEmpty(item.WORK_STATUS) && item.WORK_STATUS != "[Select One]")
+				if (!String.IsNullOrEmpty(item.WORK_STATUS) && item.WORK_STATUS != "")
 				{
 					newItem.INCIDENT_ID = incidentId;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
@@ -411,14 +411,14 @@ namespace SQM.Website
 					RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 					RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-					rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 					foreach (var s in statuses)
 					{
 						rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 
-					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
 					item.ITEM_DESCRIPTION = tbr.Text;
@@ -470,14 +470,14 @@ namespace SQM.Website
 					RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 					RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-					rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 					foreach (var s in statuses)
 					{
 						rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 
-					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
 					if (sequence != delId)
@@ -530,14 +530,14 @@ namespace SQM.Website
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-				rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlw.Items.Add(new DropDownListItem("", ""));
 				List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 				foreach (var s in statuses)
 				{
 					rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
 				}
 
-				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 					item.WORK_STATUS = rddlw.SelectedValue;
 
 				item.ITEM_DESCRIPTION = tbr.Text;
@@ -573,14 +573,14 @@ namespace SQM.Website
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-				rddlw.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlw.Items.Add(new DropDownListItem("", ""));
 				List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 				foreach (var s in statuses)
 				{
 					rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
 				}
 
-				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != "[Select One]"))
+				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 					item.WORK_STATUS = rddlw.SelectedValue;
 
 				seqnumber = Convert.ToInt32(lb.Text);

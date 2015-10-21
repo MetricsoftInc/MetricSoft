@@ -1,0 +1,1635 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnAddChart1Resource1.Text" xml:space="preserve">
+    <value>Add Chart</value>
+  </data>
+  <data name="btnAddChart1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnAddChart2Resource1.Text" xml:space="preserve">
+    <value>Add Chart</value>
+  </data>
+  <data name="btnAddChart2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnNewViewResource1.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="btnNewViewResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnRefreshDashboardResource1.Text" xml:space="preserve">
+    <value>Refresh View</value>
+  </data>
+  <data name="btnRefreshDashboardResource1.ToolTip" xml:space="preserve">
+    <value>Refresh the dashboard display</value>
+  </data>
+  <data name="btnTestViewResource1.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="btnTestViewResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnViewCancelResource1.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="btnViewCancelResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnViewLayoutResource1.Text" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="btnViewLayoutResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnViewSaveResource1.Text" xml:space="preserve">
+    <value>Save View</value>
+  </data>
+  <data name="btnViewSaveResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbVINewRowResource1.SingleClickText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbVINewRowResource1.Text" xml:space="preserve">
+    <value>Start New Row</value>
+  </data>
+  <data name="cbVINewRowResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlDateIntervalResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlDateIntervalResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlDateIntervalResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlDateIntervalResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlDateIntervalResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlDateIntervalResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlDateIntervalResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlDateIntervalResource1.ToolTip" xml:space="preserve">
+    <value>select interval for charts calculating points by date</value>
+  </data>
+  <data name="ddlDateSpanResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlDateSpanResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlDateSpanResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlDateSpanResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlDateSpanResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlDateSpanResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlDateSpanResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlDateSpanResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlDfltCriteriaResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlDfltCriteriaResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlDfltCriteriaResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPerspectiveResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPerspectiveResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlPerspectiveResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlPerspectiveResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlPerspectiveResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlPerspectiveResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlPerspectiveResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlPerspectiveResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlViewAvailabilityResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlViewAvailabilityResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlViewAvailabilityResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlViewListResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlViewListResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlViewListResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlViewListResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlViewListResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlViewListResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlViewListResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlViewListResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlVIGaugeTypeResource1.EmptyMessage" xml:space="preserve">
+    <value>chart type</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.ToolTip" xml:space="preserve">
+    <value>select chart or gauge type</value>
+  </data>
+  <data name="ddlVIScopeResource1.EmptyMessage" xml:space="preserve">
+    <value>for metric or category</value>
+  </data>
+  <data name="ddlVIScopeResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVIScopeResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVIScopeResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVIScopeResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVIScopeResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVIScopeResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVIScopeResource1.ToolTip" xml:space="preserve">
+    <value>select metrics by category, type or specific measure</value>
+  </data>
+  <data name="ddlVISeqResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlVISeqResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVISeqResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVISeqResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVISeqResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVISeqResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVISeqResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVISeqResource1.ToolTip" xml:space="preserve">
+    <value>display sequence</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlVISeriesOrderResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.ToolTip" xml:space="preserve">
+    <value>data series ordering</value>
+  </data>
+  <data name="ddlVIStatResource1.EmptyMessage" xml:space="preserve">
+    <value>statistic</value>
+  </data>
+  <data name="ddlVIStatResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVIStatResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVIStatResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVIStatResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVIStatResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVIStatResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVIStatResource1.ToolTip" xml:space="preserve">
+    <value>select metric to display</value>
+  </data>
+  <data name="ddlVITargetResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlVITargetResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVITargetResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVITargetResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVITargetResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVITargetResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVITargetResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVITargetResource1.ToolTip" xml:space="preserve">
+    <value>overlay metric target</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlVIXAxisScaleResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.ToolTip" xml:space="preserve">
+    <value>choose auto scaling or enter min/max scale values</value>
+  </data>
+  <data name="ddlYearFromResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlYearFromResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlYearFromResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlYearFromResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlYearFromResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlYearFromResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlYearFromResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlYearFromResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlYearToResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlYearToResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlYearToResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlYearToResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlYearToResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlYearToResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlYearToResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlYearToResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodFromResource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodFromResource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="dmPeriodFromResource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="dmPeriodFromResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodFromResource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="dmPeriodFromResource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="dmPeriodToResource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodToResource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="dmPeriodToResource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="dmPeriodToResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="dmPeriodToResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmPeriodToResource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="dmPeriodToResource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>Perspective</value>
+  </data>
+  <data name="Label1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDashboardTitleResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDashboardTitleResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDateIntervalResource1.Text" xml:space="preserve">
+    <value>Interval:</value>
+  </data>
+  <data name="lblDateIntervalResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDateSpanResource1.Text" xml:space="preserve">
+    <value>Date Span:</value>
+  </data>
+  <data name="lblDateSpanResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDfltParamsResource1.Text" xml:space="preserve">
+    <value>Display Criteria</value>
+  </data>
+  <data name="lblDfltParamsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdate_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdate_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdateResource1.Text" xml:space="preserve">
+    <value>Last Updated By</value>
+  </data>
+  <data name="lblLastUpdateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblOfResource1.Text" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="lblOfResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPeriodFromResource1.Text" xml:space="preserve">
+    <value>From: </value>
+  </data>
+  <data name="lblPeriodFromResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPeriodToResource1.Text" xml:space="preserve">
+    <value>To: </value>
+  </data>
+  <data name="lblPeriodToResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPerspectiveResource1.Text" xml:space="preserve">
+    <value>Select a view representing the detailed analysis you wish to explore. Views are listed according to system topics or data types represented.</value>
+  </data>
+  <data name="lblPerspectiveResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantSelectResource1.Text" xml:space="preserve">
+    <value>Locations:</value>
+  </data>
+  <data name="lblPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStatsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblStatsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblTargetResource1.Text" xml:space="preserve">
+    <value>Target:</value>
+  </data>
+  <data name="lblTargetResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewAvailabilityResource1.Text" xml:space="preserve">
+    <value>Availability</value>
+  </data>
+  <data name="lblViewAvailabilityResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewDescResource1.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lblViewDescResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewLoadErrorResource1.Text" xml:space="preserve">
+    <value>An error occured attemtping to open the selected view.</value>
+  </data>
+  <data name="lblViewLoadErrorResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewNameResource1.Text" xml:space="preserve">
+    <value>View Name</value>
+  </data>
+  <data name="lblViewNameResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewResource1.Text" xml:space="preserve">
+    <value>View:</value>
+  </data>
+  <data name="lblViewResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LblViewSaveErrorResource1.Text" xml:space="preserve">
+    <value>An error occured while saving your changes.</value>
+  </data>
+  <data name="LblViewSaveErrorResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblVIScopeResource1.Text" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="lblVIScopeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblVISeqResource1.Text" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="lblVISeqResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblVIXAxisResource1.Text" xml:space="preserve">
+    <value>Variable Axis</value>
+  </data>
+  <data name="lblVIXAxisResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblWorkingResource1.Text" xml:space="preserve">
+    <value>Loading view - please wait...</value>
+  </data>
+  <data name="lblWorkingResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblXByResource1.Text" xml:space="preserve">
+    <value>by</value>
+  </data>
+  <data name="lblXByResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblXResource1.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="lblXResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblXToResource1.Text" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="lblXToResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblYearFromResource1.Text" xml:space="preserve">
+    <value>From: </value>
+  </data>
+  <data name="lblYearFromResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblYearToResource1.Text" xml:space="preserve">
+    <value>To: </value>
+  </data>
+  <data name="lblYearToResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkExportResource1.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="lnkExportResource1.ToolTip" xml:space="preserve">
+    <value>Export Data To Excel Format</value>
+  </data>
+  <data name="lnkPrintResource1.Text" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="lnkPrintResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlDashboardAreaResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlDashboardAreaResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlDashboardSelectsResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlDashboardSelectsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlStatsResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlStatsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radAjaxMessagesResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadAjaxPanel1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadAjaxPanel2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadAjaxPanel3Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource1.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource1.Text" xml:space="preserve">
+    <value>Select Range</value>
+  </data>
+  <data name="RadComboBoxItemResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource1.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource10.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource10.Text" xml:space="preserve">
+    <value>Environmental YTD Performance</value>
+  </data>
+  <data name="RadComboBoxItemResource10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource10.Value" xml:space="preserve">
+    <value>EP</value>
+  </data>
+  <data name="RadComboBoxItemResource11.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource11.Text" xml:space="preserve">
+    <value>Health &amp; Safety</value>
+  </data>
+  <data name="RadComboBoxItemResource11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource11.Value" xml:space="preserve">
+    <value>HS</value>
+  </data>
+  <data name="RadComboBoxItemResource12.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource12.Text" xml:space="preserve">
+    <value>Health &amp; Safety YTD Performance</value>
+  </data>
+  <data name="RadComboBoxItemResource12.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource12.Value" xml:space="preserve">
+    <value>HSP</value>
+  </data>
+  <data name="RadComboBoxItemResource13.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource13.Text" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="RadComboBoxItemResource13.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource13.Value" xml:space="preserve">
+    <value>QS</value>
+  </data>
+  <data name="RadComboBoxItemResource14.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource14.Text" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="RadComboBoxItemResource14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource14.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource15.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource15.Text" xml:space="preserve">
+    <value>Plant</value>
+  </data>
+  <data name="RadComboBoxItemResource15.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource15.Value" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RadComboBoxItemResource16.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource16.Text" xml:space="preserve">
+    <value>Business Org</value>
+  </data>
+  <data name="RadComboBoxItemResource16.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource16.Value" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RadComboBoxItemResource17.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource17.Text" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="RadComboBoxItemResource17.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource17.Value" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RadComboBoxItemResource18.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource18.Text" xml:space="preserve">
+    <value>No Defaults</value>
+  </data>
+  <data name="RadComboBoxItemResource18.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource18.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource19.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource19.Text" xml:space="preserve">
+    <value>Use Current / Allow Override</value>
+  </data>
+  <data name="RadComboBoxItemResource19.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource19.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource2.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource2.Text" xml:space="preserve">
+    <value>Year To Date</value>
+  </data>
+  <data name="RadComboBoxItemResource2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource2.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource20.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource20.Text" xml:space="preserve">
+    <value>Use Current / No Override</value>
+  </data>
+  <data name="RadComboBoxItemResource20.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource20.Value" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RadComboBoxItemResource21.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource21.Text" xml:space="preserve">
+    <value>Select Locations</value>
+  </data>
+  <data name="RadComboBoxItemResource21.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource21.Value" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RadComboBoxItemResource22.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource22.Text" xml:space="preserve">
+    <value>Select Time Span</value>
+  </data>
+  <data name="RadComboBoxItemResource22.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource22.Value" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RadComboBoxItemResource23.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource23.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RadComboBoxItemResource23.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource23.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource24.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource24.Text" xml:space="preserve">
+    <value>Section Area</value>
+  </data>
+  <data name="RadComboBoxItemResource24.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource24.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource25.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource25.Text" xml:space="preserve">
+    <value>Vernier</value>
+  </data>
+  <data name="RadComboBoxItemResource25.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource25.Value" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="RadComboBoxItemResource26.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource26.Text" xml:space="preserve">
+    <value>Vernier Array</value>
+  </data>
+  <data name="RadComboBoxItemResource26.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource26.Value" xml:space="preserve">
+    <value>210</value>
+  </data>
+  <data name="RadComboBoxItemResource27.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource27.Text" xml:space="preserve">
+    <value>Bar Graph</value>
+  </data>
+  <data name="RadComboBoxItemResource27.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource27.Value" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="RadComboBoxItemResource28.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource28.Text" xml:space="preserve">
+    <value>Stacked-Bar Graph</value>
+  </data>
+  <data name="RadComboBoxItemResource28.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource28.Value" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="RadComboBoxItemResource29.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource29.Text" xml:space="preserve">
+    <value>Bar Pareto Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource29.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource29.Value" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="RadComboBoxItemResource3.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource3.Text" xml:space="preserve">
+    <value>FY Year To Date</value>
+  </data>
+  <data name="RadComboBoxItemResource3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource3.Value" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RadComboBoxItemResource30.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource30.Text" xml:space="preserve">
+    <value>Column Gauge</value>
+  </data>
+  <data name="RadComboBoxItemResource30.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource30.Value" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="RadComboBoxItemResource31.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource31.Text" xml:space="preserve">
+    <value>Column Gauge Array</value>
+  </data>
+  <data name="RadComboBoxItemResource31.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource31.Value" xml:space="preserve">
+    <value>220</value>
+  </data>
+  <data name="RadComboBoxItemResource32.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource32.Text" xml:space="preserve">
+    <value>Column Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource32.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource32.Value" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="RadComboBoxItemResource33.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource33.Text" xml:space="preserve">
+    <value>Stacked-Column Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource33.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource33.Value" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="RadComboBoxItemResource34.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource34.Text" xml:space="preserve">
+    <value>Grouped-Column Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource34.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource34.Value" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="RadComboBoxItemResource35.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource35.Text" xml:space="preserve">
+    <value>Column Pareto Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource35.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource35.Value" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="RadComboBoxItemResource36.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource36.Text" xml:space="preserve">
+    <value>Line Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource36.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource36.Value" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="RadComboBoxItemResource37.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource37.Text" xml:space="preserve">
+    <value>Line Chart Array</value>
+  </data>
+  <data name="RadComboBoxItemResource37.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource37.Value" xml:space="preserve">
+    <value>232</value>
+  </data>
+  <data name="RadComboBoxItemResource38.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource38.Text" xml:space="preserve">
+    <value>Pie Chart</value>
+  </data>
+  <data name="RadComboBoxItemResource38.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource38.Value" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="RadComboBoxItemResource39.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource39.Text" xml:space="preserve">
+    <value>Pie Chart Array</value>
+  </data>
+  <data name="RadComboBoxItemResource39.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource39.Value" xml:space="preserve">
+    <value>250</value>
+  </data>
+  <data name="RadComboBoxItemResource4.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource4.Text" xml:space="preserve">
+    <value>FY Year Over Year</value>
+  </data>
+  <data name="RadComboBoxItemResource4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource4.Value" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="RadComboBoxItemResource40.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource40.Text" xml:space="preserve">
+    <value>Radial Gauge</value>
+  </data>
+  <data name="RadComboBoxItemResource40.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource40.Value" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="RadComboBoxItemResource41.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource41.Text" xml:space="preserve">
+    <value>Radial Gauge Array</value>
+  </data>
+  <data name="RadComboBoxItemResource41.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource41.Value" xml:space="preserve">
+    <value>260</value>
+  </data>
+  <data name="RadComboBoxItemResource42.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource42.Text" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="RadComboBoxItemResource42.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource42.Value" xml:space="preserve">
+    <value>sum</value>
+  </data>
+  <data name="RadComboBoxItemResource43.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource43.Text" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="RadComboBoxItemResource43.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource43.Value" xml:space="preserve">
+    <value>sumCost</value>
+  </data>
+  <data name="RadComboBoxItemResource44.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource44.Text" xml:space="preserve">
+    <value>Percent Change</value>
+  </data>
+  <data name="RadComboBoxItemResource44.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource44.Value" xml:space="preserve">
+    <value>pctChange</value>
+  </data>
+  <data name="RadComboBoxItemResource45.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource45.Text" xml:space="preserve">
+    <value>Days Elapsed</value>
+  </data>
+  <data name="RadComboBoxItemResource45.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource45.Value" xml:space="preserve">
+    <value>deltaDy</value>
+  </data>
+  <data name="RadComboBoxItemResource46.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource46.Text" xml:space="preserve">
+    <value>Sum All</value>
+  </data>
+  <data name="RadComboBoxItemResource46.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource46.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource47.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource47.Text" xml:space="preserve">
+    <value>Order By Measure-Location</value>
+  </data>
+  <data name="RadComboBoxItemResource47.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource47.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource48.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource48.Text" xml:space="preserve">
+    <value>Order By Location-Measure</value>
+  </data>
+  <data name="RadComboBoxItemResource48.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource48.Value" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RadComboBoxItemResource49.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource49.Text" xml:space="preserve">
+    <value>Order By Period-Location</value>
+  </data>
+  <data name="RadComboBoxItemResource49.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource49.Value" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="RadComboBoxItemResource5.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource5.Text" xml:space="preserve">
+    <value>FY Metrics Effective Range</value>
+  </data>
+  <data name="RadComboBoxItemResource5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource5.Value" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="RadComboBoxItemResource50.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource50.Text" xml:space="preserve">
+    <value>Order By Period-Measure</value>
+  </data>
+  <data name="RadComboBoxItemResource50.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource50.Value" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="RadComboBoxItemResource51.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource51.Text" xml:space="preserve">
+    <value>Order By Year-Location</value>
+  </data>
+  <data name="RadComboBoxItemResource51.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource51.Value" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="RadComboBoxItemResource52.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource52.Text" xml:space="preserve">
+    <value>Order By Year-Measure</value>
+  </data>
+  <data name="RadComboBoxItemResource52.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource52.Value" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="RadComboBoxItemResource53.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource53.Text" xml:space="preserve">
+    <value>Auto Scale</value>
+  </data>
+  <data name="RadComboBoxItemResource53.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource53.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource54.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource54.Text" xml:space="preserve">
+    <value>Set Scales</value>
+  </data>
+  <data name="RadComboBoxItemResource54.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource54.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource55.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource55.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="RadComboBoxItemResource55.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource55.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource56.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource56.Text" xml:space="preserve">
+    <value>Target Value</value>
+  </data>
+  <data name="RadComboBoxItemResource56.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource56.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource57.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource57.Text" xml:space="preserve">
+    <value>Current Value</value>
+  </data>
+  <data name="RadComboBoxItemResource57.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource57.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource6.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource6.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="RadComboBoxItemResource6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource6.Value" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RadComboBoxItemResource7.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource7.Text" xml:space="preserve">
+    <value>By Year</value>
+  </data>
+  <data name="RadComboBoxItemResource7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource7.Value" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RadComboBoxItemResource8.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource8.Text" xml:space="preserve">
+    <value>By Month</value>
+  </data>
+  <data name="RadComboBoxItemResource8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource8.Value" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="RadComboBoxItemResource9.AccessKey" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource9.Text" xml:space="preserve">
+    <value>Environmental Metrics</value>
+  </data>
+  <data name="RadComboBoxItemResource9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource9.Value" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="radPnlGraphResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPnlScopeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPnlXAxisResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewDescResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewDescResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewDescResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewNameResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewNameResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbViewNameResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIHeightResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIHeightResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIHeightResource1.ToolTip" xml:space="preserve">
+    <value>height</value>
+  </data>
+  <data name="tbVITitleResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVITitleResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVITitleResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIWidthResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIWidthResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIWidthResource1.ToolTip" xml:space="preserve">
+    <value>width</value>
+  </data>
+  <data name="tbVIXAxisLabelResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisLabelResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisLabelResource1.ToolTip" xml:space="preserve">
+    <value>variable axis label</value>
+  </data>
+  <data name="tbVIXAxisMaxResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisMaxResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisMaxResource1.ToolTip" xml:space="preserve">
+    <value>axis maximum value</value>
+  </data>
+  <data name="tbVIXAxisMinResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisMinResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisMinResource1.ToolTip" xml:space="preserve">
+    <value>axis minimum or orign value</value>
+  </data>
+  <data name="tbVIXAxisUnitResource1.Label" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisUnitResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
+    <value>scale unit</value>
+  </data>
+</root>

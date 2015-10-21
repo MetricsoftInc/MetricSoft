@@ -731,7 +731,7 @@ namespace SQM.Website
 
 			if (shifts != null && shifts.Count > 0)
 			{
-				rddlShiftID.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlShiftID.Items.Add(new DropDownListItem("", ""));
 
 				foreach (var s in shifts)
 				{
@@ -748,7 +748,7 @@ namespace SQM.Website
 
 			if (shifts != null && shifts.Count > 0)
 			{
-				rddlJobTenure.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlJobTenure.Items.Add(new DropDownListItem("", ""));
 
 				foreach (var s in shifts)
 				{
@@ -770,7 +770,7 @@ namespace SQM.Website
 
 				if (depts != null && depts.Count > 0)
 				{
-					rddlDeptTest.Items.Add(new DropDownListItem("[Select One]", ""));
+					rddlDeptTest.Items.Add(new DropDownListItem("", ""));
 		
 					foreach (var s in depts)
 					{
@@ -825,7 +825,7 @@ namespace SQM.Website
 
 			if (injtype != null && injtype.Count > 0)
 			{
-				rddlInjuryType.Items.Add(new DropDownListItem("[Select One]", ""));	
+				rddlInjuryType.Items.Add(new DropDownListItem("", ""));	
 
 				foreach (var s in injtype)
 				{
@@ -846,7 +846,7 @@ namespace SQM.Website
 
 			if (parts != null && parts.Count > 0)
 			{
-				rddlBodyPart.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlBodyPart.Items.Add(new DropDownListItem("", ""));
 
 				foreach (var s in parts)
 				{
@@ -1627,7 +1627,7 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_LOSTTIME_HIST();
 
-				if (item.WORK_STATUS != "[Select One]")
+				if (item.WORK_STATUS != "")
 				{
 					newItem.INCIDENT_ID = incidentId;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;

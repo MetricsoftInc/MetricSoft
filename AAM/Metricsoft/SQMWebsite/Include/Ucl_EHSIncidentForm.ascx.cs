@@ -281,7 +281,7 @@ namespace SQM.Website
 						if (q.QuestionType == EHSIncidentQuestionType.Dropdown || q.QuestionType == EHSIncidentQuestionType.LocationDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.StandardsReferencesDropdown || q.QuestionType == EHSIncidentQuestionType.UsersDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.UsersDropdownLocationFiltered)
-							validator.InitialValue = "[Select One]";
+							validator.InitialValue = "";
 
 						pnl.Controls.Add(validator);
 					}
@@ -381,7 +381,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Dropdown:
 						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
-						rddl.Items.Add(new DropDownListItem("[Select One]", ""));
+						rddl.Items.Add(new DropDownListItem("", ""));
 
 						if (q.QuestionId == (decimal)EHSQuestionId.Department)
 						{
@@ -620,7 +620,7 @@ namespace SQM.Website
 						{
 							var plantIdList = SelectPlantIdsByAccessLevel();
 							if (plantIdList.Count > 1)
-								rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
+								rddlLocation.Items.Add(new DropDownListItem("", ""));
 							foreach (decimal pid in plantIdList)
 							{
 								string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
@@ -641,7 +641,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.UsersDropdown:
 						var rddl3 = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						rddl3.Items.Add(new DropDownListItem("[Select One]", ""));
+						rddl3.Items.Add(new DropDownListItem("", ""));
 
 						var personList = new List<PERSON>();
 						if (CurrentStep == 1)
@@ -811,7 +811,7 @@ namespace SQM.Website
 						if (q.QuestionType == EHSIncidentQuestionType.Dropdown || q.QuestionType == EHSIncidentQuestionType.LocationDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.StandardsReferencesDropdown || q.QuestionType == EHSIncidentQuestionType.UsersDropdown ||
 						q.QuestionType == EHSIncidentQuestionType.UsersDropdownLocationFiltered)
-							validator.InitialValue = "[Select One]";
+							validator.InitialValue = "";
 
 						pnl.Controls.Add(validator);
 					}
@@ -892,7 +892,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Dropdown:
 						var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val" };
-						rddl.Items.Add(new DropDownListItem("[Select One]", ""));
+						rddl.Items.Add(new DropDownListItem("", ""));
 
 						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
 						{
@@ -1117,7 +1117,7 @@ namespace SQM.Website
 						rddlLocation = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
 						var plantIdList = SelectPlantIdsByAccessLevel();
 						if (plantIdList.Count > 1)
-							rddlLocation.Items.Add(new DropDownListItem("[Select One]", ""));
+							rddlLocation.Items.Add(new DropDownListItem("", ""));
 						foreach (decimal pid in plantIdList)
 						{
 							string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
@@ -1136,7 +1136,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.UsersDropdown:
 						var rddl3 = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						rddl3.Items.Add(new DropDownListItem("[Select One]", ""));
+						rddl3.Items.Add(new DropDownListItem("", ""));
 
 						var personList = new List<PERSON>();
 						if (CurrentStep == 1)
@@ -1280,7 +1280,7 @@ namespace SQM.Website
 			if (rddlFilteredUsers != null)
 			{
 				rddlFilteredUsers.Items.Clear();
-				rddlFilteredUsers.Items.Add(new DropDownListItem("[Select One]", ""));
+				rddlFilteredUsers.Items.Add(new DropDownListItem("", ""));
 
 				var locationPersonList = new List<PERSON>();
 				if (this.SelectedLocationId > 0)
@@ -1605,7 +1605,7 @@ namespace SQM.Website
 		{
 			List<STANDARDS_REFERENCES> srList = SQMStandardsReferencesMgr.SelectReferencesByStandard("IMS");
 			var rcb = new RadComboBox();
-			rcb.Items.Add(new RadComboBoxItem("[Select One]"));
+			rcb.Items.Add(new RadComboBoxItem(""));
 			foreach (var s in srList)
 			{
 				string combined = s.SECTION + " - " + s.DESCRIPTION;

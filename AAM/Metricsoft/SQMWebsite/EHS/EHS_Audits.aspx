@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="EHS Audits" Language="C#" MasterPageFile="~/RspPSMaster.Master"
     AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_Audits.aspx.cs" ClientIDMode="AutoID"
-    Inherits="SQM.Website.EHS_Audits" ValidateRequest="false" %>
+    Inherits="SQM.Website.EHS_Audits" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
@@ -51,7 +51,7 @@
                 <div class="col-xs-12 col-sm-12">
 
                     <span style="float: left; margin-top: 6px;">
-                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Manage Environmental Health &amp; Safety Assessments"></asp:Label></span>
+                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Manage Environmental Health &amp; Safety Assessments" meta:resourcekey="lblViewEHSRezTitleResource1"></asp:Label></span>
 
                         <br class="clearfix visible-xs-block" />
 
@@ -59,13 +59,13 @@
                             <br />
                             <span style="clear: both; float: left; margin-top: -14px;">
                                 <telerik:RadButton ID="rbNew" runat="server" Text="New Assessment" Icon-PrimaryIconUrl="/images/ico-plus.png"
-                                    CssClass="metroIconButton" Skin="Metro" OnClick="rbNew_Click" CausesValidation="false" />
+                                    CssClass="metroIconButton" Skin="Metro" OnClick="rbNew_Click" CausesValidation="False" meta:resourcekey="rbNewResource1" style="position: relative;" />
                             </span>
                         </div>
 
                         <br class="clearfix visible-xs-block" />
 
-                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="Add or update EH&amp;S Assessments below."></asp:Label>
+                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="Add or update EH&amp;S Assessments below." meta:resourcekey="lblPageInstructionsResource1"></asp:Label>
                 </div>
             </div>
 
@@ -80,10 +80,10 @@
                     <div class="row-fluid">
 
                         <span style="float: left; width: 160px;">
-                            <asp:Label runat="server" ID="lblPlantSelect" Text="Locations:" CssClass="prompt"></asp:Label>
+                            <asp:Label runat="server" ID="lblPlantSelect" Text="Locations:" CssClass="prompt" meta:resourcekey="lblPlantSelectResource1"></asp:Label>
                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                        <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ZIndex="9000" Skin="Metro" Height="350" Width="650" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
 
                         <div class="visible-xs"></div>
                         <br class="visible-xs-block" style="margin-top: 7px;" />
@@ -96,20 +96,20 @@
 
 
                             <span style="float: left; width: 160px;">
-                                <asp:Label runat="server" ID="lblAuditType" Text="Assessment Type:" CssClass="prompt"></asp:Label>
+                                <asp:Label runat="server" ID="lblAuditType" Text="Assessment Type:" CssClass="prompt" meta:resourcekey="lblAuditTypeResource1"></asp:Label>
                             </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select assessment types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select assessment types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false" meta:resourcekey="rcbAuditTypeResource1"></telerik:RadComboBox>
 
                             <div class="clearfix visible-xs"></div>
                             <br class="visible-xs-block" style="margin-top: 7px;" />
 
-                            <asp:Label runat="server" ID="lblStatus" Text="Status:" CssClass="prompt"></asp:Label>&nbsp;&nbsp;
-                                            <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select assessment status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+                            <asp:Label runat="server" ID="lblStatus" Text="Status:" CssClass="prompt" meta:resourcekey="lblStatusResource1"></asp:Label>&nbsp;&nbsp;
+                                            <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select assessment status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false" meta:resourcekey="rcbStatusSelectResource1">
                                                 <Items>
-                                                    <telerik:RadComboBoxItem Text="Open" Value="A" />
-                                                    <telerik:RadComboBoxItem Text="Closed" Value="C" />
-                                                    <telerik:RadComboBoxItem Text="All" Value="" />
+                                                    <telerik:RadComboBoxItem Text="Open" Value="A" meta:resourcekey="RadComboBoxItemResource1" />
+                                                    <telerik:RadComboBoxItem Text="Closed" Value="C" meta:resourcekey="RadComboBoxItemResource2" />
+                                                    <telerik:RadComboBoxItem Text="All" Value="" meta:resourcekey="RadComboBoxItemResource3" />
                                                     <%--<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />--%>
                                                     <%--<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />--%>
                                                 </Items>
@@ -125,16 +125,56 @@
 
 
                         <span style="float: left; margin-top: 4px;">
-                            <asp:Label runat="server" ID="lblAuditDate" Text="Assessment Date From:" CssClass="prompt"></asp:Label>
-                            <telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
+                            <asp:Label runat="server" ID="lblAuditDate" Text="Assessment Date From:" CssClass="prompt" meta:resourcekey="lblAuditDateResource1"></asp:Label>
+                            <telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" Culture="en-US" meta:resourcekey="dmFromDateResource1">
+<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+
+<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+<EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+
+<ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+
+<FocusedStyle Resize="None"></FocusedStyle>
+
+<DisabledStyle Resize="None"></DisabledStyle>
+
+<InvalidStyle Resize="None"></InvalidStyle>
+
+<HoveredStyle Resize="None"></HoveredStyle>
+
+<EnabledStyle Resize="None"></EnabledStyle>
+</DateInput>
+
+<DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
+						</telerik:RadDatePicker>
                         </span>
 
                         <div class="clearfix visible-xs"></div>
                         <br class="visible-xs-block" />
 
                         <span>
-                            <asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt"></asp:Label>
-                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="145" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small"></telerik:RadDatePicker>
+                            <asp:Label runat="server" ID="lblToDate" Text="To:" CssClass="prompt" meta:resourcekey="lblToDateResource1"></asp:Label>
+                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" Culture="en-US" meta:resourcekey="dmToDateResource1">
+<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+
+<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+<EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+
+<ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+
+<FocusedStyle Resize="None"></FocusedStyle>
+
+<DisabledStyle Resize="None"></DisabledStyle>
+
+<InvalidStyle Resize="None"></InvalidStyle>
+
+<HoveredStyle Resize="None"></HoveredStyle>
+
+<EnabledStyle Resize="None"></EnabledStyle>
+</DateInput>
+
+<DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
+						</telerik:RadDatePicker>
                         </span>
 
                         <div class="clearfix visible-xs"></div>
@@ -143,7 +183,7 @@
                         <span class="noprint">
                             <%--<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
                                         <span style="padding-top: 10px;""><asp:CheckBox id="cbShowImage" runat="server" Checked="false"/></span>--%>
-                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessments" OnClick="btnAuditsSearchClick" />
+                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessments" OnClick="btnAuditsSearchClick" meta:resourcekey="btnSearchResource1" />
                         </span>
 
                     </div>
@@ -152,42 +192,19 @@
                 <%--	$$$$$$$$$$$$$$ Audit Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
 
 
-                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2">
+                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel2Resource1">
 
                     <div class="clearfix visible-xs"></div>
                     <br class="visible-xs-block" />
 
                     <div class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
 
-                        <%--                            <td valign="top" class="noprint">
-                                        <asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="View Statistics: "></asp:Label>
-                                        <telerik:RadComboBox ID="ddlChartType" runat="server" ZIndex="9000"  Width="350"  Skin="Metro" EmptyMessage="Select a chart" AutoPostBack="true" OnSelectedIndexChanged="ddlChartTypeChange">
-                                        </telerik:RadComboBox>
-                                        <p style="float: right; margin-right: 5px; width: 100px;">
-                                            <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="Print" style="margin-right: 5px;"  Visible="false" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                                            <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonCancel" Visible="false"  OnClick="lnkCloseChart" ToolTip="Close"></asp:LinkButton>
-                                        </p>
-						</span>
-
-					</div>
-
-                        --%>
-                        <%--<asp:Panel ID="pnlChartSection" runat="server" Width="100%">
-                                <div class="row-fluid">
-                                <div id="divChart" runat="server" class="borderSoft" style="height: 320px; width: 99%; padding: 10px 0;">
-                                    <Ucl:RadGauge ID="uclChart" runat="server" />
-                                </div>
-                                 <div id="divChart" runat="server" class="borderSoft" style="width: 99%; padding: 10px 0;">
-                                    <Ucl:RadGauge ID="uclChart" runat="server" />
-                                </div>
-                                </div>
-                            </asp:Panel>--%>
-                        <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="false">
+                        <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="False" meta:resourcekey="pnlAuditDetailsResource1">
                             <div class="row-fluid">
                                 <br />
                                 <asp:HiddenField ID="hfAuditDetails" runat="server" Value="Assessment # Summary" />
-                                <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt"></asp:Label>
-                                <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="Close">
+                                <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt" meta:resourcekey="lblAuditDetailsResource1"></asp:Label>
+                                <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="Close" meta:resourcekey="lnkAuditDetailsCloseResource1">
                                              <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
                                 </asp:LinkButton>
                                 <br />
@@ -205,7 +222,7 @@
 
             <Ucl:AuditForm ID="uclAuditForm" runat="server" />
 
-            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" meta:resourcekey="RadAjaxManager1Resource1">
             </telerik:RadAjaxManager>
         </div>
     </div>

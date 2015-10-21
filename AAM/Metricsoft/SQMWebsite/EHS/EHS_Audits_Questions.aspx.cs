@@ -31,7 +31,7 @@ namespace SQM.Website
 			{
 				try
 				{
-					ddlAuditType.Items.Add(new ListItem("[Select One]", ""));
+					ddlAuditType.Items.Add(new ListItem("", ""));
 					var auditTypeList = EHSAuditMgr.SelectAuditTypeList(_companyId);
 					foreach (var t in auditTypeList)
 						ddlAuditType.Items.Add(new ListItem(t.TITLE, t.AUDIT_TYPE_ID.ToString()));

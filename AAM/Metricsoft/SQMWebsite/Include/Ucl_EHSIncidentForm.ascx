@@ -26,15 +26,15 @@
 		<tr>
 			<td>
 				<div id="divPageBody" class="textStd" style="text-align: left; margin: 0 0;" runat="server">
-					<telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
-						<asp:Label ID="lblResults" runat="server" />
-						<asp:Panel ID="pnlAddEdit" runat="server">
+					<telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel1Resource1">
+						<asp:Label ID="lblResults" runat="server" meta:resourcekey="lblResultsResource1" />
+						<asp:Panel ID="pnlAddEdit" runat="server" meta:resourcekey="pnlAddEditResource1">
 							<div class="container-fluid blueCell" style="padding: 7px; margin-top: 5px;">
-								<asp:Panel ID="pnlIncidentHeader" runat="server">
+								<asp:Panel ID="pnlIncidentHeader" runat="server" meta:resourcekey="pnlIncidentHeaderResource1">
 									<div class="row-fluid" >
 										<div class="col-xs-12  text-left">
 											<span>
-											<asp:Label ID="lblAddOrEditIncident" class="prompt" runat="server"><strong>Add a New Incident:</strong></asp:Label>
+											<asp:Label ID="lblAddOrEditIncident" class="prompt" runat="server" meta:resourcekey="lblAddOrEditIncidentResource1"><strong>Add a New Incident:</strong></asp:Label>
 											<a href="/EHS/EHS_Incidents.aspx" id="ahReturn" runat="server" style="font-size:medium; margin-left: 40px;">
 												<img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
 												Return to List</a>
@@ -49,9 +49,9 @@
 									<br class="clearfix" style="clear:both;"/>
 									<div class="row-fluid" style="margin-top:-80px;" >
 										<div class="col-xs-12 text-left">
-											<asp:Label runat="server" ID="lblIncidentLocation" class="textStd"></asp:Label>
+											<asp:Label runat="server" ID="lblIncidentLocation" class="textStd" meta:resourcekey="lblIncidentLocationResource1"></asp:Label>
 											<br />
-											<asp:Label ID="lblIncidentType" class="textStd"  runat="server">Type:  </asp:Label>
+											<asp:Label ID="lblIncidentType" class="textStd"  runat="server" meta:resourcekey="lblIncidentTypeResource1">Type:  </asp:Label>
 										</div>
 									</div>
 								</asp:Panel>
@@ -59,53 +59,54 @@
 							<div class="container" style="margin-top: 5px;">
 								<div class="row text_center">
 									<div class="col-xs-12 col-sm-12 text-center">
-										<asp:Label ID="lblPageTitle" runat="server" Font-Bold="true" CssClass="pageTitles"></asp:Label>
+										<asp:Label ID="lblPageTitle" runat="server" Font-Bold="True" CssClass="pageTitles" meta:resourcekey="lblPageTitleResource1"></asp:Label>
 									</div>
 								</div>
 							</div>
-							<div id="divForm" runat="server" visible="false">
-								<asp:Panel ID="pnlForm" runat="server">
+							<div id="divForm" runat="server" visible="False">
+								<asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
 								</asp:Panel>
 								<table style="width: 100%;">
 									<tr>
 										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="false"
-												CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
-												OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
+											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="False"
+												CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="True" SingleClickText="Saving..."
+												OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" meta:resourcekey="btnSaveReturnResource1" />
 										</td>
 										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="false"
-													Icon-SecondaryIconUrl="/images/ico-arr-rt-wht.png" SingleClick="true" SingleClickText="Saving..."
+											<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="False" SingleClick="True" SingleClickText="Saving..."
 												CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
-												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" meta:resourcekey="btnSaveContinueResource1" >
+												<Icon SecondaryIconUrl="/images/ico-arr-rt-wht.png" />
+											</telerik:RadButton>
 										</td>
 									</tr>
 								</table>
-								<div id="divSubnav" runat="server" visible="true">
-									<div id="divSubnavPage" runat="server" class="borderSoft" visible="false">
-										<ucl:Containment id="uclContainment" runat="server" Visible="false" />
-										<ucl:RootCause id="uclRootCause" runat="server" Visible="false"/>
-										<ucl:Action id="uclAction" runat="server" Visible="false"/>
-										<ucl:Approval id="uclApproval" runat="server" Visible="false"/>
+								<div id="divSubnav" runat="server">
+									<div id="divSubnavPage" runat="server" class="borderSoft" visible="False">
+										<ucl:Containment id="uclContainment" runat="server" Visible="False" />
+										<ucl:RootCause id="uclRootCause" runat="server" Visible="False"/>
+										<ucl:Action id="uclAction" runat="server" Visible="False"/>
+										<ucl:Approval id="uclApproval" runat="server" Visible="False"/>
 									</div>
 
 									<div style="margin-top: 5px;">
 										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="Save" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
-											OnClick="btnSubnavSave_Click" CommandArgument="0"/>
+											OnClick="btnSubnavSave_Click" CommandArgument="0" meta:resourcekey="btnSubnavSaveResource1"/>
 										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="0" />
+											OnClick="btnSubnav_Click" CommandArgument="0" meta:resourcekey="btnSubnavIncidentResource1" />
 										<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Initial Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="2"/>
+											OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
 										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="3"/>
+											OnClick="btnSubnav_Click" CommandArgument="3" meta:resourcekey="btnSubnavRootCauseResource1"/>
 										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="4"/>
+											OnClick="btnSubnav_Click" CommandArgument="4" meta:resourcekey="btnSubnavActionResource1"/>
 										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approvals" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="5"/>
+											OnClick="btnSubnav_Click" CommandArgument="5" meta:resourcekey="btnSubnavApprovalResource1"/>
 										<span style="float:right">
-											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
-												Text="Delete Incident" SingleClick="true" SingleClickText="Deleting..."
-												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" />
+											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="False" ForeColor="DarkRed"
+												Text="Delete Incident" SingleClick="True" SingleClickText="Deleting..."
+												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" meta:resourcekey="btnDeleteResource1" />
 										</span>
 									</div>
 								</div>

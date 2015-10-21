@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspQAILogin.master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SQM.Website.Login" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspQAILogin.master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SQM.Website.Login" meta:resourcekey="PageResource1" %>
 
 <%@ Register Src="~/Include/Ucl_AdminPasswordEdit.ascx" TagName="PassEdit" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
@@ -58,12 +58,12 @@
 	
 	<div class="container-fluid">
 
-		<asp:Panel runat="server" ID="pnlLogin">
+		<asp:Panel runat="server" ID="pnlLogin" meta:resourcekey="pnlLoginResource1">
 
 			<div class="row-fluid">
 				<div class="col-xs-12  text-left">
 					<p>
-						<asp:Label ID="lblMainInfo" runat="server" CssClass="textStd" Visible="false"></asp:Label>
+						<asp:Label ID="lblMainInfo" runat="server" CssClass="textStd" Visible="False" meta:resourcekey="lblMainInfoResource1"></asp:Label>
 					</p>
 				</div>
 			</div>
@@ -72,27 +72,27 @@
 
 				<div class="col-xs-12 text-left">
 
-					<asp:Label ID="Label1" runat="server" class="prompt" Text="Username:"></asp:Label>
-					<asp:TextBox ID="tbUsername" runat="server" CausesValidation="false" Style="width: 170px; margin: 5px 4px 0 0;" Text=""
-						MaxLength="32"></asp:TextBox>
+					<asp:Label ID="Label1" runat="server" class="prompt" Text="Username:" meta:resourcekey="Label1Resource1"></asp:Label>
+					<asp:TextBox ID="tbUsername" runat="server" Style="width: 170px; margin: 5px 4px 0 0;"
+						MaxLength="32" meta:resourcekey="tbUsernameResource1"></asp:TextBox>
 
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 
 					<br />
-					<asp:Label ID="Label2" runat="server" class="prompt"  Text="Password:"></asp:Label>
-					<asp:TextBox ID="tbPassword" runat="server" CausesValidation="false" TextMode="Password" 
-						MaxLength="32" Style="width: 170px; margin-top: 8px;  margin: 5px 4px 0 2px;" onblur="ClearMessages();"></asp:TextBox>
+					<asp:Label ID="Label2" runat="server" class="prompt"  Text="Password:" meta:resourcekey="Label2Resource1"></asp:Label>
+					<asp:TextBox ID="tbPassword" runat="server" TextMode="Password" 
+						MaxLength="32" Style="width: 170px; margin-top: 8px;  margin: 5px 4px 0 2px;" onblur="ClearMessages();" meta:resourcekey="tbPasswordResource1"></asp:TextBox>
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 	
 
 					<asp:Button runat="server" Text="Login" ID="btnLogin" CssClass="buttonEmphasis" Style="width: 80px;  margin: 5px 0 0 0;"
-						OnClick="btnLogin_Click" />
+						OnClick="btnLogin_Click" meta:resourcekey="btnLoginResource1" />
 					<asp:LinkButton runat="server" ID="lnkForgotPassword" class="buttonLinkSmall"
-						Text="Forgot Username/Password ?" OnClick="lnkForgotPassword_Click" Visible="false"></asp:LinkButton>
+						Text="Forgot Username/Password ?" OnClick="lnkForgotPassword_Click" Visible="False" meta:resourcekey="lnkForgotPasswordResource1"></asp:LinkButton>
 				</div>
 
 			</div>
@@ -100,16 +100,16 @@
 
 			<div class="row-fluid">
 				<div class="col-xs-12 text-left">
-					<asp:Label runat="server" ID="lblLoginError_out" class="promptAlert" Visible="false" Text="The System could not log you in. Please verify the username and password entered are correct."></asp:Label>
-					<asp:Label runat="server" ID="lblLoginAttemptError_out" class="promptAlert" Visible="false" Text="The System could not log you in. Please click the Forgot Username/Password link or contact your system administrator for assistance."></asp:Label>
-					<asp:Label runat="server" ID="lblSessionError_out" class="promptAlert" Visible="false" Text="A different user is already logged into the system from another browser page."></asp:Label>
+					<asp:Label runat="server" ID="lblLoginError_out" class="promptAlert" Visible="False" Text="The System could not log you in. Please verify the username and password entered are correct." meta:resourcekey="lblLoginError_outResource1"></asp:Label>
+					<asp:Label runat="server" ID="lblLoginAttemptError_out" class="promptAlert" Visible="False" Text="The System could not log you in. Please click the Forgot Username/Password link or contact your system administrator for assistance." meta:resourcekey="lblLoginAttemptError_outResource1"></asp:Label>
+					<asp:Label runat="server" ID="lblSessionError_out" class="promptAlert" Visible="False" Text="A different user is already logged into the system from another browser page." meta:resourcekey="lblSessionError_outResource1"></asp:Label>
 				</div>
 			</div>
 		</asp:Panel>
 
 		<div class="row-fluid">
 			<div class="col-xs-12 text-left">
-				<asp:Panel runat="server" ID="pnlLoginPasswordEdit" Visible="false">
+				<asp:Panel runat="server" ID="pnlLoginPasswordEdit" Visible="False" meta:resourcekey="pnlLoginPasswordEditResource1">
 					<Ucl:PassEdit ID="uclPassEdit" runat="server" strCurrentControl="login" />
 				</asp:Panel>
 			</div>
@@ -127,17 +127,17 @@
 
 				<div id="divAnnouncements" runat="server" style="margin-top: 10px;">
 					<div id="divLoginMessage" runat="server" class="borderSoft" style="width: 98%; padding: 4px; margin-bottom: 7px;" visible="false">
-						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText"></asp:Label>
+						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText" meta:resourcekey="lblLoginMessageResource1"></asp:Label>
 					</div>
 
-					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" GroupingText="Corporate Objectives & Performance" CssClass="sectionTitles" Width="99%" Visible="false">
+					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" GroupingText="Corporate Objectives & Performance" CssClass="sectionTitles" Width="99%" Visible="False" meta:resourcekey="pnlPostingResource1">
 						<center>
-							<div id="divTicker" runat="server" visible="false">
-								<asp:Label ID="lblStats" runat="server" CssClass="prompt" Text="Number Of Days Without A Lost Time Case"></asp:Label>
+							<div id="divTicker" runat="server" visible="False">
+								<asp:Label ID="lblStats" runat="server" CssClass="prompt" Text="Number Of Days Without A Lost Time Case" meta:resourcekey="lblStatsResource1"></asp:Label>
 								<Ucl:RadGauge ID="uclGauge" runat="server" />
 							</div>
 							<img runat="server" id="imgPostingEHS" style="height: auto; width: auto;" />
-							<img runat="server" id="imgPostingQS" style="height: auto; width: auto;" />
+							&nbsp;<img runat="server" id="imgPostingQS" style="height: auto; width: auto;" />
 						</center>
 						<br />
 					</asp:Panel>

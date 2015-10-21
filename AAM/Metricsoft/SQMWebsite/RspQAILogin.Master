@@ -12,7 +12,7 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="/css/normalize.css" rel="stylesheet" type="text/css" />
-	<link href="//fonts.googleapis.com/css?family=Bitter:400,400italic|Open+Sans:300italic,300" rel="stylesheet" type="text/css" />
+	<link href="http://localhost:64917/fonts.googleapis.com/css?family=Bitter:400,400italic|Open+Sans:300italic,300" rel="stylesheet" type="text/css" />
 	<link href="/css/PSSQM_Default.css" rel="stylesheet" type="text/css" />
 	<link href="/css/MetroThemeOverride.css" rel="stylesheet" type="text/css" />
 	<link href="http://aspnet-skins.telerikstatic.com/ajaxz/2013.2.717/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
@@ -41,19 +41,19 @@
 	<!-- mt - added to remediate potential 'session fixation' security threats -->
 	<!-- mt - added autocomplete=off to the form because not all browsers respect the element-level attribute -->
 	<form id="Form1" runat="server" autocomplete="off">
-		<asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true" />
+		<asp:ScriptManager ID="ScriptManager1" runat="server" />
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 text-left">
 					<div style="float: left;" class="noprint">
-						<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;"/>
+						<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;" meta:resourcekey="imgLogoResource1"/>
 					</div>
 					<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
-						<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" Text=""></asp:Label>
+						<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" meta:resourcekey="lblMainTitleResource1"></asp:Label>
 					</div>
 					<br />
-					<asp:Label ID="lblMainInfo" runat="server" CssClass="instructText" Visible="false"></asp:Label>
+					<asp:Label ID="lblMainInfo" runat="server" CssClass="instructText" Visible="False" meta:resourcekey="lblMainInfoResource1"></asp:Label>
 					<br />
 				</div>
 			</div>

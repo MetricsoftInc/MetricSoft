@@ -33,71 +33,118 @@
 
 </script>
 
-<asp:Panel ID="pnlLostTime" Visible="false" runat="server">
+<asp:Panel ID="pnlLostTime" Visible="False" runat="server" meta:resourcekey="pnlLostTimeResource1">
 
 	<div class="container-fluid">
 
-		<telerik:RadAjaxPanel ID="rapLostTime" runat="server">
+		<telerik:RadAjaxPanel ID="rapLostTime" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapLostTimeResource1">
 
 		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound"  OnItemCommand="rptLostTime_ItemCommand">
 
-			<HeaderTemplate>
-					<table class="table" border="0" >
-						<thead>
-							<tr class="row">
-<%--								<th class="text-center"><b><asp:Label ID="lbhdItem" runat ="server" Text="Item" /></b></th>--%>
-								<th class="col-sm-1 text-left-more"><b><asp:Label ID="lbWorkStatus" runat="server" Text="Work Status" /></b></th>
-								<th class="col-sm-3 text-left-more"><b><asp:Label ID="lbRestrictDesc" runat="server" Text="Comments" /></b></th>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbBeginDate" runat="server" Text="Effective Date" /></b></th>
-<%--								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbReturnDate" runat="server" Text="Return Date" /></b></th>--%>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbNextMedDate" runat="server" Text="Next Medical Appt." /></b></th>
-								<th class="col-sm-2 text-left-more"><b><asp:Label ID="lbExpectedReturnDT" runat="server" Text="Expected Return Date" /></b></th>
-								<th class="text-left-more"/></th>
-							</tr>
-						</thead>
-			</HeaderTemplate>
-			<ItemTemplate>
-			<tbody>
-				<tr class="row">
-					<td class="text-left-more">
-						<asp:Label ID="lbItemSeq" runat="server" Visible="false" />
-						<telerik:RadDropDownList ID="rddlWorkStatus" Skin="Metro" on CssClass="WarnIfChanged" ZIndex="9000" ExpandDirection="Up" Height="100" Width="180" autopostback="true" runat="server" OnSelectedIndexChanged="rddlw_SelectedIndexChanged"></telerik:RadDropDownList>
-						<asp:RequiredFieldValidator runat="server" ID="rfvWorkStatus" ControlToValidate="rddlWorkStatus" Enabled="false" Display="None" InitialValue="[Select One]" ErrorMessage="Required" />
-					</td>
-					<td class="text-left-more">
-						<asp:TextBox ID="tbRestrictDesc" Rows="3" Height="65px" Width="90%" TextMode="MultiLine" SkinID="Metro" runat="server" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvRestrictDesc" ControlToValidate="tbRestrictDesc"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>
-					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpBeginDate" Skin="Metro" Width="95%" CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rvfBeginDate" ControlToValidate="rdpBeginDate"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>
-<%--					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpReturnDate" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvReturnDate" ControlToValidate="rdpReturnDate"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>--%>
-					<td class="text-left-more">
-						<telerik:RadDatePicker ID="rdpNextMedDate" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true" />
-						<asp:RequiredFieldValidator runat="server" ID="rfvNextMedDate" ControlToValidate="rdpNextMedDate"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>
-					<td class="text-left">
-						<telerik:RadDatePicker ID="rdpExpectedReturnDT" Skin="Metro" Width="95%"  CssClass="WarnIfChanged" runat="server" ShowPopupOnFocus="true"/>
-						<asp:RequiredFieldValidator runat="server" ID="rfvExpectedReturnDT" ControlToValidate="rdpExpectedReturnDT"  Enabled="false" Display="None" ErrorMessage="Required" />
-					</td>
-					<td class="col-xs-12 text-left-more">
-						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
-							Text="Delete Item" SingleClick="true" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" />
-					</td>
-				</tbody>
-			</ItemTemplate>
 			<FooterTemplate>
 				</table> 
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
-						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" UseSubmitBehavior="true" ></asp:Button>
+						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddLostTimeResource1" ></asp:Button>
 					</div>
 				</div>
 			</FooterTemplate>
+			<HeaderTemplate>
+				<table border="0" class="table">
+					<thead>
+						<tr class="row">
+							<th class="col-sm-1 text-left-more"><b>
+								<asp:Label ID="lbWorkStatus" runat="server" meta:resourcekey="lbWorkStatusResource1" Text="Work Status"></asp:Label>
+								</b></th>
+							<th class="col-sm-3 text-left-more"><b>
+								<asp:Label ID="lbRestrictDesc" runat="server" meta:resourcekey="lbRestrictDescResource1" Text="Comments"></asp:Label>
+								</b></th>
+							<th class="col-sm-2 text-left-more"><b>
+								<asp:Label ID="lbBeginDate" runat="server" meta:resourcekey="lbBeginDateResource1" Text="Effective Date"></asp:Label>
+								</b></th>
+							<th class="col-sm-2 text-left-more"><b>
+								<asp:Label ID="lbNextMedDate" runat="server" meta:resourcekey="lbNextMedDateResource1" Text="Next Medical Appt."></asp:Label>
+								</b></th>
+							<th class="col-sm-2 text-left-more"><b>
+								<asp:Label ID="lbExpectedReturnDT" runat="server" meta:resourcekey="lbExpectedReturnDTResource1" Text="Expected Return Date"></asp:Label>
+								</b></th>
+							<th class="text-left-more"/>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</HeaderTemplate>
+			<ItemTemplate>
+				<tbody>
+					<tr class="row">
+						<td class="text-left-more">
+							<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1" Visible="False"></asp:Label>
+							<telerik:RadDropDownList ID="rddlWorkStatus" runat="server" AutoPostBack="True" CssClass="WarnIfChanged" ExpandDirection="Up" Height="100" meta:resourcekey="rddlWorkStatusResource1" on="" OnSelectedIndexChanged="rddlw_SelectedIndexChanged" Skin="Metro" Width="180px" ZIndex="9000">
+							</telerik:RadDropDownList>
+							<asp:RequiredFieldValidator ID="rfvWorkStatus" runat="server" ControlToValidate="rddlWorkStatus" Display="None" Enabled="False" ErrorMessage="Required" InitialValue="[Select One]" meta:resourcekey="rfvWorkStatusResource1"></asp:RequiredFieldValidator>
+						</td>
+						<td class="text-left-more">
+							<asp:TextBox ID="tbRestrictDesc" runat="server" Height="65px" meta:resourcekey="tbRestrictDescResource1" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="90%"></asp:TextBox>
+							<asp:RequiredFieldValidator ID="rfvRestrictDesc" runat="server" ControlToValidate="tbRestrictDesc" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvRestrictDescResource1"></asp:RequiredFieldValidator>
+						</td>
+						<td class="text-left-more">
+							<telerik:RadDatePicker ID="rdpBeginDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpBeginDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+								</Calendar>
+								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
+									<EmptyMessageStyle Resize="None" />
+									<ReadOnlyStyle Resize="None" />
+									<FocusedStyle Resize="None" />
+									<DisabledStyle Resize="None" />
+									<InvalidStyle Resize="None" />
+									<HoveredStyle Resize="None" />
+									<EnabledStyle Resize="None" />
+								</DateInput>
+								<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
+							</telerik:RadDatePicker>
+							<asp:RequiredFieldValidator ID="rvfBeginDate" runat="server" ControlToValidate="rdpBeginDate" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rvfBeginDateResource1"></asp:RequiredFieldValidator>
+						</td>
+						<td class="text-left-more">
+							<telerik:RadDatePicker ID="rdpNextMedDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpNextMedDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+								</Calendar>
+								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
+									<EmptyMessageStyle Resize="None" />
+									<ReadOnlyStyle Resize="None" />
+									<FocusedStyle Resize="None" />
+									<DisabledStyle Resize="None" />
+									<InvalidStyle Resize="None" />
+									<HoveredStyle Resize="None" />
+									<EnabledStyle Resize="None" />
+								</DateInput>
+								<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
+							</telerik:RadDatePicker>
+							<asp:RequiredFieldValidator ID="rfvNextMedDate" runat="server" ControlToValidate="rdpNextMedDate" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvNextMedDateResource1"></asp:RequiredFieldValidator>
+						</td>
+						<td class="text-left">
+							<telerik:RadDatePicker ID="rdpExpectedReturnDT" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpExpectedReturnDTResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+								</Calendar>
+								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
+									<EmptyMessageStyle Resize="None" />
+									<ReadOnlyStyle Resize="None" />
+									<FocusedStyle Resize="None" />
+									<DisabledStyle Resize="None" />
+									<InvalidStyle Resize="None" />
+									<HoveredStyle Resize="None" />
+									<EnabledStyle Resize="None" />
+								</DateInput>
+								<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
+							</telerik:RadDatePicker>
+							<asp:RequiredFieldValidator ID="rfvExpectedReturnDT" runat="server" ControlToValidate="rdpExpectedReturnDT" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvExpectedReturnDTResource1"></asp:RequiredFieldValidator>
+						</td>
+						<td class="col-xs-12 text-left-more">
+							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" meta:resourcekey="btnItemDeleteResource1" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="Deleting..." Text="Delete Item">
+							</telerik:RadButton>
+						</td>
+					</tr>
+				</tbody>
+			</ItemTemplate>
 		</asp:Repeater>
 
 	</telerik:RadAjaxPanel>

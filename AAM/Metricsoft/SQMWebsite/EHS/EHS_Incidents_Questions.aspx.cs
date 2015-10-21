@@ -31,7 +31,7 @@ namespace SQM.Website
 			{
 				try
 				{
-					ddlIncidentType.Items.Add(new ListItem("[Select One]", ""));
+					ddlIncidentType.Items.Add(new ListItem("", ""));
 					var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(_companyId);
 					foreach (var t in incidentTypeList)
 						ddlIncidentType.Items.Add(new ListItem(t.TITLE, t.INCIDENT_TYPE_ID.ToString()));

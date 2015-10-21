@@ -698,6 +698,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1170,6 +1171,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1183,6 +1185,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -1461,7 +1464,6 @@
     <None Include="Web.Release.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_LocalResources\" />
     <Folder Include="Report\" />
   </ItemGroup>
   <ItemGroup>
@@ -1477,6 +1479,32 @@
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
     <Content Include="EHS\App_LocalResources\EHS_IncidentForm.aspx.resx" />
     <Content Include="EHS\App_LocalResources\EHS_InjuryIllnessForm.aspx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />
+    <Content Include="Home\App_LocalResources\Calendar.aspx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_EHSIncidentForm.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Approval.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditList.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditExceptionList.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditScheduleList.ascx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audits.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audit_Scheduler.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audit_Exceptions.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audits_Questions.aspx.resx" />
+    <Content Include="App_LocalResources\PSMaster.Master.resx" />
+    <Content Include="App_LocalResources\RspPSMaster.Master.resx" />
+    <Content Include="Home\App_LocalResources\Dashboard.aspx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_DashboardArea.ascx.resx" />
+    <EmbeddedResource Include="App_LocalResources\Login.aspx.resx" />
+    <EmbeddedResource Include="App_LocalResources\RspQAILogin.Master.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>

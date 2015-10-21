@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="SQM.Website.Dashboard"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="SQM.Website.Dashboard" meta:resourcekey="PageResource1"  %>
 <%@ Register src="~/Include/Ucl_DashboardArea.ascx" TagName="Dashboard" TagPrefix="Ucl" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
@@ -25,7 +25,7 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="1">
                 <tr>
                     <td class="tabActiveTableBg" colspan="10" align="center">
-                        <asp:Panel ID="pnlMonitor" runat="server" GroupingText="Performance Dashboard" CssClass="sectionTitles" Width="99%" style="margin: 3px;">
+                        <asp:Panel ID="pnlMonitor" runat="server" GroupingText="Performance Dashboard" CssClass="sectionTitles" Width="99%" style="margin: 3px;" meta:resourcekey="pnlMonitorResource1">
                             <Ucl:Dashboard  ID="uclDashbd0" runat="server"/>
                         </asp:Panel>
                     </td>

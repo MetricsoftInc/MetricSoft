@@ -608,7 +608,7 @@ namespace SQM.Website
         public static List<TaskItem> IncidentTaskSchedule(decimal companyID, DateTime fromDate, DateTime toDate, List<decimal> responsibleIDS, decimal[] plantIDS, bool addProblemCases)
         {
 			// pending TASKS
-			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 			string newStatus = ((int)TaskStatus.New).ToString();
             List<TaskItem> taskList = new List<TaskItem>();
 			INCIDENT incident;
@@ -661,7 +661,9 @@ namespace SQM.Website
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
-						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION;
+						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? 
+							XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : recordDesc;
 
                         switch (recordType)
                         {
@@ -671,14 +673,14 @@ namespace SQM.Website
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
 								taskItem.Title = taskItem.Task.DESCRIPTION;
                                 taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
+                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, recordDesc) + ": " + incident.DESCRIPTION;
                                 break;
 							case TaskRecordType.Audit:
 								AUDIT audit = (AUDIT)taskItem.Detail;
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
 								taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Assessment ") + ": " + audit.DESCRIPTION;
+								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, recordDesc) + ": " + audit.DESCRIPTION;
 								break;
                             default:
                                 break;
@@ -699,6 +701,8 @@ namespace SQM.Website
             List<TaskItem> taskList = new List<TaskItem>();
             List<EHSProfile> plantProfileList = new List<EHSProfile>();
             List<EHS_PROFILE_MEASURE> reqList = new List<EHS_PROFILE_MEASURE>();
+
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
             try
             {
@@ -758,7 +762,7 @@ namespace SQM.Website
                                     taskItem.RecordKey = "";  // don't allow data input beyond current month
                                 taskItem.Taskstatus = TaskStatus.Pending;
                                 taskItem.Plant = profile.Plant;
-                                taskItem.Title = "Environmental Data Input";
+								taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "30").FirstOrDefault().DESCRIPTION;
                                 taskItem.LongTitle = profile.Plant.PLANT_NAME + " - " + taskItem.Title;
                                 taskItem.Description = respMeasures.TrimEnd(',');
                                 taskItem.Detail = reqResponsible.TrimEnd(',');
@@ -827,9 +831,9 @@ namespace SQM.Website
                                 taskItem.Task.TASK_TYPE = "C";
                                 if (responsibleIDS.Count > 0)
                                     taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)profile.APPROVER_ID, taskItem.Taskstatus);
-                                taskItem.Title = "Environmental Data Input Approval";
+								taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "31").FirstOrDefault().DESCRIPTION_SHORT;
                                 taskItem.LongTitle = plant.PLANT_NAME + " - " + taskItem.Title;
-                                taskItem.Description = "Local Approval Due";
+								taskItem.Description = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "31").FirstOrDefault().DESCRIPTION_SHORT;
                                 taskList.Add(taskItem);
                             }
                         }
@@ -929,6 +933,8 @@ namespace SQM.Website
             List<TaskItem> taskList = new List<TaskItem>();
             List<EHSProfile> plantProfileList = new List<EHSProfile>();
             List<EHS_PROFILE_MEASURE> reqList = new List<EHS_PROFILE_MEASURE>();
+
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
             try
             {
@@ -1034,7 +1040,7 @@ namespace SQM.Website
                                     taskItem.Taskstatus = periodStatus;
                                     taskItem.Plant = profile.Plant;
 									//taskItem.Person = person;
-                                    taskItem.Title = "Environmental Data Input";
+									taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "30").FirstOrDefault().DESCRIPTION;
                                     taskItem.LongTitle = profile.Plant.PLANT_NAME + " - " + taskItem.Title;
                                     taskItem.Description = reqMeasures.TrimEnd(',');
                                     taskItem.Detail = reqResponsible.TrimEnd(',');
@@ -1133,9 +1139,9 @@ namespace SQM.Website
                             taskItem.Taskstatus = periodStatus;
                             taskItem.Plant = plant;
 							taskItem.Person = person;
-                            taskItem.Title = "Environmental Data Input Approval";
+							taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "31").FirstOrDefault().DESCRIPTION_SHORT;
                             taskItem.LongTitle = plant.PLANT_NAME + " - " + taskItem.Title;
-                            taskItem.Description = "Local Approval";
+							taskItem.Description = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "31").FirstOrDefault().DESCRIPTION;
                             taskItem.Detail = SQMModelMgr.FormatPersonListItem(person);
                             taskItem.Task = new TASK_STATUS();
                             taskItem.Task.DUE_DT = dueDate;
@@ -1165,7 +1171,7 @@ namespace SQM.Website
             DateTime forwardDate = DateTime.Now;
 			INCIDENT incident;
 
-			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS" });
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
             List<TaskItem> taskList = new List<TaskItem>();
             try
@@ -1218,7 +1224,8 @@ namespace SQM.Website
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
                         taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
                         taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
-						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.RecordType.ToString()).FirstOrDefault().DESCRIPTION;
+						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : recordDesc;
 
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
                         switch (recordType)
@@ -1227,16 +1234,16 @@ namespace SQM.Website
                             case TaskRecordType.PreventativeAction:
 								incident = (INCIDENT)taskItem.Detail;
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
-                                taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+                                taskItem.Title = actionText;
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
+                                taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, recordDesc + " ") + ": " + incident.DESCRIPTION;
                                 break;
 							case TaskRecordType.Audit:
 								AUDIT audit = (AUDIT)taskItem.Detail;
 								taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
-                                taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+								taskItem.Title = actionText;
 								taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + actionText + ": " + taskItem.Task.DESCRIPTION;
-								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Assessment ") + ": " + audit.DESCRIPTION;
+								taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, recordDesc + " ") + ": " + audit.DESCRIPTION;
 								break;
                             default:
                                 break;

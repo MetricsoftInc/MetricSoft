@@ -183,7 +183,7 @@ namespace SQM.Website
 					rvfcp.ValidationGroup = ValidationGroup;
 					rvfsd.ValidationGroup = ValidationGroup;
 
-					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("", ""));
 
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
@@ -319,7 +319,7 @@ namespace SQM.Website
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
 
-					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("", ""));
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
 					foreach (PERSON p in personList)
@@ -331,7 +331,7 @@ namespace SQM.Website
 						}
 					}
 
-					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != ""))
 						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
 
 					seqnumber = Convert.ToInt32(lb.Text);
@@ -371,7 +371,7 @@ namespace SQM.Website
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
 
-					rddlp.Items.Add(new RadComboBoxItem("[Select One]", ""));
+					rddlp.Items.Add(new RadComboBoxItem("", ""));
 
 					var personList = new List<PERSON>();
 					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
@@ -384,7 +384,7 @@ namespace SQM.Website
 						}
 					}
 
-					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != "[Select One]"))
+					if (!string.IsNullOrEmpty(rddlp.SelectedValue) && (rddlp.SelectedValue != ""))
 						item.ASSIGNED_PERSON_ID = Convert.ToInt32(rddlp.SelectedValue);
 
 					if (Convert.ToInt32(lb.Text) != delId + 1)

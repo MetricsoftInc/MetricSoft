@@ -1,0 +1,1056 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnCalculateResource1.Text" xml:space="preserve">
+    <value>Calculate Target Metrics</value>
+  </data>
+  <data name="btnCalculateResource1.ToolTip" xml:space="preserve">
+    <value>Calculate YTD corporate metrics per the selected reporting month</value>
+  </data>
+  <data name="btnSearchMetricsResource1.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="btnSearchMetricsResource1.ToolTip" xml:space="preserve">
+    <value>search data</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlBusLocSelectResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.ToolTip" xml:space="preserve">
+    <value>View or modify Metric Profile for the selected location</value>
+  </data>
+  <data name="ddlPlantFilterResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantFilterResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlPlantFilterResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlPlantFilterResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlPlantFilterResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlPlantFilterResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlPlantFilterResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlPlantFilterResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
+    <value>All items checked</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
+    <value>Check All</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
+    <value>items checked</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
+    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
+  </data>
+  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value>View or enter metric data for the selected location</value>
+  </data>
+  <data name="GridTemplateColumnResource1.AndCurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.ColumnGroupName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.CurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.EditFormHeaderTextFormat" xml:space="preserve">
+    <value>{0}:</value>
+  </data>
+  <data name="GridTemplateColumnResource1.FooterAggregateFormatString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.GroupByExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderAbbr" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderAxis" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
+    <value>Reporting Period</value>
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.AndCurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.ColumnGroupName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.CurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.EditFormHeaderTextFormat" xml:space="preserve">
+    <value>{0}:</value>
+  </data>
+  <data name="GridTemplateColumnResource2.FooterAggregateFormatString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.GroupByExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderAbbr" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderAxis" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
+    <value>Inputs</value>
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gvProdListResource1.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gvProdListResource1.EmptyDataText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gvProdListResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblBusLocSelectHdrResource1.Text" xml:space="preserve">
+    <value>Business Location</value>
+  </data>
+  <data name="lblBusLocSelectHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCurrencyResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblCurrencyResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDateSelect1Resource1.Text" xml:space="preserve">
+    <value>Reporting Month</value>
+  </data>
+  <data name="lblDateSelect1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDateSelect2Resource1.Text" xml:space="preserve">
+    <value>Reporting Month</value>
+  </data>
+  <data name="lblDateSelect2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDueDate_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDueDate_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblDueDateHdrResource1.Text" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="lblDueDateHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputPeriodHdrResource1.Text" xml:space="preserve">
+    <value>Reporting Month</value>
+  </data>
+  <data name="lblInputPeriodHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputStatus1_outResource1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblInputStatus1_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputStatus2_outResource1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblInputStatus2_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputStatus3_outResource1.Text" xml:space="preserve">
+    <value> Required Metrics Entered</value>
+  </data>
+  <data name="lblInputStatus3_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputStatuseHdrResource1.Text" xml:space="preserve">
+    <value>Input Status</value>
+  </data>
+  <data name="lblInputStatuseHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInputStatusOf_outResource1.Text" xml:space="preserve">
+    <value> of </value>
+  </data>
+  <data name="lblInputStatusOf_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdate_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdate_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdateBy_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdateBy_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLastUpdateHdrResource1.Text" xml:space="preserve">
+    <value>Last Update</value>
+  </data>
+  <data name="lblLastUpdateHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocationType_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocationType_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocationTypeResource1.Text" xml:space="preserve">
+    <value>Location Type</value>
+  </data>
+  <data name="lblLocationTypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocCodeHdrPlantResource1.Text" xml:space="preserve">
+    <value>Location Code</value>
+  </data>
+  <data name="lblLocCodeHdrPlantResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocCodePlant_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblLocCodePlant_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblMessageResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblMessageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPeriodFrom_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPeriodFrom_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPeriodSelectHdrResource1.Text" xml:space="preserve">
+    <value>Reporting Month</value>
+  </data>
+  <data name="lblPeriodSelectHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantFilterHdrResource1.Text" xml:space="preserve">
+    <value>Business Location</value>
+  </data>
+  <data name="lblPlantFilterHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantName_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantName_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantNameHdrResource1.Text" xml:space="preserve">
+    <value>Business Location</value>
+  </data>
+  <data name="lblPlantNameHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPlantSelectHdrResource1.Text" xml:space="preserve">
+    <value>Business Location</value>
+  </data>
+  <data name="lblPlantSelectHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProdFieldResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProdValueResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProfileUpdate_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProfileUpdate_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProfileUpdateBy_outResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProfileUpdateBy_outResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblProfileUpdateHdrResource1.Text" xml:space="preserve">
+    <value>Last Update</value>
+  </data>
+  <data name="lblProfileUpdateHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRateResource1.Text" xml:space="preserve">
+    <value> Exchange Rate Recorded On </value>
+  </data>
+  <data name="lblRateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRateStatusResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblRateStatusResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblToDateResource1.Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="lblToDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkPeriodResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkPeriodResource1.ToolTip" xml:space="preserve">
+    <value>select period</value>
+  </data>
+  <data name="mnuBusLocSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mnuPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlEHSItemHdrResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlEHSItemHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlMessageResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlMessageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlPeriodHdrResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlPeriodHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProdListResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProdListResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfileInputHdrResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfileInputHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfilePeriodListResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfilePeriodListResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfileSelectHdrResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlProfileSelectHdrResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect0Resource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect0Resource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="radDateSelect0Resource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="radDateSelect0Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect0Resource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="radDateSelect0Resource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="radDateSelect1Resource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect1Resource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="radDateSelect1Resource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="radDateSelect1Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect1Resource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="radDateSelect1Resource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="radDateSelect2Resource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect2Resource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="radDateSelect2Resource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="radDateSelect2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radDateSelect2Resource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="radDateSelect2Resource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="radPeriodSelectResource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPeriodSelectResource1.DatePopupButton.ToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="radPeriodSelectResource1.HiddenInputTitleAttibute" xml:space="preserve">
+    <value>Visually hidden input created for functionality purposes.</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="radPeriodSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="radPeriodSelectResource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadMonthYearPicker</value>
+  </data>
+  <data name="radPeriodSelectResource1.WrapperTableSummary" xml:space="preserve">
+    <value>Table holding date picker control for selection of dates.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.BackImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.FilterMenu.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.CollapseTooltip" xml:space="preserve">
+    <value>Collapse group</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.ExpandTooltip" xml:space="preserve">
+    <value>Expand group</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
+    <value>; </value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.GroupContinuedFormatString" xml:space="preserve">
+    <value>... group continued from the previous page. </value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.GroupContinuesFormatString" xml:space="preserve">
+    <value> Group continues on the next page.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
+    <value>Showing {0} of {1} items.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
+    <value> ({0})</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.UnGroupButtonTooltip" xml:space="preserve">
+    <value>Click here to ungroup</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupingSettings.UnGroupTooltip" xml:space="preserve">
+    <value>Drag out of the bar to ungroup</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupPanel.Text" xml:space="preserve">
+    <value>Drag a column header and drop it here to group by that column</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.GroupPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.HierarchySettings.CollapseTooltip" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.HierarchySettings.ExpandTooltip" xml:space="preserve">
+    <value>Expand</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.HierarchySettings.SelfCollapseTooltip" xml:space="preserve">
+    <value>Self reference collapse</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.HierarchySettings.SelfExpandTooltip" xml:space="preserve">
+    <value>Self reference expand</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.Caption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.AddNewRecordText" xml:space="preserve">
+    <value>Add new record</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
+    <value>Cancel changes</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
+    <value>Export to CSV</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
+    <value>Export to PDF</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
+    <value>Export to Word</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
+    <value>Prev</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
+    <value>{0}:</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
+    <value>No child records to display.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
+    <value>No records to display.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
+    <value>Change Page Size</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
+    <value>First Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
+    <value>Go to Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
+    <value>Last Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
+    <value>Next Pages</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
+    <value>Next Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
+    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
+    <value>Page size:</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
+    <value>Previous Pages</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
+    <value>Previous Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
+    <value>{0}:</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.Summary" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.MasterTableView.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
+    <value>Change Page Size</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.FirstPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
+    <value>First Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
+    <value>Go to Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.LastPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
+    <value>Last Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
+    <value>Next Pages</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.NextPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
+    <value>Next Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
+    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
+    <value>Page size:</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
+    <value>Previous Pages</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.PrevPageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rgProfilePeriodListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
+    <value>Previous Page</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
+    <value>Sorted asc</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
+    <value>Sorted desc</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.SortingSettings.SortToolTip" xml:space="preserve">
+    <value>Click here to sort</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.StatusBarSettings.LoadingText" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="rgProfilePeriodListResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TemplateFieldResource1.AccessibleHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TemplateFieldResource1.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
+    <value>Data Name</value>
+  </data>
+  <data name="TemplateFieldResource2.AccessibleHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TemplateFieldResource2.FooterText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
+    <value>Value</value>
+  </data>
+</root>
