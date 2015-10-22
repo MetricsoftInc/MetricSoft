@@ -685,8 +685,8 @@ namespace SQM.Website
 				{
 					EHSIncidentData data = (EHSIncidentData)e.Item.DataItem;
 
-					lbl = (Label)e.Item.FindControl("lblIncidentId");
-					lbl.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
+					LinkButton lnk = (LinkButton)e.Item.FindControl("lbIncidentId");
+					lnk.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
 
 					if (data.Incident.DESCRIPTION.Length > 120)
 					{

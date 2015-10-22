@@ -488,10 +488,10 @@
 							<table class="innerTable">
 								<tr>
 									<td>
-										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lbIncidentIdResource2" OnClick="lnkEditIncident" ToolTip="Edit incident">
+										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbIncidentIdResource2" OnClick="lnkEditIncident" ToolTip="Edit incident">
 											<span style="white-space: nowrap;">
-												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Incident.INCIDENT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblIncidentId" meta:resourcekey="lblIncidentIdResource3"></asp:Label>
-
+												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" />
+									<%--			<asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Incident.INCIDENT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblIncidentId" meta:resourcekey="lblIncidentIdResource3"></asp:Label>--%>
 											</span>
 										</asp:LinkButton>
 									</td>
