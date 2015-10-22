@@ -178,8 +178,8 @@ namespace SQM.Website
 
 				EHSAuditData data = (EHSAuditData)e.Item.DataItem;
 
-				lbl = (Label)e.Item.FindControl("lblAuditId");
-				lbl.Text = WebSiteCommon.FormatID(data.Audit.AUDIT_ID, 6);
+				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditId");
+				lnk.Text = WebSiteCommon.FormatID(data.Audit.AUDIT_ID, 6);
 
 				if (data.Audit.DESCRIPTION.Length > 120)
 				{
@@ -216,7 +216,7 @@ namespace SQM.Website
 						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "A") + "<br/>(" + data.DaysToClose + ")";
 				}
 
-				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditId");
+				lnk = (LinkButton)e.Item.FindControl("lbAuditId");
 
 				if (SessionManager.UserContext.Person.PERSON_ID == data.Person.PERSON_ID)
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;

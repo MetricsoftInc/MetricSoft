@@ -490,7 +490,7 @@
 									<td>
 										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbIncidentIdResource2" OnClick="lnkEditIncident" ToolTip="Edit incident">
 											<span style="white-space: nowrap;">
-												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" />
+					<%--							<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" />--%>
 									<%--			<asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Incident.INCIDENT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblIncidentId" meta:resourcekey="lblIncidentIdResource3"></asp:Label>--%>
 											</span>
 										</asp:LinkButton>
@@ -579,11 +579,7 @@
 							<table class="innerTable">
 								<tr>
 									<td>
-										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lbIncidentIdResource3" OnClick="lnkEditIncident" ToolTip="Edit Recommendation">
-											<span style="white-space: nowrap;">
-												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Incident.INCIDENT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblIncidentId" meta:resourcekey="lblIncidentIdResource4"></asp:Label>
-
-											</span>
+										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbIncidentIdResource3" OnClick="lnkEditIncident" ToolTip="Edit Recommendation">
 										</asp:LinkButton>
 									</td>
 								</tr>

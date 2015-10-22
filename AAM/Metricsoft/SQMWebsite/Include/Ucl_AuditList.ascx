@@ -161,11 +161,7 @@
 							<table class="innerTable">
 								<tr>
 									<td>
-										<asp:LinkButton ID="lbAuditId" runat="server" CommandArgument='<%# Eval("Audit.AUDIT_ID") %>' meta:resourcekey="lbAuditIdResource1" OnClick="lnkEditAudit" ToolTip="Edit assessment">
-                                            <span style="white-space: nowrap;">
-                                                <img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Audit.AUDIT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblAuditId" meta:resourcekey="lblAuditIdResource1"></asp:Label>
-
-                                            </span>
+										<asp:LinkButton ID="lbAuditId" runat="server" CommandArgument='<%# Eval("Audit.AUDIT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbAuditIdResource1" OnClick="lnkEditAudit" ToolTip="Edit assessment">
                                         </asp:LinkButton>
 									</td>
 								</tr>

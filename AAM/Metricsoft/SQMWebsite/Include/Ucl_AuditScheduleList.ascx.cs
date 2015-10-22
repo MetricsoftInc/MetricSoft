@@ -162,8 +162,8 @@ namespace SQM.Website
 
 				EHSAuditSchedulerData data = (EHSAuditSchedulerData)e.Item.DataItem;
 
-				lbl = (Label)e.Item.FindControl("lblAuditScheduleId");
-				lbl.Text = WebSiteCommon.FormatID(data.AuditScheduler.AUDIT_SCHEDULER_ID, 6);
+				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditScheduleId");
+				lnk.Text = WebSiteCommon.FormatID(data.AuditScheduler.AUDIT_SCHEDULER_ID, 6);
 
 				lbl = (Label)e.Item.FindControl("lblAuditScheduleStatus");
 
@@ -180,7 +180,7 @@ namespace SQM.Website
 				DayOfWeek day = (DayOfWeek)data.AuditScheduler.DAY_OF_WEEK;
 				lbl.Text = day.ToString();
 
-				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditScheduleId");
+				lnk = (LinkButton)e.Item.FindControl("lbAuditScheduleId");
 				lnk.CommandArgument = data.AuditScheduler.AUDIT_SCHEDULER_ID.ToString();
 
 			}
