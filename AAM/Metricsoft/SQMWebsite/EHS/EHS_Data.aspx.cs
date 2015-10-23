@@ -595,6 +595,8 @@ namespace SQM.Website.EHS
 			public void InstantiateIn(Control container)
 			{
 				dynamic dataItem = (container.Parent as GridDataItem).DataItem;
+				if (dataItem == null)
+					return;
 				if (dataItem.DATA_TYPE == "O")
 				{
 					var rtbTotal = new RadTextBox()
