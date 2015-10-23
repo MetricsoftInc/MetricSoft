@@ -136,7 +136,7 @@ namespace SQM.Website
 						if (UserContext.GetScopePrivileges(SysScope.incident).Count() > 0)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_HS", "11").DESCRIPTION, GetMenu("MENU_HS", "11").DESCRIPTION_SHORT));
 						if (UserContext.GetScopePrivileges(SysScope.console).Count() > 0)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_HS", "12").DESCRIPTION, GetMenu("MENU_HS", "12").DESCRIPTION));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_HS", "12").DESCRIPTION, GetMenu("MENU_HS", "12").DESCRIPTION_SHORT));
 					}
 
 					if (UserContext.GetScopePrivileges(SysScope.audit).Count() > 0)
