@@ -97,7 +97,7 @@ namespace SQM.Website
 						RadMenu1.Items.Add(OrgMenu);
 						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_ORG", "11").DESCRIPTION, GetMenu("MENU_ORG", "11").DESCRIPTION_SHORT));
 						OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_ORG", "12").DESCRIPTION, GetMenu("MENU_ORG", "12").DESCRIPTION_SHORT));
-						if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
+						if (UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system) && SessionManager.UserContext.Person.PERSON_ID == 1)
 						{
 							OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_ORG", "13").DESCRIPTION, GetMenu("MENU_ORG", "13").DESCRIPTION_SHORT));
 							OrgMenu.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_ORG", "14").DESCRIPTION, GetMenu("MENU_ORG", "14").DESCRIPTION_SHORT));
