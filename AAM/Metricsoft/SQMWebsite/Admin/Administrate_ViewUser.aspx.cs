@@ -104,6 +104,11 @@ namespace SQM.Website
 			else
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
 
+			if (!string.IsNullOrEmpty(tbFilterName.Text.Trim()))
+			{
+				personList = personList.Where(l => tbFilterName.Text.Trim().ToUpper().Contains(l.LAST_NAME.ToUpper()) || tbFilterName.Text.Trim().ToUpper().Contains(l.FIRST_NAME.ToUpper())).ToList();
+			}
+
 			if (personList.Count > 0)
 			{
 				if (plantID > 0)

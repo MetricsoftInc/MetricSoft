@@ -82,12 +82,20 @@
                         </tr>
                     </table>
                     <div id="divPageBody" runat="server" style="margin-top: 5px;">
-						<span style="float: left; margin: 8px;">
+						<div style="float: left; margin-left: 8px;">
                             <asp:Label ID="lblFilterPlant" runat="server" CssClass="prompt" Text="HR Location: "></asp:Label>
-                            <telerik:RadComboBox id="ddlPlantList" runat="server" Skin="Metro" ZIndex="9000" Width="280" AutoPostBack="true" EmptyMessage="HR Plant Location" OnSelectedIndexChanged="FilterUsers"></telerik:RadComboBox>
-                            &nbsp;&nbsp;
+                            <telerik:RadComboBox id="ddlPlantList" runat="server" Skin="Metro" ZIndex="9000" Width="280" AutoPostBack="false" EmptyMessage="HR Plant Location"></telerik:RadComboBox>
+							<asp:Button id="btnSearchUsers" runat="server" OnClick="FilterUsers" CssClass="buttonEmphasis" Text="Search" style="margin-left: 20px;"/>
+                        </div>
+                        <asp:Button id="btnAddUser" runat="server" CssClass="buttonAddLarge" style="float: right; margin-right: 25px;" Text="Add User " ToolTip="Add A New User" OnClick="btnUserAdd_Click"/>
+                        <br style="clear: both;" />
+						<div style="float: left; margin: 4px 0px 4px 8px;">
+							<asp:Label ID="lblFilterName" runat="server" Text="User Name: " CssClass="prompt"></asp:Label>
+							&nbsp;
+							<asp:TextBox ID="tbFilterName" runat="server" MaxLength="100" Width="280"></asp:TextBox>
+							&nbsp;&nbsp;
 							<asp:Label ID="lblFilterStatus" runat="server" CssClass="prompt" Text="Status/Role: "></asp:Label>
-                            <telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="true" EmptyMessage="by status or role" OnSelectedIndexChanged="FilterUsers">
+                            <telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="false" EmptyMessage="by status or role" >
                                 <Items>
                                     <telerik:RadComboBoxItem Text="" Value="" />
                                     <telerik:RadComboBoxItem Text="Any Status" Value="0" />
@@ -100,10 +108,9 @@
                             &nbsp;&nbsp;
                             <asp:Label ID="lblUserCount" runat="server" CssClass="prompt" Text="Count = "></asp:Label>
                             <asp:Label ID="lblUserCount_out" runat="server" CssClass="textStd" ></asp:Label>
-                        </span>
-                        <asp:Button id="btnAddUser" runat="server" CssClass="buttonAddLarge" style="float: right; margin-right: 25px;" Text="Add User " ToolTip="Add A New User" OnClick="btnUserAdd_Click"/>
-                        <br style="clear: both;" />
-                        <Ucl:AdminList id="uclUserList" runat="server"/>
+						</div>
+						<br style="clear: both;" />
+						<Ucl:AdminList id="uclUserList" runat="server"/>
                         
                         <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="565" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
