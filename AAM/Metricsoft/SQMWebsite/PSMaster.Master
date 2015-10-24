@@ -175,7 +175,7 @@
 				<asp:Panel id="Panel1" runat="server" style="float: right;" meta:resourcekey="Panel1Resource1">
 				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences" meta:resourcekey="lbBusinessCard1_outResource1"></asp:LinkButton>
 					&nbsp;&nbsp;
-					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirmAction('Log Out');" onClick="lbLogout_Click" Title="Logout" meta:resourcekey="lnkLogoutResource1"></asp:LinkButton>
+					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirm('Please confirm - do you wish to log out ?');" onClick="lbLogout_Click" Title="Logout" meta:resourcekey="lnkLogoutResource1"></asp:LinkButton>
 				</asp:Panel>
 				<br />
 				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;" meta:resourcekey="pnlStatOfTheDayResource1">
