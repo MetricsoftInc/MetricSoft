@@ -375,6 +375,7 @@
     <Content Include="images\filetype\icon_jpg.jpg" />
     <Content Include="images\filetype\icon_pdf.gif" />
     <Content Include="images\filetype\icon_pdf.jpg" />
+    <Content Include="images\filetype\icon_png.jpg" />
     <Content Include="images\filetype\icon_ppt.gif" />
     <Content Include="images\filetype\icon_ppt.jpg" />
     <Content Include="images\filetype\icon_pptx.gif" />
