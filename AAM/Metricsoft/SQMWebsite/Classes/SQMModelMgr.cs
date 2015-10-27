@@ -1030,10 +1030,11 @@ namespace SQM.Website
         {
 			PSsqmEntities ctx = new PSsqmEntities();
             List<PERSON> personList = new List<PERSON>();
+			string addPlant = plantID.ToString() + ",";
 
 			personList = (from p in ctx.PERSON
 						  where p.COMPANY_ID == companyID
-								&& p.PLANT_ID == plantID
+								&& (p.PLANT_ID == plantID  ||  p.NEW_LOCATION_CD.Contains(addPlant))
 								&& p.STATUS == "A"
 						  select p).ToList();
 
@@ -1999,7 +2000,7 @@ namespace SQM.Website
                     try
                     {
                         string[] locs = person.NEW_LOCATION_CD.Split(',');
-                        decimal[] plantArray = Array.ConvertAll(locs, new Converter<string, decimal>(decimal.Parse));
+						decimal[] plantArray = Array.ConvertAll(locs.Where(s => !string.IsNullOrEmpty(s)).ToArray(), new Converter<string, decimal>(decimal.Parse));
                         userLocationList.AddRange(locationList.Where(l => plantArray.Contains(l.Plant.PLANT_ID)).ToList());
                     }
                     catch { ; }

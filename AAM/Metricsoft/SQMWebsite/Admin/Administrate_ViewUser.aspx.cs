@@ -417,7 +417,7 @@ namespace SQM.Website
             {
                 person.NEW_LOCATION_CD += (item.Value + ",");
             }
-            person.NEW_LOCATION_CD = person.NEW_LOCATION_CD.TrimEnd(',');
+            //person.NEW_LOCATION_CD = person.NEW_LOCATION_CD.TrimEnd(',');
 
             person.OLD_LOCATION_CD = "";
 
