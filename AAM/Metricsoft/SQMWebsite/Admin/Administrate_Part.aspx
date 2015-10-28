@@ -15,16 +15,16 @@
                             </td>
 						  </tr>
 				  </table>
-                  <BR/> 
+                  <BR/>
 
-				
-<!-- PAGE DATA CONTENT TABLE --> 
 
-					  <!-- DATA ENTRY CONTENT TABLE -->	
-				
-					  	 
+<!-- PAGE DATA CONTENT TABLE -->
+
+					  <!-- DATA ENTRY CONTENT TABLE -->
+
+
             <TABLE WIDTH="98%" BORDER="0" CELLSPACING="1" CELLPADDING="4" class="darkBorder">
-              <TR> 
+              <TR>
                 <TD CLASS="columnHeader" width="40%">
                     <asp:Label ID="lblNewPart" runat="server" Text="Add Part"></asp:Label>
                 </TD>
@@ -48,8 +48,8 @@
                             <td>
                                 <asp:TextBox ID="tbSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                                 <br />
-                                <asp:RadioButtonList runat="server" ID="rblSearchPart" CSSclass="radioList" 
-	                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                <asp:RadioButtonList runat="server" ID="rblSearchPart" CSSclass="radioList"
+	                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                            AutoPostBack="false">
 							            <asp:ListItem Text="All&nbsp;&nbsp;" Value="" ></asp:ListItem>
 								        <asp:ListItem Text="All Active" Value="A"></asp:ListItem>
@@ -57,7 +57,7 @@
                             </td>
                             <!--
                             <TD>
-                                <asp:Button ID="lbSearchPart" runat="server" CSSclass="buttonStd" onclick="lbSearchPart_Click" Text="Search"></asp:Button>
+                                <asp:Button ID="lbSearchPart" runat="server" CSSclass="buttonStd" onclick="lbSearchPart_Click" Text="<%$ Resources:LocalizedText, Search %>"></asp:Button>
                             </TD>
                             -->
                             <TD>
@@ -68,7 +68,7 @@
                     </TABLE>
                 </TD>
             </TR>
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblUploadData" runat="server" Text="Upload Part Master Data"></asp:Label>
                 </TD>
@@ -76,14 +76,14 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                             <TD>
-                                <asp:Button ID="lbUploadData" runat="server" class="buttonStd" 
+                                <asp:Button ID="lbUploadData" runat="server" class="buttonStd"
                                     onclick="lbUploadData_Click" text="Upload Data"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
-                </TD>                   
+                </TD>
             </TR>
- 
+
           </TABLE>
         </td>
       </tr>

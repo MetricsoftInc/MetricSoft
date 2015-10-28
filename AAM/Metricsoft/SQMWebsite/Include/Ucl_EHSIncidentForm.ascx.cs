@@ -44,7 +44,7 @@ namespace SQM.Website
 		// Incident Custom Forms:
 		protected Ucl_INCFORM_InjuryIllness injuryIllnessForm;
 
-		
+
 		// Special answers used in INCIDENT table
 		string incidentDescription = "";
 		protected DateTime incidentDate;
@@ -122,7 +122,7 @@ namespace SQM.Website
 			get { return ViewState["CreatePersonId"] == null ? 0 : (decimal)ViewState["CreatePersonId"]; }
 			set { ViewState["CreatePersonId"] = value; }
 		}
-		
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
@@ -261,11 +261,11 @@ namespace SQM.Website
 					pnl.Controls.Add(new LiteralControl("<span class=\"requiredStar\">&bull;</span>"));
 				if (q.IsRequiredClose)
 					pnl.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
-				
+
 				pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
 
 				if (q.QuestionType != EHSIncidentQuestionType.BooleanCheckBox && q.QuestionType != EHSIncidentQuestionType.CheckBox &&
-					q.QuestionType != EHSIncidentQuestionType.Attachment && q.QuestionType != EHSIncidentQuestionType.DocumentAttachment && 
+					q.QuestionType != EHSIncidentQuestionType.Attachment && q.QuestionType != EHSIncidentQuestionType.DocumentAttachment &&
 					q.QuestionType != EHSIncidentQuestionType.ImageAttachment && q.QuestionType != EHSIncidentQuestionType.PageOneAttachment)
 				{
 					if (q.IsRequired)
@@ -430,7 +430,7 @@ namespace SQM.Website
 						{
 							rdp.SelectedDate = DateTime.Now;
 						}
-						
+
 						if (shouldPopulate)
 						{
 							DateTime parseDate;
@@ -440,7 +440,7 @@ namespace SQM.Website
 						else
 						{
 							// Default projected completion date 30 or 60 days based on previous questions
-							if (q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate) 
+							if (q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate)
 							{
 								if (EditIncidentId > 0)
 								{
@@ -463,15 +463,15 @@ namespace SQM.Website
 								}
 							}
 						}
-						
+
 						// Incident report date, completion date, projected completion date are not editable
 						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate ||
 							q.QuestionId == (decimal)EHSQuestionId.CompletionDate ||
-							q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate) 
+							q.QuestionId == (decimal)EHSQuestionId.ProjectedCompletionDate)
 						{
 							rdp.Enabled = false;
 						}
-						
+
 						pnl.Controls.Add(rdp);
 						break;
 
@@ -502,7 +502,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.BooleanCheckBox:
 						pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
-						var bcb = new CheckBox() { ID = qid, Text = "Yes", CssClass = "WarnIfChanged" };
+						var bcb = new CheckBox() { ID = qid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
@@ -521,9 +521,9 @@ namespace SQM.Website
 								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedCreate8D);
 							bcb.AutoPostBack = true;
 						}
-						
+
 						pnl.Controls.Add(bcb);
-						
+
 						pnl.Controls.Add(new LiteralControl("</div>"));
 						break;
 
@@ -665,7 +665,7 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { "Yes", "No" };
+						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
 						foreach (var choice in choices)
 						{
 							var li = new ListItem(choice);
@@ -677,7 +677,7 @@ namespace SQM.Website
 						{
 							rblYN.SelectedIndexChanged += rblYN_SelectedIndexChanged;
 						}
-						pnl.Controls.Add(rblYN); 
+						pnl.Controls.Add(rblYN);
 						break;
 
 					case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
@@ -686,7 +686,7 @@ namespace SQM.Website
 
 						if (shouldPopulate)
 							rddlFilteredUsers.SelectedValue = q.AnswerText;
-						
+
 						if (rddlFilteredUsers.Items.Count() == 1)
 							validator.InitialValue = rddlFilteredUsers.Items[0].Text;
 
@@ -1008,7 +1008,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.BooleanCheckBox:
 						pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
-						var bcb = new CheckBox() { ID = qid, Text = "Yes", CssClass = "WarnIfChanged" };
+						var bcb = new CheckBox() { ID = qid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
@@ -1160,7 +1160,7 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { "Yes", "No" };
+						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
 						foreach (var choice in choices)
 						{
 							var li = new ListItem(choice);
@@ -1206,11 +1206,11 @@ namespace SQM.Website
 
 			UpdateAnswersFromForm();
 
-			UpdateButtonText();		
-		
-		
+			UpdateButtonText();
+
+
 		}
-		
+
 		void rddlLocation_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			BuildFilteredUsersDropdownList();
@@ -1390,7 +1390,7 @@ namespace SQM.Website
 				{
 					score++;
 				}
-				else 
+				else
 				{
 					if (field is RadTextBox)
 					{
@@ -1537,7 +1537,7 @@ namespace SQM.Website
 									}
 									else if (formControl is RadioButtonList)
 									{
-										(formControl as RadioButtonList).SelectedValue = "No";
+										(formControl as RadioButtonList).SelectedValue = Resources.LocalizedText.No;
 										(formControl as RadioButtonList).ForeColor = greyColor;
 									}
 									else if (formControl is RadDropDownList)
@@ -1577,7 +1577,7 @@ namespace SQM.Website
 									var rbl = (formControl as RadioButtonList);
 									if (criteriaIsMet)
 									{
-										rbl.SelectedValue = "Yes";
+										rbl.SelectedValue = Resources.LocalizedText.Yes;
 										affectedQuestion.AnswerText = "Yes";
 
 										// Recursively process any other controls triggered by a forced checkbox
@@ -1588,7 +1588,7 @@ namespace SQM.Website
 									{
 										// Only force to false if the result of a parent checkbox changing (avoids changes on form rebuilds)
 										if (controlQuestionChanged)
-											rbl.SelectedValue = "No";
+											rbl.SelectedValue = Resources.LocalizedText.No;
 									}
 
 									rbl.Enabled = (answer != triggerVal);
@@ -1702,7 +1702,7 @@ namespace SQM.Website
 			{
 				divForm.Visible = false;
 				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
-				
+
 				btnSaveReturn.Visible = false;
 				btnSaveContinue.Visible = false;
 				btnDelete.Visible = false;
@@ -1738,7 +1738,7 @@ namespace SQM.Website
 
 				lblResults.Visible = true;
 			}
-			
+
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(SelectedTypeId, companyId, CurrentStep);
 			UpdateAnswersFromForm();
 			GetIncidentInfoFromQuestions(questions);
@@ -2012,7 +2012,7 @@ namespace SQM.Website
 			entities.AddToINCIDENT(newIncident);
 			entities.SaveChanges();
 			incidentId = newIncident.INCIDENT_ID;
-			
+
 			return newIncident;
 		}
 
@@ -2078,12 +2078,12 @@ namespace SQM.Website
 					{
 						if (q.QuestionId == (decimal)EHSQuestionId.DateDue)
 							dueDate = DateTime.Parse(incidentAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US"));
-						else if (q.QuestionId == (decimal)EHSQuestionId.ResponsiblePersonDropdown) 
+						else if (q.QuestionId == (decimal)EHSQuestionId.ResponsiblePersonDropdown)
 							responsiblePersonId = Convert.ToDecimal(incidentAnswer.ANSWER_VALUE);
 					}
 				}
 			}
-			
+
 			if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
 			{
 				//int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
@@ -2146,7 +2146,7 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				// only Admin, Approvers or incident owner can delete 
+				// only Admin, Approvers or incident owner can delete
 				if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
 					UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.incident) ||
 					UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident) ||
@@ -2209,7 +2209,7 @@ namespace SQM.Website
 			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
 			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
-			lblPageTitle.Text = "Incident";
+			lblPageTitle.Text = Resources.LocalizedText.Incident;
 
 			switch (btn.CommandArgument)
 			{
@@ -2224,7 +2224,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
-					lblPageTitle.Text = "Root Cause";
+					lblPageTitle.Text = Resources.LocalizedText.RootCause;
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					uclRootCause.Visible = divSubnavPage.Visible = true;
@@ -2234,7 +2234,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
-					lblPageTitle.Text = "Corrective Action";
+					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					uclAction.Visible = divSubnavPage.Visible = true;
@@ -2244,7 +2244,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
-					lblPageTitle.Text = "Approvals";
+					lblPageTitle.Text = Resources.LocalizedText.Approvals;
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					uclApproval.Visible = divSubnavPage.Visible = true;
@@ -2256,7 +2256,7 @@ namespace SQM.Website
 					break;
 				case "0":
 				default:
-					lblPageTitle.Text = "Incident";
+					lblPageTitle.Text = Resources.LocalizedText.Incident;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -2278,14 +2278,13 @@ namespace SQM.Website
 
 		protected void RefreshPageContext()
 		{
-			string typeString = "";
-			typeString = "Incident";
+			string typeString = Resources.LocalizedText.Incident;
 			lblPageTitle.Text = typeString;
 
 				if (!IsEditContext)
 				{
 					lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
-					lblIncidentType.Text = "Incident Type: ";
+					lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
 					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 					lblIncidentLocation.Text = "Incident Location: ";
 					lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
@@ -2294,7 +2293,7 @@ namespace SQM.Website
 				{
 
 					lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
-					lblIncidentType.Text = "Incident Type: ";
+					lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
 					lblIncidentLocation.Text = "Incident Location: ";
 					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 					lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
@@ -2324,6 +2323,6 @@ namespace SQM.Website
 			return plantIdList;
 		}
 
-		
+
 	}
 }

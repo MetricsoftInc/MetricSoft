@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,32 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnSearchResource1.Text" xml:space="preserve">
-    <value>Search</value>
-  </data>
   <data name="btnSearchResource1.ToolTip" xml:space="preserve">
     <value>List assessment exceptions</value>
   </data>
   <data name="ddlDateSpanResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlDateSpanResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlDateSpanResource1.ToolTip" xml:space="preserve">
     <value />
@@ -150,71 +129,17 @@
   <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
     <value>Select responsible/supplier locations</value>
   </data>
-  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlYearFromResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlYearFromResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlYearFromResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlYearToResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlYearToResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlYearToResource1.ToolTip" xml:space="preserve">
     <value />
@@ -224,15 +149,6 @@
   </data>
   <data name="dmPeriodFromResource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodFromResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -246,9 +162,6 @@
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -258,23 +171,11 @@
   <data name="dmPeriodFromResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="dmPeriodFromResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="dmPeriodToResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="dmPeriodToResource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodToResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -288,9 +189,6 @@
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -299,9 +197,6 @@
   </data>
   <data name="dmPeriodToResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
-  </data>
-  <data name="dmPeriodToResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
   <data name="GridBoundColumnResource1.AndCurrentFilterValue" xml:space="preserve">
     <value />
@@ -398,150 +293,6 @@
     <value>False</value>
   </data>
   <data name="GridBoundColumnResource10.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.DataFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridBoundColumnResource2.EmptyDataText" xml:space="preserve">
-    <value>&amp;nbsp;</value>
-  </data>
-  <data name="GridBoundColumnResource2.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.HeaderText" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="GridBoundColumnResource2.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource2.HtmlEncode" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="GridBoundColumnResource2.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.DataFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridBoundColumnResource3.EmptyDataText" xml:space="preserve">
-    <value>&amp;nbsp;</value>
-  </data>
-  <data name="GridBoundColumnResource3.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.HeaderText" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="GridBoundColumnResource3.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource3.HtmlEncode" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="GridBoundColumnResource3.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.DataFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridBoundColumnResource4.EmptyDataText" xml:space="preserve">
-    <value>&amp;nbsp;</value>
-  </data>
-  <data name="GridBoundColumnResource4.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.HeaderText" xml:space="preserve">
-    <value>Comments</value>
-  </data>
-  <data name="GridBoundColumnResource4.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridBoundColumnResource4.HtmlEncode" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="GridBoundColumnResource4.SortExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridBoundColumnResource5.AndCurrentFilterValue" xml:space="preserve">
@@ -940,45 +691,6 @@
   <data name="GridTemplateColumnResource12.SortExpression" xml:space="preserve">
     <value>Audit.TOTAL_SCORE</value>
   </data>
-  <data name="GridTemplateColumnResource13.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridTemplateColumnResource13.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderText" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource2.AndCurrentFilterValue" xml:space="preserve">
     <value />
   </data>
@@ -1016,45 +728,6 @@
     <value />
   </data>
   <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridTemplateColumnResource3.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderText" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.SortExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource4.AndCurrentFilterValue" xml:space="preserve">
@@ -1328,18 +1001,6 @@
     <value>From:</value>
   </data>
   <data name="lblPeriodFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPeriodToResource1.Text" xml:space="preserve">
-    <value>To:</value>
-  </data>
-  <data name="lblPeriodToResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPlantSelectResource1.Text" xml:space="preserve">
-    <value>Locations:</value>
-  </data>
-  <data name="lblPlantSelectResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lblResolutionDateResource1.Text" xml:space="preserve">
@@ -1756,9 +1417,6 @@
   <data name="rgAuditAnswersResource1.SortingSettings.SortToolTip" xml:space="preserve">
     <value>Click here to sort</value>
   </data>
-  <data name="rgAuditAnswersResource1.StatusBarSettings.LoadingText" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
   <data name="rgAuditAnswersResource1.StatusBarSettings.ReadyText" xml:space="preserve">
     <value>Ready</value>
   </data>
@@ -2083,9 +1741,6 @@
   <data name="rgAuditListResource1.SortingSettings.SortToolTip" xml:space="preserve">
     <value>Click here to sort</value>
   </data>
-  <data name="rgAuditListResource1.StatusBarSettings.LoadingText" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
   <data name="rgAuditListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
     <value>Ready</value>
   </data>
@@ -2409,9 +2064,6 @@
   </data>
   <data name="rgTasksResource1.SortingSettings.SortToolTip" xml:space="preserve">
     <value>Click here to sort</value>
-  </data>
-  <data name="rgTasksResource1.StatusBarSettings.LoadingText" xml:space="preserve">
-    <value>Loading...</value>
   </data>
   <data name="rgTasksResource1.StatusBarSettings.ReadyText" xml:space="preserve">
     <value>Ready</value>

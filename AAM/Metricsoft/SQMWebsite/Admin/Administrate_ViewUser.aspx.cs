@@ -196,7 +196,7 @@ namespace SQM.Website
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.EffLocation.Company.COMPANY_ID, 0, false);
 
 				SQMBasePage.SetLocationList(ddlPlantList, locationList, SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
-				ddlPlantList.Items.Insert(0, new RadComboBoxItem("All", ""));
+				ddlPlantList.Items.Insert(0, new RadComboBoxItem(Resources.LocalizedText.All, ""));
 
 				ddl = (DropDownList)hfBase.FindControl("ddlPrefListSize");
 				if (ddl != null)

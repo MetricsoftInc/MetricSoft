@@ -4,7 +4,7 @@
 <%@ Register src="~/Include/Ucl_StreamList.ascx" TagName="StreamList" TagPrefix="Ucl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
-<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
   <script type="text/javascript">
       function CalcCost(tbF1, tbF2, tbTot) {
           var f1 = +(document.getElementById(tbF1).value.replace(/,/, '.'));
@@ -54,13 +54,13 @@
                                 </tr>
                                 <tr align="center" align="center" height="24">
                                     <td>
-                                        <asp:LinkButton id="btnCreateReport" runat="server" CssClass = "buttonLink" Text="Create Cost Report" 
+                                        <asp:LinkButton id="btnCreateReport" runat="server" CssClass = "buttonLink" Text="Create Cost Report"
                                             OnClientClick="return confirmAction('Create The Cost Report');" ></asp:LinkButton>
                                     </td>
                                     </tr>
                                     <tr align="center" align="center" height="24">
                                     <td>
-                                        <asp:LinkButton id="btnSubmitReport" runat="server" CssClass = "buttonLink" Text="Submit Report" 
+                                        <asp:LinkButton id="btnSubmitReport" runat="server" CssClass = "buttonLink" Text="Submit Report"
                                             OnClientClick="return confirmAction('Submit The Cost Report');"></asp:LinkButton>
                                     </td>
                                 </tr>
@@ -228,7 +228,7 @@
                                     </tr>
                                 </table>
                                 <asp:Panel ID="pnlDowntimeCost" runat="server" style="height:1px; visibility: hidden; margin-top: 2px;" >
-                                <table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">                     
+                                <table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">
                                     <tr >
                                         <td class="columnHeader" width="25%">
                                             <asp:Label ID="lblCRPlantLine" runat="server" text="Plant Line/Operation"></asp:Label>
@@ -435,7 +435,7 @@
                                 <table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">
                                     <tr >
                                         <td class="columnHeader" width="25%">
-                                            <asp:Label ID="lblCRShipDesc" runat="server" text="Description"></asp:Label>
+                                            <asp:Label ID="lblCRShipDesc" runat="server" text="<%$ Resources:LocalizedText, Description %>"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="20%">

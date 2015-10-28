@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_EHSRez.ascx.cs" Inherits="SQM.Website.Ucl_EHSRez" %>
 <%@ Register src="~/Include/Ucl_ItemHdr.ascx" TagName="ItemHdr" TagPrefix="Ucl" %>
-<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="../scripts/jquery-1.4.1.min.js"></script>
 <script type="text/javascript" src="../scripts/jquery-ui-1.8.20.custom.min.js"></script>
 <script type="text/javascript" src="../scripts/datepicker.js"></script>
@@ -63,7 +63,7 @@
     }
 
 </script>
-   
+
 <asp:HiddenField ID="hfOper" runat="server" />
 
 <asp:Panel ID="pnlEHSProfile" runat="server" Visible = "false" CssClass="admBkgd">
@@ -81,19 +81,19 @@
             <td valign="top" align="center" width="50%" colspan="1">
                 <div id="divMetricListGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvMetricList" Name="gvMetricList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeaderWhenEmpty="True" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvOnProfileRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellText" />    
+                        <HeaderStyle CssClass="HeadingCellText" />
                         <RowStyle CssClass="DataCell" />
                 	    <Columns>
                             <asp:TemplateField HeaderText="Measure Name" ItemStyle-Width="35%">
                                 <ItemTemplate>
-                                        <asp:LinkButton ID="lnkMetricName" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline" 
+                                        <asp:LinkButton ID="lnkMetricName" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline"
 										    Text='<%#Eval("EHS_MEASURE.MEASURE_NAME") %>' OnClick="lnkMetricList_Click"></asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="M Code" ItemStyle-Width="15%">
 							    <ItemTemplate>
                                     <asp:HiddenField id="hfMetricCategory" runat="server" value='<%#Eval("EHS_MEASURE.MEASURE_CATEGORY") %>' />
-								    <asp:LinkButton ID="lnkMetricCD" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline" 
+								    <asp:LinkButton ID="lnkMetricCD" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline"
 										Text='<%#Eval("EHS_MEASURE.MEASURE_CD") %>' OnClientClick="UpdateProfileButtons();" OnClick="lnkMetricList_Click"></asp:LinkButton>
                                 </ItemTemplate>
 							</asp:TemplateField>
@@ -122,10 +122,10 @@
             <td valign="top" width="1%"></td>
             <td valign="top" width="49%">
                 <asp:Button ID="btnProfileMeasureNew" runat="server" Text="Add Metric" ToolTip="Add an EHS Measure to this profile" CSSclass="buttonStd" style="margin: 6px;" enabled=false OnClick="btnMetricAdd_Click" ></asp:Button>
-                <asp:Button ID="btnMetricCancel" CSSclass="buttonStd" runat="server" text="Cancel" enabled=false style="margin: 5px;" OnClientClick="CancelProfileMeasure(); return false;"  ></asp:Button>
-                <asp:Button ID="btnMetricSave" CSSclass="buttonStd" runat="server" enabled=false text="Update Metric" style="margin: 5px;" 
+                <asp:Button ID="btnMetricCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" enabled=false style="margin: 5px;" OnClientClick="CancelProfileMeasure(); return false;"  ></asp:Button>
+                <asp:Button ID="btnMetricSave" CSSclass="buttonStd" runat="server" enabled=false text="Update Metric" style="margin: 5px;"
                         OnClientClick="return ValidProfileMeasure();" OnClick="btnMetricSave_Click" ></asp:Button>
-                <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Profile" style="float: right; margin: 5px;" 
+                <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Profile" style="float: right; margin: 5px;"
                         OnClientClick="return confirmChange('Environment Profile');" onclick="btnProfileSave_Click" ></asp:Button>
                 <asp:Panel id="pnlMetricEdit" runat="server">
                     <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder1">
@@ -301,7 +301,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricStatus" runat="server" text="Status"></asp:Label>
+                                <asp:Label ID="lblMetricStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlMetricStatus" runat="server"></asp:DropDownList></td>

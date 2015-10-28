@@ -13,7 +13,7 @@
                                 <asp:Label ID="lblViewTradePartnerTitle" runat="server" Text="Trading Partners - "></asp:Label>
                             </td>
 					    </tr>
-				    </table><BR/> 
+				    </table><BR/>
 
                     <table width="99%" border="0" cellspacing="0" cellpadding="1" class="darkBorder">
                         <tr>
@@ -23,14 +23,14 @@
 		                    </td>
                             <td class="tabActiveTableBg" width="70%">
                                 <asp:TextBox ID="tbSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>&nbsp;
-                                <asp:Button ID="btnSearchCompany" runat="server" Text="Search" CSSclass="buttonStd" onclick="lbSearchCompany_Click"></asp:Button>
+                                <asp:Button ID="btnSearchCompany" runat="server" Text="<%$ Resources:LocalizedText, Search %>" CSSclass="buttonStd" onclick="lbSearchCompany_Click"></asp:Button>
                             </td>
                         </tr>
                     </table>
                     <br>
 
        	            <table width="99%" cellpadding="3" cellspacing="1" border="0" class="darkBorder">
-                        <TR> 
+                        <TR>
 		                    <TD class="tableDataHdr" colspan="5">
 			                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
 				                    <tr>
@@ -39,7 +39,7 @@
                                             <asp:Label runat="server" ID="lblCustomerListHdr" Text="Customer Companies List" Visible="true"></asp:Label>
                                         </td>
 	                                    <td align="right">
-					                <!-- BUTTONS -->		
+					                <!-- BUTTONS -->
 					                        <table cellpadding=0 cellspacing=2 border=0>
 						                        <tr>
                                                     <TD>
@@ -53,7 +53,7 @@
 			                    </table>
                             </TD>
                         </TR>
-                       
+
 
                             <table width="99%" border="0" cellspacing="0" cellpadding="0">
                                 <asp:Panel ID="pnlB2BSupplier" runat="server" Visible="false">
@@ -68,11 +68,11 @@
 					                                <table cellpadding=0 cellspacing=2 border=0>
 						                                <tr>
 							                                <td>
-                                                                <asp:Button ID="btnTradePartnerCancel1" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                                                <asp:Button ID="btnTradePartnerCancel1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                                              onclick="btnTradePartnerCancel_Click" CommandArgument="edit" UseSubmitBehavior="false"></asp:Button>
                                                             </td>
                                                             <td>
-                                                                <asp:Button ID="btnTradePartnerSave1" CSSclass="buttonEmphasis" runat="server" text="Save" OnClientClick="return confirmChange('Trading Partner Assignments');" onclick="btnTradePartnerSave_Click"></asp:Button>
+                                                                <asp:Button ID="btnTradePartnerSave1" CSSclass="buttonEmphasis" runat="server" text="<%$ Resources:LocalizedText, Save %>" OnClientClick="return confirmChange('Trading Partner Assignments');" onclick="btnTradePartnerSave_Click"></asp:Button>
                                                             </td>
 						                                </tr>
 					                                </table>
@@ -104,11 +104,11 @@
 					                                <table cellpadding=0 cellspacing=2 border=0>
 						                                <tr>
 							                                <td>
-                                                                <asp:Button ID="btnTradePartnerCancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                                                <asp:Button ID="btnTradePartnerCancel2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                                              onclick="btnTradePartnerCancel_Click" CommandArgument="edit" UseSubmitBehavior="false"></asp:Button>
                                                             </td>
                                                             <td>
-                                                                <asp:Button ID="btnTradePartnerSave2" CSSclass="buttonEmphasis" runat="server" text="Save" OnClientClick="return confirmChange('Trading Partner Assignments');" onclick="btnTradePartnerSave_Click"></asp:Button>
+                                                                <asp:Button ID="btnTradePartnerSave2" CSSclass="buttonEmphasis" runat="server" text="<%$ Resources:LocalizedText, Save %>" OnClientClick="return confirmChange('Trading Partner Assignments');" onclick="btnTradePartnerSave_Click"></asp:Button>
                                                             </td>
 						                                </tr>
 					                                </table>
@@ -129,7 +129,7 @@
                                 </asp:Panel>
                                 <Ucl:PartList id="uclPartList" runat="server"/>
                             </table>
-                       
+
 			        </table>
                 </TD>
             </TR>

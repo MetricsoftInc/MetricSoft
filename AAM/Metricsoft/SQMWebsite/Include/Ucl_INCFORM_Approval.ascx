@@ -36,7 +36,7 @@
 
 	<div class="container-fluid">
 
-		<telerik:RadAjaxPanel ID="rapApprovals" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapApprovalsResource1">  
+		<telerik:RadAjaxPanel ID="rapApprovals" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapApprovalsResource1">
 
 		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound" OnItemCommand="rptApprovals_ItemCommand">
 			<FooterTemplate>
@@ -75,7 +75,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
 						<span>Date&nbsp;
-						<telerik:RadDatePicker ID="rdpAcceptDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" Enabled="False" meta:resourcekey="rdpAcceptDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="120px">
+						<telerik:RadDatePicker ID="rdpAcceptDate" runat="server" CssClass="WarnIfChanged" Enabled="False" meta:resourcekey="rdpAcceptDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="120px">
 							<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 							</Calendar>
 							<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">

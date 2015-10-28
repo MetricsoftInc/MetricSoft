@@ -440,7 +440,7 @@ namespace SQM.Website
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
 					ucllosttime.Visible = false;
-					lblFormTitle.Text = "Incident";
+					lblFormTitle.Text = Resources.LocalizedText.Incident;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";
 					rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
@@ -557,13 +557,12 @@ namespace SQM.Website
 
 		protected void RefreshPageContext()
 		{
-			string typeString = "";
-			typeString = "Incident";
+			string typeString = Resources.LocalizedText.Incident;
 
 			if (!IsEditContext)
 			{
 				lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
-				lblIncidentType.Text = "Incident Type: ";
+				lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
 				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 				lblIncidentLocation.Text = "Incident Location: ";
 				lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
@@ -572,7 +571,7 @@ namespace SQM.Website
 			{
 
 				lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
-				lblIncidentType.Text = "Incident Type: ";
+				lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
 				lblIncidentLocation.Text = "Incident Location: ";
 				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
 				lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
@@ -1184,7 +1183,7 @@ namespace SQM.Website
 			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
 			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
-			lblFormTitle.Text = "Incident";
+			lblFormTitle.Text = Resources.LocalizedText.Incident;
 
 			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
@@ -1199,7 +1198,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "3":
-					lblFormTitle.Text = "Root Cause";
+					lblFormTitle.Text = Resources.LocalizedText.RootCause;
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
@@ -1207,7 +1206,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "4":
-					lblFormTitle.Text = "Corrective Action";
+					lblFormTitle.Text = Resources.LocalizedText.CorrectiveAction;
 					btnSubnavAction.Enabled = false;
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
@@ -1215,7 +1214,7 @@ namespace SQM.Website
 					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
 					break;
 				case "5":
-					lblFormTitle.Text = "Approvals";
+					lblFormTitle.Text = Resources.LocalizedText.Approvals;
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
@@ -1233,7 +1232,7 @@ namespace SQM.Website
 					break;
 				case "0":
 				default:
-					lblFormTitle.Text = "Incident";
+					lblFormTitle.Text = Resources.LocalizedText.Incident;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";

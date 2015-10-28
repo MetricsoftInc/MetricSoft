@@ -3,7 +3,7 @@
 <%@ Register src="~/Include/Ucl_Status.ascx" TagName="Status" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadAsyncUpload" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_EHSIncidentDetails.ascx" TagName="IncidentDetails" TagPrefix="Ucl" %>
-<%@ Reference Control="~/Include/Ucl_QualityIssue.ascx" %>    
+<%@ Reference Control="~/Include/Ucl_QualityIssue.ascx" %>
 <%--<%@ Register src="~/Include/Ucl_RadScriptBlock.ascx" TagName="RadScript" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_QISearch.ascx" TagName="QISearch" TagPrefix="Ucl" %>--%>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
@@ -17,7 +17,7 @@
         }
     });
 
- 
+
     function ValidSave1(changeDesc) {
         return confirmChange(changeDesc);
     }
@@ -50,7 +50,7 @@
         catch (ex) {
         }
     }
- 
+
 </script>
     <asp:Panel ID="pnlCase0" runat="server" Visible = "false">
         <table width="99%" class="editArea">
@@ -91,7 +91,7 @@
                         <asp:PlaceHolder ID="phCase0InActive" runat="server">
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblCaseInActive" runat="server" text="Inactive" ></asp:Label>
+                                <asp:Label ID="lblCaseInActive" runat="server" Text="<%$ Resources:LocalizedText, Inactive %>" ></asp:Label>
                             </td>
                             <td class="tableDataAlt">&nbsp;</td>
                             <td class="tableDataAlt">
@@ -111,7 +111,7 @@
                             <td class="required">&nbsp;</td>
                             <td class="tableDataSmall">
                                 <%--<div ID="divQISearch" runat="server" Visible="false">
-                                    <Ucl:RadScript id="uclRadScript" runat="server"/> 
+                                    <Ucl:RadScript id="uclRadScript" runat="server"/>
                                     <Ucl:QISearch id="uclQISearch" runat="server" />
                                 </div>--%>
                                 <%--<asp:UpdatePanel ID="udpAddIncident" runat="server" UpdateMode=Conditional>
@@ -141,7 +141,7 @@
                             <td class="tableDataAlt">&nbsp;</td>
                             <td CLASS="tableDataAlt">
                                 <asp:GridView runat="server" ID="gvCasePartsList" Name="gvCasePartsList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" >
-                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                     <RowStyle CssClass="DataCell" />
                 	                    <Columns>
                                             <asp:BoundField DataField="PART_NUM" HeaderText="Part Number" ItemStyle-Width="30%" />
@@ -181,11 +181,11 @@
                             <asp:PostBackTrigger ControlID="btnCase0Save" />
                         </Triggers>
                         <ContentTemplate>
-                            <asp:Button ID="btnCase0Cancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+                            <asp:Button ID="btnCase0Cancel" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                                 onclick="btnCancel_Click" CommandArgument="0"></asp:Button>
                             <asp:Button ID="btnCase0Save" CSSclass="buttonEmphasis" runat="server" text="Save Case" Enabled="true" title="save this step of the problem case"
                                 OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="0"></asp:Button>
-                            <asp:Button id="btnCase0Delete" CssClass="buttonEmphasis" runat="server" style="float: right; margin-right: 10px;" Text="Delete Case" Visible="false" Enabled="false" 
+                            <asp:Button id="btnCase0Delete" CssClass="buttonEmphasis" runat="server" style="float: right; margin-right: 10px;" Text="Delete Case" Visible="false" Enabled="false"
                               title="Delete this problem case"  ToolTip="Delete this problem case" OnClientClick="return confirmAction('Delete This Case (NOTE: this action will permanently remove the Problem Case and cannot be un-done)');" onclick="btnDelete_Click" ></asp:Button>
                          </ContentTemplate>
                     </asp:UpdatePanel>
@@ -212,9 +212,9 @@
                                 <asp:Label ID="lblCase1Status" runat="server" text="Task Assignments"></asp:Label>
                             </td>
                             <td class="required" width="1%">&nbsp;</td>
-                            <td class="tableDataAlt" width="85%"> 
+                            <td class="tableDataAlt" width="85%">
                                 <asp:GridView runat="server" ID="gvTeamList" Name="gvTaskList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="0" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvTeamList_OnRowDataBound">
-                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                     <RowStyle CssClass="DataCell" />
                 	                <Columns>
                                         <asp:TemplateField HeaderText="Step" ItemStyle-Width="33">
@@ -235,7 +235,7 @@
                                                 <telerik:RadComboBox ID="ddlResponsible" runat="server" Skin="Metro" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged"></telerik:RadComboBox>
                                             </ItemTemplate>
 					                    </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Status" ItemStyle-Width="25%">
+                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="25%">
 						                    <ItemTemplate>
                                                 <asp:HiddenField ID="hfCompleteDate" runat="server" value='<%#Eval("COMPLETE_DT") %>'/>
                                                 <asp:HiddenField ID="hfCompleteBy" runat="server" value='<%#Eval("COMPLETE_ID") %>'/>
@@ -276,7 +276,7 @@
                         <asp:PostBackTrigger ControlID="btnCase1Save" />
                     </Triggers>
                     <ContentTemplate>
-                        <asp:Button ID="btnCase1Cancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+                        <asp:Button ID="btnCase1Cancel" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                             onclick="btnCancel_Click" CommandArgument="1"></asp:Button>
                         <asp:Button ID="btnCase1Save" CSSclass="buttonEmphasis" runat="server" text="Save Team Assignments" Enabled="true" title="save this step of the problem case"
                             OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="1"></asp:Button>
@@ -444,9 +444,9 @@
                             <asp:PostBackTrigger ControlID="btnCase2Save" />
                         </Triggers>
                         <ContentTemplate>
-                            <asp:Button ID="btnCase2Cancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+                            <asp:Button ID="btnCase2Cancel" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                                 onclick="btnCancel_Click" CommandArgument="2"></asp:Button>
-                            <asp:Button ID="btnCase2Save" CSSclass="buttonEmphasis" runat="server" text="Save Definition" Enabled="true" title="save this step of the problem case" 
+                            <asp:Button ID="btnCase2Save" CSSclass="buttonEmphasis" runat="server" text="Save Definition" Enabled="true" title="save this step of the problem case"
                                 OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="2"></asp:Button>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -455,7 +455,7 @@
 		    </table>
         </asp:PlaceHolder>
     </asp:Panel>
-   
+
     <asp:Panel ID="pnlCase3" runat="server" Visible = "false">
         <asp:HiddenField id="hfHlpCase3Complete" runat="server" Value="This step may be marked as complete when at least one containment action has been entered and saved."/>
         <table width="99%" class="editArea">
@@ -469,7 +469,7 @@
                     <td class="editArea">
                         <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft" style="margin-top: 4px;">
                             <tr>
-                                <td class="columnHeader" width="14%"><asp:Label ID="lblCase3InitialContain" runat="server" text="Initial Action"></asp:Label></td>
+                                <td class="columnHeader" width="14%"><asp:Label ID="lblCase3InitialContain" runat="server" text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label></td>
                                 <td class="tableDataAlt" width="1%"></td>
                                 <td class="tableDataAlt" width="85%"><asp:TextBox ID="tbCase3InitialContain" runat="server" TextMode="multiline" rows="4" maxlength="1000" CssClass="commentArea WarnIfChanged"></asp:TextBox></td>
                             </tr>
@@ -490,7 +490,7 @@
                             <td class="required" width="1%"></td>
                             <td class="tableDataAlt" width="85%">
                                 <asp:GridView runat="server" ID="gvContainList" Name="gvContainList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeader="True"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%"  OnRowDataBound="gvContainList_OnRowDataBound">
-                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                     <RowStyle CssClass="DataCell" />
                 	                <Columns>
                                         <asp:TemplateField HeaderText="Action Description" ItemStyle-VerticalAlign="Top" >
@@ -509,15 +509,15 @@
                                                 <telerik:RadComboBox ID="ddlContainResponsible" runat="server" Skin="Metro" style="width: 99%; margin-top:3px;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" ToolTip="Select the person responsible for implementing or overseeing this action" EmptyMessage="Select Person"></telerik:RadComboBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Due Date /<br>Status" ItemStyle-VerticalAlign="Top" ItemStyle-Width="120px">
+                                        <asp:TemplateField ItemStyle-VerticalAlign="Top" ItemStyle-Width="120px">
                                             <ItemTemplate>
                                                 <asp:HiddenField ID="hfContainDueDate" runat="server" Value='<%#Eval("DUE_DT") %>' />
                                                 <telerik:RadDatePicker ID="radContainDueDate" runat="server" CssClass="textStd WarnIfChanged" Width=115 Skin="Metro" style="margin-top: 3px;" ></telerik:RadDatePicker>
                                                 <br />
-                                                <telerik:RadComboBox ID="ddlContainStatus" runat="server" Skin="Metro" style="width: 99%; margin-top: 3px;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" Width="115"  EmptyMessage="Status" ToolTip="Select the status of the action to be performed"></telerik:RadComboBox>
+                                                <telerik:RadComboBox ID="ddlContainStatus" runat="server" Skin="Metro" style="width: 99%; margin-top: 3px;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" Width="115" EmptyMessage="<%$ Resources:LocalizedText, Status %>" ToolTip="Select the status of the action to be performed"></telerik:RadComboBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                          
+
                                     </Columns>
                                 </asp:GridView>
                             </td>
@@ -551,12 +551,12 @@
                             <asp:PostBackTrigger ControlID="btnCase3Save2" />
                         </Triggers>
                         <ContentTemplate>
-                            <asp:Button ID="btnCase3Cancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                            <asp:Button ID="btnCase3Cancel2" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                                 onclick="btnCancel_Click" CommandArgument="3"></asp:Button>
                             <asp:Button ID="btnCase3Save2" CSSclass="buttonEmphasis" runat="server" text="Save Containment" title="save this step of the problem case"
                                 OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="3"></asp:Button>
                         </ContentTemplate>
-                </asp:UpdatePanel>    
+                </asp:UpdatePanel>
                 </td>
             </tr>
         </table>
@@ -586,9 +586,9 @@
                         </td>
                         <td class="required">&nbsp;</td>
                         <td class="tableDataAlt">
-                            <asp:GridView runat="server" ID="gvCauseStepList" Name="gvCauseStepList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false" CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" 
+                            <asp:GridView runat="server" ID="gvCauseStepList" Name="gvCauseStepList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false" CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true"
                                 Width="99%" OnRowDataBound="gvCauseStepList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                <HeaderStyle CssClass="HeadingCellTextLeft" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                     	            <asp:BoundField  DataField="PROBCASE_ID" Visible="False"/>
@@ -621,7 +621,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="columnHeader" width="14%"><asp:Label ID="lblCase4Comments" runat="server" text="Comments"></asp:Label></td>
+                        <td class="columnHeader" width="14%"><asp:Label ID="lblCase4Comments" runat="server" Text="<%$ Resources:LocalizedText, Comments %>"></asp:Label></td>
                         <td class="tableDataAlt" width="1%">&nbsp;</td>
                         <td class="tableDataAlt" width="85%"><asp:TextBox ID="tbCase4Comments" runat="server" TextMode="multiline" rows="4" maxlength="1000" CssClass="commentArea WarnIfChanged"></asp:TextBox></td>
                     </tr>
@@ -637,9 +637,9 @@
         <tr style="height: 5px;"><td></td></tr>
         <tr id="trCase4OptionArea" runat="server">
             <td align="right" class="optionArea">
-                <asp:Button ID="btnCase4Cancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                <asp:Button ID="btnCase4Cancel2" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                     onclick="btnCancel_Click" CommandArgument="4"></asp:Button>
-                <asp:Button ID="btnCase4Save2" CSSclass="buttonEmphasis" runat="server" text="Save Root Cause" Enabled="true" title="save this step of the problem case" 
+                <asp:Button ID="btnCase4Save2" CSSclass="buttonEmphasis" runat="server" text="Save Root Cause" Enabled="true" title="save this step of the problem case"
                     OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="4"></asp:Button>
             </td>
         </tr>
@@ -664,7 +664,7 @@
                                 <table width="100%" align="center"  border="0" cellspacing="0" cellpadding="1" class="borderSoft" style="margin-top: 4px;">
                                     <tr>
                                         <td class="columnHeader"  width="14%">
-                                            <asp:Label ID="lblRelatedCause" runat="server" class="prompt"  Text="Root Cause"></asp:Label>
+                                            <asp:Label ID="lblRelatedCause" runat="server" class="prompt"  Text="<%$ Resources:LocalizedText, RootCause %>"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="85%">
@@ -681,7 +681,7 @@
                                         <td class="required">&nbsp;</td>
                                         <td class="tableDataAlt">
                                             <asp:GridView runat="server" ID="gvActionList" Name="gvActionList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeader="True"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%"  OnRowDataBound="gvCauseActionSubList_OnRowDataBound">
-                                                <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                 <RowStyle CssClass="DataCell" />
                 	                            <Columns>
                                                     <asp:TemplateField HeaderText="Action Description" ItemStyle-VerticalAlign="Top">
@@ -705,17 +705,17 @@
                                                             <telerik:RadComboBox ID="ddlActionResponsible" runat="server" Skin="Metro" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" style="width: 99%; margin-top: 3px;" ToolTip="Select the person responsible for implementing or overseeing this action" EmptyMessage="Select Person"></telerik:RadComboBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="Due Date /<br>Status" ItemStyle-VerticalAlign="Top" ItemStyle-Width="120px">
+                                                    <asp:TemplateField ItemStyle-VerticalAlign="Top" ItemStyle-Width="120px">
                                                         <ItemTemplate>
                                                             <asp:HiddenField ID="hfActionDueDate" runat="server" Value='<%#Eval("EFF_DT") %>' />
                                                             <asp:HiddenField ID="hfActionStatus" runat="server" Value='<%#Eval("STATUS") %>' />
                                                             <telerik:RadDatePicker ID="radActionDueDate" runat="server" CssClass="textStd WarnIfChanged" Width=115 Skin="Metro" style="margin-top: 3px;"></telerik:RadDatePicker>
                                                             <br />
-                                                            <telerik:RadComboBox ID="ddlActionStatus" runat="server" Skin="Metro" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" style="width: 99%; margin-top: 3px;"  EmptyMessage="Status" ToolTip="Select the status of the action to be performed"></telerik:RadComboBox>
+                                                            <telerik:RadComboBox ID="ddlActionStatus" runat="server" Skin="Metro" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" style="width: 99%; margin-top: 3px;" EmptyMessage="<%$ Resources:LocalizedText, Status %>" ToolTip="Select the status of the action to be performed"></telerik:RadComboBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                 </Columns>
-                                            </asp:GridView>    
+                                            </asp:GridView>
                                         </td>
                                     </tr>
                                 </table>
@@ -793,14 +793,14 @@
                     </tr>
                 </table>
             </asp:PlaceHolder>
-            </td>   
+            </td>
         </tr>
         <tr style="height: 5px;"><td></td></tr>
         <tr>
             <td class="editArea">
                 <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="borderSoft" style="margin-top: 4px;">
                     <tr>
-                        <td class="columnHeader"  width="14%"><asp:Label ID="lblCase5Attachments" runat="server" text="Attachments"></asp:Label></td>
+                        <td class="columnHeader"  width="14%"><asp:Label ID="lblCase5Attachments" runat="server" text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label></td>
                         <td class="tableDataAlt"  width="1%"></td>
                         <td class="tableDataAlt"  width="85%">
                             <Ucl:RadAsyncUpload id="uclRadAsyncUpload5" runat="server"/>
@@ -822,16 +822,16 @@
                     <asp:PostBackTrigger ControlID="btnCase5Save2" />
                 </Triggers>
                 <ContentTemplate>
-                    <asp:Button ID="btnCase5Cancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                    <asp:Button ID="btnCase5Cancel2" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                         onclick="btnCancel_Click" CommandArgument="5"></asp:Button>
-                    <asp:Button ID="btnCase5Save2" CSSclass="buttonEmphasis" runat="server" text="Save Corrective Action" Enabled="true" title="save this step of the problem case" 
+                    <asp:Button ID="btnCase5Save2" CSSclass="buttonEmphasis" runat="server" text="Save Corrective Action" Enabled="true" title="save this step of the problem case"
                         OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="5"></asp:Button>
                 </ContentTemplate>
             </asp:UpdatePanel>
             </td>
         </tr>
     </table>
-    
+
 </asp:Panel>
 
 <asp:Panel ID="pnlCase6" runat="server" Visible = "false">
@@ -883,7 +883,7 @@
                         <td class="tableDataAlt" width="85%">
                             <div id="div1" runat="server" class="">
                                 <asp:GridView runat="server" ID="gvActionEfectiveList" Name="gvActionEffectiveList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvActionEffectiveList_OnRowDataBound">
-                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                     <RowStyle CssClass="DataCell" />
                 	                <Columns>
                                         <asp:TemplateField HeaderText="Corrective Action Tested" ItemStyle-Width="40%" ItemStyle-VerticalAlign="Top">
@@ -934,7 +934,7 @@
             <td class="editArea">
                 <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="borderSoft" style="margin-top: 4px;">
                     <tr>
-                        <td class="columnHeader"  width="14%"><asp:Label ID="lblCase6Attachments" runat="server" text="Attachments"></asp:Label></td>
+                        <td class="columnHeader"  width="14%"><asp:Label ID="lblCase6Attachments" runat="server" text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label></td>
                         <td class="tableDataAlt" width="1%"></td>
                         <td class="tableDataAlt" width="85%">
                             <Ucl:RadAsyncUpload id="uclRadAsyncUpload6" runat="server"/>
@@ -957,7 +957,7 @@
                     <asp:PostBackTrigger ControlID="btnCase6Save2" />
                 </Triggers>
                 <ContentTemplate>
-                    <asp:Button ID="btnCase6Cancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                    <asp:Button ID="btnCase6Cancel2" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                         onclick="btnCancel_Click" CommandArgument="6"></asp:Button>
                     <asp:Button ID="btnCase6Save2" CSSclass="buttonEmphasis" runat="server" text="Save Verification" Enabled="true" title="save this step of the problem case"
                         OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="6"></asp:Button>
@@ -1011,11 +1011,11 @@
                             <asp:UpdatePanel ID="udpDocumentationList" runat="server" ChildrenAsTriggers=true UpdateMode=Conditional>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="btnDocumentationAdd" />
-                                     <asp:PostBackTrigger ControlID="gvDocumentationList" /> 
+                                     <asp:PostBackTrigger ControlID="gvDocumentationList" />
                                 </Triggers>
                                 <ContentTemplate>
                                     <asp:GridView runat="server" ID="gvDocumentationList" Name="gvDocumentationList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="false" Width="100%" OnRowDataBound="gvCase7Documentation_OnRowDataBound" >
-                                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                                         <RowStyle CssClass="DataCell" />
                 	                    <Columns>
                                             <asp:TemplateField HeaderText="Affected Document" ItemStyle-Width="30%">
@@ -1036,15 +1036,15 @@
                                                      <telerik:RadDatePicker ID="radTargetDate" runat="server" CssClass="textStd WarnIfChanged" Width=115 Skin="Metro" ToolTip="click to select due date"></telerik:RadDatePicker>
                                                 </ItemTemplate>
 				                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Status" ItemStyle-Width="14%">
+                                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="14%">
                                                 <ItemTemplate>
                                                     <asp:HiddenField ID="hfStatus" runat="server" value='<%#Eval("CONFIRM_STATUS") %>'/>
-                                                    <telerik:RadComboBox ID="ddlStatus" runat="server" Skin="Metro" style="width: 98%;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" ToolTip="Enter the change status" EmptyMessage="Status"></telerik:RadComboBox>
+                                                    <telerik:RadComboBox ID="ddlStatus" runat="server" Skin="Metro" style="width: 98%;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" ToolTip="Enter the change status" EmptyMessage="<%$ Resources:LocalizedText, Status %>"></telerik:RadComboBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
-                                    <asp:Button ID="btnDocumentationAdd" CSSclass="buttonAdd" runat="server" text="Add Document" style="margin: 5px;" 
+                                    <asp:Button ID="btnDocumentationAdd" CSSclass="buttonAdd" runat="server" text="Add Document" style="margin: 5px;"
                                          onclick="btnDocumentationAdd_Click" CommandArgument="team" ></asp:Button>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
@@ -1062,7 +1062,7 @@
                     <asp:PostBackTrigger ControlID="btnCase7Save" />
                 </Triggers>
                 <ContentTemplate>
-                    <asp:Button ID="btnCase7Cancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+                    <asp:Button ID="btnCase7Cancel" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                         onclick="btnCancel_Click" CommandArgument="7"></asp:Button>
                     <asp:Button ID="btnCase7Save" CSSclass="buttonEmphasis" runat="server" text="Save Prevention" Enabled="true" title="save this step of the problem case"
                         OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="7"></asp:Button>
@@ -1125,9 +1125,9 @@
                         <asp:PostBackTrigger ControlID="btnCase8Save" />
                     </Triggers>
                     <ContentTemplate>
-                        <asp:Button ID="btnCase8Cancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+                        <asp:Button ID="btnCase8Cancel" CSSclass="buttonStd" runat="server" text="<%$ Resources:LocalizedText, Cancel %>"
                             onclick="btnCancel_Click" CommandArgument="8"></asp:Button>
-                        <asp:Button ID="btnCase8Save" CSSclass="buttonEmphasis" runat="server" text="Save" Enabled="true"  style="width: 70px;" title="save this step of the problem case" 
+                        <asp:Button ID="btnCase8Save" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" Enabled="true"  style="width: 70px;" title="save this step of the problem case"
                             OnClientClick="return confirmChange('Problem Case');" onclick="btnSave_Click" CommandArgument="8"></asp:Button>
                    </ContentTemplate>
                 </asp:UpdatePanel>

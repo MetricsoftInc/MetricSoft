@@ -12,7 +12,7 @@
         <asp:Label runat="server" ID="lblInputsListTitle" Text="Metric Inputs"></asp:Label>
     </span>
     <div id="divInputsListReviewArea" runat="server" visible="false">
-        <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px; padding-top: 3px;" OnClick="lnkCloseMetric" ToolTip="Close">
+        <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px; padding-top: 3px;" OnClick="lnkCloseMetric" ToolTip="<%$ Resources:LocalizedText, Close %>">
             <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
         </asp:LinkButton>
         <Ucl:RadGauge id="uclGauge" runat="server"/>

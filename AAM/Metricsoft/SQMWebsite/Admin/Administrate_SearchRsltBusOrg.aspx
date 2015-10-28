@@ -14,7 +14,7 @@
                                 <asp:Label ID="lblBusOrgSearchTitle" runat="server" Text="Business Organization - Search Results"></asp:Label>
                             </td>
 					    </tr>
-				    </table><BR/> 
+				    </table><BR/>
 
 <!--Border table of record data-->
                     <table width="98%" border="0" cellspacing="0" cellpadding="2" class="darkBorder">
@@ -31,7 +31,7 @@
                     <br>
 
        	            <table width="98%" cellpadding="3" cellspacing="1" border="0" class="darkBorder">
-                        <TR> 
+                        <TR>
 		                    <TD class="tableDataHdr" colspan="5">
 			                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
 				                    <tr>
@@ -39,7 +39,7 @@
                                             <asp:Label runat="server" ID="lblBusOrgResultsHdr" Text="Results" Visible="true"></asp:Label>
                                         </td>
 					                    <td align="right">
-						                <!-- BUTTONS -->		
+						                <!-- BUTTONS -->
 					                        <table cellpadding=0 cellspacing=2 border=0>
 						                        <tr>
                                                    <td>
@@ -59,7 +59,7 @@
                             <!-- results grid -->
                              <div ID="divGVScroll" runat="server" >
                             <asp:GridView runat="server" ID="gvBusOrgList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="2" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvBusOrgList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                     	            <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
@@ -70,7 +70,7 @@
                                         </ItemTemplate>
 							        </asp:TemplateField>
                                     <asp:BoundField DataField="DUNS_CODE" HeaderText="DUNS Code" ItemStyle-Width="10%" />
-                                    <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:Label ID="lblStatus" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -79,7 +79,7 @@
                                     <asp:TemplateField HeaderText="Associated Plants" ItemStyle-Width="50%">
                                         <ItemTemplate>
                                             <asp:GridView runat="server" ID="gvPlantGrid" Name="gvPlantGrid" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%">
-                                                <HeaderStyle CssClass="HeadingCellText" />    
+                                                <HeaderStyle CssClass="HeadingCellText" />
                                                 <RowStyle CssClass="DataCell" />
                                                 <Columns>
                                                     <asp:BoundField DataField="PLANT_ID" HeaderText="Plant ID" Visible="false"/>
@@ -101,12 +101,12 @@
                             </td>
                         </tr>
 
-                        <TR> 
+                        <TR>
 		                    <TD class="tableDataHdr" colspan="5">
 			                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
 				                    <tr>
 					                    <td align="right">
-						                <!-- BUTTONS -->		
+						                <!-- BUTTONS -->
 					                        <table cellpadding=0 cellspacing=2 border=0>
 						                        <tr>
                                                    <td>

@@ -42,6 +42,11 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.Title = Resources.LocalizedText.EHSAudits;
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblStatus.Text = Resources.LocalizedText.Status + ":";
+			this.lblToDate.Text = Resources.LocalizedText.To + ":";
+			this.lblAuditType.Text = Resources.LocalizedText.AssessmentType + ":";
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
@@ -260,10 +265,10 @@ namespace SQM.Website
 			if (Mode == AuditMode.Audit)
 			{
 
-				lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Assessments";
-				lblPageInstructions.Text = "Add or update EH&amp;S Assessments below.";
+				lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
+				lblPageInstructions.Text = GetLocalResourceObject("lblPageInstructionsResource1.Text").ToString();
 				//lblStatus.Text = "Assessment Status:";
-				rbNew.Text = "New Assessment";
+				rbNew.Text = GetLocalResourceObject("rbNewResource1.Text").ToString();
 				lblAuditDate.Visible = true;
 				phAudit.Visible = true;
 

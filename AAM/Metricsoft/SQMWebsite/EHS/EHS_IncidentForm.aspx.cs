@@ -13,6 +13,11 @@ namespace SQM.Website
 {
 	public partial class EHS_IncidentForm : SQMBasePage
 	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			this.Title = Resources.LocalizedText.EHSIncidents;
+		}
+
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
 			if (!IsPostBack)

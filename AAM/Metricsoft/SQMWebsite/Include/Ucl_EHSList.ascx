@@ -69,7 +69,7 @@
                     <asp:Label runat="server" ID="lblPeriodSelectHdr" Text="Reporting Month" meta:resourcekey="lblPeriodSelectHdrResource1"></asp:Label>
                 </SPAN>
                 <BR>
-                <telerik:RadMonthYearPicker ID="radPeriodSelect" runat="server" OnSelectedDateChanged="radDateSelect1Click" AutoPostBack="True" CssClass="textStd" Width=165px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radPeriodSelectResource1"><dateinput autopostback="True" dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="Cancel"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+                <telerik:RadMonthYearPicker ID="radPeriodSelect" runat="server" OnSelectedDateChanged="radDateSelect1Click" AutoPostBack="True" CssClass="textStd" Width=165px Skin="Metro"><dateinput autopostback="True" dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
             </td>
             <td id="tdPeriod" runat="server" class=summaryData valign=top>
 				<SPAN CLASS=summaryHeader>
@@ -130,21 +130,21 @@
                         <asp:Label runat="server" ID="lblDateSelect1" Text="Reporting Month" meta:resourcekey="lblDateSelect1Resource1"></asp:Label>
                     </span>
                     <BR>
-				    <telerik:RadMonthYearPicker ID="radDateSelect0" runat="server" CssClass="textStd" Width=165px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radDateSelect0Resource1"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="Cancel"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+				    <telerik:RadMonthYearPicker ID="radDateSelect0" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
                 </span>
                 <span id="divToDate" runat="server">
                    <span CLASS=summaryHeader>
                         <asp:Label runat="server" ID="lblDateSelect2" Text="Reporting Month" meta:resourcekey="lblDateSelect2Resource1"></asp:Label>
                     </span>
                     <BR>
-				    <telerik:RadMonthYearPicker ID="radDateSelect1" runat="server" CssClass="textStd" Width=165px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radDateSelect1Resource1"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="Cancel"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+				    <telerik:RadMonthYearPicker ID="radDateSelect1" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
                     &nbsp;
-                    <asp:Label ID="lblToDate" runat="server" Text="To" CssClass="prompt" meta:resourcekey="lblToDateResource1"></asp:Label>
+                    <asp:Label ID="lblToDate" runat="server" Text="<%$ Resources:LocalizedText, To %>" CssClass="prompt"></asp:Label>
                     &nbsp;
-                    <telerik:RadMonthYearPicker ID="radDateSelect2" runat="server" CssClass="textStd" Width=165px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radDateSelect2Resource1" ><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="Cancel"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+                    <telerik:RadMonthYearPicker ID="radDateSelect2" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
                 </span>
                 &nbsp;&nbsp;
-                <asp:Button id="btnSearchMetrics" runat="server" text="Search" ToolTip="search data" CssClass="buttonEmphasis" onclick="btnSearchMetricsClick" meta:resourcekey="btnSearchMetricsResource1"/>
+                <asp:Button id="btnSearchMetrics" runat="server" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="search data" CssClass="buttonEmphasis" onclick="btnSearchMetricsClick" />
                  <asp:Button ID="btnCalculate" runat="server" Text="Calculate Target Metrics" Visible="False" ToolTip="Calculate YTD corporate metrics per the selected reporting month"  style="margin-left: 30px;" OnClientClick="return confirmAction('Update metric calculations');"  onclick="btnCalculate_Click" meta:resourcekey="btnCalculateResource1"></asp:Button>
             </td>
         </tr>
@@ -163,7 +163,7 @@
         </tr>
         <tr id="trEHSIncident" runat="server">
              <td class="columnHeader" runat="server" >
-				<asp:Label runat="server" ID="lblDescription" text="Incident"></asp:Label>
+				<asp:Label runat="server" ID="lblDescription" text="<%$ Resources:LocalizedText, Incident %>"></asp:Label>
 			</td>
             <td class="tableDataAlt" runat="server">
                   <asp:Label runat="server" ID="lblIncidentID_out"></asp:Label>
@@ -195,7 +195,7 @@
                     <asp:Label runat="server" ID="lblResponsible_out" ></asp:Label>
 			</td>
         </tr>
- 
+
     </table>
 </asp:Panel>
 
@@ -215,7 +215,7 @@
 				<ItemStyle Width="40%" />
 			</asp:TemplateField>
 		</Columns>
-        <HeaderStyle CssClass="HeadingCellTextLeftSmall" />    
+        <HeaderStyle CssClass="HeadingCellTextLeftSmall" />
         <RowStyle CssClass="textSmall" />
     </asp:GridView>
 </asp:Panel>

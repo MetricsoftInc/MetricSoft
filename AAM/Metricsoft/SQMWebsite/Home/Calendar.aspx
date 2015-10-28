@@ -18,7 +18,7 @@
 			$find("<%=winUpdateTask.ClientID %>").show();
 		}
 
-	</script> 
+	</script>
 
 </asp:Content>
 
@@ -52,10 +52,10 @@
 							<asp:Label ID="lblScheduleScope" runat="server" Text="Display Calendar For:" CssClass="prompt" meta:resourcekey="lblScheduleScopeResource1"></asp:Label>
 							&nbsp;&nbsp;
 						</span>
-							
+
 						<span style="padding-right: 3px;">
 							<telerik:RadComboBox ID="ddlScheduleScope" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
-								AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="select either yourself or an accesible business location" meta:resourcekey="ddlScheduleScopeResource1"></telerik:RadComboBox>
+								AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="Select either yourself or an accesible business location" meta:resourcekey="ddlScheduleScopeResource1"></telerik:RadComboBox>
 							<telerik:RadMenu ID="mnuScheduleScope" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select" meta:resourcekey="mnuScheduleScopeResource1">
 								<DefaultGroupSettings RepeatDirection="Horizontal" />
 						</telerik:RadMenu>
@@ -64,7 +64,7 @@
 						<div class="clearfix visible-xs"></div>
 
 						<span class="logoImgInline noprint">
-							<asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" ToolTip="print current calendar view" OnClientClick="javascript:window.print()" meta:resourcekey="lnkPrintResource1"></asp:LinkButton>
+							<asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" ToolTip="Print current calendar view" OnClientClick="javascript:window.print()" meta:resourcekey="lnkPrintResource1"></asp:LinkButton>
 						</span>
 
 					</div>
@@ -89,7 +89,7 @@
 				</div>
 			</div>
 		</div>
-			
+
 		<div id="divTaskList" runat="server" style="margin-top: 4px;" visible="False">
 			<div style="margin: 5px;" class="noprint">
 				<asp:Label ID="LlblActionsTitle" runat="server"  CssClass="pageTitles" Text="Actions Assigned To Me" meta:resourcekey="LlblActionsTitleResource1" ></asp:Label>
@@ -105,8 +105,8 @@
 		</div>
 	</asp:Panel>
 	<asp:Label ID="lblScheduleRange" runat="server" Text="Future Months:" CssClass="prompt" Visible="False" meta:resourcekey="lblScheduleRangeResource1"></asp:Label>
-	<telerik:RadSlider runat="server" ID="sldScheduleRange" visible="False" MinimumValue="3" MaximumValue="12" Value="12" LargeChange="3" ItemType="Tick" TrackPosition="TopLeft" Skin="Metro" 
-		width="150px" Height="37px" AutoPostBack="True" OnValueChanged="ScheduleScope_Select" ToolTip="select number of months in the future to populate in the calendar" DbValue="12" Length="150" meta:resourcekey="sldScheduleRangeResource1" SelectedRegionStartValue="3" SelectionEnd="3" SelectionStart="3" ></telerik:RadSlider>
+	<telerik:RadSlider runat="server" ID="sldScheduleRange" visible="False" MinimumValue="3" MaximumValue="12" Value="12" LargeChange="3" ItemType="Tick" TrackPosition="TopLeft" Skin="Metro"
+		width="150px" Height="37px" AutoPostBack="True" OnValueChanged="ScheduleScope_Select" ToolTip="Select number of months in the future to populate in the calendar" DbValue="12" Length="150" meta:resourcekey="sldScheduleRangeResource1" SelectedRegionStartValue="3" SelectionEnd="3" SelectionStart="3" ></telerik:RadSlider>
 	<br style="clear: both;" />
 
 

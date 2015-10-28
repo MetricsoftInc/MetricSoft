@@ -3,10 +3,10 @@
                    <td>
                      <table width="100%" border="0" cellspacing="0" cellpadding="2">
 			            <tr>
-			                <td class=admBkgd align=center>	
+			                <td class=admBkgd align=center>
                             <div id="divPlantPartGVScroll" runat="server" class="">
                               <asp:GridView runat="server" ID="gvPlantPartList" Name="gvPlantPartList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="98%" OnRowDataBound="gvPlantPart_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                                     <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="20%">
@@ -45,7 +45,7 @@
                                             <asp:Label ID="lblSuppPlantLocation_out" runat="server" text='<%#Eval("SUPP_PLANT_DUNS_CODE") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Active" ItemStyle-Width="8%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Active %>" ItemStyle-Width="8%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:CheckBox ID="cbStatus" runat="server" DataTextField="STATUS" Style="margin-left: 33%;" OnCheckedChanged="wasChanged"></asp:CheckBox>

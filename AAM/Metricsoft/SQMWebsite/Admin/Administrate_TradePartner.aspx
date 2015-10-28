@@ -14,14 +14,14 @@
                             </td>
 						  </tr>
 				  </table>
-                  <BR/> 
-
-				
+                  <BR/>
 
 
-					  <!-- DATA ENTRY CONTENT TABLE -->	
-				
-					  	 
+
+
+					  <!-- DATA ENTRY CONTENT TABLE -->
+
+
             <TABLE WIDTH="98%" BORDER="0" CELLSPACING="1" CELLPADDING="4" class="darkBorder">
                <tr>
                 <TD CLASS="columnHeader">
@@ -34,7 +34,7 @@
                                 <asp:TextBox ID="tbSearchSupplierCompany" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                             </td>
                             <TD>
-                             <asp:Button ID="btnSearchSupplierCompany" runat="server" CSSclass="buttonStd" text="Search" CommandArgument="supp" onclick="btnSearchSupplier_Click"></asp:Button>
+                             <asp:Button ID="btnSearchSupplierCompany" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" CommandArgument="supp" onclick="btnSearchSupplier_Click"></asp:Button>
                            </TD>
                         </TR>
                     </TABLE>
@@ -51,7 +51,7 @@
                                 <asp:TextBox ID="tbSearchCustomerCompany" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                             </td>
                             <TD>
-                             <asp:Button ID="btnSearchCustomerCompany" runat="server" CSSclass="buttonStd" text="Search" CommandArgument="cust" onclick="btnSearchCustomer_Click"></asp:Button>
+                             <asp:Button ID="btnSearchCustomerCompany" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" CommandArgument="cust" onclick="btnSearchCustomer_Click"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
@@ -67,21 +67,21 @@
                             <td>
                                 <asp:TextBox ID="tbSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                                 <br />
-                                 <asp:RadioButtonList runat="server" ID="rblAssignedBuyer" CSSclass="radioList" 
-	                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                 <asp:RadioButtonList runat="server" ID="rblAssignedBuyer" CSSclass="radioList"
+	                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                            AutoPostBack="false">
 							            <asp:ListItem Text="All&nbsp;&nbsp;" Value="" ></asp:ListItem>
 								        <asp:ListItem Text="Unassigned" Value="U"></asp:ListItem>
 						        </asp:RadioButtonList>
                             </td>
                         <TD>
-                             <asp:Button ID="lbSearchBuyer" runat="server" CSSclass="buttonStd" text="Search" onclick="lbSearchBuyer_Click"></asp:Button>
+                             <asp:Button ID="lbSearchBuyer" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" onclick="lbSearchBuyer_Click"></asp:Button>
                         </TD>
                         </TR>
                     </TABLE>
                 </TD>
             </TR>
-           <TR> 
+           <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblUploadData" runat="server" Text="Upload Buyer Codes"></asp:Label>
                 </TD>
@@ -89,12 +89,12 @@
                     <TABLE BORDER=0 CELLSPACING= CELLPADDING=5>
                         <TR>
                             <TD>
-                                <asp:Button ID="lbUploadData" runat="server" CSSclass="buttonStd" 
+                                <asp:Button ID="lbUploadData" runat="server" CSSclass="buttonStd"
                                     onclick="lbUploadData_Click" text="Upload Data"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
-                </TD>                   
+                </TD>
             </TR>
           </TABLE>
         </td>

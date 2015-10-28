@@ -42,7 +42,7 @@
 		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound"  OnItemCommand="rptLostTime_ItemCommand">
 
 			<FooterTemplate>
-				</table> 
+				</table>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
 						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddLostTimeResource1" ></asp:Button>
@@ -57,7 +57,7 @@
 								<asp:Label ID="lbWorkStatus" runat="server" meta:resourcekey="lbWorkStatusResource1" Text="Work Status"></asp:Label>
 								</b></th>
 							<th class="col-sm-3 text-left-more"><b>
-								<asp:Label ID="lbRestrictDesc" runat="server" meta:resourcekey="lbRestrictDescResource1" Text="Comments"></asp:Label>
+								<asp:Label ID="lbRestrictDesc" runat="server" meta:resourcekey="lbRestrictDescResource1" Text="<%$ Resources:LocalizedText, Comments %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbBeginDate" runat="server" meta:resourcekey="lbBeginDateResource1" Text="Effective Date"></asp:Label>
@@ -88,7 +88,7 @@
 							<asp:RequiredFieldValidator ID="rfvRestrictDesc" runat="server" ControlToValidate="tbRestrictDesc" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvRestrictDescResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpBeginDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpBeginDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+							<telerik:RadDatePicker ID="rdpBeginDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpBeginDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -105,7 +105,7 @@
 							<asp:RequiredFieldValidator ID="rvfBeginDate" runat="server" ControlToValidate="rdpBeginDate" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rvfBeginDateResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpNextMedDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpNextMedDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+							<telerik:RadDatePicker ID="rdpNextMedDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpNextMedDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -122,7 +122,7 @@
 							<asp:RequiredFieldValidator ID="rfvNextMedDate" runat="server" ControlToValidate="rdpNextMedDate" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvNextMedDateResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left">
-							<telerik:RadDatePicker ID="rdpExpectedReturnDT" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpExpectedReturnDTResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
+							<telerik:RadDatePicker ID="rdpExpectedReturnDT" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpExpectedReturnDTResource1" ShowPopupOnFocus="True" Skin="Metro" Width="95%">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -139,7 +139,7 @@
 							<asp:RequiredFieldValidator ID="rfvExpectedReturnDT" runat="server" ControlToValidate="rdpExpectedReturnDT" Display="None" Enabled="False" ErrorMessage="Required" meta:resourcekey="rfvExpectedReturnDTResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="col-xs-12 text-left-more">
-							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" meta:resourcekey="btnItemDeleteResource1" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="Deleting..." Text="Delete Item">
+							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="Delete Item">
 							</telerik:RadButton>
 						</td>
 					</tr>
@@ -149,6 +149,6 @@
 
 	</telerik:RadAjaxPanel>
 
-	</div>   
+	</div>
 
 </asp:Panel>

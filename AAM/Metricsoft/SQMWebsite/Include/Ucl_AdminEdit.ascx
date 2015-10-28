@@ -33,7 +33,7 @@
 			</tr>
             <tr>
 				<td class="columnHeader">
-                    <asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
+                    <asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<% Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
 				</td>
 				<td class="tableDataAlt">&nbsp;</td>
 				<td class="tableDataAlt">
@@ -44,9 +44,9 @@
 			</tr>
             <tr>
 				<td align="left" class="tabActiveTableBg"colspan="3">
-					<asp:Button ID="btnPrefCancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+					<asp:Button ID="btnPrefCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
 						onclick="btnCancel_Click" CommandArgument="prefs"></asp:Button>
-					<asp:Button ID="btnPrefSave" CSSclass="buttonEmphasis" runat="server" text="Save" 
+					<asp:Button ID="btnPrefSave" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
 					 OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs"></asp:Button>
 				</td>
 			</tr>
@@ -57,9 +57,9 @@
 	  <table width="99%" class="editArea">
 			<tr>
 				<td align="right" class="optionArea">
-					<asp:Button ID="btnDeptCancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+					<asp:Button ID="btnDeptCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
 						onclick="btnCancel_Click" CommandArgument="dept"></asp:Button>
-					<asp:Button ID="btnDeptSave" CSSclass="buttonEmphasis" runat="server" text="Save Department" 
+					<asp:Button ID="btnDeptSave" CSSclass="buttonEmphasis" runat="server" text="Save Department"
 						OnClientClick="return confirmChange('Department');" onclick="btnSave_Click" CommandArgument="dept"></asp:Button>
 				</td>
 			</tr>
@@ -84,7 +84,7 @@
 						</tr>
 						<tr>
 							<td class="columnHeader">
-								<asp:Label ID="lblSetDeptStatus" runat="server" text="Status"></asp:Label>
+								<asp:Label ID="lblSetDeptStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
 							</td>
 							<td class="required">&nbsp;</td>
 							<td class="tableDataAlt"><asp:DropDownList ID="ddlDeptStatus" runat="server"></asp:DropDownList>
@@ -114,9 +114,9 @@
 		<table width="99%" class="editArea">
 			<tr>
 				<td class="optionArea">
-					<asp:Button ID="btnLaborCancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+					<asp:Button ID="btnLaborCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
 						onclick="btnCancel_Click" CommandArgument="labor"></asp:Button>
-					<asp:Button ID="btnLaborSave" CSSclass="buttonEmphasis" runat="server" text="Save Labor Code" 
+					<asp:Button ID="btnLaborSave" CSSclass="buttonEmphasis" runat="server" text="Save Labor Code"
 						OnClientClick="return confirmChange('Labor Type');" onclick="btnSave_Click" CommandArgument="labor"></asp:Button>
 				</td>
 			</tr>
@@ -148,7 +148,7 @@
 						</tr>
 						<tr>
 							<td class="columnHeader">
-								<asp:Label ID="lblSetLaborStatus" runat="server" text="Status"></asp:Label>
+								<asp:Label ID="lblSetLaborStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
 							</td>
 							<td class="required">&nbsp;</td>
 							<td class="tableDataAlt"><asp:DropDownList ID="ddlLaborStatus" runat="server"></asp:DropDownList>
@@ -178,9 +178,9 @@
 		<table width="99%" class="editArea">
 			<tr>
 				<td align="right" class="editArea">
-					<asp:Button ID="btnLineCancel" CSSclass="buttonStd" runat="server" text="Cancel" 
+					<asp:Button ID="btnLineCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
 						onclick="btnCancel_Click" CommandArgument="line"></asp:Button>
-					<asp:Button ID="btnLineSave" CSSclass="buttonEmphasis" runat="server" text="Save" 
+					<asp:Button ID="btnLineSave" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
 						OnClientClick="return confirmChange('Line/Operation');" onclick="btnSave_Click" CommandArgument="line"></asp:Button>
 				</td>
 			</tr>
@@ -205,7 +205,7 @@
 						</tr>
 						<tr>
 							<td class="columnHeader">
-								<asp:Label ID="lblSetLineStatus" runat="server" text="Status"></asp:Label>
+								<asp:Label ID="lblSetLineStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
 							</td>
 							<td class="required">&nbsp;</td>
 							<td class="tableDataAlt"><asp:DropDownList ID="ddlLineStatus" runat="server"></asp:DropDownList>

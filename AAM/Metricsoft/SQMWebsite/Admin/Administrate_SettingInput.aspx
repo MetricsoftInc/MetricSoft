@@ -31,7 +31,7 @@
 								<asp:DropDownList ID="ddlSettingGroup" runat="server" CssClass="textStd" AutoPostBack="false">
 								</asp:DropDownList>
 								&nbsp;&nbsp;
-								<asp:Button id="btnSettingSearch" runat="server" CssClass="buttonEmphasis" text="Search" OnClick="btnSettingSearch_Click"/>
+								<asp:Button id="btnSettingSearch" runat="server" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" OnClick="btnSettingSearch_Click"/>
 							</span>
 							<asp:HiddenField runat="server" ID="hdnEncrypt" />
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">

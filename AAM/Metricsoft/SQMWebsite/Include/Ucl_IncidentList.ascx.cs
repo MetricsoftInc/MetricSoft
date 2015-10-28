@@ -212,6 +212,11 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
+			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.Status + "/<br/>(Days Open)";
+			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn6").HeaderText = Resources.LocalizedText.Status + "<br/>(Days)";
+
 			if (!Page.IsPostBack)
 			{
 				ddlSeveritySelect.Items.AddRange(WebSiteCommon.PopulateRadListItems("incidentSeverity"));

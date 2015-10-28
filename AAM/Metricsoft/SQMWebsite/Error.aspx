@@ -31,7 +31,7 @@
                 </tr>
                 <tr style="height: 50px" valign="top">
                     <td style="margin-left: auto; margin-right: auto" align="center" colspan="2">
-                        <input id="Button1" type="button" value="OK" onclick="location.href='login.aspx'" style="width: 60px" />
+                        <input id="Button1" type="button" value="<%$ Resources:LocalizedText, OK %>" onclick="location.href='login.aspx'" style="width: 60px" />
                     </td>
                 </tr>
             </table>

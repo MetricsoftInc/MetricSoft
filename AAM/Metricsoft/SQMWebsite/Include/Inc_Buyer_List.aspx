@@ -3,9 +3,9 @@
                    <td>
                      <table width="100%" border="0" cellspacing="0" cellpadding="2">
 			            <tr>
-			                <td class=admBkgd align=center>	
+			                <td class=admBkgd align=center>
                               <asp:GridView runat="server" ID="gvBuyerList" Name="gvBuyerList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="98%" OnRowDataBound="gvBuyerList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                                     <asp:TemplateField HeaderText="Buyer Code" ItemStyle-Width="20%">
@@ -17,7 +17,7 @@
                                     <asp:BoundField DataField="FIRST_NAME" HeaderText="First name" ItemStyle-Width="22%" />
                                     <asp:BoundField DataField="LAST_NAME" HeaderText="Last Name" ItemStyle-Width="23%" />
                                     <asp:BoundField DataField="NEW_LOCATION_CD" HeaderText="Location" ItemStyle-Width="25%" />
-                                    <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>

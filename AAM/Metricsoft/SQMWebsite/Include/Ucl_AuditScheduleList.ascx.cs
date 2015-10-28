@@ -110,6 +110,9 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
+
 			if (!Page.IsPostBack)
 			{
 
@@ -169,11 +172,11 @@ namespace SQM.Website
 
 				if (data.AuditScheduler.INACTIVE)
 				{
-					lbl.Text = "Inactive";
+					lbl.Text = Resources.LocalizedText.Inactive;
 				}
 				else
 				{
-					lbl.Text = "Active";
+					lbl.Text = Resources.LocalizedText.Active;
 				}
 
 				lbl = (Label)e.Item.FindControl("lblDayOfWeek");

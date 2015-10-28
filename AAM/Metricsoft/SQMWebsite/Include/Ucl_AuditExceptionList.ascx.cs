@@ -88,6 +88,9 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
+
 			if (!Page.IsPostBack)
 			{
 

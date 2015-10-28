@@ -15,7 +15,7 @@
     <table cellspacing="0" cellpadding="1" border="0" width="100%">
         <tr>
             <td class="summaryDataEnd" width="150px">
-                <asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt" Text="Locations:" meta:resourcekey="lblPlantSelectResource1"></asp:Label>
+                <asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
             </td>
             <td class="summaryDataEnd">
                 <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators" EmptyMessage="Select responsible/supplier locations" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
@@ -29,15 +29,15 @@
             <td class="summaryDataEnd">
                 <telerik:RadComboBox ID="ddlDateSpan" runat="server" Skin="Metro" Width=180px Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlDateSpanChange" meta:resourcekey="ddlDateSpanResource1">
                     <Items>
-                        <telerik:RadComboBoxItem Text="Select Range" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource1"/> 
-                        <telerik:RadComboBoxItem Text="Year To Date" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource2" /> 
-                        <telerik:RadComboBoxItem Text="Previous Year" Value="3" runat="server" meta:resourcekey="RadComboBoxItemResource3" /> 
-                        <telerik:RadComboBoxItem Text="FY Year To Date" Value="4" runat="server" meta:resourcekey="RadComboBoxItemResource4" /> 
+                        <telerik:RadComboBoxItem Text="Select Range" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource1"/>
+                        <telerik:RadComboBoxItem Text="Year To Date" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource2" />
+                        <telerik:RadComboBoxItem Text="Previous Year" Value="3" runat="server" meta:resourcekey="RadComboBoxItemResource3" />
+                        <telerik:RadComboBoxItem Text="FY Year To Date" Value="4" runat="server" meta:resourcekey="RadComboBoxItemResource4" />
                     </Items>
                 </telerik:RadComboBox>
                 <span style="margin-left: 8px;">
                     <asp:Label runat="server" ID="lblPeriodFrom"  CssClass="prompt" Text="From:" meta:resourcekey="lblPeriodFromResource1"></asp:Label>
-                    <telerik:RadMonthYearPicker ID="dmPeriodFrom" runat="server" CssClass="textStd" Width=155px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="dmPeriodFromResource1">
+                    <telerik:RadMonthYearPicker ID="dmPeriodFrom" runat="server" CssClass="textStd" Width=155px Skin="Metro">
 						<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" Font-Size="Small" LabelWidth="64px" Skin="Metro" Width="">
 							<EmptyMessageStyle Resize="None" />
 							<ReadOnlyStyle Resize="None" />
@@ -48,11 +48,11 @@
 							<EnabledStyle Resize="None" />
 						</DateInput>
 						<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-						<MonthYearNavigationSettings DateIsOutOfRangeMessage="Cancel" />
+						<MonthYearNavigationSettings DateIsOutOfRangeMessage="<%$ Resources:LocalizedText, Cancel %>" />
 				</telerik:RadMonthYearPicker>
                     <telerik:RadComboBox ID="ddlYearFrom" runat="server" Skin="Metro" Width=100px Font-Size=Small Visible="False" meta:resourcekey="ddlYearFromResource1"></telerik:RadComboBox>
-                    <asp:Label runat="server" ID="lblPeriodTo" CssClass="prompt" Text="To:" style="margin-left: 5px;" meta:resourcekey="lblPeriodToResource1"></asp:Label>
-                    <telerik:RadMonthYearPicker ID="dmPeriodTo" runat="server" CssClass="textStd" Width=155px Skin="Metro" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="dmPeriodToResource1">
+                    <asp:Label runat="server" ID="lblPeriodTo" CssClass="prompt" style="margin-left: 5px;"></asp:Label>
+                    <telerik:RadMonthYearPicker ID="dmPeriodTo" runat="server" CssClass="textStd" Width=155px Skin="Metro">
 						<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" Font-Size="Small" LabelWidth="64px" Skin="Metro" Width="">
 							<EmptyMessageStyle Resize="None" />
 							<ReadOnlyStyle Resize="None" />
@@ -63,12 +63,12 @@
 							<EnabledStyle Resize="None" />
 						</DateInput>
 						<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-						<MonthYearNavigationSettings DateIsOutOfRangeMessage="Cancel" />
+						<MonthYearNavigationSettings DateIsOutOfRangeMessage="<%$ Resources:LocalizedText, Cancel %>" />
 				</telerik:RadMonthYearPicker>
-                    <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=100px Font-Size=Small Visible="False" meta:resourcekey="ddlYearToResource1"></telerik:RadComboBox> 
+                    <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=100px Font-Size=Small Visible="False" meta:resourcekey="ddlYearToResource1"></telerik:RadComboBox>
                 </span>
                 <span class="noprint">
-                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessment exceptions" OnClick="btnAuditsSearchClick" meta:resourcekey="btnSearchResource1" />
+                    <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="List assessment exceptions" OnClick="btnAuditsSearchClick" />
                 </span>
             </td>
         </tr>
@@ -134,11 +134,11 @@
 												</telerik:GridTemplateColumn>
 												<telerik:GridBoundColumn DataField="Task.Due_Dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Due_Dt column" HeaderText="Due Date" meta:resourcekey="GridBoundColumnResource1" UniqueName="Task.Due_Dt">
 												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Task.Description" FilterControlAltText="Filter Task.Description column" HeaderText="Description" meta:resourcekey="GridBoundColumnResource2" UniqueName="Task.Description">
+												<telerik:GridBoundColumn DataField="Task.Description" FilterControlAltText="Filter Task.Description column" HeaderText="<%$ Resources:LocalizedText, Description %>" UniqueName="Task.Description">
 												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Taskstatus" FilterControlAltText="Filter Taskstatus column" HeaderText="Status" meta:resourcekey="GridBoundColumnResource3" UniqueName="Taskstatus">
+												<telerik:GridBoundColumn DataField="Taskstatus" FilterControlAltText="Filter Taskstatus column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="Taskstatus">
 												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Task.Comments" FilterControlAltText="Filter Task.Comments column" HeaderText="Comments" meta:resourcekey="GridBoundColumnResource4" UniqueName="Task.Comments">
+												<telerik:GridBoundColumn DataField="Task.Comments" FilterControlAltText="Filter Task.Comments column" HeaderText="<%$ Resources:LocalizedText, Comments %>" meta:resourcekey="GridBoundColumnResource4" UniqueName="Task.Comments">
 												</telerik:GridBoundColumn>
 												<telerik:GridBoundColumn DataField="Task.Complete_dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Complete_dt column" HeaderText="Complete Date" meta:resourcekey="GridBoundColumnResource5" UniqueName="Task.Complete_dt">
 												</telerik:GridBoundColumn>
@@ -160,7 +160,7 @@
 									</telerik:GridBoundColumn>
 									<telerik:GridBoundColumn DataField="AnswerComment" FilterControlAltText="Filter AnswerComment column" HeaderText="Comment" meta:resourcekey="GridBoundColumnResource9" UniqueName="AnswerComment">
 									</telerik:GridBoundColumn>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Status" meta:resourcekey="GridTemplateColumnResource3" UniqueName="TemplateColumn1">
+									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn1">
 										<ItemTemplate>
 											<asp:Label ID="lblAnswerStatus" runat="server" meta:resourcekey="lblAnswerStatusResource1"></asp:Label>
 										</ItemTemplate>
@@ -218,7 +218,7 @@
 							<asp:Label ID="lblScore" runat="server" meta:resourcekey="lblScoreResource1" Text='<%# Eval("Audit.TOTAL_SCORE") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn6 column" HeaderText="Status" meta:resourcekey="GridTemplateColumnResource13" UniqueName="TemplateColumn6">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn6 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn6">
 						<ItemTemplate>
 							<asp:Label ID="lblAuditStatus" runat="server" meta:resourcekey="lblAuditStatusResource1"></asp:Label>
 						</ItemTemplate>

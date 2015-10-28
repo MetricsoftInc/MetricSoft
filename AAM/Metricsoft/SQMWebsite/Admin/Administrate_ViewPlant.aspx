@@ -37,7 +37,7 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                     <br />
                     <div id="divNavArea" runat="server"  class="navAreaLeft">
                         <Ucl:AdminTabs id="uclAdminTabs" runat="server"/>
@@ -53,17 +53,17 @@
                                                 <table border="0" cellspacing="0" cellpadding="1">
                                                     <tr>
                                                          <td>
-                                                            <asp:Button ID="lbPlantCancel1" CSSclass="buttonStd" runat="server" text="Cancel"  style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;" 
+                                                            <asp:Button ID="lbPlantCancel1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"  style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                              onclick="lbPlantSave_Click" CommandArgument="cancel"></asp:Button>
-                                                        </TD>  
+                                                        </TD>
                                                         <td>
-                                                            <asp:Button ID="lbSavePlant1" CSSclass="buttonEmphasis" runat="server" text="Save" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;" 
+                                                            <asp:Button ID="lbSavePlant1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                              OnClientClick="return confirmChange('Plant');" onclick="lbPlantSave_Click" CommandArgument="edit"></asp:Button>
                                                         </td>
                                                     </tr>
                                                 </table>
                                             </TD>
-                                        </TR> 
+                                        </TR>
                                     </table>
                                  </td>
                               </tr>
@@ -100,7 +100,7 @@
 			                            </tr>
                                         <tr>
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblPlantStatus" runat="server" text="Status"></asp:Label>
+                                                <asp:Label ID="lblPlantStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                             </td>
                                             <td class="required">&nbsp;</td>
                                             <td class="tableDataAlt"><asp:DropDownList ID="ddlPlantStatus" runat="server"></asp:DropDownList></td>

@@ -72,8 +72,8 @@
 						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required" meta:resourcekey="rfvRootCauseResource1"></asp:RequiredFieldValidator>
 					</div>
 					<div class="col-sm-2 text-left-more">
-						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete" 
-							Text="Delete Item" SingleClick="True" SingleClickText="Deleting..." OnClientClicking="DeleteConfirmItem" meta:resourcekey="btnItemDeleteResource1" />
+						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete"
+							Text="Delete Item" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" OnClientClicking="DeleteConfirmItem" />
 					</div>
 				</div>
 			</ItemTemplate>

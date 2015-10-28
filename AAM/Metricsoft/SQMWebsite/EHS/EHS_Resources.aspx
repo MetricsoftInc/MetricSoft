@@ -10,7 +10,7 @@
     }
 
 </script>
-   
+
      <div class="admin_tabs">
 
         <table width="100%" border="0" cellspacing="0" cellpadding="1">
@@ -70,7 +70,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="columnHeader">
-                                                                    <asp:Label ID="lblMeasureDesc" runat="server" text="Description"></asp:Label>
+                                                                    <asp:Label ID="lblMeasureDesc" runat="server" text="<%$ Resources:LocalizedText, Description %>"></asp:Label>
                                                                 </td>
                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                 <td CLASS="tableDataAlt">
@@ -125,7 +125,7 @@
                                                             </tr>
                                                             <tr>
                                                                 <td class="columnHeader">
-                                                                    <asp:Label ID="lblMeasureStatus" runat="server" text="Status"></asp:Label>
+                                                                    <asp:Label ID="lblMeasureStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                                 </td>
                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                 <td CLASS="tableDataAlt">
@@ -134,8 +134,8 @@
                                                             </tr>
                                                         </table>
                                                         <span style="float: right; margin: 5px;">
-                                                            <asp:Button ID="btnMeasureCancel" CSSclass="buttonStd" runat="server" text="Cancel" style="margin: 5px;" OnClick="ClearMeasure"  ></asp:Button>
-                                                            <asp:Button ID="btnMeasureSave" CSSclass="buttonEmphasis" runat="server" text="Save Metric" style="margin: 5px;" 
+                                                            <asp:Button ID="btnMeasureCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="ClearMeasure"  ></asp:Button>
+                                                            <asp:Button ID="btnMeasureSave" CSSclass="buttonEmphasis" runat="server" text="Save Metric" style="margin: 5px;"
                                                                 onclick="btnMeasureSave_Click" ></asp:Button>
                                                         </span>
                                                         <br />
@@ -160,7 +160,7 @@
                                                         <td valign="top" align="center">
                                                             <div id="divMeasureGVScroll" runat="server" class="">
                                                                 <asp:GridView runat="server" ID="gvMeasureSubcatList" Name="gvMeasureSubcatList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeaderWhenEmpty="True" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvList_OnMeasureSubcatRowDataBound">
-                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                     <RowStyle CssClass="DataCell" />
                 	                                                <Columns>
                                                                         <asp:TemplateField ItemStyle-Width="17%">
@@ -178,23 +178,23 @@
                                                                             </HeaderTemplate>
                                                                             <ItemTemplate>
                                                                                 <asp:GridView runat="server" ID="gvMeasureList" Name="gvMeasureList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnMeasureRowDataBound">
-                                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                                     <RowStyle CssClass="DataCell" />
                 	                                                                <Columns>
                                                                                         <asp:TemplateField HeaderText="Code" ItemStyle-Width="12%">
 							                                                                <ItemTemplate>
-								                                                                <asp:LinkButton ID="lnkMeasureCD" runat="server" CommandArgument='<%#Eval("MEASURE_ID") %>' CSSClass="linkUnderline" 
+								                                                                <asp:LinkButton ID="lnkMeasureCD" runat="server" CommandArgument='<%#Eval("MEASURE_ID") %>' CSSClass="linkUnderline"
 										                                                            Text='<%#Eval("MEASURE_CD") %>' OnClick="lnkMeasureList_Click"></asp:LinkButton>
                                                                                             </ItemTemplate>
 							                                                            </asp:TemplateField>
                                                                                         <asp:TemplateField HeaderText="Name" ItemStyle-Width="25%">
                                                                                             <ItemTemplate>
-                                                                                                <asp:LinkButton ID="lnkMeasureName" runat="server" CommandArgument='<%#Eval("MEASURE_ID") %>' CSSClass="linkUnderline" 
+                                                                                                <asp:LinkButton ID="lnkMeasureName" runat="server" CommandArgument='<%#Eval("MEASURE_ID") %>' CSSClass="linkUnderline"
 										                                                            Text='<%#Eval("MEASURE_NAME") %>' OnClick="lnkMeasureList_Click"></asp:LinkButton>
                                                                                             </ItemTemplate>
                                                                                         </asp:TemplateField>
-                                                                                        <asp:BoundField DataField="MEASURE_DESC" HeaderText="Description" ItemStyle-Width="35%" />
-                                                                                        <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                                                                        <asp:BoundField DataField="MEASURE_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>" ItemStyle-Width="35%" />
+                                                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                                                                             <ItemTemplate>
                                                                                                 <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                                                                                 <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -212,7 +212,7 @@
                                                     </tr>
                                                 </table>
                                             </asp:panel>
-                                        </td>          
+                                        </td>
                                     </tr>
                                 </table>
                             </div>

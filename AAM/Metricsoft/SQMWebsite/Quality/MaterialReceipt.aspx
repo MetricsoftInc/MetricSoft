@@ -3,7 +3,7 @@
 <%@ Register src="~/Include/Ucl_SearchBar.ascx" TagName="SearchBar" TagPrefix="Ucl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
-   <link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+   <link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
     <script type="text/javascript" src="../scripts/jquery-1.4.1.min.js"></script>
     <script type="text/javascript" src="../scripts/jquery-ui-1.8.20.custom.min.js"></script>
     <script type="text/javascript">
@@ -49,7 +49,7 @@
                                             <asp:TextBox ID="tbStreamPart" runat="server" MaxLength="50" Columns="24"></asp:TextBox>
                                             <asp:Label ID="lblStreamSupp" runat="server" CssClass="prompt" style="margin-left: 10px;" Text="Supplier Name: "></asp:Label>
                                             <asp:TextBox ID="tbStreamSupp" runat="server" MaxLength="50" Columns="24"></asp:TextBox>
-                                            <asp:Button id="btnStreamSearch" runat="server" Text="Search" CssClass="buttonStd" style="margin-left: 10px;" OnClick="btnStreamSearch_Click"/>
+                                            <asp:Button id="btnStreamSearch" runat="server" Text="<%$ Resources:LocalizedText, Search %>" CssClass="buttonStd" style="margin-left: 10px;" OnClick="btnStreamSearch_Click"/>
                                         </asp:Panel>
                                     </td>
                                 </tr>
@@ -110,7 +110,7 @@
                                         <td CLASS="tableDataAlt">
                                             <asp:TextBox ID="tbRejectQty"  runat="server" MaxLength="8" Columns="10"/>
                                             &nbsp;&nbsp;
-                                            <asp:Button id="btnCreateIssue" runat="server" CssClass = "buttonLink" Text="Create Quality Issue" 
+                                            <asp:Button id="btnCreateIssue" runat="server" CssClass = "buttonLink" Text="Create Quality Issue"
                                                 OnClientClick="return confirmAction('Create A Quality Issue For This Receipt');" OnClick="btnCreateIssue_Click"></asp:Button>
                                         </td>
                                     </tr>

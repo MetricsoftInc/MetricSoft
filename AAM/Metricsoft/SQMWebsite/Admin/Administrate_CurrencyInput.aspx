@@ -53,7 +53,7 @@
                     <table class="currencyTable" cellpadding="0" cellspacing="0">
                         <tr>
                             <th colspan="2">From<img src="/images/defaulticon/16x16/arrow-4-right.png" alt="" style="float: right; opacity: 0.33;" /></th>
-                            <th>To</th>
+                            <th><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, To %>" /></th>
                             <th style="color: #8888aa;">
                                 <asp:Literal ID="ltrPrevMonth" runat="server">Previous Month</asp:Literal><br />Exhange Rate</th>
                             <th colspan="2">

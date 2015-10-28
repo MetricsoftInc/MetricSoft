@@ -6,17 +6,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                         <td>
-                                            <asp:Button ID="lbCancelBusOrg1" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                            <asp:Button ID="lbCancelBusOrg1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              OnClientClick="return confirmAction('Cancel without saving');"  onclick="lbCancel_Click"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbSaveBusOrg1" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbSaveBusOrg1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                              OnClientClick="return confirmChange('Business Organization');"  onclick="lbSave_Click"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                    </td>
                   </tr>
@@ -48,8 +48,8 @@
                             <td CLASS="tableDataAlt"><asp:TextBox ID="tbThreshold" size="20" maxlength="20" runat="server"/>
                             <asp:RequiredFieldValidator
                                     ID="RequiredFieldValidator4" ControlToValidate="tbThreshold" runat="server" ErrorMessage="Please enter a Threshold Amount." Display="None"></asp:RequiredFieldValidator><asp:CompareValidator
-                                    ID="CompareValidator1" runat="server" ControlToValidate="tbThreshold" Operator="DataTypeCheck" ErrorMessage="Please enter a numerical Threshold Amount." 
-                                    Type="Double"></asp:CompareValidator></td>      
+                                    ID="CompareValidator1" runat="server" ControlToValidate="tbThreshold" Operator="DataTypeCheck" ErrorMessage="Please enter a numerical Threshold Amount."
+                                    Type="Double"></asp:CompareValidator></td>
                         </tr>
                         <tr>
                             <td class="columnHeader">
@@ -59,7 +59,7 @@
                             <td class="tableDataAlt">
                                 <asp:DropDownList ID="ddlCurrencyCodes" runat="server">
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="ddlCurrencyCodes" runat="server" 
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" ControlToValidate="ddlCurrencyCodes" runat="server"
                                  ErrorMessage="Please enter a Business Organization Preferred Currency"></asp:RequiredFieldValidator>
                             </td>
                         </tr>
@@ -70,13 +70,13 @@
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlParentBusOrg" runat="server">
                                 </asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="ddlParentBusOrg" runat="server" 
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="ddlParentBusOrg" runat="server"
                                  ErrorMessage="Please enter a Business Organization Parent Organization."></asp:RequiredFieldValidator>
                          </td>
                         </TR>
                         <tr>
-                            <td class="columnHeader">Status
-                                <asp:Label ID="lblSetBusorgStatus" runat="server" text="Status"></asp:Label>
+                            <td class="columnHeader">
+                                <asp:Label ID="lblSetBusorgStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlStatus" runat="server"></asp:DropDownList>
@@ -100,6 +100,5 @@
                         </table>
                         </td>
                         </tr>
-          
-                 
-          
+
+

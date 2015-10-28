@@ -62,14 +62,14 @@
 												</ItemTemplate>
 												<ItemStyle Width="10%" />
 											</asp:TemplateField>
-											<asp:BoundField DataField="FILE_DESC" HeaderText="Description" meta:resourcekey="BoundFieldResource1">
+											<asp:BoundField DataField="FILE_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>">
 											<ItemStyle Width="35%" />
 											</asp:BoundField>
 											<asp:CommandField meta:resourcekey="CommandFieldResource1" ShowDeleteButton="True">
 											<ItemStyle HorizontalAlign="Center" />
 											</asp:CommandField>
 										</Columns>
-										<HeaderStyle CssClass="HeadingCellTextLeft" />    
+										<HeaderStyle CssClass="HeadingCellTextLeft" />
 										<RowStyle CssClass="DataCell" />
 								</asp:GridView>
 								<asp:Label runat="server" ID="lblDocsListEmpty" Text="The documents list is empty." class="GridEmpty" Visible="False" meta:resourcekey="lblDocsListEmptyResource1"></asp:Label>
@@ -114,7 +114,7 @@
 							</ItemTemplate>
 							<ItemStyle Width="30%" />
 						</asp:TemplateField>
-						<asp:TemplateField HeaderText="Description" meta:resourcekey="TemplateFieldResource7">
+						<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Description %>">
 							<ItemTemplate>
 								<a class="linkUnderline" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' target="_blank"><%# Eval("FILE_DESC") %></a>
 							</ItemTemplate>
@@ -136,7 +136,7 @@
 							<ItemStyle Width="15%" />
 						</asp:TemplateField>
 					</Columns>
-					<HeaderStyle CssClass="HeadingCellTextLeft" />    
+					<HeaderStyle CssClass="HeadingCellTextLeft" />
 					<RowStyle CssClass="DataCell" />
 					</asp:GridView>
 					<asp:Label runat="server" ID="lblGVDocsListEmpty" Text="Your documents list is empty." class="GridEmpty" Visible="False" meta:resourcekey="lblGVDocsListEmptyResource1" ></asp:Label>
@@ -227,7 +227,7 @@
 	</table>
 </asp:Panel>
 
-<asp:Panel ID="pnlRadDocsList" runat="server" Visible = "False" meta:resourcekey="pnlRadDocsListResource1">                                                 
+<asp:Panel ID="pnlRadDocsList" runat="server" Visible = "False" meta:resourcekey="pnlRadDocsListResource1">
 	<telerik:RadGrid ID="rgDocsList" runat="server" Skin="Metro" GroupPanelPosition="Top" meta:resourcekey="rgDocsListResource1">
 		<MasterTableView DataKeyNames="DOCUMENT_ID" Width="100%" AutoGenerateColumns="False" BorderColor="LightGray" BorderWidth="0px" CssClass="RadFileExplorer" Font-Size="11px" ForeColor="#444444">
 			<Columns>
@@ -242,7 +242,7 @@
 					</ItemTemplate>
 					<HeaderStyle Width="100px" />
 				</telerik:GridTemplateColumn>
-				<telerik:GridBoundColumn DataField="FILE_DESC" HeaderText="Description" FilterControlAltText="Filter FILE_DESC column" meta:resourcekey="GridBoundColumnResource1" UniqueName="FILE_DESC"></telerik:GridBoundColumn>
+				<telerik:GridBoundColumn DataField="FILE_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>" FilterControlAltText="Filter FILE_DESC column" UniqueName="FILE_DESC"></telerik:GridBoundColumn>
 				<telerik:GridBoundColumn DataField="UPLOADED_DT" HeaderText="Posted" FilterControlAltText="Filter UPLOADED_DT column" meta:resourcekey="GridBoundColumnResource2" UniqueName="UPLOADED_DT"></telerik:GridBoundColumn>
 			</Columns>
 		</MasterTableView>

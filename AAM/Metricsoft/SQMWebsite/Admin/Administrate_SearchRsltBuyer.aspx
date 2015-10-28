@@ -13,7 +13,7 @@
                                 <asp:Label ID="lblBuyerSearchTitle" runat="server" Text="Buyer Search Results"></asp:Label>
                             </td>
 					    </tr>
-				    </table><BR/> 
+				    </table><BR/>
 
 <!--Border table of record data-->
                     <table width="98%" border="0" cellspacing="0" cellpadding="1" class="darkBorder">
@@ -30,7 +30,7 @@
                     <br>
 
        	            <table width="98%" cellpadding="3" cellspacing="1" border="0" class="darkBorder">
-                        <TR> 
+                        <TR>
 		                    <TD class="tableDataHdr" colspan="5">
 			                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
 				                    <tr>
@@ -38,7 +38,7 @@
                                             <asp:Label runat="server" ID="lblBuyerResultsHdr" Text="Results" Visible="true"></asp:Label>
                                         </td>
 	                                    <td align="right">
-					                <!-- BUTTONS -->		
+					                <!-- BUTTONS -->
 					                        <table cellpadding=0 cellspacing=2 border=0>
 						                        <tr>
                                                     <TD>
@@ -59,9 +59,9 @@
                                        <td>
                                          <table width="100%" border="0" cellspacing="0" cellpadding="1">
 			                                <tr>
-			                                    <td class=admBkgd align=center>	
+			                                    <td class=admBkgd align=center>
                                                   <asp:GridView runat="server" ID="gvBuyerList" Name="gvBuyerList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="98%" OnRowDataBound="gvBuyerList_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                                    <HeaderStyle CssClass="HeadingCellText" />
                                                     <RowStyle CssClass="DataCell" />
                 	                                <Columns>
                                                         <asp:TemplateField HeaderText="Buyer Code" ItemStyle-Width="20%">
@@ -73,7 +73,7 @@
                                                         <asp:BoundField DataField="FIRST_NAME" HeaderText="First name" ItemStyle-Width="22%" />
                                                         <asp:BoundField DataField="LAST_NAME" HeaderText="Last Name" ItemStyle-Width="23%" />
                                                         <asp:BoundField DataField="NEW_LOCATION_CD" HeaderText="Location" ItemStyle-Width="25%" />
-                                                        <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                                             <ItemTemplate>
                                                                 <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                                                 <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -88,7 +88,7 @@
                                 </td>
                               </tr>
                         </table>
-                       
+
 			        </table>
                 </TD>
             </TR>

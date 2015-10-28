@@ -15,7 +15,7 @@
     }
 
 </script>
-   
+
 	<asp:HiddenField ID="hfDocviewMessage" runat="server" Value="System Communications"/>
      <div class="admin_tabs">
 
@@ -27,7 +27,7 @@
                         <asp:HiddenField ID="hfBase" runat="server" />
                         <asp:HiddenField ID="hfOper" runat="server" />
                          <asp:HiddenField ID="hfActiveTab" runat="server" />
-                 
+
                         <table width="100%">
 			                <tr>
                                 <td class="pageTitles">
@@ -59,15 +59,15 @@
 
                                             <asp:Panel ID="pnlDetails" runat="server" Visible = "false" CssClass="admBkgd">
                                                 <asp:PlaceHolder ID="phUpdateCompany" runat="server">
-                                                    <asp:Button ID="btnCancelCompany" CSSclass="buttonStd" runat="server" text="Cancel" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+                                                    <asp:Button ID="btnCancelCompany" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                         OnClientClick="return confirmAction('Cancel without saving');"  onclick="CancelCompany"></asp:Button>
-                                                    <asp:Button ID="btnSaveCompany" CSSclass="buttonEmphasis" runat="server" text="Save" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+                                                    <asp:Button ID="btnSaveCompany" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                         OnClientClick="return confirmChange('Company Settings');"  onclick="UpdateCompany"></asp:Button>
-                                                </asp:PlaceHolder>  
+                                                </asp:PlaceHolder>
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="1">
                                                     <tr>
                                                         <td class="columnHeader">
-                                                            <asp:Label ID="lblCompanyStatus" runat="server" text="Status"></asp:Label>
+                                                            <asp:Label ID="lblCompanyStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                         </td>
                                                         <td class="tableDataAlt">
                                                             <asp:DropDownList ID="ddlStatus" runat="server"></asp:DropDownList>
@@ -137,12 +137,12 @@
                                                                 <ContentTemplate>
                                                                     <div id="divNonconfGVScroll" runat="server" class="">
                                                                         <asp:GridView runat="server" ID="gvTargetList" Name="gvTargetList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnTargetRowDataBound">
-                                                                            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                                            <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                             <RowStyle CssClass="DataCell" />
                 	                                                        <Columns>
                                                                                 <asp:TemplateField HeaderText="Target" ItemStyle-Width="50%">
 							                                                        <ItemTemplate>
-								                                                        <asp:LinkButton ID="lnkTargetCD" runat="server" CommandArgument='<%#Eval("TARGET_ID") %>' CSSClass="linkUnderline" 
+								                                                        <asp:LinkButton ID="lnkTargetCD" runat="server" CommandArgument='<%#Eval("TARGET_ID") %>' CSSClass="linkUnderline"
 										                                                    Text='<%#Eval("DESCR_SHORT") %>' OnClick="lnkTargetList_Click"></asp:LinkButton>
                                                                                         <asp:HiddenField id="hfCalcsScope" runat="server" Value='<%#Eval("CALCS_SCOPE") %>'/>
                                                                                     </ItemTemplate>
@@ -187,7 +187,7 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="columnHeader">
-                                                                                    <asp:Label ID="lblTargetDescLong" runat="server" text="Description"></asp:Label>
+                                                                                    <asp:Label ID="lblTargetDescLong" runat="server" text="<%$ Resources:LocalizedText, Description %>"></asp:Label>
                                                                                 </td>
                                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                                 <td CLASS="tableDataAlt">
@@ -224,8 +224,8 @@
                                                                                 <td CLASS="tableDataAlt">
                                                                                     <telerik:RadAjaxPanel ID="RadAjaxPanel2" runat="server">
                                                                                         <telerik:RadButton ID="btnYTDMetric" runat="server" CssClass="prompt" Text="Year To Date" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as year-to-date" CommandArgument="1"></telerik:RadButton>
-                                                                                        <telerik:RadButton ID="btnYOYMetric" runat="server" CssClass="prompt" Text="Year Over Year" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as difference from previous year" CommandArgument="2"></telerik:RadButton>   
-                                                                                        <telerik:RadButton ID="btnABSMetric" runat="server" CssClass="prompt" Text="Last Occur" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated from last occurence" CommandArgument="0"></telerik:RadButton>   
+                                                                                        <telerik:RadButton ID="btnYOYMetric" runat="server" CssClass="prompt" Text="Year Over Year" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as difference from previous year" CommandArgument="2"></telerik:RadButton>
+                                                                                        <telerik:RadButton ID="btnABSMetric" runat="server" CssClass="prompt" Text="Last Occur" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated from last occurence" CommandArgument="0"></telerik:RadButton>
                                                                                     </telerik:RadAjaxPanel>
                                                                                 </td>
                                                                             </tr>
@@ -246,13 +246,13 @@
                                                                                 <td CLASS="tableDataAlt">
                                                                                     <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
                                                                                     <telerik:RadButton ID="btnTargetMin" runat="server" CssClass="prompt" Text="Minimum" OnClick="onMinMaxClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Target represents the minimum desired value for this metric" CommandArgument="0"></telerik:RadButton>
-                                                                                    <telerik:RadButton ID="btnTargetMax" runat="server" CssClass="prompt" Text="Maximum" OnClick="onMinMaxClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Target represents the maximim desired value for this metric" CommandArgument="1"></telerik:RadButton>   
+                                                                                    <telerik:RadButton ID="btnTargetMax" runat="server" CssClass="prompt" Text="Maximum" OnClick="onMinMaxClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Target represents the maximim desired value for this metric" CommandArgument="1"></telerik:RadButton>
                                                                                     </telerik:RadAjaxPanel>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="columnHeader">
-                                                                                    <asp:Label ID="lblTargetStatus" runat="server" text="Status"></asp:Label>
+                                                                                    <asp:Label ID="lblTargetStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                                                 </td>
                                                                                 <td class="required">&nbsp;</td>
                                                                                 <td CLASS="tableDataAlt">
@@ -260,15 +260,15 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
-                                           
-                                                                        <asp:Button ID="btnTargetCancel" CSSclass="buttonStd" runat="server" text="Cancel" style="margin: 5px;" onclick="btnTargetSave_Click" enabled="false" CommandArgument="cancel" ></asp:Button>
-                                                                        <asp:Button ID="btnTargetSave" CSSclass="buttonEmphasis" runat="server" text="Save Target" style="margin: 5px;" Enabled="false" CommandArgument="save" 
+
+                                                                        <asp:Button ID="btnTargetCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" onclick="btnTargetSave_Click" enabled="false" CommandArgument="cancel" ></asp:Button>
+                                                                        <asp:Button ID="btnTargetSave" CSSclass="buttonEmphasis" runat="server" text="Save Target" style="margin: 5px;" Enabled="false" CommandArgument="save"
                                                                          OnClientClick="return ValidTarget();" onclick="btnTargetSave_Click" ></asp:Button>
                                                                     </ContentTemplate>
                                                                 </asp:UpdatePanel>
                                                             </asp:Panel>
                                                             <asp:Label ID="lblAddTarget" runat="server" CssClass="instructText" Text="Enter Target details" style="display:none;"></asp:Label>
-                                                
+
                                                         </td>
                                                     </tr>
                                                 </table>

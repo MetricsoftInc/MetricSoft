@@ -21,7 +21,7 @@
 					</table>
 					<br />
 					<telerik:RadFormDecorator ID="RadFormDecorator1" DecorationZoneID="divPageBody" DecoratedControls="All"
-						Skin="Metro" runat="server" />		
+						Skin="Metro" runat="server" />
 						<div id="divPageBody" class="textStd" style="text-align: left; margin: 0 10px;" runat="server">
 						<div class="blueCell" style="padding: 10px; font-size: 13px;">
 							Convert
@@ -85,7 +85,7 @@
 								<asp:ListItem>12</asp:ListItem>
 							</asp:DropDownList>
                             <br />
-                            Base currency: 
+                            Base currency:
 							<asp:DropDownList ID="ddlBaseCurrency" AutoPostBack="false" runat="server">
 								<asp:ListItem>USD</asp:ListItem>
 								<asp:ListItem>CAD</asp:ListItem>
@@ -98,11 +98,11 @@
 								<asp:ListItem>MXN</asp:ListItem>
 								<asp:ListItem>RUB</asp:ListItem>
 							</asp:DropDownList>
-							<telerik:RadButton ID="btnSubmit" runat="server" Text="Submit" Width="100" Skin="Metro" OnClick="btnSubmit_Click" />
+							<telerik:RadButton ID="btnSubmit" runat="server" Text="<%$ Resources:LocalizedText, Submit %>" Width="100" Skin="Metro" OnClick="btnSubmit_Click" />
 						</div>
 						<br />
 						<h2><asp:Label ID="lblResults" runat="server" /></h2>
-						
+
 						<br />
 						<br />
 						<br />

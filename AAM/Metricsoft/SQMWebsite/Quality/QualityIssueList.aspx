@@ -49,7 +49,7 @@
                                                                     <asp:Label ID="lblPartSearchTitle" runat="server" CssClass="popupTitles" Text="Search Quality Issues"></asp:Label>
                                                                 </td>
                                                                 <td valign="top" nowrap align="right">
-                                                                    <asp:Button ID="btnClose" runat="server" class="buttonStd" Text="Cancel" OnClientClick="javascript:window.close();" />
+                                                                    <asp:Button ID="btnClose" runat="server" class="buttonStd" Text="<%$ Resources:LocalizedText, Cancel %>" OnClientClick="javascript:window.close();" />
                                                                 </td>
                                                             </tr>
                                                         </table>

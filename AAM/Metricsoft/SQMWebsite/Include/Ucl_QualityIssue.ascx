@@ -54,7 +54,7 @@
                                 <div id="divRecord" runat="server">
                                     <table width="99%" border="0" style="margin-top: 4px;">
                                         <tr>
-                                            <td>    
+                                            <td>
                                                 <asp:Label ID="lblIssueInstruction" runat="server" Text="Issue summary" CssClass="prompt"></asp:Label>
                                             </td>
                                         </tr>
@@ -114,7 +114,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblIssueDesc" runat="server" text="Description"></asp:Label>
+                                                <asp:Label ID="lblIssueDesc" runat="server" text="<%$ Resources:LocalizedText, Description %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt">&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -123,7 +123,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblAttach1" runat="server" text="Attachments"></asp:Label>
+                                                <asp:Label ID="lblAttach1" runat="server" text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt">&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -250,7 +250,7 @@
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
                                                                 <asp:GridView runat="server" ID="gvMeasureGrid" Name="gvMeasureGrid" CssClass="" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="none" BorderStyle="none" BorderWidth="0px" PageSize="20" AllowSorting="true" Width="99.5%" OnRowDataBound="gvMeasure_OnRowDataBound">
-                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" BorderWidth="0px" />    
+                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" BorderWidth="0px" />
                                                                     <RowStyle CssClass="DataCell" Height=26 />
                                                                     <Columns>
                                                                         <asp:TemplateField HeaderText="Print/Spec" ItemStyle-Width="50%">
@@ -329,7 +329,7 @@
                                 <div id="divDisposition" runat="server">
                                     <table width="99%" border="0" style="margin-top: 2px;">
                                         <tr>
-                                            <td>    
+                                            <td>
                                                 <asp:Label ID="lblDispositionInstruct" runat="server" Text="Issue disposition and additional steps" CssClass="prompt"></asp:Label>
                                             </td>
                                         </tr>
@@ -380,8 +380,8 @@
                                             <td class="columnHeader" width="24%">
                                                 <span>
                                                     <asp:Label runat="server" ID="lblDupIssue" Text="Repeat Of Issue"></asp:Label>
-                                                     <input ID="btnDupIncident" runat="server" type="button" style="margin-top: 4px;" class="buttonSearch" ToolTip="find repeat issues based on the part type and non-conformances observed for the current issue" onclick="PopupCenter('../Quality/QualityIssueList.aspx?', 'newPage', 800, 650);" value="Search" />
-                                                    <%--<asp:Button ID="btnDupIncident" runat="server" style="float: right; margin-right: 5px;" ToolTip="find repeat issues based on the part type and non-conformances observed for the current issue" CSSClass="buttonSearch" text="Search" OnClick="btnDupIncident_Click"></asp:Button>--%>
+                                                     <input ID="btnDupIncident" runat="server" type="button" style="margin-top: 4px;" class="buttonSearch" ToolTip="find repeat issues based on the part type and non-conformances observed for the current issue" onclick="PopupCenter('../Quality/QualityIssueList.aspx?', 'newPage', 800, 650);" value="<%$ Resources:LocalizedText, Search %>" />
+                                                    <%--<asp:Button ID="btnDupIncident" runat="server" style="float: right; margin-right: 5px;" ToolTip="find repeat issues based on the part type and non-conformances observed for the current issue" CSSClass="buttonSearch" Text="<%$ Resources:LocalizedText, Search %>" OnClick="btnDupIncident_Click"></asp:Button>--%>
                                                 </span>
                                             </td>
                                             <td class="tableDataAlt" width="1%">&nbsp;</td>
@@ -417,7 +417,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" >
-                                                <asp:Label ID="lblStatus" runat="server" text="Status"></asp:Label>
+                                                <asp:Label ID="lblStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                             </td>
                                             <td class="required" >&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -455,7 +455,7 @@
                                     <div id="divResponse" runat="server">
                                         <table width="99%" border="0">
                                             <tr>
-                                                <td>    
+                                                <td>
                                                     <asp:Label ID="lblResponseInstruct" runat="server" Text="Responses and comments between the parties responsible for resolving this issue." CssClass="instructText"></asp:Label>
                                                 </td>
                                             </tr>

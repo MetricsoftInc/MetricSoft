@@ -48,6 +48,9 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblStatus.Text = Resources.LocalizedText.Status + ":";
+			this.lblToDate.Text = Resources.LocalizedText.To + ":";
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);

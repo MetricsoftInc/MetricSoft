@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnNewIncidentCreateResource1.Text" xml:space="preserve">
+    <value>Crear incidente</value>
+  </data>
+  <data name="cbCreatedByMeResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbCreatedByMeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbShowImageResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbShowImageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlChartTypeResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlIncidentLocationResource1.EmptyMessage" xml:space="preserve">
+    <value>Seleccionar</value>
+  </data>
+  <data name="ddlIncidentLocationResource1.ToolTip" xml:space="preserve">
+    <value>Seleccione la ubicación donde ocurrió el incidente</value>
+  </data>
+  <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.CellDayFormat" xml:space="preserve">
+    <value>%d</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
+    <value> - </value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
+    <value>dddd, MMMM dd, yyyy</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
+    <value>&amp;lt;&amp;lt;</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;&amp;lt;</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.RowHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.TitleFormat" xml:space="preserve">
+    <value>MMMM yyyy</value>
+  </data>
+  <data name="dmFromDateResource1.Calendar.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="dmFromDateResource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmFromDateResource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadDatePicker</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.CellDayFormat" xml:space="preserve">
+    <value>%d</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
+    <value> - </value>
+  </data>
+  <data name="dmToDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
+    <value>dddd, MMMM dd, yyyy</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
+    <value>&amp;lt;&amp;lt;</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;&amp;lt;</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.NavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.RowHeaderText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.TitleFormat" xml:space="preserve">
+    <value>MMMM yyyy</value>
+  </data>
+  <data name="dmToDateResource1.Calendar.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="dmToDateResource1.DateInput.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dmToDateResource1.WrapperTableCaption" xml:space="preserve">
+    <value>RadDatePicker</value>
+  </data>
+  <data name="lbIncidentLocationResource1.Text" xml:space="preserve">
+    <value>Ubicación de incidencias</value>
+  </data>
+  <data name="lblCreatedByMeResource1.Text" xml:space="preserve">
+    <value>Creado por mí solo</value>
+  </data>
+  <data name="lblIncidentDateResource1.Text" xml:space="preserve">
+    <value>Incidentes Desde la fecha:</value>
+  </data>
+  <data name="lblIncidentDetailsResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblIncidentDetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblInspectionDateResource1.Text" xml:space="preserve">
+    <value>Inspection Date From:</value>
+  </data>
+  <data name="lblInspectionDateResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblPageInstructionsResource1.Text" xml:space="preserve">
+    <value>Agregar o actualizar incidentes de EH&amp;S siguientes.</value>
+  </data>
+  <data name="lblShowImageResource1.Text" xml:space="preserve">
+    <value>Display Initial Image</value>
+  </data>
+  <data name="lblShowImageResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lblViewEHSRezTitleResource1.Text" xml:space="preserve">
+    <value>Manejo de Salud y Seguridad Ambiental de Incidentes</value>
+  </data>
+  <data name="lblViewEHSRezTitleResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkChartCloseResource1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lnkIncidentDetailsCloseResource1.Text" xml:space="preserve">
+    <value>
+											 &lt;img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/&gt;
+							</value>
+  </data>
+  <data name="lnkPrintResource1.Text" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="lnkPrintResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlChartSectionResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlChartSectionResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlIncidentDetailsResource1.GroupingText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pnlIncidentDetailsResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadAjaxPanel2Resource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadComboBoxItemResource2.Text" xml:space="preserve">
+    <value>Todo abierto</value>
+  </data>
+  <data name="RadComboBoxItemResource3.Text" xml:space="preserve">
+    <value>Todo cerrada</value>
+  </data>
+  <data name="rbNewResource1.Text" xml:space="preserve">
+    <value>Nuevo Incidente</value>
+  </data>
+  <data name="rcbStatusSelectResource1.EmptyMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rcbStatusSelectResource1.ToolTip" xml:space="preserve">
+    <value>Select incident status to list</value>
+  </data>
+  <data name="rddlNewIncidentTypeResource1.ToolTip" xml:space="preserve">
+    <value>Seleccionar el tipo de incidente que desea reportar</value>
+  </data>
+  <data name="winNewIncidentResource1.Localization.PinOff" xml:space="preserve">
+    <value>Pin off</value>
+  </data>
+  <data name="winNewIncidentResource1.Localization.PinOn" xml:space="preserve">
+    <value>Pin on</value>
+  </data>
+  <data name="winNewIncidentResource1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

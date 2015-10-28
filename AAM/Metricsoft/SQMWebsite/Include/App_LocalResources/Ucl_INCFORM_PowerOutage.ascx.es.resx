@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -169,12 +169,6 @@
     <value />
   </data>
   <data name="btnSaveResource1.SingleClickText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnSaveResource1.Text" xml:space="preserve">
-    <value>Guardar</value>
-  </data>
-  <data name="btnSaveResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cbFinalIsCompleteResource1.Text" xml:space="preserve">
@@ -474,9 +468,6 @@
   <data name="rdpAcceptDateResource1.Calendar.CalendarCaption" xml:space="preserve">
     <value>Calendario</value>
   </data>
-  <data name="rdpAcceptDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
-  </data>
   <data name="rdpAcceptDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
   </data>
@@ -492,9 +483,6 @@
   <data name="rdpAcceptDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpAcceptDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpAcceptDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -507,9 +495,6 @@
   <data name="rdpAcceptDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpAcceptDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -521,9 +506,6 @@
   </data>
   <data name="rdpAcceptDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpAcceptDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -546,26 +528,11 @@
   <data name="rdpAcceptDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpAcceptDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpAcceptDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpAcceptDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpAcceptDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpAcceptDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="rdpCompleteDateResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rdpCompleteDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpCompleteDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -582,9 +549,6 @@
   <data name="rdpCompleteDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpCompleteDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpCompleteDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -597,9 +561,6 @@
   <data name="rdpCompleteDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpCompleteDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpCompleteDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -611,9 +572,6 @@
   </data>
   <data name="rdpCompleteDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpCompleteDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpCompleteDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -636,26 +594,11 @@
   <data name="rdpCompleteDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpCompleteDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpCompleteDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpCompleteDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpCompleteDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpCompleteDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="rdpFinalCompleteDateResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rdpFinalCompleteDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpFinalCompleteDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -672,9 +615,6 @@
   <data name="rdpFinalCompleteDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpFinalCompleteDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpFinalCompleteDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -687,9 +627,6 @@
   <data name="rdpFinalCompleteDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpFinalCompleteDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpFinalCompleteDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -701,9 +638,6 @@
   </data>
   <data name="rdpFinalCompleteDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpFinalCompleteDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpFinalCompleteDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -726,26 +660,14 @@
   <data name="rdpFinalCompleteDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpFinalCompleteDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpFinalCompleteDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpFinalCompleteDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpFinalCompleteDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
   </data>
-  <data name="rdpFinalCompleteDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="rdpFinalStartDateResource1.Calendar.CalendarCaption" xml:space="preserve">
     <value>Calendario</value>
-  </data>
-  <data name="rdpFinalStartDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpFinalStartDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -762,9 +684,6 @@
   <data name="rdpFinalStartDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpFinalStartDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpFinalStartDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -777,9 +696,6 @@
   <data name="rdpFinalStartDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpFinalStartDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpFinalStartDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -791,9 +707,6 @@
   </data>
   <data name="rdpFinalStartDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpFinalStartDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpFinalStartDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -816,26 +729,11 @@
   <data name="rdpFinalStartDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpFinalStartDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpFinalStartDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpFinalStartDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpFinalStartDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpFinalStartDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpIncidentDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -852,9 +750,6 @@
   <data name="rdpIncidentDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpIncidentDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpIncidentDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -867,9 +762,6 @@
   <data name="rdpIncidentDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpIncidentDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -881,9 +773,6 @@
   </data>
   <data name="rdpIncidentDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpIncidentDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -906,26 +795,11 @@
   <data name="rdpIncidentDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpIncidentDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpIncidentDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpIncidentDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpIncidentDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpIncidentDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpReportDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -942,9 +816,6 @@
   <data name="rdpReportDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpReportDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpReportDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -957,9 +828,6 @@
   <data name="rdpReportDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpReportDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -971,9 +839,6 @@
   </data>
   <data name="rdpReportDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpReportDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -996,26 +861,11 @@
   <data name="rdpReportDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpReportDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpReportDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpReportDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpReportDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpReportDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="rdpStartDateResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rdpStartDateResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
   </data>
   <data name="rdpStartDateResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
@@ -1032,9 +882,6 @@
   <data name="rdpStartDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rdpStartDateResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rdpStartDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -1047,9 +894,6 @@
   <data name="rdpStartDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rdpStartDateResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rdpStartDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -1061,9 +905,6 @@
   </data>
   <data name="rdpStartDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rdpStartDateResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rdpStartDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -1086,20 +927,11 @@
   <data name="rdpStartDateResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rdpStartDateResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rdpStartDateResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
   <data name="rdpStartDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rdpStartDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rdpStartDateResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
   <data name="RequiredFieldValidator1Resource1.ErrorMessage" xml:space="preserve">
     <value>Required</value>
@@ -1191,12 +1023,6 @@
   <data name="rfvRootCauseResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rtpIncidentTimeResource1.Calendar.CalendarCaption" xml:space="preserve">
-    <value>Calendar</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.CalendarSummary" xml:space="preserve">
-    <value>Calendar control which enables the selection of dates.</value>
-  </data>
   <data name="rtpIncidentTimeResource1.Calendar.CellDayFormat" xml:space="preserve">
     <value>%d</value>
   </data>
@@ -1212,9 +1038,6 @@
   <data name="rtpIncidentTimeResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
     <value>dddd, MMMM dd, yyyy</value>
   </data>
-  <data name="rtpIncidentTimeResource1.Calendar.DaysViewSummary" xml:space="preserve">
-    <value>Table containing all dates for the currently selected month.</value>
-  </data>
   <data name="rtpIncidentTimeResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -1227,9 +1050,6 @@
   <data name="rtpIncidentTimeResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
   </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationCaption" xml:space="preserve">
-    <value>Title and navigation</value>
-  </data>
   <data name="rtpIncidentTimeResource1.Calendar.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -1241,9 +1061,6 @@
   </data>
   <data name="rtpIncidentTimeResource1.Calendar.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationSummary" xml:space="preserve">
-    <value>Title and navigation which can change and show the current year and month.</value>
   </data>
   <data name="rtpIncidentTimeResource1.Calendar.RowHeaderImage" xml:space="preserve">
     <value />
@@ -1265,12 +1082,6 @@
   </data>
   <data name="rtpIncidentTimeResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the calendar popup.</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
   </data>
   <data name="rtpIncidentTimeResource1.TimePopupButton.ToolTip" xml:space="preserve">
     <value>Open the time view popup.</value>
@@ -1295,9 +1106,6 @@
   </data>
   <data name="rtpIncidentTimeResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
   <data name="rvfFinalStartDateResource1.ErrorMessage" xml:space="preserve">
     <value>Required</value>

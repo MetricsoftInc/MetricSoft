@@ -19,7 +19,7 @@
 				</td>
                 <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblCompanyStatus" Text="Status" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblCompanyStatus" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblCompanyStatus_out" Text="" Visible="true"></asp:Label>
@@ -54,7 +54,7 @@
 				</td>
                 <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblCompanyStatusHdr" Text="Status" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblCompanyStatusHdr" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblCompanyStatus2" Text="" Visible="true"></asp:Label>
@@ -188,7 +188,7 @@
 				</td>
                 <td class=summaryData valign=top colspan="2">
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblPlanDescHdr" Text="Description" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblPlanDescHdr" Text="<%$ Resources:LocalizedText, Description %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblPlanDesc_out" Text="" Visible="true"></asp:Label>

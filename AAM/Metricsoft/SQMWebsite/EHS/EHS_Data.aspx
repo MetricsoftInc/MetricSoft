@@ -147,7 +147,7 @@
 			<br />
 			<%-- A Telerik RadGrid for the data, called rgData, is added here via Page_Load --%>
 			<br id="rgData_placeholder" runat="server" />
-			<input type="button" id="btnSave" runat="server" value="Save" class="myButton UseSubmitAction" />
+			<input type="button" id="btnSave" runat="server" value="<%$ Resources:LocalizedText, Save %>" class="myButton UseSubmitAction" />
 			<asp:Label ID="lblSaved" runat="server" Text="Data saved!" ForeColor="Green" Font-Size="1.5em" Font-Bold="true" style="display: none; padding-left: 10px" />
 		</asp:Panel>
 		<input type="hidden" id="hfCurrDetails" />

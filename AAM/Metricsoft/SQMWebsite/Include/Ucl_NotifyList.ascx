@@ -8,10 +8,10 @@
     }
 
     function CloseUSerEditWindow() {
-        var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+        var oWindow = GetRadWindow();  //Obtaining a reference to the current window
         oWindow.Close();
     }
-	
+
 	</script>
 
 
@@ -109,8 +109,8 @@
 			</table>
 		</telerik:RadAjaxPanel>
             <span style="float: right; margin: 10px;">
-                <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="Cancel" style="width: 70px;" onclick="OnCancelNotifyAction_Click"></asp:Button>
-                <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text ="Save" style="width: 70px;" OnClientClick="return confirmChange('Notification');" onclick="OnSaveNotifyAction_Click"></asp:Button>
+                <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancelNotifyAction_Click"></asp:Button>
+                <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text ="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return confirmChange('Notification');" onclick="OnSaveNotifyAction_Click"></asp:Button>
 				&nbsp;
 				<asp:Button ID="btnDelete" class="buttonLink" runat="server" Text ="Delete" style="width: 70px;" OnClientClick="return confirmAction('Delete This Notification');" onclick="OnDeleteNotifyAction_Click"></asp:Button>
             </span>

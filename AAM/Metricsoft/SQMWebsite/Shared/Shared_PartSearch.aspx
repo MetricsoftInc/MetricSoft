@@ -24,7 +24,7 @@
     <form id="form1" runat="server">
      <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
-    <ajaxToolkit:ModalPopupExtender ID="ModalExtnd1" runat="server" TargetControlID="lblHidden" 
+    <ajaxToolkit:ModalPopupExtender ID="ModalExtnd1" runat="server" TargetControlID="lblHidden"
     PopupControlID="SummaryDiv" BackgroundCssClass="error_popupbg">
     </ajaxToolkit:ModalPopupExtender>
 
@@ -38,9 +38,9 @@
         </asp:ValidationSummary>
     </td></tr>
     <tr><td align="center">
-        <input type="button" value="OK" onclick="$find('ModalExtnd1').hide();"/>
+        <input type="button" value="<%$ Resources:LocalizedText, OK %>" onclick="$find('ModalExtnd1').hide();"/>
     </td></tr>
-</table>    
+</table>
 <asp:Label ID="lblHidden" runat="server" Text="hidden" CssClass="error_hidelbl">
 </asp:Label>
 </div>
@@ -83,14 +83,14 @@
                                         </td>
                                     </tr>
                                 </table>
-                               
+
                                 <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder">
                                     <tr>
                                         <td class="columnHeader">
                                             <asp:Label ID="lblPartString" runat="server" text="Part Number or Name"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartString" size="50" maxlength="100" runat="server"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartString" size="50" maxlength="100" runat="server"/></td>
 			                        </tr>
                                     <tr>
                                         <td class="columnHeader" width="29%">
@@ -111,13 +111,13 @@
                                             <asp:Label ID="lblPartActive" runat="server" text="Active Only"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:CheckBox id="cbPartActive" runat="server" AutoPostBack="false"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:CheckBox id="cbPartActive" runat="server" AutoPostBack="false"/></td>
 			                        </tr>
                                 </table>
 
-                                <asp:Button ID="btnPartSearch" runat="server" text="Search" CSSclass="buttonStd" OnClick="btnSearchParts_Click" style="margin: 5px;"/>
+                                <asp:Button ID="btnPartSearch" runat="server" Text="<%$ Resources:LocalizedText, Search %>" CSSclass="buttonStd" OnClick="btnSearchParts_Click" style="margin: 5px;"/>
                                 <asp:Button ID="btnPartSearchReset" runat="server" text="Reset" CSSclass="buttonStd" OnClick="btnPartSearchReset_Click" style="margin:5px;"/>
-                         
+
                                 <asp:Panel ID="pnlSearchList" runat="server" Visible="false">
                                     <Ucl:PartList id="uclSearchList" runat="server"/>
                                 </asp:Panel>

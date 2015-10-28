@@ -896,11 +896,11 @@ namespace SQM.Website
                 row1.CreateCell(0).SetCellValue("Incident ID");
                 row1.CreateCell(1).SetCellValue("Incident Date");
                 row1.CreateCell(2).SetCellValue("Report Date");
-                row1.CreateCell(3).SetCellValue("Incident Type"); // really the Issue Type
+                row1.CreateCell(3).SetCellValue(Resources.LocalizedText.IncidentType); // really the Issue Type
                 row1.CreateCell(4).SetCellValue("Location"); // Really the plant name
-                row1.CreateCell(5).SetCellValue("Description");
+                row1.CreateCell(5).SetCellValue(Resources.LocalizedText.Description);
                 row1.CreateCell(6).SetCellValue("Root Cause Operational Control");
-                row1.CreateCell(7).SetCellValue("Corrective Action");
+                row1.CreateCell(7).SetCellValue(Resources.LocalizedText.CorrectiveAction);
                 row1.CreateCell(8).SetCellValue("Responsible Person");
                 row1.CreateCell(9).SetCellValue("Due Date");
 
@@ -1193,10 +1193,10 @@ namespace SQM.Website
                 row1.CreateCell(4).SetCellValue("Inspection Category"); 
                 row1.CreateCell(5).SetCellValue("Recommendation Type");
                 row1.CreateCell(6).SetCellValue("Recommendation Description"); 
-                row1.CreateCell(7).SetCellValue("Description");
+                row1.CreateCell(7).SetCellValue(Resources.LocalizedText.Description);
                 row1.CreateCell(8).SetCellValue("Responsible Person");
                 row1.CreateCell(9).SetCellValue("Due Date");
-                row1.CreateCell(10).SetCellValue("Status");
+                row1.CreateCell(10).SetCellValue(Resources.LocalizedText.Status);
                 row1.CreateCell(11).SetCellValue("Date Actions Applied");
                 row1.CreateCell(12).SetCellValue("Corrective Actions Summary");
                 row1.CreateCell(13).SetCellValue("Recorded By");

@@ -15,7 +15,7 @@
         }
 
         function CloseMetricEditWindow() {
-            var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+            var oWindow = GetRadWindow();  //Obtaining a reference to the current window
             oWindow.Close();
         }
 
@@ -98,7 +98,7 @@
                     <asp:Label ID="lblNoMetrics" runat="server" Text="There are no Metrics defined for this profile" CssClass="labelEmphasis" visible="false"></asp:Label>
                     <asp:Label ID="lblCopyError" runat="server" Text="An error occurred when attempting to copy the selected profile." CssClass="labelEmphasis" visible="false"></asp:Label>
                 </div>
-      
+
                 <div ID="divEHSProfile" runat="server" Visible = "false" >
 
                     <table width="99.5%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 2px;">
@@ -169,8 +169,8 @@
                             </asp:PlaceHolder>
                         </table>
                         <span style="float: right; margin: 5px;">
-                            <asp:Button ID="btnProfileCancel" CSSclass="buttonStd" runat="server" text="Cancel" enabled= "true" OnClick="btnProfileCancel_Click"  ></asp:Button>
-                            <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Profile"  
+                            <asp:Button ID="btnProfileCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" enabled= "true" OnClick="btnProfileCancel_Click"  ></asp:Button>
+                            <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Profile"
                                                 OnClientClick="return ValidProfile();" OnClick="btnProfileSave_Click" ></asp:Button>
                         </span>
                     </asp:Panel>
@@ -204,7 +204,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="columnHeader">
-                                                    <asp:Label ID="lblMetricStatus" runat="server" text="Status"></asp:Label>
+                                                    <asp:Label ID="lblMetricStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                 </td>
                                                 <td class="tableDataAlt">&nbsp;</td>
                                                 <td CLASS="tableDataAlt">
@@ -235,7 +235,7 @@
                                             <asp:PlaceHolder ID="phCostWaste" runat="server">
                                                 <tr>
                                                     <td class="columnHeader">
-                                                        <asp:Label ID="lblMetricNegValue" runat="server" text="Invoice Type"></asp:Label>   
+                                                        <asp:Label ID="lblMetricNegValue" runat="server" text="Invoice Type"></asp:Label>
                                                     </td>
                                                     <td id="tdMetricCost" runat="server" class="tableDataAlt">&nbsp;</td>
                                                     <td CLASS="tableDataAlt">
@@ -284,7 +284,7 @@
                                                         <asp:Label ID="lblMetricUOM" runat="server" text="Invoice UOM"></asp:Label>
                                                     </td>
                                                     <td id="tdUOM" runat="server" class="tableDataAlt">&nbsp;</td>
-                                                    <td CLASS="tableDataAlt">       
+                                                    <td CLASS="tableDataAlt">
                                                         <asp:DropDownList ID="ddlMetricUOM" runat="server" CssClass="WarnIfChanged" OnSelectedIndexChanged="ddlUOMChanged" AutoPostback="true"></asp:DropDownList>
                                                         <span id="spUOMFactor" runat="server" visible="false">
                                                             &nbsp;
@@ -304,7 +304,7 @@
                                                     <td CLASS="tableDataAlt" >
                                                         <div style="background-color: #e8e8e8; width: 98%; padding: 3px;">
                                                             <asp:Label ID="lblValueDflt" runat="server" CssClass="prompt" text="Quantity: "></asp:Label>
-                                                            <asp:TextBox ID="tbValueDflt" runat="server" CssClass="textStd WarnIfChanged" maxlength="20" Columns="13" onblur="ValidNumeric(this, 'please enter numeric values only');"></asp:TextBox>  
+                                                            <asp:TextBox ID="tbValueDflt" runat="server" CssClass="textStd WarnIfChanged" maxlength="20" Columns="13" onblur="ValidNumeric(this, 'please enter numeric values only');"></asp:TextBox>
                                                             &nbsp;
                                                             <asp:Label ID="lblCostDflt" runat="server" CssClass="prompt" text="Cost: "></asp:Label>
                                                             <asp:TextBox ID="tbCostDflt" runat="server" CssClass="textStd WarnIfChanged" maxlength="20" Columns="13" onblur="ValidNumeric(this, 'please enter numeric values only');"></asp:TextBox>
@@ -320,9 +320,9 @@
                                 </asp:UpdatePanel>
                                 <br />
                                 <span style="float: right; margin: 5px;">
-                                    <asp:Button ID="btnMetricCancel" CSSclass="buttonStd" runat="server" text="Cancel" enabled=false 
+                                    <asp:Button ID="btnMetricCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" enabled=false
                                         OnClick="btnMetricClear_Click"></asp:Button>
-                                    <asp:Button ID="btnMetricSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Metric" 
+                                    <asp:Button ID="btnMetricSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Metric"
                                         OnClientClick="return MetricStatusConfirm();" OnClick="btnMetricSave_Click"></asp:Button>
                                 </span>
                                 <br />
@@ -337,13 +337,13 @@
                         <asp:LinkButton ID="lnkMeasureAdd" runat="server" CssClass="buttonAdd" style="float:left; margin: 0 0 4px 0;" Text="Add Metric" ToolTip="Add a metric to this profile" OnClick="btnMetricAdd_Click"></asp:LinkButton>
                         <br style="clear: both;" />
                         <asp:GridView  runat="server" ID="gvMetricList" Name="gvMetricList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeaderWhenEmpty="True" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvOnProfileRowDataBound">
-                            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                            <HeaderStyle CssClass="HeadingCellTextLeft" />
                             <RowStyle CssClass="DataCell" />
                 	        <Columns>
-                              
+
                                 <asp:TemplateField HeaderText="Metric" ItemStyle-Width="22%">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="lnkMetricName" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline"  
+                                        <asp:LinkButton ID="lnkMetricName" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline"
 										        Text='<%#Eval("EHS_MEASURE.MEASURE_NAME") %>' OnClick="lnkMetricList_Click"></asp:LinkButton>
                                         <asp:Label ID="lblMetricPrompt" runat="server" CssClass="refText" visible="false"></asp:Label>
                                         <asp:HiddenField id="hfMetricStatus" runat="server" value='<%#Eval("STATUS") %>'/>
@@ -353,7 +353,7 @@
                                 <asp:TemplateField HeaderText="M Code">
 							        <ItemTemplate>
                                         <asp:HiddenField id="hfMetricCategory" runat="server" value='<%#Eval("EHS_MEASURE.MEASURE_CATEGORY") %>' />
-								        <asp:LinkButton ID="lnkMetricCD" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline" 
+								        <asp:LinkButton ID="lnkMetricCD" runat="server" CommandArgument='<%#Eval("PRMR_ID") %>' CSSClass="linkUnderline"
 										    Text='<%#Eval("EHS_MEASURE.MEASURE_CD") %>' OnClientClick="UpdateProfileButtons();" OnClick="lnkMetricList_Click"></asp:LinkButton>
                                     </ItemTemplate>
 							    </asp:TemplateField>
@@ -411,10 +411,10 @@
         <tr>
             <td>
                 <asp:Panel ID="pnlCopyProfile" runat="server" style="float: left; margin-left: 15px;" Visible="false">
-                    <telerik:RadComboBox ID="ddlCopyProfile" runat="server" LabelCssClass="prompt" Label="Copy Profile From Location: " CheckBoxes="false" ZIndex=9000 Skin="Metro" height="300" Width="280" 
+                    <telerik:RadComboBox ID="ddlCopyProfile" runat="server" LabelCssClass="prompt" Label="Copy Profile From Location: " CheckBoxes="false" ZIndex=9000 Skin="Metro" height="300" Width="280"
                         OnClientLoad="DisableComboSeparators" OnSelectedIndexChanged="ddlCopyProfileSelect" AutoPostback="true" ToolTip="Create new profile by copying metrics from an existing profile" ></telerik:RadComboBox>
                     <br />
-                    <telerik:RadComboBox ID="ddlDefaultResponsible" runat="server" LabelCssClass="prompt" Label="Default Responsible: " CheckBoxes="false" ZIndex=9000 Skin="Metro" height="300" Width="280" 
+                    <telerik:RadComboBox ID="ddlDefaultResponsible" runat="server" LabelCssClass="prompt" Label="Default Responsible: " CheckBoxes="false" ZIndex=9000 Skin="Metro" height="300" Width="280"
                         AutoPostback="false" ToolTip="Select default responsible person for metric inputs" ></telerik:RadComboBox>
                     <asp:Button id="btnCopyProfile" runat="server" CssClass="buttonStd" style="margin-left: 10px;" Text="Copy"  OnClientClick="return confirmAction('Copy metrics from the selected profile');" OnClick="btnCopyProfile_Click" Enabled="false"/>
                 </asp:Panel>

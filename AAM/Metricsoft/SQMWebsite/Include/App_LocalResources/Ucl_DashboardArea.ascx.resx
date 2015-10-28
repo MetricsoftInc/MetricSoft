@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -147,12 +147,6 @@
   <data name="btnTestViewResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="btnViewCancelResource1.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="btnViewCancelResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewLayoutResource1.Text" xml:space="preserve">
     <value>Layout</value>
   </data>
@@ -177,47 +171,11 @@
   <data name="ddlDateIntervalResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlDateIntervalResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlDateIntervalResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlDateIntervalResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlDateIntervalResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlDateIntervalResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlDateIntervalResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlDateIntervalResource1.ToolTip" xml:space="preserve">
     <value>select interval for charts calculating points by date</value>
   </data>
   <data name="ddlDateSpanResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlDateSpanResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlDateSpanResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlDateSpanResource1.ToolTip" xml:space="preserve">
     <value />
@@ -225,47 +183,11 @@
   <data name="ddlDfltCriteriaResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlDfltCriteriaResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlDfltCriteriaResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlDfltCriteriaResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlDfltCriteriaResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlDfltCriteriaResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlDfltCriteriaResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlDfltCriteriaResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlPerspectiveResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlPerspectiveResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPerspectiveResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPerspectiveResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPerspectiveResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPerspectiveResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPerspectiveResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlPerspectiveResource1.ToolTip" xml:space="preserve">
     <value />
@@ -273,47 +195,11 @@
   <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlViewAvailabilityResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlViewAvailabilityResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlViewAvailabilityResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlViewAvailabilityResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlViewAvailabilityResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlViewAvailabilityResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlViewAvailabilityResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlViewAvailabilityResource1.ToolTip" xml:space="preserve">
     <value />
@@ -321,47 +207,11 @@
   <data name="ddlViewListResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlViewListResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlViewListResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlViewListResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlViewListResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlViewListResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlViewListResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlViewListResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlVIGaugeTypeResource1.EmptyMessage" xml:space="preserve">
     <value>chart type</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVIGaugeTypeResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlVIGaugeTypeResource1.ToolTip" xml:space="preserve">
     <value>select chart or gauge type</value>
@@ -369,47 +219,11 @@
   <data name="ddlVIScopeResource1.EmptyMessage" xml:space="preserve">
     <value>for metric or category</value>
   </data>
-  <data name="ddlVIScopeResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVIScopeResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVIScopeResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVIScopeResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVIScopeResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVIScopeResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlVIScopeResource1.ToolTip" xml:space="preserve">
     <value>select metrics by category, type or specific measure</value>
   </data>
   <data name="ddlVISeqResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlVISeqResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVISeqResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVISeqResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVISeqResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVISeqResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVISeqResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlVISeqResource1.ToolTip" xml:space="preserve">
     <value>display sequence</value>
@@ -417,47 +231,11 @@
   <data name="ddlVISeriesOrderResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlVISeriesOrderResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVISeriesOrderResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVISeriesOrderResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVISeriesOrderResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVISeriesOrderResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVISeriesOrderResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlVISeriesOrderResource1.ToolTip" xml:space="preserve">
     <value>data series ordering</value>
   </data>
   <data name="ddlVIStatResource1.EmptyMessage" xml:space="preserve">
     <value>statistic</value>
-  </data>
-  <data name="ddlVIStatResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVIStatResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVIStatResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVIStatResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVIStatResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVIStatResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlVIStatResource1.ToolTip" xml:space="preserve">
     <value>select metric to display</value>
@@ -465,47 +243,11 @@
   <data name="ddlVITargetResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlVITargetResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVITargetResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVITargetResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVITargetResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVITargetResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVITargetResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlVITargetResource1.ToolTip" xml:space="preserve">
     <value>overlay metric target</value>
   </data>
   <data name="ddlVIXAxisScaleResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlVIXAxisScaleResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlVIXAxisScaleResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlVIXAxisScaleResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlVIXAxisScaleResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlVIXAxisScaleResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlVIXAxisScaleResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlVIXAxisScaleResource1.ToolTip" xml:space="preserve">
     <value>choose auto scaling or enter min/max scale values</value>
@@ -513,47 +255,11 @@
   <data name="ddlYearFromResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlYearFromResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlYearFromResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlYearFromResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlYearToResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlYearToResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlYearToResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlYearToResource1.ToolTip" xml:space="preserve">
     <value />
@@ -563,15 +269,6 @@
   </data>
   <data name="dmPeriodFromResource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodFromResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -585,9 +282,6 @@
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="dmPeriodFromResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -597,23 +291,11 @@
   <data name="dmPeriodFromResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="dmPeriodFromResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="dmPeriodToResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="dmPeriodToResource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodToResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -627,9 +309,6 @@
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="dmPeriodToResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -638,9 +317,6 @@
   </data>
   <data name="dmPeriodToResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
-  </data>
-  <data name="dmPeriodToResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
   <data name="Label1Resource1.Text" xml:space="preserve">
     <value>Perspective</value>
@@ -696,22 +372,10 @@
   <data name="lblPeriodFromResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblPeriodToResource1.Text" xml:space="preserve">
-    <value>To: </value>
-  </data>
-  <data name="lblPeriodToResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblPerspectiveResource1.Text" xml:space="preserve">
     <value>Select a view representing the detailed analysis you wish to explore. Views are listed according to system topics or data types represented.</value>
   </data>
   <data name="lblPerspectiveResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPlantSelectResource1.Text" xml:space="preserve">
-    <value>Locations:</value>
-  </data>
-  <data name="lblPlantSelectResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lblStatsResource1.Text" xml:space="preserve">
@@ -808,12 +472,6 @@
     <value>From: </value>
   </data>
   <data name="lblYearFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblYearToResource1.Text" xml:space="preserve">
-    <value>To: </value>
-  </data>
-  <data name="lblYearToResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lnkExportResource1.Text" xml:space="preserve">
@@ -1631,5 +1289,8 @@
   </data>
   <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
     <value>scale unit</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
   </data>
 </root>

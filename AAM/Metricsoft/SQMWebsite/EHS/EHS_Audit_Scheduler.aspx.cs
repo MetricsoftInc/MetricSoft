@@ -28,6 +28,10 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.Title = Resources.LocalizedText.EHSAudits;
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblStatus.Text = Resources.LocalizedText.Status + ":";
+			this.lblAuditType.Text = Resources.LocalizedText.AssessmentType + ":";
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
@@ -216,9 +220,9 @@ namespace SQM.Website
 
 			divAuditList.Visible = true;
 
-			lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Assessment Schedules";
+			lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
 			lblPageInstructions.Text = "Add or update EH&amp;S Assessment Schedule below.";
-			rbNew.Text = "New Assessment Schedule";
+			rbNew.Text = GetLocalResourceObject("rbNewResource1.Text").ToString();
 			phAudit.Visible = true;
 		}
 

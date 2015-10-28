@@ -20,8 +20,8 @@
             <telerik:GridBoundColumn DataField="INCIDENT_DT" HeaderText="Date" HeaderStyle-Font-Size="Smaller" DataFormatString="{0:d}"
                 HeaderStyle-Width="95">
             </telerik:GridBoundColumn>
-            <telerik:GridButtonColumn UniqueName="ClosedButtonColumn" ButtonType="ImageButton" HeaderText="Closed" ImageUrl="/images/ico-lock.png" HeaderStyle-Width="52" HeaderStyle-Font-Size="Smaller" CommandName="Select"></telerik:GridButtonColumn>
-            <telerik:GridTemplateColumn UniqueName="TemplateColumn" HeaderStyle-Font-Size="Smaller" HeaderText="Incident Type/Description"
+            <telerik:GridButtonColumn UniqueName="ClosedButtonColumn" ButtonType="ImageButton" HeaderText="<%$ Resources:LocalizedText, Closed %>" ImageUrl="/images/ico-lock.png" HeaderStyle-Width="52" HeaderStyle-Font-Size="Smaller" CommandName="Select"></telerik:GridButtonColumn>
+            <telerik:GridTemplateColumn UniqueName="TemplateColumn" HeaderStyle-Font-Size="Smaller" HeaderText="<%$ Resources:LocalizedText, IncidentType %>/Description"
                 SortExpression="ISSUE_TYPE,DESCRIPTION" HeaderStyle-Width="90%" HeaderStyle-Wrap="false" ItemStyle-Wrap="false">
                 <ItemTemplate>
                     <div class="ehsIncidentItem">

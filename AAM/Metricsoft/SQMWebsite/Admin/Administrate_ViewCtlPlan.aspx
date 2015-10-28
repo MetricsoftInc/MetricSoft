@@ -45,12 +45,12 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                      <table width="98%" border="0" cellspacing="0" cellpadding="2">
 			            <tr>
-			                <td class=admBkgd align=center>	
+			                <td class=admBkgd align=center>
                                 <asp:GridView runat="server" ID="gvCtlPlan" Name="gvCtlPlan" CssClass="GridSmall" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvCtlPlan_OnRowDataBound">
-                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                    <HeaderStyle CssClass="HeadingCellText" />
                                     <RowStyle CssClass="DataCell" />
                 	                <Columns>
                                         <asp:TemplateField Visible="false">
@@ -83,13 +83,13 @@
                                                 Per&nbsp;
                                                 <asp:Label ID="lblSampleRate_out" runat="server" CssClass="DataCellSmall" text='<%#Eval("SAMPLE_RATE") %>'></asp:Label>
                                                 <br />
-                                                <asp:ImageButton ID="btnStepAttachment" runat="server" ImageUrl="~/images/attach.gif" title="Attachments" />
+                                                <asp:ImageButton ID="btnStepAttachment" runat="server" ImageUrl="~/images/attach.gif" title="<%$ Resources:LocalizedText, Attachments %>" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
            			                    <asp:TemplateField HeaderText="Measures" ItemStyle-Width="35%">
                                             <ItemTemplate>
                                                 <asp:GridView runat="server" ID="gvMeasureGrid" Name="gvMeasureGrid" CssClass="GridSmall" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvMeasure_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                                    <HeaderStyle CssClass="HeadingCellText" />
                                                     <RowStyle CssClass="DataCell" Height=26 />
                                                     <Columns>
                                                         <asp:TemplateField HeaderText="No." ItemStyle-Width="10%">
@@ -122,7 +122,7 @@
                                         <asp:TemplateField HeaderText="Methods" ItemStyle-Width="35%">
                                             <ItemTemplate>
                                                 <asp:GridView runat="server" ID="gvMethodGrid" Name="gvMethodGrid" CssClass="GridSmall" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvMethod_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                                    <HeaderStyle CssClass="HeadingCellText" />
                                                     <RowStyle CssClass="DataCell" Height="26" />
                                                     <Columns>
                                                         <asp:TemplateField HeaderText="Spec Type" ItemStyle-Width="25%">

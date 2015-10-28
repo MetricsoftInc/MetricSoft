@@ -6,17 +6,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                          <td>
-                                            <asp:Button ID="lbPlantCancel1" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                            <asp:Button ID="lbPlantCancel1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbPlantSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbSavePlant1" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbSavePlant1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                              OnClientClick="return confirmChange('Plant');" onclick="lbPlantSave_Click" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                  </td>
               </tr>
@@ -39,7 +39,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblPlantStatus" runat="server" text="Status"></asp:Label>
+                                <asp:Label ID="lblPlantStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlPlantStatus" runat="server"></asp:DropDownList></td>
@@ -70,7 +70,7 @@
                                 <asp:Label ID="lblPlantCRTreshold" runat="server" text="Cost Recovery Threshold"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
-                            <td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantCRThreshold" size="20" maxlength="20" runat="server"/></td>      
+                            <td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantCRThreshold" size="20" maxlength="20" runat="server"/></td>
 			            </tr>
                        <tr>
                             <td class="columnHeader">
@@ -105,17 +105,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                          <td>
-                                            <asp:Button ID="lbPlantCancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                            <asp:Button ID="lbPlantCancel2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbPlantSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbSavePlant2" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbSavePlant2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                              OnClientClick="return confirmChange('Plant');" onclick="lbPlantSave_Click" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                 </td>
                </tr>

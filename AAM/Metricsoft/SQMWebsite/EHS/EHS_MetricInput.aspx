@@ -17,7 +17,7 @@
       }
 
       function setFocus(sender, eventArgs) {
-          var selectedDate1 = null; 
+          var selectedDate1 = null;
           var selectedDate2 = null;
           var thisID = sender.get_id();
           var focusID;
@@ -88,11 +88,11 @@
               document.getElementById('hfNumChanged').value = Math.max(0, numChanged).toString();
           }
       }
- 
+
   </script>
 
  <div class="admin_tabs">
-     <telerik:RadCalendar ID="sharedCalendar" Visible="false" runat="server"></telerik:RadCalendar>                            
+     <telerik:RadCalendar ID="sharedCalendar" Visible="false" runat="server"></telerik:RadCalendar>
     <table width="100%" border="0" cellspacing="0" cellpadding="1">
         <tr>
             <td class="tabActiveTableBg" colspan="10" align="center">
@@ -135,8 +135,8 @@
                                     <asp:Label ID="lblRateStatus" runat="server" CssClass="textStd"></asp:Label>
                                 </asp:PlaceHolder>
                                  <span style="float: right; margin-right: 5px;"  class="noprint">
-                                    <asp:Button ID="btnSave1" class="buttonEmphasis" runat="server" Text ="Save" style="width: 70px; margin-top: 4px; margin-left: 20px;" OnClientClick="return ValidateInputs();" onclick="OnSave_Click"></asp:Button>
-                                    <asp:Button ID="btnCancel1" class="buttonStd" runat="server" Text="Cancel" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>
+                                    <asp:Button ID="btnSave1" class="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="width: 70px; margin-top: 4px; margin-left: 20px;" OnClientClick="return ValidateInputs();" onclick="OnSave_Click"></asp:Button>
+                                    <asp:Button ID="btnCancel1" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>
                                 </span>
                             </td>
                         </tr>
@@ -264,13 +264,13 @@
                     <br />
                     <span style="float: left; margin-left: 5px;" class="noprint">
                         <asp:HiddenField id="hfExportText" runat="server" Value="Export (4 month) input history to Excel"/>
-                        <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="Print" OnClientClick="javascript:window.print()"></asp:LinkButton>
+                        <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()"></asp:LinkButton>
                         <asp:LinkButton  ID="lnkExport" runat="server" Text="Export" ToolTip="Export Data To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
                         <Ucl:Export id="uclExport" runat="server"/>
                      </span>
                     <span style="float: right; margin-right: 5px;" class="noprint">
-                        <asp:Button ID="btnSave2" class="buttonEmphasis" runat="server" Text ="Save" style="width: 70px; margin-right: 5px;" OnClientClick="return ValidateInputs();" onclick="OnSave_Click"></asp:Button>
-                        <asp:Button ID="btnCancel2" class="buttonStd" runat="server" Text="Cancel" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>
+                        <asp:Button ID="btnSave2" class="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="width: 70px; margin-right: 5px;" OnClientClick="return ValidateInputs();" onclick="OnSave_Click"></asp:Button>
+                        <asp:Button ID="btnCancel2" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>
                     </span>
                     <br />
                     <Ucl:RadGauge id="uclGauge" runat="server"/>

@@ -17,7 +17,7 @@
         document.getElementById("ddlNonconfStatus").selectedIndex = 0;
         document.getElementById("btnNonconfCancel").disabled = false;
         document.getElementById("btnNonconfSave").disabled = false;
-        
+
         $("#<%=pnlNonconfEdit.ClientID%> input[type=text]").val('');
         $("#<%=pnlNonconfEdit.ClientID%> textarea").val('');
 
@@ -90,19 +90,19 @@
 
         $("#<%=pnlNonconfEdit.ClientID%> input[type=text]").val('');
         $("#<%=pnlNonconfEdit.ClientID%> textarea").val('');
- 
+
         document.getElementById("hfOper").value = "";
         document.getElementById("lblAddNonconf").style.display = 'none';
        // $('#btnNonconfCancel').unbind('click');
         return false;
     }
 
- 
 
- 
+
+
 
 </script>
-   
+
      <div class="admin_tabs">
 
         <table width="100%" border="0" cellspacing="0" cellpadding="1">
@@ -149,7 +149,7 @@
                                                         <td valign="top" align="center" width="65%">
                                                             <div id="divNonconfGVScroll" runat="server" class="">
                                                                 <asp:GridView runat="server" ID="gvNonconfCatList" Name="gvNonconfCatList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" ShowHeaderWhenEmpty="True" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvList_OnNonconfCatRowDataBound">
-                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                     <RowStyle CssClass="DataCell" />
                 	                                                <Columns>
                                                                         <asp:TemplateField ItemStyle-Width="17%">
@@ -167,23 +167,23 @@
                                                                             </HeaderTemplate>
                                                                             <ItemTemplate>
                                                                                 <asp:GridView runat="server" ID="gvNonconfList" Name="gvNonconfList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnNonconfRowDataBound">
-                                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                                     <RowStyle CssClass="DataCell" />
                 	                                                                <Columns>
                                                                                         <asp:TemplateField HeaderText="Code" ItemStyle-Width="20%">
 							                                                                <ItemTemplate>
-								                                                                <asp:LinkButton ID="lnkNonconfCD" runat="server" CommandArgument='<%#Eval("NONCONF_ID") %>' CSSClass="linkUnderline" 
+								                                                                <asp:LinkButton ID="lnkNonconfCD" runat="server" CommandArgument='<%#Eval("NONCONF_ID") %>' CSSClass="linkUnderline"
 										                                                            Text='<%#Eval("NONCONF_CD") %>' OnClick="lnkNonconfList_Click"></asp:LinkButton>
                                                                                             </ItemTemplate>
 							                                                            </asp:TemplateField>
                                                                                         <asp:TemplateField HeaderText="Name" ItemStyle-Width="30%">
                                                                                             <ItemTemplate>
-                                                                                                <asp:LinkButton ID="lnkNonconfName" runat="server" CommandArgument='<%#Eval("NONCONF_ID") %>' CSSClass="linkUnderline" 
+                                                                                                <asp:LinkButton ID="lnkNonconfName" runat="server" CommandArgument='<%#Eval("NONCONF_ID") %>' CSSClass="linkUnderline"
 										                                                            Text='<%#Eval("NONCONF_NAME") %>' OnClick="lnkNonconfList_Click"></asp:LinkButton>
                                                                                             </ItemTemplate>
                                                                                         </asp:TemplateField>
-                                                                                        <asp:BoundField DataField="NONCONF_DESC" HeaderText="Description" ItemStyle-Width="40%" />
-                                                                                        <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                                                                        <asp:BoundField DataField="NONCONF_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>" ItemStyle-Width="40%" />
+                                                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                                                                             <ItemTemplate>
                                                                                                 <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                                                                                 <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -220,8 +220,8 @@
                                                                         </td>
                                                                     </tr>
                                                                 </table>
-                                                                <asp:Button ID="btnNonconfCatCancel" CSSclass="buttonStd" runat="server" text="Cancel" style="margin: 5px;" OnClientClick="CancelCategory(); return false;" ></asp:Button>
-                                                                <asp:Button ID="btnNonconfCatSave" CSSclass="buttonEmphasis" runat="server" text="Save" style="margin: 5px;" 
+                                                                <asp:Button ID="btnNonconfCatCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClientClick="CancelCategory(); return false;" ></asp:Button>
+                                                                <asp:Button ID="btnNonconfCatSave" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;"
                                                                     OnClientClick="return ValidCategory();" onclick="btnNonconfCatSave_Click" ></asp:Button>
                                                             </asp:Panel>
                                                             <asp:Panel id="pnlNonconfEdit" runat="server">
@@ -246,7 +246,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="columnHeader">
-                                                                            <asp:Label ID="lblNonconfDesc" runat="server" text="Description"></asp:Label>
+                                                                            <asp:Label ID="lblNonconfDesc" runat="server" text="<%$ Resources:LocalizedText, Description %>"></asp:Label>
                                                                         </td>
                                                                         <td class="tableDataAlt">&nbsp;</td>
                                                                         <td CLASS="tableDataAlt">
@@ -264,7 +264,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="columnHeader">
-                                                                            <asp:Label ID="lblNonconfStatus" runat="server" text="Status"></asp:Label>
+                                                                            <asp:Label ID="lblNonconfStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                                         </td>
                                                                         <td class="tableDataAlt">&nbsp;</td>
                                                                         <td CLASS="tableDataAlt">
@@ -272,8 +272,8 @@
                                                                         </td>
                                                                     </tr>
                                                                 </table>
-                                                                <asp:Button ID="btnNonconfCancel" CSSclass="buttonStd" runat="server" text="Cancel" style="margin: 5px;" OnClientClick="CancelNonconf(); return false;" ></asp:Button>
-                                                                <asp:Button ID="btnNonconfSave" CSSclass="buttonEmphasis" runat="server" text="Save Non-Conformance" style="margin: 5px;" 
+                                                                <asp:Button ID="btnNonconfCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClientClick="CancelNonconf(); return false;" ></asp:Button>
+                                                                <asp:Button ID="btnNonconfSave" CSSclass="buttonEmphasis" runat="server" text="Save Non-Conformance" style="margin: 5px;"
                                                                     OnClientClick="return ValidNonconf();" onclick="btnNonconfSave_Click" ></asp:Button>
                                                             </asp:Panel>
                                                             <asp:Label ID="lblAddNonconf" runat="server" CssClass="instructText" Text="Enter non-conformance details" style="display:none;"></asp:Label>

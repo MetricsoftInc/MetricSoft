@@ -1,13 +1,13 @@
 	                                    <tr>
                                             <td align="right">
-                                                <asp:Button id="btnIssueListCancel" runat="server" text="Close" CSSClass="buttonStd" OnClick="btnIssueListCancel_Click"/>
+                                                <asp:Button id="btnIssueListCancel" runat="server" Text="<%$ Resources:LocalizedText, Close %>" CSSClass="buttonStd" OnClick="btnIssueListCancel_Click"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align=center>
                                                 <div id="divGVScroll" runat="server" class="">
                                                         <asp:GridView runat="server" ID="gvIssueList" Name="gvIssueList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnRowDataBound">
-                                                            <HeaderStyle CssClass="HeadingCellText" />    
+                                                            <HeaderStyle CssClass="HeadingCellText" />
                                                             <RowStyle CssClass="DataCell" />
                 	                                        <Columns>
                                                                 <asp:TemplateField HeaderText="Task"  ItemStyle-Width="15%">

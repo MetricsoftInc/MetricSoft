@@ -17,13 +17,13 @@
     }
 
     function CloseUSerEditWindow() {
-        var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+        var oWindow = GetRadWindow();  //Obtaining a reference to the current window
         oWindow.Close();
     }
 
     function ConfirmSaveUser(confirmText) {
         var status = confirmChange(confirmText);
-  
+
         //if (status == true) {
         //    var ddl = $find('<%=ddlJobCode.ClientID %>');
         //    if (ddl.get_selectedItem().get_value() == "1" || ddl.get_selectedItem().get_value() == "100") {
@@ -53,7 +53,7 @@
     }
 
 </script>
-   
+
 	<asp:HiddenField ID="hfDocviewMessage" runat="server" Value="System Communications"/>
      <div class="admin_tabs">
 
@@ -71,7 +71,7 @@
                     <asp:Panel runat="server" ID="pnlSearchBar">
                         <Ucl:SearchBar id="uclSearchBar" runat="server"/>
                     </asp:Panel>
-                    
+
                     <table width="99%">
 			            <tr>
                             <td align="left">
@@ -85,7 +85,7 @@
 						<div style="float: left; margin-left: 8px;">
                             <asp:Label ID="lblFilterPlant" runat="server" CssClass="prompt" Text="HR Location: "></asp:Label>
                             <telerik:RadComboBox id="ddlPlantList" runat="server" Skin="Metro" ZIndex="9000" Width="280" AutoPostBack="false" EmptyMessage="HR Plant Location"></telerik:RadComboBox>
-							<asp:Button id="btnSearchUsers" runat="server" OnClick="FilterUsers" CssClass="buttonEmphasis" Text="Search" style="margin-left: 20px;"/>
+							<asp:Button id="btnSearchUsers" runat="server" OnClick="FilterUsers" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" style="margin-left: 20px;"/>
                         </div>
                         <asp:Button id="btnAddUser" runat="server" CssClass="buttonAddLarge" style="float: right; margin-right: 25px;" Text="Add User " ToolTip="Add A New User" OnClick="btnUserAdd_Click"/>
                         <br style="clear: both;" />
@@ -111,7 +111,7 @@
 						</div>
 						<br style="clear: both;" />
 						<Ucl:AdminList id="uclUserList" runat="server"/>
-                        
+
                         <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="565" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
                                 <asp:Panel runat="server" ID="pnlUserEdit" >
@@ -267,7 +267,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblUserStatus" runat="server" text="Status"></asp:Label>
+                                                                <asp:Label ID="lblUserStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt"><asp:DropDownList ID="ddlUserStatus" runat="server"></asp:DropDownList></td>
@@ -299,9 +299,9 @@
                                         </tr>
                                     </table>
                                     <span style="float: right; margin: 10px;">
-<%--                                        <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="Cancel" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>--%>
-                                        <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="Cancel" style="width: 70px;" onclick="OnCancel_Click"></asp:Button>
-                                        <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text ="Save" style="width: 70px;" OnClientClick="return ConfirmSaveUser('User');" onclick="OnSave_Click"></asp:Button>
+<%--                                        <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>--%>
+                                        <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancel_Click"></asp:Button>
+                                        <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return ConfirmSaveUser('User');" onclick="OnSave_Click"></asp:Button>
                                     </span>
                                     <br />
                                     <center>

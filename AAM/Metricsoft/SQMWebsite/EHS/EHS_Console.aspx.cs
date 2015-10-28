@@ -20,7 +20,10 @@ namespace SQM.Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+			this.lblExportPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblExportToDate.Text = Resources.LocalizedText.To + ": ";
+
+			if (!Page.IsPostBack)
             {
                 SetupPage();
             }

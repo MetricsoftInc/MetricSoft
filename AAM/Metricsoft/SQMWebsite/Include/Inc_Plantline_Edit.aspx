@@ -6,17 +6,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                         <td>
-                                            <asp:Button ID="lbLineCancel1" class="buttonStd" runat="server" text="Cancel" 
+                                            <asp:Button ID="lbLineCancel1" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbLineSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbLineSave1" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbLineSave1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                              onclick="lbLineSave_Click" OnClientClick="return confirmChange('Plant Line');" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                         </table>
                     </td>
                 </tr>
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblSetLineStatus" runat="server" text="Status"></asp:Label>
+                                <asp:Label ID="lblSetLineStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlLineStatus" runat="server"></asp:DropDownList>
@@ -72,17 +72,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                         <td>
-                                             <asp:Button ID="lbLineCancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                             <asp:Button ID="lbLineCancel2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbLineSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbLineSave2" CSSclass="buttonEmphasis" runat="server" text="Save"
+                                            <asp:Button ID="lbLineSave2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                              onclick="lbLineSave_Click" OnClientClick="return confirmChange('Plant Line');" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                 </td>
               </tr>

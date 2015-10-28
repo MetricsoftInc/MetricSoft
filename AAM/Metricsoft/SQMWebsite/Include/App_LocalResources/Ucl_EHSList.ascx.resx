@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -123,32 +123,11 @@
   <data name="btnCalculateResource1.ToolTip" xml:space="preserve">
     <value>Calculate YTD corporate metrics per the selected reporting month</value>
   </data>
-  <data name="btnSearchMetricsResource1.Text" xml:space="preserve">
-    <value>Search</value>
-  </data>
   <data name="btnSearchMetricsResource1.ToolTip" xml:space="preserve">
     <value>search data</value>
   </data>
   <data name="ddlBusLocSelectResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlBusLocSelectResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlBusLocSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlBusLocSelectResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlBusLocSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlBusLocSelectResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlBusLocSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlBusLocSelectResource1.ToolTip" xml:space="preserve">
     <value>View or modify Metric Profile for the selected location</value>
@@ -156,47 +135,11 @@
   <data name="ddlPlantFilterResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlPlantFilterResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPlantFilterResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPlantFilterResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPlantFilterResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPlantFilterResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPlantFilterResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlPlantFilterResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
     <value />
-  </data>
-  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
   </data>
   <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
     <value>View or enter metric data for the selected location</value>
@@ -480,12 +423,6 @@
   <data name="lblRateStatusResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblToDateResource1.Text" xml:space="preserve">
-    <value>To</value>
-  </data>
-  <data name="lblToDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lnkPeriodResource1.Text" xml:space="preserve">
     <value />
   </data>
@@ -546,15 +483,6 @@
   <data name="radDateSelect0Resource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
   </data>
-  <data name="radDateSelect0Resource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
   </data>
@@ -567,9 +495,6 @@
   <data name="radDateSelect0Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="radDateSelect0Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="radDateSelect0Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -579,23 +504,11 @@
   <data name="radDateSelect0Resource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="radDateSelect0Resource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="radDateSelect1Resource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="radDateSelect1Resource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="radDateSelect1Resource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -609,9 +522,6 @@
   <data name="radDateSelect1Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="radDateSelect1Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="radDateSelect1Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -621,23 +531,11 @@
   <data name="radDateSelect1Resource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="radDateSelect1Resource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="radDateSelect2Resource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="radDateSelect2Resource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="radDateSelect2Resource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -651,9 +549,6 @@
   <data name="radDateSelect2Resource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="radDateSelect2Resource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="radDateSelect2Resource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -663,23 +558,11 @@
   <data name="radDateSelect2Resource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="radDateSelect2Resource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
   <data name="radPeriodSelectResource1.DateInput.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="radPeriodSelectResource1.DatePopupButton.ToolTip" xml:space="preserve">
     <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="radPeriodSelectResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
     <value />
@@ -693,9 +576,6 @@
   <data name="radPeriodSelectResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
     <value>&amp;lt;</value>
   </data>
-  <data name="radPeriodSelectResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="radPeriodSelectResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
     <value>Today</value>
   </data>
@@ -704,9 +584,6 @@
   </data>
   <data name="radPeriodSelectResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
-  </data>
-  <data name="radPeriodSelectResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
   <data name="rgProfilePeriodListResource1.BackImageUrl" xml:space="preserve">
     <value />
@@ -1025,9 +902,6 @@
   </data>
   <data name="rgProfilePeriodListResource1.SortingSettings.SortToolTip" xml:space="preserve">
     <value>Click here to sort</value>
-  </data>
-  <data name="rgProfilePeriodListResource1.StatusBarSettings.LoadingText" xml:space="preserve">
-    <value>Loading...</value>
   </data>
   <data name="rgProfilePeriodListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
     <value>Ready</value>

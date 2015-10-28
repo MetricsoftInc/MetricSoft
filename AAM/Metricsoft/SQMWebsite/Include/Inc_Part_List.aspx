@@ -5,7 +5,7 @@
 			                <td class=admBkgd align=center>
                             <div id="divPartGVScroll" runat="server" class="">
                               <asp:GridView runat="server" ID="gvPartList" Name="gvPartList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                                     <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="20%">
@@ -22,7 +22,7 @@
 							        </asp:TemplateField>
                                     <asp:BoundField DataField="PART_SUFFIX" HeaderText="Suffix" ItemStyle-Width="10%" />
                                     <asp:BoundField DataField="SOURCE_SYSTEM" HeaderText="Source System" ItemStyle-Width="30%" />
-                                    <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>

@@ -3,10 +3,10 @@
                    <td>
                      <table width="100%" border="0" cellspacing="0" cellpadding="2">
 			            <tr>
-			                <td class=admBkgd align=center>	
+			                <td class=admBkgd align=center>
                               <div class="scrollArea">
                               <asp:GridView runat="server" ID="gvB2BList" Name="gvB2BList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="98%" OnRowDataBound="gvList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                                     	<asp:TemplateField HeaderText="Company" ItemStyle-Width="24%">
@@ -29,7 +29,7 @@
 							                    <asp:Label ID="lblPlantlocation_out" runat="server" text='<%#Eval("PlantLocation") %>' ></asp:Label>
                                         	</ItemTemplate>
 					                    </asp:TemplateField>
-                                    	<asp:TemplateField HeaderText="Active" ItemStyle-Width="8%">
+                                    	<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Active %>" ItemStyle-Width="8%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfSelect_out" runat="server" Value='<%#Eval("IsSelected") %>' />
                                             <asp:CheckBox ID="cbSelect_out" runat="server" DataTextField="IsSelected" Style="margin-left: 33%;"></asp:CheckBox>

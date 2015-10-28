@@ -6,7 +6,7 @@
 		<tr>
 			<td >
                 <asp:Label ID="lblCompanyListInstruction" runat="server" CssClass="instructText" Text="Select a Company from the list below."></asp:Label>
-				<asp:Button ID="btnCompanyListClose" runat="server" Text="Close" CssClass="buttonStd"  
+				<asp:Button ID="btnCompanyListClose" runat="server" Text="<%$ Resources:LocalizedText, Close %>" CssClass="buttonStd"
 					Style="float:right; margin-right: 15px;" OnClick="btnCompanyListClose_Click" />
 			</td>
 		</tr>
@@ -52,7 +52,7 @@
 								</td>
                                 <td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblStatus" Text="Status" Visible="true"></asp:Label>
+										<asp:Label runat="server" ID="lblStatus" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
 									</span>
 									<br>
                                     <asp:Label runat="server" ID="lblStatusOut" Value='<%#Eval("STATUS") %>'/>
@@ -94,7 +94,7 @@
 								</td>
                                 <td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblStatus" Text="Status" Visible="true"></asp:Label>
+										<asp:Label runat="server" ID="lblStatus" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
 									</span>
 									<br>
                                     <asp:Label runat="server" ID="lblStatusOut" Value='<%#Eval("STATUS") %>'/>
@@ -145,9 +145,9 @@
 									<br>
 			                        <div id="divPlantGVScroll" runat="server" class="">
                                         <asp:GridView runat="server" ID="gvPlantList" Name="gvPlantList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvPlantList_OnRowDataBound">
-                                            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                            <HeaderStyle CssClass="HeadingCellTextLeft" />
                                             <RowStyle CssClass="DataCell" />
-                                            <AlternatingRowStyle CssClass="DataCellAlt" /> 
+                                            <AlternatingRowStyle CssClass="DataCellAlt" />
                 	                        <Columns>
                     	                        <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
                                                 <asp:BoundField  DataField="PLANT_ID" Visible="False"/>
@@ -170,7 +170,7 @@
                                                         <asp:Label runat="server" ID="lblLocationType_out"  Text='<%#Eval("LOCATION_TYPE") %>'></asp:Label>
                                                     </ItemTemplate>
 						                        </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                                     <ItemTemplate>
                                                         <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                                         <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -193,7 +193,7 @@
 								</td>
 								<td class="listDataAlt" valign="top" style="width: 15%;">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblOrgStatusHdr" Text="Status" Visible="true"></asp:Label>
+										<asp:Label runat="server" ID="lblOrgStatusHdr" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
 									</span>
 									<br>
 									<asp:HiddenField ID="hfStatus" runat="server" Value='<%#Eval("STATUS") %>' />
@@ -217,7 +217,7 @@
     <table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
         <tr>
             <td class="optionArea">
-                <asp:Button ID="btnDeptAdd" CSSclass="buttonStd" runat="server" text="Add Department" 
+                <asp:Button ID="btnDeptAdd" CSSclass="buttonStd" runat="server" text="Add Department"
                 onclick="btnDeptAdd_Click" CommandArgument="add"></asp:Button>
             </td>
         </tr>
@@ -225,7 +225,7 @@
             <td valign="top" align="center">
                 <div id="divDeptGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvDeptList" Name="gvDeptList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvList_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                         <RowStyle CssClass="DataCell" />
                 	    <Columns>
                     	    <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
@@ -233,12 +233,12 @@
                             <asp:BoundField  DataField="DEPT_ID" Visible="False"/>
                             <asp:TemplateField HeaderText="Department Name" ItemStyle-Width="45%">
 							    <ItemTemplate>
-								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("DEPT_ID") %>' CSSClass="linkUnderline" 
+								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("DEPT_ID") %>' CSSClass="linkUnderline"
 										Text='<%#Eval("DEPT_NAME") %>' OnClick="lnkDeptList_Click"></asp:LinkButton>
                                 </ItemTemplate>
 							</asp:TemplateField>
                             <asp:BoundField DataField="DEPT_CODE" HeaderText="Department Code" ItemStyle-Width="35%" />
-                            <asp:TemplateField HeaderText="Status" ItemStyle-Width="20%">
+                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="20%">
                                 <ItemTemplate>
                                     <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                     <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -258,7 +258,7 @@
     <table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
         <tr>
             <td class="optionArea">
-                <asp:Button ID="btnLaborAdd" CSSclass="buttonStd" runat="server" text="Add Labor Code" 
+                <asp:Button ID="btnLaborAdd" CSSclass="buttonStd" runat="server" text="Add Labor Code"
                 onclick="btnLaborAdd_Click" CommandArgument="add"></asp:Button>
             </td>
         </tr>
@@ -266,7 +266,7 @@
             <td valign="top" align="center">
                 <div id="divLaborGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvLaborList" Name="gvLaborList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvList_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                         <RowStyle CssClass="DataCell" />
                 	    <Columns>
                     	    <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
@@ -274,13 +274,13 @@
                             <asp:BoundField  DataField="LABOR_TYP_ID" Visible="False"/>
                             <asp:TemplateField HeaderText="Labor Code" ItemStyle-Width="30%">
 							    <ItemTemplate>
-								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("LABOR_TYP_ID") %>' CSSClass="linkUnderline" 
+								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("LABOR_TYP_ID") %>' CSSClass="linkUnderline"
 										Text='<%#Eval("LABOR_CODE") %>' OnClick="lnkLaborList_Click"></asp:LinkButton>
                                 </ItemTemplate>
 							</asp:TemplateField>
                             <asp:BoundField DataField="LABOR_NAME" HeaderText="Name" ItemStyle-Width="40%" />
                             <asp:BoundField DataField="LABOR_RATE" HeaderText="Cost" ItemStyle-Width="15%" />
-                            <asp:TemplateField HeaderText="Status" ItemStyle-Width="15%">
+                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="15%">
                                 <ItemTemplate>
                                     <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                     <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -300,7 +300,7 @@
     <table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
         <tr>
             <td align="left">
-                <asp:Button ID="btnLineAdd" CSSclass="buttonStd" runat="server" text="Add Line/Operation" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;" 
+                <asp:Button ID="btnLineAdd" CSSclass="buttonStd" runat="server" text="Add Line/Operation" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                 onclick="btnLineAdd_Click" CommandArgument="add"></asp:Button>
             </td>
         </tr>
@@ -308,19 +308,19 @@
             <td valign="top" align="center">
                 <div id="divLineGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvLineList" Name="gvLineList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvList_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                         <RowStyle CssClass="DataCell" />
                 	    <Columns>
                             <asp:BoundField  DataField="PLANT_ID" Visible="False"/>
                             <asp:BoundField  DataField="PLANT_LINE_ID" Visible="False"/>
                             <asp:TemplateField HeaderText="Line/Operation Name" ItemStyle-Width="60%">
 							    <ItemTemplate>
-								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("PLANT_LINE_ID") %>' CSSClass="linkUnderline" 
+								    <asp:LinkButton ID="lnkView_out" runat="server" CommandArgument='<%#Eval("PLANT_LINE_ID") %>' CSSClass="linkUnderline"
 										Text='<%#Eval("PLANT_LINE_NAME") %>' OnClick="lnkLineList_Click"></asp:LinkButton>
                                 </ItemTemplate>
 							</asp:TemplateField>
                             <asp:BoundField DataField="DOWNTIME_RATE" HeaderText="Downtime Rate (per hour)" ItemStyle-Width="25%" />
-                            <asp:TemplateField HeaderText="Status" ItemStyle-Width="15%">
+                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="15%">
                                 <ItemTemplate>
                                     <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                     <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -340,9 +340,9 @@
         <tr>
             <td class="admBkgd" align="center">
                 <div id="divUserGVScroll" runat="server" class="">
-                    <telerik:RadGrid ID="rgUserList" name="rgUserList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="100" AutoGenerateColumns="false" 
-                        OnItemDataBound="rgUserList_ItemDataBound" OnSortCommand="rgUserList_SortCommand" 
-						OnPageIndexChanged="rgUserList_PageIndexChanged" OnPageSizeChanged="rgUserList_PageSizeChanged" 
+                    <telerik:RadGrid ID="rgUserList" name="rgUserList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="100" AutoGenerateColumns="false"
+                        OnItemDataBound="rgUserList_ItemDataBound" OnSortCommand="rgUserList_SortCommand"
+						OnPageIndexChanged="rgUserList_PageIndexChanged" OnPageSizeChanged="rgUserList_PageSizeChanged"
 						GridLines="None" Width="99%">
                         <MasterTableView ExpandCollapseColumn-Visible="false">
                             <Columns>
@@ -352,7 +352,7 @@
 								            CssClass="buttonLink" OnClick="lnkUserView_Click" ToolTip="Edit this user"></asp:LinkButton>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="Email Address" ShowSortIcon="true" SortExpression="EMAIL">
+                                <telerik:GridTemplateColumn HeaderText="<%$ Resources:LocalizedText, EmailAddress %>" ShowSortIcon="true" SortExpression="EMAIL">
                                     <ItemTemplate>
                                         <asp:Label ID="lnkUserEmail" runat="server" Text='<%# Eval("EMAIL") %>' CommandArgument='<%# Eval("PERSON_ID") %>'
 								            CssClass="textStd"></asp:Label>
@@ -368,7 +368,7 @@
                                         <asp:LinkButton ID="lnkHRLocation" runat="server" Text='<%# Eval("PLANT_ID") %>' CommandArgument='<%# Eval("PERSON_ID") %>' CssClass="buttonLink" OnClick="lnkUserView_Click"></asp:LinkButton>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="Status" ShowSortIcon="true" SortExpression="STATUS">
+                                <telerik:GridTemplateColumn HeaderText="<%$ Resources:LocalizedText, Status %>" ShowSortIcon="true" SortExpression="STATUS">
                                     <ItemTemplate>
                                         <asp:Label ID="lblUserStatus" runat="server" Text='<%# Eval("STATUS") %>'></asp:Label>
                                         <asp:Image id="imgStatus" runat="server" Visible="false" ToolTip="User is inactive" style="vertical-align: middle; border: 0px;"/>

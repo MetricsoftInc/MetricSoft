@@ -19,7 +19,7 @@
             document.getElementById('hfheight').value = $(window).height();
         });
     </script>
-    
+
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
@@ -56,12 +56,12 @@
                                 <table cellspacing="2" cellpadding="0" border="0" width="100%" style="margin: 0px 4px 4px 4px;">
                                     <tr>
                                         <td valign="top">
-                                            <asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="View Statistics: "></asp:Label>
-                                            <telerik:RadComboBox ID="ddlChartType" runat="server" ZIndex="9000" Width="350" Skin="Metro" EmptyMessage="Select a chart" AutoPostBack="true" OnSelectedIndexChanged="ddlChartTypeChange">
+                                            <asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="<%$ Resources:LocalizedText, ViewStatistics %>"></asp:Label>
+                                            <telerik:RadComboBox ID="ddlChartType" runat="server" ZIndex="9000" Width="350" Skin="Metro" EmptyMessage="<%$ Resources:LocalizedText, SelectAChart %>" AutoPostBack="true" OnSelectedIndexChanged="ddlChartTypeChange">
                                             </telerik:RadComboBox>
                                             <div class="noprint" style="float: right; margin-right: 5px; width: 100px;">
-                                                <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="Print" style="margin-right: 5px;"  Visible="false" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                                                <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonCancel" Visible="false"  OnClick="lnkCloseChart" ToolTip="Close"></asp:LinkButton>
+                                                <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" style="margin-right: 5px;"  Visible="false" OnClientClick="javascript:window.print()"></asp:LinkButton>
+                                                <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonCancel" Visible="false"  OnClick="lnkCloseChart" ToolTip="<%$ Resources:LocalizedText, Close %>"></asp:LinkButton>
                                             </div>
                                         </td>
                                     </tr>

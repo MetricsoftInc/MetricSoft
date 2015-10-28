@@ -15,15 +15,15 @@
                         </td>
 				    </tr>
 				  </table>
-                  <BR/> 
-				
-<!-- PAGE DATA CONTENT TABLE --> 
+                  <BR/>
 
-					  <!-- DATA ENTRY CONTENT TABLE -->	
-				
-					  	 
+<!-- PAGE DATA CONTENT TABLE -->
+
+					  <!-- DATA ENTRY CONTENT TABLE -->
+
+
             <TABLE WIDTH="98%" BORDER="0" CELLSPACING="1" CELLPADDING="4" class="darkBorder">
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader" width="40%">
                      <asp:Label ID="lblNewBusOrg" runat="server" Text="New Business Organization"></asp:Label>
                 </TD>
@@ -31,14 +31,14 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                         <TD>
-                            <asp:Button ID="lbCreateBusOrg" runat="server" CSSclass="buttonStd" text="Create Business Organization" 
+                            <asp:Button ID="lbCreateBusOrg" runat="server" CSSclass="buttonStd" text="Create Business Organization"
                                 onclick="lbCreateBusOrg_Click"></asp:Button>
                         </TD>
                         </TR>
                     </TABLE>
                 </TD>
             </TR>
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblBusOrgSearch" runat="server" Text="Search For Business Organization"></asp:Label>
                 </TD>
@@ -48,21 +48,21 @@
                             <td>
                                 <asp:TextBox ID="tbSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                                 <br />
-                                    <asp:RadioButtonList runat="server" ID="rblSearchBusOrg" CSSclass="radioList" 
-	                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                    <asp:RadioButtonList runat="server" ID="rblSearchBusOrg" CSSclass="radioList"
+	                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                            AutoPostBack="false">
 							            <asp:ListItem Text="All&nbsp;&nbsp;" Value="%" ></asp:ListItem>
 								        <asp:ListItem Text="All Active" Value="%~A"></asp:ListItem>
 						        </asp:RadioButtonList>
                            </td>
                             <TD>
-                                <asp:Button ID="lbSearchBusOrg" runat="server" CSSclass="buttonStd" text="Search" onclick="lbSearchBusOrg_Click"></asp:Button>
+                                <asp:Button ID="lbSearchBusOrg" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" onclick="lbSearchBusOrg_Click"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
                 </TD>
             </TR>
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="Label1" runat="server" Text="Search For Plant"></asp:Label>
                 </TD>
@@ -72,22 +72,22 @@
                             <td>
                                 <asp:TextBox ID="tbPlantSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                                     <br />
-                                    <asp:RadioButtonList runat="server" ID="rblSearchPlant" CSSclass="radioList" 
-	                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                    <asp:RadioButtonList runat="server" ID="rblSearchPlant" CSSclass="radioList"
+	                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                            AutoPostBack="false">
 							            <asp:ListItem Text="All&nbsp;&nbsp;" Value="%" ></asp:ListItem>
 								        <asp:ListItem Text="All Active" Value="%~A"></asp:ListItem>
 						        </asp:RadioButtonList>
                            </td>
                             <TD>
-                                <asp:Button ID="lbSearchPlant" runat="server" CSSclass="buttonStd" text="Search" onclick="lbSearchPlant_Click"></asp:Button>
+                                <asp:Button ID="lbSearchPlant" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" onclick="lbSearchPlant_Click"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
                 </TD>
             </TR>
- 
-            <TR> 
+
+            <TR>
                 <TD CLASS="columnHeader">
                         <asp:Label ID="lblAdminDfltDocs" runat="server" Text="Administrate Default Documents"></asp:Label>
                 </TD>
@@ -95,15 +95,15 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                         <TD>
-                            <asp:Button ID = "btnDfltDocs" runat="server" CSSclass="buttonStd" 
+                            <asp:Button ID = "btnDfltDocs" runat="server" CSSclass="buttonStd"
                                 text="Default Documents" onclick="btnDfltDocs_Click" ></asp:Button>
                         </TD>
                         </TR>
-                    </TABLE>  
-                </TD>                 
+                    </TABLE>
+                </TD>
             </TR>
 
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblUploadData" runat="server" Text="Upload Business Organization Structures"></asp:Label>
                 </TD>
@@ -115,7 +115,7 @@
                             </TD>
                         </TR>
                     </TABLE>
-                </TD>                   
+                </TD>
             </TR>
           </TABLE>
          </td>

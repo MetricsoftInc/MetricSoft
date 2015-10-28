@@ -43,7 +43,7 @@
 		<asp:Repeater runat="server" ID="rptAction" ClientIDMode="AutoID" OnItemDataBound="rptAction_OnItemDataBound" OnItemCommand="rptAction_ItemCommand">
 
 			<FooterTemplate>
-				</table> 
+				</table>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
 						<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourceKey="btnAddFinalResource1" ></asp:Button>
@@ -103,7 +103,7 @@
 							<asp:RequiredFieldValidator ID="rfvActionPerson" runat="server" ControlToValidate="rddlActionPerson" Display="None" ErrorMessage="Required" InitialValue="[Select One]" meta:resourceKey="rfvActionPersonResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpFinalStartDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourceKey="rdpFinalStartDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
+							<telerik:RadDatePicker ID="rdpFinalStartDate" runat="server" CssClass="WarnIfChanged" meta:resourceKey="rdpFinalStartDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -120,7 +120,7 @@
 							<asp:RequiredFieldValidator ID="rvfFinalStartDate" runat="server" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="Required" meta:resourceKey="rvfFinalStartDateResource1"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpFinalCompleteDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourceKey="rdpFinalCompleteDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
+							<telerik:RadDatePicker ID="rdpFinalCompleteDate" runat="server" CssClass="WarnIfChanged" meta:resourceKey="rdpFinalCompleteDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -139,7 +139,7 @@
 							<asp:CheckBox ID="cbFinalIsComplete" runat="server" meta:resourceKey="cbFinalIsCompleteResource1" SkinID="Metro" Width="90%" />
 						</td>
 						<td class="text-left-more">
-							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" meta:resourceKey="btnItemDeleteResource1" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="Deleting..." Text="Delete Item">
+							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="Delete Item">
 							</telerik:RadButton>
 						</td>
 					</tr>
@@ -149,6 +149,6 @@
 
 	</telerik:RadAjaxPanel>
 
-	</div>   
+	</div>
 
 </asp:Panel>

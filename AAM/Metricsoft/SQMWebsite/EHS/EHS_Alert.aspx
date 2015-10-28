@@ -16,7 +16,7 @@
                     <asp:Image AlternateText="logo" ID="imgLogo" runat="server" style="margin: 10px; width: 150px;" />
 					<h1 style="text-align: center;">
 						<asp:Literal ID="ltrCaseName" runat="server">Title</asp:Literal></h1>
-					
+
                     <table class="alertTable" cellspacing="0" cellpadding="10" style="border: 1px solid #888888;">
                         <tr>
                             <td style="border: 1px solid #888888;"><asp:Label ID="lblPlantName" runat="server" Text="" Font-Bold="true"></asp:Label></td>
@@ -24,17 +24,17 @@
                         </tr>
 						<tr>
 							<td style="border: 1px solid #888888;">
-								<strong>Date of Incident:</strong> 
+								<strong>Date of Incident:</strong>
 								<asp:Literal ID="ltrDate" runat="server">n/a</asp:Literal>
 							</td>
 							<td style="border: 1px solid #888888;">
-								<strong>Time of Incident:</strong> 
+								<strong>Time of Incident:</strong>
 								<asp:Literal ID="ltrTime" runat="server">n/a</asp:Literal>
 							</td>
 						</tr>
                         <tr>
 							<td style="border: 1px solid #888888;" colspan="2">
-								<strong>Incident Type:</strong>
+								<strong><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, IncidentType%>" />:</strong>
                                 <asp:Literal ID="ltrIncidentType" runat="server">n/a</asp:Literal>
 							</td>
 						</tr>
@@ -70,10 +70,10 @@
 								<asp:Repeater ID="rptAttachments" runat="server">
 									<ItemTemplate>
 										<div class="distributionImageContainer" style="float: left; margin: 10px;">
-<%--										<asp:Image ID="imgAttachment" CssClass="distributionImage" Width="200"									
+<%--										<asp:Image ID="imgAttachment" CssClass="distributionImage" Width="200"
 										ImageUrl='<%# ImageUrlToBase64String(GetFileHandlerUrl() + Eval("AttachmentId").ToString() + "&FILE_NAME=" + Eval("FileName").ToString()) %>'
 										runat="server" /><br />--%>
-                                            <asp:Image AlternateText="image" ID="imgAttachment" CssClass="distributionImage" Width="220"									
+                                            <asp:Image AlternateText="image" ID="imgAttachment" CssClass="distributionImage" Width="220"
 										ImageUrl='<%# AttachmentIdToEncodedImage(Convert.ToDecimal(Eval("AttachmentId"))) %>'
 										runat="server" /><br />
                                             <asp:Label ID="lblAttachment"  runat="server" Text='<%#: Eval("Description").ToString() %>' CssClass="textSmall"></asp:Label>

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Problem.master" AutoEventWireup="true" CodeBehind="Compliance_COA.aspx.cs" Inherits="SQM.Website.Compliance_COA" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
   <script type="text/javascript">
- 
+
    </script>
    <div class="admin_tabs">
         <table width="100%" border="0" cellspacing="0" cellpadding="2">
@@ -21,7 +21,7 @@
 						            <table border="0" cellspacing="0" cellpadding="2">
 						  	            <tr>
                                             <td>
-                                                <asp:Button ID="btnCancel1" runat="server" OnClientClick="return confirmAction('Cancel without saving');" onClick="btnCancel_Click" CSSclass="buttonStd" text="Cancel"></asp:Button>
+                                                <asp:Button ID="btnCancel1" runat="server" OnClientClick="return confirmAction('Cancel without saving');" onClick="btnCancel_Click" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Cancel %>"></asp:Button>
 									        </td>
 								            <td>
                                                 <asp:Button ID="btnSave1" class="buttonEmphasis" runat="server"  OnClientClick="return confirmChange('Compliance form');" onclick="btnSave_Click" text="Save and Submit" CommandArgument=""></asp:Button>
@@ -71,7 +71,7 @@
                                                 <BR>
 							                    <asp:TextBox runat="server" ID="tbReceiverCompany" Text="" size="30" maxlength="100"></asp:TextBox>
                                                 <input type="button" onclick="PopupCenter('../Shared/Shared_PartSearch.aspx?', 'newPage', 900, 600);"
-                                                    value="Search" class="buttonStd"></input>
+                                                    value="<%$ Resources:LocalizedText, Search %>" class="buttonStd"></input>
 						                    </td>
                                         </tr>
                                         <tr>
@@ -82,7 +82,7 @@
                                                 <BR>
 							                    <asp:TextBox runat="server" ID="tbPartNumber" Text="" size="30" maxlength="100"></asp:TextBox>
                                                 <input type="button" onclick="PopupCenter('../Shared/Shared_PartSearch.aspx?', 'newPage', 800, 600);"
-                                                    value="Search" class="buttonStd"></input>
+                                                    value="<%$ Resources:LocalizedText, Search %>" class="buttonStd"></input>
 						                    </td>
                                             <td class=summaryData valign=top >
 							                    <SPAN CLASS=summaryHeader>

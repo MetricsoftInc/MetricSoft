@@ -14,7 +14,7 @@ using Telerik.Web.UI.Calendar;
 
 namespace SQM.Website.EHS
 {
-	public partial class EHS_Data : Page
+	public partial class EHS_Data : SQMBasePage
 	{
 		// These are assigned on the page's load, so as long as the session is still current, these should work in the Page Methods below.
 		static System.Globalization.Calendar calendar = null;

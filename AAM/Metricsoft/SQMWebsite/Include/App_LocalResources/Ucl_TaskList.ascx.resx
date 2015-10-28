@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnAssignCancelResource1.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="btnAssignCancelResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnAssignSaveResource1.Text" xml:space="preserve">
-    <value>Re-Assign</value>
-  </data>
-  <data name="btnAssignSaveResource1.ToolTip" xml:space="preserve">
-    <value>re-assign this task to another person</value>
-  </data>
   <data name="btnTaskDetailsResource1.AlternateText" xml:space="preserve">
     <value />
   </data>
@@ -140,42 +128,6 @@
   </data>
   <data name="btnTaskDetailsResource2.ToolTip" xml:space="preserve">
     <value>view task details</value>
-  </data>
-  <data name="ButtonResource1.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="ButtonResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ButtonResource2.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="ButtonResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlAssignPersonResource1.EmptyMessage" xml:space="preserve">
-    <value>select person</value>
-  </data>
-  <data name="ddlAssignPersonResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlAssignPersonResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlAssignPersonResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlAssignPersonResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlAssignPersonResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlAssignPersonResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
-  <data name="ddlAssignPersonResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="GridTemplateColumnResource1.AndCurrentFilterValue" xml:space="preserve">
     <value />
@@ -253,45 +205,6 @@
     <value />
   </data>
   <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridTemplateColumnResource3.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderText" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.SortExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource4.AndCurrentFilterValue" xml:space="preserve">
@@ -384,33 +297,6 @@
   <data name="GridTemplateColumnResource6.EditFormHeaderTextFormat" xml:space="preserve">
     <value>{0}:</value>
   </data>
-  <data name="GridTemplateColumnResource6.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderText" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="Image1Resource1.AlternateText" xml:space="preserve">
     <value />
   </data>
@@ -422,18 +308,6 @@
   </data>
   <data name="imgTaskStatusResource1.ToolTip" xml:space="preserve">
     <value>Pending</value>
-  </data>
-  <data name="lblAssignCommentResource1.Text" xml:space="preserve">
-    <value>Comments</value>
-  </data>
-  <data name="lblAssignCommentResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblAssignPersonResource1.Text" xml:space="preserve">
-    <value>Assign To Person</value>
-  </data>
-  <data name="lblAssignPersonResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblCreateDTResource1.Text" xml:space="preserve">
     <value />
@@ -457,18 +331,6 @@
     <value />
   </data>
   <data name="lblStatusResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTaskDetailResource1.Text" xml:space="preserve">
-    <value>info</value>
-  </data>
-  <data name="lblTaskDetailResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTaskDetailResource2.Text" xml:space="preserve">
-    <value>info</value>
-  </data>
-  <data name="lblTaskDetailResource2.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lblTaskIdResource1.ToolTip" xml:space="preserve">
@@ -540,38 +402,11 @@
   <data name="RadAjaxScheduleResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Maximize" xml:space="preserve">
-    <value>Maximize</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Minimize" xml:space="preserve">
-    <value>Minimize</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="RadWindow_TaskDetailResource1.Localization.PinOff" xml:space="preserve">
     <value>Pin off</value>
   </data>
   <data name="RadWindow_TaskDetailResource1.Localization.PinOn" xml:space="preserve">
     <value>Pin on</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Reload" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Restore" xml:space="preserve">
-    <value>Restore</value>
-  </data>
-  <data name="RadWindow_TaskDetailResource1.Localization.Yes" xml:space="preserve">
-    <value>Yes</value>
   </data>
   <data name="RadWindow_TaskDetailResource1.ToolTip" xml:space="preserve">
     <value />
@@ -894,9 +729,6 @@
   <data name="rgTaskListResource1.SortingSettings.SortToolTip" xml:space="preserve">
     <value>Click here to sort</value>
   </data>
-  <data name="rgTaskListResource1.StatusBarSettings.LoadingText" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
   <data name="rgTaskListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
     <value>Ready</value>
   </data>
@@ -906,17 +738,8 @@
   <data name="scdTaskScheduleResource1.Localization.AdvancedAllDayEvent" xml:space="preserve">
     <value>All day</value>
   </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedCalendarCancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedCalendarOK" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedCalendarToday" xml:space="preserve">
     <value>Today</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedClose" xml:space="preserve">
-    <value>Close</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedDaily" xml:space="preserve">
     <value>Daily</value>
@@ -926,9 +749,6 @@
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedDays" xml:space="preserve">
     <value>day(s)</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedDescription" xml:space="preserve">
-    <value>Description</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedDone" xml:space="preserve">
     <value>Done</value>
@@ -1065,20 +885,11 @@
   <data name="scdTaskScheduleResource1.Localization.AllDay" xml:space="preserve">
     <value>all day</value>
   </data>
-  <data name="scdTaskScheduleResource1.Localization.Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.ConfirmCancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="scdTaskScheduleResource1.Localization.ConfirmDeleteText" xml:space="preserve">
     <value>Are you sure you want to delete this appointment?</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.ConfirmDeleteTitle" xml:space="preserve">
     <value>Confirm delete</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.ConfirmOK" xml:space="preserve">
-    <value>OK</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.ConfirmRecurrenceDeleteOccurrence" xml:space="preserve">
     <value>Delete only this occurrence.</value>
@@ -1239,9 +1050,6 @@
   <data name="scdTaskScheduleResource1.Localization.ReminderWeeks" xml:space="preserve">
     <value>weeks</value>
   </data>
-  <data name="scdTaskScheduleResource1.Localization.Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="scdTaskScheduleResource1.Localization.Show24Hours" xml:space="preserve">
     <value>Show 24 hours...</value>
   </data>
@@ -1263,38 +1071,11 @@
   <data name="tbAssignCommentResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="winUpdateTaskResource1.Localization.Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Maximize" xml:space="preserve">
-    <value>Maximize</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Minimize" xml:space="preserve">
-    <value>Minimize</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="winUpdateTaskResource1.Localization.PinOff" xml:space="preserve">
     <value>Pin off</value>
   </data>
   <data name="winUpdateTaskResource1.Localization.PinOn" xml:space="preserve">
     <value>Pin on</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Reload" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Restore" xml:space="preserve">
-    <value>Restore</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.Yes" xml:space="preserve">
-    <value>Yes</value>
   </data>
   <data name="winUpdateTaskResource1.ToolTip" xml:space="preserve">
     <value />

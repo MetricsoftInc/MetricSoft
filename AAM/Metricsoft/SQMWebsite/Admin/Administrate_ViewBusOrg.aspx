@@ -9,7 +9,7 @@
 <%@ Register src="~/Include/Ucl_BusinessLoc.ascx" TagName="BusLoc" TagPrefix="Ucl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
- 
+
      <div class="admin_tabs">
         <asp:HiddenField ID="hfDocviewMessage" runat="server" Value="System Communications"/>
         <table width="100%" border="0" cellspacing="0" cellpadding="1">
@@ -38,7 +38,7 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                     <div id="divPageBody" runat="server">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
@@ -64,17 +64,17 @@
                                                             <table border="0" cellspacing="0" cellpadding="1">
                                                                 <tr>
                                                                     <td>
-                                                                        <asp:Button ID="lbCancelBusOrg1" CSSclass="buttonStd" runat="server" text="Cancel" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+                                                                        <asp:Button ID="lbCancelBusOrg1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                                          OnClientClick="return confirmAction('Cancel without saving');"  onclick="lbCancel_Click"></asp:Button>
-                                                                    </TD>  
+                                                                    </TD>
                                                                     <td>
-                                                                        <asp:Button ID="lbSaveBusOrg1" CSSclass="buttonEmphasis" runat="server" text="Save" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+                                                                        <asp:Button ID="lbSaveBusOrg1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
                                                                          OnClientClick="return confirmChange('Business Organization');"  onclick="lbSave_Click"></asp:Button>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </TD>
-                                                    </TR> 
+                                                    </TR>
                                                 </table>
                                                </td>
                                               </tr>
@@ -119,7 +119,7 @@
                                                     </TR>
                                                     <tr>
                                                         <td class="columnHeader">
-                                                            <asp:Label ID="lblSetBusorgStatus" runat="server" text="Status"></asp:Label>
+                                                            <asp:Label ID="lblSetBusorgStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                                         </td>
                                                         <td class="required">&nbsp;</td>
                                                         <td class="tableDataAlt"><asp:DropDownList ID="ddlStatus" runat="server"></asp:DropDownList>
@@ -150,7 +150,7 @@
                                 <Ucl:AdminList id="uclSubLists" runat="server"/>
                             </asp:Panel>
 
-                            <asp:Panel runat="server" ID="pnlAdminEdit"> 
+                            <asp:Panel runat="server" ID="pnlAdminEdit">
                                 <Ucl:AdminEdit id="uclAdminEdit" runat="server"/>
                             </asp:Panel>
 

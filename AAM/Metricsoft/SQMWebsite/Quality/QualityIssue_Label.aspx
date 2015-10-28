@@ -22,7 +22,7 @@
         <div id="divLabel" runat="server">
         </div>
         <br />
-       <input type="button" id="btnPrintLabel" value="Print" class="buttonStd" style="width:80px;margin-left:40px;" onclick="javascript:window.close();"></input>
+       <input type="button" id="btnPrintLabel" value="<%$ Resources:LocalizedText, Print %>" class="buttonStd" style="width:80px;margin-left:40px;" onclick="javascript:window.close();"></input>
     </form>
 </body>
 </html>

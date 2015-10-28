@@ -116,6 +116,12 @@ namespace SQM.Website
         public event EditItemClick OnViewModeChange;
         public event UclDashboardModeChanged OnDashboardModeChange;
 
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodTo.Text = this.lblYearTo.Text = Resources.LocalizedText.To + ": ";
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -143,7 +149,7 @@ namespace SQM.Website
             }
 
             uclProgress.BindProgressDisplay(100, "Updating View: ");
-            uclProgress.UpdateDisplay(1, 10, "Loading...");
+            uclProgress.UpdateDisplay(1, 10, GetLocalResourceObject("Loading").ToString());
 
             string[] plantSels = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(l => l.Value).ToArray(); // ddlPlantSelect.Items.Where(i => i.Checked == true).Select(i => i.Value).ToArray();
             string[] plantNameArray = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(l => l.Text).ToArray();  // ddlPlantSelect.Items.Where(i => i.Checked == true).Select(i => i.Text).ToArray();

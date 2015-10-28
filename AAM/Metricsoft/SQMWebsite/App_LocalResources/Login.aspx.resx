@@ -117,253 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnCancelSendEmailResource1.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="btnCancelSendEmailResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnLoginResource1.Text" xml:space="preserve">
     <value>Login</value>
-  </data>
-  <data name="btnLoginResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnSendEmailResource1.Text" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="btnSendEmailResource1.ToolTip" xml:space="preserve">
-    <value>Send temporary account reset notification to this email address</value>
   </data>
   <data name="Label1Resource1.Text" xml:space="preserve">
     <value>Username:</value>
   </data>
-  <data name="Label1Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label2Resource1.Text" xml:space="preserve">
     <value>Password:</value>
-  </data>
-  <data name="Label2Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label3Resource1.Text" xml:space="preserve">
-    <value>Email Address:</value>
-  </data>
-  <data name="Label3Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotInvalidEmailResource1.Text" xml:space="preserve">
-    <value>The email entered does not exist in the system.</value>
-  </data>
-  <data name="lblForgotInvalidEmailResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotNotSentResource1.Text" xml:space="preserve">
-    <value>There was an error sending the email.  Please contact your system administrator.</value>
-  </data>
-  <data name="lblForgotNotSentResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotNotUpdatedResource1.Text" xml:space="preserve">
-    <value>There was an error updating the password. Please contact your system administrator.</value>
-  </data>
-  <data name="lblForgotNotUpdatedResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordEmailBody1aResource1.Text" xml:space="preserve">
-    <value>The following password has been randomly generated for your </value>
-  </data>
-  <data name="lblForgotPasswordEmailBody1aResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordEmailBody1bResource1.Text" xml:space="preserve">
-    <value> account from the Forgot Password option. You must login using this random password, and then you will be prompted to change the password. &lt;br&gt;&lt;br&gt;Username: </value>
-  </data>
-  <data name="lblForgotPasswordEmailBody1bResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordEmailBody2Resource1.Text" xml:space="preserve">
-    <value>&lt;br&gt;New password: </value>
-  </data>
-  <data name="lblForgotPasswordEmailBody2Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordEmailBody3Resource1.Text" xml:space="preserve">
-    <value>Please do not reply to this message.</value>
-  </data>
-  <data name="lblForgotPasswordEmailBody3Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordEmailSubjectResource1.Text" xml:space="preserve">
-    <value>Password Recovery</value>
-  </data>
-  <data name="lblForgotPasswordEmailSubjectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblForgotPasswordInstructResource1.Text" xml:space="preserve">
-    <value>Please enter the email address associated with your user account. A temporary password will be mailed to you.&lt;br&gt;Contact your system adminstrator if you require additional assistance.</value>
-  </data>
-  <data name="lblForgotPasswordInstructResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblLoginAttemptError_outResource1.Text" xml:space="preserve">
     <value>The System could not log you in. Please click the Forgot Username/Password link or contact your system administrator for assistance.</value>
   </data>
-  <data name="lblLoginAttemptError_outResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblLoginError_outResource1.Text" xml:space="preserve">
     <value>The System could not log you in. Please verify the username and password entered are correct.</value>
-  </data>
-  <data name="lblLoginError_outResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblLoginMessageResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblLoginMessageResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMainInfoResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMainInfoResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassFail10Resource1.Text" xml:space="preserve">
-    <value>The Current Password entered does not match your current password.</value>
-  </data>
-  <data name="lblPassFail10Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassFailErrorResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassFailErrorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassFailUpdateResource1.Text" xml:space="preserve">
-    <value>An error was encountered updating the password. Please try again or contact your system administrator.</value>
-  </data>
-  <data name="lblPassFailUpdateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassMustUpdateResource1.Text" xml:space="preserve">
-    <value>You must reset your password to continue.&lt;br&gt;&lt;br&gt;</value>
-  </data>
-  <data name="lblPassMustUpdateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPassPolicyFailResource1.Text" xml:space="preserve">
-    <value>The password entered does not comply with the policy stated below - please re-enter a new password.</value>
-  </data>
-  <data name="lblPassPolicyFailResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordEmailBody1aResource1.Text" xml:space="preserve">
-    <value>Your password has been updated in the </value>
-  </data>
-  <data name="lblPasswordEmailBody1aResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordEmailBody1bResource1.Text" xml:space="preserve">
-    <value> application.</value>
-  </data>
-  <data name="lblPasswordEmailBody1bResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordEmailBody2Resource1.Text" xml:space="preserve">
-    <value>Please do not reply to this message.</value>
-  </data>
-  <data name="lblPasswordEmailBody2Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordEmailSubjectResource1.Text" xml:space="preserve">
-    <value> Password Changed</value>
-  </data>
-  <data name="lblPasswordEmailSubjectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordNoConfirmResource1.Text" xml:space="preserve">
-    <value>Password not confirmed. Please make sure the confirmation password and new password are the same.</value>
-  </data>
-  <data name="lblPasswordNoConfirmResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordPolicyResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPasswordPolicyResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblSessionError_outResource1.Text" xml:space="preserve">
     <value>A different user is already logged into the system from another browser page.</value>
   </data>
-  <data name="lblSessionError_outResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblStatsResource1.Text" xml:space="preserve">
     <value>Number Of Days Without A Lost Time Case</value>
-  </data>
-  <data name="lblStatsResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lnkForgotPasswordResource1.Text" xml:space="preserve">
     <value>Forgot Username/Password ?</value>
   </data>
-  <data name="lnkForgotPasswordResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PageResource1.Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlForgotResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlForgotResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLoginPasswordEditResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLoginPasswordEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLoginResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLoginResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlPasswordEditResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlPasswordEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="pnlPostingResource1.GroupingText" xml:space="preserve">
     <value>Corporate Objectives &amp; Performance</value>
-  </data>
-  <data name="pnlPostingResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbEmailResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbEmailResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbPasswordResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbPasswordResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUsernameResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUsernameResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -9,7 +9,7 @@ using Telerik.Web.UI.HtmlChart;
 
 namespace SQM.Website.EHS
 {
-	public partial class EHS_PerformanceReport : Page
+	public partial class EHS_PerformanceReport : SQMBasePage
 	{
 		class Data
 		{

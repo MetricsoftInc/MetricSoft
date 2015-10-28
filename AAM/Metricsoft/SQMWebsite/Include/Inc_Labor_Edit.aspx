@@ -6,17 +6,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                         <td>
-                                            <asp:Button ID="lbLaborCancel1" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                            <asp:Button ID="lbLaborCancel1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbLaborSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbLaborSave1" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbLaborSave1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                             OnClientClick="return confirmChange('Labor Type');" onclick="lbLaborSave_Click" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                   </td>
                </tr>
@@ -48,7 +48,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblSetLaborStatus" runat="server" text="Status"></asp:Label>
+                                <asp:Label ID="lblSetLaborStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td class="tableDataAlt"><asp:DropDownList ID="ddlLaborStatus" runat="server"></asp:DropDownList>
@@ -79,17 +79,17 @@
                                 <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                         <td>
-                                             <asp:Button ID="lbLaborCancel2" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                             <asp:Button ID="lbLaborCancel2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                              onclick="lbLaborSave_Click" CommandArgument="cancel"></asp:Button>
-                                        </TD>  
+                                        </TD>
                                         <td>
-                                            <asp:Button ID="lbLaborSave2" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                            <asp:Button ID="lbLaborSave2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                             OnClientClick="return confirmChange('Labor Type');" onclick="lbLaborSave_Click" CommandArgument="edit"></asp:Button>
                                         </td>
                                     </tr>
                                 </table>
                             </TD>
-                        </TR> 
+                        </TR>
                     </table>
                 </td>
               </tr>

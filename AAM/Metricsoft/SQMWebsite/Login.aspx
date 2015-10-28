@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspQAILogin.master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SQM.Website.Login" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspQAILogin.master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SQM.Website.Login" %>
 
 <%@ Register Src="~/Include/Ucl_AdminPasswordEdit.ascx" TagName="PassEdit" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
@@ -58,12 +58,12 @@
 	
 	<div class="container-fluid">
 
-		<asp:Panel runat="server" ID="pnlLogin" meta:resourcekey="pnlLoginResource1">
+		<asp:Panel runat="server" ID="pnlLogin">
 
 			<div class="row-fluid">
 				<div class="col-xs-12  text-left">
 					<p>
-						<asp:Label ID="lblMainInfo" runat="server" CssClass="textStd" Visible="False" meta:resourcekey="lblMainInfoResource1"></asp:Label>
+						<asp:Label ID="lblMainInfo" runat="server" CssClass="textStd" Visible="False"></asp:Label>
 					</p>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 
 					<asp:Label ID="Label1" runat="server" class="prompt" Text="Username:" meta:resourcekey="Label1Resource1"></asp:Label>
 					<asp:TextBox ID="tbUsername" runat="server" Style="width: 170px; margin: 5px 4px 0 0;"
-						MaxLength="32" meta:resourcekey="tbUsernameResource1"></asp:TextBox>
+						MaxLength="32"></asp:TextBox>
 
 
 					<div class="clearfix visible-xs"></div>
@@ -83,7 +83,7 @@
 					<br />
 					<asp:Label ID="Label2" runat="server" class="prompt"  Text="Password:" meta:resourcekey="Label2Resource1"></asp:Label>
 					<asp:TextBox ID="tbPassword" runat="server" TextMode="Password" 
-						MaxLength="32" Style="width: 170px; margin-top: 8px;  margin: 5px 4px 0 2px;" onblur="ClearMessages();" meta:resourcekey="tbPasswordResource1"></asp:TextBox>
+						MaxLength="32" Style="width: 170px; margin-top: 8px;  margin: 5px 4px 0 2px;" onblur="ClearMessages();"></asp:TextBox>
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
@@ -109,7 +109,7 @@
 
 		<div class="row-fluid">
 			<div class="col-xs-12 text-left">
-				<asp:Panel runat="server" ID="pnlLoginPasswordEdit" Visible="False" meta:resourcekey="pnlLoginPasswordEditResource1">
+				<asp:Panel runat="server" ID="pnlLoginPasswordEdit" Visible="False">
 					<Ucl:PassEdit ID="uclPassEdit" runat="server" strCurrentControl="login" />
 				</asp:Panel>
 			</div>
@@ -127,7 +127,7 @@
 
 				<div id="divAnnouncements" runat="server" style="margin-top: 10px;">
 					<div id="divLoginMessage" runat="server" class="borderSoft" style="width: 98%; padding: 4px; margin-bottom: 7px;" visible="false">
-						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText" meta:resourcekey="lblLoginMessageResource1"></asp:Label>
+						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText"></asp:Label>
 					</div>
 
 					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" GroupingText="Corporate Objectives & Performance" CssClass="sectionTitles" Width="99%" Visible="False" meta:resourcekey="pnlPostingResource1">

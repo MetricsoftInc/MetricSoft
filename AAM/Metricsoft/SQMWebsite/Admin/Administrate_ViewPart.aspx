@@ -27,7 +27,7 @@
     }
 
     function ClosePartDetailWindow() {
-        var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+        var oWindow = GetRadWindow();  //Obtaining a reference to the current window
         oWindow.Close();
     }
 
@@ -63,7 +63,7 @@
                                     <telerik:RadComboBox ID="ddlSourceSelect" runat="server" Width="200" Skin="Metro" ZIndex=9000 Font-Size=Small EmptyMessage="Select" AutoPostBack="true">
                                         <Items>
                                             <telerik:RadComboBoxItem Text="" Value=""/>
-                                            <telerik:RadComboBoxItem Text="All" Value="-1"/>
+                                            <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="-1"/>
                                             <telerik:RadComboBoxItem Text="Internal" Value="0"/>
                                             <telerik:RadComboBoxItem Text="Any Supplier" Value="-2"/>
                                             <telerik:RadComboBoxItem Text="Specific Supplier" Value="-22" IsSeparator="true"/>
@@ -75,18 +75,18 @@
                                     <asp:Label ID="lblFilterByUsed" runat="server" Text="Where Used"></asp:Label>
                                 </SPAN>
                                 <BR>
-                                <telerik:RadComboBox ID="ddlUsedSelect" runat="server" Width="400" Skin="Metro" ZIndex=9000 Font-Size=Small EmptyMessage="Select where part is used" AutoPostBack="false" 
+                                <telerik:RadComboBox ID="ddlUsedSelect" runat="server" Width="400" Skin="Metro" ZIndex=9000 Font-Size=Small EmptyMessage="Select where part is used" AutoPostBack="false"
                                     CheckBoxes="true" EnableCheckAllItemsCheckBox="false" OnClientLoad="comboLoad">
                                         <Items>
                                             <telerik:RadComboBoxItem Text="" Value=""/>
-                                            <telerik:RadComboBoxItem Text="All" Value="-1"/>
+                                            <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="-1"/>
                                             <telerik:RadComboBoxItem Text="Internal" Value="0"/>
                                             <telerik:RadComboBoxItem Text="Any Customer" Value="-2" />
                                             <telerik:RadComboBoxItem Text="Specific Customer" Value="-22" IsSeparator="true"/>
                                         </Items>
                                 </telerik:RadComboBox>
                                 &nbsp;&nbsp;
-                                <asp:Button id="btnPartSearch" runat="server" CssClass="buttonEmphasis" text="Search" OnClick="OnPartSearch"/>
+                                <asp:Button id="btnPartSearch" runat="server" CssClass="buttonEmphasis" text="<%$ Resources:LocalizedText, Search %>" OnClick="OnPartSearch"/>
                                 &nbsp;&nbsp;
                                 <asp:Button ID="btnPartNew" CSSclass="buttonAddLarge" runat="server" text="New" onclick="OnPartAdd" ToolTip="Add a part associated with the trading partners selected"></asp:Button>
                             </td>
@@ -111,14 +111,14 @@
                                         <asp:Label ID="lblPartNum" runat="server" text="Part Number"></asp:Label>
                                     </td>
                                     <td class="required" width="1%">&nbsp;</td>
-                                    <td CLASS="tableDataAlt" width="69%"><asp:TextBox ID="tbPartNumber" size="50" maxlength="50" runat="server" CssClass="textStd" ReadOnly="true"/></td>      
+                                    <td CLASS="tableDataAlt" width="69%"><asp:TextBox ID="tbPartNumber" size="50" maxlength="50" runat="server" CssClass="textStd" ReadOnly="true"/></td>
 			                    </tr>
                                 <tr>
                                     <td class="columnHeader" >
                                         <asp:Label ID="lblPartName" runat="server" text="Part Description"></asp:Label>
                                     </td>
                                     <td class="tableDataAlt">&nbsp;</td>
-                                    <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartName"  TextMode="multiline" rows="2" maxlength="300" runat="server" CssClass="textStd" style="width: 97%;"/></td>      
+                                    <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartName"  TextMode="multiline" rows="2" maxlength="300" runat="server" CssClass="textStd" style="width: 97%;"/></td>
 			                    </tr>
                                 <asp:PlaceHolder ID="plPartName" runat="server" Visible="false">
                                     <tr>
@@ -126,28 +126,28 @@
                                             <asp:Label ID="lblPartPrefix" runat="server" text="Part Prefix"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartPrefix" size="10" maxlength="20" runat="server" CssClass="textStd"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartPrefix" size="10" maxlength="20" runat="server" CssClass="textStd"/></td>
 			                        </tr>
                                     <tr>
                                         <td class="columnHeader">
                                             <asp:Label ID="lblPartSuffix" runat="server" text="Part Suffix"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSuffix" size="10" maxlength="20" runat="server" CssClass="textStd"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSuffix" size="10" maxlength="20" runat="server" CssClass="textStd"/></td>
 			                        </tr>
                                     <tr>
                                         <td class="columnHeader">
                                             <asp:Label ID="lblPartSep" runat="server" text="Separator"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSep" size="3" maxlength="3" runat="server" CssClass="textStd"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSep" size="3" maxlength="3" runat="server" CssClass="textStd"/></td>
 			                        </tr>
                                     <tr>
                                         <td class="columnHeader">
                                             <asp:Label ID="lblPartSerialNum" runat="server" text="Serial Number"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSerialNum" size="50" maxlength="100" runat="server" CssClass="textStd"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartSerialNum" size="50" maxlength="100" runat="server" CssClass="textStd"/></td>
 			                        </tr>
                                 </asp:PlaceHolder>
                                 <tr>
@@ -157,7 +157,7 @@
                                     <td class="tableDataAlt">&nbsp;</td>
                                     <td CLASS="tableDataAlt">
                                         <asp:DropDownList ID="ddlPartProgram" runat="server"></asp:DropDownList>
-                                    </td>      
+                                    </td>
 			                    </tr>
                                 <tr>
                                     <td class="columnHeader">
@@ -170,7 +170,7 @@
                                 </tr>
                                 <tr>
                                     <td class="columnHeader">
-                                        <asp:Label ID="lblSetPartStatus" runat="server" text="Status"></asp:Label>
+                                        <asp:Label ID="lblSetPartStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
                                     </td>
                                     <td class="required">&nbsp;</td>
                                     <td class="tableDataAlt"><asp:DropDownList ID="ddlPartStatus" runat="server"></asp:DropDownList></td>
@@ -191,9 +191,9 @@
                                 </tr>
                             </table>
                             <span style="float: right; margin: 5px;">
-                                <asp:Button ID="lbCancelPart" CSSclass="buttonStd" runat="server" text="Cancel" 
+                                <asp:Button ID="lbCancelPart" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"
                                     onclick="lbCancelPart_Click"></asp:Button>
-                                <asp:Button ID="lbSavePart" CSSclass="buttonEmphasis" runat="server" text="Save" style="margin-right: 20px;" 
+                                <asp:Button ID="lbSavePart" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin-right: 20px;"
                                     OnClientClick="return confirmChange('this part');"  onclick="lbSavePart_Click"></asp:Button>
                             </span>
                             <br />

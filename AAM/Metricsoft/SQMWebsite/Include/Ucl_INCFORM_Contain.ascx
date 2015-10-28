@@ -42,7 +42,7 @@
         <telerik:RadAjaxPanel ID="rapContain"  runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapContainResource1">
             <asp:Repeater runat="server" ID="rptContain" ClientIDMode="AutoID" OnItemDataBound="rptContain_OnItemDataBound" OnItemCommand="rptContain_ItemCommand">
                 <FooterTemplate>
-                    </table> 
+                    </table>
                     <div class="row" style="padding-top:0;margin-top:-10px;">
                         <div class="col-xs-12 text-left-more">
                             <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
@@ -57,7 +57,7 @@
 									<asp:Label ID="lbhdItem" runat="server" meta:resourcekey="lbhdItemResource1" Text="Item"></asp:Label>
 									</b></th>
 								<th class="col-sm-3 text-left-more"><b>
-									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="Initial Action"></asp:Label>
+									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label>
 									</b></th>
 								<th class="col-sm-2 text-left-more"><b>
 									<asp:Label ID="lbhdConAssignedTo" runat="server" meta:resourcekey="lbhdConAssignedToResource1" Text="Assigned To"></asp:Label>
@@ -85,7 +85,7 @@
 								<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="Required" meta:resourcekey="rfvContainPersonResource1"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
-								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged" Culture="en-US" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
+								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged"" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
 									<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 									</Calendar>
 									<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -102,7 +102,7 @@
 								<asp:RequiredFieldValidator ID="rvfStartDate" runat="server" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required" meta:resourcekey="rvfStartDateResource1"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
-								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" meta:resourcekey="btnItemDeleteResource1" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="Deleting..." Text="Delete Item">
+								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="Delete Item">
 								</telerik:RadButton>
 							</td>
 						</tr>

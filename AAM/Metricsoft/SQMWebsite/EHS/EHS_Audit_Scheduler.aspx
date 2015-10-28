@@ -1,4 +1,4 @@
-﻿<%@ Page Title="EHS Audits" Language="C#" MasterPageFile="~/RspPSMaster.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspPSMaster.Master"
     AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_Audit_Scheduler.aspx.cs" ClientIDMode="AutoID"
     Inherits="SQM.Website.EHS_Audit_Scheduler" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
@@ -77,7 +77,7 @@
                     <div class="row-fluid">
 
                         <span style="float: left; width: 160px;">
-                            <asp:Label runat="server" ID="lblPlantSelect" Text="Locations:" CssClass="prompt" meta:resourcekey="lblPlantSelectResource1"></asp:Label>
+                            <asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
                         </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<br class="visible-xs-block" />
                         <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
@@ -93,20 +93,20 @@
 
 
                             <span style="float: left; width: 160px;">
-                                <asp:Label runat="server" ID="lblAuditType" Text="Assessment Type:" CssClass="prompt" meta:resourcekey="lblAuditTypeResource1"></asp:Label>
+                                <asp:Label runat="server" ID="lblAuditType" CssClass="prompt"></asp:Label>
                             </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select assessment types to list" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false" meta:resourcekey="rcbAuditTypeResource1"></telerik:RadComboBox>
+                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="<%$ Resources:LocalizedText, SelectAssessmentTypes %>" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
 
                             <div class="clearfix visible-xs"></div>
                             <br class="visible-xs-block" style="margin-top: 7px;" />
 
-                            <asp:Label runat="server" ID="lblStatus" Text="Status:" CssClass="prompt" meta:resourcekey="lblStatusResource1"></asp:Label>&nbsp;&nbsp;
+                            <asp:Label runat="server" ID="lblStatus" CssClass="prompt"></asp:Label>&nbsp;&nbsp;
                                             <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select assessment schedules to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false" meta:resourcekey="rcbStatusSelectResource1">
                                                 <Items>
-                                                    <telerik:RadComboBoxItem Text="Active" Value="A" meta:resourcekey="RadComboBoxItemResource1" />
-                                                    <telerik:RadComboBoxItem Text="Inactive" Value="I" meta:resourcekey="RadComboBoxItemResource2" />
-                                                    <telerik:RadComboBoxItem Text="All" Value="" meta:resourcekey="RadComboBoxItemResource3" />
+                                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Active %>" Value="A" />
+                                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Inactive %>" Value="I" />
+                                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="" />
                                                 </Items>
                                             </telerik:RadComboBox>
 
@@ -128,7 +128,7 @@
                         <br class="visible-xs-block" style="margin-top: 7px;" />
 
                         <span class="noprint">
-                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List assessment schedules" OnClick="btnAuditsSearchClick" meta:resourcekey="btnSearchResource1" />
+                            <asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="<%$ Resources:LocalizedText, ListAssessmentSchedules %>" OnClick="btnAuditsSearchClick" />
                         </span>
 
                     </div>
@@ -137,19 +137,19 @@
                 <%--	$$$$$$$$$$$$$$ Audit Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
 
 
-                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel2Resource1">
+                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet">
 
                     <div class="clearfix visible-xs"></div>
                     <br class="visible-xs-block" />
 
                     <div class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
 
-                        <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="False" meta:resourcekey="pnlAuditDetailsResource1">
+                        <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="False">
                             <div class="row-fluid">
                                 <br />
                                 <asp:HiddenField ID="hfAuditDetails" runat="server" Value="Assessment # Summary" />
-                                <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt" meta:resourcekey="lblAuditDetailsResource1"></asp:Label>
-                                <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="Close" meta:resourcekey="lnkAuditDetailsCloseResource1">
+                                <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt"></asp:Label>
+                                <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="<%$ Resources:LocalizedText, Close %>">
                                              <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
                                 </asp:LinkButton>
                                 <br />
@@ -165,8 +165,8 @@
             </div>
 
             <Ucl:AuditScheduleDetail ID="uclAuditScheduleDetail" runat="server" />
-            
-            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" meta:resourcekey="RadAjaxManager1Resource1">
+
+            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
             </telerik:RadAjaxManager>
         </div>
     </div>

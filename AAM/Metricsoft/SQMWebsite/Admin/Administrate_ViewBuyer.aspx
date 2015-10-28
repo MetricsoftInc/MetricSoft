@@ -22,19 +22,19 @@
 								            <table border="0" cellspacing="0" cellpadding="1" >
 						  			            <tr>
 								                    <td>
-                                                        <asp:Button ID="lbSearchBuyers1" CSSclass="buttonStd" runat="server" text="New Search" 
+                                                        <asp:Button ID="lbSearchBuyers1" CSSclass="buttonStd" runat="server" text="New Search"
                                                         onclick="lbSearchBuyers_Click" CommandArgument=""></asp:Button>
 									                </td>
 									                <td>
-                                                        <asp:Button ID="lbBuyerEdit1" CSSclass="buttonStd" runat="server" text="Unassigned" 
+                                                        <asp:Button ID="lbBuyerEdit1" CSSclass="buttonStd" runat="server" text="Unassigned"
                                                         onclick="tab_Click" CommandArgument="assign"></asp:Button>
 									                </td>
 									                <td>
-                                                        <asp:Button ID="lbBuyerAdd1" CSSclass="buttonStd" runat="server" text="Edit" 
+                                                        <asp:Button ID="lbBuyerAdd1" CSSclass="buttonStd" runat="server" text="Edit"
                                                         onclick="tab_Click" CommandArgument="edit"></asp:Button>
 									                </td>
                                                     <td>
-                                                        <asp:Button ID="lbSaveBuyerPerson1" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                                        <asp:Button ID="lbSaveBuyerPerson1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                                         onclick="tab_Click" CommandArgument="save"></asp:Button>
 									                </td>
                                                 </TR>
@@ -45,7 +45,7 @@
                             </td>
                         </tr>
                     </table>
-                    
+
                     <table width="99%" border="0" cellspacing="1" cellpadding="4" class="darkBorder">
                         <tr style="height: 38px;">
                             <td class="tableDataHdr" colspan="5">
@@ -71,19 +71,19 @@
 						            <table border="0" cellspacing="0" cellpadding="1">
 						                <tr>
 							                <td>
-                                                <asp:Button ID="lbSearchBuyers2" CSSclass="buttonStd" runat="server" text="New Search" 
+                                                <asp:Button ID="lbSearchBuyers2" CSSclass="buttonStd" runat="server" text="New Search"
                                                     onclick="lbSearchBuyers_Click" CommandArgument=""></asp:Button>
 								            </td>
 								            <td>
-                                                <asp:Button ID="lbBuyerEdit2" CSSclass="buttonStd" runat="server" text="Unassigned" 
+                                                <asp:Button ID="lbBuyerEdit2" CSSclass="buttonStd" runat="server" text="Unassigned"
                                                     onclick="tab_Click" CommandArgument="assign"></asp:Button>
 							                </td>
 						                    <td>
-                                                <asp:Button ID="lbBuyerAdd2" CSSclass="buttonStd" runat="server" text="Edit" 
+                                                <asp:Button ID="lbBuyerAdd2" CSSclass="buttonStd" runat="server" text="Edit"
                                                  onclick="tab_Click" CommandArgument="edit"></asp:Button>
 					                        </td>
                                             <td>
-                                                <asp:Button ID="lbSaveBuyerPerson2" CSSclass="buttonEmphasis" runat="server" text="Save" 
+                                                <asp:Button ID="lbSaveBuyerPerson2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>"
                                                 onclick="tab_Click" CommandArgument="save"></asp:Button>
 									        </td>
                                         </TR>

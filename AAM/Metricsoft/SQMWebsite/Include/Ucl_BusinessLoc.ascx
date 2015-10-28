@@ -6,7 +6,7 @@
     <asp:DropDownList ID="ddlSelectLocation" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlSelectLocation_Change" Visible="false">
         <asp:ListItem Value="1">prime</asp:ListItem>
     </asp:DropDownList>
-    <asp:Button id="btnCancel" runat="server" Text="Cancel" Title="cancel selection" CssClass="buttonStd"  OnClick="btnListCompanies_Click" CommandArgument="done" Enabled="false" Visible="false"/>
+    <asp:Button id="btnCancel" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" Title="cancel selection" CssClass="buttonStd"  OnClick="btnListCompanies_Click" CommandArgument="done" Enabled="false" Visible="false"/>
     <asp:Button id="btnReset" runat="server" Text="Reset" Title="reset to default (HR location)" CssClass="buttonStd"  OnClick="btnListCompanies_Click" CommandArgument="reset" Visible="false"/>
     <br />
     <asp:Panel ID="pnlSelectCompany" runat="server" Visible="false" Width="100%">

@@ -6,7 +6,7 @@
 					                    <table cellpadding=0 cellspacing=2 border=0>
 						                    <tr>
 							                    <td>
-                                                   <asp:Button ID="lbDeptAdd1" CSSclass="buttonStd" runat="server" text="Add a Department" 
+                                                   <asp:Button ID="lbDeptAdd1" CSSclass="buttonStd" runat="server" text="Add a Department"
                                                         onclick="lnkDeptAdd_Click" CommandArgument="add"></asp:Button>
                                                 </td>
 						                    </tr>
@@ -22,7 +22,7 @@
                             <!-- results grid -->
                             <div id="divDeptGVScroll" runat="server" class="">
                             <asp:GridView runat="server" ID="gvDeptList" Name="gvDeptList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="2" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                     	            <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
@@ -35,7 +35,7 @@
                                         </ItemTemplate>
 							        </asp:TemplateField>
                                     <asp:BoundField DataField="DEPT_CODE" HeaderText="Department Code" ItemStyle-Width="35%" />
-                                    <asp:TemplateField HeaderText="Status" ItemStyle-Width="20%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="20%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>
@@ -56,7 +56,7 @@
 					                    <table cellpadding=0 cellspacing=2 border=0>
 						                    <tr>
 							                    <td>
-                                                    <asp:Button ID="lbDeptAdd2" CSSclass="buttonStd" runat="server" text="Add a Department" 
+                                                    <asp:Button ID="lbDeptAdd2" CSSclass="buttonStd" runat="server" text="Add a Department"
                                                         onclick="lnkDeptAdd_Click" CommandArgument="add"></asp:Button>
                                                 </td>
 						                    </tr>

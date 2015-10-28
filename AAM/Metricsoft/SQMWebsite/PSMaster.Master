@@ -17,7 +17,7 @@
 	<link href="/css/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
     <%--<link href="http://aspnet-skins.telerikstatic.com/ajaxz/2013.2.717/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />--%>
     <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
-    
+
     <script src="../scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="../scripts/ps_admin.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -34,7 +34,7 @@
         }
 
         function CloseUserPrefsWindow(changeDesc) {
-            var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+            var oWindow = GetRadWindow();  //Obtaining a reference to the current window
             oWindow.Close();
         }
     </script>
@@ -166,28 +166,28 @@
 
  		<div style="width:99%; margin: 5px;" >
 			<div style="float: left;" class="noprint">
-				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;" meta:resourcekey="imgLogoResource1"/>
+				<asp:Image ID="imgLogo" runat="server" CssClass="logoImg" Style="margin-bottom: 4px;"/>
 			</div>
 			<div style="float: left; margin: 12px 0 0 20px;" class="noprint">
-				<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles" meta:resourcekey="lblMainTitleResource1"></asp:Label>
+				<asp:Label ID="lblMainTitle" runat="server" CssClass="mainTitles"></asp:Label>
 			</div>
 			<div style="float:right; margin: 5px 10px 0 0;" class="noprint">
-				<asp:Panel id="Panel1" runat="server" style="float: right;" meta:resourcekey="Panel1Resource1">
-				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences" meta:resourcekey="lbBusinessCard1_outResource1"></asp:LinkButton>
+				<asp:Panel id="Panel1" runat="server" style="float: right;">
+				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences"></asp:LinkButton>
 					&nbsp;&nbsp;
-					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="Logout" OnClientClick="return confirm('Please confirm - do you wish to log out ?');" onClick="lbLogout_Click" Title="Logout" meta:resourcekey="lnkLogoutResource1"></asp:LinkButton>
+					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="<%$ Resources:LocalizedText, Logout %>" OnClientClick="return confirm('Please confirm - do you wish to log out ?');" onClick="lbLogout_Click" Title="<%$ Resources:LocalizedText, Logout %>"></asp:LinkButton>
 				</asp:Panel>
 				<br />
-				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;" meta:resourcekey="pnlStatOfTheDayResource1">
-					<asp:Label ID="lblActiveLocation" runat="server" CssClass="businessCard" meta:resourcekey="lblActiveLocationResource1"></asp:Label>
-					<asp:Label ID="lblStatOfTheDay_out" runat="server" CssClass="instructTextEmphasis" Visible="False" meta:resourcekey="lblStatOfTheDay_outResource1"></asp:Label>
-					<asp:Label ID="lblStatOfTheDay" runat="server" CssClass="businessCard" Visible="False" Text=" days without a lost time case" meta:resourcekey="lblStatOfTheDayResource1"></asp:Label>
-						
+				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;">
+					<asp:Label ID="lblActiveLocation" runat="server" CssClass="businessCard"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay_out" runat="server" CssClass="instructTextEmphasis" Visible="False"></asp:Label>
+					<asp:Label ID="lblStatOfTheDay" runat="server" CssClass="businessCard" Visible="False" Text="<%$ Resources:LocalizedText, DaysWithoutLostTimeCase %>"></asp:Label>
+
 				</asp:Panel>
 			</div>
 
 			<div class="menuContainer noprint" >
-				<telerik:RadMenu ID="RadMenu1" runat="server" OnClientLoad="ResetMenu" OnClientItemOpened="AdjustWidth" OnClientMouseOver="ResetTimeout" OnClientMouseOut="ResetTimeout" OnClientItemClosing="CheckClose" meta:resourcekey="RadMenu1Resource1" />
+				<telerik:RadMenu ID="RadMenu1" runat="server" OnClientLoad="ResetMenu" OnClientItemOpened="AdjustWidth" OnClientMouseOver="ResetTimeout" OnClientMouseOut="ResetTimeout" OnClientItemClosing="CheckClose" />
 				<span id="pnlReferenceDocSelect" runat="server" style="float: right; margin-top: 5px; margin-right: 3px;">
 					<Ucl:DocList id="uclDocSelect" runat="server"/>
 				</span>
@@ -210,7 +210,7 @@
 		</div>
     </div>
 
-    <telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Title="User Preferences"  Behaviors="Close" Behavior="Close" meta:resourcekey="winUserPrefsResource1">
+    <telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Title="User Preferences"  Behaviors="Close" Behavior="Close">
         <ContentTemplate>
             <div>
                 <center>
@@ -218,25 +218,25 @@
  					<table width="99%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
 						<tr>
 							<td class="columnHeader" width="44%">
-								<asp:Label ID="lblUserPhone" runat="server" text="Contact Phone Number" meta:resourcekey="lblUserPhoneResource1"></asp:Label>
+								<asp:Label ID="lblUserPhone" runat="server" Text="<%$ Resources:LocalizedText, ContactPhoneNumber %>"></asp:Label>
 							</td>
 							<td class="tableDataAlt" width="1%">&nbsp;</td>
 							<td class="tableDataAlt" width="55%">
-								<asp:TextBox ID="tbUserPhone" size="24" maxlength="20" runat="server" meta:resourcekey="tbUserPhoneResource1"></asp:TextBox>
+								<asp:TextBox ID="tbUserPhone" size="24" maxlength="20" runat="server"></asp:TextBox>
 							</td>
 						</tr>
 						<tr>
 							<td class="columnHeader" width="44%">
-								<asp:Label ID="lblUserLang" runat="server" text="Language/Culture" meta:resourcekey="lblUserLangResource1"></asp:Label>
+								<asp:Label ID="lblUserLang" runat="server" Text="<%$ Resources:LocalizedText, LanguageCulture %>"></asp:Label>
 							</td>
 							<td class="tableDataAlt" width="1%">&nbsp;</td>
 							<td class="tableDataAlt" width="55%">
-								<telerik:RadComboBox ID="ddlUserLang" runat="server" Skin="Metro" Width=200px ZIndex=9000 Font-Size=Small meta:resourcekey="ddlUserLangResource1" ></telerik:RadComboBox>
+								<telerik:RadComboBox ID="ddlUserLang" runat="server" Skin="Metro" Width=200px ZIndex=9000 Font-Size=Small></telerik:RadComboBox>
 							</td>
 						</tr>
 						<tr id="trChangePwd" runat="server" visible="False">
 							<td class="columnHeader" runat="server">
-								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="Change Password" OnClick="btnPassEdit_Click" ToolTip="Display password edit fields"></asp:LinkButton>
+								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<% Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
 							</td>
 							<td class="tableDataAlt" runat="server">&nbsp;</td>
 							<td class="tableDataAlt" runat="server">
@@ -245,9 +245,9 @@
 						</tr>
 					</table>
 					<br />
-					<asp:Button ID="btnUserPrefsCancel" runat="server" text="Cancel"  ToolTip="Close this window without saving" CssClass="buttonStd" OnClientClick="CloseUserPrefsWindow(); return false;" meta:resourcekey="btnUserPrefsCancelResource1" ></asp:Button>
-					<asp:Button ID="btnUserPrefsSave" runat="server" text="Save"  CssClass="buttonEmphasis" ToolTip="Save your user preferences"
-								  OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs" meta:resourcekey="btnUserPrefsSaveResource1"></asp:Button>
+					<asp:Button ID="btnUserPrefsCancel" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"  ToolTip="<%$ Resources:LocalizedText, CloseWindowNoSave %>" CssClass="buttonStd" OnClientClick="CloseUserPrefsWindow(); return false;"></asp:Button>
+					<asp:Button ID="btnUserPrefsSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>"  CssClass="buttonEmphasis" ToolTip="<%$ Resources:LocalizedText, SaveUserPrefs %>"
+								  OnClientClick="return confirmChange('User Preferences');" onclick="btnSave_Click" CommandArgument="prefs"></asp:Button>
                 </center>
             </div>
         </ContentTemplate>

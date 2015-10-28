@@ -39,6 +39,12 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.Title = Resources.LocalizedText.EHSIncidents;
+			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblIncidentType.Text = Resources.LocalizedText.IncidentType + ":";
+			this.lblStatus.Text = Resources.LocalizedText.Status + ": ";
+			this.lblToDate.Text = Resources.LocalizedText.To + ":";
+
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
@@ -212,10 +218,10 @@ namespace SQM.Website
 			dmToDate.SelectedDate = DateTime.Now;
 
 
-			lblViewEHSRezTitle.Text = "Manage Environmental Health &amp; Safety Incidents";
-			lblPageInstructions.Text = "Add or update EH&amp;S Incidents below.";
+			lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
+			lblPageInstructions.Text = GetLocalResourceObject("lblPageInstructionsResource1.Text").ToString();
 			//lblStatus.Text = "Incident Status:";
-			rbNew.Text = "New Incident";
+			rbNew.Text = GetLocalResourceObject("rbNewResource1.Text").ToString();
 			lblIncidentDate.Visible = true;
 			lblInspectionDate.Visible = false;
 			phIncident.Visible = true;

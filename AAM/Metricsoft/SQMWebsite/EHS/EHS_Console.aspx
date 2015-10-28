@@ -61,7 +61,7 @@
                                     <asp:Label ID="lblView" runat="server" Text="Activity:" CssClass="prompt"></asp:Label>
                                 </td>
                                 <td class="summaryDataEnd" colspan="2">
-                                    
+
                                     <telerik:RadComboBox ID="ddlReportList" runat="server" Skin="Metro" Width=350  Font-Size=Small EmptyMessage="select an activity..." autopostback="True" onselectedindexchanged="ddlReportList_Select">
 				                        <Items>
                                             <telerik:RadComboBoxItem Text="" Value=""/>
@@ -77,7 +77,7 @@
                             <asp:PlaceHolder ID="phBasicCriteria" runat="server" visible="false">
                                 <tr>
                                     <td class="summaryDataEnd" style="width: 90px;">
-                                        <asp:Label runat="server" ID="lblExportPlantSelect"  CssClass="prompt" Text ="Locations:"></asp:Label>
+                                        <asp:Label runat="server" ID="lblExportPlantSelect"  CssClass="prompt"></asp:Label>
                                     </td>
                                     <td class="summaryDataEnd">
                                         <telerik:RadComboBox ID="ddlExportPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ZIndex="9000" Skin="Metro"  Width="350" height="300" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
@@ -86,10 +86,10 @@
 							            <asp:Label runat="server" ID="lblExportDateSelect1" CssClass="prompt" Text="From: "></asp:Label>
 									    <telerik:RadMonthYearPicker ID="radExportDateSelect1" runat="server" CssClass="textStd" Width="165" Skin="Metro"></telerik:RadMonthYearPicker>
 									    &nbsp;
-                                        <asp:Label ID="lblExportToDate" runat="server" CssClass="prompt" Text="To: " ></asp:Label>
+                                        <asp:Label ID="lblExportToDate" runat="server" CssClass="prompt"></asp:Label>
 									    &nbsp;
                                         <telerik:RadMonthYearPicker ID="radExportDateSelect2" runat="server" CssClass="textStd" Width="165" Skin="Metro"></telerik:RadMonthYearPicker>
-                                        <asp:Button id="btnSearch" runat="server" style="margin-left: 20px;" CssClass="buttonEmphasis" Text="Search" ToolTip="search data" OnClick="btnSearch_Click"/>
+                                        <asp:Button id="btnSearch" runat="server" style="margin-left: 20px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="search data" OnClick="btnSearch_Click"/>
 								    </td>
                                 </tr>
                             </asp:PlaceHolder>
@@ -99,28 +99,28 @@
                                         <asp:Label runat="server" ID="lblExportIncidentType" CssClass="prompt" Text="Incident Types"></asp:Label>
                                     </td>
                                     <td class="summaryDataEnd" colspan="2">
-										<telerik:RadComboBox ID="ddlExportIncidentType" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="Select incident types to list" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+										<telerik:RadComboBox ID="ddlExportIncidentType" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="<%$ Resources:LocalizedText, SelectIncidentTypes %>" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
                                         &nbsp;&nbsp;
                                         <asp:Label runat="server" ID="lblExportStatus" CssClass="prompt" Text="Incident Status"></asp:Label>
                                         &nbsp;
                                         <telerik:RadComboBox ID="ddlExportStatusSelect" runat="server"  ToolTip="Select incident status to list" ZIndex="9000" Skin="Metro" AutoPostBack="true">
                                             <Items>
-                                                <telerik:RadComboBoxItem Text="Open" Value="A" /> 
-                                                <telerik:RadComboBoxItem Text="Overdue" Value="O" /> 
-                                                <telerik:RadComboBoxItem Text="Closed" Value="C" /> 
-                                                <telerik:RadComboBoxItem Text="All" Value=""/> 
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Open %>" Value="A" />
+                                                <telerik:RadComboBoxItem Text="Overdue" Value="O" />
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Closed %>" Value="C" />
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value=""/>
                                             </Items>
                                         </telerik:RadComboBox>
                                     </td>
                                 </tr>
                             </asp:PlaceHolder>
                         </table>
-                               
+
                         <Ucl:Progress id="uclProgress" runat="server"/>
                         <Ucl:Export id="uclExport" runat="server"/>
 
                         <div id="divMetricsTimespan" runat="server" class="" visible="false">
-                            <table cellspacing="0" cellpadding="0" border="0" width="100%" class="borderSoft"> 
+                            <table cellspacing="0" cellpadding="0" border="0" width="100%" class="borderSoft">
                                  <tr>
                                      <td class="columnHeader" width="40%">
                                          <asp:Label ID="lblEffFrom" runat="server" Text="Effective From Month"></asp:Label>
@@ -139,7 +139,7 @@
 				                </tr>
 				            </table>
                             <div style="float:left; margin: 5px;">
-                                <asp:Button ID="btnSaveTimespan" runat="server" CSSClass="buttonEmphasis"  text="Save" onClientClick="return confirmAction('Update effective dates');"  OnClick="btnEffDateSelect" ToolTip="Update effective dates"></asp:Button>
+                                <asp:Button ID="btnSaveTimespan" runat="server" CSSClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Save %>" onClientClick="return confirmAction('Update effective dates');"  OnClick="btnEffDateSelect" ToolTip="Update effective dates"></asp:Button>
                                 <br />
                                 <asp:Label ID="lblTimespanDateError" runat="server" Text="The dates selected are invalid. Please check your entries before saving." CssClass="labelEmphasis" visible="false"></asp:Label>
                             </div>

@@ -15,15 +15,15 @@
 	}
 
 	function CloseTaskDetailWindow() {
-		var oWindow = GetRadWindow();  //Obtaining a reference to the current window 
+		var oWindow = GetRadWindow();  //Obtaining a reference to the current window
 		oWindow.Close();
 	}
 </script>
 
 <asp:Panel ID="pnlTaskSchedule" runat="server" Visible="False" meta:resourcekey="pnlTaskScheduleResource1" >
 	<telerik:RadAjaxPanel runat="server" ID="RadAjaxSchedule" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxScheduleResource1">
-		<telerik:RadScheduler ID="scdTaskSchedule" name="scdTaskSchedule" RenderMode="Auto" runat="server" Font-Size="X-Small" Skin="Metro" 
-			SelectedView="MonthView" OnAppointmentDataBound="scdTaskSchedule_OnDataBound"  OnAppointmentCreated="scdTaskSchedule_OnCreated" 
+		<telerik:RadScheduler ID="scdTaskSchedule" name="scdTaskSchedule" RenderMode="Auto" runat="server" Font-Size="X-Small" Skin="Metro"
+			SelectedView="MonthView" OnAppointmentDataBound="scdTaskSchedule_OnDataBound"  OnAppointmentCreated="scdTaskSchedule_OnCreated"
 			 DataKeyField ="RecordKey" DataSubjectField="LongTitle" DataStartField="StartDate" DataEndField="EndDate" DataDescriptionField="Description"
 			 AllowEdit="False" AllowInsert="False" ReadOnly="True" OverflowBehavior="Expand" EditFormDateFormat="M/d/yyyy" EditFormTimeFormat="h:mm tt" EnableAdvancedForm="False" EnableResourceEditing="False" meta:resourcekey="scdTaskScheduleResource1" SelectedDate="2015-10-20" >
 				<ExportSettings>
@@ -112,7 +112,7 @@
 							<asp:Label ID="lblTaskType" runat="server" meta:resourcekey="lblTaskTypeResource1" Text='<%# Eval("TASK_TYPE") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="Description" meta:resourcekey="GridTemplateColumnResource3" ShowSortIcon="False" UniqueName="TemplateColumn2">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Description %>" ShowSortIcon="False" UniqueName="TemplateColumn2">
 						<ItemTemplate>
 							<asp:Label ID="lblDescription" runat="server" meta:resourcekey="lblDescriptionResource1" Text='<%# (string)Eval("DESCRIPTION") %>'></asp:Label>
 						</ItemTemplate>
@@ -127,7 +127,7 @@
 							<asp:Label ID="lblDueDT" runat="server" meta:resourcekey="lblDueDTResource1"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="Status" meta:resourcekey="GridTemplateColumnResource6" UniqueName="TemplateColumn5">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn5">
 						<ItemTemplate>
 							<asp:Label ID="lblStatus" runat="server" meta:resourcekey="lblStatusResource1"></asp:Label>
 						</ItemTemplate>
@@ -148,10 +148,10 @@
 		<div>
 			<center>
 				<br />
-				<asp:Label ID="lblTaskDetail" runat="server" Text="info" CssClass="textStd" meta:resourcekey="lblTaskDetailResource1"></asp:Label>
+				<asp:Label ID="lblTaskDetail" runat="server" Text="" CssClass="textStd"></asp:Label>
 				<br />
 				<br />
-				<asp:Button runat="server" CssClass="buttonStd" Text="Close" OnClientClick="CloseTaskDetailWindow();" meta:resourcekey="ButtonResource1"/>
+				<asp:Button runat="server" CssClass="buttonStd" Text="<%$ Resources:LocalizedText, Close %>" OnClientClick="CloseTaskDetailWindow();"/>
 			</center>
 		</div>
 	</ContentTemplate>

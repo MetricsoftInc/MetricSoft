@@ -1,6 +1,6 @@
                 <table width="98%" border="0" cellspacing="0" cellpadding="2">
 			        <tr>
-			            <td class=admBkgd align=center>	
+			            <td class=admBkgd align=center>
                             <table cellspacing=0 cellpadding=2 border=0 width="100%">
                     	            <tr>
                                         <td class=summaryData valign=top>
@@ -44,7 +44,7 @@
 						                </td>
                                         <td class=summaryData valign=top colspan="2">
 							                <SPAN CLASS=summaryHeader>
-                                                <asp:Label runat="server" ID="lblPlanDescHdr" Text="Description" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblPlanDescHdr" Text="<%$ Resources:LocalizedText, Description %>" Visible="true"></asp:Label>
                                             </SPAN>
                                             <BR>
 							                <asp:Label runat="server" ID="lblPlanDesc_out" Text="" Visible="true"></asp:Label>

@@ -55,7 +55,7 @@
                                     <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
                                         <tr>
                                             <td class="columnHeader">
-                                                <asp:Label runat="server" ID="lblAuditType" Text="Assessment Type"></asp:Label>
+                                                <asp:Label runat="server" ID="lblAuditType" Text="<%$ Resources:LocalizedText, AssessmentType %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -99,7 +99,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblInactive" runat="server" Text="Inactive"></asp:Label>
+                                                <asp:Label ID="lblInactive" runat="server" Text="<%$ Resources:LocalizedText, Inactive %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -116,7 +116,7 @@
                             <div id="divForm" runat="server">
                                 <asp:Panel ID="pnlForm" runat="server">
                                 </asp:Panel>
-                        
+
                                 <table style="width: 100%;">
                                     <tr>
                                         <td style="width: 33%;">
@@ -128,7 +128,7 @@
                                         </td>
                                         <td style="width: 33%; text-align: center;">
                                             <telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
-                                                Text="Delete Assessment" SingleClick="true" SingleClickText="Deleting..."
+                                                Text="Delete Assessment" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
                                                 OnClick="btnDelete_Click" OnClientClicking="DeleteConfirm" CssClass="UseSubmitAction" />
                                         </td>
                                     </tr>
@@ -136,7 +136,7 @@
 
                             </div>
                         </asp:Panel>
-                    
+
                     </telerik:RadAjaxPanel>
                     <br />
                     <br />
@@ -147,5 +147,5 @@
 </div>
 
 <div id="divAuditReportForm" runat="server" visible="false">
-    
+
 </div>

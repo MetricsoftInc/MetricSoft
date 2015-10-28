@@ -16,7 +16,7 @@
 					</div>
 				</ItemTemplate>
 			</telerik:GridTemplateColumn>
-			<telerik:GridBoundColumn UniqueName="DescriptionColumn" DataField="Description" HeaderText="Description">
+			<telerik:GridBoundColumn UniqueName="DescriptionColumn" DataField="Description" HeaderText="<%$ Resources:LocalizedText, Description %>">
 			</telerik:GridBoundColumn>
 			<telerik:GridBoundColumn UniqueName="SizeColumn" DataField="Size" HeaderText="Size" DataFormatString="{0:n0} KB">
 			</telerik:GridBoundColumn>

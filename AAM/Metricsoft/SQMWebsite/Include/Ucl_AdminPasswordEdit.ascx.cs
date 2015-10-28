@@ -26,7 +26,9 @@ namespace SQM.Website
 
 		protected override void OnInit(EventArgs e)
 		{
-            if (strCurrentControl.Equals("login"))
+			this.Label3.Text = Resources.LocalizedText.EmailAddress + ":";
+
+			if (strCurrentControl.Equals("login"))
             {
                 lblPassMustUpdate.Visible = true;
             }

@@ -29,7 +29,7 @@
                 <td class="tabActiveTableBg" colspan="10">  <%--align="center">--%>
                     <br/>
                         <asp:HiddenField ID="hfBase" runat="server" />
-                        <asp:HiddenField id="hfTimeout" runat="server"/>   
+                        <asp:HiddenField id="hfTimeout" runat="server"/>
                         <asp:Panel runat="server" ID="pnlSearchBar">
                             <Ucl:SearchBar id="uclSearchBar" runat="server"/>
                         </asp:Panel>
@@ -62,19 +62,19 @@
                                         <br />
                                         <telerik:RadComboBox ID="ddlStatusSelect" runat="server"  ZIndex=9000 Skin="Metro" AutoPostBack="true" OnSelectedIndexChanged="ddlStatusSelectChange">
                                             <Items>
-                                                <telerik:RadComboBoxItem Text="All" Value=""/> 
-                                                <telerik:RadComboBoxItem Text="Active" Value="A" /> 
-                                                <telerik:RadComboBoxItem Text="Inactive" Value="I" /> 
-                                                <telerik:RadComboBoxItem Text="Closed" Value="C" /> 
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value=""/>
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Active %>" Value="A" />
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Inactive %>" Value="I" />
+                                                <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Closed %>" Value="C" />
                                             </Items>
                                         </telerik:RadComboBox>
-                                        <asp:Button id="btnSearch" runat="server" style="margin-left: 30px;" CssClass="buttonEmphasis" Text="Search" ToolTip="List problem cases" OnClick="btnSearchClick"/>
+                                        <asp:Button id="btnSearch" runat="server" style="margin-left: 30px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="List problem cases" OnClick="btnSearchClick"/>
                                     </td>
                                 </tr>
                             </table>
                             <Ucl:CaseList id="uclCaseList" runat="server"/>
                         </asp:Panel>
-                         
+
                          <div id="divPageBody" runat="server">
                             <Ucl:CaseList id="uclCaseHdr" runat="server"/>
                             <br />

@@ -15,14 +15,14 @@
                         </td>
 				    </tr>
 				  </table>
-                  <BR/> 
+                  <BR/>
 
-				
-<!-- PAGE DATA CONTENT TABLE --> 
 
-					  <!-- DATA ENTRY CONTENT TABLE -->	
-				
-					  	 
+<!-- PAGE DATA CONTENT TABLE -->
+
+					  <!-- DATA ENTRY CONTENT TABLE -->
+
+
             <TABLE WIDTH="98%" BORDER="0" CELLSPACING="1" CELLPADDING="4" class="darkBorder">
             <tr>
                 <TD CLASS="columnHeader">
@@ -35,13 +35,13 @@
                                 <asp:TextBox ID="tbSearchString" runat="server" CausesValidation="False" MaxLength="50" Style="width: 200px"></asp:TextBox>
                             </td>
                             <TD>
-                                 <asp:Button ID="lbSearchPlant" runat="server" CSSclass="buttonStd" text="Search" onclick="lbSearchPlant_Click"></asp:Button>
+                                 <asp:Button ID="lbSearchPlant" runat="server" CSSclass="buttonStd" Text="<%$ Resources:LocalizedText, Search %>" onclick="lbSearchPlant_Click"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
                 </TD>
             </TR>
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblViewAllPlant" runat="server" Text="View All Plants"></asp:Label>
                 </TD>
@@ -49,18 +49,18 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                         <TD>
-                             <asp:Button ID="lbViewAllPlant" runat="server" CSSclass="buttonStd" text="View All Plants" 
+                             <asp:Button ID="lbViewAllPlant" runat="server" CSSclass="buttonStd" text="View All Plants"
                                 onclick="lbSearchPlant_Click" CommandArgument="%" ></asp:Button>
                         </TD>
                         <TD>
-                               <asp:Button ID="lbViewAllActivePlant" runat="server" CSSclass="buttonStd" text="View All Active" 
+                               <asp:Button ID="lbViewAllActivePlant" runat="server" CSSclass="buttonStd" text="View All Active"
                                 onclick="lbSearchPlant_Click" CommandArgument="%~A" ></asp:Button>
                         </TD>
                         </TR>
-                    </TABLE>                                  
+                    </TABLE>
             </TR>
- 
-            <TR> 
+
+            <TR>
                 <TD CLASS="columnHeader">Associate Plants
                     <asp:Label ID="lblAssocPlant" runat="server" Text="Associate Plants"></asp:Label>
                 </TD>
@@ -68,14 +68,14 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                              <TD>
-                               <asp:Button ID="lbAssocPlant" runat="server" CSSclass="buttonStd" text="Associate Plant(s)" 
+                               <asp:Button ID="lbAssocPlant" runat="server" CSSclass="buttonStd" text="Associate Plant(s)"
                                 onclick="lbSearchPlant_Click" CommandArgument="%~U" ></asp:Button>
                             </TD>
                         </TR>
-                    </TABLE>  
-                </TD>                 
+                    </TABLE>
+                </TD>
             </TR>
-            <TR> 
+            <TR>
                 <TD CLASS="columnHeader">
                     <asp:Label ID="lblUploadData" runat="server" Text="Upload Plant Definitions"></asp:Label>
                 </TD>
@@ -83,12 +83,12 @@
                     <TABLE BORDER=0 CELLSPACING=0 CELLPADDING=5>
                         <TR>
                              <TD>
-                                <asp:Button ID="lbUploadData" runat="server" CSSclass="buttonStd" 
+                                <asp:Button ID="lbUploadData" runat="server" CSSclass="buttonStd"
                                 onclick="lbUploadData_Click" text="Upload Data"></asp:Button>
                             </TD>
                         </TR>
                     </TABLE>
-                </TD>                   
+                </TD>
             </TR>
           </TABLE>
         </td>

@@ -23,7 +23,7 @@
     <form id="form1" runat="server">
      <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
-    <ajaxToolkit:ModalPopupExtender ID="ModalExtnd1" runat="server" TargetControlID="lblHidden" 
+    <ajaxToolkit:ModalPopupExtender ID="ModalExtnd1" runat="server" TargetControlID="lblHidden"
     PopupControlID="SummaryDiv" BackgroundCssClass="error_popupbg">
     </ajaxToolkit:ModalPopupExtender>
     <div  id="SummaryDiv" class="error_popupdiv">
@@ -36,9 +36,9 @@
         </asp:ValidationSummary>
     </td></tr>
     <tr><td align="center">
-        <input type="button" value="OK" onclick="$find('ModalExtnd1').hide();"/>
+        <input type="button" value="<%$ Resources:LocalizedText, OK %>" onclick="$find('ModalExtnd1').hide();"/>
     </td></tr>
-</table>    
+</table>
 <asp:Label ID="lblHidden" runat="server" Text="hidden" CssClass="error_hidelbl">
 </asp:Label>
 </div>
@@ -96,7 +96,7 @@
                                                                 <td>
 
                                                                     <!-- DATA ENTRY CONTENT TABLE -->
-                                                                   
+
                                                                     <table width="100%" border="0" cellspacing="1" cellpadding="5">
                                                                         <tr>
                                                                             <td class="columnHeader" width="15%">
@@ -108,7 +108,7 @@
                                                                                 To upload a document, click 'browse' to searchfor the appropriate file from your desktop or disk.
                                                                                 <br>
                                                                                 <br>
-                                                                                
+
                                                                                 <asp:FileUpload ID="flFileUpload" runat="server" />
                                                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Please choose a file to upload." ControlToValidate="flFileUpload"></asp:RequiredFieldValidator>
                                                                             </td>
@@ -123,10 +123,10 @@
                                                                                 A brief description of the file's contents.
                                                                                 <br>
                                                                                 <br>
-                                                                                <asp:TextBox ID="tbFileDescription" runat="server" TextMode="MultiLine" 
+                                                                                <asp:TextBox ID="tbFileDescription" runat="server" TextMode="MultiLine"
                                                                                     MaxLength="1000" Width="392px"></asp:TextBox>
                                                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Please provide a file description." ControlToValidate="tbFileDescription"></asp:RequiredFieldValidator>
-                                                                               
+
                                                                                 <asp:Panel ID="pnlDisplayArea" runat="server" Visible="true" CssClass="tableDataAlt">
                                                                                     <span class="confirm">Category</span>
                                                                                     <br />
@@ -143,13 +143,13 @@
                                                                                 <br>
                                                                                 <asp:Label ID="lblDocUpload" runat="server" class="tableDataAlt" Text="Click the 'upload' button. The file will display in the list below when complete."></asp:Label>
                                                                                 <br>
-                                                                                <br> 
-                                                                               
+                                                                                <br>
+
                                                                                 <table cellpadding="1" cellspacing="1">
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <asp:Button ID="lbUpload" runat="server" CssClass="buttonEmphasis" 
-                                                                                                onclick="lbUpload_Click" CausesValidation="true" 
+                                                                                            <asp:Button ID="lbUpload" runat="server" CssClass="buttonEmphasis"
+                                                                                                onclick="lbUpload_Click" CausesValidation="true"
                                                                                                 onclientclick="document.body.style.cursor='wait';" text="Upload Document"/>
                                                                                         </td>
                                                                                         <td></td>
@@ -158,7 +158,7 @@
                                                                                        <div id="divUploadGVScroll" runat="server" class="scrollAreaSmall">
                                                                                         <asp:GridView ID="gvUploadedFiles" runat="server" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%"
                                                                                             onrowdeleting="gvUploadedFiles_RowDeleting" OnRowDataBound="gvUploadedFiles_OnRowDataBound">
-                                                                                            <HeaderStyle CssClass="HeadingCellTextLeft" /> 
+                                                                                            <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                                             <RowStyle CssClass="DataCell" />
                                                                                             <Columns>
                                                                                                 <asp:TemplateField HeaderText="Type" ItemStyle-Width="10%">
@@ -181,7 +181,7 @@
                                                                                         </div>
                                                                                     </td></tr>
                                                                                 </table>
-                                                                               
+
                                                                             </td>
                                                                         </tr>
                                                                         <tr>

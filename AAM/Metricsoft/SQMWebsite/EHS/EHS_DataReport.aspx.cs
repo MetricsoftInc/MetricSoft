@@ -11,7 +11,7 @@ using Telerik.Web.UI.Calendar;
 
 namespace SQM.Website.EHS
 {
-	public partial class EHS_DataReport : Page
+	public partial class EHS_DataReport : SQMBasePage
 	{
 		// Stores a reference to the entities so it can persist for the entire page's life cycle.
 		PSsqmEntities entities;

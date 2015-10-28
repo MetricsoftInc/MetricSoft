@@ -15,7 +15,7 @@ namespace SQM.Website
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
+			this.Title = Resources.LocalizedText.EHSIncidents;
 		}
 
 		protected void Page_PreRender(object sender, EventArgs e)

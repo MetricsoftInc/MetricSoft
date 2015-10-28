@@ -6,7 +6,7 @@
 					                    <table cellpadding=0 cellspacing=2 border=0>
 						                    <tr>
                                                  <td>
-                                                    <asp:Button ID="lbAssociatePlants1" CSSclass="buttonStd" runat="server" text="Add Plant" 
+                                                    <asp:Button ID="lbAssociatePlants1" CSSclass="buttonStd" runat="server" text="Add Plant"
                                                         onclick="lnkPlantView_Click" CommandArgument=""></asp:Button>
                                                 </td>
 						                    </tr>
@@ -22,7 +22,7 @@
                             <!-- results grid -->
                             <div id="divPlantGVScroll" runat="server" class="">
                             <asp:GridView runat="server" ID="gvPlantList" Name="gvPlantList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="2" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvPlantList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                     	            <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
@@ -40,7 +40,7 @@
 							        </asp:TemplateField>
                                     <asp:BoundField DataField="DUNS_CODE" HeaderText="Location Code" ItemStyle-Width="20%" />
                                     <asp:BoundField DataField="GRID_CODE" HeaderText="Grid Code" ItemStyle-Width="20%" />
-                                    <asp:TemplateField HeaderText="Status" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />
                                             <asp:Label ID="lblStatus_out" runat="server" DataTextField="STATUS" ></asp:Label>

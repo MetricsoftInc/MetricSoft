@@ -40,12 +40,12 @@
 												Return to List</a>
 											</span>
 											<span class="hidden-xs"  style="float:right; width: 160px; margin-right:6px;">
-											<span class="requiredStar">&bull;</span> - Required to Create</span>												
+											<span class="requiredStar">&bull;</span> - Required to Create</span>
 											<div style="clear:both;"></div>
 												<span class="hidden-xs" style="float:right; width: 160px; margin-right:6px;">
 												<span class="requiredCloseStar">&bull;</span> - Required to Close</span>
 										</div>
-									</div>			
+									</div>
 									<br class="clearfix" style="clear:both;"/>
 									<div class="row-fluid" style="margin-top:-80px;" >
 										<div class="col-xs-12 text-left">
@@ -91,28 +91,28 @@
 									</div>
 
 									<div style="margin-top: 5px;">
-										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="Save" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
-											OnClick="btnSubnavSave_Click" CommandArgument="0" meta:resourcekey="btnSubnavSaveResource1"/>
-										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="Incident" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="0" meta:resourcekey="btnSubnavIncidentResource1" />
-										<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="Initial Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
+											OnClick="btnSubnavSave_Click" CommandArgument="0"/>
+										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+											OnClick="btnSubnav_Click" CommandArgument="0" />
+										<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
-										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="Root Cause" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="3" meta:resourcekey="btnSubnavRootCauseResource1"/>
-										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="Corrective Action" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="4" meta:resourcekey="btnSubnavActionResource1"/>
-										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="Approvals" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="5" meta:resourcekey="btnSubnavApprovalResource1"/>
+										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+											OnClick="btnSubnav_Click" CommandArgument="3"/>
+										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+											OnClick="btnSubnav_Click" CommandArgument="4"/>
+										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resource:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+											OnClick="btnSubnav_Click" CommandArgument="5"/>
 										<span style="float:right">
 											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="False" ForeColor="DarkRed"
-												Text="Delete Incident" SingleClick="True" SingleClickText="Deleting..."
-												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" meta:resourcekey="btnDeleteResource1" />
+												Text="<%$ Resources:LocalizedText, DeleteIncident %>" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
+												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" />
 										</span>
 									</div>
 								</div>
 							</div>
 						</asp:Panel>
-					
+
 					</telerik:RadAjaxPanel>
 					<br />
 					<br />
@@ -123,5 +123,5 @@
 </div>
 
 <div id="divIncidentReportForm" runat="server" visible="false">
-	
+
 </div>

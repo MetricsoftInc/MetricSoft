@@ -46,7 +46,7 @@
 						                </td>
 						                <td class=summaryData valign=top>
 							                <SPAN CLASS=summaryHeader>
-                                                <asp:Label runat="server" ID="lblStatusHdrPlant" Text="Status" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblStatusHdrPlant" Text="<%$ Resources:LocalizedText, Status %>" Visible="true"></asp:Label>
                                             </SPAN>
                                             <BR>
 							                <asp:Label runat="server" ID="lblStatusPlant_out" Text="" Visible="true"></asp:Label>

@@ -65,7 +65,7 @@
 							                        <asp:Label runat="server" ID="lblDateFrom" CssClass="prompt" Text="From: "></asp:Label>
 									                <telerik:RadMonthYearPicker ID="radDateFrom" runat="server" CssClass="textStd" Width="165" Skin="Metro" ShowPopupOnFocus="true" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="true"></telerik:RadMonthYearPicker>
 									                &nbsp;
-                                                    <asp:Label ID="lblDateTo" runat="server" CssClass="prompt" Text="To: " ></asp:Label>
+                                                    <asp:Label ID="lblDateTo" runat="server" CssClass="prompt"></asp:Label>
 									                &nbsp;
                                                     <telerik:RadMonthYearPicker ID="radDateTo" runat="server" CssClass="textStd" Width="165" Skin="Metro" ShowPopupOnFocus="true" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="true"></telerik:RadMonthYearPicker>
 								                </td>
@@ -98,10 +98,10 @@
                                     </div>
                                     <div id="divExport" runat="server" visible="false" class="noprint" style="clear: both;">
                                         <br />
-                                        <span>                                    
-                                            <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" style="margin-left: 5px;" Text="Print" OnClientClick="javascript:window.print()"></asp:LinkButton>
+                                        <span>
+                                            <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" style="margin-left: 5px;" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()"></asp:LinkButton>
                                             <asp:LinkButton  ID="lnkExport" runat="server" Text="Export" ToolTip="Export Data To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
-                                        </span>    
+                                        </span>
                                         <Ucl:Export id="uclExport" runat="server"/>
                                     </div>
                                 </telerik:RadAjaxPanel>

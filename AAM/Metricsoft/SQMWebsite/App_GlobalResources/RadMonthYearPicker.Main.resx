@@ -117,22 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="imgLogoResource1.AlternateText" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationCancelButtonCaption" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="imgLogoResource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationNextText" xml:space="preserve">
+    <value>&amp;gt;</value>
   </data>
-  <data name="lblMainInfoResource1.Text" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationNextToolTip" xml:space="preserve">
+    <value>&gt;</value>
   </data>
-  <data name="lblMainInfoResource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationOkButtonCaption" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="lblMainTitleResource1.Text" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationPrevText" xml:space="preserve">
+    <value>&amp;lt;</value>
   </data>
-  <data name="lblMainTitleResource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="MonthYearNavigationPrevToolTip" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="MonthYearNavigationTodayButtonCaption" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="MonthYearViewCaptionText" xml:space="preserve">
+    <value>Month year picker</value>
+  </data>
+  <data name="MonthYearViewSummary" xml:space="preserve">
+    <value>Table holding time picker for selecting time of day.</value>
+  </data>
+  <data name="PopupButtonToolTip" xml:space="preserve">
+    <value>Open the monthyear view popup.</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please do not remove this key.</value>
   </data>
 </root>

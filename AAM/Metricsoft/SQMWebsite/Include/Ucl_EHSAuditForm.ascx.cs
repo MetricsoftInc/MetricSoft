@@ -628,7 +628,7 @@ namespace SQM.Website
 
 					case EHSAuditQuestionType.BooleanCheckBox:
 						pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
-						var bcb = new CheckBox() { ID = qid, Text = "Yes", CssClass = "WarnIfChanged" };
+						var bcb = new CheckBox() { ID = qid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
@@ -778,7 +778,7 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { "Yes", "No" };
+						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
 						foreach (var choice in choices)
 						{
 							var li = new ListItem(choice);
@@ -1179,7 +1179,7 @@ namespace SQM.Website
 
 					case EHSAuditQuestionType.BooleanCheckBox:
 						pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
-						var bcb = new CheckBox() { ID = qid, Text = "Yes", CssClass = "WarnIfChanged" };
+						var bcb = new CheckBox() { ID = qid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
 
 						if (shouldPopulate)
 							bcb.Checked = (q.AnswerText.ToLower() == "yes") ? true : false;
@@ -1344,7 +1344,7 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { "Yes", "No" };
+						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
 						foreach (var choice in choices)
 						{
 							var li = new ListItem(choice);
@@ -1764,7 +1764,7 @@ namespace SQM.Website
 									}
 									else if (formControl is RadioButtonList)
 									{
-										(formControl as RadioButtonList).SelectedValue = "No";
+										(formControl as RadioButtonList).SelectedValue = Resources.LocalizedText.No;
 										(formControl as RadioButtonList).ForeColor = greyColor;
 									}
 									else if (formControl is RadDropDownList)
@@ -1804,7 +1804,7 @@ namespace SQM.Website
 									var rbl = (formControl as RadioButtonList);
 									if (criteriaIsMet)
 									{
-										rbl.SelectedValue = "Yes";
+										rbl.SelectedValue = Resources.LocalizedText.Yes;
 										affectedQuestion.AnswerText = "Yes";
 
 										// Recursively process any other controls triggered by a forced checkbox
@@ -1815,7 +1815,7 @@ namespace SQM.Website
 									{
 										// Only force to false if the result of a parent checkbox changing (avoids changes on form rebuilds)
 										if (controlQuestionChanged)
-											rbl.SelectedValue = "No";
+											rbl.SelectedValue = Resources.LocalizedText.No;
 									}
 
 									rbl.Enabled = (answer != triggerVal);
@@ -2611,7 +2611,7 @@ namespace SQM.Website
 
 					rddlAuditType.Visible = false;
 					//if (Mode == AuditMode.Audit)
-					lblAuditType.Text = "Assessment Type: ";
+					lblAuditType.Text = Resources.LocalizedText.AssessmentType + ": ";
 					//else if (Mode == AuditMode.Prevent)
 					//	lblAuditType.Text = "Type: ";
 
@@ -2639,7 +2639,7 @@ namespace SQM.Website
 				lblAddOrEditAudit.Text = "<strong>" + WebSiteCommon.FormatID(EditAuditId, 6) + typeString + "</strong><br/>";
 
 				rddlAuditType.Visible = false;
-				lblAuditType.Text = "Assessment Type: ";
+				lblAuditType.Text = Resources.LocalizedText.AssessmentType + ": ";
 
 				lblAuditType.Text += EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 				lblAuditType.Visible = true;

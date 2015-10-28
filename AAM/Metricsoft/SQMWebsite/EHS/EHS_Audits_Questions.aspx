@@ -24,7 +24,7 @@
 						Skin="Metro" runat="server" meta:resourcekey="RadFormDecorator1Resource1" />
 					<div id="divPageBody" class="textStd" style="text-align: left; margin: 0 10px;" runat="server">
 						<div class="blueCell" style="padding: 10px; font-size: 13px;">
-							<asp:Label class="textStd" AssociatedControlID="ddlAuditType" runat="server" Font-Bold="True" meta:resourcekey="LabelResource1">Assessment Type</asp:Label>
+							<asp:Label class="textStd" AssociatedControlID="ddlAuditType" runat="server" Font-Bold="True" Text="<%$ Resources:LocalizedText, AssessmentType %>" />
 							&nbsp;
 							<asp:DropDownList ID="ddlAuditType" AutoPostBack="True" OnSelectedIndexChanged="ddlAuditType_SelectedIndexChanged"
 								runat="server" meta:resourcekey="ddlAuditTypeResource1" />

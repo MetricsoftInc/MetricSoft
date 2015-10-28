@@ -12,11 +12,11 @@
 					                    <table cellpadding=0 cellspacing=2 border=0>
 						                    <tr>
 							                    <td>
-                                                    <asp:Button ID="lbMemberAdd1" CSSclass="buttonStd" runat="server" text="Add Member" 
+                                                    <asp:Button ID="lbMemberAdd1" CSSclass="buttonStd" runat="server" text="Add Member"
                                                     OnClientClick="ValidateNotifyList();" onclick="lnkMemberAdd_Click" CommandArgument="add" UseSubmitBehavior="false"></asp:Button>
                                                 </td>
                                                  <td>
-                                                    <asp:Button ID="lbNotifySave1" CSSclass="buttonEmphasis" runat="server" text="Save" OnClientClick="return confirmChange('Notification List');" onclick="lbSaveNotifyList_Click"></asp:Button>
+                                                    <asp:Button ID="lbNotifySave1" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" OnClientClick="return confirmChange('Notification List');" onclick="lbSaveNotifyList_Click"></asp:Button>
                                                 </td>
 						                    </tr>
 					                    </table>
@@ -31,13 +31,13 @@
                             <!-- results grid -->
                             <div id="divNotifyGVScroll" runat="server" class="">
                             <asp:GridView runat="server" ID="gvNotifyList" Name="gvNotifyList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="98%" OnRowDataBound="gvNotifyList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
                     	            <asp:BoundField  DataField="COMPANY_ID" Visible="False"/>
                     	            <asp:BoundField  DataField="BUS_ORG_ID" Visible="False"/>
                                     <asp:BoundField  DataField="NOTIFY_FOR" Visible="False"/>
-                                    <asp:TemplateField HeaderText="Email Address" ItemStyle-Width="40%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, EmailAddress %>" ItemStyle-Width="40%">
                                         <ItemTemplate>
                                             <asp:Label ID="lbEmail" runat="server" CSSclass="textSmall" Text='<%#Eval("EMAIL") %>'></asp:Label>
                                             <asp:TextBox ID="tbEmail" runat="server" CSSclass="textStd" Text='<%#Eval("EMAIL") %>' Columns="56" Visible="false" ></asp:TextBox>
@@ -76,11 +76,11 @@
 					                    <table cellpadding=0 cellspacing=2 border=0>
 						                    <tr>
 							                    <td>
-                                                    <asp:Button ID="lbMemberAdd2" CSSclass="buttonStd" runat="server" text="Add Member" 
+                                                    <asp:Button ID="lbMemberAdd2" CSSclass="buttonStd" runat="server" text="Add Member"
                                                         onclick="lnkMemberAdd_Click" CommandArgument="add" UseSubmitBehavior="false"></asp:Button>
                                                 </td>
                                                 <td>
-                                                    <asp:Button ID="lbNotifySave2" CSSclass="buttonEmphasis" runat="server" text="Save" OnClientClick="return confirmChange('Notification List');" onclick="lbSaveNotifyList_Click"></asp:Button>
+                                                    <asp:Button ID="lbNotifySave2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" OnClientClick="return confirmChange('Notification List');" onclick="lbSaveNotifyList_Click"></asp:Button>
                                                 </td>
 						                    </tr>
 					                    </table>

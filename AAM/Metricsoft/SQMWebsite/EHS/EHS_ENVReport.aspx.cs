@@ -42,7 +42,7 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
+			this.lblDateTo.Text = Resources.LocalizedText.To + ": ";
 		}
 
 		protected void Page_PreRender(object sender, EventArgs e)

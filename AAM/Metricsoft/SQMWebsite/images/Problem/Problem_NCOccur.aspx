@@ -2,7 +2,7 @@
 <%@ Register src="~/Include/Ucl_SearchBar.ascx" TagName="SearchBar" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_CaseList.ascx" TagName="IssueList" TagPrefix="Ucl" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
-<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+<link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
   <script type="text/javascript">
       function CalculateNonConforming() {
           var totalQty = document.getElementById('tbNCTotalQty');
@@ -104,8 +104,8 @@
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="60%">
-                                                <asp:RadioButtonList runat="server" ID="rblSource" CSSclass="" 
-	                                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                                <asp:RadioButtonList runat="server" ID="rblSource" CSSclass=""
+	                                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                                            AutoPostBack="false">
 							                            <asp:ListItem Text="Internal&nbsp;&nbsp;" Value="IN" ></asp:ListItem>
 								                        <asp:ListItem Text="Supplier&nbsp;&nbsp;" Value="SP"></asp:ListItem>
@@ -251,9 +251,9 @@
                                     <asp:Label ID="lblEvidenceInstruction" runat="server" Text="Categorize the non-conformances observed, enter direct measurements if taken and attach any supporting documentation." CssClass="instructText"></asp:Label>
                                     <table width="100%" border="0" cellspacing="0" cellpadding="2">
 			                            <tr>
-			                                <td class=admBkgd align=center>	
+			                                <td class=admBkgd align=center>
                                                 <asp:GridView runat="server" ID="gvQISamples" Name="gvQISamples" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvQISamples_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                                    <HeaderStyle CssClass="HeadingCellText" />
                                                     <RowStyle CssClass="DataCell" />
                 	                                <Columns>
                                                         <asp:TemplateField HeaderText="Sample" ItemStyle-Width="5%" ItemStyle-VerticalAlign="Top">
@@ -281,7 +281,7 @@
           			                                    <asp:TemplateField HeaderText="Measures" ItemStyle-Width="35%">
                                                             <ItemTemplate>
                                                                 <asp:GridView runat="server" ID="gvMeasureGrid" Name="gvMeasureGrid" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvMeasure_OnRowDataBound">
-                                                                    <HeaderStyle CssClass="HeadingCellText" />    
+                                                                    <HeaderStyle CssClass="HeadingCellText" />
                                                                     <RowStyle CssClass="DataCell" Height=26 />
                                                                     <Columns>
                                                                         <asp:TemplateField HeaderText="Characteristic" ItemStyle-Width="60%">
@@ -350,8 +350,8 @@
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="60%">
-                                                <asp:RadioButtonList runat="server" ID="rblResponsible" CSSclass="" 
-	                                                RepeatDirection="Horizontal" RepeatLayout="flow" 
+                                                <asp:RadioButtonList runat="server" ID="rblResponsible" CSSclass=""
+	                                                RepeatDirection="Horizontal" RepeatLayout="flow"
 		                                            AutoPostBack="false">
 							                            <asp:ListItem Text="Internal&nbsp;&nbsp;" Value="IN" ></asp:ListItem>
 								                        <asp:ListItem Text="Supplier&nbsp;&nbsp;" Value="SP"></asp:ListItem>
@@ -381,7 +381,7 @@
                                         </tr>
                                        <tr>
                                             <td class="columnHeader" width="39%">
-                                                <asp:Label ID="lblComments" runat="server" text="Comments"></asp:Label>
+                                                <asp:Label ID="lblComments" runat="server" text="<%$ Resources,LocalizedText, Comments %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="60%">
