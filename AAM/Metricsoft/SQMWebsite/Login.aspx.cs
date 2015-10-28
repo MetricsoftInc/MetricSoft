@@ -45,6 +45,12 @@ namespace SQM.Website
 			   //     SessionManager.Clear();
 				try
 				{
+					if (SessionManager.UserContext != null || SessionManager.SessionContext != null)
+					{
+						SessionManager.Clear();
+						Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
+					}
+
 					string info = System.Configuration.ConfigurationManager.AppSettings["MainInfo"];
 					if (!string.IsNullOrEmpty(info))
 					{
