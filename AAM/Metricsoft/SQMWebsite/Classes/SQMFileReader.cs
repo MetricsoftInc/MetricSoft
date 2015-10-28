@@ -347,6 +347,7 @@ namespace SQM.Website
 									person.EMP_ID = empID;
 									person.SSO_ID = empID;
 									person.ROLE = (int)SysPriv.view;
+									person.NEW_LOCATION_CD = "";
 								}
 
 								person.STATUS = status;
