@@ -524,7 +524,7 @@
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource3" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="Type" meta:resourcekey="GridTemplateColumnResource20" SortExpression="Incident.ISSUE_TYPE" UniqueName="TemplateColumn3">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="Incident.ISSUE_TYPE" UniqueName="TemplateColumn3">
 						<ItemTemplate>
 							<asp:Label ID="lblType" runat="server" meta:resourcekey="lblTypeResource2" Text='<%# (string)Eval("Incident.ISSUE_TYPE") %>'></asp:Label>
 						</ItemTemplate>

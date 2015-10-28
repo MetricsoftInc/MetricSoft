@@ -19,7 +19,7 @@
                         <td valign="top" align="center" class="admBkgd">
                             <!-- results grid -->
                             <asp:GridView runat="server" ID="gvPageLabelList" Name="gvPageLabelList" CssClass="GridSmall" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="2" GridLines="Both" PageSize="20" AllowSorting="true" Width="97%" ShowHeader="True" style="margin-top:4px;" OnRowDataBound="gvPageLabelList_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellTextSmall" />    
+                                <HeaderStyle CssClass="HeadingCellTextSmall" />
                                 <RowStyle CssClass="DataCellSmall" />
                 	            <Columns>
                                 <asp:TemplateField HeaderText="Page ID" Visible = "false">
@@ -33,7 +33,7 @@
                                         <asp:Label ID="lblLabelName" runat="server" CssClass="DataCellSmall" Text='<%#Eval("LABEL_NAME") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-   				                <asp:BoundField DataField="LABEL_TYPE" HeaderText="Type" ItemStyle-Width="10%" />
+   				                <asp:BoundField DataField="LABEL_TYPE" HeaderText="<%$ Resources:LocalizedText, Type %>" ItemStyle-Width="10%" />
                                 <asp:TemplateField HeaderText="Default Text" ItemStyle-Width="25%" Visible = "false">
                                     <ItemTemplate>
                                         <asp:Label ID="lblBaseLabelText" runat="server" CssClass="DataCellSmall" ></asp:Label>

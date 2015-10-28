@@ -141,7 +141,7 @@
 							<asp:Label ID="lblDayOfWeek" runat="server" meta:resourcekey="lblDayOfWeekResource1"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="Type" meta:resourcekey="GridTemplateColumnResource4" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn3">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn3">
 						<ItemTemplate>
 							<asp:Label ID="lblType" runat="server" meta:resourcekey="lblTypeResource1" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
 						</ItemTemplate>

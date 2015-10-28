@@ -168,45 +168,6 @@
   <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
     <value>TASK_ID</value>
   </data>
-  <data name="GridTemplateColumnResource2.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridTemplateColumnResource2.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource4.AndCurrentFilterValue" xml:space="preserve">
     <value />
   </data>
@@ -417,20 +378,8 @@
   <data name="rgTaskListResource1.FilterMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgTaskListResource1.GroupingSettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse group</value>
-  </data>
-  <data name="rgTaskListResource1.GroupingSettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand group</value>
-  </data>
   <data name="rgTaskListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
-  </data>
-  <data name="rgTaskListResource1.GroupingSettings.GroupContinuedFormatString" xml:space="preserve">
-    <value>... group continued from the previous page. </value>
-  </data>
-  <data name="rgTaskListResource1.GroupingSettings.GroupContinuesFormatString" xml:space="preserve">
-    <value> Group continues on the next page.</value>
   </data>
   <data name="rgTaskListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
     <value>Showing {0} of {1} items.</value>
@@ -438,41 +387,17 @@
   <data name="rgTaskListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
     <value> ({0})</value>
   </data>
-  <data name="rgTaskListResource1.GroupingSettings.UnGroupButtonTooltip" xml:space="preserve">
-    <value>Click here to ungroup</value>
-  </data>
-  <data name="rgTaskListResource1.GroupingSettings.UnGroupTooltip" xml:space="preserve">
-    <value>Drag out of the bar to ungroup</value>
-  </data>
-  <data name="rgTaskListResource1.GroupPanel.Text" xml:space="preserve">
-    <value>Drag a column header and drop it here to group by that column</value>
-  </data>
   <data name="rgTaskListResource1.GroupPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgTaskListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgTaskListResource1.HierarchySettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse</value>
-  </data>
-  <data name="rgTaskListResource1.HierarchySettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand</value>
-  </data>
-  <data name="rgTaskListResource1.HierarchySettings.SelfCollapseTooltip" xml:space="preserve">
-    <value>Self reference collapse</value>
-  </data>
-  <data name="rgTaskListResource1.HierarchySettings.SelfExpandTooltip" xml:space="preserve">
-    <value>Self reference expand</value>
-  </data>
   <data name="rgTaskListResource1.MasterTableView.Caption" xml:space="preserve">
     <value />
   </data>
   <data name="rgTaskListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.CommandItemSettings.AddNewRecordText" xml:space="preserve">
-    <value>Add new record</value>
   </data>
   <data name="rgTaskListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
     <value>Cancel changes</value>

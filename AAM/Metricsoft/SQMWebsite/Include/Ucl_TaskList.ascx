@@ -107,7 +107,7 @@
 						</ItemTemplate>
 						<ItemStyle Width="100px" />
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Type" meta:resourcekey="GridTemplateColumnResource2" ShowSortIcon="False" UniqueName="TemplateColumn1">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Type %>" meta:resourcekey="GridTemplateColumnResource2" ShowSortIcon="False" UniqueName="TemplateColumn1">
 						<ItemTemplate>
 							<asp:Label ID="lblTaskType" runat="server" meta:resourcekey="lblTaskTypeResource1" Text='<%# Eval("TASK_TYPE") %>'></asp:Label>
 						</ItemTemplate>

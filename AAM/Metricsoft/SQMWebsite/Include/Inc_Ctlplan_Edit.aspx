@@ -67,7 +67,7 @@
                                                                 <asp:Image ID="imgMeasureClass" Visible="true" runat="server"/>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Type" ItemStyle-Width="20%">
+                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Type %>" ItemStyle-Width="20%">
                                                             <ItemTemplate>
                                                                 <asp:HiddenField ID="hfMeasureType" runat="server" Value='<%#Eval("MEASURE_TYPE") %>'/>
                                                                 <asp:DropDownList ID="ddlMeasureType" runat="server" CssClass="DataCellSmall"></asp:DropDownList>

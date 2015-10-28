@@ -131,10 +131,10 @@
     <value />
   </data>
   <data name="lblViewEHSRezTitleResource1.Text" xml:space="preserve">
-    <value>Assessment Questions</value>
+    <value>Preguntas de evaluación</value>
   </data>
   <data name="PageResource1.Title" xml:space="preserve">
-    <value>Audit Questions</value>
+    <value>Preguntas de auditoría</value>
   </data>
   <data name="RadFormDecorator1Resource1.ToolTip" xml:space="preserve">
     <value />

@@ -574,45 +574,6 @@
   <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource10.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="GridTemplateColumnResource10.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderText" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.SortExpression" xml:space="preserve">
-    <value>AuditType.TITLE</value>
-  </data>
   <data name="GridTemplateColumnResource11.AndCurrentFilterValue" xml:space="preserve">
     <value />
   </data>
@@ -1105,20 +1066,8 @@
   <data name="rgAuditAnswersResource1.FilterMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse group</value>
-  </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand group</value>
-  </data>
   <data name="rgAuditAnswersResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
-  </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.GroupContinuedFormatString" xml:space="preserve">
-    <value>... group continued from the previous page. </value>
-  </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.GroupContinuesFormatString" xml:space="preserve">
-    <value> Group continues on the next page.</value>
   </data>
   <data name="rgAuditAnswersResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
     <value>Showing {0} of {1} items.</value>
@@ -1126,41 +1075,17 @@
   <data name="rgAuditAnswersResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
     <value> ({0})</value>
   </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.UnGroupButtonTooltip" xml:space="preserve">
-    <value>Click here to ungroup</value>
-  </data>
-  <data name="rgAuditAnswersResource1.GroupingSettings.UnGroupTooltip" xml:space="preserve">
-    <value>Drag out of the bar to ungroup</value>
-  </data>
-  <data name="rgAuditAnswersResource1.GroupPanel.Text" xml:space="preserve">
-    <value>Drag a column header and drop it here to group by that column</value>
-  </data>
   <data name="rgAuditAnswersResource1.GroupPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgAuditAnswersResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgAuditAnswersResource1.HierarchySettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse</value>
-  </data>
-  <data name="rgAuditAnswersResource1.HierarchySettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand</value>
-  </data>
-  <data name="rgAuditAnswersResource1.HierarchySettings.SelfCollapseTooltip" xml:space="preserve">
-    <value>Self reference collapse</value>
-  </data>
-  <data name="rgAuditAnswersResource1.HierarchySettings.SelfExpandTooltip" xml:space="preserve">
-    <value>Self reference expand</value>
-  </data>
   <data name="rgAuditAnswersResource1.MasterTableView.Caption" xml:space="preserve">
     <value />
   </data>
   <data name="rgAuditAnswersResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgAuditAnswersResource1.MasterTableView.CommandItemSettings.AddNewRecordText" xml:space="preserve">
-    <value>Add new record</value>
   </data>
   <data name="rgAuditAnswersResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
     <value>Cancel changes</value>
@@ -1429,20 +1354,8 @@
   <data name="rgAuditListResource1.FilterMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgAuditListResource1.GroupingSettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse group</value>
-  </data>
-  <data name="rgAuditListResource1.GroupingSettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand group</value>
-  </data>
   <data name="rgAuditListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
-  </data>
-  <data name="rgAuditListResource1.GroupingSettings.GroupContinuedFormatString" xml:space="preserve">
-    <value>... group continued from the previous page. </value>
-  </data>
-  <data name="rgAuditListResource1.GroupingSettings.GroupContinuesFormatString" xml:space="preserve">
-    <value> Group continues on the next page.</value>
   </data>
   <data name="rgAuditListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
     <value>Showing {0} of {1} items.</value>
@@ -1450,41 +1363,17 @@
   <data name="rgAuditListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
     <value> ({0})</value>
   </data>
-  <data name="rgAuditListResource1.GroupingSettings.UnGroupButtonTooltip" xml:space="preserve">
-    <value>Click here to ungroup</value>
-  </data>
-  <data name="rgAuditListResource1.GroupingSettings.UnGroupTooltip" xml:space="preserve">
-    <value>Drag out of the bar to ungroup</value>
-  </data>
-  <data name="rgAuditListResource1.GroupPanel.Text" xml:space="preserve">
-    <value>Drag a column header and drop it here to group by that column</value>
-  </data>
   <data name="rgAuditListResource1.GroupPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgAuditListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgAuditListResource1.HierarchySettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse</value>
-  </data>
-  <data name="rgAuditListResource1.HierarchySettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand</value>
-  </data>
-  <data name="rgAuditListResource1.HierarchySettings.SelfCollapseTooltip" xml:space="preserve">
-    <value>Self reference collapse</value>
-  </data>
-  <data name="rgAuditListResource1.HierarchySettings.SelfExpandTooltip" xml:space="preserve">
-    <value>Self reference expand</value>
-  </data>
   <data name="rgAuditListResource1.MasterTableView.Caption" xml:space="preserve">
     <value />
   </data>
   <data name="rgAuditListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgAuditListResource1.MasterTableView.CommandItemSettings.AddNewRecordText" xml:space="preserve">
-    <value>Add new record</value>
   </data>
   <data name="rgAuditListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
     <value>Cancel changes</value>
@@ -1753,20 +1642,8 @@
   <data name="rgTasksResource1.FilterMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgTasksResource1.GroupingSettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse group</value>
-  </data>
-  <data name="rgTasksResource1.GroupingSettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand group</value>
-  </data>
   <data name="rgTasksResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
-  </data>
-  <data name="rgTasksResource1.GroupingSettings.GroupContinuedFormatString" xml:space="preserve">
-    <value>... group continued from the previous page. </value>
-  </data>
-  <data name="rgTasksResource1.GroupingSettings.GroupContinuesFormatString" xml:space="preserve">
-    <value> Group continues on the next page.</value>
   </data>
   <data name="rgTasksResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
     <value>Showing {0} of {1} items.</value>
@@ -1774,41 +1651,17 @@
   <data name="rgTasksResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
     <value> ({0})</value>
   </data>
-  <data name="rgTasksResource1.GroupingSettings.UnGroupButtonTooltip" xml:space="preserve">
-    <value>Click here to ungroup</value>
-  </data>
-  <data name="rgTasksResource1.GroupingSettings.UnGroupTooltip" xml:space="preserve">
-    <value>Drag out of the bar to ungroup</value>
-  </data>
-  <data name="rgTasksResource1.GroupPanel.Text" xml:space="preserve">
-    <value>Drag a column header and drop it here to group by that column</value>
-  </data>
   <data name="rgTasksResource1.GroupPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgTasksResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgTasksResource1.HierarchySettings.CollapseTooltip" xml:space="preserve">
-    <value>Collapse</value>
-  </data>
-  <data name="rgTasksResource1.HierarchySettings.ExpandTooltip" xml:space="preserve">
-    <value>Expand</value>
-  </data>
-  <data name="rgTasksResource1.HierarchySettings.SelfCollapseTooltip" xml:space="preserve">
-    <value>Self reference collapse</value>
-  </data>
-  <data name="rgTasksResource1.HierarchySettings.SelfExpandTooltip" xml:space="preserve">
-    <value>Self reference expand</value>
-  </data>
   <data name="rgTasksResource1.MasterTableView.Caption" xml:space="preserve">
     <value />
   </data>
   <data name="rgTasksResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgTasksResource1.MasterTableView.CommandItemSettings.AddNewRecordText" xml:space="preserve">
-    <value>Add new record</value>
   </data>
   <data name="rgTasksResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
     <value>Cancel changes</value>

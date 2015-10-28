@@ -759,7 +759,7 @@ Press "OK" to confirm deletion.</value>
     <value>Tooltip</value>
   </data>
   <data name="LinkManager_LinkType" xml:space="preserve">
-    <value>Type</value>
+    <value>Tipo</value>
   </data>
   <data name="LinkManager_LinkUrl" xml:space="preserve">
     <value>URL</value>
@@ -1623,7 +1623,7 @@ Press "OK" to confirm deletion.</value>
     <value>Clipping</value>
   </data>
   <data name="StyleBuilder_Collapse" xml:space="preserve">
-    <value>Collapse</value>
+    <value>Colapso</value>
   </data>
   <data name="StyleBuilder_CollapseBorder" xml:space="preserve">
     <value>Collapse border</value>

@@ -139,7 +139,7 @@
     <value />
   </data>
   <data name="CollapseButtonToolTip" xml:space="preserve">
-    <value>Collapse</value>
+    <value>Colapso</value>
   </data>
   <data name="ColumnGroupedFieldsTitle" xml:space="preserve">
     <value>Column fields</value>
@@ -208,7 +208,7 @@
     <value>Drag to reorder</value>
   </data>
   <data name="ExpandButtonToolTip" xml:space="preserve">
-    <value>Expand</value>
+    <value>Expandir</value>
   </data>
   <data name="FieldsWindowTitle" xml:space="preserve">
     <value>RadPivotGrid Fields Window</value>
@@ -463,7 +463,7 @@
     <value>Please do not remove this key.</value>
   </data>
   <data name="DragToResize" xml:space="preserve">
-    <value>Drag to resize</value>
+    <value>Arrastre para cambiar el tamaño</value>
   </data>
   <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
     <value>Width: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pixels&lt;/em&gt;</value>

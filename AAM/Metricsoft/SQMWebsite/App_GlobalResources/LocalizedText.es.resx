@@ -270,4 +270,10 @@
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>Texto de la pregunta</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
 </root>

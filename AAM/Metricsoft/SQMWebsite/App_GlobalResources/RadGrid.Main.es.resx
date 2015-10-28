@@ -121,28 +121,28 @@
     <value />
   </data>
   <data name="AddNewRecordText" xml:space="preserve">
-    <value>Add new record</value>
+    <value>Añadir nuevo registro</value>
   </data>
   <data name="Caption" xml:space="preserve">
     <value />
   </data>
   <data name="CollapseTooltip" xml:space="preserve">
-    <value>Collapse group</value>
+    <value>Grupo colapso</value>
   </data>
   <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
     <value>Width: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pixels&lt;/em&gt;</value>
   </data>
   <data name="DragToGroupOrReorder" xml:space="preserve">
-    <value>Drag to group or reorder</value>
+    <value>Arrastrar al grupo o reordenar</value>
   </data>
   <data name="DragToResize" xml:space="preserve">
-    <value>Drag to resize</value>
+    <value>Arrastre para cambiar el tamaño</value>
   </data>
   <data name="DropHereToReorder" xml:space="preserve">
-    <value>Drop here to reorder</value>
+    <value>Arrastre aquí para reordenar</value>
   </data>
   <data name="ExpandTooltip" xml:space="preserve">
-    <value>Expand group</value>
+    <value>Expande el grupo</value>
   </data>
   <data name="ExportToCsvImageUrl" xml:space="preserve">
     <value />
@@ -181,13 +181,13 @@
     <value>; </value>
   </data>
   <data name="GroupContinuedFormatString" xml:space="preserve">
-    <value>... group continued from the previous page. </value>
+    <value>... grupo continúa de la página anterior. </value>
   </data>
   <data name="GroupContinuesFormatString" xml:space="preserve">
-    <value> Group continues on the next page.</value>
+    <value> Grupo continúa en la página siguiente.</value>
   </data>
   <data name="GroupPanelText" xml:space="preserve">
-    <value>Drag a column header and drop it here to group by that column</value>
+    <value>Arrastre y suelte un encabezado de columna aquí para agrupar por esa columna</value>
   </data>
   <data name="GroupSplitDisplayFormat" xml:space="preserve">
     <value>Showing {0} of {1} items.</value>
@@ -196,16 +196,16 @@
     <value> ({0})</value>
   </data>
   <data name="HierarchyCollapseTooltip" xml:space="preserve">
-    <value>Collapse</value>
+    <value>Colapso</value>
   </data>
   <data name="HierarchyExpandTooltip" xml:space="preserve">
-    <value>Expand</value>
+    <value>Expandir</value>
   </data>
   <data name="HierarchySelfCollapseTooltip" xml:space="preserve">
-    <value>Self reference collapse</value>
+    <value>Colapso autorreferencia</value>
   </data>
   <data name="HierarchySelfExpandTooltip" xml:space="preserve">
-    <value>Self reference expand</value>
+    <value>Autorreferencia ampliar</value>
   </data>
   <data name="LastPageText" xml:space="preserve">
     <value />
@@ -274,10 +274,10 @@
     <value />
   </data>
   <data name="UnGroupButtonTooltip" xml:space="preserve">
-    <value>Click here to ungroup</value>
+    <value>Clic aquí para desagrupar</value>
   </data>
   <data name="UnGroupTooltip" xml:space="preserve">
-    <value>Drag out of the bar to ungroup</value>
+    <value>Arrastre de la barra para desagrupar</value>
   </data>
   <data name="BetweenText" xml:space="preserve">
     <value>Between</value>

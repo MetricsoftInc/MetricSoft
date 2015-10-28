@@ -154,7 +154,7 @@
                                                                                             <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                                             <RowStyle CssClass="DataCell" />
                                                                                             <Columns>
-                                                                                                <asp:TemplateField HeaderText="Type" ItemStyle-Width="10%">
+                                                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Type %>" ItemStyle-Width="10%">
                                                                                                     <ItemTemplate>
                                                                                                         <asp:HiddenField  ID="hfFileName" runat="server" Value='<%#Eval("FILE_NAME") %>' />
                                                                                                         <asp:Image  ID="imgFileType" runat="server" HeaderText="File Type" ItemStyle-HorizontalAlign="Center"></asp:Image>

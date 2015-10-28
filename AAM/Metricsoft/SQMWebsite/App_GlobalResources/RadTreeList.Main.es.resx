@@ -205,10 +205,10 @@
     <value>Drag to reorder</value>
   </data>
   <data name="DragToResize" xml:space="preserve">
-    <value>Drag to resize</value>
+    <value>Arrastre para cambiar el tamaño</value>
   </data>
   <data name="DropHereToReorder" xml:space="preserve">
-    <value>Drop here to reorder</value>
+    <value>Arrastre aquí para reordenar</value>
   </data>
   <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
     <value>Change Page Size</value>

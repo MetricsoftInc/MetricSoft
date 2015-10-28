@@ -184,7 +184,7 @@
 							<asp:Label ID="lblDepartment" runat="server" meta:resourcekey="lblDepartmentResource1" Text='<%# Eval("Department.DEPT_NAME") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="Type" meta:resourcekey="GridTemplateColumnResource5" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn4">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn4">
 						<ItemTemplate>
 							<asp:Label ID="lblType" runat="server" meta:resourcekey="lblTypeResource1" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
 						</ItemTemplate>

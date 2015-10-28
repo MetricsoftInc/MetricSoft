@@ -41,8 +41,8 @@
 												<telerik:GridDragDropColumn HeaderStyle-Width="18px" Visible="true" meta:resourcekey="GridDragDropColumnResource1">
 <HeaderStyle Width="18px"></HeaderStyle>
 												</telerik:GridDragDropColumn>
-												<telerik:GridBoundColumn DataField="QuestionText" HeaderText="Question Text" meta:resourcekey="GridBoundColumnResource1"></telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="QuestionType" HeaderText="Type" meta:resourcekey="GridBoundColumnResource2"></telerik:GridBoundColumn>
+												<telerik:GridBoundColumn DataField="QuestionText" HeaderText="<%$ Resources:LocalizedText, QuestionText %>"></telerik:GridBoundColumn>
+												<telerik:GridBoundColumn DataField="QuestionType" HeaderText="<%$ Resources:LocalizedText, Type %>"></telerik:GridBoundColumn>
 											</Columns>
 										</MasterTableView>
 										<ClientSettings AllowRowsDragDrop="true">
@@ -61,8 +61,8 @@
 												<telerik:GridDragDropColumn HeaderStyle-Width="18px" Visible="true" meta:resourcekey="GridDragDropColumnResource2">
 <HeaderStyle Width="18px"></HeaderStyle>
 												</telerik:GridDragDropColumn>
-												<telerik:GridBoundColumn DataField="QuestionText" HeaderText="Question Text" meta:resourcekey="GridBoundColumnResource3"></telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="QuestionType" HeaderText="Type" meta:resourcekey="GridBoundColumnResource4"></telerik:GridBoundColumn>
+												<telerik:GridBoundColumn DataField="QuestionText" HeaderText="<%$ Resources:LocalizedText, QuestionText %>"></telerik:GridBoundColumn>
+												<telerik:GridBoundColumn DataField="QuestionType" HeaderText="<%$ Resources:LocalizedText, Type %>"></telerik:GridBoundColumn>
 											</Columns>
 										</MasterTableView>
 										<ClientSettings AllowRowsDragDrop="true">
