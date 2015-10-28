@@ -93,6 +93,7 @@
           <EntitySet Name="PERSPECTIVE_VIEW_ITEM" EntityType="PSsqmModel.Store.PERSPECTIVE_VIEW_ITEM" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLANT" EntityType="PSsqmModel.Store.PLANT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLANT_ACCOUNTING" EntityType="PSsqmModel.Store.PLANT_ACCOUNTING" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.Store.PLANT_ACTIVE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PLANT_LINE" EntityType="PSsqmModel.Store.PLANT_LINE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PRIVGROUP" EntityType="PSsqmModel.Store.PRIVGROUP" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PRIVLIST" EntityType="PSsqmModel.Store.PRIVLIST" store:Type="Tables" Schema="dbo" />
@@ -181,6 +182,10 @@
           <AssociationSet Name="FK_AUDIT_ANSWER_AUDIT" Association="PSsqmModel.Store.FK_AUDIT_ANSWER_AUDIT">
             <End Role="AUDIT" EntitySet="AUDIT" />
             <End Role="AUDIT_ANSWER" EntitySet="AUDIT_ANSWER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.Store.FK_AUDIT_AUDIT_TYPE">
+            <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
+            <End Role="AUDIT" EntitySet="AUDIT" />
           </AssociationSet>
           <AssociationSet Name="FK_AUDIT_COMPANY" Association="PSsqmModel.Store.FK_AUDIT_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -529,6 +534,10 @@
           <AssociationSet Name="FK_PLANT_ACCOUNTING_STAGE_PLANT" Association="PSsqmModel.Store.FK_PLANT_ACCOUNTING_STAGE_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="PLANT_ACCOUNTING" EntitySet="PLANT_ACCOUNTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.Store.FK_PLANT_ACTIVE_PLANT">
+            <End Role="PLANT" EntitySet="PLANT" />
+            <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
           <AssociationSet Name="FK_PLANT_LOCAL_LANGUAGE" Association="PSsqmModel.Store.FK_PLANT_LOCAL_LANGUAGE">
             <End Role="LOCAL_LANGUAGE" EntitySet="LOCAL_LANGUAGE" />
@@ -2043,6 +2052,16 @@
           <Property Name="FINALIZE_DT" Type="datetime" />
           <Property Name="FINALIZE_ID" Type="numeric" Precision="35" />
         </EntityType>
+        <EntityType Name="PLANT_ACTIVE">
+          <Key>
+            <PropertyRef Name="PLANT_ID" />
+            <PropertyRef Name="RECORD_TYPE" />
+          </Key>
+          <Property Name="PLANT_ID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="RECORD_TYPE" Type="int" Nullable="false" />
+          <Property Name="EFF_START_DATE" Type="date" />
+          <Property Name="EFF_END_DATE" Type="date" />
+        </EntityType>
         <EntityType Name="PLANT_LINE">
           <Key>
             <PropertyRef Name="PLANT_LINE_ID" />
@@ -2753,6 +2772,18 @@
             </Principal>
             <Dependent Role="AUDIT_ANSWER">
               <PropertyRef Name="AUDIT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AUDIT_AUDIT_TYPE">
+          <End Role="AUDIT_TYPE" Type="PSsqmModel.Store.AUDIT_TYPE" Multiplicity="1" />
+          <End Role="AUDIT" Type="PSsqmModel.Store.AUDIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_TYPE">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="AUDIT">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3802,6 +3833,18 @@
               <PropertyRef Name="PLANT_ID" />
             </Principal>
             <Dependent Role="PLANT_ACCOUNTING">
+              <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANT_ACTIVE_PLANT">
+          <End Role="PLANT" Type="PSsqmModel.Store.PLANT" Multiplicity="1" />
+          <End Role="PLANT_ACTIVE" Type="PSsqmModel.Store.PLANT_ACTIVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLANT">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="PLANT_ACTIVE">
               <PropertyRef Name="PLANT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4958,6 +5001,15 @@
           </AssociationSet>
           <EntitySet Name="SETTINGS" EntityType="PSsqmModel.SETTINGS" />
           <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
+          <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.PLANT_ACTIVE" />
+          <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE">
+            <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
+            <End Role="AUDIT" EntitySet="AUDIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT">
+            <End Role="PLANT" EntitySet="PLANT" />
+            <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -6611,6 +6663,7 @@
           <Property Type="String" Name="ALT_DUNS_CODE" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NOTIFYACTION" Relationship="PSsqmModel.FK_NOTIFY_PLAN_PLANT" FromRole="PLANT" ToRole="NOTIFYACTION" />
           <NavigationProperty Name="EHS_DATA" Relationship="PSsqmModel.FK_EHS_DATA_PLANT" FromRole="PLANT" ToRole="EHS_DATA" />
+          <NavigationProperty Name="PLANT_ACTIVE" Relationship="PSsqmModel.FK_PLANT_ACTIVE_PLANT" FromRole="PLANT" ToRole="PLANT_ACTIVE" />
           </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PLANT">
           <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="0..1" />
@@ -8030,6 +8083,7 @@
           <NavigationProperty Name="AUDIT_QUESTION_CONTROL" Relationship="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" FromRole="AUDIT_TYPE" ToRole="AUDIT_QUESTION_CONTROL" />
           <Property Name="DAYS_TO_COMPLETE" Type="Int32" Nullable="false" />
           <Property Name="INACTIVE" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AUDIT" Relationship="PSsqmModel.FK_AUDIT_AUDIT_TYPE" FromRole="AUDIT_TYPE" ToRole="AUDIT" />
         </EntityType>
         <EntityType Name="AUDIT_TYPE_TOPIC_QUESTION">
           <Key>
@@ -8223,6 +8277,7 @@
           <Property Name="CURRENT_STATUS" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="TOTAL_SCORE" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Type="Decimal" Name="DEPT_ID" Precision="35" Scale="0" />
+          <NavigationProperty Name="AUDIT_TYPE1" Relationship="PSsqmModel.FK_AUDIT_AUDIT_TYPE" FromRole="AUDIT" ToRole="AUDIT_TYPE" />
         </EntityType>
         <EntityType Name="AUDIT_ANSWER">
           <Key>
@@ -8965,6 +9020,41 @@
           <Property Type="String" Name="DESCRIPTION_SHORT" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="PLANT_ACTIVE">
+          <Key>
+            <PropertyRef Name="PLANT_ID" />
+            <PropertyRef Name="RECORD_TYPE" />
+          </Key>
+          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
+          <Property Type="DateTime" Name="EFF_START_DATE" Precision="0" />
+          <Property Type="DateTime" Name="EFF_END_DATE" Precision="0" />
+          <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_PLANT_ACTIVE_PLANT" FromRole="PLANT_ACTIVE" ToRole="PLANT" />
+        </EntityType>
+        <Association Name="FK_AUDIT_AUDIT_TYPE">
+          <End Type="PSsqmModel.AUDIT_TYPE" Role="AUDIT_TYPE" Multiplicity="1" />
+          <End Type="PSsqmModel.AUDIT" Role="AUDIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUDIT_TYPE">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Principal>
+            <Dependent Role="AUDIT">
+              <PropertyRef Name="AUDIT_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PLANT_ACTIVE_PLANT">
+          <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="1" />
+          <End Type="PSsqmModel.PLANT_ACTIVE" Role="PLANT_ACTIVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLANT">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="PLANT_ACTIVE">
+              <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11041,6 +11131,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PLANT_ACTIVE">
+            <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACTIVE">
+              <MappingFragment StoreEntitySet="PLANT_ACTIVE">
+                <ScalarProperty Name="EFF_END_DATE" ColumnName="EFF_END_DATE" />
+                <ScalarProperty Name="EFF_START_DATE" ColumnName="EFF_START_DATE" />
+                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11335,6 +11435,9 @@
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
         <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="5.8573184804326477" PointY="1.2682696139757845" />
+        <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="5.9547404525590784" PointY="14.232411257099551" />
+        <AssociationConnector Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE" />
+        <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
         </Diagram>
     </Diagrams>
   </Designer>

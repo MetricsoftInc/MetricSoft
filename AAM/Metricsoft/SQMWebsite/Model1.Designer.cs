@@ -161,6 +161,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
 
 #endregion
 
@@ -2275,6 +2277,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<XLAT> _XLAT;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PLANT_ACTIVE> PLANT_ACTIVE
+        {
+            get
+            {
+                if ((_PLANT_ACTIVE == null))
+                {
+                    _PLANT_ACTIVE = base.CreateObjectSet<PLANT_ACTIVE>("PLANT_ACTIVE");
+                }
+                return _PLANT_ACTIVE;
+            }
+        }
+        private ObjectSet<PLANT_ACTIVE> _PLANT_ACTIVE;
 
         #endregion
 
@@ -3310,6 +3328,14 @@ namespace SQM.Website
         public void AddToXLAT(XLAT xLAT)
         {
             base.AddObject("XLAT", xLAT);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PLANT_ACTIVE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPLANT_ACTIVE(PLANT_ACTIVE pLANT_ACTIVE)
+        {
+            base.AddObject("PLANT_ACTIVE", pLANT_ACTIVE);
         }
 
         #endregion
@@ -5220,6 +5246,44 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<COMPANY>("PSsqmModel.FK_AUDIT_COMPANY", "COMPANY", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE")]
+        public AUDIT_TYPE AUDIT_TYPE1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AUDIT_TYPE> AUDIT_TYPE1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AUDIT_TYPE>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", value);
                 }
             }
         }
@@ -7589,6 +7653,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AUDIT_QUESTION_CONTROL>("PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_QUESTION_CONTROL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT")]
+        public EntityCollection<AUDIT> AUDIT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AUDIT>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AUDIT>("PSsqmModel.FK_AUDIT_AUDIT_TYPE", "AUDIT", value);
                 }
             }
         }
@@ -34493,6 +34579,28 @@ namespace SQM.Website
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT_ACTIVE")]
+        public EntityCollection<PLANT_ACTIVE> PLANT_ACTIVE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PLANT_ACTIVE>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT_ACTIVE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PLANT_ACTIVE>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT_ACTIVE", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -35103,6 +35211,182 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PLANT>("PSsqmModel.FK_PLANT_ACCOUNTING_STAGE_PLANT", "PLANT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="PLANT_ACTIVE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PLANT_ACTIVE : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PLANT_ACTIVE object.
+        /// </summary>
+        /// <param name="pLANT_ID">Initial value of the PLANT_ID property.</param>
+        /// <param name="rECORD_TYPE">Initial value of the RECORD_TYPE property.</param>
+        public static PLANT_ACTIVE CreatePLANT_ACTIVE(global::System.Decimal pLANT_ID, global::System.Int32 rECORD_TYPE)
+        {
+            PLANT_ACTIVE pLANT_ACTIVE = new PLANT_ACTIVE();
+            pLANT_ACTIVE.PLANT_ID = pLANT_ID;
+            pLANT_ACTIVE.RECORD_TYPE = rECORD_TYPE;
+            return pLANT_ACTIVE;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                if (_PLANT_ID != value)
+                {
+                    OnPLANT_IDChanging(value);
+                    ReportPropertyChanging("PLANT_ID");
+                    _PLANT_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PLANT_ID");
+                    OnPLANT_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _PLANT_ID;
+        partial void OnPLANT_IDChanging(global::System.Decimal value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RECORD_TYPE
+        {
+            get
+            {
+                return _RECORD_TYPE;
+            }
+            set
+            {
+                if (_RECORD_TYPE != value)
+                {
+                    OnRECORD_TYPEChanging(value);
+                    ReportPropertyChanging("RECORD_TYPE");
+                    _RECORD_TYPE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RECORD_TYPE");
+                    OnRECORD_TYPEChanged();
+                }
+            }
+        }
+        private global::System.Int32 _RECORD_TYPE;
+        partial void OnRECORD_TYPEChanging(global::System.Int32 value);
+        partial void OnRECORD_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> EFF_START_DATE
+        {
+            get
+            {
+                return _EFF_START_DATE;
+            }
+            set
+            {
+                OnEFF_START_DATEChanging(value);
+                ReportPropertyChanging("EFF_START_DATE");
+                _EFF_START_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EFF_START_DATE");
+                OnEFF_START_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _EFF_START_DATE;
+        partial void OnEFF_START_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnEFF_START_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> EFF_END_DATE
+        {
+            get
+            {
+                return _EFF_END_DATE;
+            }
+            set
+            {
+                OnEFF_END_DATEChanging(value);
+                ReportPropertyChanging("EFF_END_DATE");
+                _EFF_END_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EFF_END_DATE");
+                OnEFF_END_DATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _EFF_END_DATE;
+        partial void OnEFF_END_DATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnEFF_END_DATEChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT")]
+        public PLANT PLANT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PLANT> PLANTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PLANT>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PLANT>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT", value);
                 }
             }
         }
