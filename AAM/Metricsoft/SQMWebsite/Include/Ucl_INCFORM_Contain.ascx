@@ -85,7 +85,7 @@
 								<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="Required" meta:resourcekey="rfvContainPersonResource1"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
-								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged"" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
+								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
 									<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 									</Calendar>
 									<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
