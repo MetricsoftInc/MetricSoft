@@ -586,12 +586,14 @@ namespace SQM.Website
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				string privScope = scope.ToString();
+				string addPlant = plantID.ToString() + ",";
+
 				personList = (from p in ctx.PERSON
 							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
 							  join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
 							  where g.PRIV_GROUP == p.PRIV_GROUP
-									&& (v.PRIV == (int)priv && v.SCOPE == privScope) 
-									&& (plantID == 0 || p.PLANT_ID == plantID)
+									&& (v.PRIV == (int)priv && v.SCOPE == privScope)
+									&& (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
 									&& (!activeOnly || p.STATUS == "A")
 							  select p).ToList();
 			}
