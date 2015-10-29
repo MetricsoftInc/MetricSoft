@@ -627,13 +627,22 @@ namespace SQM.Website
 			return personList;
 		}
 
-		public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups)
+		public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups, bool HRPlantOnly)
 		{
 			List<PERSON> personList = new List<PERSON>();
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+				if (HRPlantOnly)	// only fetch the persons having 'plant' as their HR location
+				{
+					personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+				}
+				else
+				{
+					// fetch persons having 'plant; HR location AND 'plant' as an accesible location
+					string addPlant = plantID.ToString() + ",";
+					personList = (from p in ctx.PERSON where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+				}
 			}
 			return personList;
 		}

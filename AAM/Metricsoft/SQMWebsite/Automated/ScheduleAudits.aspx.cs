@@ -124,7 +124,7 @@ namespace SQM.Website.Automated
 						// get the plant
 						PLANT auditPlant = SQMModelMgr.LookupPlant((decimal)schedule.PLANT_ID);
 						// for the location, select all people that should get the audit
-						List<PERSON> auditors = SQMModelMgr.SelectPlantPrivgroupPersonList(auditPlant.PLANT_ID, new string[1] { schedule.JOBCODE_CD });
+						List<PERSON> auditors = SQMModelMgr.SelectPlantPrivgroupPersonList(auditPlant.PLANT_ID, new string[1] { schedule.JOBCODE_CD }, true);
 						foreach (PERSON person in auditors)
 						{
 							// check to see if there is already an audit for this plant/type/date/person
