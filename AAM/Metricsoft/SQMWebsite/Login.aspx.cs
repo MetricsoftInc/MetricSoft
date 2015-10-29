@@ -45,7 +45,7 @@ namespace SQM.Website
 			   //     SessionManager.Clear();
 				try
 				{
-					if (SessionManager.UserContext != null || SessionManager.SessionContext != null)
+					if (SessionManager.SessionContext != null || SessionManager.UserContext != null)
 					{
 						SessionManager.Clear();
 						Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
