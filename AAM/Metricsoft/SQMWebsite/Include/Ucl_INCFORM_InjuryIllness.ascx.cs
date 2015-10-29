@@ -820,8 +820,14 @@ namespace SQM.Website
 
 		void PopulateInjuryTypeDropDown()
 		{
-			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
+			rddlInjuryType.Items.Add(new DropDownListItem("", ""));	
+			foreach (EHSIncidentAnswerChoice qc in EHSIncidentMgr.SelectIncidentQuestionChoices(12m))
+			{
+				rddlInjuryType.Items.Add(new DropDownListItem(qc.Value,qc.Value));
+			}
 
+			/*
+			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
 			if (injtype != null && injtype.Count > 0)
 			{
 				rddlInjuryType.Items.Add(new DropDownListItem("", ""));	
@@ -833,14 +839,19 @@ namespace SQM.Website
 					}
 				}
 			}
-
-			//rddlInjuryType.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
-			//rddlInjuryType.AutoPostBack = true;
+			*/
 		}
 
 
 		void PopulateBodyPartDropDown()
 		{
+			rddlBodyPart.Items.Add(new DropDownListItem("", ""));
+			foreach (EHSIncidentAnswerChoice qc in EHSIncidentMgr.SelectIncidentQuestionChoices(12m))
+			{
+				rddlBodyPart.Items.Add(new DropDownListItem(qc.Value, qc.Value));
+			}
+
+			/*
 			List<EHSMetaData> parts = EHSMetaDataMgr.SelectMetaDataList("INJURY_PART");
 
 			if (parts != null && parts.Count > 0)
@@ -854,9 +865,7 @@ namespace SQM.Website
 					}
 				}
 			}
-
-			//rddlBodyPart.SelectedIndexChanged += rddlInjuryType_SelectedIndexChanged;
-			//rddlBodyPart.AutoPostBack = true;
+			*/
 		}
 
 

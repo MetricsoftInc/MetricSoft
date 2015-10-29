@@ -670,6 +670,21 @@ namespace SQM.Website
 			return topicList;
 		}
 
+		public static List<EHSIncidentAnswerChoice> SelectIncidentQuestionChoices(decimal questionID)
+		{
+			var entities = new PSsqmEntities();
+			List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
+													 where qc.INCIDENT_QUESTION_ID == questionID 
+													 orderby qc.SORT_ORDER
+													 select new EHSIncidentAnswerChoice
+													 {
+														 Value = qc.QUESTION_CHOICE_VALUE,
+														 IsCategoryHeading = qc.IS_CATEGORY_HEADING
+													 }).ToList();
+
+			return choices;
+		}
+
 		public static decimal SelectIncidentLocationIdByIncidentId(decimal incidentId)
 		{
 			var entities = new PSsqmEntities();
