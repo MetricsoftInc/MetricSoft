@@ -71,7 +71,7 @@
 				<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false" AutoPostBack="true"
 					DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" OnSelectedDateChanged="rmypYear_SelectedDateChanged" />
 				<br /><br />
-				<input type="button" id="btnExport" value="Export to PDF" class="myButton" />
+				<input type="button" id="btnExport" value="<%$ Resources:RadGrid, ExportPdf %>" class="myButton" />
 			</div>
 			<br />
 			<div id="divExport" runat="server">

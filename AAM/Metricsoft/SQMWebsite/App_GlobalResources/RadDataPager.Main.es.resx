@@ -127,7 +127,7 @@
     <value />
   </data>
   <data name="LabelText" xml:space="preserve">
-    <value>Page size</value>
+    <value>Tamaño de página</value>
   </data>
   <data name="LastButtonText" xml:space="preserve">
     <value />
@@ -139,7 +139,7 @@
     <value>Change</value>
   </data>
   <data name="PageSizeText" xml:space="preserve">
-    <value>Page size</value>
+    <value>Tamaño de página</value>
   </data>
   <data name="PrevButtonText" xml:space="preserve">
     <value />

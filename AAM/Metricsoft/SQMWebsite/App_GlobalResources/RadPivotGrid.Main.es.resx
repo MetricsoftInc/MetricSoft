@@ -121,7 +121,7 @@
     <value>Aggregate fields</value>
   </data>
   <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
+    <value>Cambiar el tamaño de la página</value>
   </data>
   <data name="ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
@@ -130,7 +130,7 @@
     <value />
   </data>
   <data name="ChangePageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
+    <value>Tamaño de página:</value>
   </data>
   <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
     <value>Change</value>
@@ -223,10 +223,10 @@
     <value>Cancelar</value>
   </data>
   <data name="FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
+    <value>Primera página</value>
   </data>
   <data name="GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
+    <value>Ir a la página</value>
   </data>
   <data name="GoToPageLabelText" xml:space="preserve">
     <value>Page:</value>
@@ -238,10 +238,10 @@
     <value />
   </data>
   <data name="LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
+    <value>Última página</value>
   </data>
   <data name="NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
+    <value>Página siguiente</value>
   </data>
   <data name="OuterTableCaption" xml:space="preserve">
     <value />
@@ -265,7 +265,7 @@
     <value>Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;</value>
   </data>
   <data name="PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
+    <value>Página anteriore</value>
   </data>
   <data name="RowGroupedFieldsTitle" xml:space="preserve">
     <value>Row fields</value>
@@ -292,7 +292,7 @@
     <value>Hide Fields Window</value>
   </data>
   <data name="ZoneContextMenuRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Actualizar</value>
   </data>
   <data name="ZoneContextMenuShowFieldsWindow" xml:space="preserve">
     <value>Show Fields Window</value>

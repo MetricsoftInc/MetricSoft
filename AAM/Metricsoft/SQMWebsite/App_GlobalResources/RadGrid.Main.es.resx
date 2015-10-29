@@ -148,16 +148,16 @@
     <value />
   </data>
   <data name="ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
+    <value>Exportar a CSV</value>
   </data>
   <data name="ExportToExcelImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
+    <value>Exportar a Excel</value>
   </data>
   <data name="ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
+    <value>Exportar a PDF</value>
   </data>
   <data name="ExportToPdfImageUrl" xml:space="preserve">
     <value />
@@ -166,7 +166,7 @@
     <value />
   </data>
   <data name="ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
+    <value>Exportart a Word</value>
   </data>
   <data name="FilterExpression" xml:space="preserve">
     <value />
@@ -175,7 +175,7 @@
     <value />
   </data>
   <data name="FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
+    <value>Primera página</value>
   </data>
   <data name="GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
@@ -211,25 +211,25 @@
     <value />
   </data>
   <data name="LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
+    <value>Última página</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Cargando…</value>
   </data>
   <data name="NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
+    <value>Páginas siguientes</value>
   </data>
   <data name="NextPageText" xml:space="preserve">
     <value />
   </data>
   <data name="NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
+    <value>Página siguiente</value>
   </data>
   <data name="NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
+    <value>No hay registros secundarios para mostrar.</value>
   </data>
   <data name="NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
+    <value>No hay registros para mostrar.</value>
   </data>
   <data name="PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
@@ -238,19 +238,19 @@
     <value>Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;</value>
   </data>
   <data name="PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
+    <value>Tamaño de página:</value>
   </data>
   <data name="PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
+    <value>Páginas anteriores</value>
   </data>
   <data name="PrevPageText" xml:space="preserve">
     <value />
   </data>
   <data name="PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
+    <value>Página anteriore</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Actualizar</value>
   </data>
   <data name="RefreshImageUrl" xml:space="preserve">
     <value />
@@ -265,10 +265,10 @@
     <value>Sorted desc</value>
   </data>
   <data name="SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
+    <value>Haga clic aquí para ordenar</value>
   </data>
   <data name="StatusReadyText" xml:space="preserve">
-    <value>Ready</value>
+    <value>Listo</value>
   </data>
   <data name="Summary" xml:space="preserve">
     <value />
@@ -334,7 +334,7 @@
     <value>StartsWith</value>
   </data>
   <data name="ChangePageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
+    <value>Tamaño de página:</value>
   </data>
   <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
     <value>Change</value>
@@ -469,7 +469,7 @@
     <value />
   </data>
   <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
+    <value>Cambiar el tamaño de la página</value>
   </data>
   <data name="ChangePageSizeTextBoxToolTip" xml:space="preserve">
     <value />
@@ -481,10 +481,10 @@
     <value />
   </data>
   <data name="CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
+    <value>Cancelar los cambios</value>
   </data>
   <data name="SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
+    <value>Guardar cambios</value>
   </data>
   <data name="SliderDecreaseText" xml:space="preserve">
     <value>Disminuir</value>
@@ -529,10 +529,10 @@
     <value>View Groups</value>
   </data>
   <data name="NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
+    <value>Siguiente</value>
   </data>
   <data name="PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
+    <value>Anterior</value>
   </data>
   <data name="HeaderContextMenuFreeze" xml:space="preserve">
     <value>Freeze</value>

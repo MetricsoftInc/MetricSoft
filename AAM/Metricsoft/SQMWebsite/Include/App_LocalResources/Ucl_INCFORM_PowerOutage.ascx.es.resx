@@ -1086,9 +1086,6 @@
   <data name="rtpIncidentTimeResource1.TimePopupButton.ToolTip" xml:space="preserve">
     <value>Open the time view popup.</value>
   </data>
-  <data name="rtpIncidentTimeResource1.TimeView.Caption" xml:space="preserve">
-    <value>Time picker</value>
-  </data>
   <data name="rtpIncidentTimeResource1.TimeView.HeaderText" xml:space="preserve">
     <value>Time Picker</value>
   </data>

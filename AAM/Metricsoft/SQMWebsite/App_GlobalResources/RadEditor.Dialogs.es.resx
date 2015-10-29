@@ -336,7 +336,7 @@ Press "OK" to confirm deletion.</value>
     <value>Red</value>
   </data>
   <data name="Common_Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Actualizar</value>
   </data>
   <data name="Common_Right" xml:space="preserve">
     <value>Right</value>
@@ -1449,7 +1449,7 @@ Press "OK" to confirm deletion.</value>
     <value>Sort desc</value>
   </data>
   <data name="Common_GridSortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
+    <value>Haga clic aquí para ordenar</value>
   </data>
   <data name="TableWizard_SelectAll" xml:space="preserve">
     <value>Select All</value>

@@ -124,22 +124,22 @@
     <value />
   </data>
   <data name="FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
+    <value>Primera página</value>
   </data>
   <data name="LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
+    <value>Última página</value>
   </data>
   <data name="NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
+    <value>Página siguiente</value>
   </data>
   <data name="PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
+    <value>Página anteriore</value>
   </data>
   <data name="Summary" xml:space="preserve">
     <value />
   </data>
   <data name="NoRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
+    <value>No hay registros para mostrar.</value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancelar</value>
@@ -163,7 +163,7 @@
     <value>Cerrar</value>
   </data>
   <data name="ChangePageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
+    <value>Tamaño de página:</value>
   </data>
   <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
     <value>Change</value>
@@ -196,7 +196,7 @@
     <value>Sorted desc</value>
   </data>
   <data name="SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
+    <value>Haga clic aquí para ordenar</value>
   </data>
   <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
     <value>Width: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pixels&lt;/em&gt;</value>
@@ -211,7 +211,7 @@
     <value>Arrastre aquí para reordenar</value>
   </data>
   <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
+    <value>Cambiar el tamaño de la página</value>
   </data>
   <data name="ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
@@ -223,7 +223,7 @@
     <value />
   </data>
   <data name="GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
+    <value>Ir a la página</value>
   </data>
   <data name="GoToPageTextBoxToolTip" xml:space="preserve">
     <value />

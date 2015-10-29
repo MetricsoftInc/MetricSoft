@@ -219,25 +219,7 @@
   <data name="dmPeriodToResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadMonthYearPicker</value>
   </data>
-  <data name="GridTemplateColumnResource1.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource1.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource1.HeaderAbbr" xml:space="preserve">
@@ -258,25 +240,7 @@
   <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_ID</value>
   </data>
-  <data name="GridTemplateColumnResource10.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource10.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource10.HeaderAbbr" xml:space="preserve">
@@ -297,25 +261,7 @@
   <data name="GridTemplateColumnResource10.SortExpression" xml:space="preserve">
     <value>Plant.PLANT_NAME</value>
   </data>
-  <data name="GridTemplateColumnResource11.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource11.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource11.HeaderAbbr" xml:space="preserve">
@@ -336,25 +282,7 @@
   <data name="GridTemplateColumnResource11.SortExpression" xml:space="preserve">
     <value>ProbCase.PROBCASE_ID</value>
   </data>
-  <data name="GridTemplateColumnResource13.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource13.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource13.HeaderAbbr" xml:space="preserve">
@@ -375,25 +303,7 @@
   <data name="GridTemplateColumnResource13.SortExpression" xml:space="preserve">
     <value>ProbCase.CREATE_DT</value>
   </data>
-  <data name="GridTemplateColumnResource14.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource14.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource14.HeaderAbbr" xml:space="preserve">
@@ -414,25 +324,7 @@
   <data name="GridTemplateColumnResource14.SortExpression" xml:space="preserve">
     <value>ProbCase.LAST_UPD_DT</value>
   </data>
-  <data name="GridTemplateColumnResource16.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource16.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource16.HeaderAbbr" xml:space="preserve">
@@ -453,25 +345,7 @@
   <data name="GridTemplateColumnResource16.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource17.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource17.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource17.HeaderAbbr" xml:space="preserve">
@@ -492,25 +366,7 @@
   <data name="GridTemplateColumnResource17.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_ID</value>
   </data>
-  <data name="GridTemplateColumnResource18.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource18.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource18.HeaderAbbr" xml:space="preserve">
@@ -531,25 +387,7 @@
   <data name="GridTemplateColumnResource18.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_DT</value>
   </data>
-  <data name="GridTemplateColumnResource19.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource19.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource19.HeaderAbbr" xml:space="preserve">
@@ -570,25 +408,7 @@
   <data name="GridTemplateColumnResource19.SortExpression" xml:space="preserve">
     <value>Plant.PLANT_NAME</value>
   </data>
-  <data name="GridTemplateColumnResource2.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource2.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource2.HeaderAbbr" xml:space="preserve">
@@ -609,25 +429,7 @@
   <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_DT</value>
   </data>
-  <data name="GridTemplateColumnResource22.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource22.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource22.HeaderAbbr" xml:space="preserve">
@@ -648,25 +450,7 @@
   <data name="GridTemplateColumnResource22.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource23.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource23.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource23.HeaderAbbr" xml:space="preserve">
@@ -687,25 +471,7 @@
   <data name="GridTemplateColumnResource23.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource24.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource24.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource24.HeaderAbbr" xml:space="preserve">
@@ -726,25 +492,7 @@
   <data name="GridTemplateColumnResource24.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource25.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource25.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource25.HeaderAbbr" xml:space="preserve">
@@ -765,25 +513,7 @@
   <data name="GridTemplateColumnResource25.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_ID</value>
   </data>
-  <data name="GridTemplateColumnResource26.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource26.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource26.HeaderAbbr" xml:space="preserve">
@@ -804,25 +534,7 @@
   <data name="GridTemplateColumnResource26.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_DT</value>
   </data>
-  <data name="GridTemplateColumnResource27.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource27.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource27.HeaderAbbr" xml:space="preserve">
@@ -843,25 +555,7 @@
   <data name="GridTemplateColumnResource27.SortExpression" xml:space="preserve">
     <value>Plant.PLANT_NAME</value>
   </data>
-  <data name="GridTemplateColumnResource28.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource28.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource28.HeaderAbbr" xml:space="preserve">
@@ -882,25 +576,7 @@
   <data name="GridTemplateColumnResource28.SortExpression" xml:space="preserve">
     <value>EntryList[0].ANSWER_VALUE,EntryList[2].ANSWER_VALUE</value>
   </data>
-  <data name="GridTemplateColumnResource3.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource3.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource3.HeaderAbbr" xml:space="preserve">
@@ -921,25 +597,7 @@
   <data name="GridTemplateColumnResource3.SortExpression" xml:space="preserve">
     <value>Plant.PLANT_NAME</value>
   </data>
-  <data name="GridTemplateColumnResource30.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource30.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource30.HeaderAbbr" xml:space="preserve">
@@ -960,25 +618,7 @@
   <data name="GridTemplateColumnResource30.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource31.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource31.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource31.HeaderAbbr" xml:space="preserve">
@@ -999,25 +639,7 @@
   <data name="GridTemplateColumnResource31.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_DT</value>
   </data>
-  <data name="GridTemplateColumnResource32.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource32.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource32.HeaderAbbr" xml:space="preserve">
@@ -1038,25 +660,7 @@
   <data name="GridTemplateColumnResource32.SortExpression" xml:space="preserve">
     <value>DaysOpen</value>
   </data>
-  <data name="GridTemplateColumnResource34.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource34.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource34.HeaderAbbr" xml:space="preserve">
@@ -1077,25 +681,7 @@
   <data name="GridTemplateColumnResource34.SortExpression" xml:space="preserve">
     <value>Plant.PLANT_NAME</value>
   </data>
-  <data name="GridTemplateColumnResource35.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource35.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource35.HeaderAbbr" xml:space="preserve">
@@ -1113,25 +699,7 @@
   <data name="GridTemplateColumnResource35.SortExpression" xml:space="preserve">
     <value>Incident.ISSUE_TYPE</value>
   </data>
-  <data name="GridTemplateColumnResource37.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource37.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource37.HeaderAbbr" xml:space="preserve">
@@ -1152,25 +720,7 @@
   <data name="GridTemplateColumnResource37.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_ID</value>
   </data>
-  <data name="GridTemplateColumnResource38.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource38.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource38.HeaderAbbr" xml:space="preserve">
@@ -1191,25 +741,7 @@
   <data name="GridTemplateColumnResource38.SortExpression" xml:space="preserve">
     <value>Incident.INCIDENT_ID</value>
   </data>
-  <data name="GridTemplateColumnResource39.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource39.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource39.HeaderAbbr" xml:space="preserve">
@@ -1230,25 +762,7 @@
   <data name="GridTemplateColumnResource39.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource4.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource4.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource4.HeaderAbbr" xml:space="preserve">
@@ -1269,25 +783,7 @@
   <data name="GridTemplateColumnResource4.SortExpression" xml:space="preserve">
     <value>QIIssue.REF_OPERATION</value>
   </data>
-  <data name="GridTemplateColumnResource5.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource5.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource5.HeaderAbbr" xml:space="preserve">
@@ -1308,25 +804,7 @@
   <data name="GridTemplateColumnResource5.SortExpression" xml:space="preserve">
     <value>Part.PART_NUM</value>
   </data>
-  <data name="GridTemplateColumnResource6.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource6.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource6.HeaderAbbr" xml:space="preserve">
@@ -1347,25 +825,7 @@
   <data name="GridTemplateColumnResource6.SortExpression" xml:space="preserve">
     <value>QIIssue.OCCUR_DESC</value>
   </data>
-  <data name="GridTemplateColumnResource8.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource8.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource8.HeaderAbbr" xml:space="preserve">
@@ -1386,25 +846,7 @@
   <data name="GridTemplateColumnResource8.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource9.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
   <data name="GridTemplateColumnResource9.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource9.HeaderAbbr" xml:space="preserve">
@@ -1425,16 +867,10 @@
   <data name="GridTemplateColumnResource9.SortExpression" xml:space="preserve">
     <value>ProbCase.PROBCASE_ID</value>
   </data>
-  <data name="gvIncidentListResource1.Caption" xml:space="preserve">
-    <value />
-  </data>
   <data name="gvIncidentListResource1.EmptyDataText" xml:space="preserve">
     <value />
   </data>
   <data name="gvIncidentListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gvIssueListResource1.Caption" xml:space="preserve">
     <value />
   </data>
   <data name="gvIssueListResource1.EmptyDataText" xml:space="preserve">
@@ -2049,105 +1485,6 @@
   <data name="RadComboBoxItemResource4.Value" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="rgCaseListResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgCaseListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgCaseListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgCaseListResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
     <value />
   </data>
@@ -2166,15 +1503,6 @@
   <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2187,61 +1515,19 @@
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgCaseListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -2268,9 +1554,6 @@
   <data name="rgCaseListResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgCaseListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2283,44 +1566,20 @@
   <data name="rgCaseListResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgCaseListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgCaseListResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCaseListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgCaseListResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgCaseListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgCaseListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgCaseListResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgCaseListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
@@ -2328,112 +1587,7 @@
   <data name="rgCaseListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
   </data>
-  <data name="rgCaseListResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgCaseListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="rgCaseListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgCSTIssueListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgCSTIssueListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgCSTIssueListResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
@@ -2454,15 +1608,6 @@
   <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2475,61 +1620,19 @@
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -2556,9 +1659,6 @@
   <data name="rgCSTIssueListResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgCSTIssueListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2571,44 +1671,20 @@
   <data name="rgCSTIssueListResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgCSTIssueListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgCSTIssueListResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgCSTIssueListResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgCSTIssueListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgCSTIssueListResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgCSTIssueListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
@@ -2616,112 +1692,7 @@
   <data name="rgCSTIssueListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
   </data>
-  <data name="rgCSTIssueListResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgCSTIssueListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="rgCSTIssueListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgIncidentActionListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgIncidentActionListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgIncidentActionListResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
@@ -2742,15 +1713,6 @@
   <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2763,61 +1725,19 @@
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -2844,9 +1764,6 @@
   <data name="rgIncidentActionListResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentActionListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -2859,44 +1776,20 @@
   <data name="rgIncidentActionListResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentActionListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionListResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentActionListResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentActionListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentActionListResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgIncidentActionListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
@@ -2904,112 +1797,7 @@
   <data name="rgIncidentActionListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
   </data>
-  <data name="rgIncidentActionListResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgIncidentActionListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="rgIncidentActionListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgIncidentActionsResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgIncidentActionsResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgIncidentActionsResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
@@ -3030,15 +1818,6 @@
   <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3051,61 +1830,19 @@
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -3132,9 +1869,6 @@
   <data name="rgIncidentActionsResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentActionsResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3147,44 +1881,20 @@
   <data name="rgIncidentActionsResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentActionsResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentActionsResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentActionsResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentActionsResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentActionsResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgIncidentActionsResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
@@ -3192,112 +1902,7 @@
   <data name="rgIncidentActionsResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
   </data>
-  <data name="rgIncidentActionsResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgIncidentActionsResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="rgIncidentActionsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgIncidentListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgIncidentListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgIncidentListResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
@@ -3318,15 +1923,6 @@
   <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3339,61 +1935,19 @@
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -3420,9 +1974,6 @@
   <data name="rgIncidentListResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgIncidentListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3435,44 +1986,20 @@
   <data name="rgIncidentListResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgIncidentListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgIncidentListResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgIncidentListResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgIncidentListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgIncidentListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgIncidentListResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgIncidentListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
@@ -3480,112 +2007,7 @@
   <data name="rgIncidentListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
   </data>
-  <data name="rgIncidentListResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgIncidentListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
-  </data>
   <data name="rgIncidentListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.BackImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.FilterMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.GroupingSettings.GroupByFieldsSeparator" xml:space="preserve">
-    <value>; </value>
-  </data>
-  <data name="rgPreventativeListResource1.GroupingSettings.GroupSplitDisplayFormat" xml:space="preserve">
-    <value>Showing {0} of {1} items.</value>
-  </data>
-  <data name="rgPreventativeListResource1.GroupingSettings.GroupSplitFormat" xml:space="preserve">
-    <value> ({0})</value>
-  </data>
-  <data name="rgPreventativeListResource1.GroupPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.HeaderContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.AddNewRecordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.CancelChangesText" xml:space="preserve">
-    <value>Cancel changes</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToCsvImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToCsvText" xml:space="preserve">
-    <value>Export to CSV</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToExcelImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToExcelText" xml:space="preserve">
-    <value>Export to Excel</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToPdfImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToPdfText" xml:space="preserve">
-    <value>Export to PDF</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToWordImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.ExportToWordText" xml:space="preserve">
-    <value>Export to Word</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.NextFrozenColumnText" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.PrevFrozenColumnText" xml:space="preserve">
-    <value>Prev</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.RefreshImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.CommandItemSettings.SaveChangesText" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.EditFormSettings.CaptionFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.EditFormSettings.InsertCaption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.CollapseImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.ExpandImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
@@ -3606,15 +2028,6 @@
   <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.MasterTableView.NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3627,61 +2040,19 @@
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.AndCurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.ColumnGroupName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.CurrentFilterValue" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.EditFormHeaderTextFormat" xml:space="preserve">
-    <value>{0}:</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.GroupByExpression" xml:space="preserve">
     <value />
   </data>
   <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
@@ -3708,9 +2079,6 @@
   <data name="rgPreventativeListResource1.MasterTableView.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.PagerStyle.ChangePageSizeButtonToolTip" xml:space="preserve">
-    <value>Change Page Size</value>
-  </data>
   <data name="rgPreventativeListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
     <value />
   </data>
@@ -3723,56 +2091,26 @@
   <data name="rgPreventativeListResource1.PagerStyle.FirstPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.PagerStyle.FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
   <data name="rgPreventativeListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="rgPreventativeListResource1.PagerStyle.LastPageText" xml:space="preserve">
     <value />
   </data>
-  <data name="rgPreventativeListResource1.PagerStyle.LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.NextPagesToolTip" xml:space="preserve">
-    <value>Next Pages</value>
-  </data>
   <data name="rgPreventativeListResource1.PagerStyle.NextPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
   </data>
   <data name="rgPreventativeListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
     <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
   </data>
-  <data name="rgPreventativeListResource1.PagerStyle.PageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.PrevPagesToolTip" xml:space="preserve">
-    <value>Previous Pages</value>
-  </data>
   <data name="rgPreventativeListResource1.PagerStyle.PrevPageText" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
   </data>
   <data name="rgPreventativeListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
     <value>Sorted asc</value>
   </data>
   <data name="rgPreventativeListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
     <value>Sorted desc</value>
-  </data>
-  <data name="rgPreventativeListResource1.SortingSettings.SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="rgPreventativeListResource1.StatusBarSettings.ReadyText" xml:space="preserve">
-    <value>Ready</value>
   </data>
   <data name="rgPreventativeListResource1.ToolTip" xml:space="preserve">
     <value />
@@ -3789,16 +2127,10 @@
   <data name="TemplateFieldResource1.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="TemplateFieldResource1.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
   </data>
   <data name="TemplateFieldResource10.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource10.FooterText" xml:space="preserve">
     <value />
   </data>
   <data name="TemplateFieldResource10.HeaderText" xml:space="preserve">
@@ -3807,16 +2139,10 @@
   <data name="TemplateFieldResource2.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="TemplateFieldResource2.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
     <value>Date</value>
   </data>
   <data name="TemplateFieldResource3.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource3.FooterText" xml:space="preserve">
     <value />
   </data>
   <data name="TemplateFieldResource3.HeaderText" xml:space="preserve">
@@ -3825,16 +2151,10 @@
   <data name="TemplateFieldResource5.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="TemplateFieldResource5.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource5.HeaderText" xml:space="preserve">
     <value>Part Number</value>
   </data>
   <data name="TemplateFieldResource6.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource6.FooterText" xml:space="preserve">
     <value />
   </data>
   <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
@@ -3843,25 +2163,16 @@
   <data name="TemplateFieldResource7.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="TemplateFieldResource7.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource7.HeaderText" xml:space="preserve">
     <value>Select</value>
   </data>
   <data name="TemplateFieldResource8.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="TemplateFieldResource8.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
   </data>
   <data name="TemplateFieldResource9.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource9.FooterText" xml:space="preserve">
     <value />
   </data>
   <data name="TemplateFieldResource9.HeaderText" xml:space="preserve">

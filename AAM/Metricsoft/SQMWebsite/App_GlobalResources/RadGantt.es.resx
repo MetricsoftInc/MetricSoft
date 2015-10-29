@@ -172,7 +172,7 @@
     <value>Delete</value>
   </data>
   <data name="ExportPdf" xml:space="preserve">
-    <value>Export to PDF</value>
+    <value>Exportar a PDF</value>
   </data>
   <data name="HeaderDay" xml:space="preserve">
     <value>Day</value>
