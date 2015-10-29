@@ -134,7 +134,7 @@
 					<div class="row-fluid">
 
 						<span style="float: left; width: 160px;">
-							<asp:Label runat="server" ID="lblPlantSelect"></asp:Label>
+							<asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
 						</span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
 						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
