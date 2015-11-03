@@ -147,12 +147,33 @@ namespace SQM.Website
 			if (this.ColorScheme.Count == 0)
 				this.colorScheme = new List<MyColor>()
 				{
-					Color.Red,
-					Color.Yellow,
-					Color.Lime,
-					Color.Cyan,
-					Color.Blue,
-					Color.Magenta
+					Color.FromArgb(96, 94, 94), // #605E5E
+					Color.FromArgb(148, 130, 27), // #94821B
+					Color.FromArgb(148, 54, 22), // #943616
+					Color.FromArgb(43, 124, 116), // #2B7C74
+					Color.FromArgb(32, 126, 169), // #207EA9
+					Color.FromArgb(47, 46, 46), // #2F2E2E
+					Color.FromArgb(85, 31, 13), // #551F0D
+					Color.FromArgb(22, 62, 58), // #163E3A
+					Color.FromArgb(16, 63, 84), // #103F54
+					Color.FromArgb(232, 232, 232), // #E8E8E8
+					Color.FromArgb(244, 234, 177), // #F4EAB1
+					Color.FromArgb(244, 192, 175), // #F4C0AF
+					Color.FromArgb(182, 232, 227), // #B6E8E3
+					Color.FromArgb(186, 233, 255), // #BAE9FF
+					Color.FromArgb(204, 204, 204), // #CCCCCC
+					Color.FromArgb(233, 219, 137), // #E9DB89
+					Color.FromArgb(233, 159, 134), // #E99F86
+					Color.FromArgb(141, 209, 202), // #8DD1CA
+					Color.FromArgb(151, 222, 255), // #97DEFF
+					Color.FromArgb(160, 160, 159), // #A0A09F
+					Color.FromArgb(222, 195, 40), // #DEC328
+					Color.FromArgb(222, 80, 33), // #DE5021
+					Color.FromArgb(65, 186, 174), // #41BAAE
+					Color.FromArgb(48, 189, 255), // #30BDFF
+					Color.FromArgb(74, 65, 13), // #4A410D
+					Color.FromArgb(51, 15, 3), // #330F03
+					Color.FromArgb(8, 36, 48) // #082430
 				};
 			return this.ColorScheme[i % this.ColorScheme.Count].Color;
 		}
