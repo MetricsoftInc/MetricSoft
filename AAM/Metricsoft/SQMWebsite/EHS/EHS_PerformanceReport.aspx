@@ -15,6 +15,10 @@
 			-webkit-transform: translateY(-50%);
 			transform: translateY(-50%);
 		}
+		.yearDiv > div
+		{
+			display: inline-block;
+		}
 
 		.RadGrid_Metro .rgRow > td
 		{
@@ -78,10 +82,12 @@
 			<div class="container-fluid blueCell" style="position: relative">
 				<telerik:RadComboBox ID="rcbPlant" runat="server" Skin="Metro" Height="350" Width="400" CausesValidation="false" />
 				<br /><br />
-				<span class="prompt">Year: </span>
-				<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false"
-					DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" />
-				<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
+				<div class="yearDiv">
+					<span class="prompt">Year: </span>
+					<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false"
+						DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" />
+					<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
+				</div>
 				<div class="exportButtonDiv">
 					<input type="button" id="btnExport" runat="server" value="<%$ Resources:RadGrid.Main, ExportToPdfText %>" class="myButton" />
 				</div>
