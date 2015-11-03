@@ -479,6 +479,7 @@ namespace SQM.Website
 			// Calculate the angles of each value.
 			decimal sum = this.Values.Sum(i => (decimal?)i.YValue) ?? 0;
 			var angles = sum == 0 ? new List<decimal>() : this.Values.Select(v => (v.YValue / sum) * 2 * (decimal)Math.PI).ToList();
+			int numberOfNonZeroValues = this.Values.Where(v => v.YValue != 0).Count();
 
 			// Get the legend information and use that to calculate the pie chart's radius.
 			int longestLabelWidth = (int)(this.Values.MaxOrDefault(v => GetWidthOfString(v.Text, font), 0) + 0.5f);
@@ -515,12 +516,19 @@ namespace SQM.Website
 						j = 0;
 
 					// Create the arc for this pie chart slice.
-					var path = new HtmlGenericControl("path")
+					var path = new HtmlGenericControl(numberOfNonZeroValues == 1 ? "circle" : "path")
 					{
 						ID = "path_" + i
 					};
-					path.Attributes.Add("d", string.Format("M{0} {1} L{2} {3} A{4} {4} 0 {5} 1 {6} {7} z", pieCenter.X, pieCenter.Y, points[i].X, points[i].Y, this.PieRadius,
-						(double)angles[i] > Math.PI ? 1 : 0, points[j].X, points[j].Y));
+					if (numberOfNonZeroValues == 1)
+					{
+						path.Attributes.Add("r", this.PieRadius.ToString());
+						path.Attributes.Add("cx", pieCenter.X.ToString());
+						path.Attributes.Add("cy", pieCenter.Y.ToString());
+					}
+					else
+						path.Attributes.Add("d", string.Format("M{0} {1} L{2} {3} A{4} {4} 0 {5} 1 {6} {7} z", pieCenter.X, pieCenter.Y, points[i].X, points[i].Y, this.PieRadius,
+							(double)angles[i] > Math.PI ? 1 : 0, points[j].X, points[j].Y));
 					path.Attributes.Add("fill", ColorTranslator.ToHtml(color));
 					path.Attributes.Add("stroke", "#000");
 					path.Attributes.Add("stroke-width", "1px");
@@ -535,8 +543,8 @@ namespace SQM.Website
 					{
 						InnerText = this.Values[i].YValue.ToString()
 					};
-					text.Attributes.Add("x", textLocations[i].X.ToString());
-					text.Attributes.Add("y", textLocations[i].Y.ToString());
+					text.Attributes.Add("x", (numberOfNonZeroValues == 1 ? pieCenter.X : textLocations[i].X).ToString());
+					text.Attributes.Add("y", (numberOfNonZeroValues == 1 ? pieCenter.Y : textLocations[i].Y).ToString());
 					text.Attributes.Add("text-anchor", "middle");
 					text.Attributes.Add("fill", ColorTranslator.ToHtml(ContrastColor(color)));
 					this.SVG.Controls.Add(text);
@@ -555,7 +563,7 @@ namespace SQM.Website
 			// This is to set up the tooltips for the pie chart's slices.
 			ScriptManager.RegisterStartupScript(this, this.GetType(), "js_" + this.ID, string.Format(@"function attachTooltip_{0}()
 				{{
-					$('#{0} path').tooltip({{
+					$('#{0} path, #{0} circle').tooltip({{
 						track: true,
 						items: ':not([disabled])',
 						content: function()
