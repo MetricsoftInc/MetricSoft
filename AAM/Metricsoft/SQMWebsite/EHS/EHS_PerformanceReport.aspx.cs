@@ -373,11 +373,17 @@ namespace SQM.Website.EHS
 			calcsResult.metricSeries = data.severityRateSeries;
 			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
 
-			this.pieRecordableType.Values = data.ordinalTypeSeries;
-			this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
-			this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
-			this.pieRecordableTenure.Values = data.ordinalTenureSeries;
-			this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
+			if ((data.data as List<Data>).Last().TRIR == 0)
+				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
+			else
+			{
+				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = true;
+				this.pieRecordableType.Values = data.ordinalTypeSeries;
+				this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
+				this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
+				this.pieRecordableTenure.Values = data.ordinalTenureSeries;
+				this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
+			}
 
 			smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
 			series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };

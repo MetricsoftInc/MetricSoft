@@ -121,17 +121,17 @@
 				<div id="divFrequencyRate" runat="server" class="chartMarginTop"></div>
 				<div id="divSeverityRate" runat="server" class="chartMarginTop"></div>
 				<div style="page-break-after: always"></div>
-				<div style="overflow: hidden" class="chartMarginTop">
+				<div id="divPie1" runat="server" style="overflow: hidden" class="chartMarginTop">
 					<SQM:PieChart ID="pieRecordableType" runat="server" Title="Recordable Injuries by Type" Width="740" Height="500" StartAngle="45" Style="float: left" CssClass="pieChart" />
 					<SQM:PieChart ID="pieRecordableBodyPart" runat="server" Title="Recordable Injuries by Body Part" Width="740" Height="500" StartAngle="45" Style="float: right"
 						CssClass="pieChart" />
 				</div>
-				<div style="overflow: hidden" class="chartMarginTop">
+				<div id="divPie2" runat="server" style="overflow: hidden" class="chartMarginTop">
 					<SQM:PieChart ID="pieRecordableRootCause" runat="server" Title="Injury Root Causes" Width="740" Height="500" StartAngle="45" Style="float: left" CssClass="pieChart" />
 					<SQM:PieChart ID="pieRecordableTenure" runat="server" Title="Tenure of Injured Associate" Width="740" Height="500" StartAngle="45" Style="float: right" CssClass="pieChart" />
 				</div>
-				<div style="page-break-after: always"></div>
-				<div style="overflow: hidden" class="chartMarginTop">
+				<div id="divBreakPie" runat="server" style="page-break-after: always"></div>
+				<div id="divPie3" runat="server" style="overflow: hidden" class="chartMarginTop">
 					<SQM:PieChart ID="pieRecordableDaysToClose" runat="server" Title="Days to Close Investigations" Width="740" Height="500" StartAngle="45" CssClass="pieChart" />
 				</div>
 				<div style="overflow: hidden" class="chartMarginTop">

@@ -121,6 +121,15 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSeverityRate;
         
         /// <summary>
+        /// divPie1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPie1;
+        
+        /// <summary>
         /// pieRecordableType control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace SQM.Website.EHS {
         protected global::SQM.Website.PieChart pieRecordableBodyPart;
         
         /// <summary>
+        /// divPie2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPie2;
+        
+        /// <summary>
         /// pieRecordableRootCause control.
         /// </summary>
         /// <remarks>
@@ -155,6 +173,24 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.PieChart pieRecordableTenure;
+        
+        /// <summary>
+        /// divBreakPie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBreakPie;
+        
+        /// <summary>
+        /// divPie3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPie3;
         
         /// <summary>
         /// pieRecordableDaysToClose control.
