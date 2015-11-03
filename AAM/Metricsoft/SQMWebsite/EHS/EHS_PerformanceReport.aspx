@@ -4,6 +4,18 @@
 <%@ Register Assembly="SQMWebsite" Namespace="SQM.Website" TagPrefix="SQM" %>
 <asp:Content ContentPlaceHolderID="head" runat="server">
 	<style type="text/css">
+		.exportButtonDiv
+		{
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			-webkit-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+
 		.RadGrid_Metro .rgRow > td
 		{
 			border-color: #e5e5e5 !important;
@@ -64,14 +76,15 @@
 		<telerik:RadAjaxLoadingPanel ID="radLoading" runat="server" Skin="Metro" />
 		<telerik:RadAjaxPanel ID="radAjaxPanel" runat="server" LoadingPanelID="radLoading">
 			<div class="container-fluid blueCell" style="position: relative">
-				<telerik:RadComboBox ID="rcbPlant" runat="server" Skin="Metro" Height="350" Width="400" CausesValidation="false" AutoPostBack="true"
-					OnSelectedIndexChanged="rcbPlant_SelectedIndexChanged" />
+				<telerik:RadComboBox ID="rcbPlant" runat="server" Skin="Metro" Height="350" Width="400" CausesValidation="false" />
 				<br /><br />
 				<span class="prompt">Year: </span>
-				<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false" AutoPostBack="true"
-					DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" OnSelectedDateChanged="rmypYear_SelectedDateChanged" />
-				<br /><br />
-				<input type="button" id="btnExport" runat="server" value="<%$ Resources:RadGrid.Main, ExportToPdfText %>" class="myButton" />
+				<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false"
+					DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" />
+				<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
+				<div class="exportButtonDiv">
+					<input type="button" id="btnExport" runat="server" value="<%$ Resources:RadGrid.Main, ExportToPdfText %>" class="myButton" />
+				</div>
 			</div>
 			<br />
 			<div id="divExport" runat="server">

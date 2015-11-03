@@ -344,17 +344,7 @@ namespace SQM.Website.EHS
 				e.Item.BackColor = Color.FromArgb(255, 255, 153);
 		}
 
-		protected void rcbPlant_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-		{
-			dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year);
-
-			this.rgReport.DataSource = data.data;
-			this.rgReport.DataBind();
-
-			this.UpdateCharts(data);
-		}
-
-		protected void rmypYear_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
+		protected void btnRefresh_Click(object sender, EventArgs e)
 		{
 			dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year);
 

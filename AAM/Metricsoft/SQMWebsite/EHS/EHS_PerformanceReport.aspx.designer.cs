@@ -58,6 +58,15 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadMonthYearPicker rmypYear;
         
         /// <summary>
+        /// btnRefresh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnRefresh;
+        
+        /// <summary>
         /// btnExport control.
         /// </summary>
         /// <remarks>
