@@ -160,13 +160,13 @@
                                                                                                         <asp:Image  ID="imgFileType" runat="server" HeaderText="File Type" ItemStyle-HorizontalAlign="Center"></asp:Image>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
-                                                                                                <asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="File Name" ItemStyle-Width="30%" >
+                                                                                                <asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="<%$ Resources:LocalizedText, FileName %>" ItemStyle-Width="30%" >
                                                                                                     <ItemTemplate>
                                                                                                         <a class="linkUnderline" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID={0}", Eval("ATTACHMENT_ID")) %>' target="_blank"><%#Eval("FILE_NAME")%></a>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                                 <asp:BoundField DataField="FILE_DESC" HeaderText="File Description"  ItemStyle-Width="30%" />
-                                                                                                <asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="Size" ItemStyle-Width="15%"
+                                                                                                <asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="<%$ Resources:LocalizedText, Size %>" ItemStyle-Width="15%"
                                                                                                     SortExpression="FILE_SIZE">
                                                                                                     <ItemTemplate>
                                                                                                        <%# FormatFilesize(Eval("FILE_SIZE"))%>

@@ -284,7 +284,7 @@ namespace SQM.Website
 
 		void UpdateButtonText()
 		{
-			btnSaveReturn.Text = "Save & Return";
+			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
 
 			if (IsEditContext)
 				btnSaveReturn.Text = "Save Assessment Scheduler";

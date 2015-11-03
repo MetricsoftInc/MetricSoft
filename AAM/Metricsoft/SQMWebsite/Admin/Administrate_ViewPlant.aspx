@@ -27,7 +27,7 @@
                         <tr>
                             <td align="left" height="22px;">
                                 <asp:Label ID="lblPageInstructions" runat="server" class="instructText" Text="Manage business locations. Define site-specific settings and preferences referenced by the quality and EHS applications when collecting and reporting plant information."></asp:Label>
-                                <asp:Label ID="lblViewPlantTitle" runat="server" Text="Business Location" Visible="false"></asp:Label>
+                                <asp:Label ID="lblViewPlantTitle" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>" Visible="false"></asp:Label>
                                 <asp:Label ID="lblViewBusOrgText" runat="server" Text="Return to Organization List" Visible="false"></asp:Label>
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
                                         </tr>
                                          <tr>
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblPlantLocCode" runat="server" text="Location Code"></asp:Label>
+                                                <asp:Label ID="lblPlantLocCode" runat="server" Text="<%$ Resources:LocalizedText, LocationCode %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt">&nbsp;</td>
                                             <td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantLocCode" size="30" maxlength="20" runat="server"/></td>
@@ -171,7 +171,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader">
-                                                    <asp:Label ID="lblLocationType" runat="server" text="Location Type"></asp:Label>
+                                                    <asp:Label ID="lblLocationType" runat="server" Text="<%$ Resources:LocalizedText, LocationType %>"></asp:Label>
                                             </td>
                                             <td class="required">&nbsp;</td>
                                             <td class="tableDataAlt"><asp:DropDownList ID="ddlLocationType" runat="server"></asp:DropDownList></td>

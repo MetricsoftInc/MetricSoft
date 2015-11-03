@@ -213,8 +213,11 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodFrom.Text = Resources.LocalizedText.From + ":";
 			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
+			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn1").HeaderText = Resources.LocalizedText.IncidentDate + "/<br/>Reported By";
 			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.Status + "/<br/>(Days Open)";
+			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.DueDate + "/<br/>" + Resources.LocalizedText.AssignedTo;
 			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn6").HeaderText = Resources.LocalizedText.Status + "<br/>(Days)";
 
 			if (!Page.IsPostBack)

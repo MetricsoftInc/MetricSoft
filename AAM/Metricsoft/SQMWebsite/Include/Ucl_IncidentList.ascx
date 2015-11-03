@@ -17,7 +17,7 @@
 				<asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
 			</td>
 			<td class="summaryDataEnd">
-				<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators" EmptyMessage="Select responsible/supplier locations" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
+				<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators" EmptyMessage="<%$ Resources:LocalizedText, SelectResponsibleSupplierLocations %>"></telerik:RadComboBox>
 			</td>
 		<tr>
 			<td class="summaryDataEnd" width="150px">
@@ -46,19 +46,19 @@
 		</tr>
 		<tr>
 			<td class="summaryDataEnd" width="150px">
-				<asp:Label runat="server" ID="lblDateSpan" CssClass="prompt" Text="Date Span:" meta:resourcekey="lblDateSpanResource1"></asp:Label>
+				<asp:Label runat="server" ID="lblDateSpan" CssClass="prompt" Text="<%$ Resources:LocalizedText, DateSpan %>"></asp:Label>
 			</td>
 			<td class="summaryDataEnd">
 				<telerik:RadComboBox ID="ddlDateSpan" runat="server" Skin="Metro" Width=180px Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlDateSpanChange" meta:resourcekey="ddlDateSpanResource1">
 					<Items>
-						<telerik:RadComboBoxItem Text="Select Range" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource1"/>
-						<telerik:RadComboBoxItem Text="Year To Date" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource2" />
-						<telerik:RadComboBoxItem Text="Previous Year" Value="3" runat="server" meta:resourcekey="RadComboBoxItemResource3" />
-						<telerik:RadComboBoxItem Text="FY Year To Date" Value="4" runat="server" meta:resourcekey="RadComboBoxItemResource4" />
+						<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, SelectRange %>" Value="0" runat="server"/>
+						<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, YearToDate %>" Value="1" runat="server" />
+						<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, PreviousYear %>" Value="3" runat="server" />
+						<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, FYYearToDate %>" Value="4" runat="server" />
 					</Items>
 				</telerik:RadComboBox>
 				<span style="margin-left: 8px;">
-					<asp:Label runat="server" ID="lblPeriodFrom"  CssClass="prompt" Text="From:" meta:resourcekey="lblPeriodFromResource1"></asp:Label>
+					<asp:Label runat="server" ID="lblPeriodFrom" CssClass="prompt"></asp:Label>
 					<telerik:RadMonthYearPicker ID="dmPeriodFrom" runat="server" CssClass="textStd" Width=155px Skin="Metro">
 						<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" Font-Size="Small" LabelWidth="64px" Skin="Metro" Width="">
 							<EmptyMessageStyle Resize="None" />
@@ -217,7 +217,7 @@
 								</ItemTemplate>
 								<ItemStyle Width="10%" />
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="Select" meta:resourcekey="TemplateFieldResource7">
+							<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Select %>">
 								<ItemTemplate>
 									<asp:CheckBox ID="cbSelect" runat="server" meta:resourcekey="cbSelectResource1" Style="margin-left: 33%;" />
 								</ItemTemplate>
@@ -249,7 +249,7 @@
 								</ItemTemplate>
 								<ItemStyle Width="20%" />
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="Incident Date" meta:resourcekey="TemplateFieldResource9">
+							<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, IncidentDate %>">
 								<ItemTemplate>
 									<asp:HiddenField ID="hfIncidentDate" runat="server" Value='<%# Eval("INCIDENT_DT") %>' />
 									<asp:Label ID="lblIncidentDate" runat="server" meta:resourcekey="lblIncidentDateResource1"></asp:Label>
@@ -293,7 +293,7 @@
 							<asp:HiddenField ID="hfStatus" runat="server" Value='<%# Eval("ProbCase.STATUS") %>' />
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Location" meta:resourcekey="GridTemplateColumnResource10" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn1">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn1">
 						<ItemTemplate>
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource2" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
@@ -349,7 +349,7 @@
 	<table cellspacing="0" cellpadding="1" border="0" width="99%" class="">
 		<tr>
 			<td class="columnHeader" width="30%">
-				<asp:Label runat="server" ID="lblDetectedLocation" CssClass="prompt" Text="Business Location" meta:resourcekey="lblDetectedLocationResource1"></asp:Label>
+				<asp:Label runat="server" ID="lblDetectedLocation" CssClass="prompt" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
 			</td>
 			<td class="tableDataAlt" width="70%">
 				<asp:Label runat="server" ID="lblDetectedLocation_out" meta:resourcekey="lblDetectedLocation_outResource1"></asp:Label>
@@ -430,7 +430,7 @@
 			</td>
 			<td class="summaryDataTop" valign="top">
 				<span class="summaryHeader">
-					<asp:Label runat="server" ID="lblUpdateDate" Text="Last Update" meta:resourcekey="lblUpdateDateResource1"></asp:Label>
+					<asp:Label runat="server" ID="lblUpdateDate" Text="<%$ Resources:LocalizedText, LastUpdate %>"></asp:Label>
 				</span>
 				<br>
 				<asp:Label runat="server" ID="lblUpdateDate_out" meta:resourcekey="lblUpdateDate_outResource1"></asp:Label>
@@ -443,7 +443,7 @@
 	<table id="tblIncidentTaskHdr" runat="server" cellspacing="0" cellpadding="1" border="0" width="99%" class="">
 		<tr runat="server">
 			<td class="columnHeader" width="30%" runat="server">
-				<asp:Label runat="server" ID="lblCasePlant" CssClass="prompt" Text="Business Location"></asp:Label>
+				<asp:Label runat="server" ID="lblCasePlant" CssClass="prompt" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
 			</td>
 			<td class="tableDataAlt" width="70%" runat="server">
 				<asp:Label runat="server" ID="lblCasePlant_out"></asp:Label>
@@ -510,7 +510,7 @@
 						</ItemTemplate>
 						<ItemStyle Width="100px" />
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Incident Date/&lt;br&gt;Reported By" meta:resourcekey="GridTemplateColumnResource18" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn1">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn1">
 						<ItemTemplate>
 							<asp:Label ID="lblIncidentDT" runat="server" meta:resourcekey="lblIncidentDTResource2" Text='<%# ((DateTime)Eval("Incident.INCIDENT_DT")).ToShortDateString() %>'></asp:Label>
 							<br />
@@ -519,7 +519,7 @@
 							</span>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="Location" meta:resourcekey="GridTemplateColumnResource19" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
 						<ItemTemplate>
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource3" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
@@ -606,7 +606,7 @@
 							</span>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="Location" meta:resourcekey="GridTemplateColumnResource27" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
 						<ItemTemplate>
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource4" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
@@ -627,7 +627,7 @@
 							<asp:Label ID="lblAttach" runat="server" meta:resourcekey="lblAttachResource3"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="Due Date/&lt;br&gt;Assigned To" meta:resourcekey="GridTemplateColumnResource31" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn5">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn5">
 						<ItemTemplate>
 							<asp:Label ID="lblDueDT" runat="server" meta:resourcekey="lblDueDTResource1"></asp:Label>
 							<br />
@@ -682,7 +682,7 @@
 						</ItemTemplate>
 						<ItemStyle Width="100px" />
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Location" meta:resourcekey="GridTemplateColumnResource34" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn1">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn1">
 						<ItemTemplate>
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource5" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>

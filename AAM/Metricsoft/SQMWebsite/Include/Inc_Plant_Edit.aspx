@@ -53,7 +53,7 @@
                         </tr>
 			            <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblPlantLocCode" runat="server" text="Location Code"></asp:Label>
+                                <asp:Label ID="lblPlantLocCode" runat="server" Text="<%$ Resources:LocalizedText, LocationCode %>"></asp:Label>
                             </td>
                             <td class="tableDataAlt">&nbsp;</td>
                             <td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantLocCode" size="30" maxlength="20" runat="server"/></td>

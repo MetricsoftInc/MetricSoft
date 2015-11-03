@@ -31,7 +31,7 @@
 						<table style="width: 100%;">
 						<tr><td width="80%">
 						<strong>Date:</strong><br />
-						<asp:Label ID="lblIncidentDate" class="textStd" runat="server">Incident Date</asp:Label><br />
+						<asp:Label ID="lblIncidentDate" class="textStd" runat="server" Text="<%$ Resources:LocalizedText, IncidentDate %>" /><br />
 						<br />
 						<strong>Instructions:</strong><br />
 						<asp:Label ID="lblIncidentInstructions" class="textStd" runat="server">Incident Instructions</asp:Label><br />
@@ -53,18 +53,18 @@
 						</td><td style="background-color: #ddd;">
 							<asp:Label ID="lblFullName" runat="server" Text=""></asp:Label></td>
 						<td style="background-color: #ddd;">
-							<telerik:RadButton ID="rbAddNote" runat="server" Skin="Metro" Text="Add Note" 
+							<telerik:RadButton ID="rbAddNote" runat="server" Skin="Metro" Text="Add Note"
 								onclick="rbAddNote_Click">
 							</telerik:RadButton>
 						</td></tr>
 						</table><br />
 						<br />
-													
+
 							<telerik:RadButton ID="btnSubmit" runat="server" Text="I Have Reviewed the Instructions Above" Width="50%" Skin="Metro" OnClick="btnSubmit_Click" /><br />
 							<br />
 
 						</td><td style="width: 20%; text-align: center;">
-							<asp:Literal ID="ltrDownloadReport" runat="server"></asp:Literal>				
+							<asp:Literal ID="ltrDownloadReport" runat="server"></asp:Literal>
 						</td>
 						</tr></table>
 					</div>

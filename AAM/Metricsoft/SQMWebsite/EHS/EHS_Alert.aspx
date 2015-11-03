@@ -28,7 +28,7 @@
 								<asp:Literal ID="ltrDate" runat="server">n/a</asp:Literal>
 							</td>
 							<td style="border: 1px solid #888888;">
-								<strong>Time of Incident:</strong>
+								<strong><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, TimeOfIncident %>" />:</strong>
 								<asp:Literal ID="ltrTime" runat="server">n/a</asp:Literal>
 							</td>
 						</tr>

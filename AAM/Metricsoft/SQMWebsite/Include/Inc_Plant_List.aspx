@@ -38,7 +38,7 @@
 										    	Text='<%#Eval("PLANT_NAME") %>'  OnClick="lnkPlantView_Click" CSSclass="linkUnderline"></asp:LinkButton>
                                         </ItemTemplate>
 							        </asp:TemplateField>
-                                    <asp:BoundField DataField="DUNS_CODE" HeaderText="Location Code" ItemStyle-Width="20%" />
+                                    <asp:BoundField DataField="DUNS_CODE" HeaderText="<%$ Resources:LocalizedText, LocationCode %>" ItemStyle-Width="20%" />
                                     <asp:BoundField DataField="GRID_CODE" HeaderText="Grid Code" ItemStyle-Width="20%" />
                                     <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>

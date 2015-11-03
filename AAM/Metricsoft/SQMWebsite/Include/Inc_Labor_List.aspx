@@ -34,8 +34,8 @@
 										    	Text='<%#Eval("LABOR_CODE") %>' OnClick="lnkLaborView_Click"></asp:LinkButton>
                                         </ItemTemplate>
 							        </asp:TemplateField>
-                                    <asp:BoundField DataField="LABOR_NAME" HeaderText="Name" ItemStyle-Width="40%" />
-                                    <asp:BoundField DataField="LABOR_RATE" HeaderText="Cost" ItemStyle-Width="15%" />
+                                    <asp:BoundField DataField="LABOR_NAME" HeaderText="<%$ Resources:LocalizedText, Name %>" ItemStyle-Width="40%" />
+                                    <asp:BoundField DataField="LABOR_RATE" HeaderText="<%$ Resources:LocalizedText, Cost %>" ItemStyle-Width="15%" />
                                     <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="15%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />

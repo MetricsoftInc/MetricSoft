@@ -60,7 +60,7 @@
                                     <asp:Label ID="lblFilterBySupplier" runat="server" Text="Part Source" ></asp:Label>
                                 </SPAN>
                                 <BR>
-                                    <telerik:RadComboBox ID="ddlSourceSelect" runat="server" Width="200" Skin="Metro" ZIndex=9000 Font-Size=Small EmptyMessage="Select" AutoPostBack="true">
+                                    <telerik:RadComboBox ID="ddlSourceSelect" runat="server" Width="200" Skin="Metro" ZIndex=9000 Font-Size=Small EmptyMessage="<%$ Resources:LocalizedText, Select %>" AutoPostBack="true">
                                         <Items>
                                             <telerik:RadComboBoxItem Text="" Value=""/>
                                             <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="-1"/>
@@ -88,7 +88,7 @@
                                 &nbsp;&nbsp;
                                 <asp:Button id="btnPartSearch" runat="server" CssClass="buttonEmphasis" text="<%$ Resources:LocalizedText, Search %>" OnClick="OnPartSearch"/>
                                 &nbsp;&nbsp;
-                                <asp:Button ID="btnPartNew" CSSclass="buttonAddLarge" runat="server" text="New" onclick="OnPartAdd" ToolTip="Add a part associated with the trading partners selected"></asp:Button>
+                                <asp:Button ID="btnPartNew" CSSclass="buttonAddLarge" runat="server" text="<%$ Resources:LocalizedText, New %>" onclick="OnPartAdd" ToolTip="Add a part associated with the trading partners selected"></asp:Button>
                             </td>
                             <td class=summaryData valign=top>
 				                <SPAN CLASS=summaryHeader>

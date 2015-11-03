@@ -119,6 +119,7 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPeriodFrom.Text = this.lblYearFrom.Text = Resources.LocalizedText.From + ": ";
 			this.lblPeriodTo.Text = this.lblYearTo.Text = Resources.LocalizedText.To + ": ";
         }
 
@@ -1069,7 +1070,9 @@ namespace SQM.Website
         {
             if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
             {
-                try
+				(e.Item.FindControl("lblTarget") as Label).Text = Resources.LocalizedText.Target + ":";
+
+				try
                 {
                     PERSPECTIVE_VIEW_ITEM vi = (PERSPECTIVE_VIEW_ITEM)e.Item.DataItem;
                     DropDownList ddl;

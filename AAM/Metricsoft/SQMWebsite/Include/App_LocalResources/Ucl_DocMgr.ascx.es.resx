@@ -117,7 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RadAjaxManager1Resource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="ddlSelectDocsResource1.EmptyMessage" xml:space="preserve">
+    <value>Referencias de Aplicación</value>
+  </data>
+  <data name="GridBoundColumnResource2.HeaderText" xml:space="preserve">
+    <value>Publicado</value>
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="lblDefaultDocumentsResource1.Text" xml:space="preserve">
+    <value>Documentos almacenados</value>
+  </data>
+  <data name="lblDocListRptEmptyResource1.Text" xml:space="preserve">
+    <value>La lista de documentos está vacía.</value>
+  </data>
+  <data name="lblDocPostedHdrResource1.Text" xml:space="preserve">
+    <value>Publicado</value>
+  </data>
+  <data name="lblDocsListEmptyResource1.Text" xml:space="preserve">
+    <value>La lista de documentos está vacía.</value>
+  </data>
+  <data name="lblDocTypeHdrResource1.Text" xml:space="preserve">
+    <value>Alcance</value>
+  </data>
+  <data name="lblDocumentHdrResource1.Text" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="lblGVDocsListEmptyResource1.Text" xml:space="preserve">
+    <value>La lista de documentos está vacía.</value>
+  </data>
+  <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
+    <value>Document Name</value>
+  </data>
+  <data name="TemplateFieldResource9.HeaderText" xml:space="preserve">
+    <value>Posted By</value>
   </data>
 </root>

@@ -1229,7 +1229,7 @@ namespace SQM.Website
 		void UpdateButtonText()
 		{
 
-			btnSaveReturn.Text = "Save & Return";
+			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
 
 			int chInt = (int)EHSQuestionId.Create8D;
 			string chString = chInt.ToString();
@@ -1247,7 +1247,7 @@ namespace SQM.Website
 				if (IsEditContext)
 					btnSaveContinue.Text = "Save & Edit Report";
 				else
-					btnSaveContinue.Text = "Save & Create Report";
+					btnSaveContinue.Text = Resources.LocalizedText.SaveAndCreateReport;
 			}
 
 			if (IsEditContext)

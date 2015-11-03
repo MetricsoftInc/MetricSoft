@@ -108,7 +108,7 @@
                                             </td>
                                             <td class="required">&nbsp;</td>
                                             <td class="tableDataAlt">
-                                                 <telerik:RadComboBox ID="ddlIncidentSeverity2" runat="server" Skin="Metro" Width="350" ZIndex=9000 AutoPostBack="false" Font-Size=Small EmptyMessage="Select">
+                                                 <telerik:RadComboBox ID="ddlIncidentSeverity2" runat="server" Skin="Metro" Width="350" ZIndex=9000 AutoPostBack="false" Font-Size=Small EmptyMessage="<%$ Resources:LocalizedText, Select %>">
                                                     </telerik:RadComboBox>
                                             </td>
                                         </tr>
@@ -305,7 +305,7 @@
                                                             </asp:UpdatePanel>
                                                         </td>
                                                         <td class="tableDataAlt" width="1%">&nbsp;</td>
-                                                        <td width="17%"><asp:Label ID="lblCostEst" runat="server" Text="Cost"></asp:Label></td>
+                                                        <td width="17%"><asp:Label ID="lblCostEst" runat="server" Text="<%$ Resources:LocalizedText, Cost %>"></asp:Label></td>
                                                         <td width="58%"><asp:Label ID="lblCostDetails" runat="server" Text="Details"></asp:Label></td>
                                                     </tr>
                                                     <tr>

@@ -9,7 +9,7 @@
                                 <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
-                                    	<asp:TemplateField HeaderText="Company" ItemStyle-Width="24%">
+                                    	<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Company %>" ItemStyle-Width="24%">
 						                    <ItemTemplate>
 							                    <asp:Label ID="lblCompany_out" runat="server" text='<%#Eval("CompanyName") %>' ></asp:Label>
                                         	</ItemTemplate>
@@ -19,12 +19,12 @@
 							                    <asp:Label ID="lblBusorg_out" runat="server" text='<%#Eval("BusorgName") %>' ></asp:Label>
                                         	</ItemTemplate>
 					                    </asp:TemplateField>
-                                    	<asp:TemplateField HeaderText="Plant" ItemStyle-Width="24%">
+                                    	<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Plant %>" ItemStyle-Width="24%">
 						                    <ItemTemplate>
 							                    <asp:Label ID="lblPlant_out" runat="server" text='<%#Eval("PlantName") %>' ></asp:Label>
                                         	</ItemTemplate>
 					                    </asp:TemplateField>
-                                    	<asp:TemplateField HeaderText="Location" ItemStyle-Width="20%">
+                                    	<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Location %>" ItemStyle-Width="20%">
 						                    <ItemTemplate>
 							                    <asp:Label ID="lblPlantlocation_out" runat="server" text='<%#Eval("PlantLocation") %>' ></asp:Label>
                                         	</ItemTemplate>

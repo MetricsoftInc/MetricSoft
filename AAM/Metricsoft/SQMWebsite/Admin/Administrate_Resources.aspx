@@ -111,7 +111,7 @@
 										                                    Text='<%#Eval("MEASURE_CD") %>' OnClick="lnkMeasureList_Click"></asp:LinkButton>
                                                                     </ItemTemplate>
 							                                    </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Name" ItemStyle-Width="21%">
+                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Name %>" ItemStyle-Width="21%">
                                                                     <ItemTemplate>
                                                                         <asp:LinkButton ID="lnkMeasureName" runat="server" CommandArgument='<%#Eval("MEASURE_ID") %>' CSSClass="linkUnderline"
 										                                    Text='<%#Eval("MEASURE_NAME") %>' OnClick="lnkMeasureList_Click"></asp:LinkButton>

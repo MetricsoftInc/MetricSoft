@@ -55,7 +55,7 @@
                                             <asp:TextBox ID="tbLastName" runat="server" CSSclass="textStd" Text='<%#Eval("LAST_NAME") %>' Columns="36" Visible="false" ></asp:TextBox>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Delete" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Delete %>" ItemStyle-Width="10%">
                                     <ItemTemplate>
                                       <asp:HiddenField ID="hfStatus" runat="server" />
                                       <asp:CheckBox ID="cbStatus" runat="server" Style="margin-left: 33%;"></asp:CheckBox>

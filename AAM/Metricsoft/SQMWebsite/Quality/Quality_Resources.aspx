@@ -154,7 +154,7 @@
                 	                                                <Columns>
                                                                         <asp:TemplateField ItemStyle-Width="17%">
                                                                             <HeaderTemplate>
-                                                                                <asp:LinkButton ID="lnkCategoryNew" runat="server" Text="Category" CSSClass="linkUnderline" ToolTip="Add a new category" OnClientClick="AddCategory(); return false;"></asp:LinkButton>
+                                                                                <asp:LinkButton ID="lnkCategoryNew" runat="server" Text="<%$ Resources:LocalizedText, Category %>" CSSClass="linkUnderline" ToolTip="Add a new category" OnClientClick="AddCategory(); return false;"></asp:LinkButton>
                                                                             </HeaderTemplate>
                                                                             <ItemTemplate>
                                                                                 <asp:HiddenField ID="hfNonconfCat" runat="server" Value='<%#Eval("NONCONF_CD") %>' />
@@ -176,7 +176,7 @@
 										                                                            Text='<%#Eval("NONCONF_CD") %>' OnClick="lnkNonconfList_Click"></asp:LinkButton>
                                                                                             </ItemTemplate>
 							                                                            </asp:TemplateField>
-                                                                                        <asp:TemplateField HeaderText="Name" ItemStyle-Width="30%">
+                                                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Name %>" ItemStyle-Width="30%">
                                                                                             <ItemTemplate>
                                                                                                 <asp:LinkButton ID="lnkNonconfName" runat="server" CommandArgument='<%#Eval("NONCONF_ID") %>' CSSClass="linkUnderline"
 										                                                            Text='<%#Eval("NONCONF_NAME") %>' OnClick="lnkNonconfList_Click"></asp:LinkButton>
@@ -212,7 +212,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="columnHeader">
-                                                                            <asp:Label ID="lblNonconfCatName" runat="server" text="Name"></asp:Label>
+                                                                            <asp:Label ID="lblNonconfCatName" runat="server" Text="<%$ Resources:LocalizedText, Name %>"></asp:Label>
                                                                         </td>
                                                                         <td class="required">&nbsp;</td>
                                                                         <td CLASS="tableDataAlt">
@@ -237,7 +237,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="columnHeader">
-                                                                            <asp:Label ID="lblNonconfName" runat="server" text="Name"></asp:Label>
+                                                                            <asp:Label ID="lblNonconfName" runat="server" Text="<%$ Resources:LocalizedText, Name %>"></asp:Label>
                                                                         </td>
                                                                         <td class="required">&nbsp;</td>
                                                                         <td CLASS="tableDataAlt">
@@ -255,7 +255,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="columnHeader">
-                                                                            <asp:Label ID="lblNonconfCategory" runat="server" text="Category"></asp:Label>
+                                                                            <asp:Label ID="lblNonconfCategory" runat="server" Text="<%$ Resources:LocalizedText, Category %>"></asp:Label>
                                                                         </td>
                                                                         <td class="required">&nbsp;</td>
                                                                         <td CLASS="tableDataAlt">

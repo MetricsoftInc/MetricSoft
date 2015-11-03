@@ -9,7 +9,7 @@
 		<ItemTemplate>
 			<tr>
 				<td id="tdLocation" runat="server" class="rptInputTableEnd" style="width: 15%; vertical-align: top; padding-top: 2px; padding-left: 3px;">
-			        <asp:Label ID="lblLocation" runat="server" CSSClass="prompt" Text="Location"></asp:Label>
+			        <asp:Label ID="lblLocation" runat="server" CSSClass="prompt" Text="<%$ Resources:LocalizedText, Location %>"></asp:Label>
 				</td>
                 <td class="rptInputTable" valign="top" style="width: 85%;" >
                     <table cellspacing="0" cellpadding="1" border="0" width="100%">
@@ -39,11 +39,11 @@
                                                 <asp:Label id="lblScope1FuelQty" runat="server" CssClass="textStd"></asp:Label>
                                             </td>
                                             <td class="listDataAlt" valign="top" rowspan="1" style="width: 64%;">
-                                                <asp:GridView runat="server" ID="gvGasList1" Name="gvGasList1" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="none" 
+                                                <asp:GridView runat="server" ID="gvGasList1" Name="gvGasList1" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="none"
                                                     PageSize="20" AllowSorting="false" Width="99%" OnRowDataBound="gvGasList1_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                     <RowStyle CssClass="DataCell" />
-                                                    <AlternatingRowStyle CssClass="DataCellAlt" /> 
+                                                    <AlternatingRowStyle CssClass="DataCellAlt" />
                 	                                <Columns>
                                                         <asp:TemplateField HeaderText="Gas" ItemStyle-Width="20%">
                                                             <ItemTemplate>
@@ -100,11 +100,11 @@
                                                 <asp:Label id="lblScope2FuelQty" runat="server" CssClass="textStd"></asp:Label>
                                             </td>
                                             <td class="listDataAlt" valign="top" rowspan="1" style="width: 64%;">
-                                                <asp:GridView runat="server" ID="gvGasList2" Name="gvGasList2" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="none" 
+                                                <asp:GridView runat="server" ID="gvGasList2" Name="gvGasList2" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="none"
                                                     PageSize="20" AllowSorting="false" Width="99%" OnRowDataBound="gvGasList2_OnRowDataBound">
-                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                                    <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                     <RowStyle CssClass="DataCell" />
-                                                    <AlternatingRowStyle CssClass="DataCellAlt" /> 
+                                                    <AlternatingRowStyle CssClass="DataCellAlt" />
                 	                                <Columns>
                                                         <asp:TemplateField HeaderText="Gas" ItemStyle-Width="20%">
                                                             <ItemTemplate>

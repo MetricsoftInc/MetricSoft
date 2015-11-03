@@ -140,7 +140,7 @@
                                                                             <HeaderStyle CssClass="HeadingCellTextLeft" />
                                                                             <RowStyle CssClass="DataCell" />
                 	                                                        <Columns>
-                                                                                <asp:TemplateField HeaderText="Target" ItemStyle-Width="50%">
+                                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Target %>" ItemStyle-Width="50%">
 							                                                        <ItemTemplate>
 								                                                        <asp:LinkButton ID="lnkTargetCD" runat="server" CommandArgument='<%#Eval("TARGET_ID") %>' CSSClass="linkUnderline"
 										                                                    Text='<%#Eval("DESCR_SHORT") %>' OnClick="lnkTargetList_Click"></asp:LinkButton>
@@ -152,7 +152,7 @@
                                                                                         <asp:Label ID="lblTargetYear" runat="server" Text='<%#Eval("EFF_YEAR") %>' ></asp:Label>
                                                                                     </ItemTemplate>
                                                                                 </asp:TemplateField>
-                                                                                <asp:TemplateField HeaderText="Target Value" ItemStyle-Width="25%">
+                                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, TargetValue %>" ItemStyle-Width="25%">
                                                                                     <ItemTemplate>
                                                                                         <asp:Label ID="lblTargetValue" runat="server" ></asp:Label>
                                                                                         <asp:HiddenField id="hfTargetValue" runat="server" Value='<%#Eval("TARGET_VALUE") %>'/>
@@ -178,7 +178,7 @@
                                                                         <table width="99%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder">
                                                                             <tr>
                                                                                 <td class="columnHeader" width="34%">
-                                                                                    <asp:Label ID="lblTargetName" runat="server" text="Target"></asp:Label>
+                                                                                    <asp:Label ID="lblTargetName" runat="server" Text="<%$ Resources:LocalizedText, Target %>"></asp:Label>
                                                                                 </td>
                                                                                 <td class="required" width="1%">&nbsp;</td>
                                                                                 <td CLASS="tableDataAlt" width="65%">
@@ -202,7 +202,7 @@
                                                                                 <td CLASS="tableDataAlt">
                                                                                     <asp:DropDownList ID="ddlStatType" runat="server">
                                                                                         <asp:ListItem Value="sum">Total</asp:ListItem>
-                                                                                        <asp:ListItem Value="pctChange">Percent Change</asp:ListItem>
+                                                                                        <asp:ListItem Value="pctChange" Text="<%$ Resources:LocalizedText, PercentChange %>" />
                                                                                         <asp:ListItem Value="deltaDy">Last Occurence</asp:ListItem>
 										                                            </asp:DropDownList>
                                                                                 </td>
@@ -223,7 +223,7 @@
                                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                                 <td CLASS="tableDataAlt">
                                                                                     <telerik:RadAjaxPanel ID="RadAjaxPanel2" runat="server">
-                                                                                        <telerik:RadButton ID="btnYTDMetric" runat="server" CssClass="prompt" Text="Year To Date" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as year-to-date" CommandArgument="1"></telerik:RadButton>
+                                                                                        <telerik:RadButton ID="btnYTDMetric" runat="server" CssClass="prompt" Text="<%$ Resources:LocalizedText, YearToDate %>" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as year-to-date" CommandArgument="1"></telerik:RadButton>
                                                                                         <telerik:RadButton ID="btnYOYMetric" runat="server" CssClass="prompt" Text="Year Over Year" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated as difference from previous year" CommandArgument="2"></telerik:RadButton>
                                                                                         <telerik:RadButton ID="btnABSMetric" runat="server" CssClass="prompt" Text="Last Occur" OnClick="onTimeSpanClick" AutoPostBack=true ButtonType=ToggleButton ToggleType=Radio ToolTip="Metric calculated from last occurence" CommandArgument="0"></telerik:RadButton>
                                                                                     </telerik:RadAjaxPanel>
@@ -231,7 +231,7 @@
                                                                             </tr>
                                                       		                <tr>
                                                                                 <td class="columnHeader">
-                                                                                    <asp:Label ID="lblTargetValue" runat="server" text="Target Value"></asp:Label>
+                                                                                    <asp:Label ID="lblTargetValue" runat="server" Text="<%$ Resources:LocalizedText, TargetValue %>"></asp:Label>
                                                                                 </td>
                                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                                 <td CLASS="tableDataAlt">

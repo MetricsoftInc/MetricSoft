@@ -178,10 +178,10 @@
                                         <td style="vertical-align: bottom;">
                                             <asp:Label ID="lblInvoiceHdr" runat="server" Text=" Invoice Period (from / to)" cssclass="prompt" ></asp:Label>
                                             <asp:Label ID="lblValueHdr" runat="server" Text="Quantity" cssclass="prompt" style="margin-left: 74px;"></asp:Label>
-                                            <asp:Label ID="lblCostHdr" runat="server" Text="Cost" cssclass="prompt" style="margin-left: 95px;"></asp:Label>
+                                            <asp:Label ID="lblCostHdr" runat="server" Text="<%$ Resources:LocalizedText, Cost %>" cssclass="prompt" style="margin-left: 95px;"></asp:Label>
                                             <asp:Label ID="lblCreditHdr" runat="server" Text=" or  Credit Amount" cssclass="prompt" style="margin-left: 78px;"></asp:Label>
                                             <asp:Label ID="lblDelete" runat="server" Text="Del" cssclass="prompt" style="margin-left: 54px;" ToolTip="Delete this input"></asp:Label>
-                                           <%-- <asp:Image ID="imgDelete" runat="server" ImageUrl="/images/defaulticon/16x16/delete.png" AlternateText="Delete" ToolTip="Delete" style="vertical-align: middle; border: 0px; margin-left: 54px;" />--%>
+                                           <%-- <asp:Image ID="imgDelete" runat="server" ImageUrl="/images/defaulticon/16x16/delete.png" AlternateText="<%$ Resources:LocalizedText, Delete %>" ToolTip="<%$ Resources:LocalizedText, Delete %>" style="vertical-align: middle; border: 0px; margin-left: 54px;" />--%>
                                         </td>
                                     </tr>
                                     <tr style="height: 3px;"><td></td></tr>
@@ -265,7 +265,7 @@
                     <span style="float: left; margin-left: 5px;" class="noprint">
                         <asp:HiddenField id="hfExportText" runat="server" Value="Export (4 month) input history to Excel"/>
                         <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                        <asp:LinkButton  ID="lnkExport" runat="server" Text="Export" ToolTip="Export Data To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
+                        <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
                         <Ucl:Export id="uclExport" runat="server"/>
                      </span>
                     <span style="float: right; margin-right: 5px;" class="noprint">

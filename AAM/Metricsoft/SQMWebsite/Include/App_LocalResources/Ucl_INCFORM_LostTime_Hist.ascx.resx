@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnAddLostTimeResource1.Text" xml:space="preserve">
-    <value>Add Another</value>
-  </data>
-  <data name="btnAddLostTimeResource1.ToolTip" xml:space="preserve">
-    <value>Add Another Final Corrective Action</value>
-  </data>
-  <data name="btnItemDeleteResource1.Text" xml:space="preserve">
-    <value>Delete Item</value>
-  </data>
   <data name="btnItemDeleteResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -134,9 +125,6 @@
   </data>
   <data name="lbBeginDateResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="lbExpectedReturnDTResource1.Text" xml:space="preserve">
-    <value>Expected Return Date</value>
   </data>
   <data name="lbExpectedReturnDTResource1.ToolTip" xml:space="preserve">
     <value />
@@ -369,17 +357,11 @@
   <data name="rdpNextMedDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
   </data>
-  <data name="rfvExpectedReturnDTResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvExpectedReturnDTResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvExpectedReturnDTResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvNextMedDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvNextMedDateResource1.Text" xml:space="preserve">
     <value />
@@ -387,26 +369,17 @@
   <data name="rfvNextMedDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvRestrictDescResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvRestrictDescResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvRestrictDescResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvWorkStatusResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvWorkStatusResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvWorkStatusResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rvfBeginDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rvfBeginDateResource1.Text" xml:space="preserve">
     <value />

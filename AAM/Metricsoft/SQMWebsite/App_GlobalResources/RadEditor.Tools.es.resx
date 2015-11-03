@@ -487,7 +487,7 @@
     <value>Font</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="Links" xml:space="preserve">
     <value>Links</value>
@@ -544,16 +544,16 @@
     <value>Copy Format</value>
   </data>
   <data name="DeleteTableItems" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="InsertTableItems" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="MergeSplitCells" xml:space="preserve">
     <value>Merge and Split Cells</value>
   </data>
   <data name="MobileEdit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="ToggleEditMode" xml:space="preserve">
     <value>Toggle Edit Mode</value>

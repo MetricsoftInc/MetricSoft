@@ -5,7 +5,7 @@
                     	            <tr>
                                         <td class=summaryData valign=top>
 							                <SPAN CLASS=summaryHeader>
-                                                <asp:Label runat="server" ID="lblCompanyHdr" Text="Company" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblCompanyHdr" Text="<%$ Resources:LocalizedText, Company %>" Visible="true"></asp:Label>
                                             </SPAN>
                                             <BR>
 							                <asp:Label runat="server" ID="lblCompany_out" Text="" Visible="true"></asp:Label>

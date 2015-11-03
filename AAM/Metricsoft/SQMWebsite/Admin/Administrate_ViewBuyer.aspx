@@ -30,7 +30,7 @@
                                                         onclick="tab_Click" CommandArgument="assign"></asp:Button>
 									                </td>
 									                <td>
-                                                        <asp:Button ID="lbBuyerAdd1" CSSclass="buttonStd" runat="server" text="Edit"
+                                                        <asp:Button ID="lbBuyerAdd1" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Edit %>"
                                                         onclick="tab_Click" CommandArgument="edit"></asp:Button>
 									                </td>
                                                     <td>
@@ -79,7 +79,7 @@
                                                     onclick="tab_Click" CommandArgument="assign"></asp:Button>
 							                </td>
 						                    <td>
-                                                <asp:Button ID="lbBuyerAdd2" CSSclass="buttonStd" runat="server" text="Edit"
+                                                <asp:Button ID="lbBuyerAdd2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Edit %>"
                                                  onclick="tab_Click" CommandArgument="edit"></asp:Button>
 					                        </td>
                                             <td>

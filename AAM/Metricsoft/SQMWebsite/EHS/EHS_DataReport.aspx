@@ -18,7 +18,7 @@
 			<telerik:RadGrid ID="rgData" runat="server" Skin="Metro" AutoGenerateColumns="false" BorderStyle="None">
 				<MasterTableView DataKeyNames="PlantID">
 					<Columns>
-						<telerik:GridBoundColumn DataField="PlantName" HeaderText="Location" UniqueName="PlantName" />
+						<telerik:GridBoundColumn DataField="PlantName" HeaderText="<%$ Resources:LocalizedText, Location %>" UniqueName="PlantName" />
 						<telerik:GridBoundColumn DataField="PersonLastName" HeaderText="EHS Rep" />
 					</Columns>
 				</MasterTableView>

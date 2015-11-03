@@ -921,6 +921,8 @@ namespace SQM.Website
 
 			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
 			{
+				(e.Item.FindControl("lbWitNamePrompt") as Label).Text = Resources.LocalizedText.Name + ": ";
+
 				int minRowsToValidate = 1;
 
 				try
@@ -941,7 +943,7 @@ namespace SQM.Website
 							rsbw.Visible = (IncidentLocationId > 0) ? true : false;
 							lb.Text = witness.WITNESS_NO.ToString();
 							lb2.Text = witness.WITNESS_NO.ToString();
-							itmdel.Text = "Delete Item";
+							itmdel.Text = Resources.LocalizedText.DeleteItem;
 
 							//get the display name for the search box
 							PERSON prsn = (from p in entities.PERSON where p.PERSON_ID == witness.WITNESS_PERSON select p).FirstOrDefault();

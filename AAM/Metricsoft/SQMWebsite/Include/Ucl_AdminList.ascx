@@ -21,7 +21,7 @@
 							<tr>
 								<td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblCompanyHdr" Text="Company" Visible="true"></asp:Label>
+										<asp:Label runat="server" ID="lblCompanyHdr" Text="<%$ Resources:LocalizedText, Company %>" Visible="true"></asp:Label>
 									</span>
 									<br>
 									<asp:HiddenField runat="server" ID="hfCompanyID" Value='<%#Eval("COMPANY_ID") %>'/>
@@ -63,7 +63,7 @@
 							<tr>
 								<td class="listDataAlt" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblCompanyHdr" Text="Company" Visible="true"></asp:Label>
+										<asp:Label runat="server" ID="lblCompanyHdr" Text="<%$ Resources:LocalizedText, Company %>" Visible="true"></asp:Label>
 									</span>
 									<br>
 									<asp:HiddenField runat="server" ID="hfCompanyID" Value='<%#Eval("COMPANY_ID") %>'/>
@@ -139,7 +139,7 @@
 								</td>
 								<td class="listDataAlt" valign="top" rowspan="2" style="width: 60%;">
 									<span class="summaryHeader" style="text-align: center;">
-										<asp:Label runat="server" ID="lblBusOrgHdr" Text="Business Locations"
+										<asp:Label runat="server" ID="lblBusOrgHdr" Text="<%$ Resources:LocalizedText, BusinessLocation %>"
 											Visible="true"></asp:Label>
 									</span>
 									<br>
@@ -163,8 +163,8 @@
 									                        Text='<%#Eval("PLANT_NAME") %>'  OnClick="lnkPlant_Click" CSSclass="linkUnderline"></asp:LinkButton>
                                                     </ItemTemplate>
 						                        </asp:TemplateField>
-                                                <asp:BoundField DataField="DUNS_CODE" HeaderText="Location Code" ItemStyle-Width="15%" />
-                                                <asp:TemplateField HeaderText="Location Type" ItemStyle-Width="15%">
+                                                <asp:BoundField DataField="DUNS_CODE" HeaderText="<%$ Resources:LocalizedText, LocationCode %>" ItemStyle-Width="15%" />
+                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, LocationType %>" ItemStyle-Width="15%">
 							                        <ItemTemplate>
                                                         <asp:HiddenField runat="server" ID="hfLocationType" Value='<%#Eval("LOCATION_TYPE") %>'/>
                                                         <asp:Label runat="server" ID="lblLocationType_out"  Text='<%#Eval("LOCATION_TYPE") %>'></asp:Label>
@@ -278,8 +278,8 @@
 										Text='<%#Eval("LABOR_CODE") %>' OnClick="lnkLaborList_Click"></asp:LinkButton>
                                 </ItemTemplate>
 							</asp:TemplateField>
-                            <asp:BoundField DataField="LABOR_NAME" HeaderText="Name" ItemStyle-Width="40%" />
-                            <asp:BoundField DataField="LABOR_RATE" HeaderText="Cost" ItemStyle-Width="15%" />
+                            <asp:BoundField DataField="LABOR_NAME" HeaderText="<%$ Resources:LocalizedText, Name %>" ItemStyle-Width="40%" />
+                            <asp:BoundField DataField="LABOR_RATE" HeaderText="<%$ Resources:LocalizedText, Cost %>" ItemStyle-Width="15%" />
                             <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="15%">
                                 <ItemTemplate>
                                     <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />

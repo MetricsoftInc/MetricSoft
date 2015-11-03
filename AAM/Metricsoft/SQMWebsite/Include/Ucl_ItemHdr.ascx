@@ -118,14 +118,14 @@
 				</td>
                 <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblLocCodeHdrPlant" Text="Location Code" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblLocCodeHdrPlant" Text="<%$ Resources:LocalizedText, LocationCode %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblLocCodePlant_out" Text="" Visible="true"></asp:Label>
 				</td>
                 <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblLocationType" Text="Location Type" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblLocationType" Text="<%$ Resources:LocalizedText, LocationType %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblLocationType_out" Text="" Visible="true"></asp:Label>

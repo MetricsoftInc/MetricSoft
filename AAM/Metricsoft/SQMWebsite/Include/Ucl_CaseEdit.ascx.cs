@@ -55,7 +55,7 @@ namespace SQM.Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
-			this.gvContainList.Columns[2].HeaderText = "Due Date /<br>" + Resources.LocalizedText.Status;
+			this.gvContainList.Columns[2].HeaderText = Resources.LocalizedText.DueDate + " /<br>" + Resources.LocalizedText.Status;
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -1027,7 +1027,7 @@ namespace SQM.Website
                     btn.CommandArgument = hf.Value;
 
                     GridView gv = (GridView)e.Item.FindControl("gvActionList");
-					gv.Columns[2].HeaderText = "Due Date /<br>" + Resources.LocalizedText.Status;
+					gv.Columns[2].HeaderText = Resources.LocalizedText.DueDate + " /<br>" + Resources.LocalizedText.Status;
                     if (CaseCtl().PageMode == PageUseMode.ViewOnly)
                     {
                         gv.GridLines = GridLines.Both;

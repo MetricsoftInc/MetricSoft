@@ -133,7 +133,7 @@
 													</tr>
 													<tr>
 														<td class="columnHeader">
-															<asp:Label ID="lblValue" runat="server" Text="Value"></asp:Label>
+															<asp:Label ID="lblValue" runat="server" Text="<%$ Resources:LocalizedText, Value %>"></asp:Label>
 														</td>
 														<td class="tableDataAlt">&nbsp;</td>
 														<td class="tableDataAlt">

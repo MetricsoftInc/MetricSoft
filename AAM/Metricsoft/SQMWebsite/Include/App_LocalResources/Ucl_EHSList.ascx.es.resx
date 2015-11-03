@@ -117,7 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RadAjaxManager1Resource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="btnCalculateResource1.Text" xml:space="preserve">
+    <value>Calcular métricas de destino</value>
+  </data>
+  <data name="btnCalculateResource1.ToolTip" xml:space="preserve">
+    <value>Calcular (Año hasta la fecha) métricas corporativas por el mes del informe seleccionado</value>
+  </data>
+  <data name="btnSearchMetricsResource1.ToolTip" xml:space="preserve">
+    <value>Búsqueda de datos</value>
+  </data>
+  <data name="ddlBusLocSelectResource1.ToolTip" xml:space="preserve">
+    <value>Ver o modificar Perfil métrico para la ubicación seleccionada</value>
+  </data>
+  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
+    <value>Ver o introducir datos métricos para la ubicación seleccionada</value>
+  </data>
+  <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
+    <value>Período de información</value>
+  </data>
+  <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="lblDateSelect1Resource1.Text" xml:space="preserve">
+    <value>Mes del informe</value>
+  </data>
+  <data name="lblDateSelect2Resource1.Text" xml:space="preserve">
+    <value>Mes del informe</value>
+  </data>
+  <data name="lblInputPeriodHdrResource1.Text" xml:space="preserve">
+    <value>Mes del informe</value>
+  </data>
+  <data name="lblInputStatus3_outResource1.Text" xml:space="preserve">
+    <value>Métricas obligatorios Entró</value>
+  </data>
+  <data name="lblInputStatuseHdrResource1.Text" xml:space="preserve">
+    <value>Estado de entrada</value>
+  </data>
+  <data name="lblInputStatusOf_outResource1.Text" xml:space="preserve">
+    <value> de </value>
+  </data>
+  <data name="lblPeriodSelectHdrResource1.Text" xml:space="preserve">
+    <value>Mes del informe</value>
+  </data>
+  <data name="lblRateResource1.Text" xml:space="preserve">
+    <value> Fecha grabada en tipo de cambio </value>
+  </data>
+  <data name="lnkPeriodResource1.ToolTip" xml:space="preserve">
+    <value>Select period</value>
+  </data>
+  <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
+    <value>Nombre de datos</value>
   </data>
 </root>

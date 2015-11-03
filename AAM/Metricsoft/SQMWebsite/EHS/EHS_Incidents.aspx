@@ -1,6 +1,6 @@
 ﻿<%@ Page Title=""  Language="C#" MasterPageFile="~/RspPSMaster.Master"
 	AutoEventWireup="True" EnableEventValidation="false" CodeBehind="EHS_Incidents.aspx.cs" ClientIDMode="AutoID"
-	Inherits="SQM.Website.EHS_Incidents" ValidateRequest="false" meta:resourcekey="PageResource1" %>
+	Inherits="SQM.Website.EHS_Incidents" ValidateRequest="false" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
@@ -137,7 +137,7 @@
 							<asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
 						</span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
+						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 
 						<div class="visible-xs"></div>
 						<br class="visible-xs-block" style="margin-top: 7px;" />
@@ -178,7 +178,7 @@
 						<span style="margin-top: 4px; margin-left: 14px;">
 							<span style="padding-right:44px;"><asp:Label runat="server" ID="lblIncidentDate" Text="Incident Date From:" CssClass="prompt" meta:resourcekey="lblIncidentDateResource1"></asp:Label></span>
 							<asp:Label runat="server" ID="lblInspectionDate" Text="Inspection Date From:" CssClass="prompt" meta:resourcekey="lblInspectionDateResource1"></asp:Label>
-							<span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmFromDateResource1">
+							<span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
 <Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
 <DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
@@ -206,7 +206,7 @@
 
 						<span>
 							<span style="margin-left: 14px; padding-right:8px;"><asp:Label runat="server" ID="lblToDate" CssClass="prompt"></asp:Label>
-							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmToDateResource1">
+							<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
 <Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
 <DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
@@ -235,10 +235,10 @@
 						<span class="noprint">
 							<span style="margin-left: 14px;">
 								<asp:Label ID="lblCreatedByMe" runat="server" Text="Created By Me Only" CssClass="prompt" meta:resourcekey="lblCreatedByMeResource1"></asp:Label>
-								<span style="padding-top: 10px;""><asp:CheckBox ID="cbCreatedByMe" runat="server" meta:resourcekey="cbCreatedByMeResource1"  /></span>
+								<span style="padding-top: 10px;""><asp:CheckBox ID="cbCreatedByMe" runat="server" /></span>
 								&nbsp;&nbsp;
 								<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt" Visible="False" meta:resourcekey="lblShowImageResource1"></asp:Label>
-								<span style="padding-top: 10px;""><asp:CheckBox ID="cbShowImage" runat="server" Visible="False" meta:resourcekey="cbShowImageResource1"  /></span>
+								<span style="padding-top: 10px;""><asp:CheckBox ID="cbShowImage" runat="server" Visible="False" /></span>
 								<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="<%$ Resources:LocalizedText, ListIncidents %>" OnClick="btnIncidentsSearchClick" />
 							</span>
 						</span>
@@ -247,7 +247,7 @@
 				<br />
 				<%--	$$$$$$$$$$$$$$ Incident Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
 
-				<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel2Resource1">
+				<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet">
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
@@ -264,7 +264,7 @@
 						</span>
 					</div>
 
-					<asp:Panel ID="pnlChartSection" runat="server" Width="100%" meta:resourcekey="pnlChartSectionResource1">
+					<asp:Panel ID="pnlChartSection" runat="server" Width="100%">
 						<div class="row-fluid">
 							<div id="divChart" runat="server" class="borderSoft" style="width: 99%; padding: 10px 0;">
 								<Ucl:RadGauge ID="uclChart" runat="server" />
@@ -272,11 +272,11 @@
 						</div>
 					</asp:Panel>
 
-					<asp:Panel ID="pnlIncidentDetails" runat="server" Width="100%" Visible="False" meta:resourcekey="pnlIncidentDetailsResource1">
+					<asp:Panel ID="pnlIncidentDetails" runat="server" Width="100%" Visible="False">
 						<div class="row-fluid">
 							<br />
 							<asp:HiddenField ID="hfIncidentDetails" runat="server" Value="Incident # Summary" />
-							<asp:Label ID="lblIncidentDetails" runat="server" CssClass="prompt" meta:resourcekey="lblIncidentDetailsResource1"></asp:Label>
+							<asp:Label ID="lblIncidentDetails" runat="server" CssClass="prompt"></asp:Label>
 							<asp:LinkButton ID="lnkIncidentDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="<%$ Resources:LocalizedText, Close %>">
 											 <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
 							</asp:LinkButton>
@@ -295,7 +295,7 @@
 		</div>
 	</div>
 
-	<telerik:RadWindow runat="server" ID="winNewIncident" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="Close, Move" meta:resourcekey="winNewIncidentResource1">
+	<telerik:RadWindow runat="server" ID="winNewIncident" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="Close, Move">
 		<ContentTemplate>
 			<div class="container-fluid" style="margin-top: 10px;">
 				<div class="row">
@@ -304,7 +304,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 						<telerik:RadComboBox ID="ddlIncidentLocation" runat="server" Skin="Metro" ZIndex="9000" Height="300px" Width="300px" Font-Size="Small"
-							ToolTip="Select the location where the incident occured" EmptyMessage="Select" meta:resourcekey="ddlIncidentLocationResource1"></telerik:RadComboBox>
+							ToolTip="Select the location where the incident occured" EmptyMessage="<%$ Resources:LocalizedText, Select %>"></telerik:RadComboBox>
 					</div>
 				</div>
 				<div class="row">
@@ -313,7 +313,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 						<telerik:RadComboBox ID="rddlNewIncidentType" runat="server" Skin="Metro" ZIndex="9000" Height="250px" Width="300px" Font-Size="Small"
-							ToolTip="Select the type of incident you wish to report" EmptyMessage="Select"> </telerik:RadComboBox>
+							ToolTip="Select the type of incident you wish to report" EmptyMessage="<%$ Resources:LocalizedText, Select %>"> </telerik:RadComboBox>
 					</div>
 				</div>
 				<br />

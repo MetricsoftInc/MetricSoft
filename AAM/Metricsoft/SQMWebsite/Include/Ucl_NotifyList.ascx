@@ -67,7 +67,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlNotifyScope" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlNotifyScope" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="<%$ Resources:LocalizedText, Select %>" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                 <tr>
@@ -76,7 +76,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeTask" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeTask" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="<%$ Resources:LocalizedText, Select %>" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                 <tr>
@@ -85,7 +85,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeStatus" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeStatus" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="<%$ Resources:LocalizedText, Select %>" OnSelectedIndexChanged="ddlEdit_OnIndexChanged" AutoPostBack="true"></telerik:RadComboBox>
                     </td>
                 </tr>
                <tr>
@@ -94,7 +94,7 @@
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
-                        <telerik:RadComboBox ID="ddlScopeTiming" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="Select"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlScopeTiming" runat="server" Skin="Metro" ZIndex="9000" width=300 EmptyMessage="<%$ Resources:LocalizedText, Select %>"></telerik:RadComboBox>
                     </td>
                 </tr>
                <tr>
@@ -112,7 +112,7 @@
                 <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancelNotifyAction_Click"></asp:Button>
                 <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text ="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return confirmChange('Notification');" onclick="OnSaveNotifyAction_Click"></asp:Button>
 				&nbsp;
-				<asp:Button ID="btnDelete" class="buttonLink" runat="server" Text ="Delete" style="width: 70px;" OnClientClick="return confirmAction('Delete This Notification');" onclick="OnDeleteNotifyAction_Click"></asp:Button>
+				<asp:Button ID="btnDelete" class="buttonLink" runat="server" Text="<%$ Resources:LocalizedText, Delete %>" style="width: 70px;" OnClientClick="return confirmAction('Delete This Notification');" onclick="OnDeleteNotifyAction_Click"></asp:Button>
             </span>
             <br />
             <center>

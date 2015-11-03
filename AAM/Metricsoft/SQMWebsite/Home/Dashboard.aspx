@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="SQM.Website.Dashboard" meta:resourcekey="PageResource1"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="SQM.Website.Dashboard" %>
 <%@ Register src="~/Include/Ucl_DashboardArea.ascx" TagName="Dashboard" TagPrefix="Ucl" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>

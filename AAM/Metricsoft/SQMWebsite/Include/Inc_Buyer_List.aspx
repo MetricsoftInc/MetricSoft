@@ -16,7 +16,7 @@
 							        </asp:TemplateField>
                                     <asp:BoundField DataField="FIRST_NAME" HeaderText="First name" ItemStyle-Width="22%" />
                                     <asp:BoundField DataField="LAST_NAME" HeaderText="Last Name" ItemStyle-Width="23%" />
-                                    <asp:BoundField DataField="NEW_LOCATION_CD" HeaderText="Location" ItemStyle-Width="25%" />
+                                    <asp:BoundField DataField="NEW_LOCATION_CD" HeaderText="<%$ Resources:LocalizedText, Location %>" ItemStyle-Width="25%" />
                                     <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Status %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:HiddenField ID="hfStatus_out" runat="server" Value='<%#Eval("STATUS") %>' />

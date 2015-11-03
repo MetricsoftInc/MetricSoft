@@ -123,9 +123,6 @@
   <data name="btnTaskAddResource1.ToolTip" xml:space="preserve">
     <value>create this Task as open</value>
   </data>
-  <data name="btnTaskCompleteResource1.Text" xml:space="preserve">
-    <value>Completed</value>
-  </data>
   <data name="btnTaskCompleteResource1.ToolTip" xml:space="preserve">
     <value>update this Task as completed</value>
   </data>
@@ -178,18 +175,6 @@
     <value />
   </data>
   <data name="lblTaskDetailValueResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTaskDueDTAddResource1.Text" xml:space="preserve">
-    <value>Due Date</value>
-  </data>
-  <data name="lblTaskDueDTAddResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTaskDueDTResource1.Text" xml:space="preserve">
-    <value>Due Date</value>
-  </data>
-  <data name="lblTaskDueDTResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="lblTaskStatusAddResource1.Text" xml:space="preserve">

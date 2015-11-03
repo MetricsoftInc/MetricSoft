@@ -135,11 +135,11 @@ namespace SQM.Website
                 row.CreateCell(3).SetCellValue("Measure Name");
                 row.CreateCell(4).SetCellValue("Period Year");
                 row.CreateCell(5).SetCellValue("Period Month");
-                row.CreateCell(6).SetCellValue("Value");
+                row.CreateCell(6).SetCellValue(Resources.LocalizedText.Value);
                 row.CreateCell(7).SetCellValue("UOM");
                 row.CreateCell(8).SetCellValue("Input Value");
                 row.CreateCell(9).SetCellValue("Input UOM");
-                row.CreateCell(10).SetCellValue("Cost");
+                row.CreateCell(10).SetCellValue(Resources.LocalizedText.Cost);
                 row.CreateCell(11).SetCellValue("Currency");
                 row.CreateCell(12).SetCellValue("Input Cost");
                 row.CreateCell(13).SetCellValue("Input Currency");
@@ -894,15 +894,15 @@ namespace SQM.Website
                 //// create the headers 
                 IRow row1 = sheet1.CreateRow(0);
                 row1.CreateCell(0).SetCellValue("Incident ID");
-                row1.CreateCell(1).SetCellValue("Incident Date");
-                row1.CreateCell(2).SetCellValue("Report Date");
+                row1.CreateCell(1).SetCellValue(Resources.LocalizedText.IncidentDate);
+                row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
                 row1.CreateCell(3).SetCellValue(Resources.LocalizedText.IncidentType); // really the Issue Type
-                row1.CreateCell(4).SetCellValue("Location"); // Really the plant name
+                row1.CreateCell(4).SetCellValue(Resources.LocalizedText.Location); // Really the plant name
                 row1.CreateCell(5).SetCellValue(Resources.LocalizedText.Description);
                 row1.CreateCell(6).SetCellValue("Root Cause Operational Control");
                 row1.CreateCell(7).SetCellValue(Resources.LocalizedText.CorrectiveAction);
-                row1.CreateCell(8).SetCellValue("Responsible Person");
-                row1.CreateCell(9).SetCellValue("Due Date");
+                row1.CreateCell(8).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
+                row1.CreateCell(9).SetCellValue(Resources.LocalizedText.DueDate);
 
                 int rownum1 = 0;
                 for (int irows = 0; irows < incidentList.Count; irows++)
@@ -1188,14 +1188,14 @@ namespace SQM.Website
                 IRow row1 = sheet1.CreateRow(0);
                 row1.CreateCell(0).SetCellValue("Recommendation ID");
                 row1.CreateCell(1).SetCellValue("Inspection Date");
-                row1.CreateCell(2).SetCellValue("Report Date");
-                row1.CreateCell(3).SetCellValue("Location"); // Really the plant name
+                row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
+                row1.CreateCell(3).SetCellValue(Resources.LocalizedText.Location); // Really the plant name
                 row1.CreateCell(4).SetCellValue("Inspection Category"); 
                 row1.CreateCell(5).SetCellValue("Recommendation Type");
                 row1.CreateCell(6).SetCellValue("Recommendation Description"); 
                 row1.CreateCell(7).SetCellValue(Resources.LocalizedText.Description);
-                row1.CreateCell(8).SetCellValue("Responsible Person");
-                row1.CreateCell(9).SetCellValue("Due Date");
+                row1.CreateCell(8).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
+                row1.CreateCell(9).SetCellValue(Resources.LocalizedText.DueDate);
                 row1.CreateCell(10).SetCellValue(Resources.LocalizedText.Status);
                 row1.CreateCell(11).SetCellValue("Date Actions Applied");
                 row1.CreateCell(12).SetCellValue("Corrective Actions Summary");

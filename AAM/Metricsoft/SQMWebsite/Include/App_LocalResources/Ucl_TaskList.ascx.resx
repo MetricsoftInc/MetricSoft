@@ -132,65 +132,14 @@
   <data name="GridTemplateColumnResource1.FooterAggregateFormatString" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource1.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
     <value>Task ID</value>
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
-    <value>TASK_ID</value>
   </data>
   <data name="GridTemplateColumnResource4.FooterAggregateFormatString" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource4.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource4.HeaderText" xml:space="preserve">
     <value>Create Date</value>
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.SortExpression" xml:space="preserve">
-    <value>CREATE_DT</value>
-  </data>
-  <data name="GridTemplateColumnResource5.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderText" xml:space="preserve">
-    <value>Due Date</value>
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.SortExpression" xml:space="preserve">
-    <value>DUE_DT</value>
   </data>
   <data name="Image1Resource1.AlternateText" xml:space="preserve">
     <value />
@@ -306,116 +255,11 @@
   <data name="RadWindow_TaskDetailResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgTaskListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgTaskListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgTaskListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
-  </data>
   <data name="rgTaskListResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedAllDayEvent" xml:space="preserve">
     <value>All day</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedCalendarToday" xml:space="preserve">
-    <value>Today</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedDaily" xml:space="preserve">
     <value>Daily</value>
@@ -494,9 +338,6 @@
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedOccurrences" xml:space="preserve">
     <value>occurrences</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.AdvancedOf" xml:space="preserve">
-    <value>of</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.AdvancedOfEvery" xml:space="preserve">
     <value>of every</value>
@@ -615,17 +456,8 @@
   <data name="scdTaskScheduleResource1.Localization.ContextMenuAddRecurringAppointment" xml:space="preserve">
     <value>New Recurring Appointment</value>
   </data>
-  <data name="scdTaskScheduleResource1.Localization.ContextMenuDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.ContextMenuEdit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
   <data name="scdTaskScheduleResource1.Localization.ContextMenuGoToToday" xml:space="preserve">
     <value>Go to today</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.Delete" xml:space="preserve">
-    <value>Delete</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.HeaderAddAppointment" xml:space="preserve">
     <value>Add appointment</value>
@@ -701,9 +533,6 @@
   </data>
   <data name="scdTaskScheduleResource1.Localization.ReminderMinutes" xml:space="preserve">
     <value>minutes</value>
-  </data>
-  <data name="scdTaskScheduleResource1.Localization.ReminderNone" xml:space="preserve">
-    <value>None</value>
   </data>
   <data name="scdTaskScheduleResource1.Localization.ReminderOpenItem" xml:space="preserve">
     <value>Open Item</value>

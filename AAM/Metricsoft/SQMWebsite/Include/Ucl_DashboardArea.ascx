@@ -6,22 +6,22 @@
 
 <script type="text/javascript">
 </script>
-<asp:Panel ID="pnlDashboardArea" runat="server" meta:resourcekey="pnlDashboardAreaResource1" >
+<asp:Panel ID="pnlDashboardArea" runat="server">
     <div id="divPerspective" runat="server" style="margin-top: 3px; margin-bottom: 3px;" class="noprint">
         <asp:Label runat="server" ID="lblPerspective" CssClass="instructText" Text="Select a view representing the detailed analysis you wish to explore. Views are listed according to system topics or data types represented." style="margin: 5px;" meta:resourcekey="lblPerspectiveResource1"></asp:Label>
         <br />
     </div>
 
     <div id="divDashboardSelects" runat="server" style="margin-top: 4px;">
-        <asp:Panel ID="pnlDashboardSelects" runat="server" meta:resourcekey="pnlDashboardSelectsResource1">
+        <asp:Panel ID="pnlDashboardSelects" runat="server">
             <table cellspacing=0 cellpadding=1 border=0 width="100%" style="margin-top: 2px;">
                 <tr>
                     <td class=summaryDataEnd width="90px">
                         <asp:Label ID="lblView" runat="server" Text="View:" CssClass="prompt" meta:resourcekey="lblViewResource1"></asp:Label>
                     </td>
                     <td class=summaryDataEnd>
-                        <telerik:RadComboBox ID="ddlViewList" runat="server" Skin="Metro" Width=650px  Font-Size=Small autopostback="True" onselectedindexchanged="ddlViewList_Select" meta:resourcekey="ddlViewListResource1"></telerik:RadComboBox>
-                        <asp:Button id="btnNewView" runat="server" Text="New" visible="False" onClick="onViewLayoutClick" CssClass="buttonStd" style="margin-left: 10px;" CommandArgument="new" meta:resourcekey="btnNewViewResource1"/>
+                        <telerik:RadComboBox ID="ddlViewList" runat="server" Skin="Metro" Width=650px  Font-Size=Small autopostback="True" onselectedindexchanged="ddlViewList_Select"></telerik:RadComboBox>
+                        <asp:Button id="btnNewView" runat="server" Text="<%$ Resources:LocalizedText, New %>" visible="False" onClick="onViewLayoutClick" CssClass="buttonStd" style="margin-left: 10px;" CommandArgument="new"/>
                         <asp:Button id="btnViewLayout" runat="server" Text="Layout" visible="False" enabled="False" onClick="onViewLayoutClick" CssClass="buttonStd" CommandArgument="edit" meta:resourcekey="btnViewLayoutResource1"/>
                     </td>
                 </tr>
@@ -30,29 +30,29 @@
                         <asp:Label ID="lblPlantSelect" runat="server" CssClass="prompt"></asp:Label>
                     </td>
                      <td class=summaryDataEnd>
-                        <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel1Resource1">
-                            <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex=9000 Skin="Metro" height="350px" Width="650px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1" ></telerik:RadComboBox>
+                        <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" HorizontalAlign="NotSet">
+                            <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex=9000 Skin="Metro" height="350px" Width="650px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
                         </telerik:RadAjaxPanel>
                     </td>
                 </tr>
                 <tr>
                     <td class=summaryDataEnd width="90px">
-                        <asp:Label runat="server" ID="lblDateSpan" CssClass="prompt" Text="Date Span:" meta:resourcekey="lblDateSpanResource1"></asp:Label>
+                        <asp:Label runat="server" ID="lblDateSpan" CssClass="prompt" Text="<%$ Resources:LocalizedText, DateSpan %>"></asp:Label>
                     </td>
                     <td class=summaryDataEnd>
-                       <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel2Resource1">
-                            <telerik:RadComboBox ID="ddlDateSpan" runat="server" Skin="Metro" Width=250px Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlDateSpanChange" meta:resourcekey="ddlDateSpanResource1">
+                       <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet">
+                            <telerik:RadComboBox ID="ddlDateSpan" runat="server" Skin="Metro" Width=250px Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlDateSpanChange">
                                 <Items>
-                                    <telerik:RadComboBoxItem Text="Select Range" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource1"/>
-                                    <telerik:RadComboBoxItem Text="Year To Date" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource2" />
-                                    <telerik:RadComboBoxItem Text="FY Year To Date" Value="4" runat="server" meta:resourcekey="RadComboBoxItemResource3" />
+                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, SelectRange %>" Value="0" runat="server"/>
+                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, YearToDate %>" Value="1" runat="server" />
+                                    <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, FYYearToDate %>" Value="4" runat="server" />
                                     <telerik:RadComboBoxItem Text="FY Year Over Year" Value="5" runat="server" meta:resourcekey="RadComboBoxItemResource4" />
                                     <telerik:RadComboBoxItem Text="FY Metrics Effective Range" Value="6" runat="server" meta:resourcekey="RadComboBoxItemResource5"/>
                                 </Items>
                             </telerik:RadComboBox>
                             <span style="margin-left: 5px;">
                                 <asp:PlaceHolder ID="phPeriodSpan" runat="server">
-                                    <asp:Label runat="server" ID="lblPeriodFrom"  CssClass="prompt" Text="From: " meta:resourcekey="lblPeriodFromResource1"></asp:Label>
+                                    <asp:Label runat="server" ID="lblPeriodFrom" CssClass="prompt"></asp:Label>
                                     <telerik:RadMonthYearPicker ID="dmPeriodFrom" runat="server" CssClass="textStd" Width=155px Skin="Metro">
 										<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" Font-Size="Small" LabelWidth="64px" Skin="Metro" Width="">
 											<EmptyMessageStyle Resize="None" />
@@ -82,13 +82,13 @@
 									</telerik:RadMonthYearPicker>
                                 </asp:PlaceHolder>
                                 <asp:PlaceHolder ID="phYearSpan" runat="server">
-                                    <asp:Label runat="server" ID="lblYearFrom"  CssClass="prompt" Text="From: " meta:resourcekey="lblYearFromResource1"></asp:Label>
-                                    <telerik:RadComboBox ID="ddlYearFrom" runat="server" Skin="Metro" Width=80px Font-Size=Small meta:resourcekey="ddlYearFromResource1"></telerik:RadComboBox>
+                                    <asp:Label runat="server" ID="lblYearFrom" CssClass="prompt"></asp:Label>
+                                    <telerik:RadComboBox ID="ddlYearFrom" runat="server" Skin="Metro" Width=80px Font-Size=Small></telerik:RadComboBox>
                                     <asp:Label runat="server" ID="lblYearTo" CssClass="prompt" style="margin-left: 5px;"></asp:Label>
-                                    <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=80px Font-Size=Small meta:resourcekey="ddlYearToResource1"></telerik:RadComboBox>
+                                    <telerik:RadComboBox ID="ddlYearTo" runat="server" Skin="Metro" Width=80px Font-Size=Small></telerik:RadComboBox>
                                 </asp:PlaceHolder>
                                     <asp:Label runat="server" ID="lblDateInterval" CssClass="prompt" Text="Interval:" style="margin-left: 5px;" Visible="False" meta:resourcekey="lblDateIntervalResource1"></asp:Label>
-                                 <telerik:RadComboBox ID="ddlDateInterval" runat="server" Visible="False" Width=120px Skin="Metro" Font-Size=Small ToolTip="select interval for charts calculating points by date" meta:resourcekey="ddlDateIntervalResource1">
+                                 <telerik:RadComboBox ID="ddlDateInterval" runat="server" Visible="False" Width=120px Skin="Metro" Font-Size=Small ToolTip="Select interval for charts calculating points by date" meta:resourcekey="ddlDateIntervalResource1">
                                 <Items>
                                     <telerik:RadComboBoxItem Text="Default" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource6"/>
                                     <telerik:RadComboBoxItem Text="By Year" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource7"/>
@@ -99,7 +99,7 @@
                            <span style="float: right; margin-right: 20px;" class="noprint">
                                 <asp:LinkButton ID="btnRefreshDashboard" runat="server" ToolTip="Refresh the dashboard display" CSSClass="buttonRefresh"  text="Refresh View"  OnClick="btnRefreshDashboard_Click" meta:resourcekey="btnRefreshDashboardResource1"></asp:LinkButton>
                                 <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" style="margin-left: 5px;" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                                <asp:LinkButton  ID="lnkExport" runat="server" Text="Export" ToolTip="Export Data To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExportClick" meta:resourcekey="lnkExportResource1"></asp:LinkButton>
+                                <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExportClick"></asp:LinkButton>
                             </span>
                          </telerik:RadAjaxPanel>
                     </td>
@@ -122,7 +122,7 @@
     <div id="divMessages" runat="server">
         <center>
             <Ucl:Progress id="uclProgress" runat="server"/>
-            <telerik:RadAjaxPanel ID="radAjaxMessages" runat="server" HorizontalAlign="NotSet" meta:resourcekey="radAjaxMessagesResource1">
+            <telerik:RadAjaxPanel ID="radAjaxMessages" runat="server" HorizontalAlign="NotSet">
                 <asp:Label ID="lblWorking" runat="server" Text="Loading view - please wait..." CssClass="labelEmphasis" visible="False" meta:resourcekey="lblWorkingResource1"></asp:Label>
                 <asp:Label ID="lblViewLoadError" runat="server" Text="An error occured attemtping to open the selected view." CssClass="labelEmphasis" visible="False" meta:resourcekey="lblViewLoadErrorResource1"></asp:Label>
                 <asp:Label ID="LblViewSaveError" runat="server" Text="An error occured while saving your changes." CssClass="labelEmphasis" visible="False" meta:resourcekey="LblViewSaveErrorResource1"></asp:Label>
@@ -136,7 +136,7 @@
     <asp:HiddenField ID="hfActive" runat="server" />
     <Ucl:RadGauge id="uclGauge" runat="server"/>
     <div id="divDashboardArea" runat="server" style="text-align:center; margin-top: 10px;">
-        <asp:Label ID="lblDashboardTitle" runat="server" CssClass="refText" style="display:block; margin-bottom: 10px;" meta:resourcekey="lblDashboardTitleResource1" ></asp:Label>
+        <asp:Label ID="lblDashboardTitle" runat="server" CssClass="refText" style="display:block; margin-bottom: 10px;"></asp:Label>
     </div>
 
     <div id="divLayoutArea" runat="server" visible="False" style="margin-top: 10px; margin-bottom: 10px;">
@@ -147,7 +147,7 @@
                 </td>
                 <td class="required" width="1%">&nbsp;</td>
                 <td class="tableDataAlt textStd" width="75%">
-                    <telerik:RadTextBox ID="tbViewName" runat="server" Columns=60 Skin="Metro" MaxLength=100 Font-Size=Small LabelCssClass="" LabelWidth="64px" meta:resourcekey="tbViewNameResource1" Resize="None">
+                    <telerik:RadTextBox ID="tbViewName" runat="server" Columns=60 Skin="Metro" MaxLength=100 Font-Size=Small LabelCssClass="" LabelWidth="64px" Resize="None">
 						<EmptyMessageStyle Resize="None" />
 						<ReadOnlyStyle Resize="None" />
 						<FocusedStyle Resize="None" />
@@ -169,7 +169,7 @@
                 </td>
                 <td class="tableDataAlt">&nbsp;</td>
                 <td class="tableDataAlt">
-                    <telerik:RadTextBox ID="tbViewDesc" runat="server" Columns=60 Skin="Metro" MaxLength=400 Font-Size=Small LabelCssClass="" LabelWidth="64px" meta:resourcekey="tbViewDescResource1" Resize="None">
+                    <telerik:RadTextBox ID="tbViewDesc" runat="server" Columns=60 Skin="Metro" MaxLength=400 Font-Size=Small LabelCssClass="" LabelWidth="64px" Resize="None">
 						<EmptyMessageStyle Resize="None" />
 						<ReadOnlyStyle Resize="None" />
 						<FocusedStyle Resize="None" />
@@ -186,13 +186,13 @@
                 </td>
                 <td class="required">&nbsp;</td>
                 <td class="tableDataAlt">
-                    <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel3" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel3Resource1">
-                        <telerik:RadComboBox ID="ddlPerspective" runat="server" Skin="Metro" Width=250px ZIndex="9000" Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlPerspectiveChange" meta:resourcekey="ddlPerspectiveResource1">
+                    <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel3" HorizontalAlign="NotSet">
+                        <telerik:RadComboBox ID="ddlPerspective" runat="server" Skin="Metro" Width=250px ZIndex="9000" Font-Size=Small AutoPostBack="True" OnSelectedIndexChanged="ddlPerspectiveChange">
                             <Items>
                                     <telerik:RadComboBoxItem Text="Environmental Metrics" Value="E" runat="server" meta:resourcekey="RadComboBoxItemResource9" />
                                     <telerik:RadComboBoxItem Text="Environmental YTD Performance" Value="EP" runat="server" meta:resourcekey="RadComboBoxItemResource10" />
-                                    <telerik:RadComboBoxItem Text="Health & Safety" Value="HS" runat="server" meta:resourcekey="RadComboBoxItemResource11" />
-                                    <telerik:RadComboBoxItem Text="Health & Safety YTD Performance" Value="HSP" runat="server" meta:resourcekey="RadComboBoxItemResource12" />
+                                    <telerik:RadComboBoxItem Text="Health &amp; Safety" Value="HS" runat="server" meta:resourcekey="RadComboBoxItemResource11" />
+                                    <telerik:RadComboBoxItem Text="Health &amp; Safety YTD Performance" Value="HSP" runat="server" meta:resourcekey="RadComboBoxItemResource12" />
                                     <telerik:RadComboBoxItem Text="Quality" Value="QS" runat="server" meta:resourcekey="RadComboBoxItemResource13" />
                             </Items>
                         </telerik:RadComboBox>
@@ -205,12 +205,12 @@
                 </td>
                 <td class="tableDataAlt">&nbsp;</td>
                 <td class="tableDataAlt">
-                    <telerik:RadComboBox id="ddlViewAvailability" runat="server" Skin="Metro" Font-Size=Small Width=300px meta:resourcekey="ddlViewAvailabilityResource1">
+                    <telerik:RadComboBox id="ddlViewAvailability" runat="server" Skin="Metro" Font-Size=Small Width=300px>
                         <Items>
                             <telerik:RadComboBoxItem Text="Owner" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource14" />
-                            <telerik:RadComboBoxItem Text="Plant" Value="2" runat="server" meta:resourcekey="RadComboBoxItemResource15"/>
-                            <telerik:RadComboBoxItem Text="Business Org" Value="3" runat="server" meta:resourcekey="RadComboBoxItemResource16" />
-                            <telerik:RadComboBoxItem Text="Company" Value="4" runat="server" meta:resourcekey="RadComboBoxItemResource17"/>
+                            <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Plant %>" Value="2" runat="server" />
+                            <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, BusinessOrg %>" Value="3" runat="server" />
+                            <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Company %>" Value="4" runat="server" />
                         </Items>
                     </telerik:RadComboBox>
                 </td>
@@ -221,7 +221,7 @@
                 </td>
                 <td class="required">&nbsp;</td>
                 <td class="tableDataAlt textStd">
-                        <telerik:RadComboBox id="ddlDfltCriteria" runat="server" Skin="Metro" Font-Size=Small Width=300px meta:resourcekey="ddlDfltCriteriaResource1">
+                        <telerik:RadComboBox id="ddlDfltCriteria" runat="server" Skin="Metro" Font-Size=Small Width=300px>
                         <Items>
                             <telerik:RadComboBoxItem Text="No Defaults" Value="0" runat="server" meta:resourcekey="RadComboBoxItemResource18" />
                             <telerik:RadComboBoxItem Text="Use Current / Allow Override" Value="1" runat="server" meta:resourcekey="RadComboBoxItemResource19"/>
@@ -238,7 +238,7 @@
                 </td>
                 <td class="tableDataAlt">&nbsp;</td>
                 <td class="tableDataAlt">
-                    <asp:Label id="lblLastUpdate_out" runat="server" CssClass="textStd" meta:resourcekey="lblLastUpdate_outResource1"></asp:Label>
+                    <asp:Label id="lblLastUpdate_out" runat="server" CssClass="textStd"></asp:Label>
                 </td>
             </tr>
         </table>
@@ -257,13 +257,13 @@
 								<asp:Label ID="lblVISeq" runat="server" CssClass="prompt" meta:resourcekey="lblVISeqResource1" Text="Chart"></asp:Label>
 							</td>
 							<td>
-								<telerik:RadAjaxPanel ID="radPnlGraph" runat="server" HorizontalAlign="NotSet" meta:resourcekey="radPnlGraphResource1">
-									<telerik:RadComboBox ID="ddlVISeq" runat="server" Font-Size="Small" Height="300px" meta:resourcekey="ddlVISeqResource1" Skin="Metro" ToolTip="display sequence" Width="75px" ZIndex="9000">
+								<telerik:RadAjaxPanel ID="radPnlGraph" runat="server" HorizontalAlign="NotSet">
+									<telerik:RadComboBox ID="ddlVISeq" runat="server" Font-Size="Small" Height="300px" meta:resourcekey="ddlVISeqResource1" Skin="Metro" ToolTip="Display sequence" Width="75px" ZIndex="9000">
 										<Items>
-											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource23" Text="Delete" Value="0" />
+											<telerik:RadComboBoxItem runat="server" Text="<%$ Resources:LocalizedText, Delete %>" Value="0" />
 										</Items>
 									</telerik:RadComboBox>
-									<telerik:RadComboBox ID="ddlVIGaugeType" runat="server" EmptyMessage="chart type" Font-Size="Small" meta:resourcekey="ddlVIGaugeTypeResource1" Skin="Metro" ToolTip="select chart or gauge type">
+									<telerik:RadComboBox ID="ddlVIGaugeType" runat="server" EmptyMessage="Chart type" Font-Size="Small" meta:resourcekey="ddlVIGaugeTypeResource1" Skin="Metro" ToolTip="Select chart or gauge type">
 										<Items>
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource24" Text="Section Area" Value="1" />
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource25" Text="Vernier" Value="10" />
@@ -285,7 +285,7 @@
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource41" Text="Radial Gauge Array" Value="260" />
 										</Items>
 									</telerik:RadComboBox>
-									<telerik:RadTextBox ID="tbVIHeight" runat="server" Columns="4" EmptyMessage="height" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="5" meta:resourcekey="tbVIHeightResource1" Resize="None" Skin="Metro" ToolTip="height">
+									<telerik:RadTextBox ID="tbVIHeight" runat="server" Columns="4" EmptyMessage="Height" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="5" meta:resourcekey="tbVIHeightResource1" Resize="None" Skin="Metro" ToolTip="Height">
 										<EmptyMessageStyle Resize="None" />
 										<ReadOnlyStyle Resize="None" />
 										<FocusedStyle Resize="None" />
@@ -294,8 +294,8 @@
 										<HoveredStyle Resize="None" />
 										<EnabledStyle Resize="None" />
 									</telerik:RadTextBox>
-									<asp:Label ID="lblX" runat="server" CssClass="textSmall" meta:resourcekey="lblXResource1" Text="x"></asp:Label>
-									<telerik:RadTextBox ID="tbVIWidth" runat="server" Columns="4" EmptyMessage="width" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="5" meta:resourcekey="tbVIWidthResource1" Resize="None" Skin="Metro" ToolTip="width">
+									<asp:Label ID="lblX" runat="server" CssClass="textSmall" Text="x"></asp:Label>
+									<telerik:RadTextBox ID="tbVIWidth" runat="server" Columns="4" EmptyMessage="Width" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="5" meta:resourcekey="tbVIWidthResource1" Resize="None" Skin="Metro" ToolTip="Width">
 										<EmptyMessageStyle Resize="None" />
 										<ReadOnlyStyle Resize="None" />
 										<FocusedStyle Resize="None" />
@@ -312,7 +312,7 @@
 						<tr>
 							<td width="95px;">&nbsp;</td>
 							<td>
-								<telerik:RadTextBox ID="tbVITitle" runat="server" Columns="60" EmptyMessage="chart title" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="100" meta:resourcekey="tbVITitleResource1" Resize="None" Skin="Metro">
+								<telerik:RadTextBox ID="tbVITitle" runat="server" Columns="60" EmptyMessage="chart title" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="100" Resize="None" Skin="Metro">
 									<EmptyMessageStyle Resize="None" />
 									<ReadOnlyStyle Resize="None" />
 									<FocusedStyle Resize="None" />
@@ -325,22 +325,22 @@
 						</tr>
 						<tr>
 							<td width="95px;">
-								<asp:Label ID="lblVIScope" runat="server" CssClass="prompt" meta:resourcekey="lblVIScopeResource1" Text="Data"></asp:Label>
+								<asp:Label ID="lblVIScope" runat="server" CssClass="prompt" Text="<%$ Resources:LocalizedText, Data %>"></asp:Label>
 							</td>
 							<td>
-								<telerik:RadAjaxPanel ID="radPnlScope" runat="server" HorizontalAlign="NotSet" meta:resourcekey="radPnlScopeResource1">
-									<telerik:RadComboBox ID="ddlVIStat" runat="server" AutoPostBack="True" EmptyMessage="statistic" Font-Size="Small" meta:resourcekey="ddlVIStatResource1" OnSelectedIndexChanged="ddlVIStatChange" Skin="Metro" ToolTip="select metric to display">
+								<telerik:RadAjaxPanel ID="radPnlScope" runat="server" HorizontalAlign="NotSet">
+									<telerik:RadComboBox ID="ddlVIStat" runat="server" AutoPostBack="True" EmptyMessage="Statistic" Font-Size="Small" meta:resourcekey="ddlVIStatResource1" OnSelectedIndexChanged="ddlVIStatChange" Skin="Metro" ToolTip="Select metric to display">
 										<Items>
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource42" Text="Total" Value="sum" />
-											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource43" Text="Cost" Value="sumCost" />
-											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource44" Text="Percent Change" Value="pctChange" />
+											<telerik:RadComboBoxItem runat="server" Text="<%$ Resources:LocalizedText, Cost %>" Value="sumCost" />
+											<telerik:RadComboBoxItem runat="server" Text="<%$ Resources:LocalizedText, PercentChange %>" Value="pctChange" />
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource45" Text="Days Elapsed" Value="deltaDy" />
 										</Items>
 									</telerik:RadComboBox>
 									<asp:Label ID="lblOf" runat="server" CssClass="textSmall" meta:resourcekey="lblOfResource1" Text="of"></asp:Label>
-									<telerik:RadComboBox ID="ddlVIScope" runat="server" CheckBoxes="True" EmptyMessage="for metric or category" Font-Size="Small" Height="350px" meta:resourcekey="ddlVIScopeResource1" Skin="Metro" ToolTip="select metrics by category, type or specific measure" Width="250px" ZIndex="9000">
+									<telerik:RadComboBox ID="ddlVIScope" runat="server" CheckBoxes="True" EmptyMessage="For metric or category" Font-Size="Small" Height="350px" meta:resourcekey="ddlVIScopeResource1" Skin="Metro" ToolTip="Select metrics by category, type or specific measure" Width="250px" ZIndex="9000">
 									</telerik:RadComboBox>
-									<telerik:RadComboBox ID="ddlVISeriesOrder" runat="server" EmptyMessag="order by" Font-Size="Small" meta:resourcekey="ddlVISeriesOrderResource1" Skin="Metro" ToolTip="data series ordering">
+									<telerik:RadComboBox ID="ddlVISeriesOrder" runat="server" EmptyMessag="order by" Font-Size="Small" meta:resourcekey="ddlVISeriesOrderResource1" Skin="Metro" ToolTip="Data series ordering">
 										<Items>
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource46" Text="Sum All" Value="0" />
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource47" Text="Order By Measure-Location" Value="1" />
@@ -359,14 +359,14 @@
 								<asp:Label ID="lblVIXAxis" runat="server" CssClass="prompt" meta:resourcekey="lblVIXAxisResource1" Text="Variable Axis"></asp:Label>
 							</td>
 							<td>
-								<telerik:RadAjaxPanel ID="radPnlXAxis" runat="server" HorizontalAlign="NotSet" meta:resourcekey="radPnlXAxisResource1">
-									<telerik:RadComboBox ID="ddlVIXAxisScale" runat="server" AutoPostBack="True" EmptyMessag="set scale" Font-Size="Small" meta:resourcekey="ddlVIXAxisScaleResource1" OnSelectedIndexChanged="ddlVIScaleChange" Skin="Metro" ToolTip="choose auto scaling or enter min/max scale values" Width="120px">
+								<telerik:RadAjaxPanel ID="radPnlXAxis" runat="server" HorizontalAlign="NotSet">
+									<telerik:RadComboBox ID="ddlVIXAxisScale" runat="server" AutoPostBack="True" EmptyMessag="set scale" Font-Size="Small" meta:resourcekey="ddlVIXAxisScaleResource1" OnSelectedIndexChanged="ddlVIScaleChange" Skin="Metro" ToolTip="Choose auto scaling or enter min/max scale values" Width="120px">
 										<Items>
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource53" Text="Auto Scale" Value="0" />
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource54" Text="Set Scales" Value="1" />
 										</Items>
 									</telerik:RadComboBox>
-									<telerik:RadTextBox ID="tbVIXAxisMin" runat="server" Columns="9" EmptyMessage="scale min" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisMinResource1" Resize="None" Skin="Metro" ToolTip="axis minimum or orign value">
+									<telerik:RadTextBox ID="tbVIXAxisMin" runat="server" Columns="9" EmptyMessage="Scale min" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisMinResource1" Resize="None" Skin="Metro" ToolTip="Axis minimum or orign value">
 										<EmptyMessageStyle Resize="None" />
 										<ReadOnlyStyle Resize="None" />
 										<FocusedStyle Resize="None" />
@@ -376,7 +376,7 @@
 										<EnabledStyle Resize="None" />
 									</telerik:RadTextBox>
 									<asp:Label ID="lblXTo" runat="server" CssClass="textSmall" meta:resourcekey="lblXToResource1" Text="to"></asp:Label>
-									<telerik:RadTextBox ID="tbVIXAxisMax" runat="server" Columns="9" EmptyMessage="scale max" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisMaxResource1" Resize="None" Skin="Metro" ToolTip="axis maximum value">
+									<telerik:RadTextBox ID="tbVIXAxisMax" runat="server" Columns="9" EmptyMessage="Scale max" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisMaxResource1" Resize="None" Skin="Metro" ToolTip="Axis maximum value">
 										<EmptyMessageStyle Resize="None" />
 										<ReadOnlyStyle Resize="None" />
 										<FocusedStyle Resize="None" />
@@ -386,7 +386,7 @@
 										<EnabledStyle Resize="None" />
 									</telerik:RadTextBox>
 									<asp:Label ID="lblXBy" runat="server" CssClass="textSmall" meta:resourcekey="lblXByResource1" Text="by"></asp:Label>
-									<telerik:RadTextBox ID="tbVIXAxisUnit" runat="server" Columns="9" EmptyMessage="scale unit" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisUnitResource1" Resize="None" Skin="Metro" ToolTip="scale unit">
+									<telerik:RadTextBox ID="tbVIXAxisUnit" runat="server" Columns="9" EmptyMessage="Scale unit" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="20" meta:resourcekey="tbVIXAxisUnitResource1" Resize="None" Skin="Metro" ToolTip="Scale unit">
 										<EmptyMessageStyle Resize="None" />
 										<ReadOnlyStyle Resize="None" />
 										<FocusedStyle Resize="None" />
@@ -395,11 +395,11 @@
 										<HoveredStyle Resize="None" />
 										<EnabledStyle Resize="None" />
 									</telerik:RadTextBox>
-									<asp:Label ID="lblTarget" runat="server" CssClass="textSmall" meta:resourcekey="lblTargetResource1" Text="Target:"></asp:Label>
-									<telerik:RadComboBox ID="ddlVITarget" runat="server" EmptyMessag="overlay target" Font-Size="Small" meta:resourcekey="ddlVITargetResource1" Skin="Metro" ToolTip="overlay metric target" ZIndex="9000">
+									<asp:Label ID="lblTarget" runat="server" CssClass="textSmall"></asp:Label>
+									<telerik:RadComboBox ID="ddlVITarget" runat="server" EmptyMessag="overlay target" Font-Size="Small" meta:resourcekey="ddlVITargetResource1" Skin="Metro" ToolTip="Overlay metric target" ZIndex="9000">
 										<Items>
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource55" Text="None" Value="0" />
-											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource56" Text="Target Value" Value="1" />
+											<telerik:RadComboBoxItem runat="server" Text="<%$ Resources:LocalizedText, TargetValue %>" Value="1" />
 											<telerik:RadComboBoxItem runat="server" meta:resourcekey="RadComboBoxItemResource57" Text="Current Value" Value="1" />
 										</Items>
 									</telerik:RadComboBox>
@@ -409,7 +409,7 @@
 						<tr>
 							<td width="95px;">&nbsp;</td>
 							<td>
-								<telerik:RadTextBox ID="tbVIXAxisLabel" runat="server" Columns="60" EmptyMessage="axis label" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="200" meta:resourcekey="tbVIXAxisLabelResource1" Resize="None" Skin="Metro" ToolTip="variable axis label">
+								<telerik:RadTextBox ID="tbVIXAxisLabel" runat="server" Columns="60" EmptyMessage="Axis label" Font-Size="Small" LabelCssClass="" LabelWidth="64px" MaxLength="200" meta:resourcekey="tbVIXAxisLabelResource1" Resize="None" Skin="Metro" ToolTip="Variable axis label">
 									<EmptyMessageStyle Resize="None" />
 									<ReadOnlyStyle Resize="None" />
 									<FocusedStyle Resize="None" />
@@ -451,10 +451,10 @@
     </div>
 </asp:Panel>
 
-<asp:Panel ID="pnlStats" runat="server" Visible="False" meta:resourcekey="pnlStatsResource1">
+<asp:Panel ID="pnlStats" runat="server" Visible="False">
     <div>
             <div style="margin-top: 5px;">
-                <asp:Label id="lblStats" runat="server" CssClass="prompt" meta:resourcekey="lblStatsResource1" ></asp:Label>
+                <asp:Label id="lblStats" runat="server" CssClass="prompt"></asp:Label>
             </div>
             <div id="divStatsArea" runat="server" style ="width: 850px; overflow-x: scroll; overflow:auto; margin-top: 4px;">
             </div>

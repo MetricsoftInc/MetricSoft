@@ -112,78 +112,27 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnSaveContinueResource1.SingleClickText" xml:space="preserve">
-    <value>Saving...</value>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="btnSaveContinueResource1.Text" xml:space="preserve">
-    <value>Save &amp; Create Report</value>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
   </data>
-  <data name="btnSaveContinueResource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
   </data>
-  <data name="btnSaveReturnResource1.SingleClickText" xml:space="preserve">
-    <value>Saving...</value>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
-  <data name="btnSaveReturnResource1.Text" xml:space="preserve">
-    <value>Save &amp; Return</value>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please do not remove this key.</value>
   </data>
-  <data name="btnSaveReturnResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblAddOrEditIncidentResource1.Text" xml:space="preserve">
-    <value>&lt;strong&gt;Add a New Incident:&lt;/strong&gt;</value>
-  </data>
-  <data name="lblAddOrEditIncidentResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentLocationResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentLocationResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentTypeResource1.Text" xml:space="preserve">
-    <value>Type:  </value>
-  </data>
-  <data name="lblIncidentTypeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPageTitleResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPageTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblResultsResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblResultsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlAddEditResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlAddEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlFormResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlFormResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentHeaderResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentHeaderResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadAjaxPanel1Resource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="Select" xml:space="preserve">
+    <value>Seleccione</value>
   </data>
 </root>

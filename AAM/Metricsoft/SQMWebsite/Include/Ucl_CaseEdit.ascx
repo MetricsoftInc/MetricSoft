@@ -223,7 +223,7 @@
                                                 <asp:Label ID="lblTaskDesc" runat="server" text='<%#Eval("DESCRIPTION") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Due Date" ItemStyle-Width="17%">
+                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, DueDate %>" ItemStyle-Width="17%">
 						                    <ItemTemplate>
                                                 <asp:HiddenField ID="hfDueDate" runat="server" value='<%#Eval("DUE_DT") %>'/>
                                                  <telerik:RadDatePicker ID="radDueDate" runat="server" CssClass="textStd WarnIfChanged" Width=115 Skin="Metro" ToolTip="click to select task due date"></telerik:RadDatePicker>
@@ -317,7 +317,7 @@
                         <table width="100%" align="center"  border="0" cellspacing="0" cellpadding="1" class="borderSoft">
                             <tr class="HeadingCellTextLeft">
                                 <td width="14%">
-                                    <asp:Label ID="lblCaseHdr1" runat="server" text="Question" CssClass="tableDataHdr2"></asp:Label>
+                                    <asp:Label ID="lblCaseHdr1" runat="server" Text="<%$ Resources:LocalizedText, Question %>" CssClass="tableDataHdr2"></asp:Label>
                                 </td>
                                 <td width="28%" class="IDX" ><asp:Label runat="server" ID="lblCase2Hdr1" Text="Incident Details" CssClass="tableDataHdr2"></asp:Label></td>
                                 <td width="29%"><asp:Label ID="lblCase2Hdr2" runat="server" Text="The Problem IS" CssClass="tableDataHdr2"></asp:Label></td>
@@ -1030,7 +1030,7 @@
                                                     <telerik:RadComboBox ID="ddlResponsible" runat="server" Skin="Metro" style="width: 98%;" ZIndex=9000 Font-Size=Small CssClass="WarnIfChanged" ToolTip="Select the person responsible for implementing or overseeing this change" EmptyMessage="Select Person"></telerik:RadComboBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Due Date" ItemStyle-Width="16%">
+                                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, DueDate %>" ItemStyle-Width="16%">
 						                        <ItemTemplate>
                                                     <asp:HiddenField ID="hfTargetDate" runat="server" value='<%#Eval("TARGET_DT") %>'/>
                                                      <telerik:RadDatePicker ID="radTargetDate" runat="server" CssClass="textStd WarnIfChanged" Width=115 Skin="Metro" ToolTip="click to select due date"></telerik:RadDatePicker>

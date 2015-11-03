@@ -218,7 +218,7 @@ Would you like to clean it?</value>
     <value>Reset</value>
   </data>
   <data name="FormSelect" xml:space="preserve">
-    <value>Select</value>
+    <value>Seleccione</value>
   </data>
   <data name="FormSubmit" xml:space="preserve">
     <value>Enviar</value>
@@ -245,7 +245,7 @@ Would you like to clean it?</value>
     <value>Indent HTML</value>
   </data>
   <data name="InsertToolbar" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="MainToolbar" xml:space="preserve">
     <value>Main Toolbar</value>
@@ -272,7 +272,7 @@ Would you like to clean it?</value>
     <value>HTML</value>
   </data>
   <data name="RadEditorPreviewMode" xml:space="preserve">
-    <value>Preview</value>
+    <value>Vista previa</value>
   </data>
   <data name="ResizeCommand" xml:space="preserve">
     <value>Resize Object</value>
@@ -320,7 +320,7 @@ Would you like to clean it?</value>
     <value>You cannot undo further while in spellcheck mode. Please finish spellchecking first.</value>
   </data>
   <data name="UpdateButton" xml:space="preserve">
-    <value>Update</value>
+    <value>Actualizar</value>
   </data>
   <data name="UseCtrlC" xml:space="preserve">
     <value>Please use Ctrl+C to Copy (Cmd+C on Mac)</value>
@@ -356,6 +356,6 @@ Would you like to clean it?</value>
     <value>Content...</value>
   </data>
   <data name="RadEditorGroupboxTitle" xml:space="preserve">
-    <value>Title</value>
+    <value>Título</value>
   </data>
 </root>

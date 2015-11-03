@@ -128,7 +128,7 @@
                                 </tr>
                                 <tr>
                                     <td class="columnHeader">
-                                        <asp:Label ID="lblCRUpdated" runat="server" text="Last Update" ></asp:Label>
+                                        <asp:Label ID="lblCRUpdated" runat="server" Text="<%$ Resources:LocalizedText, LastUpdate %>"></asp:Label>
                                     </td>
                                     <td class="tableDataAlt">&nbsp;</td>
                                     <td class="tableDataAlt">
@@ -327,7 +327,7 @@
                                 <table width="99%" align="center" border="0" cellspacing="0" cellpadding="0">
                                     <tr >
                                         <td class="columnHeader" width="25%">
-                                            <asp:Label ID="lblCRDLaborDept" runat="server" text="Department"></asp:Label>
+                                            <asp:Label ID="lblCRDLaborDept" runat="server" Text="<%$ Resources:LocalizedText, Department %>"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt" width="1%">&nbsp;</td>
                                         <td class="tableDataAlt" width="20%">

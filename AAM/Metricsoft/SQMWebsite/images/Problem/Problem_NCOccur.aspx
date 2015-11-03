@@ -290,7 +290,7 @@
                                                                                 <asp:DropDownList ID="ddlMeasure" runat="server" style="width:97%;"></asp:DropDownList>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Value" ItemStyle-Width="40%">
+                                                                        <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Value %>" ItemStyle-Width="40%">
                                                                             <ItemTemplate>
                                                                                 <asp:TextBox ID="tbMeasureValue" runat="server"  style="width:97%;" text='<%#Eval("MEASURE_VALUE") %>'></asp:TextBox>
                                                                             </ItemTemplate>

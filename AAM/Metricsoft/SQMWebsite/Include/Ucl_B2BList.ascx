@@ -22,7 +22,7 @@
                             <ItemTemplate>
                                 <tr>
                                     <td class="columnHeader" width="30%">
-                                        <asp:Label runat="server" ID="lblLocationCodeHdr" cssclass="prompt" Text="Location Code" ></asp:Label>
+                                        <asp:Label runat="server" ID="lblLocationCodeHdr" cssclass="prompt" Text="<%$ Resources:LocalizedText, LocationCode %>"></asp:Label>
                                     </td>
                                     <td class="tableDataAlt" width="70%">
                                         <asp:Label ID="lblLocationCode" runat="server" CssClass="textStd"></asp:Label>
@@ -102,7 +102,7 @@
                             <ItemTemplate>
                                 <tr>
                                     <td class="columnHeader" width="30%">
-                                        <asp:Label runat="server" ID="lblLocationCodeHdr" cssclass="prompt" Text="Location Code" ></asp:Label>
+                                        <asp:Label runat="server" ID="lblLocationCodeHdr" cssclass="prompt" Text="<%$ Resources:LocalizedText, LocationCode %>"></asp:Label>
                                     </td>
                                     <td class="tableDataAlt" width="70%">
                                         <asp:Label ID="lblLocationCode" runat="server" CssClass="textStd"></asp:Label>

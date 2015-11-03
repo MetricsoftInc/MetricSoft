@@ -363,12 +363,6 @@
   <data name="lblResultsResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblSubmittedResource1.Text" xml:space="preserve">
-    <value>Power Outage submitted.</value>
-  </data>
-  <data name="lblSubmittedResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbProdImpactSMResource1.Text" xml:space="preserve">
     <value>Impacto de Producción:</value>
   </data>
@@ -933,17 +927,11 @@
   <data name="rdpStartDateResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
   </data>
-  <data name="RequiredFieldValidator1Resource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="RequiredFieldValidator1Resource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="RequiredFieldValidator1Resource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvActionPersonResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvActionPersonResource1.Text" xml:space="preserve">
     <value />
@@ -951,17 +939,11 @@
   <data name="rfvActionPersonResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvContainActionResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvContainActionResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvContainActionResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvContainPersonResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvContainPersonResource1.Text" xml:space="preserve">
     <value />
@@ -969,17 +951,11 @@
   <data name="rfvContainPersonResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvDescriptionResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvDescriptionResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvDescriptionResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvFinalActionResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvFinalActionResource1.Text" xml:space="preserve">
     <value />
@@ -987,17 +963,11 @@
   <data name="rfvFinalActionResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvIncidentDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvIncidentDateResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvIncidentDateResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvIncidentTimeResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvIncidentTimeResource1.Text" xml:space="preserve">
     <value />
@@ -1005,17 +975,11 @@
   <data name="rfvIncidentTimeResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rfvLocationResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rfvLocationResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rfvLocationResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rfvRootCauseResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rfvRootCauseResource1.Text" xml:space="preserve">
     <value />
@@ -1089,9 +1053,6 @@
   <data name="rtpIncidentTimeResource1.TimeView.HeaderText" xml:space="preserve">
     <value>Time Picker</value>
   </data>
-  <data name="rtpIncidentTimeResource1.TimeView.Summary" xml:space="preserve">
-    <value>Table holding time picker for selecting time of day.</value>
-  </data>
   <data name="rtpIncidentTimeResource1.TimeView.TimeFormat" xml:space="preserve">
     <value>t</value>
   </data>
@@ -1104,26 +1065,17 @@
   <data name="rtpIncidentTimeResource1.WrapperTableCaption" xml:space="preserve">
     <value>RadDatePicker</value>
   </data>
-  <data name="rvfFinalStartDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rvfFinalStartDateResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rvfFinalStartDateResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rvfShiftResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
   <data name="rvfShiftResource1.Text" xml:space="preserve">
     <value />
   </data>
   <data name="rvfShiftResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rvfStartDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
   </data>
   <data name="rvfStartDateResource1.Text" xml:space="preserve">
     <value />

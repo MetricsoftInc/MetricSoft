@@ -42,6 +42,7 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			this.lblDateFrom.Text = Resources.LocalizedText.From + ": ";
 			this.lblDateTo.Text = Resources.LocalizedText.To + ": ";
 		}
 

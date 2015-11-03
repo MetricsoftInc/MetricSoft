@@ -217,7 +217,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="Label1" runat="server" text="Privilege Group"></asp:Label>
+                                                                <asp:Label ID="Label1" runat="server" Text="<%$ Resources:LocalizedText, PrivilegeGroup %>"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">

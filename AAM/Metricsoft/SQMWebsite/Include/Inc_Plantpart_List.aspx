@@ -20,7 +20,7 @@
                                             <asp:Label ID="lblCustCompanyName_out" runat="server" text='<%#Eval("CUST_COMPANY_NAME") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Location" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Location %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblCustCompanyLocation_out" runat="server" text='<%#Eval("CUST_DUNS_CODE") %>'></asp:Label>
                                         </ItemTemplate>
@@ -40,7 +40,7 @@
                                             <asp:Label ID="lblSuppPlantName_out" runat="server" text='<%#Eval("SUPP_PLANT_NAME") %>' ></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                     <asp:TemplateField HeaderText="Location" ItemStyle-Width="10%">
+                                     <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Location %>" ItemStyle-Width="10%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblSuppPlantLocation_out" runat="server" text='<%#Eval("SUPP_PLANT_DUNS_CODE") %>'></asp:Label>
                                         </ItemTemplate>

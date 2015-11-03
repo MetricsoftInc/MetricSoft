@@ -21,6 +21,7 @@ namespace SQM.Website
         protected void Page_Load(object sender, EventArgs e)
         {
 			this.lblExportPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblExportDateSelect1.Text = Resources.LocalizedText.From + ": ";
 			this.lblExportToDate.Text = Resources.LocalizedText.To + ": ";
 
 			if (!Page.IsPostBack)

@@ -197,7 +197,7 @@
                 </ContentTemplate>
             </telerik:RadWindow>
 
-            <telerik:RadWindow runat="server" ID="winUpdateAnswerStatus" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="300px" Width="700px" Behaviors="Move" Title="Update Status" Behavior="Move">
+            <telerik:RadWindow runat="server" ID="winUpdateAnswerStatus" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="300px" Width="700px" Behaviors="Move" Title="<%$ Resources:LocalizedText, UpdateStatus %>" Behavior="Move">
                 <ContentTemplate>
                     <div class="container-fluid" style="margin-top: 10px;">
                         <div class="row">

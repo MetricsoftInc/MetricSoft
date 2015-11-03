@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspPSMaster.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="SQM.Website.Calendar" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RspPSMaster.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="SQM.Website.Calendar" %>
 <%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 
@@ -36,7 +36,7 @@
 		<asp:Button id="btnEscalateView" runat="server" Text="Task Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E" meta:resourcekey="btnEscalateViewResource1"/>
 	</div>
 
-	<asp:Panel runat="server" ID="pnlCalendar" Width="100%" meta:resourcekey="pnlCalendarResource1">
+	<asp:Panel runat="server" ID="pnlCalendar" Width="100%">
 
 		<div id="divCalendar" runat="server" style="margin-top: 4px;" visible="False">
 			<div style="width: 99%; margin: 5px;" class="noprint">
@@ -56,7 +56,7 @@
 						<span style="padding-right: 3px;">
 							<telerik:RadComboBox ID="ddlScheduleScope" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
 								AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="Select either yourself or an accesible business location" meta:resourcekey="ddlScheduleScopeResource1"></telerik:RadComboBox>
-							<telerik:RadMenu ID="mnuScheduleScope" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select" meta:resourcekey="mnuScheduleScopeResource1">
+							<telerik:RadMenu ID="mnuScheduleScope" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select">
 								<DefaultGroupSettings RepeatDirection="Horizontal" />
 						</telerik:RadMenu>
 						</span>
@@ -110,7 +110,7 @@
 	<br style="clear: both;" />
 
 
-	<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Behaviors="Close, Move" Title="View/Update Task" Behavior="Close, Move" meta:resourcekey="winUpdateTaskResource1">
+	<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Behaviors="Close, Move" Title="View/Update Task" Behavior="Close, Move">
 		<ContentTemplate>
 			<Ucl:Task ID="uclTask" runat="server" />
 		</ContentTemplate>

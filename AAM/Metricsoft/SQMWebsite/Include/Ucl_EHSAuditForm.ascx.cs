@@ -1430,7 +1430,7 @@ namespace SQM.Website
 
 		void UpdateButtonText()
 		{
-			btnSaveReturn.Text = "Save & Return";
+			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
 
 			if (IsEditContext)
 				btnSaveContinue.Text = "Save Assessment";
@@ -1929,7 +1929,7 @@ namespace SQM.Website
 					{
 						if (requiredFields.Trim().Length > 0)
 							requiredFields += ", ";
-						requiredFields += "Business Location";
+						requiredFields += Resources.LocalizedText.BusinessLocation;
 					}
 					if ((rddlAuditUsers.SelectedIndex <= 0 && lblAuditPersonName.Text.ToString().Length == 0))
 					{
@@ -1941,7 +1941,7 @@ namespace SQM.Website
 					{
 						if (requiredFields.Trim().Length > 0)
 							requiredFields += ", ";
-						requiredFields += "Department";
+						requiredFields += Resources.LocalizedText.Department;
 					}
 					if (requiredFields.Trim().Length > 0)
 						requiredFields = " (" + requiredFields + ")";

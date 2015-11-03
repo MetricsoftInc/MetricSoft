@@ -123,15 +123,6 @@
   <data name="btnAddWitnessResource1.ToolTip" xml:space="preserve">
     <value>Añadir otro testigo</value>
   </data>
-  <data name="btnItemDeleteResource1.SingleClickText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnItemDeleteResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnItemDeleteResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnSubnavLostTimeResource1.Text" xml:space="preserve">
     <value>Tiempo perdido historia</value>
   </data>
@@ -144,863 +135,140 @@
   <data name="lbDirectSupvSMResource1.Text" xml:space="preserve">
     <value>Directly Supervised by AAM</value>
   </data>
-  <data name="lbDirectSupvSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbDirectSupvXSResource1.Text" xml:space="preserve">
     <value>Directly Supervised by AAM</value>
-  </data>
-  <data name="lbDirectSupvXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbErgConcernSMResource1.Text" xml:space="preserve">
     <value>Ergonomic Concerns</value>
   </data>
-  <data name="lbErgConcernSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbErgConcernXSResource1.Text" xml:space="preserve">
     <value>Ergonomic Concerns</value>
-  </data>
-  <data name="lbErgConcernXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbExpectReturnDTSMResource1.Text" xml:space="preserve">
-    <value>Expected Return Date</value>
-  </data>
-  <data name="lbExpectReturnDTSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbExpectReturnDTXSResource1.Text" xml:space="preserve">
-    <value>Expected Return Date</value>
-  </data>
-  <data name="lbExpectReturnDTXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbFatalitySMResource1.Text" xml:space="preserve">
     <value>Fatality?</value>
   </data>
-  <data name="lbFatalitySMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbFatalityXSResource1.Text" xml:space="preserve">
     <value>Fatality?</value>
-  </data>
-  <data name="lbFatalityXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbFirstAidSMResource1.Text" xml:space="preserve">
     <value>First Aid?</value>
   </data>
-  <data name="lbFirstAidSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbFirstAidXSResource1.Text" xml:space="preserve">
     <value>First Aid?</value>
-  </data>
-  <data name="lbFirstAidXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbIncidentDateSMResource1.Text" xml:space="preserve">
-    <value>Incident Date</value>
-  </data>
-  <data name="lbIncidentDateSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbIncidentDateXSResource1.Text" xml:space="preserve">
-    <value>Incident Date</value>
-  </data>
-  <data name="lbIncidentDateXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbIncidentTimeSMResource1.Text" xml:space="preserve">
-    <value>Time of Incident</value>
-  </data>
-  <data name="lbIncidentTimeSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbIncidentTimeXSResource1.Text" xml:space="preserve">
-    <value>Time of Incident</value>
-  </data>
-  <data name="lbIncidentTimeXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbInjuryTypeSMResource1.Text" xml:space="preserve">
     <value>Type of Injury</value>
   </data>
-  <data name="lbInjuryTypeSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbInjuryTypeXSResource1.Text" xml:space="preserve">
     <value>Type of Injury</value>
-  </data>
-  <data name="lbInjuryTypeXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbInsideOutsideSMResource1.Text" xml:space="preserve">
     <value>Inside or Outside Building</value>
   </data>
-  <data name="lbInsideOutsideSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbInsideOutsideXSResource1.Text" xml:space="preserve">
     <value>Inside or Outside Building</value>
-  </data>
-  <data name="lbInsideOutsideXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbInvolvedPersonSMResource1.Text" xml:space="preserve">
     <value>Involved Person's Name</value>
   </data>
-  <data name="lbInvolvedPersonSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbInvolvedPersonXSResource1.Text" xml:space="preserve">
     <value>Involved Person's Name</value>
-  </data>
-  <data name="lbInvolvedPersonXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbInvPersonStatementSMResource1.Text" xml:space="preserve">
     <value>Involved Person's Statement</value>
   </data>
-  <data name="lbInvPersonStatementSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbInvPersonStatementXSResource1.Text" xml:space="preserve">
     <value>Involved Person's Statement</value>
-  </data>
-  <data name="lbInvPersonStatementXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeq2Resource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeq2Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeqResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeqResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblAddOrEditIncidentResource1.Text" xml:space="preserve">
-    <value>&lt;strong&gt;Add a New Incident:&lt;/strong&gt;</value>
-  </data>
-  <data name="lblAddOrEditIncidentResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDeptTestSMResource1.Text" xml:space="preserve">
-    <value>Department</value>
-  </data>
-  <data name="lblDeptTestSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblDeptTestXSResource1.Text" xml:space="preserve">
     <value>Parte del Cuerpo</value>
   </data>
-  <data name="lblFormTitleResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblFormTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentLocationResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentLocationResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentTypeResource1.Text" xml:space="preserve">
-    <value>Type:  </value>
-  </data>
-  <data name="lblIncidentTypeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbLocalDescSMResource1.Text" xml:space="preserve">
     <value>Local Description</value>
-  </data>
-  <data name="lbLocalDescSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbLocalDescXSResource1.Text" xml:space="preserve">
     <value>Local Description</value>
   </data>
-  <data name="lbLocalDescXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbLostTimeSMResource1.Text" xml:space="preserve">
     <value>Lost Or Restricted Time?</value>
-  </data>
-  <data name="lbLostTimeSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbLostTimeXSResource1.Text" xml:space="preserve">
     <value>Lost Or Restricted Time?</value>
   </data>
-  <data name="lbLostTimeXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblRequiredResource1.Text" xml:space="preserve">
-    <value>Required Fields Must be Completed.</value>
-  </data>
-  <data name="lblRequiredResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblResultsResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblResultsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblSubmittedResource1.Text" xml:space="preserve">
     <value>Power Outage submitted.</value>
-  </data>
-  <data name="lblSubmittedResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbRecordableSMResource1.Text" xml:space="preserve">
     <value>Recordable?</value>
   </data>
-  <data name="lbRecordableSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbRecordableXSResource1.Text" xml:space="preserve">
     <value>Recordable?</value>
-  </data>
-  <data name="lbRecordableXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbReportDateSMResource1.Text" xml:space="preserve">
-    <value>Report Date</value>
-  </data>
-  <data name="lbReportDateSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbReportDateXSResource1.Text" xml:space="preserve">
-    <value>Report Date</value>
-  </data>
-  <data name="lbReportDateXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbRqd1Resource1.Text" xml:space="preserve">
-    <value>*</value>
-  </data>
-  <data name="lbRqd1Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbRqd2Resource1.Text" xml:space="preserve">
-    <value>*</value>
-  </data>
-  <data name="lbRqd2Resource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbShiftSMResource1.Text" xml:space="preserve">
     <value>Shift</value>
   </data>
-  <data name="lbShiftSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbShiftXSResource1.Text" xml:space="preserve">
     <value>Shift</value>
-  </data>
-  <data name="lbShiftXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbStdProcsFollowedSMResource1.Text" xml:space="preserve">
     <value>Standard Work Procedures Followed without Deviation?</value>
   </data>
-  <data name="lbStdProcsFollowedSMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbStdProcsFollowedXSResource1.Text" xml:space="preserve">
     <value>Standard Work Procedures Followed without Deviation?</value>
-  </data>
-  <data name="lbStdProcsFollowedXSResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbSupervisorLabelResource1.Text" xml:space="preserve">
     <value>Supervisor: </value>
   </data>
-  <data name="lbSupervisorLabelResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbSupervisorResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbSupervisorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbSupervisorStatementSMResource1.Text" xml:space="preserve">
     <value>Supervisor's Statement</value>
-  </data>
-  <data name="lbSupervisorStatementSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbSupervisorStatementXSResource1.Text" xml:space="preserve">
     <value>Supervisor's Statement</value>
   </data>
-  <data name="lbSupervisorStatementXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbSupvInformedDateSMResource1.Text" xml:space="preserve">
     <value>Date Supervisor Informed</value>
-  </data>
-  <data name="lbSupvInformedDateSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbSupvInformedDateXSResource1.Text" xml:space="preserve">
     <value>Date Supervisor Informed</value>
   </data>
-  <data name="lbSupvInformedDateXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbTaskYearsSMResource1.Text" xml:space="preserve">
     <value>How long has associate been doing this job/specific task?</value>
-  </data>
-  <data name="lbTaskYearsSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbTaskYearsXSResource1.Text" xml:space="preserve">
     <value>How long has associate been doing this job/specific task?</value>
   </data>
-  <data name="lbTaskYearsXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbTrainingProvidedSMResource1.Text" xml:space="preserve">
     <value>Was Training for this Task Provided?</value>
-  </data>
-  <data name="lbTrainingProvidedSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbTrainingProvidedXSResource1.Text" xml:space="preserve">
     <value>Was Training for this Task Provided?</value>
   </data>
-  <data name="lbTrainingProvidedXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbWitNamePromptResource1.Text" xml:space="preserve">
-    <value>Name: </value>
-  </data>
-  <data name="lbWitNamePromptResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbWitnessColSMResource1.Text" xml:space="preserve">
     <value>Witness </value>
-  </data>
-  <data name="lbWitnessColSMResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lbWitnessColXSResource1.Text" xml:space="preserve">
     <value>Witness </value>
   </data>
-  <data name="lbWitnessColXSResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbWitStmntPromptResource1.Text" xml:space="preserve">
     <value>Statement:</value>
   </data>
-  <data name="lbWitStmntPromptResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="ListItemResource1.Text" xml:space="preserve">
-    <value>Inside    </value>
-  </data>
-  <data name="ListItemResource1.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource10.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource11.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource11.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource12.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource13.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource13.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource14.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource15.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource15.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource16.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource17.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource17.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource18.Value" xml:space="preserve">
-    <value>0</value>
+    <value>Inside</value>
   </data>
   <data name="ListItemResource2.Text" xml:space="preserve">
     <value>Outside</value>
   </data>
-  <data name="ListItemResource2.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource3.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource3.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource4.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource5.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource5.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ListItemResource6.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="ListItemResource7.Text" xml:space="preserve">
-    <value>Standard    </value>
-  </data>
-  <data name="ListItemResource7.Value" xml:space="preserve">
-    <value>1</value>
+    <value>Standard</value>
   </data>
   <data name="ListItemResource8.Text" xml:space="preserve">
     <value>Non-Standard</value>
-  </data>
-  <data name="ListItemResource8.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListItemResource9.Text" xml:space="preserve">
-    <value>Yes    </value>
-  </data>
-  <data name="ListItemResource9.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="pnlBaseForm2Resource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlBaseForm2Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlBaseFormResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlBaseFormResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlButtonsResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlButtonsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlExpReturnDTResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlExpReturnDTResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentHeaderResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentHeaderResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLocalDescResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlLocalDescResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rajx100Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rajx200Resource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rapAttachResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rapSeverityResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rddlBodyPartResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rddlDeptTestResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rddlInjuryTypeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rddlJobTenureResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rddlShiftIDResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoDirectSupvResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoErgConcernResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoFatalityResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoFirstAidResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoInsideResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoLostTimeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoRecordableResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoStdProcsFollowedResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdoTrainingProvidedResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rdpExpectReturnDTResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpExpectReturnDTResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rdpIncidentDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpIncidentDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rdpReportDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rdpReportDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpReportDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rdpSupvInformedDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpSupvInformedDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="rfvDescriptionResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="rfvDescriptionResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvDescriptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvIncidentDateResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="rfvIncidentDateResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvIncidentDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvIncidentTimeResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="rfvIncidentTimeResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvIncidentTimeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvLocalDescriptionResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="rfvLocalDescriptionResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvLocalDescriptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvShiftResource1.ErrorMessage" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="rfvShiftResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rfvShiftResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rsbInvolvedPersonResource1.Localization.LoadingItemsMessage" xml:space="preserve">
-    <value>Loading</value>
   </data>
   <data name="rsbInvolvedPersonResource1.Localization.ShowAllResults" xml:space="preserve">
     <value>Show All Results</value>
   </data>
   <data name="rsbInvolvedPersonResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rsbWitnessNameResource1.Localization.LoadingItemsMessage" xml:space="preserve">
-    <value>Loading</value>
   </data>
   <data name="rsbWitnessNameResource1.Localization.ShowAllResults" xml:space="preserve">
     <value>Show All Results</value>
@@ -1073,9 +341,6 @@
   </data>
   <data name="rtpIncidentTimeResource1.TimeView.HeaderText" xml:space="preserve">
     <value>Time Picker</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.TimeView.Summary" xml:space="preserve">
-    <value>Table holding time picker for selecting time of day.</value>
   </data>
   <data name="rtpIncidentTimeResource1.TimeView.TimeFormat" xml:space="preserve">
     <value>t</value>

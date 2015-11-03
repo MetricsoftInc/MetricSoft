@@ -9,7 +9,7 @@
 						                </td>
                                         <td class=summaryData valign=top>
 							                <SPAN CLASS=summaryHeader>
-                                                <asp:Label runat="server" ID="lblLocCodeHdr" Text="Location Code" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblLocCodeHdr" Text="<%$ Resources:LocalizedText, LocationCode %>" Visible="true"></asp:Label>
                                             </SPAN>
                                             <BR>
 							                <asp:Label runat="server" ID="lblLocCode_out" Text="" Visible="true"></asp:Label>

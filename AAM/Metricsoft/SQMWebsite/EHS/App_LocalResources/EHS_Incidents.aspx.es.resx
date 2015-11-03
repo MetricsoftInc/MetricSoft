@@ -120,164 +120,8 @@
   <data name="btnNewIncidentCreateResource1.Text" xml:space="preserve">
     <value>Crear incidente</value>
   </data>
-  <data name="cbCreatedByMeResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbCreatedByMeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbShowImageResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbShowImageResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlChartTypeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlIncidentLocationResource1.EmptyMessage" xml:space="preserve">
-    <value>Seleccionar</value>
-  </data>
   <data name="ddlIncidentLocationResource1.ToolTip" xml:space="preserve">
     <value>Seleccione la ubicación donde ocurrió el incidente</value>
-  </data>
-  <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="dmFromDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="dmFromDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmFromDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="dmToDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="dmToDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="dmToDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmToDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
   </data>
   <data name="lbIncidentLocationResource1.Text" xml:space="preserve">
     <value>Ubicación de incidencias</value>
@@ -288,17 +132,8 @@
   <data name="lblIncidentDateResource1.Text" xml:space="preserve">
     <value>Incidentes Desde la fecha:</value>
   </data>
-  <data name="lblIncidentDetailsResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblIncidentDetailsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblInspectionDateResource1.Text" xml:space="preserve">
     <value>Inspection Date From:</value>
-  </data>
-  <data name="lblInspectionDateResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblPageInstructionsResource1.Text" xml:space="preserve">
     <value>Agregar o actualizar incidentes de EH&amp;S siguientes.</value>
@@ -306,43 +141,8 @@
   <data name="lblShowImageResource1.Text" xml:space="preserve">
     <value>Display Initial Image</value>
   </data>
-  <data name="lblShowImageResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblViewEHSRezTitleResource1.Text" xml:space="preserve">
     <value>Manejo de Salud y Seguridad Ambiental de Incidentes</value>
-  </data>
-  <data name="lblViewEHSRezTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lnkChartCloseResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lnkIncidentDetailsCloseResource1.Text" xml:space="preserve">
-    <value>
-											 &lt;img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/&gt;
-							</value>
-  </data>
-  <data name="lnkPrintResource1.Text" xml:space="preserve">
-    <value>Print</value>
-  </data>
-  <data name="lnkPrintResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlChartSectionResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlChartSectionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentDetailsResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlIncidentDetailsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadAjaxPanel2Resource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="RadComboBoxItemResource2.Text" xml:space="preserve">
     <value>Todo abierto</value>
@@ -353,22 +153,10 @@
   <data name="rbNewResource1.Text" xml:space="preserve">
     <value>Nuevo Incidente</value>
   </data>
-  <data name="rcbStatusSelectResource1.EmptyMessage" xml:space="preserve">
-    <value />
-  </data>
   <data name="rcbStatusSelectResource1.ToolTip" xml:space="preserve">
     <value>Select incident status to list</value>
   </data>
   <data name="rddlNewIncidentTypeResource1.ToolTip" xml:space="preserve">
     <value>Seleccionar el tipo de incidente que desea reportar</value>
-  </data>
-  <data name="winNewIncidentResource1.Localization.PinOff" xml:space="preserve">
-    <value>Pin off</value>
-  </data>
-  <data name="winNewIncidentResource1.Localization.PinOn" xml:space="preserve">
-    <value>Pin on</value>
-  </data>
-  <data name="winNewIncidentResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

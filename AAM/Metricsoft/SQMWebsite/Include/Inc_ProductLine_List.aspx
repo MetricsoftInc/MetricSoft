@@ -53,7 +53,7 @@
                                             <asp:TextBox ID="tbProdlineDesc" runat="server" CSSclass="textStd" Text='<%#Bind("PRODUCT_LINE_DESC") %>' Columns="78" Visible="false" ></asp:TextBox><asp:RequiredFieldValidator runat="server" id="valProdDesc" ControlToValidate="tbProdlineDesc" ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Delete" ItemStyle-Width="10%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Delete %>" ItemStyle-Width="10%">
                                     	<ItemTemplate>
                                       	<asp:HiddenField ID="hfStatus" runat="server" />
                                       	<asp:CheckBox ID="cbStatus" runat="server" Style="margin-left: 33%;" OnClick="DisableEnableValidators(this);"></asp:CheckBox>

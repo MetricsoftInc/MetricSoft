@@ -18,15 +18,15 @@
 			</telerik:GridTemplateColumn>
 			<telerik:GridBoundColumn UniqueName="DescriptionColumn" DataField="Description" HeaderText="<%$ Resources:LocalizedText, Description %>">
 			</telerik:GridBoundColumn>
-			<telerik:GridBoundColumn UniqueName="SizeColumn" DataField="Size" HeaderText="Size" DataFormatString="{0:n0} KB">
+			<telerik:GridBoundColumn UniqueName="SizeColumn" DataField="Size" HeaderText="<%$ Resources:LocalizedText, Size %>" DataFormatString="{0:n0} KB">
 			</telerik:GridBoundColumn>
             <telerik:GridTemplateColumn UniqueName="DisplayTypeColumn" DataField="DisplayType" HeaderText="Show in<br/>Reports" ItemStyle-HorizontalAlign="Center" >
                 <ItemTemplate>
 				    <asp:CheckBox ID="checkBox" runat="server" Checked='<%# GetChecked(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "DisplayType"))) %>' />
 				</ItemTemplate>
             </telerik:GridTemplateColumn>
-			<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="LinkButton" ConfirmTitle="Delete"
-				ConfirmText="Delete Attachment - Are You Sure?" CommandName="Delete" Text="Delete"
+			<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="LinkButton" ConfirmTitle="<%$ Resources:LocalizedText, Delete %>"
+				ConfirmText="Delete Attachment - Are You Sure?" CommandName="Delete" Text="<%$ Resources:LocalizedText, Delete %>"
 				ItemStyle-Font-Underline="true">
 			</telerik:GridButtonColumn>
 		</Columns>

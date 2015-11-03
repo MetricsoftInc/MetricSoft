@@ -126,9 +126,6 @@
   <data name="btnTaskViewResource1.Text" xml:space="preserve">
     <value>Actions Assigned</value>
   </data>
-  <data name="ddlScheduleScopeResource1.EmptyMessage" xml:space="preserve">
-    <value />
-  </data>
   <data name="ddlScheduleScopeResource1.ToolTip" xml:space="preserve">
     <value>Select either yourself or an accesible business location</value>
   </data>
@@ -159,34 +156,7 @@
   <data name="lnkPrintResource1.ToolTip" xml:space="preserve">
     <value>Print current calendar view</value>
   </data>
-  <data name="mnuScheduleScopeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PageResource1.Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlCalendarResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlCalendarResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="sldScheduleRangeResource1.ToolTip" xml:space="preserve">
     <value>Select number of months in the future to populate in the calendar</value>
-  </data>
-  <data name="tbAssignCommentResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbAssignCommentResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="winUpdateTaskResource1.Localization.PinOff" xml:space="preserve">
-    <value>Pin off</value>
-  </data>
-  <data name="winUpdateTaskResource1.Localization.PinOn" xml:space="preserve">
-    <value>Pin on</value>
-  </data>
-  <data name="winUpdateTaskResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

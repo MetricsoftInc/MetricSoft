@@ -136,7 +136,7 @@
     <value>&lt;</value>
   </data>
   <data name="MonthYearNavigationTodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
+    <value>Hoy</value>
   </data>
   <data name="MonthYearViewCaptionText" xml:space="preserve">
     <value>Month year picker</value>
@@ -145,7 +145,7 @@
     <value>Table holding time picker for selecting time of day.</value>
   </data>
   <data name="PopupButtonToolTip" xml:space="preserve">
-    <value>Open the monthyear view popup.</value>
+    <value>Abra la ventana emergente de vista mes/año.</value>
   </data>
   <data name="ReservedResource" xml:space="preserve">
     <value>Please do not remove this key.</value>

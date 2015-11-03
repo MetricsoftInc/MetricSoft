@@ -62,7 +62,7 @@
                                                     <telerik:RadMenu ID="mnuPlantSelect" runat="server" Skin="Default" Width=250  EnableAutoScroll="true" style="z-index: 2900"  Visible="false" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="mnuPlantSelect_Select"></telerik:RadMenu>
 		                                        </td>
                                                 <td class="summaryDataEnd">
-							                        <asp:Label runat="server" ID="lblDateFrom" CssClass="prompt" Text="From: "></asp:Label>
+							                        <asp:Label runat="server" ID="lblDateFrom" CssClass="prompt"></asp:Label>
 									                <telerik:RadMonthYearPicker ID="radDateFrom" runat="server" CssClass="textStd" Width="165" Skin="Metro" ShowPopupOnFocus="true" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="true"></telerik:RadMonthYearPicker>
 									                &nbsp;
                                                     <asp:Label ID="lblDateTo" runat="server" CssClass="prompt"></asp:Label>
@@ -100,7 +100,7 @@
                                         <br />
                                         <span>
                                             <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" style="margin-left: 5px;" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                                            <asp:LinkButton  ID="lnkExport" runat="server" Text="Export" ToolTip="Export Data To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
+                                            <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
                                         </span>
                                         <Ucl:Export id="uclExport" runat="server"/>
                                     </div>

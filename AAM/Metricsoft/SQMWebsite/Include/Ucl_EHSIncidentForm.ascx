@@ -34,7 +34,7 @@
 									<div class="row-fluid" >
 										<div class="col-xs-12  text-left">
 											<span>
-											<asp:Label ID="lblAddOrEditIncident" class="prompt" runat="server" meta:resourcekey="lblAddOrEditIncidentResource1"><strong>Add a New Incident:</strong></asp:Label>
+											<asp:Label ID="lblAddOrEditIncident" class="prompt" runat="server" Font-Bold="true" Text="<%$ Resources:LocalizedText, AddANewIncident %>" />
 											<a href="/EHS/EHS_Incidents.aspx" id="ahReturn" runat="server" style="font-size:medium; margin-left: 40px;">
 												<img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
 												Return to List</a>
@@ -69,14 +69,14 @@
 								<table style="width: 100%;">
 									<tr>
 										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="False"
-												CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="True" SingleClickText="Saving..."
-												OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" meta:resourcekey="btnSaveReturnResource1" />
+											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="False"
+												CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
+												OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
 										</td>
 										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveContinue" runat="server" Text="Save &amp; Create Report" Visible="False" SingleClick="True" SingleClickText="Saving..."
+											<telerik:RadButton ID="btnSaveContinue" runat="server" Text="<%$ Resources:LocalizedText, SaveAndCreateReport %>" Visible="False" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
 												CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
-												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" meta:resourcekey="btnSaveContinueResource1" >
+												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val">
 												<Icon SecondaryIconUrl="/images/ico-arr-rt-wht.png" />
 											</telerik:RadButton>
 										</td>

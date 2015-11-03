@@ -193,7 +193,7 @@
     <value>The</value>
   </data>
   <data name="Of" xml:space="preserve">
-    <value>of</value>
+    <value>de</value>
   </data>
   <data name="NoEndDate" xml:space="preserve">
     <value>No end date</value>
@@ -214,7 +214,7 @@
     <value>Cancelar</value>
   </data>
   <data name="CalendarToday" xml:space="preserve">
-    <value>Today</value>
+    <value>Hoy</value>
   </data>
   <data name="Never" xml:space="preserve">
     <value>Never</value>

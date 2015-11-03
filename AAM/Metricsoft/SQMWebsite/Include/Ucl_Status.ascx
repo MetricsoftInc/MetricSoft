@@ -5,7 +5,7 @@
     <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder">
         <tr>
             <td id="trStatusInfo" runat="server" class="columnHeader" width="14%">
-                <asp:Label ID="lblStatusComplete" runat="server" text="Completed"></asp:Label>
+                <asp:Label ID="lblStatusComplete" runat="server" Text="<%$ Resources:LocalizedText, Completed %>"></asp:Label>
                <%-- <asp:Panel ID="pnlStatusInfo" runat="server"></asp:Panel>--%>
             </td>
             <td CLASS="tableDataAlt" width="86%">

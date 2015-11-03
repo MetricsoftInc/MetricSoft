@@ -122,7 +122,7 @@
 							<asp:Label ID="lblCreateDT" runat="server" meta:resourcekey="lblCreateDTResource1"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="Due Date" meta:resourcekey="GridTemplateColumnResource5" SortExpression="DUE_DT" UniqueName="TemplateColumn4">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, DueDate %>" SortExpression="DUE_DT" UniqueName="TemplateColumn4">
 						<ItemTemplate>
 							<asp:Label ID="lblDueDT" runat="server" meta:resourcekey="lblDueDTResource1"></asp:Label>
 						</ItemTemplate>

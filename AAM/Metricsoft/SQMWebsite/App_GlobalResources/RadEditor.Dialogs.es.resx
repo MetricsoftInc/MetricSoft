@@ -201,7 +201,7 @@ Press "OK" to confirm deletion.</value>
     <value>Custom Targets</value>
   </data>
   <data name="Common_Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="Common_DimensionUnit" xml:space="preserve">
     <value>Dimension unit</value>
@@ -213,7 +213,7 @@ Press "OK" to confirm deletion.</value>
     <value>Green</value>
   </data>
   <data name="Common_Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Altura</value>
   </data>
   <data name="Common_Id" xml:space="preserve">
     <value>Id</value>
@@ -228,7 +228,7 @@ Press "OK" to confirm deletion.</value>
     <value>Image Properties</value>
   </data>
   <data name="Common_Insert" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="Common_InvalidCharactersInPath" xml:space="preserve">
     <value>Invalid characters in folder name.</value>
@@ -282,7 +282,7 @@ Press "OK" to confirm deletion.</value>
     <value>No Color</value>
   </data>
   <data name="Common_None" xml:space="preserve">
-    <value>None</value>
+    <value>Ninguno</value>
   </data>
   <data name="Common_NoPermissionsToCreateFolder" xml:space="preserve">
     <value>The selected folder could not be created because the application did not have enough permissions. Please, contact the administrator.</value>
@@ -324,7 +324,7 @@ Press "OK" to confirm deletion.</value>
     <value>Preset Targets</value>
   </data>
   <data name="Common_Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>Vista previa</value>
   </data>
   <data name="Common_Properties" xml:space="preserve">
     <value>Properties</value>
@@ -366,7 +366,7 @@ Press "OK" to confirm deletion.</value>
     <value>Table CSS</value>
   </data>
   <data name="Common_Target" xml:space="preserve">
-    <value>Target</value>
+    <value>Objectivo</value>
   </data>
   <data name="Common_TargetBlank" xml:space="preserve">
     <value>New Window</value>
@@ -411,7 +411,7 @@ Press "OK" to confirm deletion.</value>
     <value>White</value>
   </data>
   <data name="Common_Width" xml:space="preserve">
-    <value>Width</value>
+    <value>Ancho</value>
   </data>
   <data name="Common_Yellow" xml:space="preserve">
     <value>Yellow</value>
@@ -543,7 +543,7 @@ Press "OK" to confirm deletion.</value>
     <value>Play</value>
   </data>
   <data name="FlashManager_Quality" xml:space="preserve">
-    <value>Quality</value>
+    <value>Calidad</value>
   </data>
   <data name="FlashManager_Right" xml:space="preserve">
     <value>Right</value>
@@ -750,7 +750,7 @@ Press "OK" to confirm deletion.</value>
     <value>Subject</value>
   </data>
   <data name="LinkManager_LinkTarget" xml:space="preserve">
-    <value>Target</value>
+    <value>Objectivo</value>
   </data>
   <data name="LinkManager_LinkText" xml:space="preserve">
     <value>Link Text</value>
@@ -951,7 +951,7 @@ Press "OK" to confirm deletion.</value>
     <value>N/A</value>
   </data>
   <data name="MediaManager_None" xml:space="preserve">
-    <value>None</value>
+    <value>Ninguno</value>
   </data>
   <data name="MediaManager_Nosubpicturestream" xml:space="preserve">
     <value>There is no subpicture stream</value>
@@ -1080,7 +1080,7 @@ Press "OK" to confirm deletion.</value>
     <value>Please, specify a hexadecimal value.</value>
   </data>
   <data name="MediaManager_Value" xml:space="preserve">
-    <value>Value</value>
+    <value>Valor</value>
   </data>
   <data name="MediaManager_Verticalarrow" xml:space="preserve">
     <value>Vertical arrow</value>
@@ -1272,7 +1272,7 @@ Press "OK" to confirm deletion.</value>
     <value>Invalid table width.</value>
   </data>
   <data name="TableWizard_Layout" xml:space="preserve">
-    <value>Layout</value>
+    <value>Elegir</value>
   </data>
   <data name="TableWizard_LeftAndRightSide" xml:space="preserve">
     <value>Right and left sides only</value>
@@ -1374,7 +1374,7 @@ Press "OK" to confirm deletion.</value>
     <value>Remove</value>
   </data>
   <data name="Common_Select" xml:space="preserve">
-    <value>Select</value>
+    <value>Seleccione</value>
   </data>
   <data name="Common_Open" xml:space="preserve">
     <value>Abrir</value>
@@ -1518,7 +1518,7 @@ Press "OK" to confirm deletion.</value>
     <value>Larger</value>
   </data>
   <data name="StyleBuilder_LayoutTab" xml:space="preserve">
-    <value>Layout</value>
+    <value>Elegir</value>
   </data>
   <data name="StyleBuilder_Lighter" xml:space="preserve">
     <value>Lighter</value>
@@ -1890,7 +1890,7 @@ Press "OK" to confirm deletion.</value>
     <value>Opacity</value>
   </data>
   <data name="ImageEditor_Print_Button" xml:space="preserve">
-    <value>Print</value>
+    <value>Imprimir</value>
   </data>
   <data name="ImageEditor_Print_Title" xml:space="preserve">
     <value>Print Image</value>
@@ -2034,7 +2034,7 @@ Press "OK" to confirm deletion.</value>
     <value>Text</value>
   </data>
   <data name="InsertSelectDialog_Value" xml:space="preserve">
-    <value>Value</value>
+    <value>Valor</value>
   </data>
   <data name="InsertSelectDialog_AddOption" xml:space="preserve">
     <value>Add Option</value>
@@ -2088,7 +2088,7 @@ Press "OK" to confirm deletion.</value>
     <value>Rows</value>
   </data>
   <data name="MobileLinkManager_LinkTarget" xml:space="preserve">
-    <value>Target</value>
+    <value>Objectivo</value>
   </data>
   <data name="MobileLinkManager_LinkText" xml:space="preserve">
     <value>Link Text</value>

@@ -13,14 +13,14 @@
 	 }
    </script>
 
-   <telerik:RadAjaxPanel runat="server" ID="pnlSelectDocument" Visible=False HorizontalAlign="NotSet" meta:resourcekey="pnlSelectDocumentResource1">
+   <telerik:RadAjaxPanel runat="server" ID="pnlSelectDocument" Visible=False HorizontalAlign="NotSet">
 		<span>
-			<asp:Label ID="lblSelectDocs" runat="server" CssClass="promptInverse"  visible=False meta:resourcekey="lblSelectDocsResource1"></asp:Label>
+			<asp:Label ID="lblSelectDocs" runat="server" CssClass="promptInverse"  visible=False></asp:Label>
 			<telerik:RadComboBox ID="ddlSelectDocs" runat="server" ZIndex=9000 Width=200px DropDownCssClass="multipleRowsColumns" DropDownWidth="560px" Skin="Metro"  EmptyMessage="Application References"  OnClientSelectedIndexChanged="DisplayDocument" meta:resourcekey="ddlSelectDocsResource1"></telerik:RadComboBox>
 		</span>
    </telerik:RadAjaxPanel>
 
-	<asp:Panel ID="pnlDocMgr" runat="server" Visible = "False" meta:resourcekey="pnlDocMgrResource1">
+	<asp:Panel ID="pnlDocMgr" runat="server" Visible = "False">
 		<table width="100%" border="0" cellspacing="0" cellpadding="1" class="tabActiveTableBg">
 			<tr>
 				<td align="center">
@@ -34,29 +34,29 @@
 							<td align=center>
 								<div id="divDocsGVScroll" runat="server" class="">
 								<asp:GridView ID="gvUploadedFiles" runat="server" AutoGenerateColumns="False" Width="100%"
-									CssClass="Grid" OnRowDeleting="gvUploadedFiles_RowDeleting" OnRowDataBound="gvUploadedFiles_OnRowDataBound" meta:resourcekey="gvUploadedFilesResource1">
+									CssClass="Grid" OnRowDeleting="gvUploadedFiles_RowDeleting" OnRowDataBound="gvUploadedFiles_OnRowDataBound">
 										<Columns>
-											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="Category" meta:resourcekey="TemplateFieldResource1" SortExpression="DISPLAY_TYPE">
+											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="<%$ Resources:LocalizedText, Category %>" SortExpression="DISPLAY_TYPE">
 												<ItemTemplate>
 													<asp:HiddenField ID="hfDisplayArea" runat="server" Value='<%# Eval("DISPLAY_TYPE") %>' />
-													<asp:Label ID="lblDisplayArea" runat="server" meta:resourcekey="lblDisplayAreaResource1"></asp:Label>
+													<asp:Label ID="lblDisplayArea" runat="server"></asp:Label>
 												</ItemTemplate>
 												<ItemStyle Width="15%" />
 											</asp:TemplateField>
-											<asp:TemplateField meta:resourcekey="TemplateFieldResource2">
+											<asp:TemplateField>
 												<ItemTemplate>
 													<asp:HiddenField ID="hfFileName" runat="server" Value='<%# Eval("FILE_NAME") %>' />
-													<asp:Image ID="imgFileType" runat="server" HeaderText="File Type" ItemStyle-HorizontalAlign="Center" meta:resourcekey="imgFileTypeResource1" />
+													<asp:Image ID="imgFileType" runat="server" HeaderText="File Type" ItemStyle-HorizontalAlign="Center" />
 												</ItemTemplate>
 												<ItemStyle Width="3%" />
 											</asp:TemplateField>
-											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="File Name" meta:resourcekey="TemplateFieldResource3" SortExpression="FILE_NAME">
+											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="<%$ Resources:LocalizedText, FileName %>" SortExpression="FILE_NAME">
 												<ItemTemplate>
 													<a class="linkUnderline" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' target="_blank"><%# Eval("FILE_NAME") %></a>
 												</ItemTemplate>
 												<ItemStyle Width="30%" />
 											</asp:TemplateField>
-											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="Size" meta:resourcekey="TemplateFieldResource4" SortExpression="FILE_SIZE">
+											<asp:TemplateField ConvertEmptyStringToNull="False" HeaderText="<%$ Resources:LocalizedText, Size %>" SortExpression="FILE_SIZE">
 												<ItemTemplate>
 													<%# FormatFilesize(Eval("FILE_SIZE")) %>
 												</ItemTemplate>
@@ -65,7 +65,7 @@
 											<asp:BoundField DataField="FILE_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>">
 											<ItemStyle Width="35%" />
 											</asp:BoundField>
-											<asp:CommandField meta:resourcekey="CommandFieldResource1" ShowDeleteButton="True">
+											<asp:CommandField ShowDeleteButton="True">
 											<ItemStyle HorizontalAlign="Center" />
 											</asp:CommandField>
 										</Columns>
@@ -94,17 +94,17 @@
 		</table>
   </asp:Panel>
 
- <asp:Panel ID="pnlDocList" runat="server" Visible = "False" meta:resourcekey="pnlDocListResource1">
+ <asp:Panel ID="pnlDocList" runat="server" Visible = "False">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td align=center>
 				<div class="borderSoft" id="divDocListGVScroll" runat="server">
-				<asp:GridView ID="gvDocList" runat="server" AutoGenerateColumns="False" Width="100%" CssClass="Grid"  GridLines="None" OnRowDataBound="gvDocs_OnRowDataBound" meta:resourcekey="gvDocListResource1">
+				<asp:GridView ID="gvDocList" runat="server" AutoGenerateColumns="False" Width="100%" CssClass="Grid"  GridLines="None" OnRowDataBound="gvDocs_OnRowDataBound">
 					<Columns>
-						<asp:TemplateField meta:resourcekey="TemplateFieldResource5">
+						<asp:TemplateField>
 							<ItemTemplate>
 								<asp:HiddenField ID="hfFileName" runat="server" Value='<%# Eval("FILE_NAME") %>' />
-								<asp:Image ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" meta:resourcekey="imgFileTypeResource2" />
+								<asp:Image ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" />
 							</ItemTemplate>
 							<ItemStyle Width="3%" />
 						</asp:TemplateField>
@@ -120,10 +120,10 @@
 							</ItemTemplate>
 							<ItemStyle Width="33%" />
 						</asp:TemplateField>
-						<asp:TemplateField HeaderText="Category" meta:resourcekey="TemplateFieldResource8">
+						<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Category %>">
 							<ItemTemplate>
 								<asp:HiddenField ID="hfDisplayArea" runat="server" Value='<%# Eval("DISPLAY_TYPE") %>' />
-								<asp:Label ID="lblDisplayArea" runat="server" meta:resourcekey="lblDisplayAreaResource2"></asp:Label>
+								<asp:Label ID="lblDisplayArea" runat="server"></asp:Label>
 							</ItemTemplate>
 							<ItemStyle Width="15%" />
 						</asp:TemplateField>
@@ -131,7 +131,7 @@
 							<ItemTemplate>
 								<asp:HiddenField ID="hfPostedDate" runat="server" Value='<%# Eval("UPLOADED_DT") %>' />
 								<asp:HiddenField ID="hfPostedBy" runat="server" Value='<%# Eval("UPLOADED_BY") %>' />
-								<asp:Label ID="lblPosted" runat="server" meta:resourcekey="lblPostedResource1"></asp:Label>
+								<asp:Label ID="lblPosted" runat="server"></asp:Label>
 							</ItemTemplate>
 							<ItemStyle Width="15%" />
 						</asp:TemplateField>
@@ -146,7 +146,7 @@
 	</table>
 </asp:Panel>
 
-<asp:Panel ID="pnlDocListRpt" runat="server" Visible = "False" meta:resourcekey="pnlDocListRptResource1">
+<asp:Panel ID="pnlDocListRpt" runat="server" Visible = "False">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td align=center>
@@ -158,7 +158,7 @@
 									<asp:Label ID="lblDocumentHdr" runat="server" meta:resourcekey="lblDocumentHdrResource1" Text="Document"></asp:Label>
 									</span>
 									<br>
-									<asp:Image ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" meta:resourcekey="imgFileTypeResource3" style="dsplay:block; vertical-align: middle;" />
+									<asp:Image ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" style="dsplay:block; vertical-align: middle;" />
 									<a class="linkUnderline" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' style="vertical-align: middle;" target="_blank"><%# Eval("FILE_NAME") %></a>
 									<br><a class="refText" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' target="_blank"><%# Eval("FILE_DESC") %></a></br>
 									</br>
@@ -167,9 +167,9 @@
 									<asp:Label ID="lblDocTypeHdr" runat="server" meta:resourcekey="lblDocTypeHdrResource1" Text="Scope"></asp:Label>
 									</span>
 									<br>
-									<asp:Label ID="lblDisplayArea" runat="server" meta:resourcekey="lblDisplayAreaResource3"></asp:Label>
+									<asp:Label ID="lblDisplayArea" runat="server"></asp:Label>
 									<br>
-									<asp:Label ID="lblDocReference" runat="server" meta:resourcekey="lblDocReferenceResource1"></asp:Label>
+									<asp:Label ID="lblDocReference" runat="server"></asp:Label>
 									</br>
 									</br>
 								</td>
@@ -177,7 +177,7 @@
 									<asp:Label ID="lblDocPostedHdr" runat="server" meta:resourcekey="lblDocPostedHdrResource1" Text="Posted"></asp:Label>
 									</span>
 									<br>
-									<asp:Label ID="lblPosted" runat="server" meta:resourcekey="lblPostedResource2"></asp:Label>
+									<asp:Label ID="lblPosted" runat="server"></asp:Label>
 									</br>
 								</td>
 							</tr>
@@ -192,29 +192,29 @@
 							<tr>
 								<td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblDocumentHdr" Text="Document" meta:resourcekey="lblDocumentHdrResource2"></asp:Label>
+										<asp:Label runat="server" ID="lblDocumentHdr" Text="Document" meta:resourcekey="lblDocumentHdrResource1"></asp:Label>
 									</span>
 									<br>
-									<asp:Image  ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" style="dsplay:block; vertical-align: middle;" meta:resourcekey="imgFileTypeResource4"></asp:Image>
+									<asp:Image  ID="imgFileType" runat="server" HeaderText="" ItemStyle-HorizontalAlign="Center" style="dsplay:block; vertical-align: middle;"></asp:Image>
 									 <a class="linkUnderline" style="vertical-align: middle;" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' target="_blank"><%#Eval("FILE_NAME")%></a>
 									 <br>
 									 <a class="refText" href='<%# String.Format("../Shared/SQMImageHandler.ashx?DOC=d&DOC_ID={0}", Eval("DOCUMENT_ID")) %>' target="_blank"><%#Eval("FILE_DESC")%></a>
 								</td>
 								<td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblDocTypeHdr" Text="Scope" meta:resourcekey="lblDocTypeHdrResource2"></asp:Label>
+										<asp:Label runat="server" ID="lblDocTypeHdr" Text="Scope" meta:resourcekey="lblDocTypeHdrResource1"></asp:Label>
 									</span>
 									<br>
-									<asp:Label ID="lblDisplayArea" runat="server" meta:resourcekey="lblDisplayAreaResource4"></asp:Label>
+									<asp:Label ID="lblDisplayArea" runat="server"></asp:Label>
 									<br>
-									<asp:Label ID="lblDocReference" runat="server" meta:resourcekey="lblDocReferenceResource2"></asp:Label>
+									<asp:Label ID="lblDocReference" runat="server"></asp:Label>
 								</td>
 								<td class="listData" valign="top">
 									<span class="summaryHeader">
-										<asp:Label runat="server" ID="lblDocPostedHdr" Text="Posted" meta:resourcekey="lblDocPostedHdrResource2"></asp:Label>
+										<asp:Label runat="server" ID="lblDocPostedHdr" Text="Posted" meta:resourcekey="lblDocPostedHdrResource1"></asp:Label>
 									</span>
 									<br>
-									<asp:Label ID="lblPosted" runat="server" meta:resourcekey="lblPostedResource3"></asp:Label>
+									<asp:Label ID="lblPosted" runat="server"></asp:Label>
 								</td>
 							</tr>
 						</ItemTemplate>
@@ -227,8 +227,8 @@
 	</table>
 </asp:Panel>
 
-<asp:Panel ID="pnlRadDocsList" runat="server" Visible = "False" meta:resourcekey="pnlRadDocsListResource1">
-	<telerik:RadGrid ID="rgDocsList" runat="server" Skin="Metro" GroupPanelPosition="Top" meta:resourcekey="rgDocsListResource1">
+<asp:Panel ID="pnlRadDocsList" runat="server" Visible = "False">
+	<telerik:RadGrid ID="rgDocsList" runat="server" Skin="Metro" GroupPanelPosition="Top">
 		<MasterTableView DataKeyNames="DOCUMENT_ID" Width="100%" AutoGenerateColumns="False" BorderColor="LightGray" BorderWidth="0px" CssClass="RadFileExplorer" Font-Size="11px" ForeColor="#444444">
 			<Columns>
 				<telerik:GridTemplateColumn UniqueName="TemplateColumn" HeaderText="Document" FilterControlAltText="Filter TemplateColumn column" meta:resourcekey="GridTemplateColumnResource1">

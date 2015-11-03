@@ -139,7 +139,7 @@
     <value>Please do not remove this key.</value>
   </data>
   <data name="SelectButtonText" xml:space="preserve">
-    <value>Select</value>
+    <value>Seleccione</value>
   </data>
   <data name="ServerErrorMessage" xml:space="preserve">
     <value>Error occured during file upload</value>

@@ -3,13 +3,13 @@
                    <td>
                      <table width="100%" border="0" cellspacing="0" cellpadding="2">
 			            <tr>
-			                <td class=admBkgd align=center>	
+			                <td class=admBkgd align=center>
                               <div id="divPartPlantGVScroll" runat="server" class="">
                               <asp:GridView runat="server" ID="gvPartPlantList" Name="gvPartPlantList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvPartPlant_OnRowDataBound">
-                                <HeaderStyle CssClass="HeadingCellText" />    
+                                <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
-                                    <asp:TemplateField HeaderText="Business Org" ItemStyle-Width="15%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, BusinessOrg %>" ItemStyle-Width="15%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblCustBusOrg" runat="server" text='<%#Eval("CUST_BUS_ORG_NAME") %>'></asp:Label>
                                         </ItemTemplate>
@@ -19,7 +19,7 @@
                                             <asp:Label ID="lblCustPlantID" runat="server" text='<%#Eval("CUSTOMER_PLANT_ID") %>'></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Plant" ItemStyle-Width="15%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Plant %>" ItemStyle-Width="15%">
                                         <ItemTemplate>
                                             <asp:Label ID="lblCustPlant" runat="server" text='<%#Eval("CUST_PLANT_NAME") %>'></asp:Label>
                                         </ItemTemplate>
@@ -27,10 +27,10 @@
             			            <asp:TemplateField HeaderText="Supplier" ItemStyle-Width="40%">
                                         <ItemTemplate>
                                             <asp:GridView runat="server" ID="gvPartSuppGrid" Name="gvPartSuppGrid" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%">
-                                                <HeaderStyle CssClass="HeadingCellText" />    
+                                                <HeaderStyle CssClass="HeadingCellText" />
                                                 <RowStyle CssClass="DataCell" />
                                                 <Columns>
-                                                    <asp:BoundField DataField="SUPP_COMPANY_NAME" HeaderText="Company" ItemStyle-Width="50%" />
+                                                    <asp:BoundField DataField="SUPP_COMPANY_NAME" HeaderText="<%$ Resources:LocalizedText, Company %>" ItemStyle-Width="50%" />
                                                     <asp:BoundField DataField="SUPP_PLANT_NAME" HeaderText="Supplier Plant" ItemStyle-Width="50%" />
                                                 </Columns>
                                             </asp:GridView>

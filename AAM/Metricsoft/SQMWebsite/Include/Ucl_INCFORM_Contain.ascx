@@ -45,7 +45,7 @@
                     </table>
                     <div class="row" style="padding-top:0;margin-top:-10px;">
                         <div class="col-xs-12 text-left-more">
-                            <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
+                            <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
                         </div>
                     </div>
                 </FooterTemplate>
@@ -54,13 +54,13 @@
 						<thead>
 							<tr>
 								<th class="col-sm-1 text-center"><b>
-									<asp:Label ID="lbhdItem" runat="server" meta:resourcekey="lbhdItemResource1" Text="Item"></asp:Label>
+									<asp:Label ID="lbhdItem" runat="server" Text="<%$ Resources:LocalizedText, Item %>"></asp:Label>
 									</b></th>
 								<th class="col-sm-3 text-left-more"><b>
 									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label>
 									</b></th>
 								<th class="col-sm-2 text-left-more"><b>
-									<asp:Label ID="lbhdConAssignedTo" runat="server" meta:resourcekey="lbhdConAssignedToResource1" Text="Assigned To"></asp:Label>
+									<asp:Label ID="lbhdConAssignedTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
 									</b></th>
 								<th class="col-sm-2 text-left-more"><b>
 									<asp:Label ID="lbhdConStartDate" runat="server" meta:resourcekey="lbhdConStartDateResource1" Text="Date Performed"></asp:Label>
@@ -77,12 +77,12 @@
 							</td>
 							<td class="text-left-more">
 								<asp:TextBox ID="tbContainAction" runat="server" Height="65px" meta:resourcekey="tbContainActionResource1" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="90%"></asp:TextBox>
-								<asp:RequiredFieldValidator ID="rfvContainAction" runat="server" ControlToValidate="tbContainAction" Display="None" ErrorMessage="Required" meta:resourcekey="rfvContainActionResource1"></asp:RequiredFieldValidator>
+								<asp:RequiredFieldValidator ID="rfvContainAction" runat="server" ControlToValidate="tbContainAction" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
 								<telerik:RadComboBox ID="rddlContainPerson" runat="server" CssClass="WarnIfChanged" DropDownHeight="350" ExpandDirection="Up" meta:resourcekey="rddlContainPersonResource1" Skin="Metro" Width="200px" ZIndex="9000">
 								</telerik:RadComboBox>
-								<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="Required" meta:resourcekey="rfvContainPersonResource1"></asp:RequiredFieldValidator>
+								<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
 								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
@@ -99,10 +99,10 @@
 									</DateInput>
 									<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
 								</telerik:RadDatePicker>
-								<asp:RequiredFieldValidator ID="rvfStartDate" runat="server" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="Required" meta:resourcekey="rvfStartDateResource1"></asp:RequiredFieldValidator>
+								<asp:RequiredFieldValidator ID="rvfStartDate" runat="server" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 							</td>
 							<td class="text-left-more">
-								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="Delete Item">
+								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
 								</telerik:RadButton>
 							</td>
 						</tr>

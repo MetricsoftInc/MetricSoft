@@ -104,7 +104,7 @@
                                      <asp:Image ID="imgHazardType" ImageUrl="" Visible="true" ToolTip="Energy input" runat="server" style="vertical-align: middle;"/>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Required" ItemStyle-Width="15%" ItemStyle-HorizontalAlign=Center>
+                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Required %>" ItemStyle-Width="15%" ItemStyle-HorizontalAlign=Center>
                                 <ItemTemplate>
                                     <asp:CheckBox id="cbMetricRequired" runat="server" enabled="false" Checked='<%#Eval("IS_REQUIRED") %>'/>
                                 </ItemTemplate>
@@ -230,7 +230,7 @@
                                             <table width="98%"  border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td>
-                                                       <asp:Label ID="lblUserUOMName" runat="server" text="Name" CssClass="textStd"></asp:Label>
+                                                       <asp:Label ID="lblUserUOMName" runat="server" Text="<%$ Resources:LocalizedText, Name %>" CssClass="textStd"></asp:Label>
                                                     </td>
                                                     <td>
                                                         <asp:TextBox ID="tbUserUOMName" runat="server" maxlength="100" Columns="24"></asp:TextBox>
@@ -292,7 +292,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricRequired" runat="server" text="Required"></asp:Label>
+                                <asp:Label ID="lblMetricRequired" runat="server" Text="<%$ Resources:LocalizedText, Required %>"></asp:Label>
                             </td>
                             <td class="tableDataAlt" >&nbsp;</td>
                             <td CLASS="tableDataAlt">

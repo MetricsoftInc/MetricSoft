@@ -117,109 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cbIsAcceptedResource1.Text" xml:space="preserve">
-    <value />
+  <data name="lbhdFinActionResource1.Text" xml:space="preserve">
+    <value>Acción final</value>
   </data>
-  <data name="cbIsAcceptedResource1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="lbhdFinCompltDTResource1.Text" xml:space="preserve">
+    <value>Fecha de Terminación</value>
   </data>
-  <data name="lbApproveMessageResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbApproveMessageResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbApproverJobResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbApproverJobResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbApproverResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbApproverResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeqResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lbItemSeqResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlApprovalResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlApprovalResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rapApprovalsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rdpAcceptDateResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rdpAcceptDateResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
+  <data name="lbhdFinStartDTResource1.Text" xml:space="preserve">
+    <value>Fecha tope</value>
   </data>
 </root>

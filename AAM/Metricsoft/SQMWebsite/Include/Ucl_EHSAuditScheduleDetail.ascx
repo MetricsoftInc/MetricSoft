@@ -66,7 +66,7 @@
                                         </tr>
                                         <tr runat="server">
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblLocation" runat="server" Text="Business Location"></asp:Label>
+                                                <asp:Label ID="lblLocation" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -90,7 +90,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblDayOfWeek" runat="server" Text="Day of Week"></asp:Label>
+                                                <asp:Label ID="lblDayOfWeek" runat="server" Text="<%$ Resources:LocalizedText, DayOfWeek %>"></asp:Label>
                                             </td>
                                             <td class="required">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -120,8 +120,8 @@
                                 <table style="width: 100%;">
                                     <tr>
                                         <td style="width: 33%;">
-                                            <telerik:RadButton ID="btnSaveReturn" runat="server" Text="Save &amp; Return" Visible="true"
-                                                CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="Saving..."
+                                            <telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="true"
+                                                CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
                                                 OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
                                         </td>
                                         <td style="width: 33%;">

@@ -20,7 +20,7 @@
 	<br>
     <div id="divInputsGVScroll" runat="server" class="">
         <asp:GridView runat="server" ID="gvInputsList" Name="gvInputsList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvInputsList_OnRowDataBound">
-            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+            <HeaderStyle CssClass="HeadingCellTextLeft" />
             <RowStyle CssClass="DataCell" />
             <Columns>
                 <asp:TemplateField HeaderText="Metric" ItemStyle-Width="25%">
@@ -62,7 +62,7 @@
 				         <asp:Label runat="server" ID="lblValueUOM" CssClass="refTextSmall" Text='<%# Eval("UOM") %>'></asp:Label>
  		            </ItemTemplate>
 		        </asp:TemplateField>
-                <asp:TemplateField HeaderText="Cost" ItemStyle-Width="12%">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Cost %>" ItemStyle-Width="12%">
 					<ItemTemplate>
 				        <asp:Label runat="server" ID="lblCost" CSSClass="textSmall" Text='<%# Eval("MEASURE_COST") %>'></asp:Label>
                     </ItemTemplate>
@@ -89,7 +89,7 @@
 	<br>
     <div id="divHSTMetricsGVScroll" runat="server" class="">
         <asp:GridView runat="server" ID="gvHSTMetricsList" Name="gvHSTMetricsList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvHSTMetricsList_OnRowDataBound">
-            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+            <HeaderStyle CssClass="HeadingCellTextLeft" />
             <RowStyle CssClass="DataCell" />
             <Columns>
                 <asp:TemplateField HeaderText="Metric" ItemStyle-Width="26%">
@@ -107,7 +107,7 @@
 				        <asp:Label runat="server" ID="lblHSTRequired" ></asp:Label>
                     </ItemTemplate>
 				</asp:TemplateField>
-                <asp:TemplateField HeaderText="Value" ItemStyle-Width="13%">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Value %>" ItemStyle-Width="13%">
 					<ItemTemplate>
 				        <asp:Label runat="server" ID="lblHSTValue" CSSClass="textSmall" Text='<%# Eval("MEASURE_VALUE") %>'></asp:Label>
                     </ItemTemplate>
@@ -127,7 +127,7 @@
 				         <asp:Label runat="server" ID="lblHSTInputUOM" CssClass="refTextSmall" Text='<%# Eval("INPUT_UOM_ID") %>'></asp:Label>
  		            </ItemTemplate>
 		        </asp:TemplateField>
-                <asp:TemplateField HeaderText="Cost" ItemStyle-Width="13%">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Cost %>" ItemStyle-Width="13%">
 					<ItemTemplate>
 				        <asp:Label runat="server" ID="lblHSTCost" CSSClass="textSmall" Text='<%# Eval("MEASURE_COST") %>'></asp:Label>
                     </ItemTemplate>

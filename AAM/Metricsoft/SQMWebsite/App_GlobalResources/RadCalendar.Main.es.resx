@@ -121,7 +121,7 @@
     <value>Cancelar</value>
   </data>
   <data name="FastNavigationDateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Date is out of range.</value>
+    <value>Fecha está fuera de rango.</value>
   </data>
   <data name="FastNavigationNextText" xml:space="preserve">
     <value>&amp;lt;&amp;lt;</value>
@@ -139,7 +139,7 @@
     <value>&lt;&lt;</value>
   </data>
   <data name="FastNavigationTodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
+    <value>Hoy</value>
   </data>
   <data name="NavigationNextText" xml:space="preserve">
     <value>&amp;gt;</value>

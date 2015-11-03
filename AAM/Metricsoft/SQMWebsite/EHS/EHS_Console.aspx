@@ -83,7 +83,7 @@
                                         <telerik:RadComboBox ID="ddlExportPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ZIndex="9000" Skin="Metro"  Width="350" height="300" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 		                            </td>
                                     <td class="summaryDataEnd">
-							            <asp:Label runat="server" ID="lblExportDateSelect1" CssClass="prompt" Text="From: "></asp:Label>
+							            <asp:Label runat="server" ID="lblExportDateSelect1" CssClass="prompt"></asp:Label>
 									    <telerik:RadMonthYearPicker ID="radExportDateSelect1" runat="server" CssClass="textStd" Width="165" Skin="Metro"></telerik:RadMonthYearPicker>
 									    &nbsp;
                                         <asp:Label ID="lblExportToDate" runat="server" CssClass="prompt"></asp:Label>

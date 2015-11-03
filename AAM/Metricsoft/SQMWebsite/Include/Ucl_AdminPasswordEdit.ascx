@@ -40,7 +40,7 @@
         <div runat="server" id="divErrorMsg" visible="False">
 	        <asp:Label runat="server" ID="lblPassMustUpdate" Text="You must reset your password to continue.<br><br>" CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassMustUpdateResource1"></asp:Label>
             <asp:Label runat="server" ID="lblPassFailUpdate"  Text="An error was encountered updating the password. Please try again or contact your system administrator." CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassFailUpdateResource1"></asp:Label>
-	        <asp:Label runat="server" ID="lblPassFailError" CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassFailErrorResource1"></asp:Label>
+	        <asp:Label runat="server" ID="lblPassFailError" CssClass="promptAlert" Visible="False"></asp:Label>
             <asp:Label runat="server" ID="lblPasswordNoConfirm"  Text="Password not confirmed. Please make sure the confirmation password and new password are the same." CssClass="promptAlert" Visible="False" meta:resourcekey="lblPasswordNoConfirmResource1"></asp:Label>
 	        <asp:Label runat="server" ID="lblPassFail10"  Text="The Current Password entered does not match your current password." CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassFail10Resource1"></asp:Label>
             <asp:Label runat="server" ID="lblPassPolicyFail"  Text="The password entered does not comply with the policy stated below - please re-enter a new password." CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassPolicyFailResource1"></asp:Label>
@@ -49,8 +49,8 @@
 	        <asp:Label runat="server" ID="lblPasswordEmailBody1b" Visible="False" Text=" application." meta:resourcekey="lblPasswordEmailBody1bResource1"></asp:Label>
 	        <asp:Label runat="server" ID="lblPasswordEmailBody2" Text="Please do not reply to this message." Visible="False" meta:resourcekey="lblPasswordEmailBody2Resource1" ></asp:Label>
         </div>
-        <asp:Panel ID="pnlPasswordEdit" runat="server" style="margin-top: 5px;" meta:resourcekey="pnlPasswordEditResource1">
-            <asp:Label ID="lblPasswordPolicy" runat="server" CssClass="instructText" meta:resourcekey="lblPasswordPolicyResource1"></asp:Label>
+        <asp:Panel ID="pnlPasswordEdit" runat="server" style="margin-top: 5px;">
+            <asp:Label ID="lblPasswordPolicy" runat="server" CssClass="instructText"></asp:Label>
 	        <table runat="server" id="tblPassword" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
               <tr style="height: 7px;" runat="server"><td runat="server"></td></tr>
 		        <tr runat="server">
@@ -98,9 +98,9 @@
 </telerik:RadWindow>
 
 <%--<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="200" Width="500" Title="Forgot Password" Behaviors="Move">--%>
-<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" AutoSize="True" Title="Forgot Password" Behaviors="Move" Behavior="Move" meta:resourcekey="winPasswordForgotResource1">
+<telerik:RadWindow runat="server" ID="winPasswordForgot" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" AutoSize="True" Title="Forgot Password" Behaviors="Move" Behavior="Move">
     <ContentTemplate>
-		<asp:Panel ID="pnlForgot" runat="server" style="margin-top: 5px;" meta:resourcekey="pnlForgotResource1">
+		<asp:Panel ID="pnlForgot" runat="server" style="margin-top: 5px;">
 			<table border="0" cellspacing="0" cellpadding="1">
                 <tr>
                     <td style="padding-left: 10px; padding-bottom: 7px;">

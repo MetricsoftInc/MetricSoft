@@ -142,7 +142,7 @@
     <value>Start</value>
   </data>
   <data name="AdvancedTitle" xml:space="preserve">
-    <value>Title</value>
+    <value>Título</value>
   </data>
   <data name="AdvancedUnitsHeader" xml:space="preserve">
     <value>Units</value>
@@ -169,7 +169,7 @@
     <value>Delete task</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="ExportPdf" xml:space="preserve">
     <value>Exportar a PDF</value>

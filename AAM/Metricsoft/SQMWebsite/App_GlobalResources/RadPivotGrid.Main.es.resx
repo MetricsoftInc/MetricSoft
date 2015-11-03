@@ -196,7 +196,7 @@
     <value>Defer Layout Update</value>
   </data>
   <data name="ConfigurationPanelUpdateButtonText" xml:space="preserve">
-    <value>Update</value>
+    <value>Actualizar</value>
   </data>
   <data name="DataTableCaption" xml:space="preserve">
     <value />
@@ -376,7 +376,7 @@
     <value>and</value>
   </data>
   <data name="FilterDialogByLabelText" xml:space="preserve">
-    <value>by</value>
+    <value>de</value>
   </data>
   <data name="FilterDialogCancelButtonText" xml:space="preserve">
     <value>Cancelar</value>

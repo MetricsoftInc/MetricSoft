@@ -66,11 +66,11 @@ namespace SQM.Website.EHS
 				row.CreateCell(3).SetCellValue("Measure Name");
 				row.CreateCell(4).SetCellValue("Period Year");
 				row.CreateCell(5).SetCellValue("Period Month");
-				row.CreateCell(6).SetCellValue("Value");
+				row.CreateCell(6).SetCellValue(Resources.LocalizedText.Value);
 				row.CreateCell(7).SetCellValue("UOM");
 				row.CreateCell(8).SetCellValue("Input Value");
 				row.CreateCell(9).SetCellValue("Input UOM");
-				row.CreateCell(10).SetCellValue("Cost");
+				row.CreateCell(10).SetCellValue(Resources.LocalizedText.Cost);
 				row.CreateCell(11).SetCellValue("Currency");
 				row.CreateCell(12).SetCellValue("Input Cost");
 				row.CreateCell(13).SetCellValue("Input Currency");

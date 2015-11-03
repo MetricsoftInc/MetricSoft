@@ -34,11 +34,11 @@
 
 </script>
 
-<asp:Panel ID="pnlAction" Visible="False" runat="server" meta:resourcekey="pnlActionResource1">
+<asp:Panel ID="pnlAction" Visible="False" runat="server">
 
 	<div class="container-fluid">
 
-		<telerik:RadAjaxPanel ID="rapAction" runat="server" HorizontalAlign="NotSet" meta:resourceKey="rapActionResource1">
+		<telerik:RadAjaxPanel ID="rapAction" runat="server" HorizontalAlign="NotSet">
 
 		<asp:Repeater runat="server" ID="rptAction" ClientIDMode="AutoID" OnItemDataBound="rptAction_OnItemDataBound" OnItemCommand="rptAction_ItemCommand">
 
@@ -46,7 +46,7 @@
 				</table>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
-						<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="Add Another Final Corrective Action" Text="Add Another" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourceKey="btnAddFinalResource1" ></asp:Button>
+						<asp:Button ID="btnAddFinal" CssClass="buttonAdd" runat="server" ToolTip="<%$ Resources:LocalizedText, AddAnotherFinalCorrectiveAction %>" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother"></asp:Button>
 					</div>
 				</div>
 			</FooterTemplate>
@@ -55,13 +55,13 @@
 					<thead>
 						<tr>
 							<th class="text-center"><b>
-								<asp:Label ID="lbhdItem" runat="server" meta:resourceKey="lbhdItemResource1" Text="Item"></asp:Label>
+								<asp:Label ID="lbhdItem" runat="server" Text="<%$ Resources:LocalizedText, Item %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-4 text-left-more"><b>
 								<asp:Label ID="lbhdFinAction" runat="server" meta:resourceKey="lbhdFinActionResource1" Text="Final Action"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
-								<asp:Label ID="lbhdFinAssignTo" runat="server" meta:resourceKey="lbhdFinAssignToResource1" Text="Assigned To"></asp:Label>
+								<asp:Label ID="lbhdFinAssignTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbhdFinStartDT" runat="server" meta:resourceKey="lbhdFinStartDTResource1" Text="Target Date"></asp:Label>
@@ -70,7 +70,7 @@
 								<asp:Label ID="lbhdFinCompltDT" runat="server" meta:resourceKey="lbhdFinCompltDTResource1" Text="Completion Date"></asp:Label>
 								</b></th>
 							<th class="col-sm-1 text-left-more" style="margin-left:-5px;"><b>
-								<asp:Label ID="lbhdFinComplete" runat="server" meta:resourceKey="lbhdFinCompleteResource1" Text="Cmpltd"></asp:Label>
+								<asp:Label ID="lbhdFinComplete" runat="server" Text="Cmpltd"></asp:Label>
 								</b></th>
 							<th class="col-sm-1 text-left-more"></th>
 						</tr>
@@ -81,7 +81,7 @@
 				<tbody>
 					<tr>
 						<td class="text-center">
-							<asp:Label ID="lbItemSeq" runat="server" meta:resourceKey="lbItemSeqResource1"></asp:Label>
+							<asp:Label ID="lbItemSeq" runat="server"></asp:Label>
 							<asp:HiddenField ID="hfTaskID" runat="server" />
 							<asp:HiddenField ID="hfRecordType" runat="server" />
 							<asp:HiddenField ID="hfRecordID" runat="server" />
@@ -94,16 +94,16 @@
 							<asp:HiddenField ID="hfComments" runat="server" />
 						</td>
 						<td class="text-left-more">
-							<asp:TextBox ID="tbFinalAction" runat="server" Height="65px" meta:resourceKey="tbFinalActionResource1" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
-							<asp:RequiredFieldValidator ID="rfvFinalAction" runat="server" ControlToValidate="tbFinalAction" Display="None" ErrorMessage="Required" meta:resourceKey="rfvFinalActionResource1"></asp:RequiredFieldValidator>
+							<asp:TextBox ID="tbFinalAction" runat="server" Height="65px" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
+							<asp:RequiredFieldValidator ID="rfvFinalAction" runat="server" ControlToValidate="tbFinalAction" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDropDownList ID="rddlActionPerson" runat="server" CssClass="WarnIfChanged" DropDownHeight="350px" ExpandDirection="Up" meta:resourceKey="rddlActionPersonResource1" OnSelectedIndexChanged="rddlActionPerson_SelectedIndexChanged" Skin="Metro" Width="90%" ZIndex="9000">
+							<telerik:RadDropDownList ID="rddlActionPerson" runat="server" CssClass="WarnIfChanged" DropDownHeight="350px" ExpandDirection="Up" OnSelectedIndexChanged="rddlActionPerson_SelectedIndexChanged" Skin="Metro" Width="90%" ZIndex="9000">
 							</telerik:RadDropDownList>
-							<asp:RequiredFieldValidator ID="rfvActionPerson" runat="server" ControlToValidate="rddlActionPerson" Display="None" ErrorMessage="Required" InitialValue="[Select One]" meta:resourceKey="rfvActionPersonResource1"></asp:RequiredFieldValidator>
+							<asp:RequiredFieldValidator ID="rfvActionPerson" runat="server" ControlToValidate="rddlActionPerson" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" InitialValue="[Select One]"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpFinalStartDate" runat="server" CssClass="WarnIfChanged" meta:resourceKey="rdpFinalStartDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
+							<telerik:RadDatePicker ID="rdpFinalStartDate" runat="server" CssClass="WarnIfChanged" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -117,10 +117,10 @@
 								</DateInput>
 								<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
 							</telerik:RadDatePicker>
-							<asp:RequiredFieldValidator ID="rvfFinalStartDate" runat="server" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="Required" meta:resourceKey="rvfFinalStartDateResource1"></asp:RequiredFieldValidator>
+							<asp:RequiredFieldValidator ID="rvfFinalStartDate" runat="server" ControlToValidate="rdpFinalStartDate" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 						</td>
 						<td class="text-left-more">
-							<telerik:RadDatePicker ID="rdpFinalCompleteDate" runat="server" CssClass="WarnIfChanged" meta:resourceKey="rdpFinalCompleteDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
+							<telerik:RadDatePicker ID="rdpFinalCompleteDate" runat="server" CssClass="WarnIfChanged" ShowPopupOnFocus="True" Skin="Metro" Width="115px">
 								<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 								</Calendar>
 								<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -136,10 +136,10 @@
 							</telerik:RadDatePicker>
 						</td>
 						<td class="text-left">
-							<asp:CheckBox ID="cbFinalIsComplete" runat="server" meta:resourceKey="cbFinalIsCompleteResource1" SkinID="Metro" Width="90%" />
+							<asp:CheckBox ID="cbFinalIsComplete" runat="server" SkinID="Metro" Width="90%" />
 						</td>
 						<td class="text-left-more">
-							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="Delete Item">
+							<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
 							</telerik:RadButton>
 						</td>
 					</tr>

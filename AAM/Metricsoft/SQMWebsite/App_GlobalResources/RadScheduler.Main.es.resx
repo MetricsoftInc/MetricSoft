@@ -193,7 +193,7 @@
     <value>occurrences</value>
   </data>
   <data name="AdvancedOf" xml:space="preserve">
-    <value>of</value>
+    <value>de</value>
   </data>
   <data name="AdvancedOfEvery" xml:space="preserve">
     <value>of every</value>
@@ -331,7 +331,7 @@
     <value>Cancelar</value>
   </data>
   <data name="AdvancedCalendarToday" xml:space="preserve">
-    <value>Today</value>
+    <value>Hoy</value>
   </data>
   <data name="AdvancedSubjectRequired" xml:space="preserve">
     <value>Please provide appointment subject</value>
@@ -385,10 +385,10 @@
     <value>New Recurring Appointment</value>
   </data>
   <data name="ContextMenuDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="ContextMenuEdit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="ContextMenuGoToToday" xml:space="preserve">
     <value>Go to today</value>
@@ -430,7 +430,7 @@
     <value>weeks</value>
   </data>
   <data name="ReminderNone" xml:space="preserve">
-    <value>None</value>
+    <value>Ninguno</value>
   </data>
   <data name="ReminderSnooze" xml:space="preserve">
     <value>Snooze</value>

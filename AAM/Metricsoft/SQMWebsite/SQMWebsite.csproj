@@ -751,6 +751,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadEditor.Main.fr-FR.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadEditor.Modules.es.designer.cs">
+      <DependentUpon>RadEditor.Modules.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="App_GlobalResources\RadEditor.Modules.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -861,6 +866,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadImageGallery.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadListBox.es.designer.cs">
+      <DependentUpon>RadListBox.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="App_GlobalResources\RadListBox.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -955,6 +965,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadTreeList.Main.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadUpload.es.designer.cs">
+      <DependentUpon>RadUpload.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="App_GlobalResources\RadUpload.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1830,17 +1845,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
-    <Content Include="EHS\App_LocalResources\EHS_IncidentForm.aspx.resx" />
-    <Content Include="EHS\App_LocalResources\EHS_InjuryIllnessForm.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />
     <Content Include="Home\App_LocalResources\Calendar.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_EHSIncidentForm.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Approval.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.resx" />
@@ -2139,6 +2150,18 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>RadWizard.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\RadUpload.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadUpload.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadEditor.Modules.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadEditor.Modules.es.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadListBox.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadListBox.es.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="App_LocalResources\Login.aspx.resx" />
     <Content Include="Home\App_LocalResources\Calendar.aspx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.es.resx" />
@@ -2150,6 +2173,15 @@
     <Content Include="EHS\App_LocalResources\EHS_Audit_Exceptions.aspx.es.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Audit_Scheduler.aspx.es.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Audits.aspx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audits_Questions.aspx.es.resx" />
+    <Content Include="Home\App_LocalResources\Dashboard.aspx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditExceptionList.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditList.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditScheduleList.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.es.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>

@@ -270,10 +270,184 @@
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>Evaluación</value>
+  </data>
+  <data name="AssessmentBy" xml:space="preserve">
+    <value>Evaluación por</value>
+  </data>
+  <data name="AssessmentDate" xml:space="preserve">
+    <value>Fecha de evaluación</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completado</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Datos</value>
+  </data>
+  <data name="DateSpan" xml:space="preserve">
+    <value>Fecha periodo:</value>
+  </data>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>Día de la semana</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Departamento</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Fecha de vencimiento</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportar</value>
+  </data>
+  <data name="ExportDataToExcelFormat" xml:space="preserve">
+    <value>Exportación de datos a formato Excel</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="FYYearToDate" xml:space="preserve">
+    <value>Año fiscal: El año hasta la fecha</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="PreviousYear" xml:space="preserve">
+    <value>Año anterior</value>
+  </data>
+  <data name="PrivilegeGroup" xml:space="preserve">
+    <value>Grupo de privilegio</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Pregunta</value>
+  </data>
   <data name="QuestionText" xml:space="preserve">
     <value>Texto de la pregunta</value>
   </data>
+  <data name="ResponsiblePerson" xml:space="preserve">
+    <value>Persona responsable</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Marcador</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seleccione</value>
+  </data>
+  <data name="SelectRange" xml:space="preserve">
+    <value>Seleccione la gama</value>
+  </data>
+  <data name="SelectResponsibleSupplierLocations" xml:space="preserve">
+    <value>Seleccione responsible/localizaciones proveedor</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Objectivo</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>
+  </data>
+  <data name="UpdateStatus" xml:space="preserve">
+    <value>Estado de actualización</value>
+  </data>
+  <data name="YearToDate" xml:space="preserve">
+    <value>El año hasta la fecha</value>
+  </data>
+  <data name="AddANewIncident" xml:space="preserve">
+    <value>Add a New Incident:</value>
+  </data>
+  <data name="AddAnother" xml:space="preserve">
+    <value>Agregar otro</value>
+  </data>
+  <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
+    <value>Añadir otra acción correctiva Final</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>Asignada a</value>
+  </data>
+  <data name="BusinessLocation" xml:space="preserve">
+    <value>Ubicación de la empresa</value>
+  </data>
+  <data name="BusinessOrg" xml:space="preserve">
+    <value>Organización de negocios</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Costo</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>Eliminar elemento</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="ExpectedReturnDate" xml:space="preserve">
+    <value>Expected Return Date</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="IncidentDate" xml:space="preserve">
+    <value>Incident Date</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Última actualización</value>
+  </data>
+  <data name="LocationCode" xml:space="preserve">
+    <value>Código de ubicación</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>Tipo de ubicación</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PercentChange" xml:space="preserve">
+    <value>Cambio de porcentaje</value>
+  </data>
+  <data name="Plant" xml:space="preserve">
+    <value>Planta</value>
+  </data>
+  <data name="ReportDate" xml:space="preserve">
+    <value>Report Date</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Necesario</value>
+  </data>
+  <data name="RequiredFieldsMustBeCompleted" xml:space="preserve">
+    <value>Required Fields Must be Completed.</value>
+  </data>
+  <data name="SaveAndCreateReport" xml:space="preserve">
+    <value>Guardar y crear informe</value>
+  </data>
+  <data name="SaveAndReturn" xml:space="preserve">
+    <value>Guardar y volver</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Guardar...</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+    <value>Valor objetivo</value>
+  </data>
+  <data name="TimeOfIncident" xml:space="preserve">
+    <value>Time of Incident</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valor</value>
   </data>
 </root>

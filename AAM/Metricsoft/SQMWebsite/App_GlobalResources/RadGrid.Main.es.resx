@@ -418,7 +418,7 @@
     <value>Min</value>
   </data>
   <data name="HeaderContextMenuNoneAggregateText" xml:space="preserve">
-    <value>None</value>
+    <value>Ninguno</value>
   </data>
   <data name="HeaderContextMenuSumAggregateText" xml:space="preserve">
     <value>Sum</value>
@@ -427,16 +427,16 @@
     <value>Cancelar</value>
   </data>
   <data name="EditText" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="InsertText" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="UpdateText" xml:space="preserve">
-    <value>Update</value>
+    <value>Actualizar</value>
   </data>
   <data name="DeleteText" xml:space="preserve">
-    <value>Delete</value>
+    <value>Eliminar</value>
   </data>
   <data name="AggregateFunctionAvg" xml:space="preserve">
     <value>Avg</value>
@@ -502,7 +502,7 @@
     <value>Columns Display</value>
   </data>
   <data name="MobileEditViewTitle" xml:space="preserve">
-    <value>Edit</value>
+    <value>Editar</value>
   </data>
   <data name="MobileFilterViewOptionsText" xml:space="preserve">
     <value>Options</value>
@@ -511,10 +511,10 @@
     <value>Filter by {0}</value>
   </data>
   <data name="MobileFilterViewValueText" xml:space="preserve">
-    <value>Value</value>
+    <value>Valor</value>
   </data>
   <data name="MobileInsertViewTitle" xml:space="preserve">
-    <value>Insert</value>
+    <value>Insertar</value>
   </data>
   <data name="MobileViewBackButtonText" xml:space="preserve">
     <value>Back</value>
@@ -541,7 +541,7 @@
     <value>Unfreeze</value>
   </data>
   <data name="RangeFilteringFromText" xml:space="preserve">
-    <value>From: </value>
+    <value>Desde: </value>
   </data>
   <data name="RangeFilteringToText" xml:space="preserve">
     <value>A: </value>

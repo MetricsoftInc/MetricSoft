@@ -3,9 +3,9 @@
 <asp:Panel ID="pnlPartList" runat="server" Visible="false">
     <div id="divPartListScroll" runat="server" class="">
         <asp:GridView runat="server" ID="gvPartList" Name="gvPartList" CssClass="GridAlt" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvPartList_OnRowDataBound">
-            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+            <HeaderStyle CssClass="HeadingCellTextLeft" />
             <RowStyle CssClass="DataCell" />
-            <AlternatingRowStyle CssClass="DataCellAlt" /> 
+            <AlternatingRowStyle CssClass="DataCellAlt" />
             <Columns>
                 <asp:TemplateField HeaderText="Part Number">
                     <ItemTemplate>
@@ -31,10 +31,10 @@
 		    <td class=admBkgd align=center>
                 <div id="divPartPlantGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvPartPlantList" Name="gvPartPlantList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" style="margin-top: 8px;" OnRowDataBound="gvPartPlant_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                         <RowStyle CssClass="DataCell" />
                 	        <Columns>
-                                <asp:TemplateField HeaderText="Business Org" ItemStyle-Width="15%">
+                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, BusinessOrg %>" ItemStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:Label ID="lblCustBusOrg" runat="server" text='<%#Eval("CUST_BUS_ORG_NAME") %>'></asp:Label>
                                     </ItemTemplate>
@@ -44,7 +44,7 @@
                                         <asp:Label ID="lblCustPlantID" runat="server" text='<%#Eval("CUSTOMER_PLANT_ID") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Location" ItemStyle-Width="15%">
+                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Location %>" ItemStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:Label ID="lblCustPlant" runat="server" text='<%#Eval("CUST_PLANT_NAME") %>'></asp:Label>
                                     </ItemTemplate>
@@ -52,10 +52,10 @@
             			        <asp:TemplateField HeaderText="Supplier" ItemStyle-Width="40%">
                                     <ItemTemplate>
                                         <asp:GridView runat="server" ID="gvPartSuppGrid" Name="gvPartSuppGrid" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%">
-                                            <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                            <HeaderStyle CssClass="HeadingCellTextLeft" />
                                             <RowStyle CssClass="DataCell" />
                                             <Columns>
-                                                <asp:BoundField DataField="SUPP_COMPANY_NAME" HeaderText="Company" ItemStyle-Width="50%" />
+                                                <asp:BoundField DataField="SUPP_COMPANY_NAME" HeaderText="<%$ Resources:LocalizedText, Company %>" ItemStyle-Width="50%" />
                                                 <asp:BoundField DataField="SUPP_PLANT_NAME" HeaderText="Supplier Location" ItemStyle-Width="50%" />
                                             </Columns>
                                         </asp:GridView>
@@ -77,7 +77,7 @@
              <td valign="top" align="center" class="editArea">
                 <div id="divProgramGVScroll" runat="server" class="">
                     <asp:GridView runat="server" ID="gvProgramList" Name="gvProgramList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvProgramList_OnRowDataBound">
-                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                         <RowStyle CssClass="DataCell" />
                 	    <Columns>
                             <asp:TemplateField HeaderText="Customer Company" ItemStyle-Width="30%">
@@ -89,7 +89,7 @@
                             <asp:TemplateField HeaderText="Part Programs" ItemStyle-Width="70%">
                                 <ItemTemplate>
                                     <asp:GridView runat="server" ID="gvProgram" Name="gvProgram" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" >
-                                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                                         <RowStyle CssClass="DataCell" Height=26 />
                                         <Columns>
                                             <asp:BoundField  DataField="PROGRAM_ID" Visible="False"/>
@@ -142,9 +142,9 @@
 								<br>
 			                    <div id="divPlantGVScroll" runat="server" class="">
                                     <asp:GridView runat="server" ID="gvProgramPartList" Name="gvProgramPartList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  cellpadding="1" GridLines="None" PageSize="20" AllowSorting="true" Width="99%" OnRowDataBound="gvProgramPartList_OnRowDataBound">
-                                        <HeaderStyle CssClass="HeadingCellTextLeft" />    
+                                        <HeaderStyle CssClass="HeadingCellTextLeft" />
                                         <RowStyle CssClass="DataCell" />
-                                        <AlternatingRowStyle CssClass="DataCellAlt" /> 
+                                        <AlternatingRowStyle CssClass="DataCellAlt" />
                 	                    <Columns>
                                             <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="40%">
 							                    <ItemTemplate>

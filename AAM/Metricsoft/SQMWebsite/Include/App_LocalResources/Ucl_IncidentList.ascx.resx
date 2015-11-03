@@ -141,12 +141,6 @@
   <data name="ddlDateSpanResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
-    <value>Select responsible/supplier locations</value>
-  </data>
-  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="ddlSeveritySelectResource1.EmptyMessage" xml:space="preserve">
     <value />
   </data>
@@ -165,707 +159,152 @@
   <data name="ddlYearToResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="dmPeriodFromResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodFromResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="dmPeriodFromResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
-  </data>
-  <data name="dmPeriodFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodFromResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadMonthYearPicker</value>
-  </data>
-  <data name="dmPeriodToResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodToResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="dmPeriodToResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
-  </data>
-  <data name="dmPeriodToResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="dmPeriodToResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadMonthYearPicker</value>
-  </data>
   <data name="GridTemplateColumnResource1.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
   </data>
-  <data name="GridTemplateColumnResource1.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource1.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_ID</value>
-  </data>
-  <data name="GridTemplateColumnResource10.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderText" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="GridTemplateColumnResource10.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource10.SortExpression" xml:space="preserve">
-    <value>Plant.PLANT_NAME</value>
-  </data>
   <data name="GridTemplateColumnResource11.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource11.HeaderText" xml:space="preserve">
     <value>Incident ID</value>
   </data>
-  <data name="GridTemplateColumnResource11.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource11.SortExpression" xml:space="preserve">
-    <value>ProbCase.PROBCASE_ID</value>
-  </data>
   <data name="GridTemplateColumnResource13.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource13.HeaderText" xml:space="preserve">
     <value>Created</value>
   </data>
-  <data name="GridTemplateColumnResource13.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource13.SortExpression" xml:space="preserve">
-    <value>ProbCase.CREATE_DT</value>
-  </data>
   <data name="GridTemplateColumnResource14.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource14.HeaderText" xml:space="preserve">
     <value>Updated</value>
   </data>
-  <data name="GridTemplateColumnResource14.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource14.SortExpression" xml:space="preserve">
-    <value>ProbCase.LAST_UPD_DT</value>
-  </data>
   <data name="GridTemplateColumnResource16.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource16.HeaderText" xml:space="preserve">
     <value>Reports</value>
   </data>
-  <data name="GridTemplateColumnResource16.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource16.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource17.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource17.HeaderText" xml:space="preserve">
     <value>Incident ID</value>
   </data>
-  <data name="GridTemplateColumnResource17.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource17.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_ID</value>
-  </data>
-  <data name="GridTemplateColumnResource18.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.HeaderText" xml:space="preserve">
-    <value>Incident Date/&lt;br&gt;Reported By</value>
-  </data>
-  <data name="GridTemplateColumnResource18.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource18.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_DT</value>
-  </data>
-  <data name="GridTemplateColumnResource19.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.HeaderText" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="GridTemplateColumnResource19.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource19.SortExpression" xml:space="preserve">
-    <value>Plant.PLANT_NAME</value>
-  </data>
   <data name="GridTemplateColumnResource2.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
     <value>Record Date/&lt;br&gt;Reported By</value>
   </data>
-  <data name="GridTemplateColumnResource2.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource2.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_DT</value>
-  </data>
   <data name="GridTemplateColumnResource22.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource22.HeaderText" xml:space="preserve">
     <value>Initial Evidence</value>
   </data>
-  <data name="GridTemplateColumnResource22.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource22.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource23.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource23.HeaderText" xml:space="preserve">
     <value>Status/&lt;br/&gt;(Days Open)</value>
   </data>
-  <data name="GridTemplateColumnResource23.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource23.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource24.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource24.HeaderText" xml:space="preserve">
     <value>View Reports</value>
   </data>
-  <data name="GridTemplateColumnResource24.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource24.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource25.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource25.HeaderText" xml:space="preserve">
     <value>Recommendation/&lt;br&gt;Response</value>
   </data>
-  <data name="GridTemplateColumnResource25.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource25.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_ID</value>
-  </data>
   <data name="GridTemplateColumnResource26.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource26.HeaderText" xml:space="preserve">
     <value>Inspection Date/&lt;br&gt;Entered By</value>
   </data>
-  <data name="GridTemplateColumnResource26.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource26.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_DT</value>
-  </data>
-  <data name="GridTemplateColumnResource27.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.HeaderText" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="GridTemplateColumnResource27.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource27.SortExpression" xml:space="preserve">
-    <value>Plant.PLANT_NAME</value>
-  </data>
   <data name="GridTemplateColumnResource28.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource28.HeaderText" xml:space="preserve">
     <value>Category/&lt;br&gt;Type</value>
   </data>
-  <data name="GridTemplateColumnResource28.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource28.SortExpression" xml:space="preserve">
-    <value>EntryList[0].ANSWER_VALUE,EntryList[2].ANSWER_VALUE</value>
-  </data>
   <data name="GridTemplateColumnResource3.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource3.HeaderText" xml:space="preserve">
     <value>Detected Location/&lt;br&gt;Responsible Location</value>
   </data>
-  <data name="GridTemplateColumnResource3.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource3.SortExpression" xml:space="preserve">
-    <value>Plant.PLANT_NAME</value>
-  </data>
   <data name="GridTemplateColumnResource30.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource30.HeaderText" xml:space="preserve">
     <value>Initial Evidence</value>
   </data>
-  <data name="GridTemplateColumnResource30.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource30.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.HeaderText" xml:space="preserve">
-    <value>Due Date/&lt;br&gt;Assigned To</value>
-  </data>
-  <data name="GridTemplateColumnResource31.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource31.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_DT</value>
-  </data>
   <data name="GridTemplateColumnResource32.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource32.HeaderText" xml:space="preserve">
     <value>Status&lt;br/&gt;(Days)</value>
   </data>
-  <data name="GridTemplateColumnResource32.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource32.SortExpression" xml:space="preserve">
-    <value>DaysOpen</value>
-  </data>
-  <data name="GridTemplateColumnResource34.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.HeaderText" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="GridTemplateColumnResource34.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource34.SortExpression" xml:space="preserve">
-    <value>Plant.PLANT_NAME</value>
-  </data>
   <data name="GridTemplateColumnResource35.FooterAggregateFormatString" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource35.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource35.SortExpression" xml:space="preserve">
-    <value>Incident.ISSUE_TYPE</value>
-  </data>
   <data name="GridTemplateColumnResource37.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource37.HeaderText" xml:space="preserve">
     <value>Date Due/&lt;br&gt;Responsible</value>
   </data>
-  <data name="GridTemplateColumnResource37.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource37.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_ID</value>
-  </data>
   <data name="GridTemplateColumnResource38.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource38.HeaderText" xml:space="preserve">
     <value>Root Cause/&lt;br&gt;Corrective Actions</value>
   </data>
-  <data name="GridTemplateColumnResource38.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource38.SortExpression" xml:space="preserve">
-    <value>Incident.INCIDENT_ID</value>
-  </data>
   <data name="GridTemplateColumnResource39.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource39.HeaderText" xml:space="preserve">
     <value />
   </data>
-  <data name="GridTemplateColumnResource39.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource39.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource4.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource4.HeaderText" xml:space="preserve">
     <value>Part Number/&lt;br&gt;Receipt Number</value>
   </data>
-  <data name="GridTemplateColumnResource4.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource4.SortExpression" xml:space="preserve">
-    <value>QIIssue.REF_OPERATION</value>
-  </data>
   <data name="GridTemplateColumnResource5.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource5.HeaderText" xml:space="preserve">
     <value>Part Number</value>
   </data>
-  <data name="GridTemplateColumnResource5.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource5.SortExpression" xml:space="preserve">
-    <value>Part.PART_NUM</value>
-  </data>
   <data name="GridTemplateColumnResource6.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource6.HeaderText" xml:space="preserve">
     <value>Event Category/&lt;br&gt;Problem Area</value>
   </data>
-  <data name="GridTemplateColumnResource6.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource6.SortExpression" xml:space="preserve">
-    <value>QIIssue.OCCUR_DESC</value>
-  </data>
   <data name="GridTemplateColumnResource8.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource8.HeaderText" xml:space="preserve">
     <value>Initial Evidence</value>
   </data>
-  <data name="GridTemplateColumnResource8.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource8.SortExpression" xml:space="preserve">
-    <value />
-  </data>
   <data name="GridTemplateColumnResource9.FooterAggregateFormatString" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.HeaderImageUrl" xml:space="preserve">
     <value />
   </data>
   <data name="GridTemplateColumnResource9.HeaderText" xml:space="preserve">
     <value>Problem Case ID</value>
-  </data>
-  <data name="GridTemplateColumnResource9.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridTemplateColumnResource9.SortExpression" xml:space="preserve">
-    <value>ProbCase.PROBCASE_ID</value>
   </data>
   <data name="gvIncidentListResource1.EmptyDataText" xml:space="preserve">
     <value />
@@ -1064,12 +503,6 @@
   <data name="lblCreatedResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblDateSpanResource1.Text" xml:space="preserve">
-    <value>Date Span:</value>
-  </data>
-  <data name="lblDateSpanResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblDescriptionResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -1093,9 +526,6 @@
   </data>
   <data name="lblDetectedLocation_outResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="lblDetectedLocationResource1.Text" xml:space="preserve">
-    <value>Business Location</value>
   </data>
   <data name="lblDetectedLocationResource1.ToolTip" xml:space="preserve">
     <value />
@@ -1259,12 +689,6 @@
   <data name="lblPartSearchResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="lblPeriodFromResource1.Text" xml:space="preserve">
-    <value>From:</value>
-  </data>
-  <data name="lblPeriodFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblProblemAreaResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -1339,9 +763,6 @@
   </data>
   <data name="lblUpdateDate_outResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="lblUpdateDateResource1.Text" xml:space="preserve">
-    <value>Last Update</value>
   </data>
   <data name="lblUpdateDateResource1.ToolTip" xml:space="preserve">
     <value />
@@ -1437,680 +858,20 @@
   <data name="pnlQualityIssueListResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="RadComboBoxItemResource1.AccessKey" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource1.Text" xml:space="preserve">
-    <value>Select Range</value>
-  </data>
-  <data name="RadComboBoxItemResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource1.Value" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="RadComboBoxItemResource2.AccessKey" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource2.Text" xml:space="preserve">
-    <value>Year To Date</value>
-  </data>
-  <data name="RadComboBoxItemResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource2.Value" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="RadComboBoxItemResource3.AccessKey" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource3.Text" xml:space="preserve">
-    <value>Previous Year</value>
-  </data>
-  <data name="RadComboBoxItemResource3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource3.Value" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="RadComboBoxItemResource4.AccessKey" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource4.Text" xml:space="preserve">
-    <value>FY Year To Date</value>
-  </data>
-  <data name="RadComboBoxItemResource4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="RadComboBoxItemResource4.Value" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgCaseListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCaseListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgCaseListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
-  </data>
   <data name="rgCaseListResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgCSTIssueListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgCSTIssueListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgCSTIssueListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
   </data>
   <data name="rgCSTIssueListResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentActionListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgIncidentActionListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
-  </data>
   <data name="rgIncidentActionListResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentActionsResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentActionsResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgIncidentActionsResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
   </data>
   <data name="rgIncidentActionsResource1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgIncidentListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgIncidentListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgIncidentListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
-  </data>
   <data name="rgIncidentListResource1.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ExpandCollapseColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderAbbr" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderAxis" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderImageUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.HeaderTooltip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.RowIndicatorColumn.SortExpression" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.MasterTableView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.ChangePageSizeComboBoxTableSummary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.ChangePageSizeComboBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.ChangePageSizeTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.FirstPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.LastPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.NextPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.PagerTextFormat" xml:space="preserve">
-    <value>Change page: {4} &amp;nbsp;Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;, items &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;.</value>
-  </data>
-  <data name="rgPreventativeListResource1.PagerStyle.PrevPageText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rgPreventativeListResource1.SortingSettings.SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="rgPreventativeListResource1.SortingSettings.SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
   </data>
   <data name="rgPreventativeListResource1.ToolTip" xml:space="preserve">
     <value />
@@ -2160,22 +921,10 @@
   <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
     <value>Disposition</value>
   </data>
-  <data name="TemplateFieldResource7.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource7.HeaderText" xml:space="preserve">
-    <value>Select</value>
-  </data>
   <data name="TemplateFieldResource8.AccessibleHeaderText" xml:space="preserve">
     <value />
   </data>
   <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
-  </data>
-  <data name="TemplateFieldResource9.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource9.HeaderText" xml:space="preserve">
-    <value>Incident Date</value>
   </data>
 </root>

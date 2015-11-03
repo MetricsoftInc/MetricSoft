@@ -52,7 +52,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 text-left-more">
-						<asp:Button ID="btnAddRootCause" runat="server" CommandArgument="AddAnother" CssClass="buttonAdd" meta:resourcekey="btnAddRootCauseResource1" Style="margin: 7px;" Text="Add Another" ToolTip="Add Another Root Cause" />
+						<asp:Button ID="btnAddRootCause" runat="server" CommandArgument="AddAnother" CssClass="buttonAdd" meta:resourcekey="btnAddRootCauseResource1" Style="margin: 7px;" Text="<%$ Resources:LocalizedText, AddAnother %>" ToolTip="Add Another Root Cause" />
 					</div>
 				</div>
 				<div class="row">
@@ -69,11 +69,11 @@
 					</div>
 					<div class="col-sm-5 text-left">
 						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server" meta:resourcekey="tbRootCauseResource1"></asp:TextBox>
-						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="Required" meta:resourcekey="rfvRootCauseResource1"></asp:RequiredFieldValidator>
+						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 					</div>
 					<div class="col-sm-2 text-left-more">
 						<telerik:RadButton ID="btnItemDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" ForeColor="DarkRed"  CommandArgument="Delete"
-							Text="Delete Item" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" OnClientClicking="DeleteConfirmItem" />
+							Text="<%$ Resources:LocalizedText, DeleteItem %>" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" OnClientClicking="DeleteConfirmItem" />
 					</div>
 				</div>
 			</ItemTemplate>

@@ -8,7 +8,7 @@
 			Case:
 		</td>
 		<td class="greyCell">
-			<telerik:RadComboBox ID="rcbCases" runat="server" Skin="Metro" OnSelectedIndexChanged="rcbCases_SelectedIndexChanged" 
+			<telerik:RadComboBox ID="rcbCases" runat="server" Skin="Metro" OnSelectedIndexChanged="rcbCases_SelectedIndexChanged"
 				AutoPostBack="true" Width="250" DropDownAutoWidth="Enabled">
 			</telerik:RadComboBox>
 		</td>
@@ -16,7 +16,7 @@
 </table>
 <br />
 </asp:Panel>
-<asp:Label ID="lblRequired" runat="server" Text="Required Fields Must be Completed." ForeColor="#cc0000" Font-Bold="true" Height="25" Visible="false"></asp:Label>
+<asp:Label ID="lblRequired" runat="server" Text="<%$ Resources:LocalizedText, RequiredFieldsMustBeCompleted %>" ForeColor="#cc0000" Font-Bold="true" Height="25" Visible="false"></asp:Label>
 <asp:Label ID="lblSubmitted" runat="server" Text="Prevention Verification submitted." Font-Bold="true" Visible="false"></asp:Label>
 <asp:Panel ID="pnlSelect" Visible="false" runat="server">
 	<table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td class="tanCell" style="width: 30%;">
-				Due Date:
+				<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, DueDate %>" />:
 				<span class="requiredStar">*</span>
 			</td>
 			<td class="greyCell" style="width: 70%;">
@@ -60,7 +60,7 @@
 						</telerik:RadButton>
 					</div>
 					<br style="clear: both;" />
-					<telerik:RadGrid runat="server" ID="rgPlantContacts" Name="rgPlantContacts" 
+					<telerik:RadGrid runat="server" ID="rgPlantContacts" Name="rgPlantContacts"
 						Skin="Metro" AllowMultiRowSelection="true" AutoGenerateColumns="false" CellPadding="3"
 						GridLines="None" AllowSorting="false" ShowHeader="false" Width="100%">
 						<ClientSettings EnableRowHoverStyle="true">
@@ -91,7 +91,7 @@
                     <asp:Panel ID="pnlComments" runat="server" Visible="false">
                         <div style="padding: 2px 7px 7px;">
                         <p>Comments:</p>
-                        <telerik:RadGrid runat="server" ID="rgPlantComments" Name="rgPlantComments" 
+                        <telerik:RadGrid runat="server" ID="rgPlantComments" Name="rgPlantComments"
 						    Skin="Metro" AutoGenerateColumns="false" CellPadding="3"
 						    GridLines="None" AllowSorting="false" ShowHeader="false" Width="100%">
 						    <MasterTableView ExpandCollapseColumn-Visible="false">
