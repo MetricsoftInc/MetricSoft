@@ -591,7 +591,7 @@ namespace SQM.Website
 		/// <summary>
 		/// Select a list of all audit questions by topic 
 		/// </summary>
-		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId)
+		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId, decimal auditTypeId)
 		{
 			var questionList = new List<EHSAuditQuestion>();
 			bool answerIsNegative = false;
@@ -609,7 +609,7 @@ namespace SQM.Website
 
 					// need to only select questions that appear in the specific audit
 					activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-										  where auditAnswers.Contains(q.AUDIT_QUESTION_ID)
+										  where auditAnswers.Contains(q.AUDIT_QUESTION_ID) && q.AUDIT_TYPE_ID == auditTypeId
 										  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
 										  select q
 				  ).ToList();

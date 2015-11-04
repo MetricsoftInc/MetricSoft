@@ -187,6 +187,11 @@
                         </telerik:RadGrid>
                 </NestedViewTemplate>
             	<Columns>
+									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" UniqueName="TemplateColumnType">
+										<ItemTemplate>
+											<asp:HiddenField runat="server" ID="hdnAuditTypeID" Value='<%# Eval("Audit.AUDIT_TYPE_ID") %>' />
+										</ItemTemplate>
+									</telerik:GridTemplateColumn>
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, Assessment %>" SortExpression="Audit.AUDIT_ID" UniqueName="TemplateColumn">
 						<ItemTemplate>
 							<asp:Label ID="lblAuditId" runat="server" Font-Bold="True" ForeColor="#000066" Text='<%# string.Format("{0:000000}", Eval("Audit.AUDIT_ID")) %>'></asp:Label>
