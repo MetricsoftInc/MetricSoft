@@ -483,7 +483,7 @@
 				<ExpandCollapseColumn Visible="False">
 				</ExpandCollapseColumn>
 				<Columns>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resoucres:LocalizedText, IncidentID %>" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, IncidentID %>" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn">
 						<ItemTemplate>
 							<table class="innerTable">
 								<tr>
