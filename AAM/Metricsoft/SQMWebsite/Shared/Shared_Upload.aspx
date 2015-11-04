@@ -36,7 +36,7 @@
         </asp:ValidationSummary>
     </td></tr>
     <tr><td align="center">
-        <input type="button" value="<%$ Resources:LocalizedText, OK %>" onclick="$find('ModalExtnd1').hide();"/>
+        <input type="button" runat="server" value="<%$ Resources:LocalizedText, OK %>" onclick="$find('ModalExtnd1').hide();"/>
     </td></tr>
 </table>
 <asp:Label ID="lblHidden" runat="server" Text="hidden" CssClass="error_hidelbl">
