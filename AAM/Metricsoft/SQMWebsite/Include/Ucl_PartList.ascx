@@ -7,7 +7,7 @@
             <RowStyle CssClass="DataCell" />
             <AlternatingRowStyle CssClass="DataCellAlt" />
             <Columns>
-                <asp:TemplateField HeaderText="Part Number">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, PartNumber %>">
                     <ItemTemplate>
                         <asp:LinkButton ID="lnkViewPart_out" runat="server" CommandArgument='<%#Eval("Part.PART_ID") %>'
 						    text='<%#Eval("Part.PART_NUM") %>'  CSSclass="linkUnderline" OnClick="lnkPart_Click"></asp:LinkButton>
@@ -146,7 +146,7 @@
                                         <RowStyle CssClass="DataCell" />
                                         <AlternatingRowStyle CssClass="DataCellAlt" />
                 	                    <Columns>
-                                            <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="40%">
+                                            <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ItemStyle-Width="40%">
 							                    <ItemTemplate>
 								                    <asp:LinkButton ID="lnkPartNumber" runat="server" CommandArgument='<%#Eval("Part.PART_ID") %>'
 									                    Text='<%#Eval("Part.PART_NUM") %>'  OnClick="lnkPart_Click" CSSclass="linkUnderline" ToolTip="View part details"></asp:LinkButton>

@@ -450,10 +450,37 @@
   <data name="Value" xml:space="preserve">
     <value>Valor</value>
   </data>
+  <data name="CorrectiveActions" xml:space="preserve">
+    <value>Acciones Correctivas</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Días</value>
+  </data>
+  <data name="DetectedLocation" xml:space="preserve">
+    <value>Ubicación detectada</value>
+  </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective Date</value>
   </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Categoría del evento</value>
+  </data>
   <data name="IncidentID" xml:space="preserve">
     <value>Identificación del problema</value>
+  </data>
+  <data name="InspectionDate" xml:space="preserve">
+    <value>Fecha de inspección</value>
+  </data>
+  <data name="PartNumber" xml:space="preserve">
+    <value>Número de pieza</value>
+  </data>
+  <data name="ProblemArea" xml:space="preserve">
+    <value>Área del problema</value>
+  </data>
+  <data name="ReceiptNumber" xml:space="preserve">
+    <value>Número de recibo</value>
+  </data>
+  <data name="ResponsibleLocation" xml:space="preserve">
+    <value>Ubicación responsible</value>
   </data>
 </root>

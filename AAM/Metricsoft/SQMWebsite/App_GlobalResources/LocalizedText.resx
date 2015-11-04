@@ -450,10 +450,37 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="CorrectiveActions" xml:space="preserve">
+    <value>Corrective Actions</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="DetectedLocation" xml:space="preserve">
+    <value>Detected Location</value>
+  </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective Date</value>
   </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Event Category</value>
+  </data>
   <data name="IncidentID" xml:space="preserve">
     <value>Incident ID</value>
+  </data>
+  <data name="InspectionDate" xml:space="preserve">
+    <value>Inspection Date</value>
+  </data>
+  <data name="PartNumber" xml:space="preserve">
+    <value>Part Number</value>
+  </data>
+  <data name="ProblemArea" xml:space="preserve">
+    <value>Problem Area</value>
+  </data>
+  <data name="ReceiptNumber" xml:space="preserve">
+    <value>Receipt Number</value>
+  </data>
+  <data name="ResponsibleLocation" xml:space="preserve">
+    <value>Responsible Location</value>
   </data>
 </root>

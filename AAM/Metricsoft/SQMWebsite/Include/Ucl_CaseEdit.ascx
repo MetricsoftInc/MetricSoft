@@ -144,7 +144,7 @@
                                     <HeaderStyle CssClass="HeadingCellTextLeft" />
                                     <RowStyle CssClass="DataCell" />
                 	                    <Columns>
-                                            <asp:BoundField DataField="PART_NUM" HeaderText="Part Number" ItemStyle-Width="30%" />
+                                            <asp:BoundField DataField="PART_NUM" HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ItemStyle-Width="30%" />
                                             <asp:BoundField DataField="LOT_NUM" HeaderText="Lot Number" ItemStyle-Width="25%" />
                                             <asp:BoundField DataField="CONTAINER_NUM" HeaderText="Container" ItemStyle-Width="25%" />
                                             <asp:BoundField DataField="NC_QTY" HeaderText="NC Qty" ItemStyle-Width="20%" />
@@ -674,7 +674,7 @@
                                     </tr>
                                     <tr>
                                         <td class="columnHeader">
-                                            <asp:Label ID="lblCase5ApplyAction" runat="server" text="Corrective Actions"></asp:Label>
+                                            <asp:Label ID="lblCase5ApplyAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveActions %>"></asp:Label>
                                             <br />
                                             <asp:Button ID="btnCase5AddAction" CSSclass="buttonAdd" runat="server" ToolTip="Add a corrective action" text="Add" style="margin: 7px;"  onclick="btnAdd_Click" CommandArgument="correctiveaction" UseSubmitBehavior="true"></asp:Button>
                                         </td>

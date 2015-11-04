@@ -9,7 +9,7 @@
                                 <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
-                                    <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="20%">
+                                    <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ItemStyle-Width="20%">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="lnkViewPart_out" runat="server" CommandArgument='<%#Eval("PART_ID") %>'
 										    text='<%#Eval("PART_NUM") %>' OnClick="lnkPartView_Click" CSSclass="linkUnderline"></asp:LinkButton>

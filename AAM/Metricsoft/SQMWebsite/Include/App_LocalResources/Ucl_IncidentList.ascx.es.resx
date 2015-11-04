@@ -148,53 +148,28 @@
     <value>Ver informes</value>
   </data>
   <data name="GridTemplateColumnResource25.HeaderText" xml:space="preserve">
-    <value>Recommendation/&lt;br&gt;Response</value>
+    <value>Recomendación/&lt;br&gt;Respuesta</value>
   </data>
-  <data name="GridTemplateColumnResource26.HeaderText" xml:space="preserve">
-    <value>Inspection Date/&lt;br&gt;Entered By</value>
-  </data>
-  <data name="GridTemplateColumnResource28.HeaderText" xml:space="preserve">
-    <value>Category/&lt;br&gt;Type</value>
-  </data>
-  <data name="GridTemplateColumnResource3.HeaderText" xml:space="preserve">
-    <value>Detected Location/&lt;br&gt;Responsible Location</value>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entrado por</value>
   </data>
   <data name="GridTemplateColumnResource30.HeaderText" xml:space="preserve">
     <value>La evidencia inicial</value>
   </data>
-  <data name="GridTemplateColumnResource32.HeaderText" xml:space="preserve">
-    <value>Status&lt;br/&gt;(Days)</value>
-  </data>
   <data name="GridTemplateColumnResource37.HeaderText" xml:space="preserve">
-    <value>Date Due/&lt;br&gt;Responsible</value>
-  </data>
-  <data name="GridTemplateColumnResource38.HeaderText" xml:space="preserve">
-    <value>Root Cause/&lt;br&gt;Corrective Actions</value>
-  </data>
-  <data name="GridTemplateColumnResource4.HeaderText" xml:space="preserve">
-    <value>Part Number/&lt;br&gt;Receipt Number</value>
-  </data>
-  <data name="GridTemplateColumnResource5.HeaderText" xml:space="preserve">
-    <value>Part Number</value>
-  </data>
-  <data name="GridTemplateColumnResource6.HeaderText" xml:space="preserve">
-    <value>Event Category/&lt;br&gt;Problem Area</value>
+    <value>Fecha de vencimiento/&lt;br&gt;Responsable</value>
   </data>
   <data name="GridTemplateColumnResource8.HeaderText" xml:space="preserve">
     <value>La evidencia inicial</value>
   </data>
   <data name="GridTemplateColumnResource9.HeaderText" xml:space="preserve">
-    <value>Problem Case ID</value>
+    <value>La identificación de casos de problemas</value>
   </data>
-  <data name="hlReportResource1.Text" xml:space="preserve">
-    <value>
-							&lt;img src="/images/defaulticon/16x16/open-in-new-window.png" alt="" style="vertical-align: middle;" /&gt; Incident Alert
-						</value>
+  <data name="lblIncidentAlertResource1.Text" xml:space="preserve">
+    <value>Incident Alert</value>
   </data>
-  <data name="hlReportResource2.Text" xml:space="preserve">
-    <value>
-							&lt;img src="/images/ico16-pdf-download.png" alt="" style="margin-top: -3px; vertical-align: middle;" /&gt; Alert
-								</value>
+  <data name="lblAlertResource1.Text" xml:space="preserve">
+    <value>Alert</value>
   </data>
   <data name="imgCaseStatusResource1.ToolTip" xml:space="preserve">
     <value>Case is inactive</value>
@@ -258,7 +233,7 @@
     <value>Edit incident</value>
   </data>
   <data name="lblCaseIDResource2.Text" xml:space="preserve">
-    <value>Problem Case ID</value>
+    <value>La identificación de casos de problemas</value>
   </data>
   <data name="lblCaseTypeResource1.Text" xml:space="preserve">
     <value>Case Type</value>
@@ -275,17 +250,8 @@
   <data name="lblIssueListEmptyResource1.Text" xml:space="preserve">
     <value>No Quality Issues matching your search criteria.</value>
   </data>
-  <data name="lblIssuePartNumResource1.Text" xml:space="preserve">
-    <value>Part Number</value>
-  </data>
   <data name="lblIssueResponsibleResource1.Text" xml:space="preserve">
     <value>Responsible</value>
-  </data>
-  <data name="lblPartSearchResource1.Text" xml:space="preserve">
-    <value>Part Number:</value>
-  </data>
-  <data name="lblSeveritySelectResource1.Text" xml:space="preserve">
-    <value>Event Category:</value>
   </data>
   <data name="lblShowImageResource1.Text" xml:space="preserve">
     <value>Display Initial Evidence (Images)</value>
@@ -303,17 +269,8 @@
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Identificación del problema</value>
   </data>
-  <data name="TemplateFieldResource10.HeaderText" xml:space="preserve">
-    <value>Problem Area</value>
-  </data>
   <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
     <value>Date</value>
-  </data>
-  <data name="TemplateFieldResource3.HeaderText" xml:space="preserve">
-    <value>Problem Area</value>
-  </data>
-  <data name="TemplateFieldResource5.HeaderText" xml:space="preserve">
-    <value>Part Number</value>
   </data>
   <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
     <value>Disposition</value>

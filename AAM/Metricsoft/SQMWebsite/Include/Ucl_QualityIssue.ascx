@@ -78,7 +78,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label runat="server" ID="lblDetectedLocation" Text="Detected Location"></asp:Label>
+                                                <asp:Label runat="server" ID="lblDetectedLocation" Text="<%$ Resources:LocalizedText, DetectedLocation %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -104,7 +104,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader">
-                                                <asp:Label runat="server" ID="lblIncidentSeverity" Text="Event Category" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblIncidentSeverity" Text="<%$ Resources:LocalizedText, EventCategory %>" Visible="true"></asp:Label>
                                             </td>
                                             <td class="required">&nbsp;</td>
                                             <td class="tableDataAlt">
@@ -153,7 +153,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label runat="server" ID="lblPartNumber" Text="Part Number"></asp:Label>
+                                                <asp:Label runat="server" ID="lblPartNumber" Text="<%$ Resources:LocalizedText, PartNumber %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -168,7 +168,7 @@
                                         </tr>
                                         <tr id="trReceipt" runat="server">
                                             <td class="columnHeader" width="24%">
-                                                <asp:Label ID="lblReceipt" runat="server" text="Receipt Number"></asp:Label>
+                                                <asp:Label ID="lblReceipt" runat="server" Text="<%$ Resources:LocalizedText, ReceiptNumber %>"></asp:Label>
                                             </td>
                                             <td class="tableDataAlt" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="75%">
@@ -346,7 +346,7 @@
                                                         <table width="100%"  border="0" cellspacing="0" cellpadding="1">
                                                             <tr>
                                                                 <td class="columnHeader"  width="24%">
-                                                                    <asp:Label runat="server" ID="lblResponsibleLocation" Text="Responsible Location"></asp:Label>
+                                                                    <asp:Label runat="server" ID="lblResponsibleLocation" Text="<%$ Resources:LocalizedText, ResponsibleLocation %>"></asp:Label>
                                                                 </td>
                                                                 <td class="required" width="1%">&nbsp;</td>
                                                                 <td class="tableDataAlt" width="75%">
@@ -368,7 +368,7 @@
                                                                 </td>
                                                                 <td class="tableDataAlt">&nbsp;</td>
                                                                 <td class="tableDataAlt">
-                                                                    <telerik:RadComboBox ID="ddlResponseTime" runat="server" Width=105 Skin="Metro" Height="300" ZIndex=9000 Font-Size=Small EmptyMessage="Days" ToolTip="Response required within number of days from issue creation"></telerik:RadComboBox>
+                                                                    <telerik:RadComboBox ID="ddlResponseTime" runat="server" Width=105 Skin="Metro" Height="300" ZIndex=9000 Font-Size=Small EmptyMessage="<%$ Resources:LocalizedText, Days %>" ToolTip="Response required within number of days from issue creation"></telerik:RadComboBox>
                                                                 </td>
                                                             </tr>
                                                         </table>

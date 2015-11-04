@@ -28,7 +28,7 @@
                                                                          OnClick="lnkIssue_Click" CSSclass="linkUnderline"></asp:LinkButton>
                                                                     </ItemTemplate>
 							                                    </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Part Number" ItemStyle-Width="15%">
+                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ItemStyle-Width="15%">
 							                                        <ItemTemplate>
 								                                        <asp:Label ID="lblPartNum_out" runat="server" ></asp:Label>
                                                                     </ItemTemplate>

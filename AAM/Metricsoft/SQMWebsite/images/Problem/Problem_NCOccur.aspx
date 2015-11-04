@@ -127,7 +127,7 @@
                                         </tr>
                                         <tr>
                                             <td class="columnHeader" width="39%">
-                                                <asp:Label runat="server" ID="lblPartNumber" Text="Part Number" Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblPartNumber" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="60%">

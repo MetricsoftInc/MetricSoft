@@ -77,7 +77,7 @@
                                         <tr>
                                             <td class=summaryData valign=top >
 							                    <SPAN CLASS=summaryHeader>
-                                                    <asp:Label runat="server" ID="lblPartNumber" Text="Part Number" Visible="true"></asp:Label>
+                                                    <asp:Label runat="server" ID="lblPartNumber" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
                                                 </SPAN>
                                                 <BR>
 							                    <asp:TextBox runat="server" ID="tbPartNumber" Text="" size="30" maxlength="100"></asp:TextBox>

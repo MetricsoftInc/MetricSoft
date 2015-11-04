@@ -63,14 +63,14 @@
                                         </td>
                                     </tr>
                                 </table>
-                               
+
                                 <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="darkBorder">
                                     <tr>
                                         <td class="columnHeader">
-                                            <asp:Label ID="lblPartString" runat="server" text="Part Number"></asp:Label>
+                                            <asp:Label ID="lblPartString" runat="server" Text="<%$ Resources:LocalizedText, PartNumber %>"></asp:Label>
                                         </td>
                                         <td class="tableDataAlt">&nbsp;</td>
-                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartString" size="50" maxlength="100" runat="server"/></td>      
+                                        <td CLASS="tableDataAlt"><asp:TextBox ID="tbPartString" size="50" maxlength="100" runat="server"/></td>
 			                        </tr>
                                     <tr>
                                         <td class="columnHeader">

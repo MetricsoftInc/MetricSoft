@@ -21,7 +21,7 @@
 			</td>
 		<tr>
 			<td class="summaryDataEnd" width="150px">
-				<asp:Label runat="server" ID="lblPartSearch" CssClass="prompt" Text="Part Number:" meta:resourcekey="lblPartSearchResource1"></asp:Label>
+				<asp:Label runat="server" ID="lblPartSearch" CssClass="prompt"></asp:Label>
 			</td>
 			<td class="summaryDataEnd">
 				<telerik:RadTextBox ID="tbPartSearch" runat="server" Skin="Metro" Width="180px" MaxLength="40" EmptyMessage="containing 'string'" LabelCssClass="" LabelWidth="64px" meta:resourcekey="tbPartSearchResource1" Resize="None">
@@ -34,7 +34,7 @@
 					<EnabledStyle Resize="None" />
 				</telerik:RadTextBox>
 				<span style="margin-left: 8px;">
-					<asp:Label runat="server" ID="lblSeveritySelect" CssClass="prompt" Text="Event Category:" meta:resourcekey="lblSeveritySelectResource1"></asp:Label>
+					<asp:Label runat="server" ID="lblSeveritySelect" CssClass="prompt"></asp:Label>
 					<telerik:RadComboBox ID="ddlSeveritySelect" runat="server" ZIndex="9000" Skin="Metro" width="140px" meta:resourcekey="ddlSeveritySelectResource1">
 					</telerik:RadComboBox>
 				 </span>
@@ -121,7 +121,7 @@
 						</span>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
-				<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="Detected Location/&lt;br&gt;Responsible Location" meta:resourcekey="GridTemplateColumnResource3" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
+				<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
 					<ItemTemplate>
 						<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource1" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						<br />
@@ -131,7 +131,7 @@
 						</span>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
-				<telerik:GridTemplateColumn FilterControlAltText="Filter ReceiptColumn column" HeaderText="Part Number/&lt;br&gt;Receipt Number" meta:resourcekey="GridTemplateColumnResource4" SortExpression="QIIssue.REF_OPERATION" UniqueName="ReceiptColumn">
+				<telerik:GridTemplateColumn FilterControlAltText="Filter ReceiptColumn column" SortExpression="QIIssue.REF_OPERATION" UniqueName="ReceiptColumn">
 					<ItemTemplate>
 						<asp:Label ID="lblReceiptPartNum" runat="server" meta:resourcekey="lblReceiptPartNumResource1" Text='<%# Eval("Part.PART_NUM") %>'></asp:Label>
 						<br />
@@ -140,12 +140,12 @@
 						</span>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
-				<telerik:GridTemplateColumn FilterControlAltText="Filter PartColumn column" HeaderText="Part Number" meta:resourcekey="GridTemplateColumnResource5" SortExpression="Part.PART_NUM" UniqueName="PartColumn">
+				<telerik:GridTemplateColumn FilterControlAltText="Filter PartColumn column" HeaderText="<%$ Resources:LocalizedText, PartNumber %>" SortExpression="Part.PART_NUM" UniqueName="PartColumn">
 					<ItemTemplate>
 						<asp:Label ID="lblPartNum" runat="server" meta:resourcekey="lblPartNumResource1" Text='<%# Eval("Part.PART_NUM") %>'></asp:Label>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
-				<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="Event Category/&lt;br&gt;Problem Area" meta:resourcekey="GridTemplateColumnResource6" SortExpression="QIIssue.OCCUR_DESC" UniqueName="TemplateColumn3">
+				<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" SortExpression="QIIssue.OCCUR_DESC" UniqueName="TemplateColumn3">
 					<ItemTemplate>
 						<asp:Label ID="lblSeverity" runat="server" meta:resourcekey="lblSeverityResource1"></asp:Label>
 						<br />
@@ -193,7 +193,7 @@
 								</ItemTemplate>
 								<ItemStyle Width="7%" />
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="Problem Area" meta:resourcekey="TemplateFieldResource3">
+							<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, ProblemArea %>">
 								<ItemTemplate>
 									<asp:Label ID="lblProblemArea" runat="server" meta:resourcekey="lblProblemAreaResource1" Text='<%# Eval("QIIssue.OCCUR_DESC") %>'></asp:Label>
 								</ItemTemplate>
@@ -205,7 +205,7 @@
 								</ItemTemplate>
 								<ItemStyle Width="20%" />
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="Part Number" meta:resourcekey="TemplateFieldResource5">
+							<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, PartNumber %>">
 								<ItemTemplate>
 									<asp:Label ID="lblPartNum_out" runat="server" meta:resourcekey="lblPartNum_outResource1" Text='<%# Eval("Part.PART_NUM") %>'></asp:Label>
 								</ItemTemplate>
@@ -256,7 +256,7 @@
 								</ItemTemplate>
 								<ItemStyle Width="20%" />
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="Problem Area" meta:resourcekey="TemplateFieldResource10">
+							<asp:TemplateField HeaderText="<%$ Resources:LocalizedText, ProblemArea %>">
 								<ItemTemplate>
 									<asp:Label ID="lblIssueType" runat="server" meta:resourcekey="lblIssueTypeResource1" Text='<%# Eval("ISSUE_TYPE") %>'></asp:Label>
 								</ItemTemplate>
@@ -298,7 +298,7 @@
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource2" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter colIncident column" HeaderText="<%$ Resoucres:LocalizedText, IncidentID %>" SortExpression="ProbCase.PROBCASE_ID" UniqueName="colIncident">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter colIncident column" HeaderText="<%$ Resources:LocalizedText, IncidentID %>" SortExpression="ProbCase.PROBCASE_ID" UniqueName="colIncident">
 						<ItemTemplate>
 							<asp:Label ID="lblIncidentID" runat="server" meta:resourcekey="lblIncidentIDResource2"></asp:Label>
 						</ItemTemplate>
@@ -331,7 +331,7 @@
 							</asp:LinkButton>
 							&nbsp;
 							<asp:HyperLink ID="hlReport" runat="server" ForeColor="#000066" meta:resourcekey="hlReportResource1" NavigateUrl='<%# "/EHS/EHS_Alert_PDF.aspx?pcid=" + Eval("ProbCase.PROBCASE_ID") %>' Target="_blank" Visible="False">
-							<img src="/images/defaulticon/16x16/open-in-new-window.png" alt="" style="vertical-align: middle;" /> Incident Alert
+							<img src="/images/defaulticon/16x16/open-in-new-window.png" alt="" style="vertical-align: middle;" /> <asp:Label ID="lblIncidentAlert" runat="server" Text="Incident Alert" meta:resourcekey="lblIncidentAlertResource1" />
 						</asp:HyperLink>
 							<asp:HiddenField ID="hfProblemCaseType" runat="server" Value='<%# Eval("ProbCase.PROBCASE_TYPE") %>' />
 						</ItemTemplate>
@@ -369,7 +369,7 @@
 		</tr>
 		<tr>
 			<td class="columnHeader">
-				<asp:Label runat="server" ID="lblIssuePartNum" CssClass="prompt" Text="Part Number" meta:resourcekey="lblIssuePartNumResource1"></asp:Label>
+				<asp:Label runat="server" ID="lblIssuePartNum" CssClass="prompt" Text="<%$ Resources:LocalizedText, PartNumber %>"></asp:Label>
 			</td>
 			<td class="tableDataAlt">
 				<asp:Label runat="server" ID="lblIssuePartNum_out" meta:resourcekey="lblIssuePartNum_outResource1"></asp:Label>
@@ -548,7 +548,7 @@
 						<ItemTemplate>
 							<span style="white-space: nowrap;">
 							<asp:HyperLink ID="hlReport" runat="server" ForeColor="#000088" meta:resourcekey="hlReportResource2" Target="_blank" Visible="False">
-							<img src="/images/ico16-pdf-download.png" alt="" style="margin-top: -3px; vertical-align: middle;" /> Alert
+							<img src="/images/ico16-pdf-download.png" alt="" style="margin-top: -3px; vertical-align: middle;" /> <asp:Label ID="lblAlert" runat="server" Text="Alert" meta:resourcekey="lblAlertResource1" />
 								</asp:HyperLink>
 							&nbsp;&nbsp;
 							<asp:LinkButton ID="lbReport" runat="server" ForeColor="#000088" meta:resourcekey="lbReportResource2" OnClick="lbReport_Click" Visible="False">
@@ -597,7 +597,7 @@
 						</ItemTemplate>
 						<ItemStyle Width="100px" />
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="Inspection Date/&lt;br&gt;Entered By" meta:resourcekey="GridTemplateColumnResource26" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn1">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" SortExpression="Incident.INCIDENT_DT" UniqueName="TemplateColumn1">
 						<ItemTemplate>
 							<asp:Label ID="lblIncidentDT" runat="server" meta:resourcekey="lblIncidentDTResource3"></asp:Label>
 							<br />
@@ -611,7 +611,7 @@
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource4" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="Category/&lt;br&gt;Type" meta:resourcekey="GridTemplateColumnResource28" SortExpression="EntryList[0].ANSWER_VALUE,EntryList[2].ANSWER_VALUE" UniqueName="TemplateColumn3">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" SortExpression="EntryList[0].ANSWER_VALUE,EntryList[2].ANSWER_VALUE" UniqueName="TemplateColumn3">
 						<ItemTemplate>
 							<asp:Label ID="lblCategory" runat="server" meta:resourcekey="lblCategoryResource1"></asp:Label>
 						</ItemTemplate>
@@ -705,7 +705,7 @@
 							<asp:Label ID="lblResponsible" runat="server" meta:resourcekey="lblResponsibleResource1"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="Root Cause/&lt;br&gt;Corrective Actions" meta:resourcekey="GridTemplateColumnResource38" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn5">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn5">
 						<ItemTemplate>
 							<telerik:RadGrid ID="rgIncidentActions" runat="server" AutoGenerateColumns="False" GroupPanelPosition="Top" meta:resourcekey="rgIncidentActionsResource1" OnItemDataBound="rgIncidentActions_ItemDataBound" Skin="Metro" Visible="False" Width="100%">
 								<ClientSettings EnableAlternatingItems="False">

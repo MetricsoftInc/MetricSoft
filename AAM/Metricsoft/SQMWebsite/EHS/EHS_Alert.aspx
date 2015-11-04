@@ -60,7 +60,7 @@
 
 						<tr>
 							<td style="border: 1px solid #888888;" colspan="2">
-								<strong>Corrective Actions:</strong><br />
+								<strong><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, CorrectiveActions%>" />:</strong><br />
 								<asp:Literal ID="ltrCorrectiveActions" runat="server">n/a</asp:Literal>
 							</td>
 						</tr>

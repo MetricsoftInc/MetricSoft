@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_StreamList.ascx.cs" Inherits="SQM.Website.Ucl_StreamList" %>
 <%@ Register src="~/Include/Ucl_IncidentList.ascx" TagName="IssueList" TagPrefix="Ucl" %>
-    <link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />	
+    <link type="text/css" href="../css/redmond/jquery-ui-1.8.20.custom.css" rel="Stylesheet" />
     <script type="text/javascript" src="../scripts/jquery-1.4.1.min.js"></script>
     <script type="text/javascript" src="../scripts/jquery-ui-1.8.20.custom.min.js"></script>
     <script type="text/javascript">
@@ -49,7 +49,7 @@
 									</td>
                                     <td class="listData" valign="top">
 										<span class="summaryHeader">
-											<asp:Label runat="server" ID="lblPartNum" Text="Part Number" Visible="true"></asp:Label>
+											<asp:Label runat="server" ID="lblPartNum" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
 										</span>
 										<br>
 										<asp:LinkButton ID="lnkPartNum" runat="server" CommandArgument='<%#Eval("STREAM_ID") %>'
@@ -77,7 +77,7 @@
 									</td>
                                     <td class="listDataAlt" valign="top">
 										<span class="summaryHeader">
-											<asp:Label runat="server" ID="lblPartNum" Text="Part Number" Visible="true"></asp:Label>
+											<asp:Label runat="server" ID="lblPartNum" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
 										</span>
 										<br>
 										<asp:LinkButton ID="lnkPartNum" runat="server" CommandArgument='<%#Eval("STREAM_ID") %>'
@@ -125,7 +125,7 @@
 									</td>
                                     <td class="listData" valign="top">
 										<span class="summaryHeader">
-											<asp:Label runat="server" ID="lblPartNum" Text="Part Number" Visible="true"></asp:Label>
+											<asp:Label runat="server" ID="lblPartNum" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
 										</span>
 										<br>
 										<asp:LinkButton ID="lnkPartNum" runat="server" CommandArgument='<%#Eval("STREAM_ID") %>'
@@ -153,7 +153,7 @@
 									</td>
                                     <td class="listDataAlt" valign="top">
 										<span class="summaryHeader">
-											<asp:Label runat="server" ID="lblPartNum" Text="Part Number" Visible="true"></asp:Label>
+											<asp:Label runat="server" ID="lblPartNum" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
 										</span>
 										<br>
 										<asp:LinkButton ID="lnkPartNum" runat="server" CommandArgument='<%#Eval("STREAM_ID") %>'
@@ -198,7 +198,7 @@
 				</td>
                 <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblPartNum" Text="Part Number"></asp:Label>
+                        <asp:Label runat="server" ID="lblPartNum" Text="<%$ Resources:LocalizedText, PartNumber %>"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblPartNum_out"></asp:Label>
@@ -214,7 +214,7 @@
 				 <td valign="top" align=center>
 					<div id="divStreamRecGVScroll" runat="server" class="">
                         <asp:GridView runat="server" ID="gvStreamRecList" Name="gvStreamRecList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false"  CellPadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%">
-                            <HeaderStyle CssClass="HeadingCellText" />    
+                            <HeaderStyle CssClass="HeadingCellText" />
                             <RowStyle CssClass="DataCell" />
                 	        <Columns>
                                 <asp:TemplateField HeaderText="Receipt Date" ItemStyle-Width="15%">

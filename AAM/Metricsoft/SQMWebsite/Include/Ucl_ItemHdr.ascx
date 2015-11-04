@@ -139,7 +139,7 @@
 		    <tr>
 			    <td class=summaryData valign=top>
 					<SPAN CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblPartNumHdr" Text="Part Number" Visible="true"></asp:Label>
+                        <asp:Label runat="server" ID="lblPartNumHdr" Text="<%$ Resources:LocalizedText, PartNumber %>" Visible="true"></asp:Label>
                     </SPAN>
                     <BR>
 					<asp:Label runat="server" ID="lblPartNum_out" Text="" Visible="true"></asp:Label>

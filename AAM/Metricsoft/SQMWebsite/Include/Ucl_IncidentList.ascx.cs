@@ -213,12 +213,20 @@ namespace SQM.Website
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+			this.lblPartSearch.Text = Resources.LocalizedText.PartNumber + ":";
+			this.lblSeveritySelect.Text = Resources.LocalizedText.EventCategory + ":";
 			this.lblPeriodFrom.Text = Resources.LocalizedText.From + ":";
 			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
+			this.rgCSTIssueList.MasterTableView.GetColumn("TemplateColumn2").HeaderText = Resources.LocalizedText.DetectedLocation + "/<br/>" + Resources.LocalizedText.ResponsibleLocation;
+			this.rgCSTIssueList.MasterTableView.GetColumn("ReceiptColumn").HeaderText = Resources.LocalizedText.PartNumber + "/<br/>" + Resources.LocalizedText.ReceiptNumber;
+			this.rgCSTIssueList.MasterTableView.GetColumn("TemplateColumn3").HeaderText = Resources.LocalizedText.EventCategory + "/<br/>" + Resources.LocalizedText.ProblemArea;
 			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn1").HeaderText = Resources.LocalizedText.IncidentDate + "/<br/>Reported By";
 			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.Status + "/<br/>(" + GetLocalResourceObject("DaysOpen") + ")";
+			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn1").HeaderText = Resources.LocalizedText.InspectionDate + "/<br/>" + GetLocalResourceObject("EnteredBy");
+			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn3").HeaderText = Resources.LocalizedText.Category + "/<br/>" + Resources.LocalizedText.Type;
 			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.DueDate + "/<br/>" + Resources.LocalizedText.AssignedTo;
-			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn6").HeaderText = Resources.LocalizedText.Status + "<br/>(Days)";
+			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn6").HeaderText = Resources.LocalizedText.Status + "/<br/>(" + Resources.LocalizedText.Days + ")";
+			this.rgIncidentActionList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.RootCause + "/<br/>" + Resources.LocalizedText.CorrectiveActions;
 
 			if (!Page.IsPostBack)
 			{

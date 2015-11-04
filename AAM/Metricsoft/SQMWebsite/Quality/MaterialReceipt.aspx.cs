@@ -20,6 +20,8 @@ namespace SQM.Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
+			this.lblStreamPart.Text = Resources.LocalizedText.PartNumber + ": ";
+
             if (!Page.IsPostBack)
             {
                 uclSearchBar.SetButtonsVisible(false, false, true, true, false, false);

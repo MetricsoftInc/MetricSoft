@@ -28,6 +28,11 @@ namespace SQM.Website
             get { return rptSuppPartHeader; }
         }
 
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			this.rgReceiptList.MasterTableView.Columns[0].HeaderText = Resources.LocalizedText.ReceiptNumber + "/<br/>Inspection Issue ID";
+		}
+
         #region customer
         public void BindCustPartList(List<PartData> b2bList, List<PERSON> notifyPersonList)
         {

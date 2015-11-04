@@ -138,7 +138,7 @@
                                                 <table width="99%" border="0" cellspacing="0" cellpadding="0" class="admBkgd">
                                                     <tr>
                                                         <td class="optionArea">
-                                                            <asp:Label ID="lblCategory" runat="server" Text="Problem Area: " CssClass="prompt"></asp:Label>
+                                                            <asp:Label ID="lblCategory" runat="server" CssClass="prompt"></asp:Label>
                                                             <asp:DropDownList ID="ddlProblemArea" runat="server" AutoPostBack="true"  OnSelectedIndexChanged="SelectProblemArea"></asp:DropDownList>
                                                         </td>
                                                         <td>

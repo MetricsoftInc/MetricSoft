@@ -45,7 +45,7 @@
                                 <tr>
                                     <td>
                                         <asp:Panel ID="pnlStreamSearch" runat="server">
-                                            <asp:Label ID="lblStreamPart" runat="server" CssClass="prompt" Text="Part Number: "></asp:Label>
+                                            <asp:Label ID="lblStreamPart" runat="server" CssClass="prompt"></asp:Label>
                                             <asp:TextBox ID="tbStreamPart" runat="server" MaxLength="50" Columns="24"></asp:TextBox>
                                             <asp:Label ID="lblStreamSupp" runat="server" CssClass="prompt" style="margin-left: 10px;" Text="Supplier Name: "></asp:Label>
                                             <asp:TextBox ID="tbStreamSupp" runat="server" MaxLength="50" Columns="24"></asp:TextBox>
@@ -68,7 +68,7 @@
                                 <table width="99%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder">
                                     <tr>
                                         <td class="columnHeader" width="29%">
-                                            <asp:Label ID="lblReceiptDate" runat="server" text="Inspection Date"  ></asp:Label>
+                                            <asp:Label ID="lblReceiptDate" runat="server" Text="<%$ Resources:LocalizedText, InspectionDate %>"></asp:Label>
                                         </td>
                                         <td class="required" width="1%">&nbsp;</td>
                                         <td CLASS="tableDataAlt" width="70%">

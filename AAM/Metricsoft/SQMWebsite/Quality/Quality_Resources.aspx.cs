@@ -21,6 +21,8 @@ namespace SQM.Website
 
         protected void Page_Load(object sender, EventArgs e)
         {
+			this.lblCategory.Text = Resources.LocalizedText.ProblemArea + ": ";
+
             if (!Page.IsPostBack)
             {
                 uclAdminTabs.QualityResourcePanel.Visible = true;

@@ -1187,7 +1187,7 @@ namespace SQM.Website
                 //// create the headers 
                 IRow row1 = sheet1.CreateRow(0);
                 row1.CreateCell(0).SetCellValue("Recommendation ID");
-                row1.CreateCell(1).SetCellValue("Inspection Date");
+                row1.CreateCell(1).SetCellValue(Resources.LocalizedText.InspectionDate);
                 row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
                 row1.CreateCell(3).SetCellValue(Resources.LocalizedText.Location); // Really the plant name
                 row1.CreateCell(4).SetCellValue("Inspection Category"); 

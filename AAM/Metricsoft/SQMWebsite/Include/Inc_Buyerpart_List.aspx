@@ -9,7 +9,7 @@
                                 <HeaderStyle CssClass="HeadingCellText" />
                                 <RowStyle CssClass="DataCell" />
                 	            <Columns>
-                                    <asp:BoundField DataField="PART_NUM" HeaderText="Part Number" ItemStyle-Width="20%" />
+                                    <asp:BoundField DataField="PART_NUM" HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ItemStyle-Width="20%" />
 					                <asp:BoundField DataField="COMPANY_NAME" HeaderText="Supplier Company" ItemStyle-Width="20%" />
    					                <asp:BoundField DataField="PLANT_NAME" HeaderText="Supplier Plant" ItemStyle-Width="20%" />
    				                    <asp:BoundField DataField="BUYER_CODE" HeaderText="Buyer Code" ItemStyle-Width="10%" />

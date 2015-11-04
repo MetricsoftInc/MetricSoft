@@ -168,7 +168,7 @@
         OnPageIndexChanged="rgReceiptList_PageIndexChanged" OnPageSizeChanged="rgReceiptList_PageSizeChanged" GridLines="None" Width="100%">
         <MasterTableView ExpandCollapseColumn-Visible="false">
             <Columns>
-		        <telerik:GridTemplateColumn HeaderText="Receipt Number/<br>Inspection Issue ID" ShowSortIcon="true" SortExpression="Receipt.RECEIPT_NUMBER">
+		        <telerik:GridTemplateColumn ShowSortIcon="true" SortExpression="Receipt.RECEIPT_NUMBER">
                     <ItemTemplate>
                         <asp:Label ID="lblReceiptNum" runat="server" Text='<%#Eval("Receipt.RECEIPT_NUMBER") %>'></asp:Label>
                         <br />
@@ -193,7 +193,7 @@
                         </span>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
-		        <telerik:GridTemplateColumn UniqueName="PartColumn" HeaderText="Part Number" ShowSortIcon="true" SortExpression="Part.PART_NUM">
+		        <telerik:GridTemplateColumn UniqueName="PartColumn" HeaderText="<%$ Resources:LocalizedText, PartNumber %>" ShowSortIcon="true" SortExpression="Part.PART_NUM">
                     <ItemTemplate>
                         <asp:Label ID="lblPartNum" runat="server" Text='<%#Eval("Part.PART_NUM") %>'></asp:Label>
                     </ItemTemplate>
