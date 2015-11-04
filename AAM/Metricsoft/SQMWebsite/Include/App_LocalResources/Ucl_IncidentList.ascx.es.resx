@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnReceiptSearchResource1.Text" xml:space="preserve">
-    <value>List Receipts</value>
+    <value>Lista de recibos</value>
   </data>
   <data name="btnReceiptSearchResource1.ToolTip" xml:space="preserve">
-    <value>List material receipts</value>
+    <value>Lista recibos de materiales</value>
   </data>
   <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
-    <value>Issue ID</value>
+    <value>Identificación del problema</value>
   </data>
   <data name="GridTemplateColumnResource13.HeaderText" xml:space="preserve">
-    <value>Created</value>
+    <value>Creado</value>
   </data>
   <data name="GridTemplateColumnResource14.HeaderText" xml:space="preserve">
-    <value>Updated</value>
+    <value>Actualizado</value>
   </data>
   <data name="GridTemplateColumnResource16.HeaderText" xml:space="preserve">
-    <value>Reports</value>
+    <value>Informes</value>
   </data>
   <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
-    <value>Record Date/&lt;br&gt;Reported By</value>
+    <value>Fecha de notificación/&lt;br&gt;Reportado por</value>
   </data>
   <data name="GridTemplateColumnResource22.HeaderText" xml:space="preserve">
-    <value>Initial Evidence</value>
+    <value>La evidencia inicial</value>
   </data>
   <data name="DaysOpen" xml:space="preserve">
-    <value>Days Open</value>
+    <value>Días abiertos</value>
   </data>
   <data name="GridTemplateColumnResource24.HeaderText" xml:space="preserve">
-    <value>View Reports</value>
+    <value>Ver informes</value>
   </data>
   <data name="GridTemplateColumnResource25.HeaderText" xml:space="preserve">
     <value>Recommendation/&lt;br&gt;Response</value>
@@ -160,7 +160,7 @@
     <value>Detected Location/&lt;br&gt;Responsible Location</value>
   </data>
   <data name="GridTemplateColumnResource30.HeaderText" xml:space="preserve">
-    <value>Initial Evidence</value>
+    <value>La evidencia inicial</value>
   </data>
   <data name="GridTemplateColumnResource32.HeaderText" xml:space="preserve">
     <value>Status&lt;br/&gt;(Days)</value>
@@ -181,7 +181,7 @@
     <value>Event Category/&lt;br&gt;Problem Area</value>
   </data>
   <data name="GridTemplateColumnResource8.HeaderText" xml:space="preserve">
-    <value>Initial Evidence</value>
+    <value>La evidencia inicial</value>
   </data>
   <data name="GridTemplateColumnResource9.HeaderText" xml:space="preserve">
     <value>Problem Case ID</value>
@@ -264,7 +264,7 @@
     <value>Case Type</value>
   </data>
   <data name="lblCreateDateResource1.Text" xml:space="preserve">
-    <value>Created</value>
+    <value>Creado</value>
   </data>
   <data name="lblIncidentListEmptyResource1.Text" xml:space="preserve">
     <value>No Incidents exist matching your search criteria.</value>
@@ -301,7 +301,7 @@
 							</value>
   </data>
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
-    <value>Issue ID</value>
+    <value>Identificación del problema</value>
   </data>
   <data name="TemplateFieldResource10.HeaderText" xml:space="preserve">
     <value>Problem Area</value>
@@ -319,6 +319,6 @@
     <value>Disposition</value>
   </data>
   <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
-    <value>Issue ID</value>
+    <value>Identificación del problema</value>
   </data>
 </root>

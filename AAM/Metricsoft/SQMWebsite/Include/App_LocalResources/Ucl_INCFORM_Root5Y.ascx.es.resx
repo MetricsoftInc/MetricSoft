@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnAddRootCauseResource1.ToolTip" xml:space="preserve">
-    <value>Add Another Root Cause</value>
+    <value>Agregar otro causa raíz</value>
   </data>
   <data name="lbWhyPromptResource1.Text" xml:space="preserve">
-    <value>Why </value>
+    <value>Por qué </value>
   </data>
 </root>

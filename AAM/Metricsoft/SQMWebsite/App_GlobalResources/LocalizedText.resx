@@ -450,4 +450,10 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>Effective Date</value>
+  </data>
+  <data name="IncidentID" xml:space="preserve">
+    <value>Incident ID</value>
+  </data>
 </root>

@@ -373,7 +373,7 @@ namespace SQM.Website.EHS
 			calcsResult.metricSeries = data.severityRateSeries;
 			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
 
-			if ((data.data as List<Data>).Last().TRIR == 0)
+			if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>).Last().TRIR == 0)
 				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
 			else
 			{

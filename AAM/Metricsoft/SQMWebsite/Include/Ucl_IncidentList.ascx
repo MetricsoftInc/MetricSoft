@@ -298,7 +298,7 @@
 							<asp:Label ID="lblLocation" runat="server" meta:resourcekey="lblLocationResource2" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter colIncident column" HeaderText="Incident ID" meta:resourcekey="GridTemplateColumnResource11" SortExpression="ProbCase.PROBCASE_ID" UniqueName="colIncident">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter colIncident column" HeaderText="<%$ Resoucres:LocalizedText, IncidentID %>" SortExpression="ProbCase.PROBCASE_ID" UniqueName="colIncident">
 						<ItemTemplate>
 							<asp:Label ID="lblIncidentID" runat="server" meta:resourcekey="lblIncidentIDResource2"></asp:Label>
 						</ItemTemplate>
@@ -483,7 +483,7 @@
 				<ExpandCollapseColumn Visible="False">
 				</ExpandCollapseColumn>
 				<Columns>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="Incident ID" meta:resourcekey="GridTemplateColumnResource17" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resoucres:LocalizedText, IncidentID %>" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn">
 						<ItemTemplate>
 							<table class="innerTable">
 								<tr>

@@ -85,7 +85,7 @@
 				<div class="yearDiv">
 					<span class="prompt">Year: </span>
 					<telerik:RadMonthYearPicker ID="rmypYear" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false"
-						DateInput-AutoPostBack="true" DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" />
+						DateInput-DateFormat="yyyy" DateInput-DisplayDateFormat="yyyy" />
 					<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
 				</div>
 				<div class="exportButtonDiv">

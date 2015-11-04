@@ -133,127 +133,127 @@
     <value>Parte del Cuerpo</value>
   </data>
   <data name="lbDirectSupvSMResource1.Text" xml:space="preserve">
-    <value>Directly Supervised by AAM</value>
+    <value>Supervisado directamente por la AAM</value>
   </data>
   <data name="lbDirectSupvXSResource1.Text" xml:space="preserve">
-    <value>Directly Supervised by AAM</value>
+    <value>Supervisado directamente por la AAM</value>
   </data>
   <data name="lbErgConcernSMResource1.Text" xml:space="preserve">
-    <value>Ergonomic Concerns</value>
+    <value>Preocupaciones ergonómicas</value>
   </data>
   <data name="lbErgConcernXSResource1.Text" xml:space="preserve">
-    <value>Ergonomic Concerns</value>
+    <value>Preocupaciones ergonómicas</value>
   </data>
   <data name="lbFatalitySMResource1.Text" xml:space="preserve">
-    <value>Fatality?</value>
+    <value>¿Fatlidad?</value>
   </data>
   <data name="lbFatalityXSResource1.Text" xml:space="preserve">
-    <value>Fatality?</value>
+    <value>¿Fatlidad?</value>
   </data>
   <data name="lbFirstAidSMResource1.Text" xml:space="preserve">
-    <value>First Aid?</value>
+    <value>¿Primeros auxilios?</value>
   </data>
   <data name="lbFirstAidXSResource1.Text" xml:space="preserve">
-    <value>First Aid?</value>
+    <value>¿Primeros auxilios?</value>
   </data>
   <data name="lbInjuryTypeSMResource1.Text" xml:space="preserve">
-    <value>Type of Injury</value>
+    <value>Tipo de Lesión</value>
   </data>
   <data name="lbInjuryTypeXSResource1.Text" xml:space="preserve">
-    <value>Type of Injury</value>
+    <value>Tipo de Lesión</value>
   </data>
   <data name="lbInsideOutsideSMResource1.Text" xml:space="preserve">
-    <value>Inside or Outside Building</value>
+    <value>¿Dentro o Fuera del Edificio?</value>
   </data>
   <data name="lbInsideOutsideXSResource1.Text" xml:space="preserve">
-    <value>Inside or Outside Building</value>
+    <value>¿Dentro o Fuera del Edificio?</value>
   </data>
   <data name="lbInvolvedPersonSMResource1.Text" xml:space="preserve">
-    <value>Involved Person's Name</value>
+    <value>El Nombre de la Persona Involucrada</value>
   </data>
   <data name="lbInvolvedPersonXSResource1.Text" xml:space="preserve">
-    <value>Involved Person's Name</value>
+    <value>El Nombre de la Persona Involucrada</value>
   </data>
   <data name="lbInvPersonStatementSMResource1.Text" xml:space="preserve">
-    <value>Involved Person's Statement</value>
+    <value>Declaración de la persona involucrada</value>
   </data>
   <data name="lbInvPersonStatementXSResource1.Text" xml:space="preserve">
-    <value>Involved Person's Statement</value>
+    <value>Declaración de la persona involucrada</value>
   </data>
   <data name="lblDeptTestXSResource1.Text" xml:space="preserve">
     <value>Parte del Cuerpo</value>
   </data>
   <data name="lbLocalDescSMResource1.Text" xml:space="preserve">
-    <value>Local Description</value>
+    <value>Descripción Local</value>
   </data>
   <data name="lbLocalDescXSResource1.Text" xml:space="preserve">
-    <value>Local Description</value>
+    <value>Descripción Local</value>
   </data>
   <data name="lbLostTimeSMResource1.Text" xml:space="preserve">
-    <value>Lost Or Restricted Time?</value>
+    <value>¿Tiempo perdido o restringido?</value>
   </data>
   <data name="lbLostTimeXSResource1.Text" xml:space="preserve">
-    <value>Lost Or Restricted Time?</value>
+    <value>¿Tiempo perdido o restringido?</value>
   </data>
   <data name="lblSubmittedResource1.Text" xml:space="preserve">
-    <value>Power Outage submitted.</value>
+    <value>Corte de energía presentó.</value>
   </data>
   <data name="lbRecordableSMResource1.Text" xml:space="preserve">
-    <value>Recordable?</value>
+    <value>¿Grabable?</value>
   </data>
   <data name="lbRecordableXSResource1.Text" xml:space="preserve">
-    <value>Recordable?</value>
+    <value>¿Grabable?</value>
   </data>
   <data name="lbShiftSMResource1.Text" xml:space="preserve">
-    <value>Shift</value>
+    <value>Cambio</value>
   </data>
   <data name="lbShiftXSResource1.Text" xml:space="preserve">
-    <value>Shift</value>
+    <value>Cambio</value>
   </data>
   <data name="lbStdProcsFollowedSMResource1.Text" xml:space="preserve">
-    <value>Standard Work Procedures Followed without Deviation?</value>
+    <value>¿Procedimientos estándar de trabajo seguidos sin desviaciones?</value>
   </data>
   <data name="lbStdProcsFollowedXSResource1.Text" xml:space="preserve">
-    <value>Standard Work Procedures Followed without Deviation?</value>
+    <value>¿Procedimientos estándar de trabajo seguidos sin desviaciones?</value>
   </data>
   <data name="lbSupervisorLabelResource1.Text" xml:space="preserve">
     <value>Supervisor: </value>
   </data>
   <data name="lbSupervisorStatementSMResource1.Text" xml:space="preserve">
-    <value>Supervisor's Statement</value>
+    <value>Declaración del supervisor</value>
   </data>
   <data name="lbSupervisorStatementXSResource1.Text" xml:space="preserve">
-    <value>Supervisor's Statement</value>
+    <value>Declaración del supervisor</value>
   </data>
   <data name="lbSupvInformedDateSMResource1.Text" xml:space="preserve">
-    <value>Date Supervisor Informed</value>
+    <value>La Fecha en Que el Supervisor Fue Informado</value>
   </data>
   <data name="lbSupvInformedDateXSResource1.Text" xml:space="preserve">
-    <value>Date Supervisor Informed</value>
+    <value>La Fecha en Que el Supervisor Fue Informado</value>
   </data>
   <data name="lbTaskYearsSMResource1.Text" xml:space="preserve">
-    <value>How long has associate been doing this job/specific task?</value>
+    <value>¿Cuánto tiempo ha asociado estado haciendo este trabajo / tarea específica?</value>
   </data>
   <data name="lbTaskYearsXSResource1.Text" xml:space="preserve">
-    <value>How long has associate been doing this job/specific task?</value>
+    <value>¿Cuánto tiempo ha asociado estado haciendo este trabajo / tarea específica?</value>
   </data>
   <data name="lbTrainingProvidedSMResource1.Text" xml:space="preserve">
-    <value>Was Training for this Task Provided?</value>
+    <value>¿Entrenamiento para esta tarea fue proporcionada?</value>
   </data>
   <data name="lbTrainingProvidedXSResource1.Text" xml:space="preserve">
-    <value>Was Training for this Task Provided?</value>
+    <value>¿Entrenamiento para esta tarea fue proporcionada?</value>
   </data>
   <data name="lbWitnessColSMResource1.Text" xml:space="preserve">
-    <value>Witness </value>
+    <value>Testigo </value>
   </data>
   <data name="lbWitnessColXSResource1.Text" xml:space="preserve">
-    <value>Witness </value>
+    <value>Testigo </value>
   </data>
   <data name="lbWitStmntPromptResource1.Text" xml:space="preserve">
-    <value>Statement:</value>
+    <value>Declaración:</value>
   </data>
   <data name="ListItemResource1.Text" xml:space="preserve">
-    <value>Inside</value>
+    <value>Dentro</value>
   </data>
   <data name="ListItemResource2.Text" xml:space="preserve">
     <value>Outside</value>
@@ -263,125 +263,5 @@
   </data>
   <data name="ListItemResource8.Text" xml:space="preserve">
     <value>Non-Standard</value>
-  </data>
-  <data name="rsbInvolvedPersonResource1.Localization.ShowAllResults" xml:space="preserve">
-    <value>Show All Results</value>
-  </data>
-  <data name="rsbInvolvedPersonResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rsbWitnessNameResource1.Localization.ShowAllResults" xml:space="preserve">
-    <value>Show All Results</value>
-  </data>
-  <data name="rsbWitnessNameResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.CellDayFormat" xml:space="preserve">
-    <value>%d</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.ColumnHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.ColumnHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.DateRangeSeparator" xml:space="preserve">
-    <value> - </value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.DayCellToolTipFormat" xml:space="preserve">
-    <value>dddd, MMMM dd, yyyy</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.FastNavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.FastNavigationNextText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.FastNavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.FastNavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;&amp;lt;</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.RowHeaderImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.RowHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.TitleFormat" xml:space="preserve">
-    <value>MMMM yyyy</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.ViewSelectorImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.Calendar.ViewSelectorText" xml:space="preserve">
-    <value>x</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.TimePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the time view popup.</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.TimeView.HeaderText" xml:space="preserve">
-    <value>Time Picker</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.TimeView.TimeFormat" xml:space="preserve">
-    <value>t</value>
-  </data>
-  <data name="rtpIncidentTimeResource1.TimeView.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtpIncidentTimeResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadDatePicker</value>
-  </data>
-  <data name="tbDescriptionResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbDescriptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbInvPersonStatementResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbInvPersonStatementResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbLocalDescriptionResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbLocalDescriptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbSupervisorStatementResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbSupervisorStatementResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbWitnessStatementResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbWitnessStatementResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

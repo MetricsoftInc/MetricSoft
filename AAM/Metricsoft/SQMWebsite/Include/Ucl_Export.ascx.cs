@@ -893,7 +893,7 @@ namespace SQM.Website
 
                 //// create the headers 
                 IRow row1 = sheet1.CreateRow(0);
-                row1.CreateCell(0).SetCellValue("Incident ID");
+                row1.CreateCell(0).SetCellValue(Resources.LocalizedText.IncidentID);
                 row1.CreateCell(1).SetCellValue(Resources.LocalizedText.IncidentDate);
                 row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
                 row1.CreateCell(3).SetCellValue(Resources.LocalizedText.IncidentType); // really the Issue Type

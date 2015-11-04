@@ -60,7 +60,7 @@
 								<asp:Label ID="lbRestrictDesc" runat="server" meta:resourcekey="lbRestrictDescResource1" Text="<%$ Resources:LocalizedText, Comments %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
-								<asp:Label ID="lbBeginDate" runat="server" meta:resourcekey="lbBeginDateResource1" Text="Effective Date"></asp:Label>
+								<asp:Label ID="lbBeginDate" runat="server" Text="<%$ Resources:LocalizedText, EffectiveDate %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbNextMedDate" runat="server" meta:resourcekey="lbNextMedDateResource1" Text="Next Medical Appt."></asp:Label>

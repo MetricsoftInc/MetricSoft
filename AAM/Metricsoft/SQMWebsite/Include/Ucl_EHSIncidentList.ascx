@@ -10,7 +10,7 @@
     <MasterTableView DataKeyNames="INCIDENT_ID" Width="100%" TableLayout="Fixed" AutoGenerateColumns="False"
         AllowSorting="True" AllowPaging="true" PageSize="10">
         <Columns>
-            <telerik:GridTemplateColumn UniqueName="IncidentIdTemplateColumn" HeaderText="Incident ID" HeaderStyle-Font-Size="Smaller"
+            <telerik:GridTemplateColumn UniqueName="IncidentIdTemplateColumn" HeaderText="<%$ Resoucres:LocalizedText, IncidentID %>" HeaderStyle-Font-Size="Smaller"
                 SortExpression="INCIDENT_ID" HeaderStyle-Width="75">
                 <ItemTemplate>
                     <strong><%# LeadingZeroId(Convert.ToDecimal(DataBinder.Eval(Container.DataItem, "INCIDENT_ID"))) %></strong>

@@ -85,7 +85,7 @@ namespace SQM.Website
 
 					string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)incident.DETECT_PLANT_ID);
 					lblPlantName.Text = String.Format("Location: {0}", plantName);
-					lblIncidentId.Text = String.Format("Incident ID: {0}", incident.INCIDENT_ID);
+					lblIncidentId.Text = string.Format("{0}: {1}", Resources.LocalizedText.IncidentID, incident.INCIDENT_ID);
 					//lblCaseId.Text = String.Format("Problem Case ID: {0}", probCase.PROBCASE_ID);
 
 					string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(incident.INCIDENT_ID);
@@ -192,8 +192,8 @@ namespace SQM.Website
 
 			string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)incident.DETECT_PLANT_ID);
 			lblPlantName.Text = String.Format("Location: {0}", plantName);
-			lblIncidentId.Text = String.Format("Incident ID: {0}", incidentId);
-			//lblCaseId.Text = String.Format("Incident ID: {0}", incidentId);
+			lblIncidentId.Text = string.Format("{0}: {1}", Resources.LocalizedText.IncidentID, incidentId);
+			//lblCaseId.Text = string.Format("{0}: {1}", Resources.LocalizedText.IncidentID, incidentId);
 
 			string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(incidentId);
 			decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(incidentId);

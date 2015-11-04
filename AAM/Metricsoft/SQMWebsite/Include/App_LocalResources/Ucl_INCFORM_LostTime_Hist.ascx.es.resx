@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnAddRootCauseResource1.ToolTip" xml:space="preserve">
-    <value>Add Another Root Cause</value>
+  <data name="lbNextMedDateResource1.Text" xml:space="preserve">
+    <value>Próxima cita médica</value>
   </data>
-  <data name="lbWhyPromptResource1.Text" xml:space="preserve">
-    <value>Why </value>
+  <data name="lbWorkStatusResource1.Text" xml:space="preserve">
+    <value>Estado de trabajo</value>
   </data>
 </root>

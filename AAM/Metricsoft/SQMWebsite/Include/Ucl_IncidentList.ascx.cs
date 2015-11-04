@@ -216,7 +216,7 @@ namespace SQM.Website
 			this.lblPeriodFrom.Text = Resources.LocalizedText.From + ":";
 			this.lblPeriodTo.Text = Resources.LocalizedText.To + ":";
 			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn1").HeaderText = Resources.LocalizedText.IncidentDate + "/<br/>Reported By";
-			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.Status + "/<br/>(Days Open)";
+			this.rgIncidentList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.Status + "/<br/>(" + GetLocalResourceObject("DaysOpen") + ")";
 			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn5").HeaderText = Resources.LocalizedText.DueDate + "/<br/>" + Resources.LocalizedText.AssignedTo;
 			this.rgPreventativeList.MasterTableView.GetColumn("TemplateColumn6").HeaderText = Resources.LocalizedText.Status + "<br/>(Days)";
 

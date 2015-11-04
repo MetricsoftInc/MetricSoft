@@ -421,6 +421,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Effective Date.
+        /// </summary>
+        internal static string EffectiveDate {
+            get {
+                return ResourceManager.GetString("EffectiveDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EHS Audits.
         /// </summary>
         internal static string EHSAudits {
@@ -525,6 +534,15 @@ namespace Resources {
         internal static string IncidentDate {
             get {
                 return ResourceManager.GetString("IncidentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incident ID.
+        /// </summary>
+        internal static string IncidentID {
+            get {
+                return ResourceManager.GetString("IncidentID", resourceCulture);
             }
         }
         

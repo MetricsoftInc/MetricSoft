@@ -1838,12 +1838,6 @@
     <Folder Include="Report\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_PowerOutage.ascx.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_PowerOutage.ascx.es.resx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />
     <Content Include="Home\App_LocalResources\Calendar.aspx.resx" />
@@ -2182,6 +2176,9 @@
     <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.es.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>

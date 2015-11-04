@@ -35,13 +35,13 @@
 </script>
 
 
- <asp:Panel ID="pnlRoot5Y" Visible="False" runat="server" meta:resourcekey="pnlRoot5YResource1">
+ <asp:Panel ID="pnlRoot5Y" Visible="False" runat="server">
 
 	<br />
 
 	<div class="container-fluid">
 
-		<telerik:RadAjaxPanel ID="rapRoot5Y" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapRoot5YResource1">
+		<telerik:RadAjaxPanel ID="rapRoot5Y" runat="server" HorizontalAlign="NotSet">
 
 		<asp:Repeater runat="server" ID="rptRootCause" ClientIDMode="AutoID" OnItemDataBound="rptRootCause_OnItemDataBound" OnItemCommand="rptRootCause_ItemCommand">
 			<FooterTemplate>
@@ -65,10 +65,10 @@
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-sm-1 text-left">
-						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server" meta:resourcekey="lbWhyPromptResource1"></asp:Label><asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>:</span>
+						<span><asp:Label ID="lbWhyPrompt" Text="Why " runat="server" meta:resourcekey="lbWhyPromptResource1"></asp:Label><asp:Label ID="lbItemSeq" runat="server"></asp:Label>:</span>
 					</div>
 					<div class="col-sm-5 text-left">
-						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server" meta:resourcekey="tbRootCauseResource1"></asp:TextBox>
+						<asp:TextBox ID="tbRootCause" Rows="5" Height="95px" Width="95%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
 						<asp:RequiredFieldValidator runat="server" ID="rfvRootCause" ControlToValidate="tbRootCause" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
 					</div>
 					<div class="col-sm-2 text-left-more">
