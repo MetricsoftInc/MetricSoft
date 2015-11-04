@@ -95,7 +95,7 @@
 							<table class="innerTable">
 								<tr>
 									<td>
-										<asp:LinkButton ID="lbTaskId" runat="server" CommandArgument='<%# Eval("TASK_ID") %>' meta:resourcekey="lbTaskIdResource1" OnClick="lbTaskListItem_Click" ToolTip="View or update this Task">
+										<asp:LinkButton ID="lbTaskId" runat="server" CommandArgument='<%# Eval("TASK_ID") %>' meta:resourcekey="lbTaskIdResource1" OnClick="lbTaskListItem_Click" Font-Bold="True" ForeColor="#000066" ToolTip="View or update this Task">
 											<span style="white-space: nowrap;">
 												<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" /><asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("TASK_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblTaskId" meta:resourcekey="lblTaskIdResource1"></asp:Label>
 

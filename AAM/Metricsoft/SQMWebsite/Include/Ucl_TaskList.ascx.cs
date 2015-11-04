@@ -324,8 +324,8 @@ namespace SQM.Website
 				{
 					TASK_STATUS task = (TASK_STATUS)e.Item.DataItem;
 
-					lbl = (Label)e.Item.FindControl("lblTaskId");
-					lbl.Text = WebSiteCommon.FormatID(task.TASK_ID, 6);
+					LinkButton lnk = (LinkButton)e.Item.FindControl("lbTaskId");
+					lnk.Text = WebSiteCommon.FormatID(task.TASK_ID, 6);
 
 					if (task.DESCRIPTION.Length > 120)
 					{
