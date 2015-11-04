@@ -172,13 +172,10 @@
     <value>Alert</value>
   </data>
   <data name="imgCaseStatusResource1.ToolTip" xml:space="preserve">
-    <value>Case is inactive</value>
-  </data>
-  <data name="imgRespLocationResource1.ToolTip" xml:space="preserve">
-    <value>supplier location</value>
+    <value>Caso está inactivo</value>
   </data>
   <data name="imgStatusResource1.ToolTip" xml:space="preserve">
-    <value>Case is inactive</value>
+    <value>Caso está inactivo</value>
   </data>
   <data name="lb8dResource1.Text" xml:space="preserve">
     <value>
@@ -186,7 +183,7 @@
 										</value>
   </data>
   <data name="lb8dResource1.ToolTip" xml:space="preserve">
-    <value>Edit 8D problem case</value>
+    <value>Editr el caso problema 8D</value>
   </data>
   <data name="lb8dResource2.Text" xml:space="preserve">
     <value>
@@ -194,7 +191,7 @@
 										</value>
   </data>
   <data name="lb8dResource2.ToolTip" xml:space="preserve">
-    <value>Edit 8D problem case</value>
+    <value>Editr el caso problema 8D</value>
   </data>
   <data name="lb8dResource3.Text" xml:space="preserve">
     <value>
@@ -202,7 +199,7 @@
 										</value>
   </data>
   <data name="lb8dResource3.ToolTip" xml:space="preserve">
-    <value>Edit 8D problem case</value>
+    <value>Editr el caso problema 8D</value>
   </data>
   <data name="lbEditReportResource1.Text" xml:space="preserve">
     <value>
@@ -210,7 +207,7 @@
 										</value>
   </data>
   <data name="lbEditReportResource1.ToolTip" xml:space="preserve">
-    <value>Edit Incident Report</value>
+    <value>Editar informe de incidente</value>
   </data>
   <data name="lbEditReportResource2.Text" xml:space="preserve">
     <value>
@@ -218,43 +215,28 @@
 										</value>
   </data>
   <data name="lbEditReportResource2.ToolTip" xml:space="preserve">
-    <value>Edit Response</value>
-  </data>
-  <data name="lbIncidentIdResource1.ToolTip" xml:space="preserve">
-    <value>Edit issue</value>
-  </data>
-  <data name="lbIncidentIdResource2.ToolTip" xml:space="preserve">
-    <value>Edit incident</value>
+    <value>Editar Repuesta</value>
   </data>
   <data name="lbIncidentIdResource3.ToolTip" xml:space="preserve">
-    <value>Edit Recommendation</value>
-  </data>
-  <data name="lbIncidentIdResource4.ToolTip" xml:space="preserve">
-    <value>Edit incident</value>
+    <value>Editar Recomendación</value>
   </data>
   <data name="lblCaseIDResource2.Text" xml:space="preserve">
     <value>La identificación de casos de problemas</value>
-  </data>
-  <data name="lblCaseTypeResource1.Text" xml:space="preserve">
-    <value>Case Type</value>
   </data>
   <data name="lblCreateDateResource1.Text" xml:space="preserve">
     <value>Creado</value>
   </data>
   <data name="lblIncidentListEmptyResource1.Text" xml:space="preserve">
-    <value>No Incidents exist matching your search criteria.</value>
-  </data>
-  <data name="lblIssueDescriptionResource1.Text" xml:space="preserve">
-    <value>Issue</value>
+    <value>No existen incidentes que coincidan con sus criterios de búsqueda.</value>
   </data>
   <data name="lblIssueListEmptyResource1.Text" xml:space="preserve">
-    <value>No Quality Issues matching your search criteria.</value>
+    <value>No hay problemas de calidad que coincidan con sus criterios de búsqueda.</value>
   </data>
   <data name="lblIssueResponsibleResource1.Text" xml:space="preserve">
-    <value>Responsible</value>
+    <value>Responsable</value>
   </data>
   <data name="lblShowImageResource1.Text" xml:space="preserve">
-    <value>Display Initial Evidence (Images)</value>
+    <value>Mostrar la evidencia inicial (Imágenes)</value>
   </data>
   <data name="lbReportResource1.Text" xml:space="preserve">
     <value>
@@ -268,12 +250,6 @@
   </data>
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Identificación del problema</value>
-  </data>
-  <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
-    <value>Disposition</value>
   </data>
   <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
     <value>Identificación del problema</value>

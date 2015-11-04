@@ -27,7 +27,7 @@
 				<telerik:GridTemplateColumn HeaderText="Notification Scope" ShowSortIcon="true" SortExpression="NOTIFY_SCOPE">
 					<ItemTemplate>
 						<asp:HiddenField id="hfNotifyItemID" runat="server"/>
-						<asp:LinkButton ID="lnkNotifyItem" OnClick="lnklNotifyItem_Click" CommandArgument='<%#Eval("NOTIFYACTION_ID") %>' Text='<%#Eval("NOTIFY_SCOPE") %>' runat="server" CssClass="buttonLink" Font-Bold="true" ForeColor="#000066" ToolTip="Edit incident"></asp:LinkButton>
+						<asp:LinkButton ID="lnkNotifyItem" OnClick="lnklNotifyItem_Click" CommandArgument='<%#Eval("NOTIFYACTION_ID") %>' Text='<%#Eval("NOTIFY_SCOPE") %>' runat="server" CssClass="buttonLink" Font-Bold="true" ForeColor="#000066" ToolTip="<%$ Resources:LocalizedText, EditIncident %>"></asp:LinkButton>
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
 				<telerik:GridTemplateColumn HeaderText="For Event" ShowSortIcon="false">

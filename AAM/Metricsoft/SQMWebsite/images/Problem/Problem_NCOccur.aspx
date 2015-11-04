@@ -179,7 +179,7 @@
 		                        <td>
                                    <input type='button' id='lbIdentify_nav' value="Identification" class="buttonLink" onclick="SetFocus('tbNCLotNum');"/>
                                    <input type='button' id='lbEvidence_nav' value="Evidence" class="buttonLink" onclick="SetFocus('ctl00_ctl00_ContentPlaceHolder1_ContentPlaceHolder_Body_gvQISamples_ctl02_ddlPrimaryNC');"/>
-                                   <input type='button' id='lbDisposition_nav' value="Disposition" class="buttonLink" onclick="SetFocus('ddlDisposition');"/>
+                                   <input type='button' id='lbDisposition_nav' runat="server" value="<%$ Resources:LocalizedText, Disposition %>" class="buttonLink" onclick="SetFocus('ddlDisposition');"/>
                                 </td>
                             </tr>
                             <tr height="8"><td></td></tr>
@@ -326,7 +326,7 @@
                             <tr>
                             <tr><td>&nbsp;</td></tr>
                                 <td>
-                                    <asp:Label ID="lblDispositionTitle" runat="server" CssClass="prompt" Text="Disposition:"></asp:Label>
+                                    <asp:Label ID="lblDispositionTitle" runat="server" CssClass="prompt" Text="<%$ Resources:LocalizedText, Disposition %>:"></asp:Label>
                                     &nbsp;
                                     &nbsp;
                                     <asp:Label ID="lblDispositionInstruct" runat="server" Text="Specify the Disposition of the suspect material and if this issue should be escalated to a formal Problem Resolution process." CssClass="instructText"></asp:Label>
@@ -337,7 +337,7 @@
                                     <table width="100%" border="0" cellspacing="1" cellpadding="1" class="darkBorder">
                                         <tr>
                                             <td class="columnHeader" width="39%">
-                                                <asp:Label ID="lblDisposition" runat="server" text="Disposition"></asp:Label>
+                                                <asp:Label ID="lblDisposition" runat="server" Text="<%$ Resources:LocalizedText, Disposition %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
                                             <td class="tableDataAlt" width="60%">

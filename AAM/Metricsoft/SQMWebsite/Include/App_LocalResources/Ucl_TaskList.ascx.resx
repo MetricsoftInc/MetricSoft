@@ -468,9 +468,6 @@
   <data name="scdTaskScheduleResource1.Localization.HeaderAgendaAppointment" xml:space="preserve">
     <value>Appointment</value>
   </data>
-  <data name="scdTaskScheduleResource1.Localization.HeaderAgendaDate" xml:space="preserve">
-    <value>Date</value>
-  </data>
   <data name="scdTaskScheduleResource1.Localization.HeaderAgendaResource" xml:space="preserve">
     <value>Resource</value>
   </data>

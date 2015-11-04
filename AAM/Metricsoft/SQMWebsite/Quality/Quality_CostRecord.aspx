@@ -143,7 +143,7 @@
                                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td class="tableDataHdr"  width="25%" >
-                                            &nbsp;<asp:Label ID="lblCRIncidentHdr" runat="server" text="Issue" CssClass="prompt"></asp:Label>
+                                            &nbsp;<asp:Label ID="lblCRIncidentHdr" runat="server" Text="<%$ Resources:LocalizedText, Issue %>" CssClass="prompt"></asp:Label>
                                             &nbsp;<asp:Label ID="lblCRIncidentIDHdr" runat="server" text="" CssClass="prompt"></asp:Label>
                                             &nbsp;<asp:Label ID="lblCRCostHdr" runat="server" text="Costs" CssClass="prompt"></asp:Label>
                                         </td>

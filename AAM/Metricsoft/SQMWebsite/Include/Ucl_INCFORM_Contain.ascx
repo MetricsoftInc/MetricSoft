@@ -41,14 +41,6 @@
     <div class="container-fluid">
         <telerik:RadAjaxPanel ID="rapContain"  runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapContainResource1">
             <asp:Repeater runat="server" ID="rptContain" ClientIDMode="AutoID" OnItemDataBound="rptContain_OnItemDataBound" OnItemCommand="rptContain_ItemCommand">
-                <FooterTemplate>
-                    </table>
-                    <div class="row" style="padding-top:0;margin-top:-10px;">
-                        <div class="col-xs-12 text-left-more">
-                            <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
-                        </div>
-                    </div>
-                </FooterTemplate>
             	<HeaderTemplate>
 					<table border="0" class="table">
 						<thead>
@@ -67,7 +59,6 @@
 									</b></th>
 							</tr>
 						</thead>
-					</table>
 				</HeaderTemplate>
 				<ItemTemplate>
 					<tbody>
@@ -108,6 +99,14 @@
 						</tr>
 					</tbody>
 				</ItemTemplate>
+                <FooterTemplate>
+                    </table>
+                    <div class="row" style="padding-top:0;margin-top:-10px;">
+                        <div class="col-xs-12 text-left-more">
+                            <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
+                        </div>
+                    </div>
+                </FooterTemplate>
             </asp:Repeater>
         	&nbsp;
         </telerik:RadAjaxPanel>

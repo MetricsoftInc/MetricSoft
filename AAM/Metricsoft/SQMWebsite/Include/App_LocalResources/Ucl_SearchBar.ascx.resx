@@ -117,37 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnReturnResource1.Text" xml:space="preserve">
     <value>Return</value>
   </data>
-  <data name="btnReturnResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnUploadResource1.Text" xml:space="preserve">
     <value>Upload...</value>
-  </data>
-  <data name="btnUploadResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPageTitleResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPageTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTitleItem_outResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTitleItem_outResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbSearchResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbSearchResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

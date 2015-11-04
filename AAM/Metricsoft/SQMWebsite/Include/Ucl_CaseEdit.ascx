@@ -64,7 +64,7 @@
                     <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
                         <tr>
                             <td class="columnHeader"  width="14%">
-                                <asp:Label ID="lblCaseType" runat="server" text="Case Type"></asp:Label>
+                                <asp:Label ID="lblCaseType" runat="server" Text="<%$ Resources:LocalizedText, CaseType %>"></asp:Label>
                             </td>
                             <td class="tableDataAlt"  width="1%">&nbsp;</td>
                             <td class="tableDataAlt" width="85%">

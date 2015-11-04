@@ -18,7 +18,7 @@
 						  	<tr>
                                 <td>
                                     <%-- <asp:TextBox ID="tbSearch" runat="server" style="width:150px;" ></asp:TextBox> --%>
-                                     <asp:Button ID="btnReturn" runat="server" onclick="btnReturn_Click" text="Return" CssClass="buttonReturn" CommandArgument="return" style="margin-right: 30px;" ></asp:Button>
+                                     <asp:Button ID="btnReturn" runat="server" onclick="btnReturn_Click" Text="Return" CssClass="buttonReturn" CommandArgument="return" style="margin-right: 30px;" meta:resourcekey="btnReturnResource1"></asp:Button>
                                     <asp:Button ID="btnSearch" class="buttonStd" runat="server" onclick="btnSearch_Click" text="List" style="width: 70px; margin-right: 5px;"></asp:Button>
                                     <asp:Button ID="btnNew"  runat="server" CssClass="buttonAddLarge" onclick="btnNew_Click" text="<%$ Resources:LocalizedText, New %>"  CommandArgument="new"> </asp:Button>
                                     <asp:Button ID="btnEdit" class="buttonStd" runat="server" onclick="btnEdit_Click" Text="<%$ Resources:LocalizedText, Edit %>" style="width: 70px;" CommandArgument="edit" ></asp:Button>

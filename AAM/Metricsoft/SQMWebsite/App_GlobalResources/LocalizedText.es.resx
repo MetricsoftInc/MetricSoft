@@ -450,14 +450,29 @@
   <data name="Value" xml:space="preserve">
     <value>Valor</value>
   </data>
+  <data name="CaseType" xml:space="preserve">
+    <value>Tipo de Caso</value>
+  </data>
   <data name="CorrectiveActions" xml:space="preserve">
     <value>Acciones Correctivas</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Fecha</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>Días</value>
   </data>
   <data name="DetectedLocation" xml:space="preserve">
     <value>Ubicación detectada</value>
+  </data>
+  <data name="Disposition" xml:space="preserve">
+    <value>Disposición</value>
+  </data>
+  <data name="EditIncident" xml:space="preserve">
+    <value>Editar informe</value>
+  </data>
+  <data name="EditIssue" xml:space="preserve">
+    <value>Editar asunto</value>
   </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective Date</value>
@@ -471,6 +486,9 @@
   <data name="InspectionDate" xml:space="preserve">
     <value>Fecha de inspección</value>
   </data>
+  <data name="Issue" xml:space="preserve">
+    <value>Asunto</value>
+  </data>
   <data name="PartNumber" xml:space="preserve">
     <value>Número de pieza</value>
   </data>
@@ -482,5 +500,8 @@
   </data>
   <data name="ResponsibleLocation" xml:space="preserve">
     <value>Ubicación responsible</value>
+  </data>
+  <data name="SupplierLocation" xml:space="preserve">
+    <value>Ubicación del proveedor</value>
   </data>
 </root>

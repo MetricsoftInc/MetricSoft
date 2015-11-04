@@ -173,7 +173,7 @@
                         <asp:Label ID="lblReceiptNum" runat="server" Text='<%#Eval("Receipt.RECEIPT_NUMBER") %>'></asp:Label>
                         <br />
                         <span style="white-space: nowrap;">
-                           <asp:LinkButton ID="lbIssueId" CssClass="buttonEditRightBold" runat="server" ToolTip="Edit issue" OnClick="lnkReceipt_Click">
+                           <asp:LinkButton ID="lbIssueId" CssClass="buttonEditRightBold" runat="server" ToolTip="<%$ Resources:LocalizedText, EditIssue %>" OnClick="lnkReceipt_Click">
                             </asp:LinkButton>
                         </span>
                     </ItemTemplate>
@@ -188,7 +188,7 @@
                         <asp:Label ID="lblLocation" runat="server" Text='<%#Eval("CustomerPlant.PLANT_NAME") %>'></asp:Label>
                         <br />
                         <span style="white-space: nowrap;">
-                            <asp:Image ID="imgRespLocation" Visible="true" runat="server" style="vertical-align:middle;" ImageUrl = "~/images/icon_supplier2.gif" ToolTip="supplier location"/>
+                            <asp:Image ID="imgRespLocation" Visible="true" runat="server" style="vertical-align:middle;" ImageUrl = "~/images/icon_supplier2.gif" ToolTip="<%$ Resources:LocalizedText, SupplierLocation %>"/>
                             <asp:Label ID="lblRespLocation" runat="server" Text='<%#Eval("SupplierPlant.PLANT_NAME") %>'></asp:Label>
                         </span>
                     </ItemTemplate>

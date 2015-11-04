@@ -17,7 +17,7 @@
                 </ItemTemplate>
             </telerik:GridTemplateColumn>
 
-            <telerik:GridBoundColumn DataField="INCIDENT_DT" HeaderText="Date" HeaderStyle-Font-Size="Smaller" DataFormatString="{0:d}"
+            <telerik:GridBoundColumn DataField="INCIDENT_DT" HeaderText="<%$ Resources:LocalizedText, Date %>" HeaderStyle-Font-Size="Smaller" DataFormatString="{0:d}"
                 HeaderStyle-Width="95">
             </telerik:GridBoundColumn>
             <telerik:GridButtonColumn UniqueName="ClosedButtonColumn" ButtonType="ImageButton" HeaderText="<%$ Resources:LocalizedText, Closed %>" ImageUrl="/images/ico-lock.png" HeaderStyle-Width="52" HeaderStyle-Font-Size="Smaller" CommandName="Select"></telerik:GridButtonColumn>

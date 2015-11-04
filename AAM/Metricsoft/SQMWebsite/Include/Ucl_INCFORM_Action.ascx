@@ -75,7 +75,6 @@
 							<th class="col-sm-1 text-left-more"></th>
 						</tr>
 					</thead>
-				</table>
 			</HeaderTemplate>
 			<ItemTemplate>
 				<tbody>

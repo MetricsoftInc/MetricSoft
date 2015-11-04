@@ -450,14 +450,29 @@
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="CaseType" xml:space="preserve">
+    <value>Case Type</value>
+  </data>
   <data name="CorrectiveActions" xml:space="preserve">
     <value>Corrective Actions</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>Days</value>
   </data>
   <data name="DetectedLocation" xml:space="preserve">
     <value>Detected Location</value>
+  </data>
+  <data name="Disposition" xml:space="preserve">
+    <value>Disposition</value>
+  </data>
+  <data name="EditIncident" xml:space="preserve">
+    <value>Edit incident</value>
+  </data>
+  <data name="EditIssue" xml:space="preserve">
+    <value>Edit issue</value>
   </data>
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective Date</value>
@@ -471,6 +486,9 @@
   <data name="InspectionDate" xml:space="preserve">
     <value>Inspection Date</value>
   </data>
+  <data name="Issue" xml:space="preserve">
+    <value>Issue</value>
+  </data>
   <data name="PartNumber" xml:space="preserve">
     <value>Part Number</value>
   </data>
@@ -482,5 +500,8 @@
   </data>
   <data name="ResponsibleLocation" xml:space="preserve">
     <value>Responsible Location</value>
+  </data>
+  <data name="SupplierLocation" xml:space="preserve">
+    <value>Supplier Location</value>
   </data>
 </root>

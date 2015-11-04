@@ -15,7 +15,7 @@
                                                                         <asp:Label ID="lblIssueTask_out" runat="server"></asp:Label>
                                                                     </ItemTemplate>
 							                                    </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Issue" ItemStyle-Width="10%">
+                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Issue %>" ItemStyle-Width="10%">
 							                                        <ItemTemplate>
                                                                         <asp:HiddenField id="hfIssueID" runat="server" Value='<%#Eval("QIO_ID") %>'></asp:HiddenField>
                                                                         <asp:LinkButton ID="lnkViewIssue_out" runat="server" CommandArgument='<%#Eval("QIO_ID") %>'
@@ -34,7 +34,7 @@
                                                                     </ItemTemplate>
 							                                    </asp:TemplateField>
                                                                 <asp:BoundField DataField="PROBLEM_TYPE" HeaderText="Problem Type" ItemStyle-Width="15%" />
-                                                                <asp:TemplateField  HeaderText="Disposition" ItemStyle-Width="15%">
+                                                                <asp:TemplateField  HeaderText="<%$ Resources:LocalizedText, Disposition %>" ItemStyle-Width="15%">
                                                                     <ItemTemplate>
 								                                        <asp:Label ID="lblDisposition_out" runat="server" text='<%#Eval("DISPOSITION") %>'></asp:Label>
                                                                     </ItemTemplate>

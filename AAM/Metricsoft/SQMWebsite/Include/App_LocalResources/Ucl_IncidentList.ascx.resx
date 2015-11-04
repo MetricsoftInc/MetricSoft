@@ -174,9 +174,6 @@
   <data name="imgCaseStatusResource1.ToolTip" xml:space="preserve">
     <value>Case is inactive</value>
   </data>
-  <data name="imgRespLocationResource1.ToolTip" xml:space="preserve">
-    <value>supplier location</value>
-  </data>
   <data name="imgStatusResource1.ToolTip" xml:space="preserve">
     <value>Case is inactive</value>
   </data>
@@ -220,32 +217,17 @@
   <data name="lbEditReportResource2.ToolTip" xml:space="preserve">
     <value>Edit Response</value>
   </data>
-  <data name="lbIncidentIdResource1.ToolTip" xml:space="preserve">
-    <value>Edit issue</value>
-  </data>
-  <data name="lbIncidentIdResource2.ToolTip" xml:space="preserve">
-    <value>Edit incident</value>
-  </data>
   <data name="lbIncidentIdResource3.ToolTip" xml:space="preserve">
     <value>Edit Recommendation</value>
   </data>
-  <data name="lbIncidentIdResource4.ToolTip" xml:space="preserve">
-    <value>Edit incident</value>
-  </data>
   <data name="lblCaseIDResource2.Text" xml:space="preserve">
     <value>Problem Case ID</value>
-  </data>
-  <data name="lblCaseTypeResource1.Text" xml:space="preserve">
-    <value>Case Type</value>
   </data>
   <data name="lblCreateDateResource1.Text" xml:space="preserve">
     <value>Created</value>
   </data>
   <data name="lblIncidentListEmptyResource1.Text" xml:space="preserve">
     <value>No Incidents exist matching your search criteria.</value>
-  </data>
-  <data name="lblIssueDescriptionResource1.Text" xml:space="preserve">
-    <value>Issue</value>
   </data>
   <data name="lblIssueListEmptyResource1.Text" xml:space="preserve">
     <value>No Quality Issues matching your search criteria.</value>
@@ -268,12 +250,6 @@
   </data>
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
-  </data>
-  <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
-    <value>Disposition</value>
   </data>
   <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
