@@ -212,7 +212,7 @@ namespace SQM.Website
 
             try
             {
-                using (StreamReader sr = new StreamReader(this.FileStream))
+                using (StreamReader sr = new StreamReader(this.FileStream, Encoding.Default, true))
                 {
                     string line;
                     int lineNo = 0;
@@ -242,6 +242,18 @@ namespace SQM.Website
 						ACTIVE_CUSTOMER activeCustomer = null; // AW20140414 - for Varroc - only load 
                         lastLineNo =  (++lineNo);
                         lastLine = line;
+
+						/*
+						byte b = Convert.ToByte('ñ');
+						decimal d = 'ñ';
+						int a = (int)'ñ';
+
+						Encoding utf8 = Encoding.UTF8;
+						byte[] utfBytes = utf8.GetBytes(line);
+						string utfLine = System.Text.Encoding.GetEncoding("Windows-1252").GetString(utfBytes);
+						string[] fldArray = utfLine.Split(this.Delimiter);
+						*/
+
                         string[] fldArray = line.Split(this.Delimiter);
                         if (fldArray.Length < 2)
                             break;
