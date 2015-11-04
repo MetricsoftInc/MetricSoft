@@ -390,7 +390,14 @@ namespace SQM.Website
             person.LAST_NAME = string.IsNullOrEmpty(tbUserLastName.Text) ? "" : tbUserLastName.Text;
 			person.MIDDLE_NAME = string.IsNullOrEmpty(tbUserMiddleName.Text) ? "" : tbUserMiddleName.Text;
 			person.JOBCODE_CD = ddlJobCode.SelectedValue;
-			person.PRIV_GROUP = ddlPrivGroup.SelectedValue;
+			if (string.IsNullOrEmpty(ddlPrivGroup.SelectedValue))
+			{
+				person.PRIV_GROUP = null;
+			}
+			else
+			{
+				person.PRIV_GROUP = ddlPrivGroup.SelectedValue;
+			}
             person.PHONE = tbUserPhone.Text;
             person.EMAIL = tbUserEmail.Text;
 			person.EMP_ID = tbEmpID.Text;
@@ -438,7 +445,7 @@ namespace SQM.Website
             SetLocalPerson(person);
 
             if (string.IsNullOrEmpty(tbUserSSOID.Text) || string.IsNullOrEmpty(tbUserFirstName.Text) || string.IsNullOrEmpty(tbUserLastName.Text)
-                    || string.IsNullOrEmpty(tbUserEmail.Text) || ddlJobCode.SelectedIndex < 0 || string.IsNullOrEmpty(ddlHRLocation.SelectedValue)
+                    || ddlJobCode.SelectedIndex < 0 || string.IsNullOrEmpty(ddlHRLocation.SelectedValue)
                     || string.IsNullOrEmpty(ddlHRLocation.SelectedValue))
             {
                 lblErrorMessage = lblErrRequiredInputs;

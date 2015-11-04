@@ -189,7 +189,7 @@
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblUserEmail" runat="server" text="Email" ></asp:Label>
                                                             </td>
-                                                            <td class="required">&nbsp;</td>
+                                                            <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
                                                                 <asp:TextBox ID="tbUserEmail" size="50" maxlength="100" runat="server"></asp:TextBox>
                                                             </td>
