@@ -21,13 +21,11 @@ namespace SQM.Website.EHS
 		public PERSON involvedPerson;
 		public PERSON supervisorPerson;
 		public string incidentDescription;
-		public List<string> incidentRootCause;
-		public List<string> incidentContainment;
-		public List<string> incidentCorrectiveActions;
 
 		public List<byte[]> photoData;
 		public List<string> photoCaptions;
 
+		public INCIDENT incident;
 		public List<INCIDENT_ANSWER> answerList;
 		public List<INCFORM_CONTAIN> containList;
 		public List<INCFORM_ROOT5Y> root5YList;
@@ -45,9 +43,7 @@ namespace SQM.Website.EHS
 			detectPerson = null;
 			involvedPerson = null;
 			supervisorPerson = null;
-			incidentRootCause = new List<string> { "N/A" };
-			incidentContainment = new List<string> { "N/A" };
-			incidentCorrectiveActions = new List<string> { "N/A" };
+			incident = null;
 			answerList = new List<INCIDENT_ANSWER>();
 			containList = new List<INCFORM_CONTAIN>();
 			root5YList = new List<INCFORM_ROOT5Y>();
@@ -125,7 +121,7 @@ namespace SQM.Website.EHS
 
 		private byte[] BuildPdf()
 		{
-			reportXLAT = SQMBasePage.SelectXLATList(new string[2] { "HS_5PHASE", "SHIFT" });
+			reportXLAT = SQMBasePage.SelectXLATList(new string[3] { "HS_5PHASE", "TRUEFALSE", "SHIFT" });
 
 			AlertData pageData;
 			
@@ -352,6 +348,28 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(pageData.incidentDescription, detailTxtFont));
 			tableIncident.AddCell(cell);
 
+			if (pageData.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness  &&  pageData.incident.INCFORM_INJURYILLNESS != null)
+			{
+				string val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.ERGONOMIC_CONCERN == true ? "1" : "0").DESCRIPTION_SHORT;
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				cell.AddElement(new Paragraph(string.Format("Ergonomic Conserns" + " ? {0}", val), labelTxtFont));
+				tableIncident.AddCell(cell);
+
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.STD_PROCS_FOLLOWED == true ? "1" : "0").DESCRIPTION_SHORT;
+				cell.AddElement(new Paragraph(string.Format("Standardized Worke Procedure Followed" + " ? {0}", val), labelTxtFont));
+				tableIncident.AddCell(cell);
+
+				val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.TRAINING_PROVIDED == true ? "1" : "0").DESCRIPTION_SHORT;
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				cell.AddElement(new Paragraph(string.Format("Was training for this task provided" + " ? {0}", val), labelTxtFont));
+				tableIncident.AddCell(cell);
+
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", pageData.incident.INCFORM_INJURYILLNESS.YEARS_DOING_JOB.ToString()), labelTxtFont));
+				tableIncident.AddCell(cell);
+			}
+
 			return tableIncident;
 		}
 
@@ -419,10 +437,6 @@ namespace SQM.Website.EHS
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.AddElement(new Paragraph(pageData.incidentDescription.Substring(0, Math.Min(120,pageData.incidentDescription.Length)), detailTxtItalicFont));
 			tableCause.AddCell(cell);
-
-			//cell = new PdfPCell() { Padding = 1f, PaddingTop = 4f, Border = 0 };
-			//cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT, colHdrFont));
-			//tableCause.AddCell(cell);
 
 			foreach (var rc in pageData.root5YList)
 			{
@@ -534,26 +548,26 @@ namespace SQM.Website.EHS
 			AlertData d = new AlertData();
 			var entities = new PSsqmEntities();
 
-			var incident = EHSIncidentMgr.SelectIncidentById(entities, iid);
+			d.incident = EHSIncidentMgr.SelectIncidentById(entities, iid);
 
-			if (incident != null)
+			if (d.incident != null)
 			{
-				string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)incident.DETECT_PLANT_ID);
+				string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
 				d.incidentLocation = plantName;
 				d.incidentNumber = iid.ToString();
 
 				string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
 				decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);
-				decimal companyId = incident.DETECT_COMPANY_ID;
+				decimal companyId = d.incident.DETECT_COMPANY_ID;
 				var questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 0);
 				questions.AddRange(EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 1));
 
-				d.answerList = EHSIncidentMgr.GetIncidentAnswerList(incident.INCIDENT_ID);
+				d.answerList = EHSIncidentMgr.GetIncidentAnswerList(d.incident.INCIDENT_ID);
 				INCIDENT_ANSWER answer = null;
 
 				// Date/Time
 
-				d.incidentDate = incident.INCIDENT_DT.ToShortDateString();
+				d.incidentDate = d.incident.INCIDENT_DT.ToShortDateString();
 				if ((answer = d.answerList.Where(a=> a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.TimeOfDay).SingleOrDefault()) != null)
 				{
 					if (!string.IsNullOrEmpty(answer.ANSWER_VALUE))
@@ -571,14 +585,14 @@ namespace SQM.Website.EHS
 
 				// Description
 
-				d.incidentDescription = incident.DESCRIPTION;
+				d.incidentDescription = d.incident.DESCRIPTION;
 
-				d.detectPerson = SQMModelMgr.LookupPerson(entities, (decimal)incident.CREATE_PERSON, "", false);
+				d.detectPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.CREATE_PERSON, "", false);
 				if (d.detectPerson != null)
 				{
 					d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.detectPerson.SUPV_EMP_ID);
 				}
-				if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
+				if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 				{
 					answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault();
 					answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
@@ -592,17 +606,15 @@ namespace SQM.Website.EHS
 					}
 					else
 					{
-						d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
+						d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
 						if (d.involvedPerson != null)
 							d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
 					}
 				}
 
 				// Containment
-				d.incidentContainment = new List<string>();
 				foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid))
 				{
-					d.incidentContainment.Add(cc.ITEM_DESCRIPTION);
 					if (cc.ASSIGNED_PERSON_ID.HasValue)
 					{
 						cc.ASSIGNED_PERSON = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)cc.ASSIGNED_PERSON_ID, ""));
@@ -614,10 +626,8 @@ namespace SQM.Website.EHS
 				d.root5YList = EHSIncidentMgr.GetRootCauseList(iid).Where(l=> !string.IsNullOrEmpty(l.ITEM_DESCRIPTION)).ToList();
 
 				// Corrective Actions
-				d.incidentCorrectiveActions = new List<string>();
 				foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid))
 				{
-					d.incidentCorrectiveActions.Add(ac.DESCRIPTION);
 					if (ac.RESPONSIBLE_ID.HasValue)
 					{
 						ac.COMMENTS = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)ac.RESPONSIBLE_ID, ""));

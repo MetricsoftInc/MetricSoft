@@ -199,7 +199,10 @@
 					<asp:Label ID="lbIncidentTimeXS" runat="server" Text="<%$ Resources:LocalizedText, TimeOfIncident %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadTimePicker ID="rtpIncidentTime" Skin="Metro" CssClass="WarnIfChanged" Width="278px" runat="server" ShowPopupOnFocus="True">
+				<telerik:RadTimePicker ID="rtpIncidentTime" runat="server"  ZIndex="9000" PopupDirection="BottomRight" Skin="Metro" ShowPopupOnFocus="true">
+					<TimeView Interval="00:30:00"></TimeView> 
+				</telerik:RadTimePicker>
+<%--				<telerik:RadTimePicker ID="rtpIncidentTime" Skin="Metro" CssClass="WarnIfChanged" Width="278px" runat="server" ShowPopupOnFocus="True">
 					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
 					<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
@@ -221,7 +224,7 @@
 						<HoveredStyle Resize="None" />
 						<EnabledStyle Resize="None" />
 					</DateInput>
-				</telerik:RadTimePicker>
+				</telerik:RadTimePicker>--%>
 				<asp:RequiredFieldValidator runat="server" ID="rfvIncidentTime" ControlToValidate="rtpIncidentTime" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>

@@ -1479,6 +1479,7 @@ namespace SQM.Website
 			newInjryIllnessDetails.SHIFT = selectedShift;
 			newInjryIllnessDetails.INCIDENT_TIME = incidentTime;
 			newInjryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
+			newInjryIllnessDetails.INCIDENT_TIME = rtpIncidentTime.SelectedTime;
 
 			if (!string.IsNullOrEmpty(rddlDeptTest.SelectedValue))
 			{
@@ -1669,6 +1670,7 @@ namespace SQM.Website
 				injuryIllnessDetails.SHIFT = selectedShift;
 				injuryIllnessDetails.INCIDENT_TIME = incidentTime;
 				injuryIllnessDetails.DESCRIPTION_LOCAL = localDescription;
+				injuryIllnessDetails.INCIDENT_TIME = rtpIncidentTime.SelectedTime;
 
 				if (!string.IsNullOrEmpty(rddlDeptTest.SelectedValue))
 				{

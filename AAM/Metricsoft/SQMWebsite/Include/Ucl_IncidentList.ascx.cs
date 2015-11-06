@@ -718,7 +718,14 @@ namespace SQM.Website
 					}
 
 					lbl = (Label)e.Item.FindControl("lblIncStatus");
-					lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					if (data.Incident.INCFORM_LAST_STEP_COMPLETED <= 0)
+					{
+						lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == "100").FirstOrDefault().DESCRIPTION_SHORT;
+					}
+					else
+					{
+						lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					}
 					if (data.Status == "C")
 						lbl.Text += ("<br/>" + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "  (" + data.DaysToClose.ToString() + ")");
 					else

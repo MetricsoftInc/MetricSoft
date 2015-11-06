@@ -2007,7 +2007,8 @@ namespace SQM.Website
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				INCIDENT_DT = incidentDate,
 				ISSUE_TYPE = SelectedTypeText,
-				ISSUE_TYPE_ID = SelectedTypeId
+				ISSUE_TYPE_ID = SelectedTypeId,
+				INCFORM_LAST_STEP_COMPLETED = 100
 			};
 			entities.AddToINCIDENT(newIncident);
 			entities.SaveChanges();
@@ -2033,6 +2034,8 @@ namespace SQM.Website
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_DT = DateTime.Now;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+				if (incident.INCFORM_LAST_STEP_COMPLETED < 100)
+					incident.INCFORM_LAST_STEP_COMPLETED = 100;
 
 				entities.SaveChanges();
 			}
