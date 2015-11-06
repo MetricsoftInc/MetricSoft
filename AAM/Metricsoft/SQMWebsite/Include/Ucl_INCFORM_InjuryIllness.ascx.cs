@@ -1786,14 +1786,21 @@ namespace SQM.Website
 					ia = new INCIDENT_ANSWER();
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Recordable);
-					ia.ANSWER_VALUE = injuryIllnessDetail.RECORDABLE.ToString();
+					ia.ANSWER_VALUE = injuryIllnessDetail.RECORDABLE == true ? "Yes" : "No";
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.LostTimeCase);
+					ia.ANSWER_VALUE = injuryIllnessDetail.LOST_TIME == true ? "Yes" : "No";
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 
 					ia = new INCIDENT_ANSWER();
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Fatality);
-					ia.ANSWER_VALUE = injuryIllnessDetail.FATALITY.ToString();
+					ia.ANSWER_VALUE = injuryIllnessDetail.FATALITY == true ? "Yes" : "No";
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 

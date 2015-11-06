@@ -2293,6 +2293,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PLANT_ACTIVE> _PLANT_ACTIVE;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EHS_TARGETS> EHS_TARGETS
+        {
+            get
+            {
+                if ((_EHS_TARGETS == null))
+                {
+                    _EHS_TARGETS = base.CreateObjectSet<EHS_TARGETS>("EHS_TARGETS");
+                }
+                return _EHS_TARGETS;
+            }
+        }
+        private ObjectSet<EHS_TARGETS> _EHS_TARGETS;
 
         #endregion
 
@@ -3336,6 +3352,14 @@ namespace SQM.Website
         public void AddToPLANT_ACTIVE(PLANT_ACTIVE pLANT_ACTIVE)
         {
             base.AddObject("PLANT_ACTIVE", pLANT_ACTIVE);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_TARGETS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_TARGETS(EHS_TARGETS eHS_TARGETS)
+        {
+            base.AddObject("EHS_TARGETS", eHS_TARGETS);
         }
 
         #endregion
@@ -19808,6 +19832,211 @@ namespace SQM.Website
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="EHS_TARGETS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EHS_TARGETS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EHS_TARGETS object.
+        /// </summary>
+        /// <param name="tARGET_ID">Initial value of the TARGET_ID property.</param>
+        /// <param name="tYPE">Initial value of the TYPE property.</param>
+        /// <param name="eff_YEAR">Initial value of the Eff_YEAR property.</param>
+        public static EHS_TARGETS CreateEHS_TARGETS(global::System.Decimal tARGET_ID, global::System.Decimal tYPE, global::System.Int32 eff_YEAR)
+        {
+            EHS_TARGETS eHS_TARGETS = new EHS_TARGETS();
+            eHS_TARGETS.TARGET_ID = tARGET_ID;
+            eHS_TARGETS.TYPE = tYPE;
+            eHS_TARGETS.Eff_YEAR = eff_YEAR;
+            return eHS_TARGETS;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TARGET_ID
+        {
+            get
+            {
+                return _TARGET_ID;
+            }
+            set
+            {
+                if (_TARGET_ID != value)
+                {
+                    OnTARGET_IDChanging(value);
+                    ReportPropertyChanging("TARGET_ID");
+                    _TARGET_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_ID");
+                    OnTARGET_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _TARGET_ID;
+        partial void OnTARGET_IDChanging(global::System.Decimal value);
+        partial void OnTARGET_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TYPE
+        {
+            get
+            {
+                return _TYPE;
+            }
+            set
+            {
+                OnTYPEChanging(value);
+                ReportPropertyChanging("TYPE");
+                _TYPE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TYPE");
+                OnTYPEChanged();
+            }
+        }
+        private global::System.Decimal _TYPE;
+        partial void OnTYPEChanging(global::System.Decimal value);
+        partial void OnTYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Eff_YEAR
+        {
+            get
+            {
+                return _Eff_YEAR;
+            }
+            set
+            {
+                OnEff_YEARChanging(value);
+                ReportPropertyChanging("Eff_YEAR");
+                _Eff_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Eff_YEAR");
+                OnEff_YEARChanged();
+            }
+        }
+        private global::System.Int32 _Eff_YEAR;
+        partial void OnEff_YEARChanging(global::System.Int32 value);
+        partial void OnEff_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> COMPANY_ID
+        {
+            get
+            {
+                return _COMPANY_ID;
+            }
+            set
+            {
+                OnCOMPANY_IDChanging(value);
+                ReportPropertyChanging("COMPANY_ID");
+                _COMPANY_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMPANY_ID");
+                OnCOMPANY_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _COMPANY_ID;
+        partial void OnCOMPANY_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnCOMPANY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> BUS_ORG_ID
+        {
+            get
+            {
+                return _BUS_ORG_ID;
+            }
+            set
+            {
+                OnBUS_ORG_IDChanging(value);
+                ReportPropertyChanging("BUS_ORG_ID");
+                _BUS_ORG_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BUS_ORG_ID");
+                OnBUS_ORG_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _BUS_ORG_ID;
+        partial void OnBUS_ORG_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnBUS_ORG_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PLANT_ID
+        {
+            get
+            {
+                return _PLANT_ID;
+            }
+            set
+            {
+                OnPLANT_IDChanging(value);
+                ReportPropertyChanging("PLANT_ID");
+                _PLANT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PLANT_ID");
+                OnPLANT_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _PLANT_ID;
+        partial void OnPLANT_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnPLANT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MIN_MAX
+        {
+            get
+            {
+                return _MIN_MAX;
+            }
+            set
+            {
+                OnMIN_MAXChanging(value);
+                ReportPropertyChanging("MIN_MAX");
+                _MIN_MAX = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MIN_MAX");
+                OnMIN_MAXChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MIN_MAX;
+        partial void OnMIN_MAXChanging(Nullable<global::System.Int32> value);
+        partial void OnMIN_MAXChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>

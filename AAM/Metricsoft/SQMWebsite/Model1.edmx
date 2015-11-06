@@ -52,6 +52,7 @@
           <EntitySet Name="EHS_PROFILE_INPUT" EntityType="PSsqmModel.Store.EHS_PROFILE_INPUT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EHS_PROFILE_MEASURE" EntityType="PSsqmModel.Store.EHS_PROFILE_MEASURE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="EHS_PROFILE_MEASURE_EXT" EntityType="PSsqmModel.Store.EHS_PROFILE_MEASURE_EXT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EHS_TARGETS" EntityType="PSsqmModel.Store.EHS_TARGETS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GHG_FACTOR" EntityType="PSsqmModel.Store.GHG_FACTOR" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GWP_FACTOR" EntityType="PSsqmModel.Store.GWP_FACTOR" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCFORM_ACTION" EntityType="PSsqmModel.Store.INCFORM_ACTION" store:Type="Tables" Schema="dbo" />
@@ -1398,6 +1399,18 @@
           <Property Name="OPTIONS" Type="varchar" MaxLength="20" />
           <Property Name="OVERRIDE_ALLOWED" Type="bit" />
           <Property Name="STATUS" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="EHS_TARGETS">
+          <Key>
+            <PropertyRef Name="TARGET_ID" />
+          </Key>
+          <Property Name="TARGET_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
+          <Property Name="TYPE" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="Eff_YEAR" Type="int" Nullable="false" />
+          <Property Name="COMPANY_ID" Type="numeric" Precision="35" />
+          <Property Name="BUS_ORG_ID" Type="numeric" Precision="35" />
+          <Property Name="PLANT_ID" Type="numeric" Precision="35" />
+          <Property Name="MIN_MAX" Type="int" />
         </EntityType>
         <EntityType Name="GHG_FACTOR">
           <Key>
@@ -5010,6 +5023,7 @@
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
+          <EntitySet Name="EHS_TARGETS" EntityType="PSsqmModel.EHS_TARGETS" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -9055,6 +9069,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EHS_TARGETS">
+          <Key>
+            <PropertyRef Name="TARGET_ID" />
+          </Key>
+          <Property Type="Decimal" Name="TARGET_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="TYPE" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="Eff_YEAR" Nullable="false" />
+          <Property Type="Decimal" Name="COMPANY_ID" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="BUS_ORG_ID" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="PLANT_ID" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="MIN_MAX" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11141,6 +11167,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EHS_TARGETS">
+            <EntityTypeMapping TypeName="PSsqmModel.EHS_TARGETS">
+              <MappingFragment StoreEntitySet="EHS_TARGETS">
+                <ScalarProperty Name="MIN_MAX" ColumnName="MIN_MAX" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
+                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
+                <ScalarProperty Name="Eff_YEAR" ColumnName="Eff_YEAR" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="TARGET_ID" ColumnName="TARGET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11438,6 +11477,7 @@
         <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="5.9547404525590784" PointY="14.232411257099551" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE" />
         <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
+        <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="9.6918749593626128" PointY="25.870328408605573" />
         </Diagram>
     </Diagrams>
   </Designer>
