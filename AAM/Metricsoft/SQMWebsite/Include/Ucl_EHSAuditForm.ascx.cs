@@ -2068,6 +2068,11 @@ namespace SQM.Website
 			}
 			else
 			{
+				EditAuditId = auditId;
+				SessionManager.ReturnRecordID = auditId;
+				CurrentStep = 0;
+				IsEditContext = true;
+				Visible = true;
 				// need to redraw the page with text boxes highlighted
 				BuildForm();
 				// and send a message that the field need to be entered
