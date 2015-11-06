@@ -40,15 +40,6 @@
 		<telerik:RadAjaxPanel ID="rapLostTime" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapLostTimeResource1">
 
 		<asp:Repeater runat="server" ID="rptLostTime" ClientIDMode="AutoID" OnItemDataBound="rptLostTime_OnItemDataBound"  OnItemCommand="rptLostTime_ItemCommand">
-
-			<FooterTemplate>
-				</table>
-				<div class="row">
-					<div class="col-xs-12 text-left-more">
-						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" ToolTip="<%$ Resources:LocalizedText, AddAnotherFinalCorrectiveAction %>" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother"></asp:Button>
-					</div>
-				</div>
-			</FooterTemplate>
 			<HeaderTemplate>
 				<table border="0" class="table">
 					<thead>
@@ -72,7 +63,6 @@
 							</th>
 						</tr>
 					</thead>
-				</table>
 			</HeaderTemplate>
 			<ItemTemplate>
 				<tbody>
@@ -145,6 +135,14 @@
 					</tr>
 				</tbody>
 			</ItemTemplate>
+			<FooterTemplate>
+				</table>
+				<div class="row">
+					<div class="col-xs-12 text-left-more">
+						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" ToolTip="<%$ Resources:LocalizedText, AddAnotherFinalCorrectiveAction %>" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother"></asp:Button>
+					</div>
+				</div>
+			</FooterTemplate>
 		</asp:Repeater>
 
 	</telerik:RadAjaxPanel>

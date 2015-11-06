@@ -584,9 +584,9 @@ namespace SQM.Website
 				else
 				{
 					bool roleChanged = person.ROLE != currentPerson.ROLE ||  person.PERSON_ACCESS.Count != currentPerson.PERSON_ACCESS.Count ? true : false;
+					/*
 					if (roleChanged)
 					{
-//						string strEmailBody = lblUserRoleEmailBodya.Text + strEmailCompanyName + lblUserRoleEmailBodyb.Text + "<br><br>" + lblUserRoleEmailBodyc.Text;
 						// ABW 20140805 - Build the email based on fields in the SETTINGS table
 						string strEmailSubject = "";
 						setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeSubject");
@@ -610,6 +610,7 @@ namespace SQM.Website
 						thread.IsBackground = true;
 						thread.Start();
 					}
+					*/
 					if (cbResetPassword.Checked)
 					{
 						// build the email body in 3 segments
