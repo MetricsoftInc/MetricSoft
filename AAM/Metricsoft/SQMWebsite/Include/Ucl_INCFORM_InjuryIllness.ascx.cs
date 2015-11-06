@@ -907,6 +907,7 @@ namespace SQM.Website
 			{
 				px = px + (attCnt * 30) + 35;
 				uploader.GetUploadedFiles(40, incidentId, "1");
+
 			}
 
 			// Set the html Div height based on number of attachments to be displayed in the grid:
@@ -1861,7 +1862,7 @@ namespace SQM.Website
 					);
 				SessionManager.DocumentContext.RecordType = 40;
 				SessionManager.DocumentContext.RecordID = incidentId;
-				SessionManager.DocumentContext.RecordStep = recordStep;
+				SessionManager.DocumentContext.RecordStep = "1";
 				uploader.SaveFiles();
 			}
 		}
