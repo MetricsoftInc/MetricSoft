@@ -1077,6 +1077,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1549,6 +1550,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1562,6 +1564,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -1817,6 +1820,10 @@
     <Content Include="images\fonts\Oswald-Regular.ttf" />
     <Content Include="images\fonts\Ubuntu-Regular.ttf" />
     <Content Include="Documents\GHGReferences.xlsx" />
+    <Content Include="images\fonts\Ubuntu-Light.ttf" />
+    <Content Include="images\fonts\Ubuntu-Bold.ttf" />
+    <Content Include="images\fonts\Ubuntu-LightItalic.ttf" />
+    <Content Include="images\fonts\OpenSans-Bold.ttf" />
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
@@ -1866,6 +1873,7 @@
     <Content Include="App_GlobalResources\LocalizedText.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>LocalizedText.es.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_LocalResources\Login.aspx.es.resx" />
     <Content Include="App_GlobalResources\RadAsyncUpload.es.resx">

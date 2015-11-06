@@ -199,7 +199,7 @@ namespace SQM.Website
 	{
 		public static INCIDENT SelectIncidentById(PSsqmEntities entities, decimal incidentId)
 		{
-			return (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
+			return (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 		}
 
 		public static INCIDENT_TYPE SelectIncidentType(decimal incidentTypeID)
@@ -861,6 +861,19 @@ namespace SQM.Website
 			}
 
 			return count;
+		}
+
+
+		public static List<INCIDENT_ANSWER> GetIncidentAnswerList(decimal incidentId)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+			List<INCIDENT_ANSWER> answerList = new List<INCIDENT_ANSWER>();
+
+			answerList = (from c in entities.INCIDENT_ANSWER 
+						  where c.INCIDENT_ID == incidentId
+						  select c).ToList();
+
+			return answerList;
 		}
 
 		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)

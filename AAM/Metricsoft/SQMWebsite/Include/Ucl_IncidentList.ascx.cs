@@ -661,8 +661,6 @@ namespace SQM.Website
 			if (IncidentXLATList == null  ||  IncidentXLATList.Count == 0)
 				IncidentXLATList = SQMBasePage.SelectXLATList(new string[3] { "STATUS", "INCIDENT_STATUS", "WORK_STATUS" });
 
-			rgIncidentList.MasterTableView.GetColumn("ViewReports").Display = showReports;
-
 			if (showImages)
 				rgIncidentList.MasterTableView.GetColumn("Attach").Visible = true;
 			else
@@ -731,6 +729,9 @@ namespace SQM.Website
 						LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
 						lbEditReport.Visible = false;
 					}
+
+					HyperLink hlEHSReport = (HyperLink)e.Item.FindControl("hlReport");
+					hlEHSReport.NavigateUrl = "/EHS/EHS_Alert_PDF.aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 
 					if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
 					{

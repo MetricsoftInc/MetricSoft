@@ -1486,6 +1486,8 @@ namespace SQM.Website
 				newInjryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
 			}
 
+			newInjryIllnessDetails.SHIFT = rddlShiftID.SelectedValue;
+
 			involvedPersonId = SelectInvolvedPersonId;
 			if (involvedPersonId != null && involvedPersonId != 0)
 			{
@@ -1674,6 +1676,8 @@ namespace SQM.Website
 					injuryIllnessDetails.DEPARTMENT = rddlDeptTest.SelectedText;
 				}
 
+				injuryIllnessDetails.SHIFT = rddlShiftID.SelectedValue;
+
 				if (!String.IsNullOrEmpty(tbInvPersonStatement.Text))
 					injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
@@ -1757,6 +1761,8 @@ namespace SQM.Website
 			{
 				try
 				{
+					entities.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID = {0}", incidentId);
+
 					List<decimal> iqList = (from q in entities.INCIDENT_TYPE_COMPANY_QUESTION where q.INCIDENT_TYPE_ID == (int)EHSIncidentTypeId.InjuryIllness select q.INCIDENT_QUESTION_ID).ToList();
 					List<INCIDENT_QUESTION> qList = (from q in entities.INCIDENT_QUESTION where iqList.Contains(q.INCIDENT_QUESTION_ID) select q).ToList();
 
@@ -1815,6 +1821,22 @@ namespace SQM.Website
 					ia.ANSWER_VALUE = injuryIllnessDetail.JOB_TENURE;
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.InvolvedPerson);
+					ia.ANSWER_VALUE = injuryIllnessDetail.INVOLVED_PERSON_ID.ToString();
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Shift);
+					ia.ANSWER_VALUE = injuryIllnessDetail.SHIFT;
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					status = entities.SaveChanges();
 				}
 				catch
 				{
