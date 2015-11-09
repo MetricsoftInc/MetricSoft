@@ -585,116 +585,121 @@ namespace SQM.Website.EHS
 
 			if (d.incident != null)
 			{
-				string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
-				d.incidentLocation = plantName;
-				d.incidentNumber = iid.ToString();
-
-				string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
-				decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);
-				decimal companyId = d.incident.DETECT_COMPANY_ID;
-				var questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 0);
-				questions.AddRange(EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 1));
-
-				d.answerList = EHSIncidentMgr.GetIncidentAnswerList(d.incident.INCIDENT_ID);
-				INCIDENT_ANSWER answer = null;
-
-				// Date/Time
-
-				d.incidentDate = d.incident.INCIDENT_DT.ToShortDateString();
-				if ((answer = d.answerList.Where(a=> a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.TimeOfDay).SingleOrDefault()) != null)
+				try
 				{
-					if (!string.IsNullOrEmpty(answer.ANSWER_VALUE))
-						d.incidentTime = Convert.ToDateTime(answer.ANSWER_VALUE).ToShortTimeString();
-				}
+					string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
+					d.incidentLocation = plantName;
+					d.incidentNumber = iid.ToString();
 
-				if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Department).SingleOrDefault()) != null)
-				{
-					d.incidentDept = answer.ANSWER_VALUE;
-				}
+					string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
+					decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);
+					decimal companyId = d.incident.DETECT_COMPANY_ID;
+					var questions = EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 0);
+					questions.AddRange(EHSIncidentMgr.SelectIncidentQuestionList(incidentTypeId, companyId, 1));
 
-				// Incident Type
+					d.answerList = EHSIncidentMgr.GetIncidentAnswerList(d.incident.INCIDENT_ID);
+					INCIDENT_ANSWER answer = null;
 
-				d.incidentType = incidentType;
+					// Date/Time
 
-				// Description
-
-				d.incidentDescription = d.incident.DESCRIPTION;
-
-				d.detectPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.CREATE_PERSON, "", false);
-				if (d.detectPerson != null)
-				{
-					d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.detectPerson.SUPV_EMP_ID);
-				}
-				if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
-				{
-					answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault();
-					if (answer != null)
-						answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
-
-					answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.InvolvedPerson).SingleOrDefault();
-					if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+					d.incidentDate = d.incident.INCIDENT_DT.ToShortDateString();
+					if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.TimeOfDay).SingleOrDefault()) != null)
 					{
-						d.involvedPerson = SQMModelMgr.LookupPerson(entities, Convert.ToDecimal(answer.ANSWER_VALUE), "", false);
-						if (d.involvedPerson != null)
-							d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+						if (!string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							d.incidentTime = Convert.ToDateTime(answer.ANSWER_VALUE).ToShortTimeString();
 					}
-					else
+
+					if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Department).SingleOrDefault()) != null)
 					{
-						d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
-						if (d.involvedPerson != null)
-							d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+						d.incidentDept = answer.ANSWER_VALUE;
+					}
+
+					// Incident Type
+
+					d.incidentType = incidentType;
+
+					// Description
+
+					d.incidentDescription = d.incident.DESCRIPTION;
+
+					d.detectPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.CREATE_PERSON, "", false);
+					if (d.detectPerson != null)
+					{
+						d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.detectPerson.SUPV_EMP_ID);
+					}
+					if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
+					{
+						if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
+							answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+
+						answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.InvolvedPerson).SingleOrDefault();
+						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						{
+							d.involvedPerson = SQMModelMgr.LookupPerson(entities, Convert.ToDecimal(answer.ANSWER_VALUE), "", false);
+							if (d.involvedPerson != null)
+								d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+						}
+						else
+						{
+							d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
+							if (d.involvedPerson != null)
+								d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+						}
+					}
+
+					// Containment
+					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid))
+					{
+						if (cc.ASSIGNED_PERSON_ID.HasValue)
+						{
+							cc.ASSIGNED_PERSON = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)cc.ASSIGNED_PERSON_ID, ""));
+						}
+						d.containList.Add(cc);
+					}
+
+					// Root Cause(s)
+					d.root5YList = EHSIncidentMgr.GetRootCauseList(iid).Where(l => !string.IsNullOrEmpty(l.ITEM_DESCRIPTION)).ToList();
+
+					// Corrective Actions
+					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid))
+					{
+						if (ac.RESPONSIBLE_ID.HasValue)
+						{
+							ac.COMMENTS = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)ac.RESPONSIBLE_ID, ""));
+						}
+						d.actionList.Add(ac);
+					}
+
+					var files = (from a in entities.ATTACHMENT
+								 where
+									(a.RECORD_ID == iid && a.RECORD_TYPE == 40 && a.DISPLAY_TYPE > 0) &&
+									(a.FILE_NAME.ToLower().Contains(".jpg") || a.FILE_NAME.ToLower().Contains(".jpeg") ||
+									a.FILE_NAME.ToLower().Contains(".gif") || a.FILE_NAME.ToLower().Contains(".png") ||
+									a.FILE_NAME.ToLower().Contains(".bmp"))
+								 orderby a.RECORD_TYPE, a.FILE_NAME
+								 select new
+								 {
+									 Data = (from f in entities.ATTACHMENT_FILE where f.ATTACHMENT_ID == a.ATTACHMENT_ID select f.ATTACHMENT_DATA).FirstOrDefault(),
+									 Description = (string.IsNullOrEmpty(a.FILE_DESC)) ? "" : a.FILE_DESC,
+								 }).ToList();
+
+
+					d.approvalList = EHSIncidentMgr.GetApprovalList(iid);
+
+					if (files.Count > 0)
+					{
+						d.photoData = new List<byte[]>();
+						d.photoCaptions = new List<string>();
+
+						foreach (var f in files)
+						{
+							d.photoData.Add(f.Data);
+							d.photoCaptions.Add(f.Description);
+						}
 					}
 				}
-
-				// Containment
-				foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid))
+				catch
 				{
-					if (cc.ASSIGNED_PERSON_ID.HasValue)
-					{
-						cc.ASSIGNED_PERSON = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)cc.ASSIGNED_PERSON_ID, ""));
-					}
-					d.containList.Add(cc);
-				}
-
-				// Root Cause(s)
-				d.root5YList = EHSIncidentMgr.GetRootCauseList(iid).Where(l=> !string.IsNullOrEmpty(l.ITEM_DESCRIPTION)).ToList();
-
-				// Corrective Actions
-				foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid))
-				{
-					if (ac.RESPONSIBLE_ID.HasValue)
-					{
-						ac.COMMENTS = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)ac.RESPONSIBLE_ID, ""));
-					}
-					d.actionList.Add(ac);
-				}
-
-				var files = (from a in entities.ATTACHMENT
-							 where
-								(a.RECORD_ID == iid && a.RECORD_TYPE == 40 && a.DISPLAY_TYPE > 0) &&
-								(a.FILE_NAME.ToLower().Contains(".jpg") || a.FILE_NAME.ToLower().Contains(".jpeg") ||
-								a.FILE_NAME.ToLower().Contains(".gif") || a.FILE_NAME.ToLower().Contains(".png") ||
-								a.FILE_NAME.ToLower().Contains(".bmp"))
-							 orderby a.RECORD_TYPE, a.FILE_NAME
-							 select new
-							 {
-								 Data = (from f in entities.ATTACHMENT_FILE where f.ATTACHMENT_ID == a.ATTACHMENT_ID select f.ATTACHMENT_DATA).FirstOrDefault(),
-								 Description = (string.IsNullOrEmpty(a.FILE_DESC)) ? "" : a.FILE_DESC,
-							 }).ToList();
-
-
-				d.approvalList = EHSIncidentMgr.GetApprovalList(iid);
-
-				if (files.Count > 0)
-				{
-					d.photoData = new List<byte[]>();
-					d.photoCaptions = new List<string>();
-
-					foreach (var f in files)
-					{
-						d.photoData.Add(f.Data);
-						d.photoCaptions.Add(f.Description);
-					}
 				}
 			}
 
