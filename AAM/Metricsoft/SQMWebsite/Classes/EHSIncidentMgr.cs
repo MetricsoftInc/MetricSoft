@@ -361,7 +361,7 @@ namespace SQM.Website
 			return preventativeTypeList;
 		}
 
-		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded)
+		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted)
 		{
 			bool canUpdate = false;
 
@@ -371,6 +371,11 @@ namespace SQM.Website
 				{
 					canUpdate = true;
 				}
+
+				if (stepCompleted == (int)IncidentStepStatus.signoff2)  // incident is closed
+				{
+					canUpdate = false;
+				}
 			}
 			else  // assume edit context will be false for new incidents an any user can create/save a new incident
 			{
@@ -378,6 +383,22 @@ namespace SQM.Website
 			}
 
 			return canUpdate;
+		}
+
+
+		public static bool CanDeleteIncident(decimal createPersonID, int stepCompleted)
+		{
+			bool canDelete = false;
+
+			if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
+				UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.incident) ||
+				UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident) ||
+				SessionManager.UserContext.Person.PERSON_ID == createPersonID)
+			{
+				canDelete = true;
+			}
+
+			return canDelete;
 		}
 
 

@@ -116,7 +116,11 @@ namespace SQM.Website
 			get { return ViewState["SelectedLocationId"] == null ? 0 : (decimal)ViewState["SelectedLocationId"]; }
 			set { ViewState["SelectedLocationId"] = value; }
 		}
-
+		protected int IncidentStepCompleted
+		{
+			get { return ViewState["IncidentStepCompleted"] == null ? 0 : (int)ViewState["IncidentStepCompleted"]; }
+			set { ViewState["IncidentStepCompleted"] = value; }
+		}
 		protected decimal CreatePersonId
 		{
 			get { return ViewState["CreatePersonId"] == null ? 0 : (decimal)ViewState["CreatePersonId"]; }
@@ -214,6 +218,7 @@ namespace SQM.Website
 				SelectedTypeText = incident.ISSUE_TYPE;
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
 				incidentDate = incident.INCIDENT_DT;
+				IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
 			}
 
 			pnlForm.Controls.Clear();
@@ -221,7 +226,7 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
-			pnlForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action);
+			pnlForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -538,7 +543,10 @@ namespace SQM.Website
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
+						{
 							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
+						}
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
@@ -1044,7 +1052,10 @@ namespace SQM.Website
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
+						{
 							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
+						}
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
@@ -1652,6 +1663,7 @@ namespace SQM.Website
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
+				IncidentStepCompleted = 0;
 				IsEditContext = false;
 				BuildForm();
 			}
@@ -1661,6 +1673,7 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
+			IncidentStepCompleted = 0;
 			BuildForm();
 		}
 
@@ -2150,12 +2163,8 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				// only Admin, Approvers or incident owner can delete
-				if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
-					UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.incident) ||
-					UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident) ||
-					SessionManager.UserContext.Person.PERSON_ID == CreatePersonId)
-					btnDelete.Visible = true;
+				btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 			}
 		}
 
@@ -2225,7 +2234,7 @@ namespace SQM.Website
 					uclContainment.IsEditContext = true;
 					uclContainment.EditIncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "3":
 					lblPageTitle.Text = Resources.LocalizedText.RootCause;
@@ -2235,7 +2244,7 @@ namespace SQM.Website
 					uclRootCause.IsEditContext = true;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "4":
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
@@ -2245,7 +2254,7 @@ namespace SQM.Website
 					uclAction.IsEditContext = true;
 					uclAction.EditIncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action);
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "5":
 					lblPageTitle.Text = Resources.LocalizedText.Approvals;
@@ -2255,8 +2264,8 @@ namespace SQM.Website
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
 					uclApproval.PopulateInitialForm();
-					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1)) == false)
-						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2);
+					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
+						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
 					break;
 				case "0":
 				default:
@@ -2269,6 +2278,7 @@ namespace SQM.Website
 						pnlForm.Visible = true;
 						BuildForm();
 					}
+					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 					break;
 			}
 
