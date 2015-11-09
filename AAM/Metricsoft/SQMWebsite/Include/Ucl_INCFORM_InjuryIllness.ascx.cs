@@ -420,7 +420,7 @@ namespace SQM.Website
 
 			RefreshPageContext();
 
-			pnlBaseForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate,  IncidentStepCompleted);
+			pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
 		}
 
 
@@ -1119,7 +1119,7 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				uploader.SetViewMode(btnSubnavSave.Enabled);
 				EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 			}
@@ -1210,7 +1210,7 @@ namespace SQM.Website
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
 					InitializeForm(CurrentStep);
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "3":
 					lblFormTitle.Text = Resources.LocalizedText.RootCause;
@@ -1218,7 +1218,7 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
 					InitializeForm(CurrentStep);
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "4":
 					lblFormTitle.Text = Resources.LocalizedText.CorrectiveAction;
@@ -1226,7 +1226,7 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
 					InitializeForm(CurrentStep);
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "5":
 					lblFormTitle.Text = Resources.LocalizedText.Approvals;
@@ -1234,8 +1234,8 @@ namespace SQM.Website
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
 					InitializeForm(CurrentStep);
-					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
+						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
 					break;
 				case "6":
 					lblFormTitle.Text = "Lost Time History";
@@ -1243,7 +1243,7 @@ namespace SQM.Website
 					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
 					InitializeForm(CurrentStep);
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "0":
 				default:
@@ -1255,7 +1255,7 @@ namespace SQM.Website
 					if (pnlBaseForm.Visible == false)
 						pnlBaseForm.Visible = true;
 					PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 					uploader.SetViewMode(btnSubnavSave.Enabled);
 					break;
 			}

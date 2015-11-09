@@ -226,7 +226,7 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
-			pnlForm.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+			pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -2163,7 +2163,7 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 			}
 		}
@@ -2234,7 +2234,7 @@ namespace SQM.Website
 					uclContainment.IsEditContext = true;
 					uclContainment.EditIncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "3":
 					lblPageTitle.Text = Resources.LocalizedText.RootCause;
@@ -2244,7 +2244,7 @@ namespace SQM.Website
 					uclRootCause.IsEditContext = true;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "4":
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
@@ -2254,7 +2254,7 @@ namespace SQM.Website
 					uclAction.IsEditContext = true;
 					uclAction.EditIncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "5":
 					lblPageTitle.Text = Resources.LocalizedText.Approvals;
@@ -2264,8 +2264,8 @@ namespace SQM.Website
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
 					uclApproval.PopulateInitialForm();
-					if ((btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
+						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
 					break;
 				case "0":
 				default:
@@ -2278,7 +2278,7 @@ namespace SQM.Website
 						pnlForm.Visible = true;
 						BuildForm();
 					}
-					btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 					break;
 			}
 
