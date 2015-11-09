@@ -30,6 +30,7 @@ namespace SQM.Website.EHS
 		public List<INCFORM_CONTAIN> containList;
 		public List<INCFORM_ROOT5Y> root5YList;
 		public List<TASK_STATUS> actionList;
+		public List<INCFORM_APPROVAL> approvalList;
 
 		public AlertData()
 		{
@@ -48,6 +49,7 @@ namespace SQM.Website.EHS
 			containList = new List<INCFORM_CONTAIN>();
 			root5YList = new List<INCFORM_ROOT5Y>();
 			actionList = new List<TASK_STATUS>();
+			approvalList = new List<INCFORM_APPROVAL>();
 		}
 	}
 
@@ -503,6 +505,8 @@ namespace SQM.Website.EHS
 			tableReview.SpacingBefore = 15f;
 			PdfPCell cell;
 
+			INCFORM_APPROVAL reviewer = null;
+
 			cell = new PdfPCell() { Padding = 1f, PaddingBottom = 4f, Border = 0 };
 			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
@@ -518,27 +522,56 @@ namespace SQM.Website.EHS
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
 			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW_1").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph("joe safety", detailTxtFont));
-			tableReview.AddCell(cell);
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthTop = cell.BorderWidthLeft =  cell.BorderWidthRight = .25f;
-			cell.AddElement(new Paragraph(string.Format("Dated:  {0}", "1/1/2015"), detailTxtFont));
-			tableReview.AddCell(cell);
+
+			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve1).FirstOrDefault()) == null)
+			{
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
+				cell.AddElement(new Paragraph("", detailTxtFont));
+				tableReview.AddCell(cell);
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+				cell.AddElement(new Paragraph(string.Format(""), detailTxtFont));
+				tableReview.AddCell(cell);
+			}
+			else
+			{
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
+				cell.AddElement(new Paragraph(reviewer.APPROVER_PERSON, detailTxtFont));
+				tableReview.AddCell(cell);
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+				cell.AddElement(new Paragraph(string.Format("Dated:  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				tableReview.AddCell(cell);
+			}
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
 			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW_2").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph("joe manager", detailTxtFont));
-			tableReview.AddCell(cell);
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-			cell.AddElement(new Paragraph(string.Format("Dated:  {0}","1/1/2015"), detailTxtFont));
-			tableReview.AddCell(cell);
+			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve2).FirstOrDefault()) == null)
+			{
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
+				cell.AddElement(new Paragraph("", detailTxtFont));
+				tableReview.AddCell(cell);
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+				cell.AddElement(new Paragraph(string.Format(""), detailTxtFont));
+				tableReview.AddCell(cell);
+			}
+			else
+			{
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
+				cell.AddElement(new Paragraph(reviewer.APPROVER_PERSON, detailTxtFont));
+				tableReview.AddCell(cell);
+				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+				cell.AddElement(new Paragraph(string.Format("Dated:  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				tableReview.AddCell(cell);
+			}
 
 			return tableReview;
 		}
@@ -648,6 +681,8 @@ namespace SQM.Website.EHS
 								 Description = (string.IsNullOrEmpty(a.FILE_DESC)) ? "" : a.FILE_DESC,
 							 }).ToList();
 
+
+				d.approvalList = EHSIncidentMgr.GetApprovalList(iid);
 
 				if (files.Count > 0)
 				{
