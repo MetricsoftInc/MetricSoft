@@ -123,7 +123,7 @@ namespace SQM.Website.EHS
 
 		private byte[] BuildPdf()
 		{
-			reportXLAT = SQMBasePage.SelectXLATList(new string[3] { "HS_5PHASE", "TRUEFALSE", "SHIFT" });
+			reportXLAT = SQMBasePage.SelectXLATList(new string[4] { "HS_5PHASE", "TRUEFALSE", "SHIFT", "INJURY_TENURE" });
 
 			AlertData pageData;
 			
@@ -368,7 +368,7 @@ namespace SQM.Website.EHS
 				tableIncident.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", pageData.incident.INCFORM_INJURYILLNESS.YEARS_DOING_JOB.ToString()), labelTxtFont));
+				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", GetXLAT("INJURY_TENURE", pageData.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION), labelTxtFont));
 				tableIncident.AddCell(cell);
 			}
 
@@ -542,7 +542,7 @@ namespace SQM.Website.EHS
 				tableReview.AddCell(cell);
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-				cell.AddElement(new Paragraph(string.Format("Dated:  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(GetXLAT("HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
@@ -569,7 +569,7 @@ namespace SQM.Website.EHS
 				tableReview.AddCell(cell);
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-				cell.AddElement(new Paragraph(string.Format("Dated:  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(GetXLAT("HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
