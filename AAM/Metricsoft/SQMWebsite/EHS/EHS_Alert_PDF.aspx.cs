@@ -628,7 +628,8 @@ namespace SQM.Website.EHS
 				if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 				{
 					answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault();
-					answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+					if (answer != null)
+						answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
 
 					answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.InvolvedPerson).SingleOrDefault();
 					if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
