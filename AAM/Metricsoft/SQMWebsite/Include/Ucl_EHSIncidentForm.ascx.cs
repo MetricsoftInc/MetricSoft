@@ -213,6 +213,7 @@ namespace SQM.Website
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
 				SelectedTypeText = incident.ISSUE_TYPE;
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
+				incidentDate = incident.INCIDENT_DT;
 			}
 
 			pnlForm.Controls.Clear();

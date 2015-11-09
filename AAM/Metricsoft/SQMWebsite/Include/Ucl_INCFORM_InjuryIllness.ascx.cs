@@ -291,7 +291,7 @@ namespace SQM.Website
 					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
 					tbDescription.Text = incident.DESCRIPTION;
-					rdpIncidentDate.SelectedDate = incident.INCIDENT_DT;
+					rdpIncidentDate.SelectedDate = incidentDate = incident.INCIDENT_DT;
 
 					rdpReportDate.SelectedDate = incident.CREATE_DT;
 
@@ -1292,9 +1292,6 @@ namespace SQM.Website
 				incidentId = EditIncidentId;
 			}
 
-			if (incidentDate == null || incidentDate < DateTime.Now.AddYears(-100))
-				incidentDate = DateTime.Now;
-
 			if (incidentDescription.Length > MaxTextLength)
 				incidentDescription = incidentDescription.Substring(0, MaxTextLength);
 
@@ -1418,6 +1415,7 @@ namespace SQM.Website
 			decimal incidentId = 0;
 			var newIncident = new INCIDENT()
 			{
+				INCIDENT_DT = (DateTime)rdpIncidentDate.SelectedDate,
 				DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID,
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
 				DETECT_PLANT_ID = IncidentLocationId,
@@ -1428,7 +1426,6 @@ namespace SQM.Website
 				LAST_UPD_DT = DateTime.Now,
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
-				INCIDENT_DT = incidentDate,
 				ISSUE_TYPE = SelectedTypeText,
 				ISSUE_TYPE_ID = SelectedTypeId,
 				INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined
@@ -1454,7 +1451,7 @@ namespace SQM.Website
 				incident.DETECT_PLANT_ID = IncidentLocationId;
 				incident.INCIDENT_TYPE = "EHS";
 				incident.DESCRIPTION = incidentDescription;
-				incident.INCIDENT_DT = incidentDate;
+				incident.INCIDENT_DT = (DateTime)rdpIncidentDate.SelectedDate;
 				incident.ISSUE_TYPE = SelectedTypeText;
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
