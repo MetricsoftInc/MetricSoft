@@ -899,6 +899,11 @@ namespace SQM.Website
 
 		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId)
 		{
+			return GetRootCauseList(incidentId, false);
+		}
+
+		public static List<INCFORM_ROOT5Y> GetRootCauseList(decimal incidentId, bool getMinRows)
+		{
 
 			PSsqmEntities entities = new PSsqmEntities();
 			var rootcauses = new List<INCFORM_ROOT5Y>();
@@ -909,10 +914,12 @@ namespace SQM.Website
 						where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			int itemsNeeded = 0;
-			if (rootcauses.Count() < minRowsThisForm)
-				itemsNeeded = minRowsThisForm - rootcauses.Count();
-				
+			if (getMinRows)
+			{
+				int itemsNeeded = 0;
+				if (rootcauses.Count() < minRowsThisForm)
+					itemsNeeded = minRowsThisForm - rootcauses.Count();
+
 				INCFORM_ROOT5Y rootcause = null;
 
 				int seq = rootcauses.Count();
@@ -920,13 +927,12 @@ namespace SQM.Website
 				for (int i = 1; i < itemsNeeded + 1; i++)
 				{
 					rootcause = new INCFORM_ROOT5Y();
-
 					seq = seq + 1;
 					rootcause.ITEM_SEQ = seq;
 					rootcause.ITEM_DESCRIPTION = "";
-
 					rootcauses.Add(rootcause);
 				}
+			}
 			
 			return rootcauses;
 		}
