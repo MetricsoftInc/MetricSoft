@@ -371,86 +371,86 @@
 			</div>
 		</div>
 
-
-		<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
-			<FooterTemplate>
-				<br class="visible-xs" style="padding-top: 5px;" />
-				<div class="row">
-					<div class="col-sm-4 text-left tanLabelCol">
-						<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddWitnessResource1"></asp:Button>
+		<telerik:RadAjaxPanel ID="ajaxWitness" runat="server" HorizontalAlign="NotSet">
+			<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
+				<FooterTemplate>
+					<br class="visible-xs" style="padding-top: 5px;" />
+					<div class="row">
+						<div class="col-sm-4 text-left tanLabelCol">
+							<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddWitnessResource1"></asp:Button>
+						</div>
+						<div class="col-xs-12 col-sm-8 text-left"></div>
 					</div>
-					<div class="col-xs-12 col-sm-8 text-left"></div>
-				</div>
-			</FooterTemplate>
-			<ItemTemplate>
-				<div class="row text-left">
-					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 100px;">
-						<span class="labelMultiLineText">
-						<asp:Label ID="lbWitnessColSM" runat="server" meta:resourcekey="lbWitnessColSMResource1" Text="Witness "></asp:Label>
-						<asp:Label ID="lbItemSeq" runat="server"></asp:Label>
-						<asp:Label ID="lbRqd1" runat="server" CssClass="requiredCloseStarFloat" Text="*"></asp:Label>
-						</span>
-					</div>
-					<div class="col-xs-12 visible-xs text-left-more">
-						<br />
-						<br />
-						<span>
-						<asp:Label ID="lbWitnessColXS" runat="server" meta:resourcekey="lbWitnessColXSResource1" Text="Witness "></asp:Label>
-						<asp:Label ID="lbItemSeq2" runat="server"></asp:Label>
-						<asp:Label ID="lbRqd2" runat="server" CssClass="requiredCloseStar" Text="*"></asp:Label>
-						</span>
-					</div>
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
-						<div class="row">
-							<div class="col-xs-12 col-sm-4 text-left">
-								<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
-								&nbsp;&nbsp;
-								<telerik:RadAjaxPanel ID="rajx200" runat="server" HorizontalAlign="NotSet">
-									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" CssClass="NoBorders" DataKeyNames="PersonId" EmptyMessage="Begin typing (or spacebar)" MaxResultCount="400"
-										OnSearch="rsbWitnessName_Search" ShowSearchButton="False" Skin="Metro" Width="100%">
-										<DropDownSettings Height="320px" Width="510px">
-											<ItemTemplate>
-												<table cellpadding="0" cellspacing="0" class="searchBoxResults" style="margin-left: 5px;" width="500">
-													<tr>
-														<td style="background: #EEEAE0; width: 110px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b></td>
-														<td style="background: #fff; width: 200px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonEmail") %></b></td>
-														<td id="tdPersonID" runat="server" visible="False"><%# DataBinder.Eval(Container.DataItem, "PersonId") %></td>
-													</tr>
-												</table>
-											</ItemTemplate>
-											<HeaderTemplate>
-												<table cellpadding="0" cellspacing="1" class="searchBoxResults" style="margin-left: 5px;" width="500">
-													<tr>
-														<th style="width: 110px; text-align: left;">Name </th>
-														<th style="width: 200px; text-align: left;">Email </th>
-														<th></th>
-													</tr>
-												</table>
-											</HeaderTemplate>
-										</DropDownSettings>
-			<%--							<SearchContext DataSourceID="" Enabled="False" TabIndex="0" ShowDefaultItem = "False">
-										</SearchContext>--%>
-									</telerik:RadSearchBox>
-								</telerik:RadAjaxPanel>
-							</div>
-							<div class="col-xs-12 col-sm-4 text-left">
-								<asp:Label ID="lbWitStmntPrompt" runat="server" meta:resourcekey="lbWitStmntPromptResource1" Text="Statement:"></asp:Label>
-								&nbsp;&nbsp;
-								<asp:TextBox ID="tbWitnessStatement" runat="server" Height="60px" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
-							</div>
-							<div class="col-xs-12 col-sm-3 text-left">
-								<span style="display: inline-block; padding-top:3px;">
-								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" CssClass="buttonWrapText" ForeColor="DarkRed" Height="10px" OnClientClicking="DeleteConfirmItem" SingleClick="True" Width="100%">
-								</telerik:RadButton>
-								</span>
+				</FooterTemplate>
+				<ItemTemplate>
+					<div class="row text-left">
+						<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 100px;">
+							<span class="labelMultiLineText">
+							<asp:Label ID="lbWitnessColSM" runat="server" meta:resourcekey="lbWitnessColSMResource1" Text="Witness "></asp:Label>
+							<asp:Label ID="lbItemSeq" runat="server"></asp:Label>
+							<asp:Label ID="lbRqd1" runat="server" CssClass="requiredCloseStarFloat" Text="*"></asp:Label>
+							</span>
+						</div>
+						<div class="col-xs-12 visible-xs text-left-more">
+							<br />
+							<br />
+							<span>
+							<asp:Label ID="lbWitnessColXS" runat="server" meta:resourcekey="lbWitnessColXSResource1" Text="Witness "></asp:Label>
+							<asp:Label ID="lbItemSeq2" runat="server"></asp:Label>
+							<asp:Label ID="lbRqd2" runat="server" CssClass="requiredCloseStar" Text="*"></asp:Label>
+							</span>
+						</div>
+						<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
+							<div class="row">
+								<div class="col-xs-12 col-sm-4 text-left">
+									<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
+									&nbsp;&nbsp;
+									<telerik:RadAjaxPanel ID="rajx200" runat="server" HorizontalAlign="NotSet">
+										<telerik:RadSearchBox ID="rsbWitnessName" runat="server" CssClass="NoBorders" DataKeyNames="PersonId" EmptyMessage="Begin typing (or spacebar)" MaxResultCount="400"
+											OnSearch="rsbWitnessName_Search" ShowSearchButton="False" Skin="Metro" Width="100%">
+											<DropDownSettings Height="320px" Width="510px">
+												<ItemTemplate>
+													<table cellpadding="0" cellspacing="0" class="searchBoxResults" style="margin-left: 5px;" width="500">
+														<tr>
+															<td style="background: #EEEAE0; width: 110px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b></td>
+															<td style="background: #fff; width: 200px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonEmail") %></b></td>
+															<td id="tdPersonID" runat="server" visible="False"><%# DataBinder.Eval(Container.DataItem, "PersonId") %></td>
+														</tr>
+													</table>
+												</ItemTemplate>
+												<HeaderTemplate>
+													<table cellpadding="0" cellspacing="1" class="searchBoxResults" style="margin-left: 5px;" width="500">
+														<tr>
+															<th style="width: 110px; text-align: left;">Name </th>
+															<th style="width: 200px; text-align: left;">Email </th>
+															<th></th>
+														</tr>
+													</table>
+												</HeaderTemplate>
+											</DropDownSettings>
+				<%--							<SearchContext DataSourceID="" Enabled="False" TabIndex="0" ShowDefaultItem = "False">
+											</SearchContext>--%>
+										</telerik:RadSearchBox>
+									</telerik:RadAjaxPanel>
+								</div>
+								<div class="col-xs-12 col-sm-4 text-left">
+									<asp:Label ID="lbWitStmntPrompt" runat="server" meta:resourcekey="lbWitStmntPromptResource1" Text="Statement:"></asp:Label>
+									&nbsp;&nbsp;
+									<asp:TextBox ID="tbWitnessStatement" runat="server" Height="60px" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
+								</div>
+								<div class="col-xs-12 col-sm-3 text-left">
+									<span style="display: inline-block; padding-top:3px;">
+									<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" CssClass="buttonWrapText" ForeColor="DarkRed" Height="10px" OnClientClicking="DeleteConfirmItem" SingleClick="True" Width="100%">
+									</telerik:RadButton>
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<br class="visible-xs" style="padding-top: 5px;" />
-			</ItemTemplate>
-		</asp:Repeater>
-
+					<br class="visible-xs" style="padding-top: 5px;" />
+				</ItemTemplate>
+			</asp:Repeater>
+		</telerik:RadAjaxPanel>
 
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
