@@ -47,14 +47,14 @@ namespace SQM.Website
 			}
 		}
 
-		[Category("Layout"), DefaultValue(typeof(Unit), "400px"), Description("The height of the control.")]
+		[Category("Layout"), DefaultValue(typeof(Unit), "400px"), Description("The width of the control.")]
 		public override Unit Width
 		{
 			get { return base.Width; }
 			set { base.Width = value; }
 		}
 
-		[Category("Layout"), DefaultValue(typeof(Unit), "400px"), Description("The width of the control.")]
+		[Category("Layout"), DefaultValue(typeof(Unit), "400px"), Description("The height of the control.")]
 		public override Unit Height
 		{
 			get { return base.Height; }
@@ -602,7 +602,7 @@ namespace SQM.Website
 		}
 	}
 
-	public static class Extensions
+	public static partial class Extensions
 	{
 		/// <summary>
 		/// Divides a Unit by a value, keeping the same type.

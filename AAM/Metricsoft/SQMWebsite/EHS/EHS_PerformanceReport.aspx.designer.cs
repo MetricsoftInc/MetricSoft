@@ -40,6 +40,24 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadAjaxPanel radAjaxPanel;
         
         /// <summary>
+        /// rddlType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList rddlType;
+        
+        /// <summary>
+        /// pnlMetrics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMetrics;
+        
+        /// <summary>
         /// rcbPlant control.
         /// </summary>
         /// <remarks>
@@ -83,6 +101,366 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divExport;
+        
+        /// <summary>
+        /// pnlPyramidOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPyramidOutput;
+        
+        /// <summary>
+        /// pyramid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.AAMPyramidChart pyramid;
+        
+        /// <summary>
+        /// pyramidTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable pyramidTable;
+        
+        /// <summary>
+        /// pyramidTable_column1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_column1;
+        
+        /// <summary>
+        /// pyramidTable_columnAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_columnAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_columnPreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_columnPreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_fatalitiesRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pyramidTable_fatalitiesRow;
+        
+        /// <summary>
+        /// pyramidTable_fatalitiesYTD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_fatalitiesYTD;
+        
+        /// <summary>
+        /// pyramidTable_fatalitiesAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_fatalitiesAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_fatalitiesPreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_fatalitiesPreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_fatalitiesVariance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_fatalitiesVariance;
+        
+        /// <summary>
+        /// pyramidTable_lostTimeRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pyramidTable_lostTimeRow;
+        
+        /// <summary>
+        /// pyramidTable_lostTimeYTD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_lostTimeYTD;
+        
+        /// <summary>
+        /// pyramidTable_lostTimeAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_lostTimeAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_lostTimePreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_lostTimePreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_lostTimeVariance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_lostTimeVariance;
+        
+        /// <summary>
+        /// pyramidTable_recordableRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pyramidTable_recordableRow;
+        
+        /// <summary>
+        /// pyramidTable_recordableYTD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_recordableYTD;
+        
+        /// <summary>
+        /// pyramidTable_recordableAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_recordableAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_recordablePreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_recordablePreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_recordableVariance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_recordableVariance;
+        
+        /// <summary>
+        /// pyramidTable_firstAidRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pyramidTable_firstAidRow;
+        
+        /// <summary>
+        /// pyramidTable_firstAidYTD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_firstAidYTD;
+        
+        /// <summary>
+        /// pyramidTable_firstAidAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_firstAidAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_firstAidPreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_firstAidPreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_firstAidVariance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_firstAidVariance;
+        
+        /// <summary>
+        /// pyramidTable_nearMissesRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow pyramidTable_nearMissesRow;
+        
+        /// <summary>
+        /// pyramidTable_nearMissesYTD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_nearMissesYTD;
+        
+        /// <summary>
+        /// pyramidTable_nearMissesAnnualized control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_nearMissesAnnualized;
+        
+        /// <summary>
+        /// pyramidTable_nearMissesPreviousYear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_nearMissesPreviousYear;
+        
+        /// <summary>
+        /// pyramidTable_nearMissesVariance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pyramidTable_nearMissesVariance;
+        
+        /// <summary>
+        /// divJSAsAndAudits_Pyramid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJSAsAndAudits_Pyramid;
+        
+        /// <summary>
+        /// divSafetyTrainingHours_Pyramid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSafetyTrainingHours_Pyramid;
+        
+        /// <summary>
+        /// pnlTRIRBusinessOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTRIRBusinessOutput;
+        
+        /// <summary>
+        /// pnlTRIRPlantOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTRIRPlantOutput;
+        
+        /// <summary>
+        /// rgTRIRPlant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgTRIRPlant;
+        
+        /// <summary>
+        /// pnlRecPlantOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRecPlantOutput;
+        
+        /// <summary>
+        /// rgRecPlant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgRecPlant;
+        
+        /// <summary>
+        /// pnlBalancedScorecardOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBalancedScorecardOutput;
+        
+        /// <summary>
+        /// pnlMetricsOutput control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMetricsOutput;
         
         /// <summary>
         /// rgReport control.
@@ -202,22 +580,22 @@ namespace SQM.Website.EHS {
         protected global::SQM.Website.PieChart pieRecordableDaysToClose;
         
         /// <summary>
-        /// divJSAsAndAudits control.
+        /// divJSAsAndAudits_Metrics control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJSAsAndAudits;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJSAsAndAudits_Metrics;
         
         /// <summary>
-        /// divSafetyTrainingHours control.
+        /// divSafetyTrainingHours_Metrics control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSafetyTrainingHours;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSafetyTrainingHours_Metrics;
         
         /// <summary>
         /// uclChart control.

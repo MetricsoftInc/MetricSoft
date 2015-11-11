@@ -1455,5 +1455,20 @@ namespace SQM.Website
 				newString = newString.Replace(replacement.Key, replacement.Value.ToString());
 			return newString;
 		}
+
+		/// <summary>
+		/// Determines if an flag enum contains a certain flag. NOTE: This makes no checks if an enum is passed in or not.
+		/// Comes from: http://www.codeproject.com/Tips/441086/NETs-Enum-HasFlag-and-performance-costs (solution #3)
+		/// </summary>
+		/// <typeparam name="T">This should be an enum type, but it can technically work with any integer type.</typeparam>
+		/// <param name="val">The value being checked for the flag.</param>
+		/// <param name="flag">The flag to check for.</param>
+		/// <returns>true if the flag is in the value, false otherwise.</returns>
+		public static bool Has<T>(this T val, T flag) where T : IConvertible
+		{
+			var valFlag = Convert.ToUInt64(val);
+			var flagFlag = Convert.ToUInt64(flag);
+			return (valFlag & flagFlag) == flagFlag;
+		}
 	}
 }

@@ -4,6 +4,8 @@ using System.Data.Objects;
 using System.Drawing;
 using System.Linq;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using Telerik.Web.UI.HtmlChart;
 
@@ -11,8 +13,32 @@ namespace SQM.Website.EHS
 {
 	public partial class EHS_PerformanceReport : SQMBasePage
 	{
+		[Flags]
+		enum DataToUse
+		{
+			None = 0,
+			TRIR = 0x0001,
+			FrequencyRate = 0x0002,
+			SeverityRate = 0x0004,
+			Incidents = 0x0008,
+			Frequency = 0x0010,
+			Restricted = 0x0020,
+			Severity = 0x0040,
+			FirstAid = 0x0080,
+			Leadership = 0x0100,
+			JSAs = 0x0200,
+			SafetyTraining = 0x0400,
+			Fatalities = 0x0800,
+			NearMisses = 0x1000,
+			Ordinals = 0x2000,
+
+			Pyramid = Incidents | Frequency | FirstAid | Leadership | JSAs | SafetyTraining | Fatalities | NearMisses,
+			Metrics = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Restricted | Severity | FirstAid | Leadership | JSAs | SafetyTraining | Ordinals
+		}
+
 		class Data
 		{
+			public DataToUse DataToUse { get; set; }
 			public string Month { get; set; }
 			public decimal TRIR { get; set; }
 			public decimal FrequencyRate { get; set; }
@@ -26,6 +52,8 @@ namespace SQM.Website.EHS
 			public decimal Leadership { get; set; }
 			public decimal JSAs { get; set; }
 			public decimal SafetyTraining { get; set; }
+			public decimal Fatalities { get; set; }
+			public decimal NearMisses { get; set; }
 			// Ordinals
 			public Dictionary<string, decimal> OrdinalType { get; set; }
 			public Dictionary<string, decimal> OrdinalBodyPart { get; set; }
@@ -44,43 +72,61 @@ namespace SQM.Website.EHS
 
 			public static Data operator +(Data a, Data b)
 			{
-				return new Data()
+				var c = new Data()
 				{
-					ManHours = a.ManHours + b.ManHours,
-					Incidents = a.Incidents + b.Incidents,
-					Frequency = a.Frequency + b.Frequency,
-					Restricted = a.Restricted + b.Restricted,
-					Severity = a.Severity + b.Severity,
-					FirstAid = a.FirstAid + b.FirstAid,
-					Leadership = a.Leadership + b.Leadership,
-					JSAs = a.JSAs + b.JSAs,
-					SafetyTraining = a.SafetyTraining + b.SafetyTraining,
-					OrdinalType = a.OrdinalType.Keys.Concat(b.OrdinalType.Keys).Distinct().Select(key => new
+					DataToUse = a.DataToUse
+				};
+				if (a.DataToUse.Has(DataToUse.TRIR) || a.DataToUse.Has(DataToUse.FrequencyRate) || a.DataToUse.Has(DataToUse.SeverityRate))
+					c.ManHours = a.ManHours + b.ManHours;
+				if (a.DataToUse.Has(DataToUse.Incidents))
+					c.Incidents = a.Incidents + b.Incidents;
+				if (a.DataToUse.Has(DataToUse.Frequency))
+					c.Frequency = a.Frequency + b.Frequency;
+				if (a.DataToUse.Has(DataToUse.Restricted))
+					c.Restricted = a.Restricted + b.Restricted;
+				if (a.DataToUse.Has(DataToUse.Severity))
+					c.Severity = a.Severity + b.Severity;
+				if (a.DataToUse.Has(DataToUse.FirstAid))
+					c.FirstAid = a.FirstAid + b.FirstAid;
+				if (a.DataToUse.Has(DataToUse.Leadership))
+					c.Leadership = a.Leadership + b.Leadership;
+				if (a.DataToUse.Has(DataToUse.JSAs))
+					c.JSAs = a.JSAs + b.JSAs;
+				if (a.DataToUse.Has(DataToUse.SafetyTraining))
+					c.SafetyTraining = a.SafetyTraining + b.SafetyTraining;
+				if (a.DataToUse.Has(DataToUse.Fatalities))
+					c.Fatalities = a.Fatalities + b.Fatalities;
+				if (a.DataToUse.Has(DataToUse.NearMisses))
+					c.NearMisses = a.NearMisses + b.NearMisses;
+				if (a.DataToUse.Has(DataToUse.Ordinals))
+				{
+					c.OrdinalType = a.OrdinalType.Keys.Concat(b.OrdinalType.Keys).Distinct().Select(key => new
 					{
 						key = key,
 						value = (a.OrdinalType.ContainsKey(key) ? a.OrdinalType[key] : 0) + (b.OrdinalType.ContainsKey(key) ? b.OrdinalType[key] : 0)
-					}).ToDictionary(x => x.key, x => x.value),
-					OrdinalBodyPart = a.OrdinalBodyPart.Keys.Concat(b.OrdinalBodyPart.Keys).Distinct().Select(key => new
+					}).ToDictionary(x => x.key, x => x.value);
+					c.OrdinalBodyPart = a.OrdinalBodyPart.Keys.Concat(b.OrdinalBodyPart.Keys).Distinct().Select(key => new
 					{
 						key = key,
 						value = (a.OrdinalBodyPart.ContainsKey(key) ? a.OrdinalBodyPart[key] : 0) + (b.OrdinalBodyPart.ContainsKey(key) ? b.OrdinalBodyPart[key] : 0)
-					}).ToDictionary(x => x.key, x => x.value),
-					OrdinalRootCause = a.OrdinalRootCause.Keys.Concat(b.OrdinalRootCause.Keys).Distinct().Select(key => new
+					}).ToDictionary(x => x.key, x => x.value);
+					c.OrdinalRootCause = a.OrdinalRootCause.Keys.Concat(b.OrdinalRootCause.Keys).Distinct().Select(key => new
 					{
 						key = key,
 						value = (a.OrdinalRootCause.ContainsKey(key) ? a.OrdinalRootCause[key] : 0) + (b.OrdinalRootCause.ContainsKey(key) ? b.OrdinalRootCause[key] : 0)
-					}).ToDictionary(x => x.key, x => x.value),
-					OrdinalTenure = a.OrdinalTenure.Keys.Concat(b.OrdinalTenure.Keys).Distinct().Select(key => new
+					}).ToDictionary(x => x.key, x => x.value);
+					c.OrdinalTenure = a.OrdinalTenure.Keys.Concat(b.OrdinalTenure.Keys).Distinct().Select(key => new
 					{
 						key = key,
 						value = (a.OrdinalTenure.ContainsKey(key) ? a.OrdinalTenure[key] : 0) + (b.OrdinalTenure.ContainsKey(key) ? b.OrdinalTenure[key] : 0)
-					}).ToDictionary(x => x.key, x => x.value),
-					OrdinalDaysToClose = a.OrdinalDaysToClose.Keys.Concat(b.OrdinalDaysToClose.Keys).Distinct().Select(key => new
+					}).ToDictionary(x => x.key, x => x.value);
+					c.OrdinalDaysToClose = a.OrdinalDaysToClose.Keys.Concat(b.OrdinalDaysToClose.Keys).Distinct().Select(key => new
 					{
 						key = key,
 						value = (a.OrdinalDaysToClose.ContainsKey(key) ? a.OrdinalDaysToClose[key] : 0) + (b.OrdinalDaysToClose.ContainsKey(key) ? b.OrdinalDaysToClose[key] : 0)
-					}).ToDictionary(x => x.key, x => x.value)
-				};
+					}).ToDictionary(x => x.key, x => x.value);
+				}
+				return c;
 			}
 		}
 
@@ -126,7 +172,7 @@ namespace SQM.Website.EHS
 				   select new { x.XLAT_GROUP, x.XLAT_CODE, x.DESCRIPTION };
 		}
 
-		static Dictionary<string, decimal> GetOrdinalData(IQueryable<EHS_DATA_ORD> allOrdData, dynamic types)
+		static Dictionary<string, decimal> GetOrdinalData(IEnumerable<EHS_DATA_ORD> allOrdData, dynamic types)
 		{
 			var ret = new Dictionary<string, decimal>();
 			foreach (var t in types)
@@ -139,13 +185,21 @@ namespace SQM.Website.EHS
 			return ret;
 		}
 
-		static dynamic PullData(PSsqmEntities entities, string plantID, decimal companyID, int year)
+		static dynamic PullData(PSsqmEntities entities, string plantID, decimal companyID, int year, DataToUse dataToUse)
 		{
+			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
+			var startOfNextYear = new DateTime(year + 1, 1, 1);
+
 			decimal plantID_dec = plantID.StartsWith("BU") ? decimal.Parse(plantID.Substring(2)) : decimal.Parse(plantID);
 			var plantIDs = plantID.StartsWith("BU") ? SQMModelMgr.SelectPlantList(entities, companyID, plantID_dec).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(d.PLANT_ID) : d.PLANT_ID == plantID_dec)) &&
+				EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+			var allOrdData = entities.EHS_DATA_ORD.Where(o => (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(o.EHS_DATA.PLANT_ID) : o.EHS_DATA.PLANT_ID == plantID_dec)) &&
+				EntityFunctions.TruncateTime(o.EHS_DATA.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(o.EHS_DATA.DATE) < startOfNextYear.Date).ToList();
 
 			var data = new List<Data>();
 			Data YTD = null;
+			Data previousYTD = null;
 
 			var incidentRateSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 2, year), "")
 			{
@@ -153,8 +207,14 @@ namespace SQM.Website.EHS
 			};
 			var frequencyRateSeries = new List<GaugeSeries>();
 			var severityRateSeries = new List<GaugeSeries>();
-			var jsasSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 1, year), "");
-			var safetyTrainingHoursSeries = new GaugeSeries(0, "Total Safety Training Hours", "");
+			var jsasSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 1, year), "")
+			{
+				DisplayLabels = true
+			};
+			var safetyTrainingHoursSeries = new GaugeSeries(0, "Total Safety Training Hours", "")
+			{
+				DisplayLabels = true
+			};
 
 			// Ordinal types
 			var types = GetOrdinalTypes(entities, "INJURY_TYPE");
@@ -165,7 +225,10 @@ namespace SQM.Website.EHS
 
 			for (int y = year - 2; y <= year; ++y)
 			{
-				YTD = new Data();
+				YTD = new Data()
+				{
+					DataToUse = dataToUse
+				};
 				var frequencyRateSeriesYear = new GaugeSeries(y - year - 2, y.ToString(), "");
 				var severityRateSeriesYear = new GaugeSeries(y - year - 2, y.ToString(), "");
 
@@ -174,48 +237,68 @@ namespace SQM.Website.EHS
 					var startOfMonth = new DateTime(y, i, 1);
 					var startOfNextMonth = startOfMonth.AddMonths(1);
 
-					var allData = from d in entities.EHS_DATA
-								  where EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth.Date &&
-								  (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(d.PLANT_ID) : d.PLANT_ID == plantID_dec))
-								  select d;
-					var allOrdData = from o in entities.EHS_DATA_ORD
-									 where EntityFunctions.TruncateTime(o.EHS_DATA.DATE) >= startOfMonth.Date && EntityFunctions.TruncateTime(o.EHS_DATA.DATE) < startOfNextMonth.Date &&
-									 (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(o.EHS_DATA.PLANT_ID) : o.EHS_DATA.PLANT_ID == plantID_dec))
-									 select o;
+					var allMonthData = allData.Where(d => d.DATE.Date >= startOfMonth.Date && d.DATE.Date < startOfNextMonth.Date);
+					var monthOrdData = allOrdData.Where(o => o.EHS_DATA.DATE.Date >= startOfMonth.Date && o.EHS_DATA.DATE.Date < startOfNextMonth.Date);
 
-					var manHours = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-						allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
-					var incidents = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-						allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
-					var frequency = y > year - 2 ? allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20005" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
-					var severity = y > year - 2 ? allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					var manHours = (dataToUse.Has(DataToUse.TRIR) || dataToUse.Has(DataToUse.FrequencyRate) || dataToUse.Has(DataToUse.SeverityRate)) &&
+						(y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true)) ?
+						allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					var incidents = (dataToUse.Has(DataToUse.TRIR) || dataToUse.Has(DataToUse.Incidents)) &&
+						(y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true)) ?
+						allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					var frequency = (dataToUse.Has(DataToUse.FrequencyRate) || dataToUse.Has(DataToUse.Frequency)) && y > year - 2 ?
+						allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20005" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					var severity = (dataToUse.Has(DataToUse.SeverityRate) || dataToUse.Has(DataToUse.Severity)) && y > year - 2 ?
+						allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 
 					var monthData = new Data()
 					{
+						DataToUse = dataToUse,
 						Month = startOfMonth.ToString("MMMM"),
-						TRIR = manHours == 0 ? 0 : incidents * 200000 / manHours,
-						FrequencyRate = manHours == 0 ? 0 : frequency * 200000 / manHours,
-						SeverityRate = manHours == 0 ? 0 : severity * 200000 / manHours,
-						ManHours = manHours,
-						Incidents = incidents,
-						Frequency = frequency,
-						Restricted = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						Severity = severity,
-						FirstAid = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						JSAs = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						SafetyTraining = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0,
-						OrdinalType = y == year ? GetOrdinalData(allOrdData, types) : new Dictionary<string, decimal>(),
-						OrdinalBodyPart = y == year ? GetOrdinalData(allOrdData, bodyParts) : new Dictionary<string, decimal>(),
-						OrdinalRootCause = y == year ? GetOrdinalData(allOrdData, rootCauses) : new Dictionary<string, decimal>(),
-						OrdinalTenure = y == year ? GetOrdinalData(allOrdData, tenures) : new Dictionary<string, decimal>(),
-						OrdinalDaysToClose = y == year ? GetOrdinalData(allOrdData, daysToCloses) : new Dictionary<string, decimal>()
 					};
+					if (dataToUse.Has(DataToUse.TRIR))
+						monthData.TRIR = manHours == 0 ? 0 : incidents * 200000 / manHours;
+					if (dataToUse.Has(DataToUse.FrequencyRate))
+						monthData.FrequencyRate = manHours == 0 ? 0 : frequency * 200000 / manHours;
+					if (dataToUse.Has(DataToUse.SeverityRate))
+						monthData.SeverityRate = manHours == 0 ? 0 : severity * 200000 / manHours;
+					if (dataToUse.Has(DataToUse.TRIR) || dataToUse.Has(DataToUse.FrequencyRate) || dataToUse.Has(DataToUse.SeverityRate))
+						monthData.ManHours = manHours;
+					if (dataToUse.Has(DataToUse.Incidents))
+						monthData.Incidents = incidents;
+					if (dataToUse.Has(DataToUse.Frequency))
+						monthData.Frequency = frequency;
+					if (dataToUse.Has(DataToUse.Restricted))
+						monthData.Restricted = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.Severity))
+						monthData.Severity = severity;
+					if (dataToUse.Has(DataToUse.FirstAid))
+						monthData.FirstAid = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.Leadership))
+						monthData.Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.JSAs))
+						monthData.JSAs = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.SafetyTraining))
+						monthData.SafetyTraining = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.Fatalities))
+						monthData.Fatalities = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20006" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.NearMisses))
+						monthData.NearMisses = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.Ordinals))
+					{
+						monthData.OrdinalType = y == year ? GetOrdinalData(monthOrdData, types) : new Dictionary<string, decimal>();
+						monthData.OrdinalBodyPart = y == year ? GetOrdinalData(monthOrdData, bodyParts) : new Dictionary<string, decimal>();
+						monthData.OrdinalRootCause = y == year ? GetOrdinalData(monthOrdData, rootCauses) : new Dictionary<string, decimal>();
+						monthData.OrdinalTenure = y == year ? GetOrdinalData(monthOrdData, tenures) : new Dictionary<string, decimal>();
+						monthData.OrdinalDaysToClose = y == year ? GetOrdinalData(monthOrdData, daysToCloses) : new Dictionary<string, decimal>();
+					}
 
 					if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
 						incidentRateSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.TRIR, monthData.Month));
@@ -234,6 +317,9 @@ namespace SQM.Website.EHS
 					YTD += monthData;
 				}
 
+				if (y == year - 1)
+					previousYTD = YTD;
+
 				if (y > year - 2)
 				{
 					frequencyRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, YTD.ManHours == 0 ? 0 : YTD.Frequency * 200000 / YTD.ManHours, "YTD"));
@@ -245,9 +331,12 @@ namespace SQM.Website.EHS
 			}
 
 			YTD.Month = "YTD";
-			YTD.TRIR = YTD.ManHours == 0 ? 0 : YTD.Incidents * 200000 / YTD.ManHours;
-			YTD.FrequencyRate = YTD.ManHours == 0 ? 0 : YTD.Frequency * 200000 / YTD.ManHours;
-			YTD.SeverityRate = YTD.ManHours == 0 ? 0 : YTD.Severity * 200000 / YTD.ManHours;
+			if (dataToUse.Has(DataToUse.TRIR))
+				YTD.TRIR = YTD.ManHours == 0 ? 0 : YTD.Incidents * 200000 / YTD.ManHours;
+			if (dataToUse.Has(DataToUse.FrequencyRate))
+				YTD.FrequencyRate = YTD.ManHours == 0 ? 0 : YTD.Frequency * 200000 / YTD.ManHours;
+			if (dataToUse.Has(DataToUse.SeverityRate))
+				YTD.SeverityRate = YTD.ManHours == 0 ? 0 : YTD.Severity * 200000 / YTD.ManHours;
 
 			data.Add(YTD);
 
@@ -265,6 +354,7 @@ namespace SQM.Website.EHS
 			return new
 			{
 				data,
+				previousYTD,
 				incidentRateSeries,
 				incidentRateTrendSeries,
 				frequencyRateSeries,
@@ -295,6 +385,298 @@ namespace SQM.Website.EHS
 			};
 		}
 
+		static List<dynamic> PullTRIRByBusinessUnit(PSsqmEntities entities, decimal companyID, int year)
+		{
+			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
+			var startOfNextYear = new DateTime(year + 1, 1, 1);
+
+			var plantIDs = SQMModelMgr.SelectPlantList(entities, companyID, 0).Select(p => p.PLANT_ID).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
+				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+
+			var businessOrgs = SQMModelMgr.SelectBusOrgList(entities, companyID, 0, true);
+			var data = new List<dynamic>();
+			for (int b = -1; b < businessOrgs.Count; ++b)
+			{
+				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, businessOrgs[b].BUS_ORG_ID).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
+				var incidentRateSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 2, year), "")
+				{
+					DisplayLabels = true
+				};
+
+				for (int y = year - 2; y <= year; ++y)
+				{
+					for (int i = 1; i < 13; ++i)
+					{
+						var startOfMonth = new DateTime(y, i, 1);
+						var startOfNextMonth = startOfMonth.AddMonths(1);
+
+						var monthData = allData.Where(d => d.DATE.Date >= startOfMonth.Date && d.DATE.Date < startOfNextMonth.Date && (b == -1 ? true : plantIDs.Contains(d.PLANT_ID)));
+
+						var manHours = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+						var incidents = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+
+						var TRIR = manHours == 0 ? 0 : incidents * 200000 / manHours;
+
+						if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+							incidentRateSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, TRIR, startOfMonth.ToString("MMMM")));
+					}
+				}
+
+				var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
+				for (int i = 0; i < 5; ++i)
+					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+				for (int i = 5; i < incidentRateSeries.ItemList.Count; ++i)
+					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
+						Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
+
+				data.Add(new
+				{
+					name = b == -1 ? entities.COMPANY.First(c => c.COMPANY_ID == companyID).COMPANY_NAME : businessOrgs[b].ORG_NAME,
+					incidentRateSeries,
+					incidentRateTrendSeries
+				});
+			}
+			return data;
+		}
+
+		static dynamic PullTRIRByPlant(PSsqmEntities entities, decimal companyID, int year)
+		{
+			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
+			var startOfNextYear = new DateTime(year + 1, 1, 1);
+
+			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0);
+			var plantIDs = plants.Select(p => p.PLANT_ID).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
+				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+
+			decimal totalManHours2YearsAgo = 0;
+			decimal totalManHoursPreviousYear = 0;
+			decimal totalManHoursYTD = 0;
+			decimal totalIncidents2YearsAgo = 0;
+			decimal totalIncidentsPreviousYear = 0;
+			decimal totalIncidentsYTD = 0;
+
+			var data = new List<dynamic>();
+			foreach (var plant in plants)
+			{
+				decimal manHours2YearsAgo = 0;
+				decimal manHoursPreviousYear = 0;
+				decimal manHoursYTD = 0;
+				decimal incidents2YearsAgo = 0;
+				decimal incidentsPreviousYear = 0;
+				decimal incidentsYTD = 0;
+				decimal TRIR2YearsAgo = 0;
+				decimal TRIRPreviousYear = 0;
+				decimal TRIRYTD = 0;
+
+				for (int y = year - 2; y <= year; ++y)
+				{
+					decimal manHoursTotal = 0;
+					decimal incidentsTotal = 0;
+
+					for (int i = 1; i < 13; ++i)
+					{
+						var startOfMonth = new DateTime(y, i, 1);
+						var startOfNextMonth = startOfMonth.AddMonths(1);
+
+						var monthData = allData.Where(d => d.DATE.Date >= startOfMonth.Date && d.DATE.Date < startOfNextMonth.Date && d.PLANT_ID == plant.PLANT_ID);
+
+						manHoursTotal += y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+						incidentsTotal += y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					}
+
+					var TRIR = manHoursTotal == 0 ? 0 : incidentsTotal * 200000 / manHoursTotal;
+					if (y == year - 2)
+					{
+						manHours2YearsAgo = manHoursTotal;
+						incidents2YearsAgo = incidentsTotal;
+						TRIR2YearsAgo = TRIR;
+					}
+					else if (y == year - 1)
+					{
+						manHoursPreviousYear = manHoursTotal;
+						incidentsPreviousYear = incidentsTotal;
+						TRIRPreviousYear = TRIR;
+					}
+					else
+					{
+						manHoursYTD = manHoursTotal;
+						incidentsYTD = incidentsTotal;
+						TRIRYTD = TRIR;
+					}
+				}
+
+				totalManHours2YearsAgo += manHours2YearsAgo;
+				totalManHoursPreviousYear += manHoursPreviousYear;
+				totalManHoursYTD += manHoursYTD;
+				totalIncidents2YearsAgo += incidents2YearsAgo;
+				totalIncidentsPreviousYear += incidentsPreviousYear;
+				totalIncidentsYTD += incidentsYTD;
+
+				data.Add(new
+				{
+					BusOrgID = plant.BUS_ORG_ID,
+					BusinessUnit = entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
+					Plant = plant.DUNS_CODE,
+					manHours2YearsAgo,
+					manHoursPreviousYear,
+					manHoursYTD,
+					incidents2YearsAgo,
+					incidentsPreviousYear,
+					incidentsYTD,
+					TRIR2YearsAgo,
+					TRIRPreviousYear,
+					TRIRYTD,
+					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear
+				});
+			}
+
+			data = data.OrderBy(d => d.BusOrgID).ToList();
+
+			foreach (string businessUnit in data.Select(d => d.BusinessUnit).Distinct().ToList())
+			{
+				int lastIndex = data.IndexOf(data.Last(d => d.BusinessUnit == businessUnit));
+				var allPlantsForBU = data.Where(d => d.BusinessUnit == businessUnit);
+				decimal manHours2YearsAgo = allPlantsForBU.Sum(d => (decimal)d.manHours2YearsAgo);
+				decimal manHoursPreviousYear = allPlantsForBU.Sum(d => (decimal)d.manHoursPreviousYear);
+				decimal manHoursYTD = allPlantsForBU.Sum(d => (decimal)d.manHoursYTD);
+				decimal incidents2YearsAgo = allPlantsForBU.Sum(d => (decimal)d.incidents2YearsAgo);
+				decimal incidentsPreviousYear = allPlantsForBU.Sum(d => (decimal)d.incidentsPreviousYear);
+				decimal incidentsYTD = allPlantsForBU.Sum(d => (decimal)d.incidentsYTD);
+				decimal TRIRPreviousYear = manHoursPreviousYear == 0 ? 0 : incidentsPreviousYear * 200000 / manHoursPreviousYear;
+				decimal TRIRYTD = manHoursYTD == 0 ? 0 : incidentsYTD * 200000 / manHoursYTD;
+				data.Insert(lastIndex + 1, new
+				{
+					BusinessUnit = "",
+					Plant = "",
+					TRIR2YearsAgo = manHours2YearsAgo == 0 ? 0 : incidents2YearsAgo * 200000 / manHours2YearsAgo,
+					TRIRPreviousYear,
+					TRIRYTD,
+					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear
+				});
+			}
+
+			decimal totalTRIRPreviousYear = totalManHoursPreviousYear == 0 ? 0 : totalIncidentsPreviousYear * 200000 / totalManHoursPreviousYear;
+			decimal totalTRIRYTD = totalManHoursYTD == 0 ? 0 : totalIncidentsYTD * 200000 / totalManHoursYTD;
+
+			data.Add(new
+			{
+				BusinessUnit = "Total Corp.",
+				Plant = "",
+				TRIR2YearsAgo = totalManHours2YearsAgo == 0 ? 0 : totalIncidents2YearsAgo * 200000 / totalManHours2YearsAgo,
+				TRIRPreviousYear = totalTRIRPreviousYear,
+				TRIRYTD = totalTRIRYTD,
+				PercentChange = totalTRIRPreviousYear == 0 ? 0 : (totalTRIRYTD - totalTRIRPreviousYear) / totalTRIRPreviousYear
+			});
+
+			return new
+			{
+				data,
+				year
+			};
+		}
+
+		static dynamic PullRecByPlant(PSsqmEntities entities, decimal companyID, int year)
+		{
+			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
+			var startOfNextYear = new DateTime(year + 1, 1, 1);
+
+			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0);
+			var plantIDs = plants.Select(p => p.PLANT_ID).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
+				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+
+			decimal totalIncidentsPreviousYear = 0;
+			decimal totalIncidentsYTD = 0;
+
+			var data = new List<dynamic>();
+			foreach (var plant in plants)
+			{
+				decimal incidentsPreviousYear = 0;
+				decimal incidentsYTD = 0;
+
+				for (int y = year - 2; y <= year; ++y)
+				{
+					decimal incidentsTotal = 0;
+
+					for (int i = 1; i < 13; ++i)
+					{
+						var startOfMonth = new DateTime(y, i, 1);
+						var startOfNextMonth = startOfMonth.AddMonths(1);
+
+						var monthData = allData.Where(d => d.DATE.Date >= startOfMonth.Date && d.DATE.Date < startOfNextMonth.Date && d.PLANT_ID == plant.PLANT_ID);
+
+						incidentsTotal += y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					}
+
+					if (y == year - 1)
+						incidentsPreviousYear = incidentsTotal;
+					else
+						incidentsYTD = incidentsTotal;
+				}
+
+				totalIncidentsPreviousYear += incidentsPreviousYear;
+				totalIncidentsYTD += incidentsYTD;
+
+				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / DateTime.Today.Month);
+
+				data.Add(new
+				{
+					BusOrgID = plant.BUS_ORG_ID,
+					BusinessUnit = entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
+					Plant = plant.DUNS_CODE,
+					RecPreviousYear = incidentsPreviousYear,
+					RecYTD = incidentsYTD,
+					RecAnnualized = incidentsAnnualized,
+					PercentChange = incidentsPreviousYear == 0 ? 0 : (incidentsAnnualized - incidentsPreviousYear) / incidentsPreviousYear
+				});
+			}
+
+			data = data.OrderBy(d => d.BusOrgID).ToList();
+
+			foreach (string businessUnit in data.Select(d => d.BusinessUnit).Distinct().ToList())
+			{
+				int lastIndex = data.IndexOf(data.Last(d => d.BusinessUnit == businessUnit));
+				var allPlantsForBU = data.Where(d => d.BusinessUnit == businessUnit);
+				decimal incidentsPreviousYear = allPlantsForBU.Sum(d => (decimal)d.RecPreviousYear);
+				decimal incidentsYTD = allPlantsForBU.Sum(d => (decimal)d.RecYTD);
+				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / DateTime.Today.Month);
+				data.Insert(lastIndex + 1, new
+				{
+					BusinessUnit = "",
+					Plant = "",
+					RecPreviousYear = incidentsPreviousYear,
+					RecYTD = incidentsYTD,
+					RecAnnualized = incidentsAnnualized,
+					PercentChange = incidentsPreviousYear == 0 ? 0 : (incidentsAnnualized - incidentsPreviousYear) / incidentsPreviousYear
+				});
+			}
+
+			var totalIncidentsAnnualized = Math.Round(totalIncidentsYTD * 12 / DateTime.Today.Month);
+
+			data.Add(new
+			{
+				BusinessUnit = "Total Corp.",
+				Plant = "",
+				RecPreviousYear = totalIncidentsPreviousYear,
+				RecYTD = totalIncidentsYTD,
+				RecAnnualized = totalIncidentsAnnualized,
+				PercentChange = totalIncidentsPreviousYear == 0 ? 0 : (totalIncidentsAnnualized - totalIncidentsPreviousYear) / totalIncidentsPreviousYear
+			});
+
+			return new
+			{
+				data,
+				year
+			};
+		}
+
 		PSsqmEntities entities;
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -322,12 +704,57 @@ namespace SQM.Website.EHS
 				this.divFrequencyRate.Style.Add("width", gaugeDef.Width + "px");
 				this.divSeverityRate.Style.Add("width", gaugeDef.Width + "px");
 
-				dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, SessionManager.UserContext.HRLocation.Company.COMPANY_ID, this.rmypYear.SelectedDate.Value.Year);
-
-				this.rgReport.DataSource = data.data;
-				this.rgReport.DataBind();
+				dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, SessionManager.UserContext.HRLocation.Company.COMPANY_ID, this.rmypYear.SelectedDate.Value.Year,
+					DataToUse.Metrics);
 
 				this.UpdateCharts(data);
+			}
+		}
+
+		protected void rgTRIRPlant_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
+			{
+				dynamic dataItem = e.Item.DataItem;
+				var row = e.Item as GridDataItem;
+
+				if (row["BusinessUnit"].Text == "&nbsp;")
+					row.Style.Add("background-color", "#d9d9d9");
+
+				var percentChangeCell = row["PercentChange"];
+				var label = new Label();
+				if (dataItem.PercentChange < 0)
+				{
+					label.Text = "&#8659;";
+					label.ForeColor = percentChangeCell.BackColor = Color.Green;
+					percentChangeCell.ForeColor = Color.White;
+				}
+				else if (dataItem.PercentChange > 0)
+				{
+					label.Text = "&#8657;";
+					label.ForeColor = percentChangeCell.BackColor = Color.Red;
+					percentChangeCell.ForeColor = Color.White;
+				}
+				else
+					label.Text = "=";
+				row["ImprovedOrDeclined"].Controls.Add(label);
+			}
+		}
+
+		protected void rgTRIRPlant_PreRender(object sender, EventArgs e)
+		{
+			var rg = sender as RadGrid;
+			for (int i = rg.Items.Count - 2; i >= 0; --i)
+			{
+				var rowBU = rg.Items[i]["BusinessUnit"];
+				var nextRow = rg.Items[i + 1];
+				var nextRowBU = nextRow["BusinessUnit"];
+				if (rowBU.Text == nextRowBU.Text)
+				{
+					rowBU.RowSpan = nextRowBU.RowSpan < 2 ? 2 : nextRowBU.RowSpan + 1;
+					nextRowBU.Visible = false;
+					nextRow["Plant"].Style.Add("border-left-width", "1px");
+				}
 			}
 		}
 
@@ -346,54 +773,202 @@ namespace SQM.Website.EHS
 
 		protected void btnRefresh_Click(object sender, EventArgs e)
 		{
-			dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year);
-
-			this.rgReport.DataSource = data.data;
-			this.rgReport.DataBind();
+			string plantID = this.rddlType.SelectedValue == "Metrics" ? this.rcbPlant.SelectedValue : "-1";
+			dynamic data = this.rddlType.SelectedValue == "TRIRBusiness" ? PullTRIRByBusinessUnit(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
+				(this.rddlType.SelectedValue == "TRIRPlant" ? PullTRIRByPlant(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
+				(this.rddlType.SelectedValue == "RecPlant" ? PullRecByPlant(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
+				(this.rddlType.SelectedValue == "BalancedScordcard" ? null : PullData(this.entities, plantID, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year,
+				(DataToUse)Enum.Parse(typeof(DataToUse), this.rddlType.SelectedValue)))));
 
 			this.UpdateCharts(data);
 		}
 
 		void UpdateCharts(dynamic data)
 		{
-			gaugeDef.Title = "TOTAL RECORDABLE INCIDENT RATE";
-			var series = new List<GaugeSeries>() { data.incidentRateSeries, data.incidentRateTrendSeries };
-			SetScale(gaugeDef, series);
-			this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divTRIR);
+			bool pyramid = this.rddlType.SelectedValue == "Pyramid";
+			bool trirBusiness = this.rddlType.SelectedValue == "TRIRBusiness";
+			bool trirPlant = this.rddlType.SelectedValue == "TRIRPlant";
+			bool recPlant = this.rddlType.SelectedValue == "RecPlant";
+			bool balancedScorecard = this.rddlType.SelectedValue == "BalancedScordcard";
+			bool metrics = this.rddlType.SelectedValue == "Metrics";
 
-			var calcsResult = new CalcsResult().Initialize();
+			this.pnlPyramidOutput.Visible = pyramid;
+			this.pnlTRIRBusinessOutput.Visible = trirBusiness;
+			this.pnlTRIRPlantOutput.Visible = trirPlant;
+			this.pnlRecPlantOutput.Visible = recPlant;
+			this.pnlBalancedScorecardOutput.Visible = balancedScorecard;
+			this.pnlMetricsOutput.Visible = metrics;
+			this.pnlMetrics.Style["display"] = metrics ? "visible" : "none";
 
-			gaugeDef.Title = "FREQUENCY RATE";
-			SetScale(gaugeDef, data.frequencyRateSeries);
-			calcsResult.metricSeries = data.frequencyRateSeries;
-			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divFrequencyRate);
-
-			gaugeDef.Title = "SEVERITY RATE";
-			SetScale(gaugeDef, data.severityRateSeries);
-			calcsResult.metricSeries = data.severityRateSeries;
-			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
-
-			if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>).Last().TRIR == 0)
-				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
-			else
+			if (pyramid)
 			{
-				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = true;
-				this.pieRecordableType.Values = data.ordinalTypeSeries;
-				this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
-				this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
-				this.pieRecordableTenure.Values = data.ordinalTenureSeries;
-				this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
+				var left = (gaugeDef.Width - 420 - this.pyramid.Width.ToPixels()) / 2;
+				this.pyramid.Style.Add("left", left + "px");
+				var YTD = (data.data as List<Data>).Last();
+				this.pyramid.Fatalities = YTD.Fatalities;
+				this.pyramid.LostTimeCases = YTD.Frequency;
+				this.pyramid.RecordableInjuries = YTD.Incidents;
+				this.pyramid.FirstAidCases = YTD.FirstAid;
+				this.pyramid.NearMisses = YTD.NearMisses;
+
+				var rowHeight = this.pyramid.Height.Divide(5).ToPixels() * 0.996m;
+				var halfWidth = this.pyramid.Width.Divide(2).ToPixels();
+				this.pyramidTable.Style.Add("left", (halfWidth + left) + "px");
+				this.pyramidTable_column1.Style.Add("width", (halfWidth + 20) + "px");
+				this.pyramidTable_columnAnnualized.InnerText = "Annualized " + DateTime.Today.Year;
+				this.pyramidTable_columnPreviousYear.InnerText = (DateTime.Today.Year - 1).ToString();
+
+				this.pyramidTable_fatalitiesRow.Style.Add("height", rowHeight + "px");
+				this.pyramidTable_fatalitiesYTD.InnerText = YTD.Fatalities.ToString();
+				var fatalitiesAnnualized = Math.Round(YTD.Fatalities * 12 / DateTime.Today.Month);
+				this.pyramidTable_fatalitiesAnnualized.InnerText = fatalitiesAnnualized.ToString();
+				this.pyramidTable_fatalitiesPreviousYear.InnerText = data.previousYTD.Fatalities.ToString();
+				var fatalitiesVariance = data.previousYTD.Fatalities == 0 ? 0 : (fatalitiesAnnualized - data.previousYTD.Fatalities) / data.previousYTD.Fatalities;
+				this.pyramidTable_fatalitiesVariance.InnerText = fatalitiesVariance.ToString("P1");
+				this.pyramidTable_fatalitiesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (fatalitiesVariance > 0 ? "Bad" : "Good"));
+
+				this.pyramidTable_lostTimeRow.Style.Add("height", rowHeight + "px");
+				this.pyramidTable_lostTimeYTD.InnerText = YTD.Frequency.ToString();
+				var lostTimeAnnualized = Math.Round(YTD.Frequency * 12 / DateTime.Today.Month);
+				this.pyramidTable_lostTimeAnnualized.InnerText = lostTimeAnnualized.ToString();
+				this.pyramidTable_lostTimePreviousYear.InnerText = data.previousYTD.Frequency.ToString();
+				var lostTimeVariance = data.previousYTD.Frequency == 0 ? 0 : (lostTimeAnnualized - data.previousYTD.Frequency) / data.previousYTD.Frequency;
+				this.pyramidTable_lostTimeVariance.InnerText = lostTimeVariance.ToString("P1");
+				this.pyramidTable_lostTimeVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (lostTimeVariance > 0 ? "Bad" : "Good"));
+
+				this.pyramidTable_recordableRow.Style.Add("height", rowHeight + "px");
+				this.pyramidTable_recordableYTD.InnerText = YTD.Incidents.ToString();
+				var recordableAnnualized = Math.Round(YTD.Incidents * 12 / DateTime.Today.Month);
+				this.pyramidTable_recordableAnnualized.InnerText = recordableAnnualized.ToString();
+				this.pyramidTable_recordablePreviousYear.InnerText = data.previousYTD.Incidents.ToString();
+				var recordableVariance = data.previousYTD.Incidents == 0 ? 0 : (recordableAnnualized - data.previousYTD.Incidents) / data.previousYTD.Incidents;
+				this.pyramidTable_recordableVariance.InnerText = recordableVariance.ToString("P1");
+				this.pyramidTable_recordableVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (recordableVariance > 0 ? "Bad" : "Good"));
+
+				this.pyramidTable_firstAidRow.Style.Add("height", rowHeight + "px");
+				this.pyramidTable_firstAidYTD.InnerText = YTD.FirstAid.ToString();
+				var firstAidAnnualized = Math.Round(YTD.FirstAid * 12 / DateTime.Today.Month);
+				this.pyramidTable_firstAidAnnualized.InnerText = firstAidAnnualized.ToString();
+				this.pyramidTable_firstAidPreviousYear.InnerText = data.previousYTD.FirstAid.ToString();
+				var firstAidVariance = data.previousYTD.FirstAid == 0 ? 0 : (firstAidAnnualized - data.previousYTD.FirstAid) / data.previousYTD.FirstAid;
+				this.pyramidTable_firstAidVariance.InnerText = firstAidVariance.ToString("P1");
+				this.pyramidTable_firstAidVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (firstAidVariance > 0 ? "Bad" : "Good"));
+
+				this.pyramidTable_nearMissesRow.Style.Add("height", rowHeight + "px");
+				this.pyramidTable_nearMissesYTD.InnerText = YTD.NearMisses.ToString();
+				var nearMissesAnnualized = Math.Round(YTD.NearMisses * 12 / DateTime.Today.Month);
+				this.pyramidTable_nearMissesAnnualized.InnerText = nearMissesAnnualized.ToString();
+				this.pyramidTable_nearMissesPreviousYear.InnerText = data.previousYTD.NearMisses.ToString();
+				var nearMissesVariance = data.previousYTD.NearMisses == 0 ? 0 : (nearMissesAnnualized - data.previousYTD.NearMisses) / data.previousYTD.NearMisses;
+				this.pyramidTable_nearMissesVariance.InnerText = nearMissesVariance.ToString("P1");
+				this.pyramidTable_nearMissesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (nearMissesVariance > 0 ? "Bad" : "Good"));
+
+				gaugeDef.Height = 410;
+				gaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
+				var series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
+				SetScale(gaugeDef, series);
+				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divJSAsAndAudits_Pyramid);
+
+				gaugeDef.Title = "Safety Training Hours";
+				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
+				SetScale(gaugeDef, series);
+				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divSafetyTrainingHours_Pyramid);
 			}
+			if (trirBusiness)
+			{
+				gaugeDef.Height = 410;
+				int count = 0;
+				foreach (var businessOrgData in data)
+				{
+					gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
+					var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
+					SetScale(gaugeDef, series);
+					var container = new HtmlGenericControl("div");
+					container.Attributes.Add("class", "chartMarginTop");
+					this.uclChart.CreateMultiLineChart(gaugeDef, series, container);
+					this.pnlTRIRBusinessOutput.Controls.Add(container);
 
-			smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
-			series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
-			SetScale(smallGaugeDef, series);
-			this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divJSAsAndAudits);
+					++count;
+					if ((count % 2) == 0)
+					{
+						var pageBreak = new HtmlGenericControl("div");
+						pageBreak.Style.Add("page-break-after", "always");
+						this.pnlTRIRBusinessOutput.Controls.Add(pageBreak);
+					}
+				}
+			}
+			if (trirPlant)
+			{
+				this.rgTRIRPlant.MasterTableView.GetColumn("ImprovedOrDeclined").HeaderText =
+					"Improved <span style=\"color: green; font-size: 18px\">&#8659;</span><br/>or<br/>Declined <span style=\"color: red; font-size: 18px\">&#8657;</span>";
 
-			smallGaugeDef.Title = "Safety Training Hours";
-			series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
-			SetScale(smallGaugeDef, series);
-			this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divSafetyTrainingHours);
+				this.rgTRIRPlant.MasterTableView.GetColumn("TRIR2YearsAgo").HeaderText = "TRIR<br/>" + (data.year - 2);
+				this.rgTRIRPlant.MasterTableView.GetColumn("TRIRPreviousYear").HeaderText = "TRIR<br/>" + (data.year - 1);
+				this.rgTRIRPlant.MasterTableView.GetColumn("TRIRYTD").HeaderText = "TRIR YTD<br/>" + data.year;
+				this.rgTRIRPlant.MasterTableView.GetColumn("PercentChange").HeaderText = "% Change<br/>" + data.year + " vs. " + (data.year - 1);
+
+				this.rgTRIRPlant.DataSource = data.data;
+				this.rgTRIRPlant.DataBind();
+			}
+			if (recPlant)
+			{
+				this.rgRecPlant.MasterTableView.GetColumn("ImprovedOrDeclined").HeaderText =
+					"Improved <span style=\"color: green; font-size: 18px\">&#8659;</span><br/>or<br/>Declined <span style=\"color: red; font-size: 18px\">&#8657;</span>";
+
+				this.rgRecPlant.MasterTableView.GetColumn("RecPreviousYear").HeaderText = "Recordables<br/>" + (data.year - 1);
+				this.rgRecPlant.MasterTableView.GetColumn("RecYTD").HeaderText = "Recordables YTD<br/>" + data.year;
+
+				this.rgRecPlant.DataSource = data.data;
+				this.rgRecPlant.DataBind();
+			}
+			if (balancedScorecard)
+			{
+			}
+			if (metrics)
+			{
+				this.rgReport.DataSource = data.data;
+				this.rgReport.DataBind();
+
+				gaugeDef.Height = 500;
+				gaugeDef.Title = "TOTAL RECORDABLE INCIDENT RATE";
+				var series = new List<GaugeSeries>() { data.incidentRateSeries, data.incidentRateTrendSeries };
+				SetScale(gaugeDef, series);
+				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divTRIR);
+
+				var calcsResult = new CalcsResult().Initialize();
+
+				gaugeDef.Title = "FREQUENCY RATE";
+				SetScale(gaugeDef, data.frequencyRateSeries);
+				calcsResult.metricSeries = data.frequencyRateSeries;
+				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divFrequencyRate);
+
+				gaugeDef.Title = "SEVERITY RATE";
+				SetScale(gaugeDef, data.severityRateSeries);
+				calcsResult.metricSeries = data.severityRateSeries;
+				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
+
+				if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>).Last().TRIR == 0)
+					this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
+				else
+				{
+					this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = true;
+					this.pieRecordableType.Values = data.ordinalTypeSeries;
+					this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
+					this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
+					this.pieRecordableTenure.Values = data.ordinalTenureSeries;
+					this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
+				}
+
+				smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
+				series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
+				SetScale(smallGaugeDef, series);
+				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divJSAsAndAudits_Metrics);
+
+				smallGaugeDef.Title = "Safety Training Hours";
+				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
+				SetScale(smallGaugeDef, series);
+				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divSafetyTrainingHours_Metrics);
+			}
 		}
 	}
 }
