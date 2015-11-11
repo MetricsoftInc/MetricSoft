@@ -66,7 +66,7 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
 				<asp:Label ID="lblTaskComments" runat="server" Text="<%$ Resources:LocalizedText, Comments %>" CssClass="prompt"></asp:Label>
->			</div>
+			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbTaskComments" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd" meta:resourcekey="tbTaskCommentsResource1"></asp:TextBox>
 			</div>
