@@ -175,76 +175,83 @@ namespace SQM.Website.EHS
 				PdfWriter.GetInstance(document, output);
 
 				document.Open();
-				 
-				//
-				// Table 1 - Header
-				//
 
-				var table1 = new PdfPTable(new float[] { 162f, 378f });
-				table1.TotalWidth = 540f;
-				table1.LockedWidth = true;
-				table1.DefaultCell.Border = 0;
-				table1.DefaultCell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
-				table1.DefaultCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
-				table1.SpacingAfter = 10f;
-
-				iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(logoUrl);
-				img.ScaleToFit(102f, 51f);
-				var imgCell = new PdfPCell() { Border = 0 };
-				imgCell.AddElement(img);
-				table1.AddCell(imgCell);
-
-				var hdrFont = new Font(headerFont.BaseFont, 24, 0, darkGrayColor);
-				table1.AddCell(new PdfPCell(new Phrase(GetXLAT("HS_5PHASE", "TITLE").DESCRIPTION, hdrFont))
+				try
 				{
-					HorizontalAlignment = Element.ALIGN_RIGHT,
-					VerticalAlignment = Element.ALIGN_MIDDLE,
-					Border = 0
-				});
-				
+					//
+					// Table 1 - Header
+					//
 
-				//
-				// Table 4 - Photos
-				//
+					var table1 = new PdfPTable(new float[] { 162f, 378f });
+					table1.TotalWidth = 540f;
+					table1.LockedWidth = true;
+					table1.DefaultCell.Border = 0;
+					table1.DefaultCell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+					table1.DefaultCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+					table1.SpacingAfter = 10f;
 
-				var table4 = new PdfPTable(new float[] { 180f, 180f, 180f });
-				table4.TotalWidth = 540f;
-				table4.LockedWidth = true;
+					iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(logoUrl);
+					img.ScaleToFit(102f, 51f);
+					var imgCell = new PdfPCell() { Border = 0 };
+					imgCell.AddElement(img);
+					table1.AddCell(imgCell);
 
-				if (pageData.photoData != null && pageData.photoData.Count() > 0)
-				{
-					table4.AddCell(new PdfPCell(new Phrase("Photos", infoFont)) { BackgroundColor = darkGrayColor, Padding = 10f, Border = 0, Colspan = 3 });
-
-					var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
-
-					int i = 0;
-					for (i = 0; i < pageData.photoData.Count; i++)
+					var hdrFont = new Font(headerFont.BaseFont, 24, 0, darkGrayColor);
+					table1.AddCell(new PdfPCell(new Phrase(GetXLAT("HS_5PHASE", "TITLE").DESCRIPTION, hdrFont))
 					{
-						var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
+						HorizontalAlignment = Element.ALIGN_RIGHT,
+						VerticalAlignment = Element.ALIGN_MIDDLE,
+						Border = 0
+					});
 
-						iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
-						photo.ScaleToFit(176f, 132f);
-						photoCell.AddElement(photo);
 
-						photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
+					//
+					// Table 4 - Photos
+					//
 
-						table4.AddCell(photoCell);
+					var table4 = new PdfPTable(new float[] { 180f, 180f, 180f });
+					table4.TotalWidth = 540f;
+					table4.LockedWidth = true;
+
+					if (pageData.photoData != null && pageData.photoData.Count() > 0)
+					{
+						table4.AddCell(new PdfPCell(new Phrase("Photos", infoFont)) { BackgroundColor = darkGrayColor, Padding = 10f, Border = 0, Colspan = 3 });
+
+						var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
+
+						int i = 0;
+						for (i = 0; i < pageData.photoData.Count; i++)
+						{
+							var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
+
+							iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
+							photo.ScaleToFit(176f, 132f);
+							photoCell.AddElement(photo);
+
+							photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
+
+							table4.AddCell(photoCell);
+						}
+						// pad remaining cells in row or else table will be corrupt
+						int currentCol = i % 3;
+						for (int j = 0; j < 3 - currentCol; j++)
+							table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
 					}
-					// pad remaining cells in row or else table will be corrupt
-					int currentCol = i % 3;
-					for (int j = 0; j < 3 - currentCol; j++)
-						table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 }); 
-				}
 
-				document.Add(table1);
-				document.Add(IDSection(pageData));
-				document.Add(HeaderSection(pageData));
-				document.Add(IncidentSection(pageData));
-				document.Add(ContainmentSection(pageData));
-				document.Add(CauseSection(pageData));
-				document.Add(ActionSection(pageData));
-				document.Add(ReviewSection(pageData));
-				document.Add(table4);
+					document.Add(table1);
+					document.Add(IDSection(pageData));
+					document.Add(HeaderSection(pageData));
+					document.Add(IncidentSection(pageData));
+					document.Add(ContainmentSection(pageData));
+					document.Add(CauseSection(pageData));
+					document.Add(ActionSection(pageData));
+					document.Add(ReviewSection(pageData));
+					document.Add(table4);
+
+				}
+				catch
+				{
+				}
 
 				document.Close();
 
