@@ -157,8 +157,6 @@ namespace SQM.Website
 			}
 		}
 
-
-
 		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
@@ -168,16 +166,14 @@ namespace SQM.Website
 			totalFormSteps = formSteps.Count();
 
 			InitializeForm();
-
 		}
-
 
 		void InitializeForm()
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			pnlRoot5Y.Visible = true;
-			rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId);
+			rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId, true);
 			rptRootCause.DataBind();
 		}
 
