@@ -505,7 +505,7 @@
     <value>Editar</value>
   </data>
   <data name="MobileFilterViewOptionsText" xml:space="preserve">
-    <value>Options</value>
+    <value>Opciones</value>
   </data>
   <data name="MobileFilterViewTitleFormat" xml:space="preserve">
     <value>Filter by {0}</value>
@@ -523,7 +523,7 @@
     <value>Cancelar</value>
   </data>
   <data name="MobileViewDoneButtonText" xml:space="preserve">
-    <value>Done</value>
+    <value>Hecho</value>
   </data>
   <data name="MobileViewGroupsText" xml:space="preserve">
     <value>View Groups</value>

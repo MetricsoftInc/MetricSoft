@@ -10,7 +10,7 @@
                                                             <HeaderStyle CssClass="HeadingCellText" />
                                                             <RowStyle CssClass="DataCell" />
                 	                                        <Columns>
-                                                                <asp:TemplateField HeaderText="Task"  ItemStyle-Width="15%">
+                                                                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Task %>" ItemStyle-Width="15%">
 							                                        <ItemTemplate>
                                                                         <asp:Label ID="lblIssueTask_out" runat="server"></asp:Label>
                                                                     </ItemTemplate>

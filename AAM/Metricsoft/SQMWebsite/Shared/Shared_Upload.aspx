@@ -195,7 +195,7 @@
                                                                                 <table cellpadding="1" cellspacing="1">
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <asp:Button ID="Button1" runat="server" class="buttonStd" Text="Done" OnClientClick="javascript:window.opener.document.forms[0].submit(); window.close();" />
+                                                                                            <asp:Button ID="Button1" runat="server" class="buttonStd" Text="<%$ Resources:LocalizedText, Done %>" OnClientClick="javascript:window.opener.document.forms[0].submit(); window.close();" />
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>

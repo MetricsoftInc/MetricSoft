@@ -121,91 +121,91 @@
     <value>Please do not remove this key.</value>
   </data>
   <data name="Recurrence" xml:space="preserve">
-    <value>Recurrence</value>
+    <value>Recurrencia</value>
   </data>
   <data name="Hourly" xml:space="preserve">
-    <value>Hourly</value>
+    <value>Cada hora</value>
   </data>
   <data name="Daily" xml:space="preserve">
-    <value>Daily</value>
+    <value>Diariamente</value>
   </data>
   <data name="Weekly" xml:space="preserve">
-    <value>Weekly</value>
+    <value>Cada Semena</value>
   </data>
   <data name="Monthly" xml:space="preserve">
-    <value>Monthly</value>
+    <value>Mensualmente</value>
   </data>
   <data name="Yearly" xml:space="preserve">
-    <value>Yearly</value>
+    <value>Anual</value>
   </data>
   <data name="Every" xml:space="preserve">
-    <value>Every</value>
+    <value>Cada</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>hour(s)</value>
+    <value>hora(s)</value>
   </data>
   <data name="Days" xml:space="preserve">
-    <value>day(s)</value>
+    <value>día(s)</value>
   </data>
   <data name="Weeks" xml:space="preserve">
-    <value>week(s) on</value>
+    <value>semana(s) en</value>
   </data>
   <data name="Months" xml:space="preserve">
-    <value>month(s)</value>
+    <value>mes(es)</value>
   </data>
   <data name="EveryWeekday" xml:space="preserve">
-    <value>Every weekday</value>
+    <value>Cada día de la semana</value>
   </data>
   <data name="RecurEvery" xml:space="preserve">
-    <value>Recur every</value>
+    <value>Repita cada</value>
   </data>
   <data name="Day" xml:space="preserve">
-    <value>Day</value>
+    <value>Día</value>
   </data>
   <data name="OfEvery" xml:space="preserve">
-    <value>of every</value>
+    <value>de todo</value>
   </data>
   <data name="First" xml:space="preserve">
-    <value>first</value>
+    <value>primera</value>
   </data>
   <data name="Second" xml:space="preserve">
-    <value>second</value>
+    <value>segundo</value>
   </data>
   <data name="Third" xml:space="preserve">
-    <value>third</value>
+    <value>tercera</value>
   </data>
   <data name="Fourth" xml:space="preserve">
-    <value>fourth</value>
+    <value>cuarto</value>
   </data>
   <data name="Last" xml:space="preserve">
-    <value>last</value>
+    <value>último</value>
   </data>
   <data name="MaskDay" xml:space="preserve">
-    <value>day</value>
+    <value>día</value>
   </data>
   <data name="MaskWeekday" xml:space="preserve">
-    <value>weekday</value>
+    <value>día de la semana</value>
   </data>
   <data name="MaskWeekendDay" xml:space="preserve">
-    <value>weekend day</value>
+    <value>día del fin de semana</value>
   </data>
   <data name="The" xml:space="preserve">
-    <value>The</value>
+    <value>El</value>
   </data>
   <data name="Of" xml:space="preserve">
     <value>de</value>
   </data>
   <data name="NoEndDate" xml:space="preserve">
-    <value>No end date</value>
+    <value>No hay fechas finales</value>
   </data>
   <data name="EndAfter" xml:space="preserve">
-    <value>End after</value>
+    <value>Fin después</value>
   </data>
   <data name="EndByThisDate" xml:space="preserve">
-    <value>End by</value>
+    <value>Fin por</value>
   </data>
   <data name="Occurrences" xml:space="preserve">
-    <value>occurrences</value>
+    <value>ocurrencias</value>
   </data>
   <data name="CalendarOK" xml:space="preserve">
     <value>Está bien</value>
@@ -247,6 +247,6 @@
     <value>Every working day</value>
   </data>
   <data name="Years" xml:space="preserve">
-    <value>year(s)</value>
+    <value>año(s)</value>
   </data>
 </root>

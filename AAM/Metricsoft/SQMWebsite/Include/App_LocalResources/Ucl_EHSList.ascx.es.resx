@@ -138,13 +138,7 @@
   <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
     <value>Entradas</value>
   </data>
-  <data name="lblDateSelect1Resource1.Text" xml:space="preserve">
-    <value>Mes del informe</value>
-  </data>
-  <data name="lblDateSelect2Resource1.Text" xml:space="preserve">
-    <value>Mes del informe</value>
-  </data>
-  <data name="lblInputPeriodHdrResource1.Text" xml:space="preserve">
+  <data name="reportingMonthResource1.Text" xml:space="preserve">
     <value>Mes del informe</value>
   </data>
   <data name="lblInputStatus3_outResource1.Text" xml:space="preserve">
@@ -155,9 +149,6 @@
   </data>
   <data name="lblInputStatusOf_outResource1.Text" xml:space="preserve">
     <value> de </value>
-  </data>
-  <data name="lblPeriodSelectHdrResource1.Text" xml:space="preserve">
-    <value>Mes del informe</value>
   </data>
   <data name="lblRateResource1.Text" xml:space="preserve">
     <value> Fecha grabada en tipo de cambio </value>

@@ -243,7 +243,7 @@
             </tr>
         </table>
             <div class="borderSoft" style="margin-top: 3px;">
-                <asp:Button id="btnAddChart1" runat="server" text="Add Chart" OnClick="onAddChartClick" meta:resourcekey="btnAddChart1Resource1"/>
+                <asp:Button id="btnAddChart1" runat="server" Text="Add Chart" OnClick="onAddChartClick" meta:resourcekey="btnAddChartResource1"/>
                 <asp:Repeater runat="server" ID="rptViewItem" ClientIDMode="AutoID" OnItemDataBound="rptViewItem_OnItemDataBound">
 			    <FooterTemplate>
 			    </table></FooterTemplate>
@@ -443,7 +443,7 @@
 						</tr>
 					</ItemTemplate>
 		    </asp:Repeater>
-            <asp:Button id="btnAddChart2" runat="server" text="Add Chart" OnClick="onAddChartClick" meta:resourcekey="btnAddChart2Resource1"/>
+            <asp:Button id="btnAddChart2" runat="server" Text="Add Chart" OnClick="onAddChartClick" meta:resourcekey="btnAddChartResource1"/>
         </div>
     </div>
     <div id="divExport" runat="server">

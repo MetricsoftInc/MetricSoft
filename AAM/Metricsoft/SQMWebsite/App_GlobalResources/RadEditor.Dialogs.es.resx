@@ -186,7 +186,7 @@ Press "OK" to confirm deletion.</value>
     <value>Control Buttons</value>
   </data>
   <data name="Common_Create" xml:space="preserve">
-    <value>Create</value>
+    <value>Crear</value>
   </data>
   <data name="Common_CreateNewFolder" xml:space="preserve">
     <value>Enter the new folder name</value>
@@ -747,7 +747,7 @@ Press "OK" to confirm deletion.</value>
     <value>Name</value>
   </data>
   <data name="LinkManager_LinkSubject" xml:space="preserve">
-    <value>Subject</value>
+    <value>Tema</value>
   </data>
   <data name="LinkManager_LinkTarget" xml:space="preserve">
     <value>Objectivo</value>
@@ -2022,7 +2022,7 @@ Press "OK" to confirm deletion.</value>
     <value>Name</value>
   </data>
   <data name="InsertSelectDialog_Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Opciones</value>
   </data>
   <data name="InsertSelectDialog_PixelsOrPercents" xml:space="preserve">
     <value>pixels, %</value>

@@ -66,14 +66,14 @@
 		    </td>
             <td id="tdPeriodSelect" runat="server" class=summaryData valign=top  width="170px" visible="False">
 				<SPAN CLASS=summaryHeader>
-                    <asp:Label runat="server" ID="lblPeriodSelectHdr" Text="Reporting Month" meta:resourcekey="lblPeriodSelectHdrResource1"></asp:Label>
+                    <asp:Label runat="server" ID="lblPeriodSelectHdr" Text="Reporting Month" meta:resourcekey="reportingMonthResource1"></asp:Label>
                 </SPAN>
                 <BR>
                 <telerik:RadMonthYearPicker ID="radPeriodSelect" runat="server" OnSelectedDateChanged="radDateSelect1Click" AutoPostBack="True" CssClass="textStd" Width=165px Skin="Metro"><dateinput autopostback="True" dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
             </td>
             <td id="tdPeriod" runat="server" class=summaryData valign=top>
 				<SPAN CLASS=summaryHeader>
-                    <asp:Label runat="server" ID="lblInputPeriodHdr" Text="Reporting Month" meta:resourcekey="lblInputPeriodHdrResource1"></asp:Label>
+                    <asp:Label runat="server" ID="lblInputPeriodHdr" Text="Reporting Month" meta:resourcekey="reportingMonthResource1"></asp:Label>
                 </SPAN>
                 <BR>
 				<asp:Label runat="server" ID="lblPeriodFrom_out"></asp:Label>
@@ -127,14 +127,14 @@
             <td id="Td1" runat="server" class=summaryData valign=top  width="65%">
                 <span id="divFromDate" runat="server">
 				    <span CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblDateSelect1" Text="Reporting Month" meta:resourcekey="lblDateSelect1Resource1"></asp:Label>
+                        <asp:Label runat="server" ID="lblDateSelect1" Text="Reporting Month" meta:resourcekey="reportingMonthResource1"></asp:Label>
                     </span>
                     <BR>
 				    <telerik:RadMonthYearPicker ID="radDateSelect0" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
                 </span>
                 <span id="divToDate" runat="server">
                    <span CLASS=summaryHeader>
-                        <asp:Label runat="server" ID="lblDateSelect2" Text="Reporting Month" meta:resourcekey="lblDateSelect2Resource1"></asp:Label>
+                        <asp:Label runat="server" ID="lblDateSelect2" Text="Reporting Month" meta:resourcekey="reportingMonthResource1"></asp:Label>
                     </span>
                     <BR>
 				    <telerik:RadMonthYearPicker ID="radDateSelect1" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>

@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnTaskDetailsResource1.ToolTip" xml:space="preserve">
-    <value>View task details</value>
+    <value>Ver los detalles de la tarea</value>
   </data>
   <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
-    <value>Task ID</value>
+    <value>Identificación de tareas</value>
   </data>
   <data name="GridTemplateColumnResource4.HeaderText" xml:space="preserve">
-    <value>Create Date</value>
+    <value>Fecha de creación</value>
   </data>
   <data name="imgTaskStatusResource1.ToolTip" xml:space="preserve">
-    <value>Pending</value>
+    <value>Pendiente</value>
   </data>
   <data name="lblTaskListEmptyResource1.Text" xml:space="preserve">
-    <value>Task list is empty.</value>
+    <value>La lista de tareas está vacía.</value>
   </data>
   <data name="lblTaskStriptInstructResource1.Text" xml:space="preserve">
-    <value>Tasks Overdue</value>
+    <value>Tarea atrasado</value>
   </data>
   <data name="lbTaskIdResource1.ToolTip" xml:space="preserve">
-    <value>View or update this Task</value>
+    <value>Ver o actualizar esta tarea</value>
   </data>
 </root>

@@ -179,7 +179,7 @@
 				<div id="divGVIssueListScroll" runat="server" class="">
 					<asp:GridView runat="server" ID="gvIssueList" Name="gvIssueList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="False" CellPadding="1" PageSize="20" AllowSorting="True" Width="100%" OnRowDataBound="gvIssueList_OnRowDataBound" meta:resourcekey="gvIssueListResource1">
 						<Columns>
-							<asp:TemplateField HeaderText="Issue ID" meta:resourcekey="TemplateFieldResource1">
+							<asp:TemplateField HeaderText="Issue ID" meta:resourcekey="IssueIDTemplateFieldResource1">
 								<ItemTemplate>
 									<asp:HiddenField ID="hfIssueID" runat="server" Value='<%# Eval("Incident.INCIDENT_ID") %>' />
 									<asp:LinkButton ID="lnkViewIssue_out" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' CssClass="linkUnderline" meta:resourcekey="lnkViewIssue_outResource1" OnClick="lnkIssue_Click" Text='<%# Eval("Incident.INCIDENT_ID") %>'></asp:LinkButton>
@@ -242,7 +242,7 @@
 				<div id="divGVIncidentListScroll" runat="server" class="">
 					<asp:GridView runat="server" ID="gvIncidentList" Name="gvIncidentList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="False" CellPadding="1" PageSize="20" AllowSorting="True" Width="100%" OnRowDataBound="gvIncidentList_OnRowDataBound" meta:resourcekey="gvIncidentListResource1">
 						<Columns>
-							<asp:TemplateField HeaderText="Issue ID" meta:resourcekey="TemplateFieldResource8">
+							<asp:TemplateField HeaderText="Issue ID" meta:resourcekey="IssueIDTemplateFieldResource1">
 								<ItemTemplate>
 									<asp:HiddenField ID="hfIncidentID" runat="server" Value='<%# Eval("INCIDENT_ID") %>' />
 									<asp:Label ID="lblIncidentID" runat="server" meta:resourcekey="lblIncidentIDResource1"></asp:Label>
@@ -321,7 +321,7 @@
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, Status %>" SortExpression="ProbCase.CLOSE_DT" UniqueName="TemplateColumn5">
 						<ItemTemplate>
 							<asp:Label ID="lblStatus" runat="server" meta:resourcekey="lblStatusResource1"></asp:Label>
-							<asp:Image ID="imgStatus" runat="server" meta:resourcekey="imgStatusResource1" Style="vertical-align: middle;" ToolTip="Case is inactive" Visible="False" />
+							<asp:Image ID="imgStatus" runat="server" meta:resourcekey="imgCaseStatusResource1" Style="vertical-align: middle;" ToolTip="Case is inactive" Visible="False" />
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
 					<telerik:GridTemplateColumn FilterControlAltText="Filter Reports column" HeaderText="Reports" meta:resourcekey="GridTemplateColumnResource16" UniqueName="Reports">

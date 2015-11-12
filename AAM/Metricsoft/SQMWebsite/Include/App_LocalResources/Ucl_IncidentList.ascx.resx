@@ -174,9 +174,6 @@
   <data name="imgCaseStatusResource1.ToolTip" xml:space="preserve">
     <value>Case is inactive</value>
   </data>
-  <data name="imgStatusResource1.ToolTip" xml:space="preserve">
-    <value>Case is inactive</value>
-  </data>
   <data name="lb8dResource1.Text" xml:space="preserve">
     <value>
 											&lt;span class="tableLink" style="color: #a00000; white-space: nowrap;"&gt;Edit 8D&lt;/span&gt;
@@ -248,10 +245,7 @@
 							&lt;img src="/images/ico16-documents.png" alt="" style="margin-top: -3px; vertical-align: middle;" /&gt; 8D Report
 							</value>
   </data>
-  <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
-    <value>Issue ID</value>
-  </data>
-  <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
+  <data name="IssueIDTemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Issue ID</value>
   </data>
 </root>

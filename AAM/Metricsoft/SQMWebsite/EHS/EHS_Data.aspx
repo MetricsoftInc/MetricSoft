@@ -139,9 +139,9 @@
 					<telerik:RadMonthYearPicker ID="rmypMonth" runat="server" Skin="Metro" DateInput-Skin="Metro" ShowPopupOnFocus="true" DateInput-CausesValidation="false" />
 				</span>
 				<div class="frequencyButtonDiv">
-					<input type="button" id="btnDaily" runat="server" value="Daily" />
-					<input type="button" id="btnWeekly" runat="server" value="Weekly" />
-					<input type="button" id="btnMonthly" runat="server" value="Monthly" />
+					<input type="button" id="btnDaily" runat="server" value="<%$ Resources:RadScheduler.Main, AdvancedDaily %>" />
+					<input type="button" id="btnWeekly" runat="server" value="<%$ Resources:RadScheduler.Main, AdvancedWeekly %>" />
+					<input type="button" id="btnMonthly" runat="server" value="<%$ Resources:RadScheduler.Main, AdvancedMonthly %>" />
 				</div>
 			</div>
 			<br />

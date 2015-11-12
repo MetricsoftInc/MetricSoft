@@ -504,4 +504,10 @@
   <data name="SupplierLocation" xml:space="preserve">
     <value>Supplier Location</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
 </root>

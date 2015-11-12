@@ -175,12 +175,12 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
 					<span class="labelMultiLineText">
-						<asp:Label ID="lbLocalDescSM" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescSMResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
+						<asp:Label ID="lbLocalDescSM" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbLocalDescXS" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescXSResource1"></asp:Label><span class="requiredStar">*</span></span>
+						<asp:Label ID="lbLocalDescXS" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 					<asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -233,12 +233,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbShiftSM" runat="server" Text="Shift" meta:resourcekey="lbShiftSMResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
+					<asp:Label ID="lbShiftSM" runat="server" Text="Shift" meta:resourcekey="lbShiftResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbShiftXS" runat="server" Text="Shift" meta:resourcekey="lbShiftXSResource1"></asp:Label><span class="requiredStar">*</span></span>
+					<asp:Label ID="lbShiftXS" runat="server" Text="Shift" meta:resourcekey="lbShiftResource1"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlShiftID" Skin="Metro" CssClass="WarnIfChanged" ZIndex="9000"  ExpandDirection="Up" DropDownHeight="100px" Width="278px" runat="server"></telerik:RadDropDownList>
@@ -254,7 +254,7 @@
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lblDeptTestXS" runat="server" Text="Body Part" meta:resourcekey="lblDeptTestXSResource1"></asp:Label><span class="requiredStar">*</span></span>
+					<asp:Label ID="lblDeptTestXS" runat="server" Text="<%$ Resources:LocalizedText, Department %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlDeptTest" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px" DropDownWidth="360px" CssClass="WarnIfChanged" Width="360px" runat="server"></telerik:RadDropDownList>
@@ -264,12 +264,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbInvolvedPersonSM" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonSMResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
+					<asp:Label ID="lbInvolvedPersonSM" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbInvolvedPersonXS" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonXSResource1"></asp:Label><span class="requiredStar">*</span></span>
+					<asp:Label ID="lbInvolvedPersonXS" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadAjaxPanel ID="rajx100" runat="server" HorizontalAlign="NotSet">
@@ -315,12 +315,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
 				<span class="labelMultiLineText">
-					<asp:Label ID="lbInvPersonStatementSM" runat="server" Text="Involved Person's Statement" meta:resourcekey="lbInvPersonStatementSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbInvPersonStatementSM" runat="server" Text="Involved Person's Statement" meta:resourcekey="lbInvPersonStatementResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbInvPersonStatementXS" runat="server" Text="Involved Person's Statement" meta:resourcekey="lbInvPersonStatementXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbInvPersonStatementXS" runat="server" Text="Involved Person's Statement" meta:resourcekey="lbInvPersonStatementResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbInvPersonStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -331,12 +331,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbSupvInformedDateSM" runat="server" Text="Date Supervisor Informed" meta:resourcekey="lbSupvInformedDateSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbSupvInformedDateSM" runat="server" Text="Date Supervisor Informed" meta:resourcekey="lbSupvInformedDateResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbSupvInformedDateXS" runat="server" Text="Date Supervisor Informed" meta:resourcekey="lbSupvInformedDateXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbSupvInformedDateXS" runat="server" Text="Date Supervisor Informed" meta:resourcekey="lbSupvInformedDateResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpSupvInformedDate" Skin="Metro" CssClass="WarnIfChanged" Width="278px" runat="server" ShowPopupOnFocus="True">
@@ -360,12 +360,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
 				<span class="labelMultiLineText">
-					<asp:Label ID="lbSupervisorStatementSM" runat="server" Text="Supervisor's Statement" meta:resourcekey="lbSupervisorStatementSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbSupervisorStatementSM" runat="server" Text="Supervisor's Statement" meta:resourcekey="lbSupervisorStatementResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbSupervisorStatementXS" runat="server" Text="Supervisor's Statement" meta:resourcekey="lbSupervisorStatementXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbSupervisorStatementXS" runat="server" Text="Supervisor's Statement" meta:resourcekey="lbSupervisorStatementResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbSupervisorStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server"></asp:TextBox>
@@ -373,95 +373,95 @@
 		</div>
 
 		<telerik:RadAjaxPanel ID="ajaxWitness" runat="server" HorizontalAlign="NotSet">
-			<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
-				<FooterTemplate>
-					<br class="visible-xs" style="padding-top: 5px;" />
-					<div class="row">
-						<div class="col-sm-4 text-left tanLabelCol">
-							<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddWitnessResource1"></asp:Button>
-						</div>
-						<div class="col-xs-12 col-sm-8 text-left"></div>
+		<asp:Repeater runat="server" ID="rptWitness" ClientIDMode="AutoID" OnItemDataBound="rptWitness_OnItemDataBound" OnItemCommand="rptWitness_ItemCommand">
+			<FooterTemplate>
+				<br class="visible-xs" style="padding-top: 5px;" />
+				<div class="row">
+					<div class="col-sm-4 text-left tanLabelCol">
+						<asp:Button ID="btnAddWitness" CssClass="buttonAdd" runat="server" Font-Size="Smaller" ToolTip="Add Another Witness" Text="Add Another Witness" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddWitnessResource1"></asp:Button>
 					</div>
-				</FooterTemplate>
-				<ItemTemplate>
-					<div class="row text-left">
-						<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 100px;">
-							<span class="labelMultiLineText">
-							<asp:Label ID="lbWitnessColSM" runat="server" meta:resourcekey="lbWitnessColSMResource1" Text="Witness "></asp:Label>
-							<asp:Label ID="lbItemSeq" runat="server"></asp:Label>
-							<asp:Label ID="lbRqd1" runat="server" CssClass="requiredCloseStarFloat" Text="*"></asp:Label>
-							</span>
-						</div>
-						<div class="col-xs-12 visible-xs text-left-more">
-							<br />
-							<br />
-							<span>
-							<asp:Label ID="lbWitnessColXS" runat="server" meta:resourcekey="lbWitnessColXSResource1" Text="Witness "></asp:Label>
-							<asp:Label ID="lbItemSeq2" runat="server"></asp:Label>
-							<asp:Label ID="lbRqd2" runat="server" CssClass="requiredCloseStar" Text="*"></asp:Label>
-							</span>
-						</div>
-						<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
-							<div class="row">
-								<div class="col-xs-12 col-sm-4 text-left">
-									<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
-									&nbsp;&nbsp;
-									<telerik:RadAjaxPanel ID="rajx200" runat="server" HorizontalAlign="NotSet">
-										<telerik:RadSearchBox ID="rsbWitnessName" runat="server" CssClass="NoBorders" DataKeyNames="PersonId" EmptyMessage="Begin typing (or spacebar)" MaxResultCount="400"
-											OnSearch="rsbWitnessName_Search" ShowSearchButton="False" Skin="Metro" Width="100%">
-											<DropDownSettings Height="320px" Width="510px">
-												<ItemTemplate>
-													<table cellpadding="0" cellspacing="0" class="searchBoxResults" style="margin-left: 5px;" width="500">
-														<tr>
-															<td style="background: #EEEAE0; width: 110px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b></td>
-															<td style="background: #fff; width: 200px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonEmail") %></b></td>
-															<td id="tdPersonID" runat="server" visible="False"><%# DataBinder.Eval(Container.DataItem, "PersonId") %></td>
-														</tr>
-													</table>
-												</ItemTemplate>
-												<HeaderTemplate>
-													<table cellpadding="0" cellspacing="1" class="searchBoxResults" style="margin-left: 5px;" width="500">
-														<tr>
-															<th style="width: 110px; text-align: left;">Name </th>
-															<th style="width: 200px; text-align: left;">Email </th>
-															<th></th>
-														</tr>
-													</table>
-												</HeaderTemplate>
-											</DropDownSettings>
-				<%--							<SearchContext DataSourceID="" Enabled="False" TabIndex="0" ShowDefaultItem = "False">
-											</SearchContext>--%>
-										</telerik:RadSearchBox>
-									</telerik:RadAjaxPanel>
-								</div>
-								<div class="col-xs-12 col-sm-4 text-left">
-									<asp:Label ID="lbWitStmntPrompt" runat="server" meta:resourcekey="lbWitStmntPromptResource1" Text="Statement:"></asp:Label>
-									&nbsp;&nbsp;
-									<asp:TextBox ID="tbWitnessStatement" runat="server" Height="60px" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
-								</div>
-								<div class="col-xs-12 col-sm-3 text-left">
-									<span style="display: inline-block; padding-top:3px;">
-									<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" CssClass="buttonWrapText" ForeColor="DarkRed" Height="10px" OnClientClicking="DeleteConfirmItem" SingleClick="True" Width="100%">
-									</telerik:RadButton>
-									</span>
-								</div>
+					<div class="col-xs-12 col-sm-8 text-left"></div>
+				</div>
+			</FooterTemplate>
+			<ItemTemplate>
+				<div class="row text-left">
+					<div class="col-sm-4 hidden-xs text-left tanLabelColHigh" style="height: 100px;">
+						<span class="labelMultiLineText">
+						<asp:Label ID="lbWitnessColSM" runat="server" meta:resourcekey="lbWitnessColResource1" Text="Witness "></asp:Label>
+						<asp:Label ID="lbItemSeq" runat="server"></asp:Label>
+						<asp:Label ID="lbRqd1" runat="server" CssClass="requiredCloseStarFloat" Text="*"></asp:Label>
+						</span>
+					</div>
+					<div class="col-xs-12 visible-xs text-left-more">
+						<br />
+						<br />
+						<span>
+						<asp:Label ID="lbWitnessColXS" runat="server" meta:resourcekey="lbWitnessColResource1" Text="Witness "></asp:Label>
+						<asp:Label ID="lbItemSeq2" runat="server"></asp:Label>
+						<asp:Label ID="lbRqd2" runat="server" CssClass="requiredCloseStar" Text="*"></asp:Label>
+						</span>
+					</div>
+					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4 text-left">
+								<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
+								&nbsp;&nbsp;
+								<telerik:RadAjaxPanel ID="rajx200" runat="server" HorizontalAlign="NotSet">
+									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" CssClass="NoBorders" DataKeyNames="PersonId" EmptyMessage="Begin typing (or spacebar)" MaxResultCount="400"
+										OnSearch="rsbWitnessName_Search" ShowSearchButton="False" Skin="Metro" Width="100%">
+										<DropDownSettings Height="320px" Width="510px">
+											<ItemTemplate>
+												<table cellpadding="0" cellspacing="0" class="searchBoxResults" style="margin-left: 5px;" width="500">
+													<tr>
+														<td style="background: #EEEAE0; width: 110px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonName") %></b></td>
+														<td style="background: #fff; width: 200px;"><b><%# DataBinder.Eval(Container.DataItem, "PersonEmail") %></b></td>
+														<td id="tdPersonID" runat="server" visible="False"><%# DataBinder.Eval(Container.DataItem, "PersonId") %></td>
+													</tr>
+												</table>
+											</ItemTemplate>
+											<HeaderTemplate>
+												<table cellpadding="0" cellspacing="1" class="searchBoxResults" style="margin-left: 5px;" width="500">
+													<tr>
+														<th style="width: 110px; text-align: left;">Name </th>
+														<th style="width: 200px; text-align: left;">Email </th>
+														<th></th>
+													</tr>
+												</table>
+											</HeaderTemplate>
+										</DropDownSettings>
+			<%--							<SearchContext DataSourceID="" Enabled="False" TabIndex="0" ShowDefaultItem = "False">
+										</SearchContext>--%>
+									</telerik:RadSearchBox>
+								</telerik:RadAjaxPanel>
+							</div>
+							<div class="col-xs-12 col-sm-4 text-left">
+								<asp:Label ID="lbWitStmntPrompt" runat="server" meta:resourcekey="lbWitStmntPromptResource1" Text="Statement:"></asp:Label>
+								&nbsp;&nbsp;
+								<asp:TextBox ID="tbWitnessStatement" runat="server" Height="60px" SkinID="Metro" TextMode="MultiLine" Width="100%"></asp:TextBox>
+							</div>
+							<div class="col-xs-12 col-sm-3 text-left">
+								<span style="display: inline-block; padding-top:3px;">
+								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" CssClass="buttonWrapText" ForeColor="DarkRed" Height="10px" OnClientClicking="DeleteConfirmItem" SingleClick="True" Width="100%">
+								</telerik:RadButton>
+								</span>
 							</div>
 						</div>
 					</div>
-					<br class="visible-xs" style="padding-top: 5px;" />
-				</ItemTemplate>
-			</asp:Repeater>
+				</div>
+				<br class="visible-xs" style="padding-top: 5px;" />
+			</ItemTemplate>
+		</asp:Repeater>
 		</telerik:RadAjaxPanel>
 
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbInsideOutsideSM" runat="server" Text="Inside or Outside Building" meta:resourcekey="lbInsideOutsideSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbInsideOutsideSM" runat="server" Text="Inside or Outside Building" meta:resourcekey="lbInsideOutsideResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbInsideOutsideXS" runat="server" Text="Inside or Outside Building" meta:resourcekey="lbInsideOutsideXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbInsideOutsideXS" runat="server" Text="Inside or Outside Building" meta:resourcekey="lbInsideOutsideResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<span>
@@ -474,12 +474,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbDirectSupvSM" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbDirectSupvSM" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbDirectSupvXS" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbDirectSupvXS" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 				<span>
@@ -492,12 +492,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbErgConcernSM" runat="server" Text="Ergonomic Concerns" meta:resourcekey="lbErgConcernSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbErgConcernSM" runat="server" Text="Ergonomic Concerns" meta:resourcekey="lbErgConcernResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbErgConcernXS" runat="server" Text="Ergonomic Concerns" meta:resourcekey="lbErgConcernXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbErgConcernXS" runat="server" Text="Ergonomic Concerns" meta:resourcekey="lbErgConcernResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 				<span>
@@ -510,12 +510,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
 				<span>
-					<asp:Label ID="lbStdProcsFollowedSM" runat="server" Text="Standard Work Procedures Followed without Deviation?" meta:resourcekey="lbStdProcsFollowedSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbStdProcsFollowedSM" runat="server" Text="Standard Work Procedures Followed without Deviation?" meta:resourcekey="lbStdProcsFollowedResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;">
 				<br />
 				<span>
-					<asp:Label ID="lbStdProcsFollowedXS" runat="server" Text="Standard Work Procedures Followed without Deviation?" meta:resourcekey="lbStdProcsFollowedXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbStdProcsFollowedXS" runat="server" Text="Standard Work Procedures Followed without Deviation?" meta:resourcekey="lbStdProcsFollowedResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol" style="height: 40px;">
 				<span>
@@ -528,12 +528,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbTrainingProvidedSM" runat="server" Text="Was Training for this Task Provided?" meta:resourcekey="lbTrainingProvidedSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbTrainingProvidedSM" runat="server" Text="Was Training for this Task Provided?" meta:resourcekey="lbTrainingProvidedResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbTrainingProvidedXS" runat="server" Text="Was Training for this Task Provided?" meta:resourcekey="lbTrainingProvidedXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbTrainingProvidedXS" runat="server" Text="Was Training for this Task Provided?" meta:resourcekey="lbTrainingProvidedResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 greyControlCol">
 				<span>
@@ -546,12 +546,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
 				<span>
-					<asp:Label ID="lbTaskYearsSM" runat="server" Text="How long has associate been doing this job/specific task?" meta:resourcekey="lbTaskYearsSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbTaskYearsSM" runat="server" Text="How long has associate been doing this job/specific task?" meta:resourcekey="lbTaskYearsResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;">
 				<br />
 				<span>
-					<asp:Label ID="lbTaskYearsXS" runat="server" Text="How long has associate been doing this job/specific task?" meta:resourcekey="lbTaskYearsXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbTaskYearsXS" runat="server" Text="How long has associate been doing this job/specific task?" meta:resourcekey="lbTaskYearsResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 40px;">
 				<telerik:RadDropDownList ID="rddlJobTenure" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="300px" runat="server"></telerik:RadDropDownList>
@@ -561,12 +561,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbInjuryTypeSM" runat="server" Text="Type of Injury" meta:resourcekey="lbInjuryTypeSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbInjuryTypeSM" runat="server" Text="Type of Injury" meta:resourcekey="lbInjuryTypeResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbInjuryTypeXS" runat="server" Text="Type of Injury" meta:resourcekey="lbInjuryTypeXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbInjuryTypeXS" runat="server" Text="Type of Injury" meta:resourcekey="lbInjuryTypeResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="300px" runat="server"></telerik:RadDropDownList>
@@ -576,12 +576,12 @@
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
-					<asp:Label ID="lbBodyPartSM" runat="server" Text="Body Part" meta:resourcekey="lbBodyPartSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+					<asp:Label ID="lbBodyPartSM" runat="server" Text="Body Part" meta:resourcekey="lbBodyPartResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
 			<div class="col-xs-12 visible-xs text-left-more">
 				<br />
 				<span>
-					<asp:Label ID="lbBodyPartXS" runat="server" Text="Body Part" meta:resourcekey="lbBodyPartXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+					<asp:Label ID="lbBodyPartXS" runat="server" Text="Body Part" meta:resourcekey="lbBodyPartResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px"  Width="278px" runat="server"></telerik:RadDropDownList>
@@ -592,12 +592,12 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbFirstAidSM" runat="server" Text="First Aid?" meta:resourcekey="lbFirstAidSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						<asp:Label ID="lbFirstAidSM" runat="server" Text="First Aid?" meta:resourcekey="lbFirstAidResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbFirstAidXS" runat="server" Text="First Aid?" meta:resourcekey="lbFirstAidXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						<asp:Label ID="lbFirstAidXS" runat="server" Text="First Aid?" meta:resourcekey="lbFirstAidResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 greyControlCol">
 					<span>
@@ -610,12 +610,12 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbRecordableSM" runat="server" Text="Recordable?" meta:resourcekey="lbRecordableSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						<asp:Label ID="lbRecordableSM" runat="server" Text="Recordable?" meta:resourcekey="lbRecordableResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbRecordableXS" runat="server" Text="Recordable?" meta:resourcekey="lbRecordableXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						<asp:Label ID="lbRecordableXS" runat="server" Text="Recordable?" meta:resourcekey="lbRecordableResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 greyControlCol">
 					<span>
@@ -628,12 +628,12 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbFatalitySM" runat="server" Text="Fatality?" meta:resourcekey="lbFatalitySMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						<asp:Label ID="lbFatalitySM" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbFatalityXS" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						<asp:Label ID="lbFatalityXS" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 greyControlCol">
 					<span>
@@ -646,12 +646,12 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbLostTimeSM" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeSMResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						<asp:Label ID="lbLostTimeSM" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbLostTimeXS" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeXSResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						<asp:Label ID="lbLostTimeXS" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
 				<div class="col-xs-12 col-sm-8 greyControlCol">
 					<span>

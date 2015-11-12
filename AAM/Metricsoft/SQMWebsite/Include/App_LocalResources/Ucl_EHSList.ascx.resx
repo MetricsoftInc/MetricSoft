@@ -138,13 +138,7 @@
   <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
     <value>Inputs</value>
   </data>
-  <data name="lblDateSelect1Resource1.Text" xml:space="preserve">
-    <value>Reporting Month</value>
-  </data>
-  <data name="lblDateSelect2Resource1.Text" xml:space="preserve">
-    <value>Reporting Month</value>
-  </data>
-  <data name="lblInputPeriodHdrResource1.Text" xml:space="preserve">
+  <data name="reportingMonthResource1.Text" xml:space="preserve">
     <value>Reporting Month</value>
   </data>
   <data name="lblInputStatus3_outResource1.Text" xml:space="preserve">
@@ -155,9 +149,6 @@
   </data>
   <data name="lblInputStatusOf_outResource1.Text" xml:space="preserve">
     <value> of </value>
-  </data>
-  <data name="lblPeriodSelectHdrResource1.Text" xml:space="preserve">
-    <value>Reporting Month</value>
   </data>
   <data name="lblRateResource1.Text" xml:space="preserve">
     <value> Exchange Rate Recorded On </value>

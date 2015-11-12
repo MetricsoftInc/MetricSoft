@@ -148,7 +148,7 @@
     <value>Units</value>
   </data>
   <data name="AdvancedWindowTitle" xml:space="preserve">
-    <value>Task</value>
+    <value>Tarea</value>
   </data>
   <data name="Append" xml:space="preserve">
     <value>Add Task</value>
@@ -175,13 +175,13 @@
     <value>Exportar a PDF</value>
   </data>
   <data name="HeaderDay" xml:space="preserve">
-    <value>Day</value>
+    <value>Día</value>
   </data>
   <data name="HeaderMonth" xml:space="preserve">
-    <value>Month</value>
+    <value>Mes</value>
   </data>
   <data name="HeaderWeek" xml:space="preserve">
-    <value>Week</value>
+    <value>Semana</value>
   </data>
   <data name="HeaderYear" xml:space="preserve">
     <value>Year</value>
