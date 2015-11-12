@@ -3,6 +3,7 @@
 <%@ Register Src="~/Include/Ucl_EHSIncidentDetails.ascx" TagName="IncidentDetails" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Contain.ascx" TagName="Containment" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Root5Y.ascx" TagName="RootCause" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Causation.ascx" TagName="Causation" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="Action" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
 
@@ -86,6 +87,7 @@
 									<div id="divSubnavPage" runat="server" class="borderSoft" visible="False">
 										<ucl:Containment id="uclContainment" runat="server" Visible="False" />
 										<ucl:RootCause id="uclRootCause" runat="server" Visible="False"/>
+										<ucl:Causation id="uclCausation" runat="server" Visible="False"/>
 										<ucl:Action id="uclAction" runat="server" Visible="False"/>
 										<ucl:Approval id="uclApproval" runat="server" Visible="False"/>
 									</div>
@@ -99,6 +101,8 @@
 											OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
 										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="3"/>
+										<asp:LinkButton ID="btnSubnavCausation" runat="server" Text="Causation" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+											OnClick="btnSubnav_Click" CommandArgument="6"/>
 										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="4"/>
 										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"

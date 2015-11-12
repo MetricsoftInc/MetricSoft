@@ -2152,14 +2152,14 @@ namespace SQM.Website
 		{
 			if (context == "new")
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
 				btnDelete.Visible = false;
 			}
 			else
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
+				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -2189,6 +2189,10 @@ namespace SQM.Website
 					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);
 					btnSubnav_Click(btnSubnavApproval, null);
 					break;
+				case "6":
+					status = uclCausation.UpdateCausation(EditIncidentId);
+					btnSubnav_Click(btnSubnavCausation, null);
+					break;
 				default:
 					if (IsEditContext)
 					{
@@ -2215,12 +2219,12 @@ namespace SQM.Website
 
 			LinkButton btn = (LinkButton)sender;
 
-			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclAction.Visible = uclApproval.Visible = false;
-			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
+			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
-			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
 			lblPageTitle.Text = Resources.LocalizedText.Incident;
 
@@ -2264,6 +2268,17 @@ namespace SQM.Website
 					uclApproval.IsEditContext = true;
 					uclApproval.EditIncidentId = EditIncidentId;
 					uclApproval.PopulateInitialForm();
+					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
+						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					break;
+				case "6":
+					lblPageTitle.Text = "Causation";
+					btnSubnavCausation.Enabled = false;
+					btnSubnavCausation.CssClass = "buttonLinkDisabled";
+					uclCausation.Visible = divSubnavPage.Visible = true;
+					uclCausation.IsEditContext = true;
+					uclCausation.EditIncidentId = EditIncidentId;
+					uclCausation.PopulateInitialForm(entities);
 					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
 						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
 					break;
