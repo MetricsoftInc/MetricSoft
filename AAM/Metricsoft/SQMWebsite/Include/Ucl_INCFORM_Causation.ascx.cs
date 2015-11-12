@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using System.Globalization;
+using System.Threading;
 
 namespace SQM.Website
 {
@@ -41,6 +43,16 @@ namespace SQM.Website
 
 		public void BindCausation(string incidentDesc, List<INCFORM_ROOT5Y> rootCauseList, List<INCFORM_CAUSATION> causationList)
 		{
+			if (SessionManager.SessionContext != null)
+			{
+				// do we really need to do this on user controls ???
+				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+
+				base.FrameworkInitialize();
+			}
+
 			pnlCausation.Visible = true;
 
 			lblIncidentDesc.Text = incidentDesc;

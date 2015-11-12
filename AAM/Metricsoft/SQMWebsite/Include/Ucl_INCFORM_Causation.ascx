@@ -4,9 +4,9 @@
  <asp:Panel ID="pnlCausation" Visible="False" runat="server">
 
 	<div class="container-fluid" style="margin-top: 10px;">
-		<asp:Label ID="lblIncidentDesc" runat="server" Text="incident description ..." CssClass="refText"></asp:Label>
+		<asp:Label ID="lblIncidentDesc" runat="server"  CssClass="refText"></asp:Label>
 		<br /><br />
-		<asp:Label ID="lblCausationTitle" runat="server" Text="Root Cause Determinations" CssClass="prompt"></asp:Label>
+		<asp:Label ID="lblCausationTitle" runat="server" Text="Root Cause Determinations ('why' did this incident occur ?)" CssClass="prompt"></asp:Label>
 		<br />
 		<div id="divRootCause" runat="server" style="margin-top: 5px;">
 			<asp:Label ID="lblNoneRootCause" runat="server" CssClass="labelEmphasis" Text="Root Cause determinations have not yet been defined."></asp:Label>
