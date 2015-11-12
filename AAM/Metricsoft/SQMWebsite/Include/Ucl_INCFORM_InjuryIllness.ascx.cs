@@ -193,7 +193,7 @@ namespace SQM.Website
 		{
 			try
 			{
-				PSsqmEntities entities = new PSsqmEntities();
+				entities = new PSsqmEntities();
 				companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 				lblResults.Text = "";
 
@@ -274,7 +274,7 @@ namespace SQM.Website
 		public void PopulateInitialForm()
 		{
 
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			INCIDENT incident = null;
 
@@ -427,7 +427,7 @@ namespace SQM.Website
 		void InitializeForm(int currentStep)
 		{
 
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 			
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
@@ -443,6 +443,7 @@ namespace SQM.Website
 				case "INCFORM_INJURYILLNESS":
 					pnlBaseForm.Visible = true;
 					uclroot5y.Visible = false;
+					uclCausation.Visible = false;
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
@@ -458,6 +459,7 @@ namespace SQM.Website
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
 					uclroot5y.Visible = false;
+					uclCausation.Visible = false;
 					uclcontain.Visible = true;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
@@ -467,6 +469,17 @@ namespace SQM.Website
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
 					uclroot5y.Visible = true;
+					uclCausation.Visible = false;
+					uclcontain.Visible = false;
+					uclaction.Visible = false;
+					uclapproval.Visible = false;
+					ucllosttime.Visible = false;
+					break;
+				case "INCFORM_CAUSATION":
+					LoadDependantForm(currentFormName);
+					pnlBaseForm.Visible = false;
+					uclroot5y.Visible = false;
+					uclCausation.Visible = true;
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = false;
@@ -476,6 +489,7 @@ namespace SQM.Website
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
 					uclroot5y.Visible = false;
+					uclCausation.Visible = false;
 					uclcontain.Visible = false;
 					uclaction.Visible = true;
 					uclapproval.Visible = false;
@@ -485,6 +499,7 @@ namespace SQM.Website
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
 					uclroot5y.Visible = false;
+					uclCausation.Visible = false;
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
 					uclapproval.Visible = true;
@@ -493,6 +508,7 @@ namespace SQM.Website
 				case "INCFORM_LOSTTIME_HIST":
 					LoadDependantForm(currentFormName);
 					pnlBaseForm.Visible = false;
+					uclroot5y.Visible = false;
 					uclroot5y.Visible = false;
 					uclcontain.Visible = false;
 					uclaction.Visible = false;
@@ -1159,6 +1175,12 @@ namespace SQM.Website
 					Save(false);
 					btnSubnav_Click(btnSubnavApproval, null);
 					break;
+				case "35":
+					//status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
+					CurrentStep = (int)EHSFormId.INCFORM_APPROVAL;
+					uclCausation.UpdateCausation(EditIncidentId);
+					btnSubnav_Click(btnSubnavCausation, null);
+					break;
 				case "6":
 					//status = ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
@@ -1187,16 +1209,14 @@ namespace SQM.Website
 
 		protected void btnSubnav_Click(object sender, EventArgs e)
 		{
-			//RadButton btn = (RadButton)sender;
-
 			LinkButton btn = (LinkButton)sender;
 
-			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;   //divSubnavPage.Visible =
+			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = false;   //divSubnavPage.Visible =
 			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavContainment.Enabled = true;
-			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
 			lblFormTitle.Text = Resources.LocalizedText.Incident;
 
@@ -1218,6 +1238,17 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_ROOT5Y;
 					InitializeForm(CurrentStep);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					break;
+				case "35":
+					lblFormTitle.Text = "Causation";
+					btnSubnavCausation.Enabled = false;
+					btnSubnavCausation.CssClass = "buttonLinkDisabled";
+					CurrentStep = (int)EHSFormId.INCFORM_CAUSATION;
+					uclCausation.Visible = true;
+					uclCausation.IsEditContext = true;
+					uclCausation.EditIncidentId = EditIncidentId;
+					uclCausation.PopulateInitialForm(entities);
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "4":
@@ -1308,7 +1339,7 @@ namespace SQM.Website
 	
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 			string savingForm = (from tc in entities.INCFORM_TYPE_CONTROL where tc.INCIDENT_TYPE_ID == typeId && tc.STEP_NUMBER == CurrentStep select tc.STEP_FORM).FirstOrDefault();
 
 			switch (savingForm)
@@ -1325,6 +1356,9 @@ namespace SQM.Website
 					if (incidentId == 0)
 						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 					uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId);
+					break;
+				case "INCFORM_CAUSATION":
+					uclCausation.UpdateCausation(EditIncidentId);
 					break;
 				case "INCFORM_ACTION":
 					if (incidentId == 0)
@@ -1416,7 +1450,7 @@ namespace SQM.Website
 
 		protected INCIDENT CreateNewIncident()
 		{
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 
 			decimal incidentId = 0;
 			var newIncident = new INCIDENT()
@@ -1447,7 +1481,7 @@ namespace SQM.Website
 
 		protected INCIDENT UpdateIncident(decimal incidentId)
 		{
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 
 			INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 			if (incident != null)
@@ -1475,7 +1509,7 @@ namespace SQM.Website
 		protected INCFORM_INJURYILLNESS CreateNewInjuryIllnessDetails(decimal incidentId)
 		{
 
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 
 			var newInjryIllnessDetails = new INCFORM_INJURYILLNESS();
 			
@@ -1665,7 +1699,7 @@ namespace SQM.Website
 
 		protected INCFORM_INJURYILLNESS UpdateInjuryIllnessDetails(decimal incidentId)
 		{
-			PSsqmEntities entities = new PSsqmEntities();
+			entities = new PSsqmEntities();
 
 			INCFORM_INJURYILLNESS injuryIllnessDetails = (from po in entities.INCFORM_INJURYILLNESS where po.INCIDENT_ID == incidentId select po).FirstOrDefault();
 

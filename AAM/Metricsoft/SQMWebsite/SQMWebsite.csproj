@@ -516,6 +516,8 @@
     <Content Include="Include\Ucl_EHSReport.ascx" />
     <Content Include="Include\Ucl_MetricList.ascx" />
     <Content Include="Include\Ucl_TaskStatus.ascx" />
+    <Content Include="Include\Ucl_IncidentSummary.ascx" />
+    <Content Include="Include\Ucl_INCFORM_Causation.ascx" />
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
@@ -1077,6 +1079,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1550,6 +1553,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1563,6 +1567,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -1636,6 +1641,20 @@
     </Compile>
     <Compile Include="Include\Ucl_TaskStatus.ascx.designer.cs">
       <DependentUpon>Ucl_TaskStatus.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_IncidentSummary.ascx.cs">
+      <DependentUpon>Ucl_IncidentSummary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_IncidentSummary.ascx.designer.cs">
+      <DependentUpon>Ucl_IncidentSummary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Causation.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Causation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Causation.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Causation.ascx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

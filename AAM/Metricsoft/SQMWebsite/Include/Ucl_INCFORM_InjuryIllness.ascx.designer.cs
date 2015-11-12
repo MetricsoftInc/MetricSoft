@@ -949,6 +949,15 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
         
         /// <summary>
+        /// uclCausation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_Causation uclCausation;
+        
+        /// <summary>
         /// uclaction control.
         /// </summary>
         /// <remarks>
@@ -1037,6 +1046,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavRootCause;
+        
+        /// <summary>
+        /// btnSubnavCausation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavCausation;
         
         /// <summary>
         /// btnSubnavAction control.

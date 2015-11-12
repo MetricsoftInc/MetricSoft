@@ -163,6 +163,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
 
 #endregion
 
@@ -2309,6 +2310,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<EHS_TARGETS> _EHS_TARGETS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_CAUSATION> INCFORM_CAUSATION
+        {
+            get
+            {
+                if ((_INCFORM_CAUSATION == null))
+                {
+                    _INCFORM_CAUSATION = base.CreateObjectSet<INCFORM_CAUSATION>("INCFORM_CAUSATION");
+                }
+                return _INCFORM_CAUSATION;
+            }
+        }
+        private ObjectSet<INCFORM_CAUSATION> _INCFORM_CAUSATION;
 
         #endregion
 
@@ -3360,6 +3377,14 @@ namespace SQM.Website
         public void AddToEHS_TARGETS(EHS_TARGETS eHS_TARGETS)
         {
             base.AddObject("EHS_TARGETS", eHS_TARGETS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_CAUSATION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_CAUSATION(INCFORM_CAUSATION iNCFORM_CAUSATION)
+        {
+            base.AddObject("INCFORM_CAUSATION", iNCFORM_CAUSATION);
         }
 
         #endregion
@@ -21247,6 +21272,182 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_CAUSATION")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_CAUSATION : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_CAUSATION object.
+        /// </summary>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="cAUSEATION_CD">Initial value of the CAUSEATION_CD property.</param>
+        public static INCFORM_CAUSATION CreateINCFORM_CAUSATION(global::System.Decimal iNCIDENT_ID, global::System.String cAUSEATION_CD)
+        {
+            INCFORM_CAUSATION iNCFORM_CAUSATION = new INCFORM_CAUSATION();
+            iNCFORM_CAUSATION.INCIDENT_ID = iNCIDENT_ID;
+            iNCFORM_CAUSATION.CAUSEATION_CD = cAUSEATION_CD;
+            return iNCFORM_CAUSATION;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                if (_INCIDENT_ID != value)
+                {
+                    OnINCIDENT_IDChanging(value);
+                    ReportPropertyChanging("INCIDENT_ID");
+                    _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_ID");
+                    OnINCIDENT_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String CAUSEATION_CD
+        {
+            get
+            {
+                return _CAUSEATION_CD;
+            }
+            set
+            {
+                if (_CAUSEATION_CD != value)
+                {
+                    OnCAUSEATION_CDChanging(value);
+                    ReportPropertyChanging("CAUSEATION_CD");
+                    _CAUSEATION_CD = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("CAUSEATION_CD");
+                    OnCAUSEATION_CDChanged();
+                }
+            }
+        }
+        private global::System.String _CAUSEATION_CD;
+        partial void OnCAUSEATION_CDChanging(global::System.String value);
+        partial void OnCAUSEATION_CDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LAST_UPD_BY
+        {
+            get
+            {
+                return _LAST_UPD_BY;
+            }
+            set
+            {
+                OnLAST_UPD_BYChanging(value);
+                ReportPropertyChanging("LAST_UPD_BY");
+                _LAST_UPD_BY = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LAST_UPD_BY");
+                OnLAST_UPD_BYChanged();
+            }
+        }
+        private global::System.String _LAST_UPD_BY;
+        partial void OnLAST_UPD_BYChanging(global::System.String value);
+        partial void OnLAST_UPD_BYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LAST_UPD_DT
+        {
+            get
+            {
+                return _LAST_UPD_DT;
+            }
+            set
+            {
+                OnLAST_UPD_DTChanging(value);
+                ReportPropertyChanging("LAST_UPD_DT");
+                _LAST_UPD_DT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_UPD_DT");
+                OnLAST_UPD_DTChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LAST_UPD_DT;
+        partial void OnLAST_UPD_DTChanging(Nullable<global::System.DateTime> value);
+        partial void OnLAST_UPD_DTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_CONTAIN")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -24577,6 +24778,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION")]
+        public EntityCollection<INCFORM_CAUSATION> INCFORM_CAUSATION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
                 }
             }
         }

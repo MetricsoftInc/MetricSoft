@@ -2,6 +2,7 @@
 	Inherits="SQM.Website.Ucl_INCFORM_InjuryIllness" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Root5Y.ascx" TagName="INCFORMRoot5Y" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Causation.ascx" TagName="Causation" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Contain.ascx" TagName="INCFORMContain" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="INCFORMAction" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="INCFORMApproval" TagPrefix="Ucl" %>
@@ -731,15 +732,11 @@
 
 
 <Ucl:INCFORMContain ID="uclcontain" runat="server" />
-
 <Ucl:INCFORMRoot5Y ID="uclroot5y" runat="server" />
-
+<ucl:Causation id="uclCausation" runat="server" Visible="False"/>
 <Ucl:INCFORMAction ID="uclaction" runat="server" />
-
 <Ucl:INCFORMApproval ID="uclapproval" runat="server" />
-
 <Ucl:INCFORMLostTimeHist ID="ucllosttime" runat="server" />
-
 
 
 <asp:Panel ID="pnlButtons" runat="server">
@@ -769,6 +766,8 @@
 						OnClick="btnSubnav_Click" CommandArgument="2"/>
 					<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 						OnClick="btnSubnav_Click" CommandArgument="3"/>
+					<asp:LinkButton ID="btnSubnavCausation" runat="server" Text="Causation" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+						OnClick="btnSubnav_Click" CommandArgument="35"/>
 					<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 						OnClick="btnSubnav_Click" CommandArgument="4"/>
 					<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"

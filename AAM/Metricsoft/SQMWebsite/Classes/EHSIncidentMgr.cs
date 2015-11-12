@@ -210,6 +210,7 @@ namespace SQM.Website
 			{
 				incident.INCFORM_CONTAIN.Load();
 				incident.INCFORM_ROOT5Y.Load();
+				incident.INCFORM_CAUSATION.Load();
 				incident.INCFORM_ACTION.Load();
 				incident.INCFORM_APPROVAL.Load();
 			}

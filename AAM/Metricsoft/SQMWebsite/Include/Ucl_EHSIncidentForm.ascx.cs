@@ -2189,7 +2189,7 @@ namespace SQM.Website
 					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);
 					btnSubnav_Click(btnSubnavApproval, null);
 					break;
-				case "6":
+				case "35":
 					status = uclCausation.UpdateCausation(EditIncidentId);
 					btnSubnav_Click(btnSubnavCausation, null);
 					break;
@@ -2271,7 +2271,7 @@ namespace SQM.Website
 					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
 						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
 					break;
-				case "6":
+				case "35":
 					lblPageTitle.Text = "Causation";
 					btnSubnavCausation.Enabled = false;
 					btnSubnavCausation.CssClass = "buttonLinkDisabled";
@@ -2279,8 +2279,7 @@ namespace SQM.Website
 					uclCausation.IsEditContext = true;
 					uclCausation.EditIncidentId = EditIncidentId;
 					uclCausation.PopulateInitialForm(entities);
-					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "0":
 				default:
