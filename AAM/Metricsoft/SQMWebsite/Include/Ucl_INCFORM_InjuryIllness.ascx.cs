@@ -1121,7 +1121,7 @@ namespace SQM.Website
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
 				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				uploader.SetViewMode(btnSubnavSave.Enabled);
-				EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
+				btnDeleteInc.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 			}
 		}
 
