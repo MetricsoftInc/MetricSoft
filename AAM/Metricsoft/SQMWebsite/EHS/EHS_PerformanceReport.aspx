@@ -244,7 +244,8 @@
 									<HeaderStyle HorizontalAlign="Center" />
 									<ItemStyle Font-Bold="true" HorizontalAlign="Center" />
 								</telerik:GridBoundColumn>
-								<telerik:GridBoundColumn DataField="ProgressToGoal" HeaderText="Progress<br/>to Goal" ColumnGroupName="PerformanceResults">
+								<telerik:GridBoundColumn DataField="ProgressToGoal" DataFormatString="{0:P1}" HeaderText="Progress<br/>to Goal" UniqueName="ProgressToGoal"
+									ColumnGroupName="PerformanceResults">
 									<HeaderStyle HorizontalAlign="Center" />
 									<ItemStyle Font-Bold="true" HorizontalAlign="Center" />
 								</telerik:GridBoundColumn>
@@ -315,15 +316,15 @@
 								<telerik:GridBoundColumn DataField="TRIR" DataFormatString="{0:F1}" HeaderText="TRIR" ColumnGroupName="None1" />
 								<telerik:GridBoundColumn DataField="FrequencyRate" DataFormatString="{0:F1}" HeaderText="Frequency<br>Rate" ColumnGroupName="None1" />
 								<telerik:GridBoundColumn DataField="SeverityRate" DataFormatString="{0:F1}" HeaderText="Severity<br>Rate" ColumnGroupName="None1" />
-								<telerik:GridBoundColumn DataField="ManHours" DataFormatString="{0:N0}" HeaderText="Man-hours" ColumnGroupName="None1" />
-								<telerik:GridBoundColumn DataField="Incidents" HeaderText="Total<br>Recordable<br>Cases" ColumnGroupName="Incidents" />
-								<telerik:GridBoundColumn DataField="Frequency" HeaderText="Total Lost<br>Time Cases" ColumnGroupName="Frequency" />
-								<telerik:GridBoundColumn DataField="Restricted" HeaderText="Total<br>Days<br>Restricted" ColumnGroupName="Restricted" />
-								<telerik:GridBoundColumn DataField="Severity" HeaderText="Total Lost<br>Time Days" ColumnGroupName="Severity" />
-								<telerik:GridBoundColumn DataField="FirstAid" HeaderText="First Aid<br>Cases" ColumnGroupName="None2" />
-								<telerik:GridBoundColumn DataField="Leadership" HeaderText="Leadership<br>Safety<br>Walks" ColumnGroupName="None2" />
-								<telerik:GridBoundColumn DataField="JSAs" HeaderText="JSAs<br>Completed" ColumnGroupName="None2" />
-								<telerik:GridBoundColumn DataField="SafetyTraining" HeaderText="Total Safety<br>Training<br>Hours" ColumnGroupName="None2" />
+								<telerik:GridBoundColumn DataField="ManHours" DataFormatString="{0:N0}" HeaderText="Man-hours" UniqueName="ManHours" ColumnGroupName="None1" />
+								<telerik:GridBoundColumn DataField="Incidents" HeaderText="Total<br>Recordable<br>Cases" UniqueName="Incidents" ColumnGroupName="Incidents" />
+								<telerik:GridBoundColumn DataField="Frequency" HeaderText="Total Lost<br>Time Cases" UniqueName="Frequency" ColumnGroupName="Frequency" />
+								<telerik:GridBoundColumn DataField="Restricted" HeaderText="Total<br>Days<br>Restricted" UniqueName="Restricted" ColumnGroupName="Restricted" />
+								<telerik:GridBoundColumn DataField="Severity" HeaderText="Total Lost<br>Time Days" UniqueName="Severity" ColumnGroupName="Severity" />
+								<telerik:GridBoundColumn DataField="FirstAid" HeaderText="First Aid<br>Cases" UniqueName="FirstAid" ColumnGroupName="None2" />
+								<telerik:GridBoundColumn DataField="Leadership" HeaderText="Leadership<br>Safety<br>Walks" UniqueName="Leadership" ColumnGroupName="None2" />
+								<telerik:GridBoundColumn DataField="JSAs" HeaderText="JSAs<br>Completed" UniqueName="JSAs" ColumnGroupName="None2" />
+								<telerik:GridBoundColumn DataField="SafetyTraining" HeaderText="Total Safety<br>Training<br>Hours" UniqueName="SafetyTraining" ColumnGroupName="None2" />
 							</Columns>
 						</MasterTableView>
 					</telerik:RadGrid>

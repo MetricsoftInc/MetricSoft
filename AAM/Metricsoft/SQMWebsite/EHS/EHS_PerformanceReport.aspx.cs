@@ -351,14 +351,39 @@ namespace SQM.Website.EHS
 			for (int i = 1; i < jsasSeries.ItemList.Count; ++i)
 				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue) / 2m, jsasSeries.ItemList[i].Text));
 
+			var incidentRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
+				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
+				(plantID.StartsWith("BU") ? t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == plantID_dec : t.PLANT_ID.HasValue && t.PLANT_ID == plantID_dec)));
+			var frequencyRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "FREQUENCY" &&
+				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
+				(plantID.StartsWith("BU") ? t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == plantID_dec : t.PLANT_ID.HasValue && t.PLANT_ID == plantID_dec)));
+			var severityRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "SEVERITY" &&
+				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
+				(plantID.StartsWith("BU") ? t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == plantID_dec : t.PLANT_ID.HasValue && t.PLANT_ID == plantID_dec)));
+			var jsasTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "AUDITS" &&
+				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
+				(plantID.StartsWith("BU") ? t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == plantID_dec : t.PLANT_ID.HasValue && t.PLANT_ID == plantID_dec)));
+
+			var targetData = new Data()
+			{
+				Month = "Target",
+				TRIR = incidentRateTarget != null ? incidentRateTarget.TARGET_VALUE : 0,
+				FrequencyRate = frequencyRateTarget != null ? frequencyRateTarget.TARGET_VALUE : 0,
+				SeverityRate = severityRateTarget != null ? severityRateTarget.TARGET_VALUE : 0
+			};
+			data.Add(targetData);
+
 			return new
 			{
 				data,
 				previousYTD,
 				incidentRateSeries,
 				incidentRateTrendSeries,
+				incidentRateTarget = targetData.TRIR,
 				frequencyRateSeries,
+				frequencyRateTarget = targetData.FrequencyRate,
 				severityRateSeries,
+				severityRateTarget = targetData.SeverityRate,
 				ordinalTypeSeries = YTD.OrdinalType.Select(type => new GaugeSeriesItem(0, 0, 0, type.Value, type.Key)
 				{
 					Exploded = false
@@ -381,6 +406,7 @@ namespace SQM.Website.EHS
 				}).ToList(),
 				jsasSeries,
 				jsasTrendSeries,
+				jsasTarget = jsasTarget != null ? jsasTarget.TARGET_VALUE : 0,
 				safetyTrainingHoursSeries
 			};
 		}
@@ -398,7 +424,8 @@ namespace SQM.Website.EHS
 			var data = new List<dynamic>();
 			for (int b = -1; b < businessOrgs.Count; ++b)
 			{
-				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, businessOrgs[b].BUS_ORG_ID).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
+				var busOrgID = b == -1 ? 0 : businessOrgs[b].BUS_ORG_ID;
+				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, busOrgID).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
 				var incidentRateSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 2, year), "")
 				{
 					DisplayLabels = true
@@ -432,11 +459,15 @@ namespace SQM.Website.EHS
 					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
 						Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
 
+				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
+					(b == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID : t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == busOrgID));
+
 				data.Add(new
 				{
 					name = b == -1 ? entities.COMPANY.First(c => c.COMPANY_ID == companyID).COMPANY_NAME : businessOrgs[b].ORG_NAME,
 					incidentRateSeries,
-					incidentRateTrendSeries
+					incidentRateTrendSeries,
+					incidentRateTarget = target != null ? target.TARGET_VALUE : 0
 				});
 			}
 			return data;
@@ -518,6 +549,9 @@ namespace SQM.Website.EHS
 				totalIncidentsPreviousYear += incidentsPreviousYear;
 				totalIncidentsYTD += incidentsYTD;
 
+				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.PLANT_ID.HasValue && t.PLANT_ID == plant.PLANT_ID);
+				decimal TRIRGoal = target != null ? target.TARGET_VALUE : 0;
+
 				data.Add(new
 				{
 					BusOrgID = plant.BUS_ORG_ID,
@@ -529,10 +563,12 @@ namespace SQM.Website.EHS
 					incidents2YearsAgo,
 					incidentsPreviousYear,
 					incidentsYTD,
+					TRIRGoal,
 					TRIR2YearsAgo,
 					TRIRPreviousYear,
 					TRIRYTD,
-					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear
+					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear,
+					ProgressToGoal = TRIRGoal == 0 ? 0 : (TRIRYTD - TRIRGoal) / TRIRGoal
 				});
 			}
 
@@ -540,7 +576,12 @@ namespace SQM.Website.EHS
 
 			foreach (string businessUnit in data.Select(d => d.BusinessUnit).Distinct().ToList())
 			{
-				int lastIndex = data.IndexOf(data.Last(d => d.BusinessUnit == businessUnit));
+				var last = data.Last(d => d.BusinessUnit == businessUnit);
+				decimal busOrgID = last.BusOrgID;
+
+				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == busOrgID);
+
+				int lastIndex = data.IndexOf(last);
 				var allPlantsForBU = data.Where(d => d.BusinessUnit == businessUnit);
 				decimal manHours2YearsAgo = allPlantsForBU.Sum(d => (decimal)d.manHours2YearsAgo);
 				decimal manHoursPreviousYear = allPlantsForBU.Sum(d => (decimal)d.manHoursPreviousYear);
@@ -548,19 +589,25 @@ namespace SQM.Website.EHS
 				decimal incidents2YearsAgo = allPlantsForBU.Sum(d => (decimal)d.incidents2YearsAgo);
 				decimal incidentsPreviousYear = allPlantsForBU.Sum(d => (decimal)d.incidentsPreviousYear);
 				decimal incidentsYTD = allPlantsForBU.Sum(d => (decimal)d.incidentsYTD);
+				decimal TRIRGoal = target != null ? target.TARGET_VALUE : 0;
 				decimal TRIRPreviousYear = manHoursPreviousYear == 0 ? 0 : incidentsPreviousYear * 200000 / manHoursPreviousYear;
 				decimal TRIRYTD = manHoursYTD == 0 ? 0 : incidentsYTD * 200000 / manHoursYTD;
 				data.Insert(lastIndex + 1, new
 				{
 					BusinessUnit = "",
 					Plant = "",
+					TRIRGoal,
 					TRIR2YearsAgo = manHours2YearsAgo == 0 ? 0 : incidents2YearsAgo * 200000 / manHours2YearsAgo,
 					TRIRPreviousYear,
 					TRIRYTD,
-					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear
+					PercentChange = TRIRPreviousYear == 0 ? 0 : (TRIRYTD - TRIRPreviousYear) / TRIRPreviousYear,
+					ProgressToGoal = TRIRGoal == 0 ? 0 : (TRIRYTD - TRIRGoal) / TRIRGoal
 				});
 			}
 
+			var totalTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID);
+
+			decimal totalTRIRGoal = totalTarget != null ? totalTarget.TARGET_VALUE : 0;
 			decimal totalTRIRPreviousYear = totalManHoursPreviousYear == 0 ? 0 : totalIncidentsPreviousYear * 200000 / totalManHoursPreviousYear;
 			decimal totalTRIRYTD = totalManHoursYTD == 0 ? 0 : totalIncidentsYTD * 200000 / totalManHoursYTD;
 
@@ -568,10 +615,12 @@ namespace SQM.Website.EHS
 			{
 				BusinessUnit = "Total Corp.",
 				Plant = "",
+				TRIRGoal = totalTRIRGoal,
 				TRIR2YearsAgo = totalManHours2YearsAgo == 0 ? 0 : totalIncidents2YearsAgo * 200000 / totalManHours2YearsAgo,
 				TRIRPreviousYear = totalTRIRPreviousYear,
 				TRIRYTD = totalTRIRYTD,
-				PercentChange = totalTRIRPreviousYear == 0 ? 0 : (totalTRIRYTD - totalTRIRPreviousYear) / totalTRIRPreviousYear
+				PercentChange = totalTRIRPreviousYear == 0 ? 0 : (totalTRIRYTD - totalTRIRPreviousYear) / totalTRIRPreviousYear,
+				ProgressToGoal = totalTRIRGoal == 0 ? 0 : (totalTRIRYTD - totalTRIRGoal) / totalTRIRGoal
 			});
 
 			return new
@@ -738,6 +787,21 @@ namespace SQM.Website.EHS
 				else
 					label.Text = "=";
 				row["ImprovedOrDeclined"].Controls.Add(label);
+
+				if (sender == this.rgTRIRPlant)
+				{
+					var progressToGoalCell = row["ProgressToGoal"];
+					if (dataItem.ProgressToGoal < 0)
+					{
+						progressToGoalCell.BackColor = Color.Green;
+						progressToGoalCell.ForeColor = Color.White;
+					}
+					else if (dataItem.ProgressToGoal > 0)
+					{
+						progressToGoalCell.BackColor = Color.Red;
+						progressToGoalCell.ForeColor = Color.White;
+					}
+				}
 			}
 		}
 
@@ -767,8 +831,18 @@ namespace SQM.Website.EHS
 				e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.rmypYear.SelectedDate.Value.Year.ToString();
 				this.didFirstHeader = true;
 			}
-			if ((e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem) && (e.Item.DataItem as Data).Month == "YTD")
-				e.Item.BackColor = Color.FromArgb(255, 255, 153);
+			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
+			{
+				var month = (e.Item.DataItem as Data).Month;
+				if (month == "YTD")
+					e.Item.BackColor = Color.FromArgb(255, 255, 153);
+				else if (month == "Target")
+				{
+					var item = e.Item as GridDataItem;
+					foreach (var column in new[] { "ManHours", "Incidents", "Frequency", "Restricted", "Severity", "FirstAid", "Leadership", "JSAs", "SafetyTraining" })
+						item[column].Text = "";
+				}
+			}
 		}
 
 		protected void btnRefresh_Click(object sender, EventArgs e)
@@ -785,6 +859,8 @@ namespace SQM.Website.EHS
 
 		void UpdateCharts(dynamic data)
 		{
+			gaugeDef.Target = smallGaugeDef.Target = null;
+
 			bool pyramid = this.rddlType.SelectedValue == "Pyramid";
 			bool trirBusiness = this.rddlType.SelectedValue == "TRIRBusiness";
 			bool trirPlant = this.rddlType.SelectedValue == "TRIRPlant";
@@ -804,7 +880,7 @@ namespace SQM.Website.EHS
 			{
 				var left = (gaugeDef.Width - 420 - this.pyramid.Width.ToPixels()) / 2;
 				this.pyramid.Style.Add("left", left + "px");
-				var YTD = (data.data as List<Data>).Last();
+				var YTD = (data.data as List<Data>)[12];
 				this.pyramid.Fatalities = YTD.Fatalities;
 				this.pyramid.LostTimeCases = YTD.Frequency;
 				this.pyramid.RecordableInjuries = YTD.Incidents;
@@ -865,11 +941,17 @@ namespace SQM.Website.EHS
 
 				gaugeDef.Height = 410;
 				gaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
+				gaugeDef.Target = new PERSPECTIVE_TARGET()
+				{
+					TARGET_VALUE = data.jsasTarget,
+					DESCR_SHORT = "Target"
+				};
 				var series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
 				SetScale(gaugeDef, series);
 				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divJSAsAndAudits_Pyramid);
 
 				gaugeDef.Title = "Safety Training Hours";
+				gaugeDef.Target = null;
 				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
 				SetScale(gaugeDef, series);
 				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divSafetyTrainingHours_Pyramid);
@@ -881,6 +963,11 @@ namespace SQM.Website.EHS
 				foreach (var businessOrgData in data)
 				{
 					gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
+					gaugeDef.Target = new PERSPECTIVE_TARGET()
+					{
+						TARGET_VALUE = businessOrgData.incidentRateTarget,
+						DESCR_SHORT = "Target"
+					};
 					var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
 					SetScale(gaugeDef, series);
 					var container = new HtmlGenericControl("div");
@@ -931,6 +1018,11 @@ namespace SQM.Website.EHS
 
 				gaugeDef.Height = 500;
 				gaugeDef.Title = "TOTAL RECORDABLE INCIDENT RATE";
+				gaugeDef.Target = new PERSPECTIVE_TARGET()
+				{
+					TARGET_VALUE = data.incidentRateTarget,
+					DESCR_SHORT = "Target"
+				};
 				var series = new List<GaugeSeries>() { data.incidentRateSeries, data.incidentRateTrendSeries };
 				SetScale(gaugeDef, series);
 				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divTRIR);
@@ -938,6 +1030,7 @@ namespace SQM.Website.EHS
 				var calcsResult = new CalcsResult().Initialize();
 
 				gaugeDef.Title = "FREQUENCY RATE";
+				gaugeDef.Target = null;
 				SetScale(gaugeDef, data.frequencyRateSeries);
 				calcsResult.metricSeries = data.frequencyRateSeries;
 				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divFrequencyRate);
@@ -947,7 +1040,7 @@ namespace SQM.Website.EHS
 				calcsResult.metricSeries = data.severityRateSeries;
 				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
 
-				if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>).Last().TRIR == 0)
+				if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>)[12].TRIR == 0)
 					this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
 				else
 				{
@@ -960,11 +1053,17 @@ namespace SQM.Website.EHS
 				}
 
 				smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
+				smallGaugeDef.Target = new PERSPECTIVE_TARGET()
+				{
+					TARGET_VALUE = data.jsasTarget,
+					DESCR_SHORT = "Target"
+				};
 				series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
 				SetScale(smallGaugeDef, series);
 				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divJSAsAndAudits_Metrics);
 
 				smallGaugeDef.Title = "Safety Training Hours";
+				smallGaugeDef.Target = null;
 				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
 				SetScale(smallGaugeDef, series);
 				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divSafetyTrainingHours_Metrics);
