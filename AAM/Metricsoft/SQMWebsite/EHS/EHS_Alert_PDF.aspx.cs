@@ -29,6 +29,7 @@ namespace SQM.Website.EHS
 		public List<INCIDENT_ANSWER> answerList;
 		public List<INCFORM_CONTAIN> containList;
 		public List<INCFORM_ROOT5Y> root5YList;
+		public INCFORM_CAUSATION causation;
 		public List<TASK_STATUS> actionList;
 		public List<INCFORM_APPROVAL> approvalList;
 
@@ -48,6 +49,7 @@ namespace SQM.Website.EHS
 			answerList = new List<INCIDENT_ANSWER>();
 			containList = new List<INCFORM_CONTAIN>();
 			root5YList = new List<INCFORM_ROOT5Y>();
+			causation = null;
 			actionList = new List<TASK_STATUS>();
 			approvalList = new List<INCFORM_APPROVAL>();
 		}
@@ -123,7 +125,7 @@ namespace SQM.Website.EHS
 
 		private byte[] BuildPdf()
 		{
-			reportXLAT = SQMBasePage.SelectXLATList(new string[4] { "HS_5PHASE", "TRUEFALSE", "SHIFT", "INJURY_TENURE" });
+			reportXLAT = SQMBasePage.SelectXLATList(new string[5] { "HS_5PHASE", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE" });
 
 			AlertData pageData;
 			
@@ -435,10 +437,9 @@ namespace SQM.Website.EHS
 			tableCause.TotalWidth = 540f;
 			tableCause.LockedWidth = true;
 			tableCause.SpacingBefore = 15f;
-			PdfPCell cell;
 
+			PdfPCell cell;
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
 			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ROOTCAUSE").DESCRIPTION, detailHdrFont));
 			tableCause.AddCell(cell);
@@ -451,6 +452,13 @@ namespace SQM.Website.EHS
 			{
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
 				cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT + "{0}", rc.ITEM_DESCRIPTION), detailTxtFont));
+				tableCause.AddCell(cell);
+			}
+
+			if (pageData.causation != null)
+			{
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				cell.AddElement(new Paragraph(String.Format("Causation: " + "{0}", GetXLAT("INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION), detailTxtFont));
 				tableCause.AddCell(cell);
 			}
 
@@ -666,6 +674,14 @@ namespace SQM.Website.EHS
 
 					// Root Cause(s)
 					d.root5YList = EHSIncidentMgr.GetRootCauseList(iid).Where(l => !string.IsNullOrEmpty(l.ITEM_DESCRIPTION)).ToList();
+					if (d.root5YList != null  &&  d.root5YList.Count > 0)
+					{
+						d.incident.INCFORM_CAUSATION.Load();
+						if (d.incident.INCFORM_CAUSATION != null && d.incident.INCFORM_CAUSATION.Count > 0)
+						{
+							d.causation = d.incident.INCFORM_CAUSATION.ElementAt(0);
+						}
+					}
 
 					// Corrective Actions
 					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid))
