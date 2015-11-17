@@ -454,6 +454,15 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.WebControls.Panel pnlBalancedScorecardOutput;
         
         /// <summary>
+        /// rptBalancedScorecard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptBalancedScorecard;
+        
+        /// <summary>
         /// pnlMetricsOutput control.
         /// </summary>
         /// <remarks>

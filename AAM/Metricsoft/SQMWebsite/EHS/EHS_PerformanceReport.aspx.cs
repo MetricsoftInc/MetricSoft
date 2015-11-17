@@ -33,6 +33,7 @@ namespace SQM.Website.EHS
 			Ordinals = 0x2000,
 
 			Pyramid = Incidents | Frequency | FirstAid | Leadership | JSAs | SafetyTraining | Fatalities | NearMisses,
+			BalancedScorecard = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Severity,
 			Metrics = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Restricted | Severity | FirstAid | Leadership | JSAs | SafetyTraining | Ordinals
 		}
 
@@ -726,6 +727,205 @@ namespace SQM.Website.EHS
 			};
 		}
 
+		static List<dynamic> PullBalancedScorecardData(PSsqmEntities entities, decimal companyID, int year)
+		{
+			var data = new List<dynamic>();
+			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
+
+			var totalCorpData = PullData(entities, "-1", companyID, year, DataToUse.BalancedScorecard);
+			var totalCorpDataList = totalCorpData.data as List<Data>;
+			data.Add(new
+			{
+				Name = "Total Corp.",
+				TRIR = new
+				{
+					ItemType = "Incident Rate",
+					Target = totalCorpData.incidentRateTarget,
+					Jan = totalCorpDataList[0].TRIR,
+					Feb = totalCorpDataList[1].TRIR,
+					Mar = totalCorpDataList[2].TRIR,
+					Apr = totalCorpDataList[3].TRIR,
+					May = totalCorpDataList[4].TRIR,
+					Jun = totalCorpDataList[5].TRIR,
+					Jul = totalCorpDataList[6].TRIR,
+					Aug = totalCorpDataList[7].TRIR,
+					Sep = totalCorpDataList[8].TRIR,
+					Oct = totalCorpDataList[9].TRIR,
+					Nov = totalCorpDataList[10].TRIR,
+					Dec = totalCorpDataList[11].TRIR,
+					YTD = totalCorpDataList[12].TRIR
+				},
+				FrequencyRate = new
+				{
+					ItemType = "Freqeucny Rate",
+					Target = totalCorpData.frequencyRateTarget,
+					Jan = totalCorpDataList[0].FrequencyRate,
+					Feb = totalCorpDataList[1].FrequencyRate,
+					Mar = totalCorpDataList[2].FrequencyRate,
+					Apr = totalCorpDataList[3].FrequencyRate,
+					May = totalCorpDataList[4].FrequencyRate,
+					Jun = totalCorpDataList[5].FrequencyRate,
+					Jul = totalCorpDataList[6].FrequencyRate,
+					Aug = totalCorpDataList[7].FrequencyRate,
+					Sep = totalCorpDataList[8].FrequencyRate,
+					Oct = totalCorpDataList[9].FrequencyRate,
+					Nov = totalCorpDataList[10].FrequencyRate,
+					Dec = totalCorpDataList[11].FrequencyRate,
+					YTD = totalCorpDataList[12].FrequencyRate
+				},
+				SeverityRate = new
+				{
+					ItemType = "Severity Rate",
+					Target = totalCorpData.severityRateTarget,
+					Jan = totalCorpDataList[0].SeverityRate,
+					Feb = totalCorpDataList[1].SeverityRate,
+					Mar = totalCorpDataList[2].SeverityRate,
+					Apr = totalCorpDataList[3].SeverityRate,
+					May = totalCorpDataList[4].SeverityRate,
+					Jun = totalCorpDataList[5].SeverityRate,
+					Jul = totalCorpDataList[6].SeverityRate,
+					Aug = totalCorpDataList[7].SeverityRate,
+					Sep = totalCorpDataList[8].SeverityRate,
+					Oct = totalCorpDataList[9].SeverityRate,
+					Nov = totalCorpDataList[10].SeverityRate,
+					Dec = totalCorpDataList[11].SeverityRate,
+					YTD = totalCorpDataList[12].SeverityRate
+				}
+			});
+
+			decimal? busOrgID = null;
+			foreach (var businessLoc in businessLocs.OrderBy(l => l.Plant.BUS_ORG_ID).ThenBy(l => l.Plant.PLANT_NAME))
+			{
+				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
+				{
+					busOrgID = businessLoc.Plant.BUS_ORG_ID;
+					var busOrgData = PullData(entities, "BU" + busOrgID, companyID, year, DataToUse.BalancedScorecard);
+					var busOrgDataList = busOrgData.data as List<Data>;
+					data.Add(new
+					{
+						Name = businessLoc.BusinessOrg.ORG_NAME,
+						TRIR = new
+						{
+							ItemType = "Incident Rate",
+							Target = busOrgData.incidentRateTarget,
+							Jan = busOrgDataList[0].TRIR,
+							Feb = busOrgDataList[1].TRIR,
+							Mar = busOrgDataList[2].TRIR,
+							Apr = busOrgDataList[3].TRIR,
+							May = busOrgDataList[4].TRIR,
+							Jun = busOrgDataList[5].TRIR,
+							Jul = busOrgDataList[6].TRIR,
+							Aug = busOrgDataList[7].TRIR,
+							Sep = busOrgDataList[8].TRIR,
+							Oct = busOrgDataList[9].TRIR,
+							Nov = busOrgDataList[10].TRIR,
+							Dec = busOrgDataList[11].TRIR,
+							YTD = busOrgDataList[12].TRIR
+						},
+						FrequencyRate = new
+						{
+							ItemType = "Freqeucny Rate",
+							Target = busOrgData.frequencyRateTarget,
+							Jan = busOrgDataList[0].FrequencyRate,
+							Feb = busOrgDataList[1].FrequencyRate,
+							Mar = busOrgDataList[2].FrequencyRate,
+							Apr = busOrgDataList[3].FrequencyRate,
+							May = busOrgDataList[4].FrequencyRate,
+							Jun = busOrgDataList[5].FrequencyRate,
+							Jul = busOrgDataList[6].FrequencyRate,
+							Aug = busOrgDataList[7].FrequencyRate,
+							Sep = busOrgDataList[8].FrequencyRate,
+							Oct = busOrgDataList[9].FrequencyRate,
+							Nov = busOrgDataList[10].FrequencyRate,
+							Dec = busOrgDataList[11].FrequencyRate,
+							YTD = busOrgDataList[12].FrequencyRate
+						},
+						SeverityRate = new
+						{
+							ItemType = "Severity Rate",
+							Target = busOrgData.severityRateTarget,
+							Jan = busOrgDataList[0].SeverityRate,
+							Feb = busOrgDataList[1].SeverityRate,
+							Mar = busOrgDataList[2].SeverityRate,
+							Apr = busOrgDataList[3].SeverityRate,
+							May = busOrgDataList[4].SeverityRate,
+							Jun = busOrgDataList[5].SeverityRate,
+							Jul = busOrgDataList[6].SeverityRate,
+							Aug = busOrgDataList[7].SeverityRate,
+							Sep = busOrgDataList[8].SeverityRate,
+							Oct = busOrgDataList[9].SeverityRate,
+							Nov = busOrgDataList[10].SeverityRate,
+							Dec = busOrgDataList[11].SeverityRate,
+							YTD = busOrgDataList[12].SeverityRate
+						}
+					});
+				}
+
+				var plantData = PullData(entities, businessLoc.Plant.PLANT_ID.ToString(), companyID, year, DataToUse.BalancedScorecard);
+				var plantDataList = plantData.data as List<Data>;
+				data.Add(new
+				{
+					Name = businessLoc.Plant.PLANT_NAME,
+					TRIR = new
+					{
+						ItemType = "Incident Rate",
+						Target = plantData.incidentRateTarget,
+						Jan = plantDataList[0].TRIR,
+						Feb = plantDataList[1].TRIR,
+						Mar = plantDataList[2].TRIR,
+						Apr = plantDataList[3].TRIR,
+						May = plantDataList[4].TRIR,
+						Jun = plantDataList[5].TRIR,
+						Jul = plantDataList[6].TRIR,
+						Aug = plantDataList[7].TRIR,
+						Sep = plantDataList[8].TRIR,
+						Oct = plantDataList[9].TRIR,
+						Nov = plantDataList[10].TRIR,
+						Dec = plantDataList[11].TRIR,
+						YTD = plantDataList[12].TRIR
+					},
+					FrequencyRate = new
+					{
+						ItemType = "Freqeucny Rate",
+						Target = plantData.frequencyRateTarget,
+						Jan = plantDataList[0].FrequencyRate,
+						Feb = plantDataList[1].FrequencyRate,
+						Mar = plantDataList[2].FrequencyRate,
+						Apr = plantDataList[3].FrequencyRate,
+						May = plantDataList[4].FrequencyRate,
+						Jun = plantDataList[5].FrequencyRate,
+						Jul = plantDataList[6].FrequencyRate,
+						Aug = plantDataList[7].FrequencyRate,
+						Sep = plantDataList[8].FrequencyRate,
+						Oct = plantDataList[9].FrequencyRate,
+						Nov = plantDataList[10].FrequencyRate,
+						Dec = plantDataList[11].FrequencyRate,
+						YTD = plantDataList[12].FrequencyRate
+					},
+					SeverityRate = new
+					{
+						ItemType = "Severity Rate",
+						Target = plantData.severityRateTarget,
+						Jan = plantDataList[0].SeverityRate,
+						Feb = plantDataList[1].SeverityRate,
+						Mar = plantDataList[2].SeverityRate,
+						Apr = plantDataList[3].SeverityRate,
+						May = plantDataList[4].SeverityRate,
+						Jun = plantDataList[5].SeverityRate,
+						Jul = plantDataList[6].SeverityRate,
+						Aug = plantDataList[7].SeverityRate,
+						Sep = plantDataList[8].SeverityRate,
+						Oct = plantDataList[9].SeverityRate,
+						Nov = plantDataList[10].SeverityRate,
+						Dec = plantDataList[11].SeverityRate,
+						YTD = plantDataList[12].SeverityRate
+					}
+				});
+			}
+
+			return data;
+		}
+
 		PSsqmEntities entities;
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -822,14 +1022,120 @@ namespace SQM.Website.EHS
 			}
 		}
 
-		bool didFirstHeader = false;
+		protected void rptBalancedScorecard_ItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.Header)
+			{
+				var rgBalancedScorescardHeader = e.Item.FindControl("rgBalancedScorescardHeader") as RadGrid;
+				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
+				{
+					int nextMonth = DateTime.Today.Month + 1;
+					for (int i = nextMonth; i < 13; ++i)
+						rgBalancedScorescardHeader.MasterTableView.GetColumn("Month" + i).Visible = false;
+				}
+				rgBalancedScorescardHeader.MasterTableView.Width = new Unit(gaugeDef.Width, UnitType.Pixel);
+				rgBalancedScorescardHeader.DataSource = new List<dynamic>();
+				rgBalancedScorescardHeader.DataBind();
+			}
+			else if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+			{
+				dynamic dataItem = e.Item.DataItem;
+				var rgBalancedScorecardItem = e.Item.FindControl("rgBalancedScorecardItem") as RadGrid;
+				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
+				{
+					int nextMonth = DateTime.Today.Month + 1;
+					for (int i = nextMonth; i < 13; ++i)
+						rgBalancedScorecardItem.MasterTableView.GetColumn("Month" + i).Visible = false;
+				}
+				rgBalancedScorecardItem.MasterTableView.Width = new Unit(gaugeDef.Width, UnitType.Pixel);
+				rgBalancedScorecardItem.DataSource = new List<dynamic>()
+				{
+					new
+					{
+						ItemType = dataItem.Name
+					},
+					dataItem.TRIR,
+					dataItem.FrequencyRate,
+					dataItem.SeverityRate
+				};
+				rgBalancedScorecardItem.DataBind();
+			}
+		}
+
+		bool didFirstHeader_rgBalancedScorescardHeader = false;
+
+		protected void rgBalancedScorescardHeader_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item.ItemType == GridItemType.Header)
+			{
+				if (!this.didFirstHeader_rgBalancedScorescardHeader)
+				{
+					e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.rmypYear.SelectedDate.Value.Year.ToString();
+					this.didFirstHeader_rgBalancedScorescardHeader = true;
+				}
+				else
+				{
+					int width = 200;
+					if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
+						width += 100 * (12 - DateTime.Today.Month);
+					(sender as RadGrid).MasterTableView.GetColumn("Target").HeaderStyle.Width = new Unit(width, UnitType.Pixel);
+				}
+			}
+		}
+
+		protected void rgBalancedScorecardItem_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
+			{
+				int width = 150;
+				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
+					width += 100 * (12 - DateTime.Today.Month);
+				(sender as RadGrid).MasterTableView.GetColumn("ItemType").HeaderStyle.Width = new Unit(width, UnitType.Pixel);
+
+				var item = e.Item as GridDataItem;
+				if (item["Target"].Text == "&nbsp;")
+				{
+					item["ItemType"].ColumnSpan = (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year ? DateTime.Today.Month : 12) + 3;
+					item["ItemType"].Font.Bold = true;
+					item.Cells.Remove(item["YTD"]);
+					for (int i = 12; i > 0; --i)
+						item.Cells.Remove(item["Month" + i]);
+					item.Cells.Remove(item["Target"]);
+				}
+				else
+				{
+					dynamic dataItem = e.Item.DataItem as dynamic;
+					decimal target = dataItem.Target;
+					var values = new decimal[]
+					{
+						dataItem.Jan, dataItem.Feb, dataItem.Mar, dataItem.Apr, dataItem.May, dataItem.Jun, dataItem.Jul, dataItem.Aug, dataItem.Sep, dataItem.Oct, dataItem.Nov, dataItem.Dec
+					};
+					TableCell cell;
+					for (int i = 0; i < 12; ++i)
+					{
+						cell = item["Month" + (i + 1)];
+						if (values[i] > target)
+							cell.BackColor = Color.Red;
+						else
+							cell.BackColor = Color.Green;
+					}
+					cell = item["YTD"];
+					if (dataItem.YTD > target)
+						cell.BackColor = Color.Red;
+					else
+						cell.BackColor = Color.Green;
+				}
+			}
+		}
+
+		bool didFirstHeader_rgReport = false;
 
 		protected void rgReport_ItemDataBound(object sender, GridItemEventArgs e)
 		{
-			if (e.Item.ItemType == GridItemType.Header && !this.didFirstHeader)
+			if (e.Item.ItemType == GridItemType.Header && !this.didFirstHeader_rgReport)
 			{
 				e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.rmypYear.SelectedDate.Value.Year.ToString();
-				this.didFirstHeader = true;
+				this.didFirstHeader_rgReport = true;
 			}
 			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
 			{
@@ -851,7 +1157,8 @@ namespace SQM.Website.EHS
 			dynamic data = this.rddlType.SelectedValue == "TRIRBusiness" ? PullTRIRByBusinessUnit(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
 				(this.rddlType.SelectedValue == "TRIRPlant" ? PullTRIRByPlant(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
 				(this.rddlType.SelectedValue == "RecPlant" ? PullRecByPlant(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
-				(this.rddlType.SelectedValue == "BalancedScordcard" ? null : PullData(this.entities, plantID, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year,
+				(this.rddlType.SelectedValue == "BalancedScordcard" ? PullBalancedScorecardData(this.entities, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year) :
+				PullData(this.entities, plantID, decimal.Parse(this.hfCompanyID.Value), this.rmypYear.SelectedDate.Value.Year,
 				(DataToUse)Enum.Parse(typeof(DataToUse), this.rddlType.SelectedValue)))));
 
 			this.UpdateCharts(data);
@@ -1010,6 +1317,8 @@ namespace SQM.Website.EHS
 			}
 			if (balancedScorecard)
 			{
+				this.rptBalancedScorecard.DataSource = data;
+				this.rptBalancedScorecard.DataBind();
 			}
 			if (metrics)
 			{
