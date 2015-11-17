@@ -45,6 +45,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static dynamic GetDailyData(decimal plantID, DateTime day)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -100,6 +101,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static dynamic GetWeeklyData(decimal plantID, DateTime day)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -136,6 +138,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static dynamic GetMonthlyData(decimal plantID, DateTime day)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -264,6 +267,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveDailyData(decimal plantID, DateTime day, Dictionary<string, Dictionary<string, dynamic>> allData)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -329,6 +333,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveWeeklyData(decimal plantID, DateTime day, Dictionary<string, string> allData)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -381,6 +386,7 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveMonthlyData(decimal plantID, DateTime day, Dictionary<string, string> allData)
 		{
+			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
