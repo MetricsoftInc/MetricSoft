@@ -25,10 +25,10 @@ namespace SQM.Website.EHS
 
 			// This is done outside of IsPostBack because we need to get the header names every time, Telerik's RadGrid loses the header text on postback.
 			var measures = from m in this.entities.EHS_MEASURE
-						   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1"
+						   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.FREQUENCY != "M"
 						   orderby m.MEASURE_CD
-						   select new { m.MEASURE_NAME, m.MEASURE_ID };
-			this.measureHeaders = measures.ToDictionary(m => string.Format("measure_{0}", m.MEASURE_ID), m => m.MEASURE_NAME);
+						   select new { m.MEASURE_NAME, m.MEASURE_ID, m.DATA_TYPE };
+			this.measureHeaders = measures.ToDictionary(m => string.Format("measure_{0}_{1}", m.DATA_TYPE, m.MEASURE_ID), m => m.MEASURE_NAME);
 
 			if (!this.IsPostBack)
 			{
@@ -37,7 +37,7 @@ namespace SQM.Website.EHS
 					this.rgData.MasterTableView.Columns.Add(new GridBoundColumn()
 					{
 						HeaderText = measure.MEASURE_NAME,
-						UniqueName = string.Format("measure_{0}", measure.MEASURE_ID)
+						UniqueName = string.Format("measure_{0}_{1}", measure.DATA_TYPE, measure.MEASURE_ID)
 					});
 
 				var data = (from pl in this.entities.PLANT
@@ -96,7 +96,7 @@ namespace SQM.Website.EHS
 			var startOfNextWeek = startOfWeek.AddDays(7);
 			var measure_columns = from c in this.rgData.MasterTableView.Columns.OfType<GridBoundColumn>()
 								  where !string.IsNullOrWhiteSpace(c.UniqueName) && c.UniqueName.StartsWith("measure_")
-								  select new { c.UniqueName, MeasureID = decimal.Parse(c.UniqueName.Substring(8)) };
+								  select new { c.UniqueName, DataType = c.UniqueName[8].ToString(), MeasureID = decimal.Parse(c.UniqueName.Substring(10)) };
 			var measure_totals = measure_columns.ToDictionary(m => m.UniqueName, m => 0m);
 			foreach (var row in this.rgData.MasterTableView.GetItems(GridItemType.Item, GridItemType.AlternatingItem).Cast<GridDataItem>())
 			{
@@ -106,31 +106,53 @@ namespace SQM.Website.EHS
 				if (plantID == -1m)
 					continue;
 
-				var data = from d in this.entities.EHS_DATA
-						   where d.PLANT_ID == plantID && EntityFunctions.TruncateTime(d.DATE) >= startOfWeek && EntityFunctions.TruncateTime(d.DATE) < startOfNextWeek
-						   group d by d.MEASURE_ID into m
-						   select new { MeasureID = m.Key, DataTotal = m.Sum(d => d.VALUE) };
-				bool hadData = data.Any();
+				var valueData = from d in this.entities.EHS_DATA
+								where d.PLANT_ID == plantID && EntityFunctions.TruncateTime(d.DATE) >= startOfWeek && EntityFunctions.TruncateTime(d.DATE) < startOfNextWeek &&
+								d.EHS_MEASURE.FREQUENCY != "M" && (d.EHS_MEASURE.DATA_TYPE == "V" || d.EHS_MEASURE.DATA_TYPE == "O")
+								group d by d.MEASURE_ID into m
+								select new { MeasureID = m.Key, DataTotal = m.Sum(d => d.VALUE) };
+				var attributeData = from d in this.entities.EHS_DATA
+									where d.PLANT_ID == plantID && EntityFunctions.TruncateTime(d.DATE) >= startOfWeek && EntityFunctions.TruncateTime(d.DATE) < startOfNextWeek &&
+									d.EHS_MEASURE.FREQUENCY != "M" && d.EHS_MEASURE.DATA_TYPE == "A"
+									//group d by d.MEASURE_ID into m
+									//select new { MeasureID = m.Key, Attribute = m };
+									select new { MeasureID = d.MEASURE_ID, Attribute = d.ATTRIBUTE };
+				bool hadValueData = valueData.Any();
+				bool hadAttributeData = attributeData.Any();
 				foreach (var measure in measure_columns)
 				{
-					decimal value = 0;
 					// Here we check if there was any data from above as well as data for this specific measure.
-					if (hadData)
+					if (hadValueData)
 					{
-						var measure_data = data.FirstOrDefault(d => d.MeasureID == measure.MeasureID);
+						decimal value = 0;
+						var measure_data = valueData.FirstOrDefault(d => d.MeasureID == measure.MeasureID);
 						if (measure_data != null && measure_data.DataTotal.HasValue)
 							value = measure_data.DataTotal.Value;
+						row[measure.UniqueName].Text = value.ToString();
+						// Add the value to the totals to update later.
+						measure_totals[measure.UniqueName] += value;
 					}
-					row[measure.UniqueName].Text = value.ToString();
-					// Add the value to the totals to update later.
-					measure_totals[measure.UniqueName] += value;
+					// This is to handle attribute data, as it is a string instead of a value
+					if (hadAttributeData)
+					{
+						var measure_data = attributeData.FirstOrDefault(d => d.MeasureID == measure.MeasureID);
+						if (measure_data != null && measure_data.Attribute != null)
+							row[measure.UniqueName].Text = measure_data.Attribute;
+					}
+					if (!hadValueData && !hadAttributeData)
+						row[measure.UniqueName].Text = measure.DataType == "A" ? "" : "0";
 				}
 			}
 			// Update the totals row.
 			var totalRow = this.rgData.MasterTableView.Items.Cast<GridDataItem>().First(i => (decimal)this.rgData.MasterTableView.DataKeyValues[i.ItemIndex]["PlantID"] == -1m);
 			totalRow.ControlStyle.Font.Bold = true;
 			foreach (var measure in measure_columns)
-				totalRow[measure.UniqueName].Text = measure_totals[measure.UniqueName].ToString();
+			{
+				if (measure.DataType == "A")
+					totalRow[measure.UniqueName].Text = "";
+				else
+					totalRow[measure.UniqueName].Text = measure_totals[measure.UniqueName].ToString();
+			}
 			this.updateHeaders();
 		}
 	}
