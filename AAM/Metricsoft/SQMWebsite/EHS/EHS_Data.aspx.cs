@@ -638,6 +638,8 @@ namespace SQM.Website.EHS
 						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width),
 						CssClass = "WarnIfChanged"
 					};
+					if (dataItem.DATA_TYPE == "V")
+						rtbData.Style.Add("transform", "translateX(-550px)");
 					container.Controls.Add(rtbData);
 					container.Controls.Add(new CompareValidator()
 					{
