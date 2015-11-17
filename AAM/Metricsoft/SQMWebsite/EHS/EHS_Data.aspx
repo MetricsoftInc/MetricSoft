@@ -429,6 +429,10 @@
 						// On success, show the saved label then have it fade out after 2 seconds.
 						$('#<%= this.lblSaved.ClientID %>').show().delay(2000).fadeOut();
 					},
+					error: function(jqXHR, textStatus, errorThrown)
+					{
+						alert('An error occured while saving.\n\n' + textStatus + ': ' + errorThrown);
+					},
 					complete: function()
 					{
 						// No matter what, always hide the loading panel when done.
@@ -460,6 +464,10 @@
 						// On success, show the saved label then have it fade out after 2 seconds.
 						$('#<%= this.lblSaved.ClientID %>').show().delay(2000).fadeOut();
 					},
+					error: function(jqXHR, textStatus, errorThrown)
+					{
+						alert('An error occured while saving.\n\n' + textStatus + ': ' + errorThrown);
+					},
 					complete: function()
 					{
 						// No matter what, always hide the loading panel when done.
@@ -490,6 +498,10 @@
 					{
 						// On success, show the saved label then have it fade out after 2 seconds.
 						$('#<%= this.lblSaved.ClientID %>').show().delay(2000).fadeOut();
+					},
+					error: function(jqXHR, textStatus, errorThrown)
+					{
+						alert('An error occured while saving.\n\n' + textStatus + ': ' + errorThrown);
 					},
 					complete: function()
 					{
