@@ -277,11 +277,48 @@ namespace SQM.Website
 		{
 			INCIDENT incident = null;
 			bool isUpdated = false;
+			IncidentStepStatus calcStatus = IncidentStepStatus.unknown;
+
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				incident = (from i in ctx.INCIDENT where i.INCIDENT_ID == incidentID select i).SingleOrDefault();
 				if (incident != null)
 				{
+					calcStatus = IncidentStepStatus.defined;
+
+					if ((from c in ctx.INCFORM_CONTAIN where c.INCIDENT_ID == incidentID select c).Count() > 0)
+					{
+						calcStatus = IncidentStepStatus.containment;
+					}
+					if ((from c in ctx.INCFORM_ROOT5Y where c.INCIDENT_ID == incidentID select c).Count() > 0)
+					{
+						calcStatus = IncidentStepStatus.rootcause;
+					}
+					if ((from c in ctx.INCFORM_CAUSATION where c.INCIDENT_ID == incidentID select c).Count() > 0)
+					{
+						calcStatus = IncidentStepStatus.rootcauseComplete;
+					}
+					if ((from c in ctx.TASK_STATUS where c.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&  c.RECORD_ID == incidentID select c).Count() > 0)
+					{
+						calcStatus = IncidentStepStatus.correctiveaction;
+					}
+					List<INCFORM_APPROVAL> approvalList = (from c in ctx.INCFORM_APPROVAL where c.INCIDENT_ID == incidentID select c).ToList();
+					{
+						if (approvalList != null && approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve1).ToList().Count > 0)
+						{
+							calcStatus = IncidentStepStatus.signoff1;
+						}
+						if (approvalList != null && approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve2).ToList().Count > 0)
+						{
+							calcStatus = IncidentStepStatus.signoff2;
+							if (closeIncident && !incident.CLOSE_DATE.HasValue)
+							{
+								incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
+								isUpdated = true;
+							}
+						}
+					}
+					/*
 					if ((int)currentStepStatus > incident.INCFORM_LAST_STEP_COMPLETED)
 					{
 						incident.INCFORM_LAST_STEP_COMPLETED = (int)currentStepStatus;
@@ -292,8 +329,12 @@ namespace SQM.Website
 						incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
 						isUpdated = true;
 					}
-					if (isUpdated)
-						ctx.SaveChanges();
+					*/
+					if (calcStatus != IncidentStepStatus.unknown)
+					{
+						incident.INCFORM_LAST_STEP_COMPLETED = (int)calcStatus;
+						int status = ctx.SaveChanges();
+					}
 				}
 			}
 

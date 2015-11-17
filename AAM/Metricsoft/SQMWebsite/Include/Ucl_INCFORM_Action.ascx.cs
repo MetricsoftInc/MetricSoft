@@ -337,7 +337,6 @@ namespace SQM.Website
 
 			PSsqmEntities entities = new PSsqmEntities();
 			int status = 0;
-			int seq = 0;
 
 			foreach (TASK_STATUS action in actionList)
 			{
@@ -347,15 +346,12 @@ namespace SQM.Website
 				}
 			}
 
-			if (seq > 0)
-			{
-				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.correctiveaction);
-			}
-
 			if (status > -1)
 			{
 				EHSNotificationMgr.NotifyIncidentStatus(ActionIncident, ((int)SysPriv.update).ToString(), "Corrective action specified");
 			}
+
+			EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.correctiveaction);
 
 			return status;
 		}
