@@ -15,7 +15,7 @@
 				</telerik:RadDatePicker>
 			</div>
 			<br />
-			<telerik:RadGrid ID="rgData" runat="server" Skin="Metro" AutoGenerateColumns="false" BorderStyle="None">
+			<telerik:RadGrid ID="rgData" runat="server" Skin="Metro" AutoGenerateColumns="false" BorderStyle="None" Width="2500">
 				<MasterTableView DataKeyNames="PlantID">
 					<Columns>
 						<telerik:GridBoundColumn DataField="PlantName" HeaderText="<%$ Resources:LocalizedText, Location %>" UniqueName="PlantName" />

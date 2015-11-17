@@ -34,11 +34,15 @@ namespace SQM.Website.EHS
 			{
 				// This creates all the measure columns in the RadGrid.
 				foreach (var measure in measures)
-					this.rgData.MasterTableView.Columns.Add(new GridBoundColumn()
+				{
+					var column = new GridBoundColumn()
 					{
 						HeaderText = measure.MEASURE_NAME,
-						UniqueName = string.Format("measure_{0}_{1}", measure.DATA_TYPE, measure.MEASURE_ID)
-					});
+						UniqueName = string.Format("measure_{0}_{1}", measure.DATA_TYPE, measure.MEASURE_ID),
+					};
+					column.HeaderStyle.Width = measure.DATA_TYPE == "A" ? new Unit(250, UnitType.Pixel) : Unit.Empty;
+					this.rgData.MasterTableView.Columns.Add(column);
+				}
 
 				var data = (from pl in this.entities.PLANT
 							join pers in this.entities.PERSON on pl.PLANT_ID equals pers.PLANT_ID into per
