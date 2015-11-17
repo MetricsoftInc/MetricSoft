@@ -2298,22 +2298,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<EHS_TARGETS> EHS_TARGETS
-        {
-            get
-            {
-                if ((_EHS_TARGETS == null))
-                {
-                    _EHS_TARGETS = base.CreateObjectSet<EHS_TARGETS>("EHS_TARGETS");
-                }
-                return _EHS_TARGETS;
-            }
-        }
-        private ObjectSet<EHS_TARGETS> _EHS_TARGETS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_CAUSATION> INCFORM_CAUSATION
         {
             get
@@ -2326,6 +2310,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_CAUSATION> _INCFORM_CAUSATION;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EHS_TARGETS> EHS_TARGETS
+        {
+            get
+            {
+                if ((_EHS_TARGETS == null))
+                {
+                    _EHS_TARGETS = base.CreateObjectSet<EHS_TARGETS>("EHS_TARGETS");
+                }
+                return _EHS_TARGETS;
+            }
+        }
+        private ObjectSet<EHS_TARGETS> _EHS_TARGETS;
 
         #endregion
 
@@ -3372,19 +3372,19 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the EHS_TARGETS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToEHS_TARGETS(EHS_TARGETS eHS_TARGETS)
-        {
-            base.AddObject("EHS_TARGETS", eHS_TARGETS);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_CAUSATION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_CAUSATION(INCFORM_CAUSATION iNCFORM_CAUSATION)
         {
             base.AddObject("INCFORM_CAUSATION", iNCFORM_CAUSATION);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_TARGETS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_TARGETS(EHS_TARGETS eHS_TARGETS)
+        {
+            base.AddObject("EHS_TARGETS", eHS_TARGETS);
         }
 
         #endregion
@@ -19872,15 +19872,15 @@ namespace SQM.Website
         /// <summary>
         /// Create a new EHS_TARGETS object.
         /// </summary>
-        /// <param name="tARGET_ID">Initial value of the TARGET_ID property.</param>
+        /// <param name="tARGETID">Initial value of the TARGETID property.</param>
         /// <param name="tYPE">Initial value of the TYPE property.</param>
-        /// <param name="eff_YEAR">Initial value of the Eff_YEAR property.</param>
-        public static EHS_TARGETS CreateEHS_TARGETS(global::System.Decimal tARGET_ID, global::System.Decimal tYPE, global::System.Int32 eff_YEAR)
+        /// <param name="tARGET_VALUE">Initial value of the TARGET_VALUE property.</param>
+        public static EHS_TARGETS CreateEHS_TARGETS(global::System.Decimal tARGETID, global::System.String tYPE, global::System.Decimal tARGET_VALUE)
         {
             EHS_TARGETS eHS_TARGETS = new EHS_TARGETS();
-            eHS_TARGETS.TARGET_ID = tARGET_ID;
+            eHS_TARGETS.TARGETID = tARGETID;
             eHS_TARGETS.TYPE = tYPE;
-            eHS_TARGETS.Eff_YEAR = eff_YEAR;
+            eHS_TARGETS.TARGET_VALUE = tARGET_VALUE;
             return eHS_TARGETS;
         }
 
@@ -19893,34 +19893,34 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal TARGET_ID
+        public global::System.Decimal TARGETID
         {
             get
             {
-                return _TARGET_ID;
+                return _TARGETID;
             }
             set
             {
-                if (_TARGET_ID != value)
+                if (_TARGETID != value)
                 {
-                    OnTARGET_IDChanging(value);
-                    ReportPropertyChanging("TARGET_ID");
-                    _TARGET_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("TARGET_ID");
-                    OnTARGET_IDChanged();
+                    OnTARGETIDChanging(value);
+                    ReportPropertyChanging("TARGETID");
+                    _TARGETID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGETID");
+                    OnTARGETIDChanged();
                 }
             }
         }
-        private global::System.Decimal _TARGET_ID;
-        partial void OnTARGET_IDChanging(global::System.Decimal value);
-        partial void OnTARGET_IDChanged();
+        private global::System.Decimal _TARGETID;
+        partial void OnTARGETIDChanging(global::System.Decimal value);
+        partial void OnTARGETIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal TYPE
+        public global::System.String TYPE
         {
             get
             {
@@ -19930,13 +19930,13 @@ namespace SQM.Website
             {
                 OnTYPEChanging(value);
                 ReportPropertyChanging("TYPE");
-                _TYPE = StructuralObject.SetValidValue(value);
+                _TYPE = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("TYPE");
                 OnTYPEChanged();
             }
         }
-        private global::System.Decimal _TYPE;
-        partial void OnTYPEChanging(global::System.Decimal value);
+        private global::System.String _TYPE;
+        partial void OnTYPEChanging(global::System.String value);
         partial void OnTYPEChanged();
     
         /// <summary>
@@ -19944,24 +19944,24 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Eff_YEAR
+        public global::System.Decimal TARGET_VALUE
         {
             get
             {
-                return _Eff_YEAR;
+                return _TARGET_VALUE;
             }
             set
             {
-                OnEff_YEARChanging(value);
-                ReportPropertyChanging("Eff_YEAR");
-                _Eff_YEAR = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Eff_YEAR");
-                OnEff_YEARChanged();
+                OnTARGET_VALUEChanging(value);
+                ReportPropertyChanging("TARGET_VALUE");
+                _TARGET_VALUE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TARGET_VALUE");
+                OnTARGET_VALUEChanged();
             }
         }
-        private global::System.Int32 _Eff_YEAR;
-        partial void OnEff_YEARChanging(global::System.Int32 value);
-        partial void OnEff_YEARChanged();
+        private global::System.Decimal _TARGET_VALUE;
+        partial void OnTARGET_VALUEChanging(global::System.Decimal value);
+        partial void OnTARGET_VALUEChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
