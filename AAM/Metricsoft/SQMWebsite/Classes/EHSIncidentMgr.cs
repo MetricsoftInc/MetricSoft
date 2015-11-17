@@ -211,7 +211,6 @@ namespace SQM.Website
 				incident.INCFORM_CONTAIN.Load();
 				incident.INCFORM_ROOT5Y.Load();
 				incident.INCFORM_CAUSATION.Load();
-				incident.INCFORM_ACTION.Load();
 				incident.INCFORM_APPROVAL.Load();
 			}
 
@@ -298,9 +297,14 @@ namespace SQM.Website
 					{
 						calcStatus = IncidentStepStatus.rootcauseComplete;
 					}
-					if ((from c in ctx.TASK_STATUS where c.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&  c.RECORD_ID == incidentID select c).Count() > 0)
+					List<TASK_STATUS> actionList = (from c in ctx.TASK_STATUS where c.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && c.RECORD_ID == incidentID select c).ToList();
+					if (actionList != null  &&  actionList.Count() > 0)
 					{
 						calcStatus = IncidentStepStatus.correctiveaction;
+						if (actionList.Where(l => l.COMPLETE_DT != null).ToList().Count > 0)
+						{
+							calcStatus = IncidentStepStatus.correctiveactionComplete;
+						}
 					}
 					List<INCFORM_APPROVAL> approvalList = (from c in ctx.INCFORM_APPROVAL where c.INCIDENT_ID == incidentID select c).ToList();
 					{
