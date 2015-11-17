@@ -520,8 +520,9 @@ namespace SQM.Website.EHS
 			}
 			foreach (var column in rgData.MasterTableView.Columns.OfType<GridTemplateColumn>())
 			{
-				column.HeaderStyle.HorizontalAlign = column.ItemStyle.HorizontalAlign = HorizontalAlign.Center;
-				column.HeaderStyle.CssClass = "dataHeader";
+				column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+				column.ItemStyle.HorizontalAlign = this.Request.QueryString["type"] == "Weekly" || this.Request.QueryString["type"] == "Monthly" ? HorizontalAlign.Left : HorizontalAlign.Center;
+                column.HeaderStyle.CssClass = "dataHeader";
 				column.HeaderStyle.Width = column.ItemStyle.Width = new Unit(this.Request.QueryString["type"] == "Weekly" || this.Request.QueryString["type"] == "Monthly" ? "70%" : "10%");
 				column.ItemStyle.CssClass = "greyCell";
 			}
@@ -638,8 +639,6 @@ namespace SQM.Website.EHS
 						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width),
 						CssClass = "WarnIfChanged"
 					};
-					if (dataItem.DATA_TYPE == "V")
-						rtbData.Style.Add("transform", "translateX(-550px)");
 					container.Controls.Add(rtbData);
 					container.Controls.Add(new CompareValidator()
 					{
