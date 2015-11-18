@@ -627,6 +627,13 @@ namespace SQM.Website.EHS
 					if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Department).SingleOrDefault()) != null)
 					{
 						d.incidentDept = answer.ANSWER_VALUE;
+						decimal deptID = 0;
+						if (decimal.TryParse(answer.ANSWER_VALUE, out deptID))
+						{
+							DEPARTMENT dept = SQMModelMgr.LookupDepartment(entities, deptID);
+							if (dept != null)
+								d.incidentDept = dept.DEPT_NAME;
+						}
 					}
 
 					// Incident Type

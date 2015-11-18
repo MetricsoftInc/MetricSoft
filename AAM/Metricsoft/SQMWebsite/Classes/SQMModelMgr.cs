@@ -2045,6 +2045,13 @@ namespace SQM.Website
             return userLocationList;
         }
 
+		public static DEPARTMENT LookupDepartment(SQM.Website.PSsqmEntities ctx, decimal deptID)
+		{
+			DEPARTMENT dept = (from d in ctx.DEPARTMENT where d.DEPT_ID == deptID select d).SingleOrDefault();
+
+			return dept;
+		}
+
         public static DEPARTMENT LookupDepartment(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal busOrgID, decimal plantID, decimal deptID, string deptCode, bool createNew)
         {
             DEPARTMENT dept = null;
@@ -2055,22 +2062,22 @@ namespace SQM.Website
                     if (deptID > 0)
                         dept = (from d in ctx.DEPARTMENT
                                 where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == plantID) && (d.DEPT_ID == deptID)
-                                select d).Single();
+                                select d).SingleOrDefault();
                     else
                         dept = (from d in ctx.DEPARTMENT
                                 where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == plantID) && (d.DEPT_CODE == deptCode)
-                                select d).Single();
+                                select d).SingleOrDefault();
                 }
                 else
                 {
                     if (deptID > 0)
                         dept = (from d in ctx.DEPARTMENT
                                 where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == null) && (d.DEPT_ID == deptID)
-                                select d).Single();
+                                select d).SingleOrDefault();
                     else
                         dept = (from d in ctx.DEPARTMENT
                                 where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == null) && (d.DEPT_CODE == deptCode)
-                                select d).Single();
+                                select d).SingleOrDefault();
                 }
             }
             catch

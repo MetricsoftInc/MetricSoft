@@ -266,13 +266,13 @@ namespace SQM.Website
 			return baseFormName;
 		}
 
-		public static INCIDENT UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus)
+		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus)
 		{
 			return UpdateIncidentStatus(incidentID,  currentStepStatus, false);
 		}
 
 
-		public static INCIDENT UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, bool closeIncident)
+		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, bool closeIncident)
 		{
 			INCIDENT incident = null;
 			bool isUpdated = false;
@@ -342,7 +342,7 @@ namespace SQM.Website
 				}
 			}
 
-			return incident;
+			return calcStatus;
 		}
 
 		public static List<EHSFormControlStep> GetStepsForincidentTypeId(decimal incidentTypeId)
