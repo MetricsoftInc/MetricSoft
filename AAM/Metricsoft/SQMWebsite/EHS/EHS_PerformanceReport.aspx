@@ -47,6 +47,11 @@
 			color: #fff;
 		}
 
+		.RadAjax .raDiv
+		{
+			background-position: center 20px !important;
+		}
+
 		.rgCaption
 		{
 			color: #000;
