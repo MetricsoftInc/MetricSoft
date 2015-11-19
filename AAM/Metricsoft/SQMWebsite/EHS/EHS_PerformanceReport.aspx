@@ -144,7 +144,7 @@
 					<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
 				</div>
 				<div class="exportButtonDiv">
-					<!--<telerik:RadButton ID="btnExportAll" runat="server" Text="Export all to PDF" Skin="Metro" OnClick="btnExportAll_Click" OnClientClicked="btnExportAll_ClientClicked" />-->
+					<%--<telerik:RadButton ID="btnExportAll" runat="server" Text="Export all to PDF" Skin="Metro" OnClick="btnExportAll_Click" OnClientClicked="btnExportAll_ClientClicked" />--%>
 					<input type="button" id="btnExport" runat="server" value="<%$ Resources:RadGrid.Main, ExportToPdfText %>" class="myButton" />
 				</div>
 			</div>
@@ -184,7 +184,7 @@
 				form.remove();
 			});
 
-			function exportAll_endRequest()
+			/*function exportAll_endRequest()
 			{
 				console.log("exportAll_endRequest called");
 				Sys.WebForms.PageRequestManager.getInstance().remove_endRequest(exportAll_endRequest);
@@ -193,16 +193,16 @@
 				div.css('transform', 'scale(0.5, 0.5) translate(-50%, -50%)');
 				form.append($('<input type="text" name="html" />').val(div[0].outerHTML));
 				$('body').append(form);
-				/*form[0].submit();
+				form[0].submit();
 				form.remove();
-				div.empty();*/
+				div.empty();
 			}
 
 			function btnExportAll_ClientClicked(sender, eventArgs)
 			{
 				console.log("btnExportAll_ClientClicked called");
 				Sys.WebForms.PageRequestManager.getInstance().add_endRequest(exportAll_endRequest);
-			}
+			}*/
 
 			function resetCSS()
 			{
