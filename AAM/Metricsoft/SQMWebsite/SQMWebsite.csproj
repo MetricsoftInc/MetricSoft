@@ -482,6 +482,11 @@
     <Content Include="Include\Ucl_INCFORM_LostTime_Hist.ascx" />
     <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
+    <Content Include="Include\Ucl_PerformanceReport_BalancedScorecard.ascx" />
+    <Content Include="Include\Ucl_PerformanceReport_Metrics.ascx" />
+    <Content Include="Include\Ucl_PerformanceReport_Pyramid.ascx" />
+    <Content Include="Include\Ucl_PerformanceReport_RecPlant.ascx" />
+    <Content Include="Include\Ucl_PerformanceReport_TRIRPlant.ascx" />
     <Content Include="Include\Ucl_PersonList.ascx" />
     <Content Include="Include\Ucl_PersonSearch.ascx" />
     <Content Include="Include\Ucl_PreventionLocation.ascx" />
@@ -1400,6 +1405,41 @@
     </Compile>
     <Compile Include="Include\Ucl_PartSearch.ascx.designer.cs">
       <DependentUpon>Ucl_PartSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_BalancedScorecard.ascx.cs">
+      <DependentUpon>Ucl_PerformanceReport_BalancedScorecard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_BalancedScorecard.ascx.designer.cs">
+      <DependentUpon>Ucl_PerformanceReport_BalancedScorecard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_Metrics.ascx.cs">
+      <DependentUpon>Ucl_PerformanceReport_Metrics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_Metrics.ascx.designer.cs">
+      <DependentUpon>Ucl_PerformanceReport_Metrics.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_Pyramid.ascx.cs">
+      <DependentUpon>Ucl_PerformanceReport_Pyramid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_Pyramid.ascx.designer.cs">
+      <DependentUpon>Ucl_PerformanceReport_Pyramid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_RecPlant.ascx.cs">
+      <DependentUpon>Ucl_PerformanceReport_RecPlant.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_RecPlant.ascx.designer.cs">
+      <DependentUpon>Ucl_PerformanceReport_RecPlant.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_TRIRPlant.ascx.cs">
+      <DependentUpon>Ucl_PerformanceReport_TRIRPlant.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PerformanceReport_TRIRPlant.ascx.designer.cs">
+      <DependentUpon>Ucl_PerformanceReport_TRIRPlant.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_PersonList.ascx.cs">
       <DependentUpon>Ucl_PersonList.ascx</DependentUpon>

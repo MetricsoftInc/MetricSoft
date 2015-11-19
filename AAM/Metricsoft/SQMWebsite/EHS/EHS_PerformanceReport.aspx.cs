@@ -14,7 +14,7 @@ namespace SQM.Website.EHS
 	public partial class EHS_PerformanceReport : SQMBasePage
 	{
 		[Flags]
-		enum DataToUse
+		public enum DataToUse
 		{
 			None = 0,
 			TRIR = 0x0001,
@@ -37,7 +37,7 @@ namespace SQM.Website.EHS
 			Metrics = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Restricted | Severity | FirstAid | Leadership | JSAs | SafetyTraining | Ordinals
 		}
 
-		class Data
+		public class Data
 		{
 			public DataToUse DataToUse { get; set; }
 			public string Month { get; set; }
@@ -131,7 +131,7 @@ namespace SQM.Website.EHS
 			}
 		}
 
-		static GaugeDefinition gaugeDef = new GaugeDefinition()
+		public static GaugeDefinition gaugeDef = new GaugeDefinition()
 		{
 			Height = 500,
 			Width = 1500,
@@ -139,7 +139,7 @@ namespace SQM.Website.EHS
 			LegendPosition = ChartLegendPosition.Right,
 			LegendBackgroundColor = Color.White
 		};
-		static GaugeDefinition smallGaugeDef = new GaugeDefinition()
+		public static GaugeDefinition smallGaugeDef = new GaugeDefinition()
 		{
 			Height = 500,
 			Width = 740,
@@ -376,7 +376,10 @@ namespace SQM.Website.EHS
 
 			return new
 			{
+				title = plantID_dec == -1 ? entities.COMPANY.First(c => c.COMPANY_ID == companyID).COMPANY_NAME :
+					(plantID.StartsWith("BU") ? entities.BUSINESS_ORG.First(b => b.BUS_ORG_ID == plantID_dec).ORG_NAME : entities.PLANT.First(p => p.PLANT_ID == plantID_dec).PLANT_NAME),
 				data,
+				year,
 				previousYTD,
 				incidentRateSeries,
 				incidentRateTrendSeries,
@@ -727,7 +730,7 @@ namespace SQM.Website.EHS
 			};
 		}
 
-		static List<dynamic> PullBalancedScorecardData(PSsqmEntities entities, decimal companyID, int year)
+		static dynamic PullBalancedScorecardData(PSsqmEntities entities, decimal companyID, int year)
 		{
 			var data = new List<dynamic>();
 			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
@@ -923,7 +926,11 @@ namespace SQM.Website.EHS
 				});
 			}
 
-			return data;
+			return new
+			{
+				data,
+				year
+			};
 		}
 
 		PSsqmEntities entities;
@@ -948,10 +955,8 @@ namespace SQM.Website.EHS
 				});
 				this.rmypYear.SelectedDate = DateTime.Today;
 
+				this.divExportAll.Style.Add("width", gaugeDef.Width + "px");
 				this.divExport.Style.Add("width", gaugeDef.Width + "px");
-				this.divTRIR.Style.Add("width", gaugeDef.Width + "px");
-				this.divFrequencyRate.Style.Add("width", gaugeDef.Width + "px");
-				this.divSeverityRate.Style.Add("width", gaugeDef.Width + "px");
 
 				dynamic data = PullData(this.entities, this.rcbPlant.SelectedValue, SessionManager.UserContext.HRLocation.Company.COMPANY_ID, this.rmypYear.SelectedDate.Value.Year,
 					DataToUse.Metrics);
@@ -960,195 +965,227 @@ namespace SQM.Website.EHS
 			}
 		}
 
-		protected void rgTRIRPlant_ItemDataBound(object sender, GridItemEventArgs e)
+		static HtmlGenericControl CreatePageBreakDiv()
 		{
-			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
-			{
-				dynamic dataItem = e.Item.DataItem;
-				var row = e.Item as GridDataItem;
-
-				if (row["BusinessUnit"].Text == "&nbsp;")
-					row.Style.Add("background-color", "#d9d9d9");
-
-				var percentChangeCell = row["PercentChange"];
-				var label = new Label();
-				if (dataItem.PercentChange < 0)
-				{
-					label.Text = "&#8659;";
-					label.ForeColor = percentChangeCell.BackColor = Color.Green;
-					percentChangeCell.ForeColor = Color.White;
-				}
-				else if (dataItem.PercentChange > 0)
-				{
-					label.Text = "&#8657;";
-					label.ForeColor = percentChangeCell.BackColor = Color.Red;
-					percentChangeCell.ForeColor = Color.White;
-				}
-				else
-					label.Text = "=";
-				row["ImprovedOrDeclined"].Controls.Add(label);
-
-				if (sender == this.rgTRIRPlant)
-				{
-					var progressToGoalCell = row["ProgressToGoal"];
-					if (dataItem.ProgressToGoal < 0)
-					{
-						progressToGoalCell.BackColor = Color.Green;
-						progressToGoalCell.ForeColor = Color.White;
-					}
-					else if (dataItem.ProgressToGoal > 0)
-					{
-						progressToGoalCell.BackColor = Color.Red;
-						progressToGoalCell.ForeColor = Color.White;
-					}
-				}
-			}
+			var div = new HtmlGenericControl("div");
+			div.Style.Add("page-break-after", "always");
+			div.Style.Add("padding", "1px");
+			return div;
 		}
 
-		protected void rgTRIRPlant_PreRender(object sender, EventArgs e)
+		protected void btnExportAll_Click(object sender, EventArgs e)
 		{
-			var rg = sender as RadGrid;
-			for (int i = rg.Items.Count - 2; i >= 0; --i)
-			{
-				var rowBU = rg.Items[i]["BusinessUnit"];
-				var nextRow = rg.Items[i + 1];
-				var nextRowBU = nextRow["BusinessUnit"];
-				if (rowBU.Text == nextRowBU.Text)
-				{
-					rowBU.RowSpan = nextRowBU.RowSpan < 2 ? 2 : nextRowBU.RowSpan + 1;
-					nextRowBU.Visible = false;
-					nextRow["Plant"].Style.Add("border-left-width", "1px");
-				}
-			}
-		}
+			this.btnRefresh_Click(null, EventArgs.Empty);
 
-		protected void rptBalancedScorecard_ItemDataBound(object sender, RepeaterItemEventArgs e)
-		{
-			if (e.Item.ItemType == ListItemType.Header)
+			gaugeDef.Target = smallGaugeDef.Target = null;
+
+			string plantID = this.rddlType.SelectedValue == "Metrics" ? this.rcbPlant.SelectedValue : "-1";
+			decimal companyID = decimal.Parse(this.hfCompanyID.Value);
+			int year = this.rmypYear.SelectedDate.Value.Year;
+
+			#region Pyramid
+
+			var pnlPyramidOutput = new Panel();
+
+			dynamic data = PullData(this.entities, plantID, companyID, year, DataToUse.Pyramid);
+			var YTD = (data.data as List<Data>)[12];
+
+			var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
+			uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
+			uclPyramid.Fatalities = YTD.Fatalities;
+			uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;
+			uclPyramid.LostTimeCases = YTD.Frequency;
+			uclPyramid.RecordableInjuriesPreviousYear = data.previousYTD.Incidents;
+			uclPyramid.RecordableInjuries = YTD.Incidents;
+			uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.FirstAid;
+			uclPyramid.FirstAidCases = YTD.FirstAid;
+			uclPyramid.NearMissesPreviousYear = data.previousYTD.NearMisses;
+			uclPyramid.NearMisses = YTD.NearMisses;
+			uclPyramid.JSAsSeries = data.jsasSeries;
+			uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
+			uclPyramid.JSAsTarget = data.jsasTarget;
+			uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+			pnlPyramidOutput.Controls.Add(uclPyramid);
+
+			this.divExportAll.Controls.Add(pnlPyramidOutput);
+
+			#endregion
+
+			this.divExportAll.Controls.Add(CreatePageBreakDiv());
+
+			#region TRIR By Business Unit
+
+			var pnlTRIRBusinessOutput = new Panel();
+
+			data = PullTRIRByBusinessUnit(this.entities, companyID, year);
+
+			gaugeDef.Height = 410;
+			int count = 0;
+			foreach (var businessOrgData in data)
 			{
-				var rgBalancedScorescardHeader = e.Item.FindControl("rgBalancedScorescardHeader") as RadGrid;
-				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
+				gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
+				gaugeDef.Target = new PERSPECTIVE_TARGET()
 				{
-					int nextMonth = DateTime.Today.Month + 1;
-					for (int i = nextMonth; i < 13; ++i)
-						rgBalancedScorescardHeader.MasterTableView.GetColumn("Month" + i).Visible = false;
-				}
-				rgBalancedScorescardHeader.MasterTableView.Width = new Unit(gaugeDef.Width, UnitType.Pixel);
-				rgBalancedScorescardHeader.DataSource = new List<dynamic>();
-				rgBalancedScorescardHeader.DataBind();
-			}
-			else if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-			{
-				dynamic dataItem = e.Item.DataItem;
-				var rgBalancedScorecardItem = e.Item.FindControl("rgBalancedScorecardItem") as RadGrid;
-				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
-				{
-					int nextMonth = DateTime.Today.Month + 1;
-					for (int i = nextMonth; i < 13; ++i)
-						rgBalancedScorecardItem.MasterTableView.GetColumn("Month" + i).Visible = false;
-				}
-				rgBalancedScorecardItem.MasterTableView.Width = new Unit(gaugeDef.Width, UnitType.Pixel);
-				rgBalancedScorecardItem.DataSource = new List<dynamic>()
-				{
-					new
-					{
-						ItemType = dataItem.Name
-					},
-					dataItem.TRIR,
-					dataItem.FrequencyRate,
-					dataItem.SeverityRate
+					TARGET_VALUE = businessOrgData.incidentRateTarget,
+					DESCR_SHORT = "Target"
 				};
-				rgBalancedScorecardItem.DataBind();
+				var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
+				WebSiteCommon.SetScale(gaugeDef, series);
+				var container = new HtmlGenericControl("div");
+				container.Attributes.Add("class", "chartMarginTop");
+				this.uclChart.CreateMultiLineChart(gaugeDef, series, container);
+				pnlTRIRBusinessOutput.Controls.Add(container);
+
+				++count;
+				if ((count % 2) == 0)
+					pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 			}
-		}
 
-		bool didFirstHeader_rgBalancedScorescardHeader = false;
+			this.divExportAll.Controls.Add(pnlTRIRBusinessOutput);
 
-		protected void rgBalancedScorescardHeader_ItemDataBound(object sender, GridItemEventArgs e)
-		{
-			if (e.Item.ItemType == GridItemType.Header)
+			#endregion
+
+			this.divExportAll.Controls.Add(CreatePageBreakDiv());
+
+			#region TRIR Comparison By Plant
+
+			var pnlTRIRPlantOutput = new Panel();
+
+			data = PullTRIRByPlant(this.entities, companyID, year);
+
+			var uclTRIRPlant = this.LoadControl<Ucl_PerformanceReport_TRIRPlant>("~/Include/Ucl_PerformanceReport_TRIRPlant.ascx");
+			uclTRIRPlant.Year = data.year;
+			uclTRIRPlant.Data = data.data;
+			pnlTRIRPlantOutput.Controls.Add(uclTRIRPlant);
+
+			this.divExportAll.Controls.Add(pnlTRIRPlantOutput);
+
+			#endregion
+
+			this.divExportAll.Controls.Add(CreatePageBreakDiv());
+
+			#region Recordable Comparison By Plant
+
+			var pnlRecPlantOutput = new Panel();
+
+			data = PullRecByPlant(this.entities, companyID, year);
+
+			var uclRecPlant = this.LoadControl<Ucl_PerformanceReport_RecPlant>("~/Include/Ucl_PerformanceReport_RecPlant.ascx");
+			uclRecPlant.Year = data.year;
+			uclRecPlant.Data = data.data;
+			pnlRecPlantOutput.Controls.Add(uclRecPlant);
+
+			this.divExportAll.Controls.Add(pnlRecPlantOutput);
+
+			#endregion
+
+			this.divExportAll.Controls.Add(CreatePageBreakDiv());
+
+			#region Balanced Scorecard
+
+			var pnlBalancedScorecardOutput = new Panel();
+
+			data = PullBalancedScorecardData(this.entities, companyID, year);
+
+			var uclBalancedScorecord = this.LoadControl<Ucl_PerformanceReport_BalancedScorecard>("~/Include/Ucl_PerformanceReport_BalancedScorecard.ascx");
+			uclBalancedScorecord.Year = data.year;
+			uclBalancedScorecord.Width = gaugeDef.Width;
+			uclBalancedScorecord.Data = data.data;
+			pnlBalancedScorecardOutput.Controls.Add(uclBalancedScorecord);
+
+			this.divExportAll.Controls.Add(pnlBalancedScorecardOutput);
+
+			#endregion
+
+			this.divExportAll.Controls.Add(CreatePageBreakDiv());
+
+			#region Metrics
+
+			var pnlMetricsOutput = new Panel();
+
+			// Total Corp.
+			data = PullData(this.entities, "-1", companyID, year, DataToUse.Metrics);
+
+			var uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
+			uclMetrics.Title = data.title;
+			uclMetrics.Year = data.year;
+			uclMetrics.Data = data.data;
+			uclMetrics.IncidentRateSeries = data.incidentRateSeries;
+			uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
+			uclMetrics.IncidentRateTarget = data.incidentRateTarget;
+			uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
+			uclMetrics.SeverityRateSeries = data.severityRateSeries;
+			uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
+			uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
+			uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
+			uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
+			uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
+			uclMetrics.JSAsSeries = data.jsasSeries;
+			uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
+			uclMetrics.JSAsTarget = data.jsasTarget;
+			uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+			pnlMetricsOutput.Controls.Add(uclMetrics);
+
+			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
+			decimal? busOrgID = null;
+			foreach (var businessLoc in businessLocs.OrderBy(l => l.Plant.BUS_ORG_ID).ThenBy(l => l.Plant.PLANT_NAME))
 			{
-				if (!this.didFirstHeader_rgBalancedScorescardHeader)
+				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
 				{
-					e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.rmypYear.SelectedDate.Value.Year.ToString();
-					this.didFirstHeader_rgBalancedScorescardHeader = true;
-				}
-				else
-				{
-					int width = 200;
-					if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
-						width += 100 * (12 - DateTime.Today.Month);
-					(sender as RadGrid).MasterTableView.GetColumn("Target").HeaderStyle.Width = new Unit(width, UnitType.Pixel);
-				}
-			}
-		}
+					pnlMetricsOutput.Controls.Add(CreatePageBreakDiv());
 
-		protected void rgBalancedScorecardItem_ItemDataBound(object sender, GridItemEventArgs e)
-		{
-			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
-			{
-				int width = 150;
-				if (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year)
-					width += 100 * (12 - DateTime.Today.Month);
-				(sender as RadGrid).MasterTableView.GetColumn("ItemType").HeaderStyle.Width = new Unit(width, UnitType.Pixel);
+					busOrgID = businessLoc.Plant.BUS_ORG_ID;
+					data = PullData(this.entities, "BU" + busOrgID, companyID, year, DataToUse.Metrics);
 
-				var item = e.Item as GridDataItem;
-				if (item["Target"].Text == "&nbsp;")
-				{
-					item["ItemType"].ColumnSpan = (this.rmypYear.SelectedDate.Value.Year == DateTime.Today.Year ? DateTime.Today.Month : 12) + 3;
-					item["ItemType"].Font.Bold = true;
-					item.Cells.Remove(item["YTD"]);
-					for (int i = 12; i > 0; --i)
-						item.Cells.Remove(item["Month" + i]);
-					item.Cells.Remove(item["Target"]);
+					uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
+					uclMetrics.Title = data.title;
+					uclMetrics.Year = data.year;
+					uclMetrics.Data = data.data;
+					uclMetrics.IncidentRateSeries = data.incidentRateSeries;
+					uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
+					uclMetrics.IncidentRateTarget = data.incidentRateTarget;
+					uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
+					uclMetrics.SeverityRateSeries = data.severityRateSeries;
+					uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
+					uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
+					uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
+					uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
+					uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
+					uclMetrics.JSAsSeries = data.jsasSeries;
+					uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
+					uclMetrics.JSAsTarget = data.jsasTarget;
+					uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+					pnlMetricsOutput.Controls.Add(uclMetrics);
 				}
-				else
-				{
-					dynamic dataItem = e.Item.DataItem as dynamic;
-					decimal target = dataItem.Target;
-					var values = new decimal[]
-					{
-						dataItem.Jan, dataItem.Feb, dataItem.Mar, dataItem.Apr, dataItem.May, dataItem.Jun, dataItem.Jul, dataItem.Aug, dataItem.Sep, dataItem.Oct, dataItem.Nov, dataItem.Dec
-					};
-					TableCell cell;
-					for (int i = 0; i < 12; ++i)
-					{
-						cell = item["Month" + (i + 1)];
-						if (values[i] > target)
-							cell.BackColor = Color.Red;
-						else
-							cell.BackColor = Color.Green;
-					}
-					cell = item["YTD"];
-					if (dataItem.YTD > target)
-						cell.BackColor = Color.Red;
-					else
-						cell.BackColor = Color.Green;
-				}
-			}
-		}
 
-		bool didFirstHeader_rgReport = false;
+				pnlMetricsOutput.Controls.Add(CreatePageBreakDiv());
 
-		protected void rgReport_ItemDataBound(object sender, GridItemEventArgs e)
-		{
-			if (e.Item.ItemType == GridItemType.Header && !this.didFirstHeader_rgReport)
-			{
-				e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.rmypYear.SelectedDate.Value.Year.ToString();
-				this.didFirstHeader_rgReport = true;
+				data = PullData(this.entities, businessLoc.Plant.PLANT_ID.ToString(), companyID, year, DataToUse.Metrics);
+
+				uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
+				uclMetrics.Title = data.title;
+				uclMetrics.Year = data.year;
+				uclMetrics.Data = data.data;
+				uclMetrics.IncidentRateSeries = data.incidentRateSeries;
+				uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
+				uclMetrics.IncidentRateTarget = data.incidentRateTarget;
+				uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
+				uclMetrics.SeverityRateSeries = data.severityRateSeries;
+				uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
+				uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
+				uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
+				uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
+				uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
+				uclMetrics.JSAsSeries = data.jsasSeries;
+				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
+				uclMetrics.JSAsTarget = data.jsasTarget;
+				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				pnlMetricsOutput.Controls.Add(uclMetrics);
 			}
-			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
-			{
-				var month = (e.Item.DataItem as Data).Month;
-				if (month == "YTD")
-					e.Item.BackColor = Color.FromArgb(255, 255, 153);
-				else if (month == "Target")
-				{
-					var item = e.Item as GridDataItem;
-					foreach (var column in new[] { "ManHours", "Incidents", "Frequency", "Restricted", "Severity", "FirstAid", "Leadership", "JSAs", "SafetyTraining" })
-						item[column].Text = "";
-				}
-			}
+
+			this.divExportAll.Controls.Add(pnlMetricsOutput);
+
+			#endregion
 		}
 
 		protected void btnRefresh_Click(object sender, EventArgs e)
@@ -1185,83 +1222,24 @@ namespace SQM.Website.EHS
 
 			if (pyramid)
 			{
-				var left = (gaugeDef.Width - 420 - this.pyramid.Width.ToPixels()) / 2;
-				this.pyramid.Style.Add("left", left + "px");
 				var YTD = (data.data as List<Data>)[12];
-				this.pyramid.Fatalities = YTD.Fatalities;
-				this.pyramid.LostTimeCases = YTD.Frequency;
-				this.pyramid.RecordableInjuries = YTD.Incidents;
-				this.pyramid.FirstAidCases = YTD.FirstAid;
-				this.pyramid.NearMisses = YTD.NearMisses;
 
-				var rowHeight = this.pyramid.Height.Divide(5).ToPixels() * 0.996m;
-				var halfWidth = this.pyramid.Width.Divide(2).ToPixels();
-				this.pyramidTable.Style.Add("left", (halfWidth + left) + "px");
-				this.pyramidTable_column1.Style.Add("width", (halfWidth + 20) + "px");
-				this.pyramidTable_columnAnnualized.InnerText = "Annualized " + DateTime.Today.Year;
-				this.pyramidTable_columnPreviousYear.InnerText = (DateTime.Today.Year - 1).ToString();
-
-				this.pyramidTable_fatalitiesRow.Style.Add("height", rowHeight + "px");
-				this.pyramidTable_fatalitiesYTD.InnerText = YTD.Fatalities.ToString();
-				var fatalitiesAnnualized = Math.Round(YTD.Fatalities * 12 / DateTime.Today.Month);
-				this.pyramidTable_fatalitiesAnnualized.InnerText = fatalitiesAnnualized.ToString();
-				this.pyramidTable_fatalitiesPreviousYear.InnerText = data.previousYTD.Fatalities.ToString();
-				var fatalitiesVariance = data.previousYTD.Fatalities == 0 ? 0 : (fatalitiesAnnualized - data.previousYTD.Fatalities) / data.previousYTD.Fatalities;
-				this.pyramidTable_fatalitiesVariance.InnerText = fatalitiesVariance.ToString("P1");
-				this.pyramidTable_fatalitiesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (fatalitiesVariance > 0 ? "Bad" : "Good"));
-
-				this.pyramidTable_lostTimeRow.Style.Add("height", rowHeight + "px");
-				this.pyramidTable_lostTimeYTD.InnerText = YTD.Frequency.ToString();
-				var lostTimeAnnualized = Math.Round(YTD.Frequency * 12 / DateTime.Today.Month);
-				this.pyramidTable_lostTimeAnnualized.InnerText = lostTimeAnnualized.ToString();
-				this.pyramidTable_lostTimePreviousYear.InnerText = data.previousYTD.Frequency.ToString();
-				var lostTimeVariance = data.previousYTD.Frequency == 0 ? 0 : (lostTimeAnnualized - data.previousYTD.Frequency) / data.previousYTD.Frequency;
-				this.pyramidTable_lostTimeVariance.InnerText = lostTimeVariance.ToString("P1");
-				this.pyramidTable_lostTimeVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (lostTimeVariance > 0 ? "Bad" : "Good"));
-
-				this.pyramidTable_recordableRow.Style.Add("height", rowHeight + "px");
-				this.pyramidTable_recordableYTD.InnerText = YTD.Incidents.ToString();
-				var recordableAnnualized = Math.Round(YTD.Incidents * 12 / DateTime.Today.Month);
-				this.pyramidTable_recordableAnnualized.InnerText = recordableAnnualized.ToString();
-				this.pyramidTable_recordablePreviousYear.InnerText = data.previousYTD.Incidents.ToString();
-				var recordableVariance = data.previousYTD.Incidents == 0 ? 0 : (recordableAnnualized - data.previousYTD.Incidents) / data.previousYTD.Incidents;
-				this.pyramidTable_recordableVariance.InnerText = recordableVariance.ToString("P1");
-				this.pyramidTable_recordableVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (recordableVariance > 0 ? "Bad" : "Good"));
-
-				this.pyramidTable_firstAidRow.Style.Add("height", rowHeight + "px");
-				this.pyramidTable_firstAidYTD.InnerText = YTD.FirstAid.ToString();
-				var firstAidAnnualized = Math.Round(YTD.FirstAid * 12 / DateTime.Today.Month);
-				this.pyramidTable_firstAidAnnualized.InnerText = firstAidAnnualized.ToString();
-				this.pyramidTable_firstAidPreviousYear.InnerText = data.previousYTD.FirstAid.ToString();
-				var firstAidVariance = data.previousYTD.FirstAid == 0 ? 0 : (firstAidAnnualized - data.previousYTD.FirstAid) / data.previousYTD.FirstAid;
-				this.pyramidTable_firstAidVariance.InnerText = firstAidVariance.ToString("P1");
-				this.pyramidTable_firstAidVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (firstAidVariance > 0 ? "Bad" : "Good"));
-
-				this.pyramidTable_nearMissesRow.Style.Add("height", rowHeight + "px");
-				this.pyramidTable_nearMissesYTD.InnerText = YTD.NearMisses.ToString();
-				var nearMissesAnnualized = Math.Round(YTD.NearMisses * 12 / DateTime.Today.Month);
-				this.pyramidTable_nearMissesAnnualized.InnerText = nearMissesAnnualized.ToString();
-				this.pyramidTable_nearMissesPreviousYear.InnerText = data.previousYTD.NearMisses.ToString();
-				var nearMissesVariance = data.previousYTD.NearMisses == 0 ? 0 : (nearMissesAnnualized - data.previousYTD.NearMisses) / data.previousYTD.NearMisses;
-				this.pyramidTable_nearMissesVariance.InnerText = nearMissesVariance.ToString("P1");
-				this.pyramidTable_nearMissesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (nearMissesVariance > 0 ? "Bad" : "Good"));
-
-				gaugeDef.Height = 410;
-				gaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
-				gaugeDef.Target = new PERSPECTIVE_TARGET()
-				{
-					TARGET_VALUE = data.jsasTarget,
-					DESCR_SHORT = "Target"
-				};
-				var series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
-				SetScale(gaugeDef, series);
-				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divJSAsAndAudits_Pyramid);
-
-				gaugeDef.Title = "Safety Training Hours";
-				gaugeDef.Target = null;
-				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
-				SetScale(gaugeDef, series);
-				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divSafetyTrainingHours_Pyramid);
+				var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
+				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
+				uclPyramid.Fatalities = YTD.Fatalities;
+				uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;
+				uclPyramid.LostTimeCases = YTD.Frequency;
+				uclPyramid.RecordableInjuriesPreviousYear = data.previousYTD.Incidents;
+				uclPyramid.RecordableInjuries = YTD.Incidents;
+				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.FirstAid;
+				uclPyramid.FirstAidCases = YTD.FirstAid;
+				uclPyramid.NearMissesPreviousYear = data.previousYTD.NearMisses;
+				uclPyramid.NearMisses = YTD.NearMisses;
+				uclPyramid.JSAsSeries = data.jsasSeries;
+				uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
+				uclPyramid.JSAsTarget = data.jsasTarget;
+				uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				this.pnlPyramidOutput.Controls.Add(uclPyramid);
 			}
 			if (trirBusiness)
 			{
@@ -1284,98 +1262,52 @@ namespace SQM.Website.EHS
 
 					++count;
 					if ((count % 2) == 0)
-					{
-						var pageBreak = new HtmlGenericControl("div");
-						pageBreak.Style.Add("page-break-after", "always");
-						this.pnlTRIRBusinessOutput.Controls.Add(pageBreak);
-					}
+						this.pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 				}
 			}
 			if (trirPlant)
 			{
-				this.rgTRIRPlant.MasterTableView.GetColumn("ImprovedOrDeclined").HeaderText =
-					"Improved <span style=\"color: green; font-size: 18px\">&#8659;</span><br/>or<br/>Declined <span style=\"color: red; font-size: 18px\">&#8657;</span>";
-
-				this.rgTRIRPlant.MasterTableView.GetColumn("TRIR2YearsAgo").HeaderText = "TRIR<br/>" + (data.year - 2);
-				this.rgTRIRPlant.MasterTableView.GetColumn("TRIRPreviousYear").HeaderText = "TRIR<br/>" + (data.year - 1);
-				this.rgTRIRPlant.MasterTableView.GetColumn("TRIRYTD").HeaderText = "TRIR YTD<br/>" + data.year;
-				this.rgTRIRPlant.MasterTableView.GetColumn("PercentChange").HeaderText = "% Change<br/>" + data.year + " vs. " + (data.year - 1);
-
-				this.rgTRIRPlant.DataSource = data.data;
-				this.rgTRIRPlant.DataBind();
+				var uclTRIRPlant = this.LoadControl<Ucl_PerformanceReport_TRIRPlant>("~/Include/Ucl_PerformanceReport_TRIRPlant.ascx");
+				uclTRIRPlant.Year = data.year;
+				uclTRIRPlant.Data = data.data;
+				this.pnlTRIRPlantOutput.Controls.Add(uclTRIRPlant);
 			}
 			if (recPlant)
 			{
-				this.rgRecPlant.MasterTableView.GetColumn("ImprovedOrDeclined").HeaderText =
-					"Improved <span style=\"color: green; font-size: 18px\">&#8659;</span><br/>or<br/>Declined <span style=\"color: red; font-size: 18px\">&#8657;</span>";
-
-				this.rgRecPlant.MasterTableView.GetColumn("RecPreviousYear").HeaderText = "Recordables<br/>" + (data.year - 1);
-				this.rgRecPlant.MasterTableView.GetColumn("RecYTD").HeaderText = "Recordables YTD<br/>" + data.year;
-
-				this.rgRecPlant.DataSource = data.data;
-				this.rgRecPlant.DataBind();
+				var uclRecPlant = this.LoadControl<Ucl_PerformanceReport_RecPlant>("~/Include/Ucl_PerformanceReport_RecPlant.ascx");
+				uclRecPlant.Year = data.year;
+				uclRecPlant.Data = data.data;
+				this.pnlRecPlantOutput.Controls.Add(uclRecPlant);
 			}
 			if (balancedScorecard)
 			{
-				this.rptBalancedScorecard.DataSource = data;
-				this.rptBalancedScorecard.DataBind();
+				var uclBalancedScorecord = this.LoadControl<Ucl_PerformanceReport_BalancedScorecard>("~/Include/Ucl_PerformanceReport_BalancedScorecard.ascx");
+				uclBalancedScorecord.Year = data.year;
+				uclBalancedScorecord.Width = gaugeDef.Width;
+				uclBalancedScorecord.Data = data.data;
+				this.pnlBalancedScorecardOutput.Controls.Add(uclBalancedScorecord);
 			}
 			if (metrics)
 			{
-				this.rgReport.DataSource = data.data;
-				this.rgReport.DataBind();
-
-				gaugeDef.Height = 500;
-				gaugeDef.Title = "TOTAL RECORDABLE INCIDENT RATE";
-				gaugeDef.Target = new PERSPECTIVE_TARGET()
-				{
-					TARGET_VALUE = data.incidentRateTarget,
-					DESCR_SHORT = "Target"
-				};
-				var series = new List<GaugeSeries>() { data.incidentRateSeries, data.incidentRateTrendSeries };
-				SetScale(gaugeDef, series);
-				this.uclChart.CreateMultiLineChart(gaugeDef, series, this.divTRIR);
-
-				var calcsResult = new CalcsResult().Initialize();
-
-				gaugeDef.Title = "FREQUENCY RATE";
-				gaugeDef.Target = null;
-				SetScale(gaugeDef, data.frequencyRateSeries);
-				calcsResult.metricSeries = data.frequencyRateSeries;
-				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divFrequencyRate);
-
-				gaugeDef.Title = "SEVERITY RATE";
-				SetScale(gaugeDef, data.severityRateSeries);
-				calcsResult.metricSeries = data.severityRateSeries;
-				this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, gaugeDef, calcsResult, this.divSeverityRate);
-
-				if (this.rmypYear.SelectedDate.Value.Year != DateTime.Today.Year || (data.data as List<Data>)[12].TRIR == 0)
-					this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
-				else
-				{
-					this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = true;
-					this.pieRecordableType.Values = data.ordinalTypeSeries;
-					this.pieRecordableBodyPart.Values = data.ordinalBodyPartSeries;
-					this.pieRecordableRootCause.Values = data.ordinalRootCauseSeries;
-					this.pieRecordableTenure.Values = data.ordinalTenureSeries;
-					this.pieRecordableDaysToClose.Values = data.ordinalDaysToCloseSeries;
-				}
-
-				smallGaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
-				smallGaugeDef.Target = new PERSPECTIVE_TARGET()
-				{
-					TARGET_VALUE = data.jsasTarget,
-					DESCR_SHORT = "Target"
-				};
-				series = new List<GaugeSeries>() { data.jsasSeries, data.jsasTrendSeries };
-				SetScale(smallGaugeDef, series);
-				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divJSAsAndAudits_Metrics);
-
-				smallGaugeDef.Title = "Safety Training Hours";
-				smallGaugeDef.Target = null;
-				series = new List<GaugeSeries>() { data.safetyTrainingHoursSeries };
-				SetScale(smallGaugeDef, series);
-				this.uclChart.CreateMultiLineChart(smallGaugeDef, series, this.divSafetyTrainingHours_Metrics);
+				var uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
+				uclMetrics.Title = data.title;
+				uclMetrics.Year = data.year;
+				uclMetrics.Data = data.data;
+				uclMetrics.IncidentRateSeries = data.incidentRateSeries;
+				uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
+				uclMetrics.IncidentRateTarget = data.incidentRateTarget;
+				uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
+				uclMetrics.SeverityRateSeries = data.severityRateSeries;
+				uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
+				uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
+				uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
+				uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
+				uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
+				uclMetrics.JSAsSeries = data.jsasSeries;
+				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
+				uclMetrics.JSAsTarget = data.jsasTarget;
+				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				this.pnlMetricsOutput.Controls.Add(uclMetrics);
 			}
 		}
 	}

@@ -13,6 +13,7 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Security;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
 using Telerik.Web.UI;
@@ -1469,6 +1470,35 @@ namespace SQM.Website
 			var valFlag = Convert.ToUInt64(val);
 			var flagFlag = Convert.ToUInt64(flag);
 			return (valFlag & flagFlag) == flagFlag;
+		}
+
+		/// <summary>
+		/// Sets the scale min and max of a gauge definition based on the series data given.
+		/// </summary>
+		/// <param name="gd">The gauge definition to set the scale of.</param>
+		/// <param name="series">The list of series data to base the scale on.</param>
+		public static void SetScale(GaugeDefinition gd, List<GaugeSeries> series)
+		{
+			decimal min = 0, max = 0;
+			foreach (var ser in series)
+			{
+				min = Math.Min(min, ser.ItemList.Min(i => i.YValue));
+				max = Math.Max(max, ser.ItemList.Max(i => i.YValue));
+			}
+			gd.ScaleMin = min == 0 && max == 0 ? 0 : (decimal?)null;
+			gd.ScaleMax = min == 0 && max == 0 ? 1 : 0;
+		}
+
+		/// <summary>
+		/// Loads a Control object from a file based on a specified virtual path, but also casts the result.
+		/// </summary>
+		/// <typeparam name="T">The Control's type.</typeparam>
+		/// <param name="page">The page to load the control for.</param>
+		/// <param name="virtualPath">The virtual path to the control's file.</param>
+		/// <returns>The Control object that was loaded, cast to <typeparamref name="T" />.</returns>
+		public static T LoadControl<T>(this Page page, string virtualPath) where T : Control
+		{
+			return page.LoadControl(virtualPath) as T;
 		}
 	}
 }
