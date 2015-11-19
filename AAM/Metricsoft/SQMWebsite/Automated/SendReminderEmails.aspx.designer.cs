@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SQM.Website {
+namespace SQM.Website.Automated {
     
     
     public partial class SendReminderEmails {

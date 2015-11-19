@@ -888,7 +888,7 @@ namespace SQM.Website
 					if (nameOrder == "LF")
 						return (person.LAST_NAME + ", " + person.FIRST_NAME);
 					else 
-						return (person.FIRST_NAME + ", " + person.LAST_NAME);
+						return (person.FIRST_NAME + " " + person.LAST_NAME);
 				}
 			}
 			else

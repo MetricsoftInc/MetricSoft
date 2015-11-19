@@ -2,147 +2,153 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Configuration;
+using SQM.Website;
+using SQM.Website.Shared;
 
-namespace SQM.Website
+namespace SQM.Website.Automated
 {
-	enum TaskStatusRecordType
-	{
-		ProblemCase = 21,
-		Incident = 40
-	}
-
-
 	public partial class SendReminderEmails : System.Web.UI.Page
 	{
-		static PSsqmEntities entities;
-
-		static TimeSpan initialReminderHours;
-		static TimeSpan repeatReminderHours;
 		static StringBuilder output;
+		static DateTime fromDate;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			output = new StringBuilder();
-
-			WriteLine("Started.");
-
-			if (ShouldSendNotification() == true)
+			if (IsPostBack)
 			{
-				try
-				{
-					TaskNotification();
-				}
-				catch (Exception ex)
-				{
-					WriteLine("Main TaskNotification Error: " + ex.ToString());
-					WriteLine("Main TaskNotification Detailed Error: " + ex.InnerException.ToString());
-				}
+				return;
 			}
 
-			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
-			WriteLogFile();
-		}
+			output = new StringBuilder();
+			bool validIP = true;
+			DateTime thisPeriod = DateTime.UtcNow;
+			decimal updateIndicator = thisPeriod.Ticks;
+			decimal locationID = 0;
 
+			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 
-		protected bool ShouldSendNotification()
-		{
-			bool shouldSend = false;
-
-			var entities = new PSsqmEntities();
-			TimeSpan timeBetweenNotifications = new TimeSpan(24, 0, 0);
-			DateTime lastSentDate;
-
-			SETTINGS stHours = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "HoursBetweenNotifications");
-
-			if (stHours != null)
+			try
 			{
-				if (!string.IsNullOrEmpty(stHours.VALUE))
-				{
-					int hours;
-					if (Int32.TryParse(stHours.VALUE, out hours))
-						timeBetweenNotifications = new TimeSpan(hours, 0, 0);
-				}
+				string currentIP = GetIPAddress();
+				List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
 
-				SETTINGS stLastSent = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "NotificationLastSent");
-
-				if (stLastSent != null)
+				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
+				/*
+				if (strValidIP.Equals(currentIP))
 				{
-					if (DateTime.TryParse(stLastSent.VALUE, out lastSentDate))
+					WriteLine("Main Incident RollUp being accessed from a valid IP address " + currentIP);
+					validIP = true;
+
+					if (Request.QueryString["validation"] != null)
 					{
-						WriteLine("Last sent date: " + lastSentDate);
-						shouldSend = (DateTime.Now.Subtract(timeBetweenNotifications) > lastSentDate);
-
-						if (shouldSend == true)
-						{
-							// Set last sent date to now
-							stLastSent.VALUE = DateTime.Now.ToString();
-							SQMSettings.UpdateSettings(entities, stLastSent, "Automated Emailer");
-						}
+						if (Request.QueryString["validation"].ToString().Equals("Vb12M11a4"))
+							validIP = true;
 					}
 					else
 					{
-						shouldSend = false;
+						WriteLine("Main Incident RollUp requested from incorrect source.");
+						validIP = false;
 					}
 				}
 				else
 				{
-					WriteLine("Missing value in SETTINGS table: NotificationLastSent");
-					shouldSend = false;
+					WriteLine("Main Incident RollUp being accessed from invalid IP address " + currentIP);
+					validIP = false;
 				}
-			}
-			else
-			{
-				WriteLine("Missing value in SETTINGS table: HoursBetweenNotifications");
-				shouldSend = false;
-			}
-
-			WriteLine("Should send: " + shouldSend);
-
-			return shouldSend;
-		}
-
-
-		static void TaskNotification()
-		{
-			try
-			{
-				DateTime fromDate = DateTime.Now.AddMonths(-6);
-				List<TaskItem> taskList = new List<TaskItem>();
-				List<decimal> respForList = new List<decimal>();
-				List<decimal> respPlantList = new List<decimal>();
-
-				List<UserContext> assignedUserList = TaskMgr.AssignedUserList();
-
-				WriteLine("");
-				WriteLine("Executing TaskMgr.MailTaskList:");
-
-				foreach (UserContext assignedUser in assignedUserList)
-				{
-					WriteLine(assignedUser.Person.SSO_ID);
-
-					respForList.Clear();
-					respForList.Add(assignedUser.Person.PERSON_ID);
-					//respForList.AddRange(assignedUser.DelegateList);
-
-					taskList.Clear();
-					taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
-					taskList.AddRange(TaskMgr.IncidentTaskStatus(1, respForList, respPlantList, false));
-					WriteLine(taskList.Count.ToString());
-
-					TaskMgr.MailTaskList(taskList, assignedUser.Person.EMAIL, "exe");
-				}
-
+				*/
 			}
 			catch (Exception ex)
 			{
-				WriteLine("TaskNotification Error: " + ex.ToString());
-				WriteLine("TaskNotification Detailed Error: " + ex.InnerException.ToString());
+				validIP = false;
+				WriteLine("Main Email Notification Error validating IP Address: " + ex.ToString());
 			}
+
+			// make sure this code is NOT moved to production
+			//validIP = true;
+
+			if (!validIP)
+			{
+				WriteLine("Main Incident RollUp Invalid IP Address");
+				ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
+				WriteLogFile();
+				return;
+			}
+
+			try
+			{
+				PSsqmEntities entities = new PSsqmEntities();
+
+
+				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
+				if (openAuditList.Count > 0)
+				{
+					WriteLine("Open Audits ...");
+					foreach (TaskItem taskItem in openAuditList)
+					{
+						WriteLine("Audit: " + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+						AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+						if (audit != null)
+						{
+							EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+						}
+					}
+				}
+
+				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(DateTime.UtcNow);
+				if (openTaskList.Count > 0)
+				{
+				   WriteLine("Open Tasks ...");
+					foreach (TaskItem taskItem in openTaskList)
+					{
+						WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+						if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident)
+						{
+							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+							if (incident != null)
+							{
+								// notify assigned person and escalation person if over-over due
+								//EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+								if (taskItem.Taskstatus >= TaskStatus.Overdue)
+								{
+									// send to notification list for plant, BU, ...
+									//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+								}
+							}
+						}
+						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)
+						{
+							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+							if (audit != null)
+							{
+								EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+							}
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				WriteLine("Main Email Notificaion Error - " + ex.ToString());
+			}
+
+			WriteLine("");
+			WriteLine("Completed: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
+			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
+			WriteLogFile();
 		}
 
+		public string GetIPAddress()
+		{
+			string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+
+			string myIP = Dns.GetHostByName(hostName).AddressList[0].ToString(); // Get the IP
+
+			return myIP;
+		}
 
 		static void WriteLogFile()
 		{
@@ -171,12 +177,10 @@ namespace SQM.Website
 			}
 		}
 
-
 		static void WriteLine(string text)
 		{
 			output.AppendLine(text);
 		}
-
 	}
 
 }

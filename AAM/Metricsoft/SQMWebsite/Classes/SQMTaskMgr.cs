@@ -222,16 +222,16 @@ namespace SQM.Website
             get;
             set;
         }
-        public PART Part
-        {
-            get;
-            set;
-        }
         public PERSON Person
         {
             get;
             set;
         }
+		public PERSON EscalatePerson
+		{
+			get;
+			set;
+		}
         public DateTime TaskDate
         {
             get;
@@ -1259,6 +1259,104 @@ namespace SQM.Website
             return taskList;
         }
 
+		public static List<TaskItem> SelectOpenAudits(DateTime notifySinceDate)
+		{
+			// fetch empty or incomplete audits that are near due
+			List<TaskItem> taskList = new List<TaskItem>();
+			List<string> excludeStatus = new List<string>();
+			excludeStatus.Add("E");  // exlude expired
+			excludeStatus.Add("C");  // exlude closed
+
+			try
+			{
+				using (PSsqmEntities entities = new PSsqmEntities())
+				{
+					var auditList = (from a in entities.AUDIT
+									 join t in entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID into t_a 
+									 join p in entities.PERSON on a.AUDIT_PERSON equals p.PERSON_ID into p_a
+									 where (!excludeStatus.Contains(a.CURRENT_STATUS))
+									 from t in t_a.DefaultIfEmpty()
+									 from p in p_a.DefaultIfEmpty()
+									 select new
+									 {
+										 Audit = a,
+										 AuditType = t,
+										 Person = p
+									 }).ToList();
+
+					int deltaDays = 0;
+					foreach (var audit in auditList)
+					{
+						// notify if 1 & 2 days prior and on due date
+						deltaDays = (audit.Audit.AUDIT_DT.AddDays(audit.AuditType.DAYS_TO_COMPLETE) - DateTime.Now).Days;
+						if (deltaDays < 2  &&  deltaDays > -1)
+						{
+							TaskItem taskItem = new TaskItem();
+							taskItem.Task = new TASK_STATUS();
+							taskItem.Task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							taskItem.Task.RECORD_ID = audit.Audit.AUDIT_ID;
+							taskItem.Task.DUE_DT = audit.Audit.AUDIT_DT.AddDays(audit.AuditType.DAYS_TO_COMPLETE);
+							taskItem.Task.STATUS = "0";  // assume open status;
+							taskItem.Person = audit.Person;
+							taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+							taskList.Add(taskItem);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+			}
+			return taskList;
+		}
+
+		public static List<TaskItem> SelectOpenTasks(DateTime notifySinceDate)
+		{
+			List<TaskItem> taskList = new List<TaskItem>();
+			List<string> excludeStatus = new List<string>();
+			excludeStatus.Add(((int)TaskStatus.Complete).ToString());  // exlude complete tasks
+			excludeStatus.Add(((int)TaskStatus.Expired).ToString());  // exlude expired tasks
+
+			try
+			{
+				using (PSsqmEntities entities = new PSsqmEntities())
+				{
+					taskList = (from t in entities.TASK_STATUS
+								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
+								where (t.DUE_DT != null  &&  t.COMPLETE_DT == null &&  !excludeStatus.Contains(t.STATUS))
+								from p in p_t.DefaultIfEmpty()
+								select new TaskItem
+								{
+									Task = t,
+									RecordType = t.RECORD_TYPE,
+									RecordID = t.RECORD_ID,
+									Person = p
+								}).OrderBy(l => l.RecordID).ToList();
+
+					List<string> supvList = taskList.GroupBy(l=> l.Person.SUPV_EMP_ID).Select(l => l.First().Person.SUPV_EMP_ID).ToList();
+					List<PERSON> escalateToList = (from ep in entities.PERSON where supvList.Contains(ep.EMP_ID) select ep).ToList();
+					foreach (TaskItem taskItem in taskList)
+					{
+						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+						if (taskItem.Taskstatus == TaskStatus.Overdue)
+						{
+							if (SetEscalation(0, taskItem) > TaskStatus.Overdue)
+							{
+								taskItem.NotifyType = TaskNotification.Escalation;
+								taskItem.EscalatePerson = escalateToList.Where(l => l.EMP_ID == taskItem.Person.SUPV_EMP_ID).FirstOrDefault();
+							}
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+			}
+			return taskList;
+		}
+
 		public static List<TaskItem> ExceptionTaskListByRecord(int recordType, decimal recordID, decimal recordSubID)
 		{
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
@@ -1286,28 +1384,6 @@ namespace SQM.Website
 					foreach (TaskItem taskItem in taskList)
 					{
 						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-
-						//TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
-						//switch (recordType)
-						//{
-						//	case TaskRecordType.HealthSafetyIncident:
-						//	case TaskRecordType.PreventativeAction:
-						//		incident = (INCIDENT)taskItem.Detail;
-						//		taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
-						//		taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-						//		taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-						//		taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Incident ") + ": " + incident.DESCRIPTION;
-						//		break;
-						//	case TaskRecordType.Audit:
-						//		AUDIT audit = (AUDIT)taskItem.Detail;
-						//		taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString();
-						//		taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-						//		taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
-						//		taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, "Audit ") + ": " + audit.DESCRIPTION;
-						//		break;
-						//	default:
-						//		break;
-						//}
 					}
 				}
 			}

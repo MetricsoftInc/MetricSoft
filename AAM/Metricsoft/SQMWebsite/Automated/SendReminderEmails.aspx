@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SendReminderEmails.aspx.cs" Inherits="SQM.Website.SendReminderEmails" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SendReminderEmails.aspx.cs" Inherits="SQM.Website.Automated.SendReminderEmails" %>
 
 <!DOCTYPE html>
 

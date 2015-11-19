@@ -1128,11 +1128,32 @@ namespace SQM.Website
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
-				string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+				string language = "en";
+				try
+				{
+					string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+					language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+				}
+				catch
+				{ }
 
 				XLATList = (from x in ctx.XLAT
 							where x.XLAT_LANGUAGE == language && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+							orderby x.XLAT_GROUP, x.XLAT_CODE
+							select x).ToList();
+			}
+			return XLATList;
+		}
+
+		public static List<XLAT> SelectXLATList(string[] XLATGroupArray, int languageID)
+		{
+			List<XLAT> XLATList = new List<XLAT>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				XLATList = (from x in ctx.XLAT
+							join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE 
+							where l.LANGUAGE_ID == languageID && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
 							orderby x.XLAT_GROUP, x.XLAT_CODE
 							select x).ToList();
 			}
