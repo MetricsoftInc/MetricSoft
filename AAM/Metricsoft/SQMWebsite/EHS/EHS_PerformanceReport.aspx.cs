@@ -148,18 +148,6 @@ namespace SQM.Website.EHS
 			LegendBackgroundColor = Color.White
 		};
 
-		static void SetScale(GaugeDefinition gd, List<GaugeSeries> series)
-		{
-			decimal min = 0, max = 0;
-			foreach (var ser in series)
-			{
-				min = Math.Min(min, ser.ItemList.Min(i => i.YValue));
-				max = Math.Max(max, ser.ItemList.Max(i => i.YValue));
-			}
-			gd.ScaleMin = min == 0 && max == 0 ? 0 : (decimal?)null;
-			gd.ScaleMax = min == 0 && max == 0 ? 1 : 0;
-		}
-
 		/// <summary>
 		/// Gets all the types for an ordinal from the XLAT table.
 		/// </summary>
@@ -1254,7 +1242,7 @@ namespace SQM.Website.EHS
 						DESCR_SHORT = "Target"
 					};
 					var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
-					SetScale(gaugeDef, series);
+					WebSiteCommon.SetScale(gaugeDef, series);
 					var container = new HtmlGenericControl("div");
 					container.Attributes.Add("class", "chartMarginTop");
 					this.uclChart.CreateMultiLineChart(gaugeDef, series, container);
