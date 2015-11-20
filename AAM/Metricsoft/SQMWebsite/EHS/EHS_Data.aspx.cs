@@ -73,7 +73,7 @@ namespace SQM.Website.EHS
 								dataID = data.DATA_ID;
 								if (measureIsValue)
 									value = data.VALUE.ToString();
-								else if (measure.DATA_TYPE == "A")
+								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									value = data.ATTRIBUTE;
 							}
 						}
@@ -85,7 +85,7 @@ namespace SQM.Website.EHS
 						dataToAdd.validatorToolTip = toolTip;
 						if (measure.DATA_TYPE == "O")
 							dataToAdd.ordinal = GetOrdinalData(entities, dataID);
-						allData.Add(dayName + "|" + measure.MEASURE_ID, ((ExpandoObject)dataToAdd).ToDictionary(x => x.Key, x => x.Value));
+						allData.Add(dayName + "|" + measure.MEASURE_ID, (dataToAdd as ExpandoObject).ToDictionary(x => x.Key, x => x.Value));
 					}
 				}
 				return new
@@ -118,7 +118,7 @@ namespace SQM.Website.EHS
 					{
 						if (measure.DATA_TYPE == "V")
 							value = data.VALUE.ToString();
-						else if (measure.DATA_TYPE == "A")
+						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
 					}
 					string type = measure.DATA_TYPE == "V" ? "Integer" : "String";
@@ -154,7 +154,7 @@ namespace SQM.Website.EHS
 					{
 						if (measure.DATA_TYPE == "V")
 							value = data.VALUE.ToString();
-						else if (measure.DATA_TYPE == "A")
+						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
 					}
 					string type = measure.DATA_TYPE == "V" ? "Integer" : "String";
@@ -297,7 +297,7 @@ namespace SQM.Website.EHS
 								{
 									if (measureIsValue)
 										data.VALUE = decimal.Parse(text);
-									else if (measure.DATA_TYPE == "A")
+									else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 										data.ATTRIBUTE = text;
 									if (measure_data.ContainsKey("ordinal"))
 										UpdateOrdinalData(entities, data.DATA_ID, measure_data["ordinal"]);
@@ -317,7 +317,7 @@ namespace SQM.Website.EHS
 							};
 							if (measureIsValue)
 								newData.VALUE = decimal.Parse(text);
-							else if (measure.DATA_TYPE == "A")
+							else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 								newData.ATTRIBUTE = text;
 							entities.EHS_DATA.AddObject(newData);
 							if (measure_data.ContainsKey("ordinal"))
@@ -356,7 +356,7 @@ namespace SQM.Website.EHS
 						{
 							if (measure.DATA_TYPE == "V")
 								data.VALUE = decimal.Parse(text);
-							else if (measure.DATA_TYPE == "A")
+							else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 								data.ATTRIBUTE = text;
 						}
 						else
@@ -373,7 +373,7 @@ namespace SQM.Website.EHS
 						};
 						if (measure.DATA_TYPE == "V")
 							newData.VALUE = decimal.Parse(text);
-						else if (measure.DATA_TYPE == "A")
+						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							newData.ATTRIBUTE = text;
 						entities.EHS_DATA.AddObject(newData);
 					}
@@ -408,7 +408,7 @@ namespace SQM.Website.EHS
 						{
 							if (measure.DATA_TYPE == "V")
 								data.VALUE = decimal.Parse(text);
-							else if (measure.DATA_TYPE == "A")
+							else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 								data.ATTRIBUTE = text;
 						}
 						else
@@ -425,7 +425,7 @@ namespace SQM.Website.EHS
 						};
 						if (measure.DATA_TYPE == "V")
 							newData.VALUE = decimal.Parse(text);
-						else if (measure.DATA_TYPE == "A")
+						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							newData.ATTRIBUTE = text;
 						entities.EHS_DATA.AddObject(newData);
 					}
@@ -528,7 +528,7 @@ namespace SQM.Website.EHS
 			{
 				column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
 				column.ItemStyle.HorizontalAlign = this.Request.QueryString["type"] == "Weekly" || this.Request.QueryString["type"] == "Monthly" ? HorizontalAlign.Left : HorizontalAlign.Center;
-                column.HeaderStyle.CssClass = "dataHeader";
+				column.HeaderStyle.CssClass = "dataHeader";
 				column.HeaderStyle.Width = column.ItemStyle.Width = new Unit(this.Request.QueryString["type"] == "Weekly" || this.Request.QueryString["type"] == "Monthly" ? "70%" : "10%");
 				column.ItemStyle.CssClass = "greyCell";
 			}
@@ -635,6 +635,48 @@ namespace SQM.Website.EHS
 						ID = "hfDetails" + this.Suffix
 					};
 					container.Controls.Add(hfDetails);
+				}
+				else if (dataItem.DATA_TYPE == "Y")
+				{
+					var rbYes = new RadButton()
+					{
+						AutoPostBack = false,
+						ButtonType = RadButtonType.ToggleButton,
+						GroupName = "YesNoNA",
+						ID = "rbYes" + this.Suffix,
+						OnClientCheckedChanged = "rbYesNoNA_ClientCheckedChanged",
+						Text = "Yes",
+						ToggleType = ButtonToggleType.Radio
+					};
+					container.Controls.Add(rbYes);
+					var rbNo = new RadButton()
+					{
+						AutoPostBack = false,
+						ButtonType = RadButtonType.ToggleButton,
+						GroupName = "YesNoNA",
+						ID = "rbNo" + this.Suffix,
+						OnClientCheckedChanged = "rbYesNoNA_ClientCheckedChanged",
+						Text = "No",
+						ToggleType = ButtonToggleType.Radio
+					};
+					container.Controls.Add(rbNo);
+					var rbNA = new RadButton()
+					{
+						AutoPostBack = false,
+						ButtonType = RadButtonType.ToggleButton,
+						GroupName = "YesNoNA",
+						ID = "rbNA" + this.Suffix,
+						OnClientCheckedChanged = "rbYesNoNA_ClientCheckedChanged",
+						Text = "N/A",
+						ToggleType = ButtonToggleType.Radio
+					};
+					container.Controls.Add(rbNA);
+					var rtbHidden = new RadTextBox()
+					{
+						ID = "rtbHidden" + this.Suffix
+					};
+					rtbHidden.Style.Add("display", "none");
+					container.Controls.Add(rtbHidden);
 				}
 				else
 				{

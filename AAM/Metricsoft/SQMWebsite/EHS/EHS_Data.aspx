@@ -226,6 +226,12 @@
 				});
 			});
 
+			function rbYesNoNA_ClientCheckedChanged(sender, eventArgs)
+			{
+				if (eventArgs.get_checked())
+					$(sender.get_element()).parent().find('input[type="text"]').val(sender.get_text());
+			}
+
 			$(':button[id^="btn"]:not(#btnSave)').click(function()
 			{
 				var id = $(this).attr('id');
@@ -271,6 +277,15 @@
 								var dayData = data.d.allData[day + '|' + measureIDs[rowNum]];
 								var cell = $(rgData_data[rowNum].get_cell('gtc' + day));
 								cell.find('input[type="text"]').val(dayData.value);
+								if (cell.find('[id$="rbYes' + day + '"]').length > 0)
+								{
+									if (dayData.value == 'Yes')
+										$find(cell.find('[id$="rbYes' + day + '"]').attr('id')).set_checked(true);
+									else if (dayData.value == 'No')
+										$find(cell.find('[id$="rbNo' + day + '"]').attr('id')).set_checked(true);
+									else
+										$find(cell.find('[id$="rbNA' + day + '"]').attr('id')).set_checked(true);
+								}
 								var validator = cell.find('span[id$="cmp' + day + '"]')[0];
 								if (validator)
 								{
@@ -319,6 +334,15 @@
 							var measureData = data.d.allData[measureIDs[rowNum]];
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
 							cell.find('input[type="text"]').val(measureData.value);
+							if (cell.find('[id$="rbYesFull"]').length > 0)
+							{
+								if (measureData.value == 'Yes')
+									$find(cell.find('[id$="rbYesFull"]').attr('id')).set_checked(true);
+								else if (measureData.value == 'No')
+									$find(cell.find('[id$="rbNoFull"]').attr('id')).set_checked(true);
+								else
+									$find(cell.find('[id$="rbNAFull"]').attr('id')).set_checked(true);
+							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
 							{
@@ -364,6 +388,15 @@
 							var measureData = data.d.allData[measureIDs[rowNum]];
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
 							cell.find('input[type="text"]').val(measureData.value);
+							if (cell.find('[id$="rbYesFull"]').length > 0)
+							{
+								if (measureData.value == 'Yes')
+									$find(cell.find('[id$="rbYesFull"]').attr('id')).set_checked(true);
+								else if (measureData.value == 'No')
+									$find(cell.find('[id$="rbNoFull"]').attr('id')).set_checked(true);
+								else
+									$find(cell.find('[id$="rbNAFull"]').attr('id')).set_checked(true);
+							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
 							{
