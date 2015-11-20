@@ -100,16 +100,6 @@ namespace SQM.Website.EHS
 			ShowPdf(BuildPdf());
 		}
 
-		protected  XLAT GetXLAT(string xlatGroup, string xlatCode)
-		{
-			XLAT menu = reportXLAT.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode).FirstOrDefault();
-			if (menu == null)
-			{
-				menu = new XLAT();
-			}
-			return menu;
-		}
-
 		private void ShowPdf(byte[] strS)
 		{
 			Response.ClearContent();
@@ -199,7 +189,7 @@ namespace SQM.Website.EHS
 					table1.AddCell(imgCell);
 
 					var hdrFont = new Font(headerFont.BaseFont, 24, 0, darkGrayColor);
-					table1.AddCell(new PdfPCell(new Phrase(GetXLAT("HS_5PHASE", "TITLE").DESCRIPTION, hdrFont))
+					table1.AddCell(new PdfPCell(new Phrase(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "TITLE").DESCRIPTION, hdrFont))
 					{
 						HorizontalAlignment = Element.ALIGN_RIGHT,
 						VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -269,7 +259,7 @@ namespace SQM.Website.EHS
 			PdfPCell cell;
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 6, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "INCIDENTTYPE").DESCRIPTION_SHORT + ":", detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "INCIDENTTYPE").DESCRIPTION_SHORT + ":", detailHdrFont));
 			tableIncident.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 4, Border = 0 };
 			cell.AddElement(new Paragraph(string.Format(pageData.incidentType + "   ( # {0} )", pageData.incidentNumber), labelTxtFont));
@@ -288,12 +278,12 @@ namespace SQM.Website.EHS
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "PLANT").DESCRIPTION_SHORT + ":  {0}",pageData.incidentLocation), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation), detailTxtFont));
 			tableHeader.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.Colspan = 2;
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight =.25f;
-			cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept), detailTxtFont));
 			tableHeader.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
@@ -310,12 +300,12 @@ namespace SQM.Website.EHS
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthBottom = .25f;
-			cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "SUPERVISOR").DESCRIPTION_SHORT + ":  {0}", pageData.supervisorPerson == null ? "" : SQMModelMgr.FormatPersonListItem(pageData.supervisorPerson)), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "SUPERVISOR").DESCRIPTION_SHORT + ":  {0}", pageData.supervisorPerson == null ? "" : SQMModelMgr.FormatPersonListItem(pageData.supervisorPerson)), detailTxtFont));
 			tableHeader.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.Colspan = 2;
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
-			cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "CONTACT_NO").DESCRIPTION_SHORT + ":  {0}", pageData.supervisorPerson == null ? "" : pageData.supervisorPerson.PHONE), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "CONTACT_NO").DESCRIPTION_SHORT + ":  {0}", pageData.supervisorPerson == null ? "" : pageData.supervisorPerson.PHONE), detailTxtFont));
 			tableHeader.AddCell(cell);
 			return tableHeader;
 		}
@@ -361,23 +351,23 @@ namespace SQM.Website.EHS
 
 			if (pageData.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness  &&  pageData.incident.INCFORM_INJURYILLNESS != null)
 			{
-				string val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.ERGONOMIC_CONCERN == true ? "1" : "0").DESCRIPTION_SHORT;
+				string val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.ERGONOMIC_CONCERN == true ? "1" : "0").DESCRIPTION_SHORT;
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
 				cell.AddElement(new Paragraph(string.Format("Ergonomic Conserns" + " ? {0}", val), labelTxtFont));
 				tableIncident.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.STD_PROCS_FOLLOWED == true ? "1" : "0").DESCRIPTION_SHORT;
+				val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.STD_PROCS_FOLLOWED == true ? "1" : "0").DESCRIPTION_SHORT;
 				cell.AddElement(new Paragraph(string.Format("Standardized Worke Procedure Followed" + " ? {0}", val), labelTxtFont));
 				tableIncident.AddCell(cell);
 
-				val = GetXLAT("TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.TRAINING_PROVIDED == true ? "1" : "0").DESCRIPTION_SHORT;
+				val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.TRAINING_PROVIDED == true ? "1" : "0").DESCRIPTION_SHORT;
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
 				cell.AddElement(new Paragraph(string.Format("Was training for this task provided" + " ? {0}", val), labelTxtFont));
 				tableIncident.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", GetXLAT("INJURY_TENURE", pageData.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION), labelTxtFont));
+				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", SQMBasePage.GetXLAT(reportXLAT,"INJURY_TENURE", pageData.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION), labelTxtFont));
 				tableIncident.AddCell(cell);
 			}
 
@@ -395,17 +385,17 @@ namespace SQM.Website.EHS
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "CONTAINMENT").DESCRIPTION, detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "CONTAINMENT").DESCRIPTION, detailHdrFont));
 			tableContain.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "CONTAINMENT").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "CONTAINMENT").DESCRIPTION_SHORT, colHdrFont));
 			tableContain.AddCell(cell);
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "RESPONSIBLE").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "RESPONSIBLE").DESCRIPTION_SHORT, colHdrFont));
 			tableContain.AddCell(cell);
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ACTION_DT").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ACTION_DT").DESCRIPTION_SHORT, colHdrFont));
 			tableContain.AddCell(cell);
 
 			foreach (var cc in pageData.containList)
@@ -441,7 +431,7 @@ namespace SQM.Website.EHS
 			PdfPCell cell;
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.BorderWidthTop = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ROOTCAUSE").DESCRIPTION, detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ROOTCAUSE").DESCRIPTION, detailHdrFont));
 			tableCause.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
@@ -451,14 +441,14 @@ namespace SQM.Website.EHS
 			foreach (var rc in pageData.root5YList)
 			{
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(String.Format(GetXLAT("HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT + "{0}", rc.ITEM_DESCRIPTION), detailTxtFont));
+				cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT + "{0}", rc.ITEM_DESCRIPTION), detailTxtFont));
 				tableCause.AddCell(cell);
 			}
 
 			if (pageData.causation != null)
 			{
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(String.Format("Causation: " + "{0}", GetXLAT("INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION), detailTxtFont));
+				cell.AddElement(new Paragraph(String.Format("Causation: " + "{0}", SQMBasePage.GetXLAT(reportXLAT,"INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION), detailTxtFont));
 				tableCause.AddCell(cell);
 			}
 
@@ -476,17 +466,17 @@ namespace SQM.Website.EHS
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ACTION").DESCRIPTION, detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ACTION").DESCRIPTION, detailHdrFont));
 			tableAction.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ACTION").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ACTION").DESCRIPTION_SHORT, colHdrFont));
 			tableAction.AddCell(cell);
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "RESPONSIBLE").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "RESPONSIBLE").DESCRIPTION_SHORT, colHdrFont));
 			tableAction.AddCell(cell);
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "ACTION_DT").DESCRIPTION_SHORT, colHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ACTION_DT").DESCRIPTION_SHORT, colHdrFont));
 			tableAction.AddCell(cell);
 
 			foreach (var ac in pageData.actionList)
@@ -525,17 +515,17 @@ namespace SQM.Website.EHS
 			cell = new PdfPCell() { Padding = 1f, PaddingBottom = 4f, Border = 0 };
 			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW").DESCRIPTION_SHORT, detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "REVIEW").DESCRIPTION_SHORT, detailHdrFont));
 			tableReview.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, PaddingBottom = 4f, Border = 0 };
 			cell.Colspan = 3;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW").DESCRIPTION, detailTxtItalicFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "REVIEW").DESCRIPTION, detailTxtItalicFont));
 			tableReview.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW_1").DESCRIPTION_SHORT, detailTxtFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "REVIEW_1").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
 
 			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve1).FirstOrDefault()) == null)
@@ -557,13 +547,13 @@ namespace SQM.Website.EHS
 				tableReview.AddCell(cell);
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-				cell.AddElement(new Paragraph(string.Format(GetXLAT("HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph(GetXLAT("HS_5PHASE", "REVIEW_2").DESCRIPTION_SHORT, detailTxtFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "REVIEW_2").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
 			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve2).FirstOrDefault()) == null)
 			{
@@ -584,7 +574,7 @@ namespace SQM.Website.EHS
 				tableReview.AddCell(cell);
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-				cell.AddElement(new Paragraph(string.Format(GetXLAT("HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)reviewer.APPROVAL_DATE, "d", false)), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
@@ -652,7 +642,7 @@ namespace SQM.Website.EHS
 					if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 					{
 						if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
-							answer.ANSWER_VALUE = GetXLAT("SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+							answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT,"SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
 
 						answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.InvolvedPerson).SingleOrDefault();
 						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))

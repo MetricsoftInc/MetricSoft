@@ -507,6 +507,14 @@ namespace SQM.Website
              return langList;
         }
 
+		public static LOCAL_LANGUAGE LookupPersonLanguage(PSsqmEntities ctx, PERSON person)
+		{
+			LOCAL_LANGUAGE lang = (from l in ctx.LOCAL_LANGUAGE
+								   where (person.PREFERRED_LANG_ID == null && l.LANGUAGE_ID == 1) ||  l.LANGUAGE_ID == person.PREFERRED_LANG_ID 
+								   select l).SingleOrDefault();
+			return lang;
+		}
+
         #endregion
 
         #region person
@@ -726,7 +734,6 @@ namespace SQM.Website
 
                 if (person.PERSON_RESP == null)
                     person = AddPersonResp(person);
-
             }
             catch
             {

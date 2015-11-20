@@ -93,7 +93,7 @@ namespace SQM.Website.Automated
 						AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
 						if (audit != null)
 						{
-							EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+							//EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
 						}
 					}
 				}
@@ -125,6 +125,7 @@ namespace SQM.Website.Automated
 							if (audit != null)
 							{
 								EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+								return;
 							}
 						}
 					}

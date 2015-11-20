@@ -1153,12 +1153,34 @@ namespace SQM.Website
 			{
 				XLATList = (from x in ctx.XLAT
 							join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE 
-							where l.LANGUAGE_ID == languageID && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+							where (languageID == 0 || l.LANGUAGE_ID == languageID) && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
 							orderby x.XLAT_GROUP, x.XLAT_CODE
 							select x).ToList();
 			}
 			return XLATList;
 		}
+
+		public static XLAT GetXLAT(List<XLAT> xlatList, string xlatGroup, string xlatCode)
+		{
+			XLAT xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode).FirstOrDefault();
+			if (xlat == null)
+			{
+				xlat = new XLAT();
+			}
+			return xlat;
+		}
+
+		public static XLAT GetXLAT(List<XLAT> xlatList, string xlatGroup, string xlatCode, string language)
+		{
+			XLAT xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode  &&  (string.IsNullOrEmpty(language)  ||  l.XLAT_LANGUAGE == language)).FirstOrDefault();
+			if (xlat == null)
+			{
+				xlat = new XLAT();
+			}
+			return xlat;
+		}
+
+
 		#endregion
 	}
 
