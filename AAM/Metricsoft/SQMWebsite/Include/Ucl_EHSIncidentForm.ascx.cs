@@ -355,7 +355,7 @@ namespace SQM.Website
 						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.TextLong, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -373,7 +373,7 @@ namespace SQM.Website
 						var cbl = new CheckBoxList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.TextLong, choice.Value);
 							if (shouldPopulate)
 							{
 								string[] answers = q.AnswerText.Split('|');
@@ -397,21 +397,21 @@ namespace SQM.Website
 						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
 						{
 							// Check for any category headings
-							var matches = q.AnswerChoices.Where(ac => ac.IsCategoryHeading == true);
+							var matches = q.AnswerChoices.Where(ac => ac.IsHeading == true);
 							bool containsCategoryHeadings = (matches.Count() > 0);
 
 							foreach (var choice in q.AnswerChoices)
 							{
 								if (containsCategoryHeadings == true)
 								{
-									if (choice.IsCategoryHeading)
-										rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
+									if (choice.IsHeading)
+										rddl.Items.Add(new DropDownListItem(choice.TextLong, "") { CssClass = "dropdownItemHeading", Enabled = false });
 									else
-										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Value, choice.Value));
+										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.TextLong, choice.Value));
 								}
 								else
 								{
-									rddl.Items.Add(new DropDownListItem(choice.Value, choice.Value));
+									rddl.Items.Add(new DropDownListItem(choice.TextLong, choice.Value));
 								}
 							}
 
@@ -869,7 +869,7 @@ namespace SQM.Website
 						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.TextLong, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -887,7 +887,7 @@ namespace SQM.Website
 						var cbl = new CheckBoxList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.TextLong, choice.Value);
 							if (shouldPopulate)
 							{
 								string[] answers = q.AnswerText.Split('|');
@@ -906,21 +906,21 @@ namespace SQM.Website
 						if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
 						{
 							// Check for any category headings
-							var matches = q.AnswerChoices.Where(ac => ac.IsCategoryHeading == true);
+							var matches = q.AnswerChoices.Where(ac => ac.IsHeading == true);
 							bool containsCategoryHeadings = (matches.Count() > 0);
 
 							foreach (var choice in q.AnswerChoices)
 							{
 								if (containsCategoryHeadings == true)
 								{
-									if (choice.IsCategoryHeading)
-										rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
+									if (choice.IsHeading)
+										rddl.Items.Add(new DropDownListItem(choice.TextLong, choice.Value) { CssClass = "dropdownItemHeading", Enabled = false });
 									else
-										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Value, choice.Value));
+										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.TextLong, choice.Value));
 								}
 								else
 								{
-									rddl.Items.Add(new DropDownListItem(choice.Value, choice.Value));
+									rddl.Items.Add(new DropDownListItem(choice.TextLong, choice.Value));
 								}
 							}
 

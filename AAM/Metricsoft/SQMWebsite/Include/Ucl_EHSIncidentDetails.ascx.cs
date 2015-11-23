@@ -39,9 +39,8 @@ namespace SQM.Website
 										 where a.INCIDENT_ID == incidentId && a.INCIDENT_QUESTION_ID == q.QuestionId
 										 select a.ANSWER_VALUE).FirstOrDefault();
 						answer = (answer == null) ? "" : answer;
-
 						answer = answer.Replace("<a href", "<a target=\"blank\" href");
-
+						string answerText = "";
 						if (!string.IsNullOrEmpty(answer) ||
 							q.QuestionType == EHSIncidentQuestionType.Attachment ||
 							q.QuestionType == EHSIncidentQuestionType.PageOneAttachment)
@@ -50,45 +49,53 @@ namespace SQM.Website
 							{
 								case EHSIncidentQuestionType.Date:
 									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortDateString();
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.Time:
 									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortTimeString();
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.DateTime:
 									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToString();
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.LocationDropdown:
 									answer = EHSIncidentMgr.SelectPlantNameById(Convert.ToDecimal(answer));
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.UsersDropdown:
 									answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
 									answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
-									answer = Server.HtmlEncode(answer);
+									answerText = Server.HtmlEncode(answer);
 									break;
 
 								case EHSIncidentQuestionType.Attachment:
-									answer = GetUploadedFiles(40, incidentId, (step + 1).ToString());
+									answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
 									break;
 
 								case EHSIncidentQuestionType.PageOneAttachment:
-									answer = GetUploadedFiles(40, incidentId, (step + 1).ToString());
+									answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
 									break;
-
+								default:
+									if (answer == "Yes")
+										answerText = Resources.LocalizedText.Yes;
+									else if (answer == "No")
+										answerText = Resources.LocalizedText.No;
+									else
+										answerText = q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault() != null ? q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault().Text : answer;
+									break;
 							}
 						}
-						sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td></tr>", q.QuestionText, answer));
+
+						sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td></tr>", q.QuestionText, answerText));
 					}
 				}
 				sb.AppendLine("</table>");

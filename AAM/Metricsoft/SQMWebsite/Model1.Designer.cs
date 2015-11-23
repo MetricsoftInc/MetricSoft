@@ -2266,22 +2266,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<XLAT> XLAT
-        {
-            get
-            {
-                if ((_XLAT == null))
-                {
-                    _XLAT = base.CreateObjectSet<XLAT>("XLAT");
-                }
-                return _XLAT;
-            }
-        }
-        private ObjectSet<XLAT> _XLAT;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<PLANT_ACTIVE> PLANT_ACTIVE
         {
             get
@@ -2326,6 +2310,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<EHS_TARGETS> _EHS_TARGETS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<XLAT> XLAT
+        {
+            get
+            {
+                if ((_XLAT == null))
+                {
+                    _XLAT = base.CreateObjectSet<XLAT>("XLAT");
+                }
+                return _XLAT;
+            }
+        }
+        private ObjectSet<XLAT> _XLAT;
 
         #endregion
 
@@ -3356,14 +3356,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the XLAT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToXLAT(XLAT xLAT)
-        {
-            base.AddObject("XLAT", xLAT);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the PLANT_ACTIVE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPLANT_ACTIVE(PLANT_ACTIVE pLANT_ACTIVE)
@@ -3385,6 +3377,14 @@ namespace SQM.Website
         public void AddToEHS_TARGETS(EHS_TARGETS eHS_TARGETS)
         {
             base.AddObject("EHS_TARGETS", eHS_TARGETS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the XLAT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToXLAT(XLAT xLAT)
+        {
+            base.AddObject("XLAT", xLAT);
         }
 
         #endregion
@@ -49502,6 +49502,54 @@ namespace SQM.Website
         private global::System.String _STATUS;
         partial void OnSTATUSChanging(global::System.String value);
         partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IS_HEADING
+        {
+            get
+            {
+                return _IS_HEADING;
+            }
+            set
+            {
+                OnIS_HEADINGChanging(value);
+                ReportPropertyChanging("IS_HEADING");
+                _IS_HEADING = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IS_HEADING");
+                OnIS_HEADINGChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IS_HEADING;
+        partial void OnIS_HEADINGChanging(Nullable<global::System.Boolean> value);
+        partial void OnIS_HEADINGChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> SORT_ORDER
+        {
+            get
+            {
+                return _SORT_ORDER;
+            }
+            set
+            {
+                OnSORT_ORDERChanging(value);
+                ReportPropertyChanging("SORT_ORDER");
+                _SORT_ORDER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORT_ORDER");
+                OnSORT_ORDERChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _SORT_ORDER;
+        partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
+        partial void OnSORT_ORDERChanged();
 
         #endregion
 

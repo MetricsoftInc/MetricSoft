@@ -36,10 +36,12 @@ namespace SQM.Website
 
 	public class EHSAuditAnswerChoice
 	{
+		public string Text { get; set; }
 		public string Value { get; set; }
 		public bool IsCategoryHeading { get; set; }
 		public decimal ChoiceWeight { get; set; }
 		public bool ChoicePositive { get; set; }
+		public int SortOrder { get; set; }
 	}
 
 	public class EHSAuditComment
@@ -451,6 +453,7 @@ namespace SQM.Website
 
 					if (newQuestion.HasMultipleChoices)
 					{
+						List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");
 						List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
 															  where qc.AUDIT_QUESTION_ID == questionInfo.AUDIT_QUESTION_ID
 															  orderby qc.SORT_ORDER
@@ -462,16 +465,14 @@ namespace SQM.Website
 																  ChoicePositive = qc.CHOICE_POSITIVE
 															  }).ToList();
 						if (choices.Count > 0)
+						{
+							foreach (EHSAuditAnswerChoice choice in choices)
+							{
+								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+							}
 							newQuestion.AnswerChoices = choices;
+						}
 					}
-
-					//// Question control logic
-					//newQuestion.QuestionControls = (from qc in entities.AUDIT_QUESTION_CONTROL
-					//								where qc.AUDIT_TYPE_ID == auditTypeId &&
-					//								qc.AUDIT_TOPIC_ID == auditTopicId &&
-					//								qc.AUDIT_QUESTION_ID == newQuestion.QuestionId
-					//								orderby qc.PROCESS_ORDER
-					//								select qc).ToList();
 
 					questionList.Add(newQuestion);
 				}
@@ -515,6 +516,7 @@ namespace SQM.Website
 
 					if (newQuestion.HasMultipleChoices)
 					{
+						List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");
 						List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
 																 where qc.AUDIT_QUESTION_ID == q.AUDIT_QUESTION_ID
 																 orderby qc.SORT_ORDER
@@ -524,7 +526,13 @@ namespace SQM.Website
 																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
 																 }).ToList();
 						if (choices.Count > 0)
+						{
+							foreach (EHSAuditAnswerChoice choice in choices)
+							{
+								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+							}
 							newQuestion.AnswerChoices = choices;
+						}
 					}
 					questionList.Add(newQuestion);
 				}
@@ -660,6 +668,7 @@ namespace SQM.Website
 
 					if (newQuestion.HasMultipleChoices)
 					{
+						List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");
 						List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
 															  where qc.AUDIT_QUESTION_ID == questionInfo.AUDIT_QUESTION_ID
 															  orderby qc.SORT_ORDER
@@ -671,7 +680,13 @@ namespace SQM.Website
 																  ChoicePositive = qc.CHOICE_POSITIVE
 															  }).ToList();
 						if (choices.Count > 0)
+						{
+							foreach (EHSAuditAnswerChoice choice in choices)
+							{
+								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+							}
 							newQuestion.AnswerChoices = choices;
+						}
 					}
 
 					// only return a list of negative answers

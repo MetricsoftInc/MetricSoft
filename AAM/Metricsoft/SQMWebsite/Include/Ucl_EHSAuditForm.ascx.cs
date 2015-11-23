@@ -499,7 +499,7 @@ namespace SQM.Website
 						rbl.RepeatDirection = RepeatDirection.Horizontal;
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -518,7 +518,7 @@ namespace SQM.Website
 						rblp.RepeatDirection = RepeatDirection.Horizontal;
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -540,7 +540,7 @@ namespace SQM.Website
 						var cbl = new CheckBoxList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							if (shouldPopulate)
 							{
 								string[] answers = q.AnswerText.Split('|');
@@ -569,11 +569,11 @@ namespace SQM.Website
 									if (choice.IsCategoryHeading)
 										rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
 									else
-										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Value, choice.Value));
+										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Text, choice.Value));
 								}
 								else
 								{
-									rddl.Items.Add(new DropDownListItem(choice.Value, choice.Value));
+									rddl.Items.Add(new DropDownListItem(choice.Text, choice.Value));
 								}
 							}
 
@@ -1050,7 +1050,7 @@ namespace SQM.Website
 						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -1069,7 +1069,7 @@ namespace SQM.Website
 						rblp.RepeatDirection = RepeatDirection.Horizontal;
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							// Don't try to explicitly set SelectedValue in case answer choice text changed in database
 							if (shouldPopulate)
 							{
@@ -1091,7 +1091,7 @@ namespace SQM.Website
 						var cbl = new CheckBoxList() { ID = qid, CssClass = "WarnIfChanged" };
 						foreach (var choice in q.AnswerChoices)
 						{
-							var li = new ListItem(choice.Value);
+							var li = new ListItem(choice.Text, choice.Value);
 							if (shouldPopulate)
 							{
 								string[] answers = q.AnswerText.Split('|');
@@ -1118,13 +1118,13 @@ namespace SQM.Website
 								if (containsCategoryHeadings == true)
 								{
 									if (choice.IsCategoryHeading)
-										rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
+										rddl.Items.Add(new DropDownListItem(choice.Text, "") { CssClass = "dropdownItemHeading", Enabled = false });
 									else
-										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Value, choice.Value));
+										rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Text, choice.Value));
 								}
 								else
 								{
-									rddl.Items.Add(new DropDownListItem(choice.Value, choice.Value));
+									rddl.Items.Add(new DropDownListItem(choice.Text, choice.Value));
 								}
 							}
 

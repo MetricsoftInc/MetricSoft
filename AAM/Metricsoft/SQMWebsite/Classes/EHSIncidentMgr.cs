@@ -19,7 +19,7 @@ namespace SQM.Website
 		public string QuestionText { get; set; }
 		public EHSIncidentQuestionType QuestionType { get; set; }
 		public bool HasMultipleChoices { get; set; }
-		public List<EHSIncidentAnswerChoice> AnswerChoices { get; set; }
+		public List<EHSMetaData> AnswerChoices { get; set; }
 		public bool IsRequired { get; set; }
 		public bool IsRequiredClose { get; set; }
 		public string HelpText { get; set; }
@@ -30,6 +30,7 @@ namespace SQM.Website
 
 	public class EHSIncidentAnswerChoice
 	{
+		public string Text { get; set; }
 		public string Value { get; set; }
 		public bool IsCategoryHeading { get; set; }
 	}
@@ -649,14 +650,7 @@ namespace SQM.Website
 
 					if (newQuestion.HasMultipleChoices)
 					{
-						List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
-																 where qc.INCIDENT_QUESTION_ID == questionInfo.INCIDENT_QUESTION_ID
-																 orderby qc.SORT_ORDER
-																 select new EHSIncidentAnswerChoice
-																 {
-																	 Value = qc.QUESTION_CHOICE_VALUE,
-																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
-																 }).ToList();
+						List<EHSMetaData> choices = EHSMetaDataMgr.SelectMetaDataList("IQ_" + questionInfo.INCIDENT_QUESTION_ID.ToString()).OrderBy(l => l.SortOrder).ToList();
 						if (choices.Count > 0)
 							newQuestion.AnswerChoices = choices;
 					}
@@ -710,14 +704,7 @@ namespace SQM.Website
 
 					if (newQuestion.HasMultipleChoices)
 					{
-						List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
-																 where qc.INCIDENT_QUESTION_ID == q.INCIDENT_QUESTION_ID
-																 orderby qc.SORT_ORDER
-																 select new EHSIncidentAnswerChoice
-																 {
-																	 Value = qc.QUESTION_CHOICE_VALUE,
-																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
-																 }).ToList();
+						List<EHSMetaData> choices = EHSMetaDataMgr.SelectMetaDataList("IQ_" + q.INCIDENT_QUESTION_ID.ToString()).OrderBy(l => l.SortOrder).ToList();
 						if (choices.Count > 0)
 							newQuestion.AnswerChoices = choices;
 					}
@@ -752,18 +739,9 @@ namespace SQM.Website
 			return topicList;
 		}
 
-		public static List<EHSIncidentAnswerChoice> SelectIncidentQuestionChoices(decimal questionID)
+		public static List<EHSMetaData> SelectIncidentQuestionChoices(decimal questionID)
 		{
-			var entities = new PSsqmEntities();
-			List<EHSIncidentAnswerChoice> choices = (from qc in entities.INCIDENT_QUESTION_CHOICE
-													 where qc.INCIDENT_QUESTION_ID == questionID 
-													 orderby qc.SORT_ORDER
-													 select new EHSIncidentAnswerChoice
-													 {
-														 Value = qc.QUESTION_CHOICE_VALUE,
-														 IsCategoryHeading = qc.IS_CATEGORY_HEADING
-													 }).ToList();
-
+			List<EHSMetaData> choices = EHSMetaDataMgr.SelectMetaDataList("IQ_" + questionID.ToString()).OrderBy(l => l.SortOrder).ToList();
 			return choices;
 		}
 
@@ -1653,6 +1631,8 @@ namespace SQM.Website
 		public string TextLong { get; set; }
 		public string Value { get; set; }
 		public string Status { get; set; }
+		public int SortOrder { get; set; }
+		public bool IsHeading { get; set; }
 
 	}
 
@@ -1677,7 +1657,9 @@ namespace SQM.Website
 							Text = x.DESCRIPTION_SHORT,
 							TextLong = x.DESCRIPTION,
 							Value = x.XLAT_CODE,
-							Status = x.STATUS
+							Status = x.STATUS,
+							SortOrder = (int)x.SORT_ORDER,
+							IsHeading = (bool)x.IS_HEADING
 						}).ToList();
 			return metaList;
 		}

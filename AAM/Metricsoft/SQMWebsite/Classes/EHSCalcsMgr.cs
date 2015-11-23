@@ -1154,6 +1154,8 @@ namespace SQM.Website
 
 				if (this.AuditHst != null)
 				{
+					List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");  // get localized answer texts
+
 					decimal[] ids = this.AuditHst.Select(a => a.Audit.AUDIT_ID).Distinct().ToArray();
 					var qaList = (from a in this.Entities.AUDIT_ANSWER
 								  where (ids.Contains(a.AUDIT_ID))
@@ -1206,6 +1208,7 @@ namespace SQM.Website
 											// set the flag if there are any negative answers
 											foreach (EHSAuditAnswerChoice choice in choices)
 											{
+												choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
 												if (choice.Value.Equals(answer) && !choice.ChoicePositive)
 													answerIsNegative = true;
 											}

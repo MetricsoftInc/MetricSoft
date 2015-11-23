@@ -44,6 +44,7 @@ namespace SQM.Website
 						tid = q.TopicId.ToString();
 						ptid = previousTopic;
 						bool answerIsPositive = false;
+						string answerText = "";
 
 						if (!previousTopic.Equals(tid)) // add a topic header
 						{
@@ -141,12 +142,14 @@ namespace SQM.Website
 							q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
 							q.QuestionType == EHSAuditQuestionType.RadioPercentage)
 						{
+							answerText = q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault() != null ? q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault().Text : "";
 							comment = Server.HtmlEncode(comment);
-							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, answer, comment));
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, answerText, comment));
 						}
 						else
 						{
-							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\"></td></tr>", q.QuestionText, answer));
+							answerText = q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault() != null ? q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault().Text : "";
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\"></td></tr>", q.QuestionText, answerText));
 						}
 					}
 					// add the last topic total

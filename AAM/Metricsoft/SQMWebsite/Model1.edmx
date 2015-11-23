@@ -2705,10 +2705,12 @@
           </Key>
           <Property Name="XLAT_LANGUAGE" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="XLAT_GROUP" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="DESCRIPTION" Type="nvarchar" />
           <Property Name="DESCRIPTION_SHORT" Type="nvarchar" MaxLength="200" />
           <Property Name="STATUS" Type="varchar" MaxLength="4" />
+          <Property Name="IS_HEADING" Type="bit" />
+          <Property Name="SORT_ORDER" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -5040,7 +5042,6 @@
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
           <EntitySet Name="SETTINGS" EntityType="PSsqmModel.SETTINGS" />
-          <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
           <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.PLANT_ACTIVE" />
           <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE">
             <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
@@ -5056,6 +5057,7 @@
             <End Role="INCFORM_CAUSATION" EntitySet="INCFORM_CAUSATION" />
           </AssociationSet>
           <EntitySet Name="EHS_TARGETS" EntityType="PSsqmModel.EHS_TARGETS" />
+          <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -9054,19 +9056,6 @@
           <Property Type="Boolean" Name="ENCRYPT_VALUE" Nullable="false" />
           <Property Type="String" Name="LANGUAGE" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="XLAT">
-          <Key>
-            <PropertyRef Name="XLAT_LANGUAGE" />
-            <PropertyRef Name="XLAT_GROUP" />
-            <PropertyRef Name="XLAT_CODE" />
-          </Key>
-          <Property Type="String" Name="XLAT_LANGUAGE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="XLAT_GROUP" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DESCRIPTION_SHORT" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="PLANT_ACTIVE">
           <Key>
             <PropertyRef Name="PLANT_ID" />
@@ -9136,6 +9125,21 @@
           <Property Type="Decimal" Name="BUS_ORG_ID" Precision="35" Scale="0" />
           <Property Type="Decimal" Name="PLANT_ID" Precision="35" Scale="0" />
           <Property Type="Int32" Name="MIN_MAX" />
+        </EntityType>
+        <EntityType Name="XLAT">
+          <Key>
+            <PropertyRef Name="XLAT_LANGUAGE" />
+            <PropertyRef Name="XLAT_GROUP" />
+            <PropertyRef Name="XLAT_CODE" />
+          </Key>
+          <Property Type="String" Name="XLAT_LANGUAGE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_GROUP" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DESCRIPTION_SHORT" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IS_HEADING" />
+          <Property Type="Int16" Name="SORT_ORDER" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -11201,18 +11205,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="XLAT">
-            <EntityTypeMapping TypeName="PSsqmModel.XLAT">
-              <MappingFragment StoreEntitySet="XLAT">
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DESCRIPTION_SHORT" ColumnName="DESCRIPTION_SHORT" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="XLAT_CODE" ColumnName="XLAT_CODE" />
-                <ScalarProperty Name="XLAT_GROUP" ColumnName="XLAT_GROUP" />
-                <ScalarProperty Name="XLAT_LANGUAGE" ColumnName="XLAT_LANGUAGE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PLANT_ACTIVE">
             <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACTIVE">
               <MappingFragment StoreEntitySet="PLANT_ACTIVE">
@@ -11243,6 +11235,20 @@
                 <ScalarProperty Name="TARGET_VALUE" ColumnName="TARGET_VALUE" />
                 <ScalarProperty Name="TYPE" ColumnName="TYPE" />
                 <ScalarProperty Name="TARGETID" ColumnName="TARGETID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XLAT">
+            <EntityTypeMapping TypeName="PSsqmModel.XLAT">
+              <MappingFragment StoreEntitySet="XLAT">
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="IS_HEADING" ColumnName="IS_HEADING" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DESCRIPTION_SHORT" ColumnName="DESCRIPTION_SHORT" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="XLAT_CODE" ColumnName="XLAT_CODE" />
+                <ScalarProperty Name="XLAT_GROUP" ColumnName="XLAT_GROUP" />
+                <ScalarProperty Name="XLAT_LANGUAGE" ColumnName="XLAT_LANGUAGE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11539,13 +11545,13 @@
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="9.4488953265589171" PointY="26.513987017103464" />
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
-        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="5.8573184804326477" PointY="1.2682696139757845" />
         <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="5.9547404525590784" PointY="14.232411257099551" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE" />
         <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_CAUSATION" Width="1.5" PointX="9.6135556351456586" PointY="30.916818230839826" />
         <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="3.1552437782079181" PointY="11.040620212927749" />
+        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="8.6119807849693952" PointY="28.228467328580315" />
         </Diagram>
     </Diagrams>
   </Designer>
