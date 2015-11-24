@@ -513,4 +513,7 @@
   <data name="SaveSuccess" xml:space="preserve">
     <value>Your updates have been saved.</value>
   </data>
+  <data name="LogoutConfirm" xml:space="preserve">
+    <value>return confirm('Please confirm - do you wish to log out ?');</value>
+  </data>
 </root>

@@ -175,7 +175,7 @@
 				<asp:Panel id="Panel1" runat="server" style="float: right;">
 				<asp:LinkButton ID="lbBusinessCard1_out" runat="server" class="buttonUser"  OnClientClick="OpenUserPrefsWindow(); return false;" Title="Update my user preferences"></asp:LinkButton>
 					&nbsp;&nbsp;
-					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="<%$ Resources:LocalizedText, Logout %>" OnClientClick="return confirm('Please confirm - do you wish to log out ?');" onClick="lbLogout_Click" Title="<%$ Resources:LocalizedText, Logout %>"></asp:LinkButton>
+					<asp:LinkButton ID="lnkLogout" runat="server" CssClass="buttonExit" Text="<%$ Resources:LocalizedText, Logout %>" OnClientClick="<%$ Resources:LocalizedText, LogoutConfirm %>" onClick="lbLogout_Click" Title="<%$ Resources:LocalizedText, Logout %>"></asp:LinkButton>
 				</asp:Panel>
 				<br />
 				<asp:Panel id="pnlStatOfTheDay" runat="server" style="float: right; margin-top: 2px;">
