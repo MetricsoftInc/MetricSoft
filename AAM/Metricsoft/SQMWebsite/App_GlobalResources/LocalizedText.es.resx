@@ -510,4 +510,7 @@
   <data name="Task" xml:space="preserve">
     <value>Tarea</value>
   </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Your updates have been saved.</value>
+  </data>
 </root>

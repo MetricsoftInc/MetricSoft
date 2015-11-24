@@ -2197,7 +2197,8 @@ namespace SQM.Website
 			}
 			if (status >= 0)
 			{
-				string script = string.Format("alert('{0}');", "Your updates have been saved.");
+				//string script = string.Format("alert('{0}');", "Your updates have been saved.");
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 
 				if(CurrentSubnav == "0"  || CurrentSubnav == "I")
