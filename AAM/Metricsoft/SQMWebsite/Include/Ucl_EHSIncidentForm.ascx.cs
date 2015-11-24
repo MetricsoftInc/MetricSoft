@@ -674,12 +674,8 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
-						foreach (var choice in choices)
-						{
-							var li = new ListItem(choice);
-							rblYN.Items.Add(li);
-						}
+						rblYN.Items.Add(new ListItem(Resources.LocalizedText.Yes, "Yes"));
+						rblYN.Items.Add(new ListItem(Resources.LocalizedText.No, "No"));
 						if (shouldPopulate)
 							rblYN.SelectedValue = q.AnswerText;
 						if (q.QuestionControls != null && q.QuestionControls.Count > 0)
@@ -1172,12 +1168,8 @@ namespace SQM.Website
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
 						rblYN.RepeatColumns = 2;
 						rblYN.AutoPostBack = true;
-						var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
-						foreach (var choice in choices)
-						{
-							var li = new ListItem(choice);
-							rblYN.Items.Add(li);
-						}
+						rblYN.Items.Add(new ListItem(Resources.LocalizedText.Yes, "Yes"));
+						rblYN.Items.Add(new ListItem(Resources.LocalizedText.No, "No"));
 						if (shouldPopulate)
 							rblYN.SelectedValue = q.AnswerText;
 						if (q.QuestionControls != null && q.QuestionControls.Count > 0)
