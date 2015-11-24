@@ -3,9 +3,9 @@
 <%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
 <%@ Register Assembly="SQMWebsite" Namespace="SQM.Website" TagPrefix="SQM" %>
 <Ucl:RadGauge ID="uclChart" runat="server" />
-<div id="divTitle" runat="server" style="font-size: large; font-weight: bold; text-align: center"></div>
+<div id="divTitle" runat="server" style="font-size: large; font-weight: bold; text-align: center" class="divTitleMetrics"></div>
 <br />
-<telerik:RadGrid ID="rgReport" runat="server" Skin="Metro" AutoGenerateColumns="false" Width="1500" OnItemDataBound="rgReport_ItemDataBound">
+<telerik:RadGrid ID="rgReport" runat="server" Skin="Metro" AutoGenerateColumns="false" Width="1500" OnItemDataBound="rgReport_ItemDataBound" OnPreRender="rgReport_PreRender">
 	<AlternatingItemStyle BackColor="Transparent" />
 	<MasterTableView>
 		<ColumnGroups>

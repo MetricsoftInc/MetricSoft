@@ -67,10 +67,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == GridItemType.Header)
 			{
 				if (!this.didFirstHeader_rgBalancedScorescardHeader)
-				{
-					e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.Year.ToString();
 					this.didFirstHeader_rgBalancedScorescardHeader = true;
-				}
 				else
 				{
 					int width = 200;
@@ -79,6 +76,12 @@ namespace SQM.Website
 					(sender as RadGrid).MasterTableView.GetColumn("Target").HeaderStyle.Width = new Unit(width, UnitType.Pixel);
 				}
 			}
+		}
+
+		protected void rgBalancedScorescardHeader_PreRender(object sender, EventArgs e)
+		{
+			var cells = (sender as RadGrid).MasterTableView.GetItems(GridItemType.Header)[0].Cells;
+			cells[cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.Year.ToString();
 		}
 
 		protected void rgBalancedScorecardItem_ItemDataBound(object sender, GridItemEventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Objects;
 using System.Drawing;
 using System.Linq;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -137,7 +138,8 @@ namespace SQM.Website.EHS
 			Width = 1500,
 			DisplayLegend = true,
 			LegendPosition = ChartLegendPosition.Right,
-			LegendBackgroundColor = Color.White
+			LegendBackgroundColor = Color.White,
+			OnLoad = "radHtmlChart_Load"
 		};
 		public static GaugeDefinition smallGaugeDef = new GaugeDefinition()
 		{
@@ -145,7 +147,8 @@ namespace SQM.Website.EHS
 			Width = 740,
 			DisplayLegend = true,
 			LegendPosition = ChartLegendPosition.Right,
-			LegendBackgroundColor = Color.White
+			LegendBackgroundColor = Color.White,
+			OnLoad = "radHtmlChart_Load"
 		};
 
 		/// <summary>
@@ -961,221 +964,6 @@ namespace SQM.Website.EHS
 			return div;
 		}
 
-		protected void btnExportAll_Click(object sender, EventArgs e)
-		{
-			this.btnRefresh_Click(null, EventArgs.Empty);
-
-			gaugeDef.Target = smallGaugeDef.Target = null;
-
-			string plantID = this.rddlType.SelectedValue == "Metrics" ? this.rcbPlant.SelectedValue : "-1";
-			decimal companyID = decimal.Parse(this.hfCompanyID.Value);
-			int year = this.rmypYear.SelectedDate.Value.Year;
-
-			#region Pyramid
-
-			var pnlPyramidOutput = new Panel();
-
-			dynamic data = PullData(this.entities, plantID, companyID, year, DataToUse.Pyramid);
-			var YTD = (data.data as List<Data>)[12];
-
-			var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
-			uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
-			uclPyramid.Fatalities = YTD.Fatalities;
-			uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;
-			uclPyramid.LostTimeCases = YTD.Frequency;
-			uclPyramid.RecordableInjuriesPreviousYear = data.previousYTD.Incidents;
-			uclPyramid.RecordableInjuries = YTD.Incidents;
-			uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.FirstAid;
-			uclPyramid.FirstAidCases = YTD.FirstAid;
-			uclPyramid.NearMissesPreviousYear = data.previousYTD.NearMisses;
-			uclPyramid.NearMisses = YTD.NearMisses;
-			uclPyramid.JSAsSeries = data.jsasSeries;
-			uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
-			uclPyramid.JSAsTarget = data.jsasTarget;
-			uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
-			pnlPyramidOutput.Controls.Add(uclPyramid);
-
-			this.divExportAll.Controls.Add(pnlPyramidOutput);
-
-			#endregion
-
-			this.divExportAll.Controls.Add(CreatePageBreakDiv());
-
-			#region TRIR By Business Unit
-
-			var pnlTRIRBusinessOutput = new Panel();
-
-			data = PullTRIRByBusinessUnit(this.entities, companyID, year);
-
-			gaugeDef.Height = 410;
-			int count = 0;
-			foreach (var businessOrgData in data)
-			{
-				gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
-				gaugeDef.Target = new PERSPECTIVE_TARGET()
-				{
-					TARGET_VALUE = businessOrgData.incidentRateTarget,
-					DESCR_SHORT = "Target"
-				};
-				var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
-				WebSiteCommon.SetScale(gaugeDef, series);
-				var container = new HtmlGenericControl("div");
-				container.Attributes.Add("class", "chartMarginTop");
-				this.uclChart.CreateMultiLineChart(gaugeDef, series, container);
-				pnlTRIRBusinessOutput.Controls.Add(container);
-
-				++count;
-				if ((count % 2) == 0)
-					pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
-			}
-
-			this.divExportAll.Controls.Add(pnlTRIRBusinessOutput);
-
-			#endregion
-
-			this.divExportAll.Controls.Add(CreatePageBreakDiv());
-
-			#region TRIR Comparison By Plant
-
-			var pnlTRIRPlantOutput = new Panel();
-
-			data = PullTRIRByPlant(this.entities, companyID, year);
-
-			var uclTRIRPlant = this.LoadControl<Ucl_PerformanceReport_TRIRPlant>("~/Include/Ucl_PerformanceReport_TRIRPlant.ascx");
-			uclTRIRPlant.Year = data.year;
-			uclTRIRPlant.Data = data.data;
-			pnlTRIRPlantOutput.Controls.Add(uclTRIRPlant);
-
-			this.divExportAll.Controls.Add(pnlTRIRPlantOutput);
-
-			#endregion
-
-			this.divExportAll.Controls.Add(CreatePageBreakDiv());
-
-			#region Recordable Comparison By Plant
-
-			var pnlRecPlantOutput = new Panel();
-
-			data = PullRecByPlant(this.entities, companyID, year);
-
-			var uclRecPlant = this.LoadControl<Ucl_PerformanceReport_RecPlant>("~/Include/Ucl_PerformanceReport_RecPlant.ascx");
-			uclRecPlant.Year = data.year;
-			uclRecPlant.Data = data.data;
-			pnlRecPlantOutput.Controls.Add(uclRecPlant);
-
-			this.divExportAll.Controls.Add(pnlRecPlantOutput);
-
-			#endregion
-
-			this.divExportAll.Controls.Add(CreatePageBreakDiv());
-
-			#region Balanced Scorecard
-
-			var pnlBalancedScorecardOutput = new Panel();
-
-			data = PullBalancedScorecardData(this.entities, companyID, year);
-
-			var uclBalancedScorecord = this.LoadControl<Ucl_PerformanceReport_BalancedScorecard>("~/Include/Ucl_PerformanceReport_BalancedScorecard.ascx");
-			uclBalancedScorecord.Year = data.year;
-			uclBalancedScorecord.Width = gaugeDef.Width;
-			uclBalancedScorecord.Data = data.data;
-			pnlBalancedScorecardOutput.Controls.Add(uclBalancedScorecord);
-
-			this.divExportAll.Controls.Add(pnlBalancedScorecardOutput);
-
-			#endregion
-
-			this.divExportAll.Controls.Add(CreatePageBreakDiv());
-
-			#region Metrics
-
-			var pnlMetricsOutput = new Panel();
-
-			// Total Corp.
-			data = PullData(this.entities, "-1", companyID, year, DataToUse.Metrics);
-
-			var uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
-			uclMetrics.Title = data.title;
-			uclMetrics.Year = data.year;
-			uclMetrics.Data = data.data;
-			uclMetrics.IncidentRateSeries = data.incidentRateSeries;
-			uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
-			uclMetrics.IncidentRateTarget = data.incidentRateTarget;
-			uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
-			uclMetrics.SeverityRateSeries = data.severityRateSeries;
-			uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
-			uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
-			uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
-			uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
-			uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
-			uclMetrics.JSAsSeries = data.jsasSeries;
-			uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
-			uclMetrics.JSAsTarget = data.jsasTarget;
-			uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
-			pnlMetricsOutput.Controls.Add(uclMetrics);
-
-			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
-			decimal? busOrgID = null;
-			foreach (var businessLoc in businessLocs.OrderBy(l => l.Plant.BUS_ORG_ID).ThenBy(l => l.Plant.PLANT_NAME))
-			{
-				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
-				{
-					pnlMetricsOutput.Controls.Add(CreatePageBreakDiv());
-
-					busOrgID = businessLoc.Plant.BUS_ORG_ID;
-					data = PullData(this.entities, "BU" + busOrgID, companyID, year, DataToUse.Metrics);
-
-					uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
-					uclMetrics.Title = data.title;
-					uclMetrics.Year = data.year;
-					uclMetrics.Data = data.data;
-					uclMetrics.IncidentRateSeries = data.incidentRateSeries;
-					uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
-					uclMetrics.IncidentRateTarget = data.incidentRateTarget;
-					uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
-					uclMetrics.SeverityRateSeries = data.severityRateSeries;
-					uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
-					uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
-					uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
-					uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
-					uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
-					uclMetrics.JSAsSeries = data.jsasSeries;
-					uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
-					uclMetrics.JSAsTarget = data.jsasTarget;
-					uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
-					pnlMetricsOutput.Controls.Add(uclMetrics);
-				}
-
-				pnlMetricsOutput.Controls.Add(CreatePageBreakDiv());
-
-				data = PullData(this.entities, businessLoc.Plant.PLANT_ID.ToString(), companyID, year, DataToUse.Metrics);
-
-				uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
-				uclMetrics.Title = data.title;
-				uclMetrics.Year = data.year;
-				uclMetrics.Data = data.data;
-				uclMetrics.IncidentRateSeries = data.incidentRateSeries;
-				uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
-				uclMetrics.IncidentRateTarget = data.incidentRateTarget;
-				uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
-				uclMetrics.SeverityRateSeries = data.severityRateSeries;
-				uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
-				uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
-				uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
-				uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
-				uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
-				uclMetrics.JSAsSeries = data.jsasSeries;
-				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
-				uclMetrics.JSAsTarget = data.jsasTarget;
-				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
-				pnlMetricsOutput.Controls.Add(uclMetrics);
-			}
-
-			this.divExportAll.Controls.Add(pnlMetricsOutput);
-
-			#endregion
-		}
-
 		protected void btnRefresh_Click(object sender, EventArgs e)
 		{
 			string plantID = this.rddlType.SelectedValue == "Metrics" ? this.rcbPlant.SelectedValue : "-1";
@@ -1297,6 +1085,161 @@ namespace SQM.Website.EHS
 				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
 				this.pnlMetricsOutput.Controls.Add(uclMetrics);
 			}
+		}
+
+		protected void radAjaxManager_AjaxRequest(object sender, AjaxRequestEventArgs e)
+		{
+			this.divExportAll.Controls.Clear();
+			this.divExportAll.Style["width"] = gaugeDef.Width + "px";
+
+			gaugeDef.Target = smallGaugeDef.Target = null;
+
+			decimal companyID = decimal.Parse(this.hfCompanyID.Value);
+			int year = this.rmypYear.SelectedDate.Value.Year;
+
+			if (e.Argument == "pyramid")
+			{
+				var pnlPyramidOutput = new Panel();
+
+				dynamic data = PullData(this.entities, "-1", companyID, year, DataToUse.Pyramid);
+				var YTD = (data.data as List<Data>)[12];
+
+				var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
+				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
+				uclPyramid.Fatalities = YTD.Fatalities;
+				uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;
+				uclPyramid.LostTimeCases = YTD.Frequency;
+				uclPyramid.RecordableInjuriesPreviousYear = data.previousYTD.Incidents;
+				uclPyramid.RecordableInjuries = YTD.Incidents;
+				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.FirstAid;
+				uclPyramid.FirstAidCases = YTD.FirstAid;
+				uclPyramid.NearMissesPreviousYear = data.previousYTD.NearMisses;
+				uclPyramid.NearMisses = YTD.NearMisses;
+				uclPyramid.JSAsSeries = data.jsasSeries;
+				uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
+				uclPyramid.JSAsTarget = data.jsasTarget;
+				uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				pnlPyramidOutput.Controls.Add(uclPyramid);
+
+				this.divExportAll.Controls.Add(pnlPyramidOutput);
+			}
+			else if (e.Argument == "trirBusinessUnit")
+			{
+				var pnlTRIRBusinessOutput = new Panel();
+
+				dynamic data = PullTRIRByBusinessUnit(this.entities, companyID, year);
+
+				gaugeDef.Height = 410;
+				int count = 0;
+				foreach (var businessOrgData in data)
+				{
+					gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
+					gaugeDef.Target = new PERSPECTIVE_TARGET()
+					{
+						TARGET_VALUE = businessOrgData.incidentRateTarget,
+						DESCR_SHORT = "Target"
+					};
+					var series = new List<GaugeSeries>() { businessOrgData.incidentRateSeries, businessOrgData.incidentRateTrendSeries };
+					WebSiteCommon.SetScale(gaugeDef, series);
+					var container = new HtmlGenericControl("div");
+					container.Attributes.Add("class", "chartMarginTop");
+					this.uclChart.CreateMultiLineChart(gaugeDef, series, container);
+					pnlTRIRBusinessOutput.Controls.Add(container);
+
+					++count;
+					if ((count % 2) == 0)
+						pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
+				}
+
+				this.divExportAll.Controls.Add(pnlTRIRBusinessOutput);
+			}
+			else if (e.Argument == "trirPlant")
+			{
+				var pnlTRIRPlantOutput = new Panel();
+
+				dynamic data = PullTRIRByPlant(this.entities, companyID, year);
+
+				var uclTRIRPlant = this.LoadControl<Ucl_PerformanceReport_TRIRPlant>("~/Include/Ucl_PerformanceReport_TRIRPlant.ascx");
+				uclTRIRPlant.Year = data.year;
+				uclTRIRPlant.Data = data.data;
+				pnlTRIRPlantOutput.Controls.Add(uclTRIRPlant);
+
+				this.divExportAll.Controls.Add(pnlTRIRPlantOutput);
+			}
+			else if (e.Argument == "recPlant")
+			{
+				var pnlRecPlantOutput = new Panel();
+
+				dynamic data = PullRecByPlant(this.entities, companyID, year);
+
+				var uclRecPlant = this.LoadControl<Ucl_PerformanceReport_RecPlant>("~/Include/Ucl_PerformanceReport_RecPlant.ascx");
+				uclRecPlant.Year = data.year;
+				uclRecPlant.Data = data.data;
+				pnlRecPlantOutput.Controls.Add(uclRecPlant);
+
+				this.divExportAll.Controls.Add(pnlRecPlantOutput);
+			}
+			else if (e.Argument == "balancedScorecard")
+			{
+				var pnlBalancedScorecardOutput = new Panel();
+
+				dynamic data = PullBalancedScorecardData(this.entities, companyID, year);
+
+				var uclBalancedScorecord = this.LoadControl<Ucl_PerformanceReport_BalancedScorecard>("~/Include/Ucl_PerformanceReport_BalancedScorecard.ascx");
+				uclBalancedScorecord.Year = data.year;
+				uclBalancedScorecord.Width = gaugeDef.Width;
+				uclBalancedScorecord.Data = data.data;
+				pnlBalancedScorecardOutput.Controls.Add(uclBalancedScorecord);
+
+				this.divExportAll.Controls.Add(pnlBalancedScorecardOutput);
+			}
+			else if (e.Argument.StartsWith("metrics_"))
+			{
+				var pnlMetricsOutput = new Panel();
+
+				// Total Corp.
+				dynamic data = PullData(this.entities, e.Argument.Substring(8), companyID, year, DataToUse.Metrics);
+
+				var uclMetrics = this.LoadControl<Ucl_PerformanceReport_Metrics>("~/Include/Ucl_PerformanceReport_Metrics.ascx");
+				uclMetrics.Title = data.title;
+				uclMetrics.Year = data.year;
+				uclMetrics.Data = data.data;
+				uclMetrics.IncidentRateSeries = data.incidentRateSeries;
+				uclMetrics.IncidentRateTrendSeries = data.incidentRateTrendSeries;
+				uclMetrics.IncidentRateTarget = data.incidentRateTarget;
+				uclMetrics.FrequencyRateSeries = data.frequencyRateSeries;
+				uclMetrics.SeverityRateSeries = data.severityRateSeries;
+				uclMetrics.OrdinalTypeSeries = data.ordinalTypeSeries;
+				uclMetrics.OrdinalBodyPartSeries = data.ordinalBodyPartSeries;
+				uclMetrics.OrdinalRootCauseSeries = data.ordinalRootCauseSeries;
+				uclMetrics.OrdinalTenureSeries = data.ordinalTenureSeries;
+				uclMetrics.OrdinalDaysToCloseSeries = data.ordinalDaysToCloseSeries;
+				uclMetrics.JSAsSeries = data.jsasSeries;
+				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
+				uclMetrics.JSAsTarget = data.jsasTarget;
+				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				pnlMetricsOutput.Controls.Add(uclMetrics);
+
+				this.divExportAll.Controls.Add(pnlMetricsOutput);
+			}
+		}
+
+		[WebMethod]
+		public static List<string> GetMetricsList(decimal companyID)
+		{
+			var metricsList = new List<string>() { "-1" };
+			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
+			decimal? busOrgID = null;
+			foreach (var businessLoc in businessLocs.OrderBy(l => l.Plant.BUS_ORG_ID).ThenBy(l => l.Plant.PLANT_NAME))
+			{
+				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
+				{
+					busOrgID = businessLoc.Plant.BUS_ORG_ID;
+					metricsList.Add("BU" + busOrgID);
+				}
+				metricsList.Add(businessLoc.Plant.PLANT_ID.ToString());
+			}
+			return metricsList;
 		}
 	}
 }

@@ -119,6 +119,15 @@
 		<span class="pageTitles" style="float: left; margin-top: 6px">Health & Safety Performance Report</span>
 		<br class="clear" /><br />
 		<telerik:RadAjaxLoadingPanel ID="radLoading" runat="server" Skin="Metro" />
+		<telerik:RadAjaxManager ID="radAjaxManager" runat="server" OnAjaxRequest="radAjaxManager_AjaxRequest">
+			<AjaxSettings>
+				<telerik:AjaxSetting AjaxControlID="radAjaxManager">
+					<UpdatedControls>
+						<telerik:AjaxUpdatedControl ControlID="divExportAll" />
+					</UpdatedControls>
+				</telerik:AjaxSetting>
+			</AjaxSettings>
+		</telerik:RadAjaxManager>
 		<telerik:RadAjaxPanel ID="radAjaxPanel" runat="server" LoadingPanelID="radLoading">
 			<div class="container-fluid blueCell" style="position: relative">
 				<span class="prompt">Report Type: </span>
@@ -144,12 +153,14 @@
 					<telerik:RadButton ID="btnRefresh" runat="server" Text="<%$ Resources:RadGrid.Main, Refresh %>" Skin="Metro" OnClick="btnRefresh_Click" />
 				</div>
 				<div class="exportButtonDiv">
-					<%--<telerik:RadButton ID="btnExportAll" runat="server" Text="Export all to PDF" Skin="Metro" OnClick="btnExportAll_Click" OnClientClicked="btnExportAll_ClientClicked" />--%>
+					<input type="button" id="btnExportAll" runat="server" value="Export all to PDF" class="myButton" />
 					<input type="button" id="btnExport" runat="server" value="<%$ Resources:RadGrid.Main, ExportToPdfText %>" class="myButton" />
 				</div>
 			</div>
 			<br />
-			<div id="divExportAll" runat="server" style="display: none"></div>
+			<div id="divExportAll" runat="server"
+				style="display: none; -moz-transform: scale(0.5, 0.5) translate(-50%, -50%); -ms-transform: scale(0.5, 0.5) translate(-50%, -50%); -o-transform: scale(0.5, 0.5) translate(-50%, -50%); -webkit-transform: scale(0.5, 0.5) translate(-50%, -50%); transform: scale(0.5, 0.5) translate(-50%, -50%);"
+				enableviewstate="false"></div>
 			<div id="divExport" runat="server">
 				<asp:Panel ID="pnlPyramidOutput" runat="server" />
 				<asp:Panel ID="pnlTRIRBusinessOutput" runat="server" />
@@ -163,6 +174,18 @@
 	<Ucl:RadGauge ID="uclChart" runat="server" />
 	<telerik:RadCodeBlock ID="radCodeBlock" runat="server">
 		<script type="text/javascript">
+			var $body = $('body');
+			var hfCompanyID = $('#<%= this.hfCompanyID.ClientID %>');
+			var radAjaxManager = null;
+			var radLoading = null;
+
+			// This will get the controls we need later.
+			Sys.Application.add_load(function ()
+			{
+				radAjaxManager = $find('<%= this.radAjaxManager.ClientID %>');
+				radLoading = $find('<%= this.radLoading.ClientID %>');
+			});
+
 			function rddlType_ClientItemSelected(sender, eventArgs)
 			{
 				var item = eventArgs.get_item();
@@ -173,36 +196,161 @@
 					pnlMetrics.hide();
 			}
 
-			$('body').on('click', '#btnExport', function ()
+			$body.on('click', '#btnExport', function ()
 			{
-				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx" />');
+				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx"><input type="text" name="filename" value="PerformanceReport.pdf" /></form>');
 				var div = $('#divExport').clone();
 				div.css('transform', 'scale(0.5, 0.5) translate(-50%, -50%)');
 				form.append($('<input type="text" name="html" />').val(div[0].outerHTML));
-				$('body').append(form);
+				$body.append(form);
 				form[0].submit();
 				form.remove();
 			});
 
-			/*function exportAll_endRequest()
+			var doingExportAll = false;
+			var lastDone = '';
+			var metricsList = [];
+			var metricsListIndex = -1;
+
+			var numberOfCharts;
+			var numberOfChartsDone;
+
+			function processNext()
 			{
-				console.log("exportAll_endRequest called");
-				Sys.WebForms.PageRequestManager.getInstance().remove_endRequest(exportAll_endRequest);
-				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx" />');
-				var div = $('#divExportAll');
-				div.css('transform', 'scale(0.5, 0.5) translate(-50%, -50%)');
-				form.append($('<input type="text" name="html" />').val(div[0].outerHTML));
-				$('body').append(form);
-				form[0].submit();
-				form.remove();
-				div.empty();
+				var bookmarkName = '';
+				switch (lastDone)
+				{
+					case 'pyramid':
+						bookmarkName = 'Pyramid';
+						break;
+					case 'trirBusinessUnit':
+						bookmarkName = 'TRIR By Business Unit';
+						break;
+					case 'trirPlant':
+						bookmarkName = 'TRIR Comparison By Plant';
+						break;
+					case 'recPlant':
+						bookmarkName = 'Recordable Comparison By Plant';
+						break;
+					case 'balancedScorecard':
+						bookmarkName = 'Balanced Scorecard';
+						break;
+					case 'metrics':
+						bookmarkName = 'Metrics - ' + $('#divExportAll #divTitle').html();
+						break;
+				}
+				var div = $('#divExportAll').clone();
+				div.css('display', '');
+				$.ajax({
+					method: 'POST',
+					url: '/Shared/PdfDownloader.ashx',
+					data: { html: div[0].outerHTML, bookmarkName: bookmarkName },
+					success: function ()
+					{
+						$('#divExportAll').empty();
+						if (lastDone == 'pyramid')
+						{
+							numberOfCharts = numberOfChartsDone = 0;
+							lastDone = 'trirBusinessUnit';
+							radAjaxManager.ajaxRequest('trirBusinessUnit');
+						}
+						else if (lastDone == 'trirBusinessUnit')
+						{
+							numberOfCharts = numberOfChartsDone = 0;
+							lastDone = 'trirPlant';
+							radAjaxManager.ajaxRequest('trirPlant');
+						}
+						else if (lastDone == 'trirPlant')
+						{
+							lastDone = 'recPlant';
+							radAjaxManager.ajaxRequest('recPlant');
+						}
+						else if (lastDone == 'recPlant')
+						{
+							lastDone = 'balancedScorecard';
+							radAjaxManager.ajaxRequest('balancedScorecard');
+						}
+						else if (lastDone == 'balancedScorecard')
+						{
+							numberOfCharts = numberOfChartsDone = 0;
+							lastDone = 'metrics';
+							metricsListIndex = 0;
+							$.ajax({
+								method: 'POST',
+								url: '<%= this.Request.Url.AbsolutePath %>/GetMetricsList',
+								data: JSON.stringify({ companyID: hfCompanyID.val() }),
+								contentType: 'application/json; charset=UTF-8',
+								success: function (data)
+								{
+									metricsList = data.d;
+									radAjaxManager.ajaxRequest('metrics_' + metricsList[metricsListIndex]);
+								}
+							});
+						}
+						else
+						{
+							++metricsListIndex;
+							if (metricsListIndex == metricsList.length)
+							{
+								radLoading.hide('<%= this.radAjaxPanel.ClientID %>');
+								Sys.WebForms.PageRequestManager.getInstance().remove_endRequest(exportAll_endRequest);
+								doingExportAll = false;
+								var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx"><input type="text" name="end_batch" value="1" /><input type="text" name="filename" value="PerformanceReportAll.pdf" /></form>');
+								$body.append(form);
+								form[0].submit();
+								form.remove();
+							}
+							else
+							{
+								numberOfCharts = numberOfChartsDone = 0;
+								radAjaxManager.ajaxRequest('metrics_' + metricsList[metricsListIndex]);
+							}
+						}
+					}
+				});
 			}
 
-			function btnExportAll_ClientClicked(sender, eventArgs)
+			function radHtmlChart_Load(sender, eventArgs)
 			{
-				console.log("btnExportAll_ClientClicked called");
+				if (doingExportAll)
+				{
+					var kendoWidget = sender.get_kendoWidget();
+					kendoWidget.bind('render', function ()
+					{
+						++numberOfChartsDone;
+						if (numberOfChartsDone == numberOfCharts)
+							processNext();
+					});
+					kendoWidget.options.transitions = false;
+					kendoWidget.redraw();
+				}
+			}
+
+			function exportAll_endRequest()
+			{
+				numberOfCharts = $('#divExportAll .RadHtmlChart').length;
+				if (numberOfChartsDone == numberOfCharts)
+					processNext();
+			}
+
+			$body.on('click', '#btnExportAll', function ()
+			{
+				doingExportAll = true;
+				numberOfCharts = numberOfChartsDone = 0;
+				radLoading.show('<%= this.radAjaxPanel.ClientID %>');
 				Sys.WebForms.PageRequestManager.getInstance().add_endRequest(exportAll_endRequest);
-			}*/
+				$.ajax({
+					method: 'POST',
+					url: '/Shared/PdfDownloader.ashx',
+					data: { start_batch: 1 },
+					success: function ()
+					{
+						lastDone = 'pyramid';
+						radAjaxManager.ajaxRequest('pyramid');
+					}
+				});
+			});
+
 
 			function resetCSS()
 			{
@@ -363,6 +511,12 @@
 						'color'
 					]));
 				});
+
+				// Last one for the title of the metrics
+				var divTitleMetrics = $('.divTitleMetrics');
+				divTitleMetrics.css(divTitleMetrics.getStyles([
+					'font-family'
+				]));
 			}
 
 			Sys.Application.add_init(resetCSS);

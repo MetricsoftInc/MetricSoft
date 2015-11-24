@@ -88,15 +88,8 @@ namespace SQM.Website
 			this.uclChart.CreateMultiLineChart(EHS.EHS_PerformanceReport.smallGaugeDef, series, this.divSafetyTrainingHours_Metrics);
 		}
 
-		bool didFirstHeader_rgReport = false;
-
 		protected void rgReport_ItemDataBound(object sender, GridItemEventArgs e)
 		{
-			if (e.Item.ItemType == GridItemType.Header && !this.didFirstHeader_rgReport)
-			{
-				e.Item.Cells[e.Item.Cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.Year.ToString();
-				this.didFirstHeader_rgReport = true;
-			}
 			if (e.Item.ItemType == GridItemType.Item || e.Item.ItemType == GridItemType.AlternatingItem)
 			{
 				var month = (e.Item.DataItem as EHS.EHS_PerformanceReport.Data).Month;
@@ -109,6 +102,12 @@ namespace SQM.Website
 						item[column].Text = "";
 				}
 			}
+		}
+
+		protected void rgReport_PreRender(object sender, EventArgs e)
+		{
+			var cells = this.rgReport.MasterTableView.GetItems(GridItemType.Header)[0].Cells;
+			cells[cells.Cast<GridTableHeaderCell>().Select(c => c.Text).ToList().IndexOf("Year")].Text = this.Year.ToString();
 		}
 	}
 }

@@ -2,7 +2,7 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <asp:Repeater ID="rptBalancedScorecard" runat="server" OnItemDataBound="rptBalancedScorecard_ItemDataBound">
 	<HeaderTemplate>
-		<telerik:RadGrid ID="rgBalancedScorescardHeader" runat="server" Skin="Metro" AutoGenerateColumns="false" OnItemDataBound="rgBalancedScorescardHeader_ItemDataBound">
+		<telerik:RadGrid ID="rgBalancedScorescardHeader" runat="server" Skin="Metro" AutoGenerateColumns="false" OnItemDataBound="rgBalancedScorescardHeader_ItemDataBound" OnPreRender="rgBalancedScorescardHeader_PreRender">
 			<MasterTableView TableLayout="Fixed">
 				<NoRecordsTemplate></NoRecordsTemplate>
 				<ColumnGroups>

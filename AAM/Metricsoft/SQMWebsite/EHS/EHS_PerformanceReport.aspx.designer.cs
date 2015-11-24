@@ -31,6 +31,15 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadAjaxLoadingPanel radLoading;
         
         /// <summary>
+        /// radAjaxManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxManager radAjaxManager;
+        
+        /// <summary>
         /// radAjaxPanel control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton btnRefresh;
+        
+        /// <summary>
+        /// btnExportAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnExportAll;
         
         /// <summary>
         /// btnExport control.
