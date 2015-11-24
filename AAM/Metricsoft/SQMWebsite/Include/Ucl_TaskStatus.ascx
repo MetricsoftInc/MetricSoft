@@ -74,8 +74,8 @@
 		<br />
 		<div style="float: right; margin: 5px;">
 			<span>
-				<asp:Button ID="btnTaskComplete" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Completed %>" style="margin: 5px;" OnClientClick="return confirmAction('update this task as Complete');" onclick="btnTaskComplete_Click" ToolTip="Update this Task as completed"></asp:Button>
-				<asp:Button ID="btnTaskAssign" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Reassign %>" style="margin: 5px;" OnClientClick="return confirmAction('re-assign this Task');" onclick="btnTaskAssign_Click" ToolTip="<%$ Resources:LocalizedText, ReassignToolTip %>"></asp:Button>
+				<asp:Button ID="btnTaskComplete" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Completed %>" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskCompleteConfirm %>" onclick="btnTaskComplete_Click" ToolTip="Update this Task as completed"></asp:Button>
+				<asp:Button ID="btnTaskAssign" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Reassign %>" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskReAssignConfirm %>" onclick="btnTaskAssign_Click" ToolTip="<%$ Resources:LocalizedText, ReassignToolTip %>"></asp:Button>
 				<asp:Button ID="btnTaskCancel" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
 			</span>
         </div>
@@ -148,7 +148,7 @@
 		<br />
 		<div style="float: right; margin: 5px;">
 			<span>
-				<asp:Button ID="btnTaskAdd" CSSclass="buttonStd" runat="server" Text="Create" style="margin: 5px;" OnClientClick="return confirmAction('create this task as open');" onclick="btnTaskAdd_Click" ToolTip="Create this Task as open" meta:resourcekey="btnTaskAddResource1"></asp:Button>
+				<asp:Button ID="btnTaskAdd" CSSclass="buttonStd" runat="server" Text="Create" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskCreateConfirm %>" onclick="btnTaskAdd_Click" ToolTip="Create this Task as open" meta:resourcekey="btnTaskAddResource1"></asp:Button>
 				<asp:Button ID="btnTaskCancelAdd" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
 			</span>
         </div>
@@ -177,7 +177,7 @@
 			<br />
 			<div style="float: right; margin: 5px;">
 				<span>
-					<asp:Button ID="btnAssignSave" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Reassign %>" style="margin: 5px;" OnClientClick="return confirmAction('re-assign this Task');" onclick="btnTaskAssignUpdate_Click" ToolTip="<%$ Resources:LocalizedText, ReassignToolTip %>"></asp:Button>
+					<asp:Button ID="btnAssignSave" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Reassign %>" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskReAssignConfirm %>" onclick="btnTaskAssignUpdate_Click" ToolTip="<%$ Resources:LocalizedText, ReassignToolTip %>"></asp:Button>
 					<asp:Button ID="btnAssignCancel" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
 				</span>
 			</div>

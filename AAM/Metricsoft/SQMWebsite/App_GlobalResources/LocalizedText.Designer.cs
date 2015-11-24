@@ -772,7 +772,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to return confirm(&apos;Please confirm - do you wish to log out ?&apos;);.
+        ///   Looks up a localized string similar to return confirm(&apos;Please confirm - do you wish to log out&apos;);.
         /// </summary>
         internal static string LogoutConfirm {
             get {
@@ -1182,6 +1182,33 @@ namespace Resources {
         internal static string Task {
             get {
                 return ResourceManager.GetString("Task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;update this task as Complete&apos;);.
+        /// </summary>
+        internal static string TaskCompleteConfirm {
+            get {
+                return ResourceManager.GetString("TaskCompleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;create an open Task&apos;);.
+        /// </summary>
+        internal static string TaskCreateConfirm {
+            get {
+                return ResourceManager.GetString("TaskCreateConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;re-assign this Task&apos;);.
+        /// </summary>
+        internal static string TaskReAssignConfirm {
+            get {
+                return ResourceManager.GetString("TaskReAssignConfirm", resourceCulture);
             }
         }
         

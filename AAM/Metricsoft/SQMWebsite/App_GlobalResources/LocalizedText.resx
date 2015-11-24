@@ -514,6 +514,15 @@
     <value>Your updates have been saved.</value>
   </data>
   <data name="LogoutConfirm" xml:space="preserve">
-    <value>return confirm('Please confirm - do you wish to log out ?');</value>
+    <value>return confirm('Please confirm - do you wish to log out');</value>
+  </data>
+  <data name="TaskCompleteConfirm" xml:space="preserve">
+    <value>return confirmAction('update this task as Complete');</value>
+  </data>
+  <data name="TaskCreateConfirm" xml:space="preserve">
+    <value>return confirmAction('create an open Task');</value>
+  </data>
+  <data name="TaskReAssignConfirm" xml:space="preserve">
+    <value>return confirmAction('re-assign this Task');</value>
   </data>
 </root>
