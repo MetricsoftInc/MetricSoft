@@ -275,7 +275,6 @@
 					<asp:Panel ID="pnlIncidentDetails" runat="server" Width="100%" Visible="False">
 						<div class="row-fluid">
 							<br />
-							<asp:HiddenField ID="hfIncidentDetails" runat="server" Value="Incident # Summary" />
 							<asp:Label ID="lblIncidentDetails" runat="server" CssClass="prompt"></asp:Label>
 							<asp:LinkButton ID="lnkIncidentDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="<%$ Resources:LocalizedText, Close %>">
 											 <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>

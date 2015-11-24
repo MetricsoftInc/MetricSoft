@@ -202,7 +202,6 @@
                         <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="False" meta:resourcekey="pnlAuditDetailsResource1">
                             <div class="row-fluid">
                                 <br />
-                                <asp:HiddenField ID="hfAuditDetails" runat="server" Value="Assessment # Summary" />
                                 <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt" meta:resourcekey="lblAuditDetailsResource1"></asp:Label>
                                 <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="<%$ Resources:LocalizedText, Close %>">
                                              <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
