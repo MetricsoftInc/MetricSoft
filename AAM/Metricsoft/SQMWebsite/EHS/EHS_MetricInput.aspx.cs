@@ -530,14 +530,18 @@ namespace SQM.Website
 
                     if (status >= 0)
                     {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
+						string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
                         hasSaveWarning = false;  // cancel warning to allow re-save 
                         MessageDisplay(0);
                         LoadProfileInput(LocalProfile().InputPeriod.PeriodDate, EHSProfileStatus.Normal);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveError');", true);
+						string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveError);
+						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveError');", true);
                         MessageDisplay(0);
                         ClearInput();
                     }

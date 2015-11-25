@@ -642,9 +642,13 @@ namespace SQM.Website
             }
             
             LocalProfile().Profile.UTIL_MONTH_SPAN = LocalProfile().Profile.WASTE_MONTH_SPAN = Convert.ToInt32(WebSiteCommon.GetXlatValue("invoiceSpan", "MINDATE"));
-           
-            if (EHSProfile.UpdateProfile(LocalProfile()) >= 0)
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
+
+			if (EHSProfile.UpdateProfile(LocalProfile()) >= 0)
+			{
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				//ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
+			}
             BindProfile(LocalProfile());
         }
 

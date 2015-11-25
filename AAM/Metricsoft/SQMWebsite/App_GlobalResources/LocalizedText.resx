@@ -537,4 +537,55 @@
   <data name="AssessmentRequiredsMsg" xml:space="preserve">
     <value>You must complete all required fields on this page to save.</value>
   </data>
+  <data name="CancelSaveConfirm" xml:space="preserve">
+    <value>return confirmAction('Cancel without saving');</value>
+  </data>
+  <data name="ENVDataDefaultValue" xml:space="preserve">
+    <value>Default value -</value>
+  </data>
+  <data name="ENVDataDeleteMsg" xml:space="preserve">
+    <value>This input will be deleted when the reporting period is finalized</value>
+  </data>
+  <data name="ENVDataPeriodSelect" xml:space="preserve">
+    <value>--select--</value>
+  </data>
+  <data name="ENVDataValidate1" xml:space="preserve">
+    <value>Some Metric Inputs have been marked for deletion. Do you wish to continue saving ?</value>
+  </data>
+  <data name="ENVDataValidate2" xml:space="preserve">
+    <value>This reporting month was previously approved, however some Metric Inputs have now been changed. Do you wish to continue saving ?</value>
+  </data>
+  <data name="ENVDataValidate3" xml:space="preserve">
+    <value>Metric Inputs</value>
+  </data>
+  <data name="ENVProfileAddMetric" xml:space="preserve">
+    <value>Add Metric</value>
+  </data>
+  <data name="ENVProfileCopyConfirm" xml:space="preserve">
+    <value>return confirmAction('Copy metrics from the selected profile');</value>
+  </data>
+  <data name="ENVProfileDeleteConfirm" xml:space="preserve">
+    <value>DELETE this metric and any data collected to date</value>
+  </data>
+  <data name="ENVProfileDeleteConfirm2" xml:space="preserve">
+    <value>Please note this action CANNOT BE REVERSED</value>
+  </data>
+  <data name="ENVProfileRequiredsMsg" xml:space="preserve">
+    <value>Please enter all required (*) fields before saving.</value>
+  </data>
+  <data name="ENVProfileUpdateMetric" xml:space="preserve">
+    <value>Update Metric</value>
+  </data>
+  <data name="ENVProfileValidate1" xml:space="preserve">
+    <value>Metric Profile</value>
+  </data>
+  <data name="ENVProfileValidate2" xml:space="preserve">
+    <value>Final Approver Is Required</value>
+  </data>
+  <data name="NumericInputConfirm" xml:space="preserve">
+    <value>ValidNumeric(this, 'please enter numeric values only');</value>
+  </data>
+  <data name="SaveError" xml:space="preserve">
+    <value>An error was encountered while attempting to save your changes.</value>
+  </data>
 </root>

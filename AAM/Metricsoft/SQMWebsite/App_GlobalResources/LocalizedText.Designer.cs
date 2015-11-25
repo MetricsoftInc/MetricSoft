@@ -241,6 +241,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;Cancel without saving&apos;);.
+        /// </summary>
+        internal static string CancelSaveConfirm {
+            get {
+                return ResourceManager.GetString("CancelSaveConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Case Type.
         /// </summary>
         internal static string CaseType {
@@ -574,6 +583,132 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default value -.
+        /// </summary>
+        internal static string ENVDataDefaultValue {
+            get {
+                return ResourceManager.GetString("ENVDataDefaultValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This input will be deleted when the reporting period is finalized.
+        /// </summary>
+        internal static string ENVDataDeleteMsg {
+            get {
+                return ResourceManager.GetString("ENVDataDeleteMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to --select--.
+        /// </summary>
+        internal static string ENVDataPeriodSelect {
+            get {
+                return ResourceManager.GetString("ENVDataPeriodSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some Metric Inputs have been marked for deletion. Do you wish to continue saving ?.
+        /// </summary>
+        internal static string ENVDataValidate1 {
+            get {
+                return ResourceManager.GetString("ENVDataValidate1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This reporting month was previously approved, however some Metric Inputs have now been changed. Do you wish to continue saving ?.
+        /// </summary>
+        internal static string ENVDataValidate2 {
+            get {
+                return ResourceManager.GetString("ENVDataValidate2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metric Inputs.
+        /// </summary>
+        internal static string ENVDataValidate3 {
+            get {
+                return ResourceManager.GetString("ENVDataValidate3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Metric.
+        /// </summary>
+        internal static string ENVProfileAddMetric {
+            get {
+                return ResourceManager.GetString("ENVProfileAddMetric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;Copy metrics from the selected profile&apos;);.
+        /// </summary>
+        internal static string ENVProfileCopyConfirm {
+            get {
+                return ResourceManager.GetString("ENVProfileCopyConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE this metric and any data collected to date.
+        /// </summary>
+        internal static string ENVProfileDeleteConfirm {
+            get {
+                return ResourceManager.GetString("ENVProfileDeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please note this action CANNOT BE REVERSED.
+        /// </summary>
+        internal static string ENVProfileDeleteConfirm2 {
+            get {
+                return ResourceManager.GetString("ENVProfileDeleteConfirm2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter all required (*) fields before saving..
+        /// </summary>
+        internal static string ENVProfileRequiredsMsg {
+            get {
+                return ResourceManager.GetString("ENVProfileRequiredsMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Metric.
+        /// </summary>
+        internal static string ENVProfileUpdateMetric {
+            get {
+                return ResourceManager.GetString("ENVProfileUpdateMetric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metric Profile.
+        /// </summary>
+        internal static string ENVProfileValidate1 {
+            get {
+                return ResourceManager.GetString("ENVProfileValidate1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final Approver Is Required.
+        /// </summary>
+        internal static string ENVProfileValidate2 {
+            get {
+                return ResourceManager.GetString("ENVProfileValidate2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Category.
         /// </summary>
         internal static string EventCategory {
@@ -844,6 +979,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ValidNumeric(this, &apos;please enter numeric values only&apos;);.
+        /// </summary>
+        internal static string NumericInputConfirm {
+            get {
+                return ResourceManager.GetString("NumericInputConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         internal static string OK {
@@ -1047,6 +1191,15 @@ namespace Resources {
         internal static string SaveAndReturn {
             get {
                 return ResourceManager.GetString("SaveAndReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error was encountered while attempting to save your changes..
+        /// </summary>
+        internal static string SaveError {
+            get {
+                return ResourceManager.GetString("SaveError", resourceCulture);
             }
         }
         

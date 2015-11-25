@@ -2242,6 +2242,9 @@
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_MetricInput.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_MetricInput.aspx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Profile.aspx.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
