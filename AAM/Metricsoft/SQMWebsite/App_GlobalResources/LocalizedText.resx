@@ -582,6 +582,12 @@
   <data name="ENVProfileValidate2" xml:space="preserve">
     <value>Final Approver Is Required</value>
   </data>
+  <data name="ENVReportCriteriaMsg" xml:space="preserve">
+    <value>Error in report criteria selection. Please make sure at least one location is selected and the report from/to dates are valid.</value>
+  </data>
+  <data name="ENVReportViewOpenMsg" xml:space="preserve">
+    <value>Error opening or executing the selected report</value>
+  </data>
   <data name="NumericInputConfirm" xml:space="preserve">
     <value>ValidNumeric(this, 'please enter numeric values only');</value>
   </data>

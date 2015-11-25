@@ -709,6 +709,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error in report criteria selection. Please make sure at least one location is selected and the report from/to dates are valid..
+        /// </summary>
+        internal static string ENVReportCriteriaMsg {
+            get {
+                return ResourceManager.GetString("ENVReportCriteriaMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error opening or executing the selected report.
+        /// </summary>
+        internal static string ENVReportViewOpenMsg {
+            get {
+                return ResourceManager.GetString("ENVReportViewOpenMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Category.
         /// </summary>
         internal static string EventCategory {

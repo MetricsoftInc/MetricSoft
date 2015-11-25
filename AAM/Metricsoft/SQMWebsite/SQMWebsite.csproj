@@ -2245,6 +2245,9 @@
     <Content Include="EHS\App_LocalResources\EHS_MetricInput.aspx.resx" />
     <Content Include="EHS\App_LocalResources\EHS_MetricInput.aspx.es.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Profile.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_ENVReport.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_ENVReport.aspx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Profile.aspx.es.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
