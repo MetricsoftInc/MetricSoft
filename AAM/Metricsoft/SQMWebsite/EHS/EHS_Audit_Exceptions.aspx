@@ -219,7 +219,7 @@
                         <br />
                         <div style="float: right; margin: 5px;">
                             <span>
-                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Save %>" Style="margin: 5px;" OnClientClick="return confirmAction('update the assessment exception status');" OnClick="btnStatusSave_Click" ToolTip="Update the status of this audit exception" meta:resourcekey="btnStatusSaveResource1"></asp:Button>
+                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Save %>" Style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, AssessmentExceptionUpdateConfirm %>" OnClick="btnStatusSave_Click" ToolTip="Update the status of this audit exception" meta:resourcekey="btnStatusSaveResource1"></asp:Button>
                                 <asp:Button ID="btnStatusCancel" CssClass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" Style="margin: 5px;" OnClick="btnStatusCancel_Click"></asp:Button>
                             </span>
                         </div>

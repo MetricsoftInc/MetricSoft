@@ -525,4 +525,16 @@
   <data name="TaskReAssignConfirm" xml:space="preserve">
     <value>return confirmAction('re-assign this Task ?');</value>
   </data>
+  <data name="AssessmentExceptionUpdateConfirm" xml:space="preserve">
+    <value>return confirmAction('update the assessment exception status');</value>
+  </data>
+  <data name="AssessmentIncompleteMsg" xml:space="preserve">
+    <value>You must complete all required fields on this page to close the assessment.</value>
+  </data>
+  <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
+    <value>You must complete all required text fields on this page to save. Complete the fields lined with red.</value>
+  </data>
+  <data name="AssessmentRequiredsMsg" xml:space="preserve">
+    <value>You must complete all required fields on this page to save.</value>
+  </data>
 </root>

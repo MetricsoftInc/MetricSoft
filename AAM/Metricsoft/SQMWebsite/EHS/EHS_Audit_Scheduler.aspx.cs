@@ -221,7 +221,7 @@ namespace SQM.Website
 			divAuditList.Visible = true;
 
 			lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
-			lblPageInstructions.Text = "Add or update EH&amp;S Assessment Schedule below.";
+			//lblPageInstructions.Text = "Add or update EH&amp;S Assessment Schedule below.";
 			rbNew.Text = GetLocalResourceObject("rbNewResource1.Text").ToString();
 			phAudit.Visible = true;
 		}

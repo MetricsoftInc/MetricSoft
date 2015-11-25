@@ -1583,7 +1583,8 @@ namespace SQM.Website
 					else
 					{
 						closeCh.Checked = false;
-						string script = string.Format("alert('{0}');", "You must complete all required fields on this page to close the assessment.");
+						//string script = string.Format("alert('{0}');", "You must complete all required fields on this page to close the assessment.");
+						string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentIncompleteMsg);
 						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 					}
 				}
@@ -1945,7 +1946,7 @@ namespace SQM.Website
 					}
 					if (requiredFields.Trim().Length > 0)
 						requiredFields = " (" + requiredFields + ")";
-					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save." + requiredFields);
+					string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsMsg + requiredFields);
 					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 				}
 				else
@@ -1953,7 +1954,7 @@ namespace SQM.Website
 			}
 			else
 			{
-				string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsMsg);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 		}
@@ -1964,7 +1965,7 @@ namespace SQM.Website
 			{
 				if (hdnAuditLocation.Value.ToString().Trim().Length == 0 || rddlAuditUsers.SelectedIndex == 0 || rddlDepartment.SelectedIndex == 0)
 				{
-					string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+					string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsMsg);
 					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 				}
 				else
@@ -1972,7 +1973,7 @@ namespace SQM.Website
 			}
 			else
 			{
-				string script = string.Format("alert('{0}');", "You must complete all required fields on this page to save.");
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsMsg);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 		}
@@ -2076,7 +2077,7 @@ namespace SQM.Website
 				// need to redraw the page with text boxes highlighted
 				BuildForm();
 				// and send a message that the field need to be entered
-				string script = string.Format("alert('{0}');", "You must complete all required text fields on this page to save. Complete the fields lined with red.");
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsIndicatedMsg);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
 

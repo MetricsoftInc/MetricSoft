@@ -151,6 +151,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;update the assessment exception status&apos;);.
+        /// </summary>
+        internal static string AssessmentExceptionUpdateConfirm {
+            get {
+                return ResourceManager.GetString("AssessmentExceptionUpdateConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must complete all required fields on this page to close the assessment..
+        /// </summary>
+        internal static string AssessmentIncompleteMsg {
+            get {
+                return ResourceManager.GetString("AssessmentIncompleteMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must complete all required text fields on this page to save. Complete the fields lined with red..
+        /// </summary>
+        internal static string AssessmentRequiredsIndicatedMsg {
+            get {
+                return ResourceManager.GetString("AssessmentRequiredsIndicatedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must complete all required fields on this page to save..
+        /// </summary>
+        internal static string AssessmentRequiredsMsg {
+            get {
+                return ResourceManager.GetString("AssessmentRequiredsMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assessment Type.
         /// </summary>
         internal static string AssessmentType {
