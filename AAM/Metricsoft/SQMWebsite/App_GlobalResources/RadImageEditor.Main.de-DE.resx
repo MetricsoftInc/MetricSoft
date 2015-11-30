@@ -120,11 +120,11 @@
   <data name="AddText" xml:space="preserve">
     <value>Text einfügen</value>
   </data>
+  <data name="Blur" xml:space="preserve">
+    <value>Blur</value>
+  </data>
   <data name="BrightnessContrast" xml:space="preserve">
     <value>Helligkeit/Kontrast</value>
-  </data>
-	<data name="Blur" xml:space="preserve">
-    <value>Blur</value>
   </data>
   <data name="CanvasNotSupported" xml:space="preserve">
     <value>Der gegenwärtige Browser unterstützt den &lt;canvas&gt; Tag nicht.</value>
@@ -204,7 +204,7 @@
   <data name="Sepia" xml:space="preserve">
     <value>Sepia</value>
   </data>
-	<data name="Sharpen" xml:space="preserve">
+  <data name="Sharpen" xml:space="preserve">
 		<value>Sharpen</value>
 	</data>
   <data name="StatusBar_LastAction" xml:space="preserve">

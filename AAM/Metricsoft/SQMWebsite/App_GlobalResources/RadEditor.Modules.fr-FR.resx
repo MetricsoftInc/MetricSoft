@@ -117,41 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="blank" xml:space="preserve">
-    <value>Nouvelle fenêtre</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="media" xml:space="preserve">
-    <value>Panneau de media</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="parent" xml:space="preserve">
-    <value>Fenêtre parente</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>Panneau de recherche</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="self" xml:space="preserve">
-    <value>Même fenêtre</value>
-    <comment>
-    </comment>
-  </data>
-  <data name="top" xml:space="preserve">
-    <value>Fenêtre du navigateur</value>
-    <comment>
-    </comment>
-  </data>
   <data name="align" xml:space="preserve">
     <value>Alignement</value>
     <comment>
@@ -164,6 +129,11 @@
   </data>
   <data name="bgColor" xml:space="preserve">
     <value>Couleur du fond</value>
+    <comment>
+    </comment>
+  </data>
+  <data name="blank" xml:space="preserve">
+    <value>Nouvelle fenêtre</value>
     <comment>
     </comment>
   </data>
@@ -217,6 +187,11 @@
     <comment>
     </comment>
   </data>
+  <data name="media" xml:space="preserve">
+    <value>Panneau de media</value>
+    <comment>
+    </comment>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Nom</value>
     <comment>
@@ -234,6 +209,11 @@
   </data>
   <data name="noWrap" xml:space="preserve">
     <value>Pas de retour à la ligne</value>
+    <comment>
+    </comment>
+  </data>
+  <data name="parent" xml:space="preserve">
+    <value>Fenêtre parente</value>
     <comment>
     </comment>
   </data>
@@ -257,8 +237,23 @@
     <comment>
     </comment>
   </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
+    <comment>
+    </comment>
+  </data>
   <data name="rows" xml:space="preserve">
     <value>Lignes</value>
+    <comment>
+    </comment>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Panneau de recherche</value>
+    <comment>
+    </comment>
+  </data>
+  <data name="self" xml:space="preserve">
+    <value>Même fenêtre</value>
     <comment>
     </comment>
   </data>
@@ -279,6 +274,11 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Titre</value>
+    <comment>
+    </comment>
+  </data>
+  <data name="top" xml:space="preserve">
+    <value>Fenêtre du navigateur</value>
     <comment>
     </comment>
   </data>

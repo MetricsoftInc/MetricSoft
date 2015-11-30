@@ -138,9 +138,6 @@
   <data name="GridTemplateColumnResource2.HeaderText" xml:space="preserve">
     <value>Entradas</value>
   </data>
-  <data name="reportingMonthResource1.Text" xml:space="preserve">
-    <value>Mes del informe</value>
-  </data>
   <data name="lblInputStatus3_outResource1.Text" xml:space="preserve">
     <value>Métricas obligatorios Entró</value>
   </data>
@@ -155,6 +152,9 @@
   </data>
   <data name="lnkPeriodResource1.ToolTip" xml:space="preserve">
     <value>Select period</value>
+  </data>
+  <data name="reportingMonthResource1.Text" xml:space="preserve">
+    <value>Mes del informe</value>
   </data>
   <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
     <value>Nombre de datos</value>

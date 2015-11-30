@@ -120,23 +120,71 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="AddANewIncident" xml:space="preserve">
+    <value>Add a New Incident:</value>
+  </data>
+  <data name="AddAnother" xml:space="preserve">
+    <value>Add Another</value>
+  </data>
+  <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
+    <value>Add Another Final Corrective Action</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
   <data name="Approvals" xml:space="preserve">
     <value>Approvals</value>
   </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>Assessment</value>
+  </data>
+  <data name="AssessmentBy" xml:space="preserve">
+    <value>Assessment By</value>
+  </data>
+  <data name="AssessmentDate" xml:space="preserve">
+    <value>Assessment Date</value>
+  </data>
   <data name="AssessmentDateFrom" xml:space="preserve">
     <value>Assessment Date From:</value>
+  </data>
+  <data name="AssessmentExceptionUpdateConfirm" xml:space="preserve">
+    <value>return confirmAction('update the assessment exception status');</value>
+  </data>
+  <data name="AssessmentIncompleteMsg" xml:space="preserve">
+    <value>You must complete all required fields on this page to close the assessment.</value>
+  </data>
+  <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
+    <value>You must complete all required text fields on this page to save. Complete the fields lined with red.</value>
+  </data>
+  <data name="AssessmentRequiredsMsg" xml:space="preserve">
+    <value>You must complete all required fields on this page to save.</value>
   </data>
   <data name="AssessmentType" xml:space="preserve">
     <value>Assessment Type</value>
   </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>Assigned To</value>
+  </data>
   <data name="Attachments" xml:space="preserve">
     <value>Attachments</value>
   </data>
+  <data name="BusinessLocation" xml:space="preserve">
+    <value>Business Location</value>
+  </data>
+  <data name="BusinessOrg" xml:space="preserve">
+    <value>Business Org</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="CancelSaveConfirm" xml:space="preserve">
+    <value>return confirmAction('Cancel without saving');</value>
+  </data>
+  <data name="CaseType" xml:space="preserve">
+    <value>Case Type</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Change Password</value>
@@ -153,137 +201,29 @@
   <data name="Comments" xml:space="preserve">
     <value>Comments</value>
   </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
   <data name="ContactPhoneNumber" xml:space="preserve">
     <value>Contact Phone Number</value>
   </data>
   <data name="CorrectiveAction" xml:space="preserve">
     <value>Corrective Action</value>
   </data>
-  <data name="DaysWithoutLostTimeCase" xml:space="preserve">
-    <value> days without a lost time case</value>
+  <data name="CorrectiveActions" xml:space="preserve">
+    <value>Corrective Actions</value>
   </data>
-  <data name="DeleteIncident" xml:space="preserve">
-    <value>Delete Incident</value>
-  </data>
-  <data name="Deleting" xml:space="preserve">
-    <value>Deleting...</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="DisplayPasswordEditFields" xml:space="preserve">
-    <value>Display password edit fields</value>
-  </data>
-  <data name="EHSAudits" xml:space="preserve">
-    <value>EHS Audits</value>
-  </data>
-  <data name="EHSIncidents" xml:space="preserve">
-    <value>EHS Incidents</value>
-  </data>
-  <data name="EmailAddress" xml:space="preserve">
-    <value>Email Address</value>
-  </data>
-  <data name="Inactive" xml:space="preserve">
-    <value>Inactive</value>
-  </data>
-  <data name="Incident" xml:space="preserve">
-    <value>Incident</value>
-  </data>
-  <data name="IncidentType" xml:space="preserve">
-    <value>Incident Type</value>
-  </data>
-  <data name="InitialAction" xml:space="preserve">
-    <value>Initial Action</value>
-  </data>
-  <data name="LanguageCulture" xml:space="preserve">
-    <value>Language/Culture</value>
-  </data>
-  <data name="ListAssessments" xml:space="preserve">
-    <value>List assessments</value>
-  </data>
-  <data name="ListAssessmentSchedules" xml:space="preserve">
-    <value>List assessment schedules</value>
-  </data>
-  <data name="ListIncidents" xml:space="preserve">
-    <value>List incidents</value>
-  </data>
-  <data name="Locations" xml:space="preserve">
-    <value>Locations</value>
-  </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="Open" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>Print</value>
-  </data>
-  <data name="Reassign" xml:space="preserve">
-    <value>Re-Assign</value>
-  </data>
-  <data name="ReassignToolTip" xml:space="preserve">
-    <value>Re-assign this task to another person</value>
-  </data>
-  <data name="RootCause" xml:space="preserve">
-    <value>Root Cause</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SaveUserPrefs" xml:space="preserve">
-    <value>Save your user preferences</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SelectAChart" xml:space="preserve">
-    <value>Select a chart</value>
-  </data>
-  <data name="SelectAssessmentStatus" xml:space="preserve">
-    <value>Select assessment status to list</value>
-  </data>
-  <data name="SelectAssessmentTypes" xml:space="preserve">
-    <value>Select assessment types to list</value>
-  </data>
-  <data name="SelectIncidentTypes" xml:space="preserve">
-    <value>Select incident types to list</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>To</value>
-  </data>
-  <data name="ViewStatistics" xml:space="preserve">
-    <value>View Statistics: </value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="Assessment" xml:space="preserve">
-    <value>Assessment</value>
-  </data>
-  <data name="AssessmentBy" xml:space="preserve">
-    <value>Assessment By</value>
-  </data>
-  <data name="AssessmentDate" xml:space="preserve">
-    <value>Assessment Date</value>
-  </data>
-  <data name="Completed" xml:space="preserve">
-    <value>Completed</value>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>Data</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
   <data name="DateSpan" xml:space="preserve">
     <value>Date Span:</value>
@@ -291,182 +231,47 @@
   <data name="DayOfWeek" xml:space="preserve">
     <value>Day of Week</value>
   </data>
-  <data name="Department" xml:space="preserve">
-    <value>Department</value>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
   </data>
-  <data name="DueDate" xml:space="preserve">
-    <value>Due Date</value>
-  </data>
-  <data name="Export" xml:space="preserve">
-    <value>Export</value>
-  </data>
-  <data name="ExportDataToExcelFormat" xml:space="preserve">
-    <value>Export Data To Excel Format</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>From</value>
-  </data>
-  <data name="FYYearToDate" xml:space="preserve">
-    <value>FY Year To Date</value>
-  </data>
-  <data name="Location" xml:space="preserve">
-    <value>Location</value>
-  </data>
-  <data name="New" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="PreviousYear" xml:space="preserve">
-    <value>Previous Year</value>
-  </data>
-  <data name="PrivilegeGroup" xml:space="preserve">
-    <value>Privilege Group</value>
-  </data>
-  <data name="Question" xml:space="preserve">
-    <value>Question</value>
-  </data>
-  <data name="QuestionText" xml:space="preserve">
-    <value>Question Text</value>
-  </data>
-  <data name="ResponsiblePerson" xml:space="preserve">
-    <value>Responsible Person</value>
-  </data>
-  <data name="Score" xml:space="preserve">
-    <value>Score</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="SelectRange" xml:space="preserve">
-    <value>Select Range</value>
-  </data>
-  <data name="SelectResponsibleSupplierLocations" xml:space="preserve">
-    <value>Select responsible/supplier locations</value>
-  </data>
-  <data name="Target" xml:space="preserve">
-    <value>Target</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="UpdateStatus" xml:space="preserve">
-    <value>Update Status</value>
-  </data>
-  <data name="YearToDate" xml:space="preserve">
-    <value>Year To Date</value>
-  </data>
-  <data name="AddANewIncident" xml:space="preserve">
-    <value>Add a New Incident:</value>
-  </data>
-  <data name="AddAnother" xml:space="preserve">
-    <value>Add Another</value>
-  </data>
-  <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
-    <value>Add Another Final Corrective Action</value>
-  </data>
-  <data name="AssignedTo" xml:space="preserve">
-    <value>Assigned To</value>
-  </data>
-  <data name="BusinessLocation" xml:space="preserve">
-    <value>Business Location</value>
-  </data>
-  <data name="BusinessOrg" xml:space="preserve">
-    <value>Business Org</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="Company" xml:space="preserve">
-    <value>Company</value>
-  </data>
-  <data name="Cost" xml:space="preserve">
-    <value>Cost</value>
+  <data name="DaysWithoutLostTimeCase" xml:space="preserve">
+    <value> days without a lost time case</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DeleteIncident" xml:space="preserve">
+    <value>Delete Incident</value>
+  </data>
   <data name="DeleteItem" xml:space="preserve">
     <value>Delete Item</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="Deleting" xml:space="preserve">
+    <value>Deleting...</value>
   </data>
-  <data name="ExpectedReturnDate" xml:space="preserve">
-    <value>Expected Return Date</value>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
   </data>
-  <data name="FileName" xml:space="preserve">
-    <value>File Name</value>
-  </data>
-  <data name="IncidentDate" xml:space="preserve">
-    <value>Incident Date</value>
-  </data>
-  <data name="Item" xml:space="preserve">
-    <value>Item</value>
-  </data>
-  <data name="LastUpdate" xml:space="preserve">
-    <value>Last Update</value>
-  </data>
-  <data name="LocationCode" xml:space="preserve">
-    <value>Location Code</value>
-  </data>
-  <data name="LocationType" xml:space="preserve">
-    <value>Location Type</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="PercentChange" xml:space="preserve">
-    <value>Percent Change</value>
-  </data>
-  <data name="Plant" xml:space="preserve">
-    <value>Plant</value>
-  </data>
-  <data name="ReportDate" xml:space="preserve">
-    <value>Report Date</value>
-  </data>
-  <data name="Required" xml:space="preserve">
-    <value>Required</value>
-  </data>
-  <data name="RequiredFieldsMustBeCompleted" xml:space="preserve">
-    <value>Required Fields Must be Completed.</value>
-  </data>
-  <data name="SaveAndCreateReport" xml:space="preserve">
-    <value>Save &amp; Create Report</value>
-  </data>
-  <data name="SaveAndReturn" xml:space="preserve">
-    <value>Save &amp; Return</value>
-  </data>
-  <data name="Saving" xml:space="preserve">
-    <value>Saving...</value>
-  </data>
-  <data name="Size" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="TargetValue" xml:space="preserve">
-    <value>Target Value</value>
-  </data>
-  <data name="TimeOfIncident" xml:space="preserve">
-    <value>Time of Incident</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="CaseType" xml:space="preserve">
-    <value>Case Type</value>
-  </data>
-  <data name="CorrectiveActions" xml:space="preserve">
-    <value>Corrective Actions</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="Days" xml:space="preserve">
-    <value>Days</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="DetectedLocation" xml:space="preserve">
     <value>Detected Location</value>
   </data>
+  <data name="DisplayPasswordEditFields" xml:space="preserve">
+    <value>Display password edit fields</value>
+  </data>
   <data name="Disposition" xml:space="preserve">
     <value>Disposition</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="EditIncident" xml:space="preserve">
     <value>Edit incident</value>
@@ -477,68 +282,14 @@
   <data name="EffectiveDate" xml:space="preserve">
     <value>Effective Date</value>
   </data>
-  <data name="EventCategory" xml:space="preserve">
-    <value>Event Category</value>
+  <data name="EHSAudits" xml:space="preserve">
+    <value>EHS Audits</value>
   </data>
-  <data name="IncidentID" xml:space="preserve">
-    <value>Incident ID</value>
+  <data name="EHSIncidents" xml:space="preserve">
+    <value>EHS Incidents</value>
   </data>
-  <data name="InspectionDate" xml:space="preserve">
-    <value>Inspection Date</value>
-  </data>
-  <data name="Issue" xml:space="preserve">
-    <value>Issue</value>
-  </data>
-  <data name="PartNumber" xml:space="preserve">
-    <value>Part Number</value>
-  </data>
-  <data name="ProblemArea" xml:space="preserve">
-    <value>Problem Area</value>
-  </data>
-  <data name="ReceiptNumber" xml:space="preserve">
-    <value>Receipt Number</value>
-  </data>
-  <data name="ResponsibleLocation" xml:space="preserve">
-    <value>Responsible Location</value>
-  </data>
-  <data name="SupplierLocation" xml:space="preserve">
-    <value>Supplier Location</value>
-  </data>
-  <data name="Done" xml:space="preserve">
-    <value>Done</value>
-  </data>
-  <data name="Task" xml:space="preserve">
-    <value>Task</value>
-  </data>
-  <data name="SaveSuccess" xml:space="preserve">
-    <value>Your updates have been saved.</value>
-  </data>
-  <data name="LogoutConfirm" xml:space="preserve">
-    <value>return confirm('Please confirm - do you wish to log out');</value>
-  </data>
-  <data name="TaskCompleteConfirm" xml:space="preserve">
-    <value>return confirmAction('update this task as Complete');</value>
-  </data>
-  <data name="TaskCreateConfirm" xml:space="preserve">
-    <value>return confirmAction('create an open Task');</value>
-  </data>
-  <data name="TaskReAssignConfirm" xml:space="preserve">
-    <value>return confirmAction('re-assign this Task');</value>
-  </data>
-  <data name="AssessmentExceptionUpdateConfirm" xml:space="preserve">
-    <value>return confirmAction('update the assessment exception status');</value>
-  </data>
-  <data name="AssessmentIncompleteMsg" xml:space="preserve">
-    <value>You must complete all required fields on this page to close the assessment.</value>
-  </data>
-  <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
-    <value>You must complete all required text fields on this page to save. Complete the fields lined with red.</value>
-  </data>
-  <data name="AssessmentRequiredsMsg" xml:space="preserve">
-    <value>You must complete all required fields on this page to save.</value>
-  </data>
-  <data name="CancelSaveConfirm" xml:space="preserve">
-    <value>return confirmAction('Cancel without saving');</value>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>Email Address</value>
   </data>
   <data name="ENVDataDefaultValue" xml:space="preserve">
     <value>Default value -</value>
@@ -588,10 +339,259 @@
   <data name="ENVReportViewOpenMsg" xml:space="preserve">
     <value>Error opening or executing the selected report</value>
   </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>Event Category</value>
+  </data>
+  <data name="ExpectedReturnDate" xml:space="preserve">
+    <value>Expected Return Date</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportDataToExcelFormat" xml:space="preserve">
+    <value>Export Data To Excel Format</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="FYYearToDate" xml:space="preserve">
+    <value>FY Year To Date</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Incident" xml:space="preserve">
+    <value>Incident</value>
+  </data>
+  <data name="IncidentDate" xml:space="preserve">
+    <value>Incident Date</value>
+  </data>
+  <data name="IncidentID" xml:space="preserve">
+    <value>Incident ID</value>
+  </data>
+  <data name="IncidentType" xml:space="preserve">
+    <value>Incident Type</value>
+  </data>
+  <data name="InitialAction" xml:space="preserve">
+    <value>Initial Action</value>
+  </data>
+  <data name="InspectionDate" xml:space="preserve">
+    <value>Inspection Date</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>Issue</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="LanguageCulture" xml:space="preserve">
+    <value>Language/Culture</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Last Update</value>
+  </data>
+  <data name="ListAssessments" xml:space="preserve">
+    <value>List assessments</value>
+  </data>
+  <data name="ListAssessmentSchedules" xml:space="preserve">
+    <value>List assessment schedules</value>
+  </data>
+  <data name="ListIncidents" xml:space="preserve">
+    <value>List incidents</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationCode" xml:space="preserve">
+    <value>Location Code</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>Locations</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>Location Type</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LogoutConfirm" xml:space="preserve">
+    <value>return confirm('Please confirm - do you wish to log out');</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="NumericInputConfirm" xml:space="preserve">
     <value>ValidNumeric(this, 'please enter numeric values only');</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="PartNumber" xml:space="preserve">
+    <value>Part Number</value>
+  </data>
+  <data name="PercentChange" xml:space="preserve">
+    <value>Percent Change</value>
+  </data>
+  <data name="Plant" xml:space="preserve">
+    <value>Plant</value>
+  </data>
+  <data name="PreviousYear" xml:space="preserve">
+    <value>Previous Year</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="PrivilegeGroup" xml:space="preserve">
+    <value>Privilege Group</value>
+  </data>
+  <data name="ProblemArea" xml:space="preserve">
+    <value>Problem Area</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>Question Text</value>
+  </data>
+  <data name="Reassign" xml:space="preserve">
+    <value>Re-Assign</value>
+  </data>
+  <data name="ReassignToolTip" xml:space="preserve">
+    <value>Re-assign this task to another person</value>
+  </data>
+  <data name="ReceiptNumber" xml:space="preserve">
+    <value>Receipt Number</value>
+  </data>
+  <data name="ReportDate" xml:space="preserve">
+    <value>Report Date</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="RequiredFieldsMustBeCompleted" xml:space="preserve">
+    <value>Required Fields Must be Completed.</value>
+  </data>
+  <data name="ResponsibleLocation" xml:space="preserve">
+    <value>Responsible Location</value>
+  </data>
+  <data name="ResponsiblePerson" xml:space="preserve">
+    <value>Responsible Person</value>
+  </data>
+  <data name="RootCause" xml:space="preserve">
+    <value>Root Cause</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAndCreateReport" xml:space="preserve">
+    <value>Save &amp; Create Report</value>
+  </data>
+  <data name="SaveAndReturn" xml:space="preserve">
+    <value>Save &amp; Return</value>
+  </data>
   <data name="SaveError" xml:space="preserve">
     <value>An error was encountered while attempting to save your changes.</value>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Your updates have been saved.</value>
+  </data>
+  <data name="SaveUserPrefs" xml:space="preserve">
+    <value>Save your user preferences</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving...</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectAChart" xml:space="preserve">
+    <value>Select a chart</value>
+  </data>
+  <data name="SelectAssessmentStatus" xml:space="preserve">
+    <value>Select assessment status to list</value>
+  </data>
+  <data name="SelectAssessmentTypes" xml:space="preserve">
+    <value>Select assessment types to list</value>
+  </data>
+  <data name="SelectIncidentTypes" xml:space="preserve">
+    <value>Select incident types to list</value>
+  </data>
+  <data name="SelectRange" xml:space="preserve">
+    <value>Select Range</value>
+  </data>
+  <data name="SelectResponsibleSupplierLocations" xml:space="preserve">
+    <value>Select responsible/supplier locations</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="SupplierLocation" xml:space="preserve">
+    <value>Supplier Location</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+    <value>Target Value</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="TaskCompleteConfirm" xml:space="preserve">
+    <value>return confirmAction('update this task as Complete');</value>
+  </data>
+  <data name="TaskCreateConfirm" xml:space="preserve">
+    <value>return confirmAction('create an open Task');</value>
+  </data>
+  <data name="TaskReAssignConfirm" xml:space="preserve">
+    <value>return confirmAction('re-assign this Task');</value>
+  </data>
+  <data name="TimeOfIncident" xml:space="preserve">
+    <value>Time of Incident</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UpdateStatus" xml:space="preserve">
+    <value>Update Status</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>View Statistics: </value>
+  </data>
+  <data name="YearToDate" xml:space="preserve">
+    <value>Year To Date</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

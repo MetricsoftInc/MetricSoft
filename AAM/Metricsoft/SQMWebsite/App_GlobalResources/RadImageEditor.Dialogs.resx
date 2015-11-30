@@ -147,6 +147,9 @@
   <data name="AddText_Title" xml:space="preserve">
     <value>Insert Text</value>
   </data>
+  <data name="Brightness_TxtBoxToolTip" xml:space="preserve">
+    <value>Enter a value between -100 and 100</value>
+  </data>
   <data name="BrightnessContrast_ApplyBtn_Text" xml:space="preserve">
     <value>Apply</value>
   </data>
@@ -161,9 +164,6 @@
   </data>
   <data name="BrightnessContrast_Title" xml:space="preserve">
     <value>Brightness/Contrast</value>
-  </data>
-  <data name="Brightness_TxtBoxToolTip" xml:space="preserve">
-    <value>Enter a value between -100 and 100</value>
   </data>
   <data name="Common_ActualSize" xml:space="preserve">
     <value>Actual Size</value>
@@ -330,6 +330,9 @@
   <data name="Flip_Title" xml:space="preserve">
     <value>Flip</value>
   </data>
+  <data name="Hue_TxtBoxToolTip" xml:space="preserve">
+    <value>Enter a value between 0 and 360</value>
+  </data>
   <data name="HueSaturation_ApplyBtn_Text" xml:space="preserve">
     <value>Apply</value>
   </data>
@@ -344,9 +347,6 @@
   </data>
   <data name="HueSaturation_Title" xml:space="preserve">
     <value>Hue/Saturation</value>
-  </data>
-  <data name="Hue_TxtBoxToolTip" xml:space="preserve">
-    <value>Enter a value between 0 and 360</value>
   </data>
   <data name="InsertImage_Title" xml:space="preserve">
     <value>Insert Image</value>

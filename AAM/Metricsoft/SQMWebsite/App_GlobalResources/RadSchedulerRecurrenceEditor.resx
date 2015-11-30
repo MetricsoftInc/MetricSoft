@@ -117,65 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please do not remove this key.</value>
+  <data name="After" xml:space="preserve">
+    <value>After</value>
   </data>
-  <data name="Recurrence" xml:space="preserve">
-    <value>Recurrence</value>
+  <data name="CalendarCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Hourly" xml:space="preserve">
-    <value>Hourly</value>
+  <data name="CalendarOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CalendarToday" xml:space="preserve">
+    <value>Today</value>
   </data>
   <data name="Daily" xml:space="preserve">
     <value>Daily</value>
   </data>
-  <data name="Weekly" xml:space="preserve">
-    <value>Weekly</value>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
   </data>
-  <data name="Monthly" xml:space="preserve">
-    <value>Monthly</value>
+  <data name="DayOfMonth" xml:space="preserve">
+    <value>Day of the month</value>
   </data>
-  <data name="Yearly" xml:space="preserve">
-    <value>Yearly</value>
-  </data>
-  <data name="Every" xml:space="preserve">
-    <value>Every</value>
-  </data>
-  <data name="Hours" xml:space="preserve">
-    <value>hour(s)</value>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>Day of the week</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>day(s)</value>
   </data>
-  <data name="Weeks" xml:space="preserve">
-    <value>week(s) on</value>
+  <data name="EndAfter" xml:space="preserve">
+    <value>End after</value>
   </data>
-  <data name="Months" xml:space="preserve">
-    <value>month(s)</value>
+  <data name="EndByThisDate" xml:space="preserve">
+    <value>End by</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>Every</value>
   </data>
   <data name="EveryWeekday" xml:space="preserve">
     <value>Every weekday</value>
   </data>
-  <data name="RecurEvery" xml:space="preserve">
-    <value>Recur every</value>
-  </data>
-  <data name="Day" xml:space="preserve">
-    <value>Day</value>
-  </data>
-  <data name="OfEvery" xml:space="preserve">
-    <value>of every</value>
+  <data name="EveryWorkingDay" xml:space="preserve">
+    <value>Every working day</value>
   </data>
   <data name="First" xml:space="preserve">
     <value>first</value>
   </data>
-  <data name="Second" xml:space="preserve">
-    <value>second</value>
-  </data>
-  <data name="Third" xml:space="preserve">
-    <value>third</value>
-  </data>
   <data name="Fourth" xml:space="preserve">
     <value>fourth</value>
+  </data>
+  <data name="Hourly" xml:space="preserve">
+    <value>Hourly</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>hour(s)</value>
   </data>
   <data name="Last" xml:space="preserve">
     <value>last</value>
@@ -189,47 +183,35 @@
   <data name="MaskWeekendDay" xml:space="preserve">
     <value>weekend day</value>
   </data>
-  <data name="The" xml:space="preserve">
-    <value>The</value>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>of</value>
-  </data>
-  <data name="NoEndDate" xml:space="preserve">
-    <value>No end date</value>
-  </data>
-  <data name="EndAfter" xml:space="preserve">
-    <value>End after</value>
-  </data>
-  <data name="EndByThisDate" xml:space="preserve">
-    <value>End by</value>
-  </data>
-  <data name="Occurrences" xml:space="preserve">
-    <value>occurrences</value>
-  </data>
-  <data name="CalendarOK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="CalendarCancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="CalendarToday" xml:space="preserve">
-    <value>Today</value>
+  <data name="Months" xml:space="preserve">
+    <value>month(s)</value>
   </data>
   <data name="Never" xml:space="preserve">
     <value>Never</value>
   </data>
-  <data name="After" xml:space="preserve">
-    <value>After</value>
+  <data name="NoEndDate" xml:space="preserve">
+    <value>No end date</value>
   </data>
-  <data name="DayOfMonth" xml:space="preserve">
-    <value>Day of the month</value>
+  <data name="Occurrences" xml:space="preserve">
+    <value>occurrences</value>
   </data>
-  <data name="DayOfWeek" xml:space="preserve">
-    <value>Day of the week</value>
+  <data name="Of" xml:space="preserve">
+    <value>of</value>
+  </data>
+  <data name="OfEvery" xml:space="preserve">
+    <value>of every</value>
   </data>
   <data name="On" xml:space="preserve">
     <value>On</value>
+  </data>
+  <data name="RecurEvery" xml:space="preserve">
+    <value>Recur every</value>
+  </data>
+  <data name="Recurrence" xml:space="preserve">
+    <value>Recurrence</value>
   </data>
   <data name="Repeat" xml:space="preserve">
     <value>Repeat:</value>
@@ -243,8 +225,26 @@
   <data name="RepeatOn" xml:space="preserve">
     <value>Repeat On:</value>
   </data>
-  <data name="EveryWorkingDay" xml:space="preserve">
-    <value>Every working day</value>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please do not remove this key.</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>second</value>
+  </data>
+  <data name="The" xml:space="preserve">
+    <value>The</value>
+  </data>
+  <data name="Third" xml:space="preserve">
+    <value>third</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>week(s) on</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>Yearly</value>
   </data>
   <data name="Years" xml:space="preserve">
     <value>year(s)</value>

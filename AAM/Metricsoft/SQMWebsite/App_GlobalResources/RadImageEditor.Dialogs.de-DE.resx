@@ -147,6 +147,9 @@
   <data name="AddText_Title" xml:space="preserve">
     <value>Text einfügen</value>
   </data>
+  <data name="Brightness_TxtBoxToolTip" xml:space="preserve">
+    <value>Geben Sie ein Wert zwishen -100 und 100</value>
+  </data>
   <data name="BrightnessContrast_ApplyBtn_Text" xml:space="preserve">
     <value>Anwenden</value>
   </data>
@@ -161,9 +164,6 @@
   </data>
   <data name="BrightnessContrast_Title" xml:space="preserve">
     <value>Helligkeit/Kontrast</value>
-  </data>
-  <data name="Brightness_TxtBoxToolTip" xml:space="preserve">
-    <value>Geben Sie ein Wert zwishen -100 und 100</value>
   </data>
   <data name="Common_ActualSize" xml:space="preserve">
     <value>Tatsächliche Größe</value>
@@ -330,6 +330,9 @@
   <data name="Flip_Title" xml:space="preserve">
     <value>Bild spiegeln</value>
   </data>
+  <data name="Hue_TxtBoxToolTip" xml:space="preserve">
+    <value>Geben Sie ein Wert zwishen 0 und 360</value>
+  </data>
   <data name="HueSaturation_ApplyBtn_Text" xml:space="preserve">
     <value>Anwenden</value>
   </data>
@@ -344,9 +347,6 @@
   </data>
   <data name="HueSaturation_Title" xml:space="preserve">
     <value>Farbton/Sättigung </value>
-  </data>
-  <data name="Hue_TxtBoxToolTip" xml:space="preserve">
-    <value>Geben Sie ein Wert zwishen 0 und 360</value>
   </data>
   <data name="InsertImage_Title" xml:space="preserve">
     <value>Bild einfügen</value>

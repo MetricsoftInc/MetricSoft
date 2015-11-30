@@ -117,27 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
-  </data>
-  <data name="blank" xml:space="preserve">
-    <value>Neues Fenster</value>
-  </data>
-  <data name="media" xml:space="preserve">
-    <value>Media-Fenster</value>
-  </data>
-  <data name="parent" xml:space="preserve">
-    <value>Übergeordnetes Fenster</value>
-  </data>
-  <data name="search" xml:space="preserve">
-    <value>Such-Fenster</value>
-  </data>
-  <data name="self" xml:space="preserve">
-    <value>Gleiches Fenster</value>
-  </data>
-  <data name="top" xml:space="preserve">
-    <value>Browser-Fenster</value>
-  </data>
   <data name="align" xml:space="preserve">
     <value>Ausrichtung</value>
   </data>
@@ -146,6 +125,9 @@
   </data>
   <data name="bgColor" xml:space="preserve">
     <value>Hintergrund</value>
+  </data>
+  <data name="blank" xml:space="preserve">
+    <value>Neues Fenster</value>
   </data>
   <data name="border" xml:space="preserve">
     <value>Rahmenbreite</value>
@@ -177,6 +159,9 @@
   <data name="id" xml:space="preserve">
     <value>Id</value>
   </data>
+  <data name="media" xml:space="preserve">
+    <value>Media-Fenster</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -188,6 +173,9 @@
   </data>
   <data name="noWrap" xml:space="preserve">
     <value>Kein Umbruch</value>
+  </data>
+  <data name="parent" xml:space="preserve">
+    <value>Übergeordnetes Fenster</value>
   </data>
   <data name="RadEditorDomInspector" xml:space="preserve">
     <value>Tag-Inspektor</value>
@@ -201,8 +189,17 @@
   <data name="RadEditorStatistics" xml:space="preserve">
     <value>Statistik</value>
   </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
+  </data>
   <data name="rows" xml:space="preserve">
     <value>Zeile</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Such-Fenster</value>
+  </data>
+  <data name="self" xml:space="preserve">
+    <value>Gleiches Fenster</value>
   </data>
   <data name="StatisticsCharacters" xml:space="preserve">
     <value>Zeichen:</value>
@@ -215,6 +212,9 @@
   </data>
   <data name="title" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="top" xml:space="preserve">
+    <value>Browser-Fenster</value>
   </data>
   <data name="vAlign" xml:space="preserve">
     <value>Senkrechte Ausrichtung</value>

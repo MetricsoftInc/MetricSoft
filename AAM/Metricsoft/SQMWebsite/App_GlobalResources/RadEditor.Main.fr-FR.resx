@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Veuillez ne pas supprimer cette ligne. RadEditor en a besoin pour déterminer si un fichier de ressource externe est présent dans App_GlobalResources.</value>
-  </data>
   <data name="AddCustomColor" xml:space="preserve">
     <value>Couleur personnalisée...</value>
   </data>
@@ -133,7 +130,8 @@
     <value>Ajouter au dictionnaire</value>
   </data>
   <data name="AskWordCleaning" xml:space="preserve">
-    <value>Le texte que vous essayez de coller contient un formatage Word.Voulez-vous que le formatage soit supprimé ?</value>
+    <value>Le texte que vous essayez de coller contient un formatage Word.
+Voulez-vous que le formatage soit supprimé ?</value>
   </data>
   <data name="CancelButton" xml:space="preserve">
     <value>Annuler</value>
@@ -155,6 +153,9 @@
   </data>
   <data name="ClearAllHtmlTags" xml:space="preserve">
     <value>Toutes les balises HTML</value>
+  </data>
+  <data name="ClearClass" xml:space="preserve">
+    <value>Supprimer le formatage</value>
   </data>
   <data name="ClearCssFormatting" xml:space="preserve">
     <value>Les styles (CSS)</value>
@@ -189,6 +190,12 @@
   <data name="EnhancedEditToolbar" xml:space="preserve">
     <value>Barre d'édition</value>
   </data>
+  <data name="ExceededHtmlLength" xml:space="preserve">
+    <value>Le code HTML ajouté dépasse la limite des caractères</value>
+  </data>
+  <data name="ExceededTextLength" xml:space="preserve">
+    <value>Le texte ajouté dépasse la limite des caractères</value>
+  </data>
   <data name="FileOpen" xml:space="preserve">
     <value>Ouvrir le fichier...</value>
   </data>
@@ -200,6 +207,9 @@
   </data>
   <data name="FormCheckbox" xml:space="preserve">
     <value>Case à cocher</value>
+  </data>
+  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
+    <value>Erreur ! Les éléments de formulaire sont uniquement pris en charge lorsque la zone de contenu est définie comme une Iframe !</value>
   </data>
   <data name="FormForm" xml:space="preserve">
     <value>Formulaire</value>
@@ -227,6 +237,9 @@
   </data>
   <data name="FormTextarea" xml:space="preserve">
     <value>Zone de texte</value>
+  </data>
+  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
+    <value>RadEditor._getAllSheets appelé sans objet document fourni</value>
   </data>
   <data name="HtmlMode" xml:space="preserve">
     <value>Mode HTML</value>
@@ -267,17 +280,32 @@
   <data name="RadEditorDesignMode" xml:space="preserve">
     <value>Design</value>
   </data>
+  <data name="RadEditorGroupboxContent" xml:space="preserve">
+    <value>Contenu...</value>
+  </data>
+  <data name="RadEditorGroupboxTitle" xml:space="preserve">
+    <value>Titre</value>
+  </data>
   <data name="RadEditorHtmlMode" xml:space="preserve">
     <value>HTML</value>
   </data>
   <data name="RadEditorPreviewMode" xml:space="preserve">
     <value>Prévisualisation</value>
   </data>
+  <data name="ReduceTheConentLength" xml:space="preserve">
+    <value>Veuillez réduire le contenu du champ</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Veuillez ne pas supprimer cette ligne. RadEditor en a besoin pour déterminer si un fichier de ressource externe est présent dans App_GlobalResources.</value>
+  </data>
   <data name="ResizeCommand" xml:space="preserve">
     <value>Redimensionner l'objet</value>
   </data>
   <data name="SetHtml" xml:space="preserve">
     <value>Définir HTML</value>
+  </data>
+  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
+    <value>Erreur ! Réglez EditorContentAreaMode à Iframe si vous voulez modifier le code HTML en pleine page</value>
   </data>
   <data name="ShowToolbarTooltip" xml:space="preserve">
     <value>Afficher la barre d'outils</value>
@@ -329,32 +357,5 @@
   </data>
   <data name="UseCtrlX" xml:space="preserve">
     <value>Utilisez Ctrl+X (Cmd+X sur Mac)</value>
-  </data>
-  <data name="ClearClass" xml:space="preserve">
-    <value>Supprimer le formatage</value>
-  </data>
-  <data name="ExceededHtmlLength" xml:space="preserve">
-    <value>Le code HTML ajouté dépasse la limite des caractères</value>
-  </data>
-  <data name="ExceededTextLength" xml:space="preserve">
-    <value>Le texte ajouté dépasse la limite des caractères</value>
-  </data>
-  <data name="ReduceTheConentLength" xml:space="preserve">
-    <value>Veuillez réduire le contenu du champ</value>
-  </data>
-  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
-    <value>Erreur ! Les éléments de formulaire sont uniquement pris en charge lorsque la zone de contenu est définie comme une Iframe !</value>
-  </data>
-  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
-    <value>RadEditor._getAllSheets appelé sans objet document fourni</value>
-  </data>
-  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
-    <value>Erreur ! Réglez EditorContentAreaMode à Iframe si vous voulez modifier le code HTML en pleine page</value>
-  </data>
-  <data name="RadEditorGroupboxContent" xml:space="preserve">
-    <value>Contenu...</value>
-  </data>
-  <data name="RadEditorGroupboxTitle" xml:space="preserve">
-    <value>Titre</value>
   </data>
 </root>

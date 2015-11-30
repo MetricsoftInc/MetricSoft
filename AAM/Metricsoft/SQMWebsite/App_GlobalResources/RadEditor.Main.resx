@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
-  </data>
   <data name="AddCustomColor" xml:space="preserve">
     <value>Add Custom Color...</value>
   </data>
@@ -157,6 +154,9 @@ Would you like to clean it?</value>
   <data name="ClearAllHtmlTags" xml:space="preserve">
     <value>All HTML Tags</value>
   </data>
+  <data name="ClearClass" xml:space="preserve">
+    <value>Clear Class</value>
+  </data>
   <data name="ClearCssFormatting" xml:space="preserve">
     <value>Cascading Style Sheets</value>
   </data>
@@ -190,6 +190,12 @@ Would you like to clean it?</value>
   <data name="EnhancedEditToolbar" xml:space="preserve">
     <value>Enhanced Edit</value>
   </data>
+  <data name="ExceededHtmlLength" xml:space="preserve">
+    <value>The added HTML code exceeded the character limit</value>
+  </data>
+  <data name="ExceededTextLength" xml:space="preserve">
+    <value>The added text exceeded the character limit</value>
+  </data>
   <data name="FileOpen" xml:space="preserve">
     <value>Open file..</value>
   </data>
@@ -201,6 +207,9 @@ Would you like to clean it?</value>
   </data>
   <data name="FormCheckbox" xml:space="preserve">
     <value>Checkbox</value>
+  </data>
+  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
+    <value>Error! Form elements are only supported when the content area is set to Iframe!</value>
   </data>
   <data name="FormForm" xml:space="preserve">
     <value>Form</value>
@@ -228,6 +237,9 @@ Would you like to clean it?</value>
   </data>
   <data name="FormTextarea" xml:space="preserve">
     <value>Textarea</value>
+  </data>
+  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
+    <value>RadEditor._getAllSheets called with no document object provided!</value>
   </data>
   <data name="HtmlMode" xml:space="preserve">
     <value>HTML Mode</value>
@@ -268,17 +280,32 @@ Would you like to clean it?</value>
   <data name="RadEditorDesignMode" xml:space="preserve">
     <value>Design</value>
   </data>
+  <data name="RadEditorGroupboxContent" xml:space="preserve">
+    <value>Content...</value>
+  </data>
+  <data name="RadEditorGroupboxTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="RadEditorHtmlMode" xml:space="preserve">
     <value>HTML</value>
   </data>
   <data name="RadEditorPreviewMode" xml:space="preserve">
     <value>Preview</value>
   </data>
+  <data name="ReduceTheConentLength" xml:space="preserve">
+    <value>Please, reduce the content of the field</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
+  </data>
   <data name="ResizeCommand" xml:space="preserve">
     <value>Resize Object</value>
   </data>
   <data name="SetHtml" xml:space="preserve">
     <value>Set HTML</value>
+  </data>
+  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
+    <value>Error! Set EditorContentAreaMode to Iframe if you want to edit full page HTML!</value>
   </data>
   <data name="ShowToolbarTooltip" xml:space="preserve">
     <value>Show toolbar</value>
@@ -330,32 +357,5 @@ Would you like to clean it?</value>
   </data>
   <data name="UseCtrlX" xml:space="preserve">
     <value>Please use Ctrl+X to Cut (Cmd+X on Mac)</value>
-  </data>
-  <data name="ClearClass" xml:space="preserve">
-    <value>Clear Class</value>
-  </data>
-  <data name="ExceededHtmlLength" xml:space="preserve">
-    <value>The added HTML code exceeded the character limit</value>
-  </data>
-  <data name="ExceededTextLength" xml:space="preserve">
-    <value>The added text exceeded the character limit</value>
-  </data>
-  <data name="ReduceTheConentLength" xml:space="preserve">
-    <value>Please, reduce the content of the field</value>
-  </data>
-  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
-    <value>Error! Form elements are only supported when the content area is set to Iframe!</value>
-  </data>
-  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
-    <value>RadEditor._getAllSheets called with no document object provided!</value>
-  </data>
-  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
-    <value>Error! Set EditorContentAreaMode to Iframe if you want to edit full page HTML!</value>
-  </data>
-  <data name="RadEditorGroupboxContent" xml:space="preserve">
-    <value>Content...</value>
-  </data>
-  <data name="RadEditorGroupboxTitle" xml:space="preserve">
-    <value>Title</value>
   </data>
 </root>

@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
-  </data>
   <data name="AddCustomColor" xml:space="preserve">
     <value>Neue Farbe...</value>
   </data>
@@ -156,6 +153,9 @@
   <data name="ClearAllHtmlTags" xml:space="preserve">
     <value>Alle HTML-Tags entfernen</value>
   </data>
+  <data name="ClearClass" xml:space="preserve">
+    <value>Keine Klasse</value>
+  </data>
   <data name="ClearCssFormatting" xml:space="preserve">
     <value>Cascading Style Sheets</value>
   </data>
@@ -189,6 +189,12 @@
   <data name="EnhancedEditToolbar" xml:space="preserve">
     <value>Erweitertes Bearbeiten</value>
   </data>
+  <data name="ExceededHtmlLength" xml:space="preserve">
+    <value>Der zusätzliche HTML-Code für die die normale Grenze überschritten</value>
+  </data>
+  <data name="ExceededTextLength" xml:space="preserve">
+    <value>Der zusätzliche Text über dem Zeichen begrenzt</value>
+  </data>
   <data name="FileOpen" xml:space="preserve">
     <value>Datei öffnen..</value>
   </data>
@@ -200,6 +206,9 @@
   </data>
   <data name="FormCheckbox" xml:space="preserve">
     <value>Kontrollkästchen</value>
+  </data>
+  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
+    <value>Fehler! Form Bestandteile sind unterstuetzt lediglich, wenn die ContentArea auf Iframe angesetzt ist</value>
   </data>
   <data name="FormForm" xml:space="preserve">
     <value>Formular</value>
@@ -227,6 +236,9 @@
   </data>
   <data name="FormTextarea" xml:space="preserve">
     <value>Textbereich</value>
+  </data>
+  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
+    <value>RadEditor._getAllSheets wird ohne beigestelltes document Objekt gerufen</value>
   </data>
   <data name="HtmlMode" xml:space="preserve">
     <value>HTML Modus</value>
@@ -267,17 +279,32 @@
   <data name="RadEditorDesignMode" xml:space="preserve">
     <value>Design</value>
   </data>
+  <data name="RadEditorGroupboxContent" xml:space="preserve">
+    <value>Inhalt...</value>
+  </data>
+  <data name="RadEditorGroupboxTitle" xml:space="preserve">
+    <value>Titel</value>
+  </data>
   <data name="RadEditorHtmlMode" xml:space="preserve">
     <value>HTML</value>
   </data>
   <data name="RadEditorPreviewMode" xml:space="preserve">
     <value>Vorschau</value>
   </data>
+  <data name="ReduceTheConentLength" xml:space="preserve">
+    <value>Bitte, reduzieren Sie den Inhalt des Feldes</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
+  </data>
   <data name="ResizeCommand" xml:space="preserve">
     <value>Objektgröße anpassen</value>
   </data>
   <data name="SetHtml" xml:space="preserve">
     <value>HTML Setzen</value>
+  </data>
+  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
+    <value>Fehler! Setz EditorContentAreaMode auf Iframe an, wenn ganze Seite HTML editiert werden will</value>
   </data>
   <data name="ShowToolbarTooltip" xml:space="preserve">
     <value>Werkzeugleiste anzeigen</value>
@@ -329,32 +356,5 @@
   </data>
   <data name="UseCtrlX" xml:space="preserve">
     <value>Ctrl+X Benutzen (Cmd+X auf Mac)</value>
-  </data>
-  <data name="ClearClass" xml:space="preserve">
-    <value>Keine Klasse</value>
-  </data>
-  <data name="ExceededHtmlLength" xml:space="preserve">
-    <value>Der zusätzliche HTML-Code für die die normale Grenze überschritten</value>
-  </data>
-  <data name="ExceededTextLength" xml:space="preserve">
-    <value>Der zusätzliche Text über dem Zeichen begrenzt</value>
-  </data>
-  <data name="ReduceTheConentLength" xml:space="preserve">
-    <value>Bitte, reduzieren Sie den Inhalt des Feldes</value>
-  </data>
-  <data name="FormElementsAreSupportedByIframeError" xml:space="preserve">
-    <value>Fehler! Form Bestandteile sind unterstuetzt lediglich, wenn die ContentArea auf Iframe angesetzt ist</value>
-  </data>
-  <data name="GetAllSheetsCalledWithNoDocumentError" xml:space="preserve">
-    <value>RadEditor._getAllSheets wird ohne beigestelltes document Objekt gerufen</value>
-  </data>
-  <data name="SetToIframeForFullHTMLError" xml:space="preserve">
-    <value>Fehler! Setz EditorContentAreaMode auf Iframe an, wenn ganze Seite HTML editiert werden will</value>
-  </data>
-  <data name="RadEditorGroupboxContent" xml:space="preserve">
-    <value>Inhalt...</value>
-  </data>
-  <data name="RadEditorGroupboxTitle" xml:space="preserve">
-    <value>Titel</value>
   </data>
 </root>

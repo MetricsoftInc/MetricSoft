@@ -117,65 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please do not remove this key.</value>
+  <data name="After" xml:space="preserve">
+    <value>After</value>
   </data>
-  <data name="Recurrence" xml:space="preserve">
-    <value>Recurrencia</value>
+  <data name="CalendarCancel" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
-  <data name="Hourly" xml:space="preserve">
-    <value>Cada hora</value>
+  <data name="CalendarOK" xml:space="preserve">
+    <value>Está bien</value>
+  </data>
+  <data name="CalendarToday" xml:space="preserve">
+    <value>Hoy</value>
   </data>
   <data name="Daily" xml:space="preserve">
     <value>Diariamente</value>
   </data>
-  <data name="Weekly" xml:space="preserve">
-    <value>Cada Semena</value>
+  <data name="Day" xml:space="preserve">
+    <value>Día</value>
   </data>
-  <data name="Monthly" xml:space="preserve">
-    <value>Mensualmente</value>
+  <data name="DayOfMonth" xml:space="preserve">
+    <value>Day of the month</value>
   </data>
-  <data name="Yearly" xml:space="preserve">
-    <value>Anual</value>
-  </data>
-  <data name="Every" xml:space="preserve">
-    <value>Cada</value>
-  </data>
-  <data name="Hours" xml:space="preserve">
-    <value>hora(s)</value>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>Day of the week</value>
   </data>
   <data name="Days" xml:space="preserve">
     <value>día(s)</value>
   </data>
-  <data name="Weeks" xml:space="preserve">
-    <value>semana(s) en</value>
+  <data name="EndAfter" xml:space="preserve">
+    <value>Fin después</value>
   </data>
-  <data name="Months" xml:space="preserve">
-    <value>mes(es)</value>
+  <data name="EndByThisDate" xml:space="preserve">
+    <value>Fin por</value>
+  </data>
+  <data name="Every" xml:space="preserve">
+    <value>Cada</value>
   </data>
   <data name="EveryWeekday" xml:space="preserve">
     <value>Cada día de la semana</value>
   </data>
-  <data name="RecurEvery" xml:space="preserve">
-    <value>Repita cada</value>
-  </data>
-  <data name="Day" xml:space="preserve">
-    <value>Día</value>
-  </data>
-  <data name="OfEvery" xml:space="preserve">
-    <value>de todo</value>
+  <data name="EveryWorkingDay" xml:space="preserve">
+    <value>Every working day</value>
   </data>
   <data name="First" xml:space="preserve">
     <value>primera</value>
   </data>
-  <data name="Second" xml:space="preserve">
-    <value>segundo</value>
-  </data>
-  <data name="Third" xml:space="preserve">
-    <value>tercera</value>
-  </data>
   <data name="Fourth" xml:space="preserve">
     <value>cuarto</value>
+  </data>
+  <data name="Hourly" xml:space="preserve">
+    <value>Cada hora</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>hora(s)</value>
   </data>
   <data name="Last" xml:space="preserve">
     <value>último</value>
@@ -189,47 +183,35 @@
   <data name="MaskWeekendDay" xml:space="preserve">
     <value>día del fin de semana</value>
   </data>
-  <data name="The" xml:space="preserve">
-    <value>El</value>
+  <data name="Monthly" xml:space="preserve">
+    <value>Mensualmente</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>de</value>
-  </data>
-  <data name="NoEndDate" xml:space="preserve">
-    <value>No hay fechas finales</value>
-  </data>
-  <data name="EndAfter" xml:space="preserve">
-    <value>Fin después</value>
-  </data>
-  <data name="EndByThisDate" xml:space="preserve">
-    <value>Fin por</value>
-  </data>
-  <data name="Occurrences" xml:space="preserve">
-    <value>ocurrencias</value>
-  </data>
-  <data name="CalendarOK" xml:space="preserve">
-    <value>Está bien</value>
-  </data>
-  <data name="CalendarCancel" xml:space="preserve">
-    <value>Cancelar</value>
-  </data>
-  <data name="CalendarToday" xml:space="preserve">
-    <value>Hoy</value>
+  <data name="Months" xml:space="preserve">
+    <value>mes(es)</value>
   </data>
   <data name="Never" xml:space="preserve">
     <value>Never</value>
   </data>
-  <data name="After" xml:space="preserve">
-    <value>After</value>
+  <data name="NoEndDate" xml:space="preserve">
+    <value>No hay fechas finales</value>
   </data>
-  <data name="DayOfMonth" xml:space="preserve">
-    <value>Day of the month</value>
+  <data name="Occurrences" xml:space="preserve">
+    <value>ocurrencias</value>
   </data>
-  <data name="DayOfWeek" xml:space="preserve">
-    <value>Day of the week</value>
+  <data name="Of" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="OfEvery" xml:space="preserve">
+    <value>de todo</value>
   </data>
   <data name="On" xml:space="preserve">
     <value>On</value>
+  </data>
+  <data name="RecurEvery" xml:space="preserve">
+    <value>Repita cada</value>
+  </data>
+  <data name="Recurrence" xml:space="preserve">
+    <value>Recurrencia</value>
   </data>
   <data name="Repeat" xml:space="preserve">
     <value>Repeat:</value>
@@ -243,8 +225,26 @@
   <data name="RepeatOn" xml:space="preserve">
     <value>Repeat On:</value>
   </data>
-  <data name="EveryWorkingDay" xml:space="preserve">
-    <value>Every working day</value>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please do not remove this key.</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>segundo</value>
+  </data>
+  <data name="The" xml:space="preserve">
+    <value>El</value>
+  </data>
+  <data name="Third" xml:space="preserve">
+    <value>tercera</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Cada Semena</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>semana(s) en</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>Anual</value>
   </data>
   <data name="Years" xml:space="preserve">
     <value>año(s)</value>

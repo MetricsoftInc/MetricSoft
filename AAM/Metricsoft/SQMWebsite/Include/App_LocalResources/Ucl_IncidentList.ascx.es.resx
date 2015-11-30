@@ -123,6 +123,12 @@
   <data name="btnReceiptSearchResource1.ToolTip" xml:space="preserve">
     <value>Lista recibos de materiales</value>
   </data>
+  <data name="DaysOpen" xml:space="preserve">
+    <value>Días abiertos</value>
+  </data>
+  <data name="EnteredBy" xml:space="preserve">
+    <value>Entrado por</value>
+  </data>
   <data name="GridTemplateColumnResource1.HeaderText" xml:space="preserve">
     <value>Identificación del problema</value>
   </data>
@@ -141,17 +147,11 @@
   <data name="GridTemplateColumnResource22.HeaderText" xml:space="preserve">
     <value>La evidencia inicial</value>
   </data>
-  <data name="DaysOpen" xml:space="preserve">
-    <value>Días abiertos</value>
-  </data>
   <data name="GridTemplateColumnResource24.HeaderText" xml:space="preserve">
     <value>Ver informes</value>
   </data>
   <data name="GridTemplateColumnResource25.HeaderText" xml:space="preserve">
     <value>Recomendación/&lt;br&gt;Respuesta</value>
-  </data>
-  <data name="EnteredBy" xml:space="preserve">
-    <value>Entrado por</value>
   </data>
   <data name="GridTemplateColumnResource30.HeaderText" xml:space="preserve">
     <value>La evidencia inicial</value>
@@ -165,14 +165,11 @@
   <data name="GridTemplateColumnResource9.HeaderText" xml:space="preserve">
     <value>La identificación de casos de problemas</value>
   </data>
-  <data name="lblIncidentAlertResource1.Text" xml:space="preserve">
-    <value>Incident Alert</value>
-  </data>
-  <data name="lblAlertResource1.Text" xml:space="preserve">
-    <value>Alert</value>
-  </data>
   <data name="imgCaseStatusResource1.ToolTip" xml:space="preserve">
     <value>Caso está inactivo</value>
+  </data>
+  <data name="IssueIDTemplateFieldResource1.HeaderText" xml:space="preserve">
+    <value>Identificación del problema</value>
   </data>
   <data name="lb8dResource1.Text" xml:space="preserve">
     <value>
@@ -217,11 +214,17 @@
   <data name="lbIncidentIdResource3.ToolTip" xml:space="preserve">
     <value>Editar Recomendación</value>
   </data>
+  <data name="lblAlertResource1.Text" xml:space="preserve">
+    <value>Alert</value>
+  </data>
   <data name="lblCaseIDResource2.Text" xml:space="preserve">
     <value>La identificación de casos de problemas</value>
   </data>
   <data name="lblCreateDateResource1.Text" xml:space="preserve">
     <value>Creado</value>
+  </data>
+  <data name="lblIncidentAlertResource1.Text" xml:space="preserve">
+    <value>Incident Alert</value>
   </data>
   <data name="lblIncidentListEmptyResource1.Text" xml:space="preserve">
     <value>No existen incidentes que coincidan con sus criterios de búsqueda.</value>
@@ -244,8 +247,5 @@
     <value>
 							&lt;img src="/images/ico16-documents.png" alt="" style="margin-top: -3px; vertical-align: middle;" /&gt; 8D Report
 							</value>
-  </data>
-  <data name="IssueIDTemplateFieldResource1.HeaderText" xml:space="preserve">
-    <value>Identificación del problema</value>
   </data>
 </root>

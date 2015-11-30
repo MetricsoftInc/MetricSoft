@@ -222,6 +222,9 @@
   <data name="lblXToResource1.Text" xml:space="preserve">
     <value>a</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Cargando…</value>
+  </data>
   <data name="RadComboBoxItemResource10.Text" xml:space="preserve">
     <value>Desempeño ambiental (Año hasta la fecha)</value>
   </data>
@@ -380,8 +383,5 @@
   </data>
   <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
     <value>La unidad de la escala</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Cargando…</value>
   </data>
 </root>

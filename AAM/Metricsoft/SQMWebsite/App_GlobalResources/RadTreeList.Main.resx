@@ -117,98 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please do not remove this key.</value>
-  </data>
-  <data name="Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FirstPageToolTip" xml:space="preserve">
-    <value>First Page</value>
-  </data>
-  <data name="LastPageToolTip" xml:space="preserve">
-    <value>Last Page</value>
-  </data>
-  <data name="NextPageToolTip" xml:space="preserve">
-    <value>Next Page</value>
-  </data>
-  <data name="PrevPageToolTip" xml:space="preserve">
-    <value>Previous Page</value>
-  </data>
-  <data name="Summary" xml:space="preserve">
-    <value />
-  </data>
-  <data name="NoRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
+  <data name="AddRecordText" xml:space="preserve">
+    <value>Add record</value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="EditText" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="InsertText" xml:space="preserve">
-    <value>Insert</value>
-  </data>
-  <data name="UpdateText" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="DeleteText" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="AddRecordText" xml:space="preserve">
-    <value>Add record</value>
-  </data>
-  <data name="CloseText" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="ChangePageSizeLabelText" xml:space="preserve">
-    <value>Page size:</value>
-  </data>
-  <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="GoToPageLabelText" xml:space="preserve">
-    <value>Page:</value>
-  </data>
-  <data name="GoToPageLinkButtonText" xml:space="preserve">
-    <value>Go</value>
-  </data>
-  <data name="PageOfLabelText" xml:space="preserve">
-    <value>of {0}</value>
-  </data>
-  <data name="PageSliderDecreaseToolTip" xml:space="preserve">
-    <value>Decrease</value>
-  </data>
-  <data name="PageSliderDragToolTip" xml:space="preserve">
-    <value>Drag</value>
-  </data>
-  <data name="PageSliderIncreaseToolTip" xml:space="preserve">
-    <value>Increase</value>
-  </data>
-  <data name="PageSliderPagerLabel" xml:space="preserve">
-    <value>Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;</value>
-  </data>
-  <data name="SortedAscToolTip" xml:space="preserve">
-    <value>Sorted asc</value>
-  </data>
-  <data name="SortedDescToolTip" xml:space="preserve">
-    <value>Sorted desc</value>
-  </data>
-  <data name="SortToolTip" xml:space="preserve">
-    <value>Click here to sort</value>
-  </data>
-  <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
-    <value>Width: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pixels&lt;/em&gt;</value>
-  </data>
-  <data name="DragToReorder" xml:space="preserve">
-    <value>Drag to reorder</value>
-  </data>
-  <data name="DragToResize" xml:space="preserve">
-    <value>Drag to resize</value>
-  </data>
-  <data name="DropHereToReorder" xml:space="preserve">
-    <value>Drop here to reorder</value>
+  <data name="Caption" xml:space="preserve">
+    <value />
   </data>
   <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
     <value>Change Page Size</value>
@@ -219,20 +135,62 @@
   <data name="ChangePageSizeComboBoxToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="ChangePageSizeLabelText" xml:space="preserve">
+    <value>Page size:</value>
+  </data>
+  <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ChangePageSizeTextBoxToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="GoToPageButtonToolTip" xml:space="preserve">
-    <value>Go to Page</value>
-  </data>
-  <data name="GoToPageTextBoxToolTip" xml:space="preserve">
-    <value />
+  <data name="CloseText" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="CollapseToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
+    <value>Width: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pixels&lt;/em&gt;</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DragToReorder" xml:space="preserve">
+    <value>Drag to reorder</value>
+  </data>
+  <data name="DragToResize" xml:space="preserve">
+    <value>Drag to resize</value>
+  </data>
+  <data name="DropHereToReorder" xml:space="preserve">
+    <value>Drop here to reorder</value>
+  </data>
+  <data name="EditText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="ExpandToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="FirstPageToolTip" xml:space="preserve">
+    <value>First Page</value>
+  </data>
+  <data name="GoToPageButtonToolTip" xml:space="preserve">
+    <value>Go to Page</value>
+  </data>
+  <data name="GoToPageLabelText" xml:space="preserve">
+    <value>Page:</value>
+  </data>
+  <data name="GoToPageLinkButtonText" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="GoToPageTextBoxToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="InsertText" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="LastPageToolTip" xml:space="preserve">
+    <value>Last Page</value>
   </data>
   <data name="MobileColumnsViewDescription" xml:space="preserve">
     <value>Show/Hide Columns and Drag the Icon to Reorder</value>
@@ -254,5 +212,47 @@
   </data>
   <data name="MobileViewDoneButtonText" xml:space="preserve">
     <value>Done</value>
+  </data>
+  <data name="NextPageToolTip" xml:space="preserve">
+    <value>Next Page</value>
+  </data>
+  <data name="NoRecordsText" xml:space="preserve">
+    <value>No records to display.</value>
+  </data>
+  <data name="PageOfLabelText" xml:space="preserve">
+    <value>of {0}</value>
+  </data>
+  <data name="PageSliderDecreaseToolTip" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="PageSliderDragToolTip" xml:space="preserve">
+    <value>Drag</value>
+  </data>
+  <data name="PageSliderIncreaseToolTip" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="PageSliderPagerLabel" xml:space="preserve">
+    <value>Page &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;</value>
+  </data>
+  <data name="PrevPageToolTip" xml:space="preserve">
+    <value>Previous Page</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please do not remove this key.</value>
+  </data>
+  <data name="SortedAscToolTip" xml:space="preserve">
+    <value>Sorted asc</value>
+  </data>
+  <data name="SortedDescToolTip" xml:space="preserve">
+    <value>Sorted desc</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>Click here to sort</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UpdateText" xml:space="preserve">
+    <value>Update</value>
   </data>
 </root>

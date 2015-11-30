@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ReservedResource" xml:space="preserve">
-    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
-  </data>
   <data name="AboutDialog" xml:space="preserve">
     <value>About RadEditor</value>
   </data>
@@ -128,6 +125,9 @@
   </data>
   <data name="AjaxSpellCheck" xml:space="preserve">
     <value>AJAX Spellchecker</value>
+  </data>
+  <data name="AlignmentSelector" xml:space="preserve">
+    <value>Alignment selector</value>
   </data>
   <data name="ApplyClass" xml:space="preserve">
     <value>Apply CSS Class</value>
@@ -138,6 +138,18 @@
   <data name="Bold" xml:space="preserve">
     <value>Bold</value>
   </data>
+  <data name="CellBorder" xml:space="preserve">
+    <value>Cell Border</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
+  <data name="ColorPicker" xml:space="preserve">
+    <value>ColorPicker</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
   <data name="ConvertToLower" xml:space="preserve">
     <value>Convert to lower case</value>
   </data>
@@ -146,6 +158,9 @@
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
+  </data>
+  <data name="CSDialog" xml:space="preserve">
+    <value>Compliance Check</value>
   </data>
   <data name="Cut" xml:space="preserve">
     <value>Cut</value>
@@ -165,14 +180,29 @@
   <data name="DeleteTable" xml:space="preserve">
     <value>Delete Table</value>
   </data>
+  <data name="DeleteTableItems" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DocumentManager" xml:space="preserve">
     <value>Document Manager</value>
+  </data>
+  <data name="EditContent" xml:space="preserve">
+    <value>Edit Content</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Editing</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Enter Pressed</value>
   </data>
   <data name="FindAndReplace" xml:space="preserve">
     <value>Find And Replace</value>
   </data>
   <data name="FlashManager" xml:space="preserve">
     <value>Flash Manager</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>Font</value>
   </data>
   <data name="FontName" xml:space="preserve">
     <value>Font Name</value>
@@ -189,11 +219,35 @@
   <data name="FormatCodeBlock" xml:space="preserve">
     <value>Format Code Block</value>
   </data>
+  <data name="FormatPainter" xml:space="preserve">
+    <value>Format Painter</value>
+  </data>
+  <data name="FormatPainterApply" xml:space="preserve">
+    <value>Apply Format</value>
+  </data>
+  <data name="FormatPainterClear" xml:space="preserve">
+    <value>Clear Format</value>
+  </data>
+  <data name="FormatPainterCopy" xml:space="preserve">
+    <value>Copy Format</value>
+  </data>
+  <data name="FormatSets" xml:space="preserve">
+    <value>Format Sets</value>
+  </data>
   <data name="FormatStripper" xml:space="preserve">
     <value>Format Stripper</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="ImageBorder" xml:space="preserve">
+    <value>Image Border</value>
+  </data>
+  <data name="ImageEditor" xml:space="preserve">
+    <value>Image Editor</value>
   </data>
   <data name="ImageManager" xml:space="preserve">
     <value>Image Manager</value>
@@ -201,11 +255,17 @@
   <data name="ImageMapDialog" xml:space="preserve">
     <value>Image Map Editor</value>
   </data>
+  <data name="ImageSizeMargins" xml:space="preserve">
+    <value>Size and Margins</value>
+  </data>
   <data name="IncreaseSize" xml:space="preserve">
     <value>Increase Size</value>
   </data>
   <data name="Indent" xml:space="preserve">
     <value>Indent</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Insert</value>
   </data>
   <data name="InsertAnchor" xml:space="preserve">
     <value>Insert Anchor</value>
@@ -224,6 +284,9 @@
   </data>
   <data name="InsertEmailLink" xml:space="preserve">
     <value>Insert Email Link</value>
+  </data>
+  <data name="InsertExternalVideo" xml:space="preserve">
+    <value>Insert External Video</value>
   </data>
   <data name="InsertFormButton" xml:space="preserve">
     <value>Insert Button</value>
@@ -267,6 +330,12 @@
   <data name="InsertHorizontalRule" xml:space="preserve">
     <value>Horizontal Rule</value>
   </data>
+  <data name="InsertImage" xml:space="preserve">
+    <value>Insert Image</value>
+  </data>
+  <data name="InsertLink" xml:space="preserve">
+    <value>Insert Link</value>
+  </data>
   <data name="InsertOrderedList" xml:space="preserve">
     <value>Numbered List</value>
   </data>
@@ -286,6 +355,15 @@
     <value>Insert Symbol</value>
   </data>
   <data name="InsertTable" xml:space="preserve">
+    <value>Insert Table</value>
+  </data>
+  <data name="InsertTableDialog" xml:space="preserve">
+    <value>Insert Table</value>
+  </data>
+  <data name="InsertTableItems" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="InsertTableLight" xml:space="preserve">
     <value>Insert Table</value>
   </data>
   <data name="InsertTime" xml:space="preserve">
@@ -315,6 +393,12 @@
   <data name="LinkManager" xml:space="preserve">
     <value>Hyperlink Manager</value>
   </data>
+  <data name="Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>Media</value>
+  </data>
   <data name="MediaManager" xml:space="preserve">
     <value>Media Manager</value>
   </data>
@@ -324,6 +408,15 @@
   <data name="MergeRows" xml:space="preserve">
     <value>Merge Cells Vertically</value>
   </data>
+  <data name="MergeSplitCells" xml:space="preserve">
+    <value>Merge and Split Cells</value>
+  </data>
+  <data name="MobileEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MobileTableProperties" xml:space="preserve">
+    <value>Table Properties</value>
+  </data>
   <data name="ModuleManager" xml:space="preserve">
     <value>Module Manager</value>
   </data>
@@ -332,6 +425,9 @@
   </data>
   <data name="PageProperties" xml:space="preserve">
     <value>Page Properties</value>
+  </data>
+  <data name="Paragraph" xml:space="preserve">
+    <value>Paragraph</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
@@ -345,14 +441,26 @@
   <data name="PasteFromWordNoFontsNoSizes" xml:space="preserve">
     <value>Paste from Word, strip font</value>
   </data>
+  <data name="PasteHtml" xml:space="preserve">
+    <value>Paste Html</value>
+  </data>
+  <data name="PasteMarkdown" xml:space="preserve">
+    <value>Paste Markdown</value>
+  </data>
   <data name="PastePlainText" xml:space="preserve">
     <value>Paste Plain Text</value>
   </data>
   <data name="PasteStrip" xml:space="preserve">
     <value>Paste Options</value>
   </data>
+  <data name="Preferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <data name="Proofing" xml:space="preserve">
+    <value>Proofing</value>
   </data>
   <data name="RealFontSize" xml:space="preserve">
     <value>Real font size</value>
@@ -362,6 +470,12 @@
   </data>
   <data name="RepeatLastCommand" xml:space="preserve">
     <value>Repeat Last Command</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Please, do not delete this string. RadEditor needs it to determine if an external resource file is present in App_GlobalResources.</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
     <value>Select All</value>
@@ -378,11 +492,20 @@
   <data name="SetTableProperties" xml:space="preserve">
     <value>Table Properties</value>
   </data>
+  <data name="SilverlightManager" xml:space="preserve">
+    <value>Silverlight Manager</value>
+  </data>
+  <data name="SizeMargins" xml:space="preserve">
+    <value>Size and Margins</value>
+  </data>
   <data name="SpellCheck" xml:space="preserve">
     <value>Spellchecker</value>
   </data>
   <data name="SplitCell" xml:space="preserve">
     <value>Split Cell Vertically</value>
+  </data>
+  <data name="SplitCellHorizontal" xml:space="preserve">
+    <value>Split Cell Horizontally</value>
   </data>
   <data name="StrikeThrough" xml:space="preserve">
     <value>Strikethrough</value>
@@ -405,11 +528,20 @@
   <data name="StyleBuilder" xml:space="preserve">
     <value>Style Builder</value>
   </data>
+  <data name="Styles" xml:space="preserve">
+    <value>Styles</value>
+  </data>
   <data name="Subscript" xml:space="preserve">
     <value>Subscript</value>
   </data>
   <data name="Superscript" xml:space="preserve">
     <value>SuperScript</value>
+  </data>
+  <data name="TableBorder" xml:space="preserve">
+    <value>Table Border</value>
+  </data>
+  <data name="Tables" xml:space="preserve">
+    <value>Tables</value>
   </data>
   <data name="TableWizard" xml:space="preserve">
     <value>Table Wizard</value>
@@ -419,6 +551,12 @@
   </data>
   <data name="ToggleDocking" xml:space="preserve">
     <value>Dock all Floating Toolbars/Modules</value>
+  </data>
+  <data name="ToggleEditMode" xml:space="preserve">
+    <value>Toggle Edit Mode</value>
+  </data>
+  <data name="ToggleFloatingToolbar" xml:space="preserve">
+    <value>Toggle Floating Toolbar</value>
   </data>
   <data name="ToggleScreenMode" xml:space="preserve">
     <value>Toggle Full Screen Mode</value>
@@ -435,151 +573,13 @@
   <data name="Unlink" xml:space="preserve">
     <value>Remove Link</value>
   </data>
-  <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
-  </data>
-  <data name="ImageEditor" xml:space="preserve">
-    <value>Image Editor</value>
-  </data>
-  <data name="SilverlightManager" xml:space="preserve">
-    <value>Silverlight Manager</value>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="XhtmlValidator" xml:space="preserve">
     <value>XHTML Validator</value>
   </data>
-  <data name="SplitCellHorizontal" xml:space="preserve">
-    <value>Split Cell Horizontally</value>
-  </data>
-  <data name="InsertImage" xml:space="preserve">
-    <value>Insert Image</value>
-  </data>
-  <data name="InsertLink" xml:space="preserve">
-    <value>Insert Link</value>
-  </data>
-  <data name="PasteHtml" xml:space="preserve">
-    <value>Paste Html</value>
-  </data>
-  <data name="InsertTableLight" xml:space="preserve">
-    <value>Insert Table</value>
-  </data>
-  <data name="ToggleFloatingToolbar" xml:space="preserve">
-    <value>Toggle Floating Toolbar</value>
-  </data>
-  <data name="CSDialog" xml:space="preserve">
-    <value>Compliance Check</value>
-  </data>
-  <data name="Enter" xml:space="preserve">
-    <value>Enter Pressed</value>
-  </data>
-  <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Content" xml:space="preserve">
-    <value>Content</value>
-  </data>
-  <data name="Editing" xml:space="preserve">
-    <value>Editing</value>
-  </data>
-  <data name="Font" xml:space="preserve">
-    <value>Font</value>
-  </data>
-  <data name="Insert" xml:space="preserve">
-    <value>Insert</value>
-  </data>
-  <data name="Links" xml:space="preserve">
-    <value>Links</value>
-  </data>
-  <data name="Media" xml:space="preserve">
-    <value>Media</value>
-  </data>
-  <data name="Paragraph" xml:space="preserve">
-    <value>Paragraph</value>
-  </data>
-  <data name="Preferences" xml:space="preserve">
-    <value>Preferences</value>
-  </data>
-  <data name="Proofing" xml:space="preserve">
-    <value>Proofing</value>
-  </data>
-  <data name="Review" xml:space="preserve">
-    <value>Review</value>
-  </data>
-  <data name="Styles" xml:space="preserve">
-    <value>Styles</value>
-  </data>
-  <data name="Tables" xml:space="preserve">
-    <value>Tables</value>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>View</value>
-  </data>
-  <data name="InsertExternalVideo" xml:space="preserve">
-    <value>Insert External Video</value>
-  </data>
-  <data name="ColorPicker" xml:space="preserve">
-    <value>ColorPicker</value>
-  </data>
-  <data name="AlignmentSelector" xml:space="preserve">
-    <value>Alignment selector</value>
-  </data>
-  <data name="FormatSets" xml:space="preserve">
-    <value>Format Sets</value>
-  </data>
-  <data name="PasteMarkdown" xml:space="preserve">
-    <value>Paste Markdown</value>
-  </data>
-  <data name="FormatPainter" xml:space="preserve">
-    <value>Format Painter</value>
-  </data>
-  <data name="FormatPainterApply" xml:space="preserve">
-    <value>Apply Format</value>
-  </data>
-  <data name="FormatPainterClear" xml:space="preserve">
-    <value>Clear Format</value>
-  </data>
-  <data name="FormatPainterCopy" xml:space="preserve">
-    <value>Copy Format</value>
-  </data>
-  <data name="DeleteTableItems" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="InsertTableItems" xml:space="preserve">
-    <value>Insert</value>
-  </data>
-  <data name="MergeSplitCells" xml:space="preserve">
-    <value>Merge and Split Cells</value>
-  </data>
-  <data name="MobileEdit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="ToggleEditMode" xml:space="preserve">
-    <value>Toggle Edit Mode</value>
-  </data>
-  <data name="ImageSizeMargins" xml:space="preserve">
-    <value>Size and Margins</value>
-  </data>
-  <data name="SizeMargins" xml:space="preserve">
-    <value>Size and Margins</value>
-  </data>
-  <data name="CellBorder" xml:space="preserve">
-    <value>Cell Border</value>
-  </data>
-  <data name="ImageBorder" xml:space="preserve">
-    <value>Image Border</value>
-  </data>
-  <data name="TableBorder" xml:space="preserve">
-    <value>Table Border</value>
-  </data>
-  <data name="EditContent" xml:space="preserve">
-    <value>Edit Content</value>
-  </data>
-  <data name="InsertTableDialog" xml:space="preserve">
-    <value>Insert Table</value>
-  </data>
-  <data name="MobileTableProperties" xml:space="preserve">
-    <value>Table Properties</value>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
   </data>
 </root>
