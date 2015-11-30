@@ -128,7 +128,17 @@ namespace SQM.Website.Automated
 							dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, locationID, new DateTime(period.PeriodYear, period.PeriodMonth, 1), measureList.Select(m => m.MEASURE_ID).ToList(), true, updateIndicator);
 							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST"), (decimal)period.LostTime, updateIndicator);
 							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RESTRICTED_TIME"), (decimal)period.RestrictedTime, updateIndicator);
+							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST_CASES"), (decimal)period.LostTimeCase, updateIndicator);
+							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RECORDED_CASES"), (decimal)period.RecordableCase, updateIndicator);
 							EHSDataMapping.UpdateEHSDataList(entities, dataList);
+
+							// update PLANT_ACCOUNTING table stats for backwards compatibility
+							PLANT_ACCOUNTING pa = EHSModel.LookupPlantAccounting(entities, locationID, period.PeriodYear, period.PeriodMonth, true);
+							pa.TIME_LOST = period.LostTime;
+							pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
+							pa.TIME_LOST_CASES = period.LostTimeCase;
+							pa.RECORDED_CASES = period.RecordableCase;
+							EHSModel.UpdatePlantAccounting(entities, pa);
 						}
 					}
 				}

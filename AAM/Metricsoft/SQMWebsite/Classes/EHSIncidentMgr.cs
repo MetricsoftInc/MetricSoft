@@ -1165,6 +1165,10 @@ namespace SQM.Website
 				for (int n = 0; n < ndays; n++)
 				{
 					period = periodList.Where(p => p.PeriodYear == effFromDate.Year && p.PeriodMonth == effFromDate.Month).FirstOrDefault();
+					if (period == null)
+					{
+						periodList.Add((period = new EHSIncidentTimeAccounting().CreateNew(effFromDate.Year, effFromDate.Month, (decimal)incident.ISSUE_TYPE_ID)));
+					}
 					switch (workStatus)
 					{
 						case "01":
