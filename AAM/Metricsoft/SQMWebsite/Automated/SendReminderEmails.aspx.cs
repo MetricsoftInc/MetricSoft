@@ -82,7 +82,6 @@ namespace SQM.Website.Automated
 			{
 				PSsqmEntities entities = new PSsqmEntities();
 
-
 				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
 				if (openAuditList.Count > 0)
 				{
@@ -93,7 +92,7 @@ namespace SQM.Website.Automated
 						AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
 						if (audit != null)
 						{
-							//EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+							EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
 						}
 					}
 				}
@@ -111,11 +110,11 @@ namespace SQM.Website.Automated
 							if (incident != null)
 							{
 								// notify assigned person and escalation person if over-over due
-								//EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+								EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
 								if (taskItem.Taskstatus >= TaskStatus.Overdue)
 								{
 									// send to notification list for plant, BU, ...
-									//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+									EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
 								}
 							}
 						}
