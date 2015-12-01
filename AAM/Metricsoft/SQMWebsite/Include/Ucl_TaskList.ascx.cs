@@ -278,13 +278,16 @@ namespace SQM.Website
             {
                 try
                 {
-                    TaskItem item = (TaskItem)e.Item.DataItem;
-					if (item.Person != null  && (item.NotifyType == TaskNotification.Escalation || item.NotifyType == TaskNotification.Delegate))
+					if (e.Item.DataItem != null)
 					{
-						item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
+						TaskItem item = (TaskItem)e.Item.DataItem;
+						if (item.Person != null && (item.NotifyType == TaskNotification.Escalation || item.NotifyType == TaskNotification.Delegate))
+						{
+							item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
+						}
+						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 1000, "...");
+						item.Description = WebSiteCommon.StripHTML(item.Description);
 					}
-                    item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 1000, "...");
-                    item.Description = WebSiteCommon.StripHTML(item.Description);
                 }
                 catch
                 { }

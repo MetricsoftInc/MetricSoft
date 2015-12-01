@@ -205,7 +205,7 @@ namespace SQM.Website
             if (selectedValue == "0" ||  selectedValue == "TOP")
             {
 				respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-				respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
+				//respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
 
 				// QUERIES were here
             }
@@ -256,7 +256,15 @@ namespace SQM.Website
 
             uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
 
-            uclTaskStrip.BindTaskStrip(taskList.Where(l=> !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l=> l.Task.DUE_DT).ToList());
+			// get task escalations 
+			respForList = new List<decimal>();
+			respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
+			if (respForList.Count > 0)
+			{
+				// has escalation persons
+				List<TaskItem> escalateList = TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, new List<decimal>(), false);
+				uclTaskStrip.BindTaskStrip(escalateList.Where(l => !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l => l.Task.DUE_DT).ToList());
+			}
 
 			divTaskList.Visible = divEscalate.Visible = false;
 			divCalendar.Visible = true;
