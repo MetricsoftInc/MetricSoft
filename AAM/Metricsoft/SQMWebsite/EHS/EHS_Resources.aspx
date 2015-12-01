@@ -135,7 +135,7 @@
                                                         </table>
                                                         <span style="float: right; margin: 5px;">
                                                             <asp:Button ID="btnMeasureCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="ClearMeasure"  ></asp:Button>
-                                                            <asp:Button ID="btnMeasureSave" CSSclass="buttonEmphasis" runat="server" text="Save Metric" style="margin: 5px;"
+                                                            <asp:Button ID="btnMeasureSave" CSSclass="buttonEmphasis" runat="server" text="<%$ Resources:LocalizedText, SaveMetric %>" style="margin: 5px;"
                                                                 onclick="btnMeasureSave_Click" ></asp:Button>
                                                         </span>
                                                         <br />
@@ -174,7 +174,7 @@
                                                                         </asp:TemplateField>
                                                                         <asp:TemplateField ItemStyle-Width="83%">
                                                                             <HeaderTemplate>
-                                                                               <asp:Label ID="lblMeasureHdr" runat="server" text="Metric"></asp:Label>
+                                                                               <asp:Label ID="lblMeasureHdr" runat="server" Text="<%$ Resources:LocalizedText, Metric %>"></asp:Label>
                                                                             </HeaderTemplate>
                                                                             <ItemTemplate>
                                                                                 <asp:GridView runat="server" ID="gvMeasureList" Name="gvMeasureList" CssClass="Grid" ClientIDMode="AutoID" AutoGenerateColumns="false" cellpadding="1" GridLines="Both" PageSize="20" AllowSorting="true" Width="100%" OnRowDataBound="gvList_OnMeasureRowDataBound">

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="EHS_ENVReport.aspx.cs" Inherits="SQM.Website.EHS_ENVReport" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="EHS_ENVReport.aspx.cs" Inherits="SQM.Website.EHS_ENVReport" %>
 
 <%@ Register src="~/Include/Ucl_EHSList.ascx" TagName="EHSList" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_EHSReport.ascx" TagName="GHGReport" TagPrefix="Ucl" %>
@@ -51,21 +51,21 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <telerik:RadAjaxPanel ID="ajaxMain" runat="server" HorizontalAlign="NotSet" meta:resourcekey="ajaxMainResource1">
+                                    <telerik:RadAjaxPanel ID="ajaxMain" runat="server" HorizontalAlign="NotSet">
                                     <div class="noprint">
                                         <table cellspacing=0 cellpadding=2 border=0 width="100%" style="margin-bottom: 3px;">
                                             <tr>
                                                 <td class="summaryDataEnd">
                                                     <asp:Label runat="server" ID="lblPlantSelect"  CssClass="prompt" Text ="Location:" Visible="False" meta:resourcekey="lblPlantSelectResource1"></asp:Label>
                                                     &nbsp;
-                                                    <telerik:RadComboBox ID="ddlPlantSelect" runat="server" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro"  Width="350px" height="300px" Visible="False" OnClientLoad="DisableComboSeparators" OnSelectedIndexChanged="selectsChanged_Event" AutoPostBack="True" EmptyMessage="select location" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
+                                                    <telerik:RadComboBox ID="ddlPlantSelect" runat="server" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro"  Width="350px" height="300px" Visible="False" OnClientLoad="DisableComboSeparators" OnSelectedIndexChanged="selectsChanged_Event" AutoPostBack="True" EmptyMessage="Select location" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
                                                     <telerik:RadMenu ID="mnuPlantSelect" runat="server" Width=250px  EnableAutoScroll="True" style="z-index: 2900"  Visible="False" OnItemClick="mnuPlantSelect_Select" meta:resourcekey="mnuPlantSelectResource1">
 														<DefaultGroupSettings RepeatDirection="Horizontal" />
 													</telerik:RadMenu>
 		                                        </td>
                                                 <td class="summaryDataEnd">
-							                        <asp:Label runat="server" ID="lblDateFrom" CssClass="prompt" meta:resourcekey="lblDateFromResource1"></asp:Label>
-									                <telerik:RadMonthYearPicker ID="radDateFrom" runat="server" CssClass="textStd" Width="165px" Skin="Metro" ShowPopupOnFocus="True" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="True" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radDateFromResource1">
+							                        <asp:Label runat="server" ID="lblDateFrom" CssClass="prompt"></asp:Label>
+									                <telerik:RadMonthYearPicker ID="radDateFrom" runat="server" CssClass="textStd" Width="165px" Skin="Metro" ShowPopupOnFocus="True" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="True">
 														<DateInput AutoPostBack="True" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
 															<EmptyMessageStyle Resize="None" />
 															<ReadOnlyStyle Resize="None" />
@@ -79,9 +79,9 @@
 														<MonthYearNavigationSettings DateIsOutOfRangeMessage="Cancel" />
 													</telerik:RadMonthYearPicker>
 									                &nbsp;
-                                                    <asp:Label ID="lblDateTo" runat="server" CssClass="prompt" meta:resourcekey="lblDateToResource1"></asp:Label>
+                                                    <asp:Label ID="lblDateTo" runat="server" CssClass="prompt"></asp:Label>
 									                &nbsp;
-                                                    <telerik:RadMonthYearPicker ID="radDateTo" runat="server" CssClass="textStd" Width="165px" Skin="Metro" ShowPopupOnFocus="True" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="True" Culture="en-US" HiddenInputTitleAttibute="Visually hidden input created for functionality purposes." meta:resourcekey="radDateToResource1">
+                                                    <telerik:RadMonthYearPicker ID="radDateTo" runat="server" CssClass="textStd" Width="165px" Skin="Metro" ShowPopupOnFocus="True" OnSelectedDateChanged="selectsChanged_Event" AutoPostBack="True">
 														<DateInput AutoPostBack="True" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
 															<EmptyMessageStyle Resize="None" />
 															<ReadOnlyStyle Resize="None" />
@@ -98,10 +98,10 @@
                                             </tr>
                                             <tr>
                                                 <td class="summaryDataEnd" colspan="2" style="padding: 7px 0 7px 3px;">
-                                                    <asp:Panel ID="pnlOptions" runat="server" meta:resourcekey="pnlOptionsResource1">
+                                                    <asp:Panel ID="pnlOptions" runat="server">
                                                         <asp:Label ID="lblOption" runat="server" CssClass="prompt" Text="Select Report:" meta:resourcekey="lblOptionResource1"></asp:Label>
                                                         &nbsp;
-                                                        <asp:LinkButton ID="lnkOptInputs" runat="server" CssClass="buttonList" Text="Metric Inputs" CommandArgument="1" OnClick="lnkOpt_Click" meta:resourcekey="lnkOptInputsResource1"></asp:LinkButton>
+                                                        <asp:LinkButton ID="lnkOptInputs" runat="server" CssClass="buttonList" Text="<%$ Resources:LocalizedText, ENVDataValidate3 %>" CommandArgument="1" OnClick="lnkOpt_Click"></asp:LinkButton>
                                                         &nbsp;&nbsp;
                                                         <asp:LinkButton ID="lnkOptGHG" runat="server" CssClass="buttonTable" Text="GHG Emissions" CommandArgument="5" OnClick="lnkOpt_Click" meta:resourcekey="lnkOptGHGResource1"></asp:LinkButton>
                                                     </asp:Panel>
@@ -111,7 +111,7 @@
                                     </div>
                                     <Ucl:Progress id="uclProgress" runat="server"/>
                                     <div style="text-align: center;">
-                                        <asp:Label ID="lblReportTitle" runat="server" CssClass="labelTitle" meta:resourcekey="lblReportTitleResource1"></asp:Label>
+                                        <asp:Label ID="lblReportTitle" runat="server" CssClass="labelTitle"></asp:Label>
                                     </div>
                                     <div id="divInputs" runat="server" style="margin-top: 4px;" visible="False">
                                         <Ucl:EHSList id="uclInputs" runat="server" />
@@ -125,7 +125,7 @@
                                     <div id="divExport" runat="server" visible="False" class="noprint" style="clear: both;">
                                         <br />
                                         <span>
-                                            <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" style="margin-left: 5px;" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()" meta:resourcekey="lnkPrintResource1"></asp:LinkButton>
+                                            <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" style="margin-left: 5px;" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()"></asp:LinkButton>
                                             <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
                                         </span>
                                         <Ucl:Export id="uclExport" runat="server"/>

@@ -82,7 +82,7 @@
                                                     <asp:Label ID="lblMetricID" runat="server" text='<%#Eval("SCOR_METRIC_ID") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="METRIC_NAME" HeaderText="Metric" ItemStyle-Width="15%" />
+                                            <asp:BoundField DataField="METRIC_NAME" HeaderText="<%$ Resources:LocalizedText, Metric %>" ItemStyle-Width="15%" />
                                             <asp:BoundField DataField="METRIC_DESC" HeaderText="<%$ Resources:LocalizedText, Description %>" ItemStyle-Width="25%" />
            			                        <asp:TemplateField HeaderText="Factors" ItemStyle-Width="60%">
                                                 <ItemTemplate>

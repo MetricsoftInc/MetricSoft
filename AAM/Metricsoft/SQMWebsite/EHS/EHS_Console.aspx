@@ -188,7 +188,7 @@
                                                     </tr>
 							                        <tr>
                                                         <td class="columnHeader" width="30%">
-                                                            <asp:Label runat="server" ID="lblInputsHdr" cssclass="prompt" Text="Metric Inputs" ></asp:Label>
+                                                            <asp:Label runat="server" ID="lblInputsHdr" cssclass="prompt" Text="<%$ Resources:LocalizedText, ENVDataValidate3 %>" ></asp:Label>
                                                             <asp:LinkButton ID="lnkInputs" runat="server" style="float:right; margin-right: 5px;" CSSClass="buttonLink"  OnClick="lnkDisplayInputs" ToolTip="Display Metric Inputs">
                                                                  <img src="/images/defaulticon/16x16/list-ordered.png" alt="" style="vertical-align: middle; border: 0px;" />
                                                             </asp:LinkButton>

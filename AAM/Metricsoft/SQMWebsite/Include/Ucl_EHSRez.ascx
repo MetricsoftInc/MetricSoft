@@ -101,7 +101,7 @@
                                 <ItemTemplate>
                                     <asp:HiddenField id="hfMetricRegStatus" runat="server" value='<%#Eval("REG_STATUS") %>' />
                                     <asp:HiddenField id="hfDisposalCode" runat="server" value='<%#Eval("UN_CODE") %>' />
-                                     <asp:Image ID="imgHazardType" ImageUrl="" Visible="true" ToolTip="Energy input" runat="server" style="vertical-align: middle;"/>
+                                     <asp:Image ID="imgHazardType" ImageUrl="" Visible="true" ToolTip="<%$ Resources:LocalizedText, EnergyInput %>" runat="server" style="vertical-align: middle;"/>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Required %>" ItemStyle-Width="15%" ItemStyle-HorizontalAlign=Center>
@@ -116,7 +116,7 @@
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                    <asp:Label runat="server" ID="lblMetricListEmpty" Text="There are currently no Metrics defined for this business location." class="GridEmpty" Visible="false"></asp:Label>
+                    <asp:Label runat="server" ID="lblMetricListEmpty" Text="<%$ Resources:LocalizedText, NoMetricDefinedBusLoc %>" class="GridEmpty" Visible="false"></asp:Label>
                 </div>
             </td>
             <td valign="top" width="1%"></td>
@@ -125,7 +125,7 @@
                 <asp:Button ID="btnMetricCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" enabled=false style="margin: 5px;" OnClientClick="CancelProfileMeasure(); return false;"  ></asp:Button>
                 <asp:Button ID="btnMetricSave" CSSclass="buttonStd" runat="server" enabled=false text="Update Metric" style="margin: 5px;"
                         OnClientClick="return ValidProfileMeasure();" OnClick="btnMetricSave_Click" ></asp:Button>
-                <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true text="Save Profile" style="float: right; margin: 5px;"
+                <asp:Button ID="btnProfileSave" CSSclass="buttonEmphasis" runat="server" enabled=true Text="<%$ Resources:LocalizedText, SaveProfile %>" style="float: right; margin: 5px;"
                         OnClientClick="return confirmChange('Environment Profile');" onclick="btnProfileSave_Click" ></asp:Button>
                 <asp:Panel id="pnlMetricEdit" runat="server">
                     <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1" class="lightBorder1">
@@ -151,7 +151,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricPrompt" runat="server" text="Display Prompt"></asp:Label>
+                                <asp:Label ID="lblMetricPrompt" runat="server" Text="<%$ Resources:LocalizedText, DisplayPrompt %>"></asp:Label>
                             </td>
                             <td class="tableDataAlt" >&nbsp;</td>
                             <td CLASS="tableDataAlt">
@@ -202,7 +202,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricCurrency" runat="server" text="Billing Currency"></asp:Label>
+                                <asp:Label ID="lblMetricCurrency" runat="server" Text="<%$ Resources:LocalizedText, BillingCurrency %>"></asp:Label>
                             </td>
                             <td class="required" >&nbsp;</td>
                             <td CLASS="tableDataAlt">
@@ -211,7 +211,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricUOM" runat="server" text="Invoice UOM"></asp:Label>
+                                <asp:Label ID="lblMetricUOM" runat="server" Text="<%$ Resources:LocalizedText, InvoiceUOM %>"></asp:Label>
                             </td>
                             <td class="required">&nbsp;</td>
                             <td CLASS="tableDataAlt" >
@@ -274,7 +274,7 @@
                         </tr>
                         <tr>
                             <td class="columnHeader">
-                                <asp:Label ID="lblMetricResponsible" runat="server" text="Person Responsible"></asp:Label>
+                                <asp:Label ID="lblMetricResponsible" runat="server" Text="<%$ Resources:LocalizedText, PersonResponsible %>"></asp:Label>
                             </td>
                             <td class="required" >&nbsp;</td>
                             <td CLASS="tableDataAlt">

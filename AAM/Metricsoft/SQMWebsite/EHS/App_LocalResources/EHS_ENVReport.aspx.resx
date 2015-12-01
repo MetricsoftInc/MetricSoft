@@ -117,184 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ajaxMainResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="ddlPlantSelectResource1.EmptyMessage" xml:space="preserve">
-    <value>select location</value>
-  </data>
-  <data name="ddlPlantSelectResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlPlantSelectResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
-  <data name="ddlPlantSelectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDateFromResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDateFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDateToResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDateToResource1.ToolTip" xml:space="preserve">
-    <value />
+    <value>Select location</value>
   </data>
   <data name="lblOptionResource1.Text" xml:space="preserve">
     <value>Select Report:</value>
   </data>
-  <data name="lblOptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblPageInstructionsResource1.Text" xml:space="preserve">
     <value>Location specific environmental analytics.</value>
-  </data>
-  <data name="lblPageInstructionsResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblPageTitleResource1.Text" xml:space="preserve">
     <value>Plant Analytics</value>
   </data>
-  <data name="lblPageTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblPlantSelectResource1.Text" xml:space="preserve">
     <value>Location:</value>
   </data>
-  <data name="lblPlantSelectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblReportTitleResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblReportTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lnkOptGHGResource1.Text" xml:space="preserve">
     <value>GHG Emissions</value>
-  </data>
-  <data name="lnkOptGHGResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lnkOptInputsResource1.Text" xml:space="preserve">
-    <value>Metric Inputs</value>
-  </data>
-  <data name="lnkOptInputsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lnkPrintResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="mnuPlantSelectResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PageResource1.Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlOptionsResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlOptionsResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateFromResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateFromResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="radDateFromResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="radDateFromResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
-  </data>
-  <data name="radDateFromResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateFromResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadMonthYearPicker</value>
-  </data>
-  <data name="radDateFromResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
-  </data>
-  <data name="radDateToResource1.DateInput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateToResource1.DatePopupButton.ToolTip" xml:space="preserve">
-    <value>Open the monthyear view popup.</value>
-  </data>
-  <data name="radDateToResource1.HiddenInputTitleAttibute" xml:space="preserve">
-    <value>Visually hidden input created for functionality purposes.</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.CancelButtonCaption" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.DateIsOutOfRangeMessage" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.NavigationNextImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.NavigationNextText" xml:space="preserve">
-    <value>&amp;gt;</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.NavigationPrevImage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.NavigationPrevText" xml:space="preserve">
-    <value>&amp;lt;</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.OkButtonCaption" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="radDateToResource1.MonthYearNavigationSettings.TodayButtonCaption" xml:space="preserve">
-    <value>Today</value>
-  </data>
-  <data name="radDateToResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="radDateToResource1.WrapperTableCaption" xml:space="preserve">
-    <value>RadMonthYearPicker</value>
-  </data>
-  <data name="radDateToResource1.WrapperTableSummary" xml:space="preserve">
-    <value>Table holding date picker control for selection of dates.</value>
   </data>
 </root>

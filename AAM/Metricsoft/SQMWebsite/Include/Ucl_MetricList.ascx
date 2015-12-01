@@ -9,7 +9,7 @@
     <asp:HiddenField  runat="server" ID="hfInputsListPlantID"/>
     <asp:HiddenField id="hfInputsListPeriodDate" runat="server"/>
     <span class="summaryHeader navSectionBar" style="text-align: center; width: 100%;">
-        <asp:Label runat="server" ID="lblInputsListTitle" Text="Metric Inputs"></asp:Label>
+        <asp:Label runat="server" ID="lblInputsListTitle" Text="<%$ Resources:LocalizedText, ENVDataValidate3 %>"></asp:Label>
     </span>
     <div id="divInputsListReviewArea" runat="server" visible="false">
         <asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px; padding-top: 3px;" OnClick="lnkCloseMetric" ToolTip="<%$ Resources:LocalizedText, Close %>">
@@ -23,7 +23,7 @@
             <HeaderStyle CssClass="HeadingCellTextLeft" />
             <RowStyle CssClass="DataCell" />
             <Columns>
-                <asp:TemplateField HeaderText="Metric" ItemStyle-Width="25%">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Metric %>" ItemStyle-Width="25%">
 					<ItemTemplate>
                         <asp:HiddenField  runat="server" ID="hfPRMRID" Value='<%# Eval("PRMR_ID") %>'/>
                         <asp:HiddenField runat="server" ID="hfStatus" Value='<%# Eval("STATUS") %>'/>
@@ -92,7 +92,7 @@
             <HeaderStyle CssClass="HeadingCellTextLeft" />
             <RowStyle CssClass="DataCell" />
             <Columns>
-                <asp:TemplateField HeaderText="Metric" ItemStyle-Width="26%">
+                <asp:TemplateField HeaderText="<%$ Resources:LocalizedText, Metric %>" ItemStyle-Width="26%">
 					<ItemTemplate>
                         <asp:HiddenField  runat="server" ID="hfHSTMetricID" Value='<%# Eval("MEASURE_ID") %>'/>
                         <span>

@@ -120,188 +120,11 @@
   <data name="btnCopyProfileResource1.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="btnCopyProfileResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnMetricCancelResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnMetricCancelResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnMetricSaveResource1.Text" xml:space="preserve">
-    <value>Save Metric</value>
-  </data>
-  <data name="btnMetricSaveResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnMetricSaveResource2.Text" xml:space="preserve">
-    <value>Save Metric</value>
-  </data>
-  <data name="btnMetricSaveResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnProfileCancelResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnProfileSaveResource1.Text" xml:space="preserve">
-    <value>Save Profile</value>
-  </data>
-  <data name="btnProfileSaveResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEnableOverrideResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEnableOverrideResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEnableOverrideResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEnableOverrideResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource3.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbMetricRequiredResource3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlCopyProfileResource1.EmptyMessage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlCopyProfileResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlCopyProfileResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlCopyProfileResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlCopyProfileResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlCopyProfileResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlCopyProfileResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlCopyProfileResource1.ToolTip" xml:space="preserve">
     <value>Create new profile by copying metrics from an existing profile</value>
   </data>
-  <data name="ddlDayDueResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlDefaultResponsibleResource1.EmptyMessage" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlDefaultResponsibleResource1.LoadingMessage" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
-  <data name="ddlDefaultResponsibleResource1.Localization.AllItemsCheckedString" xml:space="preserve">
-    <value>All items checked</value>
-  </data>
-  <data name="ddlDefaultResponsibleResource1.Localization.CheckAllString" xml:space="preserve">
-    <value>Check All</value>
-  </data>
-  <data name="ddlDefaultResponsibleResource1.Localization.ItemsCheckedString" xml:space="preserve">
-    <value>items checked</value>
-  </data>
-  <data name="ddlDefaultResponsibleResource1.Localization.NoMatches" xml:space="preserve">
-    <value>No matches</value>
-  </data>
-  <data name="ddlDefaultResponsibleResource1.Localization.ShowMoreFormatString" xml:space="preserve">
-    <value>Items &lt;b&gt;1&lt;/b&gt;-&lt;b&gt;{0}&lt;/b&gt; out of &lt;b&gt;{1}&lt;/b&gt;</value>
-  </data>
   <data name="ddlDefaultResponsibleResource1.ToolTip" xml:space="preserve">
     <value>Select default responsible person for metric inputs</value>
-  </data>
-  <data name="ddlDisplayOrderResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlFinalApproverResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCategoryResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCategoryResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCostResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCostResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCurrencyResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricCurrencyResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricIDResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricIDResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricResponsibleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricResponsibleResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricStatusResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricStatusResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricUOMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlMetricUOMResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlNormFactResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ddlWarningDaysResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gvMetricListResource1.Caption" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gvMetricListResource1.EmptyDataText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gvMetricListResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="imgHazardTypeResource1.AlternateText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="imgHazardTypeResource1.ToolTip" xml:space="preserve">
-    <value>Energy input</value>
-  </data>
-  <data name="imgStatusResource1.AlternateText" xml:space="preserve">
-    <value />
   </data>
   <data name="imgStatusResource1.ToolTip" xml:space="preserve">
     <value>Metric is inactive</value>
@@ -309,290 +132,53 @@
   <data name="lblCopyErrorResource1.Text" xml:space="preserve">
     <value>An error occurred when attempting to copy the selected profile.</value>
   </data>
-  <data name="lblCopyErrorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblCostDfltResource1.Text" xml:space="preserve">
     <value>Cost: </value>
-  </data>
-  <data name="lblCostDfltResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblCostDfltResource2.Text" xml:space="preserve">
-    <value>Cost: </value>
-  </data>
-  <data name="lblCostDfltResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblCurrencyResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblDisplayOptionResource1.Text" xml:space="preserve">
     <value>Metric Display Order</value>
   </data>
-  <data name="lblDisplayOptionResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblEnableOverrideResource1.Text" xml:space="preserve">
     <value>Allow Override: </value>
-  </data>
-  <data name="lblEnableOverrideResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblEnableOverrideResource2.Text" xml:space="preserve">
-    <value>Allow Override: </value>
-  </data>
-  <data name="lblEnableOverrideResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblErrorMessageResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblErrorMessageResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblErrorMessageResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblErrorMessageResource2.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblFinalApproverResource1.Text" xml:space="preserve">
     <value>Local Approval By</value>
   </data>
-  <data name="lblFinalApproverResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblInputDefaultResource1.Text" xml:space="preserve">
     <value>Default Inputs</value>
-  </data>
-  <data name="lblInputDefaultResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblInputDefaultResource2.Text" xml:space="preserve">
-    <value>Default Inputs</value>
-  </data>
-  <data name="lblInputDefaultResource2.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblInputsDueResource1.Text" xml:space="preserve">
     <value>Day of Month When Inputs Are Due</value>
   </data>
-  <data name="lblInputsDueResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblInputsWarningResource1.Text" xml:space="preserve">
     <value>Reminder Prior To Due Date (Days)</value>
-  </data>
-  <data name="lblInputsWarningResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblInvoiceTypeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblInvoiceUOMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricCodeResource1.Text" xml:space="preserve">
-    <value>Metric</value>
-  </data>
-  <data name="lblMetricCodeResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricCodeResource2.Text" xml:space="preserve">
-    <value>Metric</value>
-  </data>
-  <data name="lblMetricCodeResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricCurrencyResource1.Text" xml:space="preserve">
-    <value>Billing Currency</value>
-  </data>
-  <data name="lblMetricCurrencyResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricCurrencyResource2.Text" xml:space="preserve">
-    <value>Billing Currency</value>
-  </data>
-  <data name="lblMetricCurrencyResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricListEmptyResource1.Text" xml:space="preserve">
-    <value>There are currently no Metrics defined for this business location.</value>
-  </data>
-  <data name="lblMetricListEmptyResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricNameResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricNameResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricNameResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricNameResource2.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblMetricNegValueResource1.Text" xml:space="preserve">
     <value>Invoice Type</value>
   </data>
-  <data name="lblMetricNegValueResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricNegValueResource2.Text" xml:space="preserve">
-    <value>Invoice Type</value>
-  </data>
-  <data name="lblMetricNegValueResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricPromptResource1.Text" xml:space="preserve">
-    <value>Display Prompt</value>
-  </data>
-  <data name="lblMetricPromptResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricPromptResource2.Text" xml:space="preserve">
-    <value>Display Prompt</value>
-  </data>
-  <data name="lblMetricPromptResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricPromptResource3.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricPromptResource3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblMetricRequiredResource1.Text" xml:space="preserve">
     <value>Required Monthly:</value>
-  </data>
-  <data name="lblMetricRequiredResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricRequiredResource2.Text" xml:space="preserve">
-    <value>Required Monthly:</value>
-  </data>
-  <data name="lblMetricRequiredResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricResponsibleResource1.Text" xml:space="preserve">
-    <value>Person Responsible</value>
-  </data>
-  <data name="lblMetricResponsibleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricResponsibleResource2.Text" xml:space="preserve">
-    <value>Person Responsible</value>
-  </data>
-  <data name="lblMetricResponsibleResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricResponsibleResource3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricStatusResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricStatusResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricUOMResource1.Text" xml:space="preserve">
-    <value>Invoice UOM</value>
-  </data>
-  <data name="lblMetricUOMResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMetricUOMResource2.Text" xml:space="preserve">
-    <value>Invoice UOM</value>
-  </data>
-  <data name="lblMetricUOMResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblNoMetricsResource1.Text" xml:space="preserve">
-    <value>There are no Metrics defined for this profile</value>
-  </data>
-  <data name="lblNoMetricsResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblNormFactResource1.Text" xml:space="preserve">
     <value>Normalize Metrics By</value>
   </data>
-  <data name="lblNormFactResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblPageInstructionsResource1.Text" xml:space="preserve">
     <value>Monitor energy consumption and waste streams for the selected business location on a monthly basis</value>
-  </data>
-  <data name="lblPageInstructionsResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblProfileEditResource1.Text" xml:space="preserve">
     <value>Profile Settings</value>
   </data>
-  <data name="lblProfileEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblProfileErrorResource1.Text" xml:space="preserve">
     <value>An error occurred while attempting to open this profile</value>
-  </data>
-  <data name="lblProfileErrorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblProfileNotExistResource1.Text" xml:space="preserve">
-    <value>A metric profile doest not exist for this location</value>
-  </data>
-  <data name="lblProfileNotExistResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTitleResource1.Text" xml:space="preserve">
-    <value>Metric Profile</value>
-  </data>
-  <data name="lblTitleResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblUNCodeResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="lblUOMFactorResource1.Text" xml:space="preserve">
     <value>Conversion Factor:</value>
   </data>
-  <data name="lblUOMFactorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblUOMFactorResource2.Text" xml:space="preserve">
-    <value>Conversion Factor:</value>
-  </data>
-  <data name="lblUOMFactorResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblUOMFactorStdResource1.Text" xml:space="preserve">
     <value>x invoice quantity = weight in Kg</value>
   </data>
-  <data name="lblUOMFactorStdResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblUOMFactorStdResource2.Text" xml:space="preserve">
-    <value>x invoice quantity = weight in Kg</value>
-  </data>
-  <data name="lblUOMFactorStdResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lblValueDfltResource1.Text" xml:space="preserve">
     <value>Quantity: </value>
-  </data>
-  <data name="lblValueDfltResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblValueDfltResource2.Text" xml:space="preserve">
-    <value>Quantity: </value>
-  </data>
-  <data name="lblValueDfltResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblWasteCodeResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="ListItemResource1.Text" xml:space="preserve">
     <value>By Category</value>
@@ -618,217 +204,25 @@
   <data name="lnkMeasureAddResource1.ToolTip" xml:space="preserve">
     <value>Add a metric to this profile</value>
   </data>
-  <data name="lnkMetricCDResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lnkMetricNameResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PageResource1.Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlCopyProfileResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlCopyProfileResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlMetricEditResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlMetricEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlMetricEditResource2.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlMetricEditResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlProfileEditResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlProfileEditResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlSearchBarResource1.GroupingText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlSearchBarResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCostDfltResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCostDfltResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCostDfltResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCostDfltResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbMetricPromptResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbMetricPromptResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbMetricPromptResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbMetricPromptResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUOMFactorResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUOMFactorResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUOMFactorResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbUOMFactorResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbValueDfltResource1.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbValueDfltResource1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbValueDfltResource2.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbValueDfltResource2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource1.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource1.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource1.HeaderText" xml:space="preserve">
-    <value>Metric</value>
-  </data>
-  <data name="TemplateFieldResource10.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource10.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource10.HeaderText" xml:space="preserve">
     <value>Waste Code</value>
-  </data>
-  <data name="TemplateFieldResource2.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource2.FooterText" xml:space="preserve">
-    <value />
   </data>
   <data name="TemplateFieldResource2.HeaderText" xml:space="preserve">
     <value>M Code</value>
   </data>
-  <data name="TemplateFieldResource3.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource3.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource3.HeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource4.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource4.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource4.HeaderText" xml:space="preserve">
     <value>Reqd</value>
-  </data>
-  <data name="TemplateFieldResource5.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource5.FooterText" xml:space="preserve">
-    <value />
   </data>
   <data name="TemplateFieldResource5.HeaderText" xml:space="preserve">
     <value>Responsible</value>
   </data>
-  <data name="TemplateFieldResource6.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource6.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource6.HeaderText" xml:space="preserve">
     <value>Invoice Type</value>
-  </data>
-  <data name="TemplateFieldResource7.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource7.FooterText" xml:space="preserve">
-    <value />
   </data>
   <data name="TemplateFieldResource7.HeaderText" xml:space="preserve">
     <value>Currency</value>
   </data>
-  <data name="TemplateFieldResource8.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource8.FooterText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource8.HeaderText" xml:space="preserve">
-    <value>Invoice UOM</value>
-  </data>
-  <data name="TemplateFieldResource9.AccessibleHeaderText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TemplateFieldResource9.FooterText" xml:space="preserve">
-    <value />
-  </data>
   <data name="TemplateFieldResource9.HeaderText" xml:space="preserve">
     <value>UN Code</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Maximize" xml:space="preserve">
-    <value>Maximize</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Minimize" xml:space="preserve">
-    <value>Minimize</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.PinOff" xml:space="preserve">
-    <value>Pin off</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.PinOn" xml:space="preserve">
-    <value>Pin on</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Reload" xml:space="preserve">
-    <value>Reload</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Restore" xml:space="preserve">
-    <value>Restore</value>
-  </data>
-  <data name="winMetricEditResource1.Localization.Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="winMetricEditResource1.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -168,6 +168,9 @@
   <data name="Attachments" xml:space="preserve">
     <value>Attachments</value>
   </data>
+  <data name="BillingCurrency" xml:space="preserve">
+    <value>Billing Currency</value>
+  </data>
   <data name="BusinessLocation" xml:space="preserve">
     <value>Business Location</value>
   </data>
@@ -261,6 +264,9 @@
   <data name="DisplayPasswordEditFields" xml:space="preserve">
     <value>Display password edit fields</value>
   </data>
+  <data name="DisplayPrompt" xml:space="preserve">
+    <value>Display Prompt</value>
+  </data>
   <data name="Disposition" xml:space="preserve">
     <value>Disposition</value>
   </data>
@@ -290,6 +296,9 @@
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>Email Address</value>
+  </data>
+  <data name="EnergyInput" xml:space="preserve">
+    <value>Energy input</value>
   </data>
   <data name="ENVDataDefaultValue" xml:space="preserve">
     <value>Default value -</value>
@@ -381,6 +390,9 @@
   <data name="InspectionDate" xml:space="preserve">
     <value>Inspection Date</value>
   </data>
+  <data name="InvoiceUOM" xml:space="preserve">
+    <value>Invoice UOM</value>
+  </data>
   <data name="Issue" xml:space="preserve">
     <value>Issue</value>
   </data>
@@ -420,6 +432,9 @@
   <data name="LogoutConfirm" xml:space="preserve">
     <value>return confirm('Please confirm - do you wish to log out');</value>
   </data>
+  <data name="Metric" xml:space="preserve">
+    <value>Metric</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -428,6 +443,15 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="NoMetricDefinedBusLoc" xml:space="preserve">
+    <value>There are currently no Metrics defined for this business location.</value>
+  </data>
+  <data name="NoMetricProfile" xml:space="preserve">
+    <value>A metric profile doest not exist for this location</value>
+  </data>
+  <data name="NoMetricsDefined" xml:space="preserve">
+    <value>There are no Metrics defined for this profile</value>
   </data>
   <data name="NumericInputConfirm" xml:space="preserve">
     <value>ValidNumeric(this, 'please enter numeric values only');</value>
@@ -443,6 +467,9 @@
   </data>
   <data name="PercentChange" xml:space="preserve">
     <value>Percent Change</value>
+  </data>
+  <data name="PersonResponsible" xml:space="preserve">
+    <value>Person Responsible</value>
   </data>
   <data name="Plant" xml:space="preserve">
     <value>Plant</value>
@@ -503,6 +530,12 @@
   </data>
   <data name="SaveError" xml:space="preserve">
     <value>An error was encountered while attempting to save your changes.</value>
+  </data>
+  <data name="SaveMetric" xml:space="preserve">
+    <value>Save Metric</value>
+  </data>
+  <data name="SaveProfile" xml:space="preserve">
+    <value>Save Profile</value>
   </data>
   <data name="SaveSuccess" xml:space="preserve">
     <value>Your updates have been saved.</value>

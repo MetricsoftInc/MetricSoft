@@ -121,7 +121,7 @@
     <value>Add Text</value>
   </data>
   <data name="Blur" xml:space="preserve">
-      <value>Blur</value>
+    <value>Blur</value>
   </data>
   <data name="BrightnessContrast" xml:space="preserve">
     <value>Brightness/Contrast</value>
@@ -205,8 +205,8 @@
     <value>Sepia</value>
   </data>
   <data name="Sharpen" xml:space="preserve">
-        <value>Sharpen</value>
-    </data>
+    <value>Sharpen</value>
+  </data>
   <data name="StatusBar_LastAction" xml:space="preserve">
     <value>Last Action</value>
   </data>
