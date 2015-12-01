@@ -50,7 +50,7 @@
 	</telerik:RadAjaxPanel>
 </asp:Panel>
 
-<asp:Panel ID="pnlTaskStrip" runat="server" Visible="False">
+<asp:Panel ID="pnlTaskStrip" runat="server" Visible="false">
 	<div class="navSectionBar"  style ="height: 22px; text-align:center; vertical-align: middle; padding-top: 2px;">
 		<asp:Label ID="lblTaskStriptInstruct" runat="server" Text="Tasks Overdue" CssClass="textMedium" style="color: black;" meta:resourcekey="lblTaskStriptInstructResource1"></asp:Label>
 		<asp:Image ID="Image1" runat="server" ImageUrl="~/images/status/warning.png"  Style="margin: 0px 3px 1px 3px; vertical-align: middle; border: 0px;" />

@@ -174,12 +174,7 @@ namespace SQM.Website
         private void DisplayCalendar(DateTime selectedDate)
         {
             // don't display task strip if tasklist is empty
-            if (SessionManager.UserContext.TaskList.Count == 0)
-            {
-                divCalendar.Attributes.Remove("class");
-                divTasks.Attributes.Remove("class");
-                divTasks.Visible = false;
-            }
+      
 
             bool enableItemLinks = false;
 
