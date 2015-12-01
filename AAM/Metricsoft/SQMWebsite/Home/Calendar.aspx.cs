@@ -67,18 +67,6 @@ namespace SQM.Website
 							break;
 					}
 				}
-
-				/*
-				if (SessionManager.ReturnObject is TASK_STATUS)
-				{
-					TASK_STATUS task = SessionManager.ReturnObject as TASK_STATUS;
-					SessionManager.ClearReturns();
-					if (task.TASK_STEP == ((int)SysPriv.action).ToString())
-					{
-						UpdateSelectedTask(task.TASK_ID);
-					}
-				}
-				*/
             }
         }
 
@@ -180,23 +168,6 @@ namespace SQM.Website
                 ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
             }
  
-			// get tasks - due or escalated
-            respForList = new List<decimal>();
-            respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-			respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l=> l.PERSON_ID).ToList());
-			respPlantList = new List<decimal>();
-
-
-            SessionManager.UserContext.TaskList.Clear();
-            SessionManager.UserContext.TaskList = new List<TaskItem>();
-            DateTime fromDate = DateTime.Now.AddMonths(-3);
-
-			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
-            {
-                SessionManager.UserContext.TaskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
-                SessionManager.UserContext.TaskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, false));
-            }
-
             ++SessionManager.UserContext.InboxReviews;
         }
 
@@ -216,26 +187,30 @@ namespace SQM.Website
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
             //respForList.AddRange(SessionManager.UserContext.DelegateList);
-            DateTime toDate = DateTime.Now.AddMonths(Convert.ToInt32(sldScheduleRange.Value));
+            //DateTime toDate = DateTime.Now.AddMonths(Convert.ToInt32(sldScheduleRange.Value));
+			DateTime toDate = DateTime.Now.AddMonths(1);
+			DateTime fromDate = DateTime.Now.AddMonths(-3);
 
             string selectedValue = "0";
             if (ddlScheduleScope.SelectedIndex > -1)
                 selectedValue =  ddlScheduleScope.SelectedValue;
             else if (mnuScheduleScope.SelectedItem != null)
                 selectedValue = mnuScheduleScope.SelectedItem.Value;
-            
+
+			respForList = new List<decimal>();
+			respPlantList = new List<decimal>();
+			List<TaskItem> taskList = new List<TaskItem>();
             List<TaskItem> taskScheduleList = new List<TaskItem>();
 
             if (selectedValue == "0" ||  selectedValue == "TOP")
             {
-                taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now).ToList());
-                taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, new decimal[0] { }, false));
-                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, new decimal[0] { }, SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
-                enableItemLinks = true;
+				respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
+				respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
+
+				// QUERIES were here
             }
             else
             {
-                List<decimal> plantIDS = new List<decimal>();
                 if (selectedValue.All(c => c >= '0' && c <= '9') == false)
                 {   // all accessible plants for a selected BU
                     decimal busOrgID = Convert.ToDecimal(selectedValue.Substring(2, selectedValue.Length-2));
@@ -244,7 +219,7 @@ namespace SQM.Website
                     {
                         if (ddlScheduleScope.Visible  &&  ddlScheduleScope.Items.FindItemByValue(plantID.ToString()) != null)
                         {
-                            plantIDS.Add(plantID);
+                            respPlantList.Add(plantID);
                         }
                         else if (mnuScheduleScope.Visible)
                         {
@@ -254,7 +229,7 @@ namespace SQM.Website
                                 foreach (RadMenuItem miLoc in miBU.Items)
                                 {
                                     if (miLoc.Value == plantID.ToString())
-                                        plantIDS.Add(plantID);
+                                        respPlantList.Add(plantID);
                                 }
                             }
                         }
@@ -262,20 +237,26 @@ namespace SQM.Website
                 }
                 else
                 {   // specific plant
-                    plantIDS.Add(Convert.ToDecimal(selectedValue));
+                    respPlantList.Add(Convert.ToDecimal(selectedValue));
                 }
-
-                taskScheduleList.AddRange(SessionManager.UserContext.TaskList.Where(l => l.Task.DUE_DT < DateTime.Now.Date &&
-                    (plantIDS.Contains(l.Plant.PLANT_ID) || (l.PlantResponsible != null  &&  plantIDS.Contains((decimal)l.PlantResponsible.PLANT_ID)))));
-                taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now.Date, toDate.Date, new List<decimal>(), plantIDS.ToArray(), false));
-                taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now.Date, toDate.Date, new List<decimal>(), plantIDS.ToArray(), false));
+ 
                 if (SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.busorg))
                     enableItemLinks = true;
             }
 
+			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
+			{
+				taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day), respForList, respPlantList));
+				taskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, false));
+			}
+			taskScheduleList.AddRange(taskList);
+			taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false));
+			taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, respPlantList.ToArray(), SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
+			enableItemLinks = true;
+
             uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
 
-            uclTaskStrip.BindTaskStrip(SessionManager.UserContext.TaskList.Where(l=> !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l=> l.Task.DUE_DT).ToList());
+            uclTaskStrip.BindTaskStrip(taskList.Where(l=> !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l=> l.Task.DUE_DT).ToList());
 
 			divTaskList.Visible = divEscalate.Visible = false;
 			divCalendar.Visible = true;

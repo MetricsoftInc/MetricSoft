@@ -1168,7 +1168,7 @@ namespace SQM.Website
         {
 			// tasks OVERDUE
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString()};
-            DateTime forwardDate = DateTime.Now;
+            DateTime forwardDate = DateTime.Now.AddMonths(3);
 			INCIDENT incident;
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
@@ -1222,8 +1222,8 @@ namespace SQM.Website
                     foreach (TaskItem taskItem in taskList)
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
-                        taskItem.Taskstatus = SetEscalation(responsibleIDS[0], taskItem);
-                        taskItem.NotifyType = SetNotifyType(responsibleIDS[0], (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
+						taskItem.Taskstatus = SetEscalation(responsibleIDS.Count > 0 ? responsibleIDS[0] : (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem);
+						taskItem.NotifyType = SetNotifyType(responsibleIDS.Count > 0 ? responsibleIDS[0] : (decimal)taskItem.Task.RESPONSIBLE_ID, (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
 						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.RecordType.ToString()).FirstOrDefault().DESCRIPTION;
 						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : recordDesc;
 
@@ -1253,6 +1253,7 @@ namespace SQM.Website
             }
             catch (Exception ex)
             {
+				;
                 //SQMLogger.LogException(ex);
             }
 
