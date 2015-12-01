@@ -698,16 +698,16 @@ namespace SQM.Website
 			get;
 			set;
 		}
-		public List<TaskItem> TaskList
-		{
-			get;
-			set;
-		}
-		public List<decimal> DelegateList
-		{
-			get;
-			set;
-		}
+		//public List<TaskItem> TaskList
+		//{
+		//	get;
+		//	set;
+		//}
+		//public List<decimal> DelegateList
+		//{
+		//	get;
+		//	set;
+		//}
 		public string UserName()
 		{
 			return (this.Person.FIRST_NAME + " " + this.Person.LAST_NAME);
@@ -796,7 +796,7 @@ namespace SQM.Website
 							}
 
 							this.InboxReviews = 0;
-							this.TaskList = new List<TaskItem>();
+							//this.TaskList = new List<TaskItem>();
 						}
 					}
 				}

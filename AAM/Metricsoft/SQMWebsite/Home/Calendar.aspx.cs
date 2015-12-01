@@ -122,12 +122,6 @@ namespace SQM.Website
 			SessionManager.ReturnStatus = true;
 			SessionManager.ReturnPath = (Request.Path.ToString() + "?v=T");  // return to action/task view
 			Response.Redirect("/Home/TaskAction.aspx");
-
-			/*
-			uclTask.BindTaskUpdate(task, "");
-			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
-			*/
 		}
 
         private void SetupPage()
@@ -181,9 +175,7 @@ namespace SQM.Website
 			// get scheduled tasks
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-            //respForList.AddRange(SessionManager.UserContext.DelegateList);
-            //DateTime toDate = DateTime.Now.AddMonths(Convert.ToInt32(sldScheduleRange.Value));
-			DateTime toDate = DateTime.Now.AddMonths(1);
+			DateTime toDate = DateTime.Now.AddMonths(2);
 			DateTime fromDate = DateTime.Now.AddMonths(-3);
 
             string selectedValue = "0";
@@ -200,9 +192,6 @@ namespace SQM.Website
             if (selectedValue == "0" ||  selectedValue == "TOP")
             {
 				respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-				//respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
-
-				// QUERIES were here
             }
             else
             {
