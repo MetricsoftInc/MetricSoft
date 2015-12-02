@@ -94,17 +94,19 @@
 							&nbsp;
 							<asp:TextBox ID="tbFilterName" runat="server" MaxLength="100" Width="280"></asp:TextBox>
 							&nbsp;&nbsp;
+							<span>
 							<asp:Label ID="lblFilterStatus" runat="server" CssClass="prompt" Text="Status/Role: "></asp:Label>
-                            <telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="false" EmptyMessage="by status or role" >
-                                <Items>
-                                    <telerik:RadComboBoxItem Text="" Value="" />
-                                    <telerik:RadComboBoxItem Text="Any Status" Value="0" />
-                                    <telerik:RadComboBoxItem Text="Active Only" Value="A" />
-                                    <telerik:RadComboBoxItem Text="Inactive Only" Value="I" />
-                                    <telerik:RadComboBoxItem Text="Plant Admin Role" Value="150" />
-                                    <telerik:RadComboBoxItem Text="Company Admin Role" Value="100" />
-                                </Items>
-                            </telerik:RadComboBox>
+								<telerik:RadComboBox id="ddlListStatus" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="false" EmptyMessage="filter by status" >
+									<Items>
+										<telerik:RadComboBoxItem Text="" Value="" />
+										<telerik:RadComboBoxItem Text="Any Status" Value="0" />
+										<telerik:RadComboBoxItem Text="Active Only" Value="A" />
+										<telerik:RadComboBoxItem Text="Inactive Only" Value="I" />
+									</Items>
+								</telerik:RadComboBox>
+								<telerik:RadComboBox id="ddlRoleList" runat="server" Skin="Metro" ZIndex="9000" Width="180" AutoPostBack="false" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" EmptyMessage="filter by role" >
+								</telerik:RadComboBox>
+							</span>
                             &nbsp;&nbsp;
                             <asp:Label ID="lblUserCount" runat="server" CssClass="prompt" Text="Count = "></asp:Label>
                             <asp:Label ID="lblUserCount_out" runat="server" CssClass="textStd" ></asp:Label>

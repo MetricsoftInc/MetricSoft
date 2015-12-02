@@ -97,12 +97,14 @@ namespace SQM.Website
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", true).Where(l => l.STATUS == "A").ToList();
 			else if  (ddlListStatus.SelectedValue == "I")
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false).Where(l=> l.STATUS == "I").ToList();
-            else if (ddlListStatus.SelectedValue == "150")
-				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.busloc, 0);
-            else if (ddlListStatus.SelectedValue == "100")
-				personList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0);
 			else
 				personList = SQMModelMgr.SearchPersonList(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
+
+			List<string> roleSelects = ddlRoleList.CheckedItems.Select(c => c.Value).ToList();
+			if (roleSelects.Count > 0)
+			{
+				personList = personList.Where(p => roleSelects.Contains(p.PRIV_GROUP)).ToList();
+			}
 
 			if (!string.IsNullOrEmpty(tbFilterName.Text.Trim()))
 			{
@@ -197,6 +199,12 @@ namespace SQM.Website
 
 				SQMBasePage.SetLocationList(ddlPlantList, locationList, SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
 				ddlPlantList.Items.Insert(0, new RadComboBoxItem(Resources.LocalizedText.All, ""));
+
+				ddlRoleList.DataSource = SQMModelMgr.SelectPrivGroupList("", true);
+				ddlRoleList.DataTextField = "DESCRIPTION";
+				ddlRoleList.DataValueField = "PRIV_GROUP";
+				ddlRoleList.DataBind();
+				ddlRoleList.ClearCheckedItems();
 
 				ddl = (DropDownList)hfBase.FindControl("ddlPrefListSize");
 				if (ddl != null)

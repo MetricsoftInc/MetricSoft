@@ -358,9 +358,11 @@
 								            CssClass="textStd"></asp:Label>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="Job Code" ShowSortIcon="true" SortExpression="ROLE">
+                                <telerik:GridTemplateColumn HeaderText="Job Code/Role" ShowSortIcon="true" SortExpression="ROLE">
                                     <ItemTemplate>
-                                         <asp:Label ID="lblUserRole" runat="server" Text='<%# Eval("JOBCODE_CD") %>'></asp:Label>
+										<asp:Label ID="lblJobCode" runat="server" Text='<%# Eval("JOBCODE_CD") %>'></asp:Label>
+										<br />
+										<asp:Label ID="lblUserRole" runat="server" Text='<%# Eval("PRIV_GROUP") %>'></asp:Label>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn HeaderText="HR Location" ShowSortIcon="true" SortExpression="PLANT_ID">

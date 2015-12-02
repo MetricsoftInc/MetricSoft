@@ -492,10 +492,15 @@ namespace SQM.Website
                         Label lbl = (Label)e.Item.FindControl("lblUserStatus");
                         lbl.Text = WebSiteCommon.GetXlatValue("statusCodeDelete", lbl.Text);
 
-                        lbl = (Label)e.Item.FindControl("lblUserRole");
+                        lbl = (Label)e.Item.FindControl("lblJobCode");
 						if (user.JOBCODE != null)
 						{
-							lbl.Text = (user.JOBCODE_CD + " / "+user.JOBCODE.JOB_DESC);
+							lbl.Text = (user.JOBCODE_CD + " ("+user.JOBCODE.JOB_DESC + ")");
+						}
+						lbl = (Label)e.Item.FindControl("lblUserRole");
+						if (user.PRIVGROUP != null)
+						{
+							lbl.Text = user.PRIVGROUP.DESCRIPTION;
 						}
                         //lbl.Text = WebSiteCommon.GetXlatValue("userRole", user.ROLE.ToString());
 
