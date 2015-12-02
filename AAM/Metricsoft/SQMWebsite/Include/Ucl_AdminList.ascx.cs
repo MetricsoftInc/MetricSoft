@@ -522,7 +522,7 @@ namespace SQM.Website
                         }
                         else
                         {
-                            string[] args = (user.PLANT_ID.ToString() + "," + user.NEW_LOCATION_CD).Split(',');
+                            string[] args = (user.PLANT_ID.ToString() + user.NEW_LOCATION_CD).Split(',');
                             foreach (string loc in args.Distinct().ToArray())
                             {
                                 if ((plant = PlantList().Where(l => l.PLANT_ID.ToString() == loc).FirstOrDefault()) != null)

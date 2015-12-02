@@ -594,7 +594,7 @@ namespace SQM.Website
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				string privScope = scope.ToString();
-				string addPlant = plantID.ToString() + ",";
+				string addPlant = "," + plantID.ToString() + ",";
 
 				personList = (from p in ctx.PERSON
 							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
@@ -648,7 +648,7 @@ namespace SQM.Website
 				else
 				{
 					// fetch persons having 'plant; HR location AND 'plant' as an accesible location
-					string addPlant = plantID.ToString() + ",";
+					string addPlant = "," + plantID.ToString() + ",";
 					personList = (from p in ctx.PERSON where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
 				}
 			}
@@ -1048,12 +1048,10 @@ namespace SQM.Website
         {
 			PSsqmEntities ctx = new PSsqmEntities();
             List<PERSON> personList = new List<PERSON>();
-			string addPlant = plantID.ToString() + ",";
+			string addPlant = "," + plantID.ToString() + ",";
 
 			personList = (from p in ctx.PERSON
-						  where p.COMPANY_ID == companyID
-								&& (p.PLANT_ID == plantID  ||  p.NEW_LOCATION_CD.Contains(addPlant))
-								&& p.STATUS == "A"
+						  where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && p.STATUS == "A"
 						  select p).ToList();
 
             return personList;
@@ -1088,11 +1086,14 @@ namespace SQM.Website
                 string[] locs = person.NEW_LOCATION_CD.Split(',');
                 foreach (string locid in locs)
                 {
-                    if (locid.Trim() == plantID.ToString().Trim())
-                    {
-                        canAccess = true;
-                        break;
-                    }
+					if (!string.IsNullOrEmpty(locid))
+					{
+						if (locid.Trim() == plantID.ToString().Trim())
+						{
+							canAccess = true;
+							break;
+						}
+					}
                 }
             }
 

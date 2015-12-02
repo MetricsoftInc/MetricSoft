@@ -776,8 +776,11 @@ namespace SQM.Website
 								 string[] locs = Person.NEW_LOCATION_CD.Split(',');
 								 foreach (string locid in locs)
 								 {
-									 if (decimal.TryParse(locid, out plantID)  &&  plantID != this.WorkingLocation.Plant.PLANT_ID)
-										this.PlantAccessList.Add(plantID);
+									 if (!string.IsNullOrEmpty(locid))
+									 {
+										 if (decimal.TryParse(locid, out plantID) && plantID != this.WorkingLocation.Plant.PLANT_ID)
+											 this.PlantAccessList.Add(plantID);
+									 }
 								 }
 							}
 

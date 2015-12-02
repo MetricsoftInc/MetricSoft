@@ -52,6 +52,12 @@ namespace SQM.Website
 			set { ViewState["EditIncidentId"] = value; }
 		}
 
+		public INCIDENT LocalIncident
+		{
+			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
+			set { ViewState["LocalIncident"] = value; }
+		}
+
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -143,13 +149,18 @@ namespace SQM.Website
 			totalFormSteps = formSteps.Count();
 
 			InitializeForm();
-
 		}
 
 
 		void InitializeForm()
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
+			if (LocalIncident == null)
+			{
+				return;
+			}
 
 			pnlContain.Visible = true;
 			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
@@ -186,7 +197,7 @@ namespace SQM.Website
 					rddlp.Items.Add(new RadComboBoxItem("", ""));
 
 					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)LocalIncident.DETECT_PLANT_ID);
 					foreach (PERSON p in personList)
 					{
 						if (!String.IsNullOrEmpty(p.EMAIL))
@@ -321,7 +332,7 @@ namespace SQM.Website
 
 					rddlp.Items.Add(new RadComboBoxItem("", ""));
 					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)LocalIncident.DETECT_PLANT_ID);
 					foreach (PERSON p in personList)
 					{
 						if (!String.IsNullOrEmpty(p.EMAIL))
@@ -374,7 +385,7 @@ namespace SQM.Website
 					rddlp.Items.Add(new RadComboBoxItem("", ""));
 
 					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)LocalIncident.DETECT_PLANT_ID);
 					foreach (PERSON p in personList)
 					{
 						if (!String.IsNullOrEmpty(p.EMAIL))

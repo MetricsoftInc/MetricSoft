@@ -306,12 +306,15 @@ namespace SQM.Website
 					string[] locs = person.NEW_LOCATION_CD.Split(',');
 					foreach (string locid in locs)
 					{
-                        if ((plantItem=ddlPlantSelect.Items.FindItemByValue(locid)) != null)
-                        {
-                            ddlPlantSelect.Items.FindItemByValue(locid).Checked = true;
-                            if (locs.Length > 2)
-                                lblPlantAccess.Text += lblPlantAccess.Text.Length == 0 ? plantItem.Text : (", " + plantItem.Text);
-                        }
+						if (!string.IsNullOrEmpty(locid))
+						{
+							if ((plantItem = ddlPlantSelect.Items.FindItemByValue(locid)) != null)
+							{
+								ddlPlantSelect.Items.FindItemByValue(locid).Checked = true;
+								if (locs.Length > 2)
+									lblPlantAccess.Text += lblPlantAccess.Text.Length == 0 ? plantItem.Text : (", " + plantItem.Text);
+							}
+						}
 					}
 				}
 			}
@@ -426,13 +429,14 @@ namespace SQM.Website
                     person.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
                 }
             }
-            person.NEW_LOCATION_CD = "";
 
+            person.NEW_LOCATION_CD = "";
             foreach (RadComboBoxItem item in SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect))
             {
+				if (string.IsNullOrEmpty(person.NEW_LOCATION_CD))
+					person.NEW_LOCATION_CD = ",";
                 person.NEW_LOCATION_CD += (item.Value + ",");
             }
-            //person.NEW_LOCATION_CD = person.NEW_LOCATION_CD.TrimEnd(',');
 
             person.OLD_LOCATION_CD = "";
 

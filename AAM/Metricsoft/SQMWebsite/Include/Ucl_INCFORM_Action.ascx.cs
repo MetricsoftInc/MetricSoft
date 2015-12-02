@@ -54,7 +54,11 @@ namespace SQM.Website
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
 			set { ViewState["EditIncidentId"] = value; }
 		}
-
+		public INCIDENT LocalIncident
+		{
+			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
+			set { ViewState["LocalIncident"] = value; }
+		}
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -157,6 +161,12 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
+			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
+			if (LocalIncident == null)
+			{
+				return;
+			}
+
 			pnlAction.Visible = true;
 			//rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
 			rptAction.DataSource = EHSIncidentMgr.GetCorrectiveActionList(IncidentId);
@@ -198,7 +208,7 @@ namespace SQM.Website
 					
 					rddlp.Items.Add(new DropDownListItem("", ""));
 					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID);
+					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)LocalIncident.DETECT_PLANT_ID);
 					foreach (PERSON p in personList)
 					{
 						if (!String.IsNullOrEmpty(p.EMAIL))
