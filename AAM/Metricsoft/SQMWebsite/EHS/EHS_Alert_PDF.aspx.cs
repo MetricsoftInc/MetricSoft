@@ -166,10 +166,10 @@ namespace SQM.Website.EHS
 
 				PdfWriter.GetInstance(document, output);
 
-				document.Open();
-
 				try
 				{
+					document.Open();
+
 					//
 					// Table 1 - Header
 					//
@@ -240,12 +240,11 @@ namespace SQM.Website.EHS
 					document.Add(ReviewSection(pageData));
 					document.Add(table4);
 
+					document.Close();
 				}
 				catch
 				{
 				}
-
-				document.Close();
 
 				return output.ToArray();
 			}
