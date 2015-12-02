@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>活跃</value>
+  </data>
+  <data name="AddANewIncident" xml:space="preserve">
+    <value>添加一个新事故:</value>
+  </data>
+  <data name="AddAnother" xml:space="preserve">
+    <value>添加另一个</value>
+  </data>
+  <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
+    <value>添加另一个最终纠正措施</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="Approvals" xml:space="preserve">
+    <value>批准</value>
+  </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>评估</value>
+  </data>
+  <data name="AssessmentBy" xml:space="preserve">
+    <value>评估员：</value>
+  </data>
+  <data name="AssessmentDate" xml:space="preserve">
+    <value>评估日期</value>
+  </data>
+  <data name="AssessmentDateFrom" xml:space="preserve">
+    <value>评估开始日期:</value>
+  </data>
+  <data name="AssessmentType" xml:space="preserve">
+    <value>评估类型</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>分配至</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="BusinessLocation" xml:space="preserve">
+    <value>经营位置</value>
+  </data>
+  <data name="BusinessOrg" xml:space="preserve">
+    <value>经营机构</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CaseType" xml:space="preserve">
+    <value>事件类型</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>类别</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>密码变更</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>已关闭</value>
+  </data>
+  <data name="CloseWindowNoSave" xml:space="preserve">
+    <value>在不保存的情况下关闭窗口</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>公司</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="ContactPhoneNumber" xml:space="preserve">
+    <value>联系电话号码</value>
+  </data>
+  <data name="CorrectiveAction" xml:space="preserve">
+    <value>纠正措施</value>
+  </data>
+  <data name="CorrectiveActions" xml:space="preserve">
+    <value>纠正措施</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>成本</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>数据</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="DateSpan" xml:space="preserve">
+    <value>时间跨度</value>
+  </data>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>周几</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="DaysWithoutLostTimeCase" xml:space="preserve">
+    <value> 未发生损时事故的天数</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteIncident" xml:space="preserve">
+    <value>删除事故</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>删除条目</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>正在删除...</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>部门</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="DetectedLocation" xml:space="preserve">
+    <value>检测到的位置</value>
+  </data>
+  <data name="DisplayPasswordEditFields" xml:space="preserve">
+    <value>显示密码编辑区域</value>
+  </data>
+  <data name="Disposition" xml:space="preserve">
+    <value>处置</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>截止日期</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditIncident" xml:space="preserve">
+    <value>编辑事故</value>
+  </data>
+  <data name="EditIssue" xml:space="preserve">
+    <value>编辑问题</value>
+  </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>生效日期</value>
+  </data>
+  <data name="EHSAudits" xml:space="preserve">
+    <value>EHS 审核</value>
+  </data>
+  <data name="EHSIncidents" xml:space="preserve">
+    <value>EHS 事故</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>电子邮件地址</value>
+  </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>事件类别</value>
+  </data>
+  <data name="ExpectedReturnDate" xml:space="preserve">
+    <value>预计返回日期</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="ExportDataToExcelFormat" xml:space="preserve">
+    <value>导出 Excel 格式的数据</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>自</value>
+  </data>
+  <data name="FYYearToDate" xml:space="preserve">
+    <value>从年初截至到今天</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>不活跃</value>
+  </data>
+  <data name="Incident" xml:space="preserve">
+    <value>事故</value>
+  </data>
+  <data name="IncidentDate" xml:space="preserve">
+    <value>事故日期</value>
+  </data>
+  <data name="IncidentID" xml:space="preserve">
+    <value>事故编号</value>
+  </data>
+  <data name="IncidentType" xml:space="preserve">
+    <value>事故类型</value>
+  </data>
+  <data name="InitialAction" xml:space="preserve">
+    <value>最初措施</value>
+  </data>
+  <data name="InspectionDate" xml:space="preserve">
+    <value>检查日期</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>条目</value>
+  </data>
+  <data name="LanguageCulture" xml:space="preserve">
+    <value>语言/文化</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>最近更新</value>
+  </data>
+  <data name="ListAssessments" xml:space="preserve">
+    <value>评估清单</value>
+  </data>
+  <data name="ListAssessmentSchedules" xml:space="preserve">
+    <value>清单评估时间表</value>
+  </data>
+  <data name="ListIncidents" xml:space="preserve">
+    <value>事故清单</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="LocationCode" xml:space="preserve">
+    <value>位置代码</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>位置类型</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>注销</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="PartNumber" xml:space="preserve">
+    <value>零件号</value>
+  </data>
+  <data name="PercentChange" xml:space="preserve">
+    <value>变化百分比</value>
+  </data>
+  <data name="Plant" xml:space="preserve">
+    <value>工厂</value>
+  </data>
+  <data name="PreviousYear" xml:space="preserve">
+    <value>上一年</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>打印</value>
+  </data>
+  <data name="PrivilegeGroup" xml:space="preserve">
+    <value>特权组</value>
+  </data>
+  <data name="ProblemArea" xml:space="preserve">
+    <value>问题区域</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>问题文字</value>
+  </data>
+  <data name="Reassign" xml:space="preserve">
+    <value>重新分配</value>
+  </data>
+  <data name="ReassignToolTip" xml:space="preserve">
+    <value>重新分配此项任务给另一个人</value>
+  </data>
+  <data name="ReceiptNumber" xml:space="preserve">
+    <value>接受号码</value>
+  </data>
+  <data name="ReportDate" xml:space="preserve">
+    <value>报告日期</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>需要的</value>
+  </data>
+  <data name="RequiredFieldsMustBeCompleted" xml:space="preserve">
+    <value>需要的区域必须填写完整。</value>
+  </data>
+  <data name="ResponsibleLocation" xml:space="preserve">
+    <value>负责位置</value>
+  </data>
+  <data name="ResponsiblePerson" xml:space="preserve">
+    <value>负责人</value>
+  </data>
+  <data name="RootCause" xml:space="preserve">
+    <value>根本原因</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveAndCreateReport" xml:space="preserve">
+    <value>保存并创建报告</value>
+  </data>
+  <data name="SaveAndReturn" xml:space="preserve">
+    <value>保存并返回</value>
+  </data>
+  <data name="SaveUserPrefs" xml:space="preserve">
+    <value>保存您的用户偏好</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>正在保存...</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>分数</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="SelectAChart" xml:space="preserve">
+    <value>选择一张图表</value>
+  </data>
+  <data name="SelectAssessmentStatus" xml:space="preserve">
+    <value>选择要列出的评估状态</value>
+  </data>
+  <data name="SelectAssessmentTypes" xml:space="preserve">
+    <value>选择要列出的评估类型</value>
+  </data>
+  <data name="SelectIncidentTypes" xml:space="preserve">
+    <value>选择要列出的事故类型</value>
+  </data>
+  <data name="SelectRange" xml:space="preserve">
+    <value>选择范围</value>
+  </data>
+  <data name="SelectResponsibleSupplierLocations" xml:space="preserve">
+    <value>选择负责/供应商位置</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="SupplierLocation" xml:space="preserve">
+    <value>供应商位置</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>目标</value>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+    <value>目标值</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="TimeOfIncident" xml:space="preserve">
+    <value>事故时间</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="UpdateStatus" xml:space="preserve">
+    <value>更新状态</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>浏览统计: </value>
+  </data>
+  <data name="YearToDate" xml:space="preserve">
+    <value>从年初至今</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+</root>

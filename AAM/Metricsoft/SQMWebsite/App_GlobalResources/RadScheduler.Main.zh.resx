@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdvancedAfter" xml:space="preserve">
+    <value>之后</value>
+  </data>
+  <data name="AdvancedAllDayEvent" xml:space="preserve">
+    <value>全天</value>
+  </data>
+  <data name="AdvancedCalendarCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="AdvancedCalendarOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AdvancedCalendarToday" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="AdvancedClose" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="AdvancedDaily" xml:space="preserve">
+    <value>每天</value>
+  </data>
+  <data name="AdvancedDay" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="AdvancedDayOfMonth" xml:space="preserve">
+    <value>几号</value>
+  </data>
+  <data name="AdvancedDayOfWeek" xml:space="preserve">
+    <value>周几</value>
+  </data>
+  <data name="AdvancedDays" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="AdvancedDescription" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="AdvancedDone" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="AdvancedEditAppointment" xml:space="preserve">
+    <value>编辑预约</value>
+  </data>
+  <data name="AdvancedEndAfter" xml:space="preserve">
+    <value>在...后终止</value>
+  </data>
+  <data name="AdvancedEndByThisDate" xml:space="preserve">
+    <value>由...终止</value>
+  </data>
+  <data name="AdvancedEndDateRequired" xml:space="preserve">
+    <value>需要终止日期</value>
+  </data>
+  <data name="AdvancedEndTimeRequired" xml:space="preserve">
+    <value>需要终止时间</value>
+  </data>
+  <data name="AdvancedEvery" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="AdvancedEveryWeekday" xml:space="preserve">
+    <value>周一至周五每一天</value>
+  </data>
+  <data name="AdvancedEveryWorkingDay" xml:space="preserve">
+    <value>每个工作日</value>
+  </data>
+  <data name="AdvancedFirst" xml:space="preserve">
+    <value>第一</value>
+  </data>
+  <data name="AdvancedFourth" xml:space="preserve">
+    <value>第四</value>
+  </data>
+  <data name="AdvancedFrom" xml:space="preserve">
+    <value>开始时间</value>
+  </data>
+  <data name="AdvancedHourly" xml:space="preserve">
+    <value>每小时</value>
+  </data>
+  <data name="AdvancedHours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="AdvancedInvalidNumber" xml:space="preserve">
+    <value>无效数字</value>
+  </data>
+  <data name="AdvancedLast" xml:space="preserve">
+    <value>最后</value>
+  </data>
+  <data name="AdvancedMaskDay" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="AdvancedMaskWeekday" xml:space="preserve">
+    <value>周一至周五</value>
+  </data>
+  <data name="AdvancedMaskWeekendDay" xml:space="preserve">
+    <value>周末</value>
+  </data>
+  <data name="AdvancedMonthly" xml:space="preserve">
+    <value>每月</value>
+  </data>
+  <data name="AdvancedMonths" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="AdvancedMoreDetails" xml:space="preserve">
+    <value>更多细节</value>
+  </data>
+  <data name="AdvancedNever" xml:space="preserve">
+    <value>从未</value>
+  </data>
+  <data name="AdvancedNewAppointment" xml:space="preserve">
+    <value>新预约</value>
+  </data>
+  <data name="AdvancedNoEndDate" xml:space="preserve">
+    <value>无截止日期</value>
+  </data>
+  <data name="AdvancedOccurrences" xml:space="preserve">
+    <value>出现</value>
+  </data>
+  <data name="AdvancedOf" xml:space="preserve">
+    <value>的</value>
+  </data>
+  <data name="AdvancedOfEvery" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="AdvancedOn" xml:space="preserve">
+    <value>在</value>
+  </data>
+  <data name="AdvancedRange" xml:space="preserve">
+    <value>重现范围:</value>
+  </data>
+  <data name="AdvancedRecurEvery" xml:space="preserve">
+    <value>每次重现</value>
+  </data>
+  <data name="AdvancedRecurrence" xml:space="preserve">
+    <value>重现</value>
+  </data>
+  <data name="AdvancedRecurringAppointment" xml:space="preserve">
+    <value>重现任务</value>
+  </data>
+  <data name="AdvancedRepeat" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="AdvancedRepeatAppointment" xml:space="preserve">
+    <value>重复预约</value>
+  </data>
+  <data name="AdvancedRepeatEnd" xml:space="preserve">
+    <value>重复终止</value>
+  </data>
+  <data name="AdvancedRepeatOn" xml:space="preserve">
+    <value>重复于</value>
+  </data>
+  <data name="AdvancedReset" xml:space="preserve">
+    <value>复位异常情况</value>
+  </data>
+  <data name="AdvancedSecond" xml:space="preserve">
+    <value>第二</value>
+  </data>
+  <data name="AdvancedStartDateRequired" xml:space="preserve">
+    <value>需要开始日期</value>
+  </data>
+  <data name="AdvancedStartTimeBeforeEndTime" xml:space="preserve">
+    <value>开始日期必须在终止日期之前</value>
+  </data>
+  <data name="AdvancedStartTimeRequired" xml:space="preserve">
+    <value>需要开始时间</value>
+  </data>
+  <data name="AdvancedSubject" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="AdvancedSubjectRequired" xml:space="preserve">
+    <value>请提供预约主题</value>
+  </data>
+  <data name="AdvancedThe" xml:space="preserve">
+    <value>The</value>
+  </data>
+  <data name="AdvancedThird" xml:space="preserve">
+    <value>第三</value>
+  </data>
+  <data name="AdvancedTimeZone" xml:space="preserve">
+    <value>时区</value>
+  </data>
+  <data name="AdvancedTo" xml:space="preserve">
+    <value>终止时间</value>
+  </data>
+  <data name="AdvancedWeekly" xml:space="preserve">
+    <value>每周</value>
+  </data>
+  <data name="AdvancedWeeks" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="AdvancedWorking" xml:space="preserve">
+    <value>正在工作...</value>
+  </data>
+  <data name="AdvancedYearly" xml:space="preserve">
+    <value>每年</value>
+  </data>
+  <data name="AdvancedYears" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="AllDay" xml:space="preserve">
+    <value>全天</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ConfirmCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ConfirmDeleteText" xml:space="preserve">
+    <value>您确认要删除本预约吗?</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>确认删除</value>
+  </data>
+  <data name="ConfirmOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConfirmRecurrenceDeleteOccurrence" xml:space="preserve">
+    <value>仅删除此次出现。</value>
+  </data>
+  <data name="ConfirmRecurrenceDeleteSeries" xml:space="preserve">
+    <value>删除该系列。</value>
+  </data>
+  <data name="ConfirmRecurrenceDeleteTitle" xml:space="preserve">
+    <value>删除一次重现预约</value>
+  </data>
+  <data name="ConfirmRecurrenceEditOccurrence" xml:space="preserve">
+    <value>仅编辑该次出现。</value>
+  </data>
+  <data name="ConfirmRecurrenceEditSeries" xml:space="preserve">
+    <value>编辑该系列。</value>
+  </data>
+  <data name="ConfirmRecurrenceEditTitle" xml:space="preserve">
+    <value>编辑一次重现预约</value>
+  </data>
+  <data name="ConfirmRecurrenceMoveOccurrence" xml:space="preserve">
+    <value>仅取消这一个。</value>
+  </data>
+  <data name="ConfirmRecurrenceMoveSeries" xml:space="preserve">
+    <value>取消该系列。</value>
+  </data>
+  <data name="ConfirmRecurrenceMoveTitle" xml:space="preserve">
+    <value>移动一个重现预约</value>
+  </data>
+  <data name="ConfirmRecurrenceResizeOccurrence" xml:space="preserve">
+    <value>仅重置此次出现的大小。</value>
+  </data>
+  <data name="ConfirmRecurrenceResizeSeries" xml:space="preserve">
+    <value>重置该系列大小。</value>
+  </data>
+  <data name="ConfirmRecurrenceResizeTitle" xml:space="preserve">
+    <value>重置定期预约的大小</value>
+  </data>
+  <data name="ConfirmResetExceptionsText" xml:space="preserve">
+    <value>您想删除所有现存的重现异常情况吗?</value>
+  </data>
+  <data name="ConfirmResetExceptionsTitle" xml:space="preserve">
+    <value>确认复位异常情况</value>
+  </data>
+  <data name="ContextMenuAddAppointment" xml:space="preserve">
+    <value>新预约</value>
+  </data>
+  <data name="ContextMenuAddRecurringAppointment" xml:space="preserve">
+    <value>新重现预约</value>
+  </data>
+  <data name="ContextMenuDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ContextMenuEdit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="ContextMenuGoToToday" xml:space="preserve">
+    <value>前往今天</value>
+  </data>
+  <data name="HeaderDay" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="HeaderMonth" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="HeaderMultiDay" xml:space="preserve">
+    <value>多天</value>
+  </data>
+  <data name="HeaderNextDay" xml:space="preserve">
+    <value>下一天</value>
+  </data>
+  <data name="HeaderPrevDay" xml:space="preserve">
+    <value>上一天</value>
+  </data>
+  <data name="HeaderTimeline" xml:space="preserve">
+    <value>时间表</value>
+  </data>
+  <data name="HeaderToday" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="HeaderWeek" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>提醒</value>
+  </data>
+  <data name="ReminderBeforeStart" xml:space="preserve">
+    <value>在...之前开始</value>
+  </data>
+  <data name="ReminderDay" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="ReminderDays" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="ReminderDismiss" xml:space="preserve">
+    <value>解除</value>
+  </data>
+  <data name="ReminderDismissAll" xml:space="preserve">
+    <value>解除所有</value>
+  </data>
+  <data name="ReminderDueIn" xml:space="preserve">
+    <value>截止于</value>
+  </data>
+  <data name="ReminderHour" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="ReminderHours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="ReminderMinute" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="ReminderMinutes" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="ReminderNone" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="ReminderOpenItem" xml:space="preserve">
+    <value>开放条目</value>
+  </data>
+  <data name="ReminderOverdue" xml:space="preserve">
+    <value>逾期</value>
+  </data>
+  <data name="Reminders" xml:space="preserve">
+    <value>提醒</value>
+  </data>
+  <data name="ReminderSnooze" xml:space="preserve">
+    <value>磨蹭</value>
+  </data>
+  <data name="ReminderSnoozeHint" xml:space="preserve">
+    <value>点击“磨蹭”以再次提醒:</value>
+  </data>
+  <data name="ReminderWeek" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="ReminderWeeks" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>请不要取下此键。</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Show24Hours" xml:space="preserve">
+    <value>显示 24 小时...</value>
+  </data>
+  <data name="ShowAdvancedForm" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="ShowBusinessHours" xml:space="preserve">
+    <value>显示营业时间...</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>更多...</value>
+  </data>
+</root>

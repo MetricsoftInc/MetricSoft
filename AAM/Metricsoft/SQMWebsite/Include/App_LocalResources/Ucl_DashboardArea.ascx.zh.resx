@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnAddChartResource1.Text" xml:space="preserve">
+    <value>添加图表</value>
+  </data>
+  <data name="btnRefreshDashboardResource1.Text" xml:space="preserve">
+    <value>刷新视图</value>
+  </data>
+  <data name="btnRefreshDashboardResource1.ToolTip" xml:space="preserve">
+    <value>刷新仪表盘显示</value>
+  </data>
+  <data name="btnTestViewResource1.Text" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="btnViewLayoutResource1.Text" xml:space="preserve">
+    <value>布局</value>
+  </data>
+  <data name="btnViewSaveResource1.Text" xml:space="preserve">
+    <value>保存视图</value>
+  </data>
+  <data name="cbVINewRowResource1.Text" xml:space="preserve">
+    <value>开始新行</value>
+  </data>
+  <data name="ddlDateIntervalResource1.ToolTip" xml:space="preserve">
+    <value>选择按日期计算点图表的间隔</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.EmptyMessage" xml:space="preserve">
+    <value>图表内容</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.ToolTip" xml:space="preserve">
+    <value>选择图表或仪表类型</value>
+  </data>
+  <data name="ddlVIScopeResource1.EmptyMessage" xml:space="preserve">
+    <value>指标还是分类</value>
+  </data>
+  <data name="ddlVIScopeResource1.ToolTip" xml:space="preserve">
+    <value>按类别、类型还是具体计量选择指标</value>
+  </data>
+  <data name="ddlVISeqResource1.ToolTip" xml:space="preserve">
+    <value>显示序列</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.ToolTip" xml:space="preserve">
+    <value>数字系列排序</value>
+  </data>
+  <data name="ddlVIStatResource1.EmptyMessage" xml:space="preserve">
+    <value>统计</value>
+  </data>
+  <data name="ddlVIStatResource1.ToolTip" xml:space="preserve">
+    <value>选择要显示的指标</value>
+  </data>
+  <data name="ddlVITargetResource1.ToolTip" xml:space="preserve">
+    <value>覆盖指标目标</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.ToolTip" xml:space="preserve">
+    <value>选择自动缩放或输入最小/最大缩放值</value>
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>透视</value>
+  </data>
+  <data name="lblDateIntervalResource1.Text" xml:space="preserve">
+    <value>间隔:</value>
+  </data>
+  <data name="lblDfltParamsResource1.Text" xml:space="preserve">
+    <value>显示标准</value>
+  </data>
+  <data name="lblLastUpdateResource1.Text" xml:space="preserve">
+    <value>最近更新者：</value>
+  </data>
+  <data name="lblOfResource1.Text" xml:space="preserve">
+    <value>的</value>
+  </data>
+  <data name="lblPerspectiveResource1.Text" xml:space="preserve">
+    <value>选择一个反映您希望了解之详细分析的视图。视图按照其反映的系统主题或数据类型列出。</value>
+  </data>
+  <data name="lblViewAvailabilityResource1.Text" xml:space="preserve">
+    <value>可用性。</value>
+  </data>
+  <data name="lblViewDescResource1.Text" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="lblViewLoadErrorResource1.Text" xml:space="preserve">
+    <value>在尝试打开所选视图时出错。</value>
+  </data>
+  <data name="lblViewNameResource1.Text" xml:space="preserve">
+    <value>视图名称</value>
+  </data>
+  <data name="lblViewResource1.Text" xml:space="preserve">
+    <value>视图:</value>
+  </data>
+  <data name="LblViewSaveErrorResource1.Text" xml:space="preserve">
+    <value>在保存您的修改时出错。</value>
+  </data>
+  <data name="lblVISeqResource1.Text" xml:space="preserve">
+    <value>图表</value>
+  </data>
+  <data name="lblVIXAxisResource1.Text" xml:space="preserve">
+    <value>可变轴</value>
+  </data>
+  <data name="lblWorkingResource1.Text" xml:space="preserve">
+    <value>加载视图 - 请等候...</value>
+  </data>
+  <data name="lblXByResource1.Text" xml:space="preserve">
+    <value>通过</value>
+  </data>
+  <data name="lblXToResource1.Text" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>正在加载...</value>
+  </data>
+  <data name="RadComboBoxItemResource10.Text" xml:space="preserve">
+    <value>环境 YTD 绩效</value>
+  </data>
+  <data name="RadComboBoxItemResource11.Text" xml:space="preserve">
+    <value>健康与安全</value>
+  </data>
+  <data name="RadComboBoxItemResource12.Text" xml:space="preserve">
+    <value>健康与安全 YTD 绩效</value>
+  </data>
+  <data name="RadComboBoxItemResource13.Text" xml:space="preserve">
+    <value>质量</value>
+  </data>
+  <data name="RadComboBoxItemResource14.Text" xml:space="preserve">
+    <value>业主</value>
+  </data>
+  <data name="RadComboBoxItemResource18.Text" xml:space="preserve">
+    <value>无默认值</value>
+  </data>
+  <data name="RadComboBoxItemResource19.Text" xml:space="preserve">
+    <value>使用当前值 / 允许覆盖</value>
+  </data>
+  <data name="RadComboBoxItemResource20.Text" xml:space="preserve">
+    <value>使用当前值 / 无覆盖</value>
+  </data>
+  <data name="RadComboBoxItemResource21.Text" xml:space="preserve">
+    <value>选择位置</value>
+  </data>
+  <data name="RadComboBoxItemResource22.Text" xml:space="preserve">
+    <value>选择时间跨度</value>
+  </data>
+  <data name="RadComboBoxItemResource24.Text" xml:space="preserve">
+    <value>截面积</value>
+  </data>
+  <data name="RadComboBoxItemResource25.Text" xml:space="preserve">
+    <value>游标卡尺</value>
+  </data>
+  <data name="RadComboBoxItemResource26.Text" xml:space="preserve">
+    <value>游标阵列</value>
+  </data>
+  <data name="RadComboBoxItemResource27.Text" xml:space="preserve">
+    <value>条形图</value>
+  </data>
+  <data name="RadComboBoxItemResource28.Text" xml:space="preserve">
+    <value>堆叠式条形图</value>
+  </data>
+  <data name="RadComboBoxItemResource29.Text" xml:space="preserve">
+    <value>条形帕累托图</value>
+  </data>
+  <data name="RadComboBoxItemResource30.Text" xml:space="preserve">
+    <value>柱形计</value>
+  </data>
+  <data name="RadComboBoxItemResource31.Text" xml:space="preserve">
+    <value>柱形计阵列</value>
+  </data>
+  <data name="RadComboBoxItemResource32.Text" xml:space="preserve">
+    <value>柱形图</value>
+  </data>
+  <data name="RadComboBoxItemResource33.Text" xml:space="preserve">
+    <value>堆叠式柱形图</value>
+  </data>
+  <data name="RadComboBoxItemResource34.Text" xml:space="preserve">
+    <value>编组式柱形图</value>
+  </data>
+  <data name="RadComboBoxItemResource35.Text" xml:space="preserve">
+    <value>柱形帕累托图</value>
+  </data>
+  <data name="RadComboBoxItemResource36.Text" xml:space="preserve">
+    <value>线形图</value>
+  </data>
+  <data name="RadComboBoxItemResource37.Text" xml:space="preserve">
+    <value>线型图阵列</value>
+  </data>
+  <data name="RadComboBoxItemResource38.Text" xml:space="preserve">
+    <value>饼形图</value>
+  </data>
+  <data name="RadComboBoxItemResource39.Text" xml:space="preserve">
+    <value>饼形图阵列</value>
+  </data>
+  <data name="RadComboBoxItemResource4.Text" xml:space="preserve">
+    <value>FY 逐年</value>
+  </data>
+  <data name="RadComboBoxItemResource40.Text" xml:space="preserve">
+    <value>径向计</value>
+  </data>
+  <data name="RadComboBoxItemResource41.Text" xml:space="preserve">
+    <value>径向计阵列</value>
+  </data>
+  <data name="RadComboBoxItemResource42.Text" xml:space="preserve">
+    <value>总计</value>
+  </data>
+  <data name="RadComboBoxItemResource45.Text" xml:space="preserve">
+    <value>经过天数</value>
+  </data>
+  <data name="RadComboBoxItemResource46.Text" xml:space="preserve">
+    <value>全体总和</value>
+  </data>
+  <data name="RadComboBoxItemResource47.Text" xml:space="preserve">
+    <value>按测量-位置排序</value>
+  </data>
+  <data name="RadComboBoxItemResource48.Text" xml:space="preserve">
+    <value>按位置-测量排序</value>
+  </data>
+  <data name="RadComboBoxItemResource49.Text" xml:space="preserve">
+    <value>按时段-位置排序</value>
+  </data>
+  <data name="RadComboBoxItemResource5.Text" xml:space="preserve">
+    <value>FY 指标有效范围</value>
+  </data>
+  <data name="RadComboBoxItemResource50.Text" xml:space="preserve">
+    <value>按时段-测量排序</value>
+  </data>
+  <data name="RadComboBoxItemResource51.Text" xml:space="preserve">
+    <value>按年份-位置排序</value>
+  </data>
+  <data name="RadComboBoxItemResource52.Text" xml:space="preserve">
+    <value>按年份-测量排序</value>
+  </data>
+  <data name="RadComboBoxItemResource53.Text" xml:space="preserve">
+    <value>自动缩放</value>
+  </data>
+  <data name="RadComboBoxItemResource54.Text" xml:space="preserve">
+    <value>设定比例</value>
+  </data>
+  <data name="RadComboBoxItemResource55.Text" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="RadComboBoxItemResource57.Text" xml:space="preserve">
+    <value>当前值</value>
+  </data>
+  <data name="RadComboBoxItemResource6.Text" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="RadComboBoxItemResource7.Text" xml:space="preserve">
+    <value>按年</value>
+  </data>
+  <data name="RadComboBoxItemResource8.Text" xml:space="preserve">
+    <value>按月</value>
+  </data>
+  <data name="RadComboBoxItemResource9.Text" xml:space="preserve">
+    <value>环境指标</value>
+  </data>
+  <data name="tbVIHeightResource1.ToolTip" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="tbVIWidthResource1.ToolTip" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="tbVIXAxisLabelResource1.ToolTip" xml:space="preserve">
+    <value>可变轴标志</value>
+  </data>
+  <data name="tbVIXAxisMaxResource1.ToolTip" xml:space="preserve">
+    <value>轴最大值</value>
+  </data>
+  <data name="tbVIXAxisMinResource1.ToolTip" xml:space="preserve">
+    <value>轴最小或原始值</value>
+  </data>
+  <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
+    <value>比例单位</value>
+  </data>
+</root>
