@@ -1052,7 +1052,7 @@ namespace SQM.Website
 
 			personList = (from p in ctx.PERSON
 						  where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && p.STATUS == "A"
-						  select p).ToList();
+						  select p).OrderBy(l=> l.LAST_NAME).ThenBy(l=> l.FIRST_NAME).ToList();
 
             return personList;
         }
