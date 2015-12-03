@@ -115,7 +115,7 @@ namespace SQM.Website.EHS
 
 		private byte[] BuildPdf()
 		{
-			reportXLAT = SQMBasePage.SelectXLATList(new string[5] { "HS_5PHASE", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE" });
+			reportXLAT = SQMBasePage.SelectXLATList(new string[5] { "HS_5PHASE", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE" }, 1);
 
 			AlertData pageData;
 			
