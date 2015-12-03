@@ -139,6 +139,15 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadWindow rwDetails;
         
         /// <summary>
+        /// hfLang control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfLang;
+        
+        /// <summary>
         /// radCodeBlock control.
         /// </summary>
         /// <remarks>

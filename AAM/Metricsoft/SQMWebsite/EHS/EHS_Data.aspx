@@ -183,6 +183,7 @@
 			</ContentTemplate>
 		</telerik:RadWindow>
 	</div>
+	<asp:HiddenField ID="hfLang" runat="server" />
 	<telerik:RadCodeBlock ID="radCodeBlock" runat="server">
 		<script type="text/javascript">
 			var radLoading = null;
@@ -198,6 +199,8 @@
 			var rwDetails = null;
 			var rowsForButtons = {};
 			var hfCurrDetails = $('#hfCurrDetails');
+
+			var hfLang = $('#<%= hfLang.ClientID %>');
 
 			// This is to get around Telerik's RadGrid applying its own class to the rows, by having jQuery remove the classes when the page loads.
 			$('.rgHeader, .rgRow, .rgAltRow').removeClass('rgHeader rgRow rgAltRow');
@@ -253,7 +256,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/GetDailyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate() }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate(), lang: hfLang.val() }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function(data)
 					{
@@ -261,10 +264,7 @@
 						rcbPlant.findItemByValue(data.d.plantID).select();
 						rdpEndOfWeek.set_selectedDate(new Date(data.d.endOfWeek));
 						// Store the date headers in an array for use later.
-						dates = $.map(data.d.dates, function(n, i)
-						{
-							return n
-						});
+						dates = data.d.dates;
 						// We then write all the data to the RadGrid, including the headers.
 						for (var day in data.d.dates)
 						{
@@ -579,12 +579,11 @@
 
 			function rwDetails_open(dayOfWeek, button)
 			{
-				var date = $.grep(dates, function(n)
-				{
-					return n.endsWith(dayOfWeek);
-				})[0];
+				var date = dates[dayOfWeek];
+				var br = date.indexOf('<br>');
+				date = date.substring(6, br);
 				var row = rowsForButtons[button.id];
-				rwDetails.set_title($(rgData_data[row].get_cell('MEASURE_NAME')).html() + ' Details for ' + date.substr(0, date.length - 7));
+				rwDetails.set_title($(rgData_data[row].get_cell('MEASURE_NAME')).html() + ' Details for ' + date);
 				hfCurrDetails.val(JSON.stringify({ dayOfWeek: dayOfWeek, row: row }));
 				rwDetails_populateAndShow($.parseJSON($(rgData_data[row].get_element()).find('input[type="hidden"][name$="hfDetails' + dayOfWeek + '"]').val()));
 			}

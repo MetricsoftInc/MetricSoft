@@ -31,20 +31,18 @@ namespace SQM.Website.EHS
 		/// <returns>The first day of the given week for the given year.</returns>
 		static DateTime FirstDayOfWeek(DateTime date, System.Globalization.Calendar cal, CalendarWeekRule calendarWeekRule, DayOfWeek firstDayOfWeek)
 		{
-			int year = date.Year;
-			int weekOfYear = cal.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek);
-			var jan1 = new DateTime(year, 1, 1);
+			var jan1 = new DateTime(date.Year, 1, 1);
 			int daysOffset = (int)firstDayOfWeek - (int)jan1.DayOfWeek;
-			var firstWeekDay = jan1.AddDays(daysOffset);
-			int firstWeek = cal.GetWeekOfYear(jan1, calendarWeekRule, firstDayOfWeek);
-			if (firstWeek <= 1 || firstWeek > 50)
-				--weekOfYear;
-			return firstWeekDay.AddDays(weekOfYear * 7);
+			// Minor fix, if firstDayOfWeek is not Sunday but jan1.DayOfWeek is, then 7 needs to be subtracted from the daysOffset to get the proper start of the week.
+			if (firstDayOfWeek != DayOfWeek.Sunday && jan1.DayOfWeek == DayOfWeek.Sunday)
+				daysOffset = daysOffset - 7;
+			return jan1.AddDays(daysOffset).AddDays(cal.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek) * 7 - 7);
 		}
 
 		[WebMethod]
-		public static dynamic GetDailyData(decimal plantID, DateTime day)
+		public static dynamic GetDailyData(decimal plantID, DateTime day, string lang)
 		{
+			var culture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
 			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
@@ -58,7 +56,8 @@ namespace SQM.Website.EHS
 				for (int i = 0; i < 7; ++i, startOfWeek = startOfWeek.AddDays(1))
 				{
 					string dayName = startOfWeek.ToString("ddd");
-					dateHeaders.Add(dayName, startOfWeek.ToString("d") + "<br>" + dayName);
+					dateHeaders.Add(dayName, "<span>" + startOfWeek.ToString("d", culture) + "<br>" + startOfWeek.ToString("ddd", culture) + "<input type=\"hidden\" value=\"" + dayName +
+						"\" /></span>");
 					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == startOfWeek.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
@@ -482,7 +481,7 @@ namespace SQM.Website.EHS
 		{
 			var cal = this.rdpEndOfWeek.Calendar;
 			calendar = cal.Calendar;
-			calendarWeekRule = cal.DateTimeFormat.CalendarWeekRule;
+			calendarWeekRule = cal.DateTimeFormat.CalendarWeekRule = CalendarWeekRule.FirstDay;
 			firstDayOfWeek = (DayOfWeek)cal.FirstDayOfWeek;
 
 			// The RadGrid is created here, due to the number of columns varying depending on the frequency being used. I was unable to remove columns from an existing
@@ -518,11 +517,14 @@ namespace SQM.Website.EHS
 			{
 				var startOfWeek = FirstDayOfWeek(DateTime.Today, calendar, calendarWeekRule, firstDayOfWeek);
 				for (int i = 0; i < 7; ++i, startOfWeek = startOfWeek.AddDays(1))
+				{
+					string day = startOfWeek.ToString("ddd", System.Globalization.CultureInfo.InvariantCulture);
 					rgData.MasterTableView.Columns.Add(new GridTemplateColumn()
 					{
-						UniqueName = "gtc" + startOfWeek.ToString("ddd"),
-						ItemTemplate = new DataTemplate(startOfWeek.ToString("ddd"), 100)
+						UniqueName = "gtc" + day,
+						ItemTemplate = new DataTemplate(day, 100)
 					});
+				}
 			}
 			foreach (var column in rgData.MasterTableView.Columns.OfType<GridTemplateColumn>())
 			{
@@ -543,6 +545,8 @@ namespace SQM.Website.EHS
 		{
 			if (!this.IsPostBack)
 			{
+				this.hfLang.Value = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+
 				string frequency;
 				string frequencyName = this.Request.QueryString["type"];
 				if (frequencyName == null)
