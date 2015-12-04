@@ -266,7 +266,7 @@ namespace SQM.Website.EHS
 					if (dataToUse.Has(DataToUse.Severity))
 						monthData.Severity = severity;
 					if (dataToUse.Has(DataToUse.FirstAid))
-						monthData.FirstAid = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						monthData.FirstAid = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.Leadership))
 						monthData.Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
