@@ -40,9 +40,9 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpTaskDueDT" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True" Enabled="False">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+					<Calendar runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
-					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
+					<DateInput runat="server" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
 						<EmptyMessageStyle Resize="None" />
 						<ReadOnlyStyle Resize="None" />
 						<FocusedStyle Resize="None" />
@@ -114,9 +114,9 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDatePicker ID="rdpTaskDueDTAdd" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+					<Calendar runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
-					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
+					<DateInput runat="server" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
 						<EmptyMessageStyle Resize="None" />
 						<ReadOnlyStyle Resize="None" />
 						<FocusedStyle Resize="None" />
@@ -131,11 +131,12 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
-					<asp:Label ID="lblAssignPersonAdd" runat="server" Text="Assign To Person" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
+					<asp:Label ID="lblAssignPersonAdd" runat="server" Text="Assign To Person*" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
 				</div>
 				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-					<telerik:RadComboBox ID="ddlAssignPersonAdd" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="select person" meta:resourcekey="ddlAssignPersonResource1"></telerik:RadComboBox>
+					<telerik:RadComboBox ID="ddlAssignPersonAdd" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="select person" meta:resourcekey="ddlAssignPersonResource1"></telerik:RadComboBox><div style="background-color:  #FFFFFF; background-image : url(/images/requiredAlt.gif); background-repeat : no-repeat; background-position : center; width : 10px; float: right; margin-right: 5px;">&nbsp;</div>
 				</div>
+                
 			</div>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
@@ -151,6 +152,11 @@
 				<asp:Button ID="btnTaskAdd" CSSclass="buttonStd" runat="server" Text="Create" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskCreateConfirm %>" onclick="btnTaskAdd_Click" ToolTip="Create this Task as open" meta:resourcekey="btnTaskAddResource1"></asp:Button>
 				<asp:Button ID="btnTaskCancelAdd" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
 			</span>
+            <br />
+            <span style="text-align: center">
+                <asp:Label id="lblErrRequiredInputs" runat="server" Visible="false" Text="<%$ Resources:LocalizedText, ENVProfileRequiredsMsg %>"/>
+                <asp:Label ID="lblErrorMessage" runat="server" CssClass="labelEmphasis"></asp:Label>
+            </span>
         </div>
 	</div>
 </asp:Panel>

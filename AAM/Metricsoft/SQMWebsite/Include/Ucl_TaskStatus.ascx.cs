@@ -83,7 +83,7 @@ namespace SQM.Website
 
 			pnlUpdateTask.Visible = false;
 			pnlAddTask.Visible = true;
-			btnTaskAdd.CommandArgument = recordType.ToString() + "~" + recordID.ToString() + "~" + recordSubID.ToString() + "~" + taskStep + "~" + taskType;
+			btnTaskAdd.CommandArgument = recordType.ToString() + "~" + recordID.ToString() + "~" + recordSubID.ToString() + "~" + taskStep + "~" + taskType + "~" + plantID.ToString();
 
 			lblTaskTypeValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == recordType.ToString()).FirstOrDefault().DESCRIPTION;
 
@@ -114,6 +114,7 @@ namespace SQM.Website
 
 		protected void btnTaskAdd_Click(object sender, EventArgs e)
 		{
+			lblErrorMessage.Text = "";
 			Button btn = (Button)sender;
 			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
 			{
@@ -126,31 +127,49 @@ namespace SQM.Website
 			decimal recordSubID = Convert.ToDecimal(cmd[2]);
 			string taskStep = cmd[3];
 			string taskType = cmd[4];
-			TaskStatusMgr taskMgr = new TaskStatusMgr();
-			taskMgr.Initialize(recordType, recordID);
-			TASK_STATUS task = new TASK_STATUS();
-			task.RECORD_TYPE = recordType;
-			task.RECORD_ID = recordID;
-			task.RECORD_SUBID = recordSubID;
-			task.TASK_STEP = taskStep;
-			task.TASK_TYPE = taskType;
-			task.TASK_SEQ = 0;
-			task.DUE_DT = rdpTaskDueDTAdd.SelectedDate;
-			task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPersonAdd.SelectedValue.ToString());
-			task.DETAIL = lblTaskDetailValueAdd.Text.ToString();
-			task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
-			task.STATUS = ((int)TaskStatus.New).ToString();
-			task.CREATE_DT = DateTime.Now;
-			task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
-
-			taskMgr.CreateTask(task);
-			taskMgr.UpdateTaskList(task.RECORD_ID);
-			// send email
-			EHSNotificationMgr.NotifyTaskAssigment(task);
-
-			if (OnTaskAdd != null)
+			string plantID = cmd[5];
+	
+			// make sure that the Assign To Employee has been selected
+			if (ddlAssignPersonAdd.SelectedValue.ToString().Equals(""))
 			{
-				OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
+				BindTaskAdd(recordType, recordID, recordSubID, "350", "T", lblTaskDetailValueAdd.Text.ToString(), Convert.ToDecimal(plantID), "");
+				lblErrorMessage.Text = lblErrRequiredInputs.Text.ToString();
+				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
+			else
+			{
+
+				TaskStatusMgr taskMgr = new TaskStatusMgr();
+				taskMgr.Initialize(recordType, recordID);
+				TASK_STATUS task = new TASK_STATUS();
+				task.RECORD_TYPE = recordType;
+				task.RECORD_ID = recordID;
+				task.RECORD_SUBID = recordSubID;
+				task.TASK_STEP = taskStep;
+				task.TASK_TYPE = taskType;
+				task.TASK_SEQ = 0;
+				task.DUE_DT = rdpTaskDueDTAdd.SelectedDate;
+				task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPersonAdd.SelectedValue.ToString());
+				task.DETAIL = lblTaskDetailValueAdd.Text.ToString();
+				task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
+				task.STATUS = ((int)TaskStatus.New).ToString();
+				task.CREATE_DT = DateTime.Now;
+				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
+
+				taskMgr.CreateTask(task);
+				taskMgr.UpdateTaskList(task.RECORD_ID);
+				// send email
+				EHSNotificationMgr.NotifyTaskAssigment(task);
+
+				// reset the fields for the next add
+				ddlAssignPersonAdd.SelectedIndex = 0;
+				tbTaskDescriptionAdd.Text = "";
+
+				if (OnTaskAdd != null)
+				{
+					OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
+				}
 			}
 		}
 
