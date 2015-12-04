@@ -1635,7 +1635,7 @@ namespace SQM.Website
 		public string TextLong { get; set; }
 		public string Value { get; set; }
 		public string Status { get; set; }
-		public int SortOrder { get; set; }
+		public int ? SortOrder { get; set; }
 		public bool IsHeading { get; set; }
 
 	}
@@ -1651,20 +1651,56 @@ namespace SQM.Website
 			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
 			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
 
-			metaList = (from x in entities.XLAT
-						where x.XLAT_LANGUAGE == language && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
-						orderby x.XLAT_CODE
-						select new EHSMetaData()
-						{
-							Language = x.XLAT_LANGUAGE,
-							MetaDataType = x.XLAT_GROUP,
-							Text = x.DESCRIPTION_SHORT,
-							TextLong = x.DESCRIPTION,
-							Value = x.XLAT_CODE,
-							Status = x.STATUS,
-							SortOrder = (int)x.SORT_ORDER,
-							IsHeading = (bool)x.IS_HEADING
-						}).ToList();
+			if (language == "en")
+			{
+				metaList = (from x in entities.XLAT
+							where x.XLAT_LANGUAGE == language && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
+							orderby x.XLAT_CODE
+							select new EHSMetaData()
+							{
+								Language = x.XLAT_LANGUAGE,
+								MetaDataType = x.XLAT_GROUP,
+								Text = x.DESCRIPTION_SHORT,
+								TextLong = x.DESCRIPTION,
+								Value = x.XLAT_CODE,
+								Status = x.STATUS,
+								SortOrder = x.SORT_ORDER,
+								IsHeading = (bool)x.IS_HEADING
+							}).ToList();
+			}
+			else
+			{
+				var tempList = (from x in entities.XLAT
+							where (x.XLAT_LANGUAGE == language  ||  x.XLAT_LANGUAGE == "en") && x.XLAT_GROUP == metaDataType && x.STATUS == "A"
+							orderby x.XLAT_CODE
+							select new EHSMetaData()
+							{
+								Language = x.XLAT_LANGUAGE,
+								MetaDataType = x.XLAT_GROUP,
+								Text = x.DESCRIPTION_SHORT,
+								TextLong = x.DESCRIPTION,
+								Value = x.XLAT_CODE,
+								Status = x.STATUS,
+								SortOrder = x.SORT_ORDER,
+								IsHeading = (bool)x.IS_HEADING
+							}).ToList();
+
+				EHSMetaData XLATlang = null;
+				foreach (EHSMetaData xlat in tempList.Where(x => x.Language == "en").ToList())
+				{
+					XLATlang = tempList.Where(l => l.MetaDataType == xlat.MetaDataType && l.Value == xlat.Value && l.Language == language).FirstOrDefault();
+					if (XLATlang != null)
+						metaList.Add(XLATlang);
+					else
+					{
+						XLATlang = new EHSMetaData();
+						XLATlang = (EHSMetaData)SQMModelMgr.CopyObjectValues(XLATlang, xlat, false);
+						XLATlang.Language = language;  // substitute english xlat if localized version does not exist
+						metaList.Add(xlat);
+					}
+				}
+			}
+
 			return metaList;
 		}
 	

@@ -240,6 +240,8 @@ namespace SQM.Website
 				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
 				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
 				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+				if (selectedLanguage == "th")
+					System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 
 				base.FrameworkInitialize();
 			}
@@ -290,12 +292,20 @@ namespace SQM.Website
 
 				if (incident != null)
 				{
-					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
+					string lang;
+					if ((lang=System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
 						pnlLocalDesc.Visible = true;
 
-					rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
-					rdpReportDate.Culture = rdpIncidentDate.Culture;
-					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
+					if (lang == "th")
+					{
+						//rdpIncidentDate.Culture = new System.Globalization.CultureInfo("en", true);
+						rdpIncidentDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpIncidentDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpReportDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpReportDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						//rdpReportDate.Culture = rdpIncidentDate.Culture;
+						//rtpIncidentTime.Culture = rdpIncidentDate.Culture;
+					}
 
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incidentDate = incident.INCIDENT_DT;
@@ -391,16 +401,22 @@ namespace SQM.Website
 					rdoFirstAid.SelectedValue = "1";
 					Severity_Changed(rdoFirstAid, null);
 
-					if (System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() != "en")
+					string lang;
+					if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
 						pnlLocalDesc.Visible = true;
 
-					rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
+					if (lang == "th")
+					{
+						//rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
+						rdpIncidentDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpIncidentDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpReportDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						rdpReportDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+					}
 					rdpIncidentDate.SelectedDate = DateTime.Now;
-
-					rdpReportDate.Culture = rdpIncidentDate.Culture;
+					//rdpReportDate.Culture = rdpIncidentDate.Culture;
 					rdpReportDate.SelectedDate = DateTime.Now;
-
-					rtpIncidentTime.Culture = rdpIncidentDate.Culture;
+					//rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
 					PopulateJobTenureDropDown();
 					PopulateShiftDropDown();

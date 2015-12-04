@@ -47,24 +47,14 @@ namespace SQM.Website
 						Culture = lang;
 						System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
 						System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+						if (lang == "th")
+							System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 					}
 					catch { }
                 }
                 base.InitializeCulture();
             }
         }
-
-		//protected override void FrameworkInitialize()
-		//{
-		//	//String selectedLanguage = "es";
-		//	//String selectedLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.TextInfo.CultureName.Split('-')[0];
-		//	String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
-		//	System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(selectedLanguage);
-		//	System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(selectedLanguage);
-
-		//	base.FrameworkInitialize();
-		//}
-
 
         public static string CultureInfo(int option)
         {
@@ -1129,6 +1119,7 @@ namespace SQM.Website
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
 				string language = "en";
+
 				try
 				{
 					string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
@@ -1137,10 +1128,35 @@ namespace SQM.Website
 				catch
 				{ }
 
-				XLATList = (from x in ctx.XLAT
-							where x.XLAT_LANGUAGE == language && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
-							orderby x.XLAT_GROUP, x.XLAT_CODE
-							select x).ToList();
+				if (language == "en")
+				{
+					XLATList = (from x in ctx.XLAT
+								where x.XLAT_LANGUAGE == language && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+								orderby x.XLAT_GROUP, x.XLAT_CODE
+								select x).ToList();
+				}
+				else
+				{
+					List<XLAT> tempList = (from x in ctx.XLAT
+								where (x.XLAT_LANGUAGE == language || x.XLAT_LANGUAGE == "en") && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+								orderby x.XLAT_GROUP, x.XLAT_CODE
+								select x).ToList();
+
+					XLAT XLATlang = null;
+					foreach (XLAT xlat in tempList.Where(x=> x.XLAT_LANGUAGE == "en").ToList())
+					{
+						XLATlang = tempList.Where(l => l.XLAT_GROUP == xlat.XLAT_GROUP && l.XLAT_CODE == xlat.XLAT_CODE && l.XLAT_LANGUAGE == language).FirstOrDefault();
+						if (XLATlang != null)
+							XLATList.Add(XLATlang);
+						else
+						{
+							XLATlang = new XLAT();
+							XLATlang = (XLAT)SQMModelMgr.CopyObjectValues(XLATlang, xlat, false);
+							XLATlang.XLAT_LANGUAGE = language;  // substitute english xlat if localized version does not exist
+							XLATList.Add(xlat);
+						}
+					}
+				}
 			}
 			return XLATList;
 		}
@@ -1151,11 +1167,49 @@ namespace SQM.Website
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				XLATList = (from x in ctx.XLAT
-							join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE 
-							where (languageID == 0 || l.LANGUAGE_ID == languageID) && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
-							orderby x.XLAT_GROUP, x.XLAT_CODE
-							select x).ToList();
+				if (languageID == 1)
+				{
+					XLATList = (from x in ctx.XLAT
+								join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE
+								where (l.LANGUAGE_ID == languageID) && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+								orderby x.XLAT_GROUP, x.XLAT_CODE
+								select x).ToList();
+				}
+				else if (languageID == 0)
+				{
+					XLATList = (from x in ctx.XLAT
+								join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE
+								where XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+								orderby x.XLAT_GROUP, x.XLAT_CODE
+								select x).ToList();
+				}
+				else
+				{
+					LOCAL_LANGUAGE lang = (from l in ctx.LOCAL_LANGUAGE where l.LANGUAGE_ID == languageID select l).SingleOrDefault();
+					if (lang == null)
+					{
+						return XLATList;
+					}
+					List<XLAT> tempList = (from x in ctx.XLAT
+										   join l in ctx.LOCAL_LANGUAGE on x.XLAT_LANGUAGE equals l.NLS_LANGUAGE
+										   where (l.LANGUAGE_ID == languageID  ||  l.LANGUAGE_ID == 1) && XLATGroupArray.Contains(x.XLAT_GROUP) && x.STATUS == "A"
+										   orderby x.XLAT_GROUP, x.XLAT_CODE
+										   select x).ToList();
+					XLAT XLATlang = null;
+					foreach (XLAT xlat in tempList.Where(x => x.XLAT_LANGUAGE == "en").ToList())
+					{
+						XLATlang = tempList.Where(l => l.XLAT_GROUP == xlat.XLAT_GROUP && l.XLAT_CODE == xlat.XLAT_CODE && l.XLAT_LANGUAGE == lang.NLS_LANGUAGE).FirstOrDefault();
+						if (XLATlang != null)
+							XLATList.Add(XLATlang);
+						else
+						{
+							XLATlang = new XLAT();
+							XLATlang = (XLAT)SQMModelMgr.CopyObjectValues(XLATlang, xlat, false);
+							XLATlang.XLAT_LANGUAGE = lang.NLS_LANGUAGE;  // substitute english xlat if localized version does not exist
+							XLATList.Add(xlat);
+						}
+					}
+				}
 			}
 			return XLATList;
 		}
@@ -1173,8 +1227,10 @@ namespace SQM.Website
 		public static XLAT GetXLAT(List<XLAT> xlatList, string xlatGroup, string xlatCode, string language)
 		{
 			XLAT xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode  &&  (string.IsNullOrEmpty(language)  ||  l.XLAT_LANGUAGE == language)).FirstOrDefault();
+
 			if (xlat == null)
 			{
+				if ((xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode && (string.IsNullOrEmpty(language) || l.XLAT_LANGUAGE == "en")).FirstOrDefault()) == null)
 				xlat = new XLAT();
 			}
 			return xlat;

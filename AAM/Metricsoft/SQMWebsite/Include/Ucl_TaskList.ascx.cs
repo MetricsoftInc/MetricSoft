@@ -145,6 +145,11 @@ namespace SQM.Website
             pnlTaskSchedule.Visible = true;
             hfScheduleScope.Value = enableItemLinks.ToString().ToLower();
 
+			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+			if (language == "th")
+				scdTaskSchedule.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+
             scdTaskSchedule.SelectedDate = selectedDate;
   
             foreach (TaskItem taskItem in taskList)

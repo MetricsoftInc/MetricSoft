@@ -209,6 +209,8 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+
 			INCIDENT incident = null;
 			if (EditIncidentId > 0)
 			{
@@ -426,7 +428,12 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
-						rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						//rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						if (lang == "th")
+						{
+							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						}
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
@@ -728,6 +735,8 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+
 			INCIDENT incident = null;
 			if (EditIncidentId > 0)
 			{
@@ -931,7 +940,12 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
-						rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						//rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+						if (lang == "th")
+						{
+							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+						}
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
@@ -1835,6 +1849,10 @@ namespace SQM.Website
 
 			foreach (var q in questions)
 			{
+				if (q.QuestionId == 107)
+				{
+					;
+				}
 				var control = pnlForm.FindControl(q.QuestionId.ToString());
 				string answer = "";
 				if (control != null)
@@ -1850,7 +1868,11 @@ namespace SQM.Website
 							if (q.QuestionId == (decimal)EHSQuestionId.Description)
 								incidentDescription = answer;
 							break;
-
+						case EHSIncidentQuestionType.NativeLangTextBox:
+							answer = (control as RadTextBox).Text;
+							if (q.QuestionId == (decimal)EHSQuestionId.Description)
+								incidentDescription = answer;
+							break;
 						case EHSIncidentQuestionType.RichTextBox:
 							answer = (control as RadEditor).Content;
 							if (q.QuestionId == (decimal)EHSQuestionId.RecommendationSummary)
