@@ -182,6 +182,7 @@ namespace SQM.Website
 					RadComboBox rddlp = (RadComboBox)e.Item.FindControl("rddlContainPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpStartDate");
+					sd = SQMBasePage.SetRadDateCulture(sd, "");
 					//RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpCompleteDate");
 					//CheckBox ic = (CheckBox)e.Item.FindControl("cbIsComplete");
 					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
@@ -329,6 +330,7 @@ namespace SQM.Website
 					RadComboBox rddlp = (RadComboBox)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
+					sd = SQMBasePage.SetRadDateCulture(sd, "");
 
 					rddlp.Items.Add(new RadComboBoxItem("", ""));
 					var personList = new List<PERSON>();
@@ -381,6 +383,7 @@ namespace SQM.Website
 					RadComboBox rddlp = (RadComboBox)containitem.FindControl("rddlContainPerson");
 					Label lb = (Label)containitem.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)containitem.FindControl("rdpStartDate");
+					sd = SQMBasePage.SetRadDateCulture(sd, "");
 
 					rddlp.Items.Add(new RadComboBoxItem("", ""));
 

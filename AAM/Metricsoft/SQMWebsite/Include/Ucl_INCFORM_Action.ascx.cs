@@ -194,7 +194,9 @@ namespace SQM.Website
 					RadDropDownList rddlp = (RadDropDownList)e.Item.FindControl("rddlActionPerson");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					RadDatePicker sd = (RadDatePicker)e.Item.FindControl("rdpFinalStartDate");
+					sd = SQMBasePage.SetRadDateCulture(sd, "");
 					RadDatePicker cd = (RadDatePicker)e.Item.FindControl("rdpFinalCompleteDate");
+					cd = SQMBasePage.SetRadDateCulture(cd, "");
 					CheckBox ic = (CheckBox)e.Item.FindControl("cbFinalIsComplete");
 					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 

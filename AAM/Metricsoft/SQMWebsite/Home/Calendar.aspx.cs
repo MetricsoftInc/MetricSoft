@@ -87,6 +87,7 @@ namespace SQM.Website
 					break;
 				default:
 					divTaskList.Visible = divEscalate.Visible = false;
+					uclTaskSchedule.SetTaskScheduleCulture("");
 					divCalendar.Visible = true;
 					break;
 			}

@@ -189,9 +189,11 @@ namespace SQM.Website
 
 					TextBox tbr = (TextBox)e.Item.FindControl("tbRestrictDesc");
 					RadDatePicker bd = (RadDatePicker)e.Item.FindControl("rdpBeginDate");
-					//RadDatePicker rd = (RadDatePicker)e.Item.FindControl("rdpReturnDate");
+					bd = SQMBasePage.SetRadDateCulture(bd, "");
 					RadDatePicker md = (RadDatePicker)e.Item.FindControl("rdpNextMedDate");
+					md = SQMBasePage.SetRadDateCulture(md, "");
 					RadDatePicker ed = (RadDatePicker)e.Item.FindControl("rdpExpectedReturnDT");
+					ed = SQMBasePage.SetRadDateCulture(ed, "");
 					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 
 
@@ -319,7 +321,6 @@ namespace SQM.Website
 				RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
 				TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 				RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-				//RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
@@ -407,9 +408,11 @@ namespace SQM.Website
 
 					TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-					//RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
+					bd = SQMBasePage.SetRadDateCulture(bd, "");
 					RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
+					md = SQMBasePage.SetRadDateCulture(md, "");
 					RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
+					ed = SQMBasePage.SetRadDateCulture(ed, "");
 
 					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
@@ -466,9 +469,11 @@ namespace SQM.Website
 
 					TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-					//RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
+					bd = SQMBasePage.SetRadDateCulture(bd, "");
 					RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
+					md = SQMBasePage.SetRadDateCulture(md, "");
 					RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
+					ed = SQMBasePage.SetRadDateCulture(ed, "");
 
 					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
@@ -526,7 +531,6 @@ namespace SQM.Website
 
 				TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 				RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-				//RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
@@ -565,13 +569,14 @@ namespace SQM.Website
 				Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
 
 				RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
-				//rddlw.SelectedIndexChanged += rddlw_SelectedIndexChanged;
 
 				TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 				RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-				//RadDatePicker rd = (RadDatePicker)losttimeitem.FindControl("rdpReturnDate");
+				bd = SQMBasePage.SetRadDateCulture(bd, "");
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
+				md = SQMBasePage.SetRadDateCulture(md, "");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
+				ed = SQMBasePage.SetRadDateCulture(ed, "");
 
 				rddlw.Items.Add(new DropDownListItem("", ""));
 				List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");

@@ -47,7 +47,7 @@ namespace SQM.Website
 						Culture = lang;
 						System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
 						System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
-						if (lang == "th")
+						if (CultureSettings.gregorianCalendarOverrides.Contains(lang))
 							System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 					}
 					catch { }
@@ -199,6 +199,20 @@ namespace SQM.Website
  
             return outString;
         }
+
+
+		public static RadDatePicker SetRadDateCulture(RadDatePicker rdp, string langOverride)
+		{
+			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+			if (CultureSettings.gregorianCalendarOverrides.Contains(language))
+			{
+				rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+				rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+			}
+
+			return rdp;
+		}
 
         public static void FillCurrencyDDL(DropDownList ddl, string defaultCode)
         {

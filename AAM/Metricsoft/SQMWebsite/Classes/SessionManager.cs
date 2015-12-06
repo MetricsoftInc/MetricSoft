@@ -14,9 +14,14 @@ namespace SQM.Website
 	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata }
 
+	public static class CultureSettings
+	{
+		public static string baseNLS = "en";
+		public static string[] gregorianCalendarOverrides = new string[] { "th" };
+	}
+
 	public class SessionManager
 	{
-
 		public static bool IsLoggedIn()
 		{
 			bool status = false;

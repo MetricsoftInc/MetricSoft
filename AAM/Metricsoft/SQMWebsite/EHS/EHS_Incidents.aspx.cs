@@ -213,10 +213,12 @@ namespace SQM.Website
 			pnlChartSection.Style.Add("display", "none");
 			lblChartType.Visible = ddlChartType.Visible = false;
 
+			SQMBasePage.SetRadDateCulture(dmFromDate, "");
+			SQMBasePage.SetRadDateCulture(dmToDate, "");
+
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
 			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-11);
 			dmToDate.SelectedDate = DateTime.Now;
-
 
 			lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
 			lblPageInstructions.Text = GetLocalResourceObject("lblPageInstructionsResource1.Text").ToString();

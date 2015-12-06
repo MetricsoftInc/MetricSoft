@@ -240,7 +240,7 @@ namespace SQM.Website
 				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
 				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
 				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
-				if (selectedLanguage == "th")
+				if (CultureSettings.gregorianCalendarOverrides.Contains(selectedLanguage))
 					System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 
 				base.FrameworkInitialize();
@@ -296,16 +296,8 @@ namespace SQM.Website
 					if ((lang=System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
 						pnlLocalDesc.Visible = true;
 
-					if (lang == "th")
-					{
-						//rdpIncidentDate.Culture = new System.Globalization.CultureInfo("en", true);
-						rdpIncidentDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpIncidentDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpReportDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpReportDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						//rdpReportDate.Culture = rdpIncidentDate.Culture;
-						//rtpIncidentTime.Culture = rdpIncidentDate.Culture;
-					}
+					rdpIncidentDate = SQMBasePage.SetRadDateCulture(rdpIncidentDate, "");
+					rdpReportDate = SQMBasePage.SetRadDateCulture(rdpReportDate, "");
 
 					tbDescription.Text = incident.DESCRIPTION;
 					rdpIncidentDate.SelectedDate = incidentDate = incident.INCIDENT_DT;
@@ -405,14 +397,9 @@ namespace SQM.Website
 					if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
 						pnlLocalDesc.Visible = true;
 
-					if (lang == "th")
-					{
-						//rdpIncidentDate.Culture = new System.Globalization.CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString(), true);
-						rdpIncidentDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpIncidentDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpReportDate.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						rdpReportDate.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-					}
+					rdpIncidentDate = SQMBasePage.SetRadDateCulture(rdpIncidentDate, "");
+					rdpReportDate = SQMBasePage.SetRadDateCulture(rdpReportDate, "");
+
 					rdpIncidentDate.SelectedDate = DateTime.Now;
 					//rdpReportDate.Culture = rdpIncidentDate.Culture;
 					rdpReportDate.SelectedDate = DateTime.Now;

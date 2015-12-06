@@ -140,16 +140,21 @@ namespace SQM.Website
         #endregion
 
         #region scehedule
+
+		public void SetTaskScheduleCulture(string langOverride)
+		{
+			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+			if (CultureSettings.gregorianCalendarOverrides.Contains(language))
+				scdTaskSchedule.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+		}
+
         public void BindTaskSchedule(List<TaskItem> taskList, DateTime selectedDate, bool enableItemLinks)
         {
             pnlTaskSchedule.Visible = true;
             hfScheduleScope.Value = enableItemLinks.ToString().ToLower();
 
-			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
-			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
-			if (language == "th")
-				scdTaskSchedule.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-
+			SetTaskScheduleCulture("");
             scdTaskSchedule.SelectedDate = selectedDate;
   
             foreach (TaskItem taskItem in taskList)

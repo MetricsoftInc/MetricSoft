@@ -428,12 +428,14 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
-						//rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-						if (lang == "th")
+						rdp = SQMBasePage.SetRadDateCulture(rdp, "");
+						/*
+						if (CultureSettings.gregorianCalendarOverrides.Contains(lang))
 						{
 							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 						}
+						*/
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
@@ -940,12 +942,14 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
-						//rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-						if (lang == "th")
+						rdp = SQMBasePage.SetRadDateCulture(rdp, "");
+						/*
+						if (CultureSettings.gregorianCalendarOverrides.Contains(lang))
 						{
 							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
 						}
+						*/
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
