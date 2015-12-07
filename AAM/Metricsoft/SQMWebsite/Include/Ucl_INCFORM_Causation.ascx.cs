@@ -43,49 +43,53 @@ namespace SQM.Website
 
 		public void BindCausation(string incidentDesc, List<INCFORM_ROOT5Y> rootCauseList, List<INCFORM_CAUSATION> causationList)
 		{
-			if (SessionManager.SessionContext != null)
+			try
 			{
-				// do we really need to do this on user controls ???
-				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
-				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
-				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
-
-				base.FrameworkInitialize();
-			}
-
-			pnlCausation.Visible = true;
-
-			lblIncidentDesc.Text = incidentDesc;
-
-			if (rootCauseList == null || rootCauseList.Count == 0)
-			{
-				lblNoneRootCause.Visible = true;
-				divCausation.Visible = false;
-			}
-			else
-			{
-				lblNoneRootCause.Visible = false;
-				divCausation.Visible = true;
-				rptRootCause.DataSource = rootCauseList;
-				rptRootCause.DataBind();
-
-				INCFORM_CAUSATION causation = causationList == null || causationList.Count == 0 ? null : causationList.ElementAt(0);
-
-				ddlCausation.Items.Clear();
-				ddlCausation.Items.Add(new RadComboBoxItem("", ""));
-				foreach (EHSMetaData xlat in EHSMetaDataMgr.SelectMetaDataList("INJURY_CAUSE").ToList())
+				if (SessionManager.SessionContext != null)
 				{
-					ddlCausation.Items.Add(new Telerik.Web.UI.RadComboBoxItem(xlat.TextLong, xlat.Value));
+					// do we really need to do this on user controls ???
+					String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+					Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
+					Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
+
+					base.FrameworkInitialize();
 				}
 
-				if (causation != null)
+				pnlCausation.Visible = true;
+
+				lblIncidentDesc.Text = incidentDesc;
+
+				if (rootCauseList == null || rootCauseList.Count == 0)
 				{
-					if (ddlCausation.FindItemByValue(causation.CAUSEATION_CD) != null)
+					lblNoneRootCause.Visible = true;
+					divCausation.Visible = false;
+				}
+				else
+				{
+					lblNoneRootCause.Visible = false;
+					divCausation.Visible = true;
+					rptRootCause.DataSource = rootCauseList;
+					rptRootCause.DataBind();
+
+					INCFORM_CAUSATION causation = causationList == null || causationList.Count == 0 ? null : causationList.ElementAt(0);
+
+					ddlCausation.Items.Clear();
+					ddlCausation.Items.Add(new RadComboBoxItem("", ""));
+					foreach (EHSMetaData xlat in EHSMetaDataMgr.SelectMetaDataList("INJURY_CAUSE").ToList())
 					{
-						ddlCausation.SelectedValue = causation.CAUSEATION_CD;
+						ddlCausation.Items.Add(new Telerik.Web.UI.RadComboBoxItem(xlat.TextLong, xlat.Value));
+					}
+
+					if (causation != null)
+					{
+						if (ddlCausation.FindItemByValue(causation.CAUSEATION_CD) != null)
+						{
+							ddlCausation.SelectedValue = causation.CAUSEATION_CD;
+						}
 					}
 				}
 			}
+			catch { }
 		}
 
 		public int UpdateCausation(decimal incidentID)

@@ -205,30 +205,34 @@ namespace SQM.Website.EHS
 					table4.TotalWidth = 540f;
 					table4.LockedWidth = true;
 
-					if (pageData.photoData != null && pageData.photoData.Count() > 0)
+					try
 					{
-						table4.AddCell(new PdfPCell(new Phrase("Photos", infoFont)) { BackgroundColor = darkGrayColor, Padding = 10f, Border = 0, Colspan = 3 });
-
-						var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
-
-						int i = 0;
-						for (i = 0; i < pageData.photoData.Count; i++)
+						if (pageData.photoData != null && pageData.photoData.Count() > 0)
 						{
-							var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
+							table4.AddCell(new PdfPCell(new Phrase("Photos", detailHdrFont)) { Padding = 5f, Border = 0, Colspan = 3 });
+							table4.SpacingBefore = 5f;
+							var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
 
-							iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
-							photo.ScaleToFit(176f, 132f);
-							photoCell.AddElement(photo);
+							int i = 0;
+							for (i = 0; i < pageData.photoData.Count; i++)
+							{
+								var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
 
-							photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
+								iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
+								photo.ScaleToFit(176f, 132f);
+								photoCell.AddElement(photo);
 
-							table4.AddCell(photoCell);
+								photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
+
+								table4.AddCell(photoCell);
+							}
+							// pad remaining cells in row or else table will be corrupt
+							int currentCol = i % 3;
+							for (int j = 0; j < 3 - currentCol; j++)
+								table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
 						}
-						// pad remaining cells in row or else table will be corrupt
-						int currentCol = i % 3;
-						for (int j = 0; j < 3 - currentCol; j++)
-							table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
 					}
+					catch { }
 
 					document.Add(table1);
 					document.Add(IDSection(pageData));
@@ -652,9 +656,12 @@ namespace SQM.Website.EHS
 						}
 						else
 						{
-							d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
-							if (d.involvedPerson != null)
-								d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+							if (d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID.HasValue)
+							{
+								d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
+								if (d.involvedPerson != null)
+									d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+							}
 						}
 					}
 
