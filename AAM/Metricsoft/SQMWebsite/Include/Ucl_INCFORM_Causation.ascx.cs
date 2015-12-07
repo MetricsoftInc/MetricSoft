@@ -36,12 +36,12 @@ namespace SQM.Website
 			int status = 0;
 
 			INCIDENT incident = EHSIncidentMgr.SelectIncidentById(ctx, EditIncidentId, true);
-			BindCausation(incident.DESCRIPTION, incident.INCFORM_ROOT5Y.ToList(), incident.INCFORM_CAUSATION.ToList());
+			BindCausation(incident);
 
 			return status;
 		}
 
-		public void BindCausation(string incidentDesc, List<INCFORM_ROOT5Y> rootCauseList, List<INCFORM_CAUSATION> causationList)
+		public void BindCausation(INCIDENT incident)
 		{
 			try
 			{
@@ -57,9 +57,10 @@ namespace SQM.Website
 
 				pnlCausation.Visible = true;
 
-				lblIncidentDesc.Text = incidentDesc;
+				if (incident != null)
+					lblIncidentDesc.Text = incident.DESCRIPTION;
 
-				if (rootCauseList == null || rootCauseList.Count == 0)
+				if (incident == null  || incident.INCFORM_ROOT5Y == null  ||  incident.INCFORM_ROOT5Y.Count == 0)
 				{
 					lblNoneRootCause.Visible = true;
 					divCausation.Visible = false;
@@ -68,10 +69,10 @@ namespace SQM.Website
 				{
 					lblNoneRootCause.Visible = false;
 					divCausation.Visible = true;
-					rptRootCause.DataSource = rootCauseList;
+					rptRootCause.DataSource = incident.INCFORM_ROOT5Y.ToList();
 					rptRootCause.DataBind();
 
-					INCFORM_CAUSATION causation = causationList == null || causationList.Count == 0 ? null : causationList.ElementAt(0);
+					INCFORM_CAUSATION causation = incident.INCFORM_CAUSATION == null || incident.INCFORM_CAUSATION.Count == 0 ? null : incident.INCFORM_CAUSATION.ElementAt(0);
 
 					ddlCausation.Items.Clear();
 					ddlCausation.Items.Add(new RadComboBoxItem("", ""));

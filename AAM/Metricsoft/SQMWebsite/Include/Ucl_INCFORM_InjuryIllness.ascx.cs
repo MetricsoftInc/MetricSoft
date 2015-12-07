@@ -1401,7 +1401,7 @@ namespace SQM.Website
 				//currentFormStep = CurrentFormStep;
 
 				TheIncident = CreateNewIncident();
-				incidentId = TheIncident.INCIDENT_ID;
+				EditIncidentId = incidentId = TheIncident.INCIDENT_ID;
 				theincidentId = TheIncident.INCIDENT_ID;
 
 				TheINCFORM = CreateNewInjuryIllnessDetails(incidentId);

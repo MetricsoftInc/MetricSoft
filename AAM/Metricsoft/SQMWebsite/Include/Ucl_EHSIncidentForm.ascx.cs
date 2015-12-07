@@ -1774,7 +1774,7 @@ namespace SQM.Website
 				{
 					// Add context - step 0
 					theIncident = CreateNewIncident();
-					incidentId = theIncident.INCIDENT_ID;
+					EditIncidentId = incidentId = theIncident.INCIDENT_ID;
 					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 				}

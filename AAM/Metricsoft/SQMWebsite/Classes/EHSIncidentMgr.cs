@@ -205,14 +205,22 @@ namespace SQM.Website
 
 		public static INCIDENT SelectIncidentById(PSsqmEntities entities, decimal incidentId, bool loadChildren)
 		{
-			INCIDENT incident = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
+			INCIDENT incident = null;
 
-			if (loadChildren)
+			try
 			{
-				incident.INCFORM_CONTAIN.Load();
-				incident.INCFORM_ROOT5Y.Load();
-				incident.INCFORM_CAUSATION.Load();
-				incident.INCFORM_APPROVAL.Load();
+				incident = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
+
+				if (loadChildren)
+				{
+					incident.INCFORM_CONTAIN.Load();
+					incident.INCFORM_ROOT5Y.Load();
+					incident.INCFORM_CAUSATION.Load();
+					incident.INCFORM_APPROVAL.Load();
+				}
+			}
+			catch
+			{
 			}
 
 			return incident;
