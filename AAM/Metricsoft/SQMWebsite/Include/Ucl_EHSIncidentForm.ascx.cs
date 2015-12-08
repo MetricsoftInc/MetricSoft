@@ -2031,7 +2031,7 @@ namespace SQM.Website
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
 				DETECT_PLANT_ID = SessionManager.IncidentLocation.Plant.PLANT_ID,
 				INCIDENT_TYPE = "EHS",
-				CREATE_DT = DateTime.Now,
+				CREATE_DT = DateTime.UtcNow,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
 				LAST_UPD_DT = DateTime.Now,
 				LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
