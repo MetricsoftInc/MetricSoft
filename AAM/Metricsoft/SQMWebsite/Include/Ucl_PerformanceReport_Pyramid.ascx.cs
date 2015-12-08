@@ -25,6 +25,8 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			int annualizeMonths = DateTime.Today.Month == 1 ? 12 : DateTime.Today.Month - 1;
+
 			var left = (EHS.EHS_PerformanceReport.gaugeDef.Width - 420 - this.pyramid.Width.ToPixels()) / 2;
 			this.pyramid.Style.Add("left", left + "px");
 			this.pyramid.Fatalities = this.Fatalities;
@@ -42,7 +44,7 @@ namespace SQM.Website
 
 			this.pyramidTable_fatalitiesRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_fatalitiesYTD.InnerText = this.Fatalities.ToString();
-			var fatalitiesAnnualized = Math.Round(this.Fatalities * 12 / DateTime.Today.Month);
+			var fatalitiesAnnualized = Math.Round(this.Fatalities * 12 / annualizeMonths);
 			this.pyramidTable_fatalitiesAnnualized.InnerText = fatalitiesAnnualized.ToString();
 			this.pyramidTable_fatalitiesPreviousYear.InnerText = this.FatalitiesPreviousYear.ToString();
 			var fatalitiesVariance = this.FatalitiesPreviousYear == 0 ? 0 : (fatalitiesAnnualized - this.FatalitiesPreviousYear) / this.FatalitiesPreviousYear;
@@ -51,7 +53,7 @@ namespace SQM.Website
 
 			this.pyramidTable_lostTimeRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_lostTimeYTD.InnerText = this.LostTimeCases.ToString();
-			var lostTimeAnnualized = Math.Round(this.LostTimeCases * 12 / DateTime.Today.Month);
+			var lostTimeAnnualized = Math.Round(this.LostTimeCases * 12 / annualizeMonths);
 			this.pyramidTable_lostTimeAnnualized.InnerText = lostTimeAnnualized.ToString();
 			this.pyramidTable_lostTimePreviousYear.InnerText = this.LostTimeCasesPreviousYear.ToString();
 			var lostTimeVariance = this.LostTimeCasesPreviousYear == 0 ? 0 : (lostTimeAnnualized - this.LostTimeCasesPreviousYear) / this.LostTimeCasesPreviousYear;
@@ -60,7 +62,7 @@ namespace SQM.Website
 
 			this.pyramidTable_recordableRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_recordableYTD.InnerText = this.RecordableInjuries.ToString();
-			var recordableAnnualized = Math.Round(this.RecordableInjuries * 12 / DateTime.Today.Month);
+			var recordableAnnualized = Math.Round(this.RecordableInjuries * 12 / annualizeMonths);
 			this.pyramidTable_recordableAnnualized.InnerText = recordableAnnualized.ToString();
 			this.pyramidTable_recordablePreviousYear.InnerText = this.RecordableInjuriesPreviousYear.ToString();
 			var recordableVariance = this.RecordableInjuriesPreviousYear == 0 ? 0 : (recordableAnnualized - this.RecordableInjuriesPreviousYear) / this.RecordableInjuriesPreviousYear;
@@ -69,7 +71,7 @@ namespace SQM.Website
 
 			this.pyramidTable_firstAidRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_firstAidYTD.InnerText = this.FirstAidCases.ToString();
-			var firstAidAnnualized = Math.Round(this.FirstAidCases * 12 / DateTime.Today.Month);
+			var firstAidAnnualized = Math.Round(this.FirstAidCases * 12 / annualizeMonths);
 			this.pyramidTable_firstAidAnnualized.InnerText = firstAidAnnualized.ToString();
 			this.pyramidTable_firstAidPreviousYear.InnerText = this.FirstAidCasesPreviousYear.ToString();
 			var firstAidVariance = this.FirstAidCasesPreviousYear == 0 ? 0 : (firstAidAnnualized - this.FirstAidCasesPreviousYear) / this.FirstAidCasesPreviousYear;
@@ -78,7 +80,7 @@ namespace SQM.Website
 
 			this.pyramidTable_nearMissesRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_nearMissesYTD.InnerText = this.NearMisses.ToString();
-			var nearMissesAnnualized = Math.Round(this.NearMisses * 12 / DateTime.Today.Month);
+			var nearMissesAnnualized = Math.Round(this.NearMisses * 12 / annualizeMonths);
 			this.pyramidTable_nearMissesAnnualized.InnerText = nearMissesAnnualized.ToString();
 			this.pyramidTable_nearMissesPreviousYear.InnerText = this.NearMissesPreviousYear.ToString();
 			var nearMissesVariance = this.NearMissesPreviousYear == 0 ? 0 : (nearMissesAnnualized - this.NearMissesPreviousYear) / this.NearMissesPreviousYear;

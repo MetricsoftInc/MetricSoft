@@ -630,6 +630,8 @@ namespace SQM.Website.EHS
 			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
 			var startOfNextYear = new DateTime(year + 1, 1, 1);
 
+			int annualizeMonths = DateTime.Today.Month == 1 ? 12 : DateTime.Today.Month - 1;
+
 			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0);
 			var plantIDs = plants.Select(p => p.PLANT_ID).ToList();
 			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
@@ -668,7 +670,7 @@ namespace SQM.Website.EHS
 				totalIncidentsPreviousYear += incidentsPreviousYear;
 				totalIncidentsYTD += incidentsYTD;
 
-				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / DateTime.Today.Month);
+				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / annualizeMonths);
 
 				data.Add(new
 				{
@@ -690,7 +692,7 @@ namespace SQM.Website.EHS
 				var allPlantsForBU = data.Where(d => d.BusinessUnit == businessUnit);
 				decimal incidentsPreviousYear = allPlantsForBU.Sum(d => (decimal)d.RecPreviousYear);
 				decimal incidentsYTD = allPlantsForBU.Sum(d => (decimal)d.RecYTD);
-				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / DateTime.Today.Month);
+				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / annualizeMonths);
 				data.Insert(lastIndex + 1, new
 				{
 					BusinessUnit = "",
@@ -702,7 +704,7 @@ namespace SQM.Website.EHS
 				});
 			}
 
-			var totalIncidentsAnnualized = Math.Round(totalIncidentsYTD * 12 / DateTime.Today.Month);
+			var totalIncidentsAnnualized = Math.Round(totalIncidentsYTD * 12 / annualizeMonths);
 
 			data.Add(new
 			{
