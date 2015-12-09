@@ -64,6 +64,7 @@ namespace SQM.Website.EHS
 						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
 						string value = "";
 						decimal dataID = -1;
+						bool readOnly = false;
 						if (dayData.Any())
 						{
 							var data = dayData.FirstOrDefault(d => d.MEASURE_ID == measure.MEASURE_ID);
@@ -74,14 +75,14 @@ namespace SQM.Website.EHS
 									value = data.VALUE.ToString();
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									value = data.ATTRIBUTE;
+								readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 							}
 						}
-						string type = measureIsValue ? "Integer" : "String";
-						string toolTip = "Value must be a " + (measureIsValue ? "number" : "string") + ".";
 						dynamic dataToAdd = new ExpandoObject();
 						dataToAdd.value = value;
-						dataToAdd.validatorType = type;
-						dataToAdd.validatorToolTip = toolTip;
+						dataToAdd.readOnly = readOnly;
+						dataToAdd.validatorType = measureIsValue ? "Integer" : "String";
+						dataToAdd.validatorToolTip = "Value must be a " + (measureIsValue ? "number" : "string") + ".";
 						if (measure.DATA_TYPE == "O")
 							dataToAdd.ordinal = GetOrdinalData(entities, dataID);
 						allData.Add(dayName + "|" + measure.MEASURE_ID, (dataToAdd as ExpandoObject).ToDictionary(x => x.Key, x => x.Value));
@@ -112,6 +113,7 @@ namespace SQM.Website.EHS
 				foreach (var measure in measures)
 				{
 					string value = "";
+					bool readOnly = false;
 					var data = entities.EHS_DATA.FirstOrDefault(d => EntityFunctions.TruncateTime(d.DATE) == endOfWeek.Date && d.PLANT_ID == plantID && d.MEASURE_ID == measure.MEASURE_ID);
 					if (data != null)
 					{
@@ -119,10 +121,15 @@ namespace SQM.Website.EHS
 							value = data.VALUE.ToString();
 						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
+						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					string type = measure.DATA_TYPE == "V" ? "Integer" : "String";
-					string toolTip = "Value must be a " + (measure.DATA_TYPE == "V" ? "number" : "string") + ".";
-					allData.Add(measure.MEASURE_ID.ToString(), new { value, validatorType = type, validatorToolTip = toolTip });
+					allData.Add(measure.MEASURE_ID.ToString(), new
+					{
+						value,
+						readOnly,
+						validatorType = measure.DATA_TYPE == "V" ? "Integer" : "String",
+						validatorToolTip = "Value must be a " + (measure.DATA_TYPE == "V" ? "number" : "string") + "."
+					});
 				}
 				return new
 				{
@@ -148,6 +155,7 @@ namespace SQM.Website.EHS
 				foreach (var measure in measures)
 				{
 					string value = "";
+					bool readOnly = false;
 					var data = entities.EHS_DATA.FirstOrDefault(d => EntityFunctions.TruncateTime(d.DATE) == startOfMonth.Date && d.PLANT_ID == plantID && d.MEASURE_ID == measure.MEASURE_ID);
 					if (data != null)
 					{
@@ -155,10 +163,15 @@ namespace SQM.Website.EHS
 							value = data.VALUE.ToString();
 						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
+						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					string type = measure.DATA_TYPE == "V" ? "Integer" : "String";
-					string toolTip = "Value must be a " + (measure.DATA_TYPE == "V" ? "number" : "string") + ".";
-					allData.Add(measure.MEASURE_ID.ToString(), new { value, validatorType = type, validatorToolTip = toolTip });
+					allData.Add(measure.MEASURE_ID.ToString(), new
+					{
+						value,
+						readOnly,
+						validatorType = measure.DATA_TYPE == "V" ? "Integer" : "String",
+						validatorToolTip = "Value must be a " + (measure.DATA_TYPE == "V" ? "number" : "string") + "."
+					});
 				}
 				return new
 				{
@@ -291,18 +304,22 @@ namespace SQM.Website.EHS
 							if (data != null)
 							{
 								addNew = false;
-								// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
-								if (hasText)
+								// Check if this was inserted by an automated process, and ignore any changes if so.
+								if (!data.UPDATE_IND.HasValue || data.UPDATE_IND.Value == 0)
 								{
-									if (measureIsValue)
-										data.VALUE = decimal.Parse(text);
-									else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
-										data.ATTRIBUTE = text;
-									if (measure_data.ContainsKey("ordinal"))
-										UpdateOrdinalData(entities, data.DATA_ID, measure_data["ordinal"]);
+									// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
+									if (hasText)
+									{
+										if (measureIsValue)
+											data.VALUE = decimal.Parse(text);
+										else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
+											data.ATTRIBUTE = text;
+										if (measure_data.ContainsKey("ordinal"))
+											UpdateOrdinalData(entities, data.DATA_ID, measure_data["ordinal"]);
+									}
+									else
+										entities.DeleteObject(data);
 								}
-								else
-									entities.DeleteObject(data);
 							}
 						}
 						// This will only add a new entry if there was no entry found already and we had some text in the RadTextBox.
@@ -350,16 +367,20 @@ namespace SQM.Website.EHS
 					if (data != null)
 					{
 						addNew = false;
-						// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
-						if (hasText)
+						// Check if this was inserted by an automated process, and ignore any changes if so.
+						if (!data.UPDATE_IND.HasValue || data.UPDATE_IND.Value == 0)
 						{
-							if (measure.DATA_TYPE == "V")
-								data.VALUE = decimal.Parse(text);
-							else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
-								data.ATTRIBUTE = text;
+							// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
+							if (hasText)
+							{
+								if (measure.DATA_TYPE == "V")
+									data.VALUE = decimal.Parse(text);
+								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
+									data.ATTRIBUTE = text;
+							}
+							else
+								entities.DeleteObject(data);
 						}
-						else
-							entities.DeleteObject(data);
 					}
 					// This will only add a new entry if there was no entry found already and we had some text in the RadTextBox.
 					if (addNew && hasText)
@@ -402,16 +423,20 @@ namespace SQM.Website.EHS
 					if (data != null)
 					{
 						addNew = false;
-						// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
-						if (hasText)
+						// Check if this was inserted by an automated process, and ignore any changes if so.
+						if (!data.UPDATE_IND.HasValue || data.UPDATE_IND.Value == 0)
 						{
-							if (measure.DATA_TYPE == "V")
-								data.VALUE = decimal.Parse(text);
-							else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
-								data.ATTRIBUTE = text;
+							// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
+							if (hasText)
+							{
+								if (measure.DATA_TYPE == "V")
+									data.VALUE = decimal.Parse(text);
+								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
+									data.ATTRIBUTE = text;
+							}
+							else
+								entities.DeleteObject(data);
 						}
-						else
-							entities.DeleteObject(data);
 					}
 					// This will only add a new entry if there was no entry found already and we had some text in the RadTextBox.
 					if (addNew && hasText)

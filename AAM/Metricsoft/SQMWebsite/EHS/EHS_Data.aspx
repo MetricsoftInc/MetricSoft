@@ -276,7 +276,8 @@
 							{
 								var dayData = data.d.allData[day + '|' + measureIDs[rowNum]];
 								var cell = $(rgData_data[rowNum].get_cell('gtc' + day));
-								cell.find('input[type="text"]').val(dayData.value);
+								var textBox = cell.find('input[type="text"]');
+								textBox.val(dayData.value);
 								if (cell.find('[id$="rbYes' + day + '"]').length > 0)
 								{
 									if (dayData.value == 'Yes')
@@ -285,6 +286,11 @@
 										$find(cell.find('[id$="rbNo' + day + '"]').attr('id')).set_checked(true);
 									else
 										$find(cell.find('[id$="rbNA' + day + '"]').attr('id')).set_checked(true);
+								}
+								if (dayData.readOnly)
+								{
+									textBox.prop('readonly', true);
+									$find(textBox.attr('id')).disable();
 								}
 								var validator = cell.find('span[id$="cmp' + day + '"]')[0];
 								if (validator)
@@ -333,7 +339,8 @@
 						{
 							var measureData = data.d.allData[measureIDs[rowNum]];
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
-							cell.find('input[type="text"]').val(measureData.value);
+							var textBox = cell.find('input[type="text"]');
+							textBox.val(measureData.value);
 							if (cell.find('[id$="rbYesFull"]').length > 0)
 							{
 								if (measureData.value == 'Yes')
@@ -342,6 +349,11 @@
 									$find(cell.find('[id$="rbNoFull"]').attr('id')).set_checked(true);
 								else
 									$find(cell.find('[id$="rbNAFull"]').attr('id')).set_checked(true);
+							}
+							if (measureData.readOnly)
+							{
+								textBox.prop('readonly', true);
+								$find(textBox.attr('id')).disable();
 							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
@@ -387,7 +399,8 @@
 						{
 							var measureData = data.d.allData[measureIDs[rowNum]];
 							var cell = $(rgData_data[rowNum].get_cell('gtcFull'));
-							cell.find('input[type="text"]').val(measureData.value);
+							var textBox = cell.find('input[type="text"]');
+							textBox.val(measureData.value);
 							if (cell.find('[id$="rbYesFull"]').length > 0)
 							{
 								if (measureData.value == 'Yes')
@@ -396,6 +409,11 @@
 									$find(cell.find('[id$="rbNoFull"]').attr('id')).set_checked(true);
 								else
 									$find(cell.find('[id$="rbNAFull"]').attr('id')).set_checked(true);
+							}
+							if (measureData.readOnly)
+							{
+								textBox.prop('readonly', true);
+								$find(textBox.attr('id')).disable();
 							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
