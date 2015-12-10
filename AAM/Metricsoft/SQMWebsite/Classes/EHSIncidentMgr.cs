@@ -573,7 +573,7 @@ namespace SQM.Website
 			var incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 			if (incident != null)
 			{
-				incident.CLOSE_DATE = DateTime.Now;
+				incident.CLOSE_DATE = DateTime.UtcNow;
 				entities.SaveChanges();
 			}
 		}
@@ -1012,7 +1012,7 @@ namespace SQM.Website
 					contain.ITEM_SEQ = seq;
 					contain.ITEM_DESCRIPTION = "";
 					contain.ASSIGNED_PERSON = "";
-					contain.START_DATE = DateTime.Now;
+					contain.START_DATE = DateTime.UtcNow;
 					contain.COMPLETION_DATE = null;
 					contain.IsCompleted = false;
 
@@ -1231,7 +1231,7 @@ namespace SQM.Website
 					approval.ITEM_SEQ = Convert.ToInt32(approveLevel);
 					approval.APPROVAL_MESSAGE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION;
 					approval.APPROVER_TITLE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION_SHORT;
-					approval.APPROVAL_DATE = DateTime.Now;
+					approval.APPROVAL_DATE = DateTime.UtcNow;
 					approval.IsAccepted = false;
 					approvals.Add(approval);
 				}
@@ -1386,7 +1386,7 @@ namespace SQM.Website
 
 			if (ShouldIncidentReportClose(incident))
 			{
-				incident.CLOSE_DATE = DateTime.Now;
+				incident.CLOSE_DATE = DateTime.UtcNow;
 				SetTaskComplete(incidentId, 40);
 			}
 			else
@@ -1395,7 +1395,7 @@ namespace SQM.Website
 			}
 
 			if (ShouldIncidentCloseDataComplete(incident))
-				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
+				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
 			else
 				incident.CLOSE_DATE_DATA_COMPLETE = null;
 
@@ -1474,7 +1474,7 @@ namespace SQM.Website
 
 			if (ShouldPreventionClose(incident))
 			{
-				incident.CLOSE_DATE = DateTime.Now;
+				incident.CLOSE_DATE = DateTime.UtcNow;
 				incident.CLOSE_PERSON = personId;
 				SetTaskComplete(incidentId, 45);
 				shouldUpdateAuditPerson = false;
@@ -1486,7 +1486,7 @@ namespace SQM.Website
 
 			if (ShouldPreventionCloseAudited(incident))
 			{
-				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
+				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
 				if (shouldUpdateAuditPerson == true)
 					incident.AUDIT_PERSON = personId;
 			}

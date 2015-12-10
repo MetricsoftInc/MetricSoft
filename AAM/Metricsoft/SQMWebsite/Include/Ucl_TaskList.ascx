@@ -25,13 +25,15 @@
 		<telerik:RadScheduler ID="scdTaskSchedule" name="scdTaskSchedule" RenderMode="Auto" runat="server" Font-Size="X-Small" Skin="Metro"
 			SelectedView="MonthView" OnAppointmentDataBound="scdTaskSchedule_OnDataBound"  OnAppointmentCreated="scdTaskSchedule_OnCreated"
 			 DataKeyField ="RecordKey" DataSubjectField="LongTitle" DataStartField="StartDate" DataEndField="EndDate" DataDescriptionField="Description"
-			 AllowEdit="False" AllowInsert="False" ReadOnly="True" OverflowBehavior="Expand" EditFormDateFormat="M/d/yyyy" EditFormTimeFormat="h:mm tt" EnableAdvancedForm="False" EnableResourceEditing="False" SelectedDate="2015-10-20" >
+			 AllowEdit="False" AllowInsert="False" ReadOnly="True" RowHeight = "60"
+			OverflowBehavior="Expand" EditFormDateFormat="M/d/yyyy" EditFormTimeFormat="h:mm tt" EnableAdvancedForm="False" EnableResourceEditing="False" SelectedDate="2015-10-20" >
 				<ExportSettings>
 					<Pdf PageBottomMargin="1in" PageLeftMargin="1in" PageRightMargin="1in" PageTopMargin="1in" />
 				</ExportSettings>
 				<AdvancedForm Modal="True" EnableResourceEditing="False" Enabled="False" ></AdvancedForm>
 				<TimelineView UserSelectable="False" />
-				<MonthView HeaderDateFormat="Y" />
+				<DayView UserSelectable="true" />
+				<MonthView UserSelectable="true" AdaptiveRowHeight="false" HeaderDateFormat="Y" VisibleAppointmentsPerDay="3" />
 				<AppointmentContextMenuSettings EnableDefault="True" />
 				<TimeSlotContextMenuSettings EnableDefault="True"></TimeSlotContextMenuSettings>
 				<AppointmentTemplate>

@@ -137,7 +137,7 @@ namespace SQM.Website
 								incident.DESCRIPTION + "<br/>" +
 								(!string.IsNullOrEmpty(comment) ? "<br/>"+comment  : "") + 
 								 "<br/>" +
-								"On : " + DateTime.Now.ToString() +
+								"On : " + DateTime.UtcNow.ToString() +
 								"<br/>" +
 								"By : " + incident.LAST_UPD_BY +
 								"<br/>" +

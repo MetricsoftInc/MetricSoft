@@ -368,6 +368,18 @@ namespace SQM.Website
             return localDate;
         }
 
+		public static DateTime ConvertFromToTimezone(DateTime dateIN, string tzIdIN, string tzIdOUT)
+		{
+			// convert between two timezones - not necessarily the server time
+			// timezoneIN and OUT are time zone id's as returned by the TimezoneID("035") function below
+			DateTime dateOUT = new DateTime();
+
+			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateIN, TimeZoneInfo.FindSystemTimeZoneById(tzIdIN));
+			dateOUT = TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZoneInfo.FindSystemTimeZoneById(tzIdOUT));
+
+			return dateOUT;
+		}
+
         // period date functions.  period dates span 1st day of start month thru last day of end month
         public static DateTime PeriodFromDate(DateTime startDate)
         {
