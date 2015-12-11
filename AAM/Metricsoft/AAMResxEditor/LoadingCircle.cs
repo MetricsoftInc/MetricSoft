@@ -42,7 +42,7 @@ namespace MRG.Controls.UI
 		const int DefaultOuterCircleRadius = 10;
 		const int DefaultNumberOfSpoke = 10;
 		const int DefaultSpokeThickness = 4;
-		readonly Color DefaultColor = Color.DarkGray;
+		static readonly Color DefaultColor = Color.DarkGray;
 
 		const int MacOSXInnerCircleRadius = 5;
 		const int MacOSXOuterCircleRadius = 11;

@@ -52,7 +52,10 @@ namespace AAMResxEditor
 		/// <summary>
 		/// Determines if any asynchronous tasks are still running.
 		/// </summary>
-		protected bool IsAsyncBusy { get { return this.reference_count > 0; } }
+		protected bool IsAsyncBusy
+		{
+			get { return this.reference_count > 0; }
+		}
 
 		protected AsyncBaseDialog()
 		{
@@ -235,7 +238,7 @@ namespace AAMResxEditor
 		/// <param name="afterCallback"></param>
 		protected void RunAsyncOperation(Action beforeCallback, Action action, Action afterCallback)
 		{
-			ThreadPool.QueueUserWorkItem(not_used =>
+			ThreadPool.QueueUserWorkItem(_ =>
 			{
 				try
 				{

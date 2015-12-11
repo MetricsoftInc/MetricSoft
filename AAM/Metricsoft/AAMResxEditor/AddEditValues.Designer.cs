@@ -121,7 +121,7 @@
 			this.Name = "AddEditValues";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "AddNewValues";
+			this.Text = "Add/Edit Values";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddNewValues_FormClosing);
 			this.tlpStrings.ResumeLayout(false);
 			this.tlpStrings.PerformLayout();

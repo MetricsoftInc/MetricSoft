@@ -130,6 +130,7 @@ namespace AAMResxEditor
 			}, () =>
 			{
 				this.cbFiles.Items.AddRange(files.Distinct().ToArray());
+				this.btnAddNewFile.Enabled = true;
 			});
 		}
 
@@ -254,6 +255,17 @@ namespace AAMResxEditor
 			this.tlpStrings.Controls.Add(dgvStrings, 0, 1);
 
 			dgvStrings.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders);
+		}
+
+		void btnAddNewFile_Click(object sender, EventArgs e)
+		{
+			using (var addNewFile = new AddFile())
+				if (addNewFile.ShowDialog(this) == DialogResult.OK)
+				{
+					this.cbFiles.Items.Add(addNewFile.Filename);
+					this.strings[addNewFile.Filename] = new Dictionary<string, Dictionary<string, string>>();
+					this.cbFiles.SelectedItem = addNewFile.Filename;
+				}
 		}
 
 		void btnAddNewValues_Click(object sender, EventArgs e)

@@ -16,8 +16,7 @@ namespace AAMResxEditor
 		{
 			if (m.Msg == WM_MOUSEWHEEL)
 			{
-				var pos = new Point(m.LParam.ToInt32() & 0xFFFF, m.LParam.ToInt32() >> 16);
-				var hWnd = NativeMethods.WindowFromPoint(pos);
+				var hWnd = NativeMethods.WindowFromPoint(new Point(m.LParam.ToInt32() & 0xFFFF, m.LParam.ToInt32() >> 16));
 				if (hWnd != IntPtr.Zero && hWnd != m.HWnd && Control.FromHandle(hWnd) != null)
 				{
 					NativeMethods.SendMessage(hWnd, (uint)m.Msg, m.WParam, m.LParam);

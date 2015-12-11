@@ -48,6 +48,7 @@
 			this.cbCopyTo = new System.Windows.Forms.ComboBox();
 			this.btnCopyMissing = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
+			this.btnAddNewFile = new System.Windows.Forms.Button();
 			this.tlpStrings.SuspendLayout();
 			this.tlpCopy.SuspendLayout();
 			this.SuspendLayout();
@@ -129,6 +130,7 @@
 			this.cbFiles.Location = new System.Drawing.Point(301, 38);
 			this.cbFiles.Name = "cbFiles";
 			this.cbFiles.Size = new System.Drawing.Size(225, 21);
+			this.cbFiles.Sorted = true;
 			this.cbFiles.TabIndex = 17;
 			this.cbFiles.SelectedIndexChanged += new System.EventHandler(this.cbFiles_SelectedIndexChanged);
 			// 
@@ -278,11 +280,23 @@
 			this.btnSave.UseVisualStyleBackColor = true;
 			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
+			// btnAddNewFile
+			// 
+			this.btnAddNewFile.Enabled = false;
+			this.btnAddNewFile.Location = new System.Drawing.Point(532, 38);
+			this.btnAddNewFile.Name = "btnAddNewFile";
+			this.btnAddNewFile.Size = new System.Drawing.Size(100, 23);
+			this.btnAddNewFile.TabIndex = 21;
+			this.btnAddNewFile.Text = "Add New File";
+			this.btnAddNewFile.UseVisualStyleBackColor = true;
+			this.btnAddNewFile.Click += new System.EventHandler(this.btnAddNewFile_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(855, 419);
+			this.Controls.Add(this.btnAddNewFile);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.tlpStrings);
 			this.Controls.Add(this.lblLanguageFile);
@@ -329,6 +343,7 @@
 		private System.Windows.Forms.Label lblTo;
 		private System.Windows.Forms.ComboBox cbCopyTo;
 		private System.Windows.Forms.Button btnCopyMissing;
+		private System.Windows.Forms.Button btnAddNewFile;
 	}
 }
 
