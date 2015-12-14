@@ -22,14 +22,10 @@ namespace SQM.Website.Automated
 				{
 					long updateIndicator = DateTime.UtcNow.Ticks;
 
-					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
-					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
-					decimal supervisorAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30002").MEASURE_ID;
+					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30002").MEASURE_ID;
 					var measureIDs = new List<decimal>()
 					{
-						plantManagerAuditsMeasureID,
-						ehsAuditsMeasureID,
-						supervisorAuditsMeasureID
+						plantManagerAuditsMeasureID
 					};
 
 					var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
@@ -49,13 +45,9 @@ namespace SQM.Website.Automated
 							if (closedAuditsForDay.Any())
 							{
 								int plantManagerAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "Plant Manager Audit");
-								int ehsAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "DGA Safety Audit");
-								int supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "AAM Supervisor Safety Audit");
 
 								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, activePlant.PLANT_ID, currDate, measureIDs, true, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, plantManagerAuditsMeasureID, plantManagerAudits, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, ehsAuditsMeasureID, ehsAudits, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, supervisorAuditsMeasureID, supervisorAudits, updateIndicator);
 								foreach (var data in dataList)
 									if (data.EntityState == EntityState.Detached && data.VALUE != 0)
 										entities.EHS_DATA.AddObject(data);
