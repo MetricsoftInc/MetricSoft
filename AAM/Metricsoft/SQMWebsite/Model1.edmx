@@ -1455,7 +1455,7 @@
           <Property Name="INCIDENT_ACTION_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="ITEM_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="ASSIGNED_PERSON_ID" Type="numeric" Precision="35" />
           <Property Name="START_DATE" Type="datetime" />
           <Property Name="COMPLETION_DATE" Type="datetime" />
@@ -1497,7 +1497,7 @@
           <Property Name="INCIDENT_CONTAIN_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="ITEM_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="ASSIGNED_PERSON_ID" Type="numeric" Precision="35" />
           <Property Name="START_DATE" Type="datetime" />
           <Property Name="COMPLETION_DATE" Type="datetime" />
@@ -1573,7 +1573,7 @@
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="INCIDENT_ROOT5Y_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="ITEM_SEQ" Type="int" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="1000" />
+          <Property Name="ITEM_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
         </EntityType>
@@ -2705,7 +2705,7 @@
           </Key>
           <Property Name="XLAT_LANGUAGE" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="XLAT_GROUP" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="150" />
           <Property Name="DESCRIPTION" Type="nvarchar" />
           <Property Name="DESCRIPTION_SHORT" Type="nvarchar" MaxLength="200" />
           <Property Name="STATUS" Type="varchar" MaxLength="4" />
@@ -8215,7 +8215,7 @@
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" FromRole="INCFORM_ACTION" ToRole="INCIDENT" />
           <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ASSIGNED_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="START_DATE" Type="DateTime" Precision="3" />
           <Property Name="COMPLETION_DATE" Type="DateTime" Precision="3" />
@@ -8232,7 +8232,7 @@
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCFORM_CONTAIN" ToRole="INCIDENT" />
           <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ASSIGNED_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
           <Property Name="START_DATE" Type="DateTime" Precision="3" />
           <Property Name="COMPLETION_DATE" Type="DateTime" Precision="3" />
@@ -8270,7 +8270,7 @@
           <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="INCIDENT_ROOT5Y_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCFORM_ROOT5Y" ToRole="INCIDENT" />
@@ -9134,7 +9134,7 @@
           </Key>
           <Property Type="String" Name="XLAT_LANGUAGE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="XLAT_GROUP" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="DESCRIPTION_SHORT" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="STATUS" MaxLength="4" FixedLength="false" Unicode="false" />
