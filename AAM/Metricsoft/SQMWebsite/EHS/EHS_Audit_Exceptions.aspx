@@ -75,9 +75,9 @@
 
                         <span style="float: left; width: 160px;">
                             <asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
-                        </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                        <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="650px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 
                         <div class="visible-xs"></div>
                         <br class="visible-xs-block" style="margin-top: 7px;" />
@@ -93,12 +93,13 @@
                                 <asp:Label runat="server" ID="lblAuditType" Text="Audit Type:" CssClass="prompt" meta:resourcekey="lblAuditTypeResource1"></asp:Label>
                             </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="<%$ Resources:LocalizedText, SelectAssessmentTypes %>" Width="325" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+                            <telerik:RadComboBox ID="rcbAuditType" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="<%$ Resources:LocalizedText, SelectAssessmentTypes %>" Width="256" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
 
                             <div class="clearfix visible-xs"></div>
                             <br class="visible-xs-block" style="margin-top: 7px;" />
 
-                            <asp:Label runat="server" ID="lblStatus" CssClass="prompt"></asp:Label>&nbsp;&nbsp;
+                            <span style="padding-left:12px;">
+                            <asp:Label runat="server" ID="lblStatus" CssClass="prompt"></asp:Label>
                                             <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="<%$ Resources:LocalizedText, SelectAssessmentStatus %>" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
                                                 <Items>
                                                     <telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Open %>" Value="A" />
@@ -107,7 +108,7 @@
                                                     <%--<telerik:RadComboBoxItem Text="Data Incomplete" Value="N" />--%>
                                                     <%--<telerik:RadComboBoxItem Text="Actions Pending" Value="T" />--%>
                                                 </Items>
-                                            </telerik:RadComboBox>
+                                            </telerik:RadComboBox></span>
 
                             <div class="clearfix visible-xs"></div>
                             <br class="visible-xs-block" />
@@ -117,13 +118,12 @@
 
                     <div class="row-fluid" style="margin-top: 7px;">
 
-
                         <span style="float: left; margin-top: 4px;">
-                            <asp:Label runat="server" ID="lblAuditDate" Text="<%$ Resources:LocalizedText, AssessmentDateFrom %>" CssClass="prompt"></asp:Label>
-                            <telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
-<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+                            <span style="padding-right:20px;"><asp:Label runat="server" ID="lblAuditDate" Text="<%$ Resources:LocalizedText, AssessmentDateFrom %>" CssClass="prompt"></asp:Label></span>
+                            <span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
+<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" runat="server"></Calendar>
 
-<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" runat="server">
 <EmptyMessageStyle Resize="None"></EmptyMessageStyle>
 
 <ReadOnlyStyle Resize="None"></ReadOnlyStyle>
@@ -140,18 +140,18 @@
 </DateInput>
 
 <DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
-						</telerik:RadDatePicker>
+						</telerik:RadDatePicker></span>
                         </span>
 
                         <div class="clearfix visible-xs"></div>
                         <br class="visible-xs-block" />
 
                         <span>
-                            <asp:Label runat="server" ID="lblToDate" CssClass="prompt"></asp:Label>
-                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
-<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+                            <span style="margin-left: 14px; padding-right:8px;"><asp:Label runat="server" ID="lblToDate" CssClass="prompt"></asp:Label>
+                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
+<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" runat="server"></Calendar>
 
-<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" runat="server">
 <EmptyMessageStyle Resize="None"></EmptyMessageStyle>
 
 <ReadOnlyStyle Resize="None"></ReadOnlyStyle>
@@ -168,7 +168,7 @@
 </DateInput>
 
 <DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
-						</telerik:RadDatePicker>
+						</telerik:RadDatePicker></span>
                         </span>
 
                         <div class="clearfix visible-xs"></div>

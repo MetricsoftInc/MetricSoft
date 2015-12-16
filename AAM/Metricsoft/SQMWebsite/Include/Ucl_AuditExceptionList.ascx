@@ -120,7 +120,7 @@
                 <NestedViewTemplate>
                         <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="True" AutoGenerateColumns="False"
                              OnItemCommand="rgAuditAnswers_ItemCommand" OnItemDataBound="rgAuditAnswers_ItemDataBound" GroupPanelPosition="Top">
-                            <MasterTableView DataKeyNames="QuestionId">
+                            <MasterTableView DataKeyNames="QuestionId"  GroupsDefaultExpanded="True">
                                 <NestedViewTemplate>
                                     <telerik:RadGrid runat="server" ID="rgTasks" OnNeedDataSource="rgTasks_NeedDataSource" Width="100%" AutoGenerateColumns="False" OnItemDataBound="rgTasks_ItemDataBound" GroupPanelPosition="Top">
                                         <MasterTableView DataKeyNames="Task.TASK_ID">

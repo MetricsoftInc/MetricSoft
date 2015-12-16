@@ -263,7 +263,7 @@ namespace SQM.Website
 			{
 				foreach (GridItem item in e.Item.OwnerTableView.Items)
 				{
-					if (item.Expanded && item != e.Item)
+					if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
 					{
 						item.Expanded = false;
 					}
