@@ -115,11 +115,11 @@
     <div>
         <telerik:RadGrid ID="rgAuditList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="20"
             AutoGenerateColumns="False" OnItemDataBound="rgAuditList_ItemDataBound" OnSortCommand="rgAuditList_SortCommand"
-            OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" Width="100%" OnItemCommand="rgAuditList_ItemCommand" GroupPanelPosition="Top">
+            OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" Width="100%" GroupPanelPosition="Top">
             <MasterTableView DataKeyNames="Audit.Audit_ID" GroupsDefaultExpanded="False">
                 <NestedViewTemplate>
                         <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="True" AutoGenerateColumns="False"
-                             OnItemCommand="rgAuditAnswers_ItemCommand" OnItemDataBound="rgAuditAnswers_ItemDataBound" GroupPanelPosition="Top">
+                             OnItemDataBound="rgAuditAnswers_ItemDataBound" GroupPanelPosition="Top">
                             <MasterTableView DataKeyNames="QuestionId"  GroupsDefaultExpanded="True">
                                 <NestedViewTemplate>
                                     <telerik:RadGrid runat="server" ID="rgTasks" OnNeedDataSource="rgTasks_NeedDataSource" Width="100%" AutoGenerateColumns="False" OnItemDataBound="rgTasks_ItemDataBound" GroupPanelPosition="Top">

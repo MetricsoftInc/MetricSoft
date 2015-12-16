@@ -190,11 +190,12 @@ namespace SQM.Website
 
 		protected void rgAuditList_ItemCommand(object sender, GridCommandEventArgs e)
 		{
+			// add this back to the grid to hit this code... OnItemCommand="rgAuditList_ItemCommand"  
 			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
 			{
 				foreach (GridItem item in e.Item.OwnerTableView.Items)
 				{
-					if (item.Expanded && item != e.Item)
+					if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
 					{
 						item.Expanded = false;
 					}
@@ -259,6 +260,7 @@ namespace SQM.Website
 
 		protected void rgAuditAnswers_ItemCommand(object sender, GridCommandEventArgs e)
 		{
+			// add this back to the grid to hit this code... OnItemCommand="rgAuditAnswers_ItemCommand" 
 			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
 			{
 				foreach (GridItem item in e.Item.OwnerTableView.Items)
