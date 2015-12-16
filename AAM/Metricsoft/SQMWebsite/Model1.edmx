@@ -1547,7 +1547,7 @@
           </Key>
           <Property Name="INCIDENT_LOSTTIME_HIST_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
           <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
-          <Property Name="ITEM_DESCRIPTION" Type="varchar" MaxLength="4000" />
+          <Property Name="ITEM_DESCRIPTION" Type="nvarchar" />
           <Property Name="WORK_STATUS" Type="nvarchar" MaxLength="100" />
           <Property Name="BEGIN_DT" Type="datetime" />
           <Property Name="NEXT_MEDAPPT_DT" Type="datetime" />
@@ -8909,7 +8909,7 @@
           </Key>
           <Property Type="Decimal" Name="INCIDENT_LOSTTIME_HIST_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="ITEM_DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ITEM_DESCRIPTION" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="WORK_STATUS" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="BEGIN_DT" Precision="3" />
           <Property Type="DateTime" Name="NEXT_MEDAPPT_DT" Precision="3" />
