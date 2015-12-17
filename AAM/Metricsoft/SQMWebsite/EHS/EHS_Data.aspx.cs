@@ -91,7 +91,7 @@ namespace SQM.Website.EHS
 				return new
 				{
 					plantID,
-					endOfWeek = endOfWeek.ToString("O"),
+					endOfWeek = endOfWeek.ToUniversalTime().ToString("O"),
 					dates = dateHeaders,
 					allData
 				};
@@ -134,7 +134,7 @@ namespace SQM.Website.EHS
 				return new
 				{
 					plantID,
-					endOfWeek = endOfWeek.ToString("O"),
+					endOfWeek = endOfWeek.ToUniversalTime().ToString("O"),
 					date = "End of Week " + endOfWeek.ToString("d"),
 					allData
 				};
@@ -176,7 +176,7 @@ namespace SQM.Website.EHS
 				return new
 				{
 					plantID,
-					startOfMonth = startOfMonth.ToString("O"),
+					startOfMonth = startOfMonth.ToUniversalTime().ToString("O"),
 					date = "Month of " + startOfMonth.ToString("Y"),
 					allData
 				};

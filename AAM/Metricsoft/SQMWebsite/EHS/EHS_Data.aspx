@@ -292,6 +292,11 @@
 									textBox.prop('readonly', true);
 									$find(textBox.attr('id')).disable();
 								}
+								else
+								{
+									textBox.prop('readonly', false);
+									$find(textBox.attr('id')).enable();
+								}
 								var validator = cell.find('span[id$="cmp' + day + '"]')[0];
 								if (validator)
 								{
@@ -355,6 +360,11 @@
 								textBox.prop('readonly', true);
 								$find(textBox.attr('id')).disable();
 							}
+							else
+							{
+								textBox.prop('readonly', false);
+								$find(textBox.attr('id')).enable();
+							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
 							{
@@ -414,6 +424,11 @@
 							{
 								textBox.prop('readonly', true);
 								$find(textBox.attr('id')).disable();
+							}
+							else
+							{
+								textBox.prop('readonly', false);
+								$find(textBox.attr('id')).enable();
 							}
 							var validator = cell.find('span[id$="cmpFull"]')[0];
 							if (validator)
