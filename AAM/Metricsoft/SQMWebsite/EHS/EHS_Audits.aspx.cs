@@ -68,7 +68,7 @@ namespace SQM.Website
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
 
-			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit);
+			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.audit);
 			rbNew.Visible = createAuditAccess;
 
 
@@ -171,8 +171,8 @@ namespace SQM.Website
 
 			}
 			// for now, we will only let 'admin' create audits
-			if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
-				rbNew.Visible = false;
+			//if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
+			//	rbNew.Visible = false;
 
 		}
 
@@ -241,8 +241,8 @@ namespace SQM.Website
 			}
 
 			// for now, we will only let 'admin' create audits
-			if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
-				rbNew.Visible = false;
+			//if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
+			//	rbNew.Visible = false;
 
 			SessionManager.ClearReturns();
 		}
