@@ -49,8 +49,11 @@
 			this.btnCopyMissing = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnAddNewFile = new System.Windows.Forms.Button();
+			this.tlpAddNewValues = new System.Windows.Forms.TableLayoutPanel();
+			this.btnAddNewValuesDev = new System.Windows.Forms.Button();
 			this.tlpStrings.SuspendLayout();
 			this.tlpCopy.SuspendLayout();
+			this.tlpAddNewValues.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnProcess
@@ -152,8 +155,8 @@
 			this.tlpStrings.ColumnCount = 1;
 			this.tlpStrings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tlpStrings.Controls.Add(this.lblFile, 0, 0);
-			this.tlpStrings.Controls.Add(this.btnAddNewValues, 0, 2);
 			this.tlpStrings.Controls.Add(this.tlpCopy, 0, 3);
+			this.tlpStrings.Controls.Add(this.tlpAddNewValues, 0, 2);
 			this.tlpStrings.Location = new System.Drawing.Point(218, 78);
 			this.tlpStrings.Name = "tlpStrings";
 			this.tlpStrings.RowCount = 4;
@@ -161,7 +164,7 @@
 			this.tlpStrings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tlpStrings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
 			this.tlpStrings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-			this.tlpStrings.Size = new System.Drawing.Size(625, 300);
+			this.tlpStrings.Size = new System.Drawing.Size(625, 301);
 			this.tlpStrings.TabIndex = 19;
 			// 
 			// lblFile
@@ -182,14 +185,13 @@
 			// btnAddNewValues
 			// 
 			this.btnAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnAddNewValues.Location = new System.Drawing.Point(1, 246);
-			this.btnAddNewValues.Margin = new System.Windows.Forms.Padding(0);
+			this.btnAddNewValues.Location = new System.Drawing.Point(0, 0);
+			this.btnAddNewValues.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
 			this.btnAddNewValues.Name = "btnAddNewValues";
-			this.btnAddNewValues.Size = new System.Drawing.Size(623, 23);
+			this.btnAddNewValues.Size = new System.Drawing.Size(308, 23);
 			this.btnAddNewValues.TabIndex = 1;
 			this.btnAddNewValues.Text = "Add New Value(s)";
 			this.btnAddNewValues.UseVisualStyleBackColor = true;
-			this.btnAddNewValues.Visible = false;
 			this.btnAddNewValues.Click += new System.EventHandler(this.btnAddNewValues_Click);
 			// 
 			// tlpCopy
@@ -206,7 +208,7 @@
 			this.tlpCopy.Controls.Add(this.lblTo, 3, 0);
 			this.tlpCopy.Controls.Add(this.cbCopyTo, 4, 0);
 			this.tlpCopy.Controls.Add(this.btnCopyMissing, 1, 0);
-			this.tlpCopy.Location = new System.Drawing.Point(51, 270);
+			this.tlpCopy.Location = new System.Drawing.Point(51, 271);
 			this.tlpCopy.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpCopy.Name = "tlpCopy";
 			this.tlpCopy.RowCount = 1;
@@ -272,7 +274,7 @@
 			// btnSave
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.Location = new System.Drawing.Point(768, 384);
+			this.btnSave.Location = new System.Drawing.Point(768, 385);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 20;
@@ -291,11 +293,40 @@
 			this.btnAddNewFile.UseVisualStyleBackColor = true;
 			this.btnAddNewFile.Click += new System.EventHandler(this.btnAddNewFile_Click);
 			// 
+			// tlpAddNewValues
+			// 
+			this.tlpAddNewValues.ColumnCount = 2;
+			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.Controls.Add(this.btnAddNewValues, 0, 0);
+			this.tlpAddNewValues.Controls.Add(this.btnAddNewValuesDev, 1, 0);
+			this.tlpAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpAddNewValues.Location = new System.Drawing.Point(1, 247);
+			this.tlpAddNewValues.Margin = new System.Windows.Forms.Padding(0);
+			this.tlpAddNewValues.Name = "tlpAddNewValues";
+			this.tlpAddNewValues.RowCount = 1;
+			this.tlpAddNewValues.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.Size = new System.Drawing.Size(623, 23);
+			this.tlpAddNewValues.TabIndex = 3;
+			this.tlpAddNewValues.Visible = false;
+			// 
+			// btnAddNewValuesDev
+			// 
+			this.btnAddNewValuesDev.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnAddNewValuesDev.Location = new System.Drawing.Point(314, 0);
+			this.btnAddNewValuesDev.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.btnAddNewValuesDev.Name = "btnAddNewValuesDev";
+			this.btnAddNewValuesDev.Size = new System.Drawing.Size(309, 23);
+			this.btnAddNewValuesDev.TabIndex = 2;
+			this.btnAddNewValuesDev.Text = "Add New Value(s) [Developer]";
+			this.btnAddNewValuesDev.UseVisualStyleBackColor = true;
+			this.btnAddNewValuesDev.Click += new System.EventHandler(this.btnAddNewValuesDev_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(855, 419);
+			this.ClientSize = new System.Drawing.Size(855, 420);
 			this.Controls.Add(this.btnAddNewFile);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.tlpStrings);
@@ -316,6 +347,7 @@
 			this.tlpStrings.PerformLayout();
 			this.tlpCopy.ResumeLayout(false);
 			this.tlpCopy.PerformLayout();
+			this.tlpAddNewValues.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -344,6 +376,8 @@
 		private System.Windows.Forms.ComboBox cbCopyTo;
 		private System.Windows.Forms.Button btnCopyMissing;
 		private System.Windows.Forms.Button btnAddNewFile;
+		private System.Windows.Forms.TableLayoutPanel tlpAddNewValues;
+		private System.Windows.Forms.Button btnAddNewValuesDev;
 	}
 }
 

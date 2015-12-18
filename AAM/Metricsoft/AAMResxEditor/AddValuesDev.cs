@@ -6,13 +6,23 @@ using System.Windows.Forms;
 
 namespace AAMResxEditor
 {
-	public partial class AddEditValues : Form
+	public partial class AddValuesDev : Form
 	{
+		public string ControlID
+		{
+			get { return this.tbControlID.Text; }
+		}
+
+		public string ResourceKey
+		{
+			get { return this.tbResourceKey.Text; }
+		}
+
 		public Dictionary<string, string> Values
 		{
 			get
 			{
-				return Enumerable.Range(0, this.tlpStrings.RowCount).Select(i => new
+				return Enumerable.Range(2, this.tlpStrings.RowCount - 2).Select(i => new
 				{
 					key = (this.tlpStrings.GetControlFromPosition(0, i) as Label).Text.TrimEnd(':'),
 					value = (this.tlpStrings.GetControlFromPosition(1, i) as TextBox).Text
@@ -20,17 +30,15 @@ namespace AAMResxEditor
 			}
 		}
 
-		bool Editing { get; set; }
 		MainForm MainForm { get; set; }
 
-		public AddEditValues(MainForm mainForm, params string[] languages)
+		public AddValuesDev(MainForm mainForm, params string[] languages)
 		{
 			this.InitializeComponent();
 
-			this.Editing = false;
 			this.MainForm = mainForm;
 
-			int i = 1;
+			int i = 3;
 			foreach (var language in languages)
 			{
 				this.tlpStrings.Controls.Add(new Label()
@@ -48,33 +56,31 @@ namespace AAMResxEditor
 				++i;
 			}
 
-			this.tlpStrings.RowCount = languages.Length + 1;
+			this.tlpStrings.RowCount = languages.Length + 3;
 
-			this.Height = 117 + 26 * languages.Length;
-		}
-
-		public AddEditValues(MainForm mainForm, string[] languages, string key, string[] values) : this(mainForm, languages)
-		{
-			this.Editing = true;
-			this.tbKey.Text = key;
-			int i = 1;
-			foreach (var value in values)
-				(this.tlpStrings.GetControlFromPosition(1, i++) as TextBox).Text = value;
+			this.Height = 169 + 26 * languages.Length;
 		}
 
 		void btnOK_Click(object sender, EventArgs e)
 		{
+			bool close = true;
+			if (string.IsNullOrWhiteSpace(this.tbControlID.Text))
+			{
+				this.errorProvider.SetError(this.tbControlID, "Control ID is required!");
+				close = false;
+			}
+			if (string.IsNullOrWhiteSpace(this.tbResourceKey.Text))
+			{
+				this.errorProvider.SetError(this.tbResourceKey, "Resource Key is required!");
+				close = false;
+			}
 			if (string.IsNullOrWhiteSpace(this.tbKey.Text))
 			{
 				this.errorProvider.SetError(this.tbKey, "Key is required!");
-				return;
+				close = false;
 			}
-			if (!this.Editing && this.MainForm.KeyExists(this.tbKey.Text))
-			{
-				this.errorProvider.SetError(this.tbKey, "Key already exists!");
-				return;
-			}
-			this.Close();
+			if (close)
+				this.Close();
 		}
 
 		bool canceling = false;
@@ -85,9 +91,9 @@ namespace AAMResxEditor
 			this.Close();
 		}
 
-		void AddNewValues_FormClosing(object sender, FormClosingEventArgs e)
+		void AddValuesDev_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (!this.canceling && (string.IsNullOrWhiteSpace(this.tbKey.Text) || (!this.Editing && this.MainForm.KeyExists(this.tbKey.Text))))
+			if (!this.canceling && (string.IsNullOrWhiteSpace(this.tbControlID.Text) || string.IsNullOrWhiteSpace(this.tbResourceKey.Text) || string.IsNullOrWhiteSpace(this.tbKey.Text)))
 				e.Cancel = true;
 		}
 	}

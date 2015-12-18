@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Resources;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 
@@ -83,7 +84,7 @@ namespace AAMResxEditor
 			this.RunAsyncOperation(() =>
 			{
 				this.cbFiles.Items.Clear();
-				this.lblFile.Visible = this.btnAddNewValues.Visible = this.tlpCopy.Visible = false;
+				this.lblFile.Visible = this.tlpAddNewValues.Visible = this.tlpCopy.Visible = false;
 				var dgv = this.tlpStrings.GetControlFromPosition(0, 1);
 				if (dgv != null)
 					this.tlpStrings.Controls.Remove(dgv);
@@ -107,6 +108,8 @@ namespace AAMResxEditor
 					string resxFolder = Path.GetDirectoryName(resxFile).Replace(directory + Path.DirectorySeparatorChar, "");
 					string baseNameFolder = resxFolder.Replace("App_GlobalResources", "").Replace("App_LocalResources", "").TrimEnd(Path.DirectorySeparatorChar);
 					baseName = Path.Combine(baseNameFolder, baseName);
+					if (resxFolder.Equals("App_GlobalResources", StringComparison.InvariantCultureIgnoreCase))
+						baseName = "!" + baseName;
 					this.folders[baseName] = resxFolder;
 
 					if (!checkedLanguages.Any(lang => lang.Value == languageTag))
@@ -193,7 +196,7 @@ namespace AAMResxEditor
 			this.cbCopyTo.Items.AddRange(checkedLanguageNames.ToArray());
 			this.cbCopyFrom.SelectedIndex = this.cbCopyTo.SelectedIndex = 0;
 			this.btnCopyAll.Enabled = this.btnCopyMissing.Enabled = false;
-			this.lblFile.Visible = this.btnAddNewValues.Visible = this.tlpCopy.Visible = true;
+			this.lblFile.Visible = this.tlpAddNewValues.Visible = this.tlpCopy.Visible = true;
 
 			var dgvStrings = new DataGridView()
 			{
@@ -296,6 +299,56 @@ namespace AAMResxEditor
 				}
 		}
 
+		void btnAddNewValuesDev_Click(object sender, EventArgs e)
+		{
+			if (this.lblFile.Text[0] == '!')
+			{
+				MessageBox.Show(this, "The current file is located in App_GlobalResources and does not have a corresponding file. You cannot use this action on it.", "ERROR", MessageBoxButtons.OK,
+					MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+				return;
+			}
+			string filename = Path.Combine(this.tbAAMProject.Text, this.lblFile.Text);
+			if (!File.Exists(filename))
+			{
+				MessageBox.Show(this, "The file you have selected does not exist. It must exist before this action can be used.", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error,
+					MessageBoxDefaultButton.Button1);
+				return;
+			}
+			var checkedLanguages = this.clbLanguages.CheckedItems.Cast<Language>().ToList();
+			var dgvStrings = this.tlpStrings.GetControlFromPosition(0, 1) as DataGridView;
+			using (var addNewValues = new AddValuesDev(this, checkedLanguages.Select(l => l.Name).ToArray()))
+				if (addNewValues.ShowDialog(this) == DialogResult.OK)
+				{
+					int rowNum = dgvStrings.Rows.Add();
+					string key = addNewValues.Values["Key"];
+					var fileStrings = this.strings[this.lblFile.Text];
+					fileStrings[key] = new Dictionary<string, string>();
+					dgvStrings[1, rowNum].Value = key;
+					for (int i = 0; i < checkedLanguages.Count; ++i)
+					{
+						var cell = dgvStrings[i + 2, rowNum];
+						string langString = addNewValues.Values[checkedLanguages[i].Name];
+						if (string.IsNullOrWhiteSpace(langString))
+							cell.Style.BackColor = Color.Yellow;
+						else
+						{
+							cell.Value = langString;
+							fileStrings[key][checkedLanguages[i].Value] = langString;
+						}
+					}
+					dgvStrings.Sort(dgvStrings.Columns[1], ListSortDirection.Ascending);
+					string fileContents = File.ReadAllText(filename);
+					var regex = new Regex(string.Format(@"id\s*=\s*""{0}""", addNewValues.ControlID), RegexOptions.IgnoreCase);
+					var match = regex.Match(fileContents);
+					int tagStart = fileContents.LastIndexOf('<', match.Index);
+					int tagEnd = fileContents.IndexOf('>', match.Index);
+					string tag = fileContents.Substring(tagStart, tagEnd - tagStart + 1);
+					// TODO: Actual replacement
+					fileContents = fileContents.Substring(0, tagStart) + tag + fileContents.Substring(tagEnd + 1);
+					// TODO: Actually re-save file
+				}
+		}
+
 		void btnCopyAll_Click(object sender, EventArgs e)
 		{
 			this.copyLanguages(false);
@@ -345,7 +398,10 @@ namespace AAMResxEditor
 			var checkedLanguages = this.clbLanguages.CheckedItems.Cast<Language>().ToList();
 			foreach (var file in this.folders)
 			{
-				string filenameBase = Path.Combine(directory, file.Value, Path.GetFileName(file.Key));
+				string filename = file.Key;
+				if (filename[0] == '!')
+					filename = filename.Substring(1);
+				string filenameBase = Path.Combine(directory, file.Value, Path.GetFileName(filename));
 				var writers = checkedLanguages.Select(lang =>
 				{
 					string Filename = filenameBase + (lang.Value != "" ? "." + lang.Value : "") + ".resx";
@@ -357,7 +413,7 @@ namespace AAMResxEditor
 					};
 				}).ToDictionary(x => x.Key, x => new ResXWriter() { Filename = x.Filename, Writer = x.Writer, WroteAnything = false });
 
-				foreach (var stringValues in this.strings[file.Key].OrderBy(v => v.Key))
+				foreach (var stringValues in this.strings[filename].OrderBy(v => v.Key))
 					foreach (var lang in checkedLanguages)
 						if (stringValues.Value.ContainsKey(lang.Value))
 						{
