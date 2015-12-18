@@ -239,7 +239,7 @@
 			{
 				var id = $(this).attr('id');
 				var day = id.substr(3);
-				window.location = '<%= this.Request.Url.AbsolutePath %>?type=' + day;
+				window.location = '<%= this.Request.Url.AbsolutePath %>?type=' + day + '&plant=' + rcbPlant.get_value();
 			});
 
 			// A flag to prevent the get*Data functions from recursing.

@@ -599,7 +599,7 @@ namespace SQM.Website.EHS
 
 				SQMBasePage.SetLocationList(this.rcbPlant,
 					UserContext.FilterPlantAccessList(SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true)),
-					SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
+					this.Request.QueryString["plant"] != null ? decimal.Parse(this.Request.QueryString["plant"]) : SessionManager.UserContext.HRLocation.Plant.PLANT_ID);
 
 				this.rdpEndOfWeek.SelectedDate = this.rmypMonth.SelectedDate = DateTime.Today;
 

@@ -199,9 +199,9 @@ namespace SQM.Website
 			this.DisplayTitle = false;
 			this.DisplayLegend = true;
 			this.LegendPosition = ChartLegendPosition.Bottom;
-			this.LegendBackgroundColor = Color.FromArgb(0, 0, 0, 0);
+			this.LegendBackgroundColor = Color.White;
 			this.DisplayTooltip = true;
-			this.TooltipBackgroundColor = Color.FromArgb(0, 0, 0, 0);
+			this.TooltipBackgroundColor = Color.White;
 			this.NewRow = false;
 			this.DisplayLabel = true;
 			this.Target = null;
