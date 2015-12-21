@@ -18,7 +18,7 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="/css/footable.core.min.css" rel="stylesheet" type="text/css" />
 	<link href="/css/normalize.css" rel="stylesheet" type="text/css" />
-	<link href="http://localhost:64917/fonts.googleapis.com/css?family=Bitter:400,400italic|Open+Sans:300italic,300" rel="stylesheet" type="text/css" />
+<%--	<link href="http://localhost:64917/fonts.googleapis.com/css?family=Bitter:400,400italic|Open+Sans:300italic,300" rel="stylesheet" type="text/css" />--%>
 	<link href="/css/PSSQM_Default.css" rel="stylesheet" type="text/css" />
 	<link href="/css/MetroThemeOverride.css" rel="stylesheet" type="text/css" />
 	<link href="/css/FileExplorer.css" type="text/css" rel="stylesheet" class="Telerik_stylesheet" />
