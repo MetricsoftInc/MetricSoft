@@ -575,7 +575,7 @@ namespace SQM.Website
             return pa;
         }
 
-        public static PLANT_ACCOUNTING UpdatePlantAccounting(PSsqmEntities entities, PLANT_ACCOUNTING pa)
+        public static PLANT_ACCOUNTING UpdatePlantAccounting(PSsqmEntities entities, PLANT_ACCOUNTING pa, bool saveChanges = true)
         {
             PLANT_ACCOUNTING ret = null;
 
@@ -583,7 +583,7 @@ namespace SQM.Website
                 entities.AddToPLANT_ACCOUNTING(pa);
             pa = (PLANT_ACCOUNTING)SQMModelMgr.SetObjectTimestamp(pa, "", pa.EntityState);
 
-            if (entities.SaveChanges() > 0)
+            if (saveChanges && entities.SaveChanges() > 0)
                 ret = pa;
 
             return ret;

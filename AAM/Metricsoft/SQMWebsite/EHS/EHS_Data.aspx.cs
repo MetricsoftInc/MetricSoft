@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Objects;
 using System.Drawing;
 using System.Dynamic;
@@ -286,10 +287,11 @@ namespace SQM.Website.EHS
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "D"
 							   select new { m.MEASURE_ID, m.DATA_TYPE };
 				var startOfWeek = FirstDayOfWeek(day, calendar, calendarWeekRule, firstDayOfWeek);
-				for (int i = 0; i < 7; ++i, startOfWeek = startOfWeek.AddDays(1))
+				var currentDay = startOfWeek;
+				for (int i = 0; i < 7; ++i, currentDay = currentDay.AddDays(1))
 				{
-					string dayName = startOfWeek.ToString("ddd");
-					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == startOfWeek.Date && d.PLANT_ID == plantID);
+					string dayName = currentDay.ToString("ddd");
+					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == currentDay.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
 						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
@@ -329,7 +331,7 @@ namespace SQM.Website.EHS
 							{
 								MEASURE_ID = measure.MEASURE_ID,
 								PLANT_ID = plantID,
-								DATE = startOfWeek
+								DATE = currentDay
 							};
 							if (measureIsValue)
 								newData.VALUE = decimal.Parse(text);
@@ -341,8 +343,41 @@ namespace SQM.Website.EHS
 						}
 					}
 				}
-				// Save the changes we made to the database.
+
+				// Save the changes we made to the database. This has to be done before the Plant Accounting stuff so there is data to find.
 				entities.SaveChanges();
+
+				// Add the recorded cases and time lost cases to the Plant Accounting table.
+				var endOfWeek = startOfWeek.AddDays(6);
+				DateTime startOfMonth, startOfNextMonth;
+				PLANT_ACCOUNTING pa;
+				// This checks for a week that crosses over a month.
+				if (startOfWeek.Month != endOfWeek.Month)
+				{
+					startOfMonth = new DateTime(startOfWeek.Year, startOfWeek.Month, 1);
+					startOfNextMonth = startOfMonth.AddMonths(1);
+
+					pa = EHSModel.LookupPlantAccounting(entities, plantID, startOfMonth.Year, startOfMonth.Month, true);
+
+					pa.RECORDED_CASES = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date &&
+						EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S20004").Sum(o => o.VALUE) ?? null;
+					pa.TIME_LOST_CASES = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date &&
+						EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S20005").Sum(o => o.VALUE) ?? null;
+
+					EHSModel.UpdatePlantAccounting(entities, pa, false);
+				}
+
+				startOfMonth = new DateTime(endOfWeek.Year, endOfWeek.Month, 1);
+				startOfNextMonth = startOfMonth.AddMonths(1);
+
+				pa = EHSModel.LookupPlantAccounting(entities, plantID, startOfMonth.Year, startOfMonth.Month, true);
+
+				pa.RECORDED_CASES = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date &&
+					EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S20004").Sum(o => o.VALUE) ?? null;
+				pa.TIME_LOST_CASES = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) >= startOfMonth.Date &&
+					EntityFunctions.TruncateTime(d.DATE) < startOfNextMonth && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S20005").Sum(o => o.VALUE) ?? null;
+
+				EHSModel.UpdatePlantAccounting(entities, pa);
 			}
 		}
 
@@ -454,8 +489,21 @@ namespace SQM.Website.EHS
 						entities.EHS_DATA.AddObject(newData);
 					}
 				}
-				// Save the changes we made to the database.
+
+				// Save the changes we made to the database. This has to be done before the Plant Accounting stuff so there is data to find.
 				entities.SaveChanges();
+
+				// Add the time worked and time lost items to the Plant Accounting table.
+				var dataTimeWorked =
+					entities.EHS_DATA.FirstOrDefault(d => EntityFunctions.TruncateTime(d.DATE) == startOfMonth.Date && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S60002");
+				var dataTimeLost = entities.EHS_DATA.FirstOrDefault(d => EntityFunctions.TruncateTime(d.DATE) == startOfMonth.Date && d.PLANT_ID == plantID && d.EHS_MEASURE.MEASURE_CD == "S60001");
+
+				var pa = EHSModel.LookupPlantAccounting(entities, plantID, day.Year, day.Month, true);
+
+				pa.TIME_WORKED = dataTimeWorked == null ? null : dataTimeWorked.VALUE;
+				pa.TIME_LOST = dataTimeLost == null ? null : dataTimeLost.VALUE;
+
+				EHSModel.UpdatePlantAccounting(entities, pa);
 			}
 		}
 
