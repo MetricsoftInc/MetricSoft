@@ -43,7 +43,7 @@ namespace SQM.Website
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
 
-			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.audit);
+			bool createAuditAccess = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.audit);
 			if (rbNew.Visible)
 				rbNew.Visible = createAuditAccess;
 
