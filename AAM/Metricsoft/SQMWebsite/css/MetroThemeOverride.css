@@ -636,7 +636,6 @@ select, input {
             font-size: 12px;
         } 
 
-
 .RadScheduler .rsMonthView .rsWrap,
     .RadScheduler .rsMonthView .rsApt,
     .RadScheduler .rsMonthView .rsAptOut,
@@ -676,39 +675,36 @@ select, input {
         border: none;
     }
 
- 	.RadScheduler .rsMonthView .rsWrap
-	{
-			overflow: visible;
-			font-size: 0;
-			line-height: 0;
-	}
-	.RadScheduler .rsMonthView .rsLastWrap
-	{
-			height: 16px !important;
-	}
-	.RadScheduler .rsMonthView .rsAptContent
-	{
-			position: relative !important;
-			border-top: 0;
-			border-bottom: 0;
-			left: 0;
-			top: 0;
-	}
-	* html .RadScheduler .rsMonthView .rsAptIn
-	{
-			border-width: 0 1px;
-			top: 0;
-			margin-left: -1px;
-			margin-right: -1px;
-	}
-	* html .RadScheduler .rsMonthView .rsAptMid
-	{
-			top: 0;
-			left: 1px;
-			margin: 0 1px;
-			border-width: 1px 0;
-	}
-
-
-
+    .RadScheduler .rsMonthView .rsWrap
+    {
+            overflow: hidden;
+            font-size: 11px;
+            line-height: 14px;
+    }
+    .RadScheduler .rsMonthView .rsLastWrap
+    {
+            height: 20px !important;
+    }
+    .RadScheduler .rsMonthView .rsAptContent
+    {
+            position: relative !important;
+            border-top: 0;
+            border-bottom: 0;
+            left: 0;
+            top: 0;
+    }
+    * html .RadScheduler .rsMonthView .rsAptIn
+    {
+            border-width: 0 1px;
+            top: 0;
+        margin-left: -1px;
+        margin-right: -1px;
+    }
+    * html .RadScheduler .rsMonthView .rsAptMid
+    {
+            top: 0;
+            left: 1px;
+            margin: 0 1px;
+            border-width: 1px 0;
+    }
 
