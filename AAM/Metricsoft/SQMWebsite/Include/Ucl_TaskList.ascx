@@ -26,7 +26,7 @@
 			SelectedView="MonthView" OnAppointmentDataBound="scdTaskSchedule_OnDataBound"  OnAppointmentCreated="scdTaskSchedule_OnCreated"
 			 DataKeyField ="RecordKey" DataSubjectField="LongTitle" DataStartField="StartDate" DataEndField="EndDate" DataDescriptionField="Description"
 			 AllowEdit="False" AllowInsert="False" ReadOnly="True" RowHeight = "60"
-			OverflowBehavior="Expand" EditFormDateFormat="M/d/yyyy" EditFormTimeFormat="h:mm tt" EnableAdvancedForm="False" EnableResourceEditing="False" SelectedDate="2015-10-20" >
+			OverflowBehavior="Expand" EnableAdvancedForm="False" EnableResourceEditing="False" >
 				<ExportSettings>
 					<Pdf PageBottomMargin="1in" PageLeftMargin="1in" PageRightMargin="1in" PageTopMargin="1in" />
 				</ExportSettings>
