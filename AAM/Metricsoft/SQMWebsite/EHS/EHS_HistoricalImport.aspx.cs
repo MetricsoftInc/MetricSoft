@@ -27,7 +27,7 @@ namespace SQM.Website.EHS
 					this.AddToData(history.PLANT_ID, measures["S60003"], date, history.TOTAL_DAYS_RESTRICTED);
 					this.AddToData(history.PLANT_ID, measures["S20004"], date, history.RECORDED_CASES);
 					this.AddToData(history.PLANT_ID, measures["S20003"], date, history.FIRST_AID_CASES);
-					this.AddToData(history.PLANT_ID, measures["S30002"], date, history.LEADERSHIP_WALKS);
+					this.AddToData(history.PLANT_ID, measures["S30003"], date, history.LEADERSHIP_WALKS);
 					this.AddToData(history.PLANT_ID, measures["S40003"], date, history.JOB_SILL_ANALYSIS);
 					this.AddToData(history.PLANT_ID, measures["S50001"], date, history.SAFETY_TRAIN_SESSIONS);
 				}

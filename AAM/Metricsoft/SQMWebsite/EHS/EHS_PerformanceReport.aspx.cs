@@ -270,7 +270,7 @@ namespace SQM.Website.EHS
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.Leadership))
 						monthData.Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
-							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.JSAs))
 						monthData.JSAs = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
