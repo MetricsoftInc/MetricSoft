@@ -19,30 +19,11 @@ namespace SQM.Website
 	#region ehsdata
 	public class EHSDataMapping
 	{
-		public static EHS_DATA LookupEHSDataPeriod(PSsqmEntities ctx, decimal plantID, DateTime periodDate, decimal measureID, bool createNew)
-		{
-			EHS_DATA dataPeriod = null;
-
-			dataPeriod = (from d in ctx.EHS_DATA
-						  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && d.MEASURE_ID == measureID
-						  select d).SingleOrDefault();
-
-			if (dataPeriod == null && createNew)
-			{
-				dataPeriod = new EHS_DATA();
-				dataPeriod.MEASURE_ID = measureID;
-				dataPeriod.PLANT_ID = plantID;
-				dataPeriod.DATE = periodDate.Date;
-			}
-
-			return dataPeriod;
-		}
-
 		public static List<EHS_DATA> SelectEHSDataPeriodList(PSsqmEntities ctx, decimal plantID, DateTime periodDate, List<decimal> measureList, bool createNew, decimal updateIndicator)
 		{
 			List<EHS_DATA> dataList = new List<EHS_DATA>();
 
-			dataList = (from d in ctx.EHS_DATA
+			dataList = (from d in ctx.EHS_DATA.Include("EHS_DATA_ORD")
 							  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && (measureList.Count == 0  ||  measureList.Contains(d.MEASURE_ID))
 							  select d).ToList();
 
@@ -75,26 +56,6 @@ namespace SQM.Website
 			}
 
 			return dataList;
-		}
-
-		public static int UpdateEHSDataList(PSsqmEntities ctx, List<EHS_DATA> dataList)
-		{
-			int status = 0;
-
-			foreach (EHS_DATA ehsData in dataList)
-			{
-				if (ehsData.EntityState == EntityState.Added || ehsData.EntityState == EntityState.Detached)
-				{
-					if (ehsData.VALUE.HasValue || !string.IsNullOrEmpty(ehsData.ATTRIBUTE))
-					{
-						ctx.AddToEHS_DATA(ehsData);
-					}
-				}
-			}
-
-			status = ctx.SaveChanges();
-
-			return status;
 		}
 
 		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal addValue, decimal updateIndicator)

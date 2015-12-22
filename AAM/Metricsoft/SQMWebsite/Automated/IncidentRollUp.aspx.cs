@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Data;
+using System.Data.Objects;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -28,8 +30,6 @@ namespace SQM.Website.Automated
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 			DateTime priorPeriod = DateTime.UtcNow.AddMonths(-1);
 			DateTime thisPeriod = DateTime.UtcNow;
-			decimal updateIndicator = thisPeriod.Ticks;
-			decimal locationID = 0;
 
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 
@@ -84,63 +84,58 @@ namespace SQM.Website.Automated
 			{
 				PSsqmEntities entities = new PSsqmEntities();
 
-				// get all EHS_MEASURE's that map to EHS DATA (ne. PLANT_ACCOUNTING)
-				List<EHS_MEASURE> measureList = new List<EHS_MEASURE>();
-				measureList = (from m in entities.EHS_MEASURE
-							   where
-							   m.MEASURE_CATEGORY == "SAFE"  && 
-							   !string.IsNullOrEmpty(m.PLANT_ACCT_FIELD) &&
-							   m.FREQUENCY == "M" 
-							   select m).ToList();
-
 				// fetch all incidents occurring after the minimum reporting date
-				List<INCIDENT> incidentList = new List<INCIDENT>();
-				incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") 
+				List<INCIDENT> incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") 
 								where 
-								i.INCIDENT_DT >= fromDate  
-								select i).ToList();
+								i.INCIDENT_DT >= fromDate  &&  i.DETECT_PLANT_ID > 0 
+								select i).OrderBy(l=> l.DETECT_PLANT_ID).ThenBy(l=> l.INCIDENT_DT).ToList();
 
-				// pre allocate monthly periods for the overall accounting span
-				EHSIncidentTimeAccounting accountingPeriod = null;
-				DateTime effDate = fromDate;
-				DateTime effToDate = DateTime.UtcNow.AddMonths(1);
-				List<EHSIncidentTimeAccounting> accountingSpan = new List<EHSIncidentTimeAccounting>();
-				while (effDate <= effToDate)
-				{
-					accountingSpan.Add(new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month, 0));
-					effDate = effDate.AddMonths(1);
-				}
+				// fetch all the plant accounting records for the target timespan
+				PLANT_ACCOUNTING pa = null;
+				List<PLANT_ACCOUNTING> paList = (from a in entities.PLANT_ACCOUNTING 
+						  where
+						  EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= DateTime.Now
+						  select a).OrderBy(l=> l.PLANT_ID).ThenBy(l=> l.PERIOD_YEAR).ThenBy(l=> l.PERIOD_MONTH).ToList();
+				
+				List<EHSIncidentTimeAccounting> summaryList = new List<EHSIncidentTimeAccounting>();
 
 				foreach (INCIDENT incident in incidentList)
 				{
 					WriteLine("Incident ID: " + incident.INCIDENT_ID.ToString() + "  Occur Date: " + Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
-					locationID = (decimal)incident.DETECT_PLANT_ID;
+					incident.INCFORM_CAUSATION.Load();
 					if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
-					{
 						incident.INCFORM_LOSTTIME_HIST.Load();
-					}
-					List<EHSIncidentTimeAccounting> incidentSpan = EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, priorPeriod, thisPeriod);
-					if (incidentSpan != null && incidentSpan.Count > 0)
-					{
-						List<EHS_DATA> dataList = new List<EHS_DATA>();
-						foreach (EHSIncidentTimeAccounting period in incidentSpan)
-						{
-							dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, locationID, new DateTime(period.PeriodYear, period.PeriodMonth, 1), measureList.Select(m => m.MEASURE_ID).ToList(), true, updateIndicator);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST"), (decimal)period.LostTime, updateIndicator);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RESTRICTED_TIME"), (decimal)period.RestrictedTime, updateIndicator);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "TIME_LOST_CASES"), (decimal)period.LostTimeCase, updateIndicator);
-							EHSDataMapping.SetEHSDataValue(dataList, EHSDataMapping.GetMappedMeasure(measureList, "RECORDED_CASES"), (decimal)period.RecordableCase, updateIndicator);
-							EHSDataMapping.UpdateEHSDataList(entities, dataList);
+	
+					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, priorPeriod, thisPeriod));
+				}
 
-							// update PLANT_ACCOUNTING table stats for backwards compatibility
-							PLANT_ACCOUNTING pa = EHSModel.LookupPlantAccounting(entities, locationID, period.PeriodYear, period.PeriodMonth, true);
-							pa.TIME_LOST = period.LostTime;
-							pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
-							pa.TIME_LOST_CASES = period.LostTimeCase;
-							pa.RECORDED_CASES = period.RecordableCase;
-							EHSModel.UpdatePlantAccounting(entities, pa);
+				decimal plantID = 0;
+				foreach (EHSIncidentTimeAccounting period in summaryList.OrderBy(l => l.PlantID).ThenBy(l => l.PeriodYear).ThenBy(l => l.PeriodMonth).ToList())
+				{
+					// clear the incident acccounting values for the entire timespan upon processing a new plant ID. 
+					// we do this in case previously accounted INCIDENTs were deleted or moved to another period
+					if (period.PlantID != plantID)
+					{
+						plantID = period.PlantID;
+						foreach (PLANT_ACCOUNTING pac in paList.Where(p=> p.PLANT_ID == plantID))
+						{
+							pac.TIME_LOST = pac.TOTAL_DAYS_RESTRICTED = pac.TIME_LOST_CASES = pac.RECORDED_CASES = pac.FIRST_AID_CASES = 0;
 						}
 					}
+					// write PLANT_ACCOUNTING metrics
+					if ((pa = paList.Where(l => l.PLANT_ID == period.PlantID && l.PERIOD_YEAR == period.PeriodYear && l.PERIOD_MONTH == period.PeriodMonth).FirstOrDefault()) == null)
+					{
+						paList.Add((pa = new PLANT_ACCOUNTING()));
+						pa.PLANT_ID = period.PlantID;
+						pa.PERIOD_YEAR = period.PeriodYear;
+						pa.PERIOD_MONTH = period.PeriodMonth;
+					}
+					pa.TIME_LOST = period.LostTime;
+					pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
+					pa.TIME_LOST_CASES = period.LostTimeCase;
+					pa.RECORDED_CASES = period.RecordableCase;
+					pa.FIRST_AID_CASES = period.FirstAidCase;
+					EHSModel.UpdatePlantAccounting(entities, pa);
 				}
 			}
 			catch (Exception ex)
