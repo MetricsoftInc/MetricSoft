@@ -1160,22 +1160,23 @@ namespace SQM.Website
 			string workStatus = hist.WORK_STATUS;
 			DateTime startDate = (DateTime)hist.BEGIN_DT;
 			DateTime endDate = (DateTime)histList.Last().BEGIN_DT;
-			if (histList.Last().WORK_STATUS != "02")
+			if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
 			{
 				endDate = DateTime.UtcNow.AddDays(-1);
 			}
 
-			int numDays = Convert.ToInt32((endDate - startDate).TotalDays);
-			DateTime effDate = startDate;
+			int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
+			DateTime effDate;
 			EHSIncidentTimeAccounting period;
 			for (int n = 0; n <= numDays; n++)
 			{
 				effDate = startDate.AddDays(n);
-				period = periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault();
-				if (period == null)
+				// accrue or add accounting periods as needed per the incident timespan
+				if ((period = periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault()) == null)
 				{
 					periodList.Add((period = new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month, (decimal)incident.ISSUE_TYPE_ID, (decimal)incident.DETECT_PLANT_ID)));
 				}
+				// check if new work status occurred on this date
 				if ((hist = histList.Where(l => l.BEGIN_DT == effDate).FirstOrDefault()) != null)
 				{
 					workStatus = hist.WORK_STATUS;
