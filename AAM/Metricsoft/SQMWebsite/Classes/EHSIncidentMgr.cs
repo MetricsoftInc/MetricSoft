@@ -1125,7 +1125,7 @@ namespace SQM.Website
 			return losttimelist;
 		}
 
-		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, DateTime selectFromDate, DateTime selectToDate)
+		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, string localeTimezone)
 		{
 			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
 
@@ -1158,11 +1158,12 @@ namespace SQM.Website
 
 			INCFORM_LOSTTIME_HIST hist = histList.First();
 			string workStatus = hist.WORK_STATUS;
-			DateTime startDate = (DateTime)hist.BEGIN_DT;
-			DateTime endDate = (DateTime)histList.Last().BEGIN_DT;
+
+			DateTime startDate = WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone);
+			DateTime endDate = WebSiteCommon.LocalTime((DateTime)histList.Last().BEGIN_DT, localeTimezone);
 			if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
 			{
-				endDate = DateTime.UtcNow.AddDays(-1);
+				endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
 			}
 
 			int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan

@@ -28,8 +28,6 @@ namespace SQM.Website.Automated
 			output = new StringBuilder();
 			bool validIP = true;
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
-			DateTime priorPeriod = DateTime.UtcNow.AddMonths(-1);
-			DateTime thisPeriod = DateTime.UtcNow;
 
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 
@@ -90,6 +88,9 @@ namespace SQM.Website.Automated
 								i.INCIDENT_DT >= fromDate  &&  i.DETECT_PLANT_ID > 0 
 								select i).OrderBy(l=> l.DETECT_PLANT_ID).ThenBy(l=> l.INCIDENT_DT).ToList();
 
+				List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0);
+				PLANT plant = null;
+
 				// fetch all the plant accounting records for the target timespan
 				PLANT_ACCOUNTING pa = null;
 				List<PLANT_ACCOUNTING> paList = (from a in entities.PLANT_ACCOUNTING 
@@ -105,19 +106,19 @@ namespace SQM.Website.Automated
 					incident.INCFORM_CAUSATION.Load();
 					if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 						incident.INCFORM_LOSTTIME_HIST.Load();
-	
-					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, priorPeriod, thisPeriod));
+					plant = plantList.Where(l => l.PLANT_ID == (decimal)incident.DETECT_PLANT_ID).FirstOrDefault();
+					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, plant.LOCAL_TIMEZONE));
 				}
 
-				decimal plantID = 0;
+				plant = null;
 				foreach (EHSIncidentTimeAccounting period in summaryList.OrderBy(l => l.PlantID).ThenBy(l => l.PeriodYear).ThenBy(l => l.PeriodMonth).ToList())
 				{
 					// clear the incident acccounting values for the entire timespan upon processing a new plant ID. 
 					// we do this in case previously accounted INCIDENTs were deleted or moved to another period
-					if (period.PlantID != plantID)
+					if (plant == null  ||  plant.PLANT_ID != period.PlantID)
 					{
-						plantID = period.PlantID;
-						foreach (PLANT_ACCOUNTING pac in paList.Where(p=> p.PLANT_ID == plantID))
+						plant = plantList.Where(l => l.PLANT_ID == period.PlantID).FirstOrDefault();
+						foreach (PLANT_ACCOUNTING pac in paList.Where(p => p.PLANT_ID == period.PlantID))
 						{
 							pac.TIME_LOST = pac.TOTAL_DAYS_RESTRICTED = pac.TIME_LOST_CASES = pac.RECORDED_CASES = pac.FIRST_AID_CASES = 0;
 						}

@@ -368,6 +368,11 @@ namespace SQM.Website
             return localDate;
         }
 
+		public static DateTime ConvertToUTC(DateTime localDate, string localTimeZone)
+		{
+			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(localTimeZone)));
+		}
+
 		public static DateTime ConvertFromToTimezone(DateTime dateIN, string tzIdIN, string tzIdOUT)
 		{
 			// convert between two timezones - not necessarily the server time
