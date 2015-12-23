@@ -13,6 +13,15 @@ namespace SQM.Website {
     public partial class EHS_Profile {
         
         /// <summary>
+        /// hfTimeout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfTimeout;
+        
+        /// <summary>
         /// hfBase control.
         /// </summary>
         /// <remarks>

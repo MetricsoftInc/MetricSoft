@@ -18,6 +18,8 @@ namespace SQM.Website
         {
             base.OnInit(e);
             uclInputHdr.OnPlantSelect += OnLocationSelect;
+
+			hfTimeout.Value = SQMBasePage.GetSessionTimeout().ToString();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -520,102 +522,109 @@ namespace SQM.Website
             btnMetricCancel.Enabled = true;
             DisplayErrorMessage(null);
 
-            if (pm == null)
-            {
-                ddlMetricID.Enabled = ddlMetricCost.Enabled = ddlMetricDisposalCode.Enabled = ddlMetricRegStatus.Enabled = ddlMetricUOM.Enabled = ddlMetricCurrency.Enabled = ddlMetricResponsible.Enabled = false;
-                ddlMetricCategory.SelectedIndex = ddlMetricID.SelectedIndex = ddlMetricDisposalCode.SelectedIndex = ddlMetricRegStatus.SelectedIndex = ddlMetricUOM.SelectedIndex = ddlMetricCost.SelectedIndex = ddlMetricResponsible.SelectedIndex = 0;
-                if (ddlMetricCurrency.Items.FindByValue(LocalProfile().Plant.CURRENCY_CODE) != null)
-                    ddlMetricCurrency.SelectedValue = LocalProfile().Plant.CURRENCY_CODE;
-                lblMetricName.Text = lblDisposalDesc.Text = "";
-                tbMetricPrompt.Text = tbUOMFactor.Text = tbWasteCode.Text = "";
-                winMetricEdit.Title = hfAddMetric.Value;
-                tbValueDflt.Text = tbCostDflt.Text = "";
-                cbEnableOverride.Checked = false;
-                cbMetricRequired.Checked = true;
-            }
-            else
-            {
-                winMetricEdit.Title = hfUpdateMetric.Value;
-                LocalProfile().CurrentProfileMeasure = pm;
-                LocalProfile().CurrentEHSMeasure = pm.EHS_MEASURE;
+			try
+			{
+				if (pm == null)
+				{
+					ddlMetricID.Enabled = ddlMetricCost.Enabled = ddlMetricDisposalCode.Enabled = ddlMetricRegStatus.Enabled = ddlMetricUOM.Enabled = ddlMetricCurrency.Enabled = ddlMetricResponsible.Enabled = false;
+					ddlMetricCategory.SelectedIndex = ddlMetricID.SelectedIndex = ddlMetricDisposalCode.SelectedIndex = ddlMetricRegStatus.SelectedIndex = ddlMetricUOM.SelectedIndex = ddlMetricCost.SelectedIndex = ddlMetricResponsible.SelectedIndex = 0;
+					if (ddlMetricCurrency.Items.FindByValue(LocalProfile().Plant.CURRENCY_CODE) != null)
+						ddlMetricCurrency.SelectedValue = LocalProfile().Plant.CURRENCY_CODE;
+					lblMetricName.Text = lblDisposalDesc.Text = "";
+					tbMetricPrompt.Text = tbUOMFactor.Text = tbWasteCode.Text = "";
+					winMetricEdit.Title = hfAddMetric.Value;
+					tbValueDflt.Text = tbCostDflt.Text = "";
+					cbEnableOverride.Checked = false;
+					cbMetricRequired.Checked = true;
+				}
+				else
+				{
+					winMetricEdit.Title = hfUpdateMetric.Value;
+					LocalProfile().CurrentProfileMeasure = pm;
+					LocalProfile().CurrentEHSMeasure = pm.EHS_MEASURE;
 
-                if (pm.EHS_MEASURE != null  &&  ddlMetricCategory.Items.FindByValue(pm.EHS_MEASURE.MEASURE_CATEGORY) != null)
-                {
-                    ddlMetricCategory.SelectedValue = pm.EHS_MEASURE.MEASURE_CATEGORY;
-                    ddlCategoryChanged(ddlMetricCategory, null);
-                    ddlMetricID.SelectedValue = WebSiteCommon.PackItemValue(pm.EHS_MEASURE.MEASURE_CATEGORY, pm.EHS_MEASURE.EFM_TYPE, pm.EHS_MEASURE.MEASURE_ID.ToString());
-                    lblMetricName.Text = pm.EHS_MEASURE.MEASURE_CD;
+					if (pm.EHS_MEASURE != null && ddlMetricCategory.Items.FindByValue(pm.EHS_MEASURE.MEASURE_CATEGORY) != null)
+					{
+						ddlMetricCategory.SelectedValue = pm.EHS_MEASURE.MEASURE_CATEGORY;
+						ddlCategoryChanged(ddlMetricCategory, null);
+						ddlMetricID.SelectedValue = WebSiteCommon.PackItemValue(pm.EHS_MEASURE.MEASURE_CATEGORY, pm.EHS_MEASURE.EFM_TYPE, pm.EHS_MEASURE.MEASURE_ID.ToString());
+						lblMetricName.Text = pm.EHS_MEASURE.MEASURE_CD;
 
-                    if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT" && ddlMetricCurrency.Items.FindByValue(pm.DEFAULT_CURRENCY_CODE) != null)
-                        ddlMetricCurrency.SelectedValue = pm.DEFAULT_CURRENCY_CODE;
+						if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT" && ddlMetricCurrency.Items.FindByValue(pm.DEFAULT_CURRENCY_CODE) != null)
+							ddlMetricCurrency.SelectedValue = pm.DEFAULT_CURRENCY_CODE;
 
-                    if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT" && pm.DEFAULT_UOM > 0)
-                    {
-                        UOM uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == pm.DEFAULT_UOM);
-                        if (uom != null)
-                        {
-                            if (ddlMetricUOM.Items.FindByValue(WebSiteCommon.PackItemValue(uom.UOM_CATEGORY, uom.EFM_TYPE, uom.UOM_ID.ToString())) != null)
-                                ddlMetricUOM.SelectedValue = WebSiteCommon.PackItemValue(uom.UOM_CATEGORY, uom.EFM_TYPE, uom.UOM_ID.ToString());
-                            else
-                                ddlMetricUOM.SelectedIndex = 0;
+						if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT" && pm.DEFAULT_UOM > 0)
+						{
+							UOM uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == pm.DEFAULT_UOM);
+							if (uom != null)
+							{
+								if (ddlMetricUOM.Items.FindByValue(WebSiteCommon.PackItemValue(uom.UOM_CATEGORY, uom.EFM_TYPE, uom.UOM_ID.ToString())) != null)
+									ddlMetricUOM.SelectedValue = WebSiteCommon.PackItemValue(uom.UOM_CATEGORY, uom.EFM_TYPE, uom.UOM_ID.ToString());
+								else
+									ddlMetricUOM.SelectedIndex = 0;
 
-                            if (uom.UOM_CATEGORY == "CUST")
-                            {
-                                spUOMFactor.Visible = true;
-                            }
-                        }
+								if (uom.UOM_CATEGORY == "CUST")
+								{
+									spUOMFactor.Visible = true;
+								}
+							}
 
-                        if (pm.UOM_FACTOR.HasValue)
-                            tbUOMFactor.Text = SQMBasePage.FormatValue((decimal)pm.UOM_FACTOR, 5);
-                    }
+							if (pm.UOM_FACTOR.HasValue)
+								tbUOMFactor.Text = SQMBasePage.FormatValue((decimal)pm.UOM_FACTOR, 5);
+						}
 
-                    if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT")
-                    {
-                        if (pm.NEG_VALUE_ALLOWED.HasValue && (bool)pm.NEG_VALUE_ALLOWED)
-                            ddlMetricCost.SelectedValue = "CREDIT";
-                        else
-                            ddlMetricCost.SelectedValue = "COST";
-                    }
-                }
+						if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT")
+						{
+							if (pm.NEG_VALUE_ALLOWED.HasValue && (bool)pm.NEG_VALUE_ALLOWED)
+								ddlMetricCost.SelectedValue = "CREDIT";
+							else
+								ddlMetricCost.SelectedValue = "COST";
+						}
+					}
 
-                tbMetricPrompt.Text = pm.MEASURE_PROMPT;
-                ddlMetricRegStatus.SelectedValue = pm.REG_STATUS;
-                ddlMetricDisposalCode.SelectedValue = pm.UN_CODE;
-                if (!string.IsNullOrEmpty(pm.UN_CODE))
-                    lblDisposalDesc.Text = SessionManager.DisposalCodeList.FirstOrDefault(l => l.UN_CODE == pm.UN_CODE).DESCRIPTION;
-                else
-                    lblDisposalDesc.Text = "";
+					tbMetricPrompt.Text = pm.MEASURE_PROMPT;
+					ddlMetricRegStatus.SelectedValue = pm.REG_STATUS;
+					ddlMetricDisposalCode.SelectedValue = pm.UN_CODE;
+					if (!string.IsNullOrEmpty(pm.UN_CODE))
+						lblDisposalDesc.Text = SessionManager.DisposalCodeList.FirstOrDefault(l => l.UN_CODE == pm.UN_CODE).DESCRIPTION;
+					else
+						lblDisposalDesc.Text = "";
 
-                tbWasteCode.Text = pm.WASTE_CODE;
+					tbWasteCode.Text = pm.WASTE_CODE;
 
-                if (pm.RESPONSIBLE_ID > 0 && ddlMetricResponsible.Items.FindByValue(pm.RESPONSIBLE_ID.ToString()) != null)
-                    ddlMetricResponsible.SelectedValue = pm.RESPONSIBLE_ID.ToString();
-                else
-                    ddlMetricResponsible.SelectedIndex = 0;
+					if (pm.RESPONSIBLE_ID > 0 && ddlMetricResponsible.Items.FindByValue(pm.RESPONSIBLE_ID.ToString()) != null)
+						ddlMetricResponsible.SelectedValue = pm.RESPONSIBLE_ID.ToString();
+					else
+						ddlMetricResponsible.SelectedIndex = 0;
 
-                ddlUOMChanged(ddlMetricUOM, null);
-                ddlMetricStatus.SelectedValue = pm.STATUS;
-                cbMetricRequired.Checked = (bool)pm.IS_REQUIRED;
+					ddlUOMChanged(ddlMetricUOM, null);
+					ddlMetricStatus.SelectedValue = pm.STATUS;
+					cbMetricRequired.Checked = (bool)pm.IS_REQUIRED;
 
-                tbValueDflt.Text = tbCostDflt.Text = "";
-                cbEnableOverride.Checked = false;
-               // radEffEndDate.ShowPopupOnFocus = true;
-                //radEffEndDate.SelectedDate = null;
-                if (pm.EHS_PROFILE_MEASURE_EXT != null  &&  pm.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT.HasValue)
-                    tbValueDflt.Text = SQMBasePage.FormatValue((decimal)pm.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT, 2);
-                if (pm.EHS_PROFILE_MEASURE_EXT != null  &&  pm.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT.HasValue)
-                    tbCostDflt.Text = SQMBasePage.FormatValue((decimal)pm.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT, 2);
-                if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.OVERRIDE_ALLOWED.HasValue)
-                    cbEnableOverride.Checked = (bool)pm.EHS_PROFILE_MEASURE_EXT.OVERRIDE_ALLOWED;
-                //if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.EFF_END_DT.HasValue)
-                //    radEffEndDate.SelectedDate = pm.EHS_PROFILE_MEASURE_EXT.EFF_END_DT;
-            }
+					tbValueDflt.Text = tbCostDflt.Text = "";
+					cbEnableOverride.Checked = false;
+					// radEffEndDate.ShowPopupOnFocus = true;
+					//radEffEndDate.SelectedDate = null;
+					if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT.HasValue)
+						tbValueDflt.Text = SQMBasePage.FormatValue((decimal)pm.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT, 2);
+					if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT.HasValue)
+						tbCostDflt.Text = SQMBasePage.FormatValue((decimal)pm.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT, 2);
+					if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.OVERRIDE_ALLOWED.HasValue)
+						cbEnableOverride.Checked = (bool)pm.EHS_PROFILE_MEASURE_EXT.OVERRIDE_ALLOWED;
+					//if (pm.EHS_PROFILE_MEASURE_EXT != null && pm.EHS_PROFILE_MEASURE_EXT.EFF_END_DT.HasValue)
+					//    radEffEndDate.SelectedDate = pm.EHS_PROFILE_MEASURE_EXT.EFF_END_DT;
+				}
 
-            UpdateListTitles();
-			pnlMetricEdit.Enabled = btnMetricCancel.Enabled = btnMetricSave.Enabled = UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata);
+				UpdateListTitles();
+				pnlMetricEdit.Enabled = btnMetricCancel.Enabled = btnMetricSave.Enabled = UserContext.CheckUserPrivilege(SysPriv.config, SysScope.envdata);
 
-            string script = "function f(){OpenMetricEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+				string script = "function f(){OpenMetricEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
+
+			catch
+			{
+			}
 
             return status;
         }

@@ -6,6 +6,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
 
 <script type="text/javascript">
+
+	window.onload = function () {
+		var timeout = document.getElementById('hfTimeout').value;
+		var timeoutWarn = ((parseInt(timeout) - 2) * 60000);
+		window.setTimeout(function () { alert("Your Session Will Timeout In Approximately 2 Minutes.  Please save your work or your changes will be lost.") }, timeoutWarn);
+	}
+
     function UpdateProfileButtons() {
         // document.getElementById("btnProfileMeasureNew").disabled = true;
     }
@@ -70,6 +77,7 @@
             <td class="tabActiveTableBg" colspan="10" align="center">
 			    <BR/>
                <%-- <FORM name="dummy">--%>
+				<asp:HiddenField id="hfTimeout" runat="server"/>
                 <asp:HiddenField ID="hfBase" runat="server" />
                 <asp:HiddenField ID="hfOper" runat="server" />
                 <asp:HiddenField ID="hfAddMetric" runat ="server" Value="<%$ Resources:LocalizedText, ENVProfileAddMetric %>" />
