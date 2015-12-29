@@ -27,6 +27,7 @@ namespace SQM.Website.Automated
 
 			output = new StringBuilder();
 			bool validIP = true;
+			bool doEHSRollup = false;
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
@@ -37,6 +38,12 @@ namespace SQM.Website.Automated
 				List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
 
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
+				SETTINGS setsEHS = sets.Where(x => x.SETTING_CD == "EHSROLLUP").FirstOrDefault();
+				if (setsEHS != null  &&  setsEHS.VALUE.ToUpper() == "Y")
+				{
+					doEHSRollup = true;
+				}
+
 				/*
 				if (strValidIP.Equals(currentIP))
 				{
@@ -148,6 +155,12 @@ namespace SQM.Website.Automated
 			WriteLine("Completed: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
+
+			if (doEHSRollup)
+			{
+				Response.Redirect(SessionManager.CurrentAdminPage = "/Automated/AuditRollUp.aspx");
+			}
+
 		}
 
 		public string GetIPAddress()
