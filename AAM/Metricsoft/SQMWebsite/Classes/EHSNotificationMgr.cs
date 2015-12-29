@@ -112,6 +112,8 @@ namespace SQM.Website
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
 			
 			notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus));
+			notifyPersonList = notifyPersonList.Where(n=> !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
+
 			foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())
 			{
 				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(entities, person);
