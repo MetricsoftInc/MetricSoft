@@ -27,7 +27,7 @@ namespace SQM.Website.Automated
 
 			output = new StringBuilder();
 			bool validIP = true;
-			bool doEHSRollup = false;
+			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
 			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
@@ -38,10 +38,10 @@ namespace SQM.Website.Automated
 				List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
 
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
-				SETTINGS setsEHS = sets.Where(x => x.SETTING_CD == "EHSROLLUP").FirstOrDefault();
-				if (setsEHS != null  &&  setsEHS.VALUE.ToUpper() == "Y")
+				SETTINGS setsEHS = sets.Where(x => x.SETTING_CD == "ROLLUP_NEXTPAGE").FirstOrDefault();
+				if (setsEHS != null  &&  !string.IsNullOrEmpty(setsEHS.VALUE)  &&  setsEHS.VALUE.Length > 1)
 				{
-					doEHSRollup = true;
+					nextPage = setsEHS.VALUE;
 				}
 
 				/*
@@ -156,9 +156,9 @@ namespace SQM.Website.Automated
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
 
-			if (doEHSRollup)
+			if (!string.IsNullOrEmpty(nextPage))
 			{
-				Response.Redirect(SessionManager.CurrentAdminPage = "/Automated/AuditRollUp.aspx");
+				Response.Redirect(SessionManager.CurrentAdminPage = "/Automated/"+nextPage);
 			}
 
 		}
