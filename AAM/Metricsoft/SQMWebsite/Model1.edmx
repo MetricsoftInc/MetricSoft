@@ -144,6 +144,13 @@
       FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="XLAT" EntityType="PSsqmModel.Store.XLAT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="XLAT_DAYS_TO_CLOSE_TRANS" EntityType="PSsqmModel.Store.XLAT_DAYS_TO_CLOSE_TRANS" store:Type="Tables" store:Schema="dbo" store:Name="XLAT_DAYS_TO_CLOSE_TRANS">
+            <DefiningQuery>SELECT 
+      [XLAT_DAYS_TO_CLOSE_TRANS].[XLAT_CODE] AS [XLAT_CODE], 
+      [XLAT_DAYS_TO_CLOSE_TRANS].[MIN_DAYS] AS [MIN_DAYS], 
+      [XLAT_DAYS_TO_CLOSE_TRANS].[MAX_DAYS] AS [MAX_DAYS]
+      FROM [dbo].[XLAT_DAYS_TO_CLOSE_TRANS] AS [XLAT_DAYS_TO_CLOSE_TRANS]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_MetricDataByPlant" EntityType="PSsqmModel.Store.vw_MetricDataByPlant" store:Type="Views" store:Schema="dbo" store:Name="vw_MetricDataByPlant">
             <DefiningQuery>SELECT 
       [vw_MetricDataByPlant].[PERIOD_YEAR] AS [PERIOD_YEAR], 
@@ -2713,6 +2720,17 @@
           <Property Name="SORT_ORDER" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
+      warning 6002: The table/view 'AAM.dbo.XLAT_DAYS_TO_CLOSE_TRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="XLAT_DAYS_TO_CLOSE_TRANS">
+          <Key>
+            <PropertyRef Name="XLAT_CODE" />
+          </Key>
+          <Property Name="XLAT_CODE" Type="varchar" Nullable="false" MaxLength="150" />
+          <Property Name="MIN_DAYS" Type="int" />
+          <Property Name="MAX_DAYS" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="vw_MetricDataByPlant">
@@ -5058,6 +5076,7 @@
           </AssociationSet>
           <EntitySet Name="EHS_TARGETS" EntityType="PSsqmModel.EHS_TARGETS" />
           <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
+          <EntitySet Name="XLAT_DAYS_TO_CLOSE_TRANS" EntityType="PSsqmModel.XLAT_DAYS_TO_CLOSE_TRANS" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -9141,6 +9160,14 @@
           <Property Type="Boolean" Name="IS_HEADING" />
           <Property Type="Int16" Name="SORT_ORDER" />
         </EntityType>
+        <EntityType Name="XLAT_DAYS_TO_CLOSE_TRANS">
+          <Key>
+            <PropertyRef Name="XLAT_CODE" />
+          </Key>
+          <Property Type="String" Name="XLAT_CODE" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="MIN_DAYS" />
+          <Property Type="Int32" Name="MAX_DAYS" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11252,6 +11279,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="XLAT_DAYS_TO_CLOSE_TRANS">
+            <EntityTypeMapping TypeName="PSsqmModel.XLAT_DAYS_TO_CLOSE_TRANS">
+              <MappingFragment StoreEntitySet="XLAT_DAYS_TO_CLOSE_TRANS">
+                <ScalarProperty Name="MAX_DAYS" ColumnName="MAX_DAYS" />
+                <ScalarProperty Name="MIN_DAYS" ColumnName="MIN_DAYS" />
+                <ScalarProperty Name="XLAT_CODE" ColumnName="XLAT_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11552,6 +11588,7 @@
         <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="3.1552437782079181" PointY="11.040620212927749" />
         <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="8.6119807849693952" PointY="28.228467328580315" />
+        <EntityTypeShape EntityType="PSsqmModel.XLAT_DAYS_TO_CLOSE_TRANS" Width="1.5" PointX="1.5326805438532869" PointY="19.108761095958187" />
         </Diagram>
     </Diagrams>
   </Designer>

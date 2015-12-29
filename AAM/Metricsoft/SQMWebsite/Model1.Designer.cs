@@ -2326,6 +2326,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<XLAT> _XLAT;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<XLAT_DAYS_TO_CLOSE_TRANS> XLAT_DAYS_TO_CLOSE_TRANS
+        {
+            get
+            {
+                if ((_XLAT_DAYS_TO_CLOSE_TRANS == null))
+                {
+                    _XLAT_DAYS_TO_CLOSE_TRANS = base.CreateObjectSet<XLAT_DAYS_TO_CLOSE_TRANS>("XLAT_DAYS_TO_CLOSE_TRANS");
+                }
+                return _XLAT_DAYS_TO_CLOSE_TRANS;
+            }
+        }
+        private ObjectSet<XLAT_DAYS_TO_CLOSE_TRANS> _XLAT_DAYS_TO_CLOSE_TRANS;
 
         #endregion
 
@@ -3385,6 +3401,14 @@ namespace SQM.Website
         public void AddToXLAT(XLAT xLAT)
         {
             base.AddObject("XLAT", xLAT);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the XLAT_DAYS_TO_CLOSE_TRANS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToXLAT_DAYS_TO_CLOSE_TRANS(XLAT_DAYS_TO_CLOSE_TRANS xLAT_DAYS_TO_CLOSE_TRANS)
+        {
+            base.AddObject("XLAT_DAYS_TO_CLOSE_TRANS", xLAT_DAYS_TO_CLOSE_TRANS);
         }
 
         #endregion
@@ -49550,6 +49574,111 @@ namespace SQM.Website
         private Nullable<global::System.Int16> _SORT_ORDER;
         partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
         partial void OnSORT_ORDERChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="XLAT_DAYS_TO_CLOSE_TRANS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class XLAT_DAYS_TO_CLOSE_TRANS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new XLAT_DAYS_TO_CLOSE_TRANS object.
+        /// </summary>
+        /// <param name="xLAT_CODE">Initial value of the XLAT_CODE property.</param>
+        public static XLAT_DAYS_TO_CLOSE_TRANS CreateXLAT_DAYS_TO_CLOSE_TRANS(global::System.String xLAT_CODE)
+        {
+            XLAT_DAYS_TO_CLOSE_TRANS xLAT_DAYS_TO_CLOSE_TRANS = new XLAT_DAYS_TO_CLOSE_TRANS();
+            xLAT_DAYS_TO_CLOSE_TRANS.XLAT_CODE = xLAT_CODE;
+            return xLAT_DAYS_TO_CLOSE_TRANS;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String XLAT_CODE
+        {
+            get
+            {
+                return _XLAT_CODE;
+            }
+            set
+            {
+                if (_XLAT_CODE != value)
+                {
+                    OnXLAT_CODEChanging(value);
+                    ReportPropertyChanging("XLAT_CODE");
+                    _XLAT_CODE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("XLAT_CODE");
+                    OnXLAT_CODEChanged();
+                }
+            }
+        }
+        private global::System.String _XLAT_CODE;
+        partial void OnXLAT_CODEChanging(global::System.String value);
+        partial void OnXLAT_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MIN_DAYS
+        {
+            get
+            {
+                return _MIN_DAYS;
+            }
+            set
+            {
+                OnMIN_DAYSChanging(value);
+                ReportPropertyChanging("MIN_DAYS");
+                _MIN_DAYS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MIN_DAYS");
+                OnMIN_DAYSChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MIN_DAYS;
+        partial void OnMIN_DAYSChanging(Nullable<global::System.Int32> value);
+        partial void OnMIN_DAYSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MAX_DAYS
+        {
+            get
+            {
+                return _MAX_DAYS;
+            }
+            set
+            {
+                OnMAX_DAYSChanging(value);
+                ReportPropertyChanging("MAX_DAYS");
+                _MAX_DAYS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MAX_DAYS");
+                OnMAX_DAYSChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MAX_DAYS;
+        partial void OnMAX_DAYSChanging(Nullable<global::System.Int32> value);
+        partial void OnMAX_DAYSChanged();
 
         #endregion
 
