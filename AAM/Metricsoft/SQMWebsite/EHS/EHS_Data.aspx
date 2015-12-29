@@ -179,7 +179,10 @@
 						<div id="daysToCloseColumn" style="text-align: left"></div>
 					</div>
 				</div>
-				<div style="float: right; margin: 5px"><input type="button" class="myButton" value="Save" onclick="rwDetails_close()"></div>
+				<div style="float: right; margin: 5px">
+					<input type="button" class="myButton" value="Cancel" onclick="rwDetails_cancel()">
+					<input type="button" class="myButton" value="Save" onclick="rwDetails_close()">
+				</div>
 			</ContentTemplate>
 		</telerik:RadWindow>
 	</div>
@@ -619,6 +622,11 @@
 				rwDetails.set_title($(rgData_data[row].get_cell('MEASURE_NAME')).html() + ' Details for ' + date);
 				hfCurrDetails.val(JSON.stringify({ dayOfWeek: dayOfWeek, row: row }));
 				rwDetails_populateAndShow($.parseJSON($(rgData_data[row].get_element()).find('input[type="hidden"][name$="hfDetails' + dayOfWeek + '"]').val()));
+			}
+
+			function rwDetails_cancel()
+			{
+				rwDetails.close();
 			}
 
 			var space_regex = /([a-z])([A-Z])/g;

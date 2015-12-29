@@ -236,8 +236,8 @@ namespace SQM.Website.EHS
 		{
 			foreach (var t in types)
 			{
-				var group = t.XLAT_GROUP as string;
-				var code = t.XLAT_CODE as string;
+				string group = t.XLAT_GROUP;
+				string code = t.XLAT_CODE;
 				var data = entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == dataID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
 				string description = t.DESCRIPTION;
 				if (type_data.Keys.Any(k => k.Contains("&amp;") || k.Contains("&lt;") || k.Contains("&gt;")))
@@ -519,10 +519,10 @@ namespace SQM.Website.EHS
 			var ret = new Dictionary<string, dynamic>();
 			foreach (var t in types)
 			{
-				var group = t.XLAT_GROUP as string;
-				var code = t.XLAT_CODE as string;
+				string group = t.XLAT_GROUP;
+				string code = t.XLAT_CODE;
 				var data = dataID == -1 ? null : entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == dataID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
-				var key = t.DESCRIPTION as string;
+				string key = t.DESCRIPTION;
 				if (data != null)
 					ret.Add(key, new { value = data.VALUE });
 				else

@@ -10,7 +10,7 @@
 namespace SQM.Website.Automated {
     
     
-    public partial class AuditRollUp {
+    public partial class EHSDataRollUp {
         
         /// <summary>
         /// form1 control.

@@ -153,7 +153,7 @@
     <Content Include="Admin\Administrate_Company.aspx" />
     <Content Include="Admin\Administrate_CurrencyInput.aspx" />
     <Content Include="Admin\Administrate_SettingInput.aspx" />
-    <Content Include="Automated\AuditRollUp.aspx" />
+    <Content Include="Automated\EHSDataRollUp.aspx" />
     <Content Include="Automated\CheckCurrency.aspx" />
     <Content Include="Automated\MailTest.aspx" />
     <Content Include="Automated\AutomatedTest.aspx" />
@@ -1113,12 +1113,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadWizard.es.resx</DependentUpon>
     </Compile>
-    <Compile Include="Automated\AuditRollUp.aspx.cs">
-      <DependentUpon>AuditRollUp.aspx</DependentUpon>
+    <Compile Include="Automated\EHSDataRollUp.aspx.cs">
+      <DependentUpon>EHSDataRollUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Automated\AuditRollUp.aspx.designer.cs">
-      <DependentUpon>AuditRollUp.aspx</DependentUpon>
+    <Compile Include="Automated\EHSDataRollUp.aspx.designer.cs">
+      <DependentUpon>EHSDataRollUp.aspx</DependentUpon>
     </Compile>
     <Compile Include="Automated\CheckCurrency.aspx.cs">
       <DependentUpon>CheckCurrency.aspx</DependentUpon>
