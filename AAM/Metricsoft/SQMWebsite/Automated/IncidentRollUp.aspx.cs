@@ -26,7 +26,9 @@ namespace SQM.Website.Automated
 			}
 
 			output = new StringBuilder();
+			SETTINGS setting = null;
 			bool validIP = true;
+			int workdays = 7;
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
@@ -38,10 +40,16 @@ namespace SQM.Website.Automated
 				List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
 
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
-				SETTINGS setsEHS = sets.Where(x => x.SETTING_CD == "ROLLUP_NEXTPAGE").FirstOrDefault();
-				if (setsEHS != null  &&  !string.IsNullOrEmpty(setsEHS.VALUE)  &&  setsEHS.VALUE.Length > 1)
+				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_WORKDAYS").FirstOrDefault();
+				if (setting != null  && !string.IsNullOrEmpty(setting.VALUE))
 				{
-					nextPage = setsEHS.VALUE;
+					if (!int.TryParse(setting.VALUE, out workdays))
+					workdays = 7;
+				}
+				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_NEXTPAGE").FirstOrDefault();
+				if (setting != null  &&  !string.IsNullOrEmpty(setting.VALUE)  &&  setting.VALUE.Length > 1)
+				{
+					nextPage = setting.VALUE;
 				}
 
 				/*
@@ -114,7 +122,7 @@ namespace SQM.Website.Automated
 					if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 						incident.INCFORM_LOSTTIME_HIST.Load();
 					plant = plantList.Where(l => l.PLANT_ID == (decimal)incident.DETECT_PLANT_ID).FirstOrDefault();
-					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, plant.LOCAL_TIMEZONE));
+					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, plant.LOCAL_TIMEZONE, workdays));
 				}
 
 				plant = null;

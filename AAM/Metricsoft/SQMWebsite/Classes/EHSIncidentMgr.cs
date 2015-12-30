@@ -1125,7 +1125,7 @@ namespace SQM.Website
 			return losttimelist;
 		}
 
-		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, string localeTimezone)
+		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, string localeTimezone, int workdays)
 		{
 			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
 
@@ -1168,10 +1168,12 @@ namespace SQM.Website
 
 			int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
 			DateTime effDate;
+			bool countDay = true;
 			EHSIncidentTimeAccounting period;
 			for (int n = 0; n <= numDays; n++)
 			{
 				effDate = startDate.AddDays(n);
+
 				// accrue or add accounting periods as needed per the incident timespan
 				if ((period = periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault()) == null)
 				{
@@ -1183,17 +1185,35 @@ namespace SQM.Website
 					workStatus = hist.WORK_STATUS;
 				}
 
-				switch (workStatus)
+				countDay = true;
+				switch (effDate.DayOfWeek)
 				{
-					case "01":
-						++period.RestrictedTime;
+					case DayOfWeek.Sunday:		// sunday
+						if (workdays < 7)
+							countDay = false;
 						break;
-					case "03":
-						++period.LostTime;
+					case DayOfWeek.Saturday:		// saturday
+						if (workdays < 6)
+							countDay = false;
 						break;
 					default:
-						++period.WorkTime;
 						break;
+				}
+
+				if (countDay)
+				{
+					switch (workStatus)
+					{
+						case "01":
+							++period.RestrictedTime;
+							break;
+						case "03":
+							++period.LostTime;
+							break;
+						default:
+							++period.WorkTime;
+							break;
+					}
 				}
 			}
 
