@@ -593,7 +593,7 @@
 					return lastIndex !== -1 && lastIndex === position;
 				};
 
-			function rwDetails_populateAndShow(data)
+			function rwDetails_populateAndShow(data, readOnly)
 			{
 				for (var key1 in data)
 				{
@@ -605,12 +605,22 @@
 						if (data[key1][key2].value)
 							value = ' value="' + data[key1][key2].value + '"';
 						column.append('<div class="flex rwDetails_row"><div class="rwDetails_rowLabel">' + key2 +
-							'</div><div class="riSingle RadInput RadInput_Metro rwDetails_rowTextbox"><input class="riTextBox riEnabled WarnIfChanged" type="text"' + value +
-							' size="20"></div></div>');
+							'</div><div class="riSingle RadInput RadInput_Metro rwDetails_rowTextbox"><input class="riTextBox ' + (readOnly ? 'riDisabled' : 'riEnabled') +
+							' WarnIfChanged" type="text"' + value + ' size="20"' + (readOnly ? ' readonly="readonly" disabled="disabled"' : '') + '></div></div>');
 					}
 				}
 
 				rwDetails.show();
+				if (readOnly)
+				{
+					$('input[onclick="rwDetails_cancel()"]').prop('value', 'Close');
+					$(rwDetails.get_contentElement()).find('input[value="Save"]').hide();
+				}
+				else
+				{
+					$('input[onclick="rwDetails_cancel()"]').prop('value', 'Cancel');
+					$(rwDetails.get_contentElement()).find('input[value="Save"]').show();
+				}
 			}
 
 			function rwDetails_open(dayOfWeek, button)
@@ -619,9 +629,11 @@
 				var br = date.indexOf('<br>');
 				date = date.substring(6, br);
 				var row = rowsForButtons[button.id];
-				rwDetails.set_title($(rgData_data[row].get_cell('MEASURE_NAME')).html() + ' Details for ' + date);
+				var dataRow = rgData_data[row];
+				rwDetails.set_title($(dataRow.get_cell('MEASURE_NAME')).html() + ' Details for ' + date);
 				hfCurrDetails.val(JSON.stringify({ dayOfWeek: dayOfWeek, row: row }));
-				rwDetails_populateAndShow($.parseJSON($(rgData_data[row].get_element()).find('input[type="hidden"][name$="hfDetails' + dayOfWeek + '"]').val()));
+				rwDetails_populateAndShow($.parseJSON($(dataRow.get_element()).find('input[type="hidden"][name$="hfDetails' + dayOfWeek + '"]').val()),
+					$(dataRow.get_cell('gtc' + dayOfWeek)).find('input[type="text"]').prop('readonly'));
 			}
 
 			function rwDetails_cancel()
