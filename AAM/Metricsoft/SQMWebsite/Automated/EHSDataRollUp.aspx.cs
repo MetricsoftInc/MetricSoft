@@ -114,7 +114,7 @@ namespace SQM.Website.Automated
 					decimal nearMissIssueTypeID = entities.INCIDENT_TYPE.First(i => i.TITLE == "Near Miss").INCIDENT_TYPE_ID;
 
 					var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
-					var incidents = entities.INCIDENT.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
+					var incidents = entities.INCIDENT.Include("INCFORM_INJURYILLNESS").Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
 					var activePlants = entities.PLANT_ACTIVE.Where(p =>
 						closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
 					foreach (var activePlant in activePlants)
@@ -228,16 +228,31 @@ namespace SQM.Website.Automated
 								EHSDataMapping.SetEHSDataValue(dataList, fatalityMeasureID, fatalities, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, closedInvestigationMeasureID, closedInvestigations, updateIndicator);
 								foreach (var data in dataList)
-									if (data.EntityState == EntityState.Detached && data.VALUE != 0)
+									if (data.VALUE != 0)
 									{
-										entities.EHS_DATA.AddObject(data);
+										if (data.EntityState == EntityState.Detached)
+											entities.EHS_DATA.AddObject(data);
 										if (data.MEASURE_ID == firstAidMeasureID)
 											UpdateOrdinalData(entities, data, firstAidOrdinals);
 										else if (data.MEASURE_ID == recordableMeasureID)
 											UpdateOrdinalData(entities, data, recordableOrdinals);
 									}
 									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
+									{
+										if (data.MEASURE_ID == firstAidMeasureID)
+										{
+											foreach (var key in firstAidOrdinals.Keys)
+												firstAidOrdinals[key] = new Dictionary<string, int>();
+											UpdateOrdinalData(entities, data, firstAidOrdinals);
+										}
+										else if (data.MEASURE_ID == recordableMeasureID)
+										{
+											foreach (var key in recordableOrdinals.Keys)
+												recordableOrdinals[key] = new Dictionary<string, int>();
+											UpdateOrdinalData(entities, data, recordableOrdinals);
+										}
 										entities.DeleteObject(data);
+									}
 							}
 
 						// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
