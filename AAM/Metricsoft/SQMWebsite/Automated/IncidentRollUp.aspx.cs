@@ -126,17 +126,14 @@ namespace SQM.Website.Automated
 				}
 
 				plant = null;
+				PLANT_ACTIVE pact = null;
+				DateTime periodDate;
 				foreach (EHSIncidentTimeAccounting period in summaryList.OrderBy(l => l.PlantID).ThenBy(l => l.PeriodYear).ThenBy(l => l.PeriodMonth).ToList())
 				{
-					// clear the incident acccounting values for the entire timespan upon processing a new plant ID. 
-					// we do this in case previously accounted INCIDENTs were deleted or moved to another period
 					if (plant == null  ||  plant.PLANT_ID != period.PlantID)
 					{
 						plant = plantList.Where(l => l.PLANT_ID == period.PlantID).FirstOrDefault();
-						foreach (PLANT_ACCOUNTING pac in paList.Where(p => p.PLANT_ID == period.PlantID))
-						{
-							pac.TIME_LOST = pac.TOTAL_DAYS_RESTRICTED = pac.TIME_LOST_CASES = pac.RECORDED_CASES = pac.FIRST_AID_CASES = 0;
-						}
+						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID &&  a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
 					// write PLANT_ACCOUNTING metrics
 					if ((pa = paList.Where(l => l.PLANT_ID == period.PlantID && l.PERIOD_YEAR == period.PeriodYear && l.PERIOD_MONTH == period.PeriodMonth).FirstOrDefault()) == null)
@@ -146,12 +143,16 @@ namespace SQM.Website.Automated
 						pa.PERIOD_YEAR = period.PeriodYear;
 						pa.PERIOD_MONTH = period.PeriodMonth;
 					}
-					pa.TIME_LOST = period.LostTime;
-					pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
-					pa.TIME_LOST_CASES = period.LostTimeCase;
-					pa.RECORDED_CASES = period.RecordableCase;
-					pa.FIRST_AID_CASES = period.FirstAidCase;
-					EHSModel.UpdatePlantAccounting(entities, pa);
+					periodDate = new DateTime(pa.PERIOD_YEAR, pa.PERIOD_MONTH, 1);
+					if (pact != null && periodDate >= pact.EFF_START_DATE)
+					{
+						pa.TIME_LOST = period.LostTime;
+						pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
+						pa.TIME_LOST_CASES = period.LostTimeCase;
+						pa.RECORDED_CASES = period.RecordableCase;
+						pa.FIRST_AID_CASES = period.FirstAidCase;
+						EHSModel.UpdatePlantAccounting(entities, pa);
+					}
 				}
 			}
 			catch (Exception ex)
