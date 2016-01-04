@@ -353,6 +353,7 @@ namespace SQM.Website
 
         public static DateTime LocalTime(DateTime utcDate, string localTimeZone)
         {
+			// convert UTC time to local based on the local timezone code
             DateTime localDate;
 
             try
@@ -370,6 +371,7 @@ namespace SQM.Website
 
 		public static DateTime ConvertToUTC(DateTime localDate, string localTimeZone)
 		{
+			// convert local time to UTC based on local timezone code
 			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(localTimeZone)));
 		}
 
