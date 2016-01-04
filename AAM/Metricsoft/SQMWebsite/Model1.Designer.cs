@@ -164,6 +164,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 
 #endregion
 
@@ -1802,22 +1803,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<AUDIT_TOPIC> AUDIT_TOPIC
-        {
-            get
-            {
-                if ((_AUDIT_TOPIC == null))
-                {
-                    _AUDIT_TOPIC = base.CreateObjectSet<AUDIT_TOPIC>("AUDIT_TOPIC");
-                }
-                return _AUDIT_TOPIC;
-            }
-        }
-        private ObjectSet<AUDIT_TOPIC> _AUDIT_TOPIC;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<AUDIT_TYPE> AUDIT_TYPE
         {
             get
@@ -2342,6 +2327,38 @@ namespace SQM.Website
             }
         }
         private ObjectSet<XLAT_DAYS_TO_CLOSE_TRANS> _XLAT_DAYS_TO_CLOSE_TRANS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_TOPIC> AUDIT_TOPIC
+        {
+            get
+            {
+                if ((_AUDIT_TOPIC == null))
+                {
+                    _AUDIT_TOPIC = base.CreateObjectSet<AUDIT_TOPIC>("AUDIT_TOPIC");
+                }
+                return _AUDIT_TOPIC;
+            }
+        }
+        private ObjectSet<AUDIT_TOPIC> _AUDIT_TOPIC;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AUDIT_TOPIC_LANG> AUDIT_TOPIC_LANG
+        {
+            get
+            {
+                if ((_AUDIT_TOPIC_LANG == null))
+                {
+                    _AUDIT_TOPIC_LANG = base.CreateObjectSet<AUDIT_TOPIC_LANG>("AUDIT_TOPIC_LANG");
+                }
+                return _AUDIT_TOPIC_LANG;
+            }
+        }
+        private ObjectSet<AUDIT_TOPIC_LANG> _AUDIT_TOPIC_LANG;
 
         #endregion
 
@@ -3140,14 +3157,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AUDIT_TOPIC EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToAUDIT_TOPIC(AUDIT_TOPIC aUDIT_TOPIC)
-        {
-            base.AddObject("AUDIT_TOPIC", aUDIT_TOPIC);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the AUDIT_TYPE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAUDIT_TYPE(AUDIT_TYPE aUDIT_TYPE)
@@ -3409,6 +3418,22 @@ namespace SQM.Website
         public void AddToXLAT_DAYS_TO_CLOSE_TRANS(XLAT_DAYS_TO_CLOSE_TRANS xLAT_DAYS_TO_CLOSE_TRANS)
         {
             base.AddObject("XLAT_DAYS_TO_CLOSE_TRANS", xLAT_DAYS_TO_CLOSE_TRANS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_TOPIC EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_TOPIC(AUDIT_TOPIC aUDIT_TOPIC)
+        {
+            base.AddObject("AUDIT_TOPIC", aUDIT_TOPIC);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AUDIT_TOPIC_LANG EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAUDIT_TOPIC_LANG(AUDIT_TOPIC_LANG aUDIT_TOPIC_LANG)
+        {
+            base.AddObject("AUDIT_TOPIC_LANG", aUDIT_TOPIC_LANG);
         }
 
         #endregion
@@ -7398,7 +7423,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Decimal AUDIT_TYPE_ID
         {
@@ -7408,14 +7433,11 @@ namespace SQM.Website
             }
             set
             {
-                if (_AUDIT_TYPE_ID != value)
-                {
-                    OnAUDIT_TYPE_IDChanging(value);
-                    ReportPropertyChanging("AUDIT_TYPE_ID");
-                    _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("AUDIT_TYPE_ID");
-                    OnAUDIT_TYPE_IDChanged();
-                }
+                OnAUDIT_TYPE_IDChanging(value);
+                ReportPropertyChanging("AUDIT_TYPE_ID");
+                _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDIT_TYPE_ID");
+                OnAUDIT_TYPE_IDChanged();
             }
         }
         private global::System.Decimal _AUDIT_TYPE_ID;
@@ -7497,6 +7519,208 @@ namespace SQM.Website
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC_LANG")]
+        public EntityCollection<AUDIT_TOPIC_LANG> AUDIT_TOPIC_LANG
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AUDIT_TOPIC_LANG>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC_LANG");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AUDIT_TOPIC_LANG>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC_LANG", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="AUDIT_TOPIC_LANG")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AUDIT_TOPIC_LANG : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AUDIT_TOPIC_LANG object.
+        /// </summary>
+        /// <param name="aUDIT_TOPIC_ID">Initial value of the AUDIT_TOPIC_ID property.</param>
+        /// <param name="nLS_LANGUAGE">Initial value of the NLS_LANGUAGE property.</param>
+        public static AUDIT_TOPIC_LANG CreateAUDIT_TOPIC_LANG(global::System.Decimal aUDIT_TOPIC_ID, global::System.String nLS_LANGUAGE)
+        {
+            AUDIT_TOPIC_LANG aUDIT_TOPIC_LANG = new AUDIT_TOPIC_LANG();
+            aUDIT_TOPIC_LANG.AUDIT_TOPIC_ID = aUDIT_TOPIC_ID;
+            aUDIT_TOPIC_LANG.NLS_LANGUAGE = nLS_LANGUAGE;
+            return aUDIT_TOPIC_LANG;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TOPIC_ID
+        {
+            get
+            {
+                return _AUDIT_TOPIC_ID;
+            }
+            set
+            {
+                if (_AUDIT_TOPIC_ID != value)
+                {
+                    OnAUDIT_TOPIC_IDChanging(value);
+                    ReportPropertyChanging("AUDIT_TOPIC_ID");
+                    _AUDIT_TOPIC_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AUDIT_TOPIC_ID");
+                    OnAUDIT_TOPIC_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _AUDIT_TOPIC_ID;
+        partial void OnAUDIT_TOPIC_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TOPIC_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NLS_LANGUAGE
+        {
+            get
+            {
+                return _NLS_LANGUAGE;
+            }
+            set
+            {
+                if (_NLS_LANGUAGE != value)
+                {
+                    OnNLS_LANGUAGEChanging(value);
+                    ReportPropertyChanging("NLS_LANGUAGE");
+                    _NLS_LANGUAGE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("NLS_LANGUAGE");
+                    OnNLS_LANGUAGEChanged();
+                }
+            }
+        }
+        private global::System.String _NLS_LANGUAGE;
+        partial void OnNLS_LANGUAGEChanging(global::System.String value);
+        partial void OnNLS_LANGUAGEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LANG_TEXT
+        {
+            get
+            {
+                return _LANG_TEXT;
+            }
+            set
+            {
+                OnLANG_TEXTChanging(value);
+                ReportPropertyChanging("LANG_TEXT");
+                _LANG_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LANG_TEXT");
+                OnLANG_TEXTChanged();
+            }
+        }
+        private global::System.String _LANG_TEXT;
+        partial void OnLANG_TEXTChanging(global::System.String value);
+        partial void OnLANG_TEXTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String HELP_TEXT
+        {
+            get
+            {
+                return _HELP_TEXT;
+            }
+            set
+            {
+                OnHELP_TEXTChanging(value);
+                ReportPropertyChanging("HELP_TEXT");
+                _HELP_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("HELP_TEXT");
+                OnHELP_TEXTChanged();
+            }
+        }
+        private global::System.String _HELP_TEXT;
+        partial void OnHELP_TEXTChanging(global::System.String value);
+        partial void OnHELP_TEXTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC")]
+        public AUDIT_TOPIC AUDIT_TOPIC
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TOPIC>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TOPIC>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AUDIT_TOPIC> AUDIT_TOPICReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AUDIT_TOPIC>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AUDIT_TOPIC>("PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>

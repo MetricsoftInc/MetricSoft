@@ -347,6 +347,22 @@ namespace SQM.Website
 			return text;
 		}
 
+		public static string AuditTopicText(AUDIT_TOPIC topic, string nlsLanguage)
+		{
+			string text;
+
+			if (topic.AUDIT_TOPIC_LANG != null && topic.AUDIT_TOPIC_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).FirstOrDefault() != null)
+			{
+				text = topic.AUDIT_TOPIC_LANG.Where(l => l.NLS_LANGUAGE == nlsLanguage).First().LANG_TEXT;
+			}
+			else
+			{
+				text = topic.TITLE;
+			}
+
+			return text;
+		}
+
 		/// <summary>
 		/// Select a list of all audit questions by topic 
 		/// </summary>
@@ -418,7 +434,7 @@ namespace SQM.Website
 									where questionInfo.AUDIT_QUESTION_TYPE_ID == ti.AUDIT_QUESTION_TYPE_ID
 									select ti).FirstOrDefault();
 
-					var topicInfo = (from tp in entities.AUDIT_TOPIC
+					var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 									 where aq.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 									select tp).FirstOrDefault();
 
@@ -439,7 +455,7 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = topicInfo.TITLE
+						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE)
 					};
 
 					if (auditAnswer != null)
@@ -633,7 +649,7 @@ namespace SQM.Website
 									where questionInfo.AUDIT_QUESTION_TYPE_ID == ti.AUDIT_QUESTION_TYPE_ID
 									select ti).FirstOrDefault();
 
-					var topicInfo = (from tp in entities.AUDIT_TOPIC
+					var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 									 where aq.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 									 select tp).FirstOrDefault();
 
@@ -655,7 +671,7 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = topicInfo.TITLE,
+						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 						AnswerText = auditAnswer.ANSWER_VALUE,
 						AnswerComment = auditAnswer.COMMENT,
 						Status = auditAnswer.STATUS,
@@ -754,7 +770,7 @@ namespace SQM.Website
 									  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
 									  select q).FirstOrDefault();
 
-				var topicInfo = (from tp in entities.AUDIT_TOPIC
+				var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 								 where auditTypeTopic.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 								 select tp).FirstOrDefault();
 
@@ -775,7 +791,7 @@ namespace SQM.Website
 					HelpText = questionInfo.HELP_TEXT,
 					StandardType = questionInfo.STANDARD_TYPE,
 					TopicId = topicInfo.AUDIT_TOPIC_ID,
-					TopicTitle = topicInfo.TITLE,
+					TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 					AnswerText = auditAnswer.ANSWER_VALUE,
 					AnswerComment = auditAnswer.COMMENT,
 					Status = auditAnswer.STATUS,
