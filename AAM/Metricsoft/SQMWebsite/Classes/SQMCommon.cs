@@ -355,10 +355,16 @@ namespace SQM.Website
         {
 			// convert UTC time to local based on the local timezone code
             DateTime localDate;
+			string timezondID = localTimeZone;
 
             try
             {
-                TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(localTimeZone);
+				if (localTimeZone.Length < 5)
+				{
+					timezondID = WebSiteCommon.GetXlatValue("timeZone", localTimeZone);
+				}
+
+				TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(timezondID);
                 localDate = TimeZoneInfo.ConvertTimeFromUtc(utcDate, tz);
             }
             catch
@@ -372,7 +378,13 @@ namespace SQM.Website
 		public static DateTime ConvertToUTC(DateTime localDate, string localTimeZone)
 		{
 			// convert local time to UTC based on local timezone code
-			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(localTimeZone)));
+			string timezondID = localTimeZone;
+			if (localTimeZone.Length < 5)
+			{
+				timezondID = WebSiteCommon.GetXlatValue("timeZone", localTimeZone);
+			}
+
+			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(timezondID)));
 		}
 
 		public static DateTime ConvertFromToTimezone(DateTime dateIN, string tzIdIN, string tzIdOUT)
