@@ -361,7 +361,7 @@ namespace SQM.Website
             {
 				if (localTimeZone.Length < 5)
 				{
-					timezondID = WebSiteCommon.GetXlatValue("timeZone", localTimeZone);
+					timezondID = TimezoneID(localTimeZone);
 				}
 
 				TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(timezondID);
@@ -381,7 +381,7 @@ namespace SQM.Website
 			string timezondID = localTimeZone;
 			if (localTimeZone.Length < 5)
 			{
-				timezondID = WebSiteCommon.GetXlatValue("timeZone", localTimeZone);
+				timezondID = TimezoneID(localTimeZone);
 			}
 
 			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(timezondID)));
@@ -398,6 +398,16 @@ namespace SQM.Website
 
 			return dateOUT;
 		}
+
+		public static string TimezoneID(string tzCode)
+		{
+			string tz = WebSiteCommon.GetXlatValue("timeZone", tzCode);
+			if (string.IsNullOrEmpty(tz))
+				tz = "GMT Standard Time";
+
+			return tz;
+		}
+
 
         // period date functions.  period dates span 1st day of start month thru last day of end month
         public static DateTime PeriodFromDate(DateTime startDate)
