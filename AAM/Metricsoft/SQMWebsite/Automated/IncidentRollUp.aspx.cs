@@ -29,12 +29,13 @@ namespace SQM.Website.Automated
 			SETTINGS setting = null;
 			bool validIP = true;
 			int workdays = 7;
+			string pageURI = HttpContext.Current.Request.Url.AbsoluteUri;
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
 			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
-			WriteLine(HttpContext.Current.Request.Url.AbsoluteUri);
+			WriteLine(pageURI);
 
 			try
 			{
@@ -171,8 +172,10 @@ namespace SQM.Website.Automated
 
 			if (!string.IsNullOrEmpty(nextPage))
 			{
-
-				Response.Redirect("~/Automated/" + nextPage);
+				int s1 = pageURI.LastIndexOf('/');
+				int s2 = pageURI.LastIndexOf('?') > -1 ? pageURI.LastIndexOf('?') : pageURI.Length;
+				string nextPageURI = pageURI.Substring(0, s1 + 1) + nextPage + pageURI.Substring(s2, pageURI.Length - s2);
+				Response.Redirect(nextPageURI);
 			}
 
 		}
