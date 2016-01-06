@@ -169,7 +169,7 @@ namespace SQM.Website.Automated
 
 			if (!string.IsNullOrEmpty(nextPage))
 			{
-				Response.Redirect(SessionManager.CurrentAdminPage = "/Automated/"+nextPage);
+				Response.Redirect("~/Automated/" + nextPage);
 			}
 
 		}
