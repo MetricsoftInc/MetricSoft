@@ -1150,8 +1150,8 @@ namespace SQM.Website
 			INCFORM_LOSTTIME_HIST hist = histList.First();
 			string workStatus = hist.WORK_STATUS;
 
-			DateTime startDate = WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone);
-			DateTime endDate = WebSiteCommon.LocalTime((DateTime)histList.Last().BEGIN_DT, localeTimezone);
+			DateTime startDate = WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date;
+			DateTime endDate = WebSiteCommon.LocalTime((DateTime)histList.Last().BEGIN_DT, localeTimezone).Date;
 			if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
 			{
 				endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
