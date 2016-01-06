@@ -135,7 +135,7 @@ namespace SQM.Website.Automated
 						plant = plantList.Where(l => l.PLANT_ID == period.PlantID).FirstOrDefault();
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID &&  a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
-					periodDate = new DateTime(period.PeriodMonth, period.PeriodYear, 1);
+					periodDate = new DateTime(period.PeriodYear, period.PeriodMonth, 1);
 					if (pact != null && periodDate >= pact.EFF_START_DATE)
 					{
 						// write PLANT_ACCOUNTING metrics
@@ -151,6 +151,8 @@ namespace SQM.Website.Automated
 						pa.TIME_LOST_CASES = period.LostTimeCase;
 						pa.RECORDED_CASES = period.RecordableCase;
 						pa.FIRST_AID_CASES = period.FirstAidCase;
+						pa.LAST_UPD_DT = DateTime.UtcNow;
+						pa.LAST_UPD_BY = "automated";
 						EHSModel.UpdatePlantAccounting(entities, pa);
 					}
 				}
