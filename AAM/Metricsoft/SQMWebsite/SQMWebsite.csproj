@@ -275,6 +275,9 @@
     <Content Include="images\company\QAILogo.jpg" />
     <Content Include="images\company\QAILogoLarge.jpg" />
     <Content Include="images\company\QAILogoSmall.jpg" />
+    <Content Include="images\company\SuperiorLogo.png" />
+    <Content Include="images\company\SuperiorLogoLarge.png" />
+    <Content Include="images\company\SuperiorLogoSmall.png" />
     <Content Include="images\company\TI_Automotive_logo.jpg" />
     <Content Include="images\company\TI_Automotive_logoLarge.jpg" />
     <Content Include="images\company\TI_Automotive_logoSmall.jpg" />
