@@ -173,7 +173,7 @@ namespace SQM.Website.Automated
 			if (!string.IsNullOrEmpty(nextPage))
 			{
 				int s1 = pageURI.LastIndexOf('/');
-				int s2 = pageURI.LastIndexOf('?') > -1 ? pageURI.LastIndexOf('?') : pageURI.Length;
+				int s2 = pageURI.LastIndexOf('.') > -1 ? pageURI.LastIndexOf('.') : pageURI.Length;
 				string nextPageURI = pageURI.Substring(0, s1 + 1) + nextPage + pageURI.Substring(s2, pageURI.Length - s2);
 				Response.Redirect(nextPageURI);
 			}
