@@ -154,7 +154,7 @@ namespace SQM.Website
 				task.DETAIL = lblTaskDetailValueAdd.Text.ToString();
 				task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
 				task.STATUS = ((int)TaskStatus.New).ToString();
-				task.CREATE_DT = SessionManager.UserContext.LocalTime != null ? SessionManager.UserContext.LocalTime : SessionManager.UserContext.LocalTime;
+				task.CREATE_DT = SessionManager.UserContext.LocalTime != null ? SessionManager.UserContext.LocalTime : DateTime.UtcNow;
 				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 
 				taskMgr.CreateTask(task);
