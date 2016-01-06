@@ -183,7 +183,7 @@ namespace SQM.Website
 				e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 1000, "...");
 				e.Appointment.Description = WebSiteCommon.StripHTML(e.Appointment.Description);
 
-				if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < DateTime.UtcNow.Date)
+				if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < SessionManager.UserContext.LocalTime.Date)
 				{
 					// past due active link
 					e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light pink

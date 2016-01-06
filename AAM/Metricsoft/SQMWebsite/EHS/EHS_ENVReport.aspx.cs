@@ -82,9 +82,9 @@ namespace SQM.Website
 			radDateFrom.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 			radDateTo.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 			radDateFrom.MinDate = new DateTime(2001, 1, 1); radDateTo.MinDate = new DateTime(2001, 1, 1);
-			radDateFrom.MaxDate = DateTime.UtcNow.AddMonths(1); radDateTo.MaxDate = DateTime.UtcNow.AddMonths(1);
-			radDateFrom.SelectedDate = DateTime.UtcNow.AddMonths(-11);
-			radDateTo.SelectedDate = DateTime.UtcNow;
+			radDateFrom.MaxDate = SessionManager.UserContext.LocalTime.AddMonths(1); radDateTo.MaxDate = SessionManager.UserContext.LocalTime.AddMonths(1);
+			radDateFrom.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(-11);
+			radDateTo.SelectedDate = SessionManager.UserContext.LocalTime;
 
 			PlantIDS = new decimal[0] { };
 			SetLocalDataset(null);

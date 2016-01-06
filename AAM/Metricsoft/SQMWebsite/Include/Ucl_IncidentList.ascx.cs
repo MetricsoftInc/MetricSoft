@@ -278,8 +278,8 @@ namespace SQM.Website
 		public void BindCSTIssueSearch(bool visible, string context, PSsqmEntities ctx)
 		{
 			pnlCSTIssueSearch.Visible = visible;
-			dmPeriodFrom.SelectedDate = DateTime.UtcNow.AddMonths(-6);
-			dmPeriodTo.SelectedDate = DateTime.UtcNow.AddMonths(1);
+			dmPeriodFrom.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(-6);
+			dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(1);
 			dmPeriodFrom.ShowPopupOnFocus = dmPeriodTo.ShowPopupOnFocus = true;
 			switch (context)
 			{

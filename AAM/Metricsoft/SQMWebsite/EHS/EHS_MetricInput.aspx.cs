@@ -36,7 +36,7 @@ namespace SQM.Website
         {
             if (!Page.IsPostBack)
             {
-                DateTime directedDate = DateTime.UtcNow;
+				DateTime directedDate = SessionManager.UserContext.LocalTime;
                 SetupPage();
                 if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
                 {   // page invoked from users inbox re: missing required inputs

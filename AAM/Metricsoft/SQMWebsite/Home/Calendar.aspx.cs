@@ -49,7 +49,7 @@ namespace SQM.Website
                 }
 
                 SetupPage();
-                DisplayCalendar(DateTime.UtcNow);
+                DisplayCalendar(SessionManager.UserContext.LocalTime);
 
 				if (!string.IsNullOrEmpty(Request.QueryString["v"]))   // initial view override
 				{
@@ -97,7 +97,7 @@ namespace SQM.Website
         protected void ScheduleScope_Select(object sender, EventArgs e)
         {
             if (sender is RadSlider)
-                DisplayCalendar(DateTime.UtcNow.AddMonths(Convert.ToInt32(sldScheduleRange.Value)));
+                DisplayCalendar(SessionManager.UserContext.LocalTime.AddMonths(Convert.ToInt32(sldScheduleRange.Value)));
             else if (sender is RadMenu)
             {
                 mnuScheduleScope.Items[0].Text = mnuScheduleScope.SelectedItem.Text;
@@ -176,8 +176,8 @@ namespace SQM.Website
 			// get scheduled tasks
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-			DateTime toDate = DateTime.UtcNow.AddMonths(2);
-			DateTime fromDate = DateTime.UtcNow.AddMonths(-3);
+			DateTime toDate = SessionManager.UserContext.LocalTime.AddMonths(2);
+			DateTime fromDate = SessionManager.UserContext.LocalTime.AddMonths(-3);
 
             string selectedValue = "0";
             if (ddlScheduleScope.SelectedIndex > -1)
@@ -231,7 +231,7 @@ namespace SQM.Website
 
 			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
 			{
-				taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day), respForList, respPlantList));
+				taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(SessionManager.UserContext.LocalTime.Year, SessionManager.UserContext.LocalTime.Month, SessionManager.UserContext.LocalTime.Day), respForList, respPlantList));
 				taskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, false));
 			}
 			taskScheduleList.AddRange(taskList);

@@ -105,7 +105,7 @@ namespace SQM.Website.EHS
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-5PhaseReport-" + DateTime.UtcNow.ToString("yyyy-MM-dd") + ".pdf");
+			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-5PhaseReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();

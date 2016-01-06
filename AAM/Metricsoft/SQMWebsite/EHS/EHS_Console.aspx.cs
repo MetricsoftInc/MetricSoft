@@ -49,8 +49,8 @@ namespace SQM.Website
             divGHGReport.Visible = divProfilePeriodScrollRepeater.Visible = divMetricHistory.Visible = divMetricHistory.Visible = phIncidentCriteria.Visible = divMetricsTimespan.Visible = false;
 
             radExportDateSelect1.MinDate = new DateTime(2001, 1, 1);
-            radExportDateSelect1.MaxDate = DateTime.UtcNow.AddMonths(1);
-            radExportDateSelect1.SelectedDate = radExportDateSelect2.SelectedDate = DateTime.UtcNow;
+			radExportDateSelect1.MaxDate = SessionManager.UserContext.LocalTime;
+			radExportDateSelect1.SelectedDate = radExportDateSelect2.SelectedDate = SessionManager.UserContext.LocalTime;
             radExportDateSelect1.ShowPopupOnFocus = radExportDateSelect2.ShowPopupOnFocus = true;
 
             ddlExportPlantSelect.Items.Clear();
@@ -91,8 +91,8 @@ namespace SQM.Website
                         }
                         catch 
                         {
-                            radEffFrom.SelectedDate = DateTime.UtcNow.AddMonths(-1);
-                            radEffTo.SelectedDate = DateTime.UtcNow;
+                            radEffFrom.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(-1);
+							radEffTo.SelectedDate = SessionManager.UserContext.LocalTime;
                         }
                     }
                     break;
@@ -178,8 +178,8 @@ namespace SQM.Website
 		{
 			string searchcriteria = "";
 			string plantList = "";
-			DateTime dtFrom = DateTime.UtcNow;
-			DateTime dtTo = DateTime.UtcNow;
+			DateTime dtFrom = SessionManager.UserContext.LocalTime;
+			DateTime dtTo = SessionManager.UserContext.LocalTime;
 
             uclProgress.BindProgressDisplay(100, "Exporting: ");
             uclProgress.UpdateDisplay(1, 10, "Exporting...");
@@ -208,8 +208,8 @@ namespace SQM.Website
 		{
 			string searchcriteria = "";
 			string plantList = "";
-			DateTime dtFrom = DateTime.UtcNow;
-			DateTime dtTo = DateTime.UtcNow;
+			DateTime dtFrom = SessionManager.UserContext.LocalTime;
+			DateTime dtTo = SessionManager.UserContext.LocalTime;
 
 			uclProgress.BindProgressDisplay(100, "Exporting: ");
             uclProgress.UpdateDisplay(1, 10, "Exporting...");
@@ -218,7 +218,7 @@ namespace SQM.Website
 			{
 				dtFrom = new DateTime(radExportDateSelect1.SelectedDate.Value.Year, radExportDateSelect1.SelectedDate.Value.Month, 1);
 			}
-			catch { dtFrom = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1); }
+			catch { dtFrom = new DateTime(SessionManager.UserContext.LocalTime.Year, SessionManager.UserContext.LocalTime.Month, 1); }
 			try
 			{
 				dtTo = new DateTime(radExportDateSelect2.SelectedDate.Value.Year, radExportDateSelect2.SelectedDate.Value.Month, 1).AddMonths(1).AddDays(-1);
@@ -307,7 +307,7 @@ namespace SQM.Website
                         {
                             if (!profile.InputPeriod.PlantAccounting.APPROVAL_DT.HasValue)
                             {
-                                profile.InputPeriod.PlantAccounting.APPROVAL_DT = DateTime.UtcNow;
+								profile.InputPeriod.PlantAccounting.APPROVAL_DT = SessionManager.UserContext.LocalTime;
                                 profile.InputPeriod.PlantAccounting.APPROVER_ID = SessionManager.UserContext.Person.PERSON_ID;
                             }
                             //profile.UpdateMetricHistory();
@@ -353,7 +353,7 @@ namespace SQM.Website
                             {
                                 if (!profile.InputPeriod.PlantAccounting.APPROVAL_DT.HasValue)
                                 {
-                                    profile.InputPeriod.PlantAccounting.APPROVAL_DT = DateTime.UtcNow;
+									profile.InputPeriod.PlantAccounting.APPROVAL_DT = SessionManager.UserContext.LocalTime;
                                     profile.InputPeriod.PlantAccounting.APPROVER_ID = SessionManager.UserContext.Person.PERSON_ID;
                                 }
                                 profile.UpdateMetricHistory(periodDate);  // new roll-up logic 
