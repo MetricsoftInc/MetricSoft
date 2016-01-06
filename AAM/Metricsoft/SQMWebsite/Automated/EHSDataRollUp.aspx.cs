@@ -1,15 +1,24 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Data;
 using System.Data.Objects;
-using System.Linq;
+using System.Net;
 using System.Text;
-using System.Web.UI;
+using System.Web;
+using System.Web.Configuration;
+using SQM.Website;
+using SQM.Website.Shared;
 
 namespace SQM.Website.Automated
 {
-	public partial class EHSDataRollUp : Page
+	public partial class EHSDataRollUp : System.Web.UI.Page
 	{
+		static StringBuilder output;
+		static DateTime fromDate;
+
 		/// <summary>
 		/// Gets all the types for an ordinal from the XLAT table.
 		/// </summary>
@@ -66,7 +75,7 @@ namespace SQM.Website.Automated
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			var output = new StringBuilder();
+			output = new StringBuilder();
 			output.AppendFormat("Started: {0:hh:mm MM/dd/yyyy}", DateTime.UtcNow);
 			output.AppendLine();
 
@@ -299,7 +308,41 @@ namespace SQM.Website.Automated
 			output.AppendLine();
 			output.AppendFormat("Completed: {0:hh:mm MM/dd/yyyy}", DateTime.UtcNow);
 
+			WriteLogFile();
+
 			this.lblOutput.Text = output.ToString().Replace("\n", "<br>");
+		}
+
+		static void WriteLine(string text)
+		{
+			output.AppendLine(text);
+		}
+
+		static void WriteLogFile()
+		{
+			try
+			{
+				string logPath = HttpContext.Current.Server.MapPath("~") + "\\log\\";
+				if (!Directory.Exists(logPath))
+					Directory.CreateDirectory(logPath);
+
+				// Write log file
+				string fullPath = logPath + string.Format("{0:yyyy-MM-dd-HHmmssfff}.txt", DateTime.UtcNow);
+				File.WriteAllText(fullPath, output.ToString());
+
+				// Keep only last 100 log files
+				int maxFiles = 100;
+				var info = new DirectoryInfo(logPath);
+				FileInfo[] files = info.GetFiles("*.txt").OrderBy(f => f.CreationTime).ToArray();
+				if (files.Count() > maxFiles)
+					for (int i = 0; i < files.Count() - maxFiles; i++)
+						File.Delete(logPath + files[i].Name);
+			}
+			catch (Exception ex)
+			{
+				WriteLine("WriteLogFile Error: " + ex.ToString());
+				WriteLine("WriteLogFile Detailed Error: " + ex.InnerException.ToString());
+			}
 		}
 	}
 }
