@@ -34,6 +34,8 @@ namespace SQM.Website.Automated
 
 			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
+			WriteLine(HttpContext.Current.Request.Url.AbsoluteUri);
+
 			try
 			{
 				string currentIP = GetIPAddress();
@@ -169,6 +171,7 @@ namespace SQM.Website.Automated
 
 			if (!string.IsNullOrEmpty(nextPage))
 			{
+
 				Response.Redirect("~/Automated/" + nextPage);
 			}
 
