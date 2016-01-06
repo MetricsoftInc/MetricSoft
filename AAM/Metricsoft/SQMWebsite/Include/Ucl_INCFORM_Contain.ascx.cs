@@ -57,7 +57,11 @@ namespace SQM.Website
 			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
 			set { ViewState["LocalIncident"] = value; }
 		}
-
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -162,8 +166,12 @@ namespace SQM.Website
 				return;
 			}
 
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)LocalIncident.DETECT_PLANT_ID, "");
+			if (plant != null)
+				IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+
 			pnlContain.Visible = true;
-			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId);
+			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			rptContain.DataBind();
 		}
 
@@ -298,7 +306,7 @@ namespace SQM.Website
 					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
 					newItem.START_DATE = item.START_DATE;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_CONTAIN(newItem);
 					status = entities.SaveChanges();
@@ -307,7 +315,7 @@ namespace SQM.Website
 
 			if (seq > 0)
 			{
-				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.containment);
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.containment, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			}
 
 			return status;

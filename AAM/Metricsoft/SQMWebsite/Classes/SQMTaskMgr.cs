@@ -751,12 +751,12 @@ namespace SQM.Website
                             }
                             // only display inputs beyond today's date
                             DateTime taskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, profile.Profile.DAY_DUE);
-                            if (taskDate.Date > DateTime.Now.Date)
+                            if (taskDate.Date > DateTime.UtcNow.Date)
                             {
                                 TaskItem taskItem = new TaskItem();
                                 taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInput);
                                 taskItem.TaskDate = taskDate;
-                                if (taskItem.TaskDate <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)))
+                                if (taskItem.TaskDate <= new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)))
                                     taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + profile.Plant.PLANT_ID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
                                 else
                                     taskItem.RecordKey = "";  // don't allow data input beyond current month
@@ -811,14 +811,14 @@ namespace SQM.Website
                             EHS_PROFILE profile = (EHS_PROFILE)o.Profile;
                             DateTime taskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, profile.DAY_DUE);
                             // only display approvals beyond today's date
-                            if (taskDate.Date > DateTime.Now.Date)
+                            if (taskDate.Date > DateTime.UtcNow.Date)
                             {
                                 PLANT plant = (PLANT)o.Plant;
                                 PERSON person = (PERSON)o.Person;
                                 TaskItem taskItem = new TaskItem();
                                 taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInputApproval);
                                 taskItem.TaskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, profile.DAY_DUE);
-                                if (taskItem.TaskDate <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)))
+                                if (taskItem.TaskDate <= new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)))
                                     taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plant.PLANT_ID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
                                 else
                                     taskItem.RecordKey = "";    // don't allow data input approval beyond current month
@@ -866,7 +866,7 @@ namespace SQM.Website
                             TaskItem taskItem = new TaskItem();
                             taskItem.RecordType = Convert.ToInt32(TaskRecordType.CurrencyInput);
                             taskItem.TaskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, inputDayDue);
-                            if (taskItem.TaskDate <= new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)))
+                            if (taskItem.TaskDate <= new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)))
                                 taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + effDate.Year + "~" + effDate.Month;
                             else
                                 taskItem.RecordKey = "";
@@ -914,7 +914,7 @@ namespace SQM.Website
 			SETTINGS sets = null;
 
             TaskStatus status = taskItem.Taskstatus;
-            TimeSpan delta = DateTime.Now - Convert.ToDateTime(taskItem.Task.DUE_DT);
+            TimeSpan delta = DateTime.UtcNow - Convert.ToDateTime(taskItem.Task.DUE_DT);
 
             if ((sets = notifySettings.Where(s => s.SETTING_CD == "LEVEL1_DAYS").FirstOrDefault()) != null  &&  delta.Days >= Convert.ToInt32(sets.VALUE))
             {
@@ -1010,7 +1010,7 @@ namespace SQM.Website
                             {
                                 // input due within n days for prior month 
                                 DateTime warnDate = dueDate.AddDays(profile.Profile.REMINDER_DAYS * -1);
-                                if (DateTime.Now >= warnDate  &&  DateTime.Now <= dueDate)
+                                if (DateTime.UtcNow >= warnDate  &&  DateTime.UtcNow <= dueDate)
                                 {
                                     if (isResponsible)
                                     {
@@ -1024,7 +1024,7 @@ namespace SQM.Website
                                 }
 
                                 // inputs past due
-                                if (dueDate.Date < DateTime.Now.Date)
+                                if (dueDate.Date < DateTime.UtcNow.Date)
                                 {
                                     periodStatus = TaskStatus.Overdue;
 									alertPeriod = true;
@@ -1168,7 +1168,7 @@ namespace SQM.Website
         {
 			// tasks OVERDUE
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString()};
-            DateTime forwardDate = DateTime.Now.AddMonths(3);
+            DateTime forwardDate = DateTime.UtcNow.AddMonths(3);
 			INCIDENT incident;
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
@@ -1289,7 +1289,7 @@ namespace SQM.Website
 					foreach (var audit in auditList)
 					{
 						// notify if 1 & 2 days prior and on due date
-						deltaDays = (audit.Audit.AUDIT_DT.AddDays(audit.AuditType.DAYS_TO_COMPLETE) - DateTime.Now).Days;
+						deltaDays = (audit.Audit.AUDIT_DT.AddDays(audit.AuditType.DAYS_TO_COMPLETE) - DateTime.UtcNow).Days;
 						if (deltaDays < 2  &&  deltaDays > -1)
 						{
 							TaskItem taskItem = new TaskItem();
@@ -1361,7 +1361,7 @@ namespace SQM.Website
 		public static List<TaskItem> ExceptionTaskListByRecord(int recordType, decimal recordID, decimal recordSubID)
 		{
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
-			DateTime forwardDate = DateTime.Now;
+			DateTime forwardDate = DateTime.UtcNow;
 
 			List<TaskItem> taskList = new List<TaskItem>();
 			try

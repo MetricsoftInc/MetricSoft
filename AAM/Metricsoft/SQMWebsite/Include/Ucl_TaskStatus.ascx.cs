@@ -105,7 +105,7 @@ namespace SQM.Website
 			}
 
 			lblTaskDetailValueAdd.Text = originalDetail;  // cause of the requirement
-			rdpTaskDueDTAdd.SelectedDate = DateTime.Today; // default to today?
+			rdpTaskDueDTAdd.SelectedDate = DateTime.UtcNow; // default to today?
 			lblTaskStatusValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == (0).ToString()).FirstOrDefault().DESCRIPTION; // default to the "Open" status
 			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
 			SQMBasePage.SetPersonList(ddlAssignPersonAdd, personList, "", 0, false, "LF");
@@ -154,7 +154,7 @@ namespace SQM.Website
 				task.DETAIL = lblTaskDetailValueAdd.Text.ToString();
 				task.DESCRIPTION = tbTaskDescriptionAdd.Text.ToString();
 				task.STATUS = ((int)TaskStatus.New).ToString();
-				task.CREATE_DT = DateTime.Now;
+				task.CREATE_DT =  SessionManager.UserContext.LocalTime != null ? SessionManager.UserContext.LocalTime : DateTime.UtcNow;
 				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 
 				taskMgr.CreateTask(task);

@@ -888,7 +888,7 @@ namespace SQM.Website
             pm.STATUS = om.STATUS;
             pm.WASTE_CODE = om.WASTE_CODE;
             pm.INPUT_SNAPSHOT = "";
-            pm.LAST_UPD_DT = DateTime.Now;
+            pm.LAST_UPD_DT = DateTime.UtcNow;
             pm.UOM_FACTOR = om.UOM_FACTOR;
             this.Profile.EHS_PROFILE_MEASURE.Add(pm);
 
@@ -1040,7 +1040,7 @@ namespace SQM.Website
         public int UpdatePeriod(bool applyFilters, string statusOverride, bool approvalStatus, string updateByUser)
         {
             int status = 0;
-            DateTime updateDate = DateTime.UtcNow;
+			DateTime updateDate = WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE);
             var PropertyInfos = this.InputPeriod.PlantAccounting.GetType().GetProperties();
             System.Reflection.PropertyInfo pInfo = null;
 
@@ -1078,7 +1078,8 @@ namespace SQM.Website
                 if (this.InputPeriod.PlantAccounting.EntityState == EntityState.Detached)
                     this.InputPeriod.Entities.AddToPLANT_ACCOUNTING(this.InputPeriod.PlantAccounting);
 
-                this.InputPeriod.PlantAccounting = (PLANT_ACCOUNTING)SQMModelMgr.SetObjectTimestamp(this.InputPeriod.PlantAccounting, SessionManager.UserContext.UserName(), this.InputPeriod.PlantAccounting.EntityState);
+				this.InputPeriod.PlantAccounting = (PLANT_ACCOUNTING)SQMModelMgr.SetObjectTimestamp(this.InputPeriod.PlantAccounting, SessionManager.UserContext.UserName(), this.InputPeriod.PlantAccounting.EntityState, updateDate);
+
                 if (approvalStatus) 
                 {
                     if (this.InputPeriod.PlantAccounting.APPROVER_ID.HasValue == false)
@@ -1421,7 +1422,7 @@ namespace SQM.Website
         public int UpdateMetricHistory(DateTime periodDate)
         {
             int status = 0;
-            DateTime updateDate = DateTime.UtcNow;
+			DateTime updateDate = WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE);
             decimal actualUOM = 0;
             bool shouldSave = false;
 

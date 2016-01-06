@@ -94,6 +94,18 @@ namespace SQM.Website
 			set { ViewState["InitialPlantId"] = value; }
 		}
 
+		protected decimal IncidentLocationId
+		{
+			get { return ViewState["IncidentLocationId"] == null ? 0 : (decimal)ViewState["IncidentLocationId"]; }
+			set { ViewState["IncidentLocationId"] = value; }
+		}
+
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
+
 		public decimal EditIncidentTypeId
 		{
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
@@ -216,6 +228,8 @@ namespace SQM.Website
 			{
 				incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
 				SessionManager.SetIncidentLocation(Convert.ToDecimal(incident.DETECT_PLANT_ID));
+				IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
+				IncidentLocationTZ = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "").LOCAL_TIMEZONE;
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
 				SelectedTypeText = incident.ISSUE_TYPE;
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
@@ -439,11 +453,11 @@ namespace SQM.Website
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
-							rdp.SelectedDate = DateTime.Now;
+							rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
 						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate && !IsEditContext) // Default report date if add mode
 						{
-							rdp.SelectedDate = DateTime.Now;
+							rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
 
 						if (shouldPopulate)
@@ -953,11 +967,11 @@ namespace SQM.Website
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
-							rdp.SelectedDate = DateTime.Now;
+							rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
 						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate && !IsEditContext) // Default report date if add mode
 						{
-							rdp.SelectedDate = DateTime.Now;
+							rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
 
 						if (shouldPopulate)
@@ -1669,6 +1683,8 @@ namespace SQM.Website
 			if (newTypeID > 0)
 			{
 				SessionManager.SetIncidentLocation(newLocationID);
+				IncidentLocationId = newLocationID;
+				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
 				CreatePersonId = 0;
@@ -1787,7 +1803,7 @@ namespace SQM.Website
 						theIncident = UpdateIncident(incidentId);
 						if (Mode == IncidentMode.Incident)
 						{
-							EHSIncidentMgr.TryCloseIncident(incidentId);
+							EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 						}
 					}
 				}
@@ -1810,11 +1826,11 @@ namespace SQM.Website
 					if (Mode == IncidentMode.Incident)
 					{
 						UpdateTaskInfo(questions, incidentId, DateTime.Now);
-						EHSIncidentMgr.TryCloseIncident(incidentId);
+						EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 					}
 					else
 					{
-						EHSIncidentMgr.TryClosePrevention(incidentId, SessionManager.UserContext.Person.PERSON_ID);
+						EHSIncidentMgr.TryClosePrevention(incidentId, SessionManager.UserContext.Person.PERSON_ID, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 					}
 				}
 			}
@@ -1825,15 +1841,6 @@ namespace SQM.Website
 				finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
 			else
 				finalPlantId = selectedPlantId;
-
-			// Start plant accounting rollup in a background thread
-			/*
-			Thread thread = new Thread(() => EHSAccountingMgr.RollupPlantAccounting(InitialPlantId, finalPlantId));
-			thread.IsBackground = true;
-			thread.Start();
-			*/
-			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
-			//obj.IsBackground = true;
 
 			if (shouldReturn)
 				Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
@@ -1970,8 +1977,8 @@ namespace SQM.Website
 				q.AnswerText = answer;
 			}
 
-			if (incidentDate == null || incidentDate < DateTime.Now.AddYears(-100))
-				incidentDate = DateTime.Now;
+			if (incidentDate == null || incidentDate < DateTime.UtcNow.AddYears(-100))
+				incidentDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 			if (incidentDescription.Length > MaxTextLength)
 				incidentDescription = incidentDescription.Substring(0, MaxTextLength);
@@ -2031,9 +2038,9 @@ namespace SQM.Website
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
 				DETECT_PLANT_ID = SessionManager.IncidentLocation.Plant.PLANT_ID,
 				INCIDENT_TYPE = "EHS",
-				CREATE_DT = DateTime.UtcNow,
+				CREATE_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ),
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
-				LAST_UPD_DT = DateTime.Now,
+				LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ),
 				LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
@@ -2064,7 +2071,7 @@ namespace SQM.Website
 				incident.INCIDENT_DT = incidentDate;
 				incident.ISSUE_TYPE = SelectedTypeText;
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
-				incident.LAST_UPD_DT = DateTime.Now;
+				incident.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 				if (incident.INCFORM_LAST_STEP_COMPLETED < 100)
 					incident.INCFORM_LAST_STEP_COMPLETED = 100;

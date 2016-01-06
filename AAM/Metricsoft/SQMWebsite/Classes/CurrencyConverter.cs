@@ -82,8 +82,8 @@ namespace SQM.Website
 		/// </summary>
 		public static double Convert(string fromCurrencyCode, string toCurrencyCode, string baseCurrencyCode, double fromValue)
 		{
-			int year = DateTime.Now.Year;
-			int month = DateTime.Now.Month;
+			int year = DateTime.UtcNow.Year;
+			int month = DateTime.UtcNow.Month;
 			return Convert(fromCurrencyCode, toCurrencyCode, baseCurrencyCode, fromValue, year, month);
 		}
 

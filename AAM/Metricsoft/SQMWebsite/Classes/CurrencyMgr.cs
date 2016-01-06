@@ -16,7 +16,7 @@ namespace SQM.Website
 			//var currencyCodes = (from c in entities.CURRENCY where c.CURRENCY_CODE != baseCurrencyCode select c.CURRENCY_CODE).ToList();
 			var currencyCodes = (from c in entities.CURRENCY select c.CURRENCY_CODE).ToList();
 
-			DateTime lastMonth = DateTime.Now.AddMonths(-1);
+			DateTime lastMonth = DateTime.UtcNow.AddMonths(-1);
 
 			foreach (string quoteCurrencyCode in currencyCodes)
 			{
@@ -41,8 +41,8 @@ namespace SQM.Website
 		{
 			// Need a minimum span of months to force Oanda to display monthly data vs. weekly data
 			DateTime oandaStartDate = startDate;
-			if (DateTime.Now.AddMonths(-12) < oandaStartDate)
-				oandaStartDate = DateTime.Now.AddMonths(-12);
+			if (DateTime.UtcNow.AddMonths(-12) < oandaStartDate)
+				oandaStartDate = DateTime.UtcNow.AddMonths(-12);
 
 			string url = BuildRequestUrl(baseCurrencyCode, quoteCurrencyCode, oandaStartDate);
 			
@@ -106,7 +106,7 @@ namespace SQM.Website
 								"period=monthly&display=absolute&rate=0&data_range=c&price=bid&view=table&" +
 								"base_currency_0={3}" +
 								"&download=csv",
-								baseCurrencyCode, startDate, DateTime.Now, quoteCurrencyCode);
+								baseCurrencyCode, startDate, DateTime.UtcNow, quoteCurrencyCode);
 
 			return url;
 		}

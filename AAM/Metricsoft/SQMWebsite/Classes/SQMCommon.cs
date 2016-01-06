@@ -355,16 +355,10 @@ namespace SQM.Website
         {
 			// convert UTC time to local based on the local timezone code
             DateTime localDate;
-			string timezondID = localTimeZone;
 
             try
             {
-				if (localTimeZone.Length < 5)
-				{
-					timezondID = TimezoneID(localTimeZone);
-				}
-
-				TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(timezondID);
+				TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById(TimezoneID(localTimeZone));
                 localDate = TimeZoneInfo.ConvertTimeFromUtc(utcDate, tz);
             }
             catch
@@ -378,34 +372,36 @@ namespace SQM.Website
 		public static DateTime ConvertToUTC(DateTime localDate, string localTimeZone)
 		{
 			// convert local time to UTC based on local timezone code
-			string timezondID = localTimeZone;
-			if (localTimeZone.Length < 5)
-			{
-				timezondID = TimezoneID(localTimeZone);
-			}
 
-			return(TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(timezondID)));
+			return (TimeZoneInfo.ConvertTimeToUtc(localDate, TimeZoneInfo.FindSystemTimeZoneById(TimezoneID(localTimeZone))));
 		}
 
-		public static DateTime ConvertFromToTimezone(DateTime dateIN, string tzIdIN, string tzIdOUT)
+		public static DateTime ConvertFromToTimezone(DateTime dateIN, string tzIN, string tzOUT)
 		{
 			// convert between two timezones - not necessarily the server time
 			// timezoneIN and OUT are time zone id's as returned by the TimezoneID("035") function below
 			DateTime dateOUT = new DateTime();
 
-			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateIN, TimeZoneInfo.FindSystemTimeZoneById(tzIdIN));
-			dateOUT = TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZoneInfo.FindSystemTimeZoneById(tzIdOUT));
+			DateTime utc = TimeZoneInfo.ConvertTimeToUtc(dateIN, TimeZoneInfo.FindSystemTimeZoneById(TimezoneID(tzIN)));
+			dateOUT = TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZoneInfo.FindSystemTimeZoneById(TimezoneID(tzOUT)));
 
 			return dateOUT;
 		}
 
-		public static string TimezoneID(string tzCode)
+		public static string TimezoneID(string tzValue)
 		{
-			string tz = WebSiteCommon.GetXlatValue("timeZone", tzCode);
-			if (string.IsNullOrEmpty(tz))
-				tz = "GMT Standard Time";
+			string tzID = tzValue;
 
-			return tz;
+			if (tzValue.Length < 5)
+			{
+				// convert timezode codes to MSDN timezone ID
+				tzID = WebSiteCommon.GetXlatValue("timeZone", tzValue);
+			}
+
+			if (string.IsNullOrEmpty(tzID))
+				tzID = "GMT Standard Time";  // use UTC as default
+
+			return tzID;
 		}
 
 

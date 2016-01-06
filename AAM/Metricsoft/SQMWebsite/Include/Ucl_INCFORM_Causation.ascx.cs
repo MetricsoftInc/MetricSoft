@@ -25,7 +25,11 @@ namespace SQM.Website
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
 			set { ViewState["EditIncidentId"] = value; }
 		}
-
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
 		protected void Page_Load(object sender, EventArgs e)
 		{
 
@@ -36,6 +40,10 @@ namespace SQM.Website
 			int status = 0;
 
 			INCIDENT incident = EHSIncidentMgr.SelectIncidentById(ctx, EditIncidentId, true);
+			PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
+			if (plant != null)
+				IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+
 			BindCausation(incident);
 
 			return status;
@@ -107,12 +115,12 @@ namespace SQM.Website
 					causation.INCIDENT_ID = incidentID;
 					causation.CAUSEATION_CD = ddlCausation.SelectedValue;
 					causation.LAST_UPD_BY = SessionManager.UserContext.UserName();
-					causation.LAST_UPD_DT = DateTime.UtcNow;
+					causation.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 					ctx.AddToINCFORM_CAUSATION(causation);
 
 					status = ctx.SaveChanges();
 
-					EHSIncidentMgr.UpdateIncidentStatus(incidentID, IncidentStepStatus.rootcauseComplete);
+					EHSIncidentMgr.UpdateIncidentStatus(incidentID, IncidentStepStatus.rootcauseComplete, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 				}
 				else
 				{

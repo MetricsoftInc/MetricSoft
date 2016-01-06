@@ -32,7 +32,7 @@ namespace SQM.Website.Automated
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
-			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
+			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			try
 			{
@@ -110,7 +110,7 @@ namespace SQM.Website.Automated
 				PLANT_ACCOUNTING pa = null;
 				List<PLANT_ACCOUNTING> paList = (from a in entities.PLANT_ACCOUNTING 
 						  where
-						  EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= DateTime.Now
+						  EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= DateTime.UtcNow
 						  select a).OrderBy(l=> l.PLANT_ID).ThenBy(l=> l.PERIOD_YEAR).ThenBy(l=> l.PERIOD_MONTH).ToList();
 				
 				List<EHSIncidentTimeAccounting> summaryList = new List<EHSIncidentTimeAccounting>();
@@ -135,17 +135,17 @@ namespace SQM.Website.Automated
 						plant = plantList.Where(l => l.PLANT_ID == period.PlantID).FirstOrDefault();
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID &&  a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
-					// write PLANT_ACCOUNTING metrics
-					if ((pa = paList.Where(l => l.PLANT_ID == period.PlantID && l.PERIOD_YEAR == period.PeriodYear && l.PERIOD_MONTH == period.PeriodMonth).FirstOrDefault()) == null)
-					{
-						paList.Add((pa = new PLANT_ACCOUNTING()));
-						pa.PLANT_ID = period.PlantID;
-						pa.PERIOD_YEAR = period.PeriodYear;
-						pa.PERIOD_MONTH = period.PeriodMonth;
-					}
-					periodDate = new DateTime(pa.PERIOD_YEAR, pa.PERIOD_MONTH, 1);
+					periodDate = new DateTime(period.PeriodMonth, period.PeriodYear, 1);
 					if (pact != null && periodDate >= pact.EFF_START_DATE)
 					{
+						// write PLANT_ACCOUNTING metrics
+						if ((pa = paList.Where(l => l.PLANT_ID == period.PlantID && l.PERIOD_YEAR == period.PeriodYear && l.PERIOD_MONTH == period.PeriodMonth).FirstOrDefault()) == null)
+						{
+							paList.Add((pa = new PLANT_ACCOUNTING()));
+							pa.PLANT_ID = period.PlantID;
+							pa.PERIOD_YEAR = period.PeriodYear;
+							pa.PERIOD_MONTH = period.PeriodMonth;
+						}
 						pa.TIME_LOST = period.LostTime;
 						pa.TOTAL_DAYS_RESTRICTED = period.RestrictedTime;
 						pa.TIME_LOST_CASES = period.LostTimeCase;
@@ -161,7 +161,7 @@ namespace SQM.Website.Automated
 			}
 
 			WriteLine("");
-			WriteLine("Completed: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
+			WriteLine("Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
 
@@ -190,7 +190,7 @@ namespace SQM.Website.Automated
 					Directory.CreateDirectory(logPath);
 
 				// Write log file
-				string fullPath = logPath + string.Format("{0:yyyy-MM-dd-HHmmssfff}.txt", DateTime.Now);
+				string fullPath = logPath + string.Format("{0:yyyy-MM-dd-HHmmssfff}.txt", DateTime.UtcNow);
 				File.WriteAllText(fullPath, output.ToString());
 
 				// Keep only last 100 log files

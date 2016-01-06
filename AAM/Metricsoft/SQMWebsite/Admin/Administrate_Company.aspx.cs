@@ -285,7 +285,7 @@ namespace SQM.Website
             staticTarget = new PERSPECTIVE_TARGET();
             staticTarget.TARGET_ID = 0;
             staticTarget.STATUS = "A";
-            staticTarget.EFF_YEAR = DateTime.Now.Year;
+            staticTarget.EFF_YEAR = DateTime.UtcNow.Year;
             BindTarget(staticTarget);
         }
 

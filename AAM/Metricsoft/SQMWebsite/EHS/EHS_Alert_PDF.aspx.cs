@@ -105,7 +105,7 @@ namespace SQM.Website.EHS
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-5PhaseReport-" + DateTime.Now.ToString("yyyy-MM-dd") + ".pdf");
+			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-5PhaseReport-" + DateTime.UtcNow.ToString("yyyy-MM-dd") + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();
@@ -666,7 +666,7 @@ namespace SQM.Website.EHS
 					}
 
 					// Containment
-					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid))
+					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null))
 					{
 						if (cc.ASSIGNED_PERSON_ID.HasValue)
 						{
@@ -687,7 +687,7 @@ namespace SQM.Website.EHS
 					}
 
 					// Corrective Actions
-					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid))
+					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid, null))
 					{
 						if (ac.RESPONSIBLE_ID.HasValue)
 						{
@@ -710,7 +710,7 @@ namespace SQM.Website.EHS
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null);
 
 					if (files.Count > 0)
 					{

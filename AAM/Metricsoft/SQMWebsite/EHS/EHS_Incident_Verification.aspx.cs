@@ -105,7 +105,7 @@ namespace SQM.Website
 					PLANT_ID = plantId,
 					PERSON_ID = personId,
 					COMMENT = rtbNewNote.Text,
-					COMMENT_DATE = DateTime.Now
+					COMMENT_DATE = DateTime.UtcNow
 				};
 				entities.INCIDENT_VERIFICATION_COMMENT.AddObject(comment);
 				entities.SaveChanges();

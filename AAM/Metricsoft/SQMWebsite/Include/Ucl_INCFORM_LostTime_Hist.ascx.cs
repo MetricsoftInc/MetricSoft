@@ -53,7 +53,11 @@ namespace SQM.Website
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
 			set { ViewState["EditIncidentId"] = value; }
 		}
-
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -147,6 +151,10 @@ namespace SQM.Website
 				try
 				{
 					WorkStatusIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)WorkStatusIncident.DETECT_PLANT_ID, "");
+					if (plant != null)
+						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+
 				}
 				catch { }
 
@@ -370,7 +378,7 @@ namespace SQM.Website
 					newItem.RETURN_EXPECTED_DT = item.RETURN_EXPECTED_DT;
 
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_LOSTTIME_HIST(newItem);
 					status = entities.SaveChanges();
@@ -379,7 +387,7 @@ namespace SQM.Website
 
 			if (seq > 0)
 			{
-				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.workstatus);
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.workstatus, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			}
 
 			if (status > -1)

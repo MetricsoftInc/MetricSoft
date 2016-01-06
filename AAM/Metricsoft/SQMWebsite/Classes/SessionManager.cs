@@ -44,7 +44,7 @@ namespace SQM.Website
 					if (calcStatOfTheDay)
 					{
 						// only option is currently # days since lost time case 
-						SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", DateTime.Now, DateTime.Now, new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID });
+						SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", DateTime.UtcNow, DateTime.UtcNow, new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID });
 						stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
 						stsmgr.ehsCtl.ElapsedTimeSeries(new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID }, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
 						if (stsmgr.ehsCtl.Results.ValidResult)
@@ -606,7 +606,7 @@ namespace SQM.Website
 
 		public static DateTime FYStartDate()
 		{
-			return FYStartDate(DateTime.Now);
+			return FYStartDate(DateTime.UtcNow);
 		}
 
 		public static DateTime FYStartDate(DateTime targetDate)
@@ -641,8 +641,8 @@ namespace SQM.Website
 				fyEndDt = new DateTime(targetDate.Year, (int)SessionManager.SessionContext.PrimaryCompany.FYSTART_MONTH-1, DateTime.DaysInMonth(targetDate.Year, (int)SessionManager.SessionContext.PrimaryCompany.FYSTART_MONTH-1));
 			}
 		   
-			if (fyEndDt > DateTime.Now)
-				fyEndDt = DateTime.Now;
+			if (fyEndDt > DateTime.UtcNow)
+				fyEndDt = DateTime.UtcNow;
 			
 
 			return fyEndDt;
@@ -694,6 +694,11 @@ namespace SQM.Website
 			set;
 		}
 		public string TimeZoneID
+		{
+			get;
+			set;
+		}
+		public DateTime LocalTime
 		{
 			get;
 			set;
@@ -793,10 +798,8 @@ namespace SQM.Website
 							int ctxstatus = 0;
 							SQMModelMgr.UpdateCredentials(ctx, access, "", out ctxstatus);
 							this.Credentials = access;
-							this.TimeZoneID = WebSiteCommon.GetXlatValue("timeZone", this.Person.PREFERRED_TIMEZONE);
-
-							//this.DelegateList = new List<decimal>();
-							//this.DelegateList = SQMModelMgr.SelectDelegateList(ctx, this.Person.PERSON_ID).Select(l => l.PERSON_ID).ToList();
+							this.TimeZoneID = this.HRLocation.Plant.LOCAL_TIMEZONE;
+							this.LocalTime = !string.IsNullOrEmpty(this.TimeZoneID) ? WebSiteCommon.LocalTime(DateTime.UtcNow, this.TimeZoneID) : DateTime.UtcNow;
 
 							if (SessionManager.CreateSessionContext(this) == null)
 							{

@@ -29,7 +29,7 @@ namespace SQM.Website.Automated
 			decimal updateIndicator = thisPeriod.Ticks;
 			decimal locationID = 0;
 
-			WriteLine("Started: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
+			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			try
 			{
@@ -136,7 +136,7 @@ namespace SQM.Website.Automated
 			}
 
 			WriteLine("");
-			WriteLine("Completed: " + DateTime.Now.ToString("hh:mm MM/dd/yyyy"));
+			WriteLine("Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
 		}
@@ -159,7 +159,7 @@ namespace SQM.Website.Automated
 					Directory.CreateDirectory(logPath);
 
 				// Write log file
-				string fullPath = logPath + string.Format("{0:yyyy-MM-dd-HHmmssfff}.txt", DateTime.Now);
+				string fullPath = logPath + string.Format("{0:yyyy-MM-dd-HHmmssfff}.txt", DateTime.UtcNow);
 				File.WriteAllText(fullPath, output.ToString());
 
 				// Keep only last 100 log files

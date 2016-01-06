@@ -420,14 +420,19 @@ namespace SQM.Website
             return oTarget;
         }
 
-        public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state)
+		public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state)
+		{
+			return SetObjectTimestamp(oTarget, updBy, state, null);
+		}
+
+        public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state, DateTime ? defaultDate)
         {
             // set the record create and update time stamps
             // naming conventions appear to be standardized accross all SQM tables
             if (oTarget == null)
                 return oTarget;
             
-            DateTime utcDate = DateTime.UtcNow;
+            DateTime utcDate = defaultDate != null ? (DateTime)defaultDate : DateTime.UtcNow;
 
             Type type = oTarget.GetType();
 

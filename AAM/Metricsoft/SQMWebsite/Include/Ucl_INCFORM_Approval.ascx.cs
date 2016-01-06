@@ -65,6 +65,12 @@ namespace SQM.Website
 			set { ViewState["ApprovalINCIDENT"] = value; }
 		}
 
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
+
 		protected decimal EditIncidentTypeId
 		{
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
@@ -159,6 +165,9 @@ namespace SQM.Website
 				try
 				{
 					ApprovalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)ApprovalIncident.DETECT_PLANT_ID, "");
+					if (plant != null)
+						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 				}
 				catch { }
 
@@ -178,7 +187,7 @@ namespace SQM.Website
 			SetUserAccess("INCFORM_APPROVAL");
 
 			pnlApproval.Visible = true;
-			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId);
+			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			rptApprovals.DataBind();
 		}
 
@@ -295,9 +304,9 @@ namespace SQM.Website
 					foreach (IncidentStepStatus stat in approvalList)
 					{
 						if (stat == IncidentStepStatus.signoff2  ||  stat == IncidentStepStatus.signoffComplete)  // set status to CLOSED if final sign-off
-							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true);
-						else 
-							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat);
+							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
+						else
+							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 					}
 				}
 

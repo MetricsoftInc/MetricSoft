@@ -15,6 +15,11 @@ namespace SQM.Website
             get { return ViewState["isDirected"] == null ? 0 : (decimal)ViewState["isDirected"]; }
             set { ViewState["isDirected"] = value; }
         }
+		protected string LocationTZ
+		{
+			get { return ViewState["LocationTZ"] == null ? "GMT" : (string)ViewState["tLocationTZ"]; }
+			set { ViewState["LocationTZ"] = value; }
+		}
 
         #region events
         protected override void OnInit(EventArgs e)
@@ -31,7 +36,7 @@ namespace SQM.Website
         {
             if (!Page.IsPostBack)
             {
-                DateTime directedDate = DateTime.Now;
+                DateTime directedDate = DateTime.UtcNow;
                 SetupPage();
                 if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
                 {   // page invoked from users inbox re: missing required inputs
@@ -106,15 +111,15 @@ namespace SQM.Website
             {
                 LocalProfile().FilterByResponsibleID = 0;
                 LocalProfile().MinPeriodDate = new DateTime(2001, 1, 1);
-                uclInputHdr.LoadProfileInputHdr(false, LocalProfile().MinPeriodDate, DateTime.Now, SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, true);
+				uclInputHdr.LoadProfileInputHdr(false, LocalProfile().MinPeriodDate, WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ), SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, true);
                     
             }
             else
             {
                 LocalProfile().FilterByResponsibleID = SessionManager.UserContext.Person.PERSON_ID;
                 SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTLIMIT");
-                LocalProfile().MinPeriodDate = DateTime.Now.AddMonths(sets != null ? Convert.ToInt32(sets.VALUE) * -1 : -5);
-                uclInputHdr.LoadProfileInputHdr(false, LocalProfile().MinPeriodDate, DateTime.Now, SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, true);
+				LocalProfile().MinPeriodDate = WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ).AddMonths(sets != null ? Convert.ToInt32(sets.VALUE) * -1 : -5);
+				uclInputHdr.LoadProfileInputHdr(false, LocalProfile().MinPeriodDate, WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ), SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, true);
             }
 
             if (directedPlantID > 0)  // override plant select ddl when directed from inbox, etc...
@@ -292,7 +297,7 @@ namespace SQM.Website
             }
 
             EHS_PROFILE_INPUT input = LocalProfile().InputPeriod.InputsList[0];
-            input.LAST_UPD_DT = DateTime.UtcNow;
+			input.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ);
             EHSProfile.UpdateProfile(LocalProfile());
 
             foreach (RepeaterItem item in rptProfilePeriod.Items)
@@ -762,7 +767,7 @@ namespace SQM.Website
                         lbl.Visible = false;
                     }
 
-                    if (LocalProfile().GetMeasureExt(metric, DateTime.Now) != null && metric.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT.HasValue)
+					if (LocalProfile().GetMeasureExt(metric, WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ)) != null && metric.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT.HasValue)
                     {
                         tbValue.CssClass = "defaultText";
                         tbValue.ToolTip = hfDefaultValue.Value + metric.EHS_PROFILE_MEASURE_EXT.NOTE;
@@ -770,7 +775,7 @@ namespace SQM.Website
                         if (string.IsNullOrEmpty(tbValue.Text))
                             tbValue.Text = SQMBasePage.FormatValue((decimal)metric.EHS_PROFILE_MEASURE_EXT.VALUE_DEFAULT, 2);
                     }
-                    if (LocalProfile().GetMeasureExt(metric, DateTime.Now) != null && metric.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT.HasValue)
+					if (LocalProfile().GetMeasureExt(metric, WebSiteCommon.LocalTime(DateTime.UtcNow, LocationTZ)) != null && metric.EHS_PROFILE_MEASURE_EXT.COST_DEFAULT.HasValue)
                     {
                         tbCost.CssClass = "defaultText";
                         tbCost.ToolTip = hfDefaultValue.Value + metric.EHS_PROFILE_MEASURE_EXT.NOTE;
@@ -812,6 +817,8 @@ namespace SQM.Website
         EHSProfile SetLocalProfile(EHSProfile profile)
         {
             SessionManager.CurrentObject = profile;
+			LocationTZ = profile.Plant.LOCAL_TIMEZONE;
+
             return LocalProfile();
         }
 

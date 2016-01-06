@@ -209,7 +209,7 @@ namespace SQM.Website
         {
             CalcsResult results = new CalcsResult().Initialize();
 
-            SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(company, "HS", DateTime.Now, DateTime.Now, plantArray).Load(DateIntervalType.fuzzy, DateSpanOption.SelectRange);
+            SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(company, "HS", DateTime.UtcNow, DateTime.UtcNow, plantArray).Load(DateIntervalType.fuzzy, DateSpanOption.SelectRange);
             metricMgr.CalcsMethods(plantArray, "HS", "63", SStat.deltaDy.ToString(), 5, 1);
             results = metricMgr.ehsCtl.Results;
             if (!results.ValidResult)
@@ -217,7 +217,7 @@ namespace SQM.Website
                 PLANT plant = SQMModelMgr.LookupPlant(plantArray[0]);
                 if (plant != null && plant.PLANT_START_DT.HasValue)
                 {
-                    results.Result = (decimal)Math.Truncate(DateTime.Now.Subtract((DateTime)plant.PLANT_START_DT).TotalDays);
+                    results.Result = (decimal)Math.Truncate(DateTime.UtcNow.Subtract((DateTime)plant.PLANT_START_DT).TotalDays);
                     results.ValidResult = true;
                 }
             }

@@ -67,7 +67,7 @@ namespace SQM.Website.Automated
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			var output = new StringBuilder();
-			output.AppendFormat("Started: {0:hh:mm MM/dd/yyyy}", DateTime.Now);
+			output.AppendFormat("Started: {0:hh:mm MM/dd/yyyy}", DateTime.UtcNow);
 			output.AppendLine();
 
 			try
@@ -297,7 +297,7 @@ namespace SQM.Website.Automated
 			}
 
 			output.AppendLine();
-			output.AppendFormat("Completed: {0:hh:mm MM/dd/yyyy}", DateTime.Now);
+			output.AppendFormat("Completed: {0:hh:mm MM/dd/yyyy}", DateTime.UtcNow);
 
 			this.lblOutput.Text = output.ToString().Replace("\n", "<br>");
 		}

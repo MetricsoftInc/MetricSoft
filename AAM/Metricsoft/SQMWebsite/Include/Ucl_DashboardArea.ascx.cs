@@ -207,46 +207,46 @@ namespace SQM.Website
             switch (localCriteria.DateSpanType)
             {
                 case DateSpanOption.YearToDate:      // ytd
-                    dmPeriodFrom.SelectedDate = new DateTime(DateTime.Now.Year, 1, 1);
-                    dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    dmPeriodFrom.SelectedDate = new DateTime(DateTime.UtcNow.Year, 1, 1);
+                    dmPeriodTo.SelectedDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
                     break;
                 case DateSpanOption.YearOverYear:      // year over year
-                    dmPeriodFrom.SelectedDate = DateTime.Now.AddYears(-1);
-                    dmPeriodTo.SelectedDate = DateTime.Now;
-                    ddlYearFrom.SelectedValue = (DateTime.Now.Year - 1).ToString();
-                    ddlYearTo.SelectedValue = DateTime.Now.Year.ToString();
+                    dmPeriodFrom.SelectedDate = DateTime.UtcNow.AddYears(-1);
+                    dmPeriodTo.SelectedDate = DateTime.UtcNow;
+                    ddlYearFrom.SelectedValue = (DateTime.UtcNow.Year - 1).ToString();
+                    ddlYearTo.SelectedValue = DateTime.UtcNow.Year.ToString();
                     //dmPeriodFrom.Visible = dmPeriodTo.Visible = false;
                     //ddlYearFrom.Visible = ddlYearTo.Visible = true;
                     phPeriodSpan.Visible = false;
                     phYearSpan.Visible = true;
                     break;
                 case DateSpanOption.FYYearOverYear:  // fy uear over year
-                    dmPeriodFrom.SelectedDate = DateTime.Now.AddYears(-1);
-                    dmPeriodTo.SelectedDate = DateTime.Now;
-                    ddlYearFrom.SelectedValue = (DateTime.Now.Year - 1).ToString();
-                    ddlYearTo.SelectedValue = DateTime.Now.Year.ToString();
+                    dmPeriodFrom.SelectedDate = DateTime.UtcNow.AddYears(-1);
+                    dmPeriodTo.SelectedDate = DateTime.UtcNow;
+                    ddlYearFrom.SelectedValue = (DateTime.UtcNow.Year - 1).ToString();
+                    ddlYearTo.SelectedValue = DateTime.UtcNow.Year.ToString();
                     //dmPeriodFrom.Visible = dmPeriodTo.Visible = false;
                     //ddlYearFrom.Visible = ddlYearTo.Visible = true;
                     phPeriodSpan.Visible = false;
                     phYearSpan.Visible = true;
                     break;
                 case DateSpanOption.PreviousYear:  // prev year
-                    lastYear = DateTime.Now.AddYears(-1);
+                    lastYear = DateTime.UtcNow.AddYears(-1);
                     dmPeriodFrom.SelectedDate = new DateTime(lastYear.Year, 1, 1);
                     dmPeriodTo.SelectedDate = new DateTime(lastYear.Year, 12, 1);
                     break;
                 case DateSpanOption.FYYearToDate:       // fy ytd
                     dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-                    dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    dmPeriodTo.SelectedDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
                      if (DateTime.Now.AddMonths(-1) < SessionManager.FYStartDate())
                             {
                                 dmPeriodFrom.SelectedDate = SessionManager.FYStartDate().AddYears(-1);
-                                dmPeriodTo.SelectedDate = DateTime.Now.AddMonths(-1);
+                                dmPeriodTo.SelectedDate = DateTime.UtcNow.AddMonths(-1);
                             }
                             else
                             {
                                 dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-                                dmPeriodTo.SelectedDate = DateTime.Now;
+                                dmPeriodTo.SelectedDate = DateTime.UtcNow;
                             }
 
                             if (localView.PERSPECTIVE == "0" || localView.PERSPECTIVE == "E")
@@ -394,11 +394,11 @@ namespace SQM.Website
             localCtx = new PSsqmEntities();
             localView = null;
             ddlDateSpan.SelectedIndex = 1;
-            dmPeriodFrom.SelectedDate = new DateTime(DateTime.Now.Year, 1, 1);
-            dmPeriodTo.SelectedDate = DateTime.Now;
+            dmPeriodFrom.SelectedDate = new DateTime(DateTime.UtcNow.Year, 1, 1);
+            dmPeriodTo.SelectedDate = DateTime.UtcNow;
             dmPeriodFrom.ShowPopupOnFocus = dmPeriodTo.ShowPopupOnFocus = true;
-            ddlYearFrom.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (DateTime.Now.Year - 2000)+1, ""));
-            ddlYearTo.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (DateTime.Now.Year - 2000)+2, ""));
+            ddlYearFrom.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (DateTime.UtcNow.Year - 2000)+1, ""));
+            ddlYearTo.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (DateTime.UtcNow.Year - 2000)+2, ""));
             btnNewView.Enabled = true;
             localCriteria = new DashboardCriteria().Initialize();
 

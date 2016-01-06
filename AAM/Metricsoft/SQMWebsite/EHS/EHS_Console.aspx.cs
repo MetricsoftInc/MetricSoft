@@ -49,8 +49,8 @@ namespace SQM.Website
             divGHGReport.Visible = divProfilePeriodScrollRepeater.Visible = divMetricHistory.Visible = divMetricHistory.Visible = phIncidentCriteria.Visible = divMetricsTimespan.Visible = false;
 
             radExportDateSelect1.MinDate = new DateTime(2001, 1, 1);
-            radExportDateSelect1.MaxDate = DateTime.Now.AddMonths(1);
-            radExportDateSelect1.SelectedDate = radExportDateSelect2.SelectedDate = DateTime.Now;
+            radExportDateSelect1.MaxDate = DateTime.UtcNow.AddMonths(1);
+            radExportDateSelect1.SelectedDate = radExportDateSelect2.SelectedDate = DateTime.UtcNow;
             radExportDateSelect1.ShowPopupOnFocus = radExportDateSelect2.ShowPopupOnFocus = true;
 
             ddlExportPlantSelect.Items.Clear();
@@ -91,8 +91,8 @@ namespace SQM.Website
                         }
                         catch 
                         {
-                            radEffFrom.SelectedDate = DateTime.Now.AddMonths(-1);
-                            radEffTo.SelectedDate = DateTime.Now;
+                            radEffFrom.SelectedDate = DateTime.UtcNow.AddMonths(-1);
+                            radEffTo.SelectedDate = DateTime.UtcNow;
                         }
                     }
                     break;
@@ -178,8 +178,8 @@ namespace SQM.Website
 		{
 			string searchcriteria = "";
 			string plantList = "";
-			DateTime dtFrom = DateTime.Today;
-			DateTime dtTo = DateTime.Today;
+			DateTime dtFrom = DateTime.UtcNow;
+			DateTime dtTo = DateTime.UtcNow;
 
             uclProgress.BindProgressDisplay(100, "Exporting: ");
             uclProgress.UpdateDisplay(1, 10, "Exporting...");
@@ -208,8 +208,8 @@ namespace SQM.Website
 		{
 			string searchcriteria = "";
 			string plantList = "";
-			DateTime dtFrom = DateTime.Today;
-			DateTime dtTo = DateTime.Today;
+			DateTime dtFrom = DateTime.UtcNow;
+			DateTime dtTo = DateTime.UtcNow;
 
 			uclProgress.BindProgressDisplay(100, "Exporting: ");
             uclProgress.UpdateDisplay(1, 10, "Exporting...");
@@ -218,12 +218,12 @@ namespace SQM.Website
 			{
 				dtFrom = new DateTime(radExportDateSelect1.SelectedDate.Value.Year, radExportDateSelect1.SelectedDate.Value.Month, 1);
 			}
-			catch { dtFrom = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1); }
+			catch { dtFrom = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1); }
 			try
 			{
 				dtTo = new DateTime(radExportDateSelect2.SelectedDate.Value.Year, radExportDateSelect2.SelectedDate.Value.Month, 1).AddMonths(1).AddDays(-1);
 			}
-			catch { dtTo = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1); }
+			catch { dtTo = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1).AddMonths(1).AddDays(-1); }
 
             List<decimal> plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlExportPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
 			List<decimal> typeList = ddlExportIncidentType.Items.Where(i => i.Checked == true).Select(i => Convert.ToDecimal(i.Value)).ToList();

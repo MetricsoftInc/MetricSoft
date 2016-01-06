@@ -178,7 +178,7 @@ namespace SQM.Website
 				}
 				else
 				{
-					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
+					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE).Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
 					this.DaysToClose = 0;
 				}
 			}
@@ -192,7 +192,7 @@ namespace SQM.Website
 				}
 				else
 				{
-					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Now.Subtract(this.Incident.INCIDENT_DT).TotalDays));
+					days = this.DaysOpen = (int)Math.Abs(Math.Truncate(WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE).Subtract(this.Incident.INCIDENT_DT).TotalDays));
 					this.DaysToClose = 0;
 				}
 			}
@@ -280,17 +280,18 @@ namespace SQM.Website
 			return baseFormName;
 		}
 
-		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus)
+		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, DateTime ? defaultDate)
 		{
-			return UpdateIncidentStatus(incidentID,  currentStepStatus, false);
+			return UpdateIncidentStatus(incidentID,  currentStepStatus, false, defaultDate);
 		}
 
 
-		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, bool closeIncident)
+		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, bool closeIncident, DateTime ? defaultDate)
 		{
 			INCIDENT incident = null;
 			bool isUpdated = false;
 			IncidentStepStatus calcStatus = IncidentStepStatus.unknown;
+			string localTZ = "";
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
@@ -331,23 +332,13 @@ namespace SQM.Website
 							calcStatus = IncidentStepStatus.signoff2;
 							if (closeIncident && !incident.CLOSE_DATE.HasValue)
 							{
-								incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
+								PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
+								incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 								isUpdated = true;
 							}
 						}
 					}
-					/*
-					if ((int)currentStepStatus > incident.INCFORM_LAST_STEP_COMPLETED)
-					{
-						incident.INCFORM_LAST_STEP_COMPLETED = (int)currentStepStatus;
-						isUpdated = true;
-					}
-					if (closeIncident  &&  !incident.CLOSE_DATE.HasValue)
-					{
-						incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
-						isUpdated = true;
-					}
-					*/
+
 					if (calcStatus != IncidentStepStatus.unknown)
 					{
 						incident.INCFORM_LAST_STEP_COMPLETED = (int)calcStatus;
@@ -571,14 +562,14 @@ namespace SQM.Website
 			return incidents;
 		}
 
-		public static void CloseIncident(decimal incidentId)
+		public static void CloseIncident(decimal incidentId, DateTime ? defaultDate)
 		{
 			var entities = new PSsqmEntities();
 
 			var incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 			if (incident != null)
 			{
-				incident.CLOSE_DATE = DateTime.UtcNow;
+				incident.CLOSE_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 				entities.SaveChanges();
 			}
 		}
@@ -991,7 +982,7 @@ namespace SQM.Website
 
 
 
-		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId)
+		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId, DateTime ? defaultDate)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			var containments = new List<INCFORM_CONTAIN>();
@@ -1017,7 +1008,7 @@ namespace SQM.Website
 					contain.ITEM_SEQ = seq;
 					contain.ITEM_DESCRIPTION = "";
 					contain.ASSIGNED_PERSON = "";
-					contain.START_DATE = DateTime.UtcNow;
+					contain.START_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 					contain.COMPLETION_DATE = null;
 					contain.IsCompleted = false;
 
@@ -1061,7 +1052,7 @@ namespace SQM.Website
 		}
 
 
-		public static List<TASK_STATUS> GetCorrectiveActionList(decimal incidentId)
+		public static List<TASK_STATUS> GetCorrectiveActionList(decimal incidentId, DateTime ? defaultDate)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 
@@ -1070,20 +1061,20 @@ namespace SQM.Website
 											select t).ToList();
 			if (actionList.Count == 0)
 			{
-				actionList.Add(CreateEmptyTask(incidentId, ((int)SysPriv.action).ToString(), 1));
+				actionList.Add(CreateEmptyTask(incidentId, ((int)SysPriv.action).ToString(), 1, defaultDate));
 			}
 
 			return actionList;
 		}
 
-		public static TASK_STATUS CreateEmptyTask(decimal incidentId, string taskStep, int taskSeq)
+		public static TASK_STATUS CreateEmptyTask(decimal incidentId, string taskStep, int taskSeq, DateTime ? defaultDate)
 		{
 			TASK_STATUS task = new TASK_STATUS();
 			task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
 			task.RECORD_ID = incidentId;
 			task.TASK_STEP = taskStep;
 			task.TASK_TYPE = "T";
-			task.CREATE_DT = DateTime.UtcNow;
+			task.CREATE_DT = defaultDate != null ? defaultDate : DateTime.UtcNow;
 			task.STATUS = ((int)TaskStatus.New).ToString();
 			task.TASK_SEQ = taskSeq;
 
@@ -1188,11 +1179,11 @@ namespace SQM.Website
 				countDay = true;
 				switch (effDate.DayOfWeek)
 				{
-					case DayOfWeek.Sunday:		// sunday
+					case DayOfWeek.Sunday:	// count if 7 day work week
 						if (workdays < 7)
 							countDay = false;
 						break;
-					case DayOfWeek.Saturday:		// saturday
+					case DayOfWeek.Saturday:   // count if 6 day work week
 						if (workdays < 6)
 							countDay = false;
 						break;
@@ -1255,7 +1246,7 @@ namespace SQM.Website
 		}
 
 
-		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId)
+		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId, DateTime ? defaultDate)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
@@ -1277,7 +1268,7 @@ namespace SQM.Website
 					approval.ITEM_SEQ = Convert.ToInt32(approveLevel);
 					approval.APPROVAL_MESSAGE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION;
 					approval.APPROVER_TITLE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION_SHORT;
-					approval.APPROVAL_DATE = DateTime.UtcNow;
+					approval.APPROVAL_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 					approval.IsAccepted = false;
 					approvals.Add(approval);
 				}
@@ -1287,14 +1278,14 @@ namespace SQM.Website
 		}
 
 
-		public static void CreateOrUpdateTask(INCIDENT incident, TASK_STATUS task)
+		public static void CreateOrUpdateTask(INCIDENT incident, TASK_STATUS task, DateTime ? defaultDate)
 		{
 			TaskStatusMgr taskMgr = new TaskStatusMgr();
 			taskMgr.Initialize(task.RECORD_TYPE, task.RECORD_ID);
 			TASK_STATUS theTask = taskMgr.SelectTask(task.TASK_ID);
 			if (theTask == null)
 			{
-				task.CREATE_DT = DateTime.UtcNow;
+				task.CREATE_DT = defaultDate != null ? defaultDate : DateTime.UtcNow;
 				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 				task.DETAIL = incident.DESCRIPTION;
 				taskMgr.CreateTask(task);
@@ -1424,7 +1415,7 @@ namespace SQM.Website
 		}
 
 
-		public static void TryCloseIncident(decimal incidentId)
+		public static void TryCloseIncident(decimal incidentId, DateTime ? defaultDate)
 		{
 			var entities = new PSsqmEntities();
 
@@ -1432,7 +1423,7 @@ namespace SQM.Website
 
 			if (ShouldIncidentReportClose(incident))
 			{
-				incident.CLOSE_DATE = DateTime.UtcNow;
+				incident.CLOSE_DATE = defaultDate != null ? defaultDate :  DateTime.UtcNow;
 				SetTaskComplete(incidentId, 40);
 			}
 			else
@@ -1441,7 +1432,7 @@ namespace SQM.Website
 			}
 
 			if (ShouldIncidentCloseDataComplete(incident))
-				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
+				incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 			else
 				incident.CLOSE_DATE_DATA_COMPLETE = null;
 
@@ -1511,16 +1502,17 @@ namespace SQM.Website
 			return shouldClose;
 		}
 
-		public static void TryClosePrevention(decimal incidentId, decimal personId)
+		public static void TryClosePrevention(decimal incidentId, decimal personId, DateTime defaultDate)
 		{
 			var entities = new PSsqmEntities();
 
 			INCIDENT incident = SelectIncidentById(entities, incidentId);
+
 			bool shouldUpdateAuditPerson = true;
 
 			if (ShouldPreventionClose(incident))
 			{
-				incident.CLOSE_DATE = DateTime.UtcNow;
+				incident.CLOSE_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 				incident.CLOSE_PERSON = personId;
 				SetTaskComplete(incidentId, 45);
 				shouldUpdateAuditPerson = false;
@@ -1532,7 +1524,7 @@ namespace SQM.Website
 
 			if (ShouldPreventionCloseAudited(incident))
 			{
-				incident.CLOSE_DATE_DATA_COMPLETE = DateTime.UtcNow;
+				incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 				if (shouldUpdateAuditPerson == true)
 					incident.AUDIT_PERSON = personId;
 			}

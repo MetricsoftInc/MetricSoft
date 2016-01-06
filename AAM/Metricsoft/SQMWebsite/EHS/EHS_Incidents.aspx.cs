@@ -217,8 +217,8 @@ namespace SQM.Website
 			SQMBasePage.SetRadDateCulture(dmToDate, "");
 
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
-			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-11);
-			dmToDate.SelectedDate = DateTime.Now;
+			dmFromDate.SelectedDate = DateTime.UtcNow.AddMonths(-11);
+			dmToDate.SelectedDate = DateTime.UtcNow;
 
 			lblViewEHSRezTitle.Text = GetLocalResourceObject("lblViewEHSRezTitleResource1.Text").ToString();
 			lblPageInstructions.Text = GetLocalResourceObject("lblPageInstructionsResource1.Text").ToString();
@@ -240,7 +240,7 @@ namespace SQM.Website
 					}
 					else
 					{
-						dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
+						dmFromDate.SelectedDate = DateTime.UtcNow.AddMonths(Convert.ToInt32(args[0]) * -1);
 					}
 				}
 				catch { }
@@ -360,7 +360,7 @@ namespace SQM.Website
 					{
 						GaugeDefinition ggCfg = new GaugeDefinition().Initialize().ConfigureControl(vi, null, "", false, !string.IsNullOrEmpty(hfwidth.Value) ? Convert.ToInt32(hfwidth.Value) - 62 : 0, 0);
 						ggCfg.Position = null;
-						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), DateTime.Now.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
+						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), DateTime.UtcNow.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
 						uclChart.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, HSCalcs().ehsCtl.Results, divChart);
 						pnlChartSection.Style.Add("display", "inline");
 						lnkChartClose.Visible = lnkPrint.Visible = true;

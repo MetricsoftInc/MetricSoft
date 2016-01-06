@@ -1258,7 +1258,7 @@ namespace SQM.Website
                     break;
                 case "age":
                     GaugeSeriesItem item;
-                    DateTime now = DateTime.Now;
+                    DateTime now = DateTime.UtcNow;
 
                     item = new GaugeSeriesItem();
                     item.Item = 1;
@@ -1983,7 +1983,7 @@ namespace SQM.Website
                         List<EHSIncidentData> incidentList =  LookupIncidentTopicOccurs(plantArray, new decimal[1] {8}, topicArray[0], "YES");  // get specific topic
                         if (incidentList != null && incidentList.Count > 0)
                         {
-                            this.Results.Result = (decimal)Math.Truncate(DateTime.Now.Subtract(incidentList.Select(l => l.Incident.INCIDENT_DT).Last()).TotalDays);
+                            this.Results.Result = (decimal)Math.Truncate(DateTime.UtcNow.Subtract(incidentList.Select(l => l.Incident.INCIDENT_DT).Last()).TotalDays);
                         }
                         else
                             this.Results.ValidResult = false;
@@ -2026,7 +2026,7 @@ namespace SQM.Website
                         tss = new int[4]  {1,8,31,91};
 
                     GaugeSeriesItem item;
-                    DateTime now = DateTime.Now;
+                    DateTime now = DateTime.UtcNow;
                     series = new GaugeSeries().CreateNew(0, "", "");
 
                     for (int n=0; n<tss.Length; n++)
@@ -2241,7 +2241,7 @@ namespace SQM.Website
 
                         if ((incident = dataList.Where(l => l.DETECT_PLANT_ID == plant.PLANT_ID).FirstOrDefault()) != null)
                         {
-                            result.Result = (decimal)Math.Truncate(DateTime.Now.Subtract(incident.INCIDENT_DT).TotalDays);
+                            result.Result = (decimal)Math.Truncate(DateTime.UtcNow.Subtract(incident.INCIDENT_DT).TotalDays);
                             result.Result = Math.Max(0, result.Result - 1);
                             result.ValidResult = true;
                         }
@@ -2249,7 +2249,7 @@ namespace SQM.Website
                         {
                             if (plant.PLANT_START_DT.HasValue)
                             {
-                                result.Result = (decimal)Math.Truncate(DateTime.Now.Subtract((DateTime)plant.PLANT_START_DT).TotalDays);
+                                result.Result = (decimal)Math.Truncate(DateTime.UtcNow.Subtract((DateTime)plant.PLANT_START_DT).TotalDays);
                                 result.ValidResult = true;
                             }
                         }

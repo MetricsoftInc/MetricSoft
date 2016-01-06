@@ -59,6 +59,11 @@ namespace SQM.Website
 			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
 			set { ViewState["LocalIncident"] = value; }
 		}
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -135,7 +140,6 @@ namespace SQM.Website
 		}
 
 
-
 		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
@@ -145,6 +149,9 @@ namespace SQM.Website
 				try
 				{
 					ActionIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)ActionIncident.DETECT_PLANT_ID, "");
+					if (plant != null)
+						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 				}
 				catch { }
 
@@ -169,7 +176,7 @@ namespace SQM.Website
 
 			pnlAction.Visible = true;
 			//rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
-			rptAction.DataSource = EHSIncidentMgr.GetCorrectiveActionList(IncidentId);
+			rptAction.DataSource = EHSIncidentMgr.GetCorrectiveActionList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			rptAction.DataBind();
 		}
 
@@ -354,7 +361,7 @@ namespace SQM.Website
 			{
 				if (!string.IsNullOrEmpty(action.DESCRIPTION)  &&  action.DUE_DT.HasValue &&  action.RESPONSIBLE_ID.HasValue)
 				{
-					EHSIncidentMgr.CreateOrUpdateTask(ActionIncident, action);
+					EHSIncidentMgr.CreateOrUpdateTask(ActionIncident, action, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 				}
 			}
 
@@ -363,7 +370,7 @@ namespace SQM.Website
 				EHSNotificationMgr.NotifyIncidentStatus(ActionIncident, ((int)SysPriv.update).ToString(), "Corrective action specified");
 			}
 
-			EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.correctiveaction);
+			EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.correctiveaction, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 
 			return status;
 		}
@@ -376,7 +383,7 @@ namespace SQM.Website
 			if (e.CommandArgument == "AddAnother")
 			{
 				int newSeq = actionList.Max(l => l.TASK_SEQ).Value + 1;
-				actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), newSeq));
+				actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), newSeq, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ)));
 				rptAction.DataSource = actionList;
 				rptAction.DataBind();
 			}
@@ -397,7 +404,7 @@ namespace SQM.Website
 					actionList.Remove(action);
 					if (actionList.Count == 0)
 					{
-						actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), 1));
+						actionList.Add(EHSIncidentMgr.CreateEmptyTask(ActionIncident.INCIDENT_ID, ((int)SysPriv.action).ToString(), 1, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ)));
 					}
 				}
 

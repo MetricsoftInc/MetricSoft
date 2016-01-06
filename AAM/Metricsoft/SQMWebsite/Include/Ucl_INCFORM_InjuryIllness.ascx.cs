@@ -145,6 +145,12 @@ namespace SQM.Website
 			set { ViewState["IncidentLocationId"] = value; }
 		}
 
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
+
 		protected decimal CreatePersonId
 		{
 			get { return ViewState["CreatePersonId"] == null ? 0 : (decimal)ViewState["CreatePersonId"]; }
@@ -221,6 +227,7 @@ namespace SQM.Website
 				}
 
 				IncidentLocationId = SessionManager.IncidentLocation.Plant.PLANT_ID;
+				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 
 				//RadSearchBox controls must be bound on Page_Load
 				PopulateInvolvedPersonRSB(IncidentLocationId);
@@ -253,6 +260,7 @@ namespace SQM.Website
 			{
 				SessionManager.SetIncidentLocation(newLocationID);
 				IncidentLocationId = newLocationID;
+				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
 				CreatePersonId = 0;
@@ -296,6 +304,9 @@ namespace SQM.Website
 					if ((lang=System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
 						pnlLocalDesc.Visible = true;
 
+					IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
+					IncidentLocationTZ = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "").LOCAL_TIMEZONE;
+
 					rdpIncidentDate = SQMBasePage.SetRadDateCulture(rdpIncidentDate, "");
 					rdpReportDate = SQMBasePage.SetRadDateCulture(rdpReportDate, "");
 
@@ -303,8 +314,6 @@ namespace SQM.Website
 					rdpIncidentDate.SelectedDate = incidentDate = incident.INCIDENT_DT;
 
 					rdpReportDate.SelectedDate = incident.CREATE_DT;
-
-					IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
 
 					PopulateDepartmentDropDown((decimal)incident.DETECT_PLANT_ID);
 
@@ -400,9 +409,9 @@ namespace SQM.Website
 					rdpIncidentDate = SQMBasePage.SetRadDateCulture(rdpIncidentDate, "");
 					rdpReportDate = SQMBasePage.SetRadDateCulture(rdpReportDate, "");
 
-					rdpIncidentDate.SelectedDate = DateTime.Now;
+					rdpIncidentDate.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 					//rdpReportDate.Culture = rdpIncidentDate.Culture;
-					rdpReportDate.SelectedDate = DateTime.Now;
+					rdpReportDate.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 					//rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
 					PopulateJobTenureDropDown();
@@ -681,7 +690,7 @@ namespace SQM.Website
 						if (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null)
 							rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
 						else
-							rdpExpectReturnDT.SelectedDate = DateTime.Now;
+							rdpExpectReturnDT.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 					}
 				}
 
@@ -708,7 +717,7 @@ namespace SQM.Website
 							if (injuryIllnessDetails.LOST_TIME == true)
 								rdpExpectReturnDT.SelectedDate = (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null) ? injuryIllnessDetails.EXPECTED_RETURN_WORK_DT : null;
 							else
-								rdpExpectReturnDT.SelectedDate = DateTime.Now;
+								rdpExpectReturnDT.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
 					}
 				}
@@ -1379,15 +1388,6 @@ namespace SQM.Website
 				finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
 			else
 				finalPlantId = IncidentLocationId;
-
-			// Start plant accounting rollup in a background thread
-			/*
-			Thread thread = new Thread(() => EHSAccountingMgr.RollupPlantAccounting(InitialPlantId, finalPlantId));
-			thread.IsBackground = true;
-			thread.Start();
-			*/
-			//Thread obj = new Thread(new ThreadStart(EHSAccountingMgr.RollupPlantAccounting(initialPlantId, finalPlantId)));
-			//obj.IsBackground = true;
 		}
 
 		protected decimal AddUpdateINCFORM_INJURYILLNESS(decimal incidentId)
@@ -1423,7 +1423,7 @@ namespace SQM.Website
 
 					if (Mode == IncidentMode.Incident)
 					{
-						EHSIncidentMgr.TryCloseIncident(incidentId);
+						EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 					}
 				}
 
@@ -1450,10 +1450,10 @@ namespace SQM.Website
 				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
 				DETECT_PLANT_ID = IncidentLocationId,
 				INCIDENT_TYPE = "EHS",
-				CREATE_DT = DateTime.UtcNow,
+				CREATE_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ),
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
 				LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
-				LAST_UPD_DT = DateTime.Now,
+				LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ),
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				ISSUE_TYPE = SelectedTypeText,
@@ -1485,7 +1485,7 @@ namespace SQM.Website
 				incident.ISSUE_TYPE = SelectedTypeText;
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-				incident.LAST_UPD_DT = DateTime.Now;
+				incident.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 				if (incident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.defined)
 					incident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined;
 
@@ -1642,7 +1642,7 @@ namespace SQM.Website
 					newItem.WITNESS_STATEMENT = item.WITNESS_STATEMENT;
 
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_WITNESS(newItem);
 					entities.SaveChanges();
@@ -1679,7 +1679,7 @@ namespace SQM.Website
 					newItem.RETURN_EXPECTED_DT = item.RETURN_EXPECTED_DT;
 
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_LOSTTIME_HIST(newItem);
 					entities.SaveChanges();

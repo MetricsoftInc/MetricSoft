@@ -51,7 +51,11 @@ namespace SQM.Website
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
 			set { ViewState["EditIncidentId"] = value; }
 		}
-
+		protected string IncidentLocationTZ
+		{
+			get { return ViewState["IncidentLocationTZ"] == null ? "GMT" : (string)ViewState["IncidentLocationTZ"]; }
+			set { ViewState["IncidentLocationTZ"] = value; }
+		}
 		public decimal NewIncidentId
 		{
 			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
@@ -159,8 +163,18 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
-			PSsqmEntities entities = new PSsqmEntities();
+			//PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
+
+			if (IncidentId > 0)
+				try
+				{
+					INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+					if (plant != null)
+						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+				}
+				catch { }
 
 			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
 			totalFormSteps = formSteps.Count();
@@ -272,7 +286,7 @@ namespace SQM.Website
 					newItem.ITEM_SEQ = seq;
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = DateTime.Now;
+					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_ROOT5Y(newItem);
 					status = entities.SaveChanges();
@@ -281,7 +295,7 @@ namespace SQM.Website
 
 			if (seq > 0)
 			{
-				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.rootcause);
+				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.rootcause, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			}
 
 			return status;

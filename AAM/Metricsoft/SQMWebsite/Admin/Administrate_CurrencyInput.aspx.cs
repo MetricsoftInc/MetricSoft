@@ -59,8 +59,8 @@ namespace SQM.Website
                 }
                 else
                 {
-                    radPeriodSelect.SelectedDate = DateTime.Now.AddMonths(-1);
-                    radPeriodSelect.DateInput.SelectedDate = DateTime.Now.AddMonths(-1);
+                    radPeriodSelect.SelectedDate = DateTime.UtcNow.AddMonths(-1);
+                    radPeriodSelect.DateInput.SelectedDate = DateTime.UtcNow.AddMonths(-1);
                 }
             }
 			SetupPage();
@@ -155,8 +155,8 @@ namespace SQM.Website
 
 		private DateTime GetMaxDate()
 		{
-			//var maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1);
-            DateTime maxDate = DateTime.Now.AddMonths(1);
+			//var maxDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month + 1, 1);
+            DateTime maxDate = DateTime.UtcNow.AddMonths(1);
 			maxDate = maxDate.AddDays(-1); // Last day of current month
 			return maxDate;
 		}

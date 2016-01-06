@@ -17,7 +17,7 @@ namespace SQM.Website
 			plantIds.Remove(0);
 
 			// Default to January 1 of current year if web.config value not found
-			DateTime startDate = new DateTime(DateTime.Now.Year, 1, 1);
+			DateTime startDate = new DateTime(DateTime.UtcNow.Year, 1, 1);
 
 			string plantAccountingCalcStartDate = System.Configuration.ConfigurationManager.AppSettings["PlantAccountingCalcStartDate"];
 			if (!string.IsNullOrEmpty(plantAccountingCalcStartDate))
@@ -34,8 +34,8 @@ namespace SQM.Website
 			{
 				DateTime incDate = startDate;
 
-				while (incDate < DateTime.Now ||
-					(incDate.Month == DateTime.Now.Month && incDate.Year == DateTime.Now.Year))
+				while (incDate < DateTime.UtcNow ||
+					(incDate.Month == DateTime.UtcNow.Month && incDate.Year == DateTime.UtcNow.Year))
 				{
 
 					var pa = EHSModel.LookupPlantAccounting(entities, pid, incDate.Year, incDate.Month, true);
@@ -55,8 +55,8 @@ namespace SQM.Website
 			{
 				DateTime incDate = startDate;
 
-				while (incDate < DateTime.Now ||
-					(incDate.Month == DateTime.Now.Month && incDate.Year == DateTime.Now.Year))
+				while (incDate < DateTime.UtcNow ||
+					(incDate.Month == DateTime.UtcNow.Month && incDate.Year == DateTime.UtcNow.Year))
 				{
 					var pa = EHSModel.LookupPlantAccounting(entities, pid, incDate.Year, incDate.Month, true);
 
