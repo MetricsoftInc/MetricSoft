@@ -209,17 +209,16 @@ namespace SQM.Website
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
 
 			// we want the start date to be the previous week Monday
-			//dmFromDate.SelectedDate = DateTime.Now.AddDays(-1);
-			//dmToDate.SelectedDate = DateTime.Now.AddMonths(1);
-
-			int dayofweek = (int)DateTime.Now.DayOfWeek;
-			DateTime fromDate = DateTime.Now.AddDays(-7);
+			// ABW 1/5/16 - use user's default plant local time for search default
+			DateTime localTime = SessionManager.UserContext.LocalTime;
+			int dayofweek = (int)localTime.DayOfWeek;
+			DateTime fromDate = localTime.AddDays(-7);
 			while ((int)(fromDate.DayOfWeek) > 1)
 			{
 				fromDate = fromDate.AddDays(-1);
 			}
 			// we want the end date to be the current week Monday
-			DateTime toDate = DateTime.Now;
+			DateTime toDate = localTime;
 			while ((int)(toDate.DayOfWeek) > 1)
 			{
 				toDate = toDate.AddDays(-1);
@@ -249,7 +248,7 @@ namespace SQM.Website
 						}
 						else
 						{
-							dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
+							dmFromDate.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(Convert.ToInt32(args[0]) * -1);
 						}
 					}
 					catch { }
@@ -445,7 +444,13 @@ namespace SQM.Website
 				auditQuestion.Status = ddlAnswerStatus.SelectedValue.ToString();
 				auditQuestion.ResolutionComment = tbResolutionComment.Text.ToString();
 				if (auditQuestion.Status.Equals("03"))
-					auditQuestion.CompleteDate = DateTime.Now;
+				{
+					// update the complete date with the local date/time of the plant
+					AUDIT audit = EHSAuditMgr.SelectAuditById(entities, auditQuestion.AuditId);
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
+					DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
+					auditQuestion.CompleteDate = localTime;
+				}
 				EHSAuditMgr.UpdateAnswer(auditQuestion);
 			}
 			UpdateTaskList("update");

@@ -320,7 +320,7 @@ namespace SQM.Website
 				dmAuditDate.Enabled = true;
 				dmAuditDate.ShowPopupOnFocus = true;
 				if (!dmAuditDate.SelectedDate.HasValue)
-					dmAuditDate.SelectedDate = DateTime.Now;
+					dmAuditDate.SelectedDate = SessionManager.UserContext.LocalTime;
 				//if (rddlDepartment.Items.Count == 0)
 				//{
 				//	UpdateDepartments((decimal)audit.DETECT_PLANT_ID);
@@ -1576,7 +1576,7 @@ namespace SQM.Website
 						}
 						if (cdFormControl != null)
 						{
-							cdFormControl.SelectedDate = DateTime.Now;
+							cdFormControl.SelectedDate = SessionManager.UserContext.LocalTime;
 							cdFormControl.Enabled = false;
 						}
 					}
@@ -2232,7 +2232,19 @@ namespace SQM.Website
 			}
 
 			if (auditDate == null || auditDate < DateTime.Now.AddYears(-100))
-				auditDate = DateTime.Now;
+			{
+				try
+				{
+					AUDIT audit = EHSAuditMgr.SelectAuditById(entities, questions[0].AuditId);
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
+					DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
+					auditDate = localTime;
+				}
+				catch
+				{
+					auditDate = SessionManager.UserContext.LocalTime;
+				}
+			}
 
 			if (auditDescription.Length > MaxTextLength)
 				auditDescription = auditDescription.Substring(0, MaxTextLength);
@@ -2403,7 +2415,9 @@ namespace SQM.Website
 				audit.CURRENT_STATUS = "C";
 				if (!audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
 				{
-					audit.CLOSE_DATE_DATA_COMPLETE = DateTime.Now;
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
+					DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
+					audit.CLOSE_DATE_DATA_COMPLETE = localTime;
 					audit.CLOSE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
 				}
 			}
@@ -2439,13 +2453,14 @@ namespace SQM.Website
 		{
 			decimal auditId = 0;
 			PLANT auditPlant = SQMModelMgr.LookupPlant(Convert.ToDecimal(hdnAuditLocation.Value.ToString()));
+			DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, auditPlant.LOCAL_TIMEZONE);
 			var newAudit = new AUDIT()
 			{
 				DETECT_COMPANY_ID = Convert.ToDecimal(auditPlant.COMPANY_ID),
 				DETECT_BUS_ORG_ID = auditPlant.BUS_ORG_ID,
 				DETECT_PLANT_ID = auditPlant.PLANT_ID,
 				AUDIT_TYPE = "EHS",
-				CREATE_DT = DateTime.Now,
+				CREATE_DT = localTime,
 				CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
 				DESCRIPTION = tbDescription.Text.ToString(),
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,

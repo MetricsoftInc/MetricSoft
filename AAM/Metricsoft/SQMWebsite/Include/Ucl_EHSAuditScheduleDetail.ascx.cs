@@ -417,13 +417,14 @@ namespace SQM.Website
 		{
 			decimal auditScheduleId = 0;
 			PLANT auditPlant = SQMModelMgr.LookupPlant(Convert.ToDecimal(hdnAuditLocation.Value.ToString()));
+			DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, auditPlant.LOCAL_TIMEZONE);
 			var newAuditScheduler = new AUDIT_SCHEDULER()
 			{
 				DAY_OF_WEEK = Convert.ToInt32(rddlDayOfWeek.SelectedValue.ToString()),
 				INACTIVE = false,
 				JOBCODE_CD = rddlAuditJobcodes.SelectedValue.ToString(),
 				PLANT_ID = auditPlant.PLANT_ID,
-				CREATE_DT = DateTime.Now,
+				CREATE_DT = localTime,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				AUDIT_TYPE_ID = auditTypeId
 			};
@@ -438,6 +439,7 @@ namespace SQM.Website
 		{
 			AUDIT_SCHEDULER scheduler = (from i in entities.AUDIT_SCHEDULER where i.AUDIT_SCHEDULER_ID == auditScheduleId select i).FirstOrDefault();
 			PLANT auditPlant = SQMModelMgr.LookupPlant(Convert.ToDecimal(hdnAuditLocation.Value.ToString()));
+			DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, auditPlant.LOCAL_TIMEZONE);
 			if (scheduler != null)
 			{
 				scheduler.PLANT_ID = auditPlant.PLANT_ID;
@@ -445,7 +447,7 @@ namespace SQM.Website
 				scheduler.DAY_OF_WEEK = Convert.ToInt32(rddlDayOfWeek.SelectedValue.ToString());
 				scheduler.JOBCODE_CD = rddlAuditJobcodes.SelectedValue.ToString();
 				scheduler.INACTIVE = cbInactive.Checked;
-				scheduler.UPDATE_DT = DateTime.Now;
+				scheduler.UPDATE_DT = localTime;
 				scheduler.UPDATE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
 				entities.SaveChanges();
 			}

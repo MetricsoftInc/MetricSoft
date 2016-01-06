@@ -259,8 +259,10 @@ namespace SQM.Website
 			divAuditList.Visible = true;
 
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
-			dmFromDate.SelectedDate = DateTime.Now.AddMonths(-1);
-			dmToDate.SelectedDate = DateTime.Now.AddMonths(1);
+			// ABW 1/5/16 - use user's default plant local time for search default
+			DateTime localTime = SessionManager.UserContext.LocalTime;
+			dmFromDate.SelectedDate = localTime.AddMonths(-1);
+			dmToDate.SelectedDate = localTime.AddMonths(1);
 
 			if (Mode == AuditMode.Audit)
 			{
@@ -284,7 +286,7 @@ namespace SQM.Website
 						}
 						else
 						{
-							dmFromDate.SelectedDate = DateTime.Now.AddMonths(Convert.ToInt32(args[0]) * -1);
+							dmFromDate.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(Convert.ToInt32(args[0]) * -1);
 						}
 					}
 					catch { }
@@ -328,51 +330,7 @@ namespace SQM.Website
 		protected void lnkCloseDetails(object sender, EventArgs e)
 		{
 			pnlAuditDetails.Visible = lnkAuditDetailsClose.Visible = false;
-			//if (ddlChartType.SelectedValue != "")
-			//	ddlChartTypeChange(null, null);
 		}
-
-		//protected void lnkCloseChart(object sender, EventArgs e)
-		//{
-		//	ddlChartType.SelectedValue = "";
-		//	lnkChartClose.Visible = lnkPrint.Visible = false;
-		//	ddlChartTypeChange(null, null);
-		//}
-
-		//protected void ddlChartTypeChange(object sender, EventArgs e)
-		//{
-		//	divChart.ViewStateMode = System.Web.UI.ViewStateMode.Disabled;
-		//	//if (ddlChartType.SelectedValue == "" || HSCalcs().ehsCtl.AuditHst == null || HSCalcs().ehsCtl.AuditHst.Count == 0)
-		//	//{
-		//	//	pnlChartSection.Style.Add("display", "none");
-		//	//	lnkChartClose.Visible = lnkPrint.Visible = false;
-		//	//}
-		//	//else
-		//	//{
-		//	//	PERSPECTIVE_VIEW view = null;
-		//	//	divChart.Controls.Clear();
-
-		//	//	if (Mode == AuditMode.Prevent)
-		//	//		view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
-		//	//	else
-		//	//		view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
-
-		//	//	if (view != null)
-		//	//	{
-		//	//		PERSPECTIVE_VIEW_ITEM vi = view.PERSPECTIVE_VIEW_ITEM.Where(i => i.ITEM_SEQ.ToString() == ddlChartType.SelectedValue).FirstOrDefault();
-		//	//		if (vi != null)
-		//	//		{
-		//	//			GaugeDefinition ggCfg = new GaugeDefinition().Initialize().ConfigureControl(vi, null, "", false, !string.IsNullOrEmpty(hfwidth.Value) ? Convert.ToInt32(hfwidth.Value) - 62 : 0, 0);
-		//	//			ggCfg.Position = null;
-		//	//			HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER).AuditSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), DateTime.Now.AddYears(100), HSCalcs().ehsCtl.GetAuditTopics());
-		//	//			uclChart.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, HSCalcs().ehsCtl.Results, divChart);
-		//	//			pnlChartSection.Style.Add("display", "inline");
-		//	//			lnkChartClose.Visible = lnkPrint.Visible = true;
-		//	//			// return;
-		//	//		}
-		//	//	}
-		//	//}
-		//}
 
 		private void SearchAudits()
 		{

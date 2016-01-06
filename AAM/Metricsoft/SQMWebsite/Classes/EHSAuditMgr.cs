@@ -117,7 +117,9 @@ namespace SQM.Website
 
 			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE + 1));  // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
-			if (closeDT.CompareTo(DateTime.Now) < 0)
+			// need to convert the "now" date to local time
+			DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE);
+			if (closeDT.CompareTo(localTime) < 0)
 				this.Status = "C";
 
 			return this.Status;
@@ -138,7 +140,9 @@ namespace SQM.Website
 
 			DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE + 1)); // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
-			if (closeDT.CompareTo(DateTime.Now) < 0)
+			// need to convert the "now" date to local time
+			DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, this.Plant.LOCAL_TIMEZONE);
+			if (closeDT.CompareTo(localTime) < 0)
 			{
 				// date has passed
 				//DateTime closeDT = Convert.ToDateTime(this.Audit.AUDIT_DT.AddDays(this.AuditType.DAYS_TO_COMPLETE));
@@ -147,8 +151,9 @@ namespace SQM.Website
 			}
 			else 
 			{
-				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(DateTime.Today.Subtract(this.Audit.AUDIT_DT).TotalDays));
-				this.DaysToClose = (int)Math.Abs(Math.Truncate(DateTime.Today.Subtract(closeDT).TotalDays));
+				// comapre to local date of plant, not server date
+				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(localTime.Date.Subtract(this.Audit.AUDIT_DT).TotalDays));
+				this.DaysToClose = (int)Math.Abs(Math.Truncate(localTime.Date.Subtract(closeDT).TotalDays));
 			}
 
 			return days;
@@ -856,21 +861,28 @@ namespace SQM.Website
 		{
 			string status = "";
 
-			var entities = new PSsqmEntities();
-			var audit = SelectAuditById(entities, auditId);
-			status = audit.CURRENT_STATUS;
-			if (status != "C")
+			try
 			{
-				var auditType = SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
-				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(auditType.DAYS_TO_COMPLETE + 1)); // add one to the date and it will default to the next day at 00:00:00, which means midnight
+				var entities = new PSsqmEntities();
+				var audit = SelectAuditById(entities, auditId);
+				status = audit.CURRENT_STATUS;
+				if (status != "C")
+				{
+					var auditType = SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+					// need to convert the "now" date to local time
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
+					DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
+					DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(auditType.DAYS_TO_COMPLETE + 1)); // add one to the date and it will default to the next day at 00:00:00, which means midnight
 
-				if (closeDT.CompareTo(DateTime.Now) < 0)
-					status = "C";
-				else if (audit.PERCENT_COMPLETE > 0)
-					status = "I";
-				else
-					status = "A";
+					if (closeDT.CompareTo(localTime) < 0)
+						status = "C";
+					else if (audit.PERCENT_COMPLETE > 0)
+						status = "I";
+					else
+						status = "A";
+				}
 			}
+			catch { }
 			return status;
 		}
 		
