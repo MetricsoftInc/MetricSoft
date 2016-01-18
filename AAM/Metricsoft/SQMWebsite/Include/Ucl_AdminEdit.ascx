@@ -33,7 +33,7 @@
 			</tr>
             <tr>
 				<td class="columnHeader">
-                    <asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<% Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
+                    <asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<%$ Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
 				</td>
 				<td class="tableDataAlt">&nbsp;</td>
 				<td class="tableDataAlt">

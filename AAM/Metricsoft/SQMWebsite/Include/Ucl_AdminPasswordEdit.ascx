@@ -34,8 +34,8 @@
 <asp:HiddenField ID="hfPasswordChangedSucces" runat="server" Value="Your password has been changed - click OK to continue logging in." />
 <asp:HiddenField runat="server" ID="hfForgotPasswordSent" Value="An email has been sent with your new password.  Please return and use the new password to login."></asp:HiddenField>
 
-<%--<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="280" Width="500" Title="<% Resources:LocalizedText, ChangePassword %>" Behaviors="Move">--%>
-<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True"  AutoSize="True" Title="<% Resources:LocalizedText, ChangePassword %>" Behaviors="Move" Behavior="Move">
+<%--<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="280" Width="500" Title="<%$ Resources:LocalizedText, ChangePassword %>" Behaviors="Move">--%>
+<telerik:RadWindow runat="server" ID="winPasswordEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True"  AutoSize="True" Title="<%$ Resources:LocalizedText, ChangePassword %>" Behaviors="Move" Behavior="Move">
     <ContentTemplate>
         <div runat="server" id="divErrorMsg" visible="False">
 	        <asp:Label runat="server" ID="lblPassMustUpdate" Text="You must reset your password to continue.<br><br>" CssClass="promptAlert" Visible="False" meta:resourcekey="lblPassMustUpdateResource1"></asp:Label>

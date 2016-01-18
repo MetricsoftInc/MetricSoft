@@ -130,6 +130,7 @@
 											    <asp:Label runat="server" ID="lblPasswordEmailBody2b" Text="<br><br>Access the website by clicking on the link: " Visible="false"></asp:Label>
 											    <asp:Label runat="server" ID="lblPasswordEmailBody3" Text="Please do not reply to this email.<br><br>Thank you." Visible="false" ></asp:Label>
 											    <asp:Label runat="server" ID="lblResetEmailSubject" Text="Password Reset" Visible="false"></asp:Label>
+											    <asp:Label runat="server" ID="lblResetEmailBody1a" Visible="false" Text="A new user password has been generated for you in the Metricsoft application. You must login using this random password, and then you will be prompted to change the password."></asp:Label>
                                                 <asp:Label runat="server" ID="lblUserRoleEmailSubjecta" Visible="false" Text="Your "></asp:Label>
 											    <asp:Label runat="server" ID="lblUserRoleEmailSubjectb" Visible="false" Text=" User Role Has Changed"></asp:Label>
                                                 <asp:Label runat="server" ID="lblUserRoleEmailBodya" Visible="false" Text="Your access or privilege to the "></asp:Label>

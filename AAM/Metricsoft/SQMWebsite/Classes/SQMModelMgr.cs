@@ -1215,6 +1215,13 @@ namespace SQM.Website
 				{
 					access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
 					access.STATUS = "A"; // assume user is enabled
+					//ABW 20160115 - Determine if we are forcing password reset for new employees
+					SETTINGS forcePasswordReset = SQMSettings.SelectSettingByCode(ctx, "COMPANY", "TASK", "PasswordChangeOnNew");
+					if (forcePasswordReset != null)
+					{
+						if (forcePasswordReset.VALUE.ToUpper().Equals("Y"))
+							access.STATUS = "P";
+					}
 				}
 
                 access.RECOVERY_EMAIL = person.EMAIL;

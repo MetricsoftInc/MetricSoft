@@ -531,8 +531,20 @@ namespace SQM.Website
 				string strEmailCompanyName = ""; // ABW 20140805
 				if (setting != null) // ABW 20140805
 					strEmailCompanyName = setting.VALUE; 
+				bool sendEmail = false;
+				setting = MailSettings.Find(x => x.SETTING_CD == "SendNewUserEmail");
+				if (setting != null && setting.VALUE.ToLower().Equals("true")) // ABW 20140805
+				{
+					sendEmail = true;
+				}
 
-				if (isNew  &&  string.IsNullOrEmpty(defaultPwd))  // send email notice only when a default password was not set
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[1] { "USER_EMAIL" }, 0);
+				string strEmailSubject = "";
+				string strEmailBody = "";
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupLanguage(new PSsqmEntities(), "", (int)person.PREFERRED_LANG_ID, false);
+				string strTemp = "";
+
+				if (isNew && (string.IsNullOrEmpty(defaultPwd) || sendEmail))  // send email notice only when a default password was not set
 				{
 					// send a confirmation email
 					// string strength = WebConfigurationManager.AppSettings["PasswordComplexity"]; // ABW 20140805
@@ -549,45 +561,73 @@ namespace SQM.Website
 					string strPassword = WebSiteCommon.Decrypt(access.PASSWORD, key);
 
 					// ABW 20140805 - Build the email based on fields in the SETTINGS table
-					// the following is standard email
-					//string strEmailBody = lblPasswordEmailBody1a.Text.ToString() + strEmailCompanyName + lblPasswordEmailBody1b.Text.ToString() + " " + selectedUser.SSO_ID + lblPasswordEmailBody2.Text.ToString() + " " + strPassword;
-					//strEmailBody += "<br><br>" + WebSiteCommon.GetXlatValueLong("passwordComplexity", strength) + "<br><br>" + lblPasswordEmailBody3.Text.ToString().Trim();
+					//string strEmailSubject = "";
+					//setting = MailSettings.Find(x => x.SETTING_CD == "NewUserSubject");
+					//if (setting == null)
+					//	strEmailSubject = strEmailCompanyName + " " + lblPasswordEmailSubject.Text.ToString();
+					//else
+					//	strEmailSubject = setting.VALUE.Trim();
+					//setting = MailSettings.Find(x => x.SETTING_CD == "NewUserWelcome");
+					//string strEmailBody = "";
+					//if (setting == null)
+					//	strEmailBody = lblPasswordEmailBody1a.Text.ToString();
+					//else
+					//	strEmailBody = setting.VALUE.Trim();
+					//strEmailBody += lblPasswordEmailBody1b.Text.ToString() + " " + LocalPerson().SSO_ID + lblPasswordEmailBody2.Text.ToString() + " " + strPassword;
+					//setting = MailSettings.Find(x => x.SETTING_CD == "MailURL");
+					//if (setting != null)
+					//	strEmailBody += lblPasswordEmailBody2b.Text.ToString() + "<a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
+					//complexity = SQMSettings.SelectSettingByCode(entities, "PASSWORDCOMPLEXITY", "TASK", strength); // ABW 20140805
+					//if (complexity != null)
+					//	strEmailBody += "<br><br>" + complexity.VALUE + "<br><br>";
+					//setting = MailSettings.Find(x => x.SETTING_CD == "NewUserSignature");
+					//if (setting == null)
+					//	strEmailBody += "<br><br>" + lblPasswordEmailBody3.Text.ToString();
+					//else
+					//	strEmailBody += "<br><br>" + setting.VALUE.Trim();
 
-					// the following is for TI only
-					//string strEmailBody = "Risk Management Professional,<br><br>TI Automotive Risk Management is pleased to offer you access to the TI Automotive Risk Management Portal (Portal)<br><br>The Portal will be used to provide tracking for:<br>";
-					//strEmailBody += "<ul><li>Environmental performance tracking</li><li>Insurer Recommendations response</li><li>Internal Risk Quality Index Recommendations Response</li><li>Safety Alerts</li>";
-					//strEmailBody += "<br>A new user account has been created for you in the Portal.<br><br>Access the website by clicking on the link: <a href='http://Ti.qai.luxinteractive.com'>Ti.qai.luxinteractive.com</a><br><br>";
-					//strEmailBody += "Your username has been assigned: <font color='red'>" + selectedUser.SSO_ID + "</font><br>Your temporary password is: <font color='red'>" + strPassword + "</font>";
-					//strEmailBody += "<br>Once you gain access to the Portal you must change your password. " + WebSiteCommon.GetXlatValueLong("passwordComplexity", strength) + "<br><br>" + lblPasswordEmailBody3.Text.ToString().Trim();
-					//strEmailBody += "<br><br><b>Michael D. Wildfong</b><br>Global Director Facilities Risk Management<br>TI Automotive<br>1272 Doris Road<br>Auburn Hills, MI 48326<br>t: +1 248 494 5320<br>m: + 1 810 265 1677<br>f: +1 248 494 5302";
-					//strEmailBody += "<br>e: <a href='mailto:mwildfong@us.tiauto.com'>mwildfong@us.tiauto.com</a>";
-
-					// ABW 20140805 - Build the email based on fields in the SETTINGS table
-					string strEmailSubject = "";
-					setting = MailSettings.Find(x => x.SETTING_CD == "NewUserSubject");
-					if (setting == null)
+					// ABW 20160115 - Build the email based on fields in the XLAT table
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserSubject", lang.NLS_LANGUAGE).DESCRIPTION;
+					if (strTemp == null || strTemp == "")
 						strEmailSubject = strEmailCompanyName + " " + lblPasswordEmailSubject.Text.ToString();
 					else
-						strEmailSubject = setting.VALUE.Trim();
-					setting = MailSettings.Find(x => x.SETTING_CD == "NewUserWelcome");
-					string strEmailBody = "";
-					if (setting == null)
+						strEmailSubject = strTemp.Trim();
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserWelcome", lang.NLS_LANGUAGE).DESCRIPTION;
+					strEmailBody = "";
+					if (strTemp == null || strTemp == "")
 						strEmailBody = lblPasswordEmailBody1a.Text.ToString();
 					else
-						strEmailBody = setting.VALUE.Trim();
-                    strEmailBody += lblPasswordEmailBody1b.Text.ToString() + " " + LocalPerson().SSO_ID + lblPasswordEmailBody2.Text.ToString() + " " + strPassword;
+						strEmailBody = strTemp.Trim();
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyUsername", lang.NLS_LANGUAGE).DESCRIPTION;
+					if (strTemp == null || strTemp == "")
+						strEmailBody += lblPasswordEmailBody1b.Text.ToString();
+					else
+						strEmailBody += strTemp.Trim();
+					strEmailBody += " " + LocalPerson().SSO_ID;
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyPassword", lang.NLS_LANGUAGE).DESCRIPTION;
+					if (strTemp == null || strTemp == "")
+						strEmailBody += lblPasswordEmailBody2.Text.ToString();
+					else
+						strEmailBody += strTemp.Trim();
+					strEmailBody += " " + strPassword;
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyUrl", lang.NLS_LANGUAGE).DESCRIPTION;
+					string strUrlLabel = "";
+					if (strTemp == null || strTemp == "")
+						strUrlLabel = lblPasswordEmailBody2b.Text.ToString();
+					else
+						strUrlLabel = strTemp.Trim();
 					setting = MailSettings.Find(x => x.SETTING_CD == "MailURL");
 					if (setting != null)
-						strEmailBody += lblPasswordEmailBody2b.Text.ToString() + "<a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
+						strEmailBody += strUrlLabel + " <a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
 					complexity = SQMSettings.SelectSettingByCode(entities, "PASSWORDCOMPLEXITY", "TASK", strength); // ABW 20140805
 					if (complexity != null)
 						strEmailBody += "<br><br>" + complexity.VALUE + "<br><br>";
-					setting = MailSettings.Find(x => x.SETTING_CD == "NewUserSignature");
-					if (setting == null)
+					strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserSignature", lang.NLS_LANGUAGE).DESCRIPTION;
+					if (strTemp == null || strTemp == "")
 						strEmailBody += "<br><br>" + lblPasswordEmailBody3.Text.ToString();
 					else
-						strEmailBody += "<br><br>" + setting.VALUE.Trim();
-					
+						strEmailBody += "<br><br>" + strTemp.Trim();
+
 					// ABW 20140117 - we are now using the email on the Person record
 					Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody.Trim(), ""));
 					thread.IsBackground = true;
@@ -596,34 +636,63 @@ namespace SQM.Website
 				else
 				{
 					bool roleChanged = person.ROLE != currentPerson.ROLE ||  person.PERSON_ACCESS.Count != currentPerson.PERSON_ACCESS.Count ? true : false;
-					/*
-					if (roleChanged)
+					// ABW 20160115 - send an email based on a parameter
+					setting = MailSettings.Find(x => x.SETTING_CD == "SendChangeUserEmail");
+					if (setting != null && setting.VALUE.ToLower().Equals("true"))
+						sendEmail = true;
+					else
+						sendEmail = false;
+
+					if (roleChanged && sendEmail)
 					{
-						// ABW 20140805 - Build the email based on fields in the SETTINGS table
-						string strEmailSubject = "";
-						setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeSubject");
-						if (setting == null)
+						 //ABW 20140805 - Build the email based on fields in the SETTINGS table
+						//strEmailSubject = "";
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeSubject");
+						//if (setting == null)
+						//	strEmailSubject = lblUserRoleEmailSubjecta.Text + strEmailCompanyName + lblUserRoleEmailSubjectb.Text;
+						//else
+						//	strEmailSubject = setting.VALUE.Trim();
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeWelcome");
+						//string strEmailBody = "";
+						//if (setting == null)
+						//	strEmailBody = lblUserRoleEmailBodya.Text + strEmailCompanyName + lblUserRoleEmailBodyb.Text;
+						//else
+						//	strEmailBody = setting.VALUE.Trim();
+
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeSignature");
+						//if (setting == null)
+						//	strEmailBody += "<br><br>" + lblUserRoleEmailBodyc.Text;
+						//else
+						//	strEmailBody += "<br><br>" + setting.VALUE.Trim();
+
+						//ABW 20160115 - Build the email based on fields in the XLAT table
+						strEmailSubject = "";
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "AdminRoleChangeSubject", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
 							strEmailSubject = lblUserRoleEmailSubjecta.Text + strEmailCompanyName + lblUserRoleEmailSubjectb.Text;
 						else
-							strEmailSubject = setting.VALUE.Trim();
-						setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeWelcome");
-						string strEmailBody = "";
-						if (setting == null)
+							strEmailSubject = strTemp.Trim();
+
+						strEmailBody = "";
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "AdminRoleChangeWelcome", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
 							strEmailBody = lblUserRoleEmailBodya.Text + strEmailCompanyName + lblUserRoleEmailBodyb.Text;
 						else
-							strEmailBody = setting.VALUE.Trim();
+							strEmailBody = strTemp.Trim();
 
 						setting = MailSettings.Find(x => x.SETTING_CD == "AdminRoleChangeSignature");
-						if (setting == null)
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "AdminRoleChangeSignature", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
 							strEmailBody += "<br><br>" + lblUserRoleEmailBodyc.Text;
 						else
-							strEmailBody += "<br><br>" + setting.VALUE.Trim();
+							strEmailBody += strTemp.Trim();
+						
 						Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody, ""));
 						thread.IsBackground = true;
 						thread.Start();
 					}
-					*/
-					if (cbResetPassword.Checked)
+					
+					if (cbResetPassword.Checked) // always send an email when the password changes
 					{
 						// build the email body in 3 segments
 						SETTINGS complexity = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "PasswordComplexity");
@@ -632,33 +701,83 @@ namespace SQM.Website
 							strength = "4";
 						else
 							strength = complexity.VALUE;
-						string strEmailSubject = "";
-						setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetSubject");
-						if (setting == null)
-							strEmailSubject = strEmailCompanyName + " " + lblResetEmailSubject.Text.ToString();
+
+						// ABW 20140805 - Build the email based on fields in the SETTINGS table
+						//string strEmailSubject = "";
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetSubject");
+						//if (setting == null)
+						//	strEmailSubject = strEmailCompanyName + " " + lblResetEmailSubject.Text.ToString();
+						//else
+						//	strEmailSubject = setting.VALUE.Trim();
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetWelcome");
+						//string strEmailBodya = "";
+						//string strEmailBodyb = "";
+						//string strEmailBodyc = "";
+						//if (setting == null)
+						//	strEmailBodya = lblPasswordEmailBody1a.Text.ToString();
+						//else
+						//	strEmailBodya = setting.VALUE.Trim();
+						//strEmailBodya += lblPasswordEmailBody1b.Text.ToString();
+						//strEmailBodyb = lblPasswordEmailBody2.Text.ToString();
+						//setting = MailSettings.Find(x => x.SETTING_CD == "MailURL");
+						//if (setting != null)
+						//	strEmailBodyc += lblPasswordEmailBody2b.Text.ToString() + "<a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
+						//complexity = SQMSettings.SelectSettingByCode(entities, "PASSWORDCOMPLEXITY", "TASK", strength);
+						//if (complexity != null)
+						//	strEmailBodyc += "<br><br>" + complexity.VALUE + "<br><br>";
+						//setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetSignature");
+						//if (setting == null)
+						//	strEmailBodyc += "<br><br>" + lblPasswordEmailBody3.Text.ToString();
+						//else
+						//	strEmailBodyc += "<br><br>" + setting.VALUE.Trim();
+
+						// ABW 20160115 - Build the email based on fields in the XLAT table
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "AdminPasswordResetSubject", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
+							strEmailSubject = strEmailCompanyName + " " + lblPasswordEmailSubject.Text.ToString();
 						else
-							strEmailSubject = setting.VALUE.Trim();
-						setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetWelcome");
+							strEmailSubject = strTemp.Trim();
+
 						string strEmailBodya = "";
 						string strEmailBodyb = "";
 						string strEmailBodyc = "";
-						if (setting == null)
-							strEmailBodya = lblPasswordEmailBody1a.Text.ToString();
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "AdminPasswordResetWelcome", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
+							strEmailBodya = lblResetEmailBody1a.Text.ToString();
 						else
-							strEmailBodya = setting.VALUE.Trim();
-						strEmailBodya += lblPasswordEmailBody1b.Text.ToString();
-						strEmailBodyb = lblPasswordEmailBody2.Text.ToString();
+							strEmailBodya = strTemp.Trim();
+
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyUsername", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
+							strEmailBodya += lblPasswordEmailBody1b.Text.ToString();
+						else
+							strEmailBodya += strTemp.Trim();
+
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyPassword", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
+							strEmailBodyb = lblPasswordEmailBody2.Text.ToString();
+						else
+							strEmailBodyb = strTemp.Trim();
+
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserBodyUrl", lang.NLS_LANGUAGE).DESCRIPTION;
+						string strUrlLabel = "";
+						if (strTemp == null || strTemp == "")
+							strUrlLabel = lblPasswordEmailBody2b.Text.ToString();
+						else
+							strUrlLabel = strTemp.Trim();
 						setting = MailSettings.Find(x => x.SETTING_CD == "MailURL");
 						if (setting != null)
-							strEmailBodyc += lblPasswordEmailBody2b.Text.ToString() + "<a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
+							strEmailBodyc += strUrlLabel.Trim() + "<a href='" + setting.VALUE + "'>" + setting.VALUE + "</a>";
 						complexity = SQMSettings.SelectSettingByCode(entities, "PASSWORDCOMPLEXITY", "TASK", strength);
 						if (complexity != null)
 							strEmailBodyc += "<br><br>" + complexity.VALUE + "<br><br>";
-						setting = MailSettings.Find(x => x.SETTING_CD == "AdminPasswordResetSignature");
-						if (setting == null)
+
+						strTemp = SQMBasePage.GetXLAT(XLATList, "USER_EMAIL", "NewUserSignature", lang.NLS_LANGUAGE).DESCRIPTION;
+						if (strTemp == null || strTemp == "")
 							strEmailBodyc += "<br><br>" + lblPasswordEmailBody3.Text.ToString();
 						else
-							strEmailBodyc += "<br><br>" + setting.VALUE.Trim();
+							strEmailBodyc += "<br><br>" + strTemp.Trim();
+		
 						int msg = WebSiteCommon.RecoverPassword(person.EMAIL, person.SSO_ID, strEmailSubject, strEmailBodya, strEmailBodyb, strEmailBodyc);
 					}
 				}

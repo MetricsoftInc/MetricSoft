@@ -976,6 +976,16 @@ namespace SQM.Website
 		public static string SendEmail(string emailAddress, string emailSubject, string emailBody, string bcc)
 		{
 			string strStatus = "";
+			// ABW 20150826 send emails to a default email if this is a development environment
+			string environment = "";
+			string altEmail = "";
+			try
+			{
+				environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
+				altEmail = System.Configuration.ConfigurationManager.AppSettings["altEmail"].ToString();
+			}
+			catch { }
+
 			// ABW 20140805 - get the parameters from the SETTINGS table instead of Web.Config
 			//string _mailServer = WebConfigurationManager.AppSettings["MailServer"];
 			//string _mailFrom = WebConfigurationManager.AppSettings["MailFrom"];
@@ -1024,9 +1034,17 @@ namespace SQM.Website
 			try
 			{
 				MailMessage msg = new MailMessage();
-				msg.To.Add(emailAddress.Trim());
-                if (!string.IsNullOrEmpty(bcc))
-                    msg.Bcc.Add(bcc.Trim());
+				// ABW 20150826 send emails to a default email if this is a development environment
+				if (environment.ToLower().Equals("dev"))
+				{
+					msg.To.Add(altEmail.Trim());
+				}
+				else
+				{
+					msg.To.Add(emailAddress.Trim());
+					if (!string.IsNullOrEmpty(bcc))
+						msg.Bcc.Add(bcc.Trim());
+				}
 				msg.From = new MailAddress(_mailFrom);
 				msg.Subject = emailSubject;
 				msg.Body = emailBody;

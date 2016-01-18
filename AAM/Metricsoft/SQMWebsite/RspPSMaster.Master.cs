@@ -211,6 +211,13 @@ namespace SQM.Website
 			tbUserPhone.Text = SessionManager.UserContext.Person.PHONE;
 			if (ddlUserLang.FindItemByValue(SessionManager.UserContext.Person.PREFERRED_LANG_ID.ToString()) != null)
 				ddlUserLang.SelectedValue = SessionManager.UserContext.Person.PREFERRED_LANG_ID.ToString();
+
+			// ABW 20160118 - show password reset based on parameter
+			SETTINGS setsPwdReset = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "COMPANY", "TASK", "PasswordResetEnable");
+			if (setsPwdReset != null && setsPwdReset.VALUE.ToUpper() == "Y")
+			{
+				trChangePwd.Visible = true;
+			}
 		}
 
 		protected void menu_Click(object sender, EventArgs e)

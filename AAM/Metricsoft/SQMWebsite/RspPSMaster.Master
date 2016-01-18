@@ -245,7 +245,7 @@
 						</tr>
 						<tr id="trChangePwd" runat="server" visible="False">
 							<td class="columnHeader" runat="server">
-								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<% Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
+								<asp:LinkButton ID="lnkChangePwd" runat="server" CSSClass="buttonLink" Text="<%$ Resources:LocalizedText, ChangePassword %>" OnClick="btnPassEdit_Click" ToolTip="<%$ Resources:LocalizedText, DisplayPasswordEditFields %>"></asp:LinkButton>
 							</td>
 							<td class="tableDataAlt" runat="server">&nbsp;</td>
 							<td class="tableDataAlt" runat="server">

@@ -346,6 +346,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblResetEmailSubject;
         
         /// <summary>
+        /// lblResetEmailBody1a control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResetEmailBody1a;
+        
+        /// <summary>
         /// lblUserRoleEmailSubjecta control.
         /// </summary>
         /// <remarks>
