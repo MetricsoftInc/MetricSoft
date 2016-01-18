@@ -2003,6 +2003,7 @@
     <Content Include="images\fonts\OpenSans-Bold.ttf" />
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <None Include="Properties\PublishProfiles\Superior-Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - Web Deploy.pubxml" />
     <Content Include="ReportMaster.Master" />
