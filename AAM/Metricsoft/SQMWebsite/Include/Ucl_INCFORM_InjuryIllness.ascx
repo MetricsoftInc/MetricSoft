@@ -272,7 +272,10 @@
 					<asp:Label ID="lbInvolvedPersonXS" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadAjaxPanel ID="rajx100" runat="server" HorizontalAlign="NotSet">
+				<asp:Panel ID="pnlInvolvedPerson" runat="server" Visible="false">
+					<asp:TextBox ID="tbInvolvedPerson" Width="75%" Height="24px" SkinID="Metro" runat="server" MaxLength="80"></asp:TextBox>
+				</asp:Panel>
+				<telerik:RadAjaxPanel ID="rajxInvolvedPerson" runat="server" HorizontalAlign="NotSet">
 						<telerik:RadSearchBox ID="rsbInvolvedPerson" runat="server" MaxResultCount="400" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbInvolvedPerson_Search"
 							ShowSearchButton="False" EmptyMessage="Begin typing (or spacebar)" Width="276px">
 							<DropDownSettings Height="320px" Width="510px">
@@ -406,7 +409,10 @@
 							<div class="col-xs-12 col-sm-4 text-left">
 								<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
 								&nbsp;&nbsp;
-								<telerik:RadAjaxPanel ID="rajx200" runat="server" HorizontalAlign="NotSet">
+								<asp:Panel ID="pnlWitness" runat="server" Visible="false">
+									<asp:TextBox ID="tbWitness" Width="98%" Height="24px" SkinID="Metro" runat="server" MaxLength="80"></asp:TextBox>
+								</asp:Panel>
+								<telerik:RadAjaxPanel ID="rajxWitness" runat="server" HorizontalAlign="NotSet">
 									<telerik:RadSearchBox ID="rsbWitnessName" runat="server" CssClass="NoBorders" DataKeyNames="PersonId" EmptyMessage="Begin typing (or spacebar)" MaxResultCount="400"
 										OnSearch="rsbWitnessName_Search" ShowSearchButton="False" Skin="Metro" Width="100%">
 										<DropDownSettings Height="320px" Width="510px">

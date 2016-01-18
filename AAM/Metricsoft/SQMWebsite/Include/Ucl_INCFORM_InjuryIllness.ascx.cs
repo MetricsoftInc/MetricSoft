@@ -163,6 +163,12 @@ namespace SQM.Website
 			set { ViewState["SelectInvolvedPersonId"] = value; }
 		}
 
+		protected List<SETTINGS> EHSSettings
+		{
+			get { return ViewState["EHSSettings"] == null ? SQMSettings.SelectSettingsGroup("EHS", "") : (List<SETTINGS>)ViewState["EHSSettings"]; }
+			set { ViewState["EHSSettings"] = value; }
+		}
+
 
 		protected override void OnInit(EventArgs e)
 		{
@@ -288,6 +294,14 @@ namespace SQM.Website
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			INCIDENT incident = null;
 
+			string psersonSelect = EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault().VALUE;
+
+			if (psersonSelect.ToLower() == "text")
+			{
+				rajxInvolvedPerson.Visible = false;
+				pnlInvolvedPerson.Visible = true;
+			}
+
 			if (IsEditContext == true)
 			{
 				incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
@@ -338,6 +352,11 @@ namespace SQM.Website
 						{
 							rsbInvolvedPerson.Text = involvedPerson;
 							lbSupervisorLabel.Visible = true;
+						}
+
+						if (!string.IsNullOrEmpty(injuryIllnessDetails.INVOLVED_PERSON_NAME))
+						{
+							tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
 						}
 
 						if (rddlDeptTest.FindItemByValue(injuryIllnessDetails.DEPT_ID.ToString()) != null)
@@ -966,8 +985,23 @@ namespace SQM.Website
 							itmdel.Text = Resources.LocalizedText.DeleteItem;
 
 							//get the display name for the search box
-							PERSON prsn = (from p in entities.PERSON where p.PERSON_ID == witness.WITNESS_PERSON select p).FirstOrDefault();
-							rsbw.Text = string.Format("{0}-{1}, {2}", Convert.ToString(prsn.PERSON_ID), prsn.LAST_NAME, prsn.FIRST_NAME);
+
+							if (witness.WITNESS_PERSON.HasValue)
+							{
+								PERSON prsn = (from p in entities.PERSON where p.PERSON_ID == witness.WITNESS_PERSON select p).FirstOrDefault();
+								if (prsn != null)
+									rsbw.Text = string.Format("{0}-{1}, {2}", Convert.ToString(prsn.PERSON_ID), prsn.LAST_NAME, prsn.FIRST_NAME);
+							}
+
+							if (pnlInvolvedPerson.Visible == true)
+							{
+								RadAjaxPanel ajx = (RadAjaxPanel)e.Item.FindControl("rajxWitness");
+								ajx.Visible = false;
+								Panel pnl = (Panel)e.Item.FindControl("pnlWitness");
+								pnl.Visible = true;
+								TextBox tbwit = (TextBox)e.Item.FindControl("tbWitness");
+								tbwit.Text = witness.WITNESS_NAME;
+							}
 							
 							tbws.Text = witness.WITNESS_STATEMENT;
 
@@ -1022,8 +1056,18 @@ namespace SQM.Website
 							item.WITNESS_NAME = rsbw.Text;
 						}
 						seqnumber = Convert.ToInt32(lb.Text);
-
 						item.WITNESS_NO = seqnumber;
+
+						if (pnlInvolvedPerson.Visible == true)
+						{
+							RadAjaxPanel ajx = (RadAjaxPanel)witnessitem.FindControl("rajxWitness");
+							ajx.Visible = false;
+							Panel pnl = (Panel)witnessitem.FindControl("pnlWitness");
+							pnl.Visible = true;
+							TextBox tbwit = (TextBox)witnessitem.FindControl("tbWitness");
+							item.WITNESS_NAME = tbwit.Text.Trim();
+						}
+
 						item.WITNESS_STATEMENT = tbws.Text;
 
 						itemList.Add(item);
@@ -1072,7 +1116,17 @@ namespace SQM.Website
 							if (split.Length > 0)
 								item.WITNESS_PERSON = Convert.ToInt32(split[0]);
 						}
-		
+
+						if (pnlInvolvedPerson.Visible == true)
+						{
+							RadAjaxPanel ajx = (RadAjaxPanel)witnessitem.FindControl("rajxWitness");
+							ajx.Visible = false;
+							Panel pnl = (Panel)witnessitem.FindControl("pnlWitness");
+							pnl.Visible = true;
+							TextBox tbwit = (TextBox)witnessitem.FindControl("tbWitness");
+							item.WITNESS_NAME = tbwit.Text.Trim();
+						}
+
 						item.WITNESS_STATEMENT = tbws.Text;
 						itemList.Add(item);
 					}
@@ -1107,7 +1161,8 @@ namespace SQM.Website
 
 				btnDeleteInc.Visible = false;
 				lblResults.Visible = true;
-				int delStatus = EHSIncidentMgr.DeleteCustomIncident(EditIncidentId, typeId);
+				//int delStatus = EHSIncidentMgr.DeleteCustomIncident(EditIncidentId, typeId);
+				int delStatus = EHSIncidentMgr.DeleteIncident(EditIncidentId);
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
 				lblResults.Text += (delStatus == 1) ? "Incident deleted." : "Error deleting incident.";
 				lblResults.Text += "</div>";
@@ -1527,6 +1582,12 @@ namespace SQM.Website
 					newInjryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
 			}
 
+			// involved person input
+			if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
+			{
+				newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
+			}
+
 			newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
 			if (rdpSupvInformedDate.SelectedDate != null)
@@ -1598,6 +1659,7 @@ namespace SQM.Website
 				var item = new INCFORM_WITNESS();
 
 				RadSearchBox rsbw = (RadSearchBox)witnessitem.FindControl("rsbWitnessName");
+				TextBox tbwit = (TextBox)witnessitem.FindControl("tbWitness");
 				TextBox tbws = (TextBox)witnessitem.FindControl("tbWitnessStatement");
 
 				if (rsbw != null && !String.IsNullOrEmpty(rsbw.Text))
@@ -1606,6 +1668,15 @@ namespace SQM.Website
 					if (split.Length > 0)
 						item.WITNESS_PERSON = Convert.ToInt32(split[0]);
 
+					seqnumber = seqnumber + 1;
+					item.WITNESS_NO = seqnumber;
+					item.WITNESS_STATEMENT = tbws.Text;
+
+					itemList.Add(item);
+				}
+				else if (!string.IsNullOrEmpty(tbwit.Text))
+				{
+					item.WITNESS_NAME = tbwit.Text.Trim();
 					seqnumber = seqnumber + 1;
 					item.WITNESS_NO = seqnumber;
 					item.WITNESS_STATEMENT = tbws.Text;
@@ -1634,11 +1705,12 @@ namespace SQM.Website
 			{
 				var newItem = new INCFORM_WITNESS();
 
-				if (item.WITNESS_PERSON != null)
+				if (item.WITNESS_PERSON != null ||  !string.IsNullOrEmpty(item.WITNESS_NAME))
 				{
 					newItem.INCIDENT_ID = incidentId;
 					newItem.WITNESS_NO = item.WITNESS_NO;
 					newItem.WITNESS_PERSON = item.WITNESS_PERSON;
+					newItem.WITNESS_NAME = item.WITNESS_NAME;
 					newItem.WITNESS_STATEMENT = item.WITNESS_STATEMENT;
 
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
@@ -1722,6 +1794,12 @@ namespace SQM.Website
 					PERSON supv = (PERSON)GetSupervisor(involvedPersonId);
 					if (supv != null)
 						injuryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
+				}
+
+				// involved person input
+				if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
+				{
+					injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
 				}
 
 				injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
@@ -1855,7 +1933,14 @@ namespace SQM.Website
 					ia = new INCIDENT_ANSWER();
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.InvolvedPerson);
-					ia.ANSWER_VALUE = injuryIllnessDetail.INVOLVED_PERSON_ID.ToString();
+					if (injuryIllnessDetail.INVOLVED_PERSON_ID > 0)
+					{
+						ia.ANSWER_VALUE = injuryIllnessDetail.INVOLVED_PERSON_ID.ToString();
+					}
+					else
+					{
+						ia.ANSWER_VALUE = injuryIllnessDetail.INVOLVED_PERSON_NAME;
+					}
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 
@@ -1863,6 +1948,13 @@ namespace SQM.Website
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.Shift);
 					ia.ANSWER_VALUE = injuryIllnessDetail.SHIFT;
+					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
+					entities.AddToINCIDENT_ANSWER(ia);
+
+					ia = new INCIDENT_ANSWER();
+					ia.INCIDENT_ID = incidentId;
+					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.TimeOfDay);
+					ia.ANSWER_VALUE = injuryIllnessDetail.INCIDENT_TIME.ToString();
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 

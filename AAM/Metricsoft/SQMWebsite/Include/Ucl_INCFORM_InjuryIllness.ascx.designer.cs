@@ -364,13 +364,31 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbInvolvedPersonXS;
         
         /// <summary>
-        /// rajx100 control.
+        /// pnlInvolvedPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxPanel rajx100;
+        protected global::System.Web.UI.WebControls.Panel pnlInvolvedPerson;
+        
+        /// <summary>
+        /// tbInvolvedPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInvolvedPerson;
+        
+        /// <summary>
+        /// rajxInvolvedPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel rajxInvolvedPerson;
         
         /// <summary>
         /// rsbInvolvedPerson control.

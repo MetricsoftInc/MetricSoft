@@ -1364,7 +1364,9 @@ namespace SQM.Website
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CAUSATION WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE RECORD_TYPE = 40 AND RECORD_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);

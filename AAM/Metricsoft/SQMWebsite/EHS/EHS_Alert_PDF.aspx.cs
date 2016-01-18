@@ -617,6 +617,11 @@ namespace SQM.Website.EHS
 							d.incidentTime = Convert.ToDateTime(answer.ANSWER_VALUE).ToShortTimeString();
 					}
 
+					if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
+					{
+						answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT, "SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+					}
+
 					if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Department).SingleOrDefault()) != null)
 					{
 						d.incidentDept = answer.ANSWER_VALUE;
@@ -642,26 +647,19 @@ namespace SQM.Website.EHS
 					{
 						d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.detectPerson.SUPV_EMP_ID);
 					}
+
 					if (d.incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 					{
-						if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
-							answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT,"SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
-
-						answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.InvolvedPerson).SingleOrDefault();
-						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						if (d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID.HasValue)
 						{
-							d.involvedPerson = SQMModelMgr.LookupPerson(entities, Convert.ToDecimal(answer.ANSWER_VALUE), "", false);
+							d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
 							if (d.involvedPerson != null)
 								d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
 						}
 						else
 						{
-							if (d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID.HasValue)
-							{
-								d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
-								if (d.involvedPerson != null)
-									d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
-							}
+							d.involvedPerson = new PERSON();
+							d.involvedPerson.FIRST_NAME = d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_NAME;
 						}
 					}
 
