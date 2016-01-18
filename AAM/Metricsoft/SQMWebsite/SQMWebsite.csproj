@@ -1207,6 +1207,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1715,6 +1716,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1728,6 +1730,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -2007,14 +2010,17 @@
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - Web Deploy.pubxml" />
     <Content Include="ReportMaster.Master" />
-    <Content Include="Web.config">
+    <None Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <Content Include="WebResource.axd" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
     <Content Include="RspQAILogin.Master" />
     <Content Include="RspPSMaster.Master" />
     <Content Include="PSMaster.Master" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Shared\PdfDownloader.ashx" />
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
