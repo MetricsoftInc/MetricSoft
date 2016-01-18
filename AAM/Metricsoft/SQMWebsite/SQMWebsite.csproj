@@ -2020,9 +2020,6 @@
     <Content Include="RspQAILogin.Master" />
     <Content Include="RspPSMaster.Master" />
     <Content Include="PSMaster.Master" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Shared\PdfDownloader.ashx" />
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
