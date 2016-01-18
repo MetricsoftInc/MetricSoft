@@ -2007,14 +2007,14 @@
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - Web Deploy.pubxml" />
     <Content Include="ReportMaster.Master" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="WebResource.axd" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
     <Content Include="RspQAILogin.Master" />
     <Content Include="RspPSMaster.Master" />
     <Content Include="PSMaster.Master" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Shared\PdfDownloader.ashx" />
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
