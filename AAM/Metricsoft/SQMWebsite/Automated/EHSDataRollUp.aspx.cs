@@ -250,13 +250,13 @@ namespace SQM.Website.Automated
 									{
 										if (data.MEASURE_ID == firstAidMeasureID)
 										{
-											foreach (var key in firstAidOrdinals.Keys)
+											foreach (var key in firstAidOrdinals.Keys.ToArray())
 												firstAidOrdinals[key] = new Dictionary<string, int>();
 											UpdateOrdinalData(entities, data, firstAidOrdinals);
 										}
 										else if (data.MEASURE_ID == recordableMeasureID)
 										{
-											foreach (var key in recordableOrdinals.Keys)
+											foreach (var key in recordableOrdinals.Keys.ToArray())
 												recordableOrdinals[key] = new Dictionary<string, int>();
 											UpdateOrdinalData(entities, data, recordableOrdinals);
 										}
