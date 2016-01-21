@@ -424,6 +424,21 @@ namespace SQM.Website
             return ddl;
         }
 
+		public static RadComboBox SetComboBoxItemsFromXLAT(RadComboBox ddl, List<XLAT> xlatList, string shortLong)
+		{
+			ddl.Items.Clear();
+
+			foreach (XLAT xlat in xlatList)
+			{
+				if (shortLong.ToUpper() == "SHORT")
+					ddl.Items.Add(new RadComboBoxItem(xlat.DESCRIPTION_SHORT, xlat.XLAT_CODE));
+				else
+					ddl.Items.Add(new RadComboBoxItem(xlat.DESCRIPTION, xlat.XLAT_CODE));
+			}
+
+			return ddl;
+		}
+
         public static List<RadComboBoxItem> GetComboBoxCheckedItems(RadComboBox ddl)
         {
             List<RadComboBoxItem> itemList = new List<RadComboBoxItem>();
