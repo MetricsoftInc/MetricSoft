@@ -124,7 +124,7 @@ namespace SQM.Website.Automated
 
 					var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
 					var incidents = entities.INCIDENT.Include("INCFORM_INJURYILLNESS").Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
-					var activePlants = entities.PLANT_ACTIVE.Where(p =>
+					var activePlants = entities.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&
 						closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
 					foreach (var activePlant in activePlants)
 					{
