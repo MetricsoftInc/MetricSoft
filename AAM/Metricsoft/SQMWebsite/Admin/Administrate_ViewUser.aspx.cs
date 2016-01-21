@@ -635,7 +635,7 @@ namespace SQM.Website
 				}
 				else
 				{
-					bool roleChanged = person.ROLE != currentPerson.ROLE ||  person.PERSON_ACCESS.Count != currentPerson.PERSON_ACCESS.Count ? true : false;
+					bool roleChanged = person.ROLE != currentPerson.ROLE ? true : false;
 					// ABW 20160115 - send an email based on a parameter
 					setting = MailSettings.Find(x => x.SETTING_CD == "SendChangeUserEmail");
 					if (setting != null && setting.VALUE.ToLower().Equals("true"))
