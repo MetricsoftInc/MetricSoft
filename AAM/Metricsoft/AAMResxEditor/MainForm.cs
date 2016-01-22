@@ -398,7 +398,8 @@ namespace AAMResxEditor
 			var checkedLanguages = this.clbLanguages.CheckedItems.Cast<Language>().ToList();
 			foreach (var file in this.folders)
 			{
-				string filename = file.Key;
+				string origFilename = file.Key;
+				string filename = origFilename;
 				if (filename[0] == '!')
 					filename = filename.Substring(1);
 				string filenameBase = Path.Combine(directory, file.Value, Path.GetFileName(filename));
@@ -413,7 +414,7 @@ namespace AAMResxEditor
 					};
 				}).ToDictionary(x => x.Key, x => new ResXWriter() { Filename = x.Filename, Writer = x.Writer, WroteAnything = false });
 
-				foreach (var stringValues in this.strings[filename].OrderBy(v => v.Key))
+				foreach (var stringValues in this.strings[origFilename].OrderBy(v => v.Key))
 					foreach (var lang in checkedLanguages)
 						if (stringValues.Value.ContainsKey(lang.Value))
 						{
