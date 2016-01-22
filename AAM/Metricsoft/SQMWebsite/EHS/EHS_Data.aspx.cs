@@ -40,6 +40,20 @@ namespace SQM.Website.EHS
 			return jan1.AddDays(daysOffset).AddDays(cal.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek) * 7 - 7);
 		}
 
+		static List<string> measuresToProtectIfPlantActive = new List<string>()
+		{
+			"S20001",
+			"S20002",
+			"S20003",
+			"S20004",
+			"S20005",
+			"S20006",
+			"S20007",
+			"S60001",
+			"S60003"
+		};
+
+
 		[WebMethod]
 		public static dynamic GetDailyData(decimal plantID, DateTime day, string lang)
 		{
@@ -50,7 +64,7 @@ namespace SQM.Website.EHS
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "D"
-							   select new { m.MEASURE_ID, m.DATA_TYPE };
+							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
 				var startOfWeek = FirstDayOfWeek(day, calendar, calendarWeekRule, firstDayOfWeek);
 				var endOfWeek = startOfWeek.AddDays(6);
 				var dateHeaders = new Dictionary<string, string>();
@@ -80,8 +94,9 @@ namespace SQM.Website.EHS
 								readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 							}
 						}
-						if (plantActive != null && (plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfWeek.Date : true)
-							&& (plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfWeek.Date : true))
+						if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
+							(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfWeek.Date : true) &&
+							(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfWeek.Date : true))
 							readOnly = true;
 						dynamic dataToAdd = new ExpandoObject();
 						dataToAdd.value = value;
@@ -112,7 +127,7 @@ namespace SQM.Website.EHS
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "W"
-							   select new { m.MEASURE_ID, m.DATA_TYPE };
+							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
 				var startOfWeek = FirstDayOfWeek(day, calendar, calendarWeekRule, firstDayOfWeek);
 				var endOfWeek = startOfWeek.AddDays(6);
 				var allData = new Dictionary<string, dynamic>();
@@ -129,8 +144,9 @@ namespace SQM.Website.EHS
 							value = data.ATTRIBUTE;
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					if (plantActive != null && (plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= endOfWeek.Date : true)
-						&& (plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= endOfWeek.Date : true))
+					if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
+						(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= endOfWeek.Date : true) &&
+						(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= endOfWeek.Date : true))
 						readOnly = true;
 					allData.Add(measure.MEASURE_ID.ToString(), new
 					{
@@ -159,7 +175,7 @@ namespace SQM.Website.EHS
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "M"
-							   select new { m.MEASURE_ID, m.DATA_TYPE };
+							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
 				var startOfMonth = new DateTime(day.Year, day.Month, 1);
 				var allData = new Dictionary<string, dynamic>();
 				foreach (var measure in measures)
@@ -175,8 +191,9 @@ namespace SQM.Website.EHS
 							value = data.ATTRIBUTE;
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					if (plantActive != null && (plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfMonth.Date : true)
-						&& (plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfMonth.Date : true))
+					if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
+						(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfMonth.Date : true) &&
+						(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfMonth.Date : true))
 						readOnly = true;
 					allData.Add(measure.MEASURE_ID.ToString(), new
 					{
