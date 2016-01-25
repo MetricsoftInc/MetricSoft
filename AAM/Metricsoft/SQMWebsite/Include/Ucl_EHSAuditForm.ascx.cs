@@ -1318,27 +1318,6 @@ namespace SQM.Website
 						pnl.Controls.Add(rddlLocation);
 						break;
 
-					case EHSAuditQuestionType.UsersDropdown:
-						var rddl3 = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						rddl3.Items.Add(new DropDownListItem("", ""));
-
-						var personList = new List<PERSON>();
-						if (CurrentStep == 1)
-							personList = EHSIncidentMgr.SelectIncidentPersonList(EditAuditId);
-						else if (CurrentStep == 0)
-							personList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-
-						foreach (PERSON p in personList)
-						{
-							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddl3.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-						}
-
-						if (shouldPopulate)
-							rddl3.SelectedValue = q.AnswerText;
-						pnl.Controls.Add(rddl3);
-						break;
-
 					case EHSAuditQuestionType.RequiredYesNoRadio:
 						var rblYN = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
 						rblYN.RepeatDirection = RepeatDirection.Horizontal;
@@ -1472,9 +1451,7 @@ namespace SQM.Website
 				var locationPersonList = new List<PERSON>();
 				if (this.SelectedLocationId > 0)
 				{
-					locationPersonList = EHSAuditMgr.SelectEhsDataOriginatorsAtPlant(this.SelectedLocationId);
-					locationPersonList.AddRange(EHSAuditMgr.SelectDataOriginatorAdditionalPlantAccess(this.SelectedLocationId));
-					locationPersonList = (from p in locationPersonList orderby p.LAST_NAME, p.FIRST_NAME select p).ToList();
+					locationPersonList = EHSAuditMgr.SelectEhsPeopleAtPlant(this.SelectedLocationId);
 				}
 				//else
 				//	locationPersonList = EHSAuditMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);

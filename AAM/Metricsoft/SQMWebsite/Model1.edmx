@@ -1229,30 +1229,6 @@
           <Property Name="PHONE2" Type="varchar" MaxLength="100" />
           <Property Name="PRIV_GROUP" Type="varchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="PERSON_ACCESS">
-          <Key>
-            <PropertyRef Name="PERSON_ID" />
-            <PropertyRef Name="ACCESS" />
-          </Key>
-          <Property Name="PERSON_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
-          <Property Name="ACCESS" Type="int" Nullable="false" />
-          <Property Name="ACCESS_PROD" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ACCESS_MODULE" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ACCESS_TOPIC" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="ACCESS_LEVEL" Type="int" />
-        </EntityType>
-        <EntityType Name="PERSON_RESP">
-          <Key>
-            <PropertyRef Name="PERSON_ID" />
-          </Key>
-          <Property Name="PERSON_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
-          <Property Name="DELEGATE_1" Type="numeric" Precision="35" Scale="0" />
-          <Property Name="DELEGATE_2" Type="numeric" Precision="35" Scale="0" />
-          <Property Name="DELEGATE_3" Type="numeric" Precision="35" Scale="0" />
-          <Property Name="ALT_BUS_ORG_ID" Type="numeric" Precision="35" Scale="0" />
-          <Property Name="ALT_PLANT_ID" Type="numeric" Precision="35" Scale="0" />
-          <Property Name="ALT_COMPANY_ID" Type="numeric" Precision="35" Scale="0" />
-        </EntityType>
         <EntityType Name="PERSPECTIVE_TARGET">
           <Key>
             <PropertyRef Name="TARGET_ID" />
@@ -3075,18 +3051,6 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PERSON_ACCESS_PERSON">
-          <End Role="PERSON" Type="Self.PERSON" Multiplicity="1" />
-          <End Role="PERSON_ACCESS" Type="Self.PERSON_ACCESS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSON_ACCESS">
-              <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PERSON_JOBCODE">
           <End Role="JOBCODE" Type="Self.JOBCODE" Multiplicity="0..1" />
           <End Role="PERSON" Type="Self.PERSON" Multiplicity="*" />
@@ -3120,18 +3084,6 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
             </Principal>
             <Dependent Role="PERSON">
               <PropertyRef Name="PRIV_GROUP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_RESP_PERSON">
-          <End Role="PERSON" Type="Self.PERSON" Multiplicity="1" />
-          <End Role="PERSON_RESP" Type="Self.PERSON_RESP" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSON_RESP">
-              <PropertyRef Name="PERSON_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3764,8 +3716,6 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="PART_ATTRIBUTE" EntityType="Self.PART_ATTRIBUTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PART_PROGRAM" EntityType="Self.PART_PROGRAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERSON" EntityType="Self.PERSON" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PERSON_ACCESS" EntityType="Self.PERSON_ACCESS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PERSON_RESP" EntityType="Self.PERSON_RESP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERSPECTIVE_TARGET" EntityType="Self.PERSPECTIVE_TARGET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERSPECTIVE_TARGET_CALC" EntityType="Self.PERSPECTIVE_TARGET_CALC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERSPECTIVE_VIEW" EntityType="Self.PERSPECTIVE_VIEW" Schema="dbo" store:Type="Tables" />
@@ -4181,10 +4131,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="PART" EntitySet="PART" />
           </AssociationSet>
-          <AssociationSet Name="FK_PERSON_ACCESS_PERSON" Association="Self.FK_PERSON_ACCESS_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSON_ACCESS" EntitySet="PERSON_ACCESS" />
-          </AssociationSet>
           <AssociationSet Name="FK_PERSON_JOBCODE" Association="Self.FK_PERSON_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
             <End Role="PERSON" EntitySet="PERSON" />
@@ -4196,10 +4142,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_PERSON_PRIVGROUP" Association="Self.FK_PERSON_PRIVGROUP">
             <End Role="PRIVGROUP" EntitySet="PRIVGROUP" />
             <End Role="PERSON" EntitySet="PERSON" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_RESP_PERSON" Association="Self.FK_PERSON_RESP_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSON_RESP" EntitySet="PERSON_RESP" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSPECTIVE_TARGET_CALC_PLANT" Association="Self.FK_PERSPECTIVE_TARGET_CALC_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
@@ -4411,8 +4353,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySet Name="NONCONFORMANCE" EntityType="PSsqmModel.NONCONFORMANCE" />
           <EntitySet Name="PART" EntityType="PSsqmModel.PART" />
           <EntitySet Name="PART_PROGRAM" EntityType="PSsqmModel.PART_PROGRAM" />
-          <EntitySet Name="PERSON_ACCESS" EntityType="PSsqmModel.PERSON_ACCESS" />
-          <EntitySet Name="PERSON_RESP" EntityType="PSsqmModel.PERSON_RESP" />
           <EntitySet Name="PERSPECTIVE_TARGET" EntityType="PSsqmModel.PERSPECTIVE_TARGET" />
           <EntitySet Name="PERSPECTIVE_TARGET_CALC" EntityType="PSsqmModel.PERSPECTIVE_TARGET_CALC" />
           <EntitySet Name="PERSPECTIVE_VIEW_ITEM" EntityType="PSsqmModel.PERSPECTIVE_VIEW_ITEM" />
@@ -4958,17 +4898,9 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="JOBCODE" EntitySet="JOBCODE" />
             <End Role="PERSON" EntitySet="PERSON" />
           </AssociationSet>
-          <AssociationSet Name="FK_PERSON_ACCESS_PERSON" Association="PSsqmModel.FK_PERSON_ACCESS_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSON_ACCESS" EntitySet="PERSON_ACCESS" />
-          </AssociationSet>
           <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.FK_PERSON_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="PERSON1" EntitySet="PERSON" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_RESP_PERSON" Association="PSsqmModel.FK_PERSON_RESP_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSON_RESP" EntitySet="PERSON_RESP" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSPECTIVE_VIEW_PERSON" Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
@@ -5562,32 +5494,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Type="Decimal" Name="PLANT_ID" Precision="35" Scale="0" />
           <NavigationProperty Name="PART" Relationship="PSsqmModel.FK_PART_PART_PROGRAM" FromRole="PART_PROGRAM" ToRole="PART" />
           <NavigationProperty Name="COMPANY" Relationship="PSsqmModel.FK_PART_PROGRAM_COMPANY" FromRole="PART_PROGRAM" ToRole="COMPANY" />
-        </EntityType>
-        <EntityType Name="PERSON_ACCESS">
-          <Key>
-            <PropertyRef Name="PERSON_ID" />
-            <PropertyRef Name="ACCESS" />
-          </Key>
-          <Property Type="Decimal" Name="PERSON_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="ACCESS" Nullable="false" />
-          <Property Type="String" Name="ACCESS_PROD" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ACCESS_MODULE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ACCESS_TOPIC" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="ACCESS_LEVEL" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_ACCESS_PERSON" FromRole="PERSON_ACCESS" ToRole="PERSON" />
-        </EntityType>
-        <EntityType Name="PERSON_RESP">
-          <Key>
-            <PropertyRef Name="PERSON_ID" />
-          </Key>
-          <Property Type="Decimal" Name="PERSON_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="DELEGATE_1" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="DELEGATE_2" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="DELEGATE_3" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="ALT_BUS_ORG_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="ALT_PLANT_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="ALT_COMPANY_ID" Precision="35" Scale="0" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_RESP_PERSON" FromRole="PERSON_RESP" ToRole="PERSON" />
         </EntityType>
         <EntityType Name="PERSPECTIVE_TARGET">
           <Key>
@@ -8435,10 +8341,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE" />
           <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
           <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
-          <NavigationProperty Name="PERSON_ACCESS" Relationship="PSsqmModel.FK_PERSON_ACCESS_PERSON" FromRole="PERSON" ToRole="PERSON_ACCESS" />
           <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
           <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
-          <NavigationProperty Name="PERSON_RESP" Relationship="PSsqmModel.FK_PERSON_RESP_PERSON" FromRole="PERSON" ToRole="PERSON_RESP" />
           <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" FromRole="PERSON" ToRole="PERSPECTIVE_VIEW" />
           <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
@@ -8510,18 +8414,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PERSON_ACCESS_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
-          <End Type="PSsqmModel.PERSON_ACCESS" Role="PERSON_ACCESS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSON_ACCESS">
-              <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PERSON_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
           <End Type="PSsqmModel.PERSON" Role="PERSON1" Multiplicity="0..1" />
@@ -8530,18 +8422,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               <PropertyRef Name="PERSON_ID" />
             </Principal>
             <Dependent Role="PERSON1">
-              <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_RESP_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
-          <End Type="PSsqmModel.PERSON_RESP" Role="PERSON_RESP" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSON_RESP">
               <PropertyRef Name="PERSON_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -9644,31 +9524,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
                 <ScalarProperty Name="PROGRAM_NAME" ColumnName="PROGRAM_NAME" />
                 <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
                 <ScalarProperty Name="PROGRAM_ID" ColumnName="PROGRAM_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PERSON_ACCESS">
-            <EntityTypeMapping TypeName="PSsqmModel.PERSON_ACCESS">
-              <MappingFragment StoreEntitySet="PERSON_ACCESS">
-                <ScalarProperty Name="ACCESS_LEVEL" ColumnName="ACCESS_LEVEL" />
-                <ScalarProperty Name="ACCESS_TOPIC" ColumnName="ACCESS_TOPIC" />
-                <ScalarProperty Name="ACCESS_MODULE" ColumnName="ACCESS_MODULE" />
-                <ScalarProperty Name="ACCESS_PROD" ColumnName="ACCESS_PROD" />
-                <ScalarProperty Name="ACCESS" ColumnName="ACCESS" />
-                <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PERSON_RESP">
-            <EntityTypeMapping TypeName="PSsqmModel.PERSON_RESP">
-              <MappingFragment StoreEntitySet="PERSON_RESP">
-                <ScalarProperty Name="ALT_COMPANY_ID" ColumnName="ALT_COMPANY_ID" />
-                <ScalarProperty Name="ALT_PLANT_ID" ColumnName="ALT_PLANT_ID" />
-                <ScalarProperty Name="ALT_BUS_ORG_ID" ColumnName="ALT_BUS_ORG_ID" />
-                <ScalarProperty Name="DELEGATE_3" ColumnName="DELEGATE_3" />
-                <ScalarProperty Name="DELEGATE_2" ColumnName="DELEGATE_2" />
-                <ScalarProperty Name="DELEGATE_1" ColumnName="DELEGATE_1" />
-                <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11395,8 +11250,6 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <EntityTypeShape EntityType="PSsqmModel.NONCONFORMANCE" Width="1.5" PointX="9.2267112178852368" PointY="29.774816064990507" />
         <EntityTypeShape EntityType="PSsqmModel.PART" Width="1.5" PointX="3.9364516772033884" PointY="16.872182719815608" />
         <EntityTypeShape EntityType="PSsqmModel.PART_PROGRAM" Width="1.5" PointX="2.6074324877035955" PointY="4.222665788709496" />
-        <EntityTypeShape EntityType="PSsqmModel.PERSON_ACCESS" Width="1.5" PointX="8.489846972976741" PointY="21.746577302807278" />
-        <EntityTypeShape EntityType="PSsqmModel.PERSON_RESP" Width="1.5" PointX="8.24976719368704" PointY="29.978562652123422" />
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_TARGET" Width="1.5" PointX="0.028970154015799127" PointY="19.753150293488591" />
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_TARGET_CALC" Width="1.5" PointX="11.516066271586375" PointY="15.870739899515518" />
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_VIEW_ITEM" Width="1.5" PointX="11.20232674069811" PointY="23.2389780838224" />
@@ -11598,9 +11451,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSON_ACCESS_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSON_RESP_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
@@ -11647,7 +11498,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_CAUSATION" Width="1.5" PointX="9.6135556351456586" PointY="30.916818230839826" />
         <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="3.1552437782079181" PointY="11.040620212927749" />
-        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="8.6119807849693952" PointY="28.228467328580315" />
+        <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="9.75" PointY="28.625" />
         <EntityTypeShape EntityType="PSsqmModel.XLAT_DAYS_TO_CLOSE_TRANS" Width="1.5" PointX="1.5326805438532869" PointY="19.108761095958187" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_TOPIC" Width="1.5" PointX="16.375" PointY="17.875" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_TOPIC_LANG" Width="1.5" PointX="18.625" PointY="18" />

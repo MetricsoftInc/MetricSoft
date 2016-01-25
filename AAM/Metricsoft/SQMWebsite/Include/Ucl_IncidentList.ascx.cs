@@ -659,7 +659,7 @@ namespace SQM.Website
 			staticAppContext = appContext;
 
 			if (IncidentXLATList == null  ||  IncidentXLATList.Count == 0)
-				IncidentXLATList = SQMBasePage.SelectXLATList(new string[3] { "STATUS", "INCIDENT_STATUS", "WORK_STATUS" });
+				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
 
 			if (showImages)
 				rgIncidentList.MasterTableView.GetColumn("Attach").Visible = true;
@@ -675,6 +675,9 @@ namespace SQM.Website
 			pnlIncidentActionList.Visible = false;
 			pnlPreventativeListRepeater.Visible = true;
 			staticAppContext = appContext;
+
+			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
+				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
 
 			if (showImages)
 				rgPreventativeList.MasterTableView.GetColumn("Attach").Visible = true;
@@ -726,6 +729,7 @@ namespace SQM.Website
 					{
 						lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 					}
+
 					if (data.Status == "C")
 						lbl.Text += ("<br/>" + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "  (" + data.DaysToClose.ToString() + ")");
 					else
@@ -782,32 +786,25 @@ namespace SQM.Website
 					EHSIncidentMgr.SelectIncidentAnswer(data.Incident, (decimal)EHSQuestionId.RecommendationType);
 
 				lbl = (Label)e.Item.FindControl("lblIncStatus");
-				try
+				if (data.Incident.INCFORM_LAST_STEP_COMPLETED <= 0)
 				{
-					if (data.Status == "U")
-					{
-						lbl.Text = "Audited " + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE_DATA_COMPLETE, "d", false) + "<br/>(" + data.DaysToClose.ToString() + ")";
-					}
-					else if (data.Status == "F")
-					{
-						lbl.Text = "Awaiting Funding " + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE_DATA_COMPLETE, "d", false) + "<br/>(" + data.DaysToClose.ToString() + ")";
-					}
-					else if (data.Status == "C")
-					{
-						lbl.Text = "Closed  " + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "<br/><strong>Not Audited</strong>";
-					}
-					else
-					{
-						lbl.Text = WebSiteCommon.GetXlatValue("incidentStatus", data.Status) + "<br/>(" + data.DaysOpen + ")";
-					}
+					lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == "100").FirstOrDefault().DESCRIPTION_SHORT;
 				}
-				catch
+				else
 				{
-					;
+					lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 				}
 
-				LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
-				lbEditReport.Visible = true;
+				if (data.Status == "C" || data.Status == "F")  // completed or awaiting funding
+				{
+					if (data.Status == "F")
+						lbl.Text += ("<br/> - " + IncidentXLATList.Where(l => l.XLAT_CODE == ((int)IncidentStepStatus.awaitingFunding).ToString()).FirstOrDefault().DESCRIPTION_SHORT);
+					lbl.Text += ("<br/>" + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "  (" + data.DaysToClose.ToString() + ")");
+				}
+				else
+				{
+					lbl.Text += "<br/>(" + data.DaysOpen.ToString() + ")";
+				}
 
 				try
 				{

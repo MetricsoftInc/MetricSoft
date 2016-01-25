@@ -572,16 +572,6 @@
 										</asp:LinkButton>
 									</td>
 								</tr>
-								<tr>
-									<td>
-										<asp:LinkButton ID="lb8d" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lb8dResource2" OnClick="lnkProblemCaseRedirect" ToolTip="Edit 8D problem case" Visible="False">
-											<span class="tableLink" style="color: #a00000; white-space: nowrap;">Edit 8D</span>
-										</asp:LinkButton>
-										<asp:LinkButton ID="lbEditReport" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lbEditReportResource2" OnClick="lbEditReport_Click" ToolTip="Edit Response" Visible="False">
-											<span class="tableLink" style="color: #006080; white-space: nowrap;">Update Response</span>
-										</asp:LinkButton>
-									</td>
-								</tr>
 							</table>
 						</ItemTemplate>
 						<ItemStyle Width="100px" />

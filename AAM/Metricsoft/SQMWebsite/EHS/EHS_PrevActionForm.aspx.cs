@@ -9,9 +9,9 @@ using System.Globalization;
 using System.Threading;
 using System.Drawing;
 
-namespace SQM.Website 
+namespace SQM.Website
 {
-	public partial class EHS_IncidentForm : SQMBasePage
+	public partial class EHS_PrevActionForm : SQMBasePage
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -30,25 +30,29 @@ namespace SQM.Website
 
 				try
 				{
-					if (SessionManager.ReturnStatus == true  &&  SessionManager.ReturnObject is INCIDENT)
+					if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is INCIDENT)
 					{
 						INCIDENT incident = SessionManager.ReturnObject as INCIDENT;
 						SessionManager.ClearReturns();
 						SessionManager.SetIncidentLocation((decimal)incident.DETECT_PLANT_ID);
 
-						if (incident.INCIDENT_ID > 0)  
+						if (incident.INCIDENT_ID > 0)
 						{
 							// edit existing incident
-							uclIncidentForm.BindIncident(incident.INCIDENT_ID);
-	
+							int step = 0;
+							if (!string.IsNullOrEmpty(Request.QueryString["s"]))   // from inbox/calendar assume this is a task assignment. direct to corrective actions page
+							{
+								int.TryParse(Request.QueryString["s"], out step);
+							}
+							uclActionForm.BindIncident(incident.INCIDENT_ID,  step);
 						}
 						else
 						{
 							// create new 
-							uclIncidentForm.InitNewIncident((decimal)incident.ISSUE_TYPE_ID, (decimal)incident.DETECT_PLANT_ID);
+							uclActionForm.InitNewIncident((decimal)incident.ISSUE_TYPE_ID, incident.ISSUE_TYPE, (decimal)incident.DETECT_PLANT_ID);
 						}
 
-						uclIncidentForm.Visible = true;
+						uclActionForm.Visible = true;
 					}
 				}
 				catch

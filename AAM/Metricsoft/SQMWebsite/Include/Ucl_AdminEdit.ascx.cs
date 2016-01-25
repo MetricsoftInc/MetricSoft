@@ -177,7 +177,6 @@ namespace SQM.Website
         {
             PSsqmEntities ctx = new PSsqmEntities();
             PERSON user = SQMModelMgr.LookupPerson(ctx, SessionManager.UserContext.Person.PERSON_ID, "", false);
-           // decimal? currentDelegate = user.PERSON_RESP.DELEGATE_1;
 
             user.PHONE = tbUserPhone.Text;
 

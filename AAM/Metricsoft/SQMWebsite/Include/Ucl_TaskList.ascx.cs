@@ -103,7 +103,7 @@ namespace SQM.Website
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
 						SessionManager.ReturnPath = Request.Path.ToString();
-                        Response.Redirect("/EHS/EHS_Incidents.aspx?mode=prevent");
+                        Response.Redirect("/EHS/EHS_PrevActions.aspx?s=1");
                         break;
 					case TaskRecordType.Audit:
 						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // audit action
@@ -376,7 +376,6 @@ namespace SQM.Website
 
 					lbl = (Label)e.Item.FindControl("lblStatus");
 					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
-					//lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == task.STATUS).FirstOrDefault().DESCRIPTION_SHORT;
 				}
 				catch
 				{

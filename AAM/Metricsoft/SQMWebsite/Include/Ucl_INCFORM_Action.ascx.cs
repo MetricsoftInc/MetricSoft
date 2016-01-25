@@ -216,15 +216,11 @@ namespace SQM.Website
 					rvfsd.ValidationGroup = ValidationGroup;
 					
 					rddlp.Items.Add(new DropDownListItem("", ""));
-					var personList = new List<PERSON>();
-					personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)LocalIncident.DETECT_PLANT_ID);
+					List<PERSON> personList = personList = EHSIncidentMgr.SelectIncidentPersonList(LocalIncident, true);
 					foreach (PERSON p in personList)
 					{
-						if (!String.IsNullOrEmpty(p.EMAIL))
-						{
-							string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-							rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-						}
+						string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+						rddlp.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
 					}
 
 					lb.Text = action.TASK_SEQ.ToString();

@@ -249,6 +249,8 @@
     <Content Include="EHS\EHS_Data.aspx" />
     <Content Include="EHS\EHS_IncidentForm.aspx" />
     <Content Include="EHS\EHS_InjuryIllnessForm.aspx" />
+    <Content Include="EHS\EHS_PrevActions.aspx" />
+    <Content Include="EHS\EHS_PrevActionForm.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="ErrorServer.aspx" />
     <Content Include="GenericError404.aspx" />
@@ -526,6 +528,7 @@
     <Content Include="Include\Ucl_TaskStatus.ascx" />
     <Content Include="Include\Ucl_IncidentSummary.ascx" />
     <Content Include="Include\Ucl_INCFORM_Causation.ascx" />
+    <Content Include="Include\Ucl_EHSPrevActionForm.ascx" />
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
@@ -1359,6 +1362,20 @@
     <Compile Include="EHS\EHS_InjuryIllnessForm.aspx.designer.cs">
       <DependentUpon>EHS_InjuryIllnessForm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EHS\EHS_PrevActions.aspx.cs">
+      <DependentUpon>EHS_PrevActions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_PrevActions.aspx.designer.cs">
+      <DependentUpon>EHS_PrevActions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_PrevActionForm.aspx.cs">
+      <DependentUpon>EHS_PrevActionForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_PrevActionForm.aspx.designer.cs">
+      <DependentUpon>EHS_PrevActionForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1818,6 +1835,13 @@
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Causation.ascx.designer.cs">
       <DependentUpon>Ucl_INCFORM_Causation.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSPrevActionForm.ascx.cs">
+      <DependentUpon>Ucl_EHSPrevActionForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSPrevActionForm.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSPrevActionForm.ascx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -2524,6 +2548,10 @@
     <Content Include="Include\App_LocalResources\Ucl_SearchBar.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.th.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_PrevActions.aspx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_EHSPrevActionForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>

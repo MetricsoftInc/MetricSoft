@@ -18,8 +18,9 @@ namespace SQM.Website
 
 		//public bool HideProblemFields = false;
 
-		public void Refresh(decimal incidentId, int[] steps)
+		public int Refresh(decimal incidentId, int[] steps)
 		{
+			int status = 0;
 			var entities = new PSsqmEntities();
 			var companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			decimal? incidentTypeId = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i.ISSUE_TYPE_ID).FirstOrDefault();
@@ -35,73 +36,81 @@ namespace SQM.Website
 					sb.AppendLine("<table class=\"lightTable\" cellspacing=\"0\" style=\"width: 100%\">");
 					foreach (var q in questions)
 					{
-						string answer = (from a in entities.INCIDENT_ANSWER
-										 where a.INCIDENT_ID == incidentId && a.INCIDENT_QUESTION_ID == q.QuestionId
-										 select a.ANSWER_VALUE).FirstOrDefault();
-						answer = (answer == null) ? "" : answer;
-						answer = answer.Replace("<a href", "<a target=\"blank\" href");
-						string answerText = "";
-						if (!string.IsNullOrEmpty(answer) ||
-							q.QuestionType == EHSIncidentQuestionType.Attachment ||
-							q.QuestionType == EHSIncidentQuestionType.PageOneAttachment)
+						try
 						{
-							switch (q.QuestionType)
+							string answer = (from a in entities.INCIDENT_ANSWER
+											 where a.INCIDENT_ID == incidentId && a.INCIDENT_QUESTION_ID == q.QuestionId
+											 select a.ANSWER_VALUE).FirstOrDefault();
+							answer = (answer == null) ? "" : answer;
+							answer = answer.Replace("<a href", "<a target=\"blank\" href");
+							string answerText = "";
+							if (!string.IsNullOrEmpty(answer) ||
+								q.QuestionType == EHSIncidentQuestionType.Attachment ||
+								q.QuestionType == EHSIncidentQuestionType.PageOneAttachment)
 							{
-								case EHSIncidentQuestionType.Date:
-									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortDateString();
-									answerText = Server.HtmlEncode(answer);
-									break;
+								switch (q.QuestionType)
+								{
+									case EHSIncidentQuestionType.Date:
+										answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortDateString();
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.Time:
-									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortTimeString();
-									answerText = Server.HtmlEncode(answer);
-									break;
+									case EHSIncidentQuestionType.Time:
+										answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToShortTimeString();
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.DateTime:
-									answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToString();
-									answerText = Server.HtmlEncode(answer);
-									break;
+									case EHSIncidentQuestionType.DateTime:
+										answer = DateTime.Parse(answer, CultureInfo.GetCultureInfo("en-US")).ToString();
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.LocationDropdown:
-									answer = EHSIncidentMgr.SelectPlantNameById(Convert.ToDecimal(answer));
-									answerText = Server.HtmlEncode(answer);
-									break;
+									case EHSIncidentQuestionType.LocationDropdown:
+										answer = EHSIncidentMgr.SelectPlantNameById(Convert.ToDecimal(answer));
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.UsersDropdown:
-									answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
-									answerText = Server.HtmlEncode(answer);
-									break;
+									case EHSIncidentQuestionType.UsersDropdown:
+										answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
-									answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
-									answerText = Server.HtmlEncode(answer);
-									break;
+									case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
+										answer = EHSIncidentMgr.SelectUserNameById(Convert.ToDecimal(answer));
+										answerText = Server.HtmlEncode(answer);
+										break;
 
-								case EHSIncidentQuestionType.Attachment:
-									answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
-									break;
+									case EHSIncidentQuestionType.Attachment:
+										answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
+										break;
 
-								case EHSIncidentQuestionType.PageOneAttachment:
-									answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
-									break;
-								default:
-									if (answer == "Yes")
-										answerText = Resources.LocalizedText.Yes;
-									else if (answer == "No")
-										answerText = Resources.LocalizedText.No;
-									else
-										answerText = q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault() != null ? q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault().Text : answer;
-									break;
+									case EHSIncidentQuestionType.PageOneAttachment:
+										answerText = GetUploadedFiles(40, incidentId, (step + 1).ToString());
+										break;
+									default:
+										if (answer == "Yes")
+											answerText = Resources.LocalizedText.Yes;
+										else if (answer == "No")
+											answerText = Resources.LocalizedText.No;
+										else
+										{
+											answerText = answer;
+										}
+										break;
+								}
 							}
-						}
 
-						sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td></tr>", q.QuestionText, answerText));
+							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td>{1}</td></tr>", q.QuestionText, answerText));
+						}
+						catch { status = -1; }
 					}
 				}
 				sb.AppendLine("</table>");
 			}
 			
 			litIncidentDetails.Text = sb.ToString();
+
+			return status;
 		}
 
 		public string GetUploadedFiles(int recordType, decimal recordId, string recordStep)

@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Billing Currency.
+        /// </summary>
+        internal static string BillingCurrency {
+            get {
+                return ResourceManager.GetString("BillingCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Business Location.
         /// </summary>
         internal static string BusinessLocation {
@@ -493,6 +502,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display Prompt.
+        /// </summary>
+        internal static string DisplayPrompt {
+            get {
+                return ResourceManager.GetString("DisplayPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disposition.
         /// </summary>
         internal static string Disposition {
@@ -579,6 +597,15 @@ namespace Resources {
         internal static string EmailAddress {
             get {
                 return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Energy input.
+        /// </summary>
+        internal static string EnergyInput {
+            get {
+                return ResourceManager.GetString("EnergyInput", resourceCulture);
             }
         }
         
@@ -853,6 +880,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        internal static string InspectionLocation {
+            get {
+                return ResourceManager.GetString("InspectionLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice UOM.
+        /// </summary>
+        internal static string InvoiceUOM {
+            get {
+                return ResourceManager.GetString("InvoiceUOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Issue.
         /// </summary>
         internal static string Issue {
@@ -970,6 +1015,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Metric.
+        /// </summary>
+        internal static string Metric {
+            get {
+                return ResourceManager.GetString("Metric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Name {
@@ -993,6 +1047,33 @@ namespace Resources {
         internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no Metrics defined for this business location..
+        /// </summary>
+        internal static string NoMetricDefinedBusLoc {
+            get {
+                return ResourceManager.GetString("NoMetricDefinedBusLoc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A metric profile doest not exist for this location.
+        /// </summary>
+        internal static string NoMetricProfile {
+            get {
+                return ResourceManager.GetString("NoMetricProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no Metrics defined for this profile.
+        /// </summary>
+        internal static string NoMetricsDefined {
+            get {
+                return ResourceManager.GetString("NoMetricsDefined", resourceCulture);
             }
         }
         
@@ -1042,11 +1123,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Person Responsible.
+        /// </summary>
+        internal static string PersonResponsible {
+            get {
+                return ResourceManager.GetString("PersonResponsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plant.
         /// </summary>
         internal static string Plant {
             get {
                 return ResourceManager.GetString("Plant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preventative Action.
+        /// </summary>
+        internal static string PreventativeAction {
+            get {
+                return ResourceManager.GetString("PreventativeAction", resourceCulture);
             }
         }
         
@@ -1128,6 +1227,24 @@ namespace Resources {
         internal static string ReceiptNumber {
             get {
                 return ResourceManager.GetString("ReceiptNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommendation.
+        /// </summary>
+        internal static string Recommendation {
+            get {
+                return ResourceManager.GetString("Recommendation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recommendation Type.
+        /// </summary>
+        internal static string RecommendationType {
+            get {
+                return ResourceManager.GetString("RecommendationType", resourceCulture);
             }
         }
         
@@ -1218,6 +1335,24 @@ namespace Resources {
         internal static string SaveError {
             get {
                 return ResourceManager.GetString("SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Metric.
+        /// </summary>
+        internal static string SaveMetric {
+            get {
+                return ResourceManager.GetString("SaveMetric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Profile.
+        /// </summary>
+        internal static string SaveProfile {
+            get {
+                return ResourceManager.GetString("SaveProfile", resourceCulture);
             }
         }
         

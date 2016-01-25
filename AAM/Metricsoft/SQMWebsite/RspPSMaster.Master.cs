@@ -53,7 +53,7 @@ namespace SQM.Website
 
 					if (menuXLATList == null || menuXLATList.Count == 0)
 					{
-						menuXLATList = SQMBasePage.SelectXLATList(new string[6] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA" });
+						menuXLATList = SQMBasePage.SelectXLATList(new string[7] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM"});
 					}
 
 					SessionManager.CurrentAdminPage = "";
@@ -151,7 +151,15 @@ namespace SQM.Website
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "13").DESCRIPTION, GetMenu("MENU_AUDIT", "13").DESCRIPTION_SHORT));
 					}
 
-					if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate)
+					if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0  &&  IsMenuActive("MENU_RM"))
+					{
+						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_RM", "0").DESCRIPTION);
+						RadMenu1.Items.Add(EHSMenu2);
+						if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
+					}
+
+					if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate && IsMenuActive("MENU_DATA"))
 					{
 						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_DATA", "0").DESCRIPTION);
 						RadMenu1.Items.Add(EHSMenu2);
@@ -171,6 +179,11 @@ namespace SQM.Website
 			{
 			   // SQMLogger.LogException(ex);
 			}
+		}
+
+		protected bool IsMenuActive(string menuGroup)
+		{
+			return menuXLATList.Where(l => l.XLAT_GROUP == menuGroup).Count() == 0 ? false : true;
 		}
 
 		protected XLAT GetMenu(string menuGroup, string menuItem)

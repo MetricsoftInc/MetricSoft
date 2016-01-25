@@ -764,19 +764,12 @@ namespace SQM.Website
 						}
 						else
 						{
-							//this.PrivList = SQMModelMgr.SelectPrivGroupJobcode(this.Person.JOBCODE_CD, "COMMON");
 							this.PrivList = SQMModelMgr.SelectPrivGroupPerson(this.Person.PRIV_GROUP, "COMMON");
 
 							SessionManager.EffLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
 
-							if (this.Person.PERSON_RESP.ALT_COMPANY_ID > 0)
-								this.WorkingLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.PERSON_RESP.ALT_COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.PERSON_RESP.ALT_BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PERSON_RESP.ALT_PLANT_ID));
-							else
-							{
-								this.WorkingLocation = new BusinessLocation();
-								this.WorkingLocation = SessionManager.EffLocation;
-							}
-								//this.WorkingLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));
+							this.WorkingLocation = new BusinessLocation();
+							this.WorkingLocation = SessionManager.EffLocation;
 
 							this.PlantAccessList = new List<decimal>();
 							this.PlantAccessList.Add(this.WorkingLocation.Plant.PLANT_ID);
@@ -807,7 +800,6 @@ namespace SQM.Website
 							}
 
 							this.InboxReviews = 0;
-							//this.TaskList = new List<TaskItem>();
 						}
 					}
 				}

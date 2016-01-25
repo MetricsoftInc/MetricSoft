@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace SQM.Website
 {
-	public partial class Ucl_EHSIncidentForm : System.Web.UI.UserControl
+	public partial class Ucl_EHSPrevActionForm : System.Web.UI.UserControl
 	{
 		const Int32 MaxTextLength = 4000;
 
@@ -138,7 +138,7 @@ namespace SQM.Website
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
-			ahReturn.HRef = "/EHS/EHS_Incidents.aspx";
+			ahReturn.HRef = "/EHS/EHS_PrevActions.aspx";
 			btnSaveReturn.Visible = btnSaveContinue.Visible = false;
 
 			var sourceId = Page.Request[Page.postEventSourceID];
@@ -151,11 +151,6 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (uclContainment.Visible == true || uclRootCause.Visible == true || uclAction.Visible == true || uclApproval.Visible == true)
-				{
-					return;
-				}
-
 				LoadHeaderInformation();
 				BuildForm();
 			}
@@ -208,13 +203,17 @@ namespace SQM.Website
 
 		public void BuildForm()
 		{
-
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 			if (typeId < 1)
 				return;
 
 			string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+
+			if (IsEditContext)
+			{
+				ShowIncidentDetails(EditIncidentId, "Recommendation Details", CurrentStep - 1);
+			}
 
 			INCIDENT incident = null;
 			if (EditIncidentId > 0)
@@ -228,14 +227,12 @@ namespace SQM.Website
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
 				incidentDate = incident.INCIDENT_DT;
 				IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
+				incidentDescription = incident.DESCRIPTION;
 			}
 
 			pnlForm.Controls.Clear();
 			divForm.Visible = true;
-			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
-
-			pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -261,6 +258,13 @@ namespace SQM.Website
 				}
 
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
+
+				// set default answers when initial creation
+				if (q.QuestionId == (decimal)EHSQuestionId.InspectionCategory  &&  !IsEditContext)
+				{
+					q.AnswerText = SelectedTypeText;
+					shouldPopulate = true;
+				}
 
 				string qid = q.QuestionId.ToString();
 
@@ -349,7 +353,7 @@ namespace SQM.Website
 						break;
 
 					case EHSIncidentQuestionType.RichTextBox:
-						var re = new RadEditor() { ID = qid, Width = 550, Height=300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
+						var re = new RadEditor() { ID = qid, Width = 550, Height = 300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
 						re.EditModes = EditModes.Design;
 						re.ToolsFile = "~/RadEditorToolsFile.xml";
 						re.ContentAreaCssFile = "~/css/RadEditor.css";
@@ -436,13 +440,6 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
 						rdp = SQMBasePage.SetRadDateCulture(rdp, "");
-						/*
-						if (CultureSettings.gregorianCalendarOverrides.Contains(lang))
-						{
-							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						}
-						*/
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
@@ -473,13 +470,13 @@ namespace SQM.Website
 										//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
 										//DateTime parseDate;
 										//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-										DateTime parseDate = DateTime.Now;
+										DateTime parseDate = DateTime.UtcNow;
 										//{
-											string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
-											if (answer.ToLower() == "behavioral")
-												rdp.SelectedDate = parseDate.AddDays(30);
-											else
-												rdp.SelectedDate = parseDate.AddDays(60);
+										string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
+										if (answer.ToLower() == "behavioral")
+											rdp.SelectedDate = parseDate.AddDays(30);
+										else
+											rdp.SelectedDate = parseDate.AddDays(60);
 										//}
 									}
 								}
@@ -539,8 +536,6 @@ namespace SQM.Website
 							bcb.CheckedChanged += new EventHandler(bcb_CheckedChanged);
 							if (q.QuestionId == (decimal)EHSQuestionId.CloseIncident)
 								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedClose);
-							if (q.QuestionId == (decimal)EHSQuestionId.Create8D)
-								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedCreate8D);
 							bcb.AutoPostBack = true;
 						}
 
@@ -552,7 +547,7 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Attachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("1");
+						uploader.SetAttachmentRecordStep((CurrentStep+1).ToString());
 						uploader.SetReportOption(false);
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
@@ -560,34 +555,36 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 						{
-							uploader.GetUploadedFiles(40, EditIncidentId, "1");
-							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep+1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						}
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep((CurrentStep + 1).ToString());
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep + 1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.ImageAttachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep((CurrentStep + 1).ToString());
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep + 1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.PageOneAttachment:
@@ -600,6 +597,7 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.CurrencyTextBox:
@@ -729,7 +727,7 @@ namespace SQM.Website
 
 			UpdateAnswersFromForm();
 
-			UpdateButtonText();
+			SetPageAccess(incident, CurrentStep);
 
 			RefreshPageContext();
 		}
@@ -947,13 +945,6 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Date:
 						var rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
 						rdp = SQMBasePage.SetRadDateCulture(rdp, "");
-						/*
-						if (CultureSettings.gregorianCalendarOverrides.Contains(lang))
-						{
-							rdp.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-							rdp.DateInput.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-						}
-						*/
 						rdp.ShowPopupOnFocus = true;
 						if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate) // Default incident date
 						{
@@ -984,7 +975,7 @@ namespace SQM.Website
 										//string dateAnswer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.ReportDate);
 										//DateTime parseDate;
 										//if (DateTime.TryParse(dateAnswer, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
-										DateTime parseDate = DateTime.Now;
+										DateTime parseDate = DateTime.UtcNow;
 										//{
 										string answer = EHSIncidentMgr.SelectIncidentAnswer(incident, (decimal)EHSQuestionId.RecommendationType);
 										if (answer.ToLower() == "behavioral")
@@ -1050,8 +1041,6 @@ namespace SQM.Website
 							bcb.CheckedChanged += new EventHandler(bcb_CheckedChanged);
 							if (q.QuestionId == (decimal)EHSQuestionId.CloseIncident)
 								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedClose);
-							if (q.QuestionId == (decimal)EHSQuestionId.Create8D)
-								bcb.CheckedChanged += new EventHandler(bcb_CheckedChangedCreate8D);
 							bcb.AutoPostBack = true;
 						}
 
@@ -1063,7 +1052,7 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.Attachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("1");
+						uploader.SetAttachmentRecordStep((CurrentStep + 1).ToString());
 						uploader.SetReportOption(false);
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
@@ -1071,34 +1060,36 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 						{
-							uploader.GetUploadedFiles(40, EditIncidentId, "1");
-							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep + 1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[2] { SysPriv.action, SysPriv.update}, IncidentStepCompleted));
 						}
 						break;
 
 					case EHSIncidentQuestionType.DocumentAttachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep((CurrentStep + 1).ToString());
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep + 1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.ImageAttachment:
 						uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
 						uploader.ID = qid;
-						uploader.SetAttachmentRecordStep("2");
+						uploader.SetAttachmentRecordStep((CurrentStep + 1).ToString());
 						// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 						uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete" };
 						uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
 						pnl.Controls.Add(uploader);
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
-							uploader.GetUploadedFiles(40, EditIncidentId, "2");
+							uploader.GetUploadedFiles(40, EditIncidentId, (CurrentStep + 1).ToString());
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.PageOneAttachment:
@@ -1111,6 +1102,7 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.SetViewMode(EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted));
 						break;
 
 					case EHSIncidentQuestionType.CurrencyTextBox:
@@ -1215,10 +1207,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.prevent))
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.prevent))
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
@@ -1229,9 +1221,7 @@ namespace SQM.Website
 
 			UpdateAnswersFromForm();
 
-			UpdateButtonText();
-
-
+			SetPageAccess(incident, CurrentStep);
 		}
 
 		void rddlLocation_SelectedIndexChanged(object sender, EventArgs e)
@@ -1247,41 +1237,6 @@ namespace SQM.Website
 		void rdp_SelectedDateRequiredClosedChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
 		{
 			UpdateClosedQuestions();
-		}
-
-		void UpdateButtonText()
-		{
-
-			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
-
-			int chInt = (int)EHSQuestionId.Create8D;
-			string chString = chInt.ToString();
-			CheckBox create8dCh = (CheckBox)pnlForm.FindControl(chString);
-
-			if (create8dCh != null && create8dCh.Checked == true)
-			{
-				if (IsEditContext)
-					btnSaveContinue.Text = "Save & Edit 8D";
-				else
-					btnSaveContinue.Text = "Save & Create 8D";
-			}
-			else
-			{
-				if (IsEditContext)
-					btnSaveContinue.Text = "Save & Edit Report";
-				else
-					btnSaveContinue.Text = Resources.LocalizedText.SaveAndCreateReport;
-			}
-
-			if (IsEditContext)
-				SetSubnav("edit");
-			else
-				SetSubnav("new");
-		}
-
-		void bcb_CheckedChangedCreate8D(object sender, EventArgs e)
-		{
-			UpdateButtonText();
 		}
 
 		void bcb_CheckedChangedClose(object sender, EventArgs e)
@@ -1486,8 +1441,6 @@ namespace SQM.Website
 				if (q.QuestionControls != null && q.QuestionControls.Count > 0)
 					ProcessQuestionControls(q, 0);
 			}
-
-			UpdateButtonText(); // One last check to fix 8d button text
 		}
 
 		protected void ProcessQuestionControls(EHSIncidentQuestion question, int depth)
@@ -1535,6 +1488,8 @@ namespace SQM.Website
 
 					var localControl = control;
 					EHSIncidentQuestion affectedQuestion = questions.FirstOrDefault(q => q.QuestionId == localControl.INCIDENT_QUESTION_AFFECTED_ID);
+
+					criteriaIsMet = true; // !!!! forcing all controls to display since autopostack not working with radajax panel
 
 					if (containerControl != null && affectedQuestion != null)
 					{
@@ -1672,7 +1627,7 @@ namespace SQM.Website
 			container.Controls.Add(rttHelp);
 		}
 
-		public void InitNewIncident(decimal newTypeID, decimal newLocationID)
+		public void InitNewIncident(decimal newTypeID, string inspectionType, decimal newLocationID)
 		{
 			if (newTypeID > 0)
 			{
@@ -1680,20 +1635,34 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				SelectedTypeText = inspectionType;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;
 				IsEditContext = false;
+				CurrentStep = 0;
 				BuildForm();
 			}
 		}
 
-		public void BindIncident(decimal incidentID)
+		public void BindIncident(decimal incidentID, int stepNumber)
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
 			IncidentStepCompleted = 0;
+			CurrentStep = stepNumber;
+			switch (CurrentStep)
+			{
+				case 1:
+					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
+					break;
+				case 23:
+					lblPageTitle.Text = Resources.LocalizedText.Approvals;
+					break;
+				default:
+					lblPageTitle.Text = Resources.LocalizedText.Recommendation;
+					break;
+			}
 			BuildForm();
 		}
 
@@ -1708,7 +1677,10 @@ namespace SQM.Website
 			{
 				CurrentSubnav = (sender as RadButton).CommandArgument;
 				CurrentStep = Convert.ToInt32((sender as RadButton).CommandArgument);
-				Save(false);
+				INCIDENT theIncident = Save(false);
+
+				SetPageAccess(theIncident, CurrentStep);
+
 			}
 			else
 			{
@@ -1721,7 +1693,9 @@ namespace SQM.Website
 		{
 			if (Page.IsValid)
 			{
-				Save(false);
+				INCIDENT theIncident = Save(false);
+
+				SetPageAccess(theIncident, CurrentStep);
 			}
 			else
 			{
@@ -1748,7 +1722,7 @@ namespace SQM.Website
 			}
 		}
 
-		protected void Save(bool shouldReturn)
+		protected INCIDENT Save(bool shouldReturn)
 		{
 			INCIDENT theIncident = null;
 			decimal incidentId = 0;
@@ -1785,7 +1759,6 @@ namespace SQM.Website
 					// Add context - step 0
 					theIncident = CreateNewIncident();
 					EditIncidentId = incidentId = theIncident.INCIDENT_ID;
-					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 				}
 				else
@@ -1794,28 +1767,29 @@ namespace SQM.Website
 					incidentId = EditIncidentId;
 					if (incidentId > 0)
 					{
-						theIncident = UpdateIncident(incidentId);
-						EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
+						theIncident = UpdateIncident(incidentId);  /// SAVE THE FUCKING THING 
 					}
 				}
+
 				if (incidentId > 0)
 				{
 					shouldCreate8d = AddOrUpdateAnswers(questions, incidentId);
 					SaveAttachments(incidentId);
+					UpdateTaskInfo(questions, incidentId, DateTime.UtcNow);
 				}
 			}
-			else if (CurrentStep == 1)
+			else
 			{
 				// Edit context - step 1
 				incidentId = EditIncidentId;
 				if (incidentId > 0)
 				{
-					AddOrUpdateAnswers(questions, incidentId);
-					shouldCreate8d = false;
-					SaveAttachments(incidentId);
+					theIncident = UpdateIncident(incidentId);  /// SAVE THE FUCKING THING 
 
-					UpdateTaskInfo(questions, incidentId, DateTime.Now);
-					EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
+					AddOrUpdateAnswers(questions, incidentId);
+
+					SaveAttachments(incidentId);
+					UpdateTaskInfo(questions, incidentId, DateTime.UtcNow);
 				}
 			}
 
@@ -1827,7 +1801,9 @@ namespace SQM.Website
 				finalPlantId = selectedPlantId;
 
 			if (shouldReturn)
-				Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
+				Response.Redirect("/EHS/EHS_PrevActions.aspx");  // mt - temporary
+
+			return theIncident;
 		}
 
 		#endregion
@@ -2003,10 +1979,6 @@ namespace SQM.Website
 					};
 					entities.AddToINCIDENT_ANSWER(incidentAnswer);
 				}
-
-				// Check if Quality Issue (8D) question set to true
-				if (q.QuestionId == (decimal)EHSQuestionId.Create8D && q.AnswerText == "Yes")
-					shouldCreate8d = true;
 			}
 			entities.SaveChanges();
 
@@ -2018,8 +1990,8 @@ namespace SQM.Website
 			decimal incidentId = 0;
 			var newIncident = new INCIDENT()
 			{
-				DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID,
-				DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID,
+				DETECT_COMPANY_ID = (decimal)SessionManager.IncidentLocation.Plant.COMPANY_ID,
+				DETECT_BUS_ORG_ID = (decimal)SessionManager.IncidentLocation.Plant.BUS_ORG_ID,
 				DETECT_PLANT_ID = SessionManager.IncidentLocation.Plant.PLANT_ID,
 				INCIDENT_TYPE = "EHS",
 				CREATE_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ),
@@ -2029,10 +2001,12 @@ namespace SQM.Website
 				DESCRIPTION = incidentDescription,
 				CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID,
 				INCIDENT_DT = incidentDate,
-				ISSUE_TYPE = SelectedTypeText,
+				ISSUE_TYPE = questions.Where(l => l.QuestionId == (decimal)EHSQuestionId.InspectionCategory).Select(s => s.AnswerText).FirstOrDefault(),
 				ISSUE_TYPE_ID = SelectedTypeId,
-				INCFORM_LAST_STEP_COMPLETED = 100
+				INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined
 			};
+			newIncident = EHSIncidentMgr.UpdatePrevActionStatus(newIncident, questions, CurrentStep, newIncident.LAST_UPD_DT);
+
 			entities.AddToINCIDENT(newIncident);
 			entities.SaveChanges();
 			incidentId = newIncident.INCIDENT_ID;
@@ -2045,20 +2019,14 @@ namespace SQM.Website
 			INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == incidentId select i).FirstOrDefault();
 			if (incident != null)
 			{
-				incident.DETECT_COMPANY_ID = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-				incident.DETECT_BUS_ORG_ID = SessionManager.UserContext.WorkingLocation.BusinessOrg.BUS_ORG_ID;
-				incident.DETECT_PLANT_ID = selectedPlantId;
-				incident.INCIDENT_TYPE = "EHS";
-				//incident.CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 				incident.DESCRIPTION = incidentDescription;
-				//incident.CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
 				incident.INCIDENT_DT = incidentDate;
-				incident.ISSUE_TYPE = SelectedTypeText;
+				incident.ISSUE_TYPE = questions.Where(l => l.QuestionId == (decimal)EHSQuestionId.InspectionCategory).Select(s => s.AnswerText).FirstOrDefault();
 				incident.ISSUE_TYPE_ID = SelectedTypeId;
 				incident.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 				incident.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-				if (incident.INCFORM_LAST_STEP_COMPLETED < 100)
-					incident.INCFORM_LAST_STEP_COMPLETED = 100;
+
+				incident = EHSIncidentMgr.UpdatePrevActionStatus(incident, questions, CurrentStep, incident.LAST_UPD_DT);
 
 				entities.SaveChanges();
 			}
@@ -2089,50 +2057,27 @@ namespace SQM.Website
 		{
 			DateTime dueDate = DateTime.MinValue;
 			decimal responsiblePersonId = 0;
+			string detailDesc = "";
 
 			foreach (var q in questions)
 			{
-				var thisQuestion = q;
-				var incidentAnswer = (from ia in entities.INCIDENT_ANSWER
-									  where ia.INCIDENT_ID == incidentId
-										  && ia.INCIDENT_QUESTION_ID == thisQuestion.QuestionId
-									  select ia).FirstOrDefault();
-
-				if (incidentAnswer != null && !String.IsNullOrEmpty(incidentAnswer.ANSWER_VALUE))
+				if (!String.IsNullOrEmpty(q.AnswerText))
 				{
-					if (q.QuestionId == (decimal)EHSQuestionId.DateDue)
-						dueDate = DateTime.Parse(incidentAnswer.ANSWER_VALUE, CultureInfo.GetCultureInfo("en-US"));
-					else if (q.QuestionId == (decimal)EHSQuestionId.ResponsiblePersonDropdown)
-						responsiblePersonId = Convert.ToDecimal(incidentAnswer.ANSWER_VALUE);
+					{
+						if (q.QuestionId == (decimal)EHSQuestionId.ReportDate)
+							dueDate = createDate.AddDays(30);  // per TI the due date should be based on the incident CREATE date instead of the inspection date
+						else if (q.QuestionId == (decimal)EHSQuestionId.AssignToPerson)
+							responsiblePersonId = Convert.ToDecimal(q.AnswerText);
+						else if (q.QuestionId == (decimal)EHSQuestionId.RecommendationSummary)
+							detailDesc = q.AnswerText;
+					}
 				}
 			}
 
 			if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
 			{
-				//int recordTypeId = (Mode == IncidentMode.Prevent) ? 45 : 40;
-				int recordTypeId = 40;
-				EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.update).ToString(), 0, responsiblePersonId, recordTypeId, dueDate, "", "");
+				EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.update).ToString(), 0, responsiblePersonId, 45, dueDate, "", detailDesc);
 			}
-		}
-
-		protected void Create8dAndRedirect(decimal incidentId)
-		{
-			SessionManager.ReturnStatus = true;
-
-			PROB_CASE probCase = ProblemCase.LookupCaseByIncident(incidentId);
-			if (probCase != null)
-			{
-				// If 8D problem case exists, redirect with problem case ID
-				SessionManager.ReturnObject = probCase.PROBCASE_ID;
-			}
-			else
-			{
-				// Otherwise, redirect with the intent of creating a new problem case
-				var entities = new PSsqmEntities();
-				SessionManager.ReturnObject = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
-			}
-
-			Response.Redirect("/Problem/Problem_Case.aspx?c=EHS");
 		}
 
 		protected void GoToNextStep(decimal incidentId)
@@ -2143,166 +2088,115 @@ namespace SQM.Website
 			SessionManager.ReturnRecordID = incidentId;
 		}
 
-		protected void ShowIncidentDetails(decimal incidentId, string result)
+		protected void ShowIncidentDetails(decimal incidentId, string result, int stepToDisplay)
 		{
-			// Display incident details control
-			btnDelete.Visible = false;
-			lblResults.Text = result.ToString();
-			var displaySteps = new int[] { CurrentStep };
+			if (stepToDisplay > -1)
+			{
+				lblResults.Text = result.ToString();
+				divDetails.Visible = uclIncidentDetails.Visible = true;
+				var displaySteps = new int[] { stepToDisplay };
+				uclIncidentDetails.Refresh(incidentId, displaySteps);
+			}
+			else
+			{
+				lblResults.Text = result.ToString();
+				divDetails.Visible = uclIncidentDetails.Visible = false;
+			}
 		}
 
 		#endregion
 
 		#region subnav
-		private void SetSubnav(string context)
+
+		private void SetPageAccess(INCIDENT incident, int actionStep)
 		{
-			if (context == "new")
+			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;  // ???
+
+			if (incident == null)  // new incident
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+				btnSubnavIncident.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
 				btnDelete.Visible = false;
 			}
 			else
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
-				btnSubnavIncident.Visible = true;
-				btnSubnavIncident.Enabled = false;
-				btnSubnavIncident.CssClass = "buttonLinkDisabled";
-				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
-				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
+				btnSubnavIncident.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+				btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = true;
+				btnSubnavIncident.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+			}
+
+			switch (actionStep)
+			{
+				case 0:
+					pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[1] {SysPriv.originate}, IncidentStepCompleted);
+					btnDelete.Visible = EHSIncidentMgr.CanDeletePrevAction(CreatePersonId, IncidentStepCompleted);
+					btnSubnavIncident.Enabled = false;
+					btnSubnavIncident.CssClass = "buttonLinkDisabled";
+					break;
+				case 1:
+					pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, IncidentStepCompleted);
+					btnDelete.Visible = false;
+					btnSubnavAction.Enabled = false;
+					btnSubnavAction.CssClass = "buttonLinkDisabled";
+					break;
+				case 2:
+					pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[2] { SysPriv.approve1, SysPriv.approve2 }, IncidentStepCompleted);
+					btnDelete.Visible = false;
+					btnSubnavApproval.Enabled = false;
+					btnSubnavApproval.CssClass = "buttonLinkDisabled";
+					break;
+				default:
+					pnlForm.Enabled = btnSubnavSave.Visible = btnDelete.Visible = false;
+					break;
 			}
 		}
 
 		protected void btnSubnavSave_Click(object sender, EventArgs e)
 		{
 			int status = 0;
-			switch (CurrentSubnav)
+
+			if (IsEditContext)
 			{
-				case "2":
-					status = uclContainment.AddUpdateINCFORM_CONTAIN(EditIncidentId);
-					btnSubnav_Click(btnSubnavContainment, null);
-					break;
-				case "3":
-					status = uclRootCause.AddUpdateINCFORM_ROOT5Y(EditIncidentId);
-					btnSubnav_Click(btnSubnavRootCause, null);
-					break;
-				case "4":
-					status = uclAction.AddUpdateINCFORM_ACTION(EditIncidentId);
-					btnSubnav_Click(btnSubnavAction, null);
-					break;
-				case "5":
-					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);
-					btnSubnav_Click(btnSubnavApproval, null);
-					break;
-				case "35":
-					status = uclCausation.UpdateCausation(EditIncidentId);
-					btnSubnav_Click(btnSubnavCausation, null);
-					break;
-				default:
-					if (IsEditContext)
-					{
-						btnSaveContinue_Click(sender, null);
-						BuildForm();
-					}
-					else
-						btnSaveReturn_Click(sender, null);
-					break;
+				btnSaveContinue_Click(sender, null);
+				BuildForm();
 			}
+			else
+			{
+				btnSaveReturn_Click(sender, null);
+			}
+
 			if (status >= 0)
 			{
 				//string script = string.Format("alert('{0}');", "Your updates have been saved.");
 				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-
-				if(CurrentSubnav == "0"  || CurrentSubnav == "I")
-					btnSubnav_Click(btnSubnavContainment, null);
 			}
 		}
 
 		protected void btnSubnav_Click(object sender, EventArgs e)
 		{
-			//RadButton btn = (RadButton)sender;
-
 			LinkButton btn = (LinkButton)sender;
-
-			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
-			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
-			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
-
-			lblPageTitle.Text = Resources.LocalizedText.Incident;
+			btnSubnavIncident.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = true;
+			btnSubnavIncident.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
 
 			switch (btn.CommandArgument)
 			{
-				case "2":
-					lblPageTitle.Text = "Initial Corrective Actions";
-					btnSubnavContainment.Enabled = false;
-					btnSubnavContainment.CssClass = "buttonLinkDisabled";
-					uclContainment.Visible = divSubnavPage.Visible = true;
-					uclContainment.IsEditContext = true;
-					uclContainment.EditIncidentId = EditIncidentId;
-					uclContainment.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					break;
-				case "3":
-					lblPageTitle.Text = Resources.LocalizedText.RootCause;
-					btnSubnavRootCause.Enabled = false;
-					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
-					uclRootCause.Visible = divSubnavPage.Visible = true;
-					uclRootCause.IsEditContext = true;
-					uclRootCause.EditIncidentId = EditIncidentId;
-					uclRootCause.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					break;
 				case "4":
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
-					btnSubnavAction.Enabled = false;
-					btnSubnavAction.CssClass = "buttonLinkDisabled";
-					uclAction.Visible = divSubnavPage.Visible = true;
-					uclAction.IsEditContext = true;
-					uclAction.EditIncidentId = EditIncidentId;
-					uclAction.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					BindIncident(EditIncidentId, 1);
 					break;
 				case "5":
 					lblPageTitle.Text = Resources.LocalizedText.Approvals;
-					btnSubnavApproval.Enabled = false;
-					btnSubnavApproval.CssClass = "buttonLinkDisabled";
-					uclApproval.Visible = divSubnavPage.Visible = true;
-					uclApproval.IsEditContext = true;
-					uclApproval.EditIncidentId = EditIncidentId;
-					uclApproval.PopulateInitialForm();
-					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
-					break;
-				case "35":
-					lblPageTitle.Text = "Causation";
-					btnSubnavCausation.Enabled = false;
-					btnSubnavCausation.CssClass = "buttonLinkDisabled";
-					uclCausation.Visible = divSubnavPage.Visible = true;
-					uclCausation.IsEditContext = true;
-					uclCausation.EditIncidentId = EditIncidentId;
-					uclCausation.PopulateInitialForm(entities);
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					BindIncident(EditIncidentId, 2);
 					break;
 				case "0":
 				default:
-					lblPageTitle.Text = Resources.LocalizedText.Incident;
-					btnSubnavIncident.Visible = true;
-					btnSubnavIncident.Enabled = false;
-					btnSubnavIncident.CssClass = "buttonLinkDisabled";
-					if (pnlForm.Visible == false)
-					{
-						pnlForm.Visible = true;
-						BuildForm();
-					}
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+					lblPageTitle.Text = Resources.LocalizedText.Recommendation;
+					BindIncident(EditIncidentId, 0);
 					break;
 			}
-
 		}
 		#endregion
 
@@ -2313,36 +2207,27 @@ namespace SQM.Website
 
 		protected void RefreshPageContext()
 		{
-			string typeString = Resources.LocalizedText.Incident;
-			lblPageTitle.Text = typeString;
+			if (!IsEditContext)
+			{
+				lblAddOrEditIncident.Text = "New" + "&nbsp" + Resources.LocalizedText.Recommendation;
+				lblIncidentType.Text =  SelectedTypeText;
+				lblIncidentLocation.Text = SessionManager.IncidentLocation.Plant.PLANT_NAME;
+			}
+			else
+			{
+				lblAddOrEditIncident.Text = Resources.LocalizedText.Recommendation + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
+				lblIncidentType.Text  = SelectedTypeText;
+				lblIncidentLocation.Text = EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
+			}
 
-				if (!IsEditContext)
-				{
-					lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
-					lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
-					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
-					lblIncidentLocation.Text = "Incident Location: ";
-					lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
-				}
-				else
-				{
-
-					lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
-					lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
-					lblIncidentLocation.Text = "Incident Location: ";
-					lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
-					lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
-				}
-
-				UpdateControlledQuestions();
-				UpdateButtonText();
+			UpdateControlledQuestions();
 		}
 
 		List<decimal> SelectPlantIdsByAccessLevel()
 		{
 			List<decimal> plantIdList = new List<decimal>();
 
-			if (UserContext.GetMaxScopePrivilege(SysScope.incident) <= SysPriv.admin)
+			if (UserContext.GetMaxScopePrivilege(SysScope.prevent) <= SysPriv.admin)
 			{
 				plantIdList = EHSIncidentMgr.SelectPlantIdsByCompanyId(companyId);
 			}
@@ -2357,7 +2242,6 @@ namespace SQM.Website
 
 			return plantIdList;
 		}
-
 
 	}
 }

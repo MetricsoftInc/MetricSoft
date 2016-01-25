@@ -11,7 +11,7 @@ namespace SQM.Website
 		Prevent
 	}
 
-	public enum IncidentStepStatus { unknown=0, defined=100, workstatus=105, containment=110, containmentComplete=115,  rootcause=120, rootcauseComplete=125, correctiveaction=130, correctiveactionComplete=135, signoff1=151, signoff2=152, signoffComplete=155}
+	public enum IncidentStepStatus { unknown=0, defined=100, workstatus=105, containment=110, containmentComplete=115,  rootcause=120, rootcauseComplete=125, correctiveaction=130, correctiveactionComplete=135, signoff1=151, signoff2=152, signoffComplete=155, awaitingFunding=156}
 
 	public class EHSIncidentQuestion
 	{
@@ -132,17 +132,15 @@ namespace SQM.Website
 
 			if (this.Incident.ISSUE_TYPE_ID == 13)
 			{
-				if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "In Progress").Count() > 0)
-					this.Status = "P";  // in-progress
-				else if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.CorrectiveActionsStatus && l.ANSWER_VALUE == "Closed").Count() > 0)
-					this.Status = "C";  // actions complete
-				//if (this.Incident.CLOSE_DATE.HasValue && !this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
-				//    this.Status = "C";  // actions complete
-				if (this.Incident.CLOSE_DATE.HasValue && this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE.HasValue)
 				{
-					this.Status = "U";  // audited and closed
+					this.Status = "C";  // incident closed
 					if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
-						this.Status = "F";
+						this.Status = "F";   // awaiting funding
+				}
+				else
+				{
+					this.Status = "A";  // incident open
 				}
 			}
 			else
@@ -170,9 +168,9 @@ namespace SQM.Website
 			int days = 0;
 			if (this.Incident.ISSUE_TYPE_ID == 13)
 			{
-				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue)
+				if (this.Incident.CLOSE_DATE.HasValue)
 				{
-					DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE_DATA_COMPLETE);
+					DateTime closeDT = Convert.ToDateTime(this.Incident.CLOSE_DATE);
 					days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract((DateTime)this.Incident.CREATE_DT).TotalDays));
 					this.DaysOpen = 0;
 				}
@@ -785,114 +783,23 @@ namespace SQM.Website
 			return (from p in entities.PLANT where p.COMPANY_ID == companyId orderby p.PLANT_NAME select p.PLANT_ID).ToList();
 		}
 
-		public static List<PERSON> SelectIncidentPersonList(decimal incidentId)
+
+		public static List<PERSON> SelectIncidentPersonList(INCIDENT incident, bool emailOnly)
 		{
-			var personSelectList = new List<PERSON>();
-			var entities = new PSsqmEntities();
-
-			INCIDENT incident = SelectIncidentById(entities, incidentId);
-			decimal companyId = 0;
-			if (incident.DETECT_COMPANY_ID != null)
-				companyId = incident.DETECT_COMPANY_ID;
-
-			// start with all data originators for the company
-			List<PERSON> personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).OrderBy(p => p.LAST_NAME).ToList();
-			personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
-			// limit the list to those people having access to the plant where the incident (if defined) occurred
-			if (incident != null)
+			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, (decimal)incident.DETECT_PLANT_ID);
+			if (emailOnly)
 			{
-				foreach (PERSON person in personList)
-				{
-					if (SQMModelMgr.PersonPlantAccess(person, (decimal)incident.DETECT_PLANT_ID) || (incident.RESP_PLANT_ID.HasValue && SQMModelMgr.PersonPlantAccess(person, (decimal)incident.RESP_PLANT_ID)))
-						personSelectList.Add(person);
-				}
+				personList = personList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList();
 			}
-
-			personSelectList = personSelectList.OrderBy(p => p.FIRST_NAME).ToList();
-			personSelectList = personSelectList.OrderBy(p => p.LAST_NAME).ToList();
-
-			return personSelectList;
-		}
-
-
-		public static List<PERSON> SelectCompanyPersonList(decimal companyId)
-		{
-			var personList = new List<PERSON>();
-
-			// select admins for the company with EHS access
-			personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).ToList();
-			personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
-
-			personList = personList.OrderBy(p => p.FIRST_NAME).ToList();
-			personList = personList.OrderBy(p => p.LAST_NAME).ToList();
 
 			return personList;
 		}
 
 		public static List<PERSON> SelectEhsPeopleAtPlant(decimal plantId)
 		{
-			var people = new List<PERSON>();
-			PSsqmEntities entities = new PSsqmEntities();
+			List<PERSON> people = new List<PERSON>();
 
-			people = (from p in entities.PERSON
-					  join pa in entities.PERSON_ACCESS on p.PERSON_ID equals pa.PERSON_ID
-					  where p.PLANT_ID == plantId
-					  && pa.ACCESS_PROD == "EHS"
-					  select p).Distinct().ToList();
-
-			return people;
-		}
-
-		public static List<PERSON> SelectEhsAdminsAtPlant(decimal plantId)
-		{
-			var people = new List<PERSON>();
-
-			people = SelectEhsPeopleAtPlant(plantId);
-			people = (from p in people where p.ROLE <= 100 select p).ToList(); // Filter by company admins
-
-			return people;
-		}
-
-		public static List<PERSON> SelectEhsDataOriginatorsAtPlant(decimal plantId)
-		{
-			var people = new List<PERSON>();
-
-			people = SelectEhsPeopleAtPlant(plantId);
-			people = (from p in people where p.ROLE <= 300 select p).ToList(); // Filter by data originators
-
-			return people;
-		}
-
-		public static List<PERSON> SelectDataOriginatorAdditionalPlantAccess(decimal plantId)
-		{
-			var people = new List<PERSON>();
-			PSsqmEntities entities = new PSsqmEntities();
-
-			var allAdmins = (from p in entities.PERSON where p.ROLE <= 300 select p).ToList();
-			foreach (var admin in allAdmins)
-			{
-				try
-				{
-					if (admin.NEW_LOCATION_CD != null)
-					{
-						var plants = admin.NEW_LOCATION_CD.Split(',');
-						foreach (string locPlantId in plants)
-						{
-							if (!string.IsNullOrEmpty(locPlantId))
-							{
-								decimal thisId = 0;
-								Decimal.TryParse(locPlantId, out thisId);
-								if (thisId > 0 && thisId == plantId)
-									people.Add(admin);
-							}
-						}
-					}
-				}
-				catch
-				{
-				}
-			}
-
+			people = SQMModelMgr.SelectPrivGroupPersonList(new SysPriv[3] {SysPriv.originate, SysPriv.update, SysPriv.action}, SysScope.incident, plantId, false);
 
 			return people;
 		}
@@ -1504,82 +1411,6 @@ namespace SQM.Website
 			return shouldClose;
 		}
 
-		public static void TryClosePrevention(decimal incidentId, decimal personId, DateTime defaultDate)
-		{
-			var entities = new PSsqmEntities();
-
-			INCIDENT incident = SelectIncidentById(entities, incidentId);
-
-			bool shouldUpdateAuditPerson = true;
-
-			if (ShouldPreventionClose(incident))
-			{
-				incident.CLOSE_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
-				incident.CLOSE_PERSON = personId;
-				SetTaskComplete(incidentId, 45);
-				shouldUpdateAuditPerson = false;
-			}
-			else
-			{
-				incident.CLOSE_DATE = null;
-			}
-
-			if (ShouldPreventionCloseAudited(incident))
-			{
-				incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
-				if (shouldUpdateAuditPerson == true)
-					incident.AUDIT_PERSON = personId;
-			}
-			else
-			{
-				incident.CLOSE_DATE_DATA_COMPLETE = null;
-			}
-
-			entities.SaveChanges();
-		}
-
-		public static bool ShouldPreventionClose(INCIDENT incident)
-		{
-			var entities = new PSsqmEntities();
-			bool shouldClose = false;
-
-			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 1);
-			foreach (var q in questionList)
-			{
-				string answer = (from a in entities.INCIDENT_ANSWER
-								 where a.INCIDENT_ID == incident.INCIDENT_ID && a.INCIDENT_QUESTION_ID == q.QuestionId
-								 select a.ANSWER_VALUE).FirstOrDefault();
-
-				if (q.QuestionId == (decimal)EHSQuestionId.CorrectiveActionsStatus && !string.IsNullOrEmpty(answer))
-					if (answer.ToLower() == "closed")
-						shouldClose = true;
-			}
-
-			return shouldClose;
-		}
-
-
-		public static bool ShouldPreventionCloseAudited(INCIDENT incident)
-		{
-			bool shouldClose = false;
-
-			var entities = new PSsqmEntities();
-
-			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 1);
-			foreach (var q in questionList)
-			{
-				string answer = (from a in entities.INCIDENT_ANSWER
-								 where a.INCIDENT_ID == incident.INCIDENT_ID && a.INCIDENT_QUESTION_ID == q.QuestionId
-								 select a.ANSWER_VALUE).FirstOrDefault();
-
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !string.IsNullOrEmpty(answer))
-					if (answer.ToLower() == "yes" || answer.ToLower().Contains("funding"))
-						shouldClose = true;
-			}
-
-			return shouldClose;
-		}
-
 		public static string SelectIncidentAnswer(INCIDENT incident, decimal questionId)
 		{
 			string answerText = null;
@@ -1671,9 +1502,112 @@ namespace SQM.Website
 			return nextSeq;
 		}
 
+		#region prevactions
 
-		//OrderByDescending(x => x.Status).First();
+		public static bool CanUpdatePrevAction(INCIDENT incident, bool IsEditContext, SysPriv[] privNeededList, int stepCompleted)
+		{
+			bool canUpdate = false;
+
+			if (stepCompleted >= (int)IncidentStepStatus.signoff1)  // action is closed
+			{
+				canUpdate = false;
+			}
+			else if (incident != null && incident.CREATE_PERSON == SessionManager.UserContext.Person.PERSON_ID)
+			{
+				canUpdate = true;
+			}
+			else
+			{
+				foreach (SysPriv priv in privNeededList)
+				{
+					if (SessionManager.CheckUserPrivilege(priv, SysScope.prevent))
+						canUpdate = true;
+				}
+			}
+
+			return canUpdate;
+		}
+
+
+		public static bool CanDeletePrevAction(decimal createPersonID, int stepCompleted)
+		{
+			bool canDelete = false;
+
+			if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.prevent) ||
+				UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.prevent) ||
+				UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.prevent) ||
+				SessionManager.UserContext.Person.PERSON_ID == createPersonID)
+			{
+				canDelete = true;
+			}
+
+			return canDelete;
+		}
+
+		public static INCIDENT UpdatePrevActionStatus(INCIDENT theIncident, List<EHSIncidentQuestion> questions, int currentStep, DateTime? defaultDate)
+		{
+			int status = 0;
+			EHSIncidentQuestion completionQuestion = null;
+
+			// assume questions collection is for the current step 
+			bool stepComplete = true;
+			foreach (EHSIncidentQuestion q in questions)
+			{
+				if (q.IsRequired && string.IsNullOrEmpty(q.AnswerText))
+				{
+					stepComplete = false;
+					break;
+				}
+			}
+
+			if (stepComplete)
+			{
+				switch (currentStep)
+				{
+					case 0:
+						if (theIncident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.correctiveaction)
+						{
+							theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.correctiveaction;
+							theIncident.LAST_UPD_DT = defaultDate.HasValue ? defaultDate : DateTime.UtcNow;
+						}
+						break;
+					case 1:
+						completionQuestion = questions.Where(l=> l.QuestionId == (decimal)EHSQuestionId.CorrectiveActionsStatus).FirstOrDefault();
+						if (completionQuestion.AnswerText.ToLower() =="closed")
+						{
+							if (theIncident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.correctiveactionComplete)
+							{
+								theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.correctiveactionComplete;
+								theIncident.CLOSE_DATE_DATA_COMPLETE = theIncident.LAST_UPD_DT = defaultDate.HasValue ? defaultDate : DateTime.UtcNow;
+								SetTaskComplete(theIncident.INCIDENT_ID, 45);
+							}
+						}
+						break;
+					case 2:
+						completionQuestion = questions.Where(l=> l.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved).FirstOrDefault();
+						if (completionQuestion.AnswerText.ToLower() == "yes" || completionQuestion.AnswerText.ToLower().Contains("funding"))
+						{
+							if (theIncident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.signoffComplete)
+							{
+								theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.signoffComplete;
+								theIncident.CLOSE_DATE = theIncident.LAST_UPD_DT = defaultDate.HasValue ? defaultDate : DateTime.UtcNow;
+								theIncident.AUDIT_PERSON = theIncident.CLOSE_PERSON = SessionManager.UserContext.Person.PERSON_ID;
+							}
+						}
+						break;
+					default:
+						break;
+				}
+			}
+
+			return theIncident;
+		}
+
+		#endregion
 	}
+
+
+	#region metadata
 
 	public class EHSMetaData
 	{
@@ -1690,7 +1624,6 @@ namespace SQM.Website
 
 	public static class EHSMetaDataMgr
 	{
-
 		public static List<EHSMetaData> SelectMetaDataList(string metaDataType)
 		{
 			var entities = new PSsqmEntities();
@@ -1751,6 +1684,6 @@ namespace SQM.Website
 
 			return metaList;
 		}
-	
+	#endregion
 	}
 }

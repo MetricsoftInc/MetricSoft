@@ -627,4 +627,16 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="InspectionLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="PreventativeAction" xml:space="preserve">
+    <value>Preventative Action</value>
+  </data>
+  <data name="Recommendation" xml:space="preserve">
+    <value>Recommendation</value>
+  </data>
+  <data name="RecommendationType" xml:space="preserve">
+    <value>Recommendation Type</value>
+  </data>
 </root>

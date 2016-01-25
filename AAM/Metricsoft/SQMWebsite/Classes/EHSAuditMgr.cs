@@ -910,7 +910,7 @@ namespace SQM.Website
 
 			// start with all data originators for the company
 			List<PERSON> personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).OrderBy(p => p.LAST_NAME).ToList();
-			personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
+			//personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
 			// limit the list to those people having access to the plant where the audit (if defined) occurred
 			if (audit != null)
 			{
@@ -933,7 +933,7 @@ namespace SQM.Website
 
 			// select admins for the company with EHS access
 			personList = SQMModelMgr.SelectPersonList(companyId, 0, true, false).Where(l => l.ROLE <= 300).ToList();
-			personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
+			//personList = SQMModelMgr.FilterPersonListByAppContext(personList, "EHS");
 
 			personList = personList.OrderBy(p => p.FIRST_NAME).ToList();
 			personList = personList.OrderBy(p => p.LAST_NAME).ToList();
@@ -943,34 +943,9 @@ namespace SQM.Website
 
 		public static List<PERSON> SelectEhsPeopleAtPlant(decimal plantId)
 		{
-			var people = new List<PERSON>();
-			PSsqmEntities entities = new PSsqmEntities();
+			List<PERSON> people = new List<PERSON>();
 
-			people = (from p in entities.PERSON
-					  join pa in entities.PERSON_ACCESS on p.PERSON_ID equals pa.PERSON_ID
-					  where p.PLANT_ID == plantId
-					  && pa.ACCESS_PROD == "EHS"
-					  select p).Distinct().ToList();
-
-			return people;
-		}
-
-		public static List<PERSON> SelectEhsAdminsAtPlant(decimal plantId)
-		{
-			var people = new List<PERSON>();
-
-			people = SelectEhsPeopleAtPlant(plantId);
-			people = (from p in people where p.ROLE <= 100 select p).ToList(); // Filter by company admins
-
-			return people;
-		}
-
-		public static List<PERSON> SelectEhsDataOriginatorsAtPlant(decimal plantId)
-		{
-			var people = new List<PERSON>();
-
-			people = SelectEhsPeopleAtPlant(plantId);
-			people = (from p in people where p.ROLE <= 300 select p).ToList(); // Filter by data originators
+			people = SQMModelMgr.SelectPrivGroupPersonList(new SysPriv[3] { SysPriv.originate, SysPriv.update, SysPriv.action }, SysScope.audit, plantId, false);
 
 			return people;
 		}

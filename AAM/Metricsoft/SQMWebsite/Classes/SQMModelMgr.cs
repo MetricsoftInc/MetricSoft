@@ -614,6 +614,28 @@ namespace SQM.Website
 			return personList;
 		}
 
+		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope, decimal plantID, bool activeOnly)
+		{
+			List<PERSON> personList = new List<PERSON>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				string privScope = scope.ToString();
+				string addPlant = "," + plantID.ToString() + ",";
+
+				personList = (from p in ctx.PERSON
+							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
+							  join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
+							  where g.PRIV_GROUP == p.PRIV_GROUP
+									&& (privList.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
+									&& (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
+									&& (!activeOnly || p.STATUS == "A")
+							  select p).ToList();
+			}
+
+			return personList;
+		}
+
 		public static List<PERSON> SelectPrivgroupPersonList(string[] privGroups)
 		{
 			List<PERSON> personList = new List<PERSON>();
@@ -729,16 +751,13 @@ namespace SQM.Website
             try
             {
                 if (personID == 0)
-					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE")
+					person = (from P in ctx.PERSON.Include("JOBCODE")
                                 where (P.SSO_ID.ToUpper() == SSOID.ToUpper())
                                 select P).Single();
                 else
-					person = (from P in ctx.PERSON.Include("PERSON_ACCESS").Include("PERSON_RESP").Include("JOBCODE")
+					person = (from P in ctx.PERSON.Include("JOBCODE")
                                 where (P.PERSON_ID == personID)
                                 select P).Single();
-
-                if (person.PERSON_RESP == null)
-                    person = AddPersonResp(person);
             }
             catch
             {
@@ -862,7 +881,6 @@ namespace SQM.Website
             person.ROLE = 300;
             person.PREFERRED_TIMEZONE = WebSiteCommon.GetXlatValue("timeZone", "035");
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, "", person.EntityState);
-            person = AddPersonResp(person);
 
             return person;
         }
@@ -907,56 +925,13 @@ namespace SQM.Website
 				return "";
 		}
 
-        public static bool CheckProductModuleAccess(PERSON person, string module)
-        {
-            bool canAccess = false;
+ 
 
-            if (person.ROLE <= 100  || (person.PERSON_ACCESS != null  &&  person.PERSON_ACCESS.Where(a => a.ACCESS_PROD == module).Count() > 0))
-                canAccess = true;
 
-            return canAccess;
-        }
-
-        public static bool CheckModuleTopicAccess(PERSON person, string topic)
-        {
-            bool canAccess = false;
-           // string baseTopic = string.IsNullOrEmpty(topic) ? "" : topic.Substring(0, 1) + "01";  // do this for backwards compatibility with single product access settings
-
-            if (person.ROLE <= 100)
-            {
-                canAccess = true;
-            }
-            else 
-            {
-                string[] args = topic.Split(',');
-                foreach (string ac in args)
-                {
-                    string baseTopic = string.IsNullOrEmpty(ac) ? "" : ac.Substring(0, 1) + "01";  // do this for backwards compatibility with single product access settings
-                    if (person.PERSON_ACCESS != null && (person.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == ac).Count() > 0 || person.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == baseTopic).Count() > 0))
-                        canAccess = true;
-                }
-            }
-
-            return canAccess;
-        }
 
         public static bool CanDelegate(PERSON fromPerson, PERSON toPerson)
         {
             bool canDelegate = false;
-
-            if (fromPerson.PERSON_ID  != toPerson.PERSON_ID  &&  (toPerson.ROLE > 1 && toPerson.ROLE <= 300))
-            {
-                canDelegate = true;
-                PERSON_ACCESS toAccess = null;
-                foreach (PERSON_ACCESS fromAccess in fromPerson.PERSON_ACCESS.Where(a=> Convert.ToInt32(a.ACCESS_TOPIC) > 200))
-                {
-                    if ((toAccess = toPerson.PERSON_ACCESS.Where(a => a.ACCESS_TOPIC == fromAccess.ACCESS_TOPIC && a.ACCESS_LEVEL > 0).FirstOrDefault()) == null)
-                    {
-                        canDelegate = false;
-                        break;
-                    }
-                }
-            }
 
             return canDelegate;
         }
@@ -967,11 +942,11 @@ namespace SQM.Website
             using (PSsqmEntities entities = new PSsqmEntities())
             {
                 if (companyID > 0)
-					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE")
+					personList = (from P in entities.PERSON.Include("JOBCODE")
                               where (P.COMPANY_ID == companyID  &&  P.ROLE > 1)
                               select P).ToList();
                 else if (busOrgID > 0)
-					personList = (from P in entities.PERSON.Include("PERSON_ACCESS").Include("Person_Resp").Include("JOBCODE")
+					personList = (from P in entities.PERSON.Include("JOBCODE")
                                   where (P.BUS_ORG_ID == busOrgID && P.ROLE > 1)
                               select P).ToList();
 
@@ -996,26 +971,13 @@ namespace SQM.Website
             return personList;
         }
 
-        public static List<PERSON> FilterPersonListByAppContext(List<PERSON> personList, string appContext)
-        {
-            List<PERSON> theList = new List<PERSON>();
-
-            foreach (PERSON person in personList)
-            {
-                if (string.IsNullOrEmpty(appContext) || SQMModelMgr.CheckProductModuleAccess(person, appContext))
-                    theList.Add(person);
-            }
-
-            return theList;
-        }
-
         public static List<PERSON> SelectPlantPersonList(decimal companyID, decimal plantID, string appContext)
         {
             List<PERSON> personList = new List<PERSON>();
 
             foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
             {
-                if (PersonPlantAccess(person, plantID)  &&  (string.IsNullOrEmpty(appContext) || SQMModelMgr.CheckProductModuleAccess(person, appContext)))
+                if (PersonPlantAccess(person, plantID)  &&  (string.IsNullOrEmpty(appContext)))
                     personList.Add(person);
             }
 
@@ -1038,7 +1000,7 @@ namespace SQM.Website
                 }
                 foreach (PERSON person in companyPersonList)
                 {
-                    if (PersonPlantAccess(person, location.Plant.PLANT_ID) && (string.IsNullOrEmpty(appContext) || SQMModelMgr.CheckModuleTopicAccess(person, appContext)))
+                    if (PersonPlantAccess(person, location.Plant.PLANT_ID) && (string.IsNullOrEmpty(appContext)))
                     {
                             if (!personList.Contains(person))
                                 personList.Add(person);
@@ -1111,7 +1073,6 @@ namespace SQM.Website
             person.COMPANY_ID = companyID;
             person.ROLE = 300;
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, "", person.EntityState);
-            person = AddPersonResp(person);
             ctx.PERSON.AddObject(person);
 
             return person;
@@ -1124,22 +1085,22 @@ namespace SQM.Website
             if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
+					personList = (from p in ctx.PERSON.Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1 && p.STATUS == "A")
                                select p).ToList();
                 else
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
+					personList = (from p in ctx.PERSON.Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1)
                                select p).ToList();
             }
             else
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
+					personList = (from p in ctx.PERSON.Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID  &&  p.ROLE > 1) && (p.STATUS == "A") && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
                 else
-					personList = (from p in ctx.PERSON.Include("Person_Access").Include("Person_Resp").Include("JOBCODE")
+					personList = (from p in ctx.PERSON.Include("JOBCODE")
                                   where (p.COMPANY_ID == companyID &&  p.ROLE > 1) && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
                                select p).ToList();
             }
@@ -1249,34 +1210,6 @@ namespace SQM.Website
             return person;
         }
 
-        public static PERSON AddPersonResp(PERSON person)
-        {
-            if (person.PERSON_RESP == null)
-            {
-                person.PERSON_RESP = new PERSON_RESP();
-                // enable delegate assignment by default for any new user
-                person = AddPersonAccess(person, "CQM","92", true);
-            }
-
-            return person;
-        }
-
-        public static PERSON AddPersonAccess(PERSON person, string prod, string topic, bool canView)
-        {
-            PERSON_ACCESS access = new PERSON_ACCESS();
-
-            access.PERSON_ID = person.PERSON_ID;
-            access.ACCESS_PROD = prod;
-            access.ACCESS_TOPIC = topic;
-            access.ACCESS_MODULE = "";
-            if (canView)
-                access.ACCESS_LEVEL = 1;
-            access.ACCESS = person.PERSON_ACCESS.Count + 1;
-            person.PERSON_ACCESS.Add(access);
-
-            return person;
-        }
-
 		public static SQM_ACCESS UpdateCredentials(SQM.Website.PSsqmEntities ctx, SQM_ACCESS access, string updateBy, out int status)
         {
             access = (SQM_ACCESS)SQMModelMgr.SetObjectTimestamp((object)access, updateBy, access.EntityState);
@@ -1368,23 +1301,6 @@ namespace SQM.Website
 			}
 			return passError;
 		}
-
-        public static List<PERSON> SelectDelegateList(PSsqmEntities ctx, decimal personID)
-        {
-            // get list of persons for which the supplied personID is a delgate
-            List<PERSON> personList = null;
-            try
-            {
-                personList = (from P in ctx.PERSON
-                              join r in ctx.PERSON_RESP on P.PERSON_ID equals r.PERSON_ID
-                              where (r.DELEGATE_1 == personID)
-                              select P).ToList();
-            }
-            catch { }
-
-            return personList;
-        }
-
 
         #endregion
 

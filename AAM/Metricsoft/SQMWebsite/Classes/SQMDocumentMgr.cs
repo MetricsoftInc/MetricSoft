@@ -180,20 +180,6 @@ namespace SQM.Website.Classes
             return ret;
         }
 
-        public static List<DOCUMENT> GetSharedDocs(decimal personID)
-        {
-            // get documents that this user's delegators have shared
-            List<DOCUMENT> ret = new List<DOCUMENT>();
-
-            List<PERSON> delegateList = SQMModelMgr.SelectDelegateList(new PSsqmEntities(), SessionManager.UserContext.Person.PERSON_ID);
-            foreach (PERSON person in delegateList)
-            {
-                ret.AddRange(SelectDocListByOwner(person.PERSON_ID, 15));
-            }
-
-            return ret;
-        }
-
         public static void Delete(decimal Document_ID)
         {
             

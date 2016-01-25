@@ -110,7 +110,7 @@ namespace SQM.Website
 		private void UpdateTaskList(string cmd)
 		{
 			TaskStatusMgr myTasks = new TaskStatusMgr().CreateNew(0, 0);
-			myTasks.SelectTaskList(new int[2] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident }, new string[1] {((int)SysPriv.action).ToString()}, SessionManager.UserContext.Person.PERSON_ID, true);
+			myTasks.SelectTaskList(new int[3] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident, (int)TaskRecordType.PreventativeAction }, new string[1] { ((int)SysPriv.action).ToString() }, SessionManager.UserContext.Person.PERSON_ID, true);
 			uclTaskList.BindTaskList(myTasks.TaskList, "");
 		}
 
