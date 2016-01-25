@@ -1224,7 +1224,14 @@ namespace SQM.Website
 				task = taskMgr.CreateTask(((int)SysPriv.action).ToString(), "T", taskSeq, !string.IsNullOrEmpty(taskDescription) ? taskDescription : incident.ISSUE_TYPE, dueDate, responsiblePersonId);
 				task.DETAIL = detail;
 				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
-				EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
+				if (recordTypeId == (int)TaskRecordType.PreventativeAction)
+				{
+					EHSNotificationMgr.NotifyPrevActionTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
+				}
+				else
+				{
+					EHSNotificationMgr.NotifyIncidentTaskAssigment(incident, task, ((int)SysPriv.action).ToString());
+				}
 			}
 			else
 			{

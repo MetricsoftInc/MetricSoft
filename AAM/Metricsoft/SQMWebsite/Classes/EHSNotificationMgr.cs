@@ -262,6 +262,192 @@ namespace SQM.Website
 		}
 
 		#endregion
+
+
+		#region prevactionemail
+		public static int NotifyPrevActionStatus(INCIDENT incident, string scopeTask, string comment)
+		{
+			return NotifyPrevActionStatus(incident, scopeTask, "", comment);
+		}
+
+		public static int NotifyPrevActionStatus(INCIDENT incident, string scopeTask, string taskStatus, string comment)
+		{
+			// send email for INCIDENT status change or activity update
+			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
+			EHSIncidentTypeId typeID = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
+			string notifyScope;
+			string incidentLabel;
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
+
+			if ((EHSIncidentTypeId)incident.ISSUE_TYPE_ID == EHSIncidentTypeId.PreventativeAction)
+			{
+				notifyScope = "RM-" + incident.ISSUE_TYPE_ID.ToString();
+			}
+			else
+			{
+				return -1;
+			}
+
+			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+			if (string.IsNullOrEmpty(appUrl))
+				appUrl = "the website";
+
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+
+			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus);
+			notifyPersonList = notifyPersonList.Where(n => !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
+
+			foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())
+			{
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(entities, person);
+				if (typeID == EHSIncidentTypeId.InjuryIllness)
+				{
+					incidentLabel = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE", notifyScope, lang.NLS_LANGUAGE).DESCRIPTION;
+				}
+				else
+				{
+					incidentLabel = incident.ISSUE_TYPE;
+				}
+				string actionText = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE_TASK", scopeTask, lang.NLS_LANGUAGE).DESCRIPTION;
+				if (taskStatus == ((int)SysPriv.notify).ToString())  // how to use enum instead of literal ?
+				{
+					actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.Overdue).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+				}
+				string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incidentLabel + " (" + plant.PLANT_NAME + ")";
+				string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION + actionText + " - <br/>" +
+								"<br/>" +
+								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incidentLabel + "<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								(!string.IsNullOrEmpty(comment) ? "<br/>" + comment : "") +
+								 "<br/>" +
+								"On : " + DateTime.UtcNow.ToString() +
+								"<br/>" +
+								"By : " + incident.LAST_UPD_BY +
+								"<br/>" +
+								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentPath + incident.INCIDENT_ID.ToString()) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
+
+			return status;
+		}
+
+		public static int NotifyPrevActionTaskAssigment(INCIDENT incident, TASK_STATUS theTask, string scopeAction)
+		{
+			// send email notify of new task assigned
+			int status = 0;
+			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+
+			if (person != null && !string.IsNullOrEmpty(person.EMAIL))
+			{
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" });
+				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				if (string.IsNullOrEmpty(appUrl))
+					appUrl = "the website";
+
+				string emailTo = person.EMAIL;
+				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
+				string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "PREVACTION_NOTIFY" && x.XLAT_CODE == "UPDATE").FirstOrDefault().DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+
+				string emailBody = XLATList.Where(x => x.XLAT_GROUP == "PREVACTION_NOTIFY" && x.XLAT_CODE == theTask.STATUS).FirstOrDefault().DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incident.ISSUE_TYPE + "<br/>" +
+								"<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								theTask.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "<br/>" +
+								"<br/>" +
+								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION_SHORT;
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
+
+			return status;
+		}
+
+		public static int NotifyPrevActionTaskStatus(INCIDENT incident, TaskItem theTaskItem, string scopeAction)
+		{
+			// send email reminders for tasks due, past due or escalated
+			int status = 0;
+			TASK_STATUS theTask = theTaskItem.Task;
+			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
+			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+			if (string.IsNullOrEmpty(appUrl))
+				appUrl = "the website";
+
+			// 1st send to the person responsible
+			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
+			{
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.Person);
+				string assignedTo = "";
+				string emailTo = theTaskItem.Person.EMAIL;
+				string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+				string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+				string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incident.ISSUE_TYPE + "<br/>" +
+								"<br/>" +
+								theTask.DETAIL + "<br/>" +
+								"<br/>" +
+								theTask.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+								"<br/>" +
+								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
+
+			// send to supervisor if this is an escalation
+			if (theTaskItem.EscalatePerson != null && !string.IsNullOrEmpty(theTaskItem.EscalatePerson.EMAIL))
+			{
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.EscalatePerson);
+				string assignedTo = SQMModelMgr.FormatPersonListItem(theTaskItem.Person, false);
+				string emailTo = theTaskItem.EscalatePerson.EMAIL;
+				string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+				string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+				string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								plant.PLANT_NAME + "<br/>" +
+								incident.ISSUE_TYPE + "<br/>" +
+								"<br/>" +
+								theTask.DETAIL + "<br/>" +
+								"<br/>" +
+								theTask.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+								"<br/>" +
+								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				thread.IsBackground = true;
+				thread.Start();
+			}
+
+			return status;
+		}
+
+		#endregion
+
+
 		#region auditemail
 		public static void NotifyOnAuditCreate(decimal auditId, decimal personId)
 		{

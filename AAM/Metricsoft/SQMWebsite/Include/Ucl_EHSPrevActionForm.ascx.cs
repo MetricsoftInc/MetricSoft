@@ -1727,6 +1727,8 @@ namespace SQM.Website
 			INCIDENT theIncident = null;
 			decimal incidentId = 0;
 			bool shouldCreate8d = false;
+			SysPriv notifyType = SysPriv.update;
+
 			string result = "<h3>EHS Incident " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
 			//SessionManager.ClearIncidentLocation();
@@ -1759,7 +1761,7 @@ namespace SQM.Website
 					// Add context - step 0
 					theIncident = CreateNewIncident();
 					EditIncidentId = incidentId = theIncident.INCIDENT_ID;
-					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
+					notifyType = SysPriv.originate;
 				}
 				else
 				{
@@ -1767,7 +1769,7 @@ namespace SQM.Website
 					incidentId = EditIncidentId;
 					if (incidentId > 0)
 					{
-						theIncident = UpdateIncident(incidentId);  /// SAVE THE FUCKING THING 
+						theIncident = UpdateIncident(incidentId);  
 					}
 				}
 
@@ -1784,7 +1786,7 @@ namespace SQM.Website
 				incidentId = EditIncidentId;
 				if (incidentId > 0)
 				{
-					theIncident = UpdateIncident(incidentId);  /// SAVE THE FUCKING THING 
+					theIncident = UpdateIncident(incidentId);  
 
 					AddOrUpdateAnswers(questions, incidentId);
 
@@ -1792,6 +1794,8 @@ namespace SQM.Website
 					UpdateTaskInfo(questions, incidentId, DateTime.UtcNow);
 				}
 			}
+
+			EHSNotificationMgr.NotifyPrevActionStatus(theIncident, ((int)notifyType).ToString(), "");
 
 			decimal finalPlantId = 0;
 			var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
