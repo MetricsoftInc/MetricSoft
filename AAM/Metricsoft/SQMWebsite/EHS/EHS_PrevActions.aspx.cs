@@ -241,7 +241,7 @@ namespace SQM.Website
 			}
 
 			// lookup charts defined for this module & app context
-			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
+			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
 			if (view != null)
 			{
 				ddlChartType.Items.Clear();
