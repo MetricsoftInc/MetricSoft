@@ -899,7 +899,7 @@ namespace SQM.Website
             newSeries.MarkersAppearance.Size = 3m;
             newSeries.MarkersAppearance.BorderWidth = 3;
             newSeries.LineAppearance.Width = 1;
-            newSeries.Name = title;
+			newSeries.Name = title.Replace("\r\n", "");
 
             if (addAxis)
             {
@@ -1466,7 +1466,7 @@ namespace SQM.Website
 
                 series.LabelsAppearance.Visible = false;
                 series.TooltipsAppearance.Visible = true;
-                series.Name = gs.Name;
+				series.Name = gs.Name.Replace("\r\n", "");
                 ++numItems;
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
                     series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numItems);
@@ -1728,7 +1728,7 @@ namespace SQM.Website
                 ColumnSeries series = new ColumnSeries();
                 ++numSeries;
                 series.Stacked = rgCfg.Grouping == 2  ? true : false;
-                series.Name = gs.Name;
+				series.Name = gs.Name.Replace("\r\n", "");
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
                     series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numSeries);
 
@@ -1890,7 +1890,7 @@ namespace SQM.Website
                 series.MarkersAppearance.BorderWidth = 3;
 
                 series.LabelsAppearance.Visible = gs.DisplayLabels;
-                series.Name = gs.Name;
+				series.Name = gs.Name.Replace("\r\n", "");
                 ++numItems;
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
                     series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numItems);
@@ -1937,6 +1937,54 @@ namespace SQM.Website
         #endregion
 
         #region pie
+
+		public int CreatePieChart(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, System.Web.UI.HtmlControls.HtmlGenericControl container)
+		{
+			int status = 0;
+			int numItems = 0;
+
+			if (gaugeSeries == null || gaugeSeries.Count == 0 || gaugeSeries[0].ItemList.Count == 0)
+				return -1;
+
+			bool exploded = gaugeSeries[0].ItemList.Count > 1 ? true : false;
+
+			RadHtmlChart rad = new RadHtmlChart();
+			if (rgCfg.Height > 0)
+				rad.Height = rgCfg.Height;
+			if (rgCfg.Width > 0)
+				rad.Width = rgCfg.Width;
+
+			rad.ChartTitle.Text = rgCfg.Title;
+			rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
+			rad.ChartTitle.Appearance.TextStyle.Bold = true;
+
+			PieSeries series = new PieSeries();
+			series.StartAngle = 45;// 90;
+			series.LabelsAppearance.Position = Telerik.Web.UI.HtmlChart.PieAndDonutLabelsPosition.OutsideEnd;
+			series.LabelsAppearance.DataFormatString = "{0} " + rgCfg.LabelV;
+			series.TooltipsAppearance.Visible = false;
+
+			foreach (GaugeSeriesItem data in gaugeSeries[0].ItemList)
+			{
+				PieSeriesItem item = new PieSeriesItem();
+				item.Name = data.Text.Replace("\r\n", "");
+				item.Y = Math.Round(data.YValue, 2);
+				if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
+					item.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
+
+				item.Exploded = exploded;
+				series.SeriesItems.Add(item);
+			}
+
+			rad.PlotArea.Series.Add(series);
+
+			System.Web.UI.HtmlControls.HtmlGenericControl div = CreateContainer(rgCfg);
+			div.Controls.Add(rad);
+			BindToContainer(container, div);
+
+			return status;
+		}
+		/*
         public int CreatePieChart(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, System.Web.UI.HtmlControls.HtmlGenericControl container)
         {
             int status = 0;
@@ -1987,6 +2035,7 @@ namespace SQM.Website
 
             return status;
         }
+		*/
         #endregion
 
         #region pareto
