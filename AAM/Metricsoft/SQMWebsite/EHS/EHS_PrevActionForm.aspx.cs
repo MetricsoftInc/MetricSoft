@@ -40,11 +40,13 @@ namespace SQM.Website
 						{
 							// edit existing incident
 							int step = 0;
+							string returnOverride = "";
 							if (!string.IsNullOrEmpty(Request.QueryString["s"]))   // from inbox/calendar assume this is a task assignment. direct to corrective actions page
 							{
 								int.TryParse(Request.QueryString["s"], out step);
+								returnOverride = "/Home/Calendar.aspx";
 							}
-							uclActionForm.BindIncident(incident.INCIDENT_ID,  step);
+							uclActionForm.BindIncident(incident.INCIDENT_ID, step, returnOverride);
 						}
 						else
 						{

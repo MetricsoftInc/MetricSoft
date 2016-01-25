@@ -138,7 +138,6 @@ namespace SQM.Website
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
-			ahReturn.HRef = "/EHS/EHS_PrevActions.aspx";
 			btnSaveReturn.Visible = btnSaveContinue.Visible = false;
 
 			var sourceId = Page.Request[Page.postEventSourceID];
@@ -156,6 +155,7 @@ namespace SQM.Website
 			}
 			else
 			{
+				ahReturn.HRef = "/EHS/EHS_PrevActions.aspx";
 				//RefreshPageContext();
 			}
 		}
@@ -1645,7 +1645,7 @@ namespace SQM.Website
 			}
 		}
 
-		public void BindIncident(decimal incidentID, int stepNumber)
+		public void BindIncident(decimal incidentID, int stepNumber, string redirectOverride)
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
@@ -1663,6 +1663,9 @@ namespace SQM.Website
 					lblPageTitle.Text = Resources.LocalizedText.Recommendation;
 					break;
 			}
+			if (!string.IsNullOrEmpty(redirectOverride))
+				ahReturn.HRef = redirectOverride;
+
 			BuildForm();
 		}
 
@@ -2189,16 +2192,16 @@ namespace SQM.Website
 			{
 				case "4":
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
-					BindIncident(EditIncidentId, 1);
+					BindIncident(EditIncidentId, 1, "");
 					break;
 				case "5":
 					lblPageTitle.Text = Resources.LocalizedText.Approvals;
-					BindIncident(EditIncidentId, 2);
+					BindIncident(EditIncidentId, 2, "");
 					break;
 				case "0":
 				default:
 					lblPageTitle.Text = Resources.LocalizedText.Recommendation;
-					BindIncident(EditIncidentId, 0);
+					BindIncident(EditIncidentId, 0, "");
 					break;
 			}
 		}
