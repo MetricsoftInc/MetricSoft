@@ -33,6 +33,14 @@ namespace SQM.Website
 			{
 				XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "NOTIFY_TIMING" });
 
+				// filter out non-installed or authorized modules from the notify-scope list 
+				List<SETTINGS>settingList = SQMSettings.SelectSettingsGroup("MODULE", "");
+
+				if (settingList.Where(l => l.SETTING_CD == "PREVACTION" && l.VALUE == "A").Count() < 1)
+				{
+					XLATList = XLATList.Where(x => !x.XLAT_CODE.Contains("RM-")).ToList();
+				}
+
 				ddlNotifyScope.DataSource = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE").ToList();
 				ddlNotifyScope.DataValueField = "XLAT_CODE";
 				ddlNotifyScope.DataTextField = "DESCRIPTION";

@@ -16,6 +16,11 @@ namespace SQM.Website
 			get { return ViewState["MenuXLATList"] == null ? null : (List<XLAT>)ViewState["MenuXLATList"]; }
 			set { ViewState["MenuXLATList"] = value; }
 		}
+		public List<SETTINGS> settingList
+		{
+			get { return ViewState["MenuSettingList"] == null ? null : (List<SETTINGS>)ViewState["MenuSettingList"]; }
+			set { ViewState["MenuSettingList"] = value; }
+		}
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
@@ -50,6 +55,10 @@ namespace SQM.Website
 			{
 				if (!Page.IsPostBack)
 				{
+					if (settingList == null || settingList.Count == 0)
+					{
+						settingList = SQMSettings.SelectSettingsGroup("MODULE", "");
+					}
 
 					if (menuXLATList == null || menuXLATList.Count == 0)
 					{
@@ -151,12 +160,15 @@ namespace SQM.Website
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "13").DESCRIPTION, GetMenu("MENU_AUDIT", "13").DESCRIPTION_SHORT));
 					}
 
-					if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0  &&  IsMenuActive("MENU_RM"))
+					if (settingList.Where(l => l.SETTING_CD == "PREVACTION" && l.VALUE == "A").Count() > 0)
 					{
-						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_RM", "0").DESCRIPTION);
-						RadMenu1.Items.Add(EHSMenu2);
-						if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
+						if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0 && IsMenuActive("MENU_RM"))
+						{
+							RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_RM", "0").DESCRIPTION);
+							RadMenu1.Items.Add(EHSMenu2);
+							if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
+								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
+						}
 					}
 
 					if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate && IsMenuActive("MENU_DATA"))
