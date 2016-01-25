@@ -100,6 +100,12 @@ namespace SQM.Website
 			set { ViewState["ValidationGroup"] = value; }
 		}
 
+		public List<XLAT> XLATList
+		{
+			get { return ViewState["ApprovalXLATList"] == null ? null : (List<XLAT>)ViewState["ApprovalXLATList"]; }
+			set { ViewState["ApprovalXLATList"] = value; }
+		}
+
 		protected void Page_Init(object sender, EventArgs e)
 		{
 			if (SessionManager.SessionContext != null)
@@ -155,11 +161,12 @@ namespace SQM.Website
 		}
 
 
-
 		public void PopulateInitialForm()
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
+			XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_APPROVALS" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 
 			if (IncidentId > 0)
 				try
@@ -202,6 +209,7 @@ namespace SQM.Website
 			{
 
 				int minRowsToValidate = 1;
+				int basecode = (int)SysPriv.approve1;
 
 				try
 				{
@@ -215,13 +223,14 @@ namespace SQM.Website
 					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
+					lbjobd.Text = XLATList.Where(l => l.XLAT_CODE == (basecode+e.Item.ItemIndex).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					lbm.Text = XLATList.Where(l => l.XLAT_CODE == (basecode+e.Item.ItemIndex).ToString()).FirstOrDefault().DESCRIPTION;
+
 					hf.Value = approval.ITEM_SEQ.ToString();
 					hf = (HiddenField)e.Item.FindControl("hfPersonID");
 					hf.Value = approval.APPROVER_PERSON_ID.ToString();
 					lb.Visible = false;
-					lbjobd.Text = approval.APPROVER_TITLE;
 					lba.Text = !string.IsNullOrEmpty(approval.APPROVER_PERSON) ? approval.APPROVER_PERSON : "";
-					lbm.Text = approval.APPROVAL_MESSAGE;
 					cba.Checked = approval.IsAccepted;
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
@@ -264,9 +273,9 @@ namespace SQM.Website
 					++seq;
 					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
 					Label lba = (Label)item.FindControl("lbApprover");
-					Label lbm = (Label)item.FindControl("lbApproveMessage");
+					//Label lbm = (Label)item.FindControl("lbApproveMessage");
 					Label lb = (Label)item.FindControl("lbItemSeq");
-					Label lbjobd = (Label)item.FindControl("lbApproverJob");
+					//Label lbjobd = (Label)item.FindControl("lbApproverJob");
 					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
 
@@ -276,8 +285,8 @@ namespace SQM.Website
 						approval.INCIDENT_ID = incidentId;
 						approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
 						approval.IsAccepted = true;
-						approval.APPROVAL_MESSAGE = lbm.Text;
-						approval.APPROVER_TITLE = lbjobd.Text;
+						//approval.APPROVAL_MESSAGE = lbm.Text;
+						//approval.APPROVER_TITLE = lbjobd.Text;
 						approval.APPROVAL_DATE = rda.SelectedDate;
 						hf = (HiddenField)item.FindControl("hfPersonID");
 						if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
