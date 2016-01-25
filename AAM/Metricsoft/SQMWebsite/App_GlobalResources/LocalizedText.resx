@@ -639,4 +639,10 @@
   <data name="RecommendationType" xml:space="preserve">
     <value>Recommendation Type</value>
   </data>
+  <data name="ActionPageLink" xml:space="preserve">
+    <value>Go To Completion Page</value>
+  </data>
+  <data name="ActionPageLinkToolTip" xml:space="preserve">
+    <value>Completing this action must be performed in the originating module page. Click here to redirect to that page.</value>
+  </data>
 </root>

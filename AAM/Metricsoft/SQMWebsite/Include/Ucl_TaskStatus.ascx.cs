@@ -61,6 +61,9 @@ namespace SQM.Website
 					{
 						lblTaskTypeValue.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == task.TASK_STEP).FirstOrDefault().DESCRIPTION);
 					}
+					btnTaskLink.CommandArgument = task.RECORD_ID.ToString();
+					btnTaskLink.Visible = true;
+					btnTaskAssign.Visible = btnTaskComplete.Visible = false;
 					break;
 				case TaskRecordType.Audit:
 					//AUDIT audit = EHSAuditMgr.SelectAuditById(ctx, task.RECORD_ID);
@@ -203,6 +206,14 @@ namespace SQM.Website
 			{
 				OnTaskUpdate("update");
 			}
+		}
+
+		protected void btnTaskLink_Click(object sender, EventArgs e)
+		{
+			SessionManager.ReturnObject = btnTaskLink.CommandArgument;
+			SessionManager.ReturnStatus = true;
+			SessionManager.ReturnPath = Request.Path.ToString();
+			Response.Redirect("/EHS/EHS_PrevActions.aspx?s=1");
 		}
 
 		protected void btnTaskAssign_Click(object sender, EventArgs e)

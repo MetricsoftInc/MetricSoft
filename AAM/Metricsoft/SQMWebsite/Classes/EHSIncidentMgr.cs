@@ -1159,7 +1159,6 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 
 			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");
-			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[1] {"INCIDENT_APPROVALS"});
 
 			var approvals = new List<INCFORM_APPROVAL>();
 			approvals = (from c in entities.INCFORM_APPROVAL
@@ -1173,8 +1172,8 @@ namespace SQM.Website
 					INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
 					approval.INCIDENT_APPROVAL_ID = incidentId;
 					approval.ITEM_SEQ = Convert.ToInt32(approveLevel);
-					approval.APPROVAL_MESSAGE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION;
-					approval.APPROVER_TITLE = XLATList.Where(l => l.XLAT_CODE == approveLevel).FirstOrDefault().DESCRIPTION_SHORT;
+					approval.APPROVAL_MESSAGE = "";
+					approval.APPROVER_TITLE = "";
 					approval.APPROVAL_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 					approval.IsAccepted = false;
 					approvals.Add(approval);

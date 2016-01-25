@@ -61,6 +61,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go To Completion Page.
+        /// </summary>
+        internal static string ActionPageLink {
+            get {
+                return ResourceManager.GetString("ActionPageLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Completing this action must be performed in the originating module page. Click here to redirect to that page..
+        /// </summary>
+        internal static string ActionPageLinkToolTip {
+            get {
+                return ResourceManager.GetString("ActionPageLinkToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
         internal static string Active {

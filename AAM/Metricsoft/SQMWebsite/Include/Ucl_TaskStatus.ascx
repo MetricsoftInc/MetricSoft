@@ -76,6 +76,7 @@
 			<span>
 				<asp:Button ID="btnTaskComplete" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Completed %>" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskCompleteConfirm %>" onclick="btnTaskComplete_Click" ToolTip="Update this Task as completed"></asp:Button>
 				<asp:Button ID="btnTaskAssign" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Reassign %>" style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, TaskReAssignConfirm %>" onclick="btnTaskAssign_Click" ToolTip="<%$ Resources:LocalizedText, ReassignToolTip %>"></asp:Button>
+				<asp:Button ID="btnTaskLink" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, ActionPageLink %>" style="margin: 5px;" onclick="btnTaskLink_Click" ToolTip="<%$ Resources:LocalizedText, ActionPageLinkToolTip %>" Visible="false"></asp:Button>
 				<asp:Button ID="btnTaskCancel" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnTaskCancel_Click"></asp:Button>
 			</span>
         </div>
