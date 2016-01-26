@@ -959,7 +959,7 @@ namespace SQM.Website
             return this.IncidentHst;
         }
 
-		public List<EHSIncidentData> SelectPreventativeList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string>inspectionCatetoryList, List<string> recommendTypeList, DateTime fromDate, DateTime toDate, List<string> statusList, bool selectAttachments)
+		public List<EHSIncidentData> SelectPreventativeList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string>inspectionCatetoryList, List<string> recommendTypeList, DateTime fromDate, DateTime toDate, List<string> statusList, bool selectAttachments, decimal createID)
 		{
 			try
 			{
@@ -967,6 +967,7 @@ namespace SQM.Website
 									join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
 									join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
 									where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
+									&& (createID == 0 || i.CREATE_PERSON == createID)
 									&& incidentTypeList.Contains((decimal)i.ISSUE_TYPE_ID) && plantIdList.Contains((decimal)i.DETECT_PLANT_ID))
 									select new EHSIncidentData
 									{

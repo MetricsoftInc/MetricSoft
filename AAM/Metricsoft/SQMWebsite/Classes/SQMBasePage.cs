@@ -1141,6 +1141,22 @@ namespace SQM.Website
         #endregion
 
 		#region XLATS
+
+		public static List<XLAT> TrimXLAT(List<XLAT> inputList)
+		{
+			List<XLAT> outputList = new List<XLAT>();
+
+			foreach (XLAT xlat in inputList)
+			{
+				xlat.XLAT_CODE = !string.IsNullOrEmpty(xlat.XLAT_CODE) ? xlat.XLAT_CODE.Trim().Replace("\r\n", "") : "";
+				xlat.DESCRIPTION = !string.IsNullOrEmpty(xlat.DESCRIPTION) ? xlat.DESCRIPTION.Trim().Replace("\r\n", "") : "";
+				xlat.DESCRIPTION_SHORT = !string.IsNullOrEmpty(xlat.DESCRIPTION_SHORT) ? xlat.DESCRIPTION_SHORT.Trim().Replace("\r\n", "") : "";
+				outputList.Add(xlat);
+			}
+
+			return outputList;
+		}
+
 		public static List<XLAT> SelectXLATList(string[] XLATGroupArray)
 		{
 			List<XLAT> XLATList = new List<XLAT>();
@@ -1187,7 +1203,7 @@ namespace SQM.Website
 					}
 				}
 			}
-			return XLATList;
+			return TrimXLAT(XLATList);
 		}
 
 		public static List<XLAT> SelectXLATList(string[] XLATGroupArray, int languageID)
@@ -1240,7 +1256,7 @@ namespace SQM.Website
 					}
 				}
 			}
-			return XLATList;
+			return TrimXLAT(XLATList);
 		}
 
 		public static XLAT GetXLAT(List<XLAT> xlatList, string xlatGroup, string xlatCode)

@@ -46,6 +46,7 @@ namespace SQM.Website
 			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbInspectionType);
+			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbRecommendType);
 		}
 
 		protected void Page_PreRender(object sender, EventArgs e)
@@ -390,7 +391,7 @@ namespace SQM.Website
 			List<string> recommendationTypeList = new List<string>();
 			recommendationTypeList.AddRange(rcbRecommendType.Items.Where(c => c.Checked).Select(c => c.Value).ToList());
 			List<string> statusList = SQMBasePage.GetComboBoxCheckedItems(rcbStatusSelect).Select(l => l.Value).ToList();
-			HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked);
+			HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
 
 			if (HSCalcs().ehsCtl.IncidentHst != null)
 			{

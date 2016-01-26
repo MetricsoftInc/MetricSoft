@@ -1647,9 +1647,9 @@ namespace SQM.Website
 							{
 								Language = x.XLAT_LANGUAGE,
 								MetaDataType = x.XLAT_GROUP,
-								Text = x.DESCRIPTION_SHORT,
-								TextLong = x.DESCRIPTION,
-								Value = x.XLAT_CODE,
+								Text = !string.IsNullOrEmpty(x.DESCRIPTION_SHORT) ? x.DESCRIPTION_SHORT.Trim().Replace("\r\n", "") : "",
+								TextLong = !string.IsNullOrEmpty(x.DESCRIPTION) ? x.DESCRIPTION.Trim().Replace("\r\n", "") : "",
+								Value = !string.IsNullOrEmpty(x.XLAT_CODE) ? x.XLAT_CODE.Trim().Replace("\r\n", "") : "",
 								Status = x.STATUS,
 								SortOrder = x.SORT_ORDER,
 								IsHeading = (bool)x.IS_HEADING
@@ -1664,9 +1664,9 @@ namespace SQM.Website
 							{
 								Language = x.XLAT_LANGUAGE,
 								MetaDataType = x.XLAT_GROUP,
-								Text = x.DESCRIPTION_SHORT,
-								TextLong = x.DESCRIPTION,
-								Value = x.XLAT_CODE,
+								Text = !string.IsNullOrEmpty(x.DESCRIPTION_SHORT) ? x.DESCRIPTION_SHORT.Trim().Replace("\r\n", "") : "",
+								TextLong = !string.IsNullOrEmpty(x.DESCRIPTION) ? x.DESCRIPTION.Trim().Replace("\r\n", "") : "",
+								Value = !string.IsNullOrEmpty(x.XLAT_CODE) ? x.XLAT_CODE.Trim().Replace("\r\n", "") : "",
 								Status = x.STATUS,
 								SortOrder = x.SORT_ORDER,
 								IsHeading = (bool)x.IS_HEADING
