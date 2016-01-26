@@ -486,6 +486,7 @@
     <Content Include="Include\Ucl_INCFORM_InjuryIllness.ascx" />
     <Content Include="Include\Ucl_INCFORM_LostTime_Hist.ascx" />
     <Content Include="Include\Ucl_INCFORM_Root5Y.ascx" />
+    <Content Include="Include\Ucl_PrivGroupList.ascx" />
     <Content Include="Include\Ucl_PartSearch.ascx" />
     <Content Include="Include\Ucl_PerformanceReport_BalancedScorecard.ascx" />
     <Content Include="Include\Ucl_PerformanceReport_Metrics.ascx" />
@@ -1539,6 +1540,13 @@
     </Compile>
     <Compile Include="Include\Ucl_INCFORM_Root5Y.ascx.designer.cs">
       <DependentUpon>Ucl_INCFORM_Root5Y.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_PrivGroupList.ascx.cs">
+      <DependentUpon>Ucl_PrivGroupList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_PrivGroupList.ascx.designer.cs">
+      <DependentUpon>Ucl_PrivGroupList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_PartSearch.ascx.cs">
       <DependentUpon>Ucl_PartSearch.ascx</DependentUpon>

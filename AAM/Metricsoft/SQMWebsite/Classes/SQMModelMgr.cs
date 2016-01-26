@@ -541,6 +541,32 @@ namespace SQM.Website
 			return jobcodeList;
 		}
 
+		public static PRIVGROUP LookupPrivGroup(SQM.Website.PSsqmEntities ctx, string privGroup, bool createNew)
+		{
+			PRIVGROUP priv = null;
+
+			try
+			{
+				priv = (from p in ctx.PRIVGROUP
+						where (p.PRIV_GROUP == privGroup)
+						select p).Single();
+			}
+			catch
+			{
+				if (createNew && (!string.IsNullOrEmpty(privGroup)))
+				{
+					priv = new PRIVGROUP();
+					priv.PRIV_GROUP = privGroup;
+				}
+			}
+			if (priv == null && createNew && !string.IsNullOrEmpty(privGroup))
+			{
+				priv = new PRIVGROUP();
+				priv.PRIV_GROUP = privGroup;
+			}
+			return priv;
+		}
+
 		public static List<PRIVGROUP> SelectPrivGroupList(string status, bool includeAdmin)
 		{
 			List<PRIVGROUP> groupList = new List<PRIVGROUP>();
@@ -578,6 +604,22 @@ namespace SQM.Website
 			return (privGroup.PRIV_GROUP + "  /  " + privGroup.DESCRIPTION);
 		}
 
+		public static PRIVGROUP UpdatePrivGroup(SQM.Website.PSsqmEntities ctx, PRIVGROUP privGroup)
+		{
+			PRIVGROUP retPrivGroup = null;
+			if (privGroup.EntityState == EntityState.Detached)
+			{
+				privGroup.STATUS = "A";
+				ctx.AddToPRIVGROUP(privGroup);
+			}
+
+			if (ctx.SaveChanges() >= 0)
+			{
+				retPrivGroup = privGroup;
+			}
+
+			return retPrivGroup;
+		}
 		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
 		{
 			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
@@ -871,6 +913,69 @@ namespace SQM.Website
 			}
 
 			return privList;
+		}
+
+		public static PRIVLIST LookupPrivList(string privGroup, int priv, string scope, bool createNew)
+		{
+			PSsqmEntities ctx = new PSsqmEntities();
+
+			PRIVLIST privList = null;
+
+			try
+			{
+				privList = (from p in ctx.PRIVLIST
+						where (p.PRIV_GROUP == privGroup && p.PRIV == priv && p.SCOPE == scope)
+						select p).Single();
+			}
+			catch
+			{
+				if (createNew && (!string.IsNullOrEmpty(privGroup)))
+				{
+					privList = new PRIVLIST();
+					privList.PRIV_GROUP = privGroup;
+				}
+			}
+			if (privList == null && createNew && !string.IsNullOrEmpty(privGroup))
+			{
+				privList = new PRIVLIST();
+				privList.PRIV_GROUP = privGroup;
+			}
+			return privList;
+
+		}
+
+		public static PRIVLIST UpdatePrivList(SQM.Website.PSsqmEntities ctx, PRIVLIST privList)
+		{
+			PRIVLIST retPrivList = null;
+			if (privList.EntityState == EntityState.Detached)
+			{
+				ctx.AddToPRIVLIST(privList);
+			}
+
+			if (ctx.SaveChanges() >= 0)
+			{
+				retPrivList = privList;
+			}
+
+			return retPrivList;
+		}
+		public static int DeletePrivList(string privGroup, int priv, string scope)
+		{
+			int status = 0;
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				try
+				{
+					status = ctx.ExecuteStoreCommand("DELETE FROM PRIVLIST WHERE PRIV_GROUP = {0} AND PRIV = {1} AND SCOPE = {2}", privGroup, priv, scope);
+				}
+				catch (Exception ex)
+				{
+					SQMLogger.LogException(ex);
+				}
+			}
+
+			return status;
 		}
 
 		public static PERSON NewPerson(string SSOID, decimal companyID)

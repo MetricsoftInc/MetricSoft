@@ -32,6 +32,12 @@
                             onclick="tab_Click">Metric Targets</asp:LinkButton>
                 </td>
             </tr>
+            <tr align="center" height="24">
+                <td id="tdPrivilegeGroups" runat="server" class="optMenu">
+                        <asp:LinkButton ID="lbPrivilegeGroups_tab" runat="server" class="optNav clickable"  CommandArgument="privs" 
+                            onclick="tab_Click">Privilege Groups</asp:LinkButton>
+                </td>
+            </tr>
         </table>
     </asp:Panel>
 

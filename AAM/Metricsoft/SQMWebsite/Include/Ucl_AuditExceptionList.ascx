@@ -118,118 +118,118 @@
             OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" Width="100%" GroupPanelPosition="Top">
             <MasterTableView DataKeyNames="Audit.Audit_ID" GroupsDefaultExpanded="False">
                 <NestedViewTemplate>
-                        <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="True" AutoGenerateColumns="False"
-                             OnItemDataBound="rgAuditAnswers_ItemDataBound" GroupPanelPosition="Top">
-                            <MasterTableView DataKeyNames="QuestionId"  GroupsDefaultExpanded="True">
-                                <NestedViewTemplate>
-                                    <telerik:RadGrid runat="server" ID="rgTasks" OnNeedDataSource="rgTasks_NeedDataSource" Width="100%" AutoGenerateColumns="False" OnItemDataBound="rgTasks_ItemDataBound" GroupPanelPosition="Top">
-                                        <MasterTableView DataKeyNames="Task.TASK_ID">
-                                            <ExpandCollapseColumn Visible="False">
-											</ExpandCollapseColumn>
-											<Columns>
-												<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, ResponsiblePerson %>" UniqueName="TemplateColumn">
-													<ItemTemplate>
-														<asp:Label ID="lblTaskAssignedTo" runat="server"></asp:Label>
-													</ItemTemplate>
-												</telerik:GridTemplateColumn>
-												<telerik:GridBoundColumn DataField="Task.Due_Dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Due_Dt column" HeaderText="<%$ Resources:LocalizedText, DueDate %>" UniqueName="Task.Due_Dt">
-												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Task.Description" FilterControlAltText="Filter Task.Description column" HeaderText="<%$ Resources:LocalizedText, Description %>" UniqueName="Task.Description">
-												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Taskstatus" FilterControlAltText="Filter Taskstatus column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="Taskstatus">
-												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Task.Comments" FilterControlAltText="Filter Task.Comments column" HeaderText="<%$ Resources:LocalizedText, Comments %>" UniqueName="Task.Comments">
-												</telerik:GridBoundColumn>
-												<telerik:GridBoundColumn DataField="Task.Complete_dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Complete_dt column" HeaderText="Complete Date" meta:resourcekey="GridBoundColumnResource5" UniqueName="Task.Complete_dt">
-												</telerik:GridBoundColumn>
-											</Columns>
-                                        </MasterTableView>
-                                    </telerik:RadGrid>
-                                </NestedViewTemplate>
-                            	<Columns>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" UniqueName="TemplateColumn">
-										<ItemTemplate>
-											<asp:HiddenField ID="hdnAuditID" runat="server" Value='<%# Eval("AuditID") %>' />
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridBoundColumn DataField="TopicTitle" FilterControlAltText="Filter TopicTitle column" HeaderText="Topic" meta:resourcekey="GridBoundColumnResource6" UniqueName="TopicTitle">
-									</telerik:GridBoundColumn>
-									<telerik:GridBoundColumn DataField="QuestionText" FilterControlAltText="Filter QuestionText column" HeaderText="<%$ Resources:LocalizedText, Question %>" UniqueName="QuestionText">
-									</telerik:GridBoundColumn>
-									<telerik:GridBoundColumn DataField="AnswerText" FilterControlAltText="Filter AnswerText column" HeaderText="Answer" meta:resourcekey="GridBoundColumnResource8" UniqueName="AnswerText">
-									</telerik:GridBoundColumn>
-									<telerik:GridBoundColumn DataField="AnswerComment" FilterControlAltText="Filter AnswerComment column" HeaderText="Comment" meta:resourcekey="GridBoundColumnResource9" UniqueName="AnswerComment">
-									</telerik:GridBoundColumn>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn1">
-										<ItemTemplate>
-											<asp:Label ID="lblAnswerStatus" runat="server"></asp:Label>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridBoundColumn DataField="ResolutionComment" FilterControlAltText="Filter ResolutionComment column" HeaderText="Resolution" meta:resourcekey="GridBoundColumnResource10" UniqueName="ResolutionComment">
-									</telerik:GridBoundColumn>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Completed %>" UniqueName="TemplateColumn2">
-										<ItemTemplate>
-											<asp:Label ID="lblResolutionDate" runat="server"></asp:Label>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" UniqueName="TemplateColumn3">
-										<ItemTemplate>
-											<asp:LinkButton ID="lnkAddTask" runat="server" meta:resourcekey="lnkAddTaskResource1" OnClick="lnkAddTask_Click" Text="Assign Task" ToolTip="Create a Task to complete this exception"></asp:LinkButton>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" UniqueName="TemplateColumn4">
-										<ItemTemplate>
-											<asp:LinkButton ID="lnkUpdateStatus" runat="server" meta:resourcekey="lnkUpdateStatusResource1" OnClick="lnkUpdateStatus_Click" Text="<%$ Resources:LocalizedText, UpdateStatus %>" ToolTip="Update the status of this exception"></asp:LinkButton>
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-								</Columns>
-                            </MasterTableView>
-                        </telerik:RadGrid>
+                    <telerik:RadGrid runat="server" ID="rgAuditAnswers" OnNeedDataSource="rgAuditAnswers_NeedDataSource" Width="100%" AllowSorting="True" AutoGenerateColumns="False"
+                        OnItemDataBound="rgAuditAnswers_ItemDataBound" GroupPanelPosition="Top">
+                        <MasterTableView DataKeyNames="QuestionId" GroupsDefaultExpanded="True">
+                            <NestedViewTemplate>
+                                <telerik:RadGrid runat="server" ID="rgTasks" OnNeedDataSource="rgTasks_NeedDataSource" Width="100%" AutoGenerateColumns="False" OnItemDataBound="rgTasks_ItemDataBound" GroupPanelPosition="Top">
+                                    <MasterTableView DataKeyNames="Task.TASK_ID">
+                                        <ExpandCollapseColumn Visible="False">
+                                        </ExpandCollapseColumn>
+                                        <Columns>
+                                            <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, ResponsiblePerson %>" UniqueName="TemplateColumn">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblTaskAssignedTo" runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridBoundColumn DataField="Task.Due_Dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Due_Dt column" HeaderText="<%$ Resources:LocalizedText, DueDate %>" UniqueName="Task.Due_Dt">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Task.Description" FilterControlAltText="Filter Task.Description column" HeaderText="<%$ Resources:LocalizedText, Description %>" UniqueName="Task.Description">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Taskstatus" FilterControlAltText="Filter Taskstatus column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="Taskstatus">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Task.Comments" FilterControlAltText="Filter Task.Comments column" HeaderText="<%$ Resources:LocalizedText, Comments %>" UniqueName="Task.Comments">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn DataField="Task.Complete_dt" DataFormatString="{0:d}" FilterControlAltText="Filter Task.Complete_dt column" HeaderText="Complete Date" meta:resourcekey="GridBoundColumnResource5" UniqueName="Task.Complete_dt">
+                                            </telerik:GridBoundColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </NestedViewTemplate>
+                            <Columns>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" UniqueName="TemplateColumn">
+                                    <ItemTemplate>
+                                        <asp:HiddenField ID="hdnAuditID" runat="server" Value='<%# Eval("AuditID") %>' />
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridBoundColumn DataField="TopicTitle" FilterControlAltText="Filter TopicTitle column" HeaderText="Topic" meta:resourcekey="GridBoundColumnResource6" UniqueName="TopicTitle">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="QuestionText" FilterControlAltText="Filter QuestionText column" HeaderText="<%$ Resources:LocalizedText, Question %>" UniqueName="QuestionText">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="AnswerText" FilterControlAltText="Filter AnswerText column" HeaderText="Answer" meta:resourcekey="GridBoundColumnResource8" UniqueName="AnswerText">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="AnswerComment" FilterControlAltText="Filter AnswerComment column" HeaderText="Comment" meta:resourcekey="GridBoundColumnResource9" UniqueName="AnswerComment">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn1">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblAnswerStatus" runat="server"></asp:Label>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridBoundColumn DataField="ResolutionComment" FilterControlAltText="Filter ResolutionComment column" HeaderText="Resolution" meta:resourcekey="GridBoundColumnResource10" UniqueName="ResolutionComment">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Completed %>" UniqueName="TemplateColumn2">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblResolutionDate" runat="server"></asp:Label>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" UniqueName="TemplateColumn3">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkAddTask" runat="server" meta:resourcekey="lnkAddTaskResource1" OnClick="lnkAddTask_Click" Text="Assign Task" ToolTip="Create a Task to complete this exception"></asp:LinkButton>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" UniqueName="TemplateColumn4">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkUpdateStatus" runat="server" meta:resourcekey="lnkUpdateStatusResource1" OnClick="lnkUpdateStatus_Click" Text="<%$ Resources:LocalizedText, UpdateStatus %>" ToolTip="Update the status of this exception"></asp:LinkButton>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                            </Columns>
+                        </MasterTableView>
+                    </telerik:RadGrid>
                 </NestedViewTemplate>
-            	<Columns>
-									<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" UniqueName="TemplateColumnType">
-										<ItemTemplate>
-											<asp:HiddenField runat="server" ID="hdnAuditTypeID" Value='<%# Eval("Audit.AUDIT_TYPE_ID") %>' />
-										</ItemTemplate>
-									</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, Assessment %>" SortExpression="Audit.AUDIT_ID" UniqueName="TemplateColumn">
-						<ItemTemplate>
-							<asp:Label ID="lblAuditId" runat="server" Font-Bold="True" ForeColor="#000066" Text='<%# string.Format("{0:000000}", Eval("Audit.AUDIT_ID")) %>'></asp:Label>
-						</ItemTemplate>
-						<ItemStyle Width="100px" />
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, AssessmentDate %>" SortExpression="Audit.AUDIT_DT" UniqueName="TemplateColumn1">
-						<ItemTemplate>
-							<asp:Label ID="lblAuditDT" runat="server" Text='<%# ((DateTime)Eval("Audit.AUDIT_DT")).ToShortDateString() %>'></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
-						<ItemTemplate>
-							<asp:Label ID="lblLocation" runat="server" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn3">
-						<ItemTemplate>
-							<asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, AssessmentBy %>" SortExpression="Audit.AUDIT_PERSON" UniqueName="TemplateColumn4">
-						<ItemTemplate>
-							<asp:Label ID="lblAuditBy" runat="server"></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, Score %>" SortExpression="Audit.TOTAL_SCORE" UniqueName="TemplateColumn5">
-						<ItemTemplate>
-							<asp:Label ID="lblScore" runat="server" Text='<%# Eval("Audit.TOTAL_SCORE") %>'></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn6 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn6">
-						<ItemTemplate>
-							<asp:Label ID="lblAuditStatus" runat="server"></asp:Label>
-						</ItemTemplate>
-					</telerik:GridTemplateColumn>
-				</Columns>
-				<PagerStyle AlwaysVisible="True" />
+                <Columns>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" UniqueName="TemplateColumnType">
+                        <ItemTemplate>
+                            <asp:HiddenField runat="server" ID="hdnAuditTypeID" Value='<%# Eval("Audit.AUDIT_TYPE_ID") %>' />
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="<%$ Resources:LocalizedText, Assessment %>" SortExpression="Audit.AUDIT_ID" UniqueName="TemplateColumn">
+                        <ItemTemplate>
+                            <asp:Label ID="lblAuditId" runat="server" Font-Bold="True" ForeColor="#000066" Text='<%# string.Format("{0:000000}", Eval("Audit.AUDIT_ID")) %>'></asp:Label>
+                        </ItemTemplate>
+                        <ItemStyle Width="100px" />
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn1 column" HeaderText="<%$ Resources:LocalizedText, AssessmentDate %>" SortExpression="Audit.AUDIT_DT" UniqueName="TemplateColumn1">
+                        <ItemTemplate>
+                            <asp:Label ID="lblAuditDT" runat="server" Text='<%# ((DateTime)Eval("Audit.AUDIT_DT")).ToShortDateString() %>'></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn2 column" HeaderText="<%$ Resources:LocalizedText, Location %>" SortExpression="Plant.PLANT_NAME" UniqueName="TemplateColumn2">
+                        <ItemTemplate>
+                            <asp:Label ID="lblLocation" runat="server" Text='<%# Eval("Plant.PLANT_NAME") %>'></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn3">
+                        <ItemTemplate>
+                            <asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, AssessmentBy %>" SortExpression="Audit.AUDIT_PERSON" UniqueName="TemplateColumn4">
+                        <ItemTemplate>
+                            <asp:Label ID="lblAuditBy" runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, Score %>" SortExpression="Audit.TOTAL_SCORE" UniqueName="TemplateColumn5">
+                        <ItemTemplate>
+                            <asp:Label ID="lblScore" runat="server" Text='<%# Eval("Audit.TOTAL_SCORE") %>'></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn6 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn6">
+                        <ItemTemplate>
+                            <asp:Label ID="lblAuditStatus" runat="server"></asp:Label>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
+                </Columns>
+                <PagerStyle AlwaysVisible="True" />
             </MasterTableView>
             <PagerStyle AlwaysVisible="True"></PagerStyle>
         </telerik:RadGrid>

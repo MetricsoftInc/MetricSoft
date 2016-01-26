@@ -4,6 +4,7 @@
 <%@ Register src="~/Include/Ucl_ItemHdr.ascx" TagName="ItemHdr" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_SearchBar.ascx" TagName="SearchBar" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_NotifyList.ascx" TagName="NotifyList" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_PrivGroupList.ascx" TagName="PrivGroupList" TagPrefix="Ucl" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
@@ -272,6 +273,10 @@
                                                         </td>
                                                     </tr>
                                                 </table>
+                                            </asp:Panel>
+
+                                            <asp:Panel ID="pnlPrivGroups" runat="server" Visible = "false">
+                                                <Ucl:PrivGroupList ID="uclPrivGroupList" runat="server" />
                                             </asp:Panel>
                                         </td>
                                     </tr>

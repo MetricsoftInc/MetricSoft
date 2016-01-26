@@ -19,7 +19,8 @@ namespace SQM.Website
             uclAdminTabs.OnTabClick += uclAdminTabs_OnTabClick;
             uclSearchBar.OnReturnClick += uclSearchBar_OnReturnClick;
 			uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
-        }
+			uclPrivGroupList.OnPrivGroupCommand += UpdatePrivGroupList;
+		}
 
         private void uclAdminTabs_OnTabClick(string tabID, string cmdArg)
         {
@@ -82,7 +83,7 @@ namespace SQM.Website
                 // setup for ps_admin.js to toggle the tab active/inactive display
                 SetActiveTab(SessionManager.CurrentSecondaryTab = hfActiveTab.Value = tabID);
 
-				pnlDetails.Visible = uclDocMgr.DocMgrPnl.Visible = pnlTargetList.Visible = pnlUomStd.Visible = pnlEscalation.Visible = false;
+				pnlDetails.Visible = uclDocMgr.DocMgrPnl.Visible = pnlTargetList.Visible = pnlUomStd.Visible = pnlEscalation.Visible = pnlPrivGroups.Visible = false;
                 COMPANY company = SQMModelMgr.LookupCompany(entities, SessionManager.EffLocation.Company.COMPANY_ID, "", false);
 
                 switch (tabID)
@@ -133,7 +134,11 @@ namespace SQM.Website
                         }
 
                         break;
-                    default:
+					case "lbPrivilegeGroups_tab":
+						pnlPrivGroups.Visible = true;
+						UpdatePrivGroupList("");
+						break;
+					default:
                         if (SessionManager.IsEffLocationPrimary())
                             uclDocMgr.BindDocMgr("SYS", 0, 0);
                         break;
@@ -408,5 +413,11 @@ namespace SQM.Website
             }
         }
         #endregion
-    }
+		#region privs
+		public void UpdatePrivGroupList(string cmd)
+		{
+			uclPrivGroupList.BindPrivGroups(SQMModelMgr.SelectPrivGroupList("", false).OrderBy(g => g.DESCRIPTION).ToList(), SessionManager.EffLocation, "company");
+		}
+		#endregion
+	}
 }
