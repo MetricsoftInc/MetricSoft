@@ -241,10 +241,13 @@ namespace SQM.Website.Automated
 									{
 										if (data.EntityState == EntityState.Detached)
 											entities.EHS_DATA.AddObject(data);
-										if (data.MEASURE_ID == firstAidMeasureID)
-											UpdateOrdinalData(entities, data, firstAidOrdinals);
-										else if (data.MEASURE_ID == recordableMeasureID)
-											UpdateOrdinalData(entities, data, recordableOrdinals);
+										if (incidentsForDay.Any())
+										{
+											if (data.MEASURE_ID == firstAidMeasureID)
+												UpdateOrdinalData(entities, data, firstAidOrdinals);
+											else if (data.MEASURE_ID == recordableMeasureID)
+												UpdateOrdinalData(entities, data, recordableOrdinals);
+										}
 									}
 									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
 									{
