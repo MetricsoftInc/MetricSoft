@@ -1054,67 +1054,73 @@ namespace SQM.Website
 			// assume incident is still open and extend timespan to NOW if last status was not return to work
 			List<INCFORM_LOSTTIME_HIST> histList = incident.INCFORM_LOSTTIME_HIST.OrderBy(h => h.BEGIN_DT).ToList();
 
-			INCFORM_LOSTTIME_HIST hist = histList.First();
-			INCFORM_LOSTTIME_HIST histLast = histList.Last();
-			string workStatus = hist.WORK_STATUS;
-
-
-			DateTime startDate = hist.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date : WebSiteCommon.LocalTime((DateTime)incident.INCIDENT_DT, localeTimezone).Date;
-			DateTime endDate =  histLast.BEGIN_DT.HasValue ?  WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
-			if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
+			try
 			{
-				endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
-			}
+				INCFORM_LOSTTIME_HIST hist = histList.First();
+				INCFORM_LOSTTIME_HIST histLast = histList.Last();
+				string workStatus = hist.WORK_STATUS;
 
-			int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
-			DateTime effDate;
-			bool countDay = true;
-			EHSIncidentTimeAccounting period;
-			for (int n = 0; n <= numDays; n++)
-			{
-				effDate = startDate.AddDays(n);
-
-				// accrue or add accounting periods as needed per the incident timespan
-				if ((period = periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault()) == null)
+				DateTime startDate = hist.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date : WebSiteCommon.LocalTime((DateTime)incident.INCIDENT_DT, localeTimezone).Date;
+				DateTime endDate = histLast.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
+				if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
 				{
-					periodList.Add((period = new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month, (decimal)incident.ISSUE_TYPE_ID, (decimal)incident.DETECT_PLANT_ID)));
-				}
-				// check if new work status occurred on this date
-				if ((hist = histList.Where(l => l.BEGIN_DT == effDate).FirstOrDefault()) != null)
-				{
-					workStatus = hist.WORK_STATUS;
+					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
 				}
 
-				countDay = true;
-				switch (effDate.DayOfWeek)
+				int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
+				DateTime effDate;
+				bool countDay = true;
+				EHSIncidentTimeAccounting period;
+				for (int n = 0; n <= numDays; n++)
 				{
-					case DayOfWeek.Sunday:	// count if 7 day work week
-						if (workdays < 7)
-							countDay = false;
-						break;
-					case DayOfWeek.Saturday:   // count if 6 day work week
-						if (workdays < 6)
-							countDay = false;
-						break;
-					default:
-						break;
-				}
+					effDate = startDate.AddDays(n);
 
-				if (countDay)
-				{
-					switch (workStatus)
+					// accrue or add accounting periods as needed per the incident timespan
+					if ((period = periodList.Where(p => p.PeriodYear == effDate.Year && p.PeriodMonth == effDate.Month).FirstOrDefault()) == null)
 					{
-						case "01":
-							++period.RestrictedTime;
+						periodList.Add((period = new EHSIncidentTimeAccounting().CreateNew(effDate.Year, effDate.Month, (decimal)incident.ISSUE_TYPE_ID, (decimal)incident.DETECT_PLANT_ID)));
+					}
+					// check if new work status occurred on this date
+					if ((hist = histList.Where(l => l.BEGIN_DT == effDate).FirstOrDefault()) != null)
+					{
+						workStatus = hist.WORK_STATUS;
+					}
+
+					countDay = true;
+					switch (effDate.DayOfWeek)
+					{
+						case DayOfWeek.Sunday:	// count if 7 day work week
+							if (workdays < 7)
+								countDay = false;
 							break;
-						case "03":
-							++period.LostTime;
+						case DayOfWeek.Saturday:   // count if 6 day work week
+							if (workdays < 6)
+								countDay = false;
 							break;
 						default:
-							++period.WorkTime;
 							break;
 					}
+
+					if (countDay)
+					{
+						switch (workStatus)
+						{
+							case "01":
+								++period.RestrictedTime;
+								break;
+							case "03":
+								++period.LostTime;
+								break;
+							default:
+								++period.WorkTime;
+								break;
+						}
+					}
 				}
+			}
+			catch
+			{
+				// what to do with errors here ?
 			}
 
 			return periodList;
@@ -1276,6 +1282,7 @@ namespace SQM.Website
 						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT_FILE WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
 						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
 					}
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID" + delCmd);
