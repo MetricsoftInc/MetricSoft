@@ -131,6 +131,22 @@ namespace SQM.Website.Automated
 				plant = null;
 				PLANT_ACTIVE pact = null;
 				DateTime periodDate;
+
+				foreach (PLANT_ACCOUNTING pah in paList.OrderBy(l=> l.PLANT_ID).ToList())
+				{
+					if (pact == null || pact.PLANT_ID != pah.PLANT_ID)
+					{
+						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == pah.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
+					}
+					if (pact != null && new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
+					{
+						pah.TIME_LOST = pah.TOTAL_DAYS_RESTRICTED = 0;
+						pah.TIME_LOST_CASES = pah.RECORDED_CASES = pah.FIRST_AID_CASES = 0;
+					}
+				}
+
+				plant = null;
+				pact = null;
 				foreach (EHSIncidentTimeAccounting period in summaryList.OrderBy(l => l.PlantID).ThenBy(l => l.PeriodYear).ThenBy(l => l.PeriodMonth).ToList())
 				{
 					if (plant == null  ||  plant.PLANT_ID != period.PlantID)
