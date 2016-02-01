@@ -185,6 +185,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="bin\SanitizerProviders.dll" />
+    <Content Include="bin\Select.HtmlToPdf.dll" />
+    <Content Include="bin\Select.HtmlToPdf.xml" />
     <Content Include="bin\Settings.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -2033,6 +2035,7 @@
     <Content Include="images\fonts\Ubuntu-Bold.ttf" />
     <Content Include="images\fonts\Ubuntu-LightItalic.ttf" />
     <Content Include="images\fonts\OpenSans-Bold.ttf" />
+    <Content Include="bin\Select.Html.dep" />
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\AAMStaging - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
