@@ -593,7 +593,7 @@ namespace SQM.Website
 							   where 
 								(string.IsNullOrEmpty(status) || g.STATUS == status)
 								&& (priv.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
-							   select g).ToList();
+							 select g).GroupBy(l => l.PRIV_GROUP).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
 			}
 
 			return groupList;
@@ -672,7 +672,7 @@ namespace SQM.Website
 									&& (privList.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
 									&& (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
 									&& (!activeOnly || p.STATUS == "A")
-							  select p).ToList();
+							  select p).GroupBy(l => l.PERSON_ID).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
 			}
 
 			return personList;
