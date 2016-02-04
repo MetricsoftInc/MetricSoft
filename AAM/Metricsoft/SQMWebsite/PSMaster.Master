@@ -210,7 +210,7 @@
 		</div>
     <%--</div>--%>
 
-    <telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Title="User Preferences"  Behaviors="Close" Behavior="Close">
+    <telerik:RadWindow runat="server" ID="winUserPrefs" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Title="User Preferences" Behaviors="None">
         <ContentTemplate>
             <div>
                 <center>

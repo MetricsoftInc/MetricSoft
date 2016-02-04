@@ -303,7 +303,7 @@
 		</div>
 	</div>
 
-	<telerik:RadWindow runat="server" ID="winNewAction" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="Close, Move" meta:resourcekey="winNewActionResource1">
+	<telerik:RadWindow runat="server" ID="winNewAction" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="None" meta:resourcekey="winNewActionResource1">
 		<ContentTemplate>
 			<div class="container-fluid" style="margin-top: 10px;">
 				<div class="row">

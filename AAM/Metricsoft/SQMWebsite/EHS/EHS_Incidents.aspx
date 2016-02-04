@@ -294,7 +294,7 @@
 		</div>
 	</div>
 
-	<telerik:RadWindow runat="server" ID="winNewIncident" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="Close, Move">
+	<telerik:RadWindow runat="server" ID="winNewIncident" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="200px" Width="500px" Behaviors="Close, Move" Title="Record A New Incident" Behavior="None">
 		<ContentTemplate>
 			<div class="container-fluid" style="margin-top: 10px;">
 				<div class="row">
