@@ -130,7 +130,7 @@
     <value>Parte del Cuerpo</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
-    <value>Supervisado directamente por la AAM</value>
+    <value>Supervisado directamente</value>
   </data>
   <data name="lbErgConcernResource1.Text" xml:space="preserve">
     <value>Preocupaciones ergonómicas</value>

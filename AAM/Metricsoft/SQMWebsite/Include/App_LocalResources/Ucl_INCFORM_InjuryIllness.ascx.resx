@@ -130,7 +130,7 @@
     <value>Body Part</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
-    <value>Directly Supervised by AAM</value>
+    <value>Employee</value>
   </data>
   <data name="lbErgConcernResource1.Text" xml:space="preserve">
     <value>Ergonomic Concerns</value>
