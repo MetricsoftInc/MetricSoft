@@ -977,8 +977,9 @@ namespace SQM.Website
         }
 
 
-        public static int DeleteProfileMeasure(EHSProfile theProfile, decimal measureID, bool deleteInputs, bool deleteMeasure)
+		public static int DeleteProfileMeasure(EHSProfile theProfile, decimal measureID, bool deleteInputs, bool deleteMeasure)
         {
+			// AW 01/2016 - this one deletes historical data, so make sure you really want to do this!!
             // delete a profile metric history and optionally, the profile measure
             int status = 0;
        
@@ -987,17 +988,17 @@ namespace SQM.Website
             {
                 try
                 {
-                    status = ctx.ExecuteStoreCommand("DELETE FROM EHS_METRIC_HISTORY WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString());
-                    if (deleteInputs)
-                    {
-                        status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_INPUT WHERE PRMR_ID IN (SELECT PRMR_ID FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString() + ")");
-                        status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE_EXT WHERE PRMR_ID IN (SELECT PRMR_ID FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString() + ")");
-                    }
-                    if (deleteMeasure)
-                    {
-                        status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString());
-                    }
-                }
+					status = ctx.ExecuteStoreCommand("DELETE FROM EHS_METRIC_HISTORY WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString());
+					if (deleteInputs)
+					{
+						status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_INPUT WHERE PRMR_ID IN (SELECT PRMR_ID FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString() + ")");
+						status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE_EXT WHERE PRMR_ID IN (SELECT PRMR_ID FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString() + ")");
+					}
+					if (deleteMeasure)
+					{
+						status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE WHERE PLANT_ID = " + theProfile.Plant.PLANT_ID.ToString() + " AND MEASURE_ID = " + measureID.ToString());
+					}
+				}
                 catch (Exception ex)
                 {
                     status = -1;
@@ -1007,6 +1008,60 @@ namespace SQM.Website
 
             return status;
         }
+
+		public static int DeleteProfileMeasureNoHistory(EHSProfile theProfile, decimal prmrID)
+		{
+			// delete a profile measure
+			int status = 0;
+			
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				try
+				{
+					status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE_EXT WHERE PRMR_ID = " + prmrID.ToString());
+					status = ctx.ExecuteStoreCommand("DELETE FROM EHS_PROFILE_MEASURE WHERE PRMR_ID = " + prmrID.ToString());
+				}
+				catch (Exception ex)
+				{
+					status = -1;
+					// log error
+				}
+			}
+
+			return status;
+		}
+
+		public static int ValidateProfileMeasureForDelete(EHSProfile theProfile, decimal prmrID)
+		{
+			// check to see if the profile measure has been used to create inputs yet
+			int status = 0;
+			List<EHS_PROFILE_INPUT> profileInput = new List<EHS_PROFILE_INPUT>();
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				profileInput = (from p in ctx.EHS_PROFILE_INPUT
+								where (p.PRMR_ID == prmrID)
+								select p).ToList();
+			}
+			foreach (EHS_PROFILE_INPUT input in profileInput)
+			{
+				status += 1;
+			}
+
+			//using (PSsqmEntities ctx = new PSsqmEntities())
+			//{
+			//	try
+			//	{
+			//		status = ctx.ExecuteStoreCommand("SELECT COUNT(*) FROM EHS_PROFILE_INPUT WHERE PRMR_ID = " + prmrID.ToString());
+			//	}
+			//	catch (Exception ex)
+			//	{
+			//		status = -1;
+			//		// log error
+			//	}
+			//}
+
+			return status;
+		}
 
         public EHSProfilePeriod LoadPeriod(DateTime periodDate)
         {

@@ -5,6 +5,7 @@
 
 <%@ Register src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadAsyncUpload" TagPrefix="Ucl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
 
@@ -280,7 +281,22 @@
                                 </tr>
 						    </ItemTemplate>
 						    <FooterTemplate>
-							    </table></FooterTemplate>
+								</table>
+								<asp:Panel id="pnlAttachments" runat="server" visible ="false">
+									<table cellspacing="0" cellpadding="1" border="0" width="99%" style="margin-top: 5px;" >
+										<tr>
+											<td class="rptInputTable">
+												<asp:Label ID="lblAttachments" runat="server" CSSClass="prompt" Text="Attachments" ></asp:Label>
+												<br />
+												<asp:Label ID="lblAttachmentsInstruct" runat="server" CssClass="refTextSmall" Text="Attach billing statements from energy providers, utilities, waste disposal vendors, etc..."></asp:Label>
+											</td>
+											<td class="rptInputTable" width="754px">
+												 <Ucl:RadAsyncUpload id="uclAttachments" runat="server"/>
+											</td>
+										</tr>
+									</table>
+								</asp:Panel>
+						    </FooterTemplate>
 					    </asp:Repeater>
 				        <asp:Label runat="server" ID="lblMetricEmptyRepeater" Height="40px" Text="The metric list is empty." class="GridEmpty" Visible="False" meta:resourcekey="lblMetricEmptyRepeaterResource1"></asp:Label>
                     </div>

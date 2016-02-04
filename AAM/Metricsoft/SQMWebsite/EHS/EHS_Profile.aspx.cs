@@ -124,7 +124,12 @@ namespace SQM.Website
                 }
                 else
                 {
-                    EHS_PROFILE_MEASURE factMetric = profile.Profile.EHS_PROFILE_MEASURE.Where(l => l.EHS_MEASURE.MEASURE_CATEGORY == "FACT").FirstOrDefault();
+					EHS_PROFILE_MEASURE factMetric = null;
+					try
+					{
+						factMetric = profile.Profile.EHS_PROFILE_MEASURE.Where(l => l.EHS_MEASURE.MEASURE_CATEGORY == "FACT").FirstOrDefault();
+					}
+					catch { }
                     if (factMetric != null  &&  ddlNormFact.Items.FindByValue(factMetric.EHS_MEASURE.MEASURE_ID.ToString()) != null)
                     {
                         ddlNormFact.SelectedValue = factMetric.EHS_MEASURE.MEASURE_ID.ToString();
@@ -342,8 +347,13 @@ namespace SQM.Website
             tdWasteCodeHdr.Visible = tdDisposalHdr.Visible = true;
             phCostWaste.Visible = true;
             phMetricExt.Visible = false;
-            tdDisposal.Attributes.Add("Class", "required");
-            tdRegStatus.Attributes.Add("Class", "required");
+
+			SETTINGS sets = SQMSettings.GetSetting("EHS", "UNCODEREQ");
+			if (sets == null || sets.VALUE.ToUpper() != "N")
+				tdDisposal.Attributes.Add("Class", "required");
+			else
+				tdDisposal.Attributes.Remove("Class");
+			tdRegStatus.Attributes.Add("Class", "required");
             tdUOM.Attributes.Add("Class", "required");
             tdCurrency.Attributes.Add("Class", "required");
             tdMetricCost.Attributes.Add("Class", "required");
@@ -781,17 +791,43 @@ namespace SQM.Website
                         reqdError = true;
                     break;
                 default:
-                    if (string.IsNullOrEmpty(ddlMetricCategory.SelectedValue) || string.IsNullOrEmpty(ddlMetricID.SelectedValue) || string.IsNullOrEmpty(ddlMetricUOM.SelectedValue) || string.IsNullOrEmpty(ddlMetricResponsible.SelectedValue)
-                        || string.IsNullOrEmpty(ddlMetricDisposalCode.SelectedValue) || string.IsNullOrEmpty(ddlMetricRegStatus.SelectedValue))
-                        reqdError = true;
+					if (tdDisposal.Attributes["Class"] == null || tdDisposal.Attributes["Class"] != "required")  // UN disposal code not required
+					{
+						if (string.IsNullOrEmpty(ddlMetricCategory.SelectedValue) || string.IsNullOrEmpty(ddlMetricID.SelectedValue) || string.IsNullOrEmpty(ddlMetricUOM.SelectedValue) || string.IsNullOrEmpty(ddlMetricResponsible.SelectedValue)
+							|| string.IsNullOrEmpty(ddlMetricRegStatus.SelectedValue))
+							reqdError = true;
+					}
+					else
+					{
+						if (string.IsNullOrEmpty(ddlMetricCategory.SelectedValue) || string.IsNullOrEmpty(ddlMetricID.SelectedValue) || string.IsNullOrEmpty(ddlMetricUOM.SelectedValue) || string.IsNullOrEmpty(ddlMetricResponsible.SelectedValue)
+						|| string.IsNullOrEmpty(ddlMetricDisposalCode.SelectedValue) || string.IsNullOrEmpty(ddlMetricRegStatus.SelectedValue))
+							reqdError = true;
+					}
                     if (tbUOMFactor.Visible && string.IsNullOrEmpty(tbUOMFactor.Text))
                         reqdError = true;
                     break;
             }
-            if (reqdError)
+
+			// AW01/2016 - if trying to delete, verify that there is no historical data associated with the Metric by checking for a EHS_PROFILE_INPUT
+			if (pm.STATUS.Equals("D"))
+			{
+				if (EHSProfile.ValidateProfileMeasureForDelete(LocalProfile(), pm.PRMR_ID) > 0)
+				{
+					reqdError = true;
+					BindProfileMeasure(pm);
+					DisplayErrorMessage(hfErrMetricHasHistory);
+					return;
+				}
+				else
+				{
+
+				}
+			}
+			if (reqdError && !pm.STATUS.Equals("D")) // AW 01/2016 - don't show the errors if we are deleting the record
             {
                 BindProfileMeasure(pm);
                 DisplayErrorMessage(hfErrRequiredInputs);
+				hfOper.Value = "";
                 return;
             }
 
@@ -802,7 +838,7 @@ namespace SQM.Website
 
             if (pm.STATUS == "D")
             {
-                EHSProfile.DeleteProfileMeasure(LocalProfile(), pm.MEASURE_ID, true, true);
+				EHSProfile.DeleteProfileMeasureNoHistory(LocalProfile(), pm.PRMR_ID); // AW 01/2016 - Delete record by PRMR_ID, not MEASURE_ID
                 measureChanged = true;
             }
   

@@ -83,6 +83,7 @@
                 <asp:HiddenField ID="hfAddMetric" runat ="server" Value="<%$ Resources:LocalizedText, ENVProfileAddMetric %>" />
                 <asp:HiddenField ID="hfUpdateMetric" runat ="server" Value="<%$ Resources:LocalizedText, ENVProfileUpdateMetric %>" />
                 <asp:HiddenField id="hfErrRequiredInputs" runat="server" Value="<%$ Resources:LocalizedText, ENVProfileRequiredsMsg %>"/>
+                <asp:HiddenField id="hfErrMetricHasHistory" runat="server" Value="<%$ Resources:LocalizedText, ENVProfileMetricHasHistoryMsg %>"/>
                 <asp:Panel runat="server" ID="pnlSearchBar">
                     <Ucl:SearchBar id="uclSearchBar" runat="server"/>
                 </asp:Panel>

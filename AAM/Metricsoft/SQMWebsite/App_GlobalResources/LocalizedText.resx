@@ -645,4 +645,7 @@
   <data name="ActionPageLinkToolTip" xml:space="preserve">
     <value>Completing this action must be performed in the originating module page. Click here to redirect to that page.</value>
   </data>
+  <data name="ENVProfileMetricHasHistoryMsg" xml:space="preserve">
+    <value>Data exists for this metric.  Please Inactivate instead of Delete.</value>
+  </data>
 </root>

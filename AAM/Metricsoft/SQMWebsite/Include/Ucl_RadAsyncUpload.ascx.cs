@@ -39,6 +39,11 @@ namespace SQM.Website
             rgFiles.MasterTableView.GetColumn(" DisplayTypeColumn").Visible = visible;
         }
 
+		public void SetSizeOption(bool visible)
+		{
+			rgFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
+		}
+
 		protected int _recordType
 		{
 			get { return ViewState["RecordType"] == null ? 0 : (int)ViewState["RecordType"]; }

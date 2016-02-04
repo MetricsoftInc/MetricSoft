@@ -264,6 +264,31 @@ namespace SQM.Website
                         break;
                 }
                 rptProfilePeriod.DataBind();
+
+				SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTATTACH");
+				if (sets != null && (sets.VALUE.ToUpper() == "Y"  ||  sets.VALUE.ToUpper() == "TRUE"))
+				{
+					foreach (RepeaterItem item in rptProfilePeriod.Controls)
+					{
+						if (item.ItemType == ListItemType.Footer)
+						{
+							Ucl_RadAsyncUpload uclAttach = (Ucl_RadAsyncUpload)item.FindControl("uclAttachments");
+							if (uclAttach != null)
+							{
+								Panel pnlAttach = (Panel)item.FindControl("pnlAttachments");
+								pnlAttach.Visible = true;
+								//uclAttach.SetViewMode(UserContext.CheckAccess("EHS", "311") >= AccessMode.Update ? true : false);
+								uclAttach.SetViewMode(UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.update ? true : false);
+								uclAttach.SetReportOption(false);
+								uclAttach.SetSizeOption(false);
+								uclAttach.OnAttachmentDelete += AttachmentDelete;
+								uclAttach.GetUploadedFiles(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString());
+								break;
+							}
+						}
+					}
+				}
+
             }
             return EHSProfileStatus.Normal;
         }
@@ -335,6 +360,30 @@ namespace SQM.Website
 
             try
             {
+				SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTATTACH");
+				if (sets != null && (sets.VALUE.ToUpper() == "Y" || sets.VALUE.ToUpper() == "TRUE"))
+				{
+					foreach (RepeaterItem item in rptProfilePeriod.Controls)
+					{
+						if (item.ItemType == ListItemType.Footer)
+						{
+							Ucl_RadAsyncUpload uclAttach = (Ucl_RadAsyncUpload)item.FindControl("uclAttachments");
+							if (uclAttach != null)
+							{
+								Panel pnlAttach = (Panel)item.FindControl("pnlAttachments");
+								pnlAttach.Visible = true;
+								SessionManager.DocumentContext = new SQM.Shared.DocumentScope().CreateNew(
+								(decimal)LocalProfile().Plant.COMPANY_ID, "BLI", 0, "", LocalProfile().Plant.PLANT_ID, "", 0);
+								SessionManager.DocumentContext.RecordType = 30;
+								SessionManager.DocumentContext.RecordID = LocalProfile().Plant.PLANT_ID;
+								SessionManager.DocumentContext.RecordStep = LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString();
+								uclAttach.SaveFiles();
+								break;
+							}
+						}
+					}
+				}
+
                 foreach (RepeaterItem item in rptProfilePeriod.Items)
                 {
                     lnk = (LinkButton)item.FindControl("lnkMetricCD");
@@ -500,7 +549,7 @@ namespace SQM.Website
                     if (status >= 0)
                     {
                         // option to finalize metrics
-                        SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTFINALIZE");
+                        sets = SQMSettings.GetSetting("EHS", "INPUTFINALIZE");
                         if (sets != null)
                         {
                             bool doRollup = false;
@@ -563,8 +612,15 @@ namespace SQM.Website
             return status;
         }
 
+		private void AttachmentDelete(ATTACHMENT attach)
+		{
+			BindSharedCalendars();
+		}
+
         private void BindSharedCalendars()
         {
+			try
+			{
             foreach (RepeaterItem item in rptProfilePeriod.Items)
             {
                 // for some reason we need to rebind the shared calendar control to all the metric calendars ??
@@ -578,6 +634,10 @@ namespace SQM.Website
                     dtp.SharedCalendar = sharedCalendar;
                 }
             }
+        }
+			catch
+			{
+			}
         }
 
         public void rptProfilePeriod_OnItemDataBound(object sender, RepeaterItemEventArgs e)
