@@ -104,7 +104,9 @@ namespace SQM.Website
 
 						if (Request.QueryString.Count > 0)
 						{
-							qry = Request.QueryString;
+							// AW 02/2016 - don't wipe out the current Collection, just add to it
+							//qry = Request.QueryString;
+							qry.Add(Request.QueryString);
 						}
 
 						if (qry.Get("t") != null)
