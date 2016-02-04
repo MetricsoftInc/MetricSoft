@@ -289,7 +289,16 @@ namespace SQM.Website
 			INCIDENT incident = null;
 			bool isUpdated = false;
 			IncidentStepStatus calcStatus = IncidentStepStatus.unknown;
+			bool closeByApproval = false;
 			string localTZ = "";
+
+			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");
+			int finalApprovalLevel = (int)SysPriv.approve2;  // default approval level requiured to close incident
+			if (!string.IsNullOrEmpty(sets.VALUE.Split(',').LastOrDefault()))
+			{
+				if (int.TryParse(sets.VALUE.Split(',').Last(), out finalApprovalLevel) == false)
+				finalApprovalLevel = (int)SysPriv.approve2;
+			}
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
@@ -323,17 +332,23 @@ namespace SQM.Website
 					{
 						if (approvalList != null && approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve1).ToList().Count > 0)
 						{
-							calcStatus = IncidentStepStatus.signoff1;
+							closeByApproval = finalApprovalLevel == (int)SysPriv.approve1 ? true : closeByApproval;
+							if (closeByApproval)
+								calcStatus = IncidentStepStatus.signoff2;
+							else
+								calcStatus = IncidentStepStatus.signoff1;
 						}
 						if (approvalList != null && approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve2).ToList().Count > 0)
 						{
+							closeByApproval = finalApprovalLevel == (int)SysPriv.approve2 ? true : closeByApproval;
 							calcStatus = IncidentStepStatus.signoff2;
-							if (closeIncident && !incident.CLOSE_DATE.HasValue)
-							{
-								PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
-								incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
-								isUpdated = true;
-							}
+						}
+
+						if ((closeIncident  ||  closeByApproval) && !incident.CLOSE_DATE.HasValue)
+						{
+							PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
+							incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
+							isUpdated = true;
 						}
 					}
 

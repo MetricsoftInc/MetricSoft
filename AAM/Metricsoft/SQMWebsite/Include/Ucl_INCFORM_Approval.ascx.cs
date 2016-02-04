@@ -149,7 +149,6 @@ namespace SQM.Website
 
 		protected override void FrameworkInitialize()
 		{
-			//String selectedLanguage = "es";
 			if (SessionManager.SessionContext != null)
 			{
 				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
@@ -273,9 +272,7 @@ namespace SQM.Website
 					++seq;
 					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
 					Label lba = (Label)item.FindControl("lbApprover");
-					//Label lbm = (Label)item.FindControl("lbApproveMessage");
 					Label lb = (Label)item.FindControl("lbItemSeq");
-					//Label lbjobd = (Label)item.FindControl("lbApproverJob");
 					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
 
@@ -285,8 +282,6 @@ namespace SQM.Website
 						approval.INCIDENT_ID = incidentId;
 						approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
 						approval.IsAccepted = true;
-						//approval.APPROVAL_MESSAGE = lbm.Text;
-						//approval.APPROVER_TITLE = lbjobd.Text;
 						approval.APPROVAL_DATE = rda.SelectedDate;
 						hf = (HiddenField)item.FindControl("hfPersonID");
 						if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
@@ -312,7 +307,8 @@ namespace SQM.Website
 				{
 					foreach (IncidentStepStatus stat in approvalList)
 					{
-						if (stat == IncidentStepStatus.signoff2  ||  stat == IncidentStepStatus.signoffComplete)  // set status to CLOSED if final sign-off
+						//if (stat == IncidentStepStatus.signoff2  ||  stat == IncidentStepStatus.signoffComplete)  // set status to CLOSED if final sign-off
+						if (stat == IncidentStepStatus.signoffComplete)  // set status to CLOSED if final sign-off
 							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 						else
 							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
