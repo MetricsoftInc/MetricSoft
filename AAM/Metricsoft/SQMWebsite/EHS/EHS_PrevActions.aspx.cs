@@ -395,7 +395,7 @@ namespace SQM.Website
 
 			if (HSCalcs().ehsCtl.IncidentHst != null)
 			{
-				uclIncidentList.BindPreventativeListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked);
+				uclIncidentList.BindPreventativeListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_DT).ToList(), "EHS", cbShowImage.Checked);
 			}
 
 			if (HSCalcs().ehsCtl.IncidentHst != null && HSCalcs().ehsCtl.IncidentHst.Count > 0)

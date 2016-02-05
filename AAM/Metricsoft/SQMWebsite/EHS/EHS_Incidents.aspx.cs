@@ -418,7 +418,7 @@ namespace SQM.Website
 
 			if (HSCalcs().ehsCtl.IncidentHst != null)
 			{
-				uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_ID).ToList(), "EHS", cbShowImage.Checked, false);
+				uclIncidentList.BindIncidentListRepeater(HSCalcs().ehsCtl.IncidentHst.OrderByDescending(x => x.Incident.INCIDENT_DT).ToList(), "EHS", cbShowImage.Checked, false);
 			}
 
 
