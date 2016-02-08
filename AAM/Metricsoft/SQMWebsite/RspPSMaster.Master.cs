@@ -183,6 +183,10 @@ namespace SQM.Website
 							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "21").DESCRIPTION, GetMenu("MENU_DATA", "21").DESCRIPTION_SHORT));
 							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "22").DESCRIPTION, GetMenu("MENU_DATA", "22").DESCRIPTION_SHORT));
 						}
+						if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.ehsdata) || UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.ehsdata))
+						{
+							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "25").DESCRIPTION, GetMenu("MENU_DATA", "25").DESCRIPTION_SHORT));
+						}
 					}
 				}
 			}
