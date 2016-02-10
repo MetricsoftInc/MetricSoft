@@ -183,10 +183,12 @@ namespace SQM.Website.EHS
 			var startOfNextYear = new DateTime(year + 1, 1, 1);
 
 			decimal plantID_dec = plantID.StartsWith("BU") ? decimal.Parse(plantID.Substring(2)) : decimal.Parse(plantID);
-			var plantIDs = plantID.StartsWith("BU") ? SQMModelMgr.SelectPlantList(entities, companyID, plantID_dec).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
-			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(d.PLANT_ID) : d.PLANT_ID == plantID_dec)) &&
+			var plantIDs = plantID.StartsWith("BU") ? SQMModelMgr.SelectPlantList(entities, companyID, plantID_dec).Where(p => p.STATUS == "A").Select(p => p.PLANT_ID).ToList() : new List<decimal>();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Include("PLANT").Where(d => d.PLANT.STATUS == "A" &&
+				(plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(d.PLANT_ID) : d.PLANT_ID == plantID_dec)) &&
 				EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
-			var allOrdData = entities.EHS_DATA_ORD.Where(o => (plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(o.EHS_DATA.PLANT_ID) : o.EHS_DATA.PLANT_ID == plantID_dec)) &&
+			var allOrdData = entities.EHS_DATA_ORD.Where(o => o.EHS_DATA.PLANT.STATUS == "A" &&
+				(plantID_dec == -1 ? true : (plantID.StartsWith("BU") ? plantIDs.Contains(o.EHS_DATA.PLANT_ID) : o.EHS_DATA.PLANT_ID == plantID_dec)) &&
 				EntityFunctions.TruncateTime(o.EHS_DATA.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(o.EHS_DATA.DATE) < startOfNextYear.Date).ToList();
 
 			var data = new List<Data>();
@@ -411,16 +413,16 @@ namespace SQM.Website.EHS
 			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
 			var startOfNextYear = new DateTime(year + 1, 1, 1);
 
-			var plantIDs = SQMModelMgr.SelectPlantList(entities, companyID, 0).Select(p => p.PLANT_ID).ToList();
-			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
-				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+			var plantIDs = SQMModelMgr.SelectPlantList(entities, companyID, 0).Where(p => p.STATUS == "A").Select(p => p.PLANT_ID).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Include("PLANT").Where(d => plantIDs.Contains(d.PLANT_ID) &&
+				EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
 
 			var businessOrgs = SQMModelMgr.SelectBusOrgList(entities, companyID, 0, true);
 			var data = new List<dynamic>();
 			for (int b = -1; b < businessOrgs.Count; ++b)
 			{
 				var busOrgID = b == -1 ? 0 : businessOrgs[b].BUS_ORG_ID;
-				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, busOrgID).Select(p => p.PLANT_ID).ToList() : new List<decimal>();
+				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, busOrgID).Where(p => p.STATUS == "A").Select(p => p.PLANT_ID).ToList() : new List<decimal>();
 				var incidentRateSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 2, year), "")
 				{
 					DisplayLabels = true
@@ -473,10 +475,10 @@ namespace SQM.Website.EHS
 			var startOf2YearsAgo = new DateTime(year - 2, 1, 1);
 			var startOfNextYear = new DateTime(year + 1, 1, 1);
 
-			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0);
+			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0).Where(p => p.STATUS == "A");
 			var plantIDs = plants.Select(p => p.PLANT_ID).ToList();
-			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
-				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Include("PLANT").Where(d => plantIDs.Contains(d.PLANT_ID) &&
+				EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
 
 			decimal totalManHours2YearsAgo = 0;
 			decimal totalManHoursPreviousYear = 0;
@@ -632,10 +634,10 @@ namespace SQM.Website.EHS
 
 			int annualizeMonths = DateTime.Today.Month == 1 ? 12 : DateTime.Today.Month - 1;
 
-			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0);
+			var plants = SQMModelMgr.SelectPlantList(entities, companyID, 0).Where(p => p.STATUS == "A");
 			var plantIDs = plants.Select(p => p.PLANT_ID).ToList();
-			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) && EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date &&
-				EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
+			var allData = entities.EHS_DATA.Include("EHS_MEASURE").Where(d => plantIDs.Contains(d.PLANT_ID) &&
+				EntityFunctions.TruncateTime(d.DATE) >= startOf2YearsAgo.Date && EntityFunctions.TruncateTime(d.DATE) < startOfNextYear.Date).ToList();
 
 			decimal totalIncidentsPreviousYear = 0;
 			decimal totalIncidentsYTD = 0;

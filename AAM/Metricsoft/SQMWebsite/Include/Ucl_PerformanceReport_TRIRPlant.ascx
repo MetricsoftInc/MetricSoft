@@ -17,7 +17,7 @@
 				<HeaderStyle HorizontalAlign="Center" />
 				<ItemStyle HorizontalAlign="Center" />
 			</telerik:GridBoundColumn>
-			<telerik:GridBoundColumn DataField="TRIRGoal" HeaderText="TRIR Goal">
+			<telerik:GridBoundColumn DataField="TRIRGoal" DataFormatString="{0:F1}" HeaderText="TRIR Goal">
 				<HeaderStyle HorizontalAlign="Center" />
 				<ItemStyle HorizontalAlign="Center" />
 			</telerik:GridBoundColumn>
