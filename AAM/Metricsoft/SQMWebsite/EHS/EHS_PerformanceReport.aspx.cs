@@ -429,6 +429,8 @@ namespace SQM.Website.EHS
 			for (int b = -1; b < businessOrgs.Count; ++b)
 			{
 				var busOrgID = b == -1 ? 0 : businessOrgs[b].BUS_ORG_ID;
+				if (busOrgID == 99) // AAM
+					continue;
 				plantIDs = b != -1 ? SQMModelMgr.SelectPlantList(entities, companyID, busOrgID).Where(p => p.STATUS == "A").Select(p => p.PLANT_ID).ToList() : new List<decimal>();
 				var incidentRateSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 2, year), "")
 				{
@@ -559,7 +561,7 @@ namespace SQM.Website.EHS
 				data.Add(new
 				{
 					BusOrgID = plant.BUS_ORG_ID,
-					BusinessUnit = entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
+					BusinessUnit = plant.BUS_ORG_ID == 99 ? " " : entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
 					Plant = plant.DUNS_CODE,
 					manHours2YearsAgo,
 					manHoursPreviousYear,
@@ -582,6 +584,8 @@ namespace SQM.Website.EHS
 			{
 				var last = data.Last(d => d.BusinessUnit == businessUnit);
 				decimal busOrgID = last.BusOrgID;
+				if (busOrgID == 99) // AAM
+					continue;
 
 				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == busOrgID);
 
@@ -684,7 +688,7 @@ namespace SQM.Website.EHS
 				data.Add(new
 				{
 					BusOrgID = plant.BUS_ORG_ID,
-					BusinessUnit = entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
+					BusinessUnit = plant.BUS_ORG_ID == 99 ? " " : entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
 					Plant = plant.DUNS_CODE,
 					RecPreviousYear = incidentsPreviousYear,
 					RecYTD = incidentsYTD,
@@ -697,7 +701,11 @@ namespace SQM.Website.EHS
 
 			foreach (string businessUnit in data.Select(d => d.BusinessUnit).Distinct().ToList())
 			{
-				int lastIndex = data.IndexOf(data.Last(d => d.BusinessUnit == businessUnit));
+				var last = data.Last(d => d.BusinessUnit == businessUnit);
+				if (last.BusOrgID == 99) // AAM
+					continue;
+
+				int lastIndex = data.IndexOf(last);
 				var allPlantsForBU = data.Where(d => d.BusinessUnit == businessUnit);
 				decimal incidentsPreviousYear = allPlantsForBU.Sum(d => (decimal)d.RecPreviousYear);
 				decimal incidentsYTD = allPlantsForBU.Sum(d => (decimal)d.RecYTD);
