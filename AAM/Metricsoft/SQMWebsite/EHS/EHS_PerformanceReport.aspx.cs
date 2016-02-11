@@ -26,16 +26,17 @@ namespace SQM.Website.EHS
 			Restricted = 0x0020,
 			Severity = 0x0040,
 			FirstAid = 0x0080,
-			Leadership = 0x0100,
-			JSAs = 0x0200,
-			SafetyTraining = 0x0400,
-			Fatalities = 0x0800,
-			NearMisses = 0x1000,
-			Ordinals = 0x2000,
+			SupervisorAudits = 0x100,
+			Leadership = 0x0200,
+			JSAs = 0x0400,
+			SafetyTraining = 0x0800,
+			Fatalities = 0x1000,
+			NearMisses = 0x2000,
+			Ordinals = 0x4000,
 
-			Pyramid = Incidents | Frequency | FirstAid | Leadership | JSAs | SafetyTraining | Fatalities | NearMisses,
+			Pyramid = Incidents | Frequency | FirstAid | SupervisorAudits | Leadership | JSAs | SafetyTraining | Fatalities | NearMisses,
 			BalancedScorecard = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Severity,
-			Metrics = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Restricted | Severity | FirstAid | Leadership | JSAs | SafetyTraining | Ordinals
+			Metrics = TRIR | FrequencyRate | SeverityRate | Incidents | Frequency | Restricted | Severity | FirstAid | SupervisorAudits | Leadership | JSAs | SafetyTraining | Ordinals
 		}
 
 		public class Data
@@ -51,6 +52,7 @@ namespace SQM.Website.EHS
 			public decimal Restricted { get; set; }
 			public decimal Severity { get; set; }
 			public decimal FirstAid { get; set; }
+			public decimal SupervisorAudits { get; set; }
 			public decimal Leadership { get; set; }
 			public decimal JSAs { get; set; }
 			public decimal SafetyTraining { get; set; }
@@ -90,6 +92,8 @@ namespace SQM.Website.EHS
 					c.Severity = a.Severity + b.Severity;
 				if (a.DataToUse.Has(DataToUse.FirstAid))
 					c.FirstAid = a.FirstAid + b.FirstAid;
+				if (a.DataToUse.Has(DataToUse.SupervisorAudits))
+					c.SupervisorAudits = a.SupervisorAudits + b.SupervisorAudits;
 				if (a.DataToUse.Has(DataToUse.Leadership))
 					c.Leadership = a.Leadership + b.Leadership;
 				if (a.DataToUse.Has(DataToUse.JSAs))
@@ -270,6 +274,9 @@ namespace SQM.Website.EHS
 					if (dataToUse.Has(DataToUse.FirstAid))
 						monthData.FirstAid = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
+					if (dataToUse.Has(DataToUse.SupervisorAudits))
+						monthData.SupervisorAudits = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.Leadership))
 						monthData.Leadership = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S30003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
@@ -302,7 +309,7 @@ namespace SQM.Website.EHS
 						severityRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SeverityRate, monthData.Month));
 					}
 					if (y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
-						jsasSeries.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.Leadership + monthData.JSAs, monthData.Month));
+						jsasSeries.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SupervisorAudits + monthData.Leadership + monthData.JSAs, monthData.Month));
 					if (y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
 						safetyTrainingHoursSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.SafetyTraining, monthData.Month));
 
