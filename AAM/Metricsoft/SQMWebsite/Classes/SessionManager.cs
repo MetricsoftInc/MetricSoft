@@ -49,7 +49,7 @@ namespace SQM.Website
 						stsmgr.ehsCtl.ElapsedTimeSeries(new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID }, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
 						if (stsmgr.ehsCtl.Results.ValidResult)
 						{
-							SessionManager.StatOfTheDay = new AttributeValue().CreateNew("", stsmgr.ehsCtl.Results.metricSeries[0].ItemList[0].YValue);
+							SessionManager.StatOfTheDay = new AttributeValue().CreateNew("", stsmgr.ehsCtl.Results.metricSeries[0].ItemList[0].YValue ?? 0);
 						}
 					}
 					else

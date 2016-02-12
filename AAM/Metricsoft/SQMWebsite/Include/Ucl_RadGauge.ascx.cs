@@ -377,7 +377,7 @@ namespace SQM.Website
 			get;
 			set;
 		}
-		public decimal YValue
+		public decimal? YValue
 		{
 			get;
 			set;
@@ -415,7 +415,7 @@ namespace SQM.Website
 			this.Group = "";
 		}
 
-		public GaugeSeriesItem(int series, int item, decimal xvalue, decimal yvalue, string itemText)
+		public GaugeSeriesItem(int series, int item, decimal xvalue, decimal? yvalue, string itemText)
 		{
 			this.Series = series;
 			this.Item = item;
@@ -714,7 +714,7 @@ namespace SQM.Website
                     if (item0 == null)
                         newItem.CreateNew(++nSeries, 0, 0, 0, series.Name);
                     else
-                        newItem.CreateNew(++nSeries, 0, item0.XValue, item0.YValue, series.Name);
+                        newItem.CreateNew(++nSeries, 0, item0.XValue, item0.YValue ?? 0, series.Name);
                     series0.ItemList.Add(newItem);
                 }
             }
@@ -920,7 +920,7 @@ namespace SQM.Website
             decimal value = 0;
             foreach (GaugeSeriesItem data in gaugeSeries.ItemList)
             {
-                value = Convert(data.YValue, rgCfg.Multiplier); // data.XValue;
+                value = Convert(data.YValue ?? 0, rgCfg.Multiplier); // data.XValue;
                 newSeries.SeriesItems.Add(new CategorySeriesItem(value));
             }
  
@@ -946,7 +946,7 @@ namespace SQM.Website
                 foreach (GaugeSeries gs in gaugeSeries)
                 {
                     if (col < gs.ItemList.Count)
-                        sum += Convert(gs.ItemList[col].YValue, rgCfg.Multiplier);
+                        sum += Convert(gs.ItemList[col].YValue ?? 0, rgCfg.Multiplier);
                 }
                 newSeries.SeriesItems.Add(new CategorySeriesItem(sum));
                 axisMin = Math.Min(axisMin, sum);
@@ -1349,7 +1349,7 @@ namespace SQM.Website
            foreach (GaugeSeriesItem item in seriesData)
            {
                SeriesItem si = new SeriesItem();
-               si.YValue = Convert(item.YValue, rgCfg.Multiplier);
+               si.YValue = Convert(item.YValue ?? 0, rgCfg.Multiplier);
                series.Items.Add(si);
            }
 
@@ -1480,7 +1480,7 @@ namespace SQM.Website
                     }
                     else
                     {
-                        item.Y = Convert(data.YValue, rgCfg.Multiplier);
+                        item.Y = Convert(data.YValue ?? 0, rgCfg.Multiplier);
                     }
                     
                     if (numItems == 1)
@@ -1624,7 +1624,7 @@ namespace SQM.Website
             foreach (GaugeSeriesItem item in seriesData)
             {
                 SeriesItem si = new SeriesItem();
-                si.YValue = Convert(item.YValue, rgCfg.Multiplier);
+                si.YValue = Convert(item.YValue ?? 0, rgCfg.Multiplier);
                 series.Items.Add(si);
             }
 
@@ -1742,7 +1742,7 @@ namespace SQM.Website
                     }
                     else
                     {
-                        item.Y = Convert(data.YValue, rgCfg.Multiplier);
+                        item.Y = Convert(data.YValue ?? 0, rgCfg.Multiplier);
                     }
 
                     sumY += Math.Abs((decimal)item.Y);
@@ -1899,9 +1899,10 @@ namespace SQM.Website
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
                     CategorySeriesItem item = new CategorySeriesItem();
-                    item.Y = Convert(data.YValue, rgCfg.Multiplier);
-                    minYValue = Math.Min(minYValue, (decimal)item.Y);
-                    sumY += Math.Abs((decimal)item.Y);
+					if (data.YValue.HasValue)
+						item.Y = Convert(data.YValue.Value, rgCfg.Multiplier);
+                    minYValue = Math.Min(minYValue, item.Y ?? 0);
+                    sumY += Math.Abs(item.Y ?? 0);
                     if (numItems == 1)
                         rad.PlotArea.XAxis.Items.Add(new AxisItem(data.Text));
                        
@@ -1968,7 +1969,7 @@ namespace SQM.Website
 			{
 				PieSeriesItem item = new PieSeriesItem();
 				item.Name = data.Text.Replace("\r\n", "");
-				item.Y = Math.Round(data.YValue, 2);
+				item.Y = Math.Round(data.YValue ?? 0, 2);
 				if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
 					item.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
 
@@ -2131,7 +2132,7 @@ namespace SQM.Website
             lorenzeSeries.LabelsAppearance.DataFormatString = "{0}%";
             lorenzeSeries.AxisName = "Lorenze";
             lorenzeSeries.Appearance.FillStyle.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("red");
-            decimal total = seriesData.Select(l => l.YValue).Sum();
+            decimal total = seriesData.Select(l => l.YValue ?? 0).Sum();
             decimal totalPct = 0;
             foreach (GaugeSeriesItem item in seriesData)
             {
@@ -2139,7 +2140,7 @@ namespace SQM.Website
                     lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
                 else
                 {
-                    totalPct += Decimal.Round(item.YValue / total * 100m, 2);
+                    totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
                     if (item == seriesData.Last())
                         totalPct = 100m;
                     lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));
@@ -2237,7 +2238,7 @@ namespace SQM.Website
             lorenzeSeries.LabelsAppearance.DataFormatString = "{0}%";
             lorenzeSeries.AxisName = "Lorenze";
             lorenzeSeries.Appearance.FillStyle.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("red");
-            decimal total = seriesData.Select(l => l.YValue).Sum();
+            decimal total = seriesData.Select(l => l.YValue ?? 0).Sum();
             decimal totalPct = 0;
             foreach (GaugeSeriesItem item in seriesData)
             {
@@ -2245,7 +2246,7 @@ namespace SQM.Website
                     lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
                 else
                 {
-                    totalPct += Decimal.Round(item.YValue / total * 100m, 2);
+                    totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
                     if (item == seriesData.Last())
                         totalPct = 100m;
                     lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));

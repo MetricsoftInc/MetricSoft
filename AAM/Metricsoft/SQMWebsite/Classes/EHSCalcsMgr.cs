@@ -164,7 +164,7 @@ namespace SQM.Website
                             tempItem.YValue = gsi.YValue;
                             tempList.Add(tempItem);
                         }
-                        total += gsi.YValue;
+                        total += gsi.YValue ?? 0;
                     }
                 }
                 foreach (GaugeSeries gs in this.metricSeries)
@@ -174,7 +174,7 @@ namespace SQM.Website
                         if (seriesOrder == EHSCalcsCtl.SeriesOrder.MeasureSeries)
                         {
                             if (total != 0)
-                                gsi.YValue = Decimal.Round(gsi.YValue / total * 100m);
+                                gsi.YValue = Decimal.Round((gsi.YValue ?? 0) / total * 100m);
                             else
                                 gsi.YValue = 0;
                         }
@@ -182,7 +182,7 @@ namespace SQM.Website
                         {
                             tempItem = tempList.Where(l => l.Text == gsi.Text).FirstOrDefault();
                             if (tempItem.YValue != 0)
-                                gsi.YValue = Decimal.Round(gsi.YValue / tempItem.YValue * 100m);
+                                gsi.YValue = Decimal.Round((gsi.YValue ?? 0) / (tempItem.YValue ?? 1) * 100m);
                             else
                                 gsi.YValue = 0;
                         }

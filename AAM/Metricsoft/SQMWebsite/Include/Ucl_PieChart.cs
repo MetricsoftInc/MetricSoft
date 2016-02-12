@@ -481,8 +481,8 @@ namespace SQM.Website
 				this.Values.RemoveAll(v => v.YValue == 0);
 
 			// Calculate the angles of each value.
-			decimal sum = this.Values.Sum(i => (decimal?)i.YValue) ?? 0;
-			var angles = sum == 0 ? new List<decimal>() : this.Values.Select(v => (v.YValue / sum) * 2 * (decimal)Math.PI).ToList();
+			decimal sum = this.Values.Sum(i => i.YValue) ?? 0;
+			var angles = sum == 0 ? new List<decimal>() : this.Values.Select(v => ((v.YValue ?? 0) / sum) * 2 * (decimal)Math.PI).ToList();
 			int numberOfNonZeroValues = this.Values.Where(v => v.YValue != 0).Count();
 
 			// Get the legend information and use that to calculate the pie chart's radius.

@@ -1537,8 +1537,8 @@ namespace SQM.Website
 			decimal min = 0, max = 0;
 			foreach (var ser in series)
 			{
-				min = Math.Min(min, ser.ItemList.Min(i => i.YValue));
-				max = Math.Max(max, ser.ItemList.Max(i => i.YValue));
+				min = Math.Min(min, ser.ItemList.Min(i => i.YValue) ?? 0);
+				max = Math.Max(max, ser.ItemList.Max(i => i.YValue) ?? 0);
 			}
 			gd.ScaleMin = min == 0 && max == 0 ? 0 : (decimal?)null;
 			gd.ScaleMax = min == 0 && max == 0 ? 1 : 0;

@@ -343,14 +343,14 @@ namespace SQM.Website.EHS
 
 			var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
 			for (int i = 0; i < 5; ++i)
-				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
 			for (int i = 5; i < incidentRateSeries.ItemList.Count; ++i)
 				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
-					Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
+					Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 6m, incidentRateSeries.ItemList[i].Text));
 			var jsasTrendSeries = new GaugeSeries(0, "Leading Trend", "");
-			jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+			jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
 			for (int i = 1; i < jsasSeries.ItemList.Count; ++i)
-				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue) / 2m, jsasSeries.ItemList[i].Text));
+				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 2m, jsasSeries.ItemList[i].Text));
 
 			var incidentRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
 				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
@@ -460,10 +460,10 @@ namespace SQM.Website.EHS
 
 				var incidentRateTrendSeries = new GaugeSeries(0, "TRIR Trend (6 Month Rolling Avg.)", "");
 				for (int i = 0; i < 5; ++i)
-					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 0, ""));
+					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
 				for (int i = 5; i < incidentRateSeries.ItemList.Count; ++i)
 					incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
-						Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue) / 6m, incidentRateSeries.ItemList[i].Text));
+						Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 6m, incidentRateSeries.ItemList[i].Text));
 
 				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
 					(b == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID : t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == busOrgID));
