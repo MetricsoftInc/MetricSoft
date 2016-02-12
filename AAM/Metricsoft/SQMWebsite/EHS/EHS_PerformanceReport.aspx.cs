@@ -301,16 +301,16 @@ namespace SQM.Website.EHS
 						monthData.OrdinalDaysToClose = y == year ? GetOrdinalData(monthOrdData, daysToCloses) : new Dictionary<string, decimal>();
 					}
 
-					if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+					if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
 						incidentRateSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.TRIR, monthData.Month));
 					if (y > year - 2)
 					{
 						frequencyRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.FrequencyRate, monthData.Month));
 						severityRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SeverityRate, monthData.Month));
 					}
-					if (y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+					if (y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
 						jsasSeries.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SupervisorAudits + monthData.Leadership + monthData.JSAs, monthData.Month));
-					if (y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+					if (y == year && (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
 						safetyTrainingHoursSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.SafetyTraining, monthData.Month));
 
 					if (y == year)
@@ -446,14 +446,14 @@ namespace SQM.Website.EHS
 
 						var monthData = allData.Where(d => d.DATE.Date >= startOfMonth.Date && d.DATE.Date < startOfNextMonth.Date && (b == -1 ? true : plantIDs.Contains(d.PLANT_ID)));
 
-						var manHours = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						var manHours = y < year || (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true) ?
 							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S60002" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
-						var incidents = y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						var incidents = y < year || (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true) ?
 							monthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S20004" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 
 						var TRIR = manHours == 0 ? 0 : incidents * 200000 / manHours;
 
-						if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true))
+						if (y < year || (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
 							incidentRateSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, TRIR, startOfMonth.ToString("MMMM")));
 					}
 				}
@@ -1039,7 +1039,7 @@ namespace SQM.Website.EHS
 			if (trirBusiness)
 			{
 				gaugeDef.Height = 410;
-				int count = 0;
+				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
 					gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
@@ -1056,7 +1056,7 @@ namespace SQM.Website.EHS
 					this.pnlTRIRBusinessOutput.Controls.Add(container);
 
 					++count;
-					if ((count % 2) == 0)
+					if (count != len && (count % 2) == 0)
 						this.pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 				}
 			}
@@ -1149,7 +1149,7 @@ namespace SQM.Website.EHS
 				dynamic data = PullTRIRByBusinessUnit(this.entities, companyID, year);
 
 				gaugeDef.Height = 410;
-				int count = 0;
+				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
 					gaugeDef.Title = businessOrgData.name.ToUpper() + " TOTAL RECORDABLE INCIDENT RATE";
@@ -1166,7 +1166,7 @@ namespace SQM.Website.EHS
 					pnlTRIRBusinessOutput.Controls.Add(container);
 
 					++count;
-					if ((count % 2) == 0)
+					if (count != len && (count % 2) == 0)
 						pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 				}
 

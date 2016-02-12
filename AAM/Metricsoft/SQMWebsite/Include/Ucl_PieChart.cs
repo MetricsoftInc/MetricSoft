@@ -476,6 +476,10 @@ namespace SQM.Website
 				title.Attributes.Add("font-size", this.TitleStyle.Font.Size.ToString());
 			this.SVG.Controls.Add(title);
 
+			// If we are not allowing values of 0, remove them from the series.
+			if (!this.AllowZeroValues)
+				this.Values.RemoveAll(v => v.YValue == 0);
+
 			// Calculate the angles of each value.
 			decimal sum = this.Values.Sum(i => (decimal?)i.YValue) ?? 0;
 			var angles = sum == 0 ? new List<decimal>() : this.Values.Select(v => (v.YValue / sum) * 2 * (decimal)Math.PI).ToList();

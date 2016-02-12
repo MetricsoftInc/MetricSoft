@@ -1,8 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_PerformanceReport_Pyramid.ascx.cs" Inherits="SQM.Website.Ucl_PerformanceReport_Pyramid" %>
 <%@ Register Assembly="SQMWebsite" Namespace="SQM.Website" TagPrefix="SQM" %>
 <SQM:Ucl_RadGauge ID="uclChart" runat="server" />
+<div style="text-align: center; font-size: large; font-weight: bold; margin-bottom: 1em">AAM Current Indiciators</div>
 <div style="position: relative; height: 650px">
-	<SQM:AAMPyramidChart ID="pyramid" runat="server" Height="600" style="position: absolute; top: 50px; z-index: 1" />
+	<SQM:AAMPyramidChart ID="pyramid" runat="server" Height="600" Font-Size="12px" style="position: absolute; top: 50px; z-index: 1" />
 	<table id="pyramidTable" runat="server" style="position: relative; top: 0; z-index: 0">
 		<thead>
 			<tr>
