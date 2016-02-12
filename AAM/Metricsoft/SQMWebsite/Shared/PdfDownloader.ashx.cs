@@ -49,8 +49,8 @@ namespace SQM.Website.Shared
 			if (context.Request["html"] == null)
 				throw new InvalidDataException("Requires 'html' value in POST data.");
 			var converter = new HtmlToPdf();
-			converter.Options.PdfPageOrientation = PdfPageOrientation.Landscape;
-			converter.Options.PdfPageSize = PdfPageSize.Letter;
+			converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+			converter.Options.PdfPageSize = context.Request["pageSize"] != null && context.Request["pageSize"] == "11x17" ? PdfPageSize.Letter11x17 : PdfPageSize.Letter;
 			converter.Options.MarginBottom = 32;
 			converter.Options.MarginLeft = 32;
 			converter.Options.MarginRight = 32;

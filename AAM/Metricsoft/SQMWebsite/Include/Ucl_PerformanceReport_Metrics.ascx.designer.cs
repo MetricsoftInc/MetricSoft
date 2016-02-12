@@ -121,15 +121,6 @@ namespace SQM.Website {
         protected global::SQM.Website.PieChart pieRecordableTenure;
         
         /// <summary>
-        /// divBreakPie control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBreakPie;
-        
-        /// <summary>
         /// divPie3 control.
         /// </summary>
         /// <remarks>

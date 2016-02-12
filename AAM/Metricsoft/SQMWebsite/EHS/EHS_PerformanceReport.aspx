@@ -178,12 +178,14 @@
 			var hfCompanyID = $('#<%= this.hfCompanyID.ClientID %>');
 			var radAjaxManager = null;
 			var radLoading = null;
+			var rddlType = null;
 
 			// This will get the controls we need later.
 			Sys.Application.add_load(function ()
 			{
 				radAjaxManager = $find('<%= this.radAjaxManager.ClientID %>');
 				radLoading = $find('<%= this.radLoading.ClientID %>');
+				rddlType = $find('<%= this.rddlType.ClientID %>');
 			});
 
 			function rddlType_ClientItemSelected(sender, eventArgs)
@@ -199,6 +201,8 @@
 			$body.on('click', '#btnExport', function ()
 			{
 				var form = $('<form method="POST" action="/Shared/PdfDownloader.ashx"><input type="text" name="filename" value="PerformanceReport.pdf" /></form>');
+				if (rddlType.get_selectedItem().get_value() == 'Metrics')
+					form.append('<input type="text" name="pageSize" value="11x17" />');
 				var div = $('#divExport').clone();
 				div.css('transform', 'scale(0.5, 0.5) translate(-50%, -50%)');
 				form.append($('<input type="text" name="html" />').val(div[0].outerHTML));
@@ -241,10 +245,13 @@
 				}
 				var div = $('#divExportAll').clone();
 				div.css('display', '');
+				var data = { html: div[0].outerHTML, bookmarkName: bookmarkName };
+				if (lastDone == 'metrics')
+					data.pageSize = '11x17';
 				$.ajax({
 					method: 'POST',
 					url: '/Shared/PdfDownloader.ashx',
-					data: { html: div[0].outerHTML, bookmarkName: bookmarkName },
+					data: data,
 					success: function ()
 					{
 						$('#divExportAll').empty();

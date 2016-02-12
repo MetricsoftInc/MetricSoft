@@ -60,10 +60,10 @@ namespace SQM.Website
 			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, EHS.EHS_PerformanceReport.gaugeDef, calcsResult, this.divSeverityRate);
 
 			if (this.Data[12].TRIR == 0)
-				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = false;
+				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = false;
 			else
 			{
-				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = this.divBreakPie.Visible = true;
+				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = true;
 				this.pieRecordableType.Values = this.OrdinalTypeSeries;
 				this.pieRecordableBodyPart.Values = this.OrdinalBodyPartSeries;
 				this.pieRecordableRootCause.Values = this.OrdinalRootCauseSeries;

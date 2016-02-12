@@ -1038,7 +1038,7 @@ namespace SQM.Website.EHS
 			}
 			if (trirBusiness)
 			{
-				gaugeDef.Height = 410;
+				gaugeDef.Height = 395;
 				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
@@ -1056,7 +1056,7 @@ namespace SQM.Website.EHS
 					this.pnlTRIRBusinessOutput.Controls.Add(container);
 
 					++count;
-					if (count != len && (count % 2) == 0)
+					if (count != len && (count % 4) == 0)
 						this.pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 				}
 			}
@@ -1148,7 +1148,7 @@ namespace SQM.Website.EHS
 
 				dynamic data = PullTRIRByBusinessUnit(this.entities, companyID, year);
 
-				gaugeDef.Height = 410;
+				gaugeDef.Height = 395;
 				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
@@ -1166,7 +1166,7 @@ namespace SQM.Website.EHS
 					pnlTRIRBusinessOutput.Controls.Add(container);
 
 					++count;
-					if (count != len && (count % 2) == 0)
+					if (count != len && (count % 4) == 0)
 						pnlTRIRBusinessOutput.Controls.Add(CreatePageBreakDiv());
 				}
 

@@ -53,6 +53,5 @@
 		</tbody>
 	</table>
 </div>
-<div style="page-break-after: always; padding: 1px"></div>
 <div id="divJSAsAndAudits_Pyramid" runat="server" class="chartMarginTop"></div>
 <div id="divSafetyTrainingHours_Pyramid" runat="server" class="chartMarginTop"></div>
