@@ -812,66 +812,69 @@ namespace SQM.Website.EHS
 				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
 				{
 					busOrgID = businessLoc.Plant.BUS_ORG_ID;
-					var busOrgData = PullData(entities, "BU" + busOrgID, companyID, year, DataToUse.BalancedScorecard);
-					var busOrgDataList = busOrgData.data as List<Data>;
-					data.Add(new
+					if (busOrgID != 99)
 					{
-						Name = businessLoc.BusinessOrg.ORG_NAME,
-						TRIR = new
+						var busOrgData = PullData(entities, "BU" + busOrgID, companyID, year, DataToUse.BalancedScorecard);
+						var busOrgDataList = busOrgData.data as List<Data>;
+						data.Add(new
 						{
-							ItemType = "Incident Rate",
-							Target = busOrgData.incidentRateTarget,
-							Jan = busOrgDataList[0].TRIR,
-							Feb = busOrgDataList[1].TRIR,
-							Mar = busOrgDataList[2].TRIR,
-							Apr = busOrgDataList[3].TRIR,
-							May = busOrgDataList[4].TRIR,
-							Jun = busOrgDataList[5].TRIR,
-							Jul = busOrgDataList[6].TRIR,
-							Aug = busOrgDataList[7].TRIR,
-							Sep = busOrgDataList[8].TRIR,
-							Oct = busOrgDataList[9].TRIR,
-							Nov = busOrgDataList[10].TRIR,
-							Dec = busOrgDataList[11].TRIR,
-							YTD = busOrgDataList[12].TRIR
-						},
-						FrequencyRate = new
-						{
-							ItemType = "Freqeucny Rate",
-							Target = busOrgData.frequencyRateTarget,
-							Jan = busOrgDataList[0].FrequencyRate,
-							Feb = busOrgDataList[1].FrequencyRate,
-							Mar = busOrgDataList[2].FrequencyRate,
-							Apr = busOrgDataList[3].FrequencyRate,
-							May = busOrgDataList[4].FrequencyRate,
-							Jun = busOrgDataList[5].FrequencyRate,
-							Jul = busOrgDataList[6].FrequencyRate,
-							Aug = busOrgDataList[7].FrequencyRate,
-							Sep = busOrgDataList[8].FrequencyRate,
-							Oct = busOrgDataList[9].FrequencyRate,
-							Nov = busOrgDataList[10].FrequencyRate,
-							Dec = busOrgDataList[11].FrequencyRate,
-							YTD = busOrgDataList[12].FrequencyRate
-						},
-						SeverityRate = new
-						{
-							ItemType = "Severity Rate",
-							Target = busOrgData.severityRateTarget,
-							Jan = busOrgDataList[0].SeverityRate,
-							Feb = busOrgDataList[1].SeverityRate,
-							Mar = busOrgDataList[2].SeverityRate,
-							Apr = busOrgDataList[3].SeverityRate,
-							May = busOrgDataList[4].SeverityRate,
-							Jun = busOrgDataList[5].SeverityRate,
-							Jul = busOrgDataList[6].SeverityRate,
-							Aug = busOrgDataList[7].SeverityRate,
-							Sep = busOrgDataList[8].SeverityRate,
-							Oct = busOrgDataList[9].SeverityRate,
-							Nov = busOrgDataList[10].SeverityRate,
-							Dec = busOrgDataList[11].SeverityRate,
-							YTD = busOrgDataList[12].SeverityRate
-						}
-					});
+							Name = businessLoc.BusinessOrg.ORG_NAME,
+							TRIR = new
+							{
+								ItemType = "Incident Rate",
+								Target = busOrgData.incidentRateTarget,
+								Jan = busOrgDataList[0].TRIR,
+								Feb = busOrgDataList[1].TRIR,
+								Mar = busOrgDataList[2].TRIR,
+								Apr = busOrgDataList[3].TRIR,
+								May = busOrgDataList[4].TRIR,
+								Jun = busOrgDataList[5].TRIR,
+								Jul = busOrgDataList[6].TRIR,
+								Aug = busOrgDataList[7].TRIR,
+								Sep = busOrgDataList[8].TRIR,
+								Oct = busOrgDataList[9].TRIR,
+								Nov = busOrgDataList[10].TRIR,
+								Dec = busOrgDataList[11].TRIR,
+								YTD = busOrgDataList[12].TRIR
+							},
+							FrequencyRate = new
+							{
+								ItemType = "Freqeucny Rate",
+								Target = busOrgData.frequencyRateTarget,
+								Jan = busOrgDataList[0].FrequencyRate,
+								Feb = busOrgDataList[1].FrequencyRate,
+								Mar = busOrgDataList[2].FrequencyRate,
+								Apr = busOrgDataList[3].FrequencyRate,
+								May = busOrgDataList[4].FrequencyRate,
+								Jun = busOrgDataList[5].FrequencyRate,
+								Jul = busOrgDataList[6].FrequencyRate,
+								Aug = busOrgDataList[7].FrequencyRate,
+								Sep = busOrgDataList[8].FrequencyRate,
+								Oct = busOrgDataList[9].FrequencyRate,
+								Nov = busOrgDataList[10].FrequencyRate,
+								Dec = busOrgDataList[11].FrequencyRate,
+								YTD = busOrgDataList[12].FrequencyRate
+							},
+							SeverityRate = new
+							{
+								ItemType = "Severity Rate",
+								Target = busOrgData.severityRateTarget,
+								Jan = busOrgDataList[0].SeverityRate,
+								Feb = busOrgDataList[1].SeverityRate,
+								Mar = busOrgDataList[2].SeverityRate,
+								Apr = busOrgDataList[3].SeverityRate,
+								May = busOrgDataList[4].SeverityRate,
+								Jun = busOrgDataList[5].SeverityRate,
+								Jul = busOrgDataList[6].SeverityRate,
+								Aug = busOrgDataList[7].SeverityRate,
+								Sep = busOrgDataList[8].SeverityRate,
+								Oct = busOrgDataList[9].SeverityRate,
+								Nov = busOrgDataList[10].SeverityRate,
+								Dec = busOrgDataList[11].SeverityRate,
+								YTD = busOrgDataList[12].SeverityRate
+							}
+						});
+					}
 				}
 
 				var plantData = PullData(entities, businessLoc.Plant.PLANT_ID.ToString(), companyID, year, DataToUse.BalancedScorecard);
@@ -1254,7 +1257,8 @@ namespace SQM.Website.EHS
 				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
 				{
 					busOrgID = businessLoc.Plant.BUS_ORG_ID;
-					metricsList.Add("BU" + busOrgID);
+					if (busOrgID != 99)
+						metricsList.Add("BU" + busOrgID);
 				}
 				metricsList.Add(businessLoc.Plant.PLANT_ID.ToString());
 			}
