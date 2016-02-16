@@ -135,7 +135,7 @@ namespace SQM.Website.Automated
 							fileReader.FileName = fileType.ToUpper();
 							fileReader.LoadCSV();
 							fileProcessed = true;
-							WriteLine(fileType + " file processed " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
+							WriteLine(file.Name + " processed " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 						}
 						// move the file
 						string sourceFile = file.FullName;
