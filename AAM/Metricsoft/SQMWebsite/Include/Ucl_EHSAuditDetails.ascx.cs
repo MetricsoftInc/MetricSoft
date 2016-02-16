@@ -36,6 +36,10 @@ namespace SQM.Website
 					decimal totalPositive = 0;
 					decimal totalTopicPositive = 0;
 					decimal totalPercent = 0;
+					decimal totalWeightScore = 0;
+					decimal totalPossibleScore = 0;
+					decimal possibleScore = 0;
+					decimal percentInTopic = 0;
 
 					sb.AppendLine("<table class=\"lightTable\" cellspacing=\"0\" style=\"width: 100%\">");
 					foreach (var q in questions)
@@ -55,9 +59,11 @@ namespace SQM.Website
 									totalPercent = totalTopicPositive / totalTopicQuestions;
 								else
 									totalPercent = 0;
-								sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
+								if (percentInTopic > 0)
+									sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
 								totalTopicQuestions = 0;
 								totalTopicPositive = 0;
+								percentInTopic = 0;
 							}
 							sb.AppendLine("<tr><td colspan=\"3\" class=\"blueCell\" style=\"width: 100%; font-weight: bold;\">" + q.TopicTitle + "</td></tr>");
 							previousTopic = tid;
@@ -76,12 +82,20 @@ namespace SQM.Website
 						{
 							totalQuestions += 1;
 							totalTopicQuestions += 1;
+							percentInTopic += 1; 
 							answerIsPositive = false;
 							foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
 							{
-								if (choice.Value.Equals(answer) && choice.ChoicePositive)
-									answerIsPositive = true;
+								if (choice.ChoiceWeight > possibleScore)
+									possibleScore = choice.ChoiceWeight;
+								if (choice.Value.Equals(answer))
+								{
+									if (choice.ChoicePositive)
+										answerIsPositive = true;
+									totalWeightScore += choice.ChoiceWeight;
+								}
 							}
+							totalPossibleScore += possibleScore;
 							if (answerIsPositive)
 							{
 								totalPositive += 1;
@@ -157,13 +171,22 @@ namespace SQM.Website
 						totalPercent = totalTopicPositive / totalTopicQuestions;
 					else
 						totalPercent = 0;
-					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
+					if (percentInTopic > 0)
+						sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
 					// update the audit total
 					if (totalQuestions > 0)
 						totalPercent = totalPositive / totalQuestions;
 					else
 						totalPercent = 0;
-					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Score:   {0:0%}", totalPercent) + "</td></tr>");
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Positive Score:   {0:0%}", totalPercent) + "</td></tr>");
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">&nbsp;</td></tr>");
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Possible Score:   {0:0}", totalPossibleScore) + "</td></tr>");
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Points Achieved:   {0:0}", totalWeightScore) + "</td></tr>");
+					if (totalPossibleScore > 0)
+						totalPercent = totalWeightScore / totalPossibleScore;
+					else
+						totalPercent = 0;
+					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent) + "</td></tr>");
 				}
 				sb.AppendLine("</table>");
 			}
