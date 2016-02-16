@@ -1679,8 +1679,8 @@ namespace SQM.Website
 				case 1:
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
 					break;
-				case 23:
-					lblPageTitle.Text = Resources.LocalizedText.Approvals;
+				case 2:
+					lblPageTitle.Text = Resources.LocalizedText.Resolution;
 					break;
 				default:
 					lblPageTitle.Text = Resources.LocalizedText.Recommendation;
@@ -2219,7 +2219,7 @@ namespace SQM.Website
 					BindIncident(EditIncidentId, 1, "");
 					break;
 				case "5":
-					lblPageTitle.Text = Resources.LocalizedText.Approvals;
+					lblPageTitle.Text = Resources.LocalizedText.Resolution;
 					BindIncident(EditIncidentId, 2, "");
 					break;
 				case "0":

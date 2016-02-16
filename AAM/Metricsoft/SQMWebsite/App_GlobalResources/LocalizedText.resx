@@ -648,4 +648,7 @@
   <data name="ENVProfileMetricHasHistoryMsg" xml:space="preserve">
     <value>Data exists for this metric.  Please Inactivate instead of Delete.</value>
   </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
 </root>
