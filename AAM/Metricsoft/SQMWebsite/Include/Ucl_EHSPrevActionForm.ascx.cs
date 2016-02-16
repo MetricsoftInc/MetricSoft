@@ -257,7 +257,7 @@ namespace SQM.Website
 					continue;
 				}
 
-				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
+				bool shouldPopulate = IsEditContext  && !string.IsNullOrEmpty(q.AnswerText);
 
 				// set default answers when initial creation
 				if (q.QuestionId == (decimal)EHSQuestionId.InspectionCategory  &&  !IsEditContext)
@@ -330,11 +330,21 @@ namespace SQM.Website
 					case EHSIncidentQuestionType.TextField:
 						var tf = new RadTextBox() { ID = qid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
+						{
 							tf.Text = q.AnswerText;
+						}
 						else if (q.QuestionId == (decimal)EHSQuestionId.Location) // Location
 							tf.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
 						if (q.QuestionId == (decimal)EHSQuestionId.CompletedBy)
 							tf.Enabled = false;
+						if (q.QuestionId == 31)  // auitor
+						{
+							tf.Enabled = false;
+							if (incident.AUDIT_PERSON.HasValue)
+								tf.Text = SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson((decimal)incident.AUDIT_PERSON, ""));
+							else
+								tf.Text = "";
+						}
 						pnl.Controls.Add(tf);
 						break;
 
@@ -449,8 +459,21 @@ namespace SQM.Website
 						{
 							rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 						}
+						if (q.QuestionId == 30)
+						{
+							rdp.Enabled = false;
+							if (incident.CLOSE_DATE.HasValue)
+							{
+								rdp.SelectedDate = incident.CLOSE_DATE;
+							}
+							else
+							{
+								rdp.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
+							}
+							shouldPopulate = false;
+						}
 
-						if (shouldPopulate)
+						if (shouldPopulate)  
 						{
 							DateTime parseDate;
 							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
@@ -1875,6 +1898,7 @@ namespace SQM.Website
 							DateTime? fromDate = (control as RadDatePicker).SelectedDate;
 							if (fromDate != null)
 							{
+								//DateTime theDate = WebSiteCommon.LocalTime(Convert.ToDateTime(fromDate), IncidentLocationTZ);
 								answer = ((DateTime)fromDate).ToString(CultureInfo.GetCultureInfo("en-US"));
 								if (q.QuestionId == (decimal)EHSQuestionId.IncidentDate || q.QuestionId == (decimal)EHSQuestionId.InspectionDate)
 									incidentDate = (DateTime)fromDate;

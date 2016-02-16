@@ -795,11 +795,12 @@ namespace SQM.Website
 					lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 				}
 
-				if (data.Status == "C" || data.Status == "F")  // completed or awaiting funding
+				if (data.Status == "U" || data.Status == "F")  // completed or awaiting funding
 				{
 					if (data.Status == "F")
 						lbl.Text += ("<br/> - " + IncidentXLATList.Where(l => l.XLAT_CODE == ((int)IncidentStepStatus.awaitingFunding).ToString()).FirstOrDefault().DESCRIPTION_SHORT);
-					lbl.Text += ("<br/>" + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "  (" + data.DaysToClose.ToString() + ")");
+					if (data.Incident.CLOSE_DATE.HasValue)
+						lbl.Text += ("<br/>" + SQMBasePage.FormatDate((DateTime)data.Incident.CLOSE_DATE, "d", false) + "  (" + data.DaysToClose.ToString() + ")");
 				}
 				else
 				{

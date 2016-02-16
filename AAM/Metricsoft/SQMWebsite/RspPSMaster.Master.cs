@@ -170,22 +170,24 @@ namespace SQM.Website
 								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
 						}
 					}
-
-					if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate && IsMenuActive("MENU_DATA"))
+					if (settingList.Where(l => l.SETTING_CD == "EHSDATA" && l.VALUE == "A").Count() > 0)
 					{
-						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_DATA", "0").DESCRIPTION);
-						RadMenu1.Items.Add(EHSMenu2);
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "11").DESCRIPTION, GetMenu("MENU_DATA", "11").DESCRIPTION_SHORT));
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "12").DESCRIPTION, GetMenu("MENU_DATA", "12").DESCRIPTION_SHORT));
-						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "13").DESCRIPTION, GetMenu("MENU_DATA", "13").DESCRIPTION_SHORT));
-						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.config)
+						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate && IsMenuActive("MENU_DATA"))
 						{
-							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "21").DESCRIPTION, GetMenu("MENU_DATA", "21").DESCRIPTION_SHORT));
-							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "22").DESCRIPTION, GetMenu("MENU_DATA", "22").DESCRIPTION_SHORT));
-						}
-						if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.ehsdata) || UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.ehsdata))
-						{
-							EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "25").DESCRIPTION, GetMenu("MENU_DATA", "25").DESCRIPTION_SHORT));
+							RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_DATA", "0").DESCRIPTION);
+							RadMenu1.Items.Add(EHSMenu2);
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "11").DESCRIPTION, GetMenu("MENU_DATA", "11").DESCRIPTION_SHORT));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "12").DESCRIPTION, GetMenu("MENU_DATA", "12").DESCRIPTION_SHORT));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_DATA", "13").DESCRIPTION, GetMenu("MENU_DATA", "13").DESCRIPTION_SHORT));
+							if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.config)
+							{
+								EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "21").DESCRIPTION, GetMenu("MENU_DATA", "21").DESCRIPTION_SHORT));
+								EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "22").DESCRIPTION, GetMenu("MENU_DATA", "22").DESCRIPTION_SHORT));
+							}
+							if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.ehsdata) || UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.ehsdata))
+							{
+								EHSMenu2.Items.Add(new RadMenuItem(GetMenu("MENU_DATA", "25").DESCRIPTION, GetMenu("MENU_DATA", "25").DESCRIPTION_SHORT));
+							}
 						}
 					}
 				}

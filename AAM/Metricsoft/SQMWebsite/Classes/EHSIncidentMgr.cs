@@ -132,15 +132,24 @@ namespace SQM.Website
 
 			if (this.Incident.ISSUE_TYPE_ID == 13)
 			{
-				if (this.Incident.CLOSE_DATE_DATA_COMPLETE.HasValue && this.Incident.CLOSE_DATE.HasValue)
+				switch (this.Incident.INCFORM_LAST_STEP_COMPLETED)
 				{
-					this.Status = "C";  // incident closed
-					if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
+					case 130:
+						this.Status = "P";	// in progress
+						break;
+					case 135:
+						this.Status = "C";  // closed
+						break;
+					case 151:
+					case 152:
+					case 155:
+						this.Status = "U";  // audited
+						if (this.EntryList.Where(l => l.INCIDENT_QUESTION_ID == (int)EHSQuestionId.FinalAuditStepResolved && l.ANSWER_VALUE.ToLower().Contains("fund")).Count() > 0)
 						this.Status = "F";   // awaiting funding
-				}
-				else
-				{
-					this.Status = "A";  // incident open
+						break;
+					default:
+						this.Status = "A";  // open/new
+						break;
 				}
 			}
 			else
@@ -1595,15 +1604,19 @@ namespace SQM.Website
 				switch (currentStep)
 				{
 					case 0:
-						if (theIncident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.correctiveaction)
+						if (theIncident.INCFORM_LAST_STEP_COMPLETED <= (int)IncidentStepStatus.defined)
 						{
-							theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.correctiveaction;
+							theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.defined;
 							theIncident.LAST_UPD_DT = defaultDate.HasValue ? defaultDate : DateTime.UtcNow;
 						}
 						break;
 					case 1:
 						completionQuestion = questions.Where(l=> l.QuestionId == (decimal)EHSQuestionId.CorrectiveActionsStatus).FirstOrDefault();
-						if (completionQuestion.AnswerText.ToLower() =="closed")
+						if (completionQuestion.AnswerText.ToLower() == "in progress")
+						{
+							theIncident.INCFORM_LAST_STEP_COMPLETED = (int)IncidentStepStatus.correctiveaction;
+						}
+						else if (completionQuestion.AnswerText.ToLower() =="closed")
 						{
 							if (theIncident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.correctiveactionComplete)
 							{
