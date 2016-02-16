@@ -770,7 +770,7 @@ namespace SQM.Website.EHS
 				},
 				FrequencyRate = new
 				{
-					ItemType = "Freqeucny Rate",
+					ItemType = "Freqeuncy Rate",
 					Target = totalCorpData.frequencyRateTarget,
 					Jan = totalCorpDataList[0].FrequencyRate,
 					Feb = totalCorpDataList[1].FrequencyRate,
@@ -839,7 +839,7 @@ namespace SQM.Website.EHS
 							},
 							FrequencyRate = new
 							{
-								ItemType = "Freqeucny Rate",
+								ItemType = "Freqeuncy Rate",
 								Target = busOrgData.frequencyRateTarget,
 								Jan = busOrgDataList[0].FrequencyRate,
 								Feb = busOrgDataList[1].FrequencyRate,
@@ -902,7 +902,7 @@ namespace SQM.Website.EHS
 					},
 					FrequencyRate = new
 					{
-						ItemType = "Freqeucny Rate",
+						ItemType = "Freqeuncy Rate",
 						Target = plantData.frequencyRateTarget,
 						Jan = plantDataList[0].FrequencyRate,
 						Feb = plantDataList[1].FrequencyRate,
