@@ -489,7 +489,15 @@ namespace SQM.Website
 						{
 							foreach (EHSAuditAnswerChoice choice in choices)
 							{
-								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+								try
+								{
+									choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								}
+								catch
+								{
+									choice.Text = choice.Value;
+								}
 							}
 							newQuestion.AnswerChoices = choices;
 						}
@@ -550,7 +558,15 @@ namespace SQM.Website
 						{
 							foreach (EHSAuditAnswerChoice choice in choices)
 							{
-								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+								try
+								{
+									choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								}
+								catch
+								{
+									choice.Text = choice.Value;
+								}
 							}
 							newQuestion.AnswerChoices = choices;
 						}
@@ -704,7 +720,15 @@ namespace SQM.Website
 						{
 							foreach (EHSAuditAnswerChoice choice in choices)
 							{
-								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+								try
+								{
+									choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+								}
+								catch
+								{
+									choice.Text = choice.Value;
+								}
 							}
 							newQuestion.AnswerChoices = choices;
 						}

@@ -157,6 +157,8 @@
     <Content Include="Automated\CheckCurrency.aspx" />
     <Content Include="Automated\MailTest.aspx" />
     <Content Include="Automated\AutomatedTest.aspx" />
+    <Content Include="Automated\ConvertIncidents.aspx" />
+    <Content Include="Automated\ResourceImport.aspx" />
     <Content Include="Automated\ScheduleAudits.aspx" />
     <Content Include="Automated\SendReminderEmails.aspx" />
     <Content Include="Automated\IncidentRollUp.aspx" />
@@ -1150,6 +1152,20 @@
     <Compile Include="Automated\AutomatedTest.aspx.designer.cs">
       <DependentUpon>AutomatedTest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Automated\ConvertIncidents.aspx.cs">
+      <DependentUpon>ConvertIncidents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Automated\ConvertIncidents.aspx.designer.cs">
+      <DependentUpon>ConvertIncidents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Automated\ResourceImport.aspx.cs">
+      <DependentUpon>ResourceImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Automated\ResourceImport.aspx.designer.cs">
+      <DependentUpon>ResourceImport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Automated\ScheduleAudits.aspx.cs">
       <DependentUpon>ScheduleAudits.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1213,6 +1229,7 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1742,6 +1759,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1755,6 +1773,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>

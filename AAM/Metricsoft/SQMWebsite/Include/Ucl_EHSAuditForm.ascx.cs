@@ -182,7 +182,7 @@ namespace SQM.Website
 					auditTypeList = EHSAuditMgr.SelectAuditTypeList(companyId, true);
 					selectString = "[Select An Assessment Type]";
 				}
-				if (auditTypeList.Count > 1)
+				if (auditTypeList.Count > 0)
 					auditTypeList.Insert(0, new AUDIT_TYPE() { AUDIT_TYPE_ID = 0, TITLE = selectString });
 				
 				rddlAuditType.DataSource = auditTypeList;
@@ -370,6 +370,8 @@ namespace SQM.Website
 			string qid = "";
 			string tid = "";
 			string ptid = "";
+			int percentInTopic = 0; // used to determine if the percentage value should show for the specific topic.
+			bool showTotals = false; // are we showing totals at all for the audit?
 
 			foreach (var q in questions)
 			{
@@ -405,7 +407,8 @@ namespace SQM.Website
 						// need to add a display for the topic percentage
 						var pnlPercent = new Panel() { ID = "Panel" + ptid };
 						pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-						pnlPercent.Controls.Add(new Label() { ID = "Label" + ptid, Text = "0%" }); // we will populate the values later
+						if (percentInTopic > 0)
+							pnlPercent.Controls.Add(new Label() { ID = "Label" + ptid, Text = "0%" }); // we will populate the values later
 						pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
 						pnlForm.Controls.Add(pnlPercent);
 					}
@@ -415,6 +418,7 @@ namespace SQM.Website
 					pnlTopic.Controls.Add(new LiteralControl("</td></tr>"));
 					pnlForm.Controls.Add(pnlTopic);
 					previousTopic = q.TopicId.ToString();
+					percentInTopic = 0;
 				}
 
 				var pnl = new Panel() { ID = "Panel" + qid };
@@ -495,7 +499,7 @@ namespace SQM.Website
 						break;
 
 					case EHSAuditQuestionType.Radio:
-						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
+						var rbl = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged auditanswer" };
 						rbl.RepeatDirection = RepeatDirection.Horizontal;
 						foreach (var choice in q.AnswerChoices)
 						{
@@ -534,6 +538,8 @@ namespace SQM.Website
 						//if (!shouldPopulate)
 						//	rbl.SelectedIndex = 0; // Default to first
 						pnl.Controls.Add(rblp);
+						percentInTopic += 1; // increase the value so we know if we should show the percentage value for the topic
+						showTotals = true;
 						break;
 
 					case EHSAuditQuestionType.CheckBox:
@@ -857,16 +863,29 @@ namespace SQM.Website
 				// need to add a display for the topic percentage
 				Panel pnlPercent = new Panel() { ID = "PanelP" + previousTopic };
 				pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-				pnlPercent.Controls.Add(new Label() { ID = "LabelP" + previousTopic, Text = "0%" }); // we will populate the values later
+				if (percentInTopic > 0)
+					pnlPercent.Controls.Add(new Label() { ID = "LabelP" + previousTopic, Text = "0%" }); // we will populate the values later
 				pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
 				pnlForm.Controls.Add(pnlPercent);
 			}
-			Panel pnlTotalPercent = new Panel() { ID = "PanelTotalPercent" };
-			pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-			pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Score:  0%" }); // we will populate the values later
-			pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
-			pnlForm.Controls.Add(pnlTotalPercent);
-
+			if (showTotals)
+			{
+				Panel pnlTotalPercent = new Panel() { ID = "PanelTotalPercent" };
+				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Positive Response Percent:  0%" }); // we will populate the values later
+				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">&nbsp;</td></tr>"));
+				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePoints", Text = "Total Possible Points:  0" }); // we will populate the values later
+				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsAchieved", Text = "Total Points Achieved:  0" }); // we will populate the values later
+				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsPercentage", Text = "Percentage of Points Achieved:  0%" }); // we will populate the values later
+				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				pnlForm.Controls.Add(pnlTotalPercent);
+			}
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
 			pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
 
@@ -1839,7 +1858,7 @@ namespace SQM.Website
 
 			var rttHelp = new RadToolTip()
 			{
-				Text = "<div style=\"font-size: 11px; line-height: 1.5em;\">" + question.HelpText + "</div>",
+				Text = "<div style=\"font-size: 11px; line-height: 1.5em;\" data-html=\"true\" >" + question.HelpText + "</div>",
 				TargetControlID = imgHelp.ID,
 				IsClientID = false,
 				RelativeTo = ToolTipRelativeDisplay.Element,
@@ -2238,6 +2257,9 @@ namespace SQM.Website
 			decimal totalPositive = 0;
 			decimal totalTopicPositive = 0;
 			decimal totalPercent = 0;
+			decimal totalWeightScore = 0;
+			decimal totalPossibleScore = 0;
+			decimal possibleScore = 0;
 			bool answerIsPositive = false;
 
 			foreach (var q in questions)
@@ -2273,11 +2295,19 @@ namespace SQM.Website
 					totalTopicQuestions += 1;
 					answer = q.AnswerText;
 					answerIsPositive = false;
+					possibleScore = 0;
 					foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
 					{
-						if (choice.Value.Equals(q.AnswerText) && choice.ChoicePositive)
-							answerIsPositive = true;
+						if (choice.ChoiceWeight > possibleScore)
+							possibleScore = choice.ChoiceWeight;
+						if (choice.Value.Equals(q.AnswerText))
+						{
+							if (choice.ChoicePositive)
+								answerIsPositive = true;
+							totalWeightScore += choice.ChoiceWeight;
+						}
 					}
+					totalPossibleScore += possibleScore;
 					if (answerIsPositive)
 					{
 						totalPositive += 1;
@@ -2303,7 +2333,27 @@ namespace SQM.Website
 					totalPercent = totalPositive / totalQuestions;
 				else
 					totalPercent = 0;
-				topicLastTotal.Text = string.Format("Total Score:   {0:0%}", totalPercent);
+				topicLastTotal.Text = string.Format("Total Positive Score:   {0:0%}", totalPercent);
+			}
+			// update point totals
+			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPossiblePoints");
+			if (topicLastTotal != null)
+			{
+				topicLastTotal.Text = string.Format("Total Possible Points:   {0:0}", totalPossibleScore);
+			}
+			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPointsAchieved");
+			if (topicLastTotal != null)
+			{
+				topicLastTotal.Text = string.Format("Total Points Achieved:   {0:0}", totalWeightScore);
+			}
+			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPointsPercentage");
+			if (topicLastTotal != null)
+			{
+				if (totalPossibleScore > 0)
+					totalPercent = totalWeightScore / totalPossibleScore;
+				else
+					totalPercent = 0;
+				topicLastTotal.Text = string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent);
 			}
 		}
 

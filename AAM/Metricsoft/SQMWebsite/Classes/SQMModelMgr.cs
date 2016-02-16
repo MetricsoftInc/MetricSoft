@@ -886,7 +886,7 @@ namespace SQM.Website
 		{
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				return (from v in ctx.PRIVLIST where (v.PRIV_GROUP == privGroup) select v).ToList();
+				return (from v in ctx.PRIVLIST where (v.PRIV_GROUP == privGroup) select v).OrderBy(l => l.SCOPE).ToList();
 			}
 		}
 

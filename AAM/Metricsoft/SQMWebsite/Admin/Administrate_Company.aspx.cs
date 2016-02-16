@@ -416,7 +416,7 @@ namespace SQM.Website
 		#region privs
 		public void UpdatePrivGroupList(string cmd)
 		{
-			uclPrivGroupList.BindPrivGroups(SQMModelMgr.SelectPrivGroupList("", false).OrderBy(g => g.DESCRIPTION).ToList(), SessionManager.EffLocation, "company");
+			uclPrivGroupList.BindPrivGroups(SQMModelMgr.SelectPrivGroupList("", false).OrderBy(g => g.PRIV_GROUP).ToList(), SessionManager.EffLocation, "company");
 		}
 		#endregion
 	}
