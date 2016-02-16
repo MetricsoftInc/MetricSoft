@@ -909,21 +909,16 @@ namespace SQM.Website
                 {
                     INCIDENT incident = incidentList[irows].Incident;
 
-                    strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 1); // Incident date
-                    if (strAnswerValue != null && strAnswerValue != "")
-                    {
-                        try
-                        {
-                            dtIncidentDate = Convert.ToDateTime(strAnswerValue);
-                            if (dtIncidentDate.ToString("MM/dd/yyyy").Equals("01/01/0001"))
-                                strIncidentDate = "";
-                            else
-                                strIncidentDate = dtIncidentDate.ToString("MM/dd/yyyy");
-                        }
-                        catch { strIncidentDate = ""; }
-                    }
-                    else
-                        strIncidentDate = "";
+					if (incident.INCIDENT_DT != null)
+					{
+						try
+						{
+							strIncidentDate = incident.INCIDENT_DT.ToString("MM/dd/yyyy");
+						}
+						catch { strIncidentDate = ""; }
+					}
+					else
+						strIncidentDate = "";
 
                     strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 2); // Due date
                     if (strAnswerValue != null && strAnswerValue != "")
@@ -941,21 +936,16 @@ namespace SQM.Website
                     else
                         strDueDate = "";
 
-                    strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 65); // Report date
-                    if (strAnswerValue != null && strAnswerValue != "")
-                    {
-                        try
-                        {
-                            dtReportDate = Convert.ToDateTime(strAnswerValue);
-                            if (dtReportDate.ToString("MM/dd/yyyy").Equals("01/01/0001"))
-                                strReportDate = "";
-                            else
-                                strReportDate = dtReportDate.ToString("MM/dd/yyyy");
-                        }
-                        catch { strReportDate = ""; }
-                    }
-                    else
-                        strReportDate = "";
+					if (incident.CREATE_DT.HasValue)
+					{
+						try
+						{
+							strReportDate = Convert.ToDateTime(incident.CREATE_DT).ToString("MM/dd/yyyy");
+						}
+						catch { strReportDate = ""; }
+					}
+					else
+						strReportDate = "";
 
                     try { strIncidentType = incident.ISSUE_TYPE; }
                     catch { strIncidentType = ""; }
