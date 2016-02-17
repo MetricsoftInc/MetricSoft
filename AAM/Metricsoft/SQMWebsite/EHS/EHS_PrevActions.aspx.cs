@@ -410,6 +410,25 @@ namespace SQM.Website
 		#endregion
 
 
+		#region conversion
+		protected void btnConvert_Click(object sender, EventArgs e)
+		{
+			// convert preventative actions to new format
+			int status = 0;
+			PSsqmEntities ctx = new PSsqmEntities();
+
+			status = ctx.ExecuteStoreCommand("update incident set INCFORM_LAST_STEP_COMPLETED = 130 where incident_id in (select i.incident_id from incident i, INCIDENT_ANSWER a where i.ISSUE_TYPE_ID = 13 and  i.INCIDENT_ID = a.INCIDENT_ID and a.INCIDENT_QUESTION_ID = 93 and a.ANSWER_VALUE = 'In Progress')");
+
+			status = ctx.ExecuteStoreCommand("update incident set INCFORM_LAST_STEP_COMPLETED = 135 where incident_id in (select i.incident_id from incident i, INCIDENT_ANSWER a where i.ISSUE_TYPE_ID = 13 and  i.INCIDENT_ID = a.INCIDENT_ID and a.INCIDENT_QUESTION_ID = 93 and a.ANSWER_VALUE = 'Closed')");
+
+			status = ctx.ExecuteStoreCommand("update incident set INCFORM_LAST_STEP_COMPLETED = 155 where incident_id in (select i.incident_id from incident i, INCIDENT_ANSWER a where i.ISSUE_TYPE_ID = 13 and  i.INCIDENT_ID = a.INCIDENT_ID and a.INCIDENT_QUESTION_ID = 88 and a.ANSWER_VALUE = 'Yes')");
+
+			status = ctx.ExecuteStoreCommand("update incident set INCFORM_LAST_STEP_COMPLETED = 155 where incident_id in (select i.incident_id from incident i, INCIDENT_ANSWER a where i.ISSUE_TYPE_ID = 13 and  i.INCIDENT_ID = a.INCIDENT_ID and a.INCIDENT_QUESTION_ID = 88 and a.ANSWER_VALUE = 'Awaiting Funding')");
+
+			status = ctx.ExecuteStoreCommand("update incident set INCFORM_LAST_STEP_COMPLETED = 100 where ISSUE_TYPE_ID = 13 and INCFORM_LAST_STEP_COMPLETED is null");
+		}
+		#endregion
+
 		#region formatting helpers
 
 		protected string DisplayProblemIcon(decimal incidentId)

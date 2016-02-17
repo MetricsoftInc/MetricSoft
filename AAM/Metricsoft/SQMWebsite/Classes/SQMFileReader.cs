@@ -201,12 +201,16 @@ namespace SQM.Website
 
         public int LoadCSV()
         {
+			Entities = new PSsqmEntities();
             Status = 0;
             int lastLineNo = 0;
             string lastLine = "";
             List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("FILE_UPLOAD", ""); // ABW 20140805
             List<SETTINGS> recpts = SQMSettings.SelectSettingsGroup("IMPORT_RECEIPT", ""); // ABW 20140805
-
+			List<PLANT> plantList = new List<PLANT>();  // mt 
+			var accessPlantList = new[] { new { plant = "", assoc = "" } }.ToList(); // mt
+			string accessLocations = "";
+			// use  settings below to limit processing to a discrete list of plants
 			SETTINGS dfltPlant = sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault() == null ? new SETTINGS() : sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault();
 			string[] dfltPlantList = string.IsNullOrEmpty(dfltPlant.VALUE) ? new string[0] : dfltPlant.VALUE.Split(',');
 
@@ -221,11 +225,23 @@ namespace SQM.Website
 					if (this.FileName == "PERSON")
 					{
 						jobcodeList = SQMModelMgr.SelectJobcodeList("A", "");
+						plantList = SQMModelMgr.SelectPlantList(new PSsqmEntities(), 1, 0);
+						// compile list of plants that a PERSON can have access to based on a primary HR location
+						// e.g. plant code GG also grants access to plants 31,32,33 (accessible locations)
+						SETTINGS assocPlant = sets.Where(s => s.SETTING_CD == "AssocPlant").FirstOrDefault();
+						if (assocPlant != null)
+						{
+							string[] plist = assocPlant.VALUE.Split('|');
+							foreach (string p in plist)
+							{
+								string[] s = p.Split(':');
+								accessPlantList.Add(new { plant = s[0], assoc = s[1] });
+							}
+						}
 					}
  
                     while ((line = sr.ReadLine()) != null)
                     {
-						Entities = new PSsqmEntities();
                         EntityState state;
                         decimal primaryCompanyID = 0;
                         COMPANY company = null;
@@ -329,11 +345,10 @@ namespace SQM.Website
 									break;
 								}
 
-								plant = SQMModelMgr.LookupPlant(Entities, HRLocation, HRLocation);
-								if (plant == null)
+								if ((plant = plantList.Where(l => l.DUNS_CODE == HRLocation || l.ALT_DUNS_CODE == HRLocation).FirstOrDefault()) == null)
 								{
 									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "HR Location does not exist: " + HRLocation, HRLocation, 1, line));
-									break;
+									break;	
 								}
 
 								person = SQMModelMgr.LookupPersonByEmpID(Entities, empID);
@@ -369,6 +384,11 @@ namespace SQM.Website
 									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))
 										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 								}
+								if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
+								{
+									person.NEW_LOCATION_CD = ("," + accessLocations + ",");
+								}
+
 								try
 								{
 									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.LAST_NAME);
@@ -383,7 +403,7 @@ namespace SQM.Website
 									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "update failure: " + empID, empID, 1, line));
 									break;
 								}
-								state = plant.EntityState;
+								state = person.EntityState;
 								CreateUpdateRecord("PERSON", person.EMP_ID + ": " + line, state);
 								break;
 
