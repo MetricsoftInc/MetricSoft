@@ -352,6 +352,11 @@ namespace SQM.Website.EHS
 			jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
 			for (int i = 1; i < jsasSeries.ItemList.Count; ++i)
 				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 2m, jsasSeries.ItemList[i].Text));
+			var safetyTrainingHoursTrendSeries = new GaugeSeries(0, "Leading Trend", "");
+			safetyTrainingHoursTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
+			for (int i = 1; i < safetyTrainingHoursSeries.ItemList.Count; ++i)
+				safetyTrainingHoursTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
+					Enumerable.Range(i - 1, 2).Select(j => safetyTrainingHoursSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 2m, safetyTrainingHoursSeries.ItemList[i].Text));
 
 			var incidentRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
 				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
@@ -412,7 +417,8 @@ namespace SQM.Website.EHS
 				jsasSeries,
 				jsasTrendSeries,
 				jsasTarget = jsasTarget != null ? jsasTarget.TARGET_VALUE : 0,
-				safetyTrainingHoursSeries
+				safetyTrainingHoursSeries,
+				safetyTrainingHoursTrendSeries
 			};
 		}
 
@@ -498,6 +504,7 @@ namespace SQM.Website.EHS
 			decimal totalIncidentsYTD = 0;
 
 			var data = new List<dynamic>();
+			var businessOrgCounts = new Dictionary<decimal?, int>();
 			foreach (var plant in plants)
 			{
 				decimal manHours2YearsAgo = 0;
@@ -559,6 +566,10 @@ namespace SQM.Website.EHS
 				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.PLANT_ID.HasValue && t.PLANT_ID == plant.PLANT_ID);
 				decimal TRIRGoal = target != null ? target.TARGET_VALUE : 0;
 
+				if (!businessOrgCounts.ContainsKey(plant.BUS_ORG_ID))
+					businessOrgCounts.Add(plant.BUS_ORG_ID, 0);
+				++businessOrgCounts[plant.BUS_ORG_ID];
+
 				data.Add(new
 				{
 					BusOrgID = plant.BUS_ORG_ID,
@@ -585,7 +596,7 @@ namespace SQM.Website.EHS
 			{
 				var last = data.Last(d => d.BusinessUnit == businessUnit);
 				decimal busOrgID = last.BusOrgID;
-				if (busOrgID == 99) // AAM
+				if (busOrgID == 99 || businessOrgCounts[busOrgID] == 1) // AAM or business unit with 1 plant
 					continue;
 
 				var target = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" && t.BUS_ORG_ID.HasValue && t.BUS_ORG_ID == busOrgID);
@@ -655,6 +666,7 @@ namespace SQM.Website.EHS
 			decimal totalIncidentsYTD = 0;
 
 			var data = new List<dynamic>();
+			var businessOrgCounts = new Dictionary<decimal?, int>();
 			foreach (var plant in plants)
 			{
 				decimal incidentsPreviousYear = 0;
@@ -686,6 +698,10 @@ namespace SQM.Website.EHS
 
 				decimal incidentsAnnualized = Math.Round(incidentsYTD * 12 / annualizeMonths);
 
+				if (!businessOrgCounts.ContainsKey(plant.BUS_ORG_ID))
+					businessOrgCounts.Add(plant.BUS_ORG_ID, 0);
+				++businessOrgCounts[plant.BUS_ORG_ID];
+
 				data.Add(new
 				{
 					BusOrgID = plant.BUS_ORG_ID,
@@ -703,7 +719,7 @@ namespace SQM.Website.EHS
 			foreach (string businessUnit in data.Select(d => d.BusinessUnit).Distinct().ToList())
 			{
 				var last = data.Last(d => d.BusinessUnit == businessUnit);
-				if (last.BusOrgID == 99) // AAM
+				if (last.BusOrgID == 99 || businessOrgCounts[last.BusOrgID] == 1) // AAM or business unit with 1 plant
 					continue;
 
 				int lastIndex = data.IndexOf(last);
@@ -745,6 +761,7 @@ namespace SQM.Website.EHS
 		{
 			var data = new List<dynamic>();
 			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
+			var businessOrgCounts = businessLocs.GroupBy(l => l.Plant.BUS_ORG_ID).ToDictionary(l => l.Key, l => l.Count());
 
 			var totalCorpData = PullData(entities, "-1", companyID, year, DataToUse.BalancedScorecard);
 			var totalCorpDataList = totalCorpData.data as List<Data>;
@@ -813,7 +830,7 @@ namespace SQM.Website.EHS
 				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
 				{
 					busOrgID = businessLoc.Plant.BUS_ORG_ID;
-					if (busOrgID != 99)
+					if (busOrgID != 99 && businessOrgCounts[busOrgID] != 1)
 					{
 						var busOrgData = PullData(entities, "BU" + busOrgID, companyID, year, DataToUse.BalancedScorecard);
 						var busOrgDataList = busOrgData.data as List<Data>;
@@ -1038,6 +1055,7 @@ namespace SQM.Website.EHS
 				uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
 				uclPyramid.JSAsTarget = data.jsasTarget;
 				uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				uclPyramid.SafetyTrainingHoursTrendSeries = data.safetyTrainingHoursTrendSeries;
 				this.pnlPyramidOutput.Controls.Add(uclPyramid);
 			}
 			if (trirBusiness)
@@ -1106,6 +1124,7 @@ namespace SQM.Website.EHS
 				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
 				uclMetrics.JSAsTarget = data.jsasTarget;
 				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				uclMetrics.SafetyTrainingHoursTrendSeries = data.safetyTrainingHoursTrendSeries;
 				this.pnlMetricsOutput.Controls.Add(uclMetrics);
 			}
 		}
@@ -1142,6 +1161,7 @@ namespace SQM.Website.EHS
 				uclPyramid.JSAsTrendSeries = data.jsasTrendSeries;
 				uclPyramid.JSAsTarget = data.jsasTarget;
 				uclPyramid.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				uclPyramid.SafetyTrainingHoursTrendSeries = data.safetyTrainingHoursTrendSeries;
 				pnlPyramidOutput.Controls.Add(uclPyramid);
 
 				this.divExportAll.Controls.Add(pnlPyramidOutput);
@@ -1241,6 +1261,7 @@ namespace SQM.Website.EHS
 				uclMetrics.JSAsTrendSeries = data.jsasTrendSeries;
 				uclMetrics.JSAsTarget = data.jsasTarget;
 				uclMetrics.SafetyTrainingHoursSeries = data.safetyTrainingHoursSeries;
+				uclMetrics.SafetyTrainingHoursTrendSeries = data.safetyTrainingHoursTrendSeries;
 				pnlMetricsOutput.Controls.Add(uclMetrics);
 
 				this.divExportAll.Controls.Add(pnlMetricsOutput);
@@ -1252,13 +1273,14 @@ namespace SQM.Website.EHS
 		{
 			var metricsList = new List<string>() { "-1" };
 			var businessLocs = SQMModelMgr.SelectBusinessLocationList(companyID, 0, true);
+			var businessOrgCounts = businessLocs.GroupBy(l => l.Plant.BUS_ORG_ID).ToDictionary(l => l.Key, l => l.Count());
 			decimal? busOrgID = null;
 			foreach (var businessLoc in businessLocs.OrderBy(l => l.Plant.BUS_ORG_ID).ThenBy(l => l.Plant.PLANT_NAME))
 			{
 				if (businessLoc.Plant.BUS_ORG_ID != busOrgID)
 				{
 					busOrgID = businessLoc.Plant.BUS_ORG_ID;
-					if (busOrgID != 99)
+					if (busOrgID != 99 && businessOrgCounts[busOrgID] != 1)
 						metricsList.Add("BU" + busOrgID);
 				}
 				metricsList.Add(businessLoc.Plant.PLANT_ID.ToString());

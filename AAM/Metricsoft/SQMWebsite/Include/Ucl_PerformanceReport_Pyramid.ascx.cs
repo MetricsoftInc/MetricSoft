@@ -22,6 +22,7 @@ namespace SQM.Website
 		public GaugeSeries JSAsTrendSeries { get; set; }
 		public decimal JSAsTarget { get; set; }
 		public GaugeSeries SafetyTrainingHoursSeries { get; set; }
+		public GaugeSeries SafetyTrainingHoursTrendSeries { get; set; }
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -100,7 +101,7 @@ namespace SQM.Website
 
 			EHS.EHS_PerformanceReport.gaugeDef.Title = "Safety Training Hours";
 			EHS.EHS_PerformanceReport.gaugeDef.Target = null;
-			series = new List<GaugeSeries>() { this.SafetyTrainingHoursSeries };
+			series = new List<GaugeSeries>() { this.SafetyTrainingHoursSeries, this.SafetyTrainingHoursTrendSeries };
 			WebSiteCommon.SetScale(EHS.EHS_PerformanceReport.gaugeDef, series);
 			this.uclChart.CreateMultiLineChart(EHS.EHS_PerformanceReport.gaugeDef, series, this.divSafetyTrainingHours_Pyramid);
 		}
