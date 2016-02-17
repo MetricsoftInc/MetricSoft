@@ -209,7 +209,7 @@ namespace SQM.Website.EHS
 			{
 				DisplayLabels = true
 			};
-			var safetyTrainingHoursSeries = new GaugeSeries(0, "Total Safety Training Hours", "")
+			var safetyTrainingHoursSeries = new GaugeSeries(0, string.Format("{0} - {1}", year - 1, year), "")
 			{
 				DisplayLabels = true
 			};
@@ -284,7 +284,7 @@ namespace SQM.Website.EHS
 						monthData.JSAs = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S40003" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.SafetyTraining))
-						monthData.SafetyTraining = y == year && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
+						monthData.SafetyTraining = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
 							allMonthData.Where(d => d.EHS_MEASURE.MEASURE_CD == "S50001" && d.VALUE.HasValue).Sum(d => d.VALUE) ?? 0 : 0;
 					if (dataToUse.Has(DataToUse.Fatalities))
 						monthData.Fatalities = y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month <= DateTime.Today.Month : true) ?
@@ -309,9 +309,10 @@ namespace SQM.Website.EHS
 						severityRateSeriesYear.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SeverityRate, monthData.Month));
 					}
 					if (y > year - 2 && (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
+					{
 						jsasSeries.ItemList.Add(new GaugeSeriesItem(y - year - 2, 0, 0, monthData.SupervisorAudits + monthData.Leadership + monthData.JSAs, monthData.Month));
-					if (y == year && (y == DateTime.Today.Year ? startOfMonth.Month < DateTime.Today.Month : true))
 						safetyTrainingHoursSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, monthData.SafetyTraining, monthData.Month));
+					}
 
 					if (y == year)
 						data.Add(monthData);
