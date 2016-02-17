@@ -871,9 +871,9 @@ namespace SQM.Website
 			if (showTotals)
 			{
 				Panel pnlTotalPercent = new Panel() { ID = "PanelTotalPercent" };
-				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Positive Response Percent:  0%" }); // we will populate the values later
-				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				//pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				//pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Positive Score:  0%" }); // we will populate the values later
+				//pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
 				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">&nbsp;</td></tr>"));
 				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"5\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
 				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePoints", Text = "Total Possible Points:  0" }); // we will populate the values later
@@ -904,7 +904,7 @@ namespace SQM.Website
 				location = mnuAuditLocation.SelectedItem.Value;
 				mnuAuditLocation.Items[0].Text = mnuAuditLocation.SelectedItem.Text;
 			}
-			else if (sender is RadSlider)
+			else if (sender is RadComboBox)
 			{
 				location = ddlAuditLocation.SelectedValue;
 			}
@@ -2326,15 +2326,15 @@ namespace SQM.Website
 				topicLastTotal.Text = string.Format("{0:0%}", totalPercent);
 			}
 			// update the audit total
-			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPercent");
-			if (topicLastTotal != null)
-			{
-				if (totalQuestions > 0)
-					totalPercent = totalPositive / totalQuestions;
-				else
-					totalPercent = 0;
-				topicLastTotal.Text = string.Format("Total Positive Score:   {0:0%}", totalPercent);
-			}
+			//topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPercent");
+			//if (topicLastTotal != null)
+			//{
+			//	if (totalQuestions > 0)
+			//		totalPercent = totalPositive / totalQuestions;
+			//	else
+			//		totalPercent = 0;
+			//	topicLastTotal.Text = string.Format("Total Positive Score:   {0:0%}", totalPercent);
+			//}
 			// update point totals
 			topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPossiblePoints");
 			if (topicLastTotal != null)

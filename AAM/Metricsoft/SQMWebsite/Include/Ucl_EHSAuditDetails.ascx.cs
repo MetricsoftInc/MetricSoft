@@ -178,7 +178,7 @@ namespace SQM.Website
 						totalPercent = totalPositive / totalQuestions;
 					else
 						totalPercent = 0;
-					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Positive Score:   {0:0%}", totalPercent) + "</td></tr>");
+					//sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Positive Score:   {0:0%}", totalPercent) + "</td></tr>");
 					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">&nbsp;</td></tr>");
 					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Possible Score:   {0:0}", totalPossibleScore) + "</td></tr>");
 					sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("Total Points Achieved:   {0:0}", totalWeightScore) + "</td></tr>");
