@@ -1680,7 +1680,7 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;

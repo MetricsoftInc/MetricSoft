@@ -1967,14 +1967,17 @@ namespace SQM.Website
 
 			foreach (GaugeSeriesItem data in gaugeSeries[0].ItemList)
 			{
-				PieSeriesItem item = new PieSeriesItem();
-				item.Name = data.Text.Replace("\r\n", "");
-				item.Y = Math.Round(data.YValue ?? 0, 2);
-				if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
-					item.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
+				if (!string.IsNullOrEmpty(data.Text.Trim()))
+				{
+					PieSeriesItem item = new PieSeriesItem();
+					item.Name = data.Text.Replace("\r\n", "");
+					item.Y = Math.Round(data.YValue ?? 0, 2);
+					if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
+						item.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
 
-				item.Exploded = exploded;
-				series.SeriesItems.Add(item);
+					item.Exploded = exploded;
+					series.SeriesItems.Add(item);
+				}
 			}
 
 			rad.PlotArea.Series.Add(series);

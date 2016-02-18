@@ -246,7 +246,7 @@ namespace SQM.Website
 				catch { }
 			}
 
-			foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID))
+			foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE))
 			{
 				RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.INCIDENT_TYPE_ID.ToString());
 				item.Checked = true;
@@ -282,7 +282,7 @@ namespace SQM.Website
 			SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
 			ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
-			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId);
+			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId, SessionManager.SessionContext.Language().NLS_LANGUAGE);
 			rddlNewIncidentType.DataSource = incidentTypeList;
 			rddlNewIncidentType.DataTextField = "TITLE";
 			rddlNewIncidentType.DataValueField = "INCIDENT_TYPE_ID";

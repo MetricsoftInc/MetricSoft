@@ -268,7 +268,7 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID).TITLE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;
@@ -306,7 +306,7 @@ namespace SQM.Website
 			{
 				incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
-				SelectedTypeText = incident.ISSUE_TYPE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType((decimal)incident.ISSUE_TYPE_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
 				IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
 
@@ -616,19 +616,15 @@ namespace SQM.Website
 			if (!IsEditContext)
 			{
 				lblAddOrEditIncident.Text = "New" + "&nbsp" + typeString;
-				lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
-				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
-				lblIncidentLocation.Text = "Incident Location: ";
-				lblIncidentLocation.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SessionManager.IncidentLocation.Plant.PLANT_NAME);
+				lblIncidentType.Text = SelectedTypeText;
+				lblIncidentLocation.Text = SessionManager.IncidentLocation.Plant.PLANT_NAME;
 			}
 			else
 			{
 
 				lblAddOrEditIncident.Text = typeString + "&nbsp" + WebSiteCommon.FormatID(EditIncidentId, 6);
-				lblIncidentType.Text = Resources.LocalizedText.IncidentType + ": ";
-				lblIncidentLocation.Text = "Incident Location: ";
-				lblIncidentType.Text += ("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + SelectedTypeText);
-				lblIncidentLocation.Text += EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
+				lblIncidentType.Text = SelectedTypeText;
+				lblIncidentLocation.Text = EHSIncidentMgr.SelectIncidentLocationNameByIncidentId(EditIncidentId);
 			}
 		}
 

@@ -1281,6 +1281,19 @@ namespace SQM.Website
 			return xlat;
 		}
 
+		public static XLAT CreateXLAT(string language, string xlatGroup, string xlatCode, string descrShort, string descr)
+		{
+			XLAT xlat = new XLAT();
+
+			xlat.XLAT_LANGUAGE = language;
+			xlat.XLAT_GROUP = xlatGroup;
+			xlat.XLAT_CODE = xlatCode;
+			xlat.DESCRIPTION_SHORT = descrShort;
+			xlat.DESCRIPTION = descr;
+
+			return xlat;
+		}
+
 
 		#endregion
 	}

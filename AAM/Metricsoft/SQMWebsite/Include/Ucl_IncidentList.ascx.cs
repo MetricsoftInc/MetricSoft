@@ -658,8 +658,14 @@ namespace SQM.Website
 			pnlIncidentListRepeater.Visible = true;
 			staticAppContext = appContext;
 
-			if (IncidentXLATList == null  ||  IncidentXLATList.Count == 0)
+			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
+			{
 				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
+				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).ToList())
+				{
+					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.SessionContext.Language().NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
+				}
+			}
 
 			if (showImages)
 				rgIncidentList.MasterTableView.GetColumn("Attach").Visible = true;
@@ -677,7 +683,13 @@ namespace SQM.Website
 			staticAppContext = appContext;
 
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
+			{
 				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
+				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).ToList())
+				{
+					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.SessionContext.Language().NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
+				}
+			}
 
 			if (showImages)
 				rgPreventativeList.MasterTableView.GetColumn("Attach").Visible = true;
@@ -705,11 +717,23 @@ namespace SQM.Website
 					LinkButton lnk = (LinkButton)e.Item.FindControl("lbIncidentId");
 					lnk.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
 
+					lbl = (Label)e.Item.FindControl("lblType");
+					try
+					{
+						lbl.Text = IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_TYPE" && l.XLAT_CODE == data.Incident.ISSUE_TYPE_ID.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					}
+					catch
+					{
+						lbl.Text = data.Incident.ISSUE_TYPE;
+					}
+
+					/*
 					if (data.Incident.DESCRIPTION.Length > 120)
 					{
 						lbl = (Label)e.Item.FindControl("lblDescription");
 						lbl.Text = data.Incident.DESCRIPTION.Substring(0, 117) + "...";
 					}
+					*/
 
 					lbl = (Label)e.Item.FindControl("lblDescription");
 					lbl.Text = HttpUtility.HtmlEncode(lbl.Text);

@@ -238,12 +238,23 @@ namespace SQM.Website
 			return incident;
 		}
 
-		public static INCIDENT_TYPE SelectIncidentType(decimal incidentTypeID)
+		public static INCIDENT_TYPE SelectIncidentType(decimal incidentTypeID, string nlsLanguage)
 		{
+			INCIDENT_TYPE inType = new INCIDENT_TYPE();
+
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				return (from t in ctx.INCIDENT_TYPE where t.INCIDENT_TYPE_ID == incidentTypeID select t).SingleOrDefault();
+				inType = (from t in ctx.INCIDENT_TYPE where t.INCIDENT_TYPE_ID == incidentTypeID select t).SingleOrDefault();
+
+				if (!string.IsNullOrEmpty(nlsLanguage) && nlsLanguage != "en")
+				{
+					INCIDENT_TYPE_LANG lang = (from t in ctx.INCIDENT_TYPE_LANG where t.NLS_LANGUAGE == nlsLanguage && t.INCIDENT_TYPE_ID == incidentTypeID select t).SingleOrDefault();
+					if (lang != null)
+						inType.TITLE = lang.LANG_TEXT;
+				}
 			}
+
+			return inType;
 		}
 
 		public static decimal SelectIncidentTypeIdByIncidentId(decimal incidentId)
@@ -396,8 +407,12 @@ namespace SQM.Website
 			return formStepList;
 		}
 
-
 		public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId)
+		{
+			return SelectIncidentTypeList(companyId, "en");
+		}
+
+		public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId, string nlsLanguage)
 		{
 			var incidentTypeList = new List<INCIDENT_TYPE>();
 
@@ -418,14 +433,28 @@ namespace SQM.Website
 										orderby itc.TITLE
 										select itc).ToList();
 				}
+
+				if (!string.IsNullOrEmpty(nlsLanguage)  &&  nlsLanguage != "en")
+				{
+					List<INCIDENT_TYPE_LANG> langList = (from l in entities.INCIDENT_TYPE_LANG
+														 where l.NLS_LANGUAGE == nlsLanguage
+														 select l).ToList();
+					foreach (var item in incidentTypeList)
+					{
+						if (langList.Where(l => l.INCIDENT_TYPE_ID == item.INCIDENT_TYPE_ID).FirstOrDefault() != null)
+						{
+							item.TITLE = langList.Where(l => l.INCIDENT_TYPE_ID == item.INCIDENT_TYPE_ID).First().LANG_TEXT;
+						}
+					}
+				}
 			}
 			catch (Exception e)
 			{
 				//SQMLogger.LogException(e);
 			}
-
 			return incidentTypeList;
 		}
+
 
 		public static List<INCIDENT_TYPE> SelectPreventativeTypeList(decimal companyId)
 		{
