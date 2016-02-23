@@ -10,6 +10,12 @@
 		$find("<%=RadWindow_TaskDetail.ClientID %>").show();
 	}
 
+	function OpenTaskWindow(details) {
+		$get("<%=lblTaskDetail.ClientID %>").innerHTML = details;
+			$find("<%=winUpdateTask.ClientID %>").show();
+		}
+
+
 	function OnClientAppointmentEditing(sender, eventArgs) {
 		eventArgs.set_cancel(true);
 	}
@@ -159,7 +165,7 @@
 	</ContentTemplate>
 </telerik:RadWindow>
 
-<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Behaviors="Close, Move" Title="View/Update Task" Behavior="Close, Move">
+<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Title="View/Update Task" Behavior="Close, Move">
 	<ContentTemplate>
 		<Ucl:Task ID="uclTask" runat="server" />
 	</ContentTemplate>

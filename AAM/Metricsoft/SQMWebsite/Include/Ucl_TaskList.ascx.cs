@@ -415,6 +415,16 @@ namespace SQM.Website
 		}
 		#endregion
 
+		#region taskwin
+
+		public void TaskWindow(int recordType, decimal recordID, decimal subID, string taskStep, string description, decimal locationID)
+		{
+			uclTask.BindTaskAdd(recordType, recordID, subID, taskStep, "T", description, locationID, "");
+			string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+		#endregion
+
 		#region common
 		public void SetRepeaterDisplay(Repeater rpt, Label lblAlert, System.Web.UI.HtmlControls.HtmlGenericControl divScroll, int rowsToScroll, int gridRowCount, string className)
         {
