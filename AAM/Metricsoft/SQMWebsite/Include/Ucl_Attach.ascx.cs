@@ -14,7 +14,7 @@ namespace SQM.Website
     public partial class Ucl_Attach : System.Web.UI.UserControl
     {
 
-        private DocumentScope staticScope 
+        public DocumentScope staticScope 
         {
             get { return ViewState["attachScope"] == null ? new DocumentScope() : (DocumentScope)ViewState["attachScope"]; }
             set { ViewState["attachScope"] = value; }
