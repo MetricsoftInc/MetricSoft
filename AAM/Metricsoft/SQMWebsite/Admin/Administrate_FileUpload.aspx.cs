@@ -328,5 +328,10 @@ namespace SQM.Website
 			dsCurrency.Tables.Add(dt);
 		}
 
+		protected void OpenAttachmentWindow(object sender, EventArgs e)
+		{
+			uclAttachWin.OpenManageAttachmentsWindow(40, 999, "2", "Upload Attachments", "Upload or view attachments for this thing");
+		}
+
 	}
 }

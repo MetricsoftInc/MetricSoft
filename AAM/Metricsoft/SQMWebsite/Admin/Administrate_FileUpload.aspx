@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" CodeBehind="Administrate_FileUpload.aspx.cs" Inherits="SQM.Website.Administrate_FileUpload" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
+<%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
     <script type="text/javascript">
         function DisplaySelectedFileName(fileUpload) {
@@ -72,6 +74,8 @@
                                  <asp:TextBox ID="tbFileSelected" runat="server" Columns="40" ReadOnly="true" style="border:0px;background-color:transparent;" />
                                 <br />
                                 <asp:Button ID="btnUpload" runat="server" Text="Process File"  CssClass="buttonEmphasis" onclick="btnUploadFile_Click" style="margin-top: 4px;"></asp:Button>
+								<br />
+								<asp:Button ID="Button1" runat="server" Text="Popup window"  CssClass="buttonEmphasis" onclick="OpenAttachmentWindow" style="margin-top: 4px;"></asp:Button>
                             </td>
                         </tr>
                     </table>
@@ -135,5 +139,8 @@
             </TR>
         </table>
         <br>
+
+		<Ucl:AttachWin ID="uclAttachWin" runat="server" />
+
     </div>
 </asp:Content>
