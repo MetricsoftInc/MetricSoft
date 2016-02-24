@@ -13,6 +13,7 @@ namespace SQM.Website
 
     public partial class Ucl_Attach : System.Web.UI.UserControl
     {
+		public event CommandClick AttachmentEvent;
 
         public DocumentScope staticScope 
         {
@@ -227,10 +228,19 @@ namespace SQM.Website
 			SessionManager.DocumentContext.RecordID = staticScope.RecordID;
 			SessionManager.DocumentContext.RecordStep = staticScope.RecordStep;
 			uclUpload.SaveFiles();
+
+			if (AttachmentEvent != null)
+			{
+				AttachmentEvent("save");
+			}
 		}
 
 		protected void btnCancel_Click(object sender, EventArgs e)
 		{
+			if (AttachmentEvent != null)
+			{
+				AttachmentEvent("cancel");
+			}
 		}
 		#endregion
 	}
