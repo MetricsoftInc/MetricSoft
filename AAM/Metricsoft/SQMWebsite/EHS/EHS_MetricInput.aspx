@@ -5,7 +5,8 @@
 
 <%@ Register src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
-<%@ Register src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadAsyncUpload" TagPrefix="Ucl" %>
+
+<%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
 
@@ -193,6 +194,9 @@
 								        <br />
                                         <asp:Label ID="lblMetricCD" runat="server" CssClass="refTextSmall" Text='<%# Eval("EHS_MEASURE.MEASURE_CD") %>'></asp:Label>
                                         <span style="float:right; margin-right: 3px;">
+											<asp:LinkButton ID="LnkAttachment" runat="server" Visible="false" ToolTip="Attachments" CommandArgument='<%# Eval("PRMR_ID") %>' CSSClass="refTextSmall" OnClick="lnkAddAttach">
+                                                <img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
+								            </asp:LinkButton>
 								            <asp:LinkButton ID="lnkMetricCD" runat="server" ToolTip="View 12 month input history" CommandArgument='<%# Eval("PRMR_ID") %>' CSSClass="refTextSmall" OnClick="lnkSelectMetric" meta:resourcekey="lnkMetricCDResource1">
                                                 <img src="/images/defaulticon/16x16/statistics-chart.png" alt="" style="vertical-align: middle; border: 0px;" />
 								            </asp:LinkButton>
@@ -282,20 +286,6 @@
 						    </ItemTemplate>
 						    <FooterTemplate>
 								</table>
-								<asp:Panel id="pnlAttachments" runat="server" visible ="false">
-									<table cellspacing="0" cellpadding="1" border="0" width="99%" style="margin-top: 5px;" >
-										<tr>
-											<td class="rptInputTable">
-												<asp:Label ID="lblAttachments" runat="server" CSSClass="prompt" Text="Attachments" ></asp:Label>
-												<br />
-												<asp:Label ID="lblAttachmentsInstruct" runat="server" CssClass="refTextSmall" Text="Attach billing statements from energy providers, utilities, waste disposal vendors, etc..."></asp:Label>
-											</td>
-											<td class="rptInputTable" width="754px">
-												 <Ucl:RadAsyncUpload id="uclAttachments" runat="server"/>
-											</td>
-										</tr>
-									</table>
-								</asp:Panel>
 						    </FooterTemplate>
 					    </asp:Repeater>
 				        <asp:Label runat="server" ID="lblMetricEmptyRepeater" Height="40px" Text="The metric list is empty." class="GridEmpty" Visible="False" meta:resourcekey="lblMetricEmptyRepeaterResource1"></asp:Label>
@@ -313,6 +303,7 @@
                     </span>
                     <br />
                     <Ucl:RadGauge id="uclGauge" runat="server"/>
+					<Ucl:AttachWin ID="uclAttachWin" runat="server" />
                 </FORM>
             </td>
         </tr>

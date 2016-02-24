@@ -28,6 +28,7 @@ namespace SQM.Website
   
             uclInputHdr.OnProfilePeriodClick += OnInputPeriodSelect;
             uclInputHdr.OnPlantSelect += OnPlantProfileSelect;
+			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 
             hfTimeout.Value = SQMBasePage.GetSessionTimeout().ToString();
         }
@@ -270,21 +271,10 @@ namespace SQM.Website
 				{
 					foreach (RepeaterItem item in rptProfilePeriod.Controls)
 					{
-						if (item.ItemType == ListItemType.Footer)
+						LinkButton lnk = (LinkButton)item.FindControl("lnkAttachment");
+						if (lnk != null)
 						{
-							Ucl_RadAsyncUpload uclAttach = (Ucl_RadAsyncUpload)item.FindControl("uclAttachments");
-							if (uclAttach != null)
-							{
-								Panel pnlAttach = (Panel)item.FindControl("pnlAttachments");
-								pnlAttach.Visible = true;
-								//uclAttach.SetViewMode(UserContext.CheckAccess("EHS", "311") >= AccessMode.Update ? true : false);
-								uclAttach.SetViewMode(UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.update ? true : false);
-								uclAttach.SetReportOption(false);
-								uclAttach.SetSizeOption(false);
-								uclAttach.OnAttachmentDelete += AttachmentDelete;
-								uclAttach.GetUploadedFiles(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString());
-								break;
-							}
+							lnk.Visible = true;
 						}
 					}
 				}
@@ -360,29 +350,7 @@ namespace SQM.Website
 
             try
             {
-				SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTATTACH");
-				if (sets != null && (sets.VALUE.ToUpper() == "Y" || sets.VALUE.ToUpper() == "TRUE"))
-				{
-					foreach (RepeaterItem item in rptProfilePeriod.Controls)
-					{
-						if (item.ItemType == ListItemType.Footer)
-						{
-							Ucl_RadAsyncUpload uclAttach = (Ucl_RadAsyncUpload)item.FindControl("uclAttachments");
-							if (uclAttach != null)
-							{
-								Panel pnlAttach = (Panel)item.FindControl("pnlAttachments");
-								pnlAttach.Visible = true;
-								SessionManager.DocumentContext = new SQM.Shared.DocumentScope().CreateNew(
-								(decimal)LocalProfile().Plant.COMPANY_ID, "BLI", 0, "", LocalProfile().Plant.PLANT_ID, "", 0);
-								SessionManager.DocumentContext.RecordType = 30;
-								SessionManager.DocumentContext.RecordID = LocalProfile().Plant.PLANT_ID;
-								SessionManager.DocumentContext.RecordStep = LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString();
-								uclAttach.SaveFiles();
-								break;
-							}
-						}
-					}
-				}
+				SETTINGS sets = null;
 
                 foreach (RepeaterItem item in rptProfilePeriod.Items)
                 {
@@ -611,11 +579,6 @@ namespace SQM.Website
 
             return status;
         }
-
-		private void AttachmentDelete(ATTACHMENT attach)
-		{
-			BindSharedCalendars();
-		}
 
         private void BindSharedCalendars()
         {
@@ -908,6 +871,17 @@ namespace SQM.Website
             }
             DisplayResults("");  
         }
+
+		protected void lnkAddAttach(object sender, EventArgs e)
+		{
+			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements");
+			BindSharedCalendars();
+		}
+
+		private void OnAttachmentsUpdate(string cmd)
+		{
+			BindSharedCalendars();
+		}
 
         protected void lnkSelectMetric(object sender, EventArgs e)
         {
