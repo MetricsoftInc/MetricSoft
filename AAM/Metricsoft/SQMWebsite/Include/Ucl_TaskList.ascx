@@ -10,8 +10,7 @@
 		$find("<%=RadWindow_TaskDetail.ClientID %>").show();
 	}
 
-	function OpenTaskWindow(details) {
-		$get("<%=lblTaskDetail.ClientID %>").innerHTML = details;
+	function OpenTaskWindow() {
 			$find("<%=winUpdateTask.ClientID %>").show();
 		}
 
