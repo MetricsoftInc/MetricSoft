@@ -220,8 +220,8 @@ namespace SQM.Website
                 {
                     string line;
                     int lineNo = 0;
-
 					List<JOBCODE> jobcodeList = new List<JOBCODE>();
+
 					if (this.FileName == "PERSON")
 					{
 						jobcodeList = SQMModelMgr.SelectJobcodeList("A", "");
@@ -382,7 +382,9 @@ namespace SQM.Website
 								{
 									jobcode = jobcodeList.Where(l => l.JOBCODE_CD == jobCode).FirstOrDefault();  // apply default privgroup for the person's jobcode, if defined
 									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))
+									{
 										person.PRIV_GROUP = jobcode.PRIV_GROUP;
+									}
 								}
 								if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
 								{
@@ -1055,6 +1057,7 @@ namespace SQM.Website
 				this.ErrorList.Add(new FileReaderError().CreateNew(lastLineNo, "processing error", ex.Message, lastLine, 1, ""));
                 Status = -12;
             }
+
 
             return Status;
         }

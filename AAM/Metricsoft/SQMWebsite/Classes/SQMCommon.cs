@@ -1450,6 +1450,69 @@ namespace SQM.Website
 			List<DatePeriod> periodList = new List<DatePeriod>();
 			DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
 			DateTime endDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
+
+			DatePeriod period = null;
+
+			switch (periodType)
+			{
+				case DateIntervalType.year:
+				case DateIntervalType.FYyear:       // assume fromdate is start of FY
+
+					int numPeriods = Math.Max(toDate.Year - fromDate.Year, 1);
+					DateTime toDate0 = endDate.AddYears((numPeriods - 1) * -1);
+					for (int p = 0; p < numPeriods; p++)
+					{
+						period = new DatePeriod();
+						periodList.Add(period);
+						period.FromDate = fromDate.AddYears(p);
+						period.ToDate = toDate0.AddYears(p);
+						period.Label = dateSpanType == DateSpanOption.FYYearOverYear || dateSpanType == DateSpanOption.FYYearToDate || dateSpanType == DateSpanOption.FYEffTimespan ? "FY" + (period.FromDate.Year + 1).ToString() : period.FromDate.Year.ToString();
+					}
+					/*
+                    while (startDate < endDate)
+                    {
+                        period = new DatePeriod();
+                        period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
+                        period.ToDate = period.FromDate.AddMonths(numMonths);
+                        period.ToDate = period.ToDate.AddDays(DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month) - 1);
+                        // period.ToDate = startDate.AddMonths(11); period.ToDate = new DateTime(period.ToDate.Year, period.ToDate.Month, DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month));
+                        if (period.ToDate > endDate)
+                            period.ToDate = endDate;
+                        period.Label = dateSpanType == DateSpanOption.FYYearOverYear || dateSpanType == DateSpanOption.FYYearToDate || dateSpanType == DateSpanOption.FYEffTimespan ? "FY" + (period.FromDate.Year + 1).ToString() : period.FromDate.Year.ToString();
+                        periodList.Add(period);
+                        startDate = startDate.AddMonths(12);
+                    }
+					*/
+					break;
+				case DateIntervalType.span:
+					period = new DatePeriod();
+					period.FromDate = fromDate;
+					period.ToDate = toDate;
+					periodList.Add(period);
+					break;
+				case DateIntervalType.month:
+				default:
+					while (startDate < endDate)
+					{
+						period = new DatePeriod();
+						period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
+						period.ToDate = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
+						period.Label = period.FromDate.Year.ToString() + "/" + period.FromDate.Month.ToString();
+						periodList.Add(period);
+						startDate = startDate.AddMonths(1);
+					}
+					break;
+			}
+
+			return periodList;
+		}
+
+		/*
+		public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
+		{
+			List<DatePeriod> periodList = new List<DatePeriod>();
+			DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
+			DateTime endDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
 			int numMonths = toDate.Month - fromDate.Month;
 			if (toDate.Month < fromDate.Month)
 				numMonths = Math.Max(11, ((startDate.Year - endDate.Year) * 12) + startDate.Month - endDate.Month);
@@ -1496,7 +1559,7 @@ namespace SQM.Website
 
 			return periodList;
 		}
-
+		*/
 		/// <summary>
 		/// Replaces multiple values in a string with a single call.
 		/// </summary>
