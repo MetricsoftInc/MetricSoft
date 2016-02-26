@@ -5918,7 +5918,8 @@ namespace SQM.Website
         /// <param name="qUESTION_TEXT">Initial value of the QUESTION_TEXT property.</param>
         /// <param name="iS_REQUIRED">Initial value of the IS_REQUIRED property.</param>
         /// <param name="iS_REQUIRED_CLOSE">Initial value of the IS_REQUIRED_CLOSE property.</param>
-        public static AUDIT_QUESTION CreateAUDIT_QUESTION(global::System.Decimal aUDIT_QUESTION_ID, global::System.Decimal aUDIT_QUESTION_TYPE_ID, global::System.String qUESTION_TEXT, global::System.Boolean iS_REQUIRED, global::System.Boolean iS_REQUIRED_CLOSE)
+        /// <param name="cOMMENT_REQUIRED">Initial value of the COMMENT_REQUIRED property.</param>
+        public static AUDIT_QUESTION CreateAUDIT_QUESTION(global::System.Decimal aUDIT_QUESTION_ID, global::System.Decimal aUDIT_QUESTION_TYPE_ID, global::System.String qUESTION_TEXT, global::System.Boolean iS_REQUIRED, global::System.Boolean iS_REQUIRED_CLOSE, global::System.Boolean cOMMENT_REQUIRED)
         {
             AUDIT_QUESTION aUDIT_QUESTION = new AUDIT_QUESTION();
             aUDIT_QUESTION.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
@@ -5926,6 +5927,7 @@ namespace SQM.Website
             aUDIT_QUESTION.QUESTION_TEXT = qUESTION_TEXT;
             aUDIT_QUESTION.IS_REQUIRED = iS_REQUIRED;
             aUDIT_QUESTION.IS_REQUIRED_CLOSE = iS_REQUIRED_CLOSE;
+            aUDIT_QUESTION.COMMENT_REQUIRED = cOMMENT_REQUIRED;
             return aUDIT_QUESTION;
         }
 
@@ -6103,6 +6105,30 @@ namespace SQM.Website
         private global::System.String _STANDARD_TYPE;
         partial void OnSTANDARD_TYPEChanging(global::System.String value);
         partial void OnSTANDARD_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean COMMENT_REQUIRED
+        {
+            get
+            {
+                return _COMMENT_REQUIRED;
+            }
+            set
+            {
+                OnCOMMENT_REQUIREDChanging(value);
+                ReportPropertyChanging("COMMENT_REQUIRED");
+                _COMMENT_REQUIRED = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("COMMENT_REQUIRED");
+                OnCOMMENT_REQUIREDChanged();
+            }
+        }
+        private global::System.Boolean _COMMENT_REQUIRED;
+        partial void OnCOMMENT_REQUIREDChanging(global::System.Boolean value);
+        partial void OnCOMMENT_REQUIREDChanged();
 
         #endregion
 

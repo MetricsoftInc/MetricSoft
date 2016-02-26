@@ -1,13 +1,14 @@
-﻿<%@ Page Title="EHS Audit_Exceptions" Language="C#" MasterPageFile="~/RspPSMaster.Master"
-    AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_Audit_Exceptions.aspx.cs" ClientIDMode="AutoID"
-    Inherits="SQM.Website.EHS_Audit_Exceptions" ValidateRequest="false" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="EHS_Audits" Language="C#" MasterPageFile="~/RspPSMaster.Master"
+    AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_Assessments.aspx.cs" ClientIDMode="AutoID"
+    Inherits="SQM.Website.EHS.EHS_Assessments" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
-<%@ Register Src="~/Include/Ucl_AuditExceptionList.ascx" TagName="AuditExceptionList" TagPrefix="Ucl" %>
-<%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
-
-<%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
+<%@ Register Src="~/Include/Ucl_AuditList.ascx" TagName="AuditList" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_EHSAssessmentForm.ascx" TagName="AssessmentForm" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_RadGauge.ascx" TagName="RadGauge" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
 
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
@@ -32,14 +33,13 @@
                     alert("Please fill out all required fields.");
             }
         }
+        function DeleteConfirm(button, args) {
+            args.set_cancel(!confirm("Delete assessment - are you sure?  Assessments cannot be undeleted."));
+        }
 
-        function OpenUpdateTaskWindow() {
+        <%--function OpenUpdateTaskWindow() {
             $find("<%=winUpdateTask.ClientID %>").show();
-        }
-
-        function OpenUpdateAnswerStatusWindow() {
-            $find("<%=winUpdateAnswerStatus.ClientID %>").show();
-        }
+        }--%>
 
     </script>
 </asp:Content>
@@ -55,11 +55,21 @@
                 <div class="col-xs-12 col-sm-12">
 
                     <span style="float: left; margin-top: 6px;">
-                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Environmental Health &amp; Safety Assessment Exceptions" meta:resourcekey="lblViewEHSRezTitleResource1"></asp:Label></span>
+                        <asp:Label ID="lblViewEHSRezTitle" runat="server" CssClass="pageTitles" Text="Manage Environmental Health &amp; Safety Assessments" meta:resourcekey="lblViewEHSRezTitleResource1"></asp:Label></span>
 
                         <br class="clearfix visible-xs-block" />
 
-                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="View EH&amp;S Assessment Exceptions below." meta:resourcekey="lblPageInstructionsResource1"></asp:Label>
+                        <div class="col-xs-7 col-sm-3">
+                            <br />
+                            <span style="clear: both; float: left; margin-top: -14px;">
+                                <telerik:RadButton ID="rbNew" runat="server" Text="New Assessment" Icon-PrimaryIconUrl="/images/ico-plus.png"
+                                    CssClass="metroIconButton" Skin="Metro" OnClick="rbNew_Click" CausesValidation="False" meta:resourcekey="rbNewResource1" style="position: relative;" />
+                            </span>
+                        </div>
+
+                        <br class="clearfix visible-xs-block" />
+
+                        <asp:Label ID="lblPageInstructions" runat="server" CssClass="instructTextFloat" Text="Add or update EH&amp;S Assessments below." meta:resourcekey="lblPageInstructionsResource1"></asp:Label>
                 </div>
             </div>
 
@@ -118,12 +128,13 @@
 
                     <div class="row-fluid" style="margin-top: 7px;">
 
+
                         <span style="float: left; margin-top: 4px;">
                             <span style="padding-right:20px;"><asp:Label runat="server" ID="lblAuditDate" Text="<%$ Resources:LocalizedText, AssessmentDateFrom %>" CssClass="prompt"></asp:Label></span>
-                            <span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
-<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" runat="server"></Calendar>
+                            <span style="margin-right: -10px !important;"><telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmFromDateResource1">
+<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
-<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" runat="server">
+<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
 <EmptyMessageStyle Resize="None"></EmptyMessageStyle>
 
 <ReadOnlyStyle Resize="None"></ReadOnlyStyle>
@@ -148,7 +159,7 @@
 
                         <span>
                             <span style="margin-left: 14px; padding-right:8px;"><asp:Label runat="server" ID="lblToDate" CssClass="prompt"></asp:Label>
-                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="115px" Height="21px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small">
+                            <telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmToDateResource1">
 <Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" runat="server"></Calendar>
 
 <DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" runat="server">
@@ -186,49 +197,77 @@
                 <%--	$$$$$$$$$$$$$$ Audit Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
 
 
+<%--                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2" HorizontalAlign="NotSet" meta:resourcekey="RadAjaxPanel2Resource1">--%>
+
+                    <div class="clearfix visible-xs"></div>
+                    <br class="visible-xs-block" />
+
+                    <div id="divChartSelect" runat="server" class="row-fluid" style="margin-top: 4px; margin-bottom: 4px;">
+						<span class="noprint">
+							<asp:Label ID="lblChartType" runat="server" CssClass="prompt" Text="<%$ Resources:LocalizedText, ViewStatistics %>"></asp:Label>
+							<telerik:RadComboBox ID="ddlChartType" runat="server" ZIndex="9000" Width="256px" Skin="Metro" EmptyMessage="<%$ Resources:LocalizedText, SelectAChart %>" AutoPostBack="True" OnSelectedIndexChanged="ddlChartTypeChange">
+							</telerik:RadComboBox>
+							<p style="float: right; margin-right: 5px; width: 100px;">
+								<asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" Style="margin-right: 5px;" Visible="False" OnClientClick="javascript:window.print()"></asp:LinkButton>
+								<asp:LinkButton ID="lnkChartClose" runat="server" CssClass="buttonCancel" Visible="False" OnClick="lnkCloseChart" ToolTip="<%$ Resources:LocalizedText, Close %>"></asp:LinkButton>
+							</p>
+						</span>
+					</div>
+
+                   <asp:Panel ID="pnlChartSection" runat="server" Width="100%">
+						<div class="row-fluid">
+							<div id="divChart" runat="server" class="borderSoft" style="width: 99%; padding: 10px 0;">
+								<Ucl:RadGauge ID="uclChart" runat="server" />
+                                <%--<div style="position: relative;">
+                                    <div style="width: 30%; float: left;">
+                                        <Ucl:RadGauge ID="uclChartPrev1" runat="server" />
+                                    </div>
+                                    <div style="width: 30%; float: left;">
+                                        <Ucl:RadGauge ID="uclChartPrev2" runat="server" />
+                                    </div>
+                                    <div style="width: 30%; float: left;">
+                                        <Ucl:RadGauge ID="uclChartPrev3" runat="server" />
+                                    </div>
+                                </div>--%>
+                            </div>
+                            <div  id="divDataResults" runat="server" class="borderSoft" style="width: 99%; padding: 10px 0;">
+                                data report
+                            </div>
+ 						</div>
+					</asp:Panel>
+
+
+
+                       <asp:Panel ID="pnlAuditDetails" runat="server" Width="100%" Visible="False" meta:resourcekey="pnlAuditDetailsResource1">
+                            <div class="row-fluid">
+                                <br />
+                                <asp:Label ID="lblAuditDetails" runat="server" CssClass="prompt" meta:resourcekey="lblAuditDetailsResource1"></asp:Label>
+                                <asp:LinkButton ID="lnkAuditDetailsClose" runat="server" CssClass="buttonLink" Style="float: right; margin-right: 10px;" OnClick="lnkCloseDetails" ToolTip="<%$ Resources:LocalizedText, Close %>">
+                                             <img src="/images/defaulticon/16x16/cancel.png" alt="" style="vertical-align: middle;"/>
+                                </asp:LinkButton>
+                                <br />
+                                <br />
+                            </div>
+                        </asp:Panel>
+                <%--</telerik:RadAjaxPanel>--%>
+
+
                 <div class="noprint">
-                    <Ucl:AuditExceptionList ID="uclAuditExceptionList" runat="server" />
+                    <Ucl:AuditList ID="uclAuditList" runat="server" />
                 </div>
             </div>
 
-            <telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Behaviors="Move" Title="Create Task" Behavior="Move">
-                <ContentTemplate>
-                    <Ucl:Task ID="uclTask" runat="server" />
-                </ContentTemplate>
-            </telerik:RadWindow>
+            <div>
+                <Ucl:AssessmentForm ID="uclAssessmentForm" runat="server" />
+            </div>
+            
 
-            <telerik:RadWindow runat="server" ID="winUpdateAnswerStatus" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="300px" Width="700px" Behaviors="Move" Title="<%$ Resources:LocalizedText, UpdateStatus %>" Behavior="Move">
-                <ContentTemplate>
-                    <div class="container-fluid" style="margin-top: 10px;">
-                        <div class="row">
-                            <div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
-                                <asp:Label ID="lblAnswerStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>" CssClass="prompt"></asp:Label>
-                            </div>
-                            <div class="col-xs-12 col-sm-8 text-left greyControlCol">
-                                <telerik:RadComboBox ID="ddlAnswerStatus" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="Select status" meta:resourcekey="ddlAnswerStatusResource1"></telerik:RadComboBox>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
-                                <asp:Label ID="lblResolutionComment" runat="server" Text="<%$ Resources:LocalizedText, Comments %>" CssClass="prompt"></asp:Label>
-                            </div>
-                            <div class="col-xs-12 col-sm-8 text-left greyControlCol">
-                                <asp:TextBox ID="tbResolutionComment" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
-                            </div>
-                        </div>
-                        <br />
-                        <div style="float: right; margin: 5px;">
-                            <span>
-                                <asp:Button ID="btnStatusSave" CssClass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Save %>" Style="margin: 5px;" OnClientClick="<%$ Resources:LocalizedText, AssessmentExceptionUpdateConfirm %>" OnClick="btnStatusSave_Click" ToolTip="Update the status of this audit exception" meta:resourcekey="btnStatusSaveResource1"></asp:Button>
-                                <asp:Button ID="btnStatusCancel" CssClass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" Style="margin: 5px;" OnClick="btnStatusCancel_Click"></asp:Button>
-                            </span>
-                        </div>
-                    </div>
-                </ContentTemplate>
-            </telerik:RadWindow>
-
-            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+            <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" meta:resourcekey="RadAjaxManager1Resource1">
             </telerik:RadAjaxManager>
         </div>
     </div>
+    <Ucl:TaskList ID="uclTaskList" runat="server" />
+
+    <Ucl:AttachWin ID="uclAttachWin" runat="server" />
+
 </asp:Content>

@@ -223,6 +223,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign Task.
+        /// </summary>
+        internal static string AssignTask {
+            get {
+                return ResourceManager.GetString("AssignTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attachments.
         /// </summary>
         internal static string Attachments {

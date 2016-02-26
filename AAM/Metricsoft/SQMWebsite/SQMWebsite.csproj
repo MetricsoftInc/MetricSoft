@@ -231,6 +231,8 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
+    <Content Include="EHS\EHS_AssessmentDetail.aspx" />
+    <Content Include="EHS\EHS_Assessments.aspx" />
     <Content Include="EHS\EHS_Audit_Exceptions.aspx" />
     <Content Include="EHS\EHS_Audit_Scheduler.aspx" />
     <Content Include="EHS\EHS_Audits.aspx" />
@@ -461,6 +463,7 @@
     <Content Include="Include\Ucl_AuditScheduleList.ascx" />
     <Content Include="Include\Ucl_AuditList.ascx" />
     <Content Include="Include\Ucl_EHSAuditAdd.ascx" />
+    <Content Include="Include\Ucl_EHSAssessmentForm.ascx" />
     <Content Include="Include\Ucl_EHSAuditScheduleDetail.ascx" />
     <Content Include="Include\Ucl_EHSAuditForm.ascx" />
     <Content Include="Include\Ucl_EHSAuditDetails.ascx" />
@@ -1234,6 +1237,20 @@
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EHS\EHS_AssessmentDetail.aspx.cs">
+      <DependentUpon>EHS_AssessmentDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_AssessmentDetail.aspx.designer.cs">
+      <DependentUpon>EHS_AssessmentDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_Assessments.aspx.cs">
+      <DependentUpon>EHS_Assessments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EHS\EHS_Assessments.aspx.designer.cs">
+      <DependentUpon>EHS_Assessments.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EHS\EHS_Audit_Exceptions.aspx.cs">
       <DependentUpon>EHS_Audit_Exceptions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1467,6 +1484,13 @@
     </Compile>
     <Compile Include="Include\Ucl_EHSAuditAdd.ascx.designer.cs">
       <DependentUpon>Ucl_EHSAuditAdd.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAssessmentForm.ascx.cs">
+      <DependentUpon>Ucl_EHSAssessmentForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_EHSAssessmentForm.ascx.designer.cs">
+      <DependentUpon>Ucl_EHSAssessmentForm.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_EHSAuditScheduleDetail.ascx.cs">
       <DependentUpon>Ucl_EHSAuditScheduleDetail.ascx</DependentUpon>
@@ -2579,6 +2603,10 @@
     <Content Include="Include\App_LocalResources\Ucl_EHSPrevActionForm.ascx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.th.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.zh.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>

@@ -1192,7 +1192,8 @@ namespace SQM.Website
 								{
 									// if this is a question type that we care about, get the possible choices for an answer
 									QuestionType = (EHSAuditQuestionType)question.AUDIT_QUESTION_TYPE_ID;
-									if (QuestionType == EHSAuditQuestionType.RadioPercentage)
+									if (QuestionType == EHSAuditQuestionType.RadioPercentage || QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft
+										|| QuestionType == EHSAuditQuestionType.Radio || QuestionType == EHSAuditQuestionType.RadioCommentLeft)
 									{
 										List<EHSAuditAnswerChoice> choices = (from qc in this.Entities.AUDIT_QUESTION_CHOICE
 																			  where qc.AUDIT_QUESTION_ID == question.AUDIT_QUESTION_ID
@@ -1209,7 +1210,15 @@ namespace SQM.Website
 											// set the flag if there are any negative answers
 											foreach (EHSAuditAnswerChoice choice in choices)
 											{
-												choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+												// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+												try
+												{
+													choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+												}
+												catch
+												{
+													choice.Text = choice.Value;
+												}
 												if (choice.Value.Equals(answer) && !choice.ChoicePositive)
 													answerIsNegative = true;
 											}

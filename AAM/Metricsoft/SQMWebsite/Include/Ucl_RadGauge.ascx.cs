@@ -1993,17 +1993,15 @@ namespace SQM.Website
 		}
 
 
-        public int CreateSpiderChart(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeriesX, System.Web.UI.HtmlControls.HtmlGenericControl container)
+        public int CreateSpiderChart(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, System.Web.UI.HtmlControls.HtmlGenericControl container)
         {
             int status = 0;
             int numItems = 0;
 
-			/*
             if (gaugeSeries == null || gaugeSeries.Count == 0  ||  gaugeSeries[0].ItemList.Count == 0)
                 return -1;
 
             bool exploded = gaugeSeries[0].ItemList.Count > 1 ? true : false;
-			*/
 
 
             RadHtmlChart rad = new RadHtmlChart();
@@ -2017,18 +2015,18 @@ namespace SQM.Website
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
 
-			List<GaugeSeries> gaugeSeries = new List<GaugeSeries>();
-			GaugeSeries g = new GaugeSeries();
-			g.Name = "Position";
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 159m, "Soft Skills"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 170m, "Sector knowledge"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 100m, "Finance knowledge"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 140m, "Work experience"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 160m, "Win7 skills"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 103m, "MS Office skills"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 173m, "Programming skills"));
-			g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 107m, "Database Skills"));
-			gaugeSeries.Add(g);
+			//List<GaugeSeries> gaugeSeries = new List<GaugeSeries>();
+			//GaugeSeries g = new GaugeSeries();
+			//g.Name = "Position";
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 159m, "Soft Skills"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 170m, "Sector knowledge"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 100m, "Finance knowledge"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 140m, "Work experience"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 160m, "Win7 skills"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 103m, "MS Office skills"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 173m, "Programming skills"));
+			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 107m, "Database Skills"));
+			//gaugeSeries.Add(g);
 
 			foreach (GaugeSeries gs in gaugeSeries)
 			{
@@ -2050,7 +2048,7 @@ namespace SQM.Website
 			}
 
 			rad.PlotArea.XAxis.Color = Color.Black;
-			rad.PlotArea.XAxis.StartAngle = 180;
+			rad.PlotArea.XAxis.StartAngle = 0;
 			rad.PlotArea.XAxis.MajorGridLines.Color = Color.BlueViolet;
 			rad.PlotArea.XAxis.MajorGridLines.Width = 1;
 			foreach (GaugeSeriesItem gi in gaugeSeries[0].ItemList)
@@ -2062,6 +2060,8 @@ namespace SQM.Website
 			rad.PlotArea.YAxis.Visible = false;
 			rad.PlotArea.YAxis.MajorGridLines.Color = Color.BlueViolet;
 			rad.PlotArea.YAxis.LabelsAppearance.Step = 1;
+			rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
+			rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin;
 
             System.Web.UI.HtmlControls.HtmlGenericControl div = CreateContainer(rgCfg);
             div.Controls.Add(rad);

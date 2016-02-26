@@ -184,6 +184,16 @@ namespace SQM.Website
 				{
 					OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
 				}
+				if (recordType == (int)TaskRecordType.Audit) // update the Question Status when adding tasks for an audit followup.
+				{
+					EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
+
+					if (auditQuestion != null)
+					{
+						auditQuestion.Status = "02";
+						EHSAuditMgr.UpdateAnswer(auditQuestion);
+					}
+				}
 			}
 		}
 

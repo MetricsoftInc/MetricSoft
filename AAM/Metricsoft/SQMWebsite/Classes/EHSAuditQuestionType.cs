@@ -29,6 +29,8 @@ namespace SQM.Website
 		UsersDropdownLocationFiltered = 20,
 		RichTextBox = 21,
 		RadioPercentage = 22,
-		NativeLangTextBox = 24
+		RadioPercentageCommentLeft = 23,
+		NativeLangTextBox = 24,
+		RadioCommentLeft = 25
 	}
 }

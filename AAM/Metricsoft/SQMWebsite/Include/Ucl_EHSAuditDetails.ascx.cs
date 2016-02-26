@@ -38,6 +38,8 @@ namespace SQM.Website
 					decimal totalPercent = 0;
 					decimal totalWeightScore = 0;
 					decimal totalPossibleScore = 0;
+					decimal totalTopicWeightScore = 0;
+					decimal totalTopicPossibleScore = 0;
 					decimal possibleScore = 0;
 					decimal percentInTopic = 0;
 
@@ -55,14 +57,20 @@ namespace SQM.Website
 							if (!previousTopic.Equals(""))
 							{
 								// need to add a display for the topic percentage
-								if (totalTopicQuestions > 0)
-									totalPercent = totalTopicPositive / totalTopicQuestions;
+								//if (totalTopicQuestions > 0)
+								//	totalPercent = totalTopicPositive / totalTopicQuestions;
+								//else
+								//	totalPercent = 0;
+								if (totalTopicPossibleScore > 0)
+									totalPercent = totalTopicWeightScore / totalTopicPossibleScore;
 								else
 									totalPercent = 0;
 								if (percentInTopic > 0)
 									sb.AppendLine("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">" + string.Format("{0:0%}", totalPercent) + "</td></tr>");
 								totalTopicQuestions = 0;
 								totalTopicPositive = 0;
+								totalTopicWeightScore = 0;
+								totalTopicPossibleScore = 0;
 								percentInTopic = 0;
 							}
 							sb.AppendLine("<tr><td colspan=\"3\" class=\"blueCell\" style=\"width: 100%; font-weight: bold;\">" + q.TopicTitle + "</td></tr>");
@@ -78,12 +86,13 @@ namespace SQM.Website
 						string answer = (auditAnswer.ANSWER_VALUE == null) ? "" : auditAnswer.ANSWER_VALUE;
 						string comment = (auditAnswer.COMMENT == null) ? "" : auditAnswer.COMMENT;
 
-						if (q.QuestionType == EHSAuditQuestionType.RadioPercentage)
+						if (q.QuestionType == EHSAuditQuestionType.RadioPercentage || q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
 						{
 							totalQuestions += 1;
 							totalTopicQuestions += 1;
 							percentInTopic += 1; 
 							answerIsPositive = false;
+							possibleScore = 0;
 							foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
 							{
 								if (choice.ChoiceWeight > possibleScore)
@@ -93,9 +102,11 @@ namespace SQM.Website
 									if (choice.ChoicePositive)
 										answerIsPositive = true;
 									totalWeightScore += choice.ChoiceWeight;
+									totalTopicWeightScore += choice.ChoiceWeight;
 								}
 							}
 							totalPossibleScore += possibleScore;
+							totalTopicPossibleScore += possibleScore;
 							if (answerIsPositive)
 							{
 								totalPositive += 1;
@@ -154,11 +165,15 @@ namespace SQM.Website
 						if (q.QuestionType == EHSAuditQuestionType.BooleanCheckBox || q.QuestionType == EHSAuditQuestionType.CheckBox ||
 							q.QuestionType == EHSAuditQuestionType.Dropdown || q.QuestionType == EHSAuditQuestionType.PercentTextBox ||
 							q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
-							q.QuestionType == EHSAuditQuestionType.RadioPercentage)
+							q.QuestionType == EHSAuditQuestionType.RadioPercentage || q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft ||
+							q.QuestionType == EHSAuditQuestionType.RadioCommentLeft)
 						{
 							answerText = q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault() != null ? q.AnswerChoices.Where(l => l.Value == answer).FirstOrDefault().Text : "";
 							comment = Server.HtmlEncode(comment);
-							sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, answerText, comment));
+							if (q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft || q.QuestionType == EHSAuditQuestionType.RadioCommentLeft)
+								sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, comment, answerText));
+							else
+								sb.AppendLine(string.Format("<tr><td style=\"width: 33%;\">{0}</td><td style=\"width: 33%;\">{1}</td><td style=\"width: 33%;\">{2}</td></tr>", q.QuestionText, answerText, comment));
 						}
 						else
 						{
@@ -167,8 +182,12 @@ namespace SQM.Website
 						}
 					}
 					// add the last topic total
-					if (totalTopicQuestions > 0)
-						totalPercent = totalTopicPositive / totalTopicQuestions;
+					//if (totalTopicQuestions > 0)
+					//	totalPercent = totalTopicPositive / totalTopicQuestions;
+					//else
+					//	totalPercent = 0;
+					if (totalTopicPossibleScore > 0)
+						totalPercent = totalTopicWeightScore / totalTopicPossibleScore;
 					else
 						totalPercent = 0;
 					if (percentInTopic > 0)

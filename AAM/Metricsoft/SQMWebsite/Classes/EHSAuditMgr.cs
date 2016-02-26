@@ -21,6 +21,7 @@ namespace SQM.Website
 		public List<EHSAuditAnswerChoice> AnswerChoices { get; set; }
 		public bool IsRequired { get; set; }
 		public bool IsRequiredClose { get; set; }
+		public bool CommentRequired { get; set; }
 		public string HelpText { get; set; }
 		public string AnswerText { get; set; }
 		public string StandardType { get; set; }
@@ -457,6 +458,7 @@ namespace SQM.Website
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
 						IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
+						CommentRequired = questionInfo.COMMENT_REQUIRED,
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
@@ -689,6 +691,7 @@ namespace SQM.Website
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
 						IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
+						CommentRequired = questionInfo.COMMENT_REQUIRED,
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
@@ -735,7 +738,8 @@ namespace SQM.Website
 					}
 
 					// only return a list of negative answers
-					if (newQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage)
+					if (newQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage || newQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft
+						|| newQuestion.QuestionType == EHSAuditQuestionType.Radio || newQuestion.QuestionType == EHSAuditQuestionType.RadioCommentLeft)
 					{
 						string answer = (newQuestion.AnswerText == null) ? "" : newQuestion.AnswerText;
 						answerIsNegative = false;
@@ -817,6 +821,7 @@ namespace SQM.Website
 					HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 					IsRequired = questionInfo.IS_REQUIRED,
 					IsRequiredClose = questionInfo.IS_REQUIRED_CLOSE,
+					CommentRequired = questionInfo.COMMENT_REQUIRED,
 					HelpText = questionInfo.HELP_TEXT,
 					StandardType = questionInfo.STANDARD_TYPE,
 					TopicId = topicInfo.AUDIT_TOPIC_ID,
