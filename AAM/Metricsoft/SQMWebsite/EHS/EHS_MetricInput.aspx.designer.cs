@@ -319,6 +319,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.HiddenField hfExportText;
         
         /// <summary>
+        /// lnkAttachments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAttachments;
+        
+        /// <summary>
         /// lnkPrint control.
         /// </summary>
         /// <remarks>

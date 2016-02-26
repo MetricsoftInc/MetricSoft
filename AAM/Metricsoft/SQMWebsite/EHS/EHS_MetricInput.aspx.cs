@@ -91,6 +91,7 @@ namespace SQM.Website
             cbFinalApproval.Checked = false;
             lblFinalApprovalBy.Text = "";
             btnSave1.Enabled = btnSave2.Enabled = btnCancel1.Enabled = btnCancel2.Enabled = false;
+			lnkPrint.Visible = lnkExport.Visible = lnkAttachments.Visible = false;
         }
 
         protected void OnPlantProfileSelect(decimal plantID)
@@ -233,6 +234,7 @@ namespace SQM.Website
                 }
                 MessageDisplay(selectStatus == EHSProfileStatus.Normal ? status : selectStatus);
                 btnSave1.Enabled = btnSave2.Enabled = btnCancel1.Enabled = btnCancel2.Enabled = UserContext.GetMaxScopePrivilege(SysScope.envdata) < SysPriv.notify ? true : false;
+				lnkPrint.Visible = lnkExport.Visible = true;
             }
             else
             {
@@ -269,12 +271,13 @@ namespace SQM.Website
 				SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTATTACH");
 				if (sets != null && (sets.VALUE.ToUpper() == "Y"  ||  sets.VALUE.ToUpper() == "TRUE"))
 				{
+					lnkAttachments.Visible = true;
 					foreach (RepeaterItem item in rptProfilePeriod.Controls)
 					{
 						LinkButton lnk = (LinkButton)item.FindControl("lnkAttachment");
 						if (lnk != null)
 						{
-							lnk.Visible = true;
+							// lnk.Visible = true;  // mt - not sure about applying attachments to individual metrics
 						}
 					}
 				}
