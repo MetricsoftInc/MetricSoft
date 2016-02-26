@@ -155,7 +155,11 @@ namespace SQM.Website
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "11").DESCRIPTION, GetMenu("MENU_AUDIT", "11").DESCRIPTION_SHORT));
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate)
+						{
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "12").DESCRIPTION, GetMenu("MENU_AUDIT", "12").DESCRIPTION_SHORT));
+							if (GetMenu("MENU_AUDIT", "15") != null)
+								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "15").DESCRIPTION, GetMenu("MENU_AUDIT", "15").DESCRIPTION_SHORT));
+						}
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "13").DESCRIPTION, GetMenu("MENU_AUDIT", "13").DESCRIPTION_SHORT));
 					}
