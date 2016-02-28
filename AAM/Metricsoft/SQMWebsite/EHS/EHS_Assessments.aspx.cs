@@ -105,13 +105,13 @@ namespace SQM.Website.EHS
 								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
 								// need to determine if the Audit is past due and force it into display mode (probelm when coming from Calendar)
 								string auditStatus = EHSAuditMgr.SelectAuditStatus(SessionManager.ReturnRecordID);
+								rbNew.Visible = false;
 								if (auditStatus == "C")
 									UpdateDisplayState(DisplayState.AuditNotificationDisplay);
 								else
 									UpdateDisplayState(DisplayState.AuditNotificationEdit);
 								if (isDirected)
 								{
-									rbNew.Visible = false;
 									uclAssessmentForm.EnableReturnButton(false);
 								}
 								break;
@@ -119,18 +119,18 @@ namespace SQM.Website.EHS
 							case "Closed":
 								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
 								UpdateDisplayState(DisplayState.AuditNotificationClosed);
+								rbNew.Visible = false;
 								if (isDirected)
 								{
-									rbNew.Visible = false;
 									uclAssessmentForm.EnableReturnButton(false);
 								}
 								break;
 							case "DisplayOnly":
 								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
 								UpdateDisplayState(DisplayState.AuditNotificationDisplay);
+								rbNew.Visible = false;
 								if (isDirected)
 								{
-									rbNew.Visible = false;
 									uclAssessmentForm.EnableReturnButton(false);
 								}
 								break;

@@ -296,7 +296,7 @@ namespace SQM.Website
 					// List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.PrimaryCompany().COMPANY_ID, 0, true);
 					List<BusinessLocation> locationList = SessionManager.PlantList;
 					locationList = UserContext.FilterPlantAccessList(locationList);
-					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
+					if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone,android") == false)
 					{
 						if (mnuAuditLocation.Items.Count == 0)
 						{
