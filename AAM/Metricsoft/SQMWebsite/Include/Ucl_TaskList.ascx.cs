@@ -211,13 +211,12 @@ namespace SQM.Website
         {
             try
             {
-				/*
                 if (SessionManager.IsUserAgentType("ipad,iphone"))
                 {
                     ImageButton btn = (ImageButton)e.Container.FindControl("btnTaskDetails");
                     btn.Visible = true;
                 }
-				*/
+
                 if (hfScheduleScope.Value == false.ToString().ToLower()  || string.IsNullOrEmpty(e.Appointment.ID.ToString()))       // only enable task link if schedule scope is by USER  (i.e. disable if PLANT view)
 					{
 						//Control div = (Control)e.Container.FindControl("divInactive");
@@ -269,13 +268,13 @@ namespace SQM.Website
                         img.ToolTip = item.Taskstatus.ToString();
                         img.Visible = true;
                     }
-					/*
+
                     if (SessionManager.IsUserAgentType("ipad,iphone"))
                     {
                         ImageButton btn = (ImageButton)e.Item.FindControl("btnTaskDetails");
                         btn.Visible = true;
                     }
-					*/
+
                 }
                 catch
                 {
