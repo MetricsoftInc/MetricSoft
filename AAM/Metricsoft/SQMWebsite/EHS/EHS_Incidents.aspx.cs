@@ -492,6 +492,272 @@ namespace SQM.Website
 		}
 		#endregion
 
+		#region conversion
+		protected void btnConversion_Click(object sender, EventArgs e)
+		{
+			int status = 0;
+			INCIDENT_ANSWER answer = null;
+			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[4] { "INJURY_CAUSE", "INJURY_TYPE", "INJURY_PART", "INJURY_TENURE"});
+
+			foreach (EHSIncidentData eda in HSCalcs().ehsCtl.IncidentHst)
+			{
+				INCIDENT incident = (from i in entities.INCIDENT where i.INCFORM_LAST_STEP_COMPLETED < 1  &&  i.INCIDENT_ID == eda.Incident.INCIDENT_ID select i).SingleOrDefault();
+				incident.INCIDENT_ANSWER.Load();
+
+				EHSIncidentTypeId issueType = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
+				switch (issueType)
+				{
+					case EHSIncidentTypeId.PropertyDamage:
+					case EHSIncidentTypeId.PowerOutage:
+					case EHSIncidentTypeId.Fire:
+					case EHSIncidentTypeId.Explosion:
+					case EHSIncidentTypeId.ImsAudit:
+					case EHSIncidentTypeId.RegulatoryContact:
+					case EHSIncidentTypeId.FireSystemImpairment:
+					case EHSIncidentTypeId.SpillRelease:
+					case EHSIncidentTypeId.EhsWalk:
+					case EHSIncidentTypeId.NearMiss:
+					case EHSIncidentTypeId.InjuryIllness:
+						incident.INCFORM_LAST_STEP_COMPLETED = 100;  // assume new status
+						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 69).FirstOrDefault();  // containment
+						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						{
+							incident.INCFORM_LAST_STEP_COMPLETED = 110;  // containment
+							INCFORM_CONTAIN contain = new INCFORM_CONTAIN();
+							contain.INCIDENT_ID = incident.INCIDENT_ID;
+							contain.ITEM_SEQ = 1;
+							contain.ITEM_DESCRIPTION = answer.ANSWER_VALUE;
+							contain.ASSIGNED_PERSON_ID = incident.CREATE_PERSON;
+							contain.START_DATE = contain.COMPLETION_DATE = incident.CREATE_DT;
+							contain.IsCompleted = true;
+							contain.LAST_UPD_BY = SessionManager.UserContext.UserName();
+							contain.LAST_UPD_DT = DateTime.UtcNow;
+							entities.AddToINCFORM_CONTAIN(contain);
+						}
+
+						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 24).FirstOrDefault();  // root cause
+						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						{
+							incident.INCFORM_LAST_STEP_COMPLETED = 120;  // root cause
+							INCFORM_ROOT5Y rootc = new INCFORM_ROOT5Y();
+							rootc.INCIDENT_ID = incident.INCIDENT_ID;
+							rootc.ITEM_SEQ = 1;
+							rootc.ITEM_DESCRIPTION = answer.ANSWER_VALUE;
+							rootc.LAST_UPD_BY = SessionManager.UserContext.UserName();
+							rootc.LAST_UPD_DT = DateTime.UtcNow;
+							entities.AddToINCFORM_ROOT5Y(rootc);
+						}
+
+						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 27).FirstOrDefault();  // causation
+						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						{
+							incident.INCFORM_LAST_STEP_COMPLETED = 125;  // causation
+							INCFORM_CAUSATION cause = new INCFORM_CAUSATION();
+							cause.CAUSEATION_CD = xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault() == null ? "00" : xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault().XLAT_CODE;
+							cause.LAST_UPD_BY = SessionManager.UserContext.UserName();
+							cause.LAST_UPD_DT = DateTime.UtcNow;
+							entities.AddToINCFORM_CAUSATION(cause);
+						}
+
+						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 27).FirstOrDefault();  // corrective action
+						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+						{
+							incident.INCFORM_LAST_STEP_COMPLETED = 130;  // corrective action
+							TASK_STATUS action = new TASK_STATUS();
+							action.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
+							action.RECORD_ID = incident.INCIDENT_ID;
+							action.TASK_SEQ = 0;
+							action.RECORD_SUBID = 0;
+							action.TASK_TYPE = "T";
+							action.TASK_SEQ = 0;
+							action.DESCRIPTION = answer.ANSWER_VALUE;
+							action.DETAIL = incident.DESCRIPTION;
+							action.STATUS = "1";
+							action.CREATE_ID = action.RESPONSIBLE_ID = action.COMPLETE_ID = incident.CREATE_PERSON;  // default action values
+							action.CREATE_DT = action.DUE_DT = action.COMPLETE_DT = incident.CREATE_DT;
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 79).FirstOrDefault();  // responsible 
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								action.RESPONSIBLE_ID = action.COMPLETE_ID = decimal.Parse(answer.ANSWER_VALUE);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 65).FirstOrDefault();  // action due date
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								action.DUE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 66).FirstOrDefault();  // action complete date
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								action.COMPLETE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 70).FirstOrDefault();  // verification ?
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								action.COMMENTS = answer.ANSWER_VALUE;
+							}
+							entities.AddToTASK_STATUS(action);
+						}
+
+						if (incident.CLOSE_DATE_DATA_COMPLETE.HasValue || incident.CLOSE_DATE.HasValue)
+						{
+							incident.INCFORM_LAST_STEP_COMPLETED = 151;  // signoff
+							INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
+							approval.INCIDENT_ID = incident.INCIDENT_ID;
+							approval.ITEM_SEQ = (int)SysPriv.approve1;
+							approval.APPROVAL_DATE = incident.CLOSE_DATE.HasValue ? incident.CLOSE_DATE : incident.CLOSE_DATE_DATA_COMPLETE;
+							approval.APPROVER_PERSON_ID = incident.CLOSE_PERSON.HasValue ? incident.CLOSE_PERSON : incident.CREATE_PERSON;
+							PERSON person = (from p in entities.PERSON where p.PERSON_ID == approval.APPROVER_PERSON_ID select p).FirstOrDefault();
+							approval.APPROVAL_MESSAGE = approval.APPROVER_PERSON = (person.FIRST_NAME + " " + person.LAST_NAME);
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 67).FirstOrDefault();  // completed by
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								approval.APPROVAL_MESSAGE = approval.APPROVER_PERSON = answer.ANSWER_VALUE;
+								string[] names = answer.ANSWER_VALUE.ToLower().Split(' ');
+								if (names.Length > 1)
+									person = (from p in entities.PERSON where p.FIRST_NAME.ToLower() == names[0] && p.LAST_NAME.ToLower() == names[2] select p).FirstOrDefault();
+							}
+							if (person != null)
+							{
+								approval.APPROVER_PERSON_ID = person.PERSON_ID;
+								approval.APPROVER_TITLE = person.JOB_TITLE;
+							}
+						}
+
+						if (issueType == EHSIncidentTypeId.InjuryIllness)
+						{
+							INCFORM_INJURYILLNESS inRec = new INCFORM_INJURYILLNESS();
+							INCFORM_WITNESS witness = new INCFORM_WITNESS();
+							INCFORM_LOSTTIME_HIST hist = new INCFORM_LOSTTIME_HIST();
+
+							inRec.INCIDENT_ID = incident.INCIDENT_ID;
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 6).FirstOrDefault(); // shift
+							inRec.SHIFT = answer.ANSWER_VALUE;
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 7).FirstOrDefault(); // department
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.DEPARTMENT = answer.ANSWER_VALUE;
+								DEPARTMENT dept = (from d in entities.DEPARTMENT where d.DEPT_NAME.ToLower() == answer.ANSWER_VALUE.ToLower() select d).SingleOrDefault();
+								if (dept != null)
+									inRec.DEPT_ID = dept.DEPT_ID;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 8).FirstOrDefault(); // involved person
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.INVOLVED_PERSON_NAME = answer.ANSWER_VALUE;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 4).FirstOrDefault(); // supervisor inform date
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.SUPERVISOR_INFORMED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 5).FirstOrDefault(); // time of incident
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.INCIDENT_TIME = TimeSpan.ParseExact(answer.ANSWER_VALUE, "hh:mm:ss", null);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 9).FirstOrDefault(); // witness
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								witness.INCIDENT_ID = incident.INCIDENT_ID;
+								witness.WITNESS_NO = 1;
+								witness.WITNESS_NAME = answer.ANSWER_VALUE;
+								witness.LAST_UPD_BY = SessionManager.UserContext.UserName();
+								witness.LAST_UPD_DT = DateTime.UtcNow;
+								entities.AddToINCFORM_WITNESS(witness);
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 10).FirstOrDefault(); // inside/outside
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.INSIDE_OUTSIDE_BLDNG = answer.ANSWER_VALUE;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 11).FirstOrDefault(); // weather
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								; // NO FIELD
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 12).FirstOrDefault(); // injury type
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.INJURY_TYPE = answer.ANSWER_VALUE;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 13).FirstOrDefault(); // body part
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.INJURY_BODY_PART = answer.ANSWER_VALUE;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 15).FirstOrDefault(); // recurrance
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								; // NO FIELD
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 16).FirstOrDefault(); // first aid case
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.FIRST_AID = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 37).FirstOrDefault(); // employee
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.COMPANY_SUPERVISED = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 58).FirstOrDefault(); // specific description
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.DESCRIPTION_LOCAL = answer.ANSWER_VALUE;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 62).FirstOrDefault(); // recordable
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.RECORDABLE = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 63).FirstOrDefault(); // lost time case
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.LOST_TIME = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;
+								if (inRec.LOST_TIME)
+								{
+									hist.INCIDENT_ID = incident.INCIDENT_ID;
+									hist.WORK_STATUS = "03";
+									hist.WORK_STATUS = "Lost Time";
+									hist.BEGIN_DT = incident.INCIDENT_DT;
+									answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 3).FirstOrDefault(); // expected return date
+									if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+									{
+										hist.RETURN_EXPECTED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+									}
+									answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 55).FirstOrDefault(); // actual return date
+									if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+									{
+										hist.RETURN_TOWORK_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+									}
+									hist.LAST_UPD_BY = SessionManager.UserContext.UserName();
+									hist.LAST_UPD_DT = DateTime.UtcNow;
+									entities.AddToINCFORM_LOSTTIME_HIST(hist);
+								}
+							}
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 74).FirstOrDefault(); // occupational event ?
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							{
+								inRec.STD_PROCS_FOLLOWED = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;  // map to std procedures ?
+							}
+
+							entities.AddToINCFORM_INJURYILLNESS(inRec);
+						}
+
+						status = entities.SaveChanges();
+
+						break;
+					case EHSIncidentTypeId.PreventativeAction:
+						break;
+					default:
+						break;
+				}
+			}
+
+
+		}
+		#endregion
+
 	}
 
 }

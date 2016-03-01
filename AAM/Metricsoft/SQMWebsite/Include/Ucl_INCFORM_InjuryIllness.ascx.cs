@@ -1908,7 +1908,7 @@ namespace SQM.Website
 					ia = new INCIDENT_ANSWER();
 					ia.INCIDENT_ID = incidentId;
 					ia.INCIDENT_QUESTION_ID = Convert.ToInt32(EHSQuestionId.FirstAid);
-					ia.ANSWER_VALUE = injuryIllnessDetail.FIRST_AID.ToString();
+					ia.ANSWER_VALUE = injuryIllnessDetail.FIRST_AID== true ? "Yes" : "No";
 					ia.ORIGINAL_QUESTION_TEXT = qList.Where(l => l.INCIDENT_QUESTION_ID == ia.INCIDENT_QUESTION_ID).Select(l => l.QUESTION_TEXT).FirstOrDefault();
 					entities.AddToINCIDENT_ANSWER(ia);
 

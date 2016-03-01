@@ -125,7 +125,7 @@ namespace SQM.Website.Automated
 					if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 						incident.INCFORM_LOSTTIME_HIST.Load();
 					plant = plantList.Where(l => l.PLANT_ID == (decimal)incident.DETECT_PLANT_ID).FirstOrDefault();
-					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(entities, incident, plant.LOCAL_TIMEZONE, workdays));
+					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(incident, plant.LOCAL_TIMEZONE, workdays));
 				}
 
 				plant = null;

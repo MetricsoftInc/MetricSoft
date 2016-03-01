@@ -205,6 +205,10 @@ namespace SQM.Website
 		#region attachwindow
 		public void OpenManageAttachmentsWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description)
 		{
+			OpenManageAttachmentsWindow(recordType, recordID, recordStep, windowTitle, description, PageUseMode.EditEnabled);
+		}
+		public void OpenManageAttachmentsWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, PageUseMode viewMode)
+		{
 			staticScope = new DocumentScope();
 			staticScope.CompanyID = 1;
 			staticScope.RecordType = recordType;
@@ -213,6 +217,16 @@ namespace SQM.Website
 
 			uclUpload.SetReportOption(false);
 			uclUpload.SetSizeOption(true);
+			if (viewMode == PageUseMode.ViewOnly)
+			{
+				uclUpload.SetViewMode(false);
+				btnSave.Visible = false;
+			}
+			else
+			{
+				uclUpload.SetViewMode(true);
+				btnSave.Visible = true;
+			}
 			uclUpload.GetUploadedFiles(recordType, recordID, recordStep);
 
 			winManageAttachments.Title = windowTitle;

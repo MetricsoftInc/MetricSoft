@@ -187,7 +187,7 @@ namespace SQM.Website
                     break;
                 case EHSProfileStatus.NoMeasures:
                     lblNoMetrics.Visible = true;
-                    uclExport.Visible = phApproval.Visible =  false;
+                    uclExport.Visible = phApproval.Visible = lnkAttachments.Visible = false;
                     break;
                 case EHSProfileStatus.NoInputs:
                     lblNoInputs.Visible = true;
@@ -877,7 +877,7 @@ namespace SQM.Website
 
 		protected void lnkAddAttach(object sender, EventArgs e)
 		{
-			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements");
+			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements", cbFinalApproval.Checked == true ? PageUseMode.ViewOnly : PageUseMode.EditEnabled);
 			BindSharedCalendars();
 		}
 

@@ -206,6 +206,23 @@ namespace SQM.Website
 
 			return days;
 		}
+
+		public EHSIncidentTimeAccounting IncidentAccounting(int workdays)
+		{
+			EHSIncidentTimeAccounting incidentAccounting = new EHSIncidentTimeAccounting();
+
+			foreach (EHSIncidentTimeAccounting period in EHSIncidentMgr.CalculateIncidentAccounting(this.Incident, this.Plant.LOCAL_TIMEZONE, workdays))
+			{
+				incidentAccounting.LostTimeCase = Math.Max(incidentAccounting.LostTimeCase, period.LostTimeCase);
+				incidentAccounting.FirstAidCase = Math.Max(incidentAccounting.FirstAidCase, period.FirstAidCase);
+				incidentAccounting.RecordableCase = Math.Max(incidentAccounting.RecordableCase, period.RecordableCase);
+				incidentAccounting.LostTime += period.LostTime;
+				incidentAccounting.RestrictedTime += period.RestrictedTime;
+				incidentAccounting.WorkTime += period.WorkTime;
+			}
+
+			return incidentAccounting;
+		}
 	}
 
 	public static class EHSIncidentMgr
@@ -1076,7 +1093,7 @@ namespace SQM.Website
 			return losttimelist;
 		}
 
-		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(PSsqmEntities ctx, INCIDENT incident, string localeTimezone, int workdays)
+		public static List<EHSIncidentTimeAccounting> CalculateIncidentAccounting(INCIDENT incident, string localeTimezone, int workdays)
 		{
 			List<EHSIncidentTimeAccounting> periodList = new List<EHSIncidentTimeAccounting>();
 
@@ -1212,7 +1229,6 @@ namespace SQM.Website
 
 			return periodList;
 		}
-
 
 		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId, DateTime ? defaultDate)
 		{

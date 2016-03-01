@@ -902,7 +902,7 @@ namespace SQM.Website
         {
             try
             {
-                this.IncidentHst = (from i in this.Entities.INCIDENT 
+				this.IncidentHst = (from i in this.Entities.INCIDENT 
                                     join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
                                     join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
                                     where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
