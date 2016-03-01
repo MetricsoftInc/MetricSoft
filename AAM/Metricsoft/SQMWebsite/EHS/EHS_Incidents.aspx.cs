@@ -532,6 +532,7 @@ namespace SQM.Website
 							contain.IsCompleted = true;
 							contain.LAST_UPD_BY = SessionManager.UserContext.UserName();
 							contain.LAST_UPD_DT = DateTime.UtcNow;
+
 							entities.AddToINCFORM_CONTAIN(contain);
 						}
 
@@ -545,6 +546,7 @@ namespace SQM.Website
 							rootc.ITEM_DESCRIPTION = answer.ANSWER_VALUE;
 							rootc.LAST_UPD_BY = SessionManager.UserContext.UserName();
 							rootc.LAST_UPD_DT = DateTime.UtcNow;
+
 							entities.AddToINCFORM_ROOT5Y(rootc);
 						}
 
@@ -553,9 +555,10 @@ namespace SQM.Website
 						{
 							incident.INCFORM_LAST_STEP_COMPLETED = 125;  // causation
 							INCFORM_CAUSATION cause = new INCFORM_CAUSATION();
-							cause.CAUSEATION_CD = xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault() == null ? "00" : xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault().XLAT_CODE;
+							cause.CAUSEATION_CD = xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault() == null ? "1000" : xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault().XLAT_CODE;
 							cause.LAST_UPD_BY = SessionManager.UserContext.UserName();
 							cause.LAST_UPD_DT = DateTime.UtcNow;
+
 							entities.AddToINCFORM_CAUSATION(cause);
 						}
 
@@ -595,6 +598,7 @@ namespace SQM.Website
 							{
 								action.COMMENTS = answer.ANSWER_VALUE;
 							}
+
 							entities.AddToTASK_STATUS(action);
 						}
 
@@ -621,6 +625,8 @@ namespace SQM.Website
 								approval.APPROVER_PERSON_ID = person.PERSON_ID;
 								approval.APPROVER_TITLE = person.JOB_TITLE;
 							}
+
+							entities.AddToINCFORM_APPROVAL(approval);
 						}
 
 						if (issueType == EHSIncidentTypeId.InjuryIllness)
@@ -663,6 +669,7 @@ namespace SQM.Website
 								witness.WITNESS_NAME = answer.ANSWER_VALUE;
 								witness.LAST_UPD_BY = SessionManager.UserContext.UserName();
 								witness.LAST_UPD_DT = DateTime.UtcNow;
+
 								entities.AddToINCFORM_WITNESS(witness);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 10).FirstOrDefault(); // inside/outside
@@ -732,6 +739,7 @@ namespace SQM.Website
 									}
 									hist.LAST_UPD_BY = SessionManager.UserContext.UserName();
 									hist.LAST_UPD_DT = DateTime.UtcNow;
+
 									entities.AddToINCFORM_LOSTTIME_HIST(hist);
 								}
 							}
