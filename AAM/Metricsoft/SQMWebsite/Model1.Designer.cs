@@ -158,12 +158,12 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_LANG), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 
 #endregion
 
@@ -2186,22 +2186,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESS
-        {
-            get
-            {
-                if ((_INCFORM_INJURYILLNESS == null))
-                {
-                    _INCFORM_INJURYILLNESS = base.CreateObjectSet<INCFORM_INJURYILLNESS>("INCFORM_INJURYILLNESS");
-                }
-                return _INCFORM_INJURYILLNESS;
-            }
-        }
-        private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<SETTINGS> SETTINGS
         {
             get
@@ -2342,6 +2326,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCIDENT_TYPE_LANG> _INCIDENT_TYPE_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESS
+        {
+            get
+            {
+                if ((_INCFORM_INJURYILLNESS == null))
+                {
+                    _INCFORM_INJURYILLNESS = base.CreateObjectSet<INCFORM_INJURYILLNESS>("INCFORM_INJURYILLNESS");
+                }
+                return _INCFORM_INJURYILLNESS;
+            }
+        }
+        private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
 
         #endregion
 
@@ -3332,14 +3332,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCFORM_INJURYILLNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
-        {
-            base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the SETTINGS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToSETTINGS(SETTINGS sETTINGS)
@@ -3409,6 +3401,14 @@ namespace SQM.Website
         public void AddToINCIDENT_TYPE_LANG(INCIDENT_TYPE_LANG iNCIDENT_TYPE_LANG)
         {
             base.AddObject("INCIDENT_TYPE_LANG", iNCIDENT_TYPE_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_INJURYILLNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
+        {
+            base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
         }
 
         #endregion
@@ -22800,6 +22800,30 @@ namespace SQM.Website
         private global::System.String _JOB_TENURE;
         partial void OnJOB_TENUREChanging(global::System.String value);
         partial void OnJOB_TENUREChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> REOCCUR
+        {
+            get
+            {
+                return _REOCCUR;
+            }
+            set
+            {
+                OnREOCCURChanging(value);
+                ReportPropertyChanging("REOCCUR");
+                _REOCCUR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("REOCCUR");
+                OnREOCCURChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _REOCCUR;
+        partial void OnREOCCURChanging(Nullable<global::System.Boolean> value);
+        partial void OnREOCCURChanged();
 
         #endregion
 
@@ -24999,6 +25023,28 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION")]
+        public EntityCollection<INCFORM_CAUSATION> INCFORM_CAUSATION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS")]
         public INCFORM_INJURYILLNESS INCFORM_INJURYILLNESS
         {
@@ -25027,28 +25073,6 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION")]
-        public EntityCollection<INCFORM_CAUSATION> INCFORM_CAUSATION
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
                 }
             }
         }

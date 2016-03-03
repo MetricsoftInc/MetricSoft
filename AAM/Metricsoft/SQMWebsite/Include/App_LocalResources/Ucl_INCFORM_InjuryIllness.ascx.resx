@@ -129,6 +129,9 @@
   <data name="lbBodyPartResource1.Text" xml:space="preserve">
     <value>Body Part</value>
   </data>
+  <data name="lbReoccurResource1.Text" xml:space="preserve">
+    <value>Reoccurance</value>
+  </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>Employee</value>
   </data>

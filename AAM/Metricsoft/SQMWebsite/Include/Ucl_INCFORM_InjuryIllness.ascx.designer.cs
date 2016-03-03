@@ -337,6 +337,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblDeptTestXS;
         
         /// <summary>
+        /// tbDepartment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDepartment;
+        
+        /// <summary>
         /// rddlDeptTest control.
         /// </summary>
         /// <remarks>
@@ -731,6 +740,33 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDropDownList rddlBodyPart;
+        
+        /// <summary>
+        /// lbReoccurSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbReoccurSM;
+        
+        /// <summary>
+        /// lbReoccurXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbReoccurXS;
+        
+        /// <summary>
+        /// rdoReoccur control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdoReoccur;
         
         /// <summary>
         /// rapSeverity control.

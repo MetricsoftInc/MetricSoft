@@ -295,7 +295,13 @@ namespace SQM.Website
 			INCIDENT incident = null;
 
 			string psersonSelect = EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault().VALUE;
+			string deptSelect = EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault().VALUE;
 
+			if (deptSelect.ToLower() == "text")
+			{
+				tbDepartment.Visible = true;
+				rddlDeptTest.Visible = false;
+			}
 			if (psersonSelect.ToLower() == "text")
 			{
 				rajxInvolvedPerson.Visible = false;
@@ -345,6 +351,11 @@ namespace SQM.Website
 						if (injuryIllnessDetails.DESCRIPTION_LOCAL != null)
 							tbLocalDescription.Text = injuryIllnessDetails.DESCRIPTION_LOCAL;
 
+						if (!string.IsNullOrEmpty(injuryIllnessDetails.DEPARTMENT))
+						{
+							tbDepartment.Text = injuryIllnessDetails.DEPARTMENT;
+						}
+
 						//Involved Person :
 						PERSON invp = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.INVOLVED_PERSON_ID select p).FirstOrDefault();
 						string involvedPerson = (invp != null) ? string.Format("{0}, {1}", invp.LAST_NAME, invp.FIRST_NAME) : "";
@@ -367,7 +378,7 @@ namespace SQM.Website
 						PERSON supv = (PERSON)(from p in entities.PERSON where p.PERSON_ID == injuryIllnessDetails.SUPERVISOR_PERSON_ID select p).FirstOrDefault();
 						lbSupervisor.Text = (supv != null) ? string.Format("{0}, {1}", supv.LAST_NAME, supv.FIRST_NAME) : "[ supervisor not found ]";
 
-						rdoInside.SelectedValue = (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE") ? "1" : "0";
+						rdoInside.SelectedValue = (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE BUILDING") ? "1" : "0";
 
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 						rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
@@ -382,6 +393,7 @@ namespace SQM.Website
 
 						rddlInjuryType.SelectedValue = injuryIllnessDetails.INJURY_TYPE;
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
+						rdoReoccur.SelectedValue = (injuryIllnessDetails.REOCCUR == true) ? "1" : "0";
 
 						SetLostTime(IsFullPagePostback);
 
@@ -1579,6 +1591,12 @@ namespace SQM.Website
 			}
 
 			// involved person input
+			if (!string.IsNullOrEmpty(tbDepartment.Text.Trim()))
+			{
+				newInjryIllnessDetails.DEPARTMENT = tbDepartment.Text.Trim();
+			}
+
+			// involved person input
 			if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
 			{
 				newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
@@ -1592,10 +1610,10 @@ namespace SQM.Website
 			if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
 				newInjryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
-			if (rdoInside.SelectedValue == "1")
-				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
+			if (rdoInside.SelectedValue == "0")
+				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside Building";
 			else
-				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
+				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside Building";
 
 			if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
 				newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
@@ -1631,7 +1649,10 @@ namespace SQM.Website
 				newInjryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
 
 			if (!String.IsNullOrEmpty(rddlBodyPart.SelectedValue))
-				newInjryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+				newInjryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue;
+
+			if (!String.IsNullOrEmpty(rdoReoccur.SelectedValue))
+				newInjryIllnessDetails.REOCCUR = Convert.ToBoolean((Convert.ToInt32(rdoReoccur.SelectedValue)));
 
 			entities.AddToINCFORM_INJURYILLNESS(newInjryIllnessDetails);
 
@@ -1792,6 +1813,11 @@ namespace SQM.Website
 						injuryIllnessDetails.SUPERVISOR_PERSON_ID = supv.PERSON_ID;
 				}
 
+				if (!string.IsNullOrEmpty(tbDepartment.Text.Trim()))
+				{
+					injuryIllnessDetails.DEPARTMENT = tbDepartment.Text.Trim();
+				}
+
 				// involved person input
 				if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
 				{
@@ -1803,10 +1829,10 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(tbSupervisorStatement.Text))
 					injuryIllnessDetails.SUPERVISOR_STATEMENT = tbSupervisorStatement.Text;
 
-				if (rdoInside.SelectedValue == "1")
-					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside";
+				if (rdoInside.SelectedValue == "0")
+					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside Building";
 				else
-					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside";
+					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside Building";
 
 				if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
 					injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
@@ -1842,7 +1868,10 @@ namespace SQM.Website
 					injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
 
 				if (!String.IsNullOrEmpty(rddlBodyPart.SelectedValue))
-					injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue; 
+					injuryIllnessDetails.INJURY_BODY_PART = rddlBodyPart.SelectedValue;
+
+				if (!String.IsNullOrEmpty(rdoReoccur.SelectedValue))
+					injuryIllnessDetails.REOCCUR = Convert.ToBoolean((Convert.ToInt32(rdoReoccur.SelectedValue)));
 
 				entities.SaveChanges();
 				AddUpdate_Witnesses(incidentId);

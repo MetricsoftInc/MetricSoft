@@ -129,6 +129,9 @@
   <data name="lbBodyPartResource1.Text" xml:space="preserve">
     <value>ส่วนของร่างกาย</value>
   </data>
+	<data name="lbReoccurResource1.Text" xml:space="preserve">
+    <value>Reoccurance</value>
+  </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>ขึนตรงต่อ AAM</value>
   </data>

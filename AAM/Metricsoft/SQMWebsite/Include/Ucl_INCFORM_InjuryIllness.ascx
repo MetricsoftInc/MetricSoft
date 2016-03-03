@@ -257,6 +257,7 @@
 					<asp:Label ID="lblDeptTestXS" runat="server" Text="<%$ Resources:LocalizedText, Department %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:TextBox ID="tbDepartment" Width="75%" Height="24px" SkinID="Metro" runat="server" MaxLength="80" Visible="false"></asp:TextBox>
 				<telerik:RadDropDownList ID="rddlDeptTest" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px" DropDownWidth="360px" CssClass="WarnIfChanged" Width="360px" runat="server"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -591,6 +592,24 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px"  Width="278px" runat="server"></telerik:RadDropDownList>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>
+					<asp:Label ID="lbReoccurSM" runat="server" Text="Reoccurance" meta:resourcekey="lbReoccurResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>
+					<asp:Label ID="lbReoccurXS" runat="server" Text="Body Part" meta:resourcekey="lbReoccurResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<span>
+					<asp:RadioButtonList ID="rdoReoccur" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" AutoPostBack="False">
+						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
+						<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, No %>"></asp:ListItem>
+					</asp:RadioButtonList></span>
 			</div>
 		</div>
 

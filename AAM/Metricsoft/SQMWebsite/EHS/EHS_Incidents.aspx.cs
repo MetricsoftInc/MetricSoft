@@ -62,6 +62,11 @@ namespace SQM.Website
 			if (rbNew.Visible)
 				rbNew.Visible = createIncidentAccess;
 
+			if (SessionManager.UserContext.Person.PERSON_ID == 1)
+			{
+				btnConversion.Visible = true;
+			}
+
 
 			if (IsPostBack)
 			{
@@ -497,12 +502,24 @@ namespace SQM.Website
 		{
 			int status = 0;
 			INCIDENT_ANSWER answer = null;
-			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[4] { "INJURY_CAUSE", "INJURY_TYPE", "INJURY_PART", "INJURY_TENURE"});
+			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[6] { "SHIFT","INJURY_CAUSE", "INJURY_TYPE", "INJURY_PART", "INJURY_TENURE", "IQ_10"});
 
-			foreach (EHSIncidentData eda in HSCalcs().ehsCtl.IncidentHst)
+			foreach (EHSIncidentData eda in HSCalcs().ehsCtl.IncidentHst.Where(i=> i.Incident.INCFORM_LAST_STEP_COMPLETED < 1  &&  i.Incident.INCIDENT_ID == 441))
 			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCFORM_LAST_STEP_COMPLETED < 1  &&  i.INCIDENT_ID == eda.Incident.INCIDENT_ID select i).SingleOrDefault();
+				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == eda.Incident.INCIDENT_ID select i).SingleOrDefault();
 				incident.INCIDENT_ANSWER.Load();
+
+				// clear any prior conversion reecords
+				string delCmd = " = " + incident.INCIDENT_ID.ToString();
+				status = entities.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE RECORD_TYPE = 40 AND RECORD_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_ROOT5Y WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_CAUSATION WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID" + delCmd);
+				status = entities.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
 
 				EHSIncidentTypeId issueType = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
 				switch (issueType)
@@ -550,11 +567,12 @@ namespace SQM.Website
 							entities.AddToINCFORM_ROOT5Y(rootc);
 						}
 
-						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 27).FirstOrDefault();  // causation
+						answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 78).FirstOrDefault();  // causation
 						if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 						{
 							incident.INCFORM_LAST_STEP_COMPLETED = 125;  // causation
 							INCFORM_CAUSATION cause = new INCFORM_CAUSATION();
+							cause.INCIDENT_ID = incident.INCIDENT_ID;
 							cause.CAUSEATION_CD = xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault() == null ? "1000" : xlatList.Where(l => l.XLAT_GROUP == "INJURY_CAUSE" && l.DESCRIPTION == answer.ANSWER_VALUE).FirstOrDefault().XLAT_CODE;
 							cause.LAST_UPD_BY = SessionManager.UserContext.UserName();
 							cause.LAST_UPD_DT = DateTime.UtcNow;
@@ -569,6 +587,7 @@ namespace SQM.Website
 							TASK_STATUS action = new TASK_STATUS();
 							action.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
 							action.RECORD_ID = incident.INCIDENT_ID;
+							action.TASK_STEP = ((int)SysPriv.action).ToString();
 							action.TASK_SEQ = 0;
 							action.RECORD_SUBID = 0;
 							action.TASK_TYPE = "T";
@@ -586,12 +605,12 @@ namespace SQM.Website
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 65).FirstOrDefault();  // action due date
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								action.DUE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+								action.DUE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy hh:mm:ss tt", null);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 66).FirstOrDefault();  // action complete date
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								action.COMPLETE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+								action.COMPLETE_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy hh:mm:ss tt", null);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 70).FirstOrDefault();  // verification ?
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
@@ -609,6 +628,7 @@ namespace SQM.Website
 							approval.INCIDENT_ID = incident.INCIDENT_ID;
 							approval.ITEM_SEQ = (int)SysPriv.approve1;
 							approval.APPROVAL_DATE = incident.CLOSE_DATE.HasValue ? incident.CLOSE_DATE : incident.CLOSE_DATE_DATA_COMPLETE;
+							approval.IsAccepted = true;
 							approval.APPROVER_PERSON_ID = incident.CLOSE_PERSON.HasValue ? incident.CLOSE_PERSON : incident.CREATE_PERSON;
 							PERSON person = (from p in entities.PERSON where p.PERSON_ID == approval.APPROVER_PERSON_ID select p).FirstOrDefault();
 							approval.APPROVAL_MESSAGE = approval.APPROVER_PERSON = (person.FIRST_NAME + " " + person.LAST_NAME);
@@ -637,7 +657,8 @@ namespace SQM.Website
 
 							inRec.INCIDENT_ID = incident.INCIDENT_ID;
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 6).FirstOrDefault(); // shift
-							inRec.SHIFT = answer.ANSWER_VALUE;
+
+							inRec.SHIFT = GetXLATCode(xlatList, "SHIFT", answer.ANSWER_VALUE);
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 7).FirstOrDefault(); // department
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
@@ -654,15 +675,15 @@ namespace SQM.Website
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 4).FirstOrDefault(); // supervisor inform date
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								inRec.SUPERVISOR_INFORMED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+								inRec.SUPERVISOR_INFORMED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy hh:mm:ss tt", null);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 5).FirstOrDefault(); // time of incident
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								inRec.INCIDENT_TIME = TimeSpan.ParseExact(answer.ANSWER_VALUE, "hh:mm:ss", null);
+								inRec.INCIDENT_TIME = TimeSpan.Parse(answer.ANSWER_VALUE);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 9).FirstOrDefault(); // witness
-							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
+							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE) &&  answer.ANSWER_VALUE.Split(' ').Length > 1)
 							{
 								witness.INCIDENT_ID = incident.INCIDENT_ID;
 								witness.WITNESS_NO = 1;
@@ -675,7 +696,7 @@ namespace SQM.Website
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 10).FirstOrDefault(); // inside/outside
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								inRec.INSIDE_OUTSIDE_BLDNG = answer.ANSWER_VALUE;
+								inRec.INSIDE_OUTSIDE_BLDNG = GetXLATCode(xlatList, "IQ_10", answer.ANSWER_VALUE);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 11).FirstOrDefault(); // weather
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
@@ -685,17 +706,17 @@ namespace SQM.Website
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 12).FirstOrDefault(); // injury type
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								inRec.INJURY_TYPE = answer.ANSWER_VALUE;
+								inRec.INJURY_TYPE = GetXLATCode(xlatList, "INJURY_TYPE", answer.ANSWER_VALUE);
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 13).FirstOrDefault(); // body part
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								inRec.INJURY_BODY_PART = answer.ANSWER_VALUE;
+								inRec.INJURY_BODY_PART = GetXLATCode(xlatList, "INJURY_PART", answer.ANSWER_VALUE);
 							}
-							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 15).FirstOrDefault(); // recurrance
+							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 15).FirstOrDefault(); // reocurrance
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 							{
-								; // NO FIELD
+								inRec.REOCCUR = answer.ANSWER_VALUE.ToLower() == "yes" ? true : false;
 							}
 							answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 16).FirstOrDefault(); // first aid case
 							if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
@@ -730,12 +751,12 @@ namespace SQM.Website
 									answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 3).FirstOrDefault(); // expected return date
 									if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 									{
-										hist.RETURN_EXPECTED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+										hist.RETURN_EXPECTED_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy hh:mm:ss tt", null);
 									}
 									answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 55).FirstOrDefault(); // actual return date
 									if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
 									{
-										hist.RETURN_TOWORK_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy", null);
+										hist.RETURN_TOWORK_DT = DateTime.ParseExact(answer.ANSWER_VALUE, "M/d/yyyy hh:mm:ss tt", null);
 									}
 									hist.LAST_UPD_BY = SessionManager.UserContext.UserName();
 									hist.LAST_UPD_DT = DateTime.UtcNow;
@@ -761,8 +782,19 @@ namespace SQM.Website
 						break;
 				}
 			}
+		}
 
+		public static string GetXLATCode(List<XLAT> xlatList, string xlatGroup, string value)
+		{
+			string xlatCode = "";
 
+			XLAT xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.DESCRIPTION == value).FirstOrDefault();
+			if (xlat != null)
+			{
+				xlatCode = xlat.XLAT_CODE;
+			}
+
+			return xlatCode;
 		}
 		#endregion
 

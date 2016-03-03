@@ -136,6 +136,12 @@
 
 	// Warn when navigating away from page with form data changed
 	$(window).bind('beforeunload', function () {
+		if (document.getElementById("hfSubmitReset").value == 'true' && document.getElementById("hfUnsaved").value == 'true') {
+			submitted = false;
+			unsaved = true;
+			document.getElementById("hfSubmitReset").value = '';
+			document.getElementById("hfUnsaved").value = ''
+		}
 		if (unsaved && !submitted) {
 			var prm = Sys.WebForms.PageRequestManager.getInstance();
 			if (!prm._processingRequest) {
@@ -155,8 +161,10 @@
 	$(document).on('click', '.UseSubmitAction', function () { // sets submitted for custom submit buttons, etc.
 		submitted = true;
 	});
-
-
+	$(document).on('click', '.buttonPopupOpen', function () { // force ignore unsaved/unsibmitted for rad window popup
+		submitted = true;
+		document.getElementById("hfUnsaved").value = unsaved.toString();
+	});
 
 </script>
 </telerik:RadCodeBlock>
@@ -173,6 +181,8 @@
 		<asp:HiddenField ID="hdCurrentActiveMenu" runat="server" />
 		<asp:HiddenField ID="hdCurrentActiveTab" runat="server" />
 		<asp:HiddenField ID="hdCurrentActiveSecondaryTab" runat="server" />
+		<asp:HiddenField ID="hfSubmitReset" runat="server"/>
+		<asp:HiddenField ID="hfUnsaved" runat="server"/>
 
 		<div style="width:99%; margin: 5px;" >
 			<div style="float: left;" class="noprint">

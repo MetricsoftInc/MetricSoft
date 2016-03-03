@@ -68,8 +68,8 @@
 		</div>
 		<div style="float: left; margin-left: 10px;">
 			<span>
-				<asp:Button ID="btnSave" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>
-				<asp:Button ID="btnCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click"></asp:Button>
+				<asp:Button ID="btnSave" CSSclass="buttonEmphasis buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>
+				<asp:Button ID="btnCancel" CSSclass="buttonStd buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click"></asp:Button>
 			</span>
 		</div>
 	</ContentTemplate>

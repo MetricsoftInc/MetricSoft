@@ -877,6 +877,7 @@ namespace SQM.Website
 
 		protected void lnkAddAttach(object sender, EventArgs e)
 		{
+			//SaveInputs(0, true);
 			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements", cbFinalApproval.Checked == true ? PageUseMode.ViewOnly : PageUseMode.EditEnabled);
 			BindSharedCalendars();
 		}
@@ -884,6 +885,9 @@ namespace SQM.Website
 		private void OnAttachmentsUpdate(string cmd)
 		{
 			BindSharedCalendars();
+			HiddenField hf = (HiddenField)this.Page.Master.FindControl("hfSubmitReset");
+			if (hf != null)
+				hf.Value = "true";
 		}
 
         protected void lnkSelectMetric(object sender, EventArgs e)

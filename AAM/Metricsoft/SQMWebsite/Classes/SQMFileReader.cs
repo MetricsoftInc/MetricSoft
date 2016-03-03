@@ -386,9 +386,12 @@ namespace SQM.Website
 										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 									}
 								}
-								if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
+								if (HRLocation == "GG")
 								{
-									person.NEW_LOCATION_CD = ("," + accessLocations + ",");
+									if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
+									{
+										person.NEW_LOCATION_CD = ("," + accessLocations + ",");
+									}
 								}
 
 								try
@@ -398,11 +401,13 @@ namespace SQM.Website
 								catch (Exception ex)
 								{
 									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "update failure: " + empID + "; " + ex.InnerException.Message, empID, 1, line));
+									Entities = new PSsqmEntities();
 									break;
 								}
 								if (person == null)
 								{
 									this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "PERSON", "update failure: " + empID, empID, 1, line));
+									Entities = new PSsqmEntities();
 									break;
 								}
 								state = person.EntityState;

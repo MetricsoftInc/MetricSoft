@@ -289,6 +289,8 @@
 					<Ucl:IncidentList ID="uclIncidentList" runat="server" />
 					<br />
 					<Ucl:Export ID="uclExport" runat="server" />
+					<br />
+					<asp:Button ID="btnConversion" runat="server" CssClass="buttonEmphasis" Text="Convert"  OnClick="btnConversion_Click" Visible="false"/>
 				</div>
 			</div>
 		</div>

@@ -129,6 +129,9 @@
   <data name="lbBodyPartResource1.Text" xml:space="preserve">
     <value>Parte del Cuerpo</value>
   </data>
+	<data name="lbReoccurResource1.Text" xml:space="preserve">
+    <value>Reoccurance</value>
+  </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>Supervisado directamente</value>
   </data>
