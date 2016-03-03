@@ -48,6 +48,8 @@ namespace SQM.Website.EHS
 
 			uclAssessmentForm.OnAttachmentListItemClick += OpenFileUpload;
 			uclAssessmentForm.OnExceptionListItemClick += AddTask;
+			//uclTask.OnTaskAdd += UpdateTaskList;
+			//uclTask.OnTaskUpdate += UpdateTaskList;
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -92,6 +94,7 @@ namespace SQM.Website.EHS
 					if (SessionManager.ReturnObject is string)
 					{
 						string type = SessionManager.ReturnObject as string;
+						string auditStatus = "";
 						switch (type)
 						{
 							case "DisplayAudits":
@@ -104,7 +107,7 @@ namespace SQM.Website.EHS
 								//UpdateDisplayState(DisplayState.AuditReportEdit);
 								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
 								// need to determine if the Audit is past due and force it into display mode (probelm when coming from Calendar)
-								string auditStatus = EHSAuditMgr.SelectAuditStatus(SessionManager.ReturnRecordID);
+								auditStatus = EHSAuditMgr.SelectAuditStatus(SessionManager.ReturnRecordID);
 								rbNew.Visible = false;
 								if (auditStatus == "C")
 									UpdateDisplayState(DisplayState.AuditNotificationDisplay);
@@ -134,6 +137,24 @@ namespace SQM.Website.EHS
 									uclAssessmentForm.EnableReturnButton(false);
 								}
 								break;
+							case "AddAttachment":
+							case "AddTask":
+								//UpdateDisplayState(DisplayState.AuditNotificationEdit); 
+								//UpdateDisplayState(DisplayState.AuditReportEdit);
+								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
+								// need to determine if the Audit is past due and force it into display mode (probelm when coming from Calendar)
+								auditStatus = EHSAuditMgr.SelectAuditStatus(SessionManager.ReturnRecordID);
+								rbNew.Visible = false;
+								if (auditStatus == "C")
+									UpdateDisplayState(DisplayState.AuditNotificationDisplay);
+								else
+									UpdateDisplayState(DisplayState.AuditNotificationEdit);
+								if (isDirected)
+								{
+									uclAssessmentForm.EnableReturnButton(false);
+								}
+								break;
+
 						}
 					}
 					SessionManager.ClearReturns();
@@ -141,6 +162,7 @@ namespace SQM.Website.EHS
 			}
 			else
 			{
+				uclAssessmentForm.EditReturnState = "NeedsRefresh";
 				if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
 				{
 					try
@@ -201,6 +223,16 @@ namespace SQM.Website.EHS
 
 		protected void UpdateDisplayState(DisplayState state)
 		{
+			decimal auditid = 0;
+			try
+			{
+				auditid = Convert.ToDecimal(SessionManager.ReturnRecordID);
+			}
+			catch
+			{
+				auditid = 0;
+			}
+
 			switch (state)
 			{
 				case DisplayState.AuditList:
@@ -210,31 +242,46 @@ namespace SQM.Website.EHS
 					break;
 
 				case DisplayState.AuditNotificationNew:
-					divAuditList.Visible = false;
-					uclAssessmentForm.Visible = true;
-					uclAssessmentForm.IsEditContext = false;
-					uclAssessmentForm.ClearControls();
-					//rbNew.Visible = false;
-					uclAssessmentForm.CheckForSingleType();
+					//divAuditList.Visible = false;
+					//uclAssessmentForm.Visible = true;
+					//uclAssessmentForm.IsEditContext = false;
+					//uclAssessmentForm.ClearControls();
+					////rbNew.Visible = false;
+					//uclAssessmentForm.CheckForSingleType();
+					SessionManager.ClearReturns();
+					SessionManager.ReturnRecordID = 0;
+					SessionManager.ReturnStatus = true;
+					SessionManager.ReturnObject = state;
+					Response.Redirect("/EHS/EHS_AssessmentForm.aspx");
 					break;
 
 				case DisplayState.AuditNotificationEdit:
-					divAuditList.Visible = false;
-					uclAssessmentForm.CurrentStep = 0;
-					uclAssessmentForm.IsEditContext = true;
-					uclAssessmentForm.Visible = true;
-					//rbNew.Visible = false;
-					uclAssessmentForm.BuildForm();
+					//divAuditList.Visible = false;
+					//uclAssessmentForm.CurrentStep = 0;
+					//uclAssessmentForm.IsEditContext = true;
+					//uclAssessmentForm.Visible = true;
+					////rbNew.Visible = false;
+					//uclAssessmentForm.BuildForm(); // we already built the form
+					SessionManager.ClearReturns();
+					SessionManager.ReturnRecordID = auditid;
+					SessionManager.ReturnStatus = true;
+					SessionManager.ReturnObject = state;
+					Response.Redirect("/EHS/EHS_AssessmentForm.aspx");
 					break;
 
 				case DisplayState.AuditNotificationDisplay:
 				case DisplayState.AuditNotificationClosed:
-					divAuditList.Visible = false;
-					uclAssessmentForm.CurrentStep = 1;
-					uclAssessmentForm.IsEditContext = false;
-					//rbNew.Visible = false;
-					uclAssessmentForm.Visible = true;
-					//uclAuditForm.BuildForm();
+					//divAuditList.Visible = false;
+					//uclAssessmentForm.CurrentStep = 1;
+					//uclAssessmentForm.IsEditContext = false;
+					////rbNew.Visible = false;
+					//uclAssessmentForm.Visible = true;
+					////uclAuditForm.BuildForm();
+					SessionManager.ClearReturns();
+					SessionManager.ReturnRecordID = auditid;
+					SessionManager.ReturnStatus = true;
+					SessionManager.ReturnObject = state;
+					Response.Redirect("/EHS/EHS_AssessmentForm.aspx");
 					break;
 
 			}
@@ -478,8 +525,8 @@ namespace SQM.Website.EHS
 		private void AddTask(decimal auditID, decimal questionID)
 		{
 			int recordType = (int)TaskRecordType.Audit;
-			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 			uclTaskList.TaskWindow(50, auditQuestion.AuditId, auditQuestion.QuestionId, "350", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID);
 
 			//uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
@@ -511,8 +558,8 @@ namespace SQM.Website.EHS
 		protected void OpenFileUpload(decimal auditID, decimal questionID)
 		{
 			int recordType = (int)TaskRecordType.Audit;
-			//EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 			//AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+			//EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID, audit.AUDIT_TYPE_ID);
 
 			uclAttachWin.OpenManageAttachmentsWindow(recordType, auditID, questionID.ToString(), "Upload Attachments", "Upload or view attachments for this assessment question");
 		}

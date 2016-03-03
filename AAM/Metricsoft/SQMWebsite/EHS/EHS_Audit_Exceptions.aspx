@@ -6,6 +6,7 @@
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_AuditExceptionList.ascx" TagName="AuditExceptionList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
 
 <%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
 
@@ -226,6 +227,8 @@
                     </div>
                 </ContentTemplate>
             </telerik:RadWindow>
+
+            <Ucl:AttachWin ID="uclAttachWin" runat="server" />
 
             <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
             </telerik:RadAjaxManager>

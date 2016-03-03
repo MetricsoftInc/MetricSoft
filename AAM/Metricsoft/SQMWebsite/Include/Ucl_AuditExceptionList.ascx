@@ -113,6 +113,7 @@
 
 <asp:Panel ID="pnlAuditListRepeater" runat="server" Visible="False">
     <div>
+        <asp:HiddenField runat="server" ID="hdnClick" />
         <telerik:RadGrid ID="rgAuditList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="20"
             AutoGenerateColumns="False" OnItemDataBound="rgAuditList_ItemDataBound" OnSortCommand="rgAuditList_SortCommand"
             OnPageIndexChanged="rgAuditList_PageIndexChanged" OnPageSizeChanged="rgAuditList_PageSizeChanged" Width="100%" GroupPanelPosition="Top">
@@ -180,6 +181,11 @@
                                 <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" UniqueName="TemplateColumn4">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="lnkUpdateStatus" runat="server" meta:resourcekey="lnkUpdateStatusResource1" OnClick="lnkUpdateStatus_Click" Text="<%$ Resources:LocalizedText, UpdateStatus %>" ToolTip="Update the status of this exception"></asp:LinkButton>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" UniqueName="TemplateColumn5">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkAddAttach" runat="server" meta:resourcekey="lnkAddTaskResource1" OnClick="lnkAddAttach_Click" Text="Attachment" ToolTip="Add files to associate with the question"></asp:LinkButton>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                             </Columns>

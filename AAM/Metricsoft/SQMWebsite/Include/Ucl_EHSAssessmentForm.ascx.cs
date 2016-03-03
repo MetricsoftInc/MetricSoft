@@ -118,6 +118,12 @@ namespace SQM.Website
 			set { ViewState["SelectedLocationId"] = value; }
 		}
 
+		public string EditReturnState
+		{
+			get { return ViewState["EditReturnState"] == null ? " " : (string)ViewState["EditReturnState"]; }
+			set { ViewState["EditReturnState"] = value; }
+		}
+
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
@@ -149,6 +155,7 @@ namespace SQM.Website
 				string script = string.Format("$(window).unbind('beforeunload'); unsaved = false;");
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "unload", script, true);
 				returnFromClick = true;
+				EditReturnState = "NeedsRefresh";
 			}
 
 			if (sourceId != null && (sourceId.Contains("AddTask") || sourceId.Contains("FileUpload")))
@@ -156,6 +163,7 @@ namespace SQM.Website
 				addingExtraInfo = true;
 			}
 
+			//if (IsPostBack && EditReturnState.Equals("NeedsRefresh"))
 			if (IsPostBack)
 			{
 				divAuditForm.Visible = true;
@@ -164,6 +172,7 @@ namespace SQM.Website
 					LoadHeaderInformation();
 				}
 				BuildForm();
+				EditReturnState = "NoRefresh";
 			}
 			else
 			{
@@ -374,11 +383,17 @@ namespace SQM.Website
 			string typeText = SelectedTypeText;
 			auditType = EHSAuditMgr.SelectAuditTypeByAuditId(EditAuditId);
 
+			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
+			try
+			{
+				UpdateAnswersFromForm(); // just in case
+			}
+			catch { }
+
 			pnlForm.Controls.Clear();
 			pnlForm.Visible = true;
 			lblResults.Visible = false;
 
-			questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"6\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 			string previousTopic = "";
@@ -917,7 +932,8 @@ namespace SQM.Website
 				{
 					pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
 					string lid = "AddTask" + qid;
-					RadButton lnk = new RadButton() { ID = lid, Text = Resources.LocalizedText.AssignTask, CssClass = "WarnIfChanged" };
+					string buttonText = Resources.LocalizedText.AssignTask + "(" + q.TasksAssigned.ToString() + ")";
+					RadButton lnk = new RadButton() { ID = lid, Text = buttonText, CssClass = "WarnIfChanged" };
 					lnk.ToolTip = "Create a Task to complete this exception";
 					lnk.Click += new System.EventHandler(lnkAddTask_Click);
 					lnk.Enabled = true;
@@ -926,7 +942,8 @@ namespace SQM.Website
 					pnl.Controls.Add(lnk);
 					pnl.Controls.Add(new LiteralControl("<span style=\"padding-left: 10px;\">"));
 					lid = "FileUpload" + qid;
-					lnk = new RadButton() { ID = lid, Text = Resources.LocalizedText.Attachments, CssClass = "WarnIfChanged" };
+					buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
+					lnk = new RadButton() { ID = lid, Text = buttonText, CssClass = "WarnIfChanged" };
 					lnk.ToolTip = "Upload attachments for this question";
 					lnk.Click += new System.EventHandler(lnkFileUpload_Click);
 					lnk.Enabled = true;
@@ -2199,6 +2216,12 @@ namespace SQM.Website
 			{
 				RadButton lnk = (RadButton)sender;
 				string[] cmd = lnk.CommandArgument.Split(',');
+
+				SessionManager.ReturnRecordID = Convert.ToDecimal(cmd[0].ToString());
+				SessionManager.ReturnObject = "CallAddTask";
+				SessionManager.ReturnStatus = true;
+				EditReturnState = "NeedsRefresh";
+
 				//AddTask(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
 				// call sending AuditID, QuestionID
 				OnExceptionListItemClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
@@ -2208,8 +2231,8 @@ namespace SQM.Website
 		//protected void AddTask(decimal auditID, decimal questionID)
 		//{
 		//	int recordType = (int)TaskRecordType.Audit;
-		//	EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 		//	AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+		//	EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID, audit.AUDIT_TYPE_ID);
 		//	uclTaskList.TaskWindow(50, auditQuestion.AuditId, auditQuestion.QuestionId, "350", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID);
 
 		//	//uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
@@ -2223,6 +2246,10 @@ namespace SQM.Website
 			{
 				RadButton lnk = (RadButton)sender;
 				string[] cmd = lnk.CommandArgument.Split(',');
+				SessionManager.ReturnRecordID = Convert.ToDecimal(cmd[0].ToString());
+				SessionManager.ReturnObject = "CallAddFile";
+				SessionManager.ReturnStatus = true;
+				EditReturnState = "NeedsRefresh";
 				//OpenFileUpload(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
 				OnAttachmentListItemClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
 			}
@@ -2231,8 +2258,8 @@ namespace SQM.Website
 		//protected void OpenFileUpload(decimal auditID, decimal questionID)
 		//{
 		//	int recordType = (int)TaskRecordType.Audit;
-		//	//EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 		//	//AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+		//	//EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID, audit.AUDIT_TYPE_ID);
 
 		//	uclAttachWin.OpenManageAttachmentsWindow(recordType, auditID, questionID.ToString(), "Upload Attachments", "Upload or view attachments for this assessment question");
 		//}

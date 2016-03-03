@@ -25,6 +25,7 @@ namespace SQM.Website
 		//public event CommandClick OnSearchReceiptsClick;
 		public event GridItemClick2 OnExceptionListItemClick;
 		public event GridItemClick2 OnExceptionChangeStatusClick;
+		public event GridItemClick2 OnExceptionAttachItemClick;
 
 		public bool LinksDisabled
 		{
@@ -234,6 +235,13 @@ namespace SQM.Website
 
 				lnk = (LinkButton)e.Item.FindControl("lnkAddTask");
 				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+				string buttonText = Resources.LocalizedText.AssignTask + "(" + data.TasksAssigned.ToString() + ")";
+				lnk.Text = buttonText;
+
+				lnk = (LinkButton)e.Item.FindControl("lnkAddAttach");
+				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
+				buttonText = Resources.LocalizedText.Attachments + "(" + data.FilesAttached.ToString() + ")";
+				lnk.Text = buttonText;
 
 				lnk = (LinkButton)e.Item.FindControl("lnkUpdateStatus");
 				lnk.CommandArgument = data.AuditId.ToString() + "," + data.QuestionId.ToString();
@@ -321,6 +329,17 @@ namespace SQM.Website
 				string[] cmd = lnk.CommandArgument.Split(',');
 				// call sending AuditID, QuestionID
 				OnExceptionListItemClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
+			}
+		}
+
+		protected void lnkAddAttach_Click(Object sender, EventArgs e)
+		{
+			if (OnExceptionAttachItemClick != null)
+			{
+				LinkButton lnk = (LinkButton)sender;
+				hdnClick.Value = lnk.CommandArgument;
+				string[] cmd = lnk.CommandArgument.Split(',');
+				OnExceptionAttachItemClick(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
 			}
 		}
 
@@ -450,5 +469,29 @@ namespace SQM.Website
 
 		#endregion
 
+
+		internal void RefreshAttachLink()
+		{
+			//string[] cmd = hdnClick.Value.ToString().Split(',');
+			//decimal auditId = Convert.ToDecimal(cmd[0].ToString());
+			//decimal questionId = Convert.ToDecimal(cmd[1].ToString());
+			//foreach (var item in rgAuditList.Columns)
+			//{
+			//	if (item is GridColumn)
+			//	{
+					
+			//		decimal currentAudit = Convert.ToDecimal(item.FindControl(""));
+			//		decimal currentQuestion = Convert.ToDecimal(dataItem["QuestionID"].ToString());
+			//		LinkButton lnk = (LinkButton)dataItem.FindControl("lnkAddAttach");
+					
+			//	}
+			//	//query to update staus field in db with 'ID'
+
+			//	// sql query to select records from db with status not equal to 1
+			//	rgAuditList.Rebind();
+			//}
+			//// sql query to select records from db with status not equal to 1
+			//rgAuditList.Rebind();
+		}
 	}
 }

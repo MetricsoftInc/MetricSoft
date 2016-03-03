@@ -243,6 +243,13 @@ namespace SQM.Website
 			SessionManager.DocumentContext.RecordStep = staticScope.RecordStep;
 			uclUpload.SaveFiles();
 
+			if (staticScope.RecordType == (int)TaskRecordType.Audit) // send back info for audit processing
+			{
+				SessionManager.ReturnRecordID = staticScope.RecordID;
+				SessionManager.ReturnObject = "AddAttachment";
+				SessionManager.ReturnStatus = true;
+			}
+
 			if (AttachmentEvent != null)
 			{
 				AttachmentEvent("save");

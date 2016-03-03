@@ -231,7 +231,7 @@
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
-    <Content Include="EHS\EHS_AssessmentDetail.aspx" />
+    <Content Include="EHS\EHS_AssessmentForm.aspx" />
     <Content Include="EHS\EHS_Assessments.aspx" />
     <Content Include="EHS\EHS_Audit_Exceptions.aspx" />
     <Content Include="EHS\EHS_Audit_Scheduler.aspx" />
@@ -1237,12 +1237,12 @@
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EHS\EHS_AssessmentDetail.aspx.cs">
-      <DependentUpon>EHS_AssessmentDetail.aspx</DependentUpon>
+    <Compile Include="EHS\EHS_AssessmentForm.aspx.cs">
+      <DependentUpon>EHS_AssessmentForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EHS\EHS_AssessmentDetail.aspx.designer.cs">
-      <DependentUpon>EHS_AssessmentDetail.aspx</DependentUpon>
+    <Compile Include="EHS\EHS_AssessmentForm.aspx.designer.cs">
+      <DependentUpon>EHS_AssessmentForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Assessments.aspx.cs">
       <DependentUpon>EHS_Assessments.aspx</DependentUpon>

@@ -154,7 +154,7 @@
     <value>You must complete all required fields on this page to close the assessment.</value>
   </data>
   <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
-    <value>You must complete all required text fields on this page to save. Complete the fields lined with red.</value>
+    <value>The assessment has been saved, but you must complete all required fields for it to be closed. Complete the fields lined with red.</value>
   </data>
   <data name="AssessmentRequiredsMsg" xml:space="preserve">
     <value>You must complete all required fields on this page to save.</value>
@@ -653,5 +653,8 @@
   </data>
   <data name="AssignTask" xml:space="preserve">
     <value>Assign Task</value>
+  </data>
+  <data name="AssessmentReturn" xml:space="preserve">
+    <value>If you have made changes and not hit the Save button, changes may be lost. Leave Page?</value>
   </data>
 </root>

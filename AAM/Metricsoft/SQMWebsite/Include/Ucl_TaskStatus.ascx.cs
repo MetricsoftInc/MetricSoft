@@ -193,6 +193,9 @@ namespace SQM.Website
 						auditQuestion.Status = "02";
 						EHSAuditMgr.UpdateAnswer(auditQuestion);
 					}
+					SessionManager.ReturnRecordID = task.RECORD_ID;
+					SessionManager.ReturnObject = "AddTask";
+					SessionManager.ReturnStatus = true;
 				}
 			}
 		}

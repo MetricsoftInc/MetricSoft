@@ -24,6 +24,7 @@ namespace SQM.Website
 		public bool CommentRequired { get; set; }
 		public string HelpText { get; set; }
 		public string AnswerText { get; set; }
+		public string AnswerValue { get; set; }
 		public string StandardType { get; set; }
 		public List<AUDIT_QUESTION_CONTROL> QuestionControls { get; set; }
 		public decimal TopicId { get; set; }
@@ -33,6 +34,8 @@ namespace SQM.Website
 		public string Status { get; set; }
 		public string ResolutionComment { get; set; }
 		public DateTime CompleteDate { get; set; }
+		public int TasksAssigned { get; set; }
+		public int FilesAttached { get; set; }
 	}
 
 	public class EHSAuditAnswerChoice
@@ -448,6 +451,15 @@ namespace SQM.Website
 									   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
 									   select a).FirstOrDefault();
 
+					string strQuestion = aq.AUDIT_QUESTION_ID.ToString();
+					List<decimal> attachmentIds = (from a in entities.ATTACHMENT
+												   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_STEP == strQuestion
+												   select a.ATTACHMENT_ID).ToList();
+
+					List<decimal> taskIds = (from a in entities.TASK_STATUS
+											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
+											 select a.TASK_ID).ToList();
+
 					var newQuestion = new EHSAuditQuestion()
 					{
 						AuditId = auditId,
@@ -462,7 +474,9 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE)
+						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						FilesAttached = attachmentIds.Count,
+						TasksAssigned = taskIds.Count
 					};
 
 					if (auditAnswer != null)
@@ -470,6 +484,8 @@ namespace SQM.Website
 						newQuestion.Status = auditAnswer.STATUS;
 						newQuestion.ResolutionComment = auditAnswer.RESOLUTION_COMMENT;
 						newQuestion.ChoicePositive = auditAnswer.CHOICE_POSITIVE;
+						newQuestion.AnswerValue = auditAnswer.ANSWER_VALUE;
+						newQuestion.AnswerComment = auditAnswer.COMMENT;
 						if (auditAnswer.COMPLETE_DATE != null)
 							newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
 					}
@@ -680,6 +696,15 @@ namespace SQM.Website
 								  where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
 								  select a).FirstOrDefault();
 
+					string strQuestion = aq.AUDIT_QUESTION_ID.ToString();
+					List<decimal> attachmentIds = (from a in entities.ATTACHMENT
+												   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_STEP == strQuestion
+												   select a.ATTACHMENT_ID).ToList();
+
+					List<decimal> taskIds = (from a in entities.TASK_STATUS
+											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
+											 select a.TASK_ID).ToList();
+
 					// need to redo this logic to only process if the answer is negative
 					var newQuestion = new EHSAuditQuestion()
 					{ 
@@ -700,7 +725,9 @@ namespace SQM.Website
 						AnswerComment = auditAnswer.COMMENT,
 						Status = auditAnswer.STATUS,
 						ResolutionComment = auditAnswer.RESOLUTION_COMMENT,
-						ChoicePositive = auditAnswer.CHOICE_POSITIVE
+						ChoicePositive = auditAnswer.CHOICE_POSITIVE,
+						FilesAttached = attachmentIds.Count,
+						TasksAssigned = taskIds.Count
 					};
 
 					if (auditAnswer.COMPLETE_DATE != null)
@@ -784,10 +811,11 @@ namespace SQM.Website
 		public static EHSAuditQuestion SelectAuditQuestion(decimal auditId, decimal questionID)
 		{
 			var newQuestion = new EHSAuditQuestion();
+
 			try
 			{
 				var entities = new PSsqmEntities();
-				var audit = (from a in entities.AUDIT
+				var	audit = (from a in entities.AUDIT
 							 where auditId == a.AUDIT_ID
 							 select a).FirstOrDefault();
 
@@ -800,9 +828,9 @@ namespace SQM.Website
 								select ti).FirstOrDefault();
 
 				var auditTypeTopic = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-									  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
-									  select q).FirstOrDefault();
-
+								  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
+								  select q).FirstOrDefault();
+				
 				var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 								 where auditTypeTopic.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 								 select tp).FirstOrDefault();
@@ -811,9 +839,18 @@ namespace SQM.Website
 								   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == questionID
 								   select a).FirstOrDefault();
 
+				string strQuestion = questionID.ToString();
+				List<decimal> attachmentIds = (from a in entities.ATTACHMENT
+											   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_STEP == strQuestion
+											   select a.ATTACHMENT_ID).ToList();
+
+				List<decimal> taskIds = (from a in entities.TASK_STATUS
+										 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == questionID
+										 select a.TASK_ID).ToList();
+
 				newQuestion = new EHSAuditQuestion()
 				{
-					AuditId = auditAnswer.AUDIT_ID,
+					AuditId = auditId,
 					QuestionId = questionInfo.AUDIT_QUESTION_ID,
 					//QuestionText = questionInfo.QUESTION_TEXT,
 					QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
@@ -826,14 +863,58 @@ namespace SQM.Website
 					StandardType = questionInfo.STANDARD_TYPE,
 					TopicId = topicInfo.AUDIT_TOPIC_ID,
 					TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
-					AnswerText = auditAnswer.ANSWER_VALUE,
-					AnswerComment = auditAnswer.COMMENT,
-					Status = auditAnswer.STATUS,
-					ResolutionComment = auditAnswer.RESOLUTION_COMMENT
+					FilesAttached = attachmentIds.Count,
+					TasksAssigned = taskIds.Count
 				};
+				if (auditAnswer != null)
+				{
+					newQuestion.AnswerText = auditAnswer.ANSWER_VALUE;
+					newQuestion.AnswerValue = auditAnswer.ANSWER_VALUE;
+					newQuestion.AnswerComment = auditAnswer.COMMENT;
+					newQuestion.Status = auditAnswer.STATUS;
+					newQuestion.ResolutionComment = auditAnswer.RESOLUTION_COMMENT;
 
-				if (auditAnswer.COMPLETE_DATE != null)
-					newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
+					if (auditAnswer.COMPLETE_DATE != null)
+						newQuestion.CompleteDate = (DateTime)auditAnswer.COMPLETE_DATE;
+				}
+				else
+				{
+					newQuestion.AnswerText = "";
+					newQuestion.AnswerValue = "";
+					newQuestion.AnswerComment = "";
+					newQuestion.Status = "";
+				}
+
+				if (newQuestion.HasMultipleChoices)
+				{
+					List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");
+					List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
+														  where qc.AUDIT_QUESTION_ID == questionInfo.AUDIT_QUESTION_ID
+														  orderby qc.SORT_ORDER
+														  select new EHSAuditAnswerChoice
+														  {
+															  Value = qc.QUESTION_CHOICE_VALUE,
+															  IsCategoryHeading = qc.IS_CATEGORY_HEADING,
+															  ChoiceWeight = qc.CHOICE_WEIGHT,
+															  ChoicePositive = qc.CHOICE_POSITIVE
+														  }).ToList();
+					if (choices.Count > 0)
+					{
+						foreach (EHSAuditAnswerChoice choice in choices)
+						{
+							// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+							try
+							{
+								choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+							}
+							catch
+							{
+								choice.Text = choice.Value;
+							}
+						}
+						newQuestion.AnswerChoices = choices;
+					}
+				}
 
 			}
 			catch (Exception e)
@@ -1040,22 +1121,28 @@ namespace SQM.Website
 			{
 				try
 				{
-					//decimal probCaseId = (from po in ctx.PROB_OCCUR where po.AUDIT_ID == auditId select po.PROBCASE_ID).FirstOrDefault();
+					// delete all attachments
+					List<decimal> attachmentIds = (from a in ctx.ATTACHMENT
+												   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId
+												   select a.ATTACHMENT_ID).ToList();
 
-					//if (probCaseId > 0)
-					//	status = ProblemCase.DeleteProblemCase(probCaseId);
+					if (attachmentIds != null && attachmentIds.Count > 0)
+					{
+						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT_FILE WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
+						status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
+					}
 
-					//List<decimal> attachmentIds = (from a in ctx.ATTACHMENT
-					//							   where a.RECORD_TYPE == 40 && a.RECORD_ID == auditId
-					//							   select a.ATTACHMENT_ID).ToList();
+					// delete all tasks assigned
+					List<decimal> taskIds = (from a in ctx.TASK_STATUS
+												   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId
+												   select a.TASK_ID).ToList();
 
-					//if (attachmentIds != null && attachmentIds.Count > 0)
-					//{
-					//	status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT_FILE WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
-					//	status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
-					//}
+					if (taskIds != null && taskIds.Count > 0)
+					{
+						status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE TASK_ID IN (" + String.Join(",", taskIds) + ")");
+					}
 
-					//status = ctx.ExecuteStoreCommand("DELETE FROM PROB_OCCUR WHERE AUDIT_ID" + delCmd);
+
 					status = ctx.ExecuteStoreCommand("DELETE FROM AUDIT_ANSWER WHERE AUDIT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM AUDIT WHERE AUDIT_ID" + delCmd);
 				}

@@ -42,8 +42,11 @@ namespace SQM.Website
 		{
 			uclAuditExceptionList.OnExceptionListItemClick += AddTask;
 			uclAuditExceptionList.OnExceptionChangeStatusClick += UpdateAnswerStatus;
+			uclAuditExceptionList.OnExceptionAttachItemClick += AddAttach;
 			uclTask.OnTaskAdd += UpdateTaskList;
 			uclTask.OnTaskUpdate += UpdateTaskList;
+			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
+
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -352,6 +355,70 @@ namespace SQM.Website
 				SearchAudits();
 			}
 		}
+
+		protected void AddAttach(decimal auditId, decimal questionId)
+		{
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditId, questionId);
+			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditId);
+			int recordType = (int)TaskRecordType.Audit;
+			// before we call the radWindow, we need to update the page?
+			uclAttachWin.OpenManageAttachmentsWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Attachments", "Upload or view files associated with this assessment question");
+		}
+
+		private void OnAttachmentsUpdate(string cmd)
+		{
+			// we want to be able to update the attachment count on the specific button
+			//LinkButton lnk;
+			//Repeater rptQuestions;
+			//HiddenField hdn;
+			//decimal quesionId;
+			//string[] args = hdnAttachClick.Value.ToString().Split(',');
+			//decimal recordID;
+			//decimal recordSubID;
+
+			//try
+			//{
+			//	recordID = Convert.ToDecimal(args[0].ToString());
+			//	recordSubID = Convert.ToDecimal(args[1].ToString());
+			//	foreach (RepeaterItem riTopic in rptAuditFormTopics.Items)
+			//	{
+			//		rptQuestions = (Repeater)riTopic.FindControl("rptAuditFormQuestions");
+			//		foreach (RepeaterItem riQuestion in rptQuestions.Items)
+			//		{
+			//			hdn = (HiddenField)riQuestion.FindControl("hdnQuestionId");
+			//			args = hdn.Value.ToString().Split(',');
+			//			try
+			//			{
+			//				quesionId = Convert.ToDecimal(args[1].ToString());
+			//			}
+			//			catch
+			//			{
+			//				quesionId = 0;
+			//			}
+			//			if (quesionId == recordSubID)
+			//			{
+			//				try
+			//				{
+			//					EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
+			//					lnk = (LinkButton)riQuestion.FindControl("LnkAttachment");
+			//					string buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
+			//					lnk.Text = buttonText;
+			//					//lnk.Focus();
+			//				}
+			//				catch
+			//				{
+			//				}
+			//			}
+			//		}
+			//	}
+			//}
+			//catch { }
+			
+			//uclAuditExceptionList.RefreshAttachLink();
+			SearchAudits();
+
+		}
+
 		#endregion
 
 
@@ -393,8 +460,8 @@ namespace SQM.Website
 		private void AddTask(decimal auditID, decimal questionID)
 		{
 			int recordType = (int)TaskRecordType.Audit;
-			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
 			uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
 			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);

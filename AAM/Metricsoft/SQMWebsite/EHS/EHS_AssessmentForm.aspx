@@ -1,6 +1,6 @@
-﻿<%@ Page Title="EHS_Audits" Language="C#" MasterPageFile="~/PSMaster.Master"
-    AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_AssessmentDetail.aspx.cs" ClientIDMode="AutoID"
-    Inherits="SQM.Website.EHS.EHS_AssessmentDetail" ValidateRequest="false" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="EHS_Audits" Language="C#" MasterPageFile="~/RspPSMaster.Master"
+    AutoEventWireup="true" EnableEventValidation="false" CodeBehind="EHS_AssessmentForm.aspx.cs" ClientIDMode="AutoID"
+    Inherits="SQM.Website.EHS.EHS_AssessmentForm" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
@@ -36,10 +36,34 @@
             args.set_cancel(!confirm("Delete assessment - are you sure?  Assessments cannot be undeleted."));
         }
 
+        function LeaveConfirm(button, args) {
+            confirm("If you have made changes and not hit the Save button, changes may be lost. Leave Page?");
+        }
+
+        var body = document.body;
+        var docElem = document.documentElement;
+        var bodyScrollTop = 0;
+        var bodyScrollLeft = 0;
+        var docElemScrollTop = 0;
+        var docElemScrollLeft = 0;
+        function OnClientBeforeOpen(sender, args) {
+            bodyScrollTop = body.scrollTop;
+            bodyScrollLeft = body.scrollLeft;
+            docElemScrollTop = docElem.scrollTop;
+            docElemScrollLeft = docElem.scrollLeft;
+        }
+        function OnClientClose() {
+            setTimeout(function () {
+                body.scrollTop = bodyScrollTop;
+                body.scrollLeft = bodyScrollLeft;
+                docElem.scrollTop = docElemScrollTop;
+                docElem.scrollLeft = docElemScrollLeft;
+            }, 30);
+        }
+
         function OpenTaskWindow() {
             $find("<%=winUpdateTask.ClientID %>").show();
         }
-
 
     </script>
 </asp:Content>
@@ -69,9 +93,9 @@
 
             <div runat="server" class="row-fluid" id="divAuditDetails">
                 <div style="width: 100%; text-align: center; margin-bottom: 10px;">
-                    <a href="~/EHS/EHS_Assessments.aspx" id="ahReturn" runat="server">
-                        <img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
-                        Return to List</a>
+                    <asp:LinkButton runat="server" ID="lnkReturn" OnClick="lnkReturn_Click"><img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
+                        Return to List</asp:LinkButton>
+
                 </div>
                 <table style="width: 100%" class="textStd">
                     <tr>
@@ -79,7 +103,7 @@
                             <div id="divPageBody" class="textStd" style="text-align: left; margin: 0 0px;" runat="server">
                                 <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
                                     <asp:Label ID="lblResults" runat="server" />
-                                    <%--<div class="container-fluid blueCell" style="padding: 7px;"">
+                                    <div class="container-fluid blueCell" style="padding: 7px;"">
 
                                         <asp:Panel ID="pnlAuditHeader" runat="server">
                                             <div class="blueCell" style="padding: 7px;">
@@ -90,7 +114,7 @@
 
 
                                                         <asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Assessment:</strong></asp:Label>
-
+                                                        <asp:HiddenField runat="server" ID="hdnAuditId" />
                                                         <span class="hidden-xs" style="float: right; width: 160px; margin-right: 6px;">
                                                             <span class="requiredStar">&bull;</span> - Required to Create
                                                         </span>
@@ -100,8 +124,7 @@
 
 
                                                         <asp:Label ID="lblAuditType" class="textStd" runat="server" Text="<%$ Resources:LocalizedText, AssessmentType %>" />
-                                                        <telerik:RadDropDownList ID="rddlAuditType" runat="server" Width="450" AutoPostBack="true" CausesValidation="false"
-                                                            OnSelectedIndexChanged="rddlAuditType_SelectedIndexChanged" Skin="Metro">
+                                                        <telerik:RadDropDownList ID="rddlAuditType" runat="server" Width="450" Skin="Metro">
                                                         </telerik:RadDropDownList>
 
                                                         <span class="hidden-xs" style="float: right; width: 160px;">
@@ -176,42 +199,66 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                    </asp:Panel>--%>
-                                    <br />
+                                    </asp:Panel>
+                                 </telerik:RadAjaxPanel>
+                                   <br />
                                         <div id="divForm" runat="server">
                                             <div id="divFormRepeater" runat="server" class="" visible="false" style="margin-top: 5px;">
                                                 <asp:Repeater runat="server" ID="rptAuditFormTopics" ClientIDMode="AutoID" OnItemDataBound="rptAuditFormTopics_OnItemDataBound">
                                                     <HeaderTemplate><br/><table width="100%" cellpadding="6" cellspacing="0" style="border-collapse: collapse;"></HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <tr><td colspan="6" class="blueCell" style="width: 100%; font-weight: bold;"><%# Eval("TITLE") %></td></tr>
+                                                        <tr><td colspan="8" class="blueCell" style="width: 100%; font-weight: bold;"><%# Eval("TITLE") %></td></tr>
                                                             <asp:Repeater runat="server" ID="rptAuditFormQuestions" ClientIDMode="AutoID" OnItemDataBound="rptAuditFormQuestions_OnItemDataBound">
                                                                 <ItemTemplate>
                                                                     <tr>
-                                                                        <td class="tanCell auditquestion" style="width: 30%;"><%# Eval("QuestionText") %></td>
-                                                                        <td class="tanCell" style="width: 10px; padding-left: 0 !important;"><asp:Literal runat="server" ID="litToolTip"></asp:Literal></td>
+                                                                        <td class="tanCell auditquestion" style="width: 30%;"><%# Eval("QuestionText") %><asp:HiddenField runat="server" ID="hdnQuestionId" Value='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' /></td>
+                                                                        <td class="tanCell" style="width: 10px; padding-left: 0 !important;"><asp:Image runat="server" ID="imgHelp" ImageUrl="/images/ico-question.png" /><telerik:RadToolTip runat="server" ID="rttToolTip" IsClientID="false" RelativeTo="Element" Width="400" Height="200" Animation="Fade" Position="MiddleRight" ContentScrolling="Auto" Skin="Metro" HideEvent="LeaveTargetAndToolTip"></telerik:RadToolTip></td>
                                                                         <td class="tanCell" style="width: 10px; padding-left: 0 !important;"><asp:Literal runat="server" ID="litRequiredStar"></asp:Literal></td>
-                                                                        <td class="greyCell"><asp:Literal runat="server" ID="litQuestion"></asp:Literal></td>
-                                                                        <td class="greyCell">
-                                                                            <asp:LinkButton runat="server" ID="lnkAddTask" OnClick="lnkAddTask_Click" ToolTip="Create a Task necessary to complete this exception" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>'>Add Task</asp:LinkButton>
+                                                                        <td class="greyCell" runat="server" id="tdCommentLeft"><telerik:RadTextBox runat="server" ID="rtbCommentLeft" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
+                                                                        <td class="greyCell"><asp:RadioButtonList runat="server" ID="rblAnswers" CssClass="WarnIfChanged auditanswer" RepeatDirection="Horizontal"></asp:RadioButtonList></td>
+                                                                        <td class="greyCell" runat="server" id="tdCommentRight"><telerik:RadTextBox runat="server" ID="rtbCommentRight" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
+                                                                        <td class="greyCell" style="width: 10%;">
+                                                                            <asp:LinkButton runat="server" ID="lnkAddTask" OnClientClick="OnClientBeforeOpen" OnClick="lnkAddTask_Click" ToolTip="Create a Task necessary to complete this exception" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CausesValidation="false"></asp:LinkButton>
                                                                         </td>
-                                                                        <td class="greyCell">
-                                                                            <asp:LinkButton ID="LnkAttachment" runat="server" ToolTip="Attachments" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddAttach">
+                                                                        <td class="greyCell" style="width: 10%;">
+                                                                            <asp:LinkButton ID="LnkAttachment" runat="server" ToolTip="Attachments" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddAttach" CausesValidation="false">
                                                                                 <img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
                                                                             </asp:LinkButton>
                                                                         </td>
                                                                     </tr>
                                                                 </ItemTemplate>
                                                             </asp:Repeater>
-                                                        <tr><td colspan="6" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;"><asp:Label runat="server" ID="lblTopicTotal"></asp:Label></td></tr>
+                                                        <tr><td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;"><asp:Label runat="server" ID="lblTopicTotal"></asp:Label></td></tr>
                                                     </ItemTemplate>
+                                                    <FooterTemplate>
+                                                        <tr><td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">&nbsp;</td></tr>
+                                                        <tr>
+                                                            <td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+                                                                <asp:Label runat="server" ID="lblTotalPossiblePoints"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+                                                                <asp:Label runat="server" ID="lblTotalPointsAchieved"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+                                                                <asp:Label runat="server" ID="lblTotalPointsPercentage"></asp:Label>
+                                                            </td>
+                                                        </tr>
+                                                        </table><br/>
+                                                    </FooterTemplate>
                                                 </asp:Repeater>
+                                                <asp:HiddenField runat="server" ID="hdnAttachClick" />
                                             </div>
+                                        </div>
                                             <table style="width: 100%;">
                                                 <tr>
                                                     <td style="width: 33%;">
                                                         <telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="false"
                                                             CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
-                                                            OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" />
+                                                            OnClick="btnSaveReturn_Click" ValidationGroup="Val" />
                                                     </td>
                                                     <td style="width: 33%; text-align: center;">
                                                         <telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="false" ForeColor="DarkRed"
@@ -221,8 +268,6 @@
                                                 </tr>
                                             </table>
 
-                                        </div>
-                                </telerik:RadAjaxPanel>
                                 <br />
                                 <br />
                             </div>
@@ -237,7 +282,7 @@
 
         </div>
     </div>
-<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Title="View/Update Task" Behavior="Close, Move">
+<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Title="View/Update Task" Behavior="Close, Move" OnClientClose="OnClientClose">
 	<ContentTemplate>
 		<Ucl:Task ID="uclTask" runat="server" />
 	</ContentTemplate>
