@@ -64,7 +64,7 @@ namespace SQM.Website
 
 			if (SessionManager.UserContext.Person.PERSON_ID == 1)
 			{
-				btnConversion.Visible = true;
+				//btnConversion.Visible = true;
 			}
 
 
