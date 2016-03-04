@@ -493,10 +493,8 @@ namespace SQM.Website
                         lbl.Text = WebSiteCommon.GetXlatValue("statusCodeDelete", lbl.Text);
 
                         lbl = (Label)e.Item.FindControl("lblJobCode");
-						if (user.JOBCODE != null)
-						{
-							lbl.Text = (user.JOBCODE_CD + " ("+user.JOBCODE.JOB_DESC + ")");
-						}
+						lbl.Text = user.JOBCODE_CD;
+
 						lbl = (Label)e.Item.FindControl("lblUserRole");
 						if (user.PRIVGROUP != null)
 						{

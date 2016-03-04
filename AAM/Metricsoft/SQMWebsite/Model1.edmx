@@ -348,14 +348,6 @@
             <End Role="EFM_REFERENCE" EntitySet="EFM_REFERENCE" />
             <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
           </AssociationSet>
-          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE">
-            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
-            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE1" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE1">
-            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
-            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
-          </AssociationSet>
           <AssociationSet Name="FK_EHS_METRIC_HISTORY_CURRENCY" Association="PSsqmModel.Store.FK_EHS_METRIC_HISTORY_CURRENCY">
             <End Role="CURRENCY" EntitySet="CURRENCY" />
             <End Role="EHS_METRIC_HISTORY" EntitySet="EHS_METRIC_HISTORY" />
@@ -515,10 +507,6 @@
           <AssociationSet Name="FK_PART_REFERENCE_COMPANY" Association="PSsqmModel.Store.FK_PART_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="PART" EntitySet="PART" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.Store.FK_PERSON_JOBCODE">
-            <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="PERSON" EntitySet="PERSON" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.Store.FK_PERSON_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
@@ -2078,18 +2066,18 @@
           <Property Name="TIME_WORKED" Type="numeric" Precision="20" Scale="5" />
           <Property Name="TIME_LOST" Type="numeric" Precision="25" Scale="5" />
           <Property Name="TIME_LOST_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="TOTAL_DAYS_RESTRICTED" Type="numeric" Precision="25" Scale="5" />
           <Property Name="RECORDED_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="FIRST_AID_CASES" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="LEADERSHIP_WALKS" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="JOB_SILL_ANALYSIS" Type="numeric" Precision="25" Scale="5" />
+          <Property Name="SAFETY_TRAIN_SESSIONS" Type="numeric" Precision="25" Scale="5" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="LAST_UPD_BY" Type="varchar" MaxLength="100" />
           <Property Name="APPROVER_ID" Type="numeric" Precision="35" />
           <Property Name="APPROVAL_DT" Type="datetime" />
           <Property Name="FINALIZE_DT" Type="datetime" />
           <Property Name="FINALIZE_ID" Type="numeric" Precision="35" />
-          <Property Name="TOTAL_DAYS_RESTRICTED" Type="numeric" Precision="25" Scale="5" />
-          <Property Name="FIRST_AID_CASES" Type="numeric" Precision="25" Scale="5" />
-          <Property Name="LEADERSHIP_WALKS" Type="numeric" Precision="25" Scale="5" />
-          <Property Name="JOB_SILL_ANALYSIS" Type="numeric" Precision="25" Scale="5" />
-          <Property Name="SAFETY_TRAIN_SESSIONS" Type="numeric" Precision="25" Scale="5" />
         </EntityType>
         <EntityType Name="PLANT_ACTIVE">
           <Key>
@@ -2695,7 +2683,7 @@
           <Property Name="EFM_TYPE" Type="varchar" MaxLength="40" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'TI.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="UOM_XREF">
           <Key>
@@ -2724,7 +2712,7 @@
           <Property Name="SORT_ORDER" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'TI.dbo.XLAT_DAYS_TO_CLOSE_TRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AAM.dbo.XLAT_DAYS_TO_CLOSE_TRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="XLAT_DAYS_TO_CLOSE_TRANS">
           <Key>
@@ -2735,7 +2723,7 @@
           <Property Name="MAX_DAYS" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'TI.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="vw_MetricDataByPlant">
           <Key>
@@ -3299,30 +3287,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EHS_MEASURE_EHS_MEASURE">
-          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
-          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Principal>
-            <Dependent Role="EHS_MEASURE1">
-              <PropertyRef Name="MEASURE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_MEASURE_EHS_MEASURE1">
-          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
-          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Principal>
-            <Dependent Role="EHS_MEASURE1">
-              <PropertyRef Name="MEASURE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EHS_METRIC_HISTORY_CURRENCY">
           <End Role="CURRENCY" Type="PSsqmModel.Store.CURRENCY" Multiplicity="0..1" />
           <End Role="EHS_METRIC_HISTORY" Type="PSsqmModel.Store.EHS_METRIC_HISTORY" Multiplicity="*" />
@@ -3802,18 +3766,6 @@
             </Principal>
             <Dependent Role="PART">
               <PropertyRef Name="COMPANY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_JOBCODE">
-          <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JOBCODE">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Principal>
-            <Dependent Role="PERSON">
-              <PropertyRef Name="JOBCODE_CD" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4940,43 +4892,6 @@
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="AUDIT" EntitySet="AUDIT" />
           </AssociationSet>
-          <EntitySet Name="PERSON" EntityType="PSsqmModel.PERSON" />
-          <AssociationSet Name="FK_ADDRESS_REFERENCE_PERSON" Association="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="ADDRESS" EntitySet="ADDRESS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_COST_REPORT_PERSON" Association="PSsqmModel.FK_COST_REPORT_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="COST_REPORT" EntitySet="COST_REPORT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_PROFILE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.FK_PERSON_JOBCODE">
-            <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="PERSON" EntitySet="PERSON" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.FK_PERSON_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSON1" EntitySet="PERSON" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSPECTIVE_VIEW_PERSON" Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PERSPECTIVE_VIEW" EntitySet="PERSPECTIVE_VIEW" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PROB_PREVENT_PROB_PREVENT" Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="PROB_PREVENT" EntitySet="PROB_PREVENT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RESPONSE_PERSON" Association="PSsqmModel.FK_RESPONSE_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="RESPONSE" EntitySet="RESPONSE" />
-          </AssociationSet>
           <EntitySet Name="INCFORM_WITNESS" EntityType="PSsqmModel.INCFORM_WITNESS" />
           <AssociationSet Name="FK_INCIDENTWITNESS_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
@@ -5011,10 +4926,6 @@
           <AssociationSet Name="FK_PRIVLIST_PRIVGROUP" Association="PSsqmModel.FK_PRIVLIST_PRIVGROUP">
             <End Role="PRIVGROUP" EntitySet="PRIVGROUP" />
             <End Role="PRIVLIST" EntitySet="PRIVLIST" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_PRIVGROUP" Association="PSsqmModel.FK_PERSON_PRIVGROUP">
-            <End Role="PRIVGROUP" EntitySet="PRIVGROUP" />
-            <End Role="PERSON" EntitySet="PERSON" />
           </AssociationSet>
           <EntitySet Name="INCIDENT_TYPE" EntityType="PSsqmModel.INCIDENT_TYPE" />
           <AssociationSet Name="FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID">
@@ -5062,10 +4973,6 @@
             <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
           </AssociationSet>
           <EntitySet Name="TASK_STATUS" EntityType="PSsqmModel.TASK_STATUS" />
-          <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
-          </AssociationSet>
           <EntitySet Name="EHS_DATA_ORD" EntityType="PSsqmModel.EHS_DATA_ORD" />
           <AssociationSet Name="FK_EHS_DATA_ORD_EHS_DATA" Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA">
             <End Role="EHS_DATA" EntitySet="EHS_DATA" />
@@ -5104,6 +5011,47 @@
           <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
+          </AssociationSet>
+          <EntitySet Name="PERSON" EntityType="PSsqmModel.PERSON" />
+          <AssociationSet Name="FK_ADDRESS_REFERENCE_PERSON" Association="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="ADDRESS" EntitySet="ADDRESS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COST_REPORT_PERSON" Association="PSsqmModel.FK_COST_REPORT_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="COST_REPORT" EntitySet="COST_REPORT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.FK_PERSON_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PERSON1" EntitySet="PERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_PRIVGROUP" Association="PSsqmModel.FK_PERSON_PRIVGROUP">
+            <End Role="PRIVGROUP" EntitySet="PRIVGROUP" />
+            <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSPECTIVE_VIEW_PERSON" Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PERSPECTIVE_VIEW" EntitySet="PERSPECTIVE_VIEW" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROB_PREVENT_PROB_PREVENT" Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PROB_PREVENT" EntitySet="PROB_PREVENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESPONSE_PERSON" Association="PSsqmModel.FK_RESPONSE_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="RESPONSE" EntitySet="RESPONSE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -8306,7 +8254,6 @@
           <Property Type="String" Name="JOB_DESC" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="DEFAULT_ROLE" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="JOBCODE" ToRole="PERSON" />
           <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="JOBCODE1" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE" ToRole="JOBCODE1" />
           <NavigationProperty Name="JOBCODE2" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE1" ToRole="JOBCODE" />
@@ -8376,158 +8323,6 @@
             </Principal>
             <Dependent Role="AUDIT">
               <PropertyRef Name="DETECT_COMPANY_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="PERSON">
-          <Key>
-            <PropertyRef Name="PERSON_ID" />
-          </Key>
-          <Property Type="Decimal" Name="PERSON_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="SSO_ID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="BUS_ORG_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="JOB_TITLE" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="FIRST_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LAST_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EMAIL" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PHONE" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="PREFERRED_LANG_ID" />
-          <Property Type="String" Name="PREFERRED_TIMEZONE" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="STATUS" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="0" />
-          <Property Type="String" Name="CREATE_BY" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CREATE_DT" Precision="0" />
-          <Property Type="String" Name="OLD_LOCATION_CD" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NEW_LOCATION_CD" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="ROLE" />
-          <Property Type="Boolean" Name="RCV_ESCALATION" />
-          <Property Type="String" Name="JOBCODE_CD" MaxLength="80" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ADDRESS" Relationship="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" FromRole="PERSON" ToRole="ADDRESS" />
-          <NavigationProperty Name="COST_REPORT" Relationship="PSsqmModel.FK_COST_REPORT_PERSON" FromRole="PERSON" ToRole="COST_REPORT" />
-          <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE" />
-          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
-          <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
-          <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
-          <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
-          <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" FromRole="PERSON" ToRole="PERSPECTIVE_VIEW" />
-          <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
-          <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
-          <Property Type="String" Name="MIDDLE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SUPV_EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PHONE2" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRIVGROUP" Relationship="PSsqmModel.FK_PERSON_PRIVGROUP" FromRole="PERSON" ToRole="PRIVGROUP" />
-          <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
-        </EntityType>
-        <Association Name="FK_ADDRESS_REFERENCE_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.ADDRESS" Role="ADDRESS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="ADDRESS">
-              <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_COST_REPORT_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.COST_REPORT" Role="COST_REPORT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="COST_REPORT">
-              <PropertyRef Name="RESPONSIBLE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_PROFILE_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.EHS_PROFILE" Role="EHS_PROFILE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE">
-              <PropertyRef Name="APPROVER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_PROFILE_MEASURE_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="RESPONSIBLE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_JOBCODE">
-          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="0..1" />
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JOBCODE">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Principal>
-            <Dependent Role="PERSON">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
-          <End Type="PSsqmModel.PERSON" Role="PERSON1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSON1">
-              <PropertyRef Name="PERSON_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSPECTIVE_VIEW_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
-          <End Type="PSsqmModel.PERSPECTIVE_VIEW" Role="PERSPECTIVE_VIEW" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PERSPECTIVE_VIEW">
-              <PropertyRef Name="OWNER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PROB_PREVENT_PROB_PREVENT">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.PROB_PREVENT" Role="PROB_PREVENT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="PROB_PREVENT">
-              <PropertyRef Name="RESPONSIBLE_PERSON" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RESPONSE_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
-          <End Type="PSsqmModel.RESPONSE" Role="RESPONSE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="RESPONSE">
-              <PropertyRef Name="PERSON_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8679,8 +8474,8 @@
           <Property Type="String" Name="PRIV_GROUP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PRIVLIST" Relationship="PSsqmModel.FK_PRIVLIST_PRIVGROUP" FromRole="PRIVGROUP" ToRole="PRIVLIST" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_PRIVGROUP" FromRole="PRIVGROUP" ToRole="PERSON" />
           <Property Type="String" Name="DESCRIPTION" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_PRIVGROUP" FromRole="PRIVGROUP" ToRole="PERSON" />
         </EntityType>
         <EntityType Name="PRIVLIST">
           <Key>
@@ -8701,18 +8496,6 @@
               <PropertyRef Name="PRIV_GROUP" />
             </Principal>
             <Dependent Role="PRIVLIST">
-              <PropertyRef Name="PRIV_GROUP" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PERSON_PRIVGROUP">
-          <End Type="PSsqmModel.PRIVGROUP" Role="PRIVGROUP" Multiplicity="0..1" />
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRIVGROUP">
-              <PropertyRef Name="PRIV_GROUP" />
-            </Principal>
-            <Dependent Role="PERSON">
               <PropertyRef Name="PRIV_GROUP" />
             </Dependent>
           </ReferentialConstraint>
@@ -8938,21 +8721,9 @@
           <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
           <Property Type="String" Name="DETAIL" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
           <Property Type="Decimal" Name="CREATE_ID" Precision="35" Scale="0" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
         </EntityType>
-        <Association Name="FK_TASK_STATUS_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.TASK_STATUS" Role="TASK_STATUS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="TASK_STATUS">
-              <PropertyRef Name="RESPONSIBLE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EHS_DATA_ORD">
           <Key>
             <PropertyRef Name="DATA_ORD_ID" />
@@ -9189,6 +8960,169 @@
             </Principal>
             <Dependent Role="INCFORM_INJURYILLNESS">
               <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PERSON">
+          <Key>
+            <PropertyRef Name="PERSON_ID" />
+          </Key>
+          <Property Type="Decimal" Name="PERSON_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SSO_ID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="BUS_ORG_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="COMPANY_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="JOB_TITLE" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FIRST_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LAST_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EMAIL" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PHONE" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PREFERRED_LANG_ID" />
+          <Property Type="String" Name="PREFERRED_TIMEZONE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATUS" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="0" />
+          <Property Type="String" Name="CREATE_BY" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CREATE_DT" Precision="0" />
+          <Property Type="String" Name="OLD_LOCATION_CD" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NEW_LOCATION_CD" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ROLE" />
+          <Property Type="Boolean" Name="RCV_ESCALATION" />
+          <Property Type="String" Name="JOBCODE_CD" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MIDDLE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SUPV_EMP_ID" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PHONE2" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ADDRESS" Relationship="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" FromRole="PERSON" ToRole="ADDRESS" />
+          <NavigationProperty Name="COST_REPORT" Relationship="PSsqmModel.FK_COST_REPORT_PERSON" FromRole="PERSON" ToRole="COST_REPORT" />
+          <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE" />
+          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
+          <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
+          <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
+          <NavigationProperty Name="PRIVGROUP" Relationship="PSsqmModel.FK_PERSON_PRIVGROUP" FromRole="PERSON" ToRole="PRIVGROUP" />
+          <NavigationProperty Name="PERSPECTIVE_VIEW" Relationship="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" FromRole="PERSON" ToRole="PERSPECTIVE_VIEW" />
+          <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
+          <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
+          <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
+        </EntityType>
+        <Association Name="FK_ADDRESS_REFERENCE_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.ADDRESS" Role="ADDRESS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="ADDRESS">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COST_REPORT_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.COST_REPORT" Role="COST_REPORT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="COST_REPORT">
+              <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.EHS_PROFILE" Role="EHS_PROFILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE">
+              <PropertyRef Name="APPROVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_MEASURE_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
+          <End Type="PSsqmModel.PERSON" Role="PERSON1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="PERSON1">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_PRIVGROUP">
+          <End Type="PSsqmModel.PRIVGROUP" Role="PRIVGROUP" Multiplicity="0..1" />
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRIVGROUP">
+              <PropertyRef Name="PRIV_GROUP" />
+            </Principal>
+            <Dependent Role="PERSON">
+              <PropertyRef Name="PRIV_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSPECTIVE_VIEW_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
+          <End Type="PSsqmModel.PERSPECTIVE_VIEW" Role="PERSPECTIVE_VIEW" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="PERSPECTIVE_VIEW">
+              <PropertyRef Name="OWNER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROB_PREVENT_PROB_PREVENT">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.PROB_PREVENT" Role="PROB_PREVENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="PROB_PREVENT">
+              <PropertyRef Name="RESPONSIBLE_PERSON" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESPONSE_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="1" />
+          <End Type="PSsqmModel.RESPONSE" Role="RESPONSE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="RESPONSE">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TASK_STATUS_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.TASK_STATUS" Role="TASK_STATUS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="TASK_STATUS">
+              <PropertyRef Name="RESPONSIBLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10948,39 +10882,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PERSON">
-            <EntityTypeMapping TypeName="PSsqmModel.PERSON">
-              <MappingFragment StoreEntitySet="PERSON">
-                <ScalarProperty Name="PRIV_GROUP" ColumnName="PRIV_GROUP" />
-                <ScalarProperty Name="PHONE2" ColumnName="PHONE2" />
-                <ScalarProperty Name="SUPV_EMP_ID" ColumnName="SUPV_EMP_ID" />
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
-                <ScalarProperty Name="MIDDLE_NAME" ColumnName="MIDDLE_NAME" />
-                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
-                <ScalarProperty Name="RCV_ESCALATION" ColumnName="RCV_ESCALATION" />
-                <ScalarProperty Name="ROLE" ColumnName="ROLE" />
-                <ScalarProperty Name="NEW_LOCATION_CD" ColumnName="NEW_LOCATION_CD" />
-                <ScalarProperty Name="OLD_LOCATION_CD" ColumnName="OLD_LOCATION_CD" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="PREFERRED_TIMEZONE" ColumnName="PREFERRED_TIMEZONE" />
-                <ScalarProperty Name="PREFERRED_LANG_ID" ColumnName="PREFERRED_LANG_ID" />
-                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
-                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
-                <ScalarProperty Name="JOB_TITLE" ColumnName="JOB_TITLE" />
-                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
-                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
-                <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
-                <ScalarProperty Name="SSO_ID" ColumnName="SSO_ID" />
-                <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCFORM_WITNESS">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_WITNESS">
               <MappingFragment StoreEntitySet="INCFORM_WITNESS">
@@ -11308,6 +11209,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PERSON">
+            <EntityTypeMapping TypeName="PSsqmModel.PERSON">
+              <MappingFragment StoreEntitySet="PERSON">
+                <ScalarProperty Name="PRIV_GROUP" ColumnName="PRIV_GROUP" />
+                <ScalarProperty Name="PHONE2" ColumnName="PHONE2" />
+                <ScalarProperty Name="SUPV_EMP_ID" ColumnName="SUPV_EMP_ID" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="MIDDLE_NAME" ColumnName="MIDDLE_NAME" />
+                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
+                <ScalarProperty Name="RCV_ESCALATION" ColumnName="RCV_ESCALATION" />
+                <ScalarProperty Name="ROLE" ColumnName="ROLE" />
+                <ScalarProperty Name="NEW_LOCATION_CD" ColumnName="NEW_LOCATION_CD" />
+                <ScalarProperty Name="OLD_LOCATION_CD" ColumnName="OLD_LOCATION_CD" />
+                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="PREFERRED_TIMEZONE" ColumnName="PREFERRED_TIMEZONE" />
+                <ScalarProperty Name="PREFERRED_LANG_ID" ColumnName="PREFERRED_LANG_ID" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="JOB_TITLE" ColumnName="JOB_TITLE" />
+                <ScalarProperty Name="COMPANY_ID" ColumnName="COMPANY_ID" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
+                <ScalarProperty Name="SSO_ID" ColumnName="SSO_ID" />
+                <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11329,7 +11263,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="70">
+      <Diagram Name="Model1" ZoomLevel="57">
         <EntityTypeShape EntityType="PSsqmModel.ADDRESS" Width="1.5" PointX="2.8186148343694466" PointY="31.355532511768644" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT" Width="1.5" PointX="6.5058092691496991" PointY="14.220001942580566" />
         <EntityTypeShape EntityType="PSsqmModel.ATTACHMENT_FILE" Width="1.5" PointX="0.99664270924247922" PointY="12.000706320628853" />
@@ -11549,16 +11483,6 @@
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_ANSWER" Width="1.5" PointX="0.08080276478119322" PointY="25.50224968488433" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_ANSWER_AUDIT" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_COMPANY" />
-        <EntityTypeShape EntityType="PSsqmModel.PERSON" Width="1.5" PointX="0.95895724788259584" PointY="23.83008826888636" />
-        <AssociationConnector Association="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_COST_REPORT_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
-        <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_WITNESS" Width="1.5" PointX="4.125" PointY="72.75" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_QUESTION_LANG" Width="1.5" PointX="7.08285738112538" PointY="22.51668953453968" />
@@ -11573,7 +11497,6 @@
         <EntityTypeShape EntityType="PSsqmModel.PRIVGROUP" Width="1.5" PointX="6.4977008060075807" PointY="20.130124980644382" />
         <EntityTypeShape EntityType="PSsqmModel.PRIVLIST" Width="1.5" PointX="9.66180584284561" PointY="27.939867524402153" />
         <AssociationConnector Association="PSsqmModel.FK_PRIVLIST_PRIVGROUP" />
-        <AssociationConnector Association="PSsqmModel.FK_PERSON_PRIVGROUP" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE" Width="1.5" PointX="1.8991645639292734" PointY="21.297161410235411" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE" />
@@ -11590,7 +11513,6 @@
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="5.7409568716496961" PointY="17.823688530281043" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="0.900325784878957" PointY="9.2478672011046985" />
-        <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_DATA_ORD" Width="1.5" PointX="7.889879697882515" PointY="12.901163196610829" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" />
         <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
@@ -11609,6 +11531,17 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="7.3197354131004477" PointY="23.452231760813032" />
         <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.PERSON" Width="1.5" PointX="2.5236430831829288" PointY="9.5087758943013743" />
+        <AssociationConnector Association="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_COST_REPORT_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSON_PRIVGROUP" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
+        <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
         </Diagram>
     </Diagrams>
   </Designer>

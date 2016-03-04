@@ -129,15 +129,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID1", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT5Y), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_ANSWER_AUDIT", "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT), "AUDIT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_ADDRESS_REFERENCE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "ADDRESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.ADDRESS), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "COST_REPORT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSON1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBCODE1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), true)]
@@ -145,7 +136,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.BUSINESS_ORG), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PLANT), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PRIVGROUP), "PRIVLIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PRIVLIST), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PRIVGROUP), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
@@ -156,7 +146,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
@@ -164,6 +153,16 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_ADDRESS_REFERENCE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "ADDRESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.ADDRESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "COST_REPORT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSON1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PRIVGROUP), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 
 #endregion
 
@@ -1946,22 +1945,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PERSON> PERSON
-        {
-            get
-            {
-                if ((_PERSON == null))
-                {
-                    _PERSON = base.CreateObjectSet<PERSON>("PERSON");
-                }
-                return _PERSON;
-            }
-        }
-        private ObjectSet<PERSON> _PERSON;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_WITNESS> INCFORM_WITNESS
         {
             get
@@ -2342,6 +2325,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PERSON> PERSON
+        {
+            get
+            {
+                if ((_PERSON == null))
+                {
+                    _PERSON = base.CreateObjectSet<PERSON>("PERSON");
+                }
+                return _PERSON;
+            }
+        }
+        private ObjectSet<PERSON> _PERSON;
 
         #endregion
 
@@ -3212,14 +3211,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PERSON EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPERSON(PERSON pERSON)
-        {
-            base.AddObject("PERSON", pERSON);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_WITNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_WITNESS(INCFORM_WITNESS iNCFORM_WITNESS)
@@ -3409,6 +3400,14 @@ namespace SQM.Website
         public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
         {
             base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PERSON EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPERSON(PERSON pERSON)
+        {
+            base.AddObject("PERSON", pERSON);
         }
 
         #endregion
@@ -28337,28 +28336,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "PERSON")]
-        public EntityCollection<PERSON> PERSON
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE1")]
         public JOBCODE JOBCODE1
         {
@@ -31591,44 +31568,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE")]
-        public JOBCODE JOBCODE
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<JOBCODE> JOBCODEReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON1")]
         public PERSON PERSON1
         {
@@ -31705,6 +31644,44 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP")]
+        public PRIVGROUP PRIVGROUP
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PRIVGROUP> PRIVGROUPReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSPECTIVE_VIEW")]
         public EntityCollection<PERSPECTIVE_VIEW> PERSPECTIVE_VIEW
         {
@@ -31761,44 +31738,6 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RESPONSE>("PSsqmModel.FK_RESPONSE_PERSON", "RESPONSE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP")]
-        public PRIVGROUP PRIVGROUP
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PRIVGROUP> PRIVGROUPReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PRIVGROUP>("PSsqmModel.FK_PERSON_PRIVGROUP", "PRIVGROUP", value);
                 }
             }
         }
