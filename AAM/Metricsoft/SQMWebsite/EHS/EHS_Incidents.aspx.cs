@@ -64,7 +64,9 @@ namespace SQM.Website
 
 			if (SessionManager.UserContext.Person.PERSON_ID == 1)
 			{
-				//btnConversion.Visible = true;
+				SETTINGS sets = SQMSettings.GetSetting("EHS","CONVERSION");
+				if (sets != null && (sets.VALUE.ToUpper() == "Y" || sets.VALUE.ToUpper() == "TRUE"))
+					btnConversion.Visible = true;
 			}
 
 
