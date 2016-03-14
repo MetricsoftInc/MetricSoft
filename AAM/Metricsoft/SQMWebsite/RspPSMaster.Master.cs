@@ -302,6 +302,11 @@ namespace SQM.Website
 			if (user != null)
 				SessionManager.UserContext.Person = user;  // ??
 		}
+
+		public void SetSubmitResetValue(bool bValue)
+		{
+			hfSubmitReset.Value = bValue.ToString().ToLower();
+		}
 	}
 
 }
