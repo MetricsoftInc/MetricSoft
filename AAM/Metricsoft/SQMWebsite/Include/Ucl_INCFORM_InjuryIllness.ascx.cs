@@ -1687,9 +1687,12 @@ namespace SQM.Website
 
 				if (rsbw != null && !String.IsNullOrEmpty(rsbw.Text))
 				{
+					decimal personID = 0;
 					string[] split = rsbw.Text.Split('-');
-					if (split.Length > 0)
-						item.WITNESS_PERSON = Convert.ToInt32(split[0]);
+					if (split.Length > 0 &&  decimal.TryParse(split[0], out personID))
+					{
+						item.WITNESS_PERSON = personID;
+					}
 
 					seqnumber = seqnumber + 1;
 					item.WITNESS_NO = seqnumber;
