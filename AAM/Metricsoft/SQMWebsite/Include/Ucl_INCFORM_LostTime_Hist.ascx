@@ -46,12 +46,14 @@
 						<tr class="row">
 							<th class="col-sm-1 text-left-more"><b>
 								<asp:Label ID="lbWorkStatus" runat="server" meta:resourcekey="lbWorkStatusResource1" Text="Work Status"></asp:Label>
+								<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 								</b></th>
 							<th class="col-sm-3 text-left-more"><b>
 								<asp:Label ID="lbRestrictDesc" runat="server" meta:resourcekey="lbRestrictDescResource1" Text="<%$ Resources:LocalizedText, Comments %>"></asp:Label>
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbBeginDate" runat="server" Text="<%$ Resources:LocalizedText, EffectiveDate %>"></asp:Label>
+								<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbNextMedDate" runat="server" meta:resourcekey="lbNextMedDateResource1" Text="Next Medical Appt."></asp:Label>
@@ -144,7 +146,8 @@
 				</div>
 			</FooterTemplate>
 		</asp:Repeater>
-
+		<br />
+		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
 	</telerik:RadAjaxPanel>
 
 	</div>

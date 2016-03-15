@@ -167,6 +167,7 @@ namespace SQM.Website
 		void InitializeForm()
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			lblStatusMsg.Visible = false;
 
 			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
 			if (LocalIncident == null)
@@ -342,7 +343,25 @@ namespace SQM.Website
 
 		public int AddUpdateINCFORM_ACTION(decimal incidentId)
 		{
+			lblStatusMsg.Visible = false;
 			List<TASK_STATUS> actionList = GetActionListFromGrid();
+			bool allFieldsComplete = true;
+
+			foreach (TASK_STATUS action in actionList)
+			{
+				if (string.IsNullOrEmpty(action.DESCRIPTION) || !action.DUE_DT.HasValue || !action.RESPONSIBLE_ID.HasValue)
+				{
+					allFieldsComplete = false;
+					break;
+				}
+			}
+
+			if (!allFieldsComplete)
+			{
+				lblStatusMsg.Text = Resources.LocalizedText.ENVProfileRequiredsMsg;
+				lblStatusMsg.Visible = true;
+				return -1;
+			}
 
 			return SaveActions(incidentId, actionList);
 		}

@@ -1785,6 +1785,7 @@ namespace SQM.Website
 					// Add context - step 0
 					theIncident = CreateNewIncident();
 					EditIncidentId = incidentId = theIncident.INCIDENT_ID;
+					IsEditContext = true;
 					//EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
 					EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 				}
@@ -2180,16 +2181,16 @@ namespace SQM.Website
 			switch (CurrentSubnav)
 			{
 				case "2":
-					status = uclContainment.AddUpdateINCFORM_CONTAIN(EditIncidentId);
-					btnSubnav_Click(btnSubnavContainment, null);
+					if ((status = uclContainment.AddUpdateINCFORM_CONTAIN(EditIncidentId)) >= 0)
+						btnSubnav_Click(btnSubnavContainment, null);
 					break;
 				case "3":
 					status = uclRootCause.AddUpdateINCFORM_ROOT5Y(EditIncidentId);
 					btnSubnav_Click(btnSubnavRootCause, null);
 					break;
 				case "4":
-					status = uclAction.AddUpdateINCFORM_ACTION(EditIncidentId);
-					btnSubnav_Click(btnSubnavAction, null);
+					if ((status = uclAction.AddUpdateINCFORM_ACTION(EditIncidentId)) >= 0)
+						btnSubnav_Click(btnSubnavAction, null);
 					break;
 				case "5":
 					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);

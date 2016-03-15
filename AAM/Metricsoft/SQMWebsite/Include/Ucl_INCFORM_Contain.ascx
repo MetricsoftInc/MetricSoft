@@ -50,6 +50,7 @@
 									</b></th>
 								<th class="col-sm-3 text-left-more"><b>
 									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label>
+									<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 									</b></th>
 								<th class="col-sm-2 text-left-more"><b>
 									<asp:Label ID="lbhdConAssignedTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
@@ -108,6 +109,8 @@
                     </div>
                 </FooterTemplate>
             </asp:Repeater>
+			<br />
+			<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
         	&nbsp;
         </telerik:RadAjaxPanel>
     </div>

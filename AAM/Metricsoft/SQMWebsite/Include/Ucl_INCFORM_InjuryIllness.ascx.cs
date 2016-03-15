@@ -1215,8 +1215,8 @@ namespace SQM.Website
 				case "2":
 					//status = uclcontain.AddUpdateINCFORM_CONTAIN(incidentId);
 					CurrentStep = (int)EHSFormId.INCFORM_CONTAIN;
-					Save(false);
-					btnSubnav_Click(btnSubnavContainment, null);
+					if ((status = Save(false)) >= 0)
+						btnSubnav_Click(btnSubnavContainment, null);
 					break;
 				case "3":
 					//status = uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId);
@@ -1227,8 +1227,8 @@ namespace SQM.Website
 				case "4":
 					//status = uclaction.AddUpdateINCFORM_ACTION(incidentId);
 					CurrentStep = (int)EHSFormId.INCFORM_ACTION;
-					Save(false);
-					btnSubnav_Click(btnSubnavAction, null);
+					if ((status = Save(false)) >= 0)
+						btnSubnav_Click(btnSubnavAction, null);
 					break;
 				case "5":
 					//status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId);
@@ -1245,8 +1245,8 @@ namespace SQM.Website
 				case "6":
 					//status = ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
-					Save(false);
-					btnSubnav_Click(btnSubnavLostTime, null);
+					if ((status =  Save(false)) >= 0)
+						btnSubnav_Click(btnSubnavLostTime, null);
 					break;
 				default:
 					CurrentStep = (int)EHSFormId.INCFORM_INJURYILLNESS;
@@ -1355,9 +1355,10 @@ namespace SQM.Website
 
 		}
 
-		protected void Save(bool shouldReturn)
+		protected int Save(bool shouldReturn)
 		{
 			decimal incidentId = 0;
+			int status = 0;
 
 			if (shouldReturn == true)
 			{
@@ -1412,7 +1413,7 @@ namespace SQM.Website
 				case "INCFORM_CONTAIN":
 					if (incidentId == 0)
 						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-					uclcontain.AddUpdateINCFORM_CONTAIN(incidentId);
+					status = uclcontain.AddUpdateINCFORM_CONTAIN(incidentId);
 					break;
 				case "INCFORM_ROOT5Y":
 					if (incidentId == 0)
@@ -1425,7 +1426,7 @@ namespace SQM.Website
 				case "INCFORM_ACTION":
 					if (incidentId == 0)
 						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-					uclaction.AddUpdateINCFORM_ACTION(incidentId);
+					status = uclaction.AddUpdateINCFORM_ACTION(incidentId);
 					break;
 				case "INCFORM_APPROVAL":
 					if (incidentId == 0)
@@ -1435,22 +1436,27 @@ namespace SQM.Website
 				case "INCFORM_LOSTTIME_HIST":
 					if (incidentId == 0)
 						incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-					ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+					status = ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
 					break;
 			}
 
-			if (incidentId == 0)
-				incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-			GetAttachments(incidentId);
-						
-			InitializeForm(CurrentStep);
+			if (status >= 0)
+			{
+				if (incidentId == 0)
+					incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				GetAttachments(incidentId);
 
-			decimal finalPlantId = 0;
-			var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
-			if (finalIncident != null)
-				finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
-			else
-				finalPlantId = IncidentLocationId;
+				InitializeForm(CurrentStep);
+
+				decimal finalPlantId = 0;
+				var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
+				if (finalIncident != null)
+					finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
+				else
+					finalPlantId = IncidentLocationId;
+			}
+
+			return status;
 		}
 
 		protected decimal AddUpdateINCFORM_INJURYILLNESS(decimal incidentId)

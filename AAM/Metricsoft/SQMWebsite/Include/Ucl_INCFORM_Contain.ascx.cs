@@ -158,6 +158,7 @@ namespace SQM.Website
 
 		void InitializeForm()
 		{
+			lblStatusMsg.Visible = false;
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
@@ -250,9 +251,11 @@ namespace SQM.Website
 
 		public int AddUpdateINCFORM_CONTAIN(decimal incidentId)
 		{
+			lblStatusMsg.Visible = false;
 			var itemList = new List<INCFORM_CONTAIN>();
 			int seqnumber = 0;
 			int status = 0;
+			bool allFieldsComplete = true;
 
 			foreach (RepeaterItem containtem in rptContain.Items)
 			{
@@ -265,17 +268,31 @@ namespace SQM.Website
 
 				seqnumber = seqnumber + 1;
 
-				item.ITEM_DESCRIPTION = tbca.Text;
+				item.ITEM_DESCRIPTION = tbca.Text.Trim();
 				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
 				item.ITEM_SEQ = seqnumber;
 				item.START_DATE = sd.SelectedDate;
+
+				if (string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+					allFieldsComplete = false;
 
 				itemList.Add(item);
 
 			}
 
 			if (itemList.Count > 0)
-				status = SaveContainment(incidentId, itemList);
+			{
+				if (allFieldsComplete)
+				{
+					status = SaveContainment(incidentId, itemList);
+				}
+				else
+				{
+					lblStatusMsg.Text = Resources.LocalizedText.ENVProfileRequiredsMsg;
+					lblStatusMsg.Visible = true;
+					status = -1;
+				}
+			}
 
 			return status;
 		}

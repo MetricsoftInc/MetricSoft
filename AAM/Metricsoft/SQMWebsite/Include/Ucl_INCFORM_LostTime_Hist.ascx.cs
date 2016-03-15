@@ -143,6 +143,7 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
+			lblStatusMsg.Visible = false;
 			PSsqmEntities entities = new PSsqmEntities();
 
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
@@ -318,8 +319,10 @@ namespace SQM.Website
 
 		public int AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
 		{
+			lblStatusMsg.Visible = false;
 			var itemList = new List<INCFORM_LOSTTIME_HIST>();
 			int status = 0;
+			bool allFieldsComplete = true;
 
 			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 			{
@@ -332,18 +335,36 @@ namespace SQM.Website
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
-				item.WORK_STATUS = rddlw.SelectedValue;
-				item.ITEM_DESCRIPTION = tbr.Text;
-				item.BEGIN_DT = bd.SelectedDate;
-				//item.RETURN_TOWORK_DT = rd.SelectedDate;
-				item.NEXT_MEDAPPT_DT = md.SelectedDate;
-				item.RETURN_EXPECTED_DT = ed.SelectedDate;
+				if (rddlw.SelectedItem == null || string.IsNullOrEmpty(rddlw.SelectedValue)  ||  bd.SelectedDate.HasValue == false)
+				{
+					allFieldsComplete = false;
+				}
+				else
+				{
+					item.WORK_STATUS = rddlw.SelectedValue;
+					item.ITEM_DESCRIPTION = tbr.Text;
+					item.BEGIN_DT = bd.SelectedDate;
+					//item.RETURN_TOWORK_DT = rd.SelectedDate;
+					item.NEXT_MEDAPPT_DT = md.SelectedDate;
+					item.RETURN_EXPECTED_DT = ed.SelectedDate;
+				}
 
 				itemList.Add(item);
 			}
 
 			if (itemList.Count > 0)
-				status = SaveLostTime(incidentId, itemList);
+			{
+				if (allFieldsComplete)
+				{
+					status = SaveLostTime(incidentId, itemList);
+				}
+				else
+				{
+					lblStatusMsg.Text = Resources.LocalizedText.ENVProfileRequiredsMsg;
+					lblStatusMsg.Visible = true;
+					status = -1;
+				}
+			}
 
 			return status;
 

@@ -59,12 +59,15 @@
 								</b></th>
 							<th class="col-sm-4 text-left-more"><b>
 								<asp:Label ID="lbhdFinAction" runat="server" meta:resourceKey="lbhdFinActionResource1" Text="Final Action"></asp:Label>
+								<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbhdFinAssignTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
+								<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbhdFinStartDT" runat="server" meta:resourceKey="lbhdFinStartDTResource1" Text="Target Date"></asp:Label>
+								<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
 								</b></th>
 							<th class="col-sm-2 text-left-more"><b>
 								<asp:Label ID="lbhdFinCompltDT" runat="server" meta:resourceKey="lbhdFinCompltDTResource1" Text="Completion Date"></asp:Label>
@@ -145,6 +148,8 @@
 				</tbody>
 			</ItemTemplate>
 		</asp:Repeater>
+		<br />
+		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
 
 	</telerik:RadAjaxPanel>
 
