@@ -18,6 +18,7 @@ namespace SQM.Website.Automated
 	{
 		static StringBuilder output;
 		static DateTime fromDate;
+		static List<SETTINGS> sets;
 
 		/// <summary>
 		/// Gets all the types for an ordinal from the XLAT table.
@@ -34,26 +35,29 @@ namespace SQM.Website.Automated
 
 		static void UpdateOrdinalData(PSsqmEntities entities, EHS_DATA ehs_data, dynamic types, Dictionary<string, int> type_data)
 		{
-			foreach (var t in types)
+			if (type_data != null)  // might be null if ordinal data type not activated in the FIRSTAID-ORDINALS or RECORDABLE-ORDINALS SETTINGS table
 			{
-				string group = t.XLAT_GROUP;
-				string code = t.XLAT_CODE;
-				var data = entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == ehs_data.DATA_ID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
-				if (type_data.ContainsKey(code))
+				foreach (var t in types)
 				{
-					if (data == null)
-						entities.EHS_DATA_ORD.AddObject(new EHS_DATA_ORD()
-						{
-							EHS_DATA = ehs_data,
-							XLAT_GROUP = t.XLAT_GROUP,
-							XLAT_CODE = t.XLAT_CODE,
-							VALUE = type_data[code]
-						});
-					else
-						data.VALUE = type_data[code];
+					string group = t.XLAT_GROUP;
+					string code = t.XLAT_CODE;
+					var data = entities.EHS_DATA_ORD.FirstOrDefault(d => d.DATA_ID == ehs_data.DATA_ID && d.XLAT_GROUP == group && d.XLAT_CODE == code);
+					if (type_data.ContainsKey(code))
+					{
+						if (data == null)
+							entities.EHS_DATA_ORD.AddObject(new EHS_DATA_ORD()
+							{
+								EHS_DATA = ehs_data,
+								XLAT_GROUP = t.XLAT_GROUP,
+								XLAT_CODE = t.XLAT_CODE,
+								VALUE = type_data[code]
+							});
+						else
+							data.VALUE = type_data[code];
+					}
+					else if (data != null)
+						entities.DeleteObject(data);
 				}
-				else if (data != null)
-					entities.DeleteObject(data);
 			}
 		}
 
@@ -84,6 +88,9 @@ namespace SQM.Website.Automated
 				using (var entities = new PSsqmEntities())
 				{
 					long updateIndicator = DateTime.UtcNow.Ticks;
+
+					// get any AUTOMATE settings
+					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
 					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
 					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
@@ -207,23 +214,37 @@ namespace SQM.Website.Automated
 									closedInvestigations = incidentsForDay.Count(i => i.CLOSE_DATE.HasValue);
 
 									// First Aid ordinals
-									firstAidOrdinals["type"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_TYPE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									firstAidOrdinals["bodyPart"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_BODY_PART).ToDictionary(b => b.Key ?? "", b => b.Count());
-									firstAidOrdinals["rootCause"] = firstAidIncidents.SelectMany(i => i.INCFORM_CAUSATION).GroupBy(c => c.CAUSEATION_CD).ToDictionary(c =>
+									// check which ordinal data we wish to capture
+									SETTINGS setFirstAid = sets.Where(s => s.SETTING_CD == "FIRSTAID-ORDINALS").FirstOrDefault();
+									if (setFirstAid != null  &&  setFirstAid.VALUE.Contains("type"))
+										firstAidOrdinals["type"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_TYPE).ToDictionary(t => t.Key ?? "", t => t.Count());
+									if (setFirstAid != null && setFirstAid.VALUE.Contains("bodyPart"))
+										firstAidOrdinals["bodyPart"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_BODY_PART).ToDictionary(b => b.Key ?? "", b => b.Count());
+									if (setFirstAid != null && setFirstAid.VALUE.Contains("rootCause"))
+										firstAidOrdinals["rootCause"] = firstAidIncidents.SelectMany(i => i.INCFORM_CAUSATION).GroupBy(c => c.CAUSEATION_CD).ToDictionary(c =>
 										c.Key ?? "", c => c.Count());
-									firstAidOrdinals["tenure"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									firstAidOrdinals["daysToClose"] = firstAidIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
+									if (setFirstAid != null && setFirstAid.VALUE.Contains("tenure"))
+										firstAidOrdinals["tenure"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
+									if (setFirstAid != null && setFirstAid.VALUE.Contains("daysToClose"))
+										firstAidOrdinals["daysToClose"] = firstAidIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
 										EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
 										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
 										x.Key ?? "", x => x.Count());
 
 									// Recordable ordinals
-									recordableOrdinals["type"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_TYPE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									recordableOrdinals["bodyPart"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_BODY_PART).ToDictionary(b => b.Key ?? "", b => b.Count());
-									recordableOrdinals["rootCause"] = recordableIncidents.SelectMany(i => i.INCFORM_CAUSATION).GroupBy(c => c.CAUSEATION_CD).ToDictionary(c =>
+									// check which ordinal data we wish to capture
+									SETTINGS setRecordable = sets.Where(s => s.SETTING_CD == "RECORDABLE-ORDINALS").FirstOrDefault();
+									if (setRecordable != null && setFirstAid.VALUE.Contains("type"))
+										recordableOrdinals["type"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_TYPE).ToDictionary(t => t.Key ?? "", t => t.Count());
+									if (setRecordable != null && setFirstAid.VALUE.Contains("bodyPart"))
+										recordableOrdinals["bodyPart"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_BODY_PART).ToDictionary(b => b.Key ?? "", b => b.Count());
+									if (setRecordable != null && setFirstAid.VALUE.Contains("rootCause"))
+										recordableOrdinals["rootCause"] = recordableIncidents.SelectMany(i => i.INCFORM_CAUSATION).GroupBy(c => c.CAUSEATION_CD).ToDictionary(c =>
 										c.Key ?? "", c => c.Count());
-									recordableOrdinals["tenure"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									recordableOrdinals["daysToClose"] = recordableIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
+									if (setRecordable != null && setFirstAid.VALUE.Contains("tenure"))
+										recordableOrdinals["tenure"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
+									if (setRecordable != null && setFirstAid.VALUE.Contains("daysToClose"))
+										recordableOrdinals["daysToClose"] = recordableIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
 										EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
 										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
 										x.Key ?? "", x => x.Count());
