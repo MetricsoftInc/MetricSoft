@@ -506,7 +506,7 @@ namespace SQM.Website
 			INCIDENT_ANSWER answer = null;
 			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[6] { "SHIFT","INJURY_CAUSE", "INJURY_TYPE", "INJURY_PART", "INJURY_TENURE", "IQ_10"});
 
-			foreach (EHSIncidentData eda in HSCalcs().ehsCtl.IncidentHst.Where(i=> i.Incident.INCFORM_LAST_STEP_COMPLETED < 1  &&  i.Incident.INCIDENT_ID == 441))
+			foreach (EHSIncidentData eda in HSCalcs().ehsCtl.IncidentHst.Where(i=> i.Incident.INCFORM_LAST_STEP_COMPLETED < 1  &&  i.Incident.INCIDENT_ID > 0))
 			{
 				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == eda.Incident.INCIDENT_ID select i).SingleOrDefault();
 				incident.INCIDENT_ANSWER.Load();
@@ -640,7 +640,11 @@ namespace SQM.Website
 								approval.APPROVAL_MESSAGE = approval.APPROVER_PERSON = answer.ANSWER_VALUE;
 								string[] names = answer.ANSWER_VALUE.ToLower().Split(' ');
 								if (names.Length > 1)
-									person = (from p in entities.PERSON where p.FIRST_NAME.ToLower() == names[0] && p.LAST_NAME.ToLower() == names[2] select p).FirstOrDefault();
+								{
+									string firstName = names[0];
+									string lastnamne = names[1];
+									person = (from p in entities.PERSON where p.FIRST_NAME.ToLower() == firstName && p.LAST_NAME.ToLower() == lastnamne select p).FirstOrDefault();
+								}
 							}
 							if (person != null)
 							{
