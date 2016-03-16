@@ -37,12 +37,9 @@ namespace SQM.Website
 					Session["vpWidth"] = vpWidth;
 				else
 					Session["vpWidth"] = "1000";
-
 			}
 			else 
 			{
-			   // if (LoginAttempts == 0)
-			   //     SessionManager.Clear();
 				try
 				{
 					if (SessionManager.SessionContext != null || SessionManager.UserContext != null)

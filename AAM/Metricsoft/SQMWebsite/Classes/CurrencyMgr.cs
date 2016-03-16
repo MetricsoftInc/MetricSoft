@@ -9,6 +9,15 @@ namespace SQM.Website
 	{
 		static PSsqmEntities entities;
 
+		public static CURRENCY_XREF GetLatestRecord(PSsqmEntities ctx)
+		{
+			CURRENCY_XREF currencyRecord = null;
+
+			currencyRecord = (from cx in ctx.CURRENCY_XREF where cx.EFF_YEAR >= DateTime.Now.Year-1 select cx).OrderByDescending(y => y.EFF_YEAR).ThenByDescending(m => m.EFF_MONTH).First();
+
+			return currencyRecord;
+		}
+
 		public static void CheckForUpdates(string baseCurrencyCode)
 		{
 			entities = new PSsqmEntities();

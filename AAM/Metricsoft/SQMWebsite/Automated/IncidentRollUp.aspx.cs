@@ -33,7 +33,7 @@ namespace SQM.Website.Automated
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
 
-			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
+			WriteLine("Incident Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			WriteLine(pageURI);
 
