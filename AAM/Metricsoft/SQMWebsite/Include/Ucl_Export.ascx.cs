@@ -111,6 +111,13 @@ namespace SQM.Website
 
             List<EHS_PROFILE_MEASURE> profileMeasureList = new List<EHS_PROFILE_MEASURE>();
 
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "TASK");
+			string altDunsLabel = "";
+			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
+			{
+				altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
+			}
+
             HSSFWorkbook hssfworkbook = InitializeWorkbook();
 
             try
@@ -146,6 +153,10 @@ namespace SQM.Website
                 row.CreateCell(14).SetCellValue("Waste Code");
                 row.CreateCell(15).SetCellValue("UN Disposal Code");
                 row.CreateCell(16).SetCellValue("Regulatory Status");
+				if (!string.IsNullOrEmpty(altDunsLabel))
+				{
+					row.CreateCell(17).SetCellValue(altDunsLabel);
+				}
 
                 int rownum = 0;
                 foreach (EHS_METRIC_HISTORY ms in metric_history)
@@ -336,6 +347,18 @@ namespace SQM.Website
                             row.CreateCell(16).SetCellValue("");
                         else
                             row.CreateCell(16).SetCellValue(WebSiteCommon.GetXlatValue("regulatoryStatus", prmr.REG_STATUS));
+
+						if (!string.IsNullOrEmpty(altDunsLabel))
+						{
+							try
+							{
+								row.CreateCell(17).SetCellValue(plant.ALT_DUNS_CODE);
+							}
+							catch
+							{
+								row.CreateCell(17).SetCellValue("");
+							}
+						}
                     }
                     catch
                     {
@@ -360,6 +383,10 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(14);
                 sheet1.AutoSizeColumn(15);
                 sheet1.AutoSizeColumn(16);
+				if (!string.IsNullOrEmpty(altDunsLabel))
+				{
+					sheet1.AutoSizeColumn(17);
+				}
 
                 IRow row2 = sheet2.CreateRow(0);
                 row2.CreateCell(0).SetCellValue("Plant Name");

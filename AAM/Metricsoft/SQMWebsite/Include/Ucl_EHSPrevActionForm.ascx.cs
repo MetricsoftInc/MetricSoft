@@ -306,6 +306,11 @@ namespace SQM.Website
 					}
 				}
 
+				if (q.QuestionId == 84)
+				{
+					;
+				}
+
 				switch (q.QuestionType)
 				{
 					case EHSIncidentQuestionType.CurrentUser:
@@ -721,7 +726,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
 						rddlFilteredUsers = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						BuildFilteredUsersDropdownList();
+						BuildFilteredUsersDropdownList(incident);
 
 						if (shouldPopulate)
 							rddlFilteredUsers.SelectedValue = q.AnswerText;
@@ -1215,7 +1220,7 @@ namespace SQM.Website
 
 					case EHSIncidentQuestionType.UsersDropdownLocationFiltered:
 						rddlFilteredUsers = new RadDropDownList() { ID = qid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
-						BuildFilteredUsersDropdownList();
+						BuildFilteredUsersDropdownList(incident);
 
 						if (shouldPopulate)
 							rddlFilteredUsers.SelectedValue = q.AnswerText;
@@ -1249,7 +1254,7 @@ namespace SQM.Website
 
 		void rddlLocation_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			BuildFilteredUsersDropdownList();
+			BuildFilteredUsersDropdownList(null);
 		}
 
 		void tb_TextRequiredClosedChanged(object sender, EventArgs e)
@@ -1268,7 +1273,7 @@ namespace SQM.Website
 			UpdateClosedQuestions();
 		}
 
-		void BuildFilteredUsersDropdownList()
+		void BuildFilteredUsersDropdownList(INCIDENT incident)
 		{
 			if (rddlLocation != null)
 			{
@@ -1286,10 +1291,10 @@ namespace SQM.Website
 				var locationPersonList = new List<PERSON>();
 				if (this.SelectedLocationId > 0)
 				{
-					locationPersonList = EHSIncidentMgr.SelectEhsPeopleAtPlant(this.SelectedLocationId);
+					{
+						locationPersonList = EHSIncidentMgr.SelectPrevActionPersonList(this.SelectedLocationId, new SysPriv[1] { SysPriv.action }, true);
+					}
 				}
-				//else
-				//	locationPersonList = EHSIncidentMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
 
 				if (locationPersonList.Count > 0)
 				{
@@ -2170,7 +2175,7 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					break;
 				case 2:
-					pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[2] { SysPriv.approve1, SysPriv.approve2 }, IncidentStepCompleted);
+					pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdatePrevAction(incident, IsEditContext, new SysPriv[3] { SysPriv.approve, SysPriv.approve1, SysPriv.approve2 }, IncidentStepCompleted);
 					btnDelete.Visible = false;
 					btnSubnavApproval.Enabled = false;
 					btnSubnavApproval.CssClass = "buttonLinkDisabled";

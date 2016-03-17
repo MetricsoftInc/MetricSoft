@@ -840,8 +840,16 @@ namespace SQM.Website
 				}
 				else
 				{
-					if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
-						hasPriv = true;
+					if (priv == SysPriv.approve)
+					{
+						if (SessionManager.UserContext.PrivList.Where(p => new int[3] { (int)SysPriv.approve, (int)SysPriv.approve1, (int)SysPriv.approve2 }.Contains(p.PRIV) && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check for any approval level if base approval priv given
+							hasPriv = true;
+					}
+					else
+					{
+						if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
+							hasPriv = true;
+					}
 				}
 			}
 

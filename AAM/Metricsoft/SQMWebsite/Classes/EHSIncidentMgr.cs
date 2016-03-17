@@ -853,6 +853,16 @@ namespace SQM.Website
 			return (from p in entities.PLANT where p.COMPANY_ID == companyId orderby p.PLANT_NAME select p.PLANT_ID).ToList();
 		}
 
+		public static List<PERSON> SelectPrevActionPersonList(decimal plantID, SysPriv[] privList, bool emailOnly)
+		{
+			List<PERSON> personList = SQMModelMgr.SelectPrivGroupPersonList(privList, SysScope.prevent, plantID, true);
+			if (emailOnly)
+			{
+				personList = personList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList();
+			}
+
+			return personList;
+		}
 
 		public static List<PERSON> SelectIncidentPersonList(INCIDENT incident, bool emailOnly)
 		{

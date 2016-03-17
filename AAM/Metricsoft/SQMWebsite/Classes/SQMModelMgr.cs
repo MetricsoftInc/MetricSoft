@@ -1030,9 +1030,6 @@ namespace SQM.Website
 				return "";
 		}
 
- 
-
-
 
         public static bool CanDelegate(PERSON fromPerson, PERSON toPerson)
         {

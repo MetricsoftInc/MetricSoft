@@ -52,9 +52,7 @@ namespace SQM.Website
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
 			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.prevent);
-			if (rbNew.Visible)
-				rbNew.Visible = createIncidentAccess;
-
+			rbNew.Visible = createIncidentAccess;
 
 			if (IsPostBack)
 			{
@@ -192,7 +190,7 @@ namespace SQM.Website
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 
 				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[3] { "IQ_81", "IQ_82", "IQ_83" }, 1);
-				rcbInspectionType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInspectionType, xlatList.Where(l => l.XLAT_GROUP == "IQ_81").ToList(), "SHORT");
+				rcbInspectionType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInspectionType, xlatList.Where(l => l.XLAT_GROUP == "IQ_81" && l.STATUS == "A").ToList(), "SHORT");
 				rcbRecommendType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbRecommendType, xlatList.Where(l => l.XLAT_GROUP == "IQ_83").ToList(), "SHORT");
 				rcbStatusSelect.SelectedValue = "A";
 
@@ -200,7 +198,7 @@ namespace SQM.Website
 				SQMBasePage.SetLocationList(ddlActionLocation, locationList, 0, true);
 				ddlActionLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
-				rddlNewActionType.DataSource = xlatList.Where(l=> l.XLAT_GROUP == "IQ_81").ToList();
+				rddlNewActionType.DataSource = xlatList.Where(l=> l.XLAT_GROUP == "IQ_81" && l.STATUS == "A").ToList();
 				rddlNewActionType.DataTextField = "DESCRIPTION_SHORT";
 				rddlNewActionType.DataValueField = "XLAT_CODE";
 				rddlNewActionType.DataBind();
