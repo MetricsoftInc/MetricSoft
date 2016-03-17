@@ -300,6 +300,7 @@ namespace SQM.Website
             TextBox tbPlantName = (TextBox)hfBase.FindControl("tbPlantName"); tbPlantName.Text = plant.PLANT_NAME;
             TextBox tbPlantDesc = (TextBox)hfBase.FindControl("tbPlantDesc"); tbPlantDesc.Text = plant.DISP_PLANT_NAME;
             TextBox tbPlantLocCode = (TextBox)hfBase.FindControl("tbPlantLocCode"); tbPlantLocCode.Text = plant.DUNS_CODE;
+			TextBox tbAltPlantCode = (TextBox)hfBase.FindControl("tbAltPlantCode"); tbAltPlantCode.Text = plant.ALT_DUNS_CODE;
             cbTrackFinData.Checked = (bool)plant.TRACK_FIN_DATA;
             cbTrackEWData.Checked = (bool)plant.TRACK_EW_DATA;
             Label lblLastUpdate = (Label)hfBase.FindControl("lblPlantLastUpdate"); lblLastUpdate.Text = plant.LAST_UPD_BY;
@@ -361,6 +362,7 @@ namespace SQM.Website
                 plant.PLANT_NAME = tbPlantName.Text.Trim();
                 plant.DISP_PLANT_NAME = tbPlantDesc.Text.Trim();
                 plant.DUNS_CODE = tbPlantLocCode.Text.Trim();
+				plant.ALT_DUNS_CODE = tbAltPlantCode.Text.Trim();
                 plant.LOCATION_CODE = ddlCountryCode.SelectedValue;
                 if (plant.LOCATION_CODE == "US")
                     plant.COMP_INT_ID = ddlPowerSourcedRegion.SelectedValue;

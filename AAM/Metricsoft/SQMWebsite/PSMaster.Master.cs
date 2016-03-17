@@ -63,7 +63,7 @@ namespace SQM.Website
 
 					if (menuXLATList == null || menuXLATList.Count == 0)
 					{
-						menuXLATList = SQMBasePage.SelectXLATList(new string[6] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA" });
+						menuXLATList = SQMBasePage.SelectXLATList(new string[7] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM" });
 					}
 
                     SessionManager.CurrentAdminPage = "";

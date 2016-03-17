@@ -174,6 +174,7 @@ namespace SQM.Website
 								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
 						}
 					}
+
 					if (settingList.Where(l => l.SETTING_CD == "EHSDATA" && l.VALUE == "A").Count() > 0)
 					{
 						if (UserContext.GetMaxScopePrivilege(SysScope.ehsdata) <= SysPriv.originate && IsMenuActive("MENU_DATA"))

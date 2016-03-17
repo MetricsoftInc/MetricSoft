@@ -657,4 +657,7 @@
   <data name="AssessmentReturn" xml:space="preserve">
     <value>If you have made changes and not hit the Save button, changes may be lost. Leave Page?</value>
   </data>
+  <data name="AltLocationCode" xml:space="preserve">
+    <value>Alternate Location Code</value>
+  </data>
 </root>
