@@ -386,12 +386,11 @@ namespace SQM.Website
 										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 									}
 								}
-								if (HRLocation == "GG")
+
+								// apply default accessible locations if defined in the 'PlantCode' SETTINGS
+								if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
 								{
-									if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
-									{
-										person.NEW_LOCATION_CD = ("," + accessLocations + ",");
-									}
+									person.NEW_LOCATION_CD = ("," + accessLocations + ",");
 								}
 
 								try
