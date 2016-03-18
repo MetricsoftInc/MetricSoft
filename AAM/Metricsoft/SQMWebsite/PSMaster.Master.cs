@@ -165,8 +165,7 @@ namespace SQM.Website
 						{
 							RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_RM", "0").DESCRIPTION);
 							RadMenu1.Items.Add(EHSMenu2);
-							if (UserContext.GetScopePrivileges(SysScope.prevent).Count() > 0)
-								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_RM", "11").DESCRIPTION, GetMenu("MENU_RM", "11").DESCRIPTION_SHORT));
 						}
 					}
 
