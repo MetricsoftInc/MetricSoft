@@ -617,6 +617,13 @@ namespace SQM.Website
 
             EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange);
             esMgr.LoadMetricInputs(dtFrom, dtTo, plantIDs, "");
+
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "TASK");
+			string altDunsLabel = "";
+			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
+			{
+				altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
+			}
            
             try
             {
@@ -645,6 +652,11 @@ namespace SQM.Website
                 row.CreateCell(7).SetCellValue("Input UOM");
                 row.CreateCell(8).SetCellValue("Input Cost");
                 row.CreateCell(9).SetCellValue("Input Currency");
+				if (!string.IsNullOrEmpty(altDunsLabel))
+				{
+					row.CreateCell(10).SetCellValue(altDunsLabel);
+				}
+
               
                 int rownum = 0;
                 for (int irows = 0; irows < esMgr.InputsList.Count; irows++)
@@ -772,6 +784,18 @@ namespace SQM.Website
                     {
                         row.CreateCell(9).SetCellValue("");
                     }
+
+					if (!string.IsNullOrEmpty(altDunsLabel))
+					{
+						try
+						{
+							row.CreateCell(10).SetCellValue(plant.ALT_DUNS_CODE);
+						}
+						catch
+						{
+							row.CreateCell(10).SetCellValue("");
+						}
+					}
                 }
 
                 sheet1.AutoSizeColumn(0);
@@ -784,6 +808,10 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(7);
                 sheet1.AutoSizeColumn(8);
                 sheet1.AutoSizeColumn(9);
+				if (!string.IsNullOrEmpty(altDunsLabel))
+				{
+					sheet1.AutoSizeColumn(10);
+				}
                 
                 IRow row2 = sheet2.CreateRow(0);
                 row2.CreateCell(0).SetCellValue("Plant Name");
