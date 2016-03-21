@@ -11,6 +11,31 @@ using Telerik.Web.UI.Calendar;
 
 namespace SQM.Website.EHS
 {
+	[Serializable]
+	public class ReportData
+	{
+		public decimal BusOrgID
+		{
+			get;
+			set;
+		}
+		public decimal PlantID
+		{
+			get;
+			set;
+		}
+		public string PlantName
+		{
+			get;
+			set;
+		}
+		public string PersonLastName
+		{
+			get;
+			set;
+		}
+	}
+
 	public partial class EHS_DataReport : SQMBasePage
 	{
 		// Stores a reference to the entities so it can persist for the entire page's life cycle.
@@ -44,12 +69,32 @@ namespace SQM.Website.EHS
 					this.rgData.MasterTableView.Columns.Add(column);
 				}
 
-				var data = (from pl in this.entities.PLANT
-							join pers in this.entities.PERSON on pl.PLANT_ID equals pers.PLANT_ID into per
-							from pe in per.DefaultIfEmpty()
-							where pe == null || pe.PRIV_GROUP == "EHS-MANAGER"
-							select new { PlantID = pl.PLANT_ID, PlantName = pl.PLANT_NAME, PersonLastName = pe.LAST_NAME }).ToList();
-				data.Add(new { PlantID = -1m, PlantName = "TOTALS", PersonLastName = "" });
+				List<ReportData> data = 
+				 (from pl in this.entities.PLANT
+							//join pers in this.entities.PERSON on pl.PLANT_ID equals pers.PLANT_ID into per
+							//from pe in per.Take(1).DefaultIfEmpty()
+							//where pe == null || pe.PRIV_GROUP == "EHS-MANAGER"
+							select new ReportData { BusOrgID = (decimal)pl.BUS_ORG_ID, PlantID = pl.PLANT_ID, PlantName = pl.PLANT_NAME, PersonLastName = "" }).OrderBy(l=> l.PlantName).ToList();
+				data.Add(new ReportData { BusOrgID = -1m, PlantID = -1m, PlantName = "TOTALS", PersonLastName = "" });
+
+				/*
+				List<PERSON> personList = (from p in this.entities.PERSON
+										   join g in this.entities.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
+										   join v in this.entities.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
+										   where g.PRIV_GROUP == p.PRIV_GROUP
+												 && (v.PRIV == 200 && v.SCOPE == "ehsdata")
+												 && (p.STATUS == "A")
+										   select p).GroupBy(l => l.PERSON_ID).Select(m => m.FirstOrDefault()).ToList();
+
+				foreach (PERSON person in personList)
+				{
+					ReportData dataItem = data.Where(d => d.PlantID == person.PLANT_ID).FirstOrDefault();
+					if (dataItem != null)
+					{
+						dataItem.PersonLastName = string.IsNullOrEmpty(dataItem.PersonLastName) ?  person.LAST_NAME : (dataItem.PersonLastName + ", " + person.LAST_NAME);
+					}
+				}
+				*/
 
 				this.rgData.DataSource = data;
 				this.rgData.DataBind();
