@@ -255,6 +255,11 @@
                                         </div>
                                             <table style="width: 100%;">
                                                 <tr>
+                                                    <td style="text-align: right;"><asp:CheckBox runat="server" ID="cbClose" Text="<%$ Resources:LocalizedText, CloseAudit %>" /></td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr><td colspan="2">&nbsp;</td></tr>
+                                                <tr>
                                                     <td style="width: 33%;">
                                                         <telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="false"
                                                             CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Saving %>"

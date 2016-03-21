@@ -484,6 +484,7 @@ namespace SQM.Website
 						newQuestion.Status = auditAnswer.STATUS;
 						newQuestion.ResolutionComment = auditAnswer.RESOLUTION_COMMENT;
 						newQuestion.ChoicePositive = auditAnswer.CHOICE_POSITIVE;
+						newQuestion.AnswerText = auditAnswer.ANSWER_VALUE;
 						newQuestion.AnswerValue = auditAnswer.ANSWER_VALUE;
 						newQuestion.AnswerComment = auditAnswer.COMMENT;
 						if (auditAnswer.COMPLETE_DATE != null)
@@ -1273,6 +1274,24 @@ namespace SQM.Website
 			}
 
 			return status;
+		}
+
+		public static List<TASK_STATUS> GetAuditActionList(decimal auditId, decimal questionId)
+		{
+			PSsqmEntities entities = new PSsqmEntities();
+
+			List<TASK_STATUS> actionList = new List<TASK_STATUS>();
+
+			if (questionId > 0)
+				actionList =  (from t in entities.TASK_STATUS
+											where t.RECORD_TYPE == (int)TaskRecordType.Audit && t.RECORD_ID == auditId && t.RECORD_SUBID == questionId
+											select t).ToList();
+			else
+				actionList = (from t in entities.TASK_STATUS
+							  where t.RECORD_TYPE == (int)TaskRecordType.Audit && t.RECORD_ID == auditId
+							  select t).ToList();
+
+			return actionList;
 		}
 
 		public static void CreateOrUpdateTask(decimal auditId, decimal responsiblePersonId, int recordTypeId, DateTime dueDate, string status, decimal createPersonId)

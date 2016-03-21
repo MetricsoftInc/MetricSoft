@@ -204,6 +204,9 @@
 							<asp:Label ID="lblAuditStatus" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn8 column" HeaderText="<%$ Resources:LocalizedText, Print %>" UniqueName="TemplateColumn8">
+                        <ItemTemplate><asp:HyperLink ID="hlReport" runat="server" ForeColor="#000066" meta:resourcekey="hlReportResource1" NavigateUrl='<%# "/EHS/EHS_Audit_PDF.aspx?aid=" + Eval("Audit.AUDIT_ID") %>' Target="_blank" Visible="true"><img src="/images/defaulticon/16x16/open-in-new-window.png" alt="" style="vertical-align: middle;" /> Print </asp:HyperLink></ItemTemplate>
+                    </telerik:GridTemplateColumn>
 				</Columns>
 				<PagerStyle AlwaysVisible="True" />
             </MasterTableView>

@@ -741,10 +741,10 @@ namespace SQM.Website.EHS
 				BuildForm();
 				// and send a message that the field need to be entered
 				if (showMsg)
-				{ 
-				string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsIndicatedMsg);
-				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-					}
+				{
+					string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsIndicatedMsg);
+					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				}
 			}
 
 		}
@@ -1020,7 +1020,7 @@ namespace SQM.Website.EHS
 			else
 				totalPercent = 0;
 			audit.PERCENT_COMPLETE = totalPercent;
-			if (totalPercent >= 100 && negativeTextComplete)
+			if (totalPercent >= 100 && negativeTextComplete && cbClose.Checked)
 			{
 				audit.CURRENT_STATUS = "C";
 				if (!audit.CLOSE_DATE_DATA_COMPLETE.HasValue)

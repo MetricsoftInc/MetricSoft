@@ -660,4 +660,7 @@
   <data name="AltLocationCode" xml:space="preserve">
     <value>Alternate Location Code</value>
   </data>
+  <data name="CloseAudit" xml:space="preserve">
+    <value>This assessment is complete</value>
+  </data>
 </root>
