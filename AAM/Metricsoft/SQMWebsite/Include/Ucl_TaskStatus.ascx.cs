@@ -141,12 +141,14 @@ namespace SQM.Website
 			decimal recordSubID = Convert.ToDecimal(cmd[2]);
 			string taskStep = cmd[3];
 			string taskType = cmd[4];
-			string plantID = cmd[5];
+
+			decimal plantID = 0;
+			decimal.TryParse(cmd[5], out plantID);
 	
 			// make sure that the Assign To Employee has been selected
 			if (ddlAssignPersonAdd.SelectedValue.ToString().Equals(""))
 			{
-				BindTaskAdd(recordType, recordID, recordSubID, "350", "T", lblTaskDetailValueAdd.Text.ToString(), Convert.ToDecimal(plantID), "");
+				BindTaskAdd(recordType, recordID, recordSubID, "350", "T", lblTaskDetailValueAdd.Text.ToString(), plantID, "");
 				lblErrorMessage.Text = lblErrRequiredInputs.Text.ToString();
 				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
@@ -174,7 +176,7 @@ namespace SQM.Website
 				taskMgr.CreateTask(task);
 				taskMgr.UpdateTaskList(task.RECORD_ID);
 				// send email
-				EHSNotificationMgr.NotifyTaskAssigment(task);
+				EHSNotificationMgr.NotifyTaskAssigment(task, plantID);
 
 				// reset the fields for the next add
 				ddlAssignPersonAdd.SelectedIndex = 0;
@@ -266,7 +268,7 @@ namespace SQM.Website
 				task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPerson.SelectedValue);
 				taskMgr.UpdateTask(task);
 				// send email
-				EHSNotificationMgr.NotifyTaskAssigment(task);
+				EHSNotificationMgr.NotifyTaskAssigment(task, 0);
 			}
 
 			if (OnTaskUpdate != null)

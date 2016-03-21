@@ -322,6 +322,26 @@ namespace SQM.Website
                 }
             }
 
+			int [] recList = new int[5] {30, 40, 45, 50, 90};
+			PLANT_ACTIVE pa = null;
+			List<PLANT_ACTIVE> plantActiveList = new List<PLANT_ACTIVE>();
+			foreach (int recType in recList)
+			{
+				PLANT_ACTIVE plantActive = new PLANT_ACTIVE();
+				plantActive.PLANT_ID = plant.PLANT_ID;
+				plantActive.RECORD_TYPE = recType;
+				plantActive.ENABLE_EMAIL = true;
+				if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == recType).FirstOrDefault()) != null)
+				{
+					plantActive.EFF_START_DATE = pa.EFF_START_DATE;
+					plantActive.EFF_END_DATE = pa.EFF_END_DATE;
+					plantActive.ENABLE_EMAIL = pa.ENABLE_EMAIL;
+					plantActive.ENABLE_INACTIVE_HIST = pa.ENABLE_INACTIVE_HIST;
+				}
+				plantActiveList.Add(plantActive);
+			}
+			BindPlantActive(plantActiveList);
+
             LocalOrg().EditObject = plant;
         }
 
@@ -395,6 +415,38 @@ namespace SQM.Website
                 address.POSTAL_CODE = tbPostal.Text;
                 address.COUNTRY = ddlCountryCode.SelectedValue;
 
+				foreach (GridItem item in rgPlantActive.Items)
+				{
+					PLANT_ACTIVE plantActive = null;
+					PLANT_ACTIVE pa = null;
+
+					HiddenField hfRecType = (HiddenField)item.FindControl("hfRecordType");
+					RadDatePicker rdp1 = (RadDatePicker)item.FindControl("rdpStartDate");
+					RadDatePicker rdp2 = (RadDatePicker)item.FindControl("rdpStopDate");
+					CheckBox cb1 = (CheckBox)item.FindControl("cbEnableEmail");
+					CheckBox cb2 = (CheckBox)item.FindControl("cbViewInactiveHist");
+
+					if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == Convert.ToInt32(hfRecType.Value)).FirstOrDefault()) != null)
+					{
+						pa.EFF_START_DATE = rdp1.SelectedDate;
+						pa.EFF_END_DATE = rdp2.SelectedDate;
+						pa.ENABLE_EMAIL = cb1.Checked;
+						pa.ENABLE_INACTIVE_HIST = cb2.Checked;
+					}
+					else
+					{
+						plantActive = new PLANT_ACTIVE();
+						plantActive.PLANT_ID = plant.PLANT_ID;
+						plantActive.RECORD_TYPE = Convert.ToInt32(hfRecType.Value);
+						plantActive.EFF_START_DATE = rdp1.SelectedDate;
+						plantActive.EFF_END_DATE = rdp2.SelectedDate;
+						plantActive.ENABLE_EMAIL = cb1.Checked;
+						plantActive.ENABLE_INACTIVE_HIST = cb2.Checked;
+						plant.PLANT_ACTIVE.Add(plantActive);
+						//entities.AddToPLANT_ACTIVE(plantActive);
+					}
+				}
+
                 if (SQMModelMgr.UpdatePlant(entities, plant, SessionManager.UserContext.UserName()) != null)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
@@ -426,9 +478,54 @@ namespace SQM.Website
         
         #endregion  
 
-        #region department
+		#region plantactive
+		private void BindPlantActive(List<PLANT_ACTIVE> plantActiveList)
+		{
+			if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busloc) || SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg))
+				rgPlantActive.Enabled = true;
+			else
+				rgPlantActive.Enabled = false;
 
-        private void DoDeptList()
+			rgPlantActive.DataSource = plantActiveList;
+			rgPlantActive.DataBind();
+		}
+
+		protected void rgPlantActive_ItemDataBound(object sender, GridItemEventArgs e)
+		{
+			if (e.Item is GridDataItem)
+			{
+				try
+				{
+					GridDataItem item = (GridDataItem)e.Item;
+					PLANT_ACTIVE plantActive = (PLANT_ACTIVE)e.Item.DataItem;
+
+					HiddenField hf = (HiddenField)item.FindControl("hPlantID");
+
+					Label lbl = (Label)item.FindControl("lblModule");
+					lbl.Text = ((TaskRecordType)plantActive.RECORD_TYPE).ToString();
+
+					RadDatePicker rdp = (RadDatePicker)item.FindControl("rdpStartDate");
+					rdp.SelectedDate = plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE : null;
+
+					rdp = (RadDatePicker)item.FindControl("rdpStopDate");
+					rdp.SelectedDate = plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE : null;
+
+					CheckBox cb = (CheckBox)item.FindControl("cbEnableEmail");
+					cb.Checked = (bool)plantActive.ENABLE_EMAIL;
+
+					cb = (CheckBox)item.FindControl("cbViewInactiveHist");
+					cb.Checked = (bool)plantActive.ENABLE_INACTIVE_HIST;
+				}
+				catch
+				{
+				}
+			}
+		}
+		#endregion
+
+		#region department
+
+		private void DoDeptList()
         {
             PLANT plant = (PLANT)SessionManager.EffLocation.Plant;
             LocalOrg().DeptList = SQMModelMgr.SelectDepartmentList(entities, (decimal)plant.COMPANY_ID, (decimal)plant.BUS_ORG_ID, plant.PLANT_ID);

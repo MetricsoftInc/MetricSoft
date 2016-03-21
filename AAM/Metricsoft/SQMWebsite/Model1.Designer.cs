@@ -148,7 +148,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_LANG), true)]
@@ -163,6 +162,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "PLANT_ACTIVE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PLANT_ACTIVE), true)]
 
 #endregion
 
@@ -2185,22 +2186,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PLANT_ACTIVE> PLANT_ACTIVE
-        {
-            get
-            {
-                if ((_PLANT_ACTIVE == null))
-                {
-                    _PLANT_ACTIVE = base.CreateObjectSet<PLANT_ACTIVE>("PLANT_ACTIVE");
-                }
-                return _PLANT_ACTIVE;
-            }
-        }
-        private ObjectSet<PLANT_ACTIVE> _PLANT_ACTIVE;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_CAUSATION> INCFORM_CAUSATION
         {
             get
@@ -2341,6 +2326,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PERSON> _PERSON;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PLANT_ACTIVE> PLANT_ACTIVE
+        {
+            get
+            {
+                if ((_PLANT_ACTIVE == null))
+                {
+                    _PLANT_ACTIVE = base.CreateObjectSet<PLANT_ACTIVE>("PLANT_ACTIVE");
+                }
+                return _PLANT_ACTIVE;
+            }
+        }
+        private ObjectSet<PLANT_ACTIVE> _PLANT_ACTIVE;
 
         #endregion
 
@@ -3331,14 +3332,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PLANT_ACTIVE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPLANT_ACTIVE(PLANT_ACTIVE pLANT_ACTIVE)
-        {
-            base.AddObject("PLANT_ACTIVE", pLANT_ACTIVE);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_CAUSATION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_CAUSATION(INCFORM_CAUSATION iNCFORM_CAUSATION)
@@ -3408,6 +3401,14 @@ namespace SQM.Website
         public void AddToPERSON(PERSON pERSON)
         {
             base.AddObject("PERSON", pERSON);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PLANT_ACTIVE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPLANT_ACTIVE(PLANT_ACTIVE pLANT_ACTIVE)
+        {
+            base.AddObject("PLANT_ACTIVE", pLANT_ACTIVE);
         }
 
         #endregion
@@ -28405,6 +28406,28 @@ namespace SQM.Website
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "PERSON")]
+        public EntityCollection<PERSON> PERSON
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSON>("PSsqmModel.FK_PERSON_JOBCODE", "PERSON", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -31760,6 +31783,44 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE")]
+        public JOBCODE JOBCODE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<JOBCODE> JOBCODEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<JOBCODE>("PSsqmModel.FK_PERSON_JOBCODE", "JOBCODE", value);
                 }
             }
         }
@@ -35652,6 +35713,54 @@ namespace SQM.Website
         private Nullable<global::System.DateTime> _EFF_END_DATE;
         partial void OnEFF_END_DATEChanging(Nullable<global::System.DateTime> value);
         partial void OnEFF_END_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> ENABLE_EMAIL
+        {
+            get
+            {
+                return _ENABLE_EMAIL;
+            }
+            set
+            {
+                OnENABLE_EMAILChanging(value);
+                ReportPropertyChanging("ENABLE_EMAIL");
+                _ENABLE_EMAIL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ENABLE_EMAIL");
+                OnENABLE_EMAILChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _ENABLE_EMAIL;
+        partial void OnENABLE_EMAILChanging(Nullable<global::System.Boolean> value);
+        partial void OnENABLE_EMAILChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> ENABLE_INACTIVE_HIST
+        {
+            get
+            {
+                return _ENABLE_INACTIVE_HIST;
+            }
+            set
+            {
+                OnENABLE_INACTIVE_HISTChanging(value);
+                ReportPropertyChanging("ENABLE_INACTIVE_HIST");
+                _ENABLE_INACTIVE_HIST = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ENABLE_INACTIVE_HIST");
+                OnENABLE_INACTIVE_HISTChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _ENABLE_INACTIVE_HIST;
+        partial void OnENABLE_INACTIVE_HISTChanging(Nullable<global::System.Boolean> value);
+        partial void OnENABLE_INACTIVE_HISTChanged();
 
         #endregion
 

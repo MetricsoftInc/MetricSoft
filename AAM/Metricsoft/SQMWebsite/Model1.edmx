@@ -508,6 +508,10 @@
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="PART" EntitySet="PART" />
           </AssociationSet>
+          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.Store.FK_PERSON_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
           <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.Store.FK_PERSON_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="PERSON1" EntitySet="PERSON" />
@@ -2088,6 +2092,8 @@
           <Property Name="RECORD_TYPE" Type="int" Nullable="false" />
           <Property Name="EFF_START_DATE" Type="date" />
           <Property Name="EFF_END_DATE" Type="date" />
+          <Property Name="ENABLE_EMAIL" Type="bit" />
+          <Property Name="ENABLE_INACTIVE_HIST" Type="bit" />
         </EntityType>
         <EntityType Name="PLANT_LINE">
           <Key>
@@ -3769,6 +3775,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PERSON_JOBCODE">
+          <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
+          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Principal>
+            <Dependent Role="PERSON">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PERSON_PERSON">
           <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="1" />
           <End Role="PERSON1" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
@@ -4979,14 +4997,9 @@
             <End Role="EHS_DATA_ORD" EntitySet="EHS_DATA_ORD" />
           </AssociationSet>
           <EntitySet Name="SETTINGS" EntityType="PSsqmModel.SETTINGS" />
-          <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.PLANT_ACTIVE" />
           <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE">
             <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
             <End Role="AUDIT" EntitySet="AUDIT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT">
-            <End Role="PLANT" EntitySet="PLANT" />
-            <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
           <EntitySet Name="INCFORM_CAUSATION" EntityType="PSsqmModel.INCFORM_CAUSATION" />
           <AssociationSet Name="FK_INCFORM_CAUSATION_INCIDENT" Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT">
@@ -5052,6 +5065,15 @@
           <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.FK_PERSON_JOBCODE">
+            <End Role="JOBCODE" EntitySet="JOBCODE" />
+            <End Role="PERSON" EntitySet="PERSON" />
+          </AssociationSet>
+          <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.PLANT_ACTIVE" />
+          <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT">
+            <End Role="PLANT" EntitySet="PLANT" />
+            <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -8257,6 +8279,7 @@
           <Property Type="String" Name="PRIV_GROUP" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="JOBCODE1" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE" ToRole="JOBCODE1" />
           <NavigationProperty Name="JOBCODE2" Relationship="PSsqmModel.FK_JOBCODE_JOBCODE" FromRole="JOBCODE1" ToRole="JOBCODE" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="JOBCODE" ToRole="PERSON" />
         </EntityType>
         <EntityType Name="AUDIT">
           <Key>
@@ -8765,17 +8788,6 @@
           <Property Type="Boolean" Name="ENCRYPT_VALUE" Nullable="false" />
           <Property Type="String" Name="LANGUAGE" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="PLANT_ACTIVE">
-          <Key>
-            <PropertyRef Name="PLANT_ID" />
-            <PropertyRef Name="RECORD_TYPE" />
-          </Key>
-          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
-          <Property Type="DateTime" Name="EFF_START_DATE" Precision="0" />
-          <Property Type="DateTime" Name="EFF_END_DATE" Precision="0" />
-          <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_PLANT_ACTIVE_PLANT" FromRole="PLANT_ACTIVE" ToRole="PLANT" />
-        </EntityType>
         <Association Name="FK_AUDIT_AUDIT_TYPE">
           <End Type="PSsqmModel.AUDIT_TYPE" Role="AUDIT_TYPE" Multiplicity="1" />
           <End Type="PSsqmModel.AUDIT" Role="AUDIT" Multiplicity="*" />
@@ -8785,18 +8797,6 @@
             </Principal>
             <Dependent Role="AUDIT">
               <PropertyRef Name="AUDIT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PLANT_ACTIVE_PLANT">
-          <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="1" />
-          <End Type="PSsqmModel.PLANT_ACTIVE" Role="PLANT_ACTIVE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PLANT">
-              <PropertyRef Name="PLANT_ID" />
-            </Principal>
-            <Dependent Role="PLANT_ACTIVE">
-              <PropertyRef Name="PLANT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9005,6 +9005,7 @@
           <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
           <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
+          <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -9123,6 +9124,43 @@
             </Principal>
             <Dependent Role="TASK_STATUS">
               <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSON_JOBCODE">
+          <End Type="PSsqmModel.JOBCODE" Role="JOBCODE" Multiplicity="0..1" />
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JOBCODE">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Principal>
+            <Dependent Role="PERSON">
+              <PropertyRef Name="JOBCODE_CD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PLANT_ACTIVE">
+          <Key>
+            <PropertyRef Name="PLANT_ID" />
+            <PropertyRef Name="RECORD_TYPE" />
+          </Key>
+          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
+          <Property Type="DateTime" Name="EFF_START_DATE" Precision="0" />
+          <Property Type="DateTime" Name="EFF_END_DATE" Precision="0" />
+          <Property Type="Boolean" Name="ENABLE_EMAIL" />
+          <Property Type="Boolean" Name="ENABLE_INACTIVE_HIST" />
+          <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_PLANT_ACTIVE_PLANT" FromRole="PLANT_ACTIVE" ToRole="PLANT" />
+        </EntityType>
+        <Association Name="FK_PLANT_ACTIVE_PLANT">
+          <End Type="PSsqmModel.PLANT" Role="PLANT" Multiplicity="1" />
+          <End Type="PSsqmModel.PLANT_ACTIVE" Role="PLANT_ACTIVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PLANT">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="PLANT_ACTIVE">
+              <PropertyRef Name="PLANT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11086,16 +11124,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PLANT_ACTIVE">
-            <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACTIVE">
-              <MappingFragment StoreEntitySet="PLANT_ACTIVE">
-                <ScalarProperty Name="EFF_END_DATE" ColumnName="EFF_END_DATE" />
-                <ScalarProperty Name="EFF_START_DATE" ColumnName="EFF_START_DATE" />
-                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
-                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="INCFORM_CAUSATION">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CAUSATION">
               <MappingFragment StoreEntitySet="INCFORM_CAUSATION">
@@ -11239,6 +11267,18 @@
                 <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
                 <ScalarProperty Name="SSO_ID" ColumnName="SSO_ID" />
                 <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLANT_ACTIVE">
+            <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACTIVE">
+              <MappingFragment StoreEntitySet="PLANT_ACTIVE">
+                <ScalarProperty Name="ENABLE_INACTIVE_HIST" ColumnName="ENABLE_INACTIVE_HIST" />
+                <ScalarProperty Name="ENABLE_EMAIL" ColumnName="ENABLE_EMAIL" />
+                <ScalarProperty Name="EFF_END_DATE" ColumnName="EFF_END_DATE" />
+                <ScalarProperty Name="EFF_START_DATE" ColumnName="EFF_START_DATE" />
+                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11516,9 +11556,7 @@
         <EntityTypeShape EntityType="PSsqmModel.EHS_DATA_ORD" Width="1.5" PointX="7.889879697882515" PointY="12.901163196610829" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" />
         <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
-        <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="5.9547404525590784" PointY="14.232411257099551" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE" />
-        <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_CAUSATION" Width="1.5" PointX="9.6135556351456586" PointY="30.916818230839826" />
         <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="3.1552437782079181" PointY="11.040620212927749" />
@@ -11542,6 +11580,9 @@
         <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
+        <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
+        <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="3.7588965314249023" PointY="30.949603512394056" />
+        <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
         </Diagram>
     </Diagrams>
   </Designer>

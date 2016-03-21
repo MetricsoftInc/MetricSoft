@@ -16,6 +16,43 @@ namespace SQM.Website
 
 		#region helpers
 
+
+		public static bool ShouldNotifyPlant(decimal plantID, TaskRecordType recordType)
+		{
+			PLANT plant = SQMModelMgr.LookupPlant(new PSsqmEntities(), plantID, "");
+
+			return ShouldNotifyPlant(plant, recordType);
+		}
+
+		public static bool ShouldNotifyPlant(PLANT plant, TaskRecordType recordType)
+		{
+			bool shouldNotify = true;
+
+			if (plant != null  &&  plant.PLANT_ACTIVE != null && plant.PLANT_ACTIVE.Count > 0)
+			{
+				PLANT_ACTIVE plantActive = plant.PLANT_ACTIVE.Where(a=> a.RECORD_TYPE == (int)recordType).FirstOrDefault();
+				if (plantActive != null &&  plantActive.ENABLE_EMAIL.HasValue && (bool)plantActive.ENABLE_EMAIL == false)
+				{
+					shouldNotify = false;
+				}
+			}
+
+			return shouldNotify;
+		}
+
+		public static bool ShouldNotifyPersonPlant(decimal personID, TaskRecordType recordType)
+		{
+			bool shouldNotify = false;
+			PERSON person = SQMModelMgr.LookupPerson(personID, "");
+
+			if (person != null)
+			{
+				shouldNotify = ShouldNotifyPlant(person.PLANT_ID, recordType);
+			}
+
+			return shouldNotify;			
+		}
+
 		public static List<PERSON> GetNotifyPersonList(PLANT plant, string notifyScope, string notifyOnTask, string notifyOnTaskStatus)
 		{
 			List<PERSON> notifyPersonList = new List<PERSON>();
@@ -109,8 +146,12 @@ namespace SQM.Website
 				appUrl = "the website";
 
 			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
+
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
-			
 			notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus));
 			notifyPersonList = notifyPersonList.Where(n=> !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
 
@@ -158,8 +199,12 @@ namespace SQM.Website
 			// send email notify of new task assigned
 			int status = 0;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
-			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
 
+			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
 			if (person != null  &&  !string.IsNullOrEmpty(person.EMAIL))
 			{
 				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" });
@@ -199,6 +244,10 @@ namespace SQM.Website
 			int status = 0;
 			TASK_STATUS theTask = theTaskItem.Task;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
 			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
@@ -294,6 +343,10 @@ namespace SQM.Website
 				appUrl = "the website";
 
 			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
 
 			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus);
 			notifyPersonList = notifyPersonList.Where(n => !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
@@ -342,8 +395,12 @@ namespace SQM.Website
 			// send email notify of new task assigned
 			int status = 0;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
-			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
 
+			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
 			if (person != null && !string.IsNullOrEmpty(person.EMAIL))
 			{
 				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" });
@@ -383,6 +440,10 @@ namespace SQM.Website
 			int status = 0;
 			TASK_STATUS theTask = theTaskItem.Task;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
 			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
@@ -458,6 +519,11 @@ namespace SQM.Website
 			string auditType = type.TITLE;
 			DateTime dueDate = audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE);
 
+			if (ShouldNotifyPlant((decimal)audit.DETECT_PLANT_ID, TaskRecordType.Audit) == false)
+			{
+				return;
+			}
+
 			PERSON person = SQMModelMgr.LookupPerson(entities, (decimal)audit.AUDIT_PERSON, "", false);
 			if (person != null  &&  !string.IsNullOrEmpty(person.EMAIL))
 			{
@@ -490,6 +556,11 @@ namespace SQM.Website
 			string auditType = type.TITLE;
 			DateTime dueDate = audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE);
 
+			if (ShouldNotifyPlant((decimal)audit.DETECT_PLANT_ID, TaskRecordType.Audit) == false)
+			{
+				return;
+			}
+
 			PERSON person = SQMModelMgr.LookupPerson(entities, (decimal)audit.AUDIT_PERSON, "", false);
 			if (person != null)
 			{
@@ -521,7 +592,13 @@ namespace SQM.Website
 			int status = 0;
 			TASK_STATUS theTask = theTaskItem.Task;
 			AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+
 			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)audit.DETECT_PLANT_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
+
 			DEPARTMENT department = new DEPARTMENT();
 			if (audit.DEPT_ID.HasValue)
 			{
@@ -569,7 +646,7 @@ namespace SQM.Website
 
 		#endregion
 
-		public static int NotifyTaskAssigment(TASK_STATUS task)
+		public static int NotifyTaskAssigment(TASK_STATUS task, decimal plantID)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			int status = 0;
@@ -578,6 +655,22 @@ namespace SQM.Website
 			string taskStep = task.TASK_STEP;
 			string taskType = task.TASK_TYPE;
 			DateTime dueDate = (DateTime)task.DUE_DT;
+
+			if (plantID > 0)  // plant where task originates was supplied.  check if email is active for this plant
+			{
+				if (ShouldNotifyPlant(plantID, (TaskRecordType)task.RECORD_TYPE) == false)
+				{
+					return status;
+				}
+			}
+			else
+			{
+				// use the responsible person's plant to deterime if email is active
+				if (ShouldNotifyPersonPlant((decimal)task.RESPONSIBLE_ID, (TaskRecordType)task.RECORD_TYPE) == false)
+				{
+					return status;
+				}
+			}
 
 			PERSON person = SQMModelMgr.LookupPerson(entities, (decimal)task.RESPONSIBLE_ID, "", false);
 			if (person != null && !string.IsNullOrEmpty(person.EMAIL))

@@ -18,7 +18,7 @@ namespace SQM.Website
                                     QualityIssue = 20, ProblemCase = 21,
                                     ProfileInput = 30, ProfileInputApproval = 31, ProfileInputFinalize = 33, CurrencyInput = 36, 
                                     HealthSafetyIncident = 40, PreventativeAction = 45, 
-									Audit = 50 }
+									Audit = 50, EHSData = 90 }
 
 
     public class ResponseItem

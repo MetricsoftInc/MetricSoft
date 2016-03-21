@@ -1734,11 +1734,11 @@ namespace SQM.Website
                 if (busOrgID == 0)
                 {
                     if (plantID > 0)
-                        plant = (from pl in ctx.PLANT.Include("Address")
+                        plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
                                 where (pl.COMPANY_ID == companyID) && (pl.PLANT_ID == plantID)
                                 select pl).Single();
-                    else 
-                        plant = (from pl in ctx.PLANT.Include("Address")
+                    else
+						plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
                                 where (pl.COMPANY_ID == companyID) && (pl.DUNS_CODE == plantCode)
                                 select pl).Single();
                 }
@@ -1793,11 +1793,11 @@ namespace SQM.Website
             try
             {
                 if (String.IsNullOrEmpty(dunsCode))
-                    plant = (from pl in ctx.PLANT.Include("Address")
+                    plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
                              where (pl.PLANT_ID == plantID)
                              select pl).Single();
                 else
-                    plant = (from pl in ctx.PLANT.Include("Address")
+					plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
                              where (pl.DUNS_CODE == dunsCode)
                              select pl).Single();
             }
