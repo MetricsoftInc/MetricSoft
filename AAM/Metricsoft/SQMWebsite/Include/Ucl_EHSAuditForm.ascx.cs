@@ -302,7 +302,6 @@ namespace SQM.Website
 							ddlAuditLocation.Enabled = true;
 							mnuAuditLocation.Visible = false;
 							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
-							ddlAuditLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 						}
 					}
 				}

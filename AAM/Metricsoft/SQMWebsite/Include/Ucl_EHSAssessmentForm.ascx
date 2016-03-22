@@ -67,7 +67,7 @@
                                             <td class="tableDataAlt">
                                                 <asp:Label runat="server" ID="lblAuditLocation" Visible="false"></asp:Label>
                                                 <telerik:RadComboBox ID="ddlAuditLocation" runat="server" Skin="Metro" Width="280" ZIndex="10" Font-Size="Small"
-                                                    AutoPostBack="true" ToolTip="select an accesible business location" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="AuditLocation_Select" EnableViewState="true">
+                                                    AutoPostBack="true" ToolTip="select an accesible business location" EmptyMessage="<%$ Resources:LocalizedText, Select %>" EnableCheckAllItemsCheckBox="false" OnSelectedIndexChanged="AuditLocation_Select" EnableViewState="true">
                                                 </telerik:RadComboBox>
                                                 <telerik:RadMenu ID="mnuAuditLocation" runat="server" Skin="Default" Width="280" Style="z-index: 9;" EnableAutoScroll="true" DefaultGroupSettings-Flow="Vertical" DefaultGroupSettings-RepeatDirection="Horizontal" OnItemClick="AuditLocation_Select" EnableViewState="true"></telerik:RadMenu>
                                                 <asp:HiddenField runat="server" ID="hdnAuditLocation" />

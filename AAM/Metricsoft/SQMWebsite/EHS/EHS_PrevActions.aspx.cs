@@ -196,7 +196,6 @@ namespace SQM.Website
 
 				// work-around for problem w/ radwindow combobox not retaining items created/set from a basepage method ?
 				SQMBasePage.SetLocationList(ddlActionLocation, locationList, 0, true);
-				ddlActionLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
 				rddlNewActionType.DataSource = xlatList.Where(l=> l.XLAT_GROUP == "IQ_81" && l.STATUS == "A").ToList();
 				rddlNewActionType.DataTextField = "DESCRIPTION_SHORT";

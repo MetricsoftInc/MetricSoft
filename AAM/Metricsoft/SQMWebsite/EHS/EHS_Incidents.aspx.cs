@@ -287,7 +287,6 @@ namespace SQM.Website
 			List<BusinessLocation> locationList = SessionManager.PlantList;
 			locationList = UserContext.FilterPlantAccessList(locationList);
 			SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
-			ddlIncidentLocation.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
 			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId, SessionManager.SessionContext.Language().NLS_LANGUAGE);
 			rddlNewIncidentType.DataSource = incidentTypeList;
