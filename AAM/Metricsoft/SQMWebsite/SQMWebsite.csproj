@@ -2626,6 +2626,8 @@
     <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.th.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Assessments.aspx.zh.resx" />
     <Content Include="EHS\App_LocalResources\EHS_PrevActions.aspx.es.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_PrevActions.aspx.th.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_PrevActions.aspx.zh.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
