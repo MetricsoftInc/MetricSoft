@@ -189,9 +189,10 @@ namespace SQM.Website
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 
-				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[3] { "IQ_81", "IQ_82", "IQ_83" }, 1);
+				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[4] { "IQ_81", "IQ_82", "IQ_83", "STATUS_SELECT" }, 1);
 				rcbInspectionType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInspectionType, xlatList.Where(l => l.XLAT_GROUP == "IQ_81" && l.STATUS == "A").ToList(), "SHORT");
 				rcbRecommendType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbRecommendType, xlatList.Where(l => l.XLAT_GROUP == "IQ_83").ToList(), "SHORT");
+				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "STATUS_SELECT").ToList(), "SHORT");
 				rcbStatusSelect.SelectedValue = "A";
 
 				// work-around for problem w/ radwindow combobox not retaining items created/set from a basepage method ?

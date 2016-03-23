@@ -169,14 +169,6 @@
 						<span style="padding-left:12px;">
 						<asp:Label runat="server" ID="lblStatus" CssClass="prompt" Text="Status" meta:resourcekey="lblStatusResource1"></asp:Label>
 						<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select action status to list" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" Width="160px" ZIndex="9000" Skin="Metro" meta:resourcekey="rcbStatusSelectResource1">
-							<Items>
-								<telerik:RadComboBoxItem Text="All" Value="" meta:resourcekey="RadComboBoxItemResource1" />
-								<telerik:RadComboBoxItem Text="All Open" Value="A" meta:resourcekey="RadComboBoxItemResource2"/>
-								<telerik:RadComboBoxItem Text="In Progress" Value="P" meta:resourcekey="RadComboBoxItemResource3"/>
-								<telerik:RadComboBoxItem Text="All Closed" Value="C" meta:resourcekey="RadComboBoxItemResource4"/>
-								<telerik:RadComboBoxItem Text="Audited" Value="U" meta:resourcekey="RadComboBoxItemResource5"/>
-								<telerik:RadComboBoxItem Text="Awaiting Funding" Value="F" meta:resourcekey="RadComboBoxItemResource6"/>
-							</Items>
 						</telerik:RadComboBox></span>
 
 						<div class="clearfix visible-xs"></div>
