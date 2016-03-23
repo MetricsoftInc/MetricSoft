@@ -134,9 +134,13 @@ namespace SQM.Website.EHS
 			}
 
 			string customerLogo = "";
-			customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"].ToString();
+			if (System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"] != null)
+				customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"].ToString();
 			if (string.IsNullOrEmpty(customerLogo))
-				customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogo"].ToString();
+			{
+				if (System.Configuration.ConfigurationManager.AppSettings["CustomerLogo"] != null)
+					customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogo"].ToString();
+			}
 			if (string.IsNullOrEmpty(customerLogo))
 				customerLogo = "MetricsoftLogo.png";
 			
