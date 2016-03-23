@@ -393,16 +393,23 @@ namespace SQM.Website.EHS
 				btnDelete.Visible = createAuditAccess;
 				btnDelete.CommandArgument = EditAuditId.ToString();
 
+				cbClose.Checked = false;
+
 				if (IsEditContext && CurrentStep < 2)
 				{
 					btnSaveReturn.Enabled = true;
 					btnSaveReturn.Visible = true;
 					btnSaveReturn.CommandArgument = "1";
+					if (CurrentStep > 0)
+						cbClose.Visible = true;
+					else
+						cbClose.Visible = false;
 				}
 				else
 				{
 					btnSaveReturn.Enabled = false;
 					btnSaveReturn.Visible = false;
+					cbClose.Visible = false;
 				}
 
 				if (rddlDepartment.Items.Count == 0)
@@ -411,13 +418,14 @@ namespace SQM.Website.EHS
 					rddlDepartment.SelectedValue = "-1";
 				}
 
-				if (audit.DEPT_ID != null && rddlDepartment.SelectedIndex == 0)
+				if (audit.DEPT_ID != null)
 				{
+					if (rddlDepartment.SelectedIndex == 0)
 					rddlDepartment.SelectedValue = audit.DEPT_ID.ToString();
 					lblDepartment.Text = rddlDepartment.SelectedText.ToString();
 				}
 
-				if (CurrentStep > 1) // display only
+				if (CurrentStep > 0) // display only
 				{
 					lblDepartment.Visible = true;
 					rddlDepartment.Enabled = false;
@@ -456,7 +464,7 @@ namespace SQM.Website.EHS
 							ddlAuditLocation.Visible = false;
 							mnuAuditLocation.Visible = true;
 							mnuAuditLocation.Enabled = true;
-							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "Select a Location", "", true);
+							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "[Select a Location]", "", true);
 						}
 					}
 					else
@@ -468,7 +476,7 @@ namespace SQM.Website.EHS
 							ddlAuditLocation.Enabled = true;
 							mnuAuditLocation.Visible = false;
 							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
-							//ddlAuditLocation.Items.Insert(0, new RadComboBoxItem("", ""));
+							ddlAuditLocation.Items.Insert(0, new RadComboBoxItem("[Select a Location]", ""));
 						}
 					}
 				}
@@ -497,6 +505,8 @@ namespace SQM.Website.EHS
 				lblAddOrEditAudit.Text = "<strong>Add a New Assessment:</strong>";
 				lblAuditType.Visible = false;
 				btnDelete.Visible = false;
+				cbClose.Checked = false;
+				cbClose.Visible = false;
 			}
 		}
 
@@ -674,6 +684,7 @@ namespace SQM.Website.EHS
 		protected void Save(bool shouldReturn)
 		{
 			AUDIT theAudit = null;
+			decimal auditPerson = 0;
 			decimal auditId = 0;
 			if (CurrentStep == 0)
 			{
@@ -708,6 +719,9 @@ namespace SQM.Website.EHS
 				auditTypeId = EditAuditTypeId;
 			}
 
+			try { auditPerson = (decimal)theAudit.AUDIT_PERSON; }
+			catch { auditPerson = 0; }
+
 			UpdateAnswersFromForm();
 
 			if (auditId > 0)
@@ -734,11 +748,12 @@ namespace SQM.Website.EHS
 				bool showMsg = true;
 				if (CurrentStep == 0)
 					showMsg = false;
-				CurrentStep = 1;
-				IsEditContext = true;
-				Visible = true;
-				// need to redraw the page with text boxes highlighted
-				BuildForm();
+				// determine if we should be in edit mode or display mode
+				if (auditPerson == SessionManager.UserContext.Person.PERSON_ID)
+					UpdateDisplayState(DisplayState.AuditNotificationEdit);
+				else
+					UpdateDisplayState(DisplayState.AuditNotificationDisplay);
+
 				// and send a message that the field need to be entered
 				if (showMsg)
 				{

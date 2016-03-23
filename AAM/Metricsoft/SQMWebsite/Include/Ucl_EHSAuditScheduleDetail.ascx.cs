@@ -225,7 +225,7 @@ namespace SQM.Website
 							ddlAuditLocation.Visible = false;
 							mnuAuditLocation.Visible = true;
 							mnuAuditLocation.Enabled = true;
-							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "Select a Location", "", true);
+							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "[Select a Location]", "", true);
 						}
 					}
 					else
@@ -237,6 +237,7 @@ namespace SQM.Website
 							ddlAuditLocation.Enabled = true;
 							mnuAuditLocation.Visible = false;
 							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
+							ddlAuditLocation.Items.Insert(0, new RadComboBoxItem("[Select a Location]", ""));
 						}
 					}
 				}
@@ -261,6 +262,10 @@ namespace SQM.Website
 				mnuAuditLocation.Items[0].Text = mnuAuditLocation.SelectedItem.Text;
 			}
 			else if (sender is RadSlider)
+			{
+				location = ddlAuditLocation.SelectedValue;
+			}
+			else
 			{
 				location = ddlAuditLocation.SelectedValue;
 			}
