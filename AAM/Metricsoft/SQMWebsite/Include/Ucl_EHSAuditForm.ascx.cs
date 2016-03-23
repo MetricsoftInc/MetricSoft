@@ -302,7 +302,7 @@ namespace SQM.Website
 							ddlAuditLocation.Enabled = true;
 							mnuAuditLocation.Visible = false;
 							SQMBasePage.SetLocationList(ddlAuditLocation, locationList, 0, true);
-							ddlAuditLocation.Items.Insert(0, new RadComboBoxItem("[Select a Location]", ""));
+							//ddlAuditLocation.Items.Insert(0, new RadComboBoxItem("[Select a Location]", ""));
 						}
 					}
 				}
