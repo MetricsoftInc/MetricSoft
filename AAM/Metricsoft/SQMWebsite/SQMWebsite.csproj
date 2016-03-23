@@ -2119,9 +2119,7 @@
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Report\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />
