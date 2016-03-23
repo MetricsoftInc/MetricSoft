@@ -544,6 +544,7 @@
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
+    <Content Include="Properties\PublishProfiles\TIStaging - Rackspace.user" />
     <Content Include="Quality\ControlMethodList.aspx" />
     <Content Include="Quality\QualityIssueList.aspx" />
     <Content Include="Quality\QualityIssue_Label.aspx" />
@@ -2102,6 +2103,7 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\PublishProfiles\Superior-Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\SuperiorStaging-Rackspace.pubxml" />
+    <None Include="Properties\PublishProfiles\TIStaging - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\varroc - Web Deploy.pubxml" />
     <Content Include="ReportMaster.Master" />
