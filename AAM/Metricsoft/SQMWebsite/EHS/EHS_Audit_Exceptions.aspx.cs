@@ -220,11 +220,11 @@ namespace SQM.Website
 			{
 				fromDate = fromDate.AddDays(-1);
 			}
-			// we want the end date to be the current week Monday
+			// we want the end date to be the next week Monday (so we can see audits in progress)
 			DateTime toDate = localTime;
 			while ((int)(toDate.DayOfWeek) > 1)
 			{
-				toDate = toDate.AddDays(-1);
+				toDate = toDate.AddDays(1);
 			}
 
 			dmFromDate.SelectedDate = fromDate;
