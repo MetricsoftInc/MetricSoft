@@ -271,7 +271,11 @@ namespace SQM.Website
 				SETTINGS sets = SQMSettings.GetSetting("EHS", "INPUTATTACH");
 				if (sets != null && (sets.VALUE.ToUpper() == "Y"  ||  sets.VALUE.ToUpper() == "TRUE"))
 				{
+					int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "");
+					lnkAttachments.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
 					lnkAttachments.Visible = true;
+
+					/*
 					foreach (RepeaterItem item in rptProfilePeriod.Controls)
 					{
 						LinkButton lnk = (LinkButton)item.FindControl("lnkAttachment");
@@ -280,6 +284,7 @@ namespace SQM.Website
 							// lnk.Visible = true;  // mt - not sure about applying attachments to individual metrics
 						}
 					}
+					*/
 				}
 
             }

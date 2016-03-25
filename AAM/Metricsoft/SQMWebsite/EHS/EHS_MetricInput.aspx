@@ -298,7 +298,7 @@
                     <br />
                     <span style="float: left; margin-left: 5px;" class="noprint">
                         <asp:HiddenField id="hfExportText" runat="server" Value="Export (4 month) input history to Excel"/>
-						<asp:LinkButton ID="lnkAttachments" runat="server" CssClass="buttonAttach buttonPopupOpen" visible="false" Text="Attachments" ToolTip="Attachments" OnClick="lnkAddAttach"></asp:LinkButton>
+						<asp:LinkButton ID="lnkAttachments" runat="server" CssClass="buttonAttach buttonPopupOpen" visible="false" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" OnClick="lnkAddAttach"></asp:LinkButton>
                         <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Visible="false" Text="<%$ Resources:LocalizedText, Print %>" OnClientClick="javascript:window.print()" style="margin-left: 5px;"></asp:LinkButton>
                         <asp:LinkButton  ID="lnkExport" runat="server" Visible="false" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
                         <Ucl:Export id="uclExport" runat="server"/>

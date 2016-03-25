@@ -348,6 +348,18 @@ namespace SQM.Website.Classes
             return ret;
         }
 
+		public static int GetAttachmentCountByRecord(int recordType, decimal recordID, string recordStep, string sessionID)
+		{
+			int count = 0;
+
+			List<ATTACHMENT> attachList = SelectAttachmentListByRecord(recordType, recordID, recordStep, sessionID);
+			if (attachList != null)
+			{
+				count = attachList.Count;
+			}
+			return count;
+		}
+
         public static List<ATTACHMENT> SelectAttachmentListByRecord(int recordType, decimal recordID, string recordStep, string sessionID)
         {
             // get all attachments related to a specific record (ie quality issue, ehs incident, etc...)
@@ -364,13 +376,18 @@ namespace SQM.Website.Classes
                     }
                     else
                     {
-                        ret = (from d in entities.ATTACHMENT
-                               where (d.RECORD_TYPE == recordType && d.RECORD_ID == recordID)
-                               select d).ToList();
+						if (!string.IsNullOrEmpty(recordStep))
+							ret = (from d in entities.ATTACHMENT
+								   where (d.RECORD_TYPE == recordType && d.RECORD_ID == recordID  &&  d.RECORD_STEP == recordStep)
+								   select d).ToList();
+						else 
+							ret = (from d in entities.ATTACHMENT
+								   where (d.RECORD_TYPE == recordType && d.RECORD_ID == recordID)
+								   select d).ToList();
                     }
 
-                    if (!string.IsNullOrEmpty(recordStep))
-                        ret = ret.Where(l => l.RECORD_STEP == recordStep).ToList();
+                    //if (!string.IsNullOrEmpty(recordStep))
+                    //    ret = ret.Where(l => l.RECORD_STEP == recordStep).ToList();
                 }
             }
             catch (Exception e)
