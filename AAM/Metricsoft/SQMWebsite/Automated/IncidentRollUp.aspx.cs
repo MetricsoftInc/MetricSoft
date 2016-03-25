@@ -103,7 +103,8 @@ namespace SQM.Website.Automated
 				// fetch all incidents occurring after the minimum reporting date
 				List<INCIDENT> incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") 
 								where 
-								i.INCIDENT_DT >= fromDate  &&  i.DETECT_PLANT_ID > 0 
+								i.ISSUE_TYPE_ID != (decimal)EHSIncidentTypeId.PreventativeAction 
+								&& i.INCIDENT_DT >= fromDate  &&  i.DETECT_PLANT_ID > 0 
 								select i).OrderBy(l=> l.DETECT_PLANT_ID).ThenBy(l=> l.INCIDENT_DT).ToList();
 
 				List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0);
