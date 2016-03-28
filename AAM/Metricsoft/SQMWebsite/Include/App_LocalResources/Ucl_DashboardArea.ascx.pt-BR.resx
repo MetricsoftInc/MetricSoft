@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lblViewNameResource1.Text" xml:space="preserve">
+    <value>Nome da visualização</value>
+  </data>
+  <data name="lblViewResource1.Text" xml:space="preserve">
+    <value>Visualização:</value>
+  </data>
+  <data name="LblViewSaveErrorResource1.Text" xml:space="preserve">
+    <value>Ocorreu um erro ao salvar suas alterações.</value>
+  </data>
+  <data name="lblVISeqResource1.Text" xml:space="preserve">
+    <value>Gráfico</value>
+  </data>
+  <data name="lblVIXAxisResource1.Text" xml:space="preserve">
+    <value>Eixo variável</value>
+  </data>
+  <data name="lblWorkingResource1.Text" xml:space="preserve">
+    <value>Carregando visualização - aguarde...</value>
+  </data>
+  <data name="lblXByResource1.Text" xml:space="preserve">
+    <value>por</value>
+  </data>
+  <data name="lblXToResource1.Text" xml:space="preserve">
+    <value>para</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Carregando...</value>
+  </data>
+  <data name="RadComboBoxItemResource10.Text" xml:space="preserve">
+    <value>Desempenho Ambiental acumulado no ano</value>
+  </data>
+  <data name="RadComboBoxItemResource11.Text" xml:space="preserve">
+    <value>Saúde e segurança</value>
+  </data>
+  <data name="RadComboBoxItemResource12.Text" xml:space="preserve">
+    <value>Desempenho de Saúde e Segurança acumulado no ano</value>
+  </data>
+  <data name="RadComboBoxItemResource13.Text" xml:space="preserve">
+    <value>Qualidade</value>
+  </data>
+  <data name="RadComboBoxItemResource14.Text" xml:space="preserve">
+    <value>Responsável</value>
+  </data>
+  <data name="RadComboBoxItemResource18.Text" xml:space="preserve">
+    <value>Sem padrões</value>
+  </data>
+  <data name="RadComboBoxItemResource19.Text" xml:space="preserve">
+    <value>Utilizar atual / Permitir substituição</value>
+  </data>
+  <data name="RadComboBoxItemResource20.Text" xml:space="preserve">
+    <value>Utilizar atual / Sem substituição</value>
+  </data>
+  <data name="RadComboBoxItemResource21.Text" xml:space="preserve">
+    <value>Selecionar locais</value>
+  </data>
+  <data name="RadComboBoxItemResource22.Text" xml:space="preserve">
+    <value>Selecionar período</value>
+  </data>
+  <data name="RadComboBoxItemResource24.Text" xml:space="preserve">
+    <value>Área da seção</value>
+  </data>
+  <data name="RadComboBoxItemResource25.Text" xml:space="preserve">
+    <value>Vernier</value>
+  </data>
+  <data name="RadComboBoxItemResource26.Text" xml:space="preserve">
+    <value>Matriz de Vernier</value>
+  </data>
+  <data name="RadComboBoxItemResource27.Text" xml:space="preserve">
+    <value>Gráfico de barras</value>
+  </data>
+  <data name="RadComboBoxItemResource28.Text" xml:space="preserve">
+    <value>Gráfico de barras empilhadas</value>
+  </data>
+  <data name="RadComboBoxItemResource29.Text" xml:space="preserve">
+    <value>Gráfico de Pareto</value>
+  </data>
+  <data name="RadComboBoxItemResource30.Text" xml:space="preserve">
+    <value>Medidor de coluna</value>
+  </data>
+  <data name="RadComboBoxItemResource31.Text" xml:space="preserve">
+    <value>Matriz de medidor de coluna</value>
+  </data>
+  <data name="RadComboBoxItemResource32.Text" xml:space="preserve">
+    <value>Gráfico de colunas</value>
+  </data>
+  <data name="RadComboBoxItemResource33.Text" xml:space="preserve">
+    <value>Gráfico de colunas empilhadas</value>
+  </data>
+  <data name="RadComboBoxItemResource34.Text" xml:space="preserve">
+    <value>Gráfico de colunas agrupadas</value>
+  </data>
+  <data name="RadComboBoxItemResource35.Text" xml:space="preserve">
+    <value>Gráfico de Pareto de colunas</value>
+  </data>
+  <data name="RadComboBoxItemResource36.Text" xml:space="preserve">
+    <value>Gráfico de linhas</value>
+  </data>
+  <data name="RadComboBoxItemResource37.Text" xml:space="preserve">
+    <value>Matriz de gráfico de linhas</value>
+  </data>
+  <data name="RadComboBoxItemResource38.Text" xml:space="preserve">
+    <value>Gráfico de pizza</value>
+  </data>
+  <data name="RadComboBoxItemResource39.Text" xml:space="preserve">
+    <value>Matriz de gráfico de pizza</value>
+  </data>
+  <data name="RadComboBoxItemResource4.Text" xml:space="preserve">
+    <value>Ano base igual ao ano anterior</value>
+  </data>
+  <data name="RadComboBoxItemResource40.Text" xml:space="preserve">
+    <value>Medidor radial</value>
+  </data>
+  <data name="RadComboBoxItemResource41.Text" xml:space="preserve">
+    <value>Matriz de medidor radial</value>
+  </data>
+  <data name="RadComboBoxItemResource42.Text" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="RadComboBoxItemResource45.Text" xml:space="preserve">
+    <value>Dias decorridos</value>
+  </data>
+  <data name="RadComboBoxItemResource46.Text" xml:space="preserve">
+    <value>Somar tudo</value>
+  </data>
+  <data name="RadComboBoxItemResource47.Text" xml:space="preserve">
+    <value>Ordenar por medição-local</value>
+  </data>
+  <data name="RadComboBoxItemResource48.Text" xml:space="preserve">
+    <value>Ordenar por local da medição</value>
+  </data>
+  <data name="RadComboBoxItemResource49.Text" xml:space="preserve">
+    <value>Ordenar por período-local</value>
+  </data>
+  <data name="RadComboBoxItemResource5.Text" xml:space="preserve">
+    <value>Intervalo efetivo de métricas do ano base</value>
+  </data>
+  <data name="RadComboBoxItemResource50.Text" xml:space="preserve">
+    <value>Ordenar por período-medida</value>
+  </data>
+  <data name="RadComboBoxItemResource51.Text" xml:space="preserve">
+    <value>Ordenar por ano-local</value>
+  </data>
+  <data name="RadComboBoxItemResource52.Text" xml:space="preserve">
+    <value>Ordenar por ano-medida</value>
+  </data>
+  <data name="RadComboBoxItemResource53.Text" xml:space="preserve">
+    <value>Escala automática</value>
+  </data>
+  <data name="RadComboBoxItemResource54.Text" xml:space="preserve">
+    <value>Definir escalas</value>
+  </data>
+  <data name="RadComboBoxItemResource55.Text" xml:space="preserve">
+    <value>Nenhum(a)</value>
+  </data>
+  <data name="RadComboBoxItemResource57.Text" xml:space="preserve">
+    <value>Valor atual</value>
+  </data>
+  <data name="RadComboBoxItemResource6.Text" xml:space="preserve">
+    <value>Padrão</value>
+  </data>
+  <data name="RadComboBoxItemResource7.Text" xml:space="preserve">
+    <value>Por ano</value>
+  </data>
+  <data name="RadComboBoxItemResource8.Text" xml:space="preserve">
+    <value>Por mês</value>
+  </data>
+  <data name="RadComboBoxItemResource9.Text" xml:space="preserve">
+    <value>Métricas ambientais</value>
+  </data>
+  <data name="tbVIHeightResource1.ToolTip" xml:space="preserve">
+    <value>Altura</value>
+  </data>
+  <data name="tbVIWidthResource1.ToolTip" xml:space="preserve">
+    <value>Largura</value>
+  </data>
+  <data name="tbVIXAxisLabelResource1.ToolTip" xml:space="preserve">
+    <value>Legenda do eixo variável</value>
+  </data>
+  <data name="tbVIXAxisMaxResource1.ToolTip" xml:space="preserve">
+    <value>Valor máximo do eixo</value>
+  </data>
+  <data name="tbVIXAxisMinResource1.ToolTip" xml:space="preserve">
+    <value>Valor de origem ou mínimo do eixo</value>
+  </data>
+  <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
+    <value>Unidade da escala</value>
+  </data>
+</root>
