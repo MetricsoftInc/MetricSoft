@@ -147,7 +147,7 @@ namespace SQM.Website
 					{
 						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_AUDIT", "0").DESCRIPTION);
 						RadMenu1.Items.Add(EHSMenu2);
-						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config)
+						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.config && GetMenu("MENU_AUDIT", "11").STATUS.ToUpper() == "A")
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "11").DESCRIPTION, GetMenu("MENU_AUDIT", "11").DESCRIPTION_SHORT));
 						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate)
 						{
@@ -156,7 +156,7 @@ namespace SQM.Website
 							if (GetMenu("MENU_AUDIT", "15").STATUS.ToUpper() == "A")
 								EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "15").DESCRIPTION, GetMenu("MENU_AUDIT", "15").DESCRIPTION_SHORT));
 						}
-						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate)
+						if (UserContext.GetMaxScopePrivilege(SysScope.audit) <= SysPriv.originate && GetMenu("MENU_AUDIT", "13").STATUS.ToUpper() == "A")
 							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_AUDIT", "13").DESCRIPTION, GetMenu("MENU_AUDIT", "13").DESCRIPTION_SHORT));
 					}
 
