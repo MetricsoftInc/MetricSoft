@@ -111,7 +111,7 @@ namespace SQM.Website
 
             List<EHS_PROFILE_MEASURE> profileMeasureList = new List<EHS_PROFILE_MEASURE>();
 
-			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "TASK");
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
 			string altDunsLabel = "";
 			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
 			{
@@ -618,7 +618,7 @@ namespace SQM.Website
             EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange);
             esMgr.LoadMetricInputs(dtFrom, dtTo, plantIDs, "");
 
-			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "TASK");
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
 			string altDunsLabel = "";
 			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
 			{
