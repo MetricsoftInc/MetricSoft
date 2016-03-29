@@ -59,9 +59,9 @@ namespace SQM.Website
                 locationList.Add(new BusinessLocation().Initialize(plantID));
 
 				List<PERSON> responsibleList = SQMModelMgr.SelectPrivGroupPersonList(SysPriv.approve, SysScope.envdata, plant.PLANT_ID);
-				responsibleList.AddRange(SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0));  // append any system administrators to the approval list
+				responsibleList.AddRange(SQMModelMgr.SelectPrivGroupPersonList(SysPriv.admin, SysScope.system, 0).Where(l=> l.STATUS == "A").ToList());  // append any system administrators to the approval list
 				SQMBasePage.SetPersonList(ddlFinalApprover, responsibleList, "", true);
-				SQMBasePage.SetPersonList(ddlMetricResponsible, SQMModelMgr.SelectPrivGroupPersonList(SysPriv.originate, SysScope.envdata, plant.PLANT_ID), "", true);
+				SQMBasePage.SetPersonList(ddlMetricResponsible, SQMModelMgr.SelectPrivGroupPersonList(SysPriv.originate, SysScope.envdata, plant.PLANT_ID).Where(l => l.STATUS == "A").ToList(), "", true);
       
                 LoadPlantProfile(plant);
 
