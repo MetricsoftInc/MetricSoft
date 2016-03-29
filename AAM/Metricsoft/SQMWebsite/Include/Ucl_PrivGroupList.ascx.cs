@@ -396,7 +396,7 @@ namespace SQM.Website
 					break;
 				case "busorg":
 				case "busloc":
-					ddlPriviledge.SelectedValue = "200";
+					ddlPriviledge.SelectedValue = "100";
 					ddlPriviledge.Enabled = false;
 					break;
 				default:
