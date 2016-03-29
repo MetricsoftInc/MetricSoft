@@ -11,7 +11,8 @@ namespace SQM.Website
 	{
 		public static string incidentPath = "/EHS/EHS_Incidents.aspx?r=";
 		public static string incidentActionPath = "/Home/Calendar.aspx?v=T";
-		public static string auditPath = "/EHS/EHS_Audits.aspx";
+		//public static string auditPath = "/EHS/EHS_Audits.aspx";
+		public static string auditPath = "/EHS/EHS_Assessments.aspx";
 		public static string auditActionPath = "/Home/Calendar.aspx?v=T";
 
 		#region helpers

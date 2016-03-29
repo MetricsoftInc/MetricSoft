@@ -2205,7 +2205,7 @@ namespace SQM.Website
 			{
 				SessionManager.ReturnStatus = false;
 				SessionManager.ReturnObject = "DisplayAudits";
-				Response.Redirect("/EHS/EHS_Audits.aspx");  // mt - temporary
+				Response.Redirect("/EHS/EHS_Assessments.aspx");  // mt - temporary
 			}
 
 		}

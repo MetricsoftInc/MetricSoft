@@ -122,7 +122,8 @@ namespace SQM.Website
 							SessionManager.ReturnObject = args[1];
 							SessionManager.ReturnStatus = true;
 							SessionManager.ReturnPath = Request.Path.ToString();
-							Response.Redirect("/EHS/EHS_Audits.aspx");
+							//Response.Redirect("/EHS/EHS_Audits.aspx");
+							Response.Redirect("/EHS/EHS_Assessments.aspx");
 						}
 						break;
                     case TaskRecordType.CurrencyInput:
