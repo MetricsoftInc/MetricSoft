@@ -103,7 +103,7 @@
 
 										<span style="float:right">
 											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="False" ForeColor="DarkRed"
-												Text="<%$ Resources:LocalizedText, DeleteIncident %>" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
+												Text="<%$ Resources:LocalizedText, Delete %>" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
 												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" meta:resourcekey="btnDeleteResource1" />
 										</span>
 									</div>
