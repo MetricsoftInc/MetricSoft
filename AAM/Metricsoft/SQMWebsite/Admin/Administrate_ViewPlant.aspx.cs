@@ -481,7 +481,7 @@ namespace SQM.Website
 		#region plantactive
 		private void BindPlantActive(List<PLANT_ACTIVE> plantActiveList)
 		{
-			if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busloc) || SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg))
+			if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.system)  &&  SessionManager.UserContext.Person.PERSON_ID == 1)
 				rgPlantActive.Enabled = true;
 			else
 				rgPlantActive.Enabled = false;
