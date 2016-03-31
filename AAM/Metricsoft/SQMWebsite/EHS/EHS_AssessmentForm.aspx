@@ -256,7 +256,9 @@
                                             <table style="width: 100%;">
                                                 <tr>
                                                     <td style="text-align: right;"><asp:CheckBox runat="server" ID="cbClose" Text="<%$ Resources:LocalizedText, CloseAudit %>" /></td>
-                                                    <td>&nbsp;</td>
+                                                    <td>
+                                                        <asp:LinkButton ID="LnkAuditAttachment" runat="server" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" CssClass="buttonAttach buttonPopupOpen" OnClick="lnkAddAttach" CausesValidation="false"></asp:LinkButton>
+                                                    </td>
                                                 </tr>
                                                 <tr><td colspan="2">&nbsp;</td></tr>
                                                 <tr>

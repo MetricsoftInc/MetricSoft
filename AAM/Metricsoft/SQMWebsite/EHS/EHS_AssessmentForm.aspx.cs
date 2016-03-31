@@ -223,36 +223,44 @@ namespace SQM.Website.EHS
 			{
 				recordID = Convert.ToDecimal(args[0].ToString());
 				recordSubID = Convert.ToDecimal(args[1].ToString());
-				foreach (RepeaterItem riTopic in rptAuditFormTopics.Items)
+				if (recordSubID > 0)
 				{
-					rptQuestions = (Repeater)riTopic.FindControl("rptAuditFormQuestions");
-					foreach (RepeaterItem riQuestion in rptQuestions.Items)
+					foreach (RepeaterItem riTopic in rptAuditFormTopics.Items)
 					{
-						hdn = (HiddenField)riQuestion.FindControl("hdnQuestionId");
-						args = hdn.Value.ToString().Split(',');
-						try
+						rptQuestions = (Repeater)riTopic.FindControl("rptAuditFormQuestions");
+						foreach (RepeaterItem riQuestion in rptQuestions.Items)
 						{
-							quesionId = Convert.ToDecimal(args[1].ToString());
-						}
-						catch
-						{
-							quesionId = 0;
-						}
-						if (quesionId == recordSubID)
-						{
+							hdn = (HiddenField)riQuestion.FindControl("hdnQuestionId");
+							args = hdn.Value.ToString().Split(',');
 							try
 							{
-								EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
-								lnk = (LinkButton)riQuestion.FindControl("LnkAttachment");
-								string buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
-								lnk.Text = buttonText;
-								lnk.Focus();
+								quesionId = Convert.ToDecimal(args[1].ToString());
 							}
 							catch
 							{
+								quesionId = 0;
+							}
+							if (quesionId == recordSubID)
+							{
+								try
+								{
+									EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
+									lnk = (LinkButton)riQuestion.FindControl("LnkAttachment");
+									string buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
+									lnk.Text = buttonText;
+									lnk.Focus();
+								}
+								catch
+								{
+								}
 							}
 						}
 					}
+				}
+				else
+				{
+					int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(50, recordID, "0", "");
+					LnkAuditAttachment.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
 				}
 			}
 			catch { }
@@ -394,6 +402,11 @@ namespace SQM.Website.EHS
 				btnDelete.CommandArgument = EditAuditId.ToString();
 
 				cbClose.Checked = false;
+				LnkAuditAttachment.Visible = true;
+				LnkAuditAttachment.CommandArgument = EditAuditId.ToString() + ",0";
+				int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(50, EditAuditId, "0", "");
+				LnkAuditAttachment.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
+				LnkAuditAttachment.Visible = true;
 
 				if (IsEditContext && CurrentStep < 2)
 				{
@@ -507,6 +520,7 @@ namespace SQM.Website.EHS
 				btnDelete.Visible = false;
 				cbClose.Checked = false;
 				cbClose.Visible = false;
+				LnkAuditAttachment.Visible = false;
 			}
 		}
 
