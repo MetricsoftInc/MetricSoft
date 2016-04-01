@@ -13,6 +13,8 @@ namespace SQM.Website
     {
 		public event GridActionCommand OnTaskUpdate;
 		public event GridActionCommand2 OnTaskAdd;
+		public event EditItemClick OnTaskListClick;
+
 
 		private List<XLAT> TaskXLATList
 		{
@@ -124,6 +126,172 @@ namespace SQM.Website
 			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
 			SQMBasePage.SetPersonList(ddlAssignPersonAdd, personList, "", 0, false, "LF");
 
+			List<TaskItem> tasklist = TaskMgr.ExceptionTaskListByRecord(recordType, recordID, recordSubID);
+			rptTaskList.DataSource = tasklist;
+			rptTaskList.DataBind();
+			if (tasklist.Count > 0)
+				pnlListTasks.Visible = true;
+			else
+				pnlListTasks.Visible = false;
+
+		}
+
+		protected void TaskItem_Click(object sender, EventArgs e)
+		{
+			lnkTask_Click(sender, e);
+		}
+
+		protected void lnkTask_Click(object sender, EventArgs e)
+		{
+			string cmd = "";
+			if (sender is ImageButton)
+			{
+				ImageButton btn = (ImageButton)sender;
+				cmd = btn.CommandArgument.ToString().Trim();
+			}
+			else
+			{
+				LinkButton lnk = (LinkButton)sender;
+				cmd = lnk.CommandArgument.ToString().Trim();
+			}
+
+			//if (OnTaskListClick != null)
+			//{
+			//	OnTaskListClick(cmd);
+			//}
+			//else
+			//{
+				string[] args = cmd.Split('|');
+				TaskRecordType taskType = (TaskRecordType)Enum.Parse(typeof(TaskRecordType), args[0]);
+
+				switch (taskType)
+				{
+					case TaskRecordType.ProfileInput:
+					case TaskRecordType.ProfileInputApproval:
+						SessionManager.ReturnObject = args[1];
+						SessionManager.ReturnStatus = true;
+						SessionManager.ReturnPath = Request.Path.ToString();
+						Response.Redirect("/EHS/EHS_MetricInput.aspx");
+						break;
+					case TaskRecordType.ProfileInputFinalize:
+						SessionManager.ReturnObject = args[1];
+						SessionManager.ReturnStatus = true;
+						SessionManager.ReturnPath = Request.Path.ToString();
+						Response.Redirect("/EHS/EHS_Console.aspx");
+						break;
+						break;
+					case TaskRecordType.HealthSafetyIncident:
+						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
+						{
+							TASK_STATUS task = new TASK_STATUS();
+							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.TASK_ID = Convert.ToDecimal(args[2]);
+							task.TASK_STEP = args[3];
+							SessionManager.ReturnObject = task;
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Path.ToString();
+							Response.Redirect("/Home/TaskAction.aspx");
+						}
+						else
+						{
+							SessionManager.ReturnObject = args[1];
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Path.ToString();
+							Response.Redirect("/EHS/EHS_Incidents.aspx");
+						}
+						break;
+					case TaskRecordType.PreventativeAction:
+						SessionManager.ReturnObject = args[1];
+						SessionManager.ReturnStatus = true;
+						SessionManager.ReturnPath = Request.Path.ToString();
+						Response.Redirect("/EHS/EHS_PrevActions.aspx?s=1");
+						break;
+					case TaskRecordType.Audit:
+						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // audit action
+						{
+							TASK_STATUS task = new TASK_STATUS();
+							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.TASK_ID = Convert.ToDecimal(args[2]);
+							task.TASK_STEP = args[3];
+							SessionManager.ReturnObject = task;
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Path.ToString();
+							Response.Redirect("/Home/TaskAction.aspx");
+						}
+						else
+						{
+							SessionManager.ReturnObject = args[1];
+							SessionManager.ReturnStatus = true;
+							SessionManager.ReturnPath = Request.Path.ToString();
+							//Response.Redirect("/EHS/EHS_Audits.aspx");
+							Response.Redirect("/EHS/EHS_Assessments.aspx");
+						}
+						break;
+					case TaskRecordType.CurrencyInput:
+						SessionManager.ReturnObject = args[1];
+						SessionManager.ReturnStatus = true;
+						SessionManager.ReturnPath = Request.Path.ToString();
+						Response.Redirect("/Admin/Administrate_CurrencyInput.aspx");
+						break;
+					default:
+						break;
+				}
+			//}
+		}
+
+		public void rptTaskList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					TaskItem item = (TaskItem)e.Item.DataItem;
+
+					Label lbl = (Label)e.Item.FindControl("lblDueDate");
+					lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
+
+					if (item.Taskstatus == TaskStatus.EscalationLevel1 || item.Taskstatus == TaskStatus.EscalationLevel2)
+					{
+						ImageButton img = (ImageButton)e.Item.FindControl("imgTaskStatus");
+						img.ImageUrl = TaskMgr.TaskStatusImage(item.Taskstatus);
+						img.ToolTip = item.Taskstatus.ToString();
+						img.Visible = true;
+					}
+
+					if (SessionManager.IsUserAgentType("ipad,iphone"))
+					{
+						ImageButton btn = (ImageButton)e.Item.FindControl("btnTaskDetails");
+						btn.Visible = true;
+					}
+
+				}
+				catch
+				{
+
+				}
+			}
+		}
+
+		protected void rptTaskList_OnItemCreate(object sender, RepeaterItemEventArgs e)
+		{
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				try
+				{
+					if (e.Item.DataItem != null)
+					{
+						TaskItem item = (TaskItem)e.Item.DataItem;
+						if (item.Person != null && (item.NotifyType == TaskNotification.Escalation || item.NotifyType == TaskNotification.Delegate))
+						{
+							item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
+						}
+						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 1000, "...");
+						item.Description = WebSiteCommon.StripHTML(item.Description);
+					}
+				}
+				catch
+				{ }
+			}
 		}
 
 		protected void btnTaskAdd_Click(object sender, EventArgs e)
@@ -305,6 +473,22 @@ namespace SQM.Website
 			}
 
 			return plantID;
+		}
+
+		protected string formatName(object responsiblePerson)
+		{
+			string fullname = "";
+			PERSON person = new PERSON();
+			try
+			{
+				person = (PERSON)responsiblePerson;
+				fullname = SQMModelMgr.FormatPersonListItem(person, false, "LF");
+			}
+			catch
+			{
+				fullname = "";
+			}
+			return fullname;
 		}
 	}
 }

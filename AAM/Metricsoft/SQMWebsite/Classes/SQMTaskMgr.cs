@@ -1362,6 +1362,7 @@ namespace SQM.Website
 		{
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
 			DateTime forwardDate = DateTime.UtcNow;
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
 			List<TaskItem> taskList = new List<TaskItem>();
 			try
@@ -1369,23 +1370,62 @@ namespace SQM.Website
 				using (PSsqmEntities entities = new PSsqmEntities())
 				{
 					taskList = (from t in entities.TASK_STATUS
+								join a in entities.AUDIT on t.RECORD_ID equals a.AUDIT_ID
 								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
+								join l in entities.PLANT on a.DETECT_PLANT_ID equals l.PLANT_ID into l_i
 								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350")
 								from p in p_t.DefaultIfEmpty()
+								from l in l_i.DefaultIfEmpty()
 								select new TaskItem
 								{
 									Task = t,
 									RecordType = t.RECORD_TYPE,
 									RecordID = t.RECORD_ID,
-									Person = p
-								}).OrderBy(l => l.RecordID).ToList();
+									Person = p,
+									Detail = a,
+									Plant = l
+								}).OrderBy(t => t.RecordID).ToList();
 
 					List<PLANT> plantList = new List<PLANT>();
 
 					foreach (TaskItem taskItem in taskList)
 					{
+						//taskItem.Taskstatus = SetEscalation(responsibleIDS.Count > 0 ? responsibleIDS[0] : (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem);
+						//taskItem.NotifyType = SetNotifyType(responsibleIDS.Count > 0 ? responsibleIDS[0] : (decimal)taskItem.Task.RESPONSIBLE_ID, (decimal)taskItem.Task.RESPONSIBLE_ID, taskItem.Taskstatus);
+						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.RecordType.ToString()).FirstOrDefault().DESCRIPTION;
+						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : recordDesc;
+
 						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+						AUDIT audit = (AUDIT)taskItem.Detail;
+						taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + taskItem.Task.RECORD_ID.ToString() + "|" + taskItem.Task.TASK_ID.ToString() + "|" + taskItem.Task.TASK_STEP;
+						taskItem.Title = WebSiteCommon.GetXlatValueLong("EHSIncidentActivity", taskItem.RecordType.ToString());
+						taskItem.LongTitle = actionText + ": " + taskItem.Task.DESCRIPTION;
+						taskItem.Description = WebSiteCommon.FormatID(taskItem.RecordID, 6, recordDesc) + ": " + audit.DESCRIPTION;
 					}
+				}
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+			}
+
+			return taskList;
+		}
+
+		public static List<TASK_STATUS> AuditTaskListByRecord(int recordType, decimal recordID, decimal recordSubID)
+		{
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
+			DateTime forwardDate = DateTime.UtcNow;
+
+			List<TASK_STATUS> taskList = new List<TASK_STATUS>();
+			try
+			{
+				using (PSsqmEntities entities = new PSsqmEntities())
+				{
+					taskList = (from t in entities.TASK_STATUS
+								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350")
+								select t).OrderBy(l => l.DUE_DT).ToList();
+
 				}
 			}
 			catch (Exception ex)

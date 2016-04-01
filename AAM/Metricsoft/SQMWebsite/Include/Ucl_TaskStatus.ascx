@@ -84,6 +84,26 @@
 </asp:Panel>
 
 <asp:Panel runat="server" ID="pnlAddTask" Visible="False">
+    <asp:Panel runat="server" ID="pnlListTasks" CssClass="container-fluid" >
+		<asp:Repeater runat="server" ID="rptTaskList" ClientIDMode="AutoID" OnItemDataBound="rptTaskList_OnItemDataBound" OnItemCreated="rptTaskList_OnItemCreate">
+			<FooterTemplate></FooterTemplate>
+			<HeaderTemplate>
+				<div class="row" style="font-weight:bold;">
+                    <div class="col-sm-4 tanLabelCol" style="width: 15%;">Due Date</div>
+                    <div class="col-sm-4 tanLabelCol" style="width: 25%;">Responsible</div>
+                    <div class="tanLabelCol col-xs-12" style="width: 60%;">Task</div>
+                </div>
+			</HeaderTemplate>
+			<ItemTemplate>
+				<div runat="server" class="row">
+					<div class="col-sm-4" style="width: 15%;"><asp:Label ID="lblDueDate" runat="server" Text='<%# Eval("Task.DUE_DT").ToString() %>'></asp:Label></div>
+					<div class="col-sm-4" style="width: 25%;"><asp:Label ID="lblLocation" runat="server" Text='<%# formatName(Eval("Person")) %>'></asp:Label></div>
+					<div class="col-xs-12" style="width: 60%;"><asp:Label ID="lblTaskItem" runat="server" Text='<%# Eval("LongTitle").ToString() %>'></asp:Label></div>
+				</div>
+			</ItemTemplate>
+		</asp:Repeater>
+    </asp:Panel>
+
 	<div class="container-fluid" style="margin-top: 10px;">
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">

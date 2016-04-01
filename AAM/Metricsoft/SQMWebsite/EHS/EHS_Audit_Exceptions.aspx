@@ -6,6 +6,7 @@
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_AuditExceptionList.ascx" TagName="AuditExceptionList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
 
 <%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
@@ -192,9 +193,10 @@
                 </div>
             </div>
 
-            <telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Behaviors="Move" Title="Create Task" Behavior="Move">
+            <telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="700px" Behaviors="Move, Close" Title="Create Task" Behavior="Move, Close" >
                 <ContentTemplate>
                     <Ucl:Task ID="uclTask" runat="server" />
+                    <%--<Ucl:TaskList ID="uclTaskList" runat="server" />--%>
                 </ContentTemplate>
             </telerik:RadWindow>
 

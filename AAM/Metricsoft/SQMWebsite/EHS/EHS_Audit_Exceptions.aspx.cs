@@ -45,6 +45,7 @@ namespace SQM.Website
 			uclAuditExceptionList.OnExceptionAttachItemClick += AddAttach;
 			uclTask.OnTaskAdd += UpdateTaskList;
 			uclTask.OnTaskUpdate += UpdateTaskList;
+			
 			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 
 		}
@@ -462,6 +463,7 @@ namespace SQM.Website
 			int recordType = (int)TaskRecordType.Audit;
 			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditID);
 			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(auditID, questionID);
+			//List<TASK_STATUS> tasks = TaskMgr.AuditTaskListByRecord(recordType, auditID, questionID);
 			uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
 			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);

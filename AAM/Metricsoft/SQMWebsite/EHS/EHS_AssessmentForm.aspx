@@ -289,7 +289,7 @@
 
         </div>
     </div>
-<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="400px" Width="700px" Title="View/Update Task" Behavior="Close, Move" OnClientClose="OnClientClose">
+<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="700px" Title="View/Add Task" Behavior="Close, Move" OnClientClose="OnClientClose">
 	<ContentTemplate>
 		<Ucl:Task ID="uclTask" runat="server" />
 	</ContentTemplate>
