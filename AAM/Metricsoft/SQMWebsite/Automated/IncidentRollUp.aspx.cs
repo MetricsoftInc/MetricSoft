@@ -139,7 +139,7 @@ namespace SQM.Website.Automated
 					{
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == pah.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
-					if (pact != null && new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
+					if (pact != null &&  pact.EFF_END_DATE.HasValue  &&  new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
 					{
 						pah.TIME_LOST = pah.TOTAL_DAYS_RESTRICTED = 0;
 						pah.TIME_LOST_CASES = pah.RECORDED_CASES = pah.FIRST_AID_CASES = 0;
@@ -156,7 +156,7 @@ namespace SQM.Website.Automated
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID &&  a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
 					periodDate = new DateTime(period.PeriodYear, period.PeriodMonth, 1);
-					if (pact != null && periodDate >= pact.EFF_START_DATE)
+					if (pact != null && pact.EFF_START_DATE.HasValue  &&  periodDate >= pact.EFF_START_DATE)
 					{
 						// write PLANT_ACCOUNTING metrics
 						if ((pa = paList.Where(l => l.PLANT_ID == period.PlantID && l.PERIOD_YEAR == period.PeriodYear && l.PERIOD_MONTH == period.PeriodMonth).FirstOrDefault()) == null)
