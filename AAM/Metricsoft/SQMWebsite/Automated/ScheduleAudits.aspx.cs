@@ -104,8 +104,8 @@ namespace SQM.Website.Automated
 			List<EHSAuditQuestion> questions = null;
 			AUDIT_ANSWER answer = null;
 			decimal auditId = 0;
-			TimeSpan start = new TimeSpan(11, 45, 0); 
-			TimeSpan end = new TimeSpan(12, 15, 0); 
+			TimeSpan start = new TimeSpan(10, 45, 0); 
+			TimeSpan end = new TimeSpan(11, 15, 0); 
 
 			foreach (AUDIT_SCHEDULER schedule in scheduler)
 			{
