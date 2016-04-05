@@ -203,6 +203,9 @@ namespace SQM.Website.Automated
 				WriteLine("RollUp Redirect Error - " + ex.ToString());
 				WriteLogFile();
 			}
+
+			System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+
 		}
 
 		public string GetIPAddress()
