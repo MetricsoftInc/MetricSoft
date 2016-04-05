@@ -219,7 +219,6 @@ namespace SQM.Website.Automated
 			try
 			{
 				// "D:\\Data\\Projects\\Metricsoft\\AAM\\Metricsoft\\SQMWebsite\\\\log\\2016-04-04-195252936.txt"
-				/*
 				string logPath = HttpContext.Current.Server.MapPath("~") + "\\log\\";
 				if (!Directory.Exists(logPath))
 					Directory.CreateDirectory(logPath);
@@ -235,7 +234,6 @@ namespace SQM.Website.Automated
 				if (files.Count() > maxFiles)
 					for (int i = 0; i < files.Count() - maxFiles; i++)
 						File.Delete(logPath + files[i].Name);
-			*/
 			}
 			catch (Exception ex)
 			{
