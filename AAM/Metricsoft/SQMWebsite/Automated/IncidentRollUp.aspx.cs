@@ -22,6 +22,7 @@ namespace SQM.Website.Automated
 		{
 			if (IsPostBack)
 			{
+				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 				return;
 			}
 
@@ -93,6 +94,8 @@ namespace SQM.Website.Automated
 				WriteLine("Main Incident RollUp Invalid IP Address");
 				ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 				WriteLogFile();
+
+				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 				return;
 			}
 

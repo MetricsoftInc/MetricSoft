@@ -6,12 +6,10 @@
 <head id="Head1" runat="server">
     <title>Incident RollUp</title>
 	<script type="text/javascript">
-
 		function CloseWindow() {
 			window.close();
 		}
-
-</script>
+	</script>
 </head>
 <body>
     <form id="form1" runat="server">
