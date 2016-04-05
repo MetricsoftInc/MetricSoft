@@ -212,10 +212,11 @@ namespace SQM.Website
 				if (parentItem != null)
 				{
 					// we only want to select the audit answers that were adverse
+					// or have a task assigned to them
 					decimal auditID = Convert.ToDecimal(parentItem.GetDataKeyValue("Audit.Audit_ID").ToString());
 					HiddenField hdnAuditTypeId = (HiddenField)parentItem.FindControl("hdnAuditTypeID");
 					decimal auditTypeID = Convert.ToDecimal(hdnAuditTypeId.Value.ToString());
-					List<EHSAuditQuestion> questions = (List<EHSAuditQuestion>)EHSAuditMgr.SelectAuditQuestionExceptionList(auditID, auditTypeID);
+					List<EHSAuditQuestion> questions = (List<EHSAuditQuestion>)EHSAuditMgr.SelectAuditQuestionExceptionList(auditID, auditTypeID, true);
 
 					(sender as RadGrid).DataSource = questions;
 				}

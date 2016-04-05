@@ -655,7 +655,7 @@ namespace SQM.Website
 		/// <summary>
 		/// Select a list of all audit questions by topic 
 		/// </summary>
-		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId, decimal auditTypeId)
+		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId, decimal auditTypeId, bool includeWithTasks)
 		{
 			var questionList = new List<EHSAuditQuestion>();
 			bool answerIsNegative = false;
@@ -779,6 +779,10 @@ namespace SQM.Website
 						if (answerIsNegative)
 						{
 							newQuestion.ChoicePositive = false;
+							questionList.Add(newQuestion);
+						}
+						else if (includeWithTasks && newQuestion.TasksAssigned > 0)
+						{
 							questionList.Add(newQuestion);
 						}
 

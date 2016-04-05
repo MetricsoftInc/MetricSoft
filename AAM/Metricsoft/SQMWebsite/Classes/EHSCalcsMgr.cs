@@ -1131,12 +1131,13 @@ namespace SQM.Website
 			return this.AuditSchedulerHst;
 		}
 
-		public List<EHSAuditData> SelectAuditExceptionList(List<decimal> plantIdList, List<decimal> auditTypeList, DateTime fromDate, DateTime toDate)
+		public List<EHSAuditData> SelectAuditExceptionList(List<decimal> plantIdList, List<decimal> auditTypeList, DateTime fromDate, DateTime toDate, bool includeWithTasks)
 		{
 
 			var auditList = new List<EHSAuditData>();
 			EHSAuditQuestionType QuestionType = new EHSAuditQuestionType();
 			bool answerIsNegative = false;
+			bool tasksAssigned = false;
 			try
 			{
 				this.AuditHst = (from a in this.Entities.AUDIT
@@ -1178,6 +1179,7 @@ namespace SQM.Website
 					foreach (EHSAuditData data in this.AuditHst)
 					{
 						answerIsNegative = false;
+						tasksAssigned = false;
 						foreach (AUDIT_ANSWER auditAnswer in data.Audit.AUDIT_ANSWER)
 						{
 							// for each answer in the audit get the answer value
@@ -1226,9 +1228,19 @@ namespace SQM.Website
 									}
 								}
 							}
+							// see if there are any tasks assigned to the answer
+							if (includeWithTasks)
+							{
+								List<decimal> taskIds = (from a in this.Entities.TASK_STATUS
+														 where a.RECORD_TYPE == 50 && a.RECORD_ID == data.Audit.AUDIT_ID && a.RECORD_SUBID == auditAnswer.AUDIT_QUESTION_ID
+														 select a.TASK_ID).ToList();
+								if (taskIds.Count > 0)
+									tasksAssigned = true;
+							}
 						}
 						// add the audit to the list only if there are negative answers
-						if (answerIsNegative)
+						// also include if there are tasks assigned
+						if (answerIsNegative || tasksAssigned)
 						{
 							auditList.Add(data);
 						}

@@ -317,7 +317,7 @@ namespace SQM.Website
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
 			//HSCalcs().ObjAny = cbShowImage.Checked;
 
-			HSCalcs().ehsCtl.SelectAuditExceptionList(plantIDS, typeList, fromDate, toDate);
+			HSCalcs().ehsCtl.SelectAuditExceptionList(plantIDS, typeList, fromDate, toDate, true);
 
 			// may want to access only the ones assigned to that person
 			//if (accessLevel < AccessMode.Admin)
