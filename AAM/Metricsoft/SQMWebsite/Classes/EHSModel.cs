@@ -1591,7 +1591,7 @@ namespace SQM.Website
                         this.InputPeriod.PlantAccounting.LAST_UPD_BY = SessionManager.UserContext.UserName();
                     }
                     this.InputPeriod.PlantAccounting.FINALIZE_DT = updateDate;
-                    this.InputPeriod.PlantAccounting.FINALIZE_ID = SessionManager.UserContext.Person.PERSON_ID;
+                    this.InputPeriod.PlantAccounting.FINALIZE_ID = SessionManager.UserContext != null ? SessionManager.UserContext.Person.PERSON_ID : 1m;
                     status = this.InputPeriod.Entities.SaveChanges();  // save the metric history
 
                    // this.Entities.SaveChanges();  // save any updated profile measures
