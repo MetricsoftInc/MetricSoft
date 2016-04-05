@@ -433,12 +433,20 @@ namespace SQM.Website.EHS
 
 				if (audit.DEPT_ID != null)
 				{
-					if (rddlDepartment.SelectedIndex == 0)
-					rddlDepartment.SelectedValue = audit.DEPT_ID.ToString();
-					lblDepartment.Text = rddlDepartment.SelectedText.ToString();
+					//if (rddlDepartment.SelectedIndex == 0)
+					try
+					{
+						rddlDepartment.SelectedValue = audit.DEPT_ID.ToString();
+						lblDepartment.Text = rddlDepartment.SelectedText.ToString();
+					}
+					catch
+					{
+						rddlDepartment.SelectedValue = "0";
+						lblDepartment.Text = rddlDepartment.SelectedText.ToString();
+					}
 				}
 
-				if (CurrentStep > 0) // display only
+				if (CurrentStep > 1) // display only
 				{
 					lblDepartment.Visible = true;
 					rddlDepartment.Enabled = false;
@@ -1004,6 +1012,33 @@ namespace SQM.Website.EHS
 					}
 					//}
 				}
+				else if (q.QuestionType == EHSAuditQuestionType.Radio || q.QuestionType == EHSAuditQuestionType.RadioCommentLeft)
+				{
+					answerIsPositive = false;
+					foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+					{
+						if (choice.Value.Equals(q.AnswerValue) && choice.ChoicePositive)
+							answerIsPositive = true;
+						if (choice.Value.Equals(q.AnswerValue))
+						{
+							totalAnswered += 1;
+						}
+					}
+					if (answerIsPositive)
+					{
+						totalPositive += 1;
+						q.ChoicePositive = true;
+					}
+					else
+					{
+						if (!q.AnswerValue.ToString().Equals(""))
+						{
+							q.ChoicePositive = false;
+							if (q.AnswerComment.ToString().Trim().Length == 0)
+								negativeTextComplete = false;
+						}
+					}
+				} 
 				else if (!q.AnswerValue.ToString().Equals(""))
 				{
 					totalAnswered += 1;
