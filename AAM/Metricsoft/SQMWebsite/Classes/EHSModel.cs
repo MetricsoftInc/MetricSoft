@@ -1561,7 +1561,7 @@ namespace SQM.Website
                                 metric.INPUT_COST += pv.Cost;
                                 metric.INPUT_CURRENCY_CODE = input.CURRENCY_CODE;
                                 metric.LAST_UPD_DT = updateDate;
-                                metric.LAST_UPD_BY = SessionManager.UserContext.UserName();
+                                metric.LAST_UPD_BY = SessionManager.UserContext != null ? SessionManager.UserContext.UserName() : "system";
                                 metric.STATUS = "A";
                                 shouldSave = true;
 
