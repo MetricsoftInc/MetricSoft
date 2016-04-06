@@ -1003,7 +1003,7 @@ namespace SQM.Website.EHS
 					}
 					else
 					{
-						if (!q.AnswerValue.ToString().Equals(""))
+						if (q.AnswerValue != null && !q.AnswerValue.ToString().Equals(""))
 						{
 							q.ChoicePositive = false;
 							if (q.AnswerComment.ToString().Trim().Length == 0)
@@ -1031,15 +1031,15 @@ namespace SQM.Website.EHS
 					}
 					else
 					{
-						if (!q.AnswerValue.ToString().Equals(""))
+						if (q.AnswerValue != null && !q.AnswerValue.ToString().Equals(""))
 						{
 							q.ChoicePositive = false;
 							if (q.AnswerComment.ToString().Trim().Length == 0)
 								negativeTextComplete = false;
 						}
 					}
-				} 
-				else if (!q.AnswerValue.ToString().Equals(""))
+				}
+				else if (q.AnswerValue != null && !q.AnswerValue.ToString().Equals(""))
 				{
 					totalAnswered += 1;
 				}
