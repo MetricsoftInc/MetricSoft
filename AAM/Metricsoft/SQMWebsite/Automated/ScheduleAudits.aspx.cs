@@ -174,7 +174,7 @@ namespace SQM.Website.Automated
 										{
 											AUDIT_ID = auditId,
 											AUDIT_QUESTION_ID = q.QuestionId,
-											//ANSWER_VALUE = q.AnswerText,
+											ANSWER_VALUE = "",
 											ORIGINAL_QUESTION_TEXT = q.QuestionText,
 											//COMMENT = q.AnswerComment
 										};
