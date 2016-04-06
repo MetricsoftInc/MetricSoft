@@ -335,7 +335,7 @@ namespace SQM.Website.Automated
 			WriteLogFile();
 
 			this.lblOutput.Text = output.ToString().Replace("\n", "<br>");
-			//System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+			System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 		}
 
 		static void WriteLine(string text)
