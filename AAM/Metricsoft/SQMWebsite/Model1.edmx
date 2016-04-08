@@ -85,6 +85,7 @@
           <EntitySet Name="LOCAL_LANGUAGE" EntityType="PSsqmModel.Store.LOCAL_LANGUAGE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NONCONFORMANCE" EntityType="PSsqmModel.Store.NONCONFORMANCE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="NOTIFYACTION" EntityType="PSsqmModel.Store.NOTIFYACTION" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NOTIFYLOG" EntityType="PSsqmModel.Store.NOTIFYLOG" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PART" EntityType="PSsqmModel.Store.PART" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PART_ATTRIBUTE" EntityType="PSsqmModel.Store.PART_ATTRIBUTE" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PART_PROGRAM" EntityType="PSsqmModel.Store.PART_PROGRAM" store:Type="Tables" Schema="dbo" />
@@ -507,10 +508,6 @@
           <AssociationSet Name="FK_PART_REFERENCE_COMPANY" Association="PSsqmModel.Store.FK_PART_REFERENCE_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
             <End Role="PART" EntitySet="PART" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.Store.FK_PERSON_JOBCODE">
-            <End Role="JOBCODE" EntitySet="JOBCODE" />
-            <End Role="PERSON" EntitySet="PERSON" />
           </AssociationSet>
           <AssociationSet Name="FK_PERSON_PERSON" Association="PSsqmModel.Store.FK_PERSON_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
@@ -1855,6 +1852,22 @@
           <Property Name="NOTIFY_DIST_TYPE" Type="varchar" MaxLength="12" />
           <Property Name="NOTIFY_DIST" Type="nvarchar" MaxLength="400" />
           <Property Name="NOTIFY_DT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NOTIFYLOG">
+          <Key>
+            <PropertyRef Name="NotifyID" />
+          </Key>
+          <Property Name="NotifyID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
+          <Property Name="RecordType" Type="int" Nullable="false" />
+          <Property Name="RecordID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="NotifyDT" Type="datetime" Nullable="false" />
+          <Property Name="MailTo" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Body" Type="nvarchar" />
+          <Property Name="MailFrom" Type="nvarchar" MaxLength="400" />
+          <Property Name="Reason" Type="varchar" MaxLength="200" />
+          <Property Name="Status" Type="varchar" MaxLength="2000" />
+          <Property Name="MailToOverride" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="PART">
           <Key>
@@ -3775,18 +3788,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PERSON_JOBCODE">
-          <End Role="JOBCODE" Type="PSsqmModel.Store.JOBCODE" Multiplicity="0..1" />
-          <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JOBCODE">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Principal>
-            <Dependent Role="PERSON">
-              <PropertyRef Name="JOBCODE_CD" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PERSON_PERSON">
           <End Role="PERSON" Type="PSsqmModel.Store.PERSON" Multiplicity="1" />
           <End Role="PERSON1" Type="PSsqmModel.Store.PERSON" Multiplicity="0..1" />
@@ -5075,6 +5076,7 @@
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
+          <EntitySet Name="NOTIFYLOG" EntityType="PSsqmModel.NOTIFYLOG" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -9164,6 +9166,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="NOTIFYLOG">
+          <Key>
+            <PropertyRef Name="NotifyID" />
+          </Key>
+          <Property Type="Decimal" Name="NotifyID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RecordType" Nullable="false" />
+          <Property Type="Decimal" Name="RecordID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="NotifyDT" Nullable="false" Precision="3" />
+          <Property Type="String" Name="MailTo" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Subject" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Body" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MailFrom" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Reason" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Status" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MailToOverride" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11282,6 +11300,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NOTIFYLOG">
+            <EntityTypeMapping TypeName="PSsqmModel.NOTIFYLOG">
+              <MappingFragment StoreEntitySet="NOTIFYLOG">
+                <ScalarProperty Name="MailToOverride" ColumnName="MailToOverride" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="MailFrom" ColumnName="MailFrom" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="MailTo" ColumnName="MailTo" />
+                <ScalarProperty Name="NotifyDT" ColumnName="NotifyDT" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="RecordType" ColumnName="RecordType" />
+                <ScalarProperty Name="NotifyID" ColumnName="NotifyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11583,6 +11618,7 @@
         <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
         <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="3.7588965314249023" PointY="30.949603512394056" />
         <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
+        <EntityTypeShape EntityType="PSsqmModel.NOTIFYLOG" Width="1.5" PointX="4.6218222531591646" PointY="12.329616015930482" />
         </Diagram>
     </Diagrams>
   </Designer>

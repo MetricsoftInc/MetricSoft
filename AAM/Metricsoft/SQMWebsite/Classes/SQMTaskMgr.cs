@@ -1472,6 +1472,8 @@ namespace SQM.Website
             List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("", "TASK");
             string url = SQMSettings.SelectSettingByCode(ctx, "MAIL", "TASK", "MailURL").VALUE;
 
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
             foreach (TaskItem taskItem in taskList)
             {
                 if (taskItem != null)
@@ -1519,7 +1521,8 @@ namespace SQM.Website
                     body += "<br /><br />";
                     body += sets.Where(s => s.SETTING_GROUP == "NOTIFY" && s.SETTING_CD == "NOREPLY").Select(s => s.XLAT_LONG).FirstOrDefault() + "</b>";
 
-                    string rslt = WebSiteCommon.SendEmail(mailAddress, subject, body, "", context);
+                    string rslt = WebSiteCommon.SendEmail(mailAddress, subject, body, "", context, null, mailSettings);
+					EHSNotificationMgr.WriteEmailLog(ctx, mailAddress, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, subject, body, taskItem.RecordType, taskItem.RecordID, ("mail task list - " + context), rslt, "");
                     if (string.IsNullOrEmpty(rslt))
                         ++status;
                 }

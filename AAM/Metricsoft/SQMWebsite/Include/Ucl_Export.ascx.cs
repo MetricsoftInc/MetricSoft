@@ -106,6 +106,8 @@ namespace SQM.Website
             EHSProfile profile = new EHSProfile();
             EHS_MEASURE measure = null;
             EHS_PROFILE_MEASURE prmr = null;
+			List<EHS_PROFILE_MEASURE> prmrList = null;
+			string measureName = "";
 
             string[] notWasteCategories = new string[] { "ENGY", "EUTL", "SAFE", "PROD" };
 
@@ -153,9 +155,10 @@ namespace SQM.Website
                 row.CreateCell(14).SetCellValue("Waste Code");
                 row.CreateCell(15).SetCellValue("UN Disposal Code");
                 row.CreateCell(16).SetCellValue("Regulatory Status");
+				row.CreateCell(17).SetCellValue("Metric Inputs");
 				if (!string.IsNullOrEmpty(altDunsLabel))
 				{
-					row.CreateCell(17).SetCellValue(altDunsLabel);
+					row.CreateCell(18).SetCellValue(altDunsLabel);
 				}
 
                 int rownum = 0;
@@ -174,11 +177,19 @@ namespace SQM.Website
 
                     try
                     {
-                        if (profile.Profile != null)
-                        {
-                            measure = ms.EHS_MEASURE as EHS_MEASURE;
-                            prmr = profile.Profile.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == ms.MEASURE_ID).SingleOrDefault();
-                        }
+						if (profile.Profile != null)
+						{
+							measure = ms.EHS_MEASURE as EHS_MEASURE;
+							prmrList = profile.Profile.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == ms.MEASURE_ID).ToList();
+							prmr = prmrList.FirstOrDefault();
+							measureName = measure.MEASURE_NAME;
+							/*
+							if (prmrList.Count > 1)
+							{
+								measureName += (" (" + prmrList.Count.ToString() + ")");
+							}
+							*/
+						}
                     }
                     catch
                     {
@@ -236,7 +247,7 @@ namespace SQM.Website
                     }
                     try
                     {
-                        row.CreateCell(3).SetCellValue(measure.MEASURE_NAME);
+						row.CreateCell(3).SetCellValue(measureName);
                     }
                     catch
                     {
@@ -348,15 +359,33 @@ namespace SQM.Website
                         else
                             row.CreateCell(16).SetCellValue(WebSiteCommon.GetXlatValue("regulatoryStatus", prmr.REG_STATUS));
 
+						string inputNames = "";
+						foreach (EHS_PROFILE_MEASURE pr in prmrList)
+						{
+							if (!string.IsNullOrEmpty(pr.MEASURE_PROMPT))
+								inputNames += inputNames.Length == 0 ? pr.MEASURE_PROMPT : (", " + pr.MEASURE_PROMPT);
+							else
+								inputNames += inputNames.Length == 0 ? measureName : (", " + measureName);
+						}
+						try
+						{
+							row.CreateCell(17).SetCellValue(inputNames);
+							row.Cells[17].CellStyle.WrapText = true;
+						}
+						catch
+						{
+							row.CreateCell(17).SetCellValue("");
+						}
+
 						if (!string.IsNullOrEmpty(altDunsLabel))
 						{
 							try
 							{
-								row.CreateCell(17).SetCellValue(plant.ALT_DUNS_CODE);
+								row.CreateCell(18).SetCellValue(plant.ALT_DUNS_CODE);
 							}
 							catch
 							{
-								row.CreateCell(17).SetCellValue("");
+								row.CreateCell(18).SetCellValue("");
 							}
 						}
                     }
@@ -383,9 +412,10 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(14);
                 sheet1.AutoSizeColumn(15);
                 sheet1.AutoSizeColumn(16);
+				sheet1.AutoSizeColumn(17);
 				if (!string.IsNullOrEmpty(altDunsLabel))
 				{
-					sheet1.AutoSizeColumn(17);
+					sheet1.AutoSizeColumn(18);
 				}
 
                 IRow row2 = sheet2.CreateRow(0);

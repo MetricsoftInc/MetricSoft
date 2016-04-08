@@ -1077,7 +1077,14 @@ namespace SQM.Website
             return SendEmail(emailAddress, emailSubject, emailBody, cc, context, null);
         }
 
-        public static string SendEmail(string emailAddress, string emailSubject, string emailBody, string cc, string context, List<ATTACHMENT> attachList)
+		public static string SendEmail(string emailAddress, string emailSubject, string emailBody, string cc, string context, List<ATTACHMENT> attachList)
+		{
+			// preserve legacy code argument list
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+			return SendEmail(emailAddress, emailSubject, emailBody, cc, context, null, mailSettings);
+		}
+
+		public static string SendEmail(string emailAddress, string emailSubject, string emailBody, string cc, string context, List<ATTACHMENT> attachList, List<SETTINGS> MailSettings)
         {
             string strStatus = "";
             string _mailServer ="";
@@ -1098,31 +1105,8 @@ namespace SQM.Website
 			catch { }
 
 			// ABW 20140805 - get the parameters from the SETTINGS table instead of Web or App Config
-			//if (context == "web")
-			//{
-			//	_mailServer = WebConfigurationManager.AppSettings["MailServer"];
-			//	_mailFrom = WebConfigurationManager.AppSettings["MailFrom"];
-			//	_mailPassword = WebConfigurationManager.AppSettings["MailPassword"];
-			//	try { _mailSmtpPort = Convert.ToInt16(WebConfigurationManager.AppSettings["MailSmtpPort"]);
-			//		  _strSSL = WebConfigurationManager.AppSettings["MailEnableSSL"];
-			//		  if (_strSSL.ToLower().Contains("false"))
-			//			  _mailEnableSsl = false;
-			//	}
-			//	catch { }
-			//}
-			//else
-			//{
-			//	_mailServer = ConfigurationSettings.AppSettings["MailServer"];
-			//	_mailFrom = ConfigurationSettings.AppSettings["MailFrom"];
-			//	_mailPassword = ConfigurationSettings.AppSettings["MailPassword"];
-			//	try { _mailSmtpPort = Convert.ToInt16(ConfigurationSettings.AppSettings["MailSmtpPort"]);
-			//		  _strSSL = WebConfigurationManager.AppSettings["MailEnableSSL"];
-			//		  if (_strSSL.ToLower().Contains("false"))
-			//			  _mailEnableSsl = false;
-			//	}
-			//	catch { }
-			//}
-			List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
+			//List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 			SETTINGS setting = new SETTINGS();
 			setting = MailSettings.Find(x => x.SETTING_CD == "MailServer");
 			if (setting != null)

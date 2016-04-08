@@ -112,6 +112,7 @@ namespace SQM.Website
 				// ABW 20140117 - we are now usig the email on the Person record
 				//string strEmailSent = WebSiteCommon.SendEmail(SessionManager.UserContext.Credentials.RECOVERY_EMAIL, lblPasswordEmailSubject.Text.ToString(), strEmailBody.Trim(), "");
 				string strEmailSent = WebSiteCommon.SendEmail(SessionManager.UserContext.Person.EMAIL, strEmailCompanyName + lblPasswordEmailSubject.Text.ToString(), strEmailBody.Trim(), "");
+				EHSNotificationMgr.WriteEmailLog(new PSsqmEntities(), SessionManager.UserContext.Person.EMAIL, "", strEmailCompanyName + lblPasswordEmailSubject.Text.ToString(), strEmailBody, 0, SessionManager.UserContext.Person.PERSON_ID, "user password changed", "", "");
 
                 if (strCurrentControl.Equals("login"))
                 {

@@ -632,6 +632,7 @@ namespace SQM.Website
 					Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody.Trim(), ""));
 					thread.IsBackground = true;
 					thread.Start();
+					EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, ("user password notification - is new = " + isNew.ToString()), "", "");
 				}
 				else
 				{
@@ -690,6 +691,7 @@ namespace SQM.Website
 						Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody, ""));
 						thread.IsBackground = true;
 						thread.Start();
+						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, "user role changed", "", "");
 					}
 					
 					if (cbResetPassword.Checked) // always send an email when the password changes

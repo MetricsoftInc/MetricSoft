@@ -6,6 +6,8 @@ using Telerik.Web.UI;
 using System.Web.UI;
 using System.Text;
 using System.Web;
+using System.Threading;
+
 
 namespace SQM.Website
 {
@@ -326,6 +328,7 @@ namespace SQM.Website
 
 			// Send email(s)
 
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 			foreach (var v in verifications)
 			{
 				var thisVerification = v;
@@ -353,12 +356,14 @@ namespace SQM.Website
 
 				string emailBody = sb.ToString();
 				string emailAddress = emailPerson.EMAIL;
-				WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "");
-
+				string rtn = ""; // WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "");
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailAddress, emailSubject, emailBody, "", "", null, mailSettings));
+				thread.IsBackground = true;
+				thread.Start();
+				EHSNotificationMgr.WriteEmailLog(entities, emailAddress, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, v.INCIDENT_ID, "prevention notification verification", rtn, "");
 			}
 
 			Response.Redirect("EHS_Incidents.aspx");
-
 		}
 
 

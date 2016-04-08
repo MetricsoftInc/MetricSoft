@@ -118,6 +118,7 @@ namespace SQM.Website
 			// send email for INCIDENT status change or activity update
 			PSsqmEntities entities = new PSsqmEntities();
 			int status = 0;
+			string rtn = "";
 			EHSIncidentTypeId typeID = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
 			string notifyScope;
 			string incidentLabel;
@@ -142,7 +143,7 @@ namespace SQM.Website
 				notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
 			}
 
-			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 			if (string.IsNullOrEmpty(appUrl))
 				appUrl = "the website";
 
@@ -151,6 +152,8 @@ namespace SQM.Website
 			{
 				return status;
 			}
+
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 			List<PERSON> notifyPersonList = InvolvedPersonList(incident);
 			notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus));
@@ -187,9 +190,10 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentPath + incident.INCIDENT_ID.ToString()) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null));
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, ("incident status update - scope: " + notifyScope + "  task: " + scopeTask + "  status: " + taskStatus), rtn, "");
 			}
 
 			return status;
@@ -199,19 +203,23 @@ namespace SQM.Website
 		{
 			// send email notify of new task assigned
 			int status = 0;
-			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			string rtn = "";
+			PSsqmEntities entities = new PSsqmEntities();
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
 			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
 			{
 				return status;
 			}
 
-			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+			PERSON person = SQMModelMgr.LookupPerson(entities, (decimal)theTask.RESPONSIBLE_ID, "", false);
 			if (person != null  &&  !string.IsNullOrEmpty(person.EMAIL))
 			{
 				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" });
-				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
+
+				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 				string emailTo = person.EMAIL;
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
@@ -231,9 +239,12 @@ namespace SQM.Website
 								"<br/>" +
 								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
-				thread.IsBackground = true;
-				thread.Start();
+				rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings);
+				//thread.IsBackground = true;
+				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				//thread.IsBackground = true;
+				//thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
 			}
 
 			return status;
@@ -243,6 +254,8 @@ namespace SQM.Website
 		{
 			// send email reminders for tasks due, past due or escalated
 			int status = 0;
+			string rtn = "";
+			PSsqmEntities entities = new PSsqmEntities();
 			TASK_STATUS theTask = theTaskItem.Task;
 			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
 			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
@@ -251,9 +264,11 @@ namespace SQM.Website
 			}
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
-			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 			if (string.IsNullOrEmpty(appUrl))
 				appUrl = "the website";
+
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 			// 1st send to the person responsible
 			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
@@ -277,9 +292,10 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update", rtn, "");
 			}
 
 			// send to supervisor if this is an escalation
@@ -303,9 +319,10 @@ namespace SQM.Website
 								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update escalation", rtn, "");
 			}
 
 			return status;
@@ -349,6 +366,8 @@ namespace SQM.Website
 				return status;
 			}
 
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
 			List<PERSON> notifyPersonList = GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus);
 			notifyPersonList = notifyPersonList.Where(n => !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
 
@@ -383,9 +402,11 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentPath + incident.INCIDENT_ID.ToString()) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null));
+				string rtn = ""; // WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null);
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action status update", rtn, "");
 			}
 
 			return status;
@@ -395,19 +416,22 @@ namespace SQM.Website
 		{
 			// send email notify of new task assigned
 			int status = 0;
-			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			PSsqmEntities entities = new PSsqmEntities();
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
 			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
 			{
 				return status;
 			}
 
-			PERSON person = SQMModelMgr.LookupPerson((decimal)theTask.RESPONSIBLE_ID, "");
+			PERSON person = SQMModelMgr.LookupPerson(entities, (decimal)theTask.RESPONSIBLE_ID, "", false);
 			if (person != null && !string.IsNullOrEmpty(person.EMAIL))
 			{
 				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" });
-				string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+				string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
+
+				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 				string emailTo = person.EMAIL;
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
@@ -427,9 +451,11 @@ namespace SQM.Website
 								"<br/>" +
 								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
-				thread.IsBackground = true;
-				thread.Start();
+				string rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings);
+				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				//thread.IsBackground = true;
+				//thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task assignment", rtn, "");
 			}
 
 			return status;
@@ -439,17 +465,21 @@ namespace SQM.Website
 		{
 			// send email reminders for tasks due, past due or escalated
 			int status = 0;
+			PSsqmEntities entities = new PSsqmEntities();
+			string rtn = "";
 			TASK_STATUS theTask = theTaskItem.Task;
-			PLANT plant = SQMModelMgr.LookupPlant((decimal)incident.DETECT_PLANT_ID);
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
 			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
 			{
 				return status;
 			}
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "PREVACTION_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
-			string appUrl = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "MAIL", "TASK", "MailURL").VALUE;
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
 			if (string.IsNullOrEmpty(appUrl))
 				appUrl = "the website";
+
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 			// 1st send to the person responsible
 			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
@@ -473,9 +503,11 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				// rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null);
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task update", rtn, "");
 			}
 
 			// send to supervisor if this is an escalation
@@ -499,9 +531,10 @@ namespace SQM.Website
 								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
 				thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task status escalation", rtn, "");
 			}
 
 			return status;
@@ -534,6 +567,8 @@ namespace SQM.Website
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
 
+				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
 				string emailSubject = SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_SUBJECT").DESCRIPTION + ": " + auditType;
 				string emailBody = SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_01").DESCRIPTION + " " + dueDate.ToString("dddd MM/dd/yyyy") + ".<br/>" +
 								"<br/>" +
@@ -541,9 +576,12 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_02").DESCRIPTION + " (" + appUrl + auditPath + ")";
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web"));
-				thread.IsBackground = true;
-				thread.Start();
+				string rtn = "";
+				WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
+				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web"));
+				//thread.IsBackground = true;
+				//thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.Audit, audit.AUDIT_ID, "audit created and assigned", rtn, "");
 			}
 		}
 
@@ -570,6 +608,8 @@ namespace SQM.Website
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
 
+				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
 				string emailSubject = SQMBasePage.GetXLAT(XLATList, "AUDIT_NOTIFY", ((int)taskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + ": " + auditType;
 				string emailBody = SQMBasePage.GetXLAT(XLATList, "AUDIT_NOTIFY", ((int)taskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + " " + dueDate.ToString("dddd MM/dd/yyyy") + ".<br/>" +
 								"<br/>" +
@@ -579,9 +619,11 @@ namespace SQM.Website
 
 				if (!string.IsNullOrEmpty(person.EMAIL))
 				{
-					Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web"));
-					thread.IsBackground = true;
-					thread.Start();
+					string rtn = WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
+					//Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web"));
+					//thread.IsBackground = true;
+					//thread.Start();
+					WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.Audit, audit.AUDIT_ID, "audit status update", rtn, "");
 				}
 			}
 		}
@@ -615,6 +657,8 @@ namespace SQM.Website
 			if (string.IsNullOrEmpty(appUrl))
 				appUrl = "the website";
 
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
 			// 1st send to the person responsible
 			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
 			{
@@ -637,9 +681,11 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
-				thread.IsBackground = true;
-				thread.Start();
+				string rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings);
+				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				//thread.IsBackground = true;
+				//thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.Audit, audit.AUDIT_ID, "audit task status update", rtn, "");
 			}
 
 			return status;
@@ -647,6 +693,7 @@ namespace SQM.Website
 
 		#endregion
 
+		#region assigntaskemail
 		public static int NotifyTaskAssigment(TASK_STATUS task, decimal plantID)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
@@ -682,6 +729,8 @@ namespace SQM.Website
 				if (string.IsNullOrEmpty(appUrl))
 					appUrl = "the website";
 
+				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
 				string recordTypeValue = SQMBasePage.GetXLAT(XLATList, "RECORD_TYPE", recordType.ToString()).DESCRIPTION;
 				string taskStepValue = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE_TASK", taskStep).DESCRIPTION;
 				string emailTo = person.EMAIL;
@@ -693,13 +742,62 @@ namespace SQM.Website
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_02").DESCRIPTION + "(" + appUrl + auditPath + ")";
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
-				thread.IsBackground = true;
-				thread.Start();
+				string rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings);
+				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+				//thread.IsBackground = true;
+				//thread.Start();
+				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, recordType, recordID, "task assignment", rtn, "");
 			}
 
 			return status;
 		}
+		#endregion
+
+		#region notifylog
+
+		public static int WriteEmailLog(PSsqmEntities ctx, string mailTo, string mailFrom, string subject, string body, int recordType, decimal recordID, string reason, string status, string mailToOverride)
+		{
+			int logStatus = 0;
+			NOTIFYLOG theLog = new NOTIFYLOG();
+
+			theLog.RecordType = (int)recordType;
+			theLog.RecordID = recordID;
+			theLog.NotifyDT = DateTime.UtcNow;
+			theLog.MailTo = mailTo;
+			theLog.MailToOverride = mailToOverride;
+			theLog.Subject = subject;
+			theLog.Body = body;
+			theLog.Reason = reason;
+			theLog.Status = status;
+
+			try
+			{
+				if (string.IsNullOrEmpty(mailFrom))
+				{
+					SETTINGS setting = null;
+					List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+					if ((setting = mailSettings.Find(x => x.SETTING_CD == "MailFrom")) != null)
+						theLog.MailFrom = setting.VALUE;
+					if ((setting = mailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null)
+						theLog.MailToOverride = setting.VALUE;
+				}
+				else
+				{
+					theLog.MailFrom = mailFrom;
+				}
+
+				ctx.AddToNOTIFYLOG(theLog);
+				logStatus = ctx.SaveChanges();
+			}
+			catch
+			{
+				// log error
+			}
+
+			return logStatus;
+		}
+
+		#endregion
 
 	}
 
