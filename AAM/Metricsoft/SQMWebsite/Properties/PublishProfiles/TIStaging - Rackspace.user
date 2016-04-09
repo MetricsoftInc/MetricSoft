@@ -5,7 +5,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>ftp://ftp.luxinteractive.com:2121/Metricsoft/TIstaging</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://ftp.luxinteractive.com:2121/Metricsoft/TI/TI</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Admin/Administrate_Company.aspx">
