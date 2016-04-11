@@ -51,7 +51,8 @@ namespace SQM.Website
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
-			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.prevent);
+			bool createIncidentAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.prevent);  // allow prevaction create for oriinate or config privs
+			createIncidentAccess = createIncidentAccess == false ? SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.prevent) : createIncidentAccess;
 			rbNew.Visible = createIncidentAccess;
 
 			if (IsPostBack)
