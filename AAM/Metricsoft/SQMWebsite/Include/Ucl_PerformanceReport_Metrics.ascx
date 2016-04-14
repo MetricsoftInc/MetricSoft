@@ -38,8 +38,8 @@
 <div id="divSeverityRate" runat="server" class="chartMarginTop"></div>
 <div style="page-break-after: always; padding: 1px"></div>
 <div id="divPie1" runat="server" style="overflow: hidden" class="chartMarginTop">
-	<SQM:PieChart ID="pieRecordableType" runat="server" Title="Recordable Injuries by Type" Width="740" Height="500" StartAngle="45" Font-Size="12px" Style="float: left" CssClass="pieChart" />
-	<SQM:PieChart ID="pieRecordableBodyPart" runat="server" Title="Recordable Injuries by Body Part" Width="740" Height="500" StartAngle="45" Font-Size="12px" Style="float: right"
+	<SQM:PieChart ID="pieRecordableType" runat="server" Title="Injuries by Type" Width="740" Height="500" StartAngle="45" Font-Size="12px" Style="float: left" CssClass="pieChart" />
+	<SQM:PieChart ID="pieRecordableBodyPart" runat="server" Title="Injuries by Body Part" Width="740" Height="500" StartAngle="45" Font-Size="12px" Style="float: right"
 		CssClass="pieChart" />
 </div>
 <div id="divPie2" runat="server" style="overflow: hidden" class="chartMarginTop">
