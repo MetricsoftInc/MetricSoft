@@ -234,16 +234,16 @@ namespace SQM.Website.Automated
 									// Recordable ordinals
 									// check which ordinal data we wish to capture
 									SETTINGS setRecordable = sets.Where(s => s.SETTING_CD == "RECORDABLE-ORDINALS").FirstOrDefault();
-									if (setRecordable != null && setFirstAid.VALUE.Contains("type"))
+									if (setRecordable != null && setRecordable.VALUE.Contains("type"))
 										recordableOrdinals["type"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_TYPE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									if (setRecordable != null && setFirstAid.VALUE.Contains("bodyPart"))
+									if (setRecordable != null && setRecordable.VALUE.Contains("bodyPart"))
 										recordableOrdinals["bodyPart"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.INJURY_BODY_PART).ToDictionary(b => b.Key ?? "", b => b.Count());
-									if (setRecordable != null && setFirstAid.VALUE.Contains("rootCause"))
+									if (setRecordable != null && setRecordable.VALUE.Contains("rootCause"))
 										recordableOrdinals["rootCause"] = recordableIncidents.SelectMany(i => i.INCFORM_CAUSATION).GroupBy(c => c.CAUSEATION_CD).ToDictionary(c =>
 										c.Key ?? "", c => c.Count());
-									if (setRecordable != null && setFirstAid.VALUE.Contains("tenure"))
+									if (setRecordable != null && setRecordable.VALUE.Contains("tenure"))
 										recordableOrdinals["tenure"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
-									if (setRecordable != null && setFirstAid.VALUE.Contains("daysToClose"))
+									if (setRecordable != null && setRecordable.VALUE.Contains("daysToClose"))
 										recordableOrdinals["daysToClose"] = recordableIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
 										EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
 										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
