@@ -79,6 +79,12 @@ namespace SQM.Website.Automated
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			string pageMode = "";
+			if (!string.IsNullOrEmpty(Request.QueryString["m"]))   // .../...aspx?p=xxxxx
+			{
+				pageMode = Request.QueryString["m"].ToLower();  // page mode (web == running manually from the menu)
+			}
+
 			output = new StringBuilder();
 			output.AppendFormat("Started: {0:hh:mm MM/dd/yyyy}", DateTime.UtcNow);
 			output.AppendLine();
@@ -335,7 +341,10 @@ namespace SQM.Website.Automated
 			WriteLogFile();
 
 			this.lblOutput.Text = output.ToString().Replace("\n", "<br>");
-			System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+			if (pageMode != "web")
+			{
+				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+			}
 		}
 
 		static void WriteLine(string text)

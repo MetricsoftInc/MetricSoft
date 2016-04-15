@@ -20,9 +20,18 @@ namespace SQM.Website.Automated
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			string pageMode = "";
+			if (!string.IsNullOrEmpty(Request.QueryString["m"]))   // .../...aspx?p=xxxxx
+			{
+				pageMode = Request.QueryString["m"].ToLower();  // page mode (web == running manually from the menu)
+			}
+
 			if (IsPostBack)
 			{
-				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				if (pageMode != "web")
+				{
+					System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				}
 				return;
 			}
 
@@ -33,6 +42,8 @@ namespace SQM.Website.Automated
 			string pageURI = HttpContext.Current.Request.Url.AbsoluteUri;
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
+
+
 
 			WriteLine("Incident Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
@@ -95,7 +106,8 @@ namespace SQM.Website.Automated
 				ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 				WriteLogFile();
 
-				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				if (pageMode != "web")
+					System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 				return;
 			}
 
@@ -207,7 +219,8 @@ namespace SQM.Website.Automated
 				WriteLogFile();
 			}
 
-			System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+			if (pageMode != "web")
+				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 
 		}
 
