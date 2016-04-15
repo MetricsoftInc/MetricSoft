@@ -349,14 +349,16 @@ namespace SQM.Website.EHS
 				incidentRateTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
 					Enumerable.Range(i - 5, 6).Select(j => incidentRateSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 6m, incidentRateSeries.ItemList[i].Text));
 			var jsasTrendSeries = new GaugeSeries(0, "Leading Trend", "");
-			jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
-			for (int i = 1; i < jsasSeries.ItemList.Count; ++i)
-				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 1, 2).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 2m, jsasSeries.ItemList[i].Text));
+			for (int i = 0; i < 5; ++i)
+				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
+			for (int i = 5; i < jsasSeries.ItemList.Count; ++i)
+				jsasTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, Enumerable.Range(i - 5, 6).Select(j => jsasSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 6m, jsasSeries.ItemList[i].Text));
 			var safetyTrainingHoursTrendSeries = new GaugeSeries(0, "Leading Trend", "");
-			safetyTrainingHoursTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
-			for (int i = 1; i < safetyTrainingHoursSeries.ItemList.Count; ++i)
+			for (int i = 0; i < 5; ++i)
+				safetyTrainingHoursTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0, null, ""));
+			for (int i = 5; i < safetyTrainingHoursSeries.ItemList.Count; ++i)
 				safetyTrainingHoursTrendSeries.ItemList.Add(new GaugeSeriesItem(0, 0, 0,
-					Enumerable.Range(i - 1, 2).Select(j => safetyTrainingHoursSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 2m, safetyTrainingHoursSeries.ItemList[i].Text));
+					Enumerable.Range(i - 5, 6).Select(j => safetyTrainingHoursSeries.ItemList[j]).Sum(v => v.YValue ?? 0) / 6m, safetyTrainingHoursSeries.ItemList[i].Text));
 
 			var incidentRateTarget = entities.EHS_TARGETS.FirstOrDefault(t => t.TYPE == "TRIR" &&
 				(plantID_dec == -1 ? t.COMPANY_ID.HasValue && t.COMPANY_ID == companyID :
