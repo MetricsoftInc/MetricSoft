@@ -289,7 +289,7 @@ namespace SQM.Website
 			else
 			{
                 winUserEdit.Title = hfUpdateUser.Value;
-                tbUserSSOID.Enabled = false;
+                tbUserSSOID.Enabled = setsPwdReset != null && setsPwdReset.VALUE.ToUpper() == "Y" ? true : false;
                 tbUserFirstName.Focus();
 
                 lblPlantAccess.Text = "";
@@ -372,6 +372,11 @@ namespace SQM.Website
 				trResetPassword.Visible = true;
 			}
 
+			cbUserEmailLock.Checked = SQMModelMgr.PersonFieldLocked(person, LockField.email);
+			cbPrivGroupLock.Checked = SQMModelMgr.PersonFieldLocked(person, LockField.priv);
+			cbHRLocationLock.Checked = SQMModelMgr.PersonFieldLocked(person, LockField.plant);
+			cbUserLanguageLock.Checked = SQMModelMgr.PersonFieldLocked(person, LockField.lang);
+
             string script = "function f(){OpenUserEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}
@@ -452,7 +457,18 @@ namespace SQM.Website
             // roles were originally a list - let's keep the logic below just in case we need to restore a multi-role strategy
             //person.PERSON_ROLE.Clear();
 			person.ROLE = 100; ///// 
-			person.RCV_ESCALATION = true; 
+			person.RCV_ESCALATION = true;
+
+			person.LOCKS = "";
+			if (cbUserEmailLock.Checked)
+				person.LOCKS += (LockField.email.ToString() + ",");
+			if (cbPrivGroupLock.Checked)
+				person.LOCKS += (LockField.priv.ToString() + ",");
+			if (cbHRLocationLock.Checked)
+				person.LOCKS += (LockField.plant.ToString() + ",");
+			if (cbUserLanguageLock.Checked)
+				person.LOCKS += (LockField.lang.ToString() + ",");
+			person.LOCKS = person.LOCKS.TrimEnd(',');
 
             SetLocalPerson(person);
 

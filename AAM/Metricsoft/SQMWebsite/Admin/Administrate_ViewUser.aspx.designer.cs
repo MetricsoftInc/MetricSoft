@@ -256,6 +256,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlUserEdit;
         
         /// <summary>
+        /// btnCancel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel2;
+        
+        /// <summary>
+        /// btnSave2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave2;
+        
+        /// <summary>
         /// lblErrRequiredInputs control.
         /// </summary>
         /// <remarks>
@@ -544,6 +562,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbUserEmail;
         
         /// <summary>
+        /// cbUserEmailLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbUserEmailLock;
+        
+        /// <summary>
         /// lblEmpID control.
         /// </summary>
         /// <remarks>
@@ -607,6 +634,15 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox ddlPrivGroup;
         
         /// <summary>
+        /// cbPrivGroupLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbPrivGroupLock;
+        
+        /// <summary>
         /// lblPrivScope control.
         /// </summary>
         /// <remarks>
@@ -632,6 +668,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox ddlHRLocation;
+        
+        /// <summary>
+        /// cbHRLocationLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbHRLocationLock;
         
         /// <summary>
         /// lblPlantSelect control.
@@ -695,6 +740,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlUserLanguage;
+        
+        /// <summary>
+        /// cbUserLanguageLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbUserLanguageLock;
         
         /// <summary>
         /// lblUserStatus control.

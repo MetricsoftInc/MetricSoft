@@ -11,6 +11,9 @@ using System.Web.Configuration;
 
 namespace SQM.Website
 {
+	public enum LockField { priv, lang, plant, email};	// person record field locks
+
+
     #region helperclasses
 
     public class OrgData
@@ -523,6 +526,19 @@ namespace SQM.Website
         #endregion
 
         #region person
+
+		public static bool PersonFieldLocked(PERSON person, LockField lockfield)
+		{
+			bool isLocked = false;
+
+			if (!string.IsNullOrEmpty(person.LOCKS))
+			{
+				if (person.LOCKS.Contains(lockfield.ToString()))
+					isLocked = true;
+			}
+
+			return isLocked;
+		}
 
 		public static List<JOBCODE> SelectJobcodeList(string status, string privGroup)
 		{

@@ -132,6 +132,11 @@ namespace SQM.Website
             ddl.DataBind();
             ddl.SelectedValue = "035";
 
+			ddlLocalLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
+			ddlLocalLanguage.DataTextField = "LANGUAGE_NAME";
+			ddlLocalLanguage.DataValueField = "LANGUAGE_ID";
+			ddlLocalLanguage.DataBind();
+			ddlLocalLanguage.SelectedIndex = 0;
  
             SetStatusList("ddlPlantStatus", "A");
 
@@ -154,6 +159,9 @@ namespace SQM.Website
 
             if (ddlPowerSourcedRegion.Items.FindByValue(plant.COMP_INT_ID) != null)
                 ddlPowerSourcedRegion.SelectedValue = plant.COMP_INT_ID;
+
+			if (ddlLocalLanguage.Items.FindByValue(plant.LOCAL_LANGUAGE.ToString()) != null)
+				ddlLocalLanguage.SelectedValue = plant.LOCAL_LANGUAGE.ToString();
 
             ddl = (DropDownList)hfBase.FindControl("ddlPlantCurrencyCodes");
             if (!string.IsNullOrEmpty(plant.CURRENCY_CODE))
@@ -388,6 +396,12 @@ namespace SQM.Website
                     plant.COMP_INT_ID = ddlPowerSourcedRegion.SelectedValue;
                 else
                     plant.COMP_INT_ID = "";
+
+				if (!string.IsNullOrEmpty(ddlLocalLanguage.SelectedValue))
+					plant.LOCAL_LANGUAGE = Convert.ToInt32(ddlLocalLanguage.SelectedValue);
+				else
+					plant.LOCAL_LANGUAGE = null;
+
                 plant.LOCATION_TYPE = ddlLocationType.SelectedValue;
                 plant.TRACK_FIN_DATA = cbTrackFinData.Checked;
                 plant.TRACK_EW_DATA = cbTrackEWData.Checked;
@@ -450,6 +464,7 @@ namespace SQM.Website
                 if (SQMModelMgr.UpdatePlant(entities, plant, SessionManager.UserContext.UserName()) != null)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
+					lbPlantSave_Click(lbPlantCancel1, null);
                 }
                 else
                 {

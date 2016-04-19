@@ -69,13 +69,13 @@
 								</tr>
 								<tr>
 									 <td class="editArea">
-										<table width="98%" align="left" border="0" cellspacing="0" cellpadding="1"  class="borderSoft" >
+										<table width="98%" align="left" border="0" cellspacing="2" cellpadding="1"  class="borderSoft" style="background-color: white;">
 											<tr>
 												<td class="columnHeader" width="34%">
 													<asp:Label ID="lblPlantBusOrg" runat="server" text="Business Organization"></asp:Label>
 												</td>
 												<td class="required" width="1%">&nbsp;</td>
-												<td class="tableDataAlt" width="65%"><asp:DropDownList ID="ddlParentBusOrg" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt" width="65%"><asp:DropDownList ID="ddlParentBusOrg" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</TR>
 											<tr>
 												<td class="columnHeader">
@@ -110,7 +110,7 @@
 													<asp:Label ID="lblPlantStatus" runat="server" text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
 												</td>
 												<td class="required">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantStatus" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantStatus" runat="server" style="width: 40%;"></asp:DropDownList></td>
 											</TR>
 											<tr>
 												<td class="columnHeader">
@@ -153,35 +153,44 @@
 													<asp:Label ID="lblPlantCOCode" runat="server" text="Country Location"></asp:Label>
 												</td>
 												<td class="tableDataAlt">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlCountryCode" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlCountryCode" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</tr>
 										   <tr>
 												<td class="columnHeader">
 													<asp:Label ID="lblPlantTimezone" runat="server" text="Local Time Zone"></asp:Label>
 												</td>
 												<td class="required">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantTimezone" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantTimezone" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</tr>
 											<tr>
 												<td class="columnHeader">
 													<asp:Label ID="lblPowerSourcedRegion" runat="server" text="Power Sourced Region"></asp:Label>
 												</td>
 												<td class="tableDataAlt">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlPowerSourcedRegion" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlPowerSourcedRegion" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</tr>
+											<tr>
+                                                <td class="columnHeader">
+                                                    <asp:Label ID="lblLocalLanguage" runat="server" text="Language/Culture"></asp:Label>
+                                                </td>
+                                                <td class="tableDataAlt">&nbsp;</td>
+                                                <td class="tableDataAlt">
+                                                    <asp:DropDownList ID="ddlLocalLanguage" runat="server" style="width: 90%;"></asp:DropDownList>
+                                                </td>
+                                            </tr>
 											<tr>
 												<td class="columnHeader">
 													<asp:Label ID="lblPlantCurrencyCode" runat="server" text="Default Currency"></asp:Label>
 												</td>
 												<td class="required">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantCurrencyCodes" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlPlantCurrencyCodes" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</tr>
 											<tr>
 												<td class="columnHeader">
 														<asp:Label ID="lblLocationType" runat="server" Text="<%$ Resources:LocalizedText, LocationType %>"></asp:Label>
 												</td>
 												<td class="required">&nbsp;</td>
-												<td class="tableDataAlt"><asp:DropDownList ID="ddlLocationType" runat="server"></asp:DropDownList></td>
+												<td class="tableDataAlt"><asp:DropDownList ID="ddlLocationType" runat="server" style="width: 90%;"></asp:DropDownList></td>
 											</TR>
 											<tr>
 												<td class="columnHeader">
@@ -284,6 +293,28 @@
 										</table>
 									</td>
                                 </tr>
+                                <tr>
+                                    <td class="editArea">
+                                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+											<TR>
+												<TD>
+													<table border="0" cellspacing="0" cellpadding="1">
+														<tr>
+															 <td>
+																<asp:Button ID="lbPlantCancel2" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>"  style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+																 onclick="lbPlantSave_Click" CommandArgument="cancel"></asp:Button>
+															</TD>
+															<td>
+																<asp:Button ID="lbSavePLant2" CSSclass="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin-top: 8px; margin-bottom: 8px; margin-left: 5px;"
+																 OnClientClick="return confirmChange('Plant');" onclick="lbPlantSave_Click" CommandArgument="edit"></asp:Button>
+															</td>
+														</tr>
+													</table>
+												</TD>
+											</TR>
+										</table>
+									</td>
+								</tr>
 							</asp:Panel>
 
                         </table>

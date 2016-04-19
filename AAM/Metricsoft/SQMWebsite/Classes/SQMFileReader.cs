@@ -203,13 +203,16 @@ namespace SQM.Website
         {
 			Entities = new PSsqmEntities();
             Status = 0;
+			bool isNew = false;
             int lastLineNo = 0;
             string lastLine = "";
+			DateTime updateDT = DateTime.UtcNow;
             List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("FILE_UPLOAD", ""); // ABW 20140805
             List<SETTINGS> recpts = SQMSettings.SelectSettingsGroup("IMPORT_RECEIPT", ""); // ABW 20140805
 			List<PLANT> plantList = new List<PLANT>();  // mt 
 			var accessPlantList = new[] { new { plant = "", assoc = "" } }.ToList(); // mt
 			string accessLocations = "";
+			List<DEPARTMENT> deptList = null;
 			// use  settings below to limit processing to a discrete list of plants
 			SETTINGS dfltPlant = sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault() == null ? new SETTINGS() : sets.Where(s => s.SETTING_CD == "PlantCode").FirstOrDefault();
 			string[] dfltPlantList = string.IsNullOrEmpty(dfltPlant.VALUE) ? new string[0] : dfltPlant.VALUE.Split(',');
@@ -222,7 +225,8 @@ namespace SQM.Website
                     int lineNo = 0;
 					List<JOBCODE> jobcodeList = new List<JOBCODE>();
 
-					if (this.FileName == "PERSON")
+
+					if (this.FileName == "PERSON"  ||  this.FileName == "REFERENCE")
 					{
 						jobcodeList = SQMModelMgr.SelectJobcodeList("A", "");
 						plantList = SQMModelMgr.SelectPlantList(new PSsqmEntities(), 1, 0);
@@ -243,6 +247,7 @@ namespace SQM.Website
                     while ((line = sr.ReadLine()) != null)
                     {
                         EntityState state;
+						isNew = false;
                         decimal primaryCompanyID = 0;
                         COMPANY company = null;
                         BUSINESS_ORG busOrg = null;
@@ -252,6 +257,7 @@ namespace SQM.Website
                         ADDRESS adr = null;
 						PERSON person = null;
 						JOBCODE jobcode = null;
+						DEPARTMENT department = null;
                         PART part = null;
                         STREAM stream = null;
                         RECEIPT receipt = null;
@@ -289,9 +295,9 @@ namespace SQM.Website
 						switch (this.FileName)
 						{
 							case "REFERENCE":
-								string reftype = fldArray[0];
-								string itemCD = fldArray[1];
-								string itemDesc = fldArray[2];
+								string reftype = fldArray[0].Trim();
+								string itemCD = fldArray[1].Trim();
+								string itemDesc = fldArray[2].Trim();
 								bool doSave = false;
 								switch (reftype)
 								{
@@ -300,6 +306,7 @@ namespace SQM.Website
 										if (jobcode == null)
 										{
 											jobcode = new JOBCODE();
+											isNew = true;
 											jobcode.JOBCODE_CD = itemCD;
 											jobcode.JOB_DESC = itemDesc;
 											jobcode.DEFAULT_ROLE = 0;
@@ -312,6 +319,59 @@ namespace SQM.Website
 										doSave = true;
 										break;
 									case "LOCATION":
+										doSave = true;
+										break;
+									case "DEPTID":
+										string plantCD = fldArray[3].Trim();
+										if (string.IsNullOrEmpty(plantCD)  ||  string.IsNullOrEmpty(itemCD))  // no plant or dept id 
+										{
+											break;
+										}
+										if ((plant = plantList.Where(l => l.DUNS_CODE == plantCD || l.ALT_DUNS_CODE == plantCD).FirstOrDefault()) == null)
+										{
+											this.ErrorList.Add(new FileReaderError().CreateNew(lineNo, "DEPTID", "Plant code does not exist: " + plantCD, plantCD, 1, line));
+											break;	
+										}
+										// get all departments matching the code 
+										deptList = (from d in Entities.DEPARTMENT where d.DEPT_CODE == itemCD select d).ToList();
+										List<decimal> addPLantList = new List<decimal>();
+										addPLantList.Add(Convert.ToDecimal(plant.PLANT_ID));
+										// get any plants associated with the prime plant
+										if ((accessLocations = accessPlantList.Where(l => l.plant == plantCD).Select(l => l.assoc).FirstOrDefault()) != null)
+										{
+											addPLantList.AddRange(Array.ConvertAll<string, decimal>(accessLocations.Split(','), Convert.ToDecimal));
+										}
+										// add or update a department for each plant it is associated with
+										foreach (decimal plantID in addPLantList)
+										{
+											if ((plant = plantList.Where(l=> l.PLANT_ID == plantID).FirstOrDefault()) != null)
+											{
+												department = deptList.Where(l => l.PLANT_ID == plantID).FirstOrDefault();
+												if (department == null)
+												{
+													department = new DEPARTMENT();
+													department.COMPANY_ID = plant.COMPANY_ID;
+													department.BUS_ORG_ID = plant.BUS_ORG_ID;
+													department.PLANT_ID = plant.PLANT_ID;
+													department.DEPT_NAME = itemDesc;
+													department.DEPT_CODE = itemCD;
+													department.STATUS = "A";
+													department.LAST_UPD_BY = "upload";
+													department.LAST_UPD_DT = updateDT;
+													Entities.AddToDEPARTMENT(department);
+												}
+												else
+												{
+													if (department.DEPT_NAME != itemDesc)
+													{
+														department.DEPT_NAME = itemDesc;
+														department.LAST_UPD_BY = "upload";
+														department.LAST_UPD_DT = updateDT;
+													}
+												}
+												CreateUpdateRecord("DEPTID", itemCD + " (" + plant.PLANT_NAME + ") : " + line, department.EntityState);
+											}
+										}
 										doSave = true;
 										break;
 									default:
@@ -360,25 +420,38 @@ namespace SQM.Website
 										break;
 									}
 									person = new PERSON();
+									isNew = true;
 									person.EMP_ID = empID;
 									person.SSO_ID = empID;
 									person.ROLE = (int)SysPriv.view;
 									person.NEW_LOCATION_CD = "";
+									person.LOCKS = "";
 								}
 
 								person.STATUS = status;
 								person.FIRST_NAME = firstName;
 								person.LAST_NAME = lastName;
 								person.MIDDLE_NAME = middleName;
-								person.EMAIL = emailAddress;
 								person.PHONE = phone1;
 								person.PHONE2 = phone2;
 								person.JOBCODE_CD = jobCode;
 								person.COMPANY_ID = (decimal)plant.COMPANY_ID;
 								person.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
-								person.PLANT_ID = (decimal)plant.PLANT_ID;
 								person.SUPV_EMP_ID = supvEmpID;
-								if (string.IsNullOrEmpty(person.PRIV_GROUP))
+
+								if (!SQMModelMgr.PersonFieldLocked(person, LockField.email))
+									person.EMAIL = emailAddress;
+
+								if (!SQMModelMgr.PersonFieldLocked(person, LockField.plant))
+									person.PLANT_ID = (decimal)plant.PLANT_ID;
+
+								if (!SQMModelMgr.PersonFieldLocked(person, LockField.lang))
+								{
+									if (plant.LOCAL_LANGUAGE.HasValue)
+										person.PREFERRED_LANG_ID = plant.LOCAL_LANGUAGE;
+								}
+
+								if (!SQMModelMgr.PersonFieldLocked(person, LockField.priv))
 								{
 									jobcode = jobcodeList.Where(l => l.JOBCODE_CD == jobCode).FirstOrDefault();  // apply default privgroup for the person's jobcode, if defined
 									if (jobcode != null && !string.IsNullOrEmpty(jobcode.PRIV_GROUP))

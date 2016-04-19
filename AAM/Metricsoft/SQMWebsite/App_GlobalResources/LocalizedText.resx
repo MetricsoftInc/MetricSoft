@@ -663,4 +663,7 @@
   <data name="CloseAudit" xml:space="preserve">
     <value>This assessment is complete</value>
   </data>
+  <data name="LockThisField" xml:space="preserve">
+    <value>Protect this field from automatic updates</value>
+  </data>
 </root>

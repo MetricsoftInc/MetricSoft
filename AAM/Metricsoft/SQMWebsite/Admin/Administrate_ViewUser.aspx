@@ -116,7 +116,11 @@
 
                         <telerik:RadWindow runat="server" ID="winUserEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="565" Width="650" Title="User Details" Behaviors="Move">
                             <ContentTemplate>
-                                <asp:Panel runat="server" ID="pnlUserEdit" >
+                                <asp:Panel runat="server" ID="pnlUserEdit">
+									<span style="float: left; margin: 5px;">
+                                        <asp:Button ID="btnCancel2" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancel_Click"></asp:Button>
+                                        <asp:Button ID="btnSave2" class="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return ConfirmSaveUser('User');" onclick="OnSave_Click"></asp:Button>
+									</span>
                                      <table width="99%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 4px;">
                                         <tr>
                                              <td class="editArea">
@@ -142,7 +146,7 @@
                                                 <asp:HiddenField id="hfEHS" runat="server" Value="EHS"/>
 
                                                 <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1">
-                                                    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" class="borderSoft" style="margin: 4px 0 4px 0; ">
+                                                    <table width="100%" align="center" border="0" cellspacing="2" cellpadding="1" class="borderSoft" style="margin: 4px 0 4px 0; background-color: white;">
                                                         <tr>
                                                             <td class="columnHeader" width="24%">
                                                                 <asp:Label ID="lblUserSSOID" runat="server" text="User ID"></asp:Label>
@@ -185,7 +189,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:TextBox ID="tbUserPhone" size="50" maxlength="40" runat="server"></asp:TextBox>
+                                                                <asp:TextBox ID="tbUserPhone" size="48" maxlength="40" runat="server"></asp:TextBox>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -194,7 +198,8 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:TextBox ID="tbUserEmail" size="50" maxlength="100" runat="server"></asp:TextBox>
+                                                                <asp:TextBox ID="tbUserEmail" size="48" maxlength="100" runat="server"></asp:TextBox>
+																<asp:CheckBox ID="cbUserEmailLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -215,7 +220,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="350" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=417 Height="350" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -224,7 +229,8 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-																<telerik:RadComboBox ID="ddlPrivGroup" runat="server" ZIndex="9000" Skin="Metro" width=300 Height="300" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select privilege group"></telerik:RadComboBox>
+																<telerik:RadComboBox ID="ddlPrivGroup" runat="server" ZIndex="9000" Skin="Metro" width=417 Height="300" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select privilege group"></telerik:RadComboBox>
+																<asp:CheckBox ID="cbPrivGroupLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>" />
 																<br />
 																<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
@@ -235,7 +241,8 @@
                                                             </td>
                                                              <td class="required">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <telerik:RadComboBox ID="ddlHRLocation" runat="server" Height="300" Style="width: 98%;" ZIndex="9000" Skin="Metro" AutoPostBack="true" OnSelectedIndexChanged="ddlLocationChange" Font-Names="Verdana"></telerik:RadComboBox>
+                                                                <telerik:RadComboBox ID="ddlHRLocation" runat="server" Height="300" Style="width: 93%;" ZIndex="9000" Skin="Metro" AutoPostBack="true" OnSelectedIndexChanged="ddlLocationChange" Font-Names="Verdana"></telerik:RadComboBox>
+																<asp:CheckBox ID="cbHRLocationLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -244,7 +251,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                              <td class="tableDataAlt">
-                                                                <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="PlantCheckedItems" Height="300" Style="width: 98%;" ZIndex="9000" Skin="Metro" Font-Names="Verdana"
+                                                                <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="PlantCheckedItems" Height="300" Style="width: 93%;" ZIndex="9000" Skin="Metro" Font-Names="Verdana"
                                                                    ToolTip="Specify additional internal locations that the user may enter data or view information" ></telerik:RadComboBox>
                                                                 <br />
                                                                 <asp:Label ID="lblPlantAccess" runat="server" CssClass="refText"></asp:Label>
@@ -256,7 +263,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:DropDownList ID="ddlUserTimezone" runat="server" style="width: 98%;"></asp:DropDownList>
+                                                                <asp:DropDownList ID="ddlUserTimezone" runat="server" style="width: 93%;"></asp:DropDownList>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -265,7 +272,8 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:DropDownList ID="ddlUserLanguage" runat="server" ToolTip="specify date and number formatting"></asp:DropDownList>
+                                                                <asp:DropDownList ID="ddlUserLanguage" runat="server" style="width: 93%;"></asp:DropDownList>
+																<asp:CheckBox ID="cbUserLanguageLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -301,8 +309,7 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <span style="float: right; margin: 10px;">
-<%--                                        <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" OnClientClick ="return confirmAction('Cancel without saving');" onclick="OnCancel_Click"></asp:Button>--%>
+                                    <span style="float: left; margin: 5px;">
                                         <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancel_Click"></asp:Button>
                                         <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return ConfirmSaveUser('User');" onclick="OnSave_Click"></asp:Button>
                                     </span>

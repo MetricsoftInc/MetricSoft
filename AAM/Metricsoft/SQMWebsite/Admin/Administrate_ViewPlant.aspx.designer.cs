@@ -391,6 +391,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.DropDownList ddlPowerSourcedRegion;
         
         /// <summary>
+        /// lblLocalLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLocalLanguage;
+        
+        /// <summary>
+        /// ddlLocalLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlLocalLanguage;
+        
+        /// <summary>
         /// lblPlantCurrencyCode control.
         /// </summary>
         /// <remarks>
@@ -506,6 +524,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPlantLastUpdateDate;
+        
+        /// <summary>
+        /// lbPlantCancel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lbPlantCancel2;
+        
+        /// <summary>
+        /// lbSavePLant2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button lbSavePLant2;
         
         /// <summary>
         /// pnlSubLists control.
