@@ -52,7 +52,6 @@ namespace SQM.Website.Automated
 				string currentIP = GetIPAddress();
 
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
-				/*
 				if (strValidIP.Equals(currentIP))
 				{
 					WriteLine("Resource Import being accessed from a valid IP address " + currentIP);
@@ -74,7 +73,6 @@ namespace SQM.Website.Automated
 					WriteLine("Resource Import being accessed from invalid IP address " + currentIP);
 					validIP = false;
 				}
-				*/
 			}
 			catch (Exception ex)
 			{
@@ -83,7 +81,7 @@ namespace SQM.Website.Automated
 			}
 
 			// make sure this code is NOT moved to production
-			validIP = true;
+			//validIP = true;
 
 			if (validIP)
 			{
