@@ -152,9 +152,12 @@
                                                                 <asp:Label ID="lblUserSSOID" runat="server" text="User ID"></asp:Label>
                                                             </td>
                                                             <td class="required" width="1%">&nbsp;</td>
-                                                            <td class="tableDataAlt" width="75%">
+                                                            <td class="tableDataAlt" width="73%">
                                                                 <asp:TextBox ID="tbUserSSOID" size="50" maxlength="100" runat="server" ></asp:TextBox>
                                                             </td>
+															<td class="columnHeader" width="2%">
+																<img src="/images/defaulticon/16x16/padlock-closed.png" alt="lock field" style="vertical-align: middle; border: 0px;" title="Click the checkboxes below to protect fields from automatic updates" />
+															</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -164,6 +167,7 @@
                                                             <td class="tableDataAlt">
                                                                 <asp:TextBox ID="tbUserFirstName" size="50" maxlength="100" runat="server"></asp:TextBox>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -173,6 +177,7 @@
                                                             <td class="tableDataAlt">
                                                                 <asp:TextBox ID="tbUserLastName" size="50" maxlength="100" runat="server"></asp:TextBox>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -182,6 +187,7 @@
                                                             <td class="tableDataAlt">
                                                                 <asp:TextBox ID="tbUserMiddleName" size="50" maxlength="100" runat="server"></asp:TextBox>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -189,8 +195,9 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:TextBox ID="tbUserPhone" size="48" maxlength="40" runat="server"></asp:TextBox>
+                                                                <asp:TextBox ID="tbUserPhone" size="50" maxlength="40" runat="server"></asp:TextBox>
                                                             </td>
+														<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -198,9 +205,11 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:TextBox ID="tbUserEmail" size="48" maxlength="100" runat="server"></asp:TextBox>
-																<asp:CheckBox ID="cbUserEmailLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
+                                                                <asp:TextBox ID="tbUserEmail" size="50" maxlength="100" runat="server"></asp:TextBox>
                                                             </td>
+															<td class="tableDataAlt">
+																<asp:CheckBox ID="cbUserEmailLock" runat="server" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
+															</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -213,6 +222,7 @@
 																	<asp:TextBox ID="tbSupvEmpID" size="16" maxlength="16" runat="server"></asp:TextBox>
 																</span>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -220,8 +230,9 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=417 Height="350" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
+																<telerik:RadComboBox ID="ddlJobCode" runat="server" ZIndex="9000" Skin="Metro" width=425 Height="350" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select job code"></telerik:RadComboBox>
                                                             </td>
+														<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -229,11 +240,13 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-																<telerik:RadComboBox ID="ddlPrivGroup" runat="server" ZIndex="9000" Skin="Metro" width=417 Height="300" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select privilege group"></telerik:RadComboBox>
-																<asp:CheckBox ID="cbPrivGroupLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>" />
+																<telerik:RadComboBox ID="ddlPrivGroup" runat="server" ZIndex="9000" Skin="Metro" width=425 Height="300" AutoPostBack="false" Font-Names="Verdana" EmptyMessage="select privilege group"></telerik:RadComboBox>
 																<br />
 																<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
+															<td class="tableDataAlt" style="vertical-align: middle; padding-bottom: 10px;">
+																<asp:CheckBox ID="cbPrivGroupLock" runat="server" ToolTip="<%$ Resources:LocalizedText, LockThisField %>" />
+															</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -241,9 +254,11 @@
                                                             </td>
                                                              <td class="required">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <telerik:RadComboBox ID="ddlHRLocation" runat="server" Height="300" Style="width: 93%;" ZIndex="9000" Skin="Metro" AutoPostBack="true" OnSelectedIndexChanged="ddlLocationChange" Font-Names="Verdana"></telerik:RadComboBox>
-																<asp:CheckBox ID="cbHRLocationLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
+                                                                <telerik:RadComboBox ID="ddlHRLocation" runat="server" Height="300" Style="width: 99%;" ZIndex="9000" Skin="Metro" AutoPostBack="true" OnSelectedIndexChanged="ddlLocationChange" Font-Names="Verdana"></telerik:RadComboBox>
                                                             </td>
+															<td class="tableDataAlt">
+																<asp:CheckBox ID="cbHRLocationLock" runat="server" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
+															</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -251,11 +266,12 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                              <td class="tableDataAlt">
-                                                                <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="PlantCheckedItems" Height="300" Style="width: 93%;" ZIndex="9000" Skin="Metro" Font-Names="Verdana"
+                                                                <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" OnClientLoad="DisableComboSeparators" OnClientDropDownClosed="PlantCheckedItems" Height="300" Style="width: 99%;" ZIndex="9000" Skin="Metro" Font-Names="Verdana"
                                                                    ToolTip="Specify additional internal locations that the user may enter data or view information" ></telerik:RadComboBox>
                                                                 <br />
                                                                 <asp:Label ID="lblPlantAccess" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -263,8 +279,9 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:DropDownList ID="ddlUserTimezone" runat="server" style="width: 93%;"></asp:DropDownList>
+                                                                <asp:DropDownList ID="ddlUserTimezone" runat="server" style="width: 99%;"></asp:DropDownList>
                                                             </td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -272,8 +289,9 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
-                                                                <asp:DropDownList ID="ddlUserLanguage" runat="server" style="width: 93%;"></asp:DropDownList>
-																<asp:CheckBox ID="cbUserLanguageLock" runat="server" style="margin-left: 5px;" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
+                                                                <asp:DropDownList ID="ddlUserLanguage" runat="server" style="width: 99%;"></asp:DropDownList>
+															<td class="tableDataAlt">
+																<asp:CheckBox ID="cbUserLanguageLock" runat="server" ToolTip="<%$ Resources:LocalizedText, LockThisField %>"/>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -282,6 +300,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt"><asp:DropDownList ID="ddlUserStatus" runat="server"></asp:DropDownList></td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -289,6 +308,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableData"><asp:Label ID="lblUserLoginDate_out" runat="server" /></td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
@@ -296,6 +316,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableData"><asp:Label ID="lblUserLastUpdate" runat="server" /></td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                         <tr id="trResetPassword" runat="server" visible="false">
                                                             <td class="columnHeader">
@@ -303,6 +324,7 @@
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableData"><asp:CheckBox runat="server" ID="cbResetPassword" /></td>
+															<td class="tableDataAlt"></td>
                                                         </tr>
                                                     </table>
                                                 </telerik:RadAjaxPanel>

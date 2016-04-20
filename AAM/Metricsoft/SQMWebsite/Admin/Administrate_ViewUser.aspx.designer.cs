@@ -634,15 +634,6 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox ddlPrivGroup;
         
         /// <summary>
-        /// cbPrivGroupLock control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbPrivGroupLock;
-        
-        /// <summary>
         /// lblPrivScope control.
         /// </summary>
         /// <remarks>
@@ -650,6 +641,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrivScope;
+        
+        /// <summary>
+        /// cbPrivGroupLock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbPrivGroupLock;
         
         /// <summary>
         /// lblUserHRLocation control.
