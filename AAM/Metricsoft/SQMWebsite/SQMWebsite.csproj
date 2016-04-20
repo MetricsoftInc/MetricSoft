@@ -325,6 +325,7 @@
     <Content Include="images\defaulticon\16x16\no.png" />
     <Content Include="images\defaulticon\16x16\open-in-new-window.png" />
     <Content Include="images\defaulticon\16x16\padlock-closed.png" />
+    <Content Include="images\defaulticon\16x16\padlock-open.png" />
     <Content Include="images\defaulticon\16x16\print.png" />
     <Content Include="images\defaulticon\16x16\save.png" />
     <Content Include="images\defaulticon\16x16\search.png" />
