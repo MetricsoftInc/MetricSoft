@@ -444,7 +444,14 @@ namespace SQM.Website
 									person.EMAIL = emailAddress;
 
 								if (!SQMModelMgr.PersonFieldLocked(person, LockField.plant))
+								{
 									person.PLANT_ID = (decimal)plant.PLANT_ID;
+									// apply default accessible locations if defined in the 'PlantCode' SETTINGS
+									if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
+									{
+										person.NEW_LOCATION_CD = ("," + accessLocations + ",");
+									}
+								}
 
 								if (!SQMModelMgr.PersonFieldLocked(person, LockField.lang))
 								{
@@ -459,12 +466,6 @@ namespace SQM.Website
 									{
 										person.PRIV_GROUP = jobcode.PRIV_GROUP;
 									}
-								}
-
-								// apply default accessible locations if defined in the 'PlantCode' SETTINGS
-								if ((accessLocations = accessPlantList.Where(l => l.plant == HRLocation).Select(l => l.assoc).FirstOrDefault()) != null)
-								{
-									person.NEW_LOCATION_CD = ("," + accessLocations + ",");
 								}
 
 								try

@@ -244,7 +244,7 @@
 																<br />
 																<asp:Label ID="lblPrivScope" runat="server" CssClass="refText"></asp:Label>
                                                             </td>
-															<td class="tableDataAlt" style="vertical-align: middle; padding-bottom: 10px;">
+															<td class="tableDataAlt" style="vertical-align: top; padding-top: 3px;">
 																<asp:CheckBox ID="cbPrivGroupLock" runat="server" ToolTip="<%$ Resources:LocalizedText, LockThisField %>" />
 															</td>
                                                         </tr>
