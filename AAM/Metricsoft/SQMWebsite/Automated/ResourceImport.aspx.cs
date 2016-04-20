@@ -24,6 +24,21 @@ namespace SQM.Website.Automated
 			output = new StringBuilder();
 			entities = new PSsqmEntities();
 
+			string pageMode = "";
+			if (!string.IsNullOrEmpty(Request.QueryString["m"]))   // .../...aspx?p=xxxxx
+			{
+				pageMode = Request.QueryString["m"].ToLower();  // page mode (web == running manually from the menu)
+			}
+
+			if (IsPostBack)
+			{
+				if (pageMode != "web")
+				{
+					System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				}
+				return;
+			}
+
 			sets = SQMSettings.SelectSettingsGroup("FILE_UPLOAD", "");
 			primaryCompany = Convert.ToInt32(sets.Find(x => x.SETTING_CD == "CompanyID").VALUE);
 			fileDelimiter = sets.Find(x => x.SETTING_CD == "FileDelimiter1").VALUE.ToCharArray();
@@ -37,7 +52,7 @@ namespace SQM.Website.Automated
 				string currentIP = GetIPAddress();
 
 				string strValidIP = sets.Find(x => x.SETTING_CD == "ValidIP").VALUE.ToString();
-
+				/*
 				if (strValidIP.Equals(currentIP))
 				{
 					WriteLine("Resource Import being accessed from a valid IP address " + currentIP);
@@ -59,6 +74,7 @@ namespace SQM.Website.Automated
 					WriteLine("Resource Import being accessed from invalid IP address " + currentIP);
 					validIP = false;
 				}
+				*/
 			}
 			catch (Exception ex)
 			{
@@ -67,7 +83,7 @@ namespace SQM.Website.Automated
 			}
 
 			// make sure this code is NOT moved to production
-			//validIP = true;
+			validIP = true;
 
 			if (validIP)
 			{
@@ -92,10 +108,14 @@ namespace SQM.Website.Automated
 					//WriteLine("Main ScheduleAudits Detailed Error: " + ex.InnerException.ToString());
 				}
 			}
+
 			WriteLine("");
 			WriteLine("Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 			ltrStatus.Text = output.ToString().Replace("\n", "<br/>");
 			WriteLogFile();
+
+			if (pageMode != "web")
+				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
 		}
 
 		public string GetIPAddress()
