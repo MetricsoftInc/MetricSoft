@@ -251,7 +251,14 @@ namespace SQM.Website
 					Response.Redirect("/Home/Calendar.aspx");
 				}
 				else
+				{
+					try
+					{
+						ViewState["RedirectPath"] = "";
+					}
+					catch { }
 					Response.Redirect(redirectPath);
+				}
 			}
 		}
 
