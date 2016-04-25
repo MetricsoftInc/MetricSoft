@@ -495,7 +495,13 @@ namespace SQM.Website
 			return preventativeTypeList;
 		}
 
+
 		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted)
+		{
+			return CanUpdateIncident(incident, IsEditContext, privNeeded, stepCompleted, -1);
+		}
+
+		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted, int stepToUpdate)
 		{
 			bool canUpdate = false;
 
@@ -506,9 +512,17 @@ namespace SQM.Website
 					canUpdate = true;
 				}
 
-				if (stepCompleted == (int)IncidentStepStatus.signoff2)  // incident is closed
+				if (stepCompleted >= (int)IncidentStepStatus.signoff1 && stepCompleted <= (int)IncidentStepStatus.signoffComplete)
 				{
-					canUpdate = false;
+					if (stepCompleted == (int)IncidentStepStatus.signoff2)  // incident is closed
+					{
+						canUpdate = false;
+					}
+
+					if (stepToUpdate == (int)IncidentStepStatus.workstatus && SessionManager.CheckUserPrivilege(privNeeded, SysScope.incident))
+					{
+						canUpdate = true;
+					}
 				}
 			}
 			else  // assume edit context will be false for new incidents an any user can create/save a new incident

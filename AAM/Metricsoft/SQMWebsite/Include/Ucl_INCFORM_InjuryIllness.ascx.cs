@@ -1336,7 +1336,9 @@ namespace SQM.Website
 					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
 					CurrentStep = (int)EHSFormId.INCFORM_LOSTTIME_HIST;
 					InitializeForm(CurrentStep);
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);  // can log lost time ?
+					if (btnSubnavSave.Visible == false)
+						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, IncidentStepCompleted, (int)IncidentStepStatus.workstatus);  // check if has closed incident priv
 					break;
 				case "0":
 				default:
