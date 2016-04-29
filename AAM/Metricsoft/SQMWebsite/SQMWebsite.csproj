@@ -282,6 +282,9 @@
     <Content Include="images\company\AAMLogoSmall.jpg" />
     <Content Include="images\company\MetricsoftLogo.png" />
     <Content Include="images\company\MetricsoftLogoSmall.png" />
+    <Content Include="images\company\NSKLogo.jpg" />
+    <Content Include="images\company\NSKLogoLarge.jpg" />
+    <Content Include="images\company\NSKLogoSmall.jpg" />
     <Content Include="images\company\QAILogo.jpg" />
     <Content Include="images\company\QAILogoLarge.jpg" />
     <Content Include="images\company\QAILogoSmall.jpg" />
