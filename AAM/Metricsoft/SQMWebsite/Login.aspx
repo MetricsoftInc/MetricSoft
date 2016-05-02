@@ -130,7 +130,9 @@
 						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText"></asp:Label>
 					</div>
 
-					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" GroupingText="Corporate Objectives & Performance" CssClass="sectionTitles" Width="99%" Visible="False" meta:resourcekey="pnlPostingResource1">
+					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" CssClass="" Width="99%" Visible="False">
+						<%--GroupingText="Corporate Objectives & Performance"--%>
+						<asp:Label ID="lblPosting" runat="server" CssClass="sectionTitles" Text="Corporate Objectives & Performance"></asp:Label>
 						<center>
 							<div id="divTicker" runat="server" visible="False">
 								<asp:Label ID="lblStats" runat="server" CssClass="prompt" Text="Number Of Days Without A Lost Time Case" meta:resourcekey="lblStatsResource1"></asp:Label>
