@@ -212,7 +212,7 @@
 					<Ucl:DocList id="uclDocSelect" runat="server"/>
 				</span>
 			</div>
-			<div class="row hidden-xs">
+			<div class="row hidden-xs" style="margin-left: 0px; width: 100%;">
 				<div class="subMenuContainer noprint" />
 			</div>
 		</div>
