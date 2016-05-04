@@ -67,24 +67,11 @@ namespace SQM.Website
 			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
 		}
 
-		protected bool UpdateAccess
+		public INCIDENT LocalIncident
 		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
+			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
+			set { ViewState["LocalIncident"] = value; }
 		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
-		}
-
 
 		public string ValidationGroup
 		{
@@ -97,10 +84,6 @@ namespace SQM.Website
 		{
 			if (SessionManager.SessionContext != null)
 			{
-				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
-
 				if (IsFullPagePostback)
 					rptRootCause.DataBind();
 			}
@@ -135,7 +118,7 @@ namespace SQM.Website
 
 			if (IncidentId != null)
 			{
-				INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
+				LocalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
 				//if (incident != null)
 				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
 				//btnClose.Text = "Reopen Power Outage Incident";
@@ -163,16 +146,18 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
-			//PSsqmEntities entities = new PSsqmEntities();
+			PSsqmEntities entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
 			if (IncidentId > 0)
 				try
 				{
-					INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
-					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+					LocalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).SingleOrDefault();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)LocalIncident.DETECT_PLANT_ID, "");
 					if (plant != null)
 						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+
+					pnlRoot5Y.Enabled = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 				}
 				catch { }
 
@@ -186,7 +171,7 @@ namespace SQM.Website
 		{
 			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
-			pnlRoot5Y.Visible = true;
+			//pnlRoot5Y.Visible = true;
 			rptRootCause.DataSource = EHSIncidentMgr.GetRootCauseList(IncidentId, true);
 			rptRootCause.DataBind();
 		}
@@ -212,13 +197,10 @@ namespace SQM.Website
 					lb.Text = rootCause.ITEM_SEQ.ToString();
 					tb.Text = rootCause.ITEM_DESCRIPTION;
 
-					// Set user access:
-					tb.Enabled = ActionAccess;
-					itmdel.Visible = ActionAccess;
-					rvf.Enabled = ActionAccess;
-
 					if (rootCause.ITEM_SEQ > minRowsToValidate)
 						rvf.Enabled = false;
+
+					itmdel.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 				}
 				catch { }
 			}
@@ -226,7 +208,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddRootCause");
-				addanother.Visible = ActionAccess;
+				addanother.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 			}
 
 		}

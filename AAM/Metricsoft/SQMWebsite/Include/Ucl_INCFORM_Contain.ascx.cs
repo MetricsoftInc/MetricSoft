@@ -174,6 +174,8 @@ namespace SQM.Website
 			pnlContain.Visible = true;
 			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			rptContain.DataBind();
+
+			pnlContain.Enabled = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 		}
 
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -236,6 +238,8 @@ namespace SQM.Website
 						rvfcp.Enabled = false;
 						rvfsd.Enabled = false;
 					}
+
+					itmdel.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 	
 				}
 				catch { }
@@ -244,7 +248,8 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddContain");
-				addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+				//addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
+				addanother.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 			}
 
 		}

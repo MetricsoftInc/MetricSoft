@@ -46,6 +46,8 @@ namespace SQM.Website
 
 			BindCausation(incident);
 
+			pnlCausation.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED);
+
 			return status;
 		}
 

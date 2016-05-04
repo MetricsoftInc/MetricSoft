@@ -179,6 +179,8 @@ namespace SQM.Website
 			//rptAction.DataSource = EHSIncidentMgr.GetFinalActionList(IncidentId);
 			rptAction.DataSource = EHSIncidentMgr.GetCorrectiveActionList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			rptAction.DataBind();
+
+			pnlAction.Enabled = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.action, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 		}
 
 		protected void rddlActionPerson_SelectedIndexChanged(object sender, DropDownListEventArgs e)
@@ -272,6 +274,8 @@ namespace SQM.Website
 						rvfsd.Enabled = false;
 					}
 
+					itmdel.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.action, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+
 				}
 				catch { }
 			}
@@ -280,7 +284,7 @@ namespace SQM.Website
 			if (e.Item.ItemType == ListItemType.Footer)
 			{
 				Button addanother = (Button)e.Item.FindControl("btnAddFinal");
-				//addanother.Visible = ActionAccess;
+				addanother.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.action, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 			}
 		}
 
