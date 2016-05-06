@@ -883,7 +883,7 @@ namespace SQM.Website
 		protected void lnkAddAttach(object sender, EventArgs e)
 		{
 			//SaveInputs(0, true);
-			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements", cbFinalApproval.Checked == true ? PageUseMode.ViewOnly : PageUseMode.EditEnabled);
+			uclAttachWin.OpenManageAttachmentsWindow(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "Upload Attachments", "Upload or view invoices or statements", (cbFinalApproval.Visible == true && cbFinalApproval.Checked == true) ? PageUseMode.ViewOnly : PageUseMode.EditEnabled);
 			BindSharedCalendars();
 		}
 
