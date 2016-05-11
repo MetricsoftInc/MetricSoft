@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddNewRecordText" xml:space="preserve">
+    <value>Dodaj nowy zapis</value>
+  </data>
+  <data name="AggregateFunctionAvg" xml:space="preserve">
+    <value>Średni</value>
+  </data>
+  <data name="AggregateFunctionCount" xml:space="preserve">
+    <value>Obliczenia</value>
+  </data>
+  <data name="AggregateFunctionCountDistinct" xml:space="preserve">
+    <value>CountDistinct</value>
+  </data>
+  <data name="AggregateFunctionCustom" xml:space="preserve">
+    <value>Na miarę</value>
+  </data>
+  <data name="AggregateFunctionFirst" xml:space="preserve">
+    <value>Pierwszy</value>
+  </data>
+  <data name="AggregateFunctionLast" xml:space="preserve">
+    <value>Ostatni</value>
+  </data>
+  <data name="AggregateFunctionMax" xml:space="preserve">
+    <value>Maksimum</value>
+  </data>
+  <data name="AggregateFunctionMin" xml:space="preserve">
+    <value>Minimum</value>
+  </data>
+  <data name="AggregateFunctionSum" xml:space="preserve">
+    <value>Suma</value>
+  </data>
+  <data name="BetweenText" xml:space="preserve">
+    <value>Pomiędzy</value>
+  </data>
+  <data name="CancelChangesText" xml:space="preserve">
+    <value>Anuluj zmiany</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="ChangePageSizeButtonToolTip" xml:space="preserve">
+    <value>Zmień rozmiar strony</value>
+  </data>
+  <data name="ChangePageSizeLabelText" xml:space="preserve">
+    <value>Rozmiar strony:</value>
+  </data>
+  <data name="ChangePageSizeLinkButtonText" xml:space="preserve">
+    <value>Zmień</value>
+  </data>
+  <data name="CloseText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="CollapseTooltip" xml:space="preserve">
+    <value>Zwiń grupę</value>
+  </data>
+  <data name="ColumnResizeTooltipFormatString" xml:space="preserve">
+    <value>Szerokość: &lt;strong&gt;{0}&lt;/strong&gt; &lt;em&gt;pikseli&lt;/em&gt;</value>
+  </data>
+  <data name="ContainsText" xml:space="preserve">
+    <value>Zawiera</value>
+  </data>
+  <data name="CustomText" xml:space="preserve">
+    <value>Na miarę</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
+  <data name="DoesNotContainText" xml:space="preserve">
+    <value>Nie zawiera </value>
+  </data>
+  <data name="DragToGroupOrReorder" xml:space="preserve">
+    <value>Przenieś do grupy lub zamów ponownie</value>
+  </data>
+  <data name="DragToResize" xml:space="preserve">
+    <value>Przenieś, aby zmienić rozmiar</value>
+  </data>
+  <data name="DropHereToReorder" xml:space="preserve">
+    <value>Wrzuć tutaj, aby zamówić ponownie</value>
+  </data>
+  <data name="EditText" xml:space="preserve">
+    <value>Edytuj</value>
+  </data>
+  <data name="ExpandTooltip" xml:space="preserve">
+    <value>Poszerz grupę</value>
+  </data>
+  <data name="ExportToCsvText" xml:space="preserve">
+    <value>Wyeksportuj do formatu CSV</value>
+  </data>
+  <data name="ExportToExcelText" xml:space="preserve">
+    <value>Wyeksportuj do formatu Excel</value>
+  </data>
+  <data name="ExportToPdfText" xml:space="preserve">
+    <value>Wyeksportuj do formatu PDF</value>
+  </data>
+  <data name="ExportToWordText" xml:space="preserve">
+    <value>Wyeksportuj do formatu Word</value>
+  </data>
+  <data name="FilterImageToolTip" xml:space="preserve">
+    <value>Filtruj</value>
+  </data>
+  <data name="FirstPageToolTip" xml:space="preserve">
+    <value>Pierwsza strona</value>
+  </data>
+  <data name="GoToPageLabelText" xml:space="preserve">
+    <value>Strona:</value>
+  </data>
+  <data name="GoToPageLinkButtonText" xml:space="preserve">
+    <value>Idź</value>
+  </data>
+  <data name="GreaterThanOrEqualToText" xml:space="preserve">
+    <value>Większe niż lub równe</value>
+  </data>
+  <data name="GreaterThanText" xml:space="preserve">
+    <value>Większe niż</value>
+  </data>
+  <data name="GroupContinuedFormatString" xml:space="preserve">
+    <value>... kontynuacja grupy z poprzedniej strony. </value>
+  </data>
+  <data name="GroupContinuesFormatString" xml:space="preserve">
+    <value> Grupa kontynuowana na następnej stronie.</value>
+  </data>
+  <data name="GroupPanelText" xml:space="preserve">
+    <value>Przenieś nagłówek kolumny i wrzuć go tutaj, do grupy, w tej kolumnie</value>
+  </data>
+  <data name="GroupSplitDisplayFormat" xml:space="preserve">
+    <value>Pokazuje {0} z {1} przedmiotów.</value>
+  </data>
+  <data name="HeaderContextMenuAggregates" xml:space="preserve">
+    <value>Agregaty</value>
+  </data>
+  <data name="HeaderContextMenuAndLabel" xml:space="preserve">
+    <value>Oraz </value>
+  </data>
+  <data name="HeaderContextMenuAvgAggregateText" xml:space="preserve">
+    <value>Średni</value>
+  </data>
+  <data name="HeaderContextMenuBestFitText" xml:space="preserve">
+    <value>Najlepszy wybór</value>
+  </data>
+  <data name="HeaderContextMenuClearButton" xml:space="preserve">
+    <value>Wyczyść filtr</value>
+  </data>
+  <data name="HeaderContextMenuColumns" xml:space="preserve">
+    <value>Kolumny</value>
+  </data>
+  <data name="HeaderContextMenuCountAggregateText" xml:space="preserve">
+    <value>Obliczenia</value>
+  </data>
+  <data name="HeaderContextMenuCustomAggregateText" xml:space="preserve">
+    <value>Na miarę</value>
+  </data>
+  <data name="HeaderContextMenuFilterButton" xml:space="preserve">
+    <value>Filtruj</value>
+  </data>
+  <data name="HeaderContextMenuFilterItemText" xml:space="preserve">
+    <value>Filtruj</value>
+  </data>
+  <data name="HeaderContextMenuFirstAggregateText" xml:space="preserve">
+    <value>Pierwszy</value>
+  </data>
+  <data name="HeaderContextMenuFreeze" xml:space="preserve">
+    <value>Unieruchom</value>
+  </data>
+  <data name="HeaderContextMenuGroupBy" xml:space="preserve">
+    <value>Pogrupuj według</value>
+  </data>
+  <data name="HeaderContextMenuLastAggregateText" xml:space="preserve">
+    <value>Ostatni</value>
+  </data>
+  <data name="HeaderContextMenuMaxAggregateText" xml:space="preserve">
+    <value>Maksimum</value>
+  </data>
+  <data name="HeaderContextMenuMinAggregateText" xml:space="preserve">
+    <value>Minimum</value>
+  </data>
+  <data name="HeaderContextMenuNoneAggregateText" xml:space="preserve">
+    <value>Brak</value>
+  </data>
+  <data name="HeaderContextMenuRowsLabel" xml:space="preserve">
+    <value>Pokaż rzędy z wartością, która</value>
+  </data>
+  <data name="HeaderContextMenuSortAsc" xml:space="preserve">
+    <value>Sortuj rosnąco</value>
+  </data>
+  <data name="HeaderContextMenuSortClear" xml:space="preserve">
+    <value>Usuń sortowanie</value>
+  </data>
+  <data name="HeaderContextMenuSortDesc" xml:space="preserve">
+    <value>Sortuj malejąco</value>
+  </data>
+  <data name="HeaderContextMenuSumAggregateText" xml:space="preserve">
+    <value>Suma</value>
+  </data>
+  <data name="HeaderContextMenuUnfreeze" xml:space="preserve">
+    <value>Odblokuj</value>
+  </data>
+  <data name="HeaderContextMenuUnGroupBy" xml:space="preserve">
+    <value>Rozgrupuj</value>
+  </data>
+  <data name="HierarchyCollapseTooltip" xml:space="preserve">
+    <value>Zwiń</value>
+  </data>
+  <data name="HierarchyExpandTooltip" xml:space="preserve">
+    <value>Rozwiń</value>
+  </data>
+  <data name="HierarchySelfCollapseTooltip" xml:space="preserve">
+    <value>Zwiń autoreferencję</value>
+  </data>
+  <data name="HierarchySelfExpandTooltip" xml:space="preserve">
+    <value>Rozwiń autoreferencję</value>
+  </data>
+  <data name="InsertText" xml:space="preserve">
+    <value>Wpisz</value>
+  </data>
+  <data name="LastPageToolTip" xml:space="preserve">
+    <value>Ostatnia strona</value>
+  </data>
+  <data name="LessThanOrEqualToText" xml:space="preserve">
+    <value>Większe niż lub równe</value>
+  </data>
+  <data name="LessThanText" xml:space="preserve">
+    <value>Większe niż</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>Ładowanie...</value>
+  </data>
+  <data name="MobileColumnsViewDescription" xml:space="preserve">
+    <value>Pokaż/ukryj kolumny i przeciągnij ikonę, aby ponownie zamówić</value>
+  </data>
+  <data name="MobileColumnsViewTitle" xml:space="preserve">
+    <value>Wyświetl kolumny</value>
+  </data>
+  <data name="MobileEditViewTitle" xml:space="preserve">
+    <value>Edytuj</value>
+  </data>
+  <data name="MobileFilterViewOptionsText" xml:space="preserve">
+    <value>Opcje</value>
+  </data>
+  <data name="MobileFilterViewTitleFormat" xml:space="preserve">
+    <value>Filtruj według {0}</value>
+  </data>
+  <data name="MobileFilterViewValueText" xml:space="preserve">
+    <value>Wartość</value>
+  </data>
+  <data name="MobileInsertViewTitle" xml:space="preserve">
+    <value>Wpisz</value>
+  </data>
+  <data name="MobileViewBackButtonText" xml:space="preserve">
+    <value>Wstecz</value>
+  </data>
+  <data name="MobileViewCancelButtonText" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="MobileViewDoneButtonText" xml:space="preserve">
+    <value>Wykonano</value>
+  </data>
+  <data name="MobileViewGroupsText" xml:space="preserve">
+    <value>Obejrzyj grupy</value>
+  </data>
+  <data name="NextFrozenColumnText" xml:space="preserve">
+    <value>Następny</value>
+  </data>
+  <data name="NextPagesToolTip" xml:space="preserve">
+    <value>Następne strony</value>
+  </data>
+  <data name="NextPageToolTip" xml:space="preserve">
+    <value>Następna strona</value>
+  </data>
+  <data name="NoDetailRecordsText" xml:space="preserve">
+    <value>Brak dokumentacji dziecka do wyświetlenia.</value>
+  </data>
+  <data name="NoMasterRecordsText" xml:space="preserve">
+    <value>Brak dokumentacji do wyświetlenia.</value>
+  </data>
+  <data name="PageOfLabelText" xml:space="preserve">
+    <value>z ({0})</value>
+  </data>
+  <data name="PagerTextFormat" xml:space="preserve">
+    <value>Zmienić stronę: {4} &amp;nbsp;Strona &lt;strong&gt;{0}&lt;/strong&gt; z &lt;strong&gt;{1}&lt;/strong&gt;, przedmioty &lt;strong&gt;{2}&lt;/strong&gt; do &lt;strong&gt;{3}&lt;/strong&gt; z &lt;strong&gt;{5}&lt;/strong&gt;.</value>
+  </data>
+  <data name="PagerTooltipFormatString" xml:space="preserve">
+    <value>Strona &lt;strong&gt;{0}&lt;/strong&gt; z &lt;strong&gt;{1}&lt;/strong&gt;</value>
+  </data>
+  <data name="PageSizeLabelText" xml:space="preserve">
+    <value>Rozmiar strony:</value>
+  </data>
+  <data name="PrevFrozenColumnText" xml:space="preserve">
+    <value>Poprzedni</value>
+  </data>
+  <data name="PrevPagesToolTip" xml:space="preserve">
+    <value>Poprzednie strony</value>
+  </data>
+  <data name="PrevPageToolTip" xml:space="preserve">
+    <value>Poprzednia strona</value>
+  </data>
+  <data name="RangeFilteringFromText" xml:space="preserve">
+    <value>Od: </value>
+  </data>
+  <data name="RangeFilteringToText" xml:space="preserve">
+    <value>Do: </value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Odśwież</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>Proszę nie usuwać niniejszego klucza.</value>
+  </data>
+  <data name="SaveChangesText" xml:space="preserve">
+    <value>Zapisz zmiany</value>
+  </data>
+  <data name="SliderDecreaseText" xml:space="preserve">
+    <value>Zmniejsz</value>
+  </data>
+  <data name="SliderDragText" xml:space="preserve">
+    <value>Przeciągnij</value>
+  </data>
+  <data name="SliderIncreaseText" xml:space="preserve">
+    <value>Zwiększ</value>
+  </data>
+  <data name="SortedAscToolTip" xml:space="preserve">
+    <value>Sortowanie rosnąco</value>
+  </data>
+  <data name="SortedDescToolTip" xml:space="preserve">
+    <value>Sortowanie malejąco</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>Kliknij tutaj, aby sortować</value>
+  </data>
+  <data name="StartsWithText" xml:space="preserve">
+    <value>StartsWith</value>
+  </data>
+  <data name="StatusReadyText" xml:space="preserve">
+    <value>Gotowy</value>
+  </data>
+  <data name="UnGroupButtonTooltip" xml:space="preserve">
+    <value>Kliknij tutaj, aby pogrupować</value>
+  </data>
+  <data name="UnGroupTooltip" xml:space="preserve">
+    <value>Przeciągnij na zewnątrz</value>
+  </data>
+  <data name="UpdateText" xml:space="preserve">
+    <value>Zaktualizuj</value>
+  </data>
+</root>

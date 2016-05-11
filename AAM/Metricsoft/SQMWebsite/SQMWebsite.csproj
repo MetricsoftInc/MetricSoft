@@ -657,6 +657,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LocalizedText.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\LocalizedText.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalizedText.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\LocalizedText.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -697,6 +702,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadCalendar.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadCalendar.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadCalendar.Main.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadCalendar.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -731,6 +741,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadComboBox.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadComboBox.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadComboBox.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\RadComboBox.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -767,6 +782,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadDatePicker.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadDatePicker.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDatePicker.Main.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadDatePicker.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -792,6 +812,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadDateTimePicker.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadDateTimePicker.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDateTimePicker.Main.pl.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadDateTimePicker.Main.pt-BR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDateTimePicker.Main.pt-BR.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadDateTimePicker.Main.th.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -811,6 +841,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadDropDownTree.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadDropDownTree.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadDropDownTree.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\RadDropDownTree.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -932,6 +967,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadGrid.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadGrid.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadGrid.Main.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadGrid.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1007,6 +1047,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadListBox.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadListBox.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadListBox.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadListBox.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1031,6 +1076,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadMonthYearPicker.Main.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadMonthYearPicker.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadMonthYearPicker.Main.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\RadMonthYearPicker.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1077,6 +1127,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RadScheduler.Main.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\RadScheduler.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadScheduler.Main.pl.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\RadScheduler.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1101,6 +1156,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadSchedulerRecurrenceEditor.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadSchedulerRecurrenceEditor.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadSchedulerRecurrenceEditor.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\RadSchedulerRecurrenceEditor.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1156,6 +1216,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RadTreeList.Main.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadTreeList.Main.pl.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadTreeList.Main.pl.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\RadTreeList.Main.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -1304,14 +1369,12 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Audit_PDF.aspx.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Audit_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1346,7 +1409,6 @@
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.designer.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
@@ -1862,7 +1924,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1876,7 +1937,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -2648,6 +2708,59 @@
       <LastGenOutput>RadTreeList.Main.pt-BR.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_LocalResources\Login.aspx.pt-BR.resx" />
+    <Content Include="App_GlobalResources\LocalizedText.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>LocalizedText.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadCalendar.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadCalendar.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadComboBox.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadComboBox.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDatePicker.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDatePicker.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDateTimePicker.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDateTimePicker.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDateTimePicker.Main.pt-BR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDateTimePicker.Main.pt-BR.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadDropDownTree.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadDropDownTree.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadGrid.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadGrid.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadListBox.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadListBox.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadMonthYearPicker.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadMonthYearPicker.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadScheduler.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadScheduler.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadSchedulerRecurrenceEditor.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadSchedulerRecurrenceEditor.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\RadTreeList.Main.pl.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadTreeList.Main.pl.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\Login.aspx.pl.resx" />
     <EmbeddedResource Include="App_LocalResources\Login.aspx.resx" />
     <Content Include="Home\App_LocalResources\Calendar.aspx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.es.resx" />
@@ -2760,6 +2873,29 @@
     <Content Include="Include\App_LocalResources\Ucl_SearchBar.ascx.pt-BR.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.pt-BR.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.pt-BR.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audits.aspx.pl.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audits_Questions.aspx.pl.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audit_Exceptions.aspx.pl.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Audit_Scheduler.aspx.pl.resx" />
+    <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.pl.resx" />
+    <Content Include="Home\App_LocalResources\Calendar.aspx.pl.resx" />
+    <Content Include="Home\App_LocalResources\Dashboard.aspx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AdminPasswordEdit.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditExceptionList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_AuditScheduleList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_DashboardArea.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_SearchBar.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.pl.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.pl.resx" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
