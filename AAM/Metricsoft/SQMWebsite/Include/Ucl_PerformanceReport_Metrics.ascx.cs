@@ -60,7 +60,7 @@ namespace SQM.Website
 			calcsResult.metricSeries = this.SeverityRateSeries;
 			this.uclChart.CreateControl(SQMChartType.ColumnChartGrouped, EHS.EHS_PerformanceReport.gaugeDef, calcsResult, this.divSeverityRate);
 
-			if (this.Data[12].TRIR == 0)
+			if (this.Data[12].Incidents == 0 && this.Data[12].FirstAid == 0)
 				this.divPie1.Visible = this.divPie2.Visible = this.divPie3.Visible = false;
 			else
 			{
