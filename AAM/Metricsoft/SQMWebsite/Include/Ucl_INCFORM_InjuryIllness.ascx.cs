@@ -395,6 +395,8 @@ namespace SQM.Website
 						rddlBodyPart.SelectedValue = injuryIllnessDetails.INJURY_BODY_PART;
 						rdoReoccur.SelectedValue = (injuryIllnessDetails.REOCCUR == true) ? "1" : "0";
 
+                        Severity_Changed(rdoFirstAid, null);
+
 						SetLostTime(IsFullPagePostback);
 
 					}
@@ -750,8 +752,8 @@ namespace SQM.Website
 				}
 			}
 
-			if (IsEditContext)
-				rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : true;  // ???
+			//if (IsEditContext)
+			//	rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : true;  // ???
 		}
 
 		private void SetUserAccess(string currentFormName)
