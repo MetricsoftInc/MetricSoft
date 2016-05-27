@@ -2254,6 +2254,7 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					uclRootCause.Visible = divSubnavPage.Visible = true;
 					uclRootCause.IsEditContext = true;
+                    uclRootCause.IncidentId = EditIncidentId;
 					uclRootCause.EditIncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
@@ -2264,7 +2265,7 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					uclAction.Visible = divSubnavPage.Visible = true;
 					uclAction.IsEditContext = true;
-					uclAction.EditIncidentId = EditIncidentId;
+                    uclAction.EditIncidentId = uclAction.IncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
