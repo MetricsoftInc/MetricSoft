@@ -572,6 +572,17 @@
     <Content Include="scripts\jquery-1.9.1.min.js" />
     <Content Include="scripts\jquery-ui-1.8.20.custom.min.js" />
     <Content Include="scripts\jquery.copycss.js" />
+    <Content Include="scripts\moment-timezone-utils.js" />
+    <Content Include="scripts\moment-timezone-with-data-2010-2020.js" />
+    <Content Include="scripts\moment-timezone-with-data-2010-2020.min.js" />
+    <Content Include="scripts\moment-timezone-with-data.js" />
+    <Content Include="scripts\moment-timezone-with-data.min.js" />
+    <Content Include="scripts\moment-timezone.js" />
+    <Content Include="scripts\moment-timezone.min.js" />
+    <Content Include="scripts\moment-with-locales.js" />
+    <Content Include="scripts\moment-with-locales.min.js" />
+    <Content Include="scripts\moment.js" />
+    <Content Include="scripts\moment.min.js" />
     <Content Include="scripts\npm.js" />
     <Content Include="scripts\prevention_location.js" />
     <Content Include="scripts\ps_admin.js" />

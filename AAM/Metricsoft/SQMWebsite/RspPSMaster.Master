@@ -30,6 +30,8 @@
 	<script src="/scripts/bootstrap.min.js" type="text/javascript"></script>
 	<script src="/scripts/footable.js" type="text/javascript"></script>
 	<script src="../scripts/ps_admin.js" type="text/javascript"></script>
+	<script src="/scripts/moment-with-locales.min.js" type="text/javascript"></script>
+	<script src="/scripts/moment-timezone-with-data-2010-2020.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function __doPostBack(eventTarget, eventArgument) {
 			document.getElementById("__EVENTTARGET").value = eventTarget;

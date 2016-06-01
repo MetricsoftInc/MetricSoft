@@ -265,7 +265,7 @@
 					{
 						// On success, we'll update the plant dropdown and date with whatever the server said.
 						rcbPlant.findItemByValue(data.d.plantID).select();
-						rdpEndOfWeek.set_selectedDate(new Date(data.d.endOfWeek));
+						rdpEndOfWeek.set_selectedDate(moment(data.d.endOfWeek).tz(moment.tz.guess()).toDate());
 						// Store the date headers in an array for use later.
 						dates = data.d.dates;
 						// We then write all the data to the RadGrid, including the headers.
@@ -337,7 +337,7 @@
 					{
 						// On success, we'll update the plant dropdown and date with whatever the server said.
 						rcbPlant.findItemByValue(data.d.plantID).select();
-						rdpEndOfWeek.set_selectedDate(new Date(data.d.endOfWeek));
+						rdpEndOfWeek.set_selectedDate(moment(data.d.endOfWeek).tz(moment.tz.guess()).toDate());
 						// We then write all the data to the RadGrid, including the header.
 						$($.grep(rgData_columns, function(n)
 						{
@@ -402,7 +402,7 @@
 					{
 						// On success, we'll update the plant dropdown and date with whatever the server said.
 						rcbPlant.findItemByValue(data.d.plantID).select();
-						rmypMonth.set_selectedDate(new Date(data.d.startOfMonth));
+						rmypMonth.set_selectedDate(moment(data.d.startOfMonth).tz(moment.tz.guess()).toDate());
 						// We then write all the data to the RadGrid, including the header.
 						$($.grep(rgData_columns, function(n)
 						{
