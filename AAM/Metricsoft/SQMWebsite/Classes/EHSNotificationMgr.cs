@@ -70,7 +70,10 @@ namespace SQM.Website
 			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // plant level
 			notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray(), true));
 
-			return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
+			// convert all email addresses to lower case to allow distinct filtering down-stream  (trying to eliminate sending duplicate emails to persons having multiple user id's w/ same email)
+			return notifyPersonList.Select(l => { l.EMAIL = l.EMAIL.ToLower(); return l; }).ToList().GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
+
+			//return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
 		}
 
 		static List<string> ParseNotifyGroups(List<NOTIFYACTION> notifyList)
