@@ -452,7 +452,7 @@ namespace SQM.Website
 
 					PopulateDepartmentDropDown(IncidentLocationId);
 
-					SetLostTime(IsFullPagePostback);
+					//SetLostTime(IsFullPagePostback);
 
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
