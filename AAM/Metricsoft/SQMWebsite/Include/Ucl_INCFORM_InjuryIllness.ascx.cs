@@ -397,7 +397,7 @@ namespace SQM.Website
 
                         Severity_Changed(rdoFirstAid, null);
 
-						SetLostTime(IsFullPagePostback);
+						//SetLostTime(IsFullPagePostback);
 
 					}
 					GetAttachments(EditIncidentId);
