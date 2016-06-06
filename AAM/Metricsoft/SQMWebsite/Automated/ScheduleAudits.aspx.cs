@@ -13,6 +13,8 @@ namespace SQM.Website.Automated
 	{
 		static PSsqmEntities entities;
 		static StringBuilder output;
+		static string startRange;
+		static string endRange;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -102,14 +104,35 @@ namespace SQM.Website.Automated
 
 		static void ScheduleAllAudits()
 		{
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", ""); // ABW 20140805
+			int startRangeHours = 04;
+			int startRangeMinutes = 45;
+			int endRangeHours = 05;
+			int endRangeMinutes = 15;
+
+			try
+			{
+				startRange = sets.Find(x => x.SETTING_CD == "AuditScheduleStart").VALUE.ToString();
+				startRangeHours = Convert.ToInt16(startRange.Substring(0, 2));
+				startRangeMinutes = Convert.ToInt16(startRange.Substring(3, 2));
+			}
+			catch { }
+			try
+			{
+				endRange = sets.Find(x => x.SETTING_CD == "AuditScheduleEnd").VALUE.ToString();
+				endRangeHours = Convert.ToInt16(endRange.Substring(0, 2));
+				endRangeMinutes = Convert.ToInt16(endRange.Substring(3, 2));
+			}
+			catch { }
+
 			List<AUDIT_SCHEDULER> scheduler = EHSAuditMgr.SelectActiveAuditSchedulers(0, null); // currently, we will select all schedules for all plants
 			AUDIT audit = null;
 			List<EHSAuditQuestion> questions = null;
 			AUDIT_ANSWER answer = null;
 			decimal auditId = 0;
-			TimeSpan start = new TimeSpan(04, 45, 0); 
-			TimeSpan end = new TimeSpan(05, 15, 0); 
-
+			TimeSpan start = new TimeSpan(startRangeHours, startRangeMinutes, 0); 
+			TimeSpan end = new TimeSpan(endRangeHours, endRangeMinutes, 0);
+			WriteLine("Audits will be created for locations with a local time of " + startRangeHours + ":" + startRangeMinutes + " through " + endRangeHours + ":" + endRangeMinutes);
 			foreach (AUDIT_SCHEDULER schedule in scheduler)
 			{
 				AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, (decimal)schedule.AUDIT_TYPE_ID);
@@ -233,9 +256,16 @@ namespace SQM.Website.Automated
 				{
 					// close the audit
 					// valid status codes... A = active, C = complete, I = incomplete/in-process, E = Expired. We are closing audits that are past due, so Expired.
-					status = audit.CURRENT_STATUS;
-					if (status != "C")
+					try
+					{
+						status = audit.CURRENT_STATUS;
+						if (status != "C")
+							status = "E";
+					}
+					catch
+					{
 						status = "E";
+					}
 					EHSAuditMgr.CloseAudit(audit.AUDIT_ID, status, closeDT.AddDays(-1)); // now take the one day back off so that the close date sets correctly
 					// now mark the Task as expired too!
 					EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status, 0);
