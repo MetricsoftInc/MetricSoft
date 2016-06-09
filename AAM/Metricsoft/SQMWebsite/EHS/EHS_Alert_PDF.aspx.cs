@@ -77,6 +77,11 @@ namespace SQM.Website.EHS
 			get { return ViewState["DetailTxtFont"] == null ? null : (Font)ViewState["DetailTxtFont"]; }
 			set { ViewState["DetailTxtFont"] = value; }
 		}
+		public Font detailTxtBoldFont
+		{
+			get { return ViewState["DetailTxtBoldFont"] == null ? null : (Font)ViewState["DetailTxtBoldFont"]; }
+			set { ViewState["DetailTxtBoldFont"] = value; }
+		}
 		public Font detailTxtItalicFont
 		{
 			get { return ViewState["DetailTxtItalicFont"] == null ? null : (Font)ViewState["DetailTxtItalicFont"]; }
@@ -162,6 +167,7 @@ namespace SQM.Website.EHS
 			labelTxtFont = new Font(labelFont.BaseFont, 12, 0, blackColor);
 			colHdrFont = new Font(colHeaderFont.BaseFont, 10,  iTextSharp.text.Font.UNDERLINE, blackColor);
 			detailTxtItalicFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+			detailTxtBoldFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD, blackColor);
 
 			// Create new PDF document
 			Document document = new Document(PageSize.A4, 35f, 35f, 35f, 35f);
@@ -195,7 +201,7 @@ namespace SQM.Website.EHS
 					var hdrFont = new Font(headerFont.BaseFont, 24, 0, darkGrayColor);
 					table1.AddCell(new PdfPCell(new Phrase(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "TITLE").DESCRIPTION, hdrFont))
 					{
-						HorizontalAlignment = Element.ALIGN_RIGHT,
+						HorizontalAlignment = Element.ALIGN_LEFT,
 						VerticalAlignment = Element.ALIGN_MIDDLE,
 						Border = 0
 					});
@@ -360,12 +366,12 @@ namespace SQM.Website.EHS
 			{
 				string val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.ERGONOMIC_CONCERN == true ? "1" : "0").DESCRIPTION_SHORT;
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(string.Format("Ergonomic Conserns" + " ? {0}", val), labelTxtFont));
+				cell.AddElement(new Paragraph(string.Format("Ergonomic Concerns" + " ? {0}", val), labelTxtFont));
 				tableIncident.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
 				val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.STD_PROCS_FOLLOWED == true ? "1" : "0").DESCRIPTION_SHORT;
-				cell.AddElement(new Paragraph(string.Format("Standardized Worke Procedure Followed" + " ? {0}", val), labelTxtFont));
+				cell.AddElement(new Paragraph(string.Format("Standardized Work Procedure Followed" + " ? {0}", val), labelTxtFont));
 				tableIncident.AddCell(cell);
 
 				val = SQMBasePage.GetXLAT(reportXLAT,"TRUEFALSE", pageData.incident.INCFORM_INJURYILLNESS.TRAINING_PROVIDED == true ? "1" : "0").DESCRIPTION_SHORT;
@@ -374,7 +380,7 @@ namespace SQM.Website.EHS
 				tableIncident.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing doing this job/specific task" + " ? {0}", SQMBasePage.GetXLAT(reportXLAT,"INJURY_TENURE", pageData.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION), labelTxtFont));
+				cell.AddElement(new Paragraph(string.Format("How long has associcate been doing this job/specific task" + " ? {0}", SQMBasePage.GetXLAT(reportXLAT,"INJURY_TENURE", pageData.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION), labelTxtFont));
 				tableIncident.AddCell(cell);
 			}
 
@@ -414,9 +420,9 @@ namespace SQM.Website.EHS
 				cell.AddElement(new Paragraph(cc.ASSIGNED_PERSON, detailTxtFont));
 				tableContain.AddCell(cell);
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				if (cc.COMPLETION_DATE.HasValue)
+				if (cc.START_DATE.HasValue)
 				{
-					cell.AddElement(new Paragraph(SQMBasePage.FormatDate((DateTime)cc.COMPLETION_DATE, "d", false), detailTxtFont));
+					cell.AddElement(new Paragraph(SQMBasePage.FormatDate((DateTime)cc.START_DATE, "d", false), detailTxtFont));
 				}
 				else
 				{
@@ -442,20 +448,34 @@ namespace SQM.Website.EHS
 			tableCause.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(pageData.incidentDescription.Substring(0, Math.Min(120,pageData.incidentDescription.Length)), detailTxtItalicFont));
+			cell.AddElement(new Paragraph(pageData.incidentDescription, detailTxtItalicFont));
 			tableCause.AddCell(cell);
 
+			iTextSharp.text.List lst = new List();
+			lst.SetListSymbol("\u2022");
+			lst.IndentationLeft = 3f;
+			cell = new PdfPCell() { Padding = 1f, Border = 0 };
+			foreach (var rc in pageData.root5YList)
+			{
+				iTextSharp.text.ListItem li = new ListItem(String.Format(" {0}  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT, rc.ITEM_DESCRIPTION), detailTxtFont);
+				lst.Add(li);
+			}
+			cell.AddElement(lst);
+			tableCause.AddCell(cell);
+
+			/*
 			foreach (var rc in pageData.root5YList)
 			{
 				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT + "{0}", rc.ITEM_DESCRIPTION), detailTxtFont));
+				cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT,"HS_5PHASE", "ROOTCAUSE").DESCRIPTION_SHORT + "  {0}", rc.ITEM_DESCRIPTION), detailTxtFont));
 				tableCause.AddCell(cell);
 			}
-
+			*/
 			if (pageData.causation != null)
 			{
-				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(String.Format("Causation: " + "{0}", SQMBasePage.GetXLAT(reportXLAT,"INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION), detailTxtFont));
+				cell = new PdfPCell() { Padding = 1f, Border = 0, PaddingTop = 3f };
+				cell.AddElement(new Paragraph("Causation", detailHdrFont));
+				cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT,"INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION, detailTxtFont));
 				tableCause.AddCell(cell);
 			}
 
@@ -665,10 +685,21 @@ namespace SQM.Website.EHS
 							d.involvedPerson = new PERSON();
 							d.involvedPerson.FIRST_NAME = d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_NAME;
 						}
+
+						if (d.incident.INCFORM_INJURYILLNESS.DEPT_ID.HasValue)
+						{
+							DEPARTMENT dept = SQMModelMgr.LookupDepartment(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.DEPT_ID);
+							if (dept != null)
+								d.incidentDept = dept.DEPT_NAME;
+						}
+						else
+						{
+							d.incidentDept = d.incident.INCFORM_INJURYILLNESS.DEPARTMENT;
+						}
 					}
 
 					// Containment
-					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null))
+					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null, false))
 					{
 						if (cc.ASSIGNED_PERSON_ID.HasValue)
 						{
@@ -689,7 +720,7 @@ namespace SQM.Website.EHS
 					}
 
 					// Corrective Actions
-					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid, null))
+					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid, null, false))
 					{
 						if (ac.RESPONSIBLE_ID.HasValue)
 						{
@@ -712,7 +743,7 @@ namespace SQM.Website.EHS
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null, 0);
 
 					if (files.Count > 0)
 					{
