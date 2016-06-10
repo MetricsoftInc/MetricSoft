@@ -259,7 +259,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/GetDailyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate(), lang: hfLang.val() }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rdpEndOfWeek.get_selectedDate()).format('YYYY-MM-DDT00:00:00'), lang: hfLang.val() }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function(data)
 					{
@@ -331,7 +331,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/GetWeeklyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate() }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rdpEndOfWeek.get_selectedDate()).format('YYYY-MM-DDT00:00:00') }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function(data)
 					{
@@ -396,7 +396,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/GetMonthlyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rmypMonth.get_selectedDate() }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rmypMonth.get_selectedDate()).format('YYYY-MM-DDT00:00:00') }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function(data)
 					{
@@ -491,7 +491,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/SaveDailyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate(), allData: data }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rdpEndOfWeek.get_selectedDate()).format('YYYY-MM-DDT00:00:00'), allData: data }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function()
 					{
@@ -526,7 +526,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/SaveWeeklyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rdpEndOfWeek.get_selectedDate(), allData: data }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rdpEndOfWeek.get_selectedDate()).format('YYYY-MM-DDT00:00:00'), allData: data }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function()
 					{
@@ -561,7 +561,7 @@
 				$.ajax({
 					method: 'POST',
 					url: '<%= this.Request.Url.AbsolutePath %>/SaveMonthlyData',
-					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: rmypMonth.get_selectedDate(), allData: data }),
+					data: JSON.stringify({ plantID: rcbPlant.get_value(), day: moment(rmypMonth.get_selectedDate()).format('YYYY-MM-DDT00:00:00'), allData: data }),
 					contentType: 'application/json; charset=UTF-8',
 					success: function()
 					{

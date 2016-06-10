@@ -58,7 +58,6 @@ namespace SQM.Website.EHS
 		public static dynamic GetDailyData(decimal plantID, DateTime day, string lang)
 		{
 			var culture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
@@ -121,7 +120,6 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static dynamic GetWeeklyData(decimal plantID, DateTime day)
 		{
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
@@ -169,7 +167,6 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static dynamic GetMonthlyData(decimal plantID, DateTime day)
 		{
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
@@ -309,7 +306,6 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveDailyData(decimal plantID, DateTime day, Dictionary<string, Dictionary<string, dynamic>> allData)
 		{
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -413,7 +409,6 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveWeeklyData(decimal plantID, DateTime day, Dictionary<string, string> allData)
 		{
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
@@ -470,7 +465,6 @@ namespace SQM.Website.EHS
 		[WebMethod]
 		public static void SaveMonthlyData(decimal plantID, DateTime day, Dictionary<string, string> allData)
 		{
-			day = day.ToUniversalTime();
 			using (var entities = new PSsqmEntities())
 			{
 				var measures = from m in entities.EHS_MEASURE
