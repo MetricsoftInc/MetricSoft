@@ -678,7 +678,17 @@ namespace SQM.Website.EHS
 						{
 							d.involvedPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.INVOLVED_PERSON_ID, "", false);
 							if (d.involvedPerson != null)
-								d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+							{
+								if (d.incident.INCFORM_INJURYILLNESS.SUPERVISOR_PERSON_ID.HasValue)		// supervisor was known
+								{
+									d.supervisorPerson = SQMModelMgr.LookupPerson(entities, (decimal)d.incident.INCFORM_INJURYILLNESS.SUPERVISOR_PERSON_ID, "", false);
+								}
+								else
+								{
+									// get current supervisor
+									d.supervisorPerson = SQMModelMgr.LookupPersonByEmpID(entities, d.involvedPerson.SUPV_EMP_ID);
+								}
+							}
 						}
 						else
 						{
