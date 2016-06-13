@@ -86,7 +86,7 @@ namespace SQM.Website
 			this.pyramidTable_nearMissesPreviousYear.InnerText = this.NearMissesPreviousYear.ToString();
 			var nearMissesVariance = this.NearMissesPreviousYear == 0 ? 0 : (nearMissesAnnualized - this.NearMissesPreviousYear) / this.NearMissesPreviousYear;
 			this.pyramidTable_nearMissesVariance.InnerText = nearMissesVariance.ToString("P1");
-			this.pyramidTable_nearMissesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (nearMissesVariance > 0 ? "Bad" : "Good"));
+			this.pyramidTable_nearMissesVariance.Attributes.Add("class", "pyramidTable_cell pyramidTable_variance" + (nearMissesVariance > 0 ? "Good" : "Bad"));
 
 			EHS.EHS_PerformanceReport.gaugeDef.Height = 410;
 			EHS.EHS_PerformanceReport.gaugeDef.Title = "Current Indicators - JSAs & Combined Audits";
