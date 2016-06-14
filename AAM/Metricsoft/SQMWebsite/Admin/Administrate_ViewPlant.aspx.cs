@@ -440,25 +440,29 @@ namespace SQM.Website
 					CheckBox cb1 = (CheckBox)item.FindControl("cbEnableEmail");
 					CheckBox cb2 = (CheckBox)item.FindControl("cbViewInactiveHist");
 
-					if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == Convert.ToInt32(hfRecType.Value)).FirstOrDefault()) != null)
+					try
 					{
-						pa.EFF_START_DATE = rdp1.SelectedDate;
-						pa.EFF_END_DATE = rdp2.SelectedDate;
-						pa.ENABLE_EMAIL = cb1.Checked;
-						pa.ENABLE_INACTIVE_HIST = cb2.Checked;
+						if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == Convert.ToInt32(hfRecType.Value)).FirstOrDefault()) != null)
+						{
+							pa.EFF_START_DATE = rdp1.SelectedDate;
+							pa.EFF_END_DATE = rdp2.SelectedDate;
+							pa.ENABLE_EMAIL = cb1.Checked;
+							pa.ENABLE_INACTIVE_HIST = cb2.Checked;
+						}
+						else
+						{
+							plantActive = new PLANT_ACTIVE();
+							plantActive.PLANT_ID = plant.PLANT_ID;
+							plantActive.RECORD_TYPE = Convert.ToInt32(hfRecType.Value);
+							plantActive.EFF_START_DATE = rdp1.SelectedDate;
+							plantActive.EFF_END_DATE = rdp2.SelectedDate;
+							plantActive.ENABLE_EMAIL = cb1.Checked;
+							plantActive.ENABLE_INACTIVE_HIST = cb2.Checked;
+							plant.PLANT_ACTIVE.Add(plantActive);
+							//entities.AddToPLANT_ACTIVE(plantActive);
+						}
 					}
-					else
-					{
-						plantActive = new PLANT_ACTIVE();
-						plantActive.PLANT_ID = plant.PLANT_ID;
-						plantActive.RECORD_TYPE = Convert.ToInt32(hfRecType.Value);
-						plantActive.EFF_START_DATE = rdp1.SelectedDate;
-						plantActive.EFF_END_DATE = rdp2.SelectedDate;
-						plantActive.ENABLE_EMAIL = cb1.Checked;
-						plantActive.ENABLE_INACTIVE_HIST = cb2.Checked;
-						plant.PLANT_ACTIVE.Add(plantActive);
-						//entities.AddToPLANT_ACTIVE(plantActive);
-					}
+					catch { }
 				}
 
                 if (SQMModelMgr.UpdatePlant(entities, plant, SessionManager.UserContext.UserName()) != null)
