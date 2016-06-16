@@ -1161,6 +1161,12 @@ namespace SQM.Website
 					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
 				}
 
+                // truncate time accural to current day in case of erroneous lost/restricted time entry
+                if (endDate > DateTime.UtcNow)
+                {
+                    endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
+                }
+
 				int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
 				DateTime effDate;
 				bool countDay = true;

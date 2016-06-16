@@ -709,7 +709,7 @@ namespace SQM.Website.EHS
 					}
 
 					// Containment
-					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null, false))
+					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null))
 					{
 						if (cc.ASSIGNED_PERSON_ID.HasValue)
 						{
@@ -730,7 +730,7 @@ namespace SQM.Website.EHS
 					}
 
 					// Corrective Actions
-					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid, null, false))
+					foreach (TASK_STATUS ac in EHSIncidentMgr.GetCorrectiveActionList(iid, null))
 					{
 						if (ac.RESPONSIBLE_ID.HasValue)
 						{
@@ -753,7 +753,7 @@ namespace SQM.Website.EHS
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null, 0);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null);
 
 					if (files.Count > 0)
 					{
