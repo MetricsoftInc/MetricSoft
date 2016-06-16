@@ -42,8 +42,7 @@ namespace SQM.Website.Automated
 			string pageURI = HttpContext.Current.Request.Url.AbsoluteUri;
 			string nextPage = "";
 			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
-
-
+			DateTime rollupToDate = DateTime.UtcNow;
 
 			WriteLine("Incident Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
@@ -65,6 +64,15 @@ namespace SQM.Website.Automated
 				if (setting != null  &&  !string.IsNullOrEmpty(setting.VALUE)  &&  setting.VALUE.Length > 1)
 				{
 					nextPage = setting.VALUE;
+				}
+
+
+				int rollupMonthsAhead = 0;
+				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
+				if (setting != null  &&  !string.IsNullOrEmpty(setting.VALUE))
+				{
+					int.TryParse(setting.VALUE, out rollupMonthsAhead);
+					rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
 				}
 
 				/*
@@ -129,7 +137,7 @@ namespace SQM.Website.Automated
 				PLANT_ACCOUNTING pa = null;
 				List<PLANT_ACCOUNTING> paList = (from a in entities.PLANT_ACCOUNTING 
 						  where
-						  EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= DateTime.UtcNow
+						  EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= rollupToDate 
 						  select a).OrderBy(l=> l.PLANT_ID).ThenBy(l=> l.PERIOD_YEAR).ThenBy(l=> l.PERIOD_MONTH).ToList();
 				
 				List<EHSIncidentTimeAccounting> summaryList = new List<EHSIncidentTimeAccounting>();
@@ -154,7 +162,8 @@ namespace SQM.Website.Automated
 					{
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == pah.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
-					if (pact != null &&  pact.EFF_END_DATE.HasValue  &&  new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
+					//if (pact != null && pact.EFF_END_DATE.HasValue && new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
+					if (pact != null &&  pact.EFF_START_DATE.HasValue  &&  new DateTime(pah.PERIOD_YEAR, pah.PERIOD_MONTH, 1).Date >= ((DateTime)pact.EFF_START_DATE).Date)
 					{
 						pah.TIME_LOST = pah.TOTAL_DAYS_RESTRICTED = 0;
 						pah.TIME_LOST_CASES = pah.RECORDED_CASES = pah.FIRST_AID_CASES = 0;
