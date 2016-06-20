@@ -176,5 +176,10 @@ namespace SQM.Website
 			}
 		}
 
+		protected void lnkExport_Click(object sender, EventArgs e)
+		{
+			uclExport.ExportGHGReportExcel(LocalGHGResultList());
+		}
+
 	}
 }

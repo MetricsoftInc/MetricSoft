@@ -1,5 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_EHSReport.ascx.cs" Inherits="SQM.Website.Ucl_EHSReport"  %>
+
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
 
 <asp:Panel id="pnlCO2Report" runat="server" class="" visible="false">
     <asp:Repeater runat="server" ID="rptCO2Report" ClientIDMode="AutoID" OnItemDataBound="rptCO2Report_OnItemDataBound">
@@ -148,4 +150,11 @@
     <br />
     <asp:Label ID="lblGHGLegend" runat="server" CssClass="refTextSmall" Text="<sup>2</sup> Regional energy source CO2 emissions factor (KG/KWH)"></asp:Label>
 	<p class="refTextSmall">  Download <a class="refTextSmall" href="/Documents/GHGReferences.xlsx">GHG References And Factors</a> used to produce this report</p>
+
+	<div id="divExport" runat="server" class="noprint" style="clear: both;">
+		<span>
+			<asp:LinkButton  ID="lnkExport" runat="server" Text="Export Report" ToolTip="Export Report To Excel Format" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExport_Click"></asp:LinkButton>
+		</span>    
+		<Ucl:Export id="uclExport" runat="server" Visible="false"/>
+	</div>
 </asp:Panel>
