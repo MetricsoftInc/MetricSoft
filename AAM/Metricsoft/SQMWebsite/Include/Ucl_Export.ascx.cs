@@ -1451,6 +1451,116 @@ namespace SQM.Website
 
         }
         #endregion
+
+		#region GHGreport
+		public void ExportGHGReportExcel(EHSModel.GHGResultList GHGTable)
+		{
+
+			try
+			{
+				string filename = "GHGReport.xls";
+				Response.ContentType = "application/vnd.ms-excel";
+				Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", filename));
+				Response.Clear();
+				HSSFWorkbook hssfworkbook = InitializeWorkbook();
+				ISheet sheet1 = hssfworkbook.CreateSheet("GHG Emissions");
+
+				ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
+				cellStyleNumeric.DataFormat = HSSFDataFormat.GetBuiltinFormat("0.00");
+
+				//// create the header - Plant Name, DUNS Code, Measure, Measure Name, Period Year, Period Month, Period from Date, Period To Date, Value, UOM, UOM Name, Input Value, Cost, Currency, Input Cost, Input Currency
+
+				int rownum = 0;
+				IRow row = sheet1.CreateRow(rownum);
+
+				row.CreateCell(0).SetCellValue("Plant Name");
+				row.CreateCell(1).SetCellValue("Emissions Scope");
+				row.CreateCell(2).SetCellValue("Fuel");
+				row.CreateCell(3).SetCellValue("Quantity");
+				row.CreateCell(4).SetCellValue("UOM");
+				row.CreateCell(5).SetCellValue("Gas");
+				row.CreateCell(6).SetCellValue("GWP Factor");
+				row.CreateCell(7).SetCellValue("GHG Factor");
+				row.CreateCell(8).SetCellValue("Emissions");
+				row.CreateCell(9).SetCellValue("UOM");
+
+
+				foreach (PLANT plant in GHGTable.ResultList.Select(l => l.Plant).Distinct().ToList())
+				{
+					List<EHSModel.GHGResult> fuelList = GHGTable.ResultList.Where(l => l.Plant.PLANT_ID == plant.PLANT_ID).ToList();
+
+					// scope 1
+					foreach (EHSModel.GHGResult ghgRrec in fuelList.Where(l => l.EFMType != "P" && l.EFMType != "HW" && l.EFMType != "STEAM" && l.GasSeq == 1).Distinct().ToList())
+					{
+						foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRrec.EFMType).ToList())
+						{
+							row = sheet1.CreateRow(++rownum);
+							try
+							{
+								row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
+								row.CreateCell(1).SetCellValue("1");
+								row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
+								row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
+								row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
+								row.CreateCell(5).SetCellValue(rslt.GasCode);
+								row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
+								row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
+								row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
+								row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
+							}
+							catch
+							{
+							}
+						}
+					}
+
+					// scope 2
+					foreach (EHSModel.GHGResult ghgRec in fuelList.Where(l => l.EFMType == "P" || l.EFMType == "HW" || l.EFMType == "STEAM" && l.GasSeq == 1).Distinct().ToList())
+					{
+						foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRec.EFMType).ToList())
+						{
+							row = sheet1.CreateRow(++rownum);
+							try
+							{
+								row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
+								row.CreateCell(1).SetCellValue("2");
+								row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
+								row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
+								row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
+								row.CreateCell(5).SetCellValue(rslt.GasCode);
+								row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
+								row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
+								row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
+								row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
+							}
+							catch
+							{
+							}
+						}
+					}
+				}
+
+				sheet1.AutoSizeColumn(0);
+				sheet1.AutoSizeColumn(1);
+				sheet1.AutoSizeColumn(2);
+				sheet1.AutoSizeColumn(3);
+				sheet1.AutoSizeColumn(4);
+				sheet1.AutoSizeColumn(5);
+				sheet1.AutoSizeColumn(6);
+				sheet1.AutoSizeColumn(7);
+				sheet1.AutoSizeColumn(8);
+				sheet1.AutoSizeColumn(9);
+
+				GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
+			}
+			catch (Exception ex)
+			{
+				//Response.Write("Error processing the file:" + ex.Message.ToString());
+				//Response.End();
+			}
+
+		}
+		#endregion
     }
 
 }
