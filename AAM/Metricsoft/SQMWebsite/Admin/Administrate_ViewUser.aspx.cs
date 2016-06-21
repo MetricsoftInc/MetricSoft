@@ -707,10 +707,13 @@ namespace SQM.Website
 						else
 							strEmailBody += strTemp.Trim();
 						
+						/*
 						Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody, ""));
 						thread.IsBackground = true;
 						thread.Start();
-						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, "user role changed", "", "");
+						*/
+						string mailStatus = WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody, "");
+						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, "user role changed", mailStatus, "");
 					}
 					
 					if (cbResetPassword.Checked) // always send an email when the password changes
@@ -800,6 +803,7 @@ namespace SQM.Website
 							strEmailBodyc += "<br><br>" + strTemp.Trim();
 		
 						int msg = WebSiteCommon.RecoverPassword(person.EMAIL, person.SSO_ID, strEmailSubject, strEmailBodya, strEmailBodyb, strEmailBodyc);
+						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBodya, 0, LocalPerson().PERSON_ID, "recover password", msg.ToString(), "");
 					}
 				}
 				isNew = false;
