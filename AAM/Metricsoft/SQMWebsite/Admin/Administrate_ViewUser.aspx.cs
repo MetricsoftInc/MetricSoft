@@ -256,9 +256,9 @@ namespace SQM.Website
             ddlUserStatus.DataValueField = "code";
             ddlUserStatus.DataBind();
 
-			if (!string.IsNullOrEmpty(currentStatus))
+			if ((ddlUserStatus.Items.FindByValue(currentStatus)) != null)
 			{
-				SetFindControlValue(ddlName, hfBase, currentStatus, true);
+				ddlUserStatus.SelectedValue = currentStatus;
 			}
 
             return ddlUserStatus;
