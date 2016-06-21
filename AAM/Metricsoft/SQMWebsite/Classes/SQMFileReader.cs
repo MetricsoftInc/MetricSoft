@@ -468,6 +468,11 @@ namespace SQM.Website
 									}
 								}
 
+								if (person.STATUS != "A")
+								{
+									person.PRIV_GROUP = null;
+								}
+
 								try
 								{
 									person = SQMModelMgr.UpdatePerson(Entities, person, "upload", false, person.SSO_ID, person.LAST_NAME);
