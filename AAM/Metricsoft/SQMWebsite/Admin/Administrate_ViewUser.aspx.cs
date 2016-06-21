@@ -645,10 +645,13 @@ namespace SQM.Website
 						strEmailBody += "<br><br>" + strTemp.Trim();
 
 					// ABW 20140117 - we are now using the email on the Person record
+					/*
 					Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody.Trim(), ""));
 					thread.IsBackground = true;
 					thread.Start();
-					EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, ("user password notification - is new = " + isNew.ToString()), "", "");
+					*/
+					string mailStatus = WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody.Trim(), "");
+					EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, ("user password notification - is new = " + isNew.ToString()), mailStatus, "");
 				}
 				else
 				{
