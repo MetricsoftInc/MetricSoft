@@ -520,6 +520,8 @@ namespace SQM.Website
 			if (updateUser)
 			{
 				string defaultPwd = "";
+				string environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
+				string altEmail = !string.IsNullOrEmpty(environment)  &&  environment.ToLower() == "dev" ?  System.Configuration.ConfigurationManager.AppSettings["altEmail"].ToString() : "";
 				if (isNew)
 				{
 					SETTINGS pwdInitial = SQMSettings.SelectSettingByCode(entities, "COMPANY", "TASK", "PasswordDefault");
@@ -651,7 +653,7 @@ namespace SQM.Website
 					thread.Start();
 					*/
 					string mailStatus = WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody.Trim(), "");
-					EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, ("user password notification - is new = " + isNew.ToString()), mailStatus, "");
+					EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, ("user password notification - is new = " + isNew.ToString()), mailStatus, altEmail);
 				}
 				else
 				{
@@ -713,7 +715,7 @@ namespace SQM.Website
 						thread.Start();
 						*/
 						string mailStatus = WebSiteCommon.SendEmail(person.EMAIL, strEmailSubject, strEmailBody, "");
-						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, "user role changed", mailStatus, "");
+						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBody, 0, LocalPerson().PERSON_ID, "user role changed", mailStatus, altEmail);
 					}
 					
 					if (cbResetPassword.Checked) // always send an email when the password changes
@@ -803,7 +805,7 @@ namespace SQM.Website
 							strEmailBodyc += "<br><br>" + strTemp.Trim();
 		
 						int msg = WebSiteCommon.RecoverPassword(person.EMAIL, person.SSO_ID, strEmailSubject, strEmailBodya, strEmailBodyb, strEmailBodyc);
-						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBodya, 0, LocalPerson().PERSON_ID, "recover password", msg.ToString(), "");
+						EHSNotificationMgr.WriteEmailLog(entities, person.EMAIL, "", strEmailSubject, strEmailBodya, 0, LocalPerson().PERSON_ID, "recover password", msg.ToString(), altEmail);
 					}
 				}
 				isNew = false;
