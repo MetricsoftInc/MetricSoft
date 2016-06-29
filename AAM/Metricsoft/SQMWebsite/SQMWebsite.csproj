@@ -231,6 +231,7 @@
     <Content Include="css\redmond\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="css\redmond\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="css\redmond\jquery-ui-1.8.20.custom.css" />
+    <Content Include="EHS\EHS_48HourReport.aspx" />
     <Content Include="EHS\EHS_Audit_PDF.aspx" />
     <Content Include="EHS\EHS_Alert_PDF.aspx" />
     <Content Include="EHS\EHS_AssessmentForm.aspx" />
@@ -1394,6 +1395,12 @@
     <Compile Include="Classes\SQMDocumentMgr.cs" />
     <Compile Include="Classes\SQMSettings.cs" />
     <Compile Include="Classes\SQMShared.cs" />
+    <Compile Include="EHS\EHS_48HourReport.aspx.cs">
+      <DependentUpon>EHS_48HourReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EHS\EHS_48HourReport.aspx.designer.cs">
+      <DependentUpon>EHS_48HourReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EHS\EHS_Audit_PDF.aspx.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

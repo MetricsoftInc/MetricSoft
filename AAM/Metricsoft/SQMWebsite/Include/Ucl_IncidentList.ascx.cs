@@ -806,7 +806,7 @@ namespace SQM.Website
 						if (!string.IsNullOrEmpty(incidentReportList[1]))
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport1");
-							hlk.NavigateUrl = uri + "Reports/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.NavigateUrl = uri + "EHS/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 							hlk.ToolTip = incidentReportList[1];
 							hlk.Text = incidentReportLabelList[1];
 							hlk.Visible = true;
