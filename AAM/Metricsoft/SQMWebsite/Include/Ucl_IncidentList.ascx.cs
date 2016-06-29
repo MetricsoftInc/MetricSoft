@@ -793,11 +793,12 @@ namespace SQM.Website
 					}
 
 					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
+					string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
 					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 					{
 						if (!string.IsNullOrEmpty(incidentReportList[0]))
 						{
-							hlk.NavigateUrl = "~/Reports/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.NavigateUrl = uri + "Reports/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 							hlk.Text = incidentReportLabelList[0];
 							hlk.ToolTip = incidentReportList[0];
 						}
@@ -805,7 +806,7 @@ namespace SQM.Website
 						if (!string.IsNullOrEmpty(incidentReportList[1]))
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport1");
-							hlk.NavigateUrl = "~/Reports/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.NavigateUrl = uri + "Reports/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 							hlk.ToolTip = incidentReportList[1];
 							hlk.Text = incidentReportLabelList[1];
 							hlk.Visible = true;
@@ -813,7 +814,7 @@ namespace SQM.Website
 						if (!string.IsNullOrEmpty(incidentReportList[2]))
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport2");
-							hlk.NavigateUrl = "~/Reports/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.NavigateUrl = uri + "Reports/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 							hlk.ToolTip = incidentReportList[2];
 							hlk.Text = incidentReportLabelList[2];
 							hlk.Visible = true;
