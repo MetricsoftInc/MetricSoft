@@ -1125,7 +1125,7 @@ namespace SQM.Website
 				// incident alert
 				if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
 				{
-					btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.incident);
+					btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
 				}
 				// optional approval steps
 				btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;

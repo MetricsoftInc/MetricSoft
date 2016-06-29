@@ -105,7 +105,7 @@ namespace SQM.Website
 			NOTIFYACTION dfltNotify = notifyList.Where(l => l.NOTIFY_SCOPE == "IN-0" && l.SCOPE_TASK == "400").FirstOrDefault();  // get default alert notification groups
 
 			btnSave.Enabled = false;
-			pnlAlert.Enabled = EHSIncidentMgr.CanUpdateIncident(LocalIncident, true, SysPriv.config, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+			pnlAlert.Enabled = btnSave.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, true, SysPriv.admin, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 
 			if (incidentAlert == null)
 			{

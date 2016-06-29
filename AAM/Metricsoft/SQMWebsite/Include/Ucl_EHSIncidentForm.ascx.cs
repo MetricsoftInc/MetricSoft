@@ -2263,7 +2263,7 @@ namespace SQM.Website
 			// incident alert
 			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
 			{
-				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.incident);
+				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
 			}
 			// optional approval steps
 			/*
