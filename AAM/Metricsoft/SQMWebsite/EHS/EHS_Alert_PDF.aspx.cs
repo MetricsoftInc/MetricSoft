@@ -211,7 +211,7 @@ namespace SQM.Website.EHS
 					// Table 4 - Photos
 					//
 
-					var table4 = new PdfPTable(new float[] { 180f, 180f, 180f });
+                    var table4 = new PdfPTable(new float[] { 540f, }); //new PdfPTable(new float[] { 180f, 180f, 180f });
 					table4.TotalWidth = 540f;
 					table4.LockedWidth = true;
 
@@ -229,7 +229,8 @@ namespace SQM.Website.EHS
 								var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
 
 								iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
-								photo.ScaleToFit(176f, 132f);
+								//photo.ScaleToFit(176f, 132f);
+                                //photo.ScaleToFit(264f, 198f);
 								photoCell.AddElement(photo);
 
 								photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
