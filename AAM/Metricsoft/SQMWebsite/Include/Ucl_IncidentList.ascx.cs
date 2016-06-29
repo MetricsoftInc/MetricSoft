@@ -792,7 +792,8 @@ namespace SQM.Website
 						lbEditReport.Visible = false;
 					}
 					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
-					string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
+					//string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
+                    string uri = "~/";
 					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 					{
 						if (!string.IsNullOrEmpty(incidentReportList[0]))
