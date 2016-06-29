@@ -791,7 +791,6 @@ namespace SQM.Website
 						LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
 						lbEditReport.Visible = false;
 					}
-
 					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
 					string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
 					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
