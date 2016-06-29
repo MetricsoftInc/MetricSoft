@@ -33,14 +33,16 @@ namespace SQM.Website
 					if (SessionManager.ReturnStatus == true  &&  SessionManager.ReturnObject is INCIDENT)
 					{
 						INCIDENT incident = SessionManager.ReturnObject as INCIDENT;
+						string context = SessionManager.ReturnContext;
 						SessionManager.ClearReturns();
 						SessionManager.SetIncidentLocation((decimal)incident.DETECT_PLANT_ID);
 
 						if (incident.INCIDENT_ID > 0)  
 						{
-							// edit existing incident
-							uclIncidentForm.BindIncident(incident.INCIDENT_ID);
-	
+							if (context == "a")
+								uclIncidentForm.BindIncidentAlert(incident.INCIDENT_ID);
+							else
+								uclIncidentForm.BindIncident(incident.INCIDENT_ID);
 						}
 						else
 						{

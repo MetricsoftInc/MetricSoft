@@ -5,6 +5,7 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Root5Y.ascx" TagName="RootCause" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Causation.ascx" TagName="Causation" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="Action" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_INCFORM_Alert.ascx" TagName="Alert" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
@@ -20,9 +21,38 @@
 			}
 		);
 	}
+
+	window.onload = function () {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = "";
+	}
+	window.onbeforeunload = function () {
+		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value == '1') {
+			return 'You have unsaved changes on this page.';
+		}
+	}
+	function ChangeUpdate(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
+		return true;
+	}
+	function ChangeClear(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
+	}
+	function CheckChange() {
+		var ret = true;
+		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value == '1') {
+			ret = confirm('You have unsaved changes on this page. \n\n Are you sure you want to leave this page ?');
+			if (ret == true) {
+				document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
+			}
+		}
+		return ret;
+	}
 </script>
 
 <div id="divIncidentForm" runat="server">
+
+	<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
+
 	<table style="width: 100%" class="textStd">
 		<tr>
 			<td>
@@ -84,34 +114,54 @@
 									</tr>
 								</table>
 								<div id="divSubnav" runat="server">
-									<div id="divSubnavPage" runat="server" class="borderSoft" visible="False">
+									<div id="divSubnavPage" runat="server" visible="False">
 										<ucl:Containment id="uclContainment" runat="server" Visible="False" />
 										<ucl:RootCause id="uclRootCause" runat="server" Visible="False"/>
 										<ucl:Causation id="uclCausation" runat="server" Visible="False"/>
 										<ucl:Action id="uclAction" runat="server" Visible="False"/>
 										<ucl:Approval id="uclApproval" runat="server" Visible="False"/>
+										<Ucl:Alert ID="uclAlert" runat="server" Visible="false" />
 									</div>
 
-									<div style="margin-top: 5px;">
-										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
-											OnClick="btnSubnavSave_Click" CommandArgument="0"/>
-										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="0" />
-										<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
-										<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="3"/>
-										<asp:LinkButton ID="btnSubnavCausation" runat="server" Text="Causation" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="35"/>
-										<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="4"/>
-										<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-											OnClick="btnSubnav_Click" CommandArgument="5"/>
-										<span style="float:right">
-											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="False" ForeColor="DarkRed"
+									<div>
+										<center>
+											<telerik:RadButton ID="btnSubnavSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro"
+												OnClientClicked="ChangeClear" OnClick="btnSubnavSave_Click" CommandArgument="0" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+											<telerik:RadButton ID="btnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="False" ForeColor="DarkRed" Style="margin-left: 30px; margin-top: 5px;"
 												Text="<%$ Resources:LocalizedText, DeleteIncident %>" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
 												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" />
-										</span>
+										</center>
+									</div>
+									<div style="margin: 10px;">
+										<center>
+											<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="0" />
+											<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
+											<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="3"/>
+											<asp:LinkButton ID="btnSubnavCausation" runat="server" Text="Causation" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="35"/>
+											<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="4"/>
+											<asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="10" visible="false"/>
+											<br />
+											<div style="margin-top: 5px;">
+												<asp:LinkButton ID="btnSubnavApproval_1" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_1 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+													OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="1.1" Visible="false"/>
+												<asp:LinkButton ID="btnSubnavApproval_2" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_2 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+													OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="2.1" Visible="false"/>
+												<asp:LinkButton ID="btnSubnavApproval_3" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_3 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+													OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="3.1" Visible="false"/>
+												<asp:LinkButton ID="btnSubnavApproval_35" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_35 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+													OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="35.1" Visible="false"/>
+												<asp:LinkButton ID="btnSubnavApproval_4" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_4 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+														OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="4.1" Visible="false"/>
+												<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+													OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="5"/>
+											</div>
+										</center>
 									</div>
 								</div>
 							</div>

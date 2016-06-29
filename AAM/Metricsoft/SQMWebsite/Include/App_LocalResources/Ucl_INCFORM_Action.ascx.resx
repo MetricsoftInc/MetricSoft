@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="lbhdFinActionResource1.Text" xml:space="preserve">
-    <value>Final Action</value>
+    <value>Final Corrective Action</value>
   </data>
   <data name="lbhdFinCompltDTResource1.Text" xml:space="preserve">
     <value>Completion Date</value>

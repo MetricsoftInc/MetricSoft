@@ -390,6 +390,9 @@
   <data name="ProblemArea" xml:space="preserve">
     <value>Área problemática</value>
   </data>
+	<data name="ProceduresFollowed" xml:space="preserve">
+    <value>Procedures Followed</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>Pergunta</value>
   </data>

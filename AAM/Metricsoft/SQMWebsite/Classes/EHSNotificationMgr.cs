@@ -10,8 +10,8 @@ namespace SQM.Website
 	public static class EHSNotificationMgr
 	{
 		public static string incidentPath = "/EHS/EHS_Incidents.aspx?r=";
+		public static string incidentAlertPath = "/EHS/EHS_Incidents.aspx?a=";
 		public static string incidentActionPath = "/Home/Calendar.aspx?v=T";
-		//public static string auditPath = "/EHS/EHS_Audits.aspx";
 		public static string auditPath = "/EHS/EHS_Assessments.aspx";
 		public static string auditActionPath = "/Home/Calendar.aspx?v=T";
 
@@ -331,6 +331,164 @@ namespace SQM.Website
 			return status;
 		}
 
+		#endregion
+
+
+		#region incidentAlert
+
+		public static int NotifyIncidentAlert(INCIDENT incident, string scopeTask, string taskStatus, List<decimal> plantList)
+		{
+			// send email for INCIDENT status change or activity update
+			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
+			string rtn = "";
+			EHSIncidentTypeId typeID = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
+			string notifyScope;
+			string incidentLabel;
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
+
+			notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
+
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
+			if (string.IsNullOrEmpty(appUrl))
+				appUrl = "the website";
+
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+			List<PERSON> notifyPersonList = new List<PERSON>();
+			foreach (decimal plantID in plantList)
+			{
+				if (ShouldNotifyPlant(SQMModelMgr.LookupPlant(entities, plantID, ""), TaskRecordType.HealthSafetyIncident) != false)
+				{
+					notifyPersonList.AddRange(GetNotifyPersonList(plant, notifyScope, scopeTask, taskStatus));
+				}
+			}
+			notifyPersonList = notifyPersonList.Where(n => !string.IsNullOrEmpty(n.EMAIL)).GroupBy(l => l.EMAIL).Select(p => p.First()).ToList();
+
+			INCFORM_INJURYILLNESS injuryIllnessDetail = EHSIncidentMgr.SelectInjuryIllnessDetailsById(new PSsqmEntities(), incident.INCIDENT_ID);
+			if (injuryIllnessDetail != null)
+			{
+				notifyScope = "IN-8";	// injury/illness incident  non-recorable
+				if ((bool)injuryIllnessDetail.FATALITY == true)
+					notifyScope += "-X";
+				else if ((bool)injuryIllnessDetail.LOST_TIME == true)
+					notifyScope += "-T";
+				else if ((bool)injuryIllnessDetail.RECORDABLE == true)
+					notifyScope += "-R";
+			}
+
+			foreach (PERSON person in notifyPersonList.Where(l => !string.IsNullOrEmpty(l.EMAIL)).ToList())
+			{
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(entities, person);
+				if (typeID == EHSIncidentTypeId.InjuryIllness)
+				{
+					incidentLabel = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE", notifyScope, lang.NLS_LANGUAGE).DESCRIPTION;
+				}
+				else
+				{
+					incidentLabel = incident.ISSUE_TYPE;
+				}
+
+				string emailSubject = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_01", lang.NLS_LANGUAGE).DESCRIPTION;
+				emailSubject = emailSubject.Replace("PP", plant.PLANT_NAME);
+				emailSubject = emailSubject.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
+				emailSubject = emailSubject.Replace("II", incidentLabel);
+
+				string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION;
+				emailBody = emailBody.Replace("PP", plant.PLANT_NAME);
+				emailBody = emailBody.Replace("II", incidentLabel);
+				emailBody = emailBody.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
+				emailBody += "<br/><br>" +
+								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Recorded By : " + incident.LAST_UPD_BY +
+								"<br/><br/>" +
+								SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_03", lang.NLS_LANGUAGE).DESCRIPTION + "<br><br>" + (appUrl + incidentAlertPath + incident.INCIDENT_ID.ToString());
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
+				thread.IsBackground = true;
+				thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, ("incident status update - scope: " + notifyScope + "  task: " + scopeTask + "  status: " + taskStatus), rtn, "");
+			}
+
+			return status;
+		}
+
+		public static int NotifyIncidentAlertTaskAssignment(INCIDENT incident, List<TASK_STATUS> taskList)
+		{
+			// send email for INCIDENT status change or activity update
+			PSsqmEntities entities = new PSsqmEntities();
+			int status = 0;
+			string rtn = "";
+			EHSIncidentTypeId typeID = (EHSIncidentTypeId)incident.ISSUE_TYPE_ID;
+			string notifyScope;
+			string incidentLabel;
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[5] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" }, 0);
+
+			notifyScope = "IN-" + ((int)EHSIncidentTypeId.Any).ToString();
+
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
+			if (string.IsNullOrEmpty(appUrl))
+				appUrl = "the website";
+
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
+			INCFORM_INJURYILLNESS injuryIllnessDetail = EHSIncidentMgr.SelectInjuryIllnessDetailsById(new PSsqmEntities(), incident.INCIDENT_ID);
+			if (injuryIllnessDetail != null)
+			{
+				notifyScope = "IN-8";	// injury/illness incident  non-recorable
+				if ((bool)injuryIllnessDetail.FATALITY == true)
+					notifyScope += "-X";
+				else if ((bool)injuryIllnessDetail.LOST_TIME == true)
+					notifyScope += "-T";
+				else if ((bool)injuryIllnessDetail.RECORDABLE == true)
+					notifyScope += "-R";
+			}
+
+			PERSON person = null;
+			foreach (TASK_STATUS task in taskList)
+			{
+				person = SQMModelMgr.LookupPerson(entities, (decimal)task.RESPONSIBLE_ID, "", false);
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(entities, person);
+				if (typeID == EHSIncidentTypeId.InjuryIllness)
+				{
+					incidentLabel = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE", notifyScope, lang.NLS_LANGUAGE).DESCRIPTION;
+				}
+				else
+				{
+					incidentLabel = incident.ISSUE_TYPE;
+				}
+
+				string emailSubject = SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+				//emailSubject = emailSubject.Replace("PP", plant.PLANT_NAME);
+				//emailSubject = emailSubject.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
+				//emailSubject = emailSubject.Replace("II", incidentLabel);
+
+				string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION;
+				emailBody = emailBody.Replace("PP", plant.PLANT_NAME);
+				emailBody = emailBody.Replace("II", incidentLabel);
+				emailBody = emailBody.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
+				emailBody += "<br/><br>" +
+								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+								incident.DESCRIPTION + "<br/>" +
+								"<br/>" +
+								"Recorded By : " + incident.LAST_UPD_BY +
+								"<br/><br/>" +
+								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION + "<br>" + 
+								"Affected Processes: " + task.DESCRIPTION + "<br><br>" + 
+								"Implementation Recommendations: " + task.DETAIL + "<br><br>" + 
+								SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_03", lang.NLS_LANGUAGE).DESCRIPTION + "<br><br>" + (appUrl + incidentAlertPath + incident.INCIDENT_ID.ToString());
+
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
+				thread.IsBackground = true;
+				thread.Start();
+				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, ("incident status update - scope: " + notifyScope + "  task: " + ((int)SysPriv.notify).ToString() + "  status: " + "380"), rtn, "");
+			}
+
+			return status;
+		}
 		#endregion
 
 

@@ -130,7 +130,7 @@
     <value>Body Part</value>
   </data>
   <data name="lbReoccurResource1.Text" xml:space="preserve">
-    <value>Reoccurance</value>
+    <value>Reoccurrence</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>Employee</value>
@@ -172,7 +172,7 @@
     <value>Shift</value>
   </data>
   <data name="lbStdProcsFollowedResource1.Text" xml:space="preserve">
-    <value>Standard Work Procedures Followed without Deviation?</value>
+    <value>Standard Work Procedures Followed ?</value>
   </data>
   <data name="lbSupervisorLabelResource1.Text" xml:space="preserve">
     <value>Supervisor: </value>
@@ -184,7 +184,13 @@
     <value>Date Supervisor Informed</value>
   </data>
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
-    <value>How long has associate been doing this job/specific task?</value>
+    <value>How long has associate been doing this job/specific task ?</value>
+  </data>
+	<data name="lbEmploymentTenureResource1.Text" xml:space="preserve">
+    <value>How long has associate been employed ?</value>
+  </data>
+  <data name="lbJobCode.Text" xml:space="preserve">
+    <value>Occupation / Job Title</value>
   </data>
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>Was Training for this Task Provided?</value>

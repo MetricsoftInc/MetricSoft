@@ -57,6 +57,7 @@
           <EntitySet Name="GHG_FACTOR" EntityType="PSsqmModel.Store.GHG_FACTOR" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GWP_FACTOR" EntityType="PSsqmModel.Store.GWP_FACTOR" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCFORM_ACTION" EntityType="PSsqmModel.Store.INCFORM_ACTION" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="INCFORM_ALERT" EntityType="PSsqmModel.Store.INCFORM_ALERT" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.Store.INCFORM_APPROVAL" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCFORM_CAUSATION" EntityType="PSsqmModel.Store.INCFORM_CAUSATION" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="INCFORM_CONTAIN" EntityType="PSsqmModel.Store.INCFORM_CONTAIN" store:Type="Tables" Schema="dbo" />
@@ -192,10 +193,6 @@
           <AssociationSet Name="FK_AUDIT_ANSWER_AUDIT" Association="PSsqmModel.Store.FK_AUDIT_ANSWER_AUDIT">
             <End Role="AUDIT" EntitySet="AUDIT" />
             <End Role="AUDIT_ANSWER" EntitySet="AUDIT_ANSWER" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.Store.FK_AUDIT_AUDIT_TYPE">
-            <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
-            <End Role="AUDIT" EntitySet="AUDIT" />
           </AssociationSet>
           <AssociationSet Name="FK_AUDIT_COMPANY" Association="PSsqmModel.Store.FK_AUDIT_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -349,6 +346,14 @@
             <End Role="EFM_REFERENCE" EntitySet="EFM_REFERENCE" />
             <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
           </AssociationSet>
+          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE">
+            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
+            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_MEASURE_EHS_MEASURE1" Association="PSsqmModel.Store.FK_EHS_MEASURE_EHS_MEASURE1">
+            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
+            <End Role="EHS_MEASURE1" EntitySet="EHS_MEASURE" />
+          </AssociationSet>
           <AssociationSet Name="FK_EHS_METRIC_HISTORY_CURRENCY" Association="PSsqmModel.Store.FK_EHS_METRIC_HISTORY_CURRENCY">
             <End Role="CURRENCY" EntitySet="CURRENCY" />
             <End Role="EHS_METRIC_HISTORY" EntitySet="EHS_METRIC_HISTORY" />
@@ -392,6 +397,10 @@
           <AssociationSet Name="FK_EHS_PROFILE_PLANT" Association="PSsqmModel.Store.FK_EHS_PROFILE_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCFORM_ALERT_INCIDENT" Association="PSsqmModel.Store.FK_INCFORM_ALERT_INCIDENT">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_ALERT" EntitySet="INCFORM_ALERT" />
           </AssociationSet>
           <AssociationSet Name="FK_INCFORM_CAUSATION_INCIDENT" Association="PSsqmModel.Store.FK_INCFORM_CAUSATION_INCIDENT">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
@@ -548,10 +557,6 @@
           <AssociationSet Name="FK_PLANT_ACCOUNTING_STAGE_PLANT" Association="PSsqmModel.Store.FK_PLANT_ACCOUNTING_STAGE_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="PLANT_ACCOUNTING" EntitySet="PLANT_ACCOUNTING" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.Store.FK_PLANT_ACTIVE_PLANT">
-            <End Role="PLANT" EntitySet="PLANT" />
-            <End Role="PLANT_ACTIVE" EntitySet="PLANT_ACTIVE" />
           </AssociationSet>
           <AssociationSet Name="FK_PLANT_LOCAL_LANGUAGE" Association="PSsqmModel.Store.FK_PLANT_LOCAL_LANGUAGE">
             <End Role="LOCAL_LANGUAGE" EntitySet="LOCAL_LANGUAGE" />
@@ -1482,6 +1487,22 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="INCFORM_ALERT">
+          <Key>
+            <PropertyRef Name="INCIDENT_ALERT_ID" />
+          </Key>
+          <Property Name="INCIDENT_ALERT_ID" Type="numeric" Nullable="false" Precision="35" StoreGeneratedPattern="Identity" />
+          <Property Name="INCIDENT_ID" Type="numeric" Nullable="false" Precision="35" />
+          <Property Name="LOCATION_LIST" Type="varchar" MaxLength="1000" />
+          <Property Name="ALERT_DESC" Type="nvarchar" />
+          <Property Name="COMMENTS" Type="nvarchar" />
+          <Property Name="ALERT_TYPE" Type="varchar" MaxLength="12" />
+          <Property Name="CREATE_DT" Type="datetime" />
+          <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
+          <Property Name="DUE_DT" Type="datetime" />
+          <Property Name="ALERT_GROUP" Type="varchar" MaxLength="400" />
+          <Property Name="RESPONSIBLE_GROUP" Type="varchar" MaxLength="400" />
+        </EntityType>
         <EntityType Name="INCFORM_APPROVAL">
           <Key>
             <PropertyRef Name="INCIDENT_APPROVAL_ID" />
@@ -1497,6 +1518,7 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="APPROVER_PERSON" Type="varchar" MaxLength="100" />
           <Property Name="APPROVER_TITLE" Type="nvarchar" MaxLength="200" />
+          <Property Name="APPROVAL_LEVEL" Type="int" />
         </EntityType>
         <EntityType Name="INCFORM_CAUSATION">
           <Key>
@@ -1507,6 +1529,7 @@
           <Property Name="CAUSEATION_CD" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="TEAM_LIST" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="INCFORM_CONTAIN">
           <Key>
@@ -1523,6 +1546,7 @@
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="ASSIGNED_PERSON" Type="varchar" MaxLength="100" />
+          <Property Name="COMMENTS" Type="nvarchar" />
         </EntityType>
         <EntityType Name="INCFORM_INJURYILLNESS">
           <Key>
@@ -1559,6 +1583,9 @@
           <Property Name="FATALITY" Type="bit" />
           <Property Name="JOB_TENURE" Type="varchar" MaxLength="12" />
           <Property Name="REOCCUR" Type="bit" />
+          <Property Name="JOBCODE_CD" Type="varchar" MaxLength="80" />
+          <Property Name="STD_PROCS_DESC" Type="nvarchar" />
+          <Property Name="EMPLOYMENT_TENURE" Type="varchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="INCFORM_LOSTTIME_HIST">
           <Key>
@@ -1595,6 +1622,9 @@
           <Property Name="ITEM_DESCRIPTION" Type="nvarchar" MaxLength="2000" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="PROBLEM_SERIES" Type="int" />
+          <Property Name="ITEM_TYPE" Type="int" />
+          <Property Name="IS_ROOTCAUSE" Type="bit" />
         </EntityType>
         <EntityType Name="INCFORM_TYPE_CONTROL">
           <Key>
@@ -2683,6 +2713,9 @@
           <Property Name="CREATE_DT" Type="datetime" />
           <Property Name="DETAIL" Type="nvarchar" />
           <Property Name="CREATE_ID" Type="numeric" Precision="35" />
+          <Property Name="TASK_CATEGORY" Type="varchar" MaxLength="20" />
+          <Property Name="TASK_VERIFICATION" Type="nvarchar" />
+          <Property Name="TASK_CRITERIA" Type="nvarchar" />
         </EntityType>
         <EntityType Name="UN_DISPOSAL">
           <Key>
@@ -2707,7 +2740,7 @@
           <Property Name="EFM_TYPE" Type="varchar" MaxLength="40" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'NSK.dbo.UOM_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="UOM_XREF">
           <Key>
@@ -2736,7 +2769,7 @@
           <Property Name="SORT_ORDER" Type="smallint" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AAM.dbo.XLAT_DAYS_TO_CLOSE_TRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'NSK.dbo.XLAT_DAYS_TO_CLOSE_TRANS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="XLAT_DAYS_TO_CLOSE_TRANS">
           <Key>
@@ -2747,7 +2780,7 @@
           <Property Name="MAX_DAYS" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'NSK.dbo.vw_MetricDataByPlant' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="vw_MetricDataByPlant">
           <Key>
@@ -2836,18 +2869,6 @@
             </Principal>
             <Dependent Role="AUDIT_ANSWER">
               <PropertyRef Name="AUDIT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AUDIT_AUDIT_TYPE">
-          <End Role="AUDIT_TYPE" Type="PSsqmModel.Store.AUDIT_TYPE" Multiplicity="1" />
-          <End Role="AUDIT" Type="PSsqmModel.Store.AUDIT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AUDIT_TYPE">
-              <PropertyRef Name="AUDIT_TYPE_ID" />
-            </Principal>
-            <Dependent Role="AUDIT">
-              <PropertyRef Name="AUDIT_TYPE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3311,6 +3332,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EHS_MEASURE_EHS_MEASURE">
+          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
+          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Principal>
+            <Dependent Role="EHS_MEASURE1">
+              <PropertyRef Name="MEASURE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_MEASURE_EHS_MEASURE1">
+          <End Role="EHS_MEASURE" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="1" />
+          <End Role="EHS_MEASURE1" Type="PSsqmModel.Store.EHS_MEASURE" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Principal>
+            <Dependent Role="EHS_MEASURE1">
+              <PropertyRef Name="MEASURE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EHS_METRIC_HISTORY_CURRENCY">
           <End Role="CURRENCY" Type="PSsqmModel.Store.CURRENCY" Multiplicity="0..1" />
           <End Role="EHS_METRIC_HISTORY" Type="PSsqmModel.Store.EHS_METRIC_HISTORY" Multiplicity="*" />
@@ -3440,6 +3485,18 @@
             </Principal>
             <Dependent Role="EHS_PROFILE">
               <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INCFORM_ALERT_INCIDENT">
+          <End Role="INCIDENT" Type="PSsqmModel.Store.INCIDENT" Multiplicity="1" />
+          <End Role="INCFORM_ALERT" Type="PSsqmModel.Store.INCFORM_ALERT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_ALERT">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3909,18 +3966,6 @@
               <PropertyRef Name="PLANT_ID" />
             </Principal>
             <Dependent Role="PLANT_ACCOUNTING">
-              <PropertyRef Name="PLANT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PLANT_ACTIVE_PLANT">
-          <End Role="PLANT" Type="PSsqmModel.Store.PLANT" Multiplicity="1" />
-          <End Role="PLANT_ACTIVE" Type="PSsqmModel.Store.PLANT_ACTIVE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PLANT">
-              <PropertyRef Name="PLANT_ID" />
-            </Principal>
-            <Dependent Role="PLANT_ACTIVE">
               <PropertyRef Name="PLANT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4903,19 +4948,9 @@
           </AssociationSet>
           <EntitySet Name="INCFORM_TYPE_CONTROL" EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" />
           <EntitySet Name="INCFORM_ACTION" EntityType="PSsqmModel.INCFORM_ACTION" />
-          <EntitySet Name="INCFORM_CONTAIN" EntityType="PSsqmModel.INCFORM_CONTAIN" />
            <AssociationSet Name="FK_INCIDENTACTION_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID">
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_ACTION" EntitySet="INCFORM_ACTION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_INCIDENTCONTAIN_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_CONTAIN" EntitySet="INCFORM_CONTAIN" />
-          </AssociationSet>
-          <EntitySet Name="INCFORM_ROOT5Y" EntityType="PSsqmModel.INCFORM_ROOT5Y" />
-          <AssociationSet Name="FK_INCIDENTROOT5Y_INCIDENT_ID1" Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_ROOT5Y" EntitySet="INCFORM_ROOT5Y" />
           </AssociationSet>
           <EntitySet Name="JOBCODE" EntityType="PSsqmModel.JOBCODE" />
           <EntitySet Name="AUDIT" EntityType="PSsqmModel.AUDIT" />
@@ -4989,11 +5024,6 @@
             <End Role="INCIDENT_TYPE_COMPANY" EntitySet="INCIDENT_TYPE_COMPANY" />
             <End Role="INCIDENT_TYPE_COMPANY_QUESTION" EntitySet="INCIDENT_TYPE_COMPANY_QUESTION" />
           </AssociationSet>
-          <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.INCFORM_APPROVAL" />
-          <AssociationSet Name="FK_INCIDENTAPPROVAL_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_APPROVAL" EntitySet="INCFORM_APPROVAL" />
-          </AssociationSet>
           <EntitySet Name="EHS_DATA" EntityType="PSsqmModel.EHS_DATA" />
           <AssociationSet Name="FK_EHS_DATA_EHS_MEASURE" Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE">
             <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
@@ -5008,7 +5038,6 @@
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCFORM_LOSTTIME_HIST" EntitySet="INCFORM_LOSTTIME_HIST" />
           </AssociationSet>
-          <EntitySet Name="TASK_STATUS" EntityType="PSsqmModel.TASK_STATUS" />
           <EntitySet Name="EHS_DATA_ORD" EntityType="PSsqmModel.EHS_DATA_ORD" />
           <AssociationSet Name="FK_EHS_DATA_ORD_EHS_DATA" Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA">
             <End Role="EHS_DATA" EntitySet="EHS_DATA" />
@@ -5018,11 +5047,6 @@
           <AssociationSet Name="FK_AUDIT_AUDIT_TYPE" Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE">
             <End Role="AUDIT_TYPE" EntitySet="AUDIT_TYPE" />
             <End Role="AUDIT" EntitySet="AUDIT" />
-          </AssociationSet>
-          <EntitySet Name="INCFORM_CAUSATION" EntityType="PSsqmModel.INCFORM_CAUSATION" />
-          <AssociationSet Name="FK_INCFORM_CAUSATION_INCIDENT" Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_CAUSATION" EntitySet="INCFORM_CAUSATION" />
           </AssociationSet>
           <EntitySet Name="EHS_TARGETS" EntityType="PSsqmModel.EHS_TARGETS" />
           <EntitySet Name="XLAT" EntityType="PSsqmModel.XLAT" />
@@ -5037,11 +5061,6 @@
           <AssociationSet Name="FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE" Association="PSsqmModel.FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE">
             <End Role="INCIDENT_TYPE" EntitySet="INCIDENT_TYPE" />
             <End Role="INCIDENT_TYPE_LANG" EntitySet="INCIDENT_TYPE_LANG" />
-          </AssociationSet>
-          <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="PSsqmModel.INCFORM_INJURYILLNESS" />
-          <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
-            <End Role="INCIDENT" EntitySet="INCIDENT" />
-            <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
           </AssociationSet>
           <EntitySet Name="PLANT_ACTIVE" EntityType="PSsqmModel.PLANT_ACTIVE" />
           <AssociationSet Name="FK_PLANT_ACTIVE_PLANT" Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT">
@@ -5090,9 +5109,40 @@
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="RESPONSE" EntitySet="RESPONSE" />
           </AssociationSet>
+          <EntitySet Name="INCFORM_APPROVAL" EntityType="PSsqmModel.INCFORM_APPROVAL" />
+          <AssociationSet Name="FK_INCIDENTAPPROVAL_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_APPROVAL" EntitySet="INCFORM_APPROVAL" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_ROOT5Y" EntityType="PSsqmModel.INCFORM_ROOT5Y" />
+          <AssociationSet Name="FK_INCIDENTROOT5Y_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_ROOT5Y" EntitySet="INCFORM_ROOT5Y" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_ALERT" EntityType="PSsqmModel.INCFORM_ALERT" />
+          <AssociationSet Name="FK_INCFORM_ALERT_INCIDENT" Association="PSsqmModel.FK_INCFORM_ALERT_INCIDENT">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_ALERT" EntitySet="INCFORM_ALERT" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_INJURYILLNESS" EntityType="PSsqmModel.INCFORM_INJURYILLNESS" />
+          <AssociationSet Name="FK_INJURYILLNESS_INCIDENT_ID" Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_INJURYILLNESS" EntitySet="INCFORM_INJURYILLNESS" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_CONTAIN" EntityType="PSsqmModel.INCFORM_CONTAIN" />
+          <AssociationSet Name="FK_INCIDENTCONTAIN_INCIDENT_ID" Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_CONTAIN" EntitySet="INCFORM_CONTAIN" />
+          </AssociationSet>
+          <EntitySet Name="TASK_STATUS" EntityType="PSsqmModel.TASK_STATUS" />
           <AssociationSet Name="FK_TASK_STATUS_PERSON" Association="PSsqmModel.FK_TASK_STATUS_PERSON">
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="TASK_STATUS" EntitySet="TASK_STATUS" />
+          </AssociationSet>
+          <EntitySet Name="INCFORM_CAUSATION" EntityType="PSsqmModel.INCFORM_CAUSATION" />
+          <AssociationSet Name="FK_INCFORM_CAUSATION_INCIDENT" Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCFORM_CAUSATION" EntitySet="INCFORM_CAUSATION" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -7538,13 +7588,14 @@
           <NavigationProperty Name="INCFORM_POWEROUTAGE" Relationship="PSsqmModel.FK_INCIDENT_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_POWEROUTAGE" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="Int32" Nullable="false" />
           <NavigationProperty Name="INCFORM_ACTION" Relationship="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_ACTION" />
-          <NavigationProperty Name="INCFORM_CONTAIN" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_CONTAIN" />
-          <NavigationProperty Name="INCFORM_ROOT5Y" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCIDENT" ToRole="INCFORM_ROOT5Y" />
           <NavigationProperty Name="INCFORM_WITNESS" Relationship="PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_WITNESS" />
-          <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
           <NavigationProperty Name="INCFORM_LOSTTIME_HIST" Relationship="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_LOSTTIME_HIST" />
-          <NavigationProperty Name="INCFORM_CAUSATION" Relationship="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" FromRole="INCIDENT" ToRole="INCFORM_CAUSATION" />
+          <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
+          <NavigationProperty Name="INCFORM_ROOT5Y" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_ROOT5Y" />
+          <NavigationProperty Name="INCFORM_ALERT" Relationship="PSsqmModel.FK_INCFORM_ALERT_INCIDENT" FromRole="INCIDENT" ToRole="INCFORM_ALERT" />
           <NavigationProperty Name="INCFORM_INJURYILLNESS" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_INJURYILLNESS" />
+          <NavigationProperty Name="INCFORM_CONTAIN" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_CONTAIN" />
+          <NavigationProperty Name="INCFORM_CAUSATION" Relationship="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" FromRole="INCIDENT" ToRole="INCFORM_CAUSATION" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -8222,23 +8273,6 @@
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
           <Property Name="ASSIGNED_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
          </EntityType>
-         <EntityType Name="INCFORM_CONTAIN">
-          <Key>
-            <PropertyRef Name="INCIDENT_CONTAIN_ID" />
-          </Key>
-          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
-          <Property Name="INCIDENT_CONTAIN_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCFORM_CONTAIN" ToRole="INCIDENT" />
-          <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="ASSIGNED_PERSON_ID" Type="Decimal" Precision="35" Scale="0" />
-          <Property Name="START_DATE" Type="DateTime" Precision="3" />
-          <Property Name="COMPLETION_DATE" Type="DateTime" Precision="3" />
-          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
-          <Property Name="ASSIGNED_PERSON" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="FK_INCIDENTACTION_INCIDENT_ID">
           <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
           <End Type="PSsqmModel.INCFORM_ACTION" Role="INCFORM_ACTION" Multiplicity="*" />
@@ -8247,42 +8281,6 @@
               <PropertyRef Name="INCIDENT_ID" />
             </Principal>
             <Dependent Role="INCFORM_ACTION">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_INCIDENTCONTAIN_INCIDENT_ID">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_CONTAIN" Role="INCFORM_CONTAIN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_CONTAIN">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="INCFORM_ROOT5Y">
-          <Key>
-            <PropertyRef Name="INCIDENT_ROOT5Y_ID" />
-          </Key>
-          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
-          <Property Name="INCIDENT_ROOT5Y_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ITEM_SEQ" Type="Int32" Nullable="false" />
-          <Property Name="ITEM_DESCRIPTION" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" FromRole="INCFORM_ROOT5Y" ToRole="INCIDENT" />
-        </EntityType>
-        <Association Name="FK_INCIDENTROOT5Y_INCIDENT_ID1">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_ROOT5Y" Role="INCFORM_ROOT5Y" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_ROOT5Y">
               <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8646,35 +8644,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="INCFORM_APPROVAL">
-          <Key>
-            <PropertyRef Name="INCIDENT_APPROVAL_ID" />
-          </Key>
-          <Property Type="Decimal" Name="INCIDENT_APPROVAL_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="ITEM_SEQ" Nullable="false" />
-          <Property Type="String" Name="APPROVAL_MESSAGE" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="APPROVER_PERSON_ID" Precision="35" Scale="0" />
-          <Property Type="DateTime" Name="APPROVAL_DATE" Precision="3" />
-          <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
-          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
-          <Property Type="String" Name="APPROVER_PERSON" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="APPROVER_TITLE" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCFORM_APPROVAL" ToRole="INCIDENT" />
-        </EntityType>
-        <Association Name="FK_INCIDENTAPPROVAL_INCIDENT_ID">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_APPROVAL" Role="INCFORM_APPROVAL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_APPROVAL">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EHS_DATA">
           <Key>
             <PropertyRef Name="DATA_ID" />
@@ -8742,30 +8711,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TASK_STATUS">
-          <Key>
-            <PropertyRef Name="TASK_ID" />
-          </Key>
-          <Property Type="Decimal" Name="TASK_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
-          <Property Type="Decimal" Name="RECORD_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="TASK_STEP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TASK_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="TASK_SEQ" />
-          <Property Type="DateTime" Name="DUE_DT" Precision="3" />
-          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
-          <Property Type="String" Name="DESCRIPTION" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="COMPLETE_DT" Precision="3" />
-          <Property Type="Decimal" Name="COMPLETE_ID" Precision="35" Scale="0" />
-          <Property Type="DateTime" Name="NOTIFY_DT" Precision="3" />
-          <Property Type="Decimal" Name="RECORD_SUBID" Precision="35" Scale="0" />
-          <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
-          <Property Type="String" Name="DETAIL" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="CREATE_ID" Precision="35" Scale="0" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
-        </EntityType>
         <EntityType Name="EHS_DATA_ORD">
           <Key>
             <PropertyRef Name="DATA_ORD_ID" />
@@ -8816,29 +8761,6 @@
             </Principal>
             <Dependent Role="AUDIT">
               <PropertyRef Name="AUDIT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="INCFORM_CAUSATION">
-          <Key>
-            <PropertyRef Name="INCIDENT_ID" />
-            <PropertyRef Name="CAUSEATION_CD" />
-          </Key>
-          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="CAUSEATION_CD" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" FromRole="INCFORM_CAUSATION" ToRole="INCIDENT" />
-        </EntityType>
-        <Association Name="FK_INCFORM_CAUSATION_INCIDENT">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_CAUSATION" Role="INCFORM_CAUSATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_CAUSATION">
-              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8930,55 +8852,6 @@
             </Principal>
             <Dependent Role="INCIDENT_TYPE_LANG">
               <PropertyRef Name="INCIDENT_TYPE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="INCFORM_INJURYILLNESS">
-          <Key>
-            <PropertyRef Name="INCIDENT_ID" />
-          </Key>
-          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="String" Name="DESCRIPTION_LOCAL" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="Time" Name="INCIDENT_TIME" Precision="7" />
-          <Property Type="String" Name="SHIFT" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="DEPARTMENT" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="OPERATION" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="INVOLVED_PERSON_NAME" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="INVOLVED_PERSON_STATEMENT" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="SUPERVISOR_INFORMED_DT" Precision="3" />
-          <Property Type="Decimal" Name="SUPERVISOR_PERSON_ID" Precision="35" Scale="0" />
-          <Property Type="String" Name="SUPERVISOR_STATEMENT" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="INSIDE_OUTSIDE_BLDNG" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="COMPANY_SUPERVISED" Nullable="false" />
-          <Property Type="Boolean" Name="ERGONOMIC_CONCERN" Nullable="false" />
-          <Property Type="Boolean" Name="STD_PROCS_FOLLOWED" Nullable="false" />
-          <Property Type="Boolean" Name="TRAINING_PROVIDED" Nullable="false" />
-          <Property Type="Int32" Name="YEARS_DOING_JOB" />
-          <Property Type="Int32" Name="MONTHS_DOING_JOB" />
-          <Property Type="Int32" Name="DAYS_DOING_JOB" />
-          <Property Type="Boolean" Name="FIRST_AID" Nullable="false" />
-          <Property Type="Boolean" Name="RECORDABLE" Nullable="false" />
-          <Property Type="Boolean" Name="LOST_TIME" Nullable="false" />
-          <Property Type="DateTime" Name="EXPECTED_RETURN_WORK_DT" Precision="3" />
-          <Property Type="String" Name="INJURY_TYPE" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="INJURY_BODY_PART" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="DEPT_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="PLANT_LINE_ID" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="INVOLVED_PERSON_ID" Precision="35" Scale="0" />
-          <Property Type="Boolean" Name="FATALITY" />
-          <Property Type="String" Name="JOB_TENURE" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="REOCCUR" />
-          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCFORM_INJURYILLNESS" ToRole="INCIDENT" />
-        </EntityType>
-        <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
-          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
-          <End Type="PSsqmModel.INCFORM_INJURYILLNESS" Role="INCFORM_INJURYILLNESS" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="INCIDENT">
-              <PropertyRef Name="INCIDENT_ID" />
-            </Principal>
-            <Dependent Role="INCFORM_INJURYILLNESS">
-              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9188,6 +9061,201 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="INCFORM_APPROVAL">
+          <Key>
+            <PropertyRef Name="INCIDENT_APPROVAL_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_APPROVAL_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="ITEM_SEQ" Nullable="false" />
+          <Property Type="String" Name="APPROVAL_MESSAGE" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="APPROVER_PERSON_ID" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="APPROVAL_DATE" Precision="3" />
+          <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="String" Name="APPROVER_PERSON" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="APPROVER_TITLE" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="APPROVAL_LEVEL" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCFORM_APPROVAL" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENTAPPROVAL_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_APPROVAL" Role="INCFORM_APPROVAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_APPROVAL">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_ROOT5Y">
+          <Key>
+            <PropertyRef Name="INCIDENT_ROOT5Y_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="INCIDENT_ROOT5Y_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ITEM_SEQ" Nullable="false" />
+          <Property Type="String" Name="ITEM_DESCRIPTION" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="Int32" Name="PROBLEM_SERIES" />
+          <Property Type="Int32" Name="ITEM_TYPE" />
+          <Property Type="Boolean" Name="IS_ROOTCAUSE" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID" FromRole="INCFORM_ROOT5Y" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENTROOT5Y_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_ROOT5Y" Role="INCFORM_ROOT5Y" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_ROOT5Y">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_ALERT">
+          <Key>
+            <PropertyRef Name="INCIDENT_ALERT_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_ALERT_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="LOCATION_LIST" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ALERT_DESC" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ALERT_TYPE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
+          <Property Type="String" Name="CREATE_BY" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DUE_DT" Precision="3" />
+          <Property Type="String" Name="ALERT_GROUP" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RESPONSIBLE_GROUP" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCFORM_ALERT_INCIDENT" FromRole="INCFORM_ALERT" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCFORM_ALERT_INCIDENT">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_ALERT" Role="INCFORM_ALERT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_ALERT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_INJURYILLNESS">
+          <Key>
+            <PropertyRef Name="INCIDENT_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="DESCRIPTION_LOCAL" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Time" Name="INCIDENT_TIME" Precision="7" />
+          <Property Type="String" Name="SHIFT" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DEPARTMENT" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OPERATION" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="INVOLVED_PERSON_NAME" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="INVOLVED_PERSON_STATEMENT" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SUPERVISOR_INFORMED_DT" Precision="3" />
+          <Property Type="Decimal" Name="SUPERVISOR_PERSON_ID" Precision="35" Scale="0" />
+          <Property Type="String" Name="SUPERVISOR_STATEMENT" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="INSIDE_OUTSIDE_BLDNG" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="COMPANY_SUPERVISED" Nullable="false" />
+          <Property Type="Boolean" Name="ERGONOMIC_CONCERN" Nullable="false" />
+          <Property Type="Boolean" Name="STD_PROCS_FOLLOWED" Nullable="false" />
+          <Property Type="Boolean" Name="TRAINING_PROVIDED" Nullable="false" />
+          <Property Type="Int32" Name="YEARS_DOING_JOB" />
+          <Property Type="Int32" Name="MONTHS_DOING_JOB" />
+          <Property Type="Int32" Name="DAYS_DOING_JOB" />
+          <Property Type="Boolean" Name="FIRST_AID" Nullable="false" />
+          <Property Type="Boolean" Name="RECORDABLE" Nullable="false" />
+          <Property Type="Boolean" Name="LOST_TIME" Nullable="false" />
+          <Property Type="DateTime" Name="EXPECTED_RETURN_WORK_DT" Precision="3" />
+          <Property Type="String" Name="INJURY_TYPE" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="INJURY_BODY_PART" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="DEPT_ID" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="PLANT_LINE_ID" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="INVOLVED_PERSON_ID" Precision="35" Scale="0" />
+          <Property Type="Boolean" Name="FATALITY" />
+          <Property Type="String" Name="JOB_TENURE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="REOCCUR" />
+          <Property Type="String" Name="JOBCODE_CD" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STD_PROCS_DESC" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EMPLOYMENT_TENURE" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCFORM_INJURYILLNESS" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INJURYILLNESS_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_INJURYILLNESS" Role="INCFORM_INJURYILLNESS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_INJURYILLNESS">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_CONTAIN">
+          <Key>
+            <PropertyRef Name="INCIDENT_CONTAIN_ID" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_CONTAIN_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="ITEM_SEQ" Nullable="false" />
+          <Property Type="String" Name="ITEM_DESCRIPTION" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="ASSIGNED_PERSON_ID" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="START_DATE" Precision="3" />
+          <Property Type="DateTime" Name="COMPLETION_DATE" Precision="3" />
+          <Property Type="Boolean" Name="IsCompleted" Nullable="false" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="String" Name="ASSIGNED_PERSON" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" FromRole="INCFORM_CONTAIN" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENTCONTAIN_INCIDENT_ID">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_CONTAIN" Role="INCFORM_CONTAIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_CONTAIN">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TASK_STATUS">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Type="Decimal" Name="TASK_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RECORD_TYPE" Nullable="false" />
+          <Property Type="Decimal" Name="RECORD_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="TASK_STEP" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TASK_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="TASK_SEQ" />
+          <Property Type="DateTime" Name="DUE_DT" Precision="3" />
+          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
+          <Property Type="String" Name="DESCRIPTION" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="COMPLETE_DT" Precision="3" />
+          <Property Type="Decimal" Name="COMPLETE_ID" Precision="35" Scale="0" />
+          <Property Type="DateTime" Name="NOTIFY_DT" Precision="3" />
+          <Property Type="Decimal" Name="RECORD_SUBID" Precision="35" Scale="0" />
+          <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
+          <Property Type="String" Name="DETAIL" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="CREATE_ID" Precision="35" Scale="0" />
+          <Property Type="String" Name="TASK_CATEGORY" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TASK_VERIFICATION" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TASK_CRITERIA" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
+        </EntityType>
         <Association Name="FK_TASK_STATUS_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
           <End Type="PSsqmModel.TASK_STATUS" Role="TASK_STATUS" Multiplicity="*" />
@@ -9197,6 +9265,30 @@
             </Principal>
             <Dependent Role="TASK_STATUS">
               <PropertyRef Name="RESPONSIBLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCFORM_CAUSATION">
+          <Key>
+            <PropertyRef Name="INCIDENT_ID" />
+            <PropertyRef Name="CAUSEATION_CD" />
+          </Key>
+          <Property Type="Decimal" Name="INCIDENT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="String" Name="CAUSEATION_CD" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LAST_UPD_BY" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="String" Name="TEAM_LIST" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" FromRole="INCFORM_CAUSATION" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCFORM_CAUSATION_INCIDENT">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCFORM_CAUSATION" Role="INCFORM_CAUSATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCFORM_CAUSATION">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10875,35 +10967,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_CONTAIN">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CONTAIN">
-              <MappingFragment StoreEntitySet="INCFORM_CONTAIN">
-                <ScalarProperty Name="ASSIGNED_PERSON" ColumnName="ASSIGNED_PERSON" />
-                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
-                <ScalarProperty Name="COMPLETION_DATE" ColumnName="COMPLETION_DATE" />
-                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
-                <ScalarProperty Name="ASSIGNED_PERSON_ID" ColumnName="ASSIGNED_PERSON_ID" />
-                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
-                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="INCIDENT_CONTAIN_ID" ColumnName="INCIDENT_CONTAIN_ID" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_ROOT5Y">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_ROOT5Y">
-              <MappingFragment StoreEntitySet="INCFORM_ROOT5Y">
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
-                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
-                <ScalarProperty Name="INCIDENT_ROOT5Y_ID" ColumnName="INCIDENT_ROOT5Y_ID" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="JOBCODE">
             <EntityTypeMapping TypeName="PSsqmModel.JOBCODE">
               <MappingFragment StoreEntitySet="JOBCODE">
@@ -11064,23 +11127,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_APPROVAL">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_APPROVAL">
-              <MappingFragment StoreEntitySet="INCFORM_APPROVAL">
-                <ScalarProperty Name="APPROVER_TITLE" ColumnName="APPROVER_TITLE" />
-                <ScalarProperty Name="APPROVER_PERSON" ColumnName="APPROVER_PERSON" />
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-                <ScalarProperty Name="APPROVAL_DATE" ColumnName="APPROVAL_DATE" />
-                <ScalarProperty Name="APPROVER_PERSON_ID" ColumnName="APPROVER_PERSON_ID" />
-                <ScalarProperty Name="APPROVAL_MESSAGE" ColumnName="APPROVAL_MESSAGE" />
-                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-                <ScalarProperty Name="INCIDENT_APPROVAL_ID" ColumnName="INCIDENT_APPROVAL_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EHS_DATA">
             <EntityTypeMapping TypeName="PSsqmModel.EHS_DATA">
               <MappingFragment StoreEntitySet="EHS_DATA">
@@ -11110,30 +11156,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TASK_STATUS">
-            <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
-              <MappingFragment StoreEntitySet="TASK_STATUS">
-                <ScalarProperty Name="CREATE_ID" ColumnName="CREATE_ID" />
-                <ScalarProperty Name="DETAIL" ColumnName="DETAIL" />
-                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
-                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
-                <ScalarProperty Name="RECORD_SUBID" ColumnName="RECORD_SUBID" />
-                <ScalarProperty Name="NOTIFY_DT" ColumnName="NOTIFY_DT" />
-                <ScalarProperty Name="COMPLETE_ID" ColumnName="COMPLETE_ID" />
-                <ScalarProperty Name="COMPLETE_DT" ColumnName="COMPLETE_DT" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
-                <ScalarProperty Name="DUE_DT" ColumnName="DUE_DT" />
-                <ScalarProperty Name="TASK_SEQ" ColumnName="TASK_SEQ" />
-                <ScalarProperty Name="TASK_TYPE" ColumnName="TASK_TYPE" />
-                <ScalarProperty Name="TASK_STEP" ColumnName="TASK_STEP" />
-                <ScalarProperty Name="RECORD_ID" ColumnName="RECORD_ID" />
-                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
-                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EHS_DATA_ORD">
             <EntityTypeMapping TypeName="PSsqmModel.EHS_DATA_ORD">
               <MappingFragment StoreEntitySet="EHS_DATA_ORD">
@@ -11157,16 +11179,6 @@
                 <ScalarProperty Name="XLAT_SHORT" ColumnName="XLAT_SHORT" />
                 <ScalarProperty Name="SETTING_CD" ColumnName="SETTING_CD" />
                 <ScalarProperty Name="SETTING_GROUP" ColumnName="SETTING_GROUP" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_CAUSATION">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CAUSATION">
-              <MappingFragment StoreEntitySet="INCFORM_CAUSATION">
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
-                <ScalarProperty Name="CAUSEATION_CD" ColumnName="CAUSEATION_CD" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11236,43 +11248,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="INCFORM_INJURYILLNESS">
-            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_INJURYILLNESS">
-              <MappingFragment StoreEntitySet="INCFORM_INJURYILLNESS">
-                <ScalarProperty Name="REOCCUR" ColumnName="REOCCUR" />
-                <ScalarProperty Name="JOB_TENURE" ColumnName="JOB_TENURE" />
-                <ScalarProperty Name="FATALITY" ColumnName="FATALITY" />
-                <ScalarProperty Name="INVOLVED_PERSON_ID" ColumnName="INVOLVED_PERSON_ID" />
-                <ScalarProperty Name="PLANT_LINE_ID" ColumnName="PLANT_LINE_ID" />
-                <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
-                <ScalarProperty Name="INJURY_BODY_PART" ColumnName="INJURY_BODY_PART" />
-                <ScalarProperty Name="INJURY_TYPE" ColumnName="INJURY_TYPE" />
-                <ScalarProperty Name="EXPECTED_RETURN_WORK_DT" ColumnName="EXPECTED_RETURN_WORK_DT" />
-                <ScalarProperty Name="LOST_TIME" ColumnName="LOST_TIME" />
-                <ScalarProperty Name="RECORDABLE" ColumnName="RECORDABLE" />
-                <ScalarProperty Name="FIRST_AID" ColumnName="FIRST_AID" />
-                <ScalarProperty Name="DAYS_DOING_JOB" ColumnName="DAYS_DOING_JOB" />
-                <ScalarProperty Name="MONTHS_DOING_JOB" ColumnName="MONTHS_DOING_JOB" />
-                <ScalarProperty Name="YEARS_DOING_JOB" ColumnName="YEARS_DOING_JOB" />
-                <ScalarProperty Name="TRAINING_PROVIDED" ColumnName="TRAINING_PROVIDED" />
-                <ScalarProperty Name="STD_PROCS_FOLLOWED" ColumnName="STD_PROCS_FOLLOWED" />
-                <ScalarProperty Name="ERGONOMIC_CONCERN" ColumnName="ERGONOMIC_CONCERN" />
-                <ScalarProperty Name="COMPANY_SUPERVISED" ColumnName="COMPANY_SUPERVISED" />
-                <ScalarProperty Name="INSIDE_OUTSIDE_BLDNG" ColumnName="INSIDE_OUTSIDE_BLDNG" />
-                <ScalarProperty Name="SUPERVISOR_STATEMENT" ColumnName="SUPERVISOR_STATEMENT" />
-                <ScalarProperty Name="SUPERVISOR_PERSON_ID" ColumnName="SUPERVISOR_PERSON_ID" />
-                <ScalarProperty Name="SUPERVISOR_INFORMED_DT" ColumnName="SUPERVISOR_INFORMED_DT" />
-                <ScalarProperty Name="INVOLVED_PERSON_STATEMENT" ColumnName="INVOLVED_PERSON_STATEMENT" />
-                <ScalarProperty Name="INVOLVED_PERSON_NAME" ColumnName="INVOLVED_PERSON_NAME" />
-                <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
-                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
-                <ScalarProperty Name="SHIFT" ColumnName="SHIFT" />
-                <ScalarProperty Name="INCIDENT_TIME" ColumnName="INCIDENT_TIME" />
-                <ScalarProperty Name="DESCRIPTION_LOCAL" ColumnName="DESCRIPTION_LOCAL" />
-                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PLANT_ACTIVE">
             <EntityTypeMapping TypeName="PSsqmModel.PLANT_ACTIVE">
               <MappingFragment StoreEntitySet="PLANT_ACTIVE">
@@ -11333,6 +11308,152 @@
                 <ScalarProperty Name="BUS_ORG_ID" ColumnName="BUS_ORG_ID" />
                 <ScalarProperty Name="SSO_ID" ColumnName="SSO_ID" />
                 <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_APPROVAL">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_APPROVAL">
+              <MappingFragment StoreEntitySet="INCFORM_APPROVAL">
+                <ScalarProperty Name="APPROVAL_LEVEL" ColumnName="APPROVAL_LEVEL" />
+                <ScalarProperty Name="APPROVER_TITLE" ColumnName="APPROVER_TITLE" />
+                <ScalarProperty Name="APPROVER_PERSON" ColumnName="APPROVER_PERSON" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="APPROVAL_DATE" ColumnName="APPROVAL_DATE" />
+                <ScalarProperty Name="APPROVER_PERSON_ID" ColumnName="APPROVER_PERSON_ID" />
+                <ScalarProperty Name="APPROVAL_MESSAGE" ColumnName="APPROVAL_MESSAGE" />
+                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_APPROVAL_ID" ColumnName="INCIDENT_APPROVAL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_ROOT5Y">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_ROOT5Y">
+              <MappingFragment StoreEntitySet="INCFORM_ROOT5Y">
+                <ScalarProperty Name="IS_ROOTCAUSE" ColumnName="IS_ROOTCAUSE" />
+                <ScalarProperty Name="ITEM_TYPE" ColumnName="ITEM_TYPE" />
+                <ScalarProperty Name="PROBLEM_SERIES" ColumnName="PROBLEM_SERIES" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
+                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
+                <ScalarProperty Name="INCIDENT_ROOT5Y_ID" ColumnName="INCIDENT_ROOT5Y_ID" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_ALERT">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_ALERT">
+              <MappingFragment StoreEntitySet="INCFORM_ALERT">
+                <ScalarProperty Name="RESPONSIBLE_GROUP" ColumnName="RESPONSIBLE_GROUP" />
+                <ScalarProperty Name="ALERT_GROUP" ColumnName="ALERT_GROUP" />
+                <ScalarProperty Name="DUE_DT" ColumnName="DUE_DT" />
+                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
+                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+                <ScalarProperty Name="ALERT_TYPE" ColumnName="ALERT_TYPE" />
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="ALERT_DESC" ColumnName="ALERT_DESC" />
+                <ScalarProperty Name="LOCATION_LIST" ColumnName="LOCATION_LIST" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_ALERT_ID" ColumnName="INCIDENT_ALERT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_INJURYILLNESS">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_INJURYILLNESS">
+              <MappingFragment StoreEntitySet="INCFORM_INJURYILLNESS">
+                <ScalarProperty Name="EMPLOYMENT_TENURE" ColumnName="EMPLOYMENT_TENURE" />
+                <ScalarProperty Name="STD_PROCS_DESC" ColumnName="STD_PROCS_DESC" />
+                <ScalarProperty Name="JOBCODE_CD" ColumnName="JOBCODE_CD" />
+                <ScalarProperty Name="REOCCUR" ColumnName="REOCCUR" />
+                <ScalarProperty Name="JOB_TENURE" ColumnName="JOB_TENURE" />
+                <ScalarProperty Name="FATALITY" ColumnName="FATALITY" />
+                <ScalarProperty Name="INVOLVED_PERSON_ID" ColumnName="INVOLVED_PERSON_ID" />
+                <ScalarProperty Name="PLANT_LINE_ID" ColumnName="PLANT_LINE_ID" />
+                <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
+                <ScalarProperty Name="INJURY_BODY_PART" ColumnName="INJURY_BODY_PART" />
+                <ScalarProperty Name="INJURY_TYPE" ColumnName="INJURY_TYPE" />
+                <ScalarProperty Name="EXPECTED_RETURN_WORK_DT" ColumnName="EXPECTED_RETURN_WORK_DT" />
+                <ScalarProperty Name="LOST_TIME" ColumnName="LOST_TIME" />
+                <ScalarProperty Name="RECORDABLE" ColumnName="RECORDABLE" />
+                <ScalarProperty Name="FIRST_AID" ColumnName="FIRST_AID" />
+                <ScalarProperty Name="DAYS_DOING_JOB" ColumnName="DAYS_DOING_JOB" />
+                <ScalarProperty Name="MONTHS_DOING_JOB" ColumnName="MONTHS_DOING_JOB" />
+                <ScalarProperty Name="YEARS_DOING_JOB" ColumnName="YEARS_DOING_JOB" />
+                <ScalarProperty Name="TRAINING_PROVIDED" ColumnName="TRAINING_PROVIDED" />
+                <ScalarProperty Name="STD_PROCS_FOLLOWED" ColumnName="STD_PROCS_FOLLOWED" />
+                <ScalarProperty Name="ERGONOMIC_CONCERN" ColumnName="ERGONOMIC_CONCERN" />
+                <ScalarProperty Name="COMPANY_SUPERVISED" ColumnName="COMPANY_SUPERVISED" />
+                <ScalarProperty Name="INSIDE_OUTSIDE_BLDNG" ColumnName="INSIDE_OUTSIDE_BLDNG" />
+                <ScalarProperty Name="SUPERVISOR_STATEMENT" ColumnName="SUPERVISOR_STATEMENT" />
+                <ScalarProperty Name="SUPERVISOR_PERSON_ID" ColumnName="SUPERVISOR_PERSON_ID" />
+                <ScalarProperty Name="SUPERVISOR_INFORMED_DT" ColumnName="SUPERVISOR_INFORMED_DT" />
+                <ScalarProperty Name="INVOLVED_PERSON_STATEMENT" ColumnName="INVOLVED_PERSON_STATEMENT" />
+                <ScalarProperty Name="INVOLVED_PERSON_NAME" ColumnName="INVOLVED_PERSON_NAME" />
+                <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
+                <ScalarProperty Name="DEPARTMENT" ColumnName="DEPARTMENT" />
+                <ScalarProperty Name="SHIFT" ColumnName="SHIFT" />
+                <ScalarProperty Name="INCIDENT_TIME" ColumnName="INCIDENT_TIME" />
+                <ScalarProperty Name="DESCRIPTION_LOCAL" ColumnName="DESCRIPTION_LOCAL" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_CONTAIN">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CONTAIN">
+              <MappingFragment StoreEntitySet="INCFORM_CONTAIN">
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="ASSIGNED_PERSON" ColumnName="ASSIGNED_PERSON" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+                <ScalarProperty Name="COMPLETION_DATE" ColumnName="COMPLETION_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="ASSIGNED_PERSON_ID" ColumnName="ASSIGNED_PERSON_ID" />
+                <ScalarProperty Name="ITEM_DESCRIPTION" ColumnName="ITEM_DESCRIPTION" />
+                <ScalarProperty Name="ITEM_SEQ" ColumnName="ITEM_SEQ" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="INCIDENT_CONTAIN_ID" ColumnName="INCIDENT_CONTAIN_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TASK_STATUS">
+            <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
+              <MappingFragment StoreEntitySet="TASK_STATUS">
+                <ScalarProperty Name="TASK_CRITERIA" ColumnName="TASK_CRITERIA" />
+                <ScalarProperty Name="TASK_VERIFICATION" ColumnName="TASK_VERIFICATION" />
+                <ScalarProperty Name="TASK_CATEGORY" ColumnName="TASK_CATEGORY" />
+                <ScalarProperty Name="CREATE_ID" ColumnName="CREATE_ID" />
+                <ScalarProperty Name="DETAIL" ColumnName="DETAIL" />
+                <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="RECORD_SUBID" ColumnName="RECORD_SUBID" />
+                <ScalarProperty Name="NOTIFY_DT" ColumnName="NOTIFY_DT" />
+                <ScalarProperty Name="COMPLETE_ID" ColumnName="COMPLETE_ID" />
+                <ScalarProperty Name="COMPLETE_DT" ColumnName="COMPLETE_DT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
+                <ScalarProperty Name="DUE_DT" ColumnName="DUE_DT" />
+                <ScalarProperty Name="TASK_SEQ" ColumnName="TASK_SEQ" />
+                <ScalarProperty Name="TASK_TYPE" ColumnName="TASK_TYPE" />
+                <ScalarProperty Name="TASK_STEP" ColumnName="TASK_STEP" />
+                <ScalarProperty Name="RECORD_ID" ColumnName="RECORD_ID" />
+                <ScalarProperty Name="RECORD_TYPE" ColumnName="RECORD_TYPE" />
+                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INCFORM_CAUSATION">
+            <EntityTypeMapping TypeName="PSsqmModel.INCFORM_CAUSATION">
+              <MappingFragment StoreEntitySet="INCFORM_CAUSATION">
+                <ScalarProperty Name="TEAM_LIST" ColumnName="TEAM_LIST" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="LAST_UPD_BY" ColumnName="LAST_UPD_BY" />
+                <ScalarProperty Name="CAUSEATION_CD" ColumnName="CAUSEATION_CD" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11566,12 +11687,7 @@
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_TYPE_CONTROL" Width="1.5" PointX="8.375" PointY="38.25" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_ACTION" Width="1.5" PointX="4.125" PointY="53.5" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_CONTAIN" Width="1.5" PointX="4.125" PointY="46.875" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_ROOT5Y" Width="1.5" PointX="4.375" PointY="61.875" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID1" />
         <EntityTypeShape EntityType="PSsqmModel.JOBCODE" Width="1.5" PointX="4.43985641581931" PointY="17.410786517621386" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT" Width="1.5" PointX="6.7684012366311634" PointY="20.3012708520057" />
         <EntityTypeShape EntityType="PSsqmModel.AUDIT_ANSWER" Width="1.5" PointX="0.08080276478119322" PointY="25.50224968488433" />
@@ -11599,20 +11715,15 @@
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="1.9836781704722335" PointY="26.67922688772866" />
-        <AssociationConnector Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_DATA" Width="1.5" PointX="7.7116309105007117" PointY="2.4932833027528987" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_LOSTTIME_HIST" Width="1.5" PointX="5.7409568716496961" PointY="17.823688530281043" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID" />
-        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="0.900325784878957" PointY="9.2478672011046985" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_DATA_ORD" Width="1.5" PointX="7.889879697882515" PointY="12.901163196610829" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" />
         <EntityTypeShape EntityType="PSsqmModel.SETTINGS" Width="1.5" PointX="7.5657807046388186" PointY="7.199632528796621" />
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_AUDIT_TYPE" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_CAUSATION" Width="1.5" PointX="9.6135556351456586" PointY="30.916818230839826" />
-        <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_TARGETS" Width="1.5" PointX="3.1552437782079181" PointY="11.040620212927749" />
         <EntityTypeShape EntityType="PSsqmModel.XLAT" Width="1.5" PointX="9.75" PointY="28.625" />
         <EntityTypeShape EntityType="PSsqmModel.XLAT_DAYS_TO_CLOSE_TRANS" Width="1.5" PointX="1.5326805438532869" PointY="19.108761095958187" />
@@ -11621,8 +11732,6 @@
         <AssociationConnector Association="PSsqmModel.FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC" />
         <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TYPE_LANG" Width="1.5" PointX="4.125" PointY="40" />
         <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE" />
-        <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="7.3197354131004477" PointY="23.452231760813032" />
-        <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
         <EntityTypeShape EntityType="PSsqmModel.PLANT_ACTIVE" Width="1.5" PointX="3.7588965314249023" PointY="30.949603512394056" />
         <AssociationConnector Association="PSsqmModel.FK_PLANT_ACTIVE_PLANT" />
         <EntityTypeShape EntityType="PSsqmModel.NOTIFYLOG" Width="1.5" PointX="4.6218222531591646" PointY="12.329616015930482" />
@@ -11637,7 +11746,20 @@
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" />
         <AssociationConnector Association="PSsqmModel.FK_RESPONSE_PERSON" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_APPROVAL" Width="1.5" PointX="4.8675710544304787" PointY="13.036933860293093" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_ROOT5Y" Width="1.5" PointX="9.9145800033186475" PointY="13.456959790297299" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_ALERT" Width="1.5" PointX="4.507740907607479" PointY="3.2729589507323498" />
+        <AssociationConnector Association="PSsqmModel.FK_INCFORM_ALERT_INCIDENT" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_INJURYILLNESS" Width="1.5" PointX="11.276272879576437" PointY="26.33467243348" />
+        <AssociationConnector Association="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_CONTAIN" Width="1.5" PointX="5.9276338023727915" PointY="10.135434811066572" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID" />
+        <EntityTypeShape EntityType="PSsqmModel.TASK_STATUS" Width="1.5" PointX="4.4453449921893631" PointY="13.811090371483513" />
         <AssociationConnector Association="PSsqmModel.FK_TASK_STATUS_PERSON" />
+        <EntityTypeShape EntityType="PSsqmModel.INCFORM_CAUSATION" Width="1.5" PointX="1.9791683098204287" PointY="25.844953519219978" />
+        <AssociationConnector Association="PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT" />
         </Diagram>
     </Diagrams>
   </Designer>

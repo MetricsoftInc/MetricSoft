@@ -49,6 +49,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlIncidentHeader;
         
         /// <summary>
+        /// hfChangeUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfChangeUpdate;
+        
+        /// <summary>
         /// lblAddOrEditIncident control.
         /// </summary>
         /// <remarks>
@@ -580,6 +589,42 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoDirectSupv;
         
         /// <summary>
+        /// divJobCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJobCode;
+        
+        /// <summary>
+        /// lbJobCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbJobCode;
+        
+        /// <summary>
+        /// lbJobCodeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbJobCodeXS;
+        
+        /// <summary>
+        /// rddlJobCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList rddlJobCode;
+        
+        /// <summary>
         /// lbErgConcernSM control.
         /// </summary>
         /// <remarks>
@@ -634,6 +679,51 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoStdProcsFollowed;
         
         /// <summary>
+        /// divProcedures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProcedures;
+        
+        /// <summary>
+        /// lbProceduresSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbProceduresSM;
+        
+        /// <summary>
+        /// lbProceduresXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbProceduresXS;
+        
+        /// <summary>
+        /// tbProcedures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbProcedures;
+        
+        /// <summary>
+        /// rfvProcedures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProcedures;
+        
+        /// <summary>
         /// lbTrainingProvidedSM control.
         /// </summary>
         /// <remarks>
@@ -686,6 +776,42 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDropDownList rddlJobTenure;
+        
+        /// <summary>
+        /// divEmploymentTenure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEmploymentTenure;
+        
+        /// <summary>
+        /// lbEmploymentTenureSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbEmploymentTenureSM;
+        
+        /// <summary>
+        /// lbEmploymentTenureXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbEmploymentTenureXS;
+        
+        /// <summary>
+        /// rddlEmploymentTenure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList rddlEmploymentTenure;
         
         /// <summary>
         /// lbInjuryTypeSM control.
@@ -985,6 +1111,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm2;
         
         /// <summary>
+        /// ucllosttime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_LostTime_Hist ucllosttime;
+        
+        /// <summary>
         /// uclcontain control.
         /// </summary>
         /// <remarks>
@@ -1030,13 +1165,13 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
         
         /// <summary>
-        /// ucllosttime control.
+        /// uclAlert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_LostTime_Hist ucllosttime;
+        protected global::SQM.Website.Ucl_INCFORM_Alert uclAlert;
         
         /// <summary>
         /// pnlButtons control.
@@ -1064,6 +1199,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton btnSubnavSave;
+        
+        /// <summary>
+        /// btnDeleteInc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnDeleteInc;
         
         /// <summary>
         /// btnSubnavIncident control.
@@ -1120,6 +1264,60 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavAction;
         
         /// <summary>
+        /// btnSubnavAlert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAlert;
+        
+        /// <summary>
+        /// btnSubnavApproval_1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_1;
+        
+        /// <summary>
+        /// btnSubnavApproval_2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_2;
+        
+        /// <summary>
+        /// btnSubnavApproval_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_3;
+        
+        /// <summary>
+        /// btnSubnavApproval_35 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_35;
+        
+        /// <summary>
+        /// btnSubnavApproval_4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_4;
+        
+        /// <summary>
         /// btnSubnavApproval control.
         /// </summary>
         /// <remarks>
@@ -1127,14 +1325,5 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
-        
-        /// <summary>
-        /// btnDeleteInc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnDeleteInc;
     }
 }

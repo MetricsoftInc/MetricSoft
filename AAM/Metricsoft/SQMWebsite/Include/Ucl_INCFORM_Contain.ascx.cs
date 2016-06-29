@@ -15,20 +15,16 @@ namespace SQM.Website
 	{
 		const Int32 MaxTextLength = 4000;
 
-		protected decimal companyId;
-
 		protected int totalFormSteps;
 
 		protected decimal incidentTypeId;
 		protected string incidentType;
 		protected bool IsFullPagePostback = false;
 
-
 		PSsqmEntities entities;
 		List<EHSFormControlStep> formSteps;
 
-
-		public decimal IncidentId { get; set; }
+		public PageUseMode PageMode { get; set; }
 		public decimal theincidentId { get; set; }
 
 		public bool IsEditContext
@@ -46,10 +42,10 @@ namespace SQM.Website
 			set { ViewState["SelectedTypeId"] = value; }
 		}
 
-		public decimal EditIncidentId
+		public decimal IncidentId
 		{
-			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
-			set { ViewState["EditIncidentId"] = value; }
+			get { return ViewState["IncidentId"] == null ? 0 : (decimal)ViewState["IncidentId"]; }
+			set { ViewState["IncidentId"] = value; }
 		}
 
 		public INCIDENT LocalIncident
@@ -70,7 +66,7 @@ namespace SQM.Website
 
 		protected decimal EditIncidentTypeId
 		{
-			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
+			get { return IncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(IncidentId); }
 		}
 
 		public string ValidationGroup
@@ -91,8 +87,6 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			PSsqmEntities entities = new PSsqmEntities();
-			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 
 			if (IsPostBack)
 			{
@@ -118,16 +112,8 @@ namespace SQM.Website
 
 			if (IncidentId != null)
 			{
-				//INCIDENT incident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).FirstOrDefault();
-				//if (incident != null)
-				//if (incident.CLOSE_DATE != null && incident.CLOSE_DATE_DATA_COMPLETE != null)
-				//btnClose.Text = "Reopen Power Outage Incident";
-
 
 			}
-
-			//if (!IsFullPagePostback)
-				//PopulateInitialForm();
 		}
 
 
@@ -146,12 +132,6 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
-			PSsqmEntities entities = new PSsqmEntities();
-			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
-			totalFormSteps = formSteps.Count();
-
 			InitializeForm();
 		}
 
@@ -159,7 +139,7 @@ namespace SQM.Website
 		void InitializeForm()
 		{
 			lblStatusMsg.Visible = false;
-			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			pnlContain.Visible = true;
 
 			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
 			if (LocalIncident == null)
@@ -172,10 +152,16 @@ namespace SQM.Website
 				IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 
 			pnlContain.Visible = true;
-			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
+			if (PageMode == PageUseMode.ViewOnly)
+			{
+				divTitle.Visible = true;
+				lblFormTitle.Text = Resources.LocalizedText.InitialAction;
+			}
+
+			rptContain.DataSource = EHSIncidentMgr.GetContainmentList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ), PageMode == PageUseMode.ViewOnly ? false : true);
 			rptContain.DataBind();
 
-			pnlContain.Enabled = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+			pnlContain.Enabled = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 		}
 
 		public void rptContain_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -227,6 +213,11 @@ namespace SQM.Website
 					//cd.SelectedDate = contain.COMPLETION_DATE;
 					//ic.Checked = contain.IsCompleted;
 
+					if ((tbca = (TextBox)e.Item.FindControl("tbComments")) != null)
+					{
+						tbca.Text = contain.COMMENTS;
+					}
+
 					// Set user access:
 					tbca.Enabled = rddlp.Enabled = sd.Enabled = itmdel.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
 
@@ -239,19 +230,24 @@ namespace SQM.Website
 						rvfsd.Enabled = false;
 					}
 
-					itmdel.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+					itmdel.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
 	
 				}
 				catch { }
 			}
 
-			if (e.Item.ItemType == ListItemType.Footer)
-			{
-				Button addanother = (Button)e.Item.FindControl("btnAddContain");
-				//addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				addanother.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
-			}
+			btnSave.Visible = btnAddContain.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.originate, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+		}
 
+
+		protected void btnSave_Click(object sender, EventArgs e)
+		{
+			if (AddUpdateINCFORM_CONTAIN(LocalIncident.INCIDENT_ID) >= 0)
+			{
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				InitializeForm();
+			}
 		}
 
 		public int AddUpdateINCFORM_CONTAIN(decimal incidentId)
@@ -273,13 +269,22 @@ namespace SQM.Website
 
 				seqnumber = seqnumber + 1;
 
-				item.ITEM_DESCRIPTION = tbca.Text.Trim();
-				item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
-				item.ITEM_SEQ = seqnumber;
-				item.START_DATE = sd.SelectedDate;
-
-				if (string.IsNullOrEmpty(item.ITEM_DESCRIPTION))
+				if (string.IsNullOrEmpty(tbca.Text.Trim()) ||  !sd.SelectedDate.HasValue)
+				{
 					allFieldsComplete = false;
+				}
+				else
+				{
+					item.ITEM_DESCRIPTION = tbca.Text.Trim();
+					item.ASSIGNED_PERSON_ID = (String.IsNullOrEmpty(rddlp.SelectedValue)) ? 0 : Convert.ToInt32(rddlp.SelectedValue);
+					item.ITEM_SEQ = seqnumber;
+					item.START_DATE = sd.SelectedDate;
+
+					if ((tbca = (TextBox)containtem.FindControl("tbComments")) != null)
+					{
+						item.COMMENTS = tbca.Text;
+					}
+				}
 
 				itemList.Add(item);
 
@@ -300,6 +305,11 @@ namespace SQM.Website
 			}
 
 			return status;
+		}
+
+		protected void AddDelete_Click(object sender, EventArgs e)
+		{
+			rptContain_ItemCommand(sender, null);
 		}
 
 		private int SaveContainment(decimal incidentId, List<INCFORM_CONTAIN> itemList)
@@ -327,6 +337,7 @@ namespace SQM.Website
 					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
 					newItem.ASSIGNED_PERSON_ID = item.ASSIGNED_PERSON_ID;
 					newItem.START_DATE = item.START_DATE;
+					newItem.COMMENTS = item.COMMENTS;
 					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
 					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
@@ -346,7 +357,19 @@ namespace SQM.Website
 
 		protected void rptContain_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
-			if (e.CommandArgument == "AddAnother")
+			string cmd = "";
+
+			if (source is Button)
+			{
+				Button btn = (Button)source;
+				cmd = btn.CommandArgument;
+			}
+			else
+			{
+				cmd = e.CommandArgument.ToString();
+			}
+
+			if (cmd == "AddAnother")
 			{
 
 				var itemList = new List<INCFORM_CONTAIN>();
@@ -399,7 +422,7 @@ namespace SQM.Website
 				rptContain.DataBind();
 
 			}
-			else if (e.CommandArgument.ToString() == "Delete")
+			else if (cmd == "Delete")
 			{
 				int delId = e.Item.ItemIndex; 
 				var itemList = new List<INCFORM_CONTAIN>();
@@ -444,7 +467,7 @@ namespace SQM.Website
 				rptContain.DataSource = itemList;
 				rptContain.DataBind();
 
-				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				decimal incidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 				int status = SaveContainment(incidentId, itemList);
 			}
 		}

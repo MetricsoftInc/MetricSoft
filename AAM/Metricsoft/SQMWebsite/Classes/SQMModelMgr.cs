@@ -1312,7 +1312,7 @@ namespace SQM.Website
                 access.SSO_ID = person.SSO_ID;
                 access.RECOVERY_EMAIL = person.EMAIL;
                 // AW 201310 - we want to update the access status when updating the person status, but not if they are being forced to update password
-                if (access.STATUS != "P" || person.STATUS == "I")
+                if (access.STATUS != "P") // || person.STATUS == "I")
                     access.STATUS = person.STATUS;
             }
             try

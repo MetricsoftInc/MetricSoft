@@ -1,12 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_TaskStatus.ascx.cs" Inherits="SQM.Website.Ucl_TaskStatus" %>
 
+<%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 	<script type="text/javascript">
+
 		function OpenAssignTaskWindow() {
 			$find("<%=winAssignTask.ClientID %>").show();
 		}
+
 	</script>
+
 
 <asp:Panel ID="pnlUpdateTask" runat="server" Visible = "False">
 	<div class="container-fluid" style="margin-top: 10px;">
@@ -69,6 +73,15 @@
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:TextBox ID="tbTaskComments" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<asp:Label ID="lblAttachments" runat="server" Text="<%$ Resources:LocalizedText, Evidence %>" CssClass="prompt"></asp:Label>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:LinkButton ID="lnkAttachments" runat="server" CssClass="buttonAttach buttonPopupOpen" visible="false" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" OnClick="lnkAddAttach"></asp:LinkButton>
+				<Ucl:AttachWin ID="uclAttachWin" runat="server" />
 			</div>
 		</div>
 		<br />
@@ -211,4 +224,3 @@
 		</div>
 	</ContentTemplate>
 </telerik:RadWindow>
-

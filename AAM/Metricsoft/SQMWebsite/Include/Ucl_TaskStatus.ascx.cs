@@ -22,11 +22,26 @@ namespace SQM.Website
 			set { ViewState["TaskXLATList"] = value; }
 		}
 
+		private TASK_STATUS CurrentTask
+		{
+			get { return ViewState["CurrentTask"] == null ? null : (TASK_STATUS)ViewState["CurrentTask"]; }
+			set { ViewState["CurrentTask"] = value; }
+		}
+
+		protected override void OnInit(EventArgs e)
+		{
+			base.OnInit(e);
+
+			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
+		}
+
 		public void BindTaskUpdate(TASK_STATUS task, string context)
 		{
 			PSsqmEntities ctx = new PSsqmEntities();
 			if (TaskXLATList == null || TaskXLATList.Count == 0)
-				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
+				TaskXLATList = SQMBasePage.SelectXLATList(new string[5] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK", "ACTION_CATEGORY" });
+
+			CurrentTask = task;
 
 			pnlUpdateTask.Visible = true;
 			btnTaskComplete.CommandArgument = task.TASK_ID.ToString();
@@ -89,13 +104,17 @@ namespace SQM.Website
 			rdpTaskDueDT.SelectedDate = (DateTime)task.DUE_DT;
 			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION;
 			tbTaskComments.Text = task.COMMENTS;
+
+			int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(CurrentTask.RECORD_TYPE, CurrentTask.RECORD_ID, CurrentTask.TASK_STEP, "");
+			lnkAttachments.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
+			lnkAttachments.Visible = true;
 		}
 
 		public void BindTaskAdd(int recordType, decimal recordID, decimal recordSubID, string taskStep, string taskType, string originalDetail, decimal plantID, string context)
 		{
 			PSsqmEntities ctx = new PSsqmEntities();
 			if (TaskXLATList == null || TaskXLATList.Count == 0)
-				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
+				TaskXLATList = SQMBasePage.SelectXLATList(new string[5] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK","ACTION_CATEGORY" });
 
 			pnlUpdateTask.Visible = false;
 			pnlAddTask.Visible = true;
@@ -184,7 +203,7 @@ namespace SQM.Website
 						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
 						{
 							TASK_STATUS task = new TASK_STATUS();
-							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
 							task.TASK_ID = Convert.ToDecimal(args[2]);
 							task.TASK_STEP = args[3];
 							SessionManager.ReturnObject = task;
@@ -490,5 +509,25 @@ namespace SQM.Website
 			}
 			return fullname;
 		}
+
+
+		protected void lnkAddAttach(object sender, EventArgs e)
+		{
+			int recordType = CurrentTask.RECORD_TYPE;
+			uclAttachWin.OpenManageAttachmentsWindow(CurrentTask.RECORD_TYPE, CurrentTask.RECORD_ID, CurrentTask.TASK_STEP, "Upload Attachments", "Upload or view task evidence", PageUseMode.EditEnabled);
+		}
+
+		private void OnAttachmentsUpdate(string cmd)
+		{
+			if (CurrentTask != null && lnkAttachments.Visible == true)
+			{
+				int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(CurrentTask.RECORD_TYPE, CurrentTask.RECORD_ID, CurrentTask.TASK_STEP, "");
+				lnkAttachments.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
+			}
+			HiddenField hf = (HiddenField)this.Page.Master.FindControl("hfSubmitReset");
+			if (hf != null)
+				hf.Value = "true";
+		}
+
 	}
 }

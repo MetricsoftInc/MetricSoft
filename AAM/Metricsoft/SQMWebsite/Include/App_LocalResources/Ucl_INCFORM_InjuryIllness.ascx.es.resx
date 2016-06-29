@@ -130,7 +130,7 @@
     <value>Parte del Cuerpo</value>
   </data>
 	<data name="lbReoccurResource1.Text" xml:space="preserve">
-    <value>Reoccurance</value>
+    <value>Reoccurrence</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>Supervisado directamente</value>
@@ -185,6 +185,9 @@
   </data>
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
     <value>¿Cuánto tiempo ha asociado estado haciendo este trabajo / tarea específica?</value>
+  </data>
+	<data name="lbJobCode.Text" xml:space="preserve">
+    <value>Occupation / Job Title</value>
   </data>
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>¿Entrenamiento para esta tarea fue proporcionada?</value>

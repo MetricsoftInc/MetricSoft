@@ -25,12 +25,11 @@ namespace SQM.Website
 		protected string incidentType;
 		protected bool IsFullPagePostback = false;
 
-
 		PSsqmEntities entities;
 		List<EHSFormControlStep> formSteps;
 
+		public PageUseMode PageMode { get; set; }
 
-		public decimal IncidentId { get; set; }
 		public decimal theincidentId { get; set; }
 
 		public bool IsEditContext
@@ -48,10 +47,10 @@ namespace SQM.Website
 			set { ViewState["SelectedTypeId"] = value; }
 		}
 
-		public decimal EditIncidentId
+		public decimal IncidentId
 		{
-			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
-			set { ViewState["EditIncidentId"] = value; }
+			get { return ViewState["IncidentId"] == null ? 0 : (decimal)ViewState["IncidentId"]; }
+			set { ViewState["IncidentId"] = value; }
 		}
 		protected string IncidentLocationTZ
 		{
@@ -73,13 +72,7 @@ namespace SQM.Website
 
 		protected decimal EditIncidentTypeId
 		{
-			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
-		}
-
-		public string ValidationGroup
-		{
-			get { return ViewState["ValidationGroup"] == null ? " " : (string)ViewState["ValidationGroup"]; }
-			set { ViewState["ValidationGroup"] = value; }
+			get { return IncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(IncidentId); }
 		}
 
 
@@ -122,8 +115,8 @@ namespace SQM.Website
 					IsFullPagePostback = true;
 			}																			
 
-			if (!IsFullPagePostback)
-				PopulateInitialForm();
+			//if (!IsFullPagePostback)
+			//	PopulateInitialForm();
 		}
 
 
@@ -146,7 +139,7 @@ namespace SQM.Website
 			lblStatusMsg.Visible = false;
 			PSsqmEntities entities = new PSsqmEntities();
 
-			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			IncidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 
 			if (IncidentId > 0)
 				try
@@ -170,13 +163,18 @@ namespace SQM.Website
 
 		void InitializeForm()
 		{
-			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			IncidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 
 			//SetUserAccess("INCFORM_LOSTTIME_HIST");
 
 			if (IncidentId > 0)
 			{
 				pnlLostTime.Visible = true;
+				if (PageMode == PageUseMode.ViewOnly)
+				{
+					divTitle.Visible = true;
+					lblFormTitle.Text = Resources.LocalizedText.LostTimeHistory;
+				}
 				rptLostTime.DataSource = EHSIncidentMgr.GetLostTimeList(IncidentId);
 				rptLostTime.DataBind();
 				//EHSIncidentMgr.CalculateWorkStatusSummary(EHSIncidentMgr.CalculateWorkStatusAccounting(new PSsqmEntities(), IncidentId, null, null));
@@ -205,20 +203,8 @@ namespace SQM.Website
 					ed = SQMBasePage.SetRadDateCulture(ed, "");
 					RadButton itmdel = (RadButton)e.Item.FindControl("btnItemDelete");
 
-
-					RequiredFieldValidator rvfw = (RequiredFieldValidator)e.Item.FindControl("rfvWorkStatus");
-					RequiredFieldValidator rvfr = (RequiredFieldValidator)e.Item.FindControl("rfvRestrictDesc");
-					RequiredFieldValidator rvfbd = (RequiredFieldValidator)e.Item.FindControl("rvfBeginDate");
-					//RequiredFieldValidator rvfrd = (RequiredFieldValidator)e.Item.FindControl("rfvReturnDate");
-					RequiredFieldValidator rvfmd = (RequiredFieldValidator)e.Item.FindControl("rfvNextMedDate");
-					RequiredFieldValidator rvfed = (RequiredFieldValidator)e.Item.FindControl("rfvExpectedReturnDT");
-
-					rvfw.ValidationGroup = ValidationGroup;
-					rvfr.ValidationGroup = ValidationGroup;
-					rvfbd.ValidationGroup = ValidationGroup;
-					//rvfrd.ValidationGroup = ValidationGroup;
-					rvfmd.ValidationGroup = ValidationGroup;
-					rvfed.ValidationGroup = ValidationGroup;
+					System.Web.UI.HtmlControls.HtmlTableRow trMd = (System.Web.UI.HtmlControls.HtmlTableRow)e.Item.FindControl("trNextMedDate");
+					System.Web.UI.HtmlControls.HtmlTableRow trEd = (System.Web.UI.HtmlControls.HtmlTableRow)e.Item.FindControl("trExpectedReturnDate");
 
 					rddlw.Items.Add(new DropDownListItem("", ""));
 					List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
@@ -238,56 +224,31 @@ namespace SQM.Website
 					ed.SelectedDate = losttime.RETURN_EXPECTED_DT;
 
 					// Set user access:
-					rddlw.Enabled = tbr.Enabled = bd.Enabled = md.Enabled = ed.Enabled = itmdel.Visible = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-
-					rvfw.Enabled = false;
-					rvfr.Enabled = false;
-					rvfbd.Enabled = false;
-					//rvfrd.Enabled = false;
-					rvfmd.Enabled = false;
-					rvfed.Enabled = false;
+					rddlw.Enabled = tbr.Enabled = bd.Enabled = md.Enabled = ed.Enabled = itmdel.Visible = PageMode == PageUseMode.ViewOnly ? false : SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 
 					switch (rddlw.SelectedValue)
 					{
 						case "":
-							tbr.Visible = false;
-							bd.Visible = false;
+							tbr.Visible = true;
+							bd.Visible = true;
 							//rd.Visible = false;
-							md.Visible = false;
-							ed.Visible = false;
-							rvfr.Enabled = false;
-							rvfbd.Enabled = false;
-							//rvfrd.Enabled = false;
-							rvfmd.Enabled = false;
-							rvfed.Enabled = false;
+							md.Visible = trMd.Visible = false;
+							ed.Visible = trEd.Visible = false;
 							break;
 						case "01":      // Return Restricted Duty
 							tbr.Visible = true;
 							bd.Visible = true;
 							//rd.Visible = false;
 							md.Visible = true;
-							ed.Visible = false;
+							ed.Visible = trEd.Visible = false;
 							//rvfr.Enabled = true;
-							rvfr.Enabled = false;
-							//rvfbd.Enabled = true;
-							rvfbd.Enabled = false;
-							//rvfrd.Enabled = false;
-							//rvfmd.Enabled = true;
-							rvfmd.Enabled = false;
-							rvfed.Enabled = false;
 							break;
 						case "02":      // Return to Work
 							tbr.Visible = true;
 							bd.Visible = true;
 							//rd.Visible = false;
-							md.Visible = false;
-							ed.Visible = false;
-							rvfr.Enabled = false;
-							rvfbd.Enabled = false;
-							//rvfrd.Enabled = true;
-							//rvfrd.Enabled = false;
-							rvfmd.Enabled = false;
-							rvfed.Enabled = false;
+							md.Visible = trMd.Visible = false;
+							ed.Visible = trEd.Visible = false;
 							break;
 						case "03":      // Additional Lost Time
 							tbr.Visible = true;
@@ -296,25 +257,23 @@ namespace SQM.Website
 							md.Visible = true;
 							ed.Visible = true;
 							//rvfr.Enabled = true;
-							rvfr.Enabled = false;
-							rvfbd.Enabled = false;
-							//rvfrd.Enabled = false;
-							//rvfmd.Enabled = true;
-							rvfmd.Enabled = false;
-							//rvfed.Enabled = true;
-							rvfed.Enabled = false;
 							break;
 					}
 				}
 				catch { }
 			}
 
+			// btnAddLostTime.Visible = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
 
-			if (e.Item.ItemType == ListItemType.Footer)
-			{
-				Button addanother = (Button)e.Item.FindControl("btnAddLostTime");
-				addanother.Visible = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-			}
+			btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED);  // can log lost time ?
+			if (btnSave.Visible == false)
+				btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED, (int)IncidentStepStatus.workstatus);  // check if has closed incident priv
+			btnAddLostTime.Visible = btnSave.Visible;
+		}
+
+		protected void AddDelete_Click(object sender, EventArgs e)
+		{
+			rptLostTime_ItemCommand(sender, null);
 		}
 
 		public int AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
@@ -326,30 +285,33 @@ namespace SQM.Website
 
 			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 			{
-				var item = new INCFORM_LOSTTIME_HIST();
-
-				Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
-				RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
-				TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
-				RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
-				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
-
-				if (rddlw.SelectedItem == null || string.IsNullOrEmpty(rddlw.SelectedValue)  ||  bd.SelectedDate.HasValue == false)
+				if (losttimeitem.ItemType == ListItemType.AlternatingItem || losttimeitem.ItemType == ListItemType.Item)
 				{
-					allFieldsComplete = false;
-				}
-				else
-				{
-					item.WORK_STATUS = rddlw.SelectedValue;
-					item.ITEM_DESCRIPTION = tbr.Text;
-					item.BEGIN_DT = bd.SelectedDate;
-					//item.RETURN_TOWORK_DT = rd.SelectedDate;
-					item.NEXT_MEDAPPT_DT = md.SelectedDate;
-					item.RETURN_EXPECTED_DT = ed.SelectedDate;
-				}
+					INCFORM_LOSTTIME_HIST item = new INCFORM_LOSTTIME_HIST();
 
-				itemList.Add(item);
+					Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
+					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
+					TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
+					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
+					RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
+					RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
+
+					if (rddlw.SelectedItem == null || string.IsNullOrEmpty(rddlw.SelectedValue) || bd.SelectedDate.HasValue == false)
+					{
+						allFieldsComplete = false;
+					}
+					else
+					{
+						item.WORK_STATUS = rddlw.SelectedValue;
+						item.ITEM_DESCRIPTION = tbr.Text;
+						item.BEGIN_DT = bd.SelectedDate;
+						//item.RETURN_TOWORK_DT = rd.SelectedDate;
+						item.NEXT_MEDAPPT_DT = md.SelectedDate;
+						item.RETURN_EXPECTED_DT = ed.SelectedDate;
+					}
+
+					itemList.Add(item);
+				}
 			}
 
 			if (itemList.Count > 0)
@@ -367,7 +329,16 @@ namespace SQM.Website
 			}
 
 			return status;
+		}
 
+		protected void btnSave_Click(object sender, EventArgs e)
+		{
+			if (AddUpdateINCFORM_LOSTTIME_HIST(IncidentId) >= 0)
+			{
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+				InitializeForm();
+			}
 		}
 
 		private int SaveLostTime(decimal incidentId, List<INCFORM_LOSTTIME_HIST> itemList)
@@ -422,7 +393,19 @@ namespace SQM.Website
 
 		protected void rptLostTime_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
-			if (e.CommandArgument == "AddAnother")
+			string cmd = "";
+
+			if (source is Button)
+			{
+				Button btn = (Button)source;
+				cmd = btn.CommandArgument;
+			}
+			else
+			{
+				cmd = e.CommandArgument.ToString();
+			}
+
+			if (cmd == "AddAnother")
 			{
 				var itemList = new List<INCFORM_LOSTTIME_HIST>();
 
@@ -481,7 +464,7 @@ namespace SQM.Website
 					lbResultsCtl.Text = "";
 			}
 
-			else if (e.CommandArgument.ToString() == "Delete")
+			else if (cmd == "Delete")
 			{
 				int delId = e.Item.ItemIndex;
 				int sequence = -1;
@@ -528,7 +511,7 @@ namespace SQM.Website
 				rptLostTime.DataSource = itemList;
 				rptLostTime.DataBind();
 
-				decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+				decimal incidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 				SaveLostTime(incidentId, itemList);
 
 			}
@@ -536,14 +519,6 @@ namespace SQM.Website
 
 		protected void rddlw_SelectedIndexChanged(object sender, DropDownListEventArgs e)
 		{
-			//RadDropDownList rddl = (RadDropDownList)sender;
-		
-			//string selectedvalue = rddl.SelectedValue;
-			
-			//// Cast the parent to type RepeaterItem
-			//RepeaterItem repeaterRow = (RepeaterItem)rddl.Parent;
-			//int rptChangeIndex = repeaterRow.ItemIndex;
-
 			// Now rebuild the datasource
 
 			int seqnumber = 0;
@@ -572,52 +547,6 @@ namespace SQM.Website
 
 				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 					item.WORK_STATUS = rddlw.SelectedValue;
-
-				item.ITEM_DESCRIPTION = tbr.Text;
-				item.BEGIN_DT = bd.SelectedDate;
-				//item.RETURN_TOWORK_DT = rd.SelectedDate;
-				item.NEXT_MEDAPPT_DT = md.SelectedDate;
-				item.RETURN_EXPECTED_DT = ed.SelectedDate;
-
-				itemList.Add(item);
-			}
-
-			rptLostTime.DataSource = itemList;
-			rptLostTime.DataBind();
-		}
-
-		private void ReBindRepeater()
-		{
-			int seqnumber = 0;
-			var itemList = new List<INCFORM_LOSTTIME_HIST>();
-
-			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
-			{
-				var item = new INCFORM_LOSTTIME_HIST();
-
-				Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
-
-				RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
-
-				TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
-				RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
-				bd = SQMBasePage.SetRadDateCulture(bd, "");
-				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
-				md = SQMBasePage.SetRadDateCulture(md, "");
-				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
-				ed = SQMBasePage.SetRadDateCulture(ed, "");
-
-				rddlw.Items.Add(new DropDownListItem("", ""));
-				List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
-				foreach (var s in statuses)
-				{
-					rddlw.Items.Add(new DropDownListItem(s.Text, s.Value));
-				}
-
-				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
-					item.WORK_STATUS = rddlw.SelectedValue;
-
-				seqnumber = Convert.ToInt32(lb.Text);
 
 				item.ITEM_DESCRIPTION = tbr.Text;
 				item.BEGIN_DT = bd.SelectedDate;

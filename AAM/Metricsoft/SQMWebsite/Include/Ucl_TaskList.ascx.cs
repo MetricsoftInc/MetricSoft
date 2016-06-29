@@ -83,7 +83,7 @@ namespace SQM.Website
 						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
 						{
 							TASK_STATUS task = new TASK_STATUS();
-							task.RECORD_TYPE = (int)TaskRecordType.Audit;
+							task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
 							task.TASK_ID = Convert.ToDecimal(args[2]);
 							task.TASK_STEP = args[3];
 							SessionManager.ReturnObject = task;
@@ -356,7 +356,7 @@ namespace SQM.Website
 					lbl = (Label)e.Item.FindControl("lblTaskType");
 
 					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == task.RECORD_TYPE.ToString()).FirstOrDefault().DESCRIPTION;
-					if (task.TASK_STEP == "350")
+					if (task.TASK_STEP == "350"  ||  task.TASK_STEP == "400")
 					{
 						if (task.RECORD_TYPE == (int)TaskRecordType.Audit && task.RECORD_SUBID > 0)
 						{

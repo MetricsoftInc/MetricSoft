@@ -3,115 +3,125 @@
 
 <script type="text/javascript">
 
-
-    function OnEditorClientLoad(editor) {
-        editor.attachEventHandler("ondblclick", function (e) {
-            var sel = editor.getSelection().getParentElement(); //get the currently selected element
-            var href = null;
-            if (sel.tagName === "A") {
-                href = sel.href; //get the href value of the selected link
-                window.open(href, null, "height=500,width=500,status=no,toolbar=no,menubar=no,location=no");
-                return false;
-            }
-        }
-        );
-    }
-
-
-    function StandardConfirm(sender, args) {
-
-        // Some pages will have no validators, so skip
-        if (typeof Page_ClientValidate === "function") {
-            var validated = Page_ClientValidate('Val_PowerOutage');
-
-            if (!validated)
-                alert("Please fill out all of the required fields.");
-        }
-    }
-
-
-    $(function () {
-        $('#tblCustomers').footable();
-    });
+	window.onload = function () {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclcontain_hfChangeUpdate').value = "";
+	}
+	window.onbeforeunload = function () {
+		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclcontain_hfChangeUpdate').value == '1') {
+			return 'You have unsaved changes on this page.';
+		}
+	}
+	function ChangeUpdate(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclcontain_hfChangeUpdate').value = '1';
+		return true;
+	}
+	function ChangeClear(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclcontain_hfChangeUpdate').value = '0';
+	}
 
 </script>
 
 
 <asp:Panel ID="pnlContain" Visible="False" runat="server" meta:resourcekey="pnlContainResource1">
+
+	<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
+
+	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 5px 0 5px 0;">
+		<div class="row text_center">
+			<div class="col-xs-12 col-sm-12 text-center">
+				<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
+			</div>
+		</div>
+	</div>
+
     <div class="container-fluid">
         <telerik:RadAjaxPanel ID="rapContain"  runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapContainResource1">
             <asp:Repeater runat="server" ID="rptContain" ClientIDMode="AutoID" OnItemDataBound="rptContain_OnItemDataBound" OnItemCommand="rptContain_ItemCommand">
             	<HeaderTemplate>
-					<table border="0" class="table">
+					<table width="99%" border="0"  class="lightTable">
 						<thead>
-							<tr>
-								<th class="col-sm-1 text-center"><b>
-									<asp:Label ID="lbhdItem" runat="server" Text="<%$ Resources:LocalizedText, Item %>"></asp:Label>
-									</b></th>
-								<th class="col-sm-3 text-left-more"><b>
-									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label>
-									<img src="/images/requiredAlt.gif" alt="" style="vertical-align: middle; border: 0px;" />
-									</b></th>
-								<th class="col-sm-2 text-left-more"><b>
-									<asp:Label ID="lbhdConAssignedTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
-									</b></th>
-								<th class="col-sm-2 text-left-more"><b>
-									<asp:Label ID="lbhdConStartDate" runat="server" meta:resourcekey="lbhdConStartDateResource1" Text="Date Performed"></asp:Label>
-									</b></th>
-							</tr>
 						</thead>
-				</HeaderTemplate>
-				<ItemTemplate>
-					<tbody>
-						<tr>
-							<td class="text-center">
-								<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>
-							</td>
-							<td class="text-left-more">
-								<asp:TextBox ID="tbContainAction" runat="server" Height="65px" meta:resourcekey="tbContainActionResource1" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="90%"></asp:TextBox>
-								<asp:RequiredFieldValidator ID="rfvContainAction" runat="server" ControlToValidate="tbContainAction" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
-							</td>
-							<td class="text-left-more">
-								<telerik:RadComboBox ID="rddlContainPerson" runat="server" CssClass="WarnIfChanged" DropDownHeight="350" ExpandDirection="Up" meta:resourcekey="rddlContainPersonResource1" Skin="Metro" Width="200px" ZIndex="9000">
-								</telerik:RadComboBox>
-								<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
-							</td>
-							<td class="text-left-more">
-								<telerik:RadDatePicker ID="rdpStartDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro">
-									<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-									</Calendar>
-									<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
-										<EmptyMessageStyle Resize="None" />
-										<ReadOnlyStyle Resize="None" />
-										<FocusedStyle Resize="None" />
-										<DisabledStyle Resize="None" />
-										<InvalidStyle Resize="None" />
-										<HoveredStyle Resize="None" />
-										<EnabledStyle Resize="None" />
-									</DateInput>
-									<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-								</telerik:RadDatePicker>
-								<asp:RequiredFieldValidator ID="rvfStartDate" runat="server" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
-							</td>
-							<td class="text-left-more">
-								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
-								</telerik:RadButton>
-							</td>
-						</tr>
-					</tbody>
-				</ItemTemplate>
-                <FooterTemplate>
-                    </table>
-                    <div class="row" style="padding-top:0;margin-top:-10px;">
-                        <div class="col-xs-12 text-left-more">
-                            <asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" ToolTip="Add Another Initial Corrective Action" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin: 7px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
-                        </div>
-                    </div>
+						</HeaderTemplate>
+						<ItemTemplate>
+						<tbody>
+							<tr>
+								<td class="columnHeader" width="20%">
+									<asp:Label ID="lbhdConAction" runat="server" meta:resourcekey="lbhdConActionResource1" Text="<%$ Resources:LocalizedText, InitialAction %>"></asp:Label>
+									&nbsp;
+									<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>
+								</td>
+								<td class="required" width="1%">&nbsp;</td>
+								<td class="tableDataAlt" width="79%">
+									<asp:TextBox ID="tbContainAction" runat="server" Height="65px" meta:resourcekey="tbContainActionResource1" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="98%"  onChange="ChangeUpdate()"></asp:TextBox>
+									<asp:RequiredFieldValidator ID="rfvContainAction" runat="server" ControlToValidate="tbContainAction" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
+								</td>
+							</tr>
+							<tr>
+								<td class="columnHeader">
+									<asp:Label ID="lbhdConAssignedTo" runat="server" Text="<%$ Resources:LocalizedText, AssignedTo %>"></asp:Label>
+								</td>
+								<td class="tableDataAlt">&nbsp;</td>
+								<td class="tableDataAlt">
+									<telerik:RadComboBox ID="rddlContainPerson" runat="server" DropDownHeight="350" ExpandDirection="Up" meta:resourcekey="rddlContainPersonResource1" Skin="Metro" Width="350px" ZIndex="9000" OnClientSelectedIndexChanged="ChangeUpdate">
+									</telerik:RadComboBox>
+									<asp:RequiredFieldValidator ID="rfvContainPerson" runat="server" ControlToValidate="rddlContainPerson" Display="None" EmptyMessage="[Select One]" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
+								</td>
+							</tr>
+							<tr>
+								<td class="columnHeader">
+									<asp:Label ID="lbhdConStartDate" runat="server" meta:resourcekey="lbhdConStartDateResource1" Text="Date Performed"></asp:Label>
+								</td>
+								<td class="required">&nbsp;</td>
+								<td class="tableDataAlt">
+									<telerik:RadDatePicker ID="rdpStartDate" runat="server" meta:resourcekey="rdpStartDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="125">
+										<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+										</Calendar>
+										<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
+											<EmptyMessageStyle Resize="None" />
+											<ReadOnlyStyle Resize="None" />
+											<FocusedStyle Resize="None" />
+											<DisabledStyle Resize="None" />
+											<InvalidStyle Resize="None" />
+											<HoveredStyle Resize="None" />
+											<EnabledStyle Resize="None" />
+										</DateInput>
+										<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
+									</telerik:RadDatePicker>
+									<asp:RequiredFieldValidator ID="rvfStartDate" runat="server" ControlToValidate="rdpStartDate" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>"></asp:RequiredFieldValidator>
+								</td>
+							</tr>
+							<tr id="trComments" runat="server">
+								<td class="columnHeader">
+									<asp:Label ID="lblComments" runat="server" Text="<%$ Resources:LocalizedText, Comments %>"></asp:Label>
+								</td>
+								<td class="tableDataAlt">&nbsp;</td>
+								<td class="tableDataAlt">
+									<asp:TextBox ID="tbComments" runat="server" Height="65px" Rows="3" SkinID="Metro" TextMode="MultiLine" Width="98%" onChange="ChangeUpdate()"></asp:TextBox>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-left-more" colspan="3">
+									<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
+									</telerik:RadButton>
+								</td>
+							</tr>
+							<tr><td colspan="3" style="height: 10px;"></td></tr>
+						</tbody>
+					</ItemTemplate>
+					<FooterTemplate>
+                </table>
                 </FooterTemplate>
             </asp:Repeater>
-			<br />
-			<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
-        	&nbsp;
+			<div class="row">
+				<center>
+					<span>
+						<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
+							OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+						<asp:Button ID="btnAddContain" CssClass="buttonAdd" runat="server" OnClick="AddDelete_Click" ToolTip="Add Another Initial Corrective Action" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin-left: 15px;" CommandArgument="AddAnother" meta:resourcekey="btnAddContainResource1"></asp:Button>
+					</span>
+				</center>
+				<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
+			</div>
         </telerik:RadAjaxPanel>
     </div>
 </asp:Panel>

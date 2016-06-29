@@ -1429,121 +1429,92 @@ namespace SQM.Website
             }
         }
 
-		public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
+		public static DatePeriod PriorFYPeriod(DateTime FYDate)
 		{
-			List<DatePeriod> periodList = new List<DatePeriod>();
-			DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
-			DateTime endDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
+			DatePeriod period = new DatePeriod();
 
-			DatePeriod period = null;
+			period.FromDate = new DateTime(FYDate.Year - 1, SessionManager.FYStartDate().Month, 1);
+			period.ToDate = new DateTime(FYDate.Year - 1, FYDate.Month, DateTime.DaysInMonth(FYDate.Year - 1, FYDate.Month));
+			if (FYDate.Month < SessionManager.FYStartDate().Month)
+				period.FromDate = period.FromDate.AddYears(-1);
+			period.Label = "FY" + (period.FromDate.Year + 1).ToString();
 
-			switch (periodType)
-			{
-				case DateIntervalType.year:
-				case DateIntervalType.FYyear:       // assume fromdate is start of FY
+			return period;
+		}
+
+		public static DatePeriod CurrentFYPeriod(DateTime FYDate)
+		{
+			DatePeriod period = new DatePeriod();
+
+			period.FromDate = new DateTime(FYDate.Year, SessionManager.FYStartDate().Month, 1);
+			period.ToDate = FYDate;
+			if (FYDate.Month < SessionManager.FYStartDate().Month)
+				period.FromDate = period.FromDate.AddYears(-1);
+			period.Label = "FY" + (period.FromDate.Year + 1).ToString();
+
+			return period;
+		}
+
+        public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
+        {
+            List<DatePeriod> periodList = new List<DatePeriod>();
+            DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
+            DateTime endDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
+
+            DatePeriod period = null;
+
+            switch (periodType)
+            {
+                case DateIntervalType.year:
+                case DateIntervalType.FYyear:       // assume fromdate is start of FY
 
 					int numPeriods = Math.Max(toDate.Year - fromDate.Year, 1);
-					DateTime toDate0 = endDate.AddYears((numPeriods - 1) * -1);
-					for (int p = 0; p < numPeriods; p++)
+					DateTime toDate0 = endDate.AddYears((numPeriods-1) * -1);
+
+					if (dateSpanType == DateSpanOption.FYYearToDate)
 					{
+						// assumes 2 year over year comparison
+						numPeriods = 2;
+						periodList.Add(PriorFYPeriod(toDate));
+
 						period = new DatePeriod();
-						periodList.Add(period);
-						period.FromDate = fromDate.AddYears(p);
-						period.ToDate = toDate0.AddYears(p);
+						periodList.Add(CurrentFYPeriod(toDate));
+					}
+					else 
+					{
+						for (int p = 0; p < numPeriods; p++)
+						{
+							period = new DatePeriod();
+							periodList.Add(period);
+							period.FromDate = fromDate.AddYears(p);
+							period.ToDate = toDate0.AddYears(p);
+						}
 						period.Label = dateSpanType == DateSpanOption.FYYearOverYear || dateSpanType == DateSpanOption.FYYearToDate || dateSpanType == DateSpanOption.FYEffTimespan ? "FY" + (period.FromDate.Year + 1).ToString() : period.FromDate.Year.ToString();
 					}
-					/*
+                    break;
+				case DateIntervalType.span:
+					period = new DatePeriod();
+					period.FromDate = fromDate;
+					period.ToDate = toDate;
+					periodList.Add(period);
+					break;
+                case DateIntervalType.month:
+                default:
                     while (startDate < endDate)
                     {
                         period = new DatePeriod();
                         period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
-                        period.ToDate = period.FromDate.AddMonths(numMonths);
-                        period.ToDate = period.ToDate.AddDays(DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month) - 1);
-                        // period.ToDate = startDate.AddMonths(11); period.ToDate = new DateTime(period.ToDate.Year, period.ToDate.Month, DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month));
-                        if (period.ToDate > endDate)
-                            period.ToDate = endDate;
-                        period.Label = dateSpanType == DateSpanOption.FYYearOverYear || dateSpanType == DateSpanOption.FYYearToDate || dateSpanType == DateSpanOption.FYEffTimespan ? "FY" + (period.FromDate.Year + 1).ToString() : period.FromDate.Year.ToString();
+                        period.ToDate = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
+                        period.Label = period.FromDate.Year.ToString() + "/" + period.FromDate.Month.ToString();
                         periodList.Add(period);
-                        startDate = startDate.AddMonths(12);
+                        startDate = startDate.AddMonths(1);
                     }
-					*/
-					break;
-				case DateIntervalType.span:
-					period = new DatePeriod();
-					period.FromDate = fromDate;
-					period.ToDate = toDate;
-					periodList.Add(period);
-					break;
-				case DateIntervalType.month:
-				default:
-					while (startDate < endDate)
-					{
-						period = new DatePeriod();
-						period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
-						period.ToDate = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
-						period.Label = period.FromDate.Year.ToString() + "/" + period.FromDate.Month.ToString();
-						periodList.Add(period);
-						startDate = startDate.AddMonths(1);
-					}
-					break;
-			}
+                    break;
+            }
 
-			return periodList;
-		}
+            return periodList;
+        }
 
-		/*
-		public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
-		{
-			List<DatePeriod> periodList = new List<DatePeriod>();
-			DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
-			DateTime endDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
-			int numMonths = toDate.Month - fromDate.Month;
-			if (toDate.Month < fromDate.Month)
-				numMonths = Math.Max(11, ((startDate.Year - endDate.Year) * 12) + startDate.Month - endDate.Month);
-
-			DatePeriod period = null;
-
-			switch (periodType)
-			{
-				case DateIntervalType.year:
-				case DateIntervalType.FYyear:       // assume fromdate is start of FY
-					while (startDate < endDate)
-					{
-						period = new DatePeriod();
-						period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
-						period.ToDate = period.FromDate.AddMonths(numMonths);
-						period.ToDate = period.ToDate.AddDays(DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month) - 1);
-						// period.ToDate = startDate.AddMonths(11); period.ToDate = new DateTime(period.ToDate.Year, period.ToDate.Month, DateTime.DaysInMonth(period.ToDate.Year, period.ToDate.Month));
-						if (period.ToDate > endDate)
-							period.ToDate = endDate;
-						period.Label = dateSpanType == DateSpanOption.FYYearOverYear || dateSpanType == DateSpanOption.FYYearToDate || dateSpanType == DateSpanOption.FYEffTimespan ? "FY" + (period.FromDate.Year + 1).ToString() : period.FromDate.Year.ToString();
-						periodList.Add(period);
-						startDate = startDate.AddMonths(12);
-					}
-					break;
-				case DateIntervalType.span:
-					period = new DatePeriod();
-					period.FromDate = fromDate;
-					period.ToDate = toDate;
-					periodList.Add(period);
-					break;
-				case DateIntervalType.month:
-				default:
-					while (startDate < endDate)
-					{
-						period = new DatePeriod();
-						period.FromDate = new DateTime(startDate.Year, startDate.Month, 1);
-						period.ToDate = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
-						period.Label = period.FromDate.Year.ToString() + "/" + period.FromDate.Month.ToString();
-						periodList.Add(period);
-						startDate = startDate.AddMonths(1);
-					}
-					break;
-			}
-
-			return periodList;
-		}
-		*/
 		/// <summary>
 		/// Replaces multiple values in a string with a single call.
 		/// </summary>

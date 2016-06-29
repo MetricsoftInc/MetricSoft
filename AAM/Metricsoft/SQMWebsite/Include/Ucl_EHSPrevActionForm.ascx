@@ -90,7 +90,7 @@
 
 									<div style="margin-top: 5px;">
 										<telerik:RadButton ID="btnSubnavSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" Style="margin-right: 10px;"
-											OnClick="btnSubnavSave_Click" CommandArgument="0" meta:resourcekey="btnSubnavSaveResource1"/>
+											OnClick="btnSubnavSave_Click" CommandArgument="0" meta:resourcekey="btnSubnavSaveResource1" SingleClick="true" />
 
 										<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Recommendation %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 											OnClick="btnSubnav_Click" CommandArgument="0" meta:resourcekey="btnSubnavIncidentResource1" />

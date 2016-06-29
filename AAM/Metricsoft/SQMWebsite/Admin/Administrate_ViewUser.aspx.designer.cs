@@ -580,6 +580,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblEmpID;
         
         /// <summary>
+        /// lblEmpSupv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpSupv;
+        
+        /// <summary>
         /// tbEmpID control.
         /// </summary>
         /// <remarks>
@@ -596,6 +605,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSupvEmpID;
+        
+        /// <summary>
+        /// trJobCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trJobCode;
         
         /// <summary>
         /// lblUserTitle control.

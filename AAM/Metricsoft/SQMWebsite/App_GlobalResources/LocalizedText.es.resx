@@ -486,6 +486,9 @@
   <data name="ProblemArea" xml:space="preserve">
     <value>Área del problema</value>
   </data>
+  <data name="ProceduresFollowed" xml:space="preserve">
+    <value>Procedures Followed</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>Pregunta</value>
   </data>
@@ -632,5 +635,11 @@
   </data>
   <data name="Resolution" xml:space="preserve">
     <value>Resolution</value>
+  </data>
+  <data name="AddCause" xml:space="preserve">
+    <value>Add Cause</value>
+  </data>
+  <data name="AddProblemSeries" xml:space="preserve">
+    <value>Add Problem Statement</value>
   </data>
 </root>

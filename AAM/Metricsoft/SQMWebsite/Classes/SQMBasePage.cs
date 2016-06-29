@@ -439,6 +439,28 @@ namespace SQM.Website
 			return ddl;
 		}
 
+		public static void SetCategorizedDropDownItems(RadDropDownList ddl, List<XLAT> xlatList, bool categorize)
+		{
+			if (xlatList != null && xlatList.Count > 0)
+			{
+				ddl.Items.Add(new DropDownListItem("", ""));
+
+				string category = "";
+				foreach (var s in xlatList.OrderBy(l => l.SORT_ORDER).ThenBy(l=> l.DESCRIPTION_SHORT).ThenBy(l => l.DESCRIPTION))	// order by category (description_short) then by specific part (description)
+				{
+					if (categorize && s.DESCRIPTION_SHORT != category)
+					{
+						category = s.DESCRIPTION_SHORT;
+						DropDownListItem sep = new DropDownListItem(s.DESCRIPTION_SHORT, s.DESCRIPTION_SHORT);
+						sep.Enabled = false;
+						sep.CssClass = "rcbSeparator";
+						ddl.Items.Add(sep);
+					}
+					ddl.Items.Add(new DropDownListItem(s.DESCRIPTION, s.XLAT_CODE));
+				}
+			}
+		}
+
         public static List<RadComboBoxItem> GetComboBoxCheckedItems(RadComboBox ddl)
         {
             List<RadComboBoxItem> itemList = new List<RadComboBoxItem>();

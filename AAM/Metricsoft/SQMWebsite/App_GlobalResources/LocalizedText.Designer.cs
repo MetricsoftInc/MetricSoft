@@ -106,11 +106,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Another Final Corrective Action.
+        ///   Looks up a localized string similar to Add Another Corrective Action.
         /// </summary>
         internal static string AddAnotherFinalCorrectiveAction {
             get {
                 return ResourceManager.GetString("AddAnotherFinalCorrectiveAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Cause.
+        /// </summary>
+        internal static string AddCause {
+            get {
+                return ResourceManager.GetString("AddCause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Problem Statement.
+        /// </summary>
+        internal static string AddProblemSeries {
+            get {
+                return ResourceManager.GetString("AddProblemSeries", resourceCulture);
             }
         }
         
@@ -322,6 +340,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Causation.
+        /// </summary>
+        internal static string Causation {
+            get {
+                return ResourceManager.GetString("Causation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Password.
         /// </summary>
         internal static string ChangePassword {
@@ -403,7 +430,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Corrective Action.
+        ///   Looks up a localized string similar to Final Corrective Action.
         /// </summary>
         internal static string CorrectiveAction {
             get {
@@ -412,7 +439,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Corrective Actions.
+        ///   Looks up a localized string similar to Final Corrective Actions.
         /// </summary>
         internal static string CorrectiveActions {
             get {
@@ -502,7 +529,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Item.
+        ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string DeleteItem {
             get {
@@ -826,6 +853,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completion Evidence / Documentation.
+        /// </summary>
+        internal static string Evidence {
+            get {
+                return ResourceManager.GetString("Evidence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expected Return Date.
         /// </summary>
         internal static string ExpectedReturnDate {
@@ -921,6 +957,51 @@ namespace Resources {
         internal static string IncidentType {
             get {
                 return ResourceManager.GetString("IncidentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval Level 1.
+        /// </summary>
+        internal static string INCIDENT_APPROVAL_1 {
+            get {
+                return ResourceManager.GetString("INCIDENT_APPROVAL_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval Level 2.
+        /// </summary>
+        internal static string INCIDENT_APPROVAL_2 {
+            get {
+                return ResourceManager.GetString("INCIDENT_APPROVAL_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval Level 3.
+        /// </summary>
+        internal static string INCIDENT_APPROVAL_3 {
+            get {
+                return ResourceManager.GetString("INCIDENT_APPROVAL_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval Level 35.
+        /// </summary>
+        internal static string INCIDENT_APPROVAL_35 {
+            get {
+                return ResourceManager.GetString("INCIDENT_APPROVAL_35", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval Level 4.
+        /// </summary>
+        internal static string INCIDENT_APPROVAL_4 {
+            get {
+                return ResourceManager.GetString("INCIDENT_APPROVAL_4", resourceCulture);
             }
         }
         
@@ -1087,6 +1168,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lost Time History.
+        /// </summary>
+        internal static string LostTimeHistory {
+            get {
+                return ResourceManager.GetString("LostTimeHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metric.
         /// </summary>
         internal static string Metric {
@@ -1195,6 +1285,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Person Accountable.
+        /// </summary>
+        internal static string PersonAccountable {
+            get {
+                return ResourceManager.GetString("PersonAccountable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Person Responsible.
         /// </summary>
         internal static string PersonResponsible {
@@ -1218,6 +1317,15 @@ namespace Resources {
         internal static string PreventativeAction {
             get {
                 return ResourceManager.GetString("PreventativeAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preventative Measures.
+        /// </summary>
+        internal static string PreventativeMeasure {
+            get {
+                return ResourceManager.GetString("PreventativeMeasure", resourceCulture);
             }
         }
         
@@ -1254,6 +1362,24 @@ namespace Resources {
         internal static string ProblemArea {
             get {
                 return ResourceManager.GetString("ProblemArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem Statement.
+        /// </summary>
+        internal static string ProblemStatement {
+            get {
+                return ResourceManager.GetString("ProblemStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Procedures Followed.
+        /// </summary>
+        internal static string ProceduresFollowed {
+            get {
+                return ResourceManager.GetString("ProceduresFollowed", resourceCulture);
             }
         }
         

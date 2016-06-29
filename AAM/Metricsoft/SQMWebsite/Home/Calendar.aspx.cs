@@ -110,7 +110,7 @@ namespace SQM.Website
 		private void UpdateTaskList(string cmd)
 		{
 			TaskStatusMgr myTasks = new TaskStatusMgr().CreateNew(0, 0);
-			myTasks.SelectTaskList(new int[3] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident, (int)TaskRecordType.PreventativeAction }, new string[1] { ((int)SysPriv.action).ToString() }, SessionManager.UserContext.Person.PERSON_ID, true);
+			myTasks.SelectTaskList(new int[3] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident, (int)TaskRecordType.PreventativeAction }, new string[2] { ((int)SysPriv.action).ToString(), ((int)SysPriv.notify).ToString() }, SessionManager.UserContext.Person.PERSON_ID, true);
 			uclTaskList.BindTaskList(myTasks.TaskList, "");
 		}
 
@@ -176,7 +176,7 @@ namespace SQM.Website
 			// get scheduled tasks
             respForList = new List<decimal>();
             respForList.Add(SessionManager.UserContext.Person.PERSON_ID);
-			DateTime toDate = SessionManager.UserContext.LocalTime.AddMonths(2);
+			DateTime toDate = SessionManager.UserContext.LocalTime.AddMonths(3);
 			DateTime fromDate = SessionManager.UserContext.LocalTime.AddMonths(-3);
 
             string selectedValue = "0";
@@ -239,7 +239,7 @@ namespace SQM.Website
 			taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, respPlantList.ToArray(), SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
 			enableItemLinks = true;
 
-            uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
+			uclTaskSchedule.BindTaskSchedule(taskScheduleList.GroupBy(l => l.Task.TASK_ID).Select(p => p.First()).ToList(), selectedDate, enableItemLinks);
 
 			// get task escalations 
 			respForList = new List<decimal>();

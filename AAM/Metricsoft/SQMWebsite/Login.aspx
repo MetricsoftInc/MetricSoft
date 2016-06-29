@@ -87,10 +87,12 @@
 
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
-	
 
-					<asp:Button runat="server" Text="Login" ID="btnLogin" CssClass="buttonEmphasis" Style="width: 80px;  margin: 5px 0 0 0;"
-						OnClick="btnLogin_Click" meta:resourcekey="btnLoginResource1" />
+					<telerik:RadButton ID="btnLogin" runat="server" meta:resourcekey="btnLoginResource1" CssClass="buttonEmphasis" Skin="Metro" Style="width: 85px;  margin: 5px 10px 0 5px; background-color: #A3461F;"
+						OnClick="btnLogin_Click" SingleClick="true"/>
+
+					<%--<asp:Button runat="server" Text="Login" ID="btnLogin" CssClass="buttonEmphasis" Style="width: 80px;  margin: 5px 10px 0 5px;"
+						OnClick="btnLogin_Click" meta:resourcekey="btnLoginResource1" />--%>
 					<asp:LinkButton runat="server" ID="lnkForgotPassword" class="buttonLinkSmall"
 						Text="Forgot Username/Password ?" OnClick="lnkForgotPassword_Click" Visible="False" meta:resourcekey="lnkForgotPasswordResource1"></asp:LinkButton>
 				</div>

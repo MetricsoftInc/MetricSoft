@@ -17,7 +17,7 @@ namespace SQM.Website
     public enum TaskRecordType { InternalQualityIncident = 10, CustomerQualityIncident = 11, SupplierQualityIncident = 12,
                                     QualityIssue = 20, ProblemCase = 21,
                                     ProfileInput = 30, ProfileInputApproval = 31, ProfileInputFinalize = 33, CurrencyInput = 36, 
-                                    HealthSafetyIncident = 40, PreventativeAction = 45, 
+                                    HealthSafetyIncident = 40,  PreventativeAction = 45, 
 									Audit = 50, EHSData = 90 }
 
 
@@ -622,7 +622,7 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT >= fromDate  &&  t.DUE_DT <= toDate &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
+                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident  || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && (t.DUE_DT >= fromDate  &&  t.DUE_DT <= toDate &&  t.COMPLETE_DT == null) && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)i.DETECT_PLANT_ID) || plantIDS.Contains((decimal)i.RESP_PLANT_ID)))
                                 from p in p_t.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()
@@ -661,7 +661,7 @@ namespace SQM.Website
                     {
                         taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
                         TaskRecordType recordType = (TaskRecordType)taskItem.RecordType;
-						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION;
+						string recordDesc = XLATList.Where(x => x.XLAT_GROUP == "RECORD_TYPE" && x.XLAT_CODE == taskItem.Task.RECORD_TYPE.ToString()).FirstOrDefault().DESCRIPTION;
 						string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault() != null ? 
 							XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == taskItem.Task.TASK_STEP).FirstOrDefault().DESCRIPTION : recordDesc;
 
@@ -1168,7 +1168,7 @@ namespace SQM.Website
         {
 			// tasks OVERDUE
 			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString()};
-            DateTime forwardDate = DateTime.UtcNow.AddMonths(3);
+            DateTime forwardDate = DateTime.UtcNow.AddMonths(2);
 			INCIDENT incident;
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
@@ -1183,7 +1183,7 @@ namespace SQM.Website
                                 join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
                                 join l in entities.PLANT on i.DETECT_PLANT_ID equals l.PLANT_ID into l_i
                                 join r in entities.PLANT on i.RESP_PLANT_ID equals r.PLANT_ID into r_i
-                                where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && statusIDS.Contains(t.STATUS) &&  t.DUE_DT <= forwardDate  && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)(i.DETECT_PLANT_ID))))
+								where ((t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident || t.RECORD_TYPE == (int)TaskRecordType.PreventativeAction) && statusIDS.Contains(t.STATUS) && t.DUE_DT <= forwardDate && (responsibleIDS.Contains((decimal)t.RESPONSIBLE_ID) || plantIDS.Contains((decimal)(i.DETECT_PLANT_ID))))
                                 from p in p_t.DefaultIfEmpty()
                                 from l in l_i.DefaultIfEmpty()
                                 from r in r_i.DefaultIfEmpty()

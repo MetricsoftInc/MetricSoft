@@ -22,7 +22,7 @@
 <asp:Panel ID="pnlPrivGroups" runat="server" CssClass="admBkgd" Visible="false">
 	<asp:HiddenField ID="hfPrivGroupContext" runat="server" />
 	<asp:HiddenField ID="hfPrivGroupBusLoc" runat="server" />
-	<asp:Button id="btnAddPrivGroup" runat="server" CssClass="buttonAddLarge" style="float: left; margin: 5px;" Text="Add Priviledge Group" ToolTip="Add a priviledge group" OnClick="btnPrivGroupAdd_Click"/>
+	<asp:Button id="btnAddPrivGroup" runat="server" CssClass="buttonAddLarge" style="float: left; margin: 5px;" Text="Add Privilege Group" ToolTip="Add a privilege group" OnClick="btnPrivGroupAdd_Click"/>
 	<telerik:RadGrid ID="rgPrivGroup" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="20"
 		AutoGenerateColumns="false" OnItemDataBound="rgPrivGroup_ItemDataBound" OnSortCommand="rgPrivGroup_SortCommand"
 		OnPageIndexChanged="rgPrivGroup_PageIndexChanged" OnPageSizeChanged="rgPrivGroup_PageSizeChanged" GridLines="None" Width="100%" OnItemCommand="rgPrivList_ItemCommand">
@@ -43,14 +43,14 @@
                                     <asp:Label ID="lblScope" runat="server" Text='<%# Eval("SCOPE") %>'></asp:Label><asp:HiddenField runat="server" ID="hdnScope" Value='<%# Eval("SCOPE") %>' />
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridTemplateColumn HeaderText="Priviledge" ShowSortIcon="false" FilterControlAltText="Filter Priviledge column">
+                            <telerik:GridTemplateColumn HeaderText="Privilege" ShowSortIcon="false" FilterControlAltText="Filter Privilege column">
                                 <ItemTemplate>
                                     <asp:Label ID="lblPrivDesc" runat="server" Text='<%# Eval("PRIV") %>'></asp:Label><asp:HiddenField runat="server" ID="hdnPriv" Value='<%# Eval("PRIV") %>' />
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                             <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" UniqueName="TemplateColumn3">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="lnkDeletePriv" runat="server" meta:resourcekey="lnkDeletePrivResource1" OnClientClick="return confirmAction('Delete This Priviledge/Scope');" onclick="OnDeletePriv_Click" Text="Delete Priviledge" ToolTip="Delete this Priviledge/Scope record from the group" CssClass="buttonLink"></asp:LinkButton>
+                                    <asp:LinkButton ID="lnkDeletePriv" runat="server" meta:resourcekey="lnkDeletePrivResource1" OnClientClick="return confirmAction('Delete This Privilege/Scope');" onclick="OnDeletePriv_Click" Text="Delete Privilege" ToolTip="Delete this Privilege/Scope record from the group" CssClass="buttonLink"></asp:LinkButton>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                         </Columns>
@@ -58,7 +58,7 @@
                 </telerik:RadGrid>
             </NestedViewTemplate>
 			<Columns>
-				<telerik:GridTemplateColumn HeaderText="Priviledge Group" ShowSortIcon="true" SortExpression="PRIV_GROUP">
+				<telerik:GridTemplateColumn HeaderText="Privilege Group" ShowSortIcon="true" SortExpression="PRIV_GROUP">
 					<ItemTemplate>
 						<asp:LinkButton ID="lnkPrivGroupItem" OnClick="lnklPrivGroupItem_Click" CommandArgument='<%#Eval("PRIV_GROUP") %>' Text='<%#Eval("PRIV_GROUP") %>' runat="server" CssClass="buttonLink" Font-Bold="true" ForeColor="#000066" ToolTip="<%$ Resources:LocalizedText, Edit %>"></asp:LinkButton>
 					</ItemTemplate>
@@ -75,7 +75,7 @@
 				</telerik:GridTemplateColumn>
                 <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" UniqueName="TemplateColumn3">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lnkAddPriv" runat="server" meta:resourcekey="lnkAddPrivResource1" OnClick="lnkAddPriv_Click" Text="Add Priviledge" ToolTip="Add a Priviledge/Scope record for the group" CssClass="buttonLink"></asp:LinkButton>
+                        <asp:LinkButton ID="lnkAddPriv" runat="server" meta:resourcekey="lnkAddPrivResource1" OnClick="lnkAddPriv_Click" Text="Add Privilege" ToolTip="Add a Privilege/Scope record for the group" CssClass="buttonLink"></asp:LinkButton>
                     </ItemTemplate>
                 </telerik:GridTemplateColumn>
             </Columns>
@@ -84,14 +84,14 @@
 	</telerik:RadGrid>
 </asp:Panel>
 
-<telerik:RadWindow runat="server" ID="winPrivGroupEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="600" Title="Priviledge Group Item" Behaviors="Move,Close">
+<telerik:RadWindow runat="server" ID="winPrivGroupEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="600" Title="Privilege Group Item" Behaviors="Move,Close">
     <ContentTemplate>
 		<asp:HiddenField id="hfPrivGroupID" runat="server"/>
 		<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1">
             <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" class="borderSoft editArea" style="margin: 8px 0 5px 0; ">
                 <tr>
                     <td class="columnHeader" width="24%" style="vertical-align: top;">
-                        <asp:Label ID="lblEditPrivGroup" runat="server" text="Priviledge Group"></asp:Label>
+                        <asp:Label ID="lblEditPrivGroup" runat="server" text="Privilege Group"></asp:Label>
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
@@ -122,7 +122,7 @@
                 <asp:Button ID="btnCancel" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancelPrivGroup_Click"></asp:Button>
                 <asp:Button ID="btnSave" class="buttonEmphasis" runat="server" Text ="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return confirmChange('PrivGroup');" onclick="OnSavePrivGroup_Click"></asp:Button>
 				&nbsp;
-				<%--<asp:Button ID="btnDelete" class="buttonLink" runat="server" Text="<%$ Resources:LocalizedText, Delete %>" style="width: 70px;" OnClientClick="return confirmAction('Delete This Priviledge Group');" onclick="OnDeletePrivGroup_Click"></asp:Button>--%>
+				<%--<asp:Button ID="btnDelete" class="buttonLink" runat="server" Text="<%$ Resources:LocalizedText, Delete %>" style="width: 70px;" OnClientClick="return confirmAction('Delete This Privilege Group');" onclick="OnDeletePrivGroup_Click"></asp:Button>--%>
             </span>
             <br />
             <center>
@@ -131,7 +131,7 @@
 	</ContentTemplate>
 </telerik:RadWindow>
 
-<telerik:RadWindow runat="server" ID="winPrivEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="600" Title="Priviledge Scope Item" Behaviors="Move,Close">
+<telerik:RadWindow runat="server" ID="winPrivEdit" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="true" Height="400" Width="600" Title="Privilege Scope Item" Behaviors="Move,Close">
     <ContentTemplate>
 		<asp:HiddenField id="hfPrivPrivGroupID" runat="server"/>
 		<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel2">
@@ -147,7 +147,7 @@
                 </tr>
                 <tr>
                     <td class="columnHeader" width="24%">
-                        <asp:Label ID="lblEditPriv" runat="server" text="Priviledge"></asp:Label>
+                        <asp:Label ID="lblEditPriv" runat="server" text="Privilege"></asp:Label>
                     </td>
                     <td class="required" width="1%">&nbsp;</td>
                     <td class="tableDataAlt" width="75%">
@@ -160,7 +160,7 @@
                 <asp:Button ID="btnCancelPriv" class="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="width: 70px;" onclick="OnCancelPriv_Click"></asp:Button>
                 <asp:Button ID="btnSavePriv" class="buttonEmphasis" runat="server" Text ="<%$ Resources:LocalizedText, Save %>" style="width: 70px;" OnClientClick="return confirmChange('Priv');" onclick="OnSavePriv_Click"></asp:Button>
 				<%--&nbsp;
-				<asp:Button ID="btnDeletePriv" class="buttonLink" runat="server" Text="<%$ Resources:LocalizedText, Delete %>" style="width: 70px;" OnClientClick="return confirmAction('Delete This Priviledge/Scope');" onclick="OnDeletePriv_Click"></asp:Button>--%>
+				<asp:Button ID="btnDeletePriv" class="buttonLink" runat="server" Text="<%$ Resources:LocalizedText, Delete %>" style="width: 70px;" OnClientClick="return confirmAction('Delete This Privilege/Scope');" onclick="OnDeletePriv_Click"></asp:Button>--%>
             </span>
             <br />
             <center>

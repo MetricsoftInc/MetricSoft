@@ -130,7 +130,7 @@
     <value>ส่วนของร่างกาย</value>
   </data>
 	<data name="lbReoccurResource1.Text" xml:space="preserve">
-    <value>Reoccurance</value>
+    <value>Reoccurrence</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>ขึนตรงต่อ AAM</value>
@@ -185,6 +185,9 @@
   </data>
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
     <value>พนักงานปฎิบัติงานนี้มานานแค่ไหน / เป็นงานพิเศษหรือไม่</value>
+  </data>
+	<data name="lbJobCode.Text" xml:space="preserve">
+    <value>Occupation / Job Title</value>
   </data>
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>มีการฝึกอบรมสำหรับงานนี้ให้กับพนักงานหรือไม่?</value>

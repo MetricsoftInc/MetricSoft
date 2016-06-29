@@ -130,7 +130,7 @@
     <value>身体部分</value>
   </data>
 	<data name="lbReoccurResource1.Text" xml:space="preserve">
-    <value>Reoccurance</value>
+    <value>Reoccurrence</value>
   </data>
   <data name="lbDirectSupvResource1.Text" xml:space="preserve">
     <value>由 AAM 直接监管</value>
@@ -185,6 +185,9 @@
   </data>
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
     <value>员工从事这一工作/具体任务多久了?</value>
+  </data>
+	<data name="lbJobCode.Text" xml:space="preserve">
+    <value>Occupation / Job Title</value>
   </data>
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>是否为该项任务提供立了培训?</value>

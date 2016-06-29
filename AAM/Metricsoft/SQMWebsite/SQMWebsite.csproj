@@ -300,8 +300,15 @@
     <Content Include="images\company\VarrocLogoSmall.jpg" />
     <Content Include="images\company\VIALogo.jpg" />
     <Content Include="images\company\VIALogoSmall.jpg" />
+    <Content Include="images\defaulticon\16x16\3D-plane.png" />
     <Content Include="images\defaulticon\16x16\activity.png" />
+    <Content Include="images\defaulticon\16x16\alert-alt.png" />
     <Content Include="images\defaulticon\16x16\arrow-1-backward.png" />
+    <Content Include="images\defaulticon\16x16\arrow-1-down-right.png" />
+    <Content Include="images\defaulticon\16x16\arrow-1-down.png" />
+    <Content Include="images\defaulticon\16x16\arrow-1-left.png" />
+    <Content Include="images\defaulticon\16x16\arrow-1-right.png" />
+    <Content Include="images\defaulticon\16x16\arrow-1-up-right.png" />
     <Content Include="images\defaulticon\16x16\arrow-1-up.png" />
     <Content Include="images\defaulticon\16x16\arrow-4-right.png" />
     <Content Include="images\defaulticon\16x16\arrow-7-right.png" />
@@ -312,7 +319,10 @@
     <Content Include="images\defaulticon\16x16\attachment.png" />
     <Content Include="images\defaulticon\16x16\blank.png" />
     <Content Include="images\defaulticon\16x16\calculator.png" />
+    <Content Include="images\defaulticon\16x16\calendar-alt-1.png" />
     <Content Include="images\defaulticon\16x16\cancel.png" />
+    <Content Include="images\defaulticon\16x16\check.png" />
+    <Content Include="images\defaulticon\16x16\comment-alt.png" />
     <Content Include="images\defaulticon\16x16\delete.png" />
     <Content Include="images\defaulticon\16x16\document.png" />
     <Content Include="images\defaulticon\16x16\download.png" />
@@ -320,6 +330,7 @@
     <Content Include="images\defaulticon\16x16\edit.png" />
     <Content Include="images\defaulticon\16x16\files.png" />
     <Content Include="images\defaulticon\16x16\grid-dot.png" />
+    <Content Include="images\defaulticon\16x16\idea-alt.png" />
     <Content Include="images\defaulticon\16x16\list-ordered.png" />
     <Content Include="images\defaulticon\16x16\login.png" />
     <Content Include="images\defaulticon\16x16\logout.png" />
@@ -337,6 +348,7 @@
     <Content Include="images\defaulticon\16x16\statistics-pie-chart.png" />
     <Content Include="images\defaulticon\16x16\sticky-note.png" />
     <Content Include="images\defaulticon\16x16\table.png" />
+    <Content Include="images\defaulticon\16x16\time.png" />
     <Content Include="images\defaulticon\16x16\user-alt-2.png" />
     <Content Include="images\defaulticon\16x16\users-alt.png" />
     <Content Include="images\defaulticon\16x16\zoom.png" />
@@ -546,6 +558,7 @@
     <Content Include="Include\Ucl_IncidentSummary.ascx" />
     <Content Include="Include\Ucl_INCFORM_Causation.ascx" />
     <Content Include="Include\Ucl_EHSPrevActionForm.ascx" />
+    <Content Include="Include\Ucl_INCFORM_Alert.ascx" />
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
@@ -561,6 +574,9 @@
     <Content Include="RadEditorToolsFile.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Reports\EHS_12HourReport.aspx" />
+    <Content Include="Reports\EHS_48HourReport.aspx" />
+    <Content Include="Reports\EHS_5Phase.aspx" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\common.js" />
@@ -1380,12 +1396,14 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Audit_PDF.aspx.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Audit_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
@@ -1420,6 +1438,7 @@
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.designer.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
@@ -1935,6 +1954,7 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1948,6 +1968,7 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -2043,6 +2064,13 @@
     <Compile Include="Include\Ucl_EHSPrevActionForm.ascx.designer.cs">
       <DependentUpon>Ucl_EHSPrevActionForm.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Alert.ascx.cs">
+      <DependentUpon>Ucl_INCFORM_Alert.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_INCFORM_Alert.ascx.designer.cs">
+      <DependentUpon>Ucl_INCFORM_Alert.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2070,6 +2098,27 @@
     </Compile>
     <Compile Include="PSMaster.Master.designer.cs">
       <DependentUpon>PSMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EHS_12HourReport.aspx.cs">
+      <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\EHS_12HourReport.aspx.designer.cs">
+      <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EHS_48HourReport.aspx.cs">
+      <DependentUpon>EHS_48HourReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\EHS_48HourReport.aspx.designer.cs">
+      <DependentUpon>EHS_48HourReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\EHS_5Phase.aspx.cs">
+      <DependentUpon>EHS_5Phase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\EHS_5Phase.aspx.designer.cs">
+      <DependentUpon>EHS_5Phase.aspx</DependentUpon>
     </Compile>
     <Compile Include="RspPSMaster.Master.cs">
       <DependentUpon>RspPSMaster.Master</DependentUpon>
@@ -2261,8 +2310,12 @@
     <Content Include="Home\App_LocalResources\Calendar.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.resx" />
@@ -2777,7 +2830,9 @@
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_DashboardArea.ascx.es.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.es.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.es.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Include\App_LocalResources\Ucl_AdminPasswordEdit.ascx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_AdminPasswordEdit.ascx.es.resx" />
     <Content Include="EHS\App_LocalResources\EHS_Audit_Exceptions.aspx.es.resx" />
@@ -2791,7 +2846,9 @@
     <Content Include="Include\App_LocalResources\Ucl_DocMgr.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.es.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.es.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.es.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.es.resx" />
@@ -2817,7 +2874,9 @@
     <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.zh.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.zh.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.zh.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.zh.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.zh.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.zh.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.zh.resx" />
     <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.zh.resx" />
@@ -2843,7 +2902,9 @@
     <Content Include="Include\App_LocalResources\Ucl_EHSList.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Action.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Contain.ascx.th.resx" />
-    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.th.resx" />
+    <Content Include="Include\App_LocalResources\Ucl_INCFORM_InjuryIllness.ascx.th.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_LostTime_Hist.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_INCFORM_Root5Y.ascx.th.resx" />
     <Content Include="Include\App_LocalResources\Ucl_IncidentList.ascx.th.resx" />

@@ -3,36 +3,34 @@
 
 <script type="text/javascript">
 
-	function OnEditorClientLoad(editor) {
-		editor.attachEventHandler("ondblclick", function (e) {
-			var sel = editor.getSelection().getParentElement(); //get the currently selected element
-			var href = null;
-			if (sel.tagName === "A") {
-				href = sel.href; //get the href value of the selected link
-				window.open(href, null, "height=500,width=500,status=no,toolbar=no,menubar=no,location=no");
-				return false;
-			}
-		}
-		);
+	window.onload = function () {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_hfChangeUpdate').value = "";
 	}
-
-
-	function StandardConfirm(sender, args) {
-
-		// Some pages will have no validators, so skip
-		if (typeof Page_ClientValidate === "function") {
-			var validated = Page_ClientValidate('Val_PowerOutage');
-
-			if (!validated)
-				alert("Please fill out all of the required fields.");
+	window.onbeforeunload = function () {
+		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_hfChangeUpdate').value == '1') {
+			return 'You have unsaved changes on this page.';
 		}
+	}
+	function ChangeUpdate() {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_hfChangeUpdate').value = '1';
+		return true;
+	}
+	function ChangeClear(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_hfChangeUpdate').value = '0';
 	}
 
 </script>
 
 <asp:Panel ID="pnlApproval" Visible="False" runat="server" meta:resourcekey="pnlApprovalResource1">
+	<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
 
-	<br />
+	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 5px 0 5px 0;">
+		<div class="row text_center">
+			<div class="col-xs-12 col-sm-12 text-center">
+				<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
+			</div>
+		</div>
+	</div>
 
 	<div class="container-fluid">
 
@@ -40,16 +38,6 @@
 
 		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound" OnItemCommand="rptApprovals_ItemCommand">
 			<FooterTemplate>
-				<div class="row">
-					<div class="col-xs-12 text-left-more">
-						<br />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 text-left-more">
-						<br />
-					</div>
-				</div>
 			</FooterTemplate>
 			<HeaderTemplate>
 			</HeaderTemplate>
@@ -70,7 +58,7 @@
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span>
-						<asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" />
+						<asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
 						</span>
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
@@ -95,12 +83,14 @@
 			</ItemTemplate>
 			<SeparatorTemplate>
 				<br />
-				<br />
 			</SeparatorTemplate>
 		</asp:Repeater>
 
 		</telerik:RadAjaxPanel>
-
+		<center>
+			<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
+				OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" Visibl="false" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+		</center>
 	</div>
 </asp:Panel>
 

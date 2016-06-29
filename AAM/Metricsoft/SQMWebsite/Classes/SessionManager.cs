@@ -11,7 +11,7 @@ namespace SQM.Website
 {
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
-	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, notify=400, view=500, none=900 }
+	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, release=390, release1=391, release2=392, release3=393, release4=394, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata }
 
 	public static class CultureSettings
@@ -312,6 +312,17 @@ namespace SQM.Website
 			}
 			set { HttpContext.Current.Session["RETURNOBJECT"] = value; }
 		}
+		public static string ReturnContext
+		{
+			get
+			{
+				if (HttpContext.Current.Session["RETURNCONTEXT"] != null)
+					return ((string)HttpContext.Current.Session["RETURNCONTEXT"]);
+				else
+					return "";
+			}
+			set { HttpContext.Current.Session["RETURNCONTEXT"] = value; }
+		}
 		public static bool ReturnStatus
 		{
 			get
@@ -339,8 +350,13 @@ namespace SQM.Website
 			try
 			{
 				HttpContext.Current.Session["RETURNOBJECT"] = null;
+				HttpContext.Current.Session["RETURNCONTEXT"] = null;
 				HttpContext.Current.Session["RETURNSTATUS"] = false;
 				HttpContext.Current.Session["RETURNPATH"] = null;
+
+				ReturnStatus = false;
+				ReturnObject = null;
+				ReturnContext = "";
 			}
 			catch { }
 		}
@@ -457,6 +473,8 @@ namespace SQM.Website
 				SessionManager.CurrencyList = null;
 				SessionManager.RemoveValue("RETURNOBJECT");
 				SessionManager.ReturnObject = null;
+				SessionManager.RemoveValue("RETURNCONTEXT");
+				SessionManager.ReturnContext = null;
 				SessionManager.RemoveValue("CURRENTOBJECT");
 				SessionManager.CurrentObject = null;
 				SessionManager.RemoveValue("TEMPOBJECT");
@@ -531,6 +549,18 @@ namespace SQM.Website
 				}
 			}
 			return isType;
+		}
+
+		public static SETTINGS GetUserSetting(string settingGroup, string settingCode)
+		{
+			try
+			{
+				return UserSettings.Where(s => s.SETTING_GROUP == settingGroup && s.SETTING_CD == settingCode).FirstOrDefault();
+			}
+			catch
+			{
+				return null;
+			}
 		}
 
 		public static BusinessLocation SetEffLocation(decimal plantID)

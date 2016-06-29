@@ -28,9 +28,15 @@ namespace SQM.Website
 		PSsqmEntities entities;
 		List<EHSFormControlStep> formSteps;
 
+		public PageUseMode PageMode { get; set; }
 
-		public decimal IncidentId { get; set; }
 		public decimal theincidentId { get; set; }
+
+		public int ApprovalLevel
+		{
+			get { return ViewState["ApprovalLevel"] == null ? 0 : (int)ViewState["ApprovalLevel"]; }
+			set { ViewState["ApprovalLevel"] = value; }
+		}
 
 		public bool IsEditContext
 		{
@@ -47,22 +53,10 @@ namespace SQM.Website
 			set { ViewState["SelectedTypeId"] = value; }
 		}
 
-		public decimal EditIncidentId
+		public decimal IncidentId
 		{
-			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
-			set { ViewState["EditIncidentId"] = value; }
-		}
-
-		public decimal NewIncidentId
-		{
-			get { return ViewState["NewIncidentId"] == null ? 0 : (decimal)ViewState["NewIncidentId"]; }
-			set { ViewState["NewIncidentId"] = value; }
-		}
-
-		public INCIDENT ApprovalIncident
-		{
-			get { return ViewState["ApprovalINCIDENT"] == null ? null : (INCIDENT)ViewState["ApprovalINCIDENT"]; }
-			set { ViewState["ApprovalINCIDENT"] = value; }
+			get { return ViewState["IncidentId"] == null ? 0 : (decimal)ViewState["IncidentId"]; }
+			set { ViewState["IncidentId"] = value; }
 		}
 
 		protected string IncidentLocationTZ
@@ -73,25 +67,13 @@ namespace SQM.Website
 
 		protected decimal EditIncidentTypeId
 		{
-			get { return EditIncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(EditIncidentId); }
+			get { return IncidentId == null ? 0 : EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(IncidentId); }
 		}
 
-		protected bool UpdateAccess
+		public INCIDENT LocalIncident
 		{
-			get { return ViewState["UpdateAccess"] == null ? false : (bool)ViewState["UpdateAccess"]; }
-			set { ViewState["UpdateAccess"] = value; }
-		}
-
-		protected bool ActionAccess
-		{
-			get { return ViewState["ActionAccess"] == null ? false : (bool)ViewState["ActionAccess"]; }
-			set { ViewState["ActionAccess"] = value; }
-		}
-
-		protected bool ApproveAccess
-		{
-			get { return ViewState["ApproveAccess"] == null ? false : (bool)ViewState["ApproveAccess"]; }
-			set { ViewState["ApproveAccess"] = value; }
+			get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
+			set { ViewState["LocalIncident"] = value; }
 		}
 
 		public string ValidationGroup
@@ -110,9 +92,6 @@ namespace SQM.Website
 		{
 			if (SessionManager.SessionContext != null)
 			{
-				UpdateAccess = SessionManager.CheckUserPrivilege(SysPriv.originate, SysScope.incident);
-				ActionAccess = SessionManager.CheckUserPrivilege(SysPriv.action, SysScope.incident);
-				ApproveAccess = SessionManager.CheckUserPrivilege(SysPriv.approve, SysScope.incident);
 
 				if (IsFullPagePostback)
 					rptApprovals.DataBind();
@@ -160,27 +139,22 @@ namespace SQM.Website
 		}
 
 
-		public void PopulateInitialForm()
+		public void PopulateInitialForm(int approvalLevel)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
-			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+			ApprovalLevel = approvalLevel;
 
 			XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_APPROVALS" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 
 			if (IncidentId > 0)
 				try
 				{
-					ApprovalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
-					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)ApprovalIncident.DETECT_PLANT_ID, "");
+					LocalIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
+					PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)LocalIncident.DETECT_PLANT_ID, "");
 					if (plant != null)
 						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 				}
 				catch { }
-
-			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
-
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
-			totalFormSteps = formSteps.Count();
 
 			InitializeForm();
 		}
@@ -188,12 +162,17 @@ namespace SQM.Website
 
 		void InitializeForm()
 		{
-			IncidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-
 			SetUserAccess("INCFORM_APPROVAL");
 
 			pnlApproval.Visible = true;
-			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
+
+			if (PageMode == PageUseMode.ViewOnly)
+			{
+				divTitle.Visible = true;
+				lblFormTitle.Text = Resources.LocalizedText.Approvals;
+			}
+
+			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(IncidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ), ApprovalLevel);
 			rptApprovals.DataBind();
 		}
 
@@ -208,7 +187,6 @@ namespace SQM.Website
 			{
 
 				int minRowsToValidate = 1;
-				int basecode = (int)SysPriv.approve1;
 
 				try
 				{
@@ -222,8 +200,8 @@ namespace SQM.Website
 					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-					lbjobd.Text = XLATList.Where(l => l.XLAT_CODE == (basecode+e.Item.ItemIndex).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
-					lbm.Text = XLATList.Where(l => l.XLAT_CODE == (basecode+e.Item.ItemIndex).ToString()).FirstOrDefault().DESCRIPTION;
+					lbjobd.Text = XLATList.Where(l => l.XLAT_CODE == approval.ITEM_SEQ.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					lbm.Text = XLATList.Where(l => l.XLAT_CODE == approval.ITEM_SEQ.ToString()).FirstOrDefault().DESCRIPTION;
 
 					hf.Value = approval.ITEM_SEQ.ToString();
 					hf = (HiddenField)e.Item.FindControl("hfPersonID");
@@ -248,15 +226,31 @@ namespace SQM.Website
 				catch { }
 			}
 
-			if (e.Item.ItemType == ListItemType.Footer)
+			if (PageMode == PageUseMode.ViewOnly)
 			{
-				//Button addanother = (Button)e.Item.FindControl("btnAddApproval");
-				//addanother.Visible = ApproveAccess;
+				btnSave.Visible = pnlApproval.Enabled = false;
 			}
-
+			else
+			{
+				if (EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.approve1, LocalIncident.INCFORM_LAST_STEP_COMPLETED)
+					|| EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.approve2, LocalIncident.INCFORM_LAST_STEP_COMPLETED)
+					|| EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.approve3, LocalIncident.INCFORM_LAST_STEP_COMPLETED)
+					|| EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.approve4, LocalIncident.INCFORM_LAST_STEP_COMPLETED))
+				{
+					btnSave.Visible = true;
+				}
+			}
 		}
 
-		public int AddUpdateINCFORM_APPROVAL(decimal incidentId)
+		protected void btnSave_Click(object sender, EventArgs e)
+		{
+			AddUpdateINCFORM_APPROVAL(IncidentId, ApprovalLevel);
+			string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+			ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+			InitializeForm();
+		}
+
+		public int AddUpdateINCFORM_APPROVAL(decimal incidentId, int approvalLevel)
 		{
 			var itemList = new List<INCFORM_APPROVAL>();
 			int status = 0;
@@ -265,7 +259,10 @@ namespace SQM.Website
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString());
+				if (approvalLevel == 0)
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND (APPROVAL_LEVEL = 0  OR APPROVAL_LEVEL IS NULL)");
+				else 
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND APPROVAL_LEVEL = " + approvalLevel.ToString());
 
 				foreach (RepeaterItem item in rptApprovals.Items)
 				{
@@ -281,6 +278,7 @@ namespace SQM.Website
 						INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
 						approval.INCIDENT_ID = incidentId;
 						approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
+						approval.APPROVAL_LEVEL = approvalLevel;
 						approval.IsAccepted = true;
 						approval.APPROVAL_DATE = rda.SelectedDate;
 						hf = (HiddenField)item.FindControl("hfPersonID");
@@ -317,7 +315,7 @@ namespace SQM.Website
 
 				if (status > -1)
 				{
-					EHSNotificationMgr.NotifyIncidentStatus(ApprovalIncident, ((int)SysPriv.approve).ToString(), "");
+					EHSNotificationMgr.NotifyIncidentStatus(LocalIncident, ((int)SysPriv.approve).ToString(), "");
 				}
 			}
 

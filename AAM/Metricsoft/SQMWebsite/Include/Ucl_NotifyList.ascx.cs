@@ -157,8 +157,9 @@ namespace SQM.Website
 							ri.Checked = true;
 					}
 
-					ddlEdit_OnIndexChanged(null, null);
 					btnDelete.Visible = true;
+
+					ddlEdit_OnIndexChanged(null, null);
 				}
 
 				string script = "function f(){OpenNotifyEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
@@ -172,9 +173,23 @@ namespace SQM.Website
 		protected void ddlEdit_OnIndexChanged(object sender, EventArgs e)
 		{
 
+			if (new string[1] { "IN-0" }.Contains(ddlNotifyScope.SelectedValue))
+			{
+				ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = true;
+			}
+			else
+			{
+				ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = false;
+			}
+
 			if (new string[2] { "350", "380" }.Contains(ddlScopeTask.SelectedValue))
 			{
 				ddlScopeStatus.Enabled = true;
+			}
+			else if (new string[1] { "400" }.Contains(ddlScopeTask.SelectedValue))
+			{
+				ddlNotifyScope.SelectedValue = "IN-0";
+				ddlScopeTiming.Enabled = false;
 			}
 			else
 			{
@@ -280,6 +295,8 @@ namespace SQM.Website
 			ddlNotifyPrivGroup.ClearCheckedItems();
 
 			btnDelete.Visible = false;
+
+			ddlEdit_OnIndexChanged(null, null);
 
 			string script = "function f(){OpenNotifyEditWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);

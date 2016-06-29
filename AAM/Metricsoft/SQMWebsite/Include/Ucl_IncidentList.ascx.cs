@@ -18,6 +18,9 @@ namespace SQM.Website
 		static string staticAppContext;
 		static int baseRowIndex;
 
+		static string[] incidentReportList;
+		static string[] incidentReportLabelList;
+
 		RadPersistenceManager persistenceManager;
 
 		public event GridItemClick OnQualityIssueClick;
@@ -84,6 +87,21 @@ namespace SQM.Website
 			if (OnIncidentClick != null)
 			{
 				OnIncidentClick(Convert.ToDecimal(lnk.CommandArgument));
+			}
+		}
+
+		protected void btnViewIncident(Object sender, EventArgs e)
+		{
+			ImageButton btn = (ImageButton)sender;
+
+			SessionManager.ReturnObject = "Notification";
+			SessionManager.ReturnRecordID = Convert.ToDecimal(btn.CommandArgument);
+			SessionManager.ReturnStatus = true;
+			SessionManager.ReturnContext = "a";
+
+			if (OnIncidentClick != null)
+			{
+				OnIncidentClick(Convert.ToDecimal(btn.CommandArgument));
 			}
 		}
 
@@ -477,7 +495,7 @@ namespace SQM.Website
 
 					//lbReportQi.Visible = (hf.Value != "EHS");
 					lbReportQi.Visible = true;
-					hlReportEhs.Visible = (hf.Value == "EHS");
+					hlReportEhs.Visible =  (hf.Value == "EHS");
 
 					ProblemCase probCase = (ProblemCase)e.Item.DataItem;
 
@@ -667,6 +685,15 @@ namespace SQM.Website
 				}
 			}
 
+			SETTINGS sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS");
+			if (sets != null)
+			{
+				incidentReportList = sets.VALUE.Split(',');
+				sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS_LABELS");
+				if (sets != null)
+					incidentReportLabelList = sets.VALUE.Split(',');
+			}
+
 			if (showImages)
 				rgIncidentList.MasterTableView.GetColumn("Attach").Visible = true;
 			else
@@ -765,9 +792,34 @@ namespace SQM.Website
 						lbEditReport.Visible = false;
 					}
 
-					HyperLink hlEHSReport = (HyperLink)e.Item.FindControl("hlReport");
-					hlEHSReport.NavigateUrl = "/EHS/EHS_Alert_PDF.aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
+					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
+					{
+						if (!string.IsNullOrEmpty(incidentReportList[0]))
+						{
+							hlk.NavigateUrl = "/Reports/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.Text = incidentReportLabelList[0];
+							hlk.ToolTip = incidentReportList[0];
+						}
 
+						if (!string.IsNullOrEmpty(incidentReportList[1]))
+						{
+							hlk = (HyperLink)e.Item.FindControl("hlReport1");
+							hlk.NavigateUrl = "/Reports/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.ToolTip = incidentReportList[1];
+							hlk.Text = incidentReportLabelList[1];
+							hlk.Visible = true;
+						}
+						if (!string.IsNullOrEmpty(incidentReportList[2]))
+						{
+							hlk = (HyperLink)e.Item.FindControl("hlReport2");
+							hlk.NavigateUrl = "/Reports/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							hlk.ToolTip = incidentReportList[2];
+							hlk.Text = incidentReportLabelList[2];
+							hlk.Visible = true;
+						}
+					}
+				
 					if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
 					{
 						lbl = (Label)e.Item.FindControl("lblAttach");

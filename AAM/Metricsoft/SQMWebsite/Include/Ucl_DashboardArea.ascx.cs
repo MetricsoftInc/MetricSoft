@@ -179,6 +179,13 @@ namespace SQM.Website
             localCriteria.MetricArray = new decimal[0];
             localCriteria.MetricNameArray = new string[0];
 
+			// final 'from' date reset when querying for FY YTD
+			if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+			{
+				dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
+				localCriteria.FromDate = Convert.ToDateTime(dmPeriodFrom.SelectedDate).AddYears(1);
+			}
+
             string[] optionSels = ddlOptions.Items.Where(i => i.Checked == true).Select(i => i.Value).ToArray();
 
             if (optionSels.Contains(Convert.ToInt32(Enum.Parse(typeof(DashboardOpts), DashboardOpts.TotalsOnly.ToString())).ToString()))
@@ -235,31 +242,22 @@ namespace SQM.Website
                     dmPeriodFrom.SelectedDate = new DateTime(lastYear.Year, 1, 1);
                     dmPeriodTo.SelectedDate = new DateTime(lastYear.Year, 12, 1);
                     break;
-                case DateSpanOption.FYYearToDate:       // fy ytd
-                    dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-                    dmPeriodTo.SelectedDate = new DateTime(SessionManager.UserContext.LocalTime.Year, SessionManager.UserContext.LocalTime.Month, 1);
-                     if (DateTime.Now.AddMonths(-1) < SessionManager.FYStartDate())
-                            {
-                                dmPeriodFrom.SelectedDate = SessionManager.FYStartDate().AddYears(-1);
-                                dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime.AddMonths(-1);
-                            }
-                            else
-                            {
-                                dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-								dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
-                            }
+				case DateSpanOption.FYYearToDate:       // fy ytd
+					dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+					dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
+					lblPeriodFrom.Visible = dmPeriodFrom.Visible = false;
 
-                            if (localView.PERSPECTIVE == "0" || localView.PERSPECTIVE == "E")
-                            {
-                                dmPeriodTo.SelectedDate = localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT < dmPeriodTo.SelectedDate ? localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT : dmPeriodTo.SelectedDate;
-                                if (dmPeriodTo.SelectedDate < dmPeriodFrom.SelectedDate)
-                                {
-                                    DateTime dt = Convert.ToDateTime(localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT).AddYears(-1);
-                                    dt = new DateTime(dt.Year, (int)localCompany.FYSTART_MONTH, 1);
-                                    dmPeriodFrom.SelectedDate = dt;
-                                }
-                            }
-                    break;
+					if (localView.PERSPECTIVE == "0" || localView.PERSPECTIVE == "E")
+					{
+						dmPeriodTo.SelectedDate = localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT < dmPeriodTo.SelectedDate ? localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT : dmPeriodTo.SelectedDate;
+						if (dmPeriodTo.SelectedDate < dmPeriodFrom.SelectedDate)
+						{
+							DateTime dt = Convert.ToDateTime(localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT).AddYears(-1);
+							dt = new DateTime(dt.Year, (int)localCompany.FYSTART_MONTH, 1);
+							dmPeriodFrom.SelectedDate = dt;
+						}
+					}
+					break;
                 case DateSpanOption.FYEffTimespan:
                     if (localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_FROM_DT.HasValue && localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT.HasValue)
                     {
@@ -583,6 +581,11 @@ namespace SQM.Website
                         break;
                 }
 
+				if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+				{
+					dmPeriodFrom.Enabled = false;
+				}
+
                 // auto display w/ options section closed if the default view
                 if (localView.PERSPECTIVE == "0")
                 {
@@ -596,10 +599,6 @@ namespace SQM.Website
                 localCriteria.ResetOptions();
                 ddlOptions.Items.FindItemByValue(Convert.ToInt32(Enum.Parse(typeof(DashboardOpts), DashboardOpts.TotalsOnly.ToString())).ToString()).Checked = false;
                 ddlOptions.Items.FindItemByValue(Convert.ToInt32(Enum.Parse(typeof(DashboardOpts), DashboardOpts.TotalsOnly.ToString())).ToString()).Enabled = ViewModel.HasArrays(localView);
-                //if (ddlOptions.Items.Where(i => i.Enabled).Count() == 0)
-                //    trViewOptions.Visible = false;
-                //else
-                //    trViewOptions.Visible = true;
 
                  MessageDisplay(null);
 
@@ -660,16 +659,35 @@ namespace SQM.Website
                      metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
                     //if (UserContext.RoleAccess() >= AccessMode.Plant)
                           lnkExport.Visible = true;
-                     if (context == "export")
-                     {
-                         uclProgress.ProgressComplete();
-                         uclProgress.BindProgressDisplay(100, "Exporting...");
-                         uclProgress.UpdateDisplay(2, 50, "Exporting...");
-                         uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), metricMgr.ehsCtl.MetricHst, false);
-                         uclProgress.ProgressComplete();
-                         return 1;
-                     }
-                   
+						  if (context == "export")
+						  {
+							  uclProgress.ProgressComplete();
+							  uclProgress.BindProgressDisplay(100, "Exporting...");
+							  uclProgress.UpdateDisplay(2, 50, "Exporting...");
+
+							  List<WebSiteCommon.DatePeriod> pdList;
+							  if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+							  {
+								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.FYyear, localCriteria.DateSpanType, "");
+								  List<EHS_METRIC_HISTORY> exportList = new List<EHS_METRIC_HISTORY>();
+								  foreach (WebSiteCommon.DatePeriod pd in pdList)
+								  {
+									  exportList.AddRange(metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, 1) >= pd.FromDate && new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, DateTime.DaysInMonth(l.PERIOD_YEAR, l.PERIOD_MONTH)) <= pd.ToDate).ToList());
+								  }
+								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), exportList, false);
+							  }
+							  else
+							  {
+								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.year, localCriteria.DateSpanType, "");
+								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(),
+									  metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, 1) >= pdList.ElementAt(0).FromDate && new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, DateTime.DaysInMonth(l.PERIOD_YEAR, l.PERIOD_MONTH)) <= pdList.ElementAt(0).ToDate).ToList(),
+									  false);
+							  }
+
+							  // uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), metricMgr.ehsCtl.MetricHst, false);
+							  uclProgress.ProgressComplete();
+							  return 1;
+						  }
                      break;
             }
 

@@ -213,18 +213,19 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="columnHeader">
-                                                                <asp:Label ID="lblEmpID" runat="server" text="Employee ID / Supervisor ID" ></asp:Label>
+                                                                <asp:Label ID="lblEmpID" runat="server" text="Employee ID" Visible="false"></asp:Label>
+																<asp:Label ID="lblEmpSupv" runat="server" text="Employee ID / Supervisor ID" Visible="false"></asp:Label>
                                                             </td>
                                                             <td class="tableDataAlt">&nbsp;</td>
                                                             <td class="tableDataAlt">
 																<span>
 																	<asp:TextBox ID="tbEmpID" size="16" maxlength="16" runat="server"></asp:TextBox>&nbsp;&nbsp;
-																	<asp:TextBox ID="tbSupvEmpID" size="16" maxlength="16" runat="server"></asp:TextBox>
+																	<asp:TextBox ID="tbSupvEmpID" size="16" maxlength="16" runat="server" Visible="false"></asp:TextBox>
 																</span>
                                                             </td>
 															<td class="tableDataAlt"></td>
                                                         </tr>
-                                                        <tr>
+                                                        <tr id="trJobCode" runat="server">
                                                             <td class="columnHeader">
                                                                 <asp:Label ID="lblUserTitle" runat="server" text="Job Code"></asp:Label>
                                                             </td>

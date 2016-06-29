@@ -53,7 +53,7 @@ namespace SQM.Website
 					TASK_STATUS task = SessionManager.ReturnObject as TASK_STATUS;
 					ReturnURL = SessionManager.ReturnPath;
 					SessionManager.ClearReturns();
-					if (task.TASK_STEP == ((int)SysPriv.action).ToString())
+					if (task.TASK_STEP == ((int)SysPriv.action).ToString()  ||  task.TASK_STEP == ((int)SysPriv.notify).ToString())
 					{
 						UpdateSelectedTask(task.TASK_ID);
 					}

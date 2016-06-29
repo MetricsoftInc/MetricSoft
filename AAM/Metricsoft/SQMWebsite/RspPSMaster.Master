@@ -138,16 +138,19 @@
 
 	// Warn when navigating away from page with form data changed
 	$(window).bind('beforeunload', function () {
-		if (document.getElementById("hfSubmitReset").value == 'true' && document.getElementById("hfUnsaved").value == 'true') {
-			submitted = false;
-			unsaved = true;
-			document.getElementById("hfSubmitReset").value = '';
-			document.getElementById("hfUnsaved").value = ''
-		}
-		if (unsaved && !submitted) {
-			var prm = Sys.WebForms.PageRequestManager.getInstance();
-			if (!prm._processingRequest) {
-				return "You have unsaved changes on this page. You will lose your changes if you leave this page now.";
+		if (document.getElementById("hfSubmitReset"))
+		{
+			if (document.getElementById("hfSubmitReset").value == 'true' && document.getElementById("hfUnsaved").value == 'true') {
+				submitted = false;
+				unsaved = true;
+				document.getElementById("hfSubmitReset").value = '';
+				document.getElementById("hfUnsaved").value = ''
+			}
+			if (unsaved && !submitted) {
+				var prm = Sys.WebForms.PageRequestManager.getInstance();
+				if (!prm._processingRequest) {
+					return "You have unsaved changes on this page. You will lose your changes if you leave this page now.";
+				}
 			}
 		}
 	});

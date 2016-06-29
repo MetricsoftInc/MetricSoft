@@ -67,10 +67,21 @@ namespace SQM.Website
 				{
 					if (string.IsNullOrEmpty(settingFamily))
 					{
-						settingsList = (from s in entities.SETTINGS
-										where (s.SETTING_GROUP.ToUpper() == settingGroup.ToUpper())
-										orderby s.SETTING_CD
-										select s).ToList();
+						if (settingGroup.Contains("*"))  // wildcard search
+						{
+							string groupLike = settingGroup.Substring(0, settingGroup.Length - 1).ToUpper();
+							settingsList = (from s in entities.SETTINGS
+											where (s.SETTING_GROUP.ToUpper().Contains(groupLike))
+											orderby s.SETTING_CD
+											select s).ToList();
+						}
+						else
+						{
+							settingsList = (from s in entities.SETTINGS
+											where (s.SETTING_GROUP.ToUpper() == settingGroup.ToUpper())
+											orderby s.SETTING_CD
+											select s).ToList();
+						}
 					}
 					else
 					{

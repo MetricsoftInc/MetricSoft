@@ -79,6 +79,76 @@ namespace SQM.Website
 		}
 	}
 
+		[Serializable]
+	public class RootCauseSeries
+	{
+		public int ProblemSeq
+		{
+			get;
+			set;
+		}
+		public string ProblemStatement
+		{
+			get;
+			set;
+		}
+		public List<INCFORM_ROOT5Y> RootCauseList
+		{
+			get;
+			set;
+		}
+	}
+
+	[Serializable]
+	public class IncidentAlertItem
+	{
+		public TASK_STATUS Task
+		{
+			get;
+			set;
+		}
+		public PLANT Location
+		{
+			get;
+			set;
+		}
+		public PERSON Person
+		{
+			get;
+			set;
+		}
+	}
+
+	[Serializable]
+	public class ActionType
+	{
+		public string ActionTypeCode
+		{
+			get;
+			set;
+		}
+		public string ActionDescription
+		{
+			get;
+			set;
+		}
+		public int ActionSeq
+		{
+			get;
+			set;
+		}
+		public string Criteria
+		{
+			get;
+			set;
+		}
+		public bool IsSelected
+		{
+			get;
+			set;
+		}
+	}
+
 	public class EHSIncidentData
 	{
 		public INCIDENT Incident
@@ -952,7 +1022,7 @@ namespace SQM.Website
 			PSsqmEntities entities = new PSsqmEntities();
 			var rootcauses = new List<INCFORM_ROOT5Y>();
 
-			int minRowsThisForm = 5;
+			int minRowsThisForm = 1;
 
 			rootcauses = (from c in entities.INCFORM_ROOT5Y
 						where c.INCIDENT_ID == incidentId
@@ -981,9 +1051,30 @@ namespace SQM.Website
 			return rootcauses;
 		}
 
+		public static List<INCFORM_ROOT5Y> FormatRootCauseList(INCIDENT incident, List<INCFORM_ROOT5Y> rootCauseList)
+		{
+			foreach (INCFORM_ROOT5Y rc in rootCauseList)
+			{
+				if (!rc.ITEM_TYPE.HasValue)
+					rc.ITEM_TYPE = 0;
+				if (!rc.PROBLEM_SERIES.HasValue)
+					rc.PROBLEM_SERIES = 0;
+			}
 
+			if (rootCauseList.Where(l => l.ITEM_TYPE == 1).Count() == 0)
+			{
+				INCFORM_ROOT5Y cause = new INCFORM_ROOT5Y();
+				cause.ITEM_TYPE = 1;
+				cause.PROBLEM_SERIES = 0;
+				cause.ITEM_SEQ = 0;
+				cause.ITEM_DESCRIPTION = incident.DESCRIPTION;
+				rootCauseList.Insert(0, cause);
+			}
 
-		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId, DateTime ? defaultDate)
+			return rootCauseList;
+		}
+
+		public static List<INCFORM_CONTAIN> GetContainmentList(decimal incidentId, DateTime? defaultDate, bool createEmpty)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 			var containments = new List<INCFORM_CONTAIN>();
@@ -995,7 +1086,7 @@ namespace SQM.Website
 						  select c).ToList();
 
 			int itemsNeeded = 0;
-			if (containments.Count() < minRowsThisForm)
+			if (containments.Count() < minRowsThisForm  &&  createEmpty)
 				itemsNeeded = minRowsThisForm -containments.Count();
 
 				int seq = containments.Count(); ;
@@ -1053,19 +1144,64 @@ namespace SQM.Website
 		}
 
 
-		public static List<TASK_STATUS> GetCorrectiveActionList(decimal incidentId, DateTime ? defaultDate)
+		public static List<TASK_STATUS> GetCorrectiveActionList(decimal incidentId, DateTime ? defaultDate, bool createEmpty)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
 
+			string taskStep = ((int)SysPriv.action).ToString();
 			List<TASK_STATUS> actionList = (from t in entities.TASK_STATUS
-											where t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && t.RECORD_ID == incidentId
+											where t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && t.TASK_STEP == taskStep  && t.RECORD_ID == incidentId
 											select t).ToList();
-			if (actionList.Count == 0)
+			if (actionList.Count == 0  &&  createEmpty)
 			{
 				actionList.Add(CreateEmptyTask(incidentId, ((int)SysPriv.action).ToString(), 1, defaultDate));
 			}
 
 			return actionList;
+		}
+
+		public static INCFORM_ALERT LookupIncidentAlert(PSsqmEntities ctx, decimal incidentId)
+		{
+			INCFORM_ALERT incidentAlert = null;
+			try 
+			{
+				incidentAlert = (from a in ctx.INCFORM_ALERT where a.INCIDENT_ID == incidentId select a).SingleOrDefault();
+			}
+			catch 
+			{
+			}
+
+			return incidentAlert;
+		}
+		public static List<TASK_STATUS> GetAlertTaskList(PSsqmEntities ctx, decimal incidentId)
+		{
+			string taskStep = ((int)SysPriv.notify).ToString();
+			List<TASK_STATUS> alertTaskList = (from t in ctx.TASK_STATUS
+											where t.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident  &&  t.TASK_STEP == taskStep && t.RECORD_ID == incidentId
+											select t).ToList();
+			return alertTaskList;
+		}
+
+		public static List<IncidentAlertItem> GetAlertItemList(PSsqmEntities ctx, decimal incidentId)
+		{
+			List<IncidentAlertItem> alertItemList = new List<IncidentAlertItem>();
+
+			foreach (TASK_STATUS task in GetAlertTaskList(ctx, incidentId).ToList())
+			{
+				IncidentAlertItem item = new IncidentAlertItem();
+				item.Task = task;
+				if (task.RESPONSIBLE_ID.HasValue)
+				{
+					item.Person = SQMModelMgr.LookupPerson(ctx, (decimal)task.RESPONSIBLE_ID, "", false);
+				}
+				if (task.RECORD_SUBID.HasValue)
+				{
+					item.Location = SQMModelMgr.LookupPlant(ctx, (decimal)task.RECORD_SUBID, "");
+				}
+				alertItemList.Add(item);
+			}
+
+			return alertItemList;
 		}
 
 		public static TASK_STATUS CreateEmptyTask(decimal incidentId, string taskStep, int taskSeq, DateTime ? defaultDate)
@@ -1106,7 +1242,7 @@ namespace SQM.Website
 
 				losttime.ITEM_DESCRIPTION = "";
 				losttime.WORK_STATUS = "";
-				losttime.BEGIN_DT = null;
+				losttime.BEGIN_DT = DateTime.UtcNow;
 				losttime.NEXT_MEDAPPT_DT = null;
 				losttime.RETURN_EXPECTED_DT = null;
 				losttime.RETURN_TOWORK_DT = null;
@@ -1161,11 +1297,11 @@ namespace SQM.Website
 					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
 				}
 
-                // truncate time accural to current day in case of erroneous lost/restricted time entry
-                if (endDate > DateTime.UtcNow)
-                {
-                    endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
-                }
+				// truncate time accural to current day in case of erroneous lost/restricted time entry
+				if (endDate > DateTime.UtcNow)
+				{
+					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
+				}
 
 				int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
 				DateTime effDate;
@@ -1260,30 +1396,38 @@ namespace SQM.Website
 			return periodList;
 		}
 
-		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId, DateTime ? defaultDate)
+		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId, DateTime ? defaultDate, int approvalLevel)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();
 
-			SETTINGS sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");
+			SETTINGS sets;
+
+			if (approvalLevel > 0)
+				sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS_"+approvalLevel.ToString()); // get approvals required for a specific step
+			else
+				sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");		// assume final approvals
 
 			var approvals = new List<INCFORM_APPROVAL>();
 			approvals = (from c in entities.INCFORM_APPROVAL
 						  where c.INCIDENT_ID == incidentId
 						  select c).ToList();
 
-			foreach (string approveLevel in sets.VALUE.Split(','))
+			int approvalCount = 0;
+			foreach (string approveRole in sets.VALUE.Split(','))
 			{
-				if (approvals.Where(l => l.ITEM_SEQ.ToString() == approveLevel).FirstOrDefault() == null)
+				++approvalCount;
+				if (approvals.Where(l => l.ITEM_SEQ.ToString() == approveRole  &&  (approvalLevel == 0  &&  l.APPROVAL_LEVEL == null  || l.APPROVAL_LEVEL == approvalLevel)).FirstOrDefault() == null)
 				{
 					INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
 					approval.INCIDENT_APPROVAL_ID = incidentId;
-					approval.ITEM_SEQ = Convert.ToInt32(approveLevel);
+					approval.ITEM_SEQ = Convert.ToInt32(approveRole);
+					approval.APPROVAL_LEVEL = approvalLevel;
 					approval.APPROVAL_MESSAGE = "";
 					approval.APPROVER_TITLE = "";
 					approval.APPROVAL_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 					approval.IsAccepted = false;
-					approvals.Add(approval);
+					approvals.Insert(approvalCount - 1, approval);
 				}
 			}
 
@@ -1390,6 +1534,7 @@ namespace SQM.Website
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
+					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ALERT WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);
 				}

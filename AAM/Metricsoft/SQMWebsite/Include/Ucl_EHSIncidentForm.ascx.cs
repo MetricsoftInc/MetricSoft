@@ -36,6 +36,8 @@ namespace SQM.Website
 		List<EHSIncidentQuestion> questions;
 		PSsqmEntities entities;
 
+		public PageUseMode PageMode { get; set; }
+
 		protected Ucl_RadAsyncUpload uploader;
 		protected Ucl_PreventionLocation preventionLocationForm;
 		protected RadDropDownList rddlLocation;
@@ -132,6 +134,18 @@ namespace SQM.Website
 			set { ViewState["CreatePersonId"] = value; }
 		}
 
+		protected List<SETTINGS> EHSSettings
+		{
+			get { return ViewState["EHSSettings"] == null ? SQMSettings.SelectSettingsGroup("EHS", "") : (List<SETTINGS>)ViewState["EHSSettings"]; }
+			set { ViewState["EHSSettings"] = value; }
+		}
+
+		protected List<XLAT> XLATList
+		{
+			get { return ViewState["XLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["XLATList"]; }
+			set { ViewState["XLATList"] = value; }
+		}
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
@@ -151,7 +165,7 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (uclContainment.Visible == true || uclRootCause.Visible == true || uclAction.Visible == true || uclApproval.Visible == true)
+				if (uclContainment.Visible == true || uclRootCause.Visible == true || uclAction.Visible == true || uclApproval.Visible == true  || uclAlert.Visible == true)
 				{
 					return;
 				}
@@ -161,6 +175,7 @@ namespace SQM.Website
 			}
 			else
 			{
+				XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_STEP" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 				//RefreshPageContext();
 			}
 		}
@@ -235,7 +250,14 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
-			pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+			if (PageMode == PageUseMode.ViewOnly)
+			{
+				pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+			}
+			else
+			{
+				pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+			}
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -311,6 +333,7 @@ namespace SQM.Website
 						else
 							tu.Text = SQMModelMgr.FormatPersonListItem(SessionManager.UserContext.Person);
 						tu.Enabled = false;
+						tu.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(tu);
 						break;
 					case EHSIncidentQuestionType.CurrentLocation:
@@ -320,6 +343,7 @@ namespace SQM.Website
 						else
 							tl.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
 						tl.Enabled = false;
+						tl.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(tl);
 						break;
 
@@ -331,6 +355,7 @@ namespace SQM.Website
 							tf.Text = SessionManager.UserContext.WorkingLocation.Plant.PLANT_NAME;
 						if (q.QuestionId == (decimal)EHSQuestionId.CompletedBy)
 							tf.Enabled = false;
+						tf.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(tf);
 						break;
 
@@ -338,6 +363,7 @@ namespace SQM.Website
 						var tb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
 							tb.Text = q.AnswerText;
+						tb.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(tb);
 						break;
 
@@ -345,6 +371,7 @@ namespace SQM.Website
 						var nltb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 						if (shouldPopulate)
 							nltb.Text = q.AnswerText;
+						nltb.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(nltb);
 						break;
 
@@ -375,6 +402,8 @@ namespace SQM.Website
 						}
 						if (!shouldPopulate)
 							rbl.SelectedIndex = 0; // Default to first
+
+						rbl.Attributes.Add("ONCLICK", "ChangeUpdate()");
 						pnl.Controls.Add(rbl);
 						break;
 
@@ -391,6 +420,8 @@ namespace SQM.Website
 							}
 							cbl.Items.Add(li);
 						}
+
+						cbl.Attributes.Add("ONCHANGE", "return ChangeUpdate();");
 						pnl.Controls.Add(cbl);
 						break;
 
@@ -430,6 +461,7 @@ namespace SQM.Website
 									rddl.SelectedValue = q.AnswerText;
 						}
 						//rddl.AutoPostBack = true;
+						rddl.OnClientSelectedIndexChanged = "ChangeUpdate";
 						pnl.Controls.Add(rddl);
 						break;
 
@@ -494,6 +526,8 @@ namespace SQM.Website
 							rdp.Enabled = false;
 						}
 
+						rdp.ClientEvents.OnDateSelected = "ChangeUpdate";
+
 						pnl.Controls.Add(rdp);
 						break;
 
@@ -507,6 +541,7 @@ namespace SQM.Website
 							if (TimeSpan.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), out parseTime))
 								rtp.SelectedTime = parseTime;
 						}
+						rtp.ClientEvents.OnDateSelected = "ChangeUpdate";
 						pnl.Controls.Add(rtp);
 						break;
 
@@ -519,6 +554,7 @@ namespace SQM.Website
 							if (DateTime.TryParse(q.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
 								rdtp.SelectedDate = parseDate;
 						}
+						rdtp.ClientEvents.OnDateSelected = "ChangeUpdate";
 						pnl.Controls.Add(rdtp);
 						break;
 
@@ -544,6 +580,7 @@ namespace SQM.Website
 							bcb.AutoPostBack = true;
 						}
 
+						bcb.Attributes.Add("ONCHECKEDCHANGED", "ChangeUpdate()");
 						pnl.Controls.Add(bcb);
 
 						pnl.Controls.Add(new LiteralControl("</div>"));
@@ -560,7 +597,7 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 						{
-							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.GetUploadedFiles(40, EditIncidentId, "");
 							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
 						}
 						break;
@@ -608,6 +645,7 @@ namespace SQM.Website
 						if (shouldPopulate)
 							ctb.Text = q.AnswerText;
 
+						ctb.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(ctb);
 						break;
 
@@ -615,6 +653,7 @@ namespace SQM.Website
 						var ptb = new RadNumericTextBox() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Percent };
 						if (shouldPopulate)
 							ptb.Text = q.AnswerText;
+						ptb.ClientEvents.OnValueChanged = "ChangeUpdate";
 						pnl.Controls.Add(ptb);
 						break;
 
@@ -629,6 +668,7 @@ namespace SQM.Website
 						rcb.Height = 300;
 						if (shouldPopulate)
 							rcb.SelectedValue = q.AnswerText;
+						rcb.OnClientSelectedIndexChanged = "ChangeUpdate";
 						pnl.Controls.Add(rcb);
 						break;
 
@@ -660,6 +700,7 @@ namespace SQM.Website
 						}
 						rddlLocation.SelectedIndexChanged += rddlLocation_SelectedIndexChanged;
 						rddlLocation.AutoPostBack = true;
+						rddlLocation.OnClientSelectedIndexChanged = "ChangeUpdate";
 
 						pnl.Controls.Add(rddlLocation);
 						break;
@@ -679,6 +720,8 @@ namespace SQM.Website
 
 						if (shouldPopulate)
 							rddl3.SelectedValue = q.AnswerText;
+
+						rddl3.OnClientSelectedIndexChanged = "ChangeUpdate";
 						pnl.Controls.Add(rddl3);
 						break;
 
@@ -695,6 +738,8 @@ namespace SQM.Website
 						{
 							rblYN.SelectedIndexChanged += rblYN_SelectedIndexChanged;
 						}
+
+						rblYN.Attributes.Add("ONCLICK", "ChangeUpdate()");
 						pnl.Controls.Add(rblYN);
 						break;
 
@@ -707,6 +752,8 @@ namespace SQM.Website
 
 						if (rddlFilteredUsers.Items.Count() == 1)
 							validator.InitialValue = rddlFilteredUsers.Items[0].Text;
+
+						rddlFilteredUsers.OnClientSelectedIndexChanged = "ChangeUpdate";
 
 						pnl.Controls.Add(rddlFilteredUsers);
 						break;
@@ -1071,7 +1118,7 @@ namespace SQM.Website
 						// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
 						if (IsEditContext)
 						{
-							uploader.GetUploadedFiles(40, EditIncidentId, "1");
+							uploader.GetUploadedFiles(40, EditIncidentId, "");
 							uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
 						}
 						break;
@@ -1274,7 +1321,12 @@ namespace SQM.Website
 			}
 
 			if (IsEditContext)
-				SetSubnav("edit");
+			{
+				if (PageMode == PageUseMode.ViewOnly)
+					SetSubnav("alert");
+				else 
+					SetSubnav("edit");
+			}
 			else
 				SetSubnav("new");
 		}
@@ -1693,8 +1745,19 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
+			PageMode = PageUseMode.EditEnabled;
 			IncidentStepCompleted = 0;
 			BuildForm();
+		}
+
+		public void BindIncidentAlert(decimal incidentID)
+		{
+			IsEditContext = true;
+			EditIncidentId = incidentID;
+			PageMode = PageUseMode.ViewOnly;
+			IncidentStepCompleted = 0;
+			BuildForm();
+			SetSubnav("alert");
 		}
 
 		#endregion
@@ -1819,13 +1882,6 @@ namespace SQM.Website
 					EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 				}
 			}
-
-			decimal finalPlantId = 0;
-			var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
-			if (finalIncident != null)
-				finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
-			else
-				finalPlantId = selectedPlantId;
 
 			if (shouldReturn)
 				Response.Redirect("/EHS/EHS_Incidents.aspx");  // mt - temporary
@@ -2159,13 +2215,43 @@ namespace SQM.Website
 		{
 			if (context == "new")
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
-				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = false;
+				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
 				btnDelete.Visible = false;
+			}
+			else if (context == "alert")
+			{
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
+				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = true;
+
+				uclContainment.IsEditContext = true;
+				uclContainment.IncidentId = EditIncidentId;
+				uclContainment.PageMode = PageUseMode.ViewOnly;
+				uclContainment.PopulateInitialForm();
+
+				uclRootCause.IsEditContext = true;
+				uclRootCause.IncidentId = EditIncidentId;
+				uclRootCause.PageMode = PageUseMode.ViewOnly;
+				uclRootCause.PopulateInitialForm();
+
+				uclCausation.IsEditContext = true;
+				uclCausation.IncidentId = EditIncidentId;
+				uclCausation.PageMode = PageUseMode.ViewOnly;
+				uclCausation.PopulateInitialForm(entities);
+
+				uclAction.IsEditContext = true;
+				uclAction.IncidentId = EditIncidentId;
+				uclAction.PageMode = PageUseMode.ViewOnly;
+				uclAction.PopulateInitialForm();
+
+				uclApproval.IsEditContext = true;
+				uclApproval.IncidentId = EditIncidentId;
+				uclApproval.PageMode = PageUseMode.ViewOnly;
+				uclApproval.PopulateInitialForm(0);
 			}
 			else
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
+				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
 				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
@@ -2173,11 +2259,33 @@ namespace SQM.Website
 				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 			}
+
+			// incident alert
+			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
+			{
+				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.incident);
+			}
+			// optional approval steps
+			/*
+			btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;
+			btnSubnavApproval_1.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_1;
+			btnSubnavApproval_2.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_2").Count() == 0 ? false : true;
+			btnSubnavApproval_2.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_2;
+			btnSubnavApproval_3.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_3").Count() == 0 ? false : true;
+			btnSubnavApproval_3.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_3;
+			btnSubnavApproval_35.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_35").Count() == 0 ? false : true;
+			btnSubnavApproval_35.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_35;
+			btnSubnavApproval_4.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_4").Count() == 0 ? false : true;
+			btnSubnavApproval_4.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_4;
+			*/
+			//btnSubnavApproval.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_0").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_0").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.Approvals;
 		}
 
 		protected void btnSubnavSave_Click(object sender, EventArgs e)
 		{
 			int status = 0;
+			bool isEdit = IsEditContext;
+
 			switch (CurrentSubnav)
 			{
 				case "2":
@@ -2193,12 +2301,15 @@ namespace SQM.Website
 						btnSubnav_Click(btnSubnavAction, null);
 					break;
 				case "5":
-					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId);
+					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId, 0);
 					btnSubnav_Click(btnSubnavApproval, null);
 					break;
 				case "35":
 					status = uclCausation.UpdateCausation(EditIncidentId);
 					btnSubnav_Click(btnSubnavCausation, null);
+					break;
+				case "10":
+					// save cross-plant alerts
 					break;
 				default:
 					if (IsEditContext)
@@ -2207,7 +2318,9 @@ namespace SQM.Website
 						BuildForm();
 					}
 					else
+					{
 						btnSaveReturn_Click(sender, null);
+					}
 					break;
 			}
 			if (status >= 0)
@@ -2216,24 +2329,25 @@ namespace SQM.Website
 				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 
-				if(CurrentSubnav == "0"  || CurrentSubnav == "I")
+				if(!isEdit && (CurrentSubnav == "0"  || CurrentSubnav == "I"))
 					btnSubnav_Click(btnSubnavContainment, null);
 			}
 		}
 
 		protected void btnSubnav_Click(object sender, EventArgs e)
 		{
-			//RadButton btn = (RadButton)sender;
-
 			LinkButton btn = (LinkButton)sender;
 
-			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = false;
-			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
+			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
-			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = "buttonLink";
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavAlert.Enabled = true;
+			//btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
+			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = "buttonLink";
+			//btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
 
+			btnSubnavSave.Visible = btnDelete.Visible = false;
 			lblPageTitle.Text = Resources.LocalizedText.Incident;
 
 			switch (btn.CommandArgument)
@@ -2244,9 +2358,9 @@ namespace SQM.Website
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					uclContainment.Visible = divSubnavPage.Visible = true;
 					uclContainment.IsEditContext = true;
-					uclContainment.EditIncidentId = EditIncidentId;
+					uclContainment.IncidentId = EditIncidentId;
 					uclContainment.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "3":
 					lblPageTitle.Text = Resources.LocalizedText.RootCause;
@@ -2254,10 +2368,9 @@ namespace SQM.Website
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
 					uclRootCause.Visible = divSubnavPage.Visible = true;
 					uclRootCause.IsEditContext = true;
-                    uclRootCause.IncidentId = EditIncidentId;
-					uclRootCause.EditIncidentId = EditIncidentId;
+					uclRootCause.IncidentId = EditIncidentId;
 					uclRootCause.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "4":
 					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
@@ -2265,20 +2378,9 @@ namespace SQM.Website
 					btnSubnavAction.CssClass = "buttonLinkDisabled";
 					uclAction.Visible = divSubnavPage.Visible = true;
 					uclAction.IsEditContext = true;
-                    uclAction.EditIncidentId = uclAction.IncidentId = EditIncidentId;
+					uclAction.IncidentId = EditIncidentId;
 					uclAction.PopulateInitialForm();
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					break;
-				case "5":
-					lblPageTitle.Text = Resources.LocalizedText.Approvals;
-					btnSubnavApproval.Enabled = false;
-					btnSubnavApproval.CssClass = "buttonLinkDisabled";
-					uclApproval.Visible = divSubnavPage.Visible = true;
-					uclApproval.IsEditContext = true;
-					uclApproval.EditIncidentId = EditIncidentId;
-					uclApproval.PopulateInitialForm();
-					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
 					break;
 				case "35":
 					lblPageTitle.Text = "Causation";
@@ -2286,9 +2388,75 @@ namespace SQM.Website
 					btnSubnavCausation.CssClass = "buttonLinkDisabled";
 					uclCausation.Visible = divSubnavPage.Visible = true;
 					uclCausation.IsEditContext = true;
-					uclCausation.EditIncidentId = EditIncidentId;
+					uclCausation.IncidentId = EditIncidentId;
 					uclCausation.PopulateInitialForm(entities);
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					break;
+				case "1.1":
+					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
+					btnSubnavApproval_1.Enabled = false;
+					btnSubnavApproval_1.CssClass = "buttonLinkDisabled";
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.Visible = true;
+					uclApproval.PopulateInitialForm(1);
+					break;
+				case "2.1":
+					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
+					btnSubnavApproval_2.Enabled = false;
+					btnSubnavApproval_2.CssClass = "buttonLinkDisabled";
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.Visible = true;
+					uclApproval.PopulateInitialForm(2);
+					break;
+				case "3.1":
+					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
+					btnSubnavApproval_3.Enabled = false;
+					btnSubnavApproval_3.CssClass = "buttonLinkDisabled";
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.Visible = true;
+					uclApproval.PopulateInitialForm(3);
+					break;
+				case "35.1":
+					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
+					btnSubnavApproval_35.Enabled = false;
+					btnSubnavApproval_35.CssClass = "buttonLinkDisabled";
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.Visible = true;
+					uclApproval.PopulateInitialForm(35);
+					break;
+				case "4.1":
+					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
+					btnSubnavApproval_4.Enabled = false;
+					btnSubnavApproval_4.CssClass = "buttonLinkDisabled";
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.Visible = true;
+					uclApproval.PopulateInitialForm(4);
+					break;
+				case "5":
+					lblPageTitle.Text = Resources.LocalizedText.Approvals;
+					btnSubnavApproval.Enabled = false;
+					btnSubnavApproval.CssClass = "buttonLinkDisabled";
+					uclApproval.Visible = divSubnavPage.Visible = true;
+					uclApproval.IsEditContext = true;
+					uclApproval.IncidentId = EditIncidentId;
+					uclApproval.PopulateInitialForm(0);
+					/*
+					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
+						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
+					*/
+					break;
+				case "10":
+					lblPageTitle.Text = Resources.LocalizedText.PreventativeMeasure;
+					btnSubnavAlert.Enabled = false;
+					btnSubnavAlert.CssClass = "buttonLinkDisabled";
+					uclAlert.IncidentId = EditIncidentId;
+					uclAlert.Visible = divSubnavPage.Visible = true;
+					uclAlert.PopulateInitialForm(entities);
 					break;
 				case "0":
 				default:
@@ -2302,6 +2470,7 @@ namespace SQM.Website
 						BuildForm();
 					}
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
+					btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 					break;
 			}
 

@@ -17,7 +17,8 @@ namespace SQM.Website
 			IncidentList,
 			IncidentNotificationNew,
 			IncidentNotificationEdit,
-			IncidentReportEdit
+			IncidentReportEdit,
+			IncidentAlert
 		}
 
 		// Mode should be "incident" (standard) or "prevent" (RMCAR)
@@ -108,6 +109,15 @@ namespace SQM.Website
 						UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
 					}
 				}
+				else if (!string.IsNullOrEmpty(Request.QueryString["a"]))   // incident Record id is supplied from incident ALERT email notification
+				{
+					string targetRec = Request.QueryString["a"];
+					decimal targetRecID;
+					if (decimal.TryParse(targetRec, out targetRecID))
+					{
+						UpdateDisplayState(DisplayState.IncidentAlert, targetRecID);
+					}
+				}
 				else if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
 				{
 					// from inbox ?
@@ -117,7 +127,10 @@ namespace SQM.Website
 						SessionManager.ClearReturns();
 						UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
 					}
-
+					else
+					{
+						DisplayNonPostback();
+					}
 				}
 				else
 				{
@@ -129,6 +142,7 @@ namespace SQM.Website
 		protected void DisplayNonPostback()
 		{
 			SetupPage();
+			SessionManager.ClearReturns();
 
 			try
 			{
@@ -138,7 +152,7 @@ namespace SQM.Website
 			{
 			}
 
-			if (SessionManager.ReturnStatus == null  ||  SessionManager.ReturnStatus != true)
+			//if (SessionManager.ReturnStatus == null  ||  SessionManager.ReturnStatus != true)
 			//if ( SessionManager.ReturnObject == null)
 				SearchIncidents();      // suppress list when invoking page from inbox
 
@@ -179,12 +193,17 @@ namespace SQM.Website
 					}
 					break;
 				case DisplayState.IncidentNotificationEdit:
+				case DisplayState.IncidentAlert:
 					SessionManager.ClearReturns();
 					INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
 					if (theIncident != null)
 					{
 						SessionManager.ReturnObject = theIncident;
 						SessionManager.ReturnStatus = true;
+						if (state == DisplayState.IncidentAlert)
+						{
+							SessionManager.ReturnContext = "a";	// pass 'alert' context to incident pages
+						}
 						if (EHSIncidentMgr.IsUseCustomForm((decimal)theIncident.ISSUE_TYPE_ID))
 						{
 							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
@@ -204,7 +223,14 @@ namespace SQM.Website
 
 		private void IncidentClick(decimal incidentID)
 		{
-			UpdateDisplayState(DisplayState.IncidentNotificationEdit, incidentID);
+			if (SessionManager.ReturnContext == "a")
+			{
+				UpdateDisplayState(DisplayState.IncidentAlert, incidentID);
+			}
+			else
+			{
+				UpdateDisplayState(DisplayState.IncidentNotificationEdit, incidentID);
+			}
 		}
 		
 		private void SetupPage()

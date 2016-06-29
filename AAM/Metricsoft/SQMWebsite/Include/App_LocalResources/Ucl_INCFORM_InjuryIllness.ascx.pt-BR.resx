@@ -183,6 +183,9 @@
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
     <value>Há quanto tempo o colaborador ealiza esse trabalho/tarefa específica?</value>
   </data>
+	<data name="lbJobCode.Text" xml:space="preserve">
+    <value>Occupation / Job Title</value>
+  </data>
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>O colaborador é treinado para realizar esta tarefa?</value>
   </data>

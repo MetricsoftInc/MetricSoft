@@ -890,7 +890,11 @@ namespace SQM.Website
 
 		private void OnAttachmentsUpdate(string cmd)
 		{
-			BindSharedCalendars();
+			if (LocalProfile() != null && lnkAttachments.Visible == true)
+			{
+				int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(30, LocalProfile().Plant.PLANT_ID, LocalProfile().InputPeriod.PeriodYear.ToString() + "," + LocalProfile().InputPeriod.PeriodMonth.ToString(), "");
+				lnkAttachments.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
+			}
 			HiddenField hf = (HiddenField)this.Page.Master.FindControl("hfSubmitReset");
 			if (hf != null)
 				hf.Value = "true";

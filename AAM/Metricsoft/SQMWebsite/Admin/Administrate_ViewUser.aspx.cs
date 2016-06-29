@@ -276,6 +276,18 @@ namespace SQM.Website
 
             DisplayErrorMessage(null);
 
+			string addFields = SessionManager.GetUserSetting("COMPANY", "PERSON_ADD_FIELDS") == null ? "" : SessionManager.GetUserSetting("COMPANY", "PERSON_ADD_FIELDS").VALUE;
+
+			if (addFields.Contains("jobcode"))
+				trJobCode.Visible = true;
+			else 
+				trJobCode.Visible = false;
+
+			if (addFields.Contains("supv"))
+				lblEmpSupv.Visible = tbSupvEmpID.Visible = true;
+			else
+				lblEmpID.Visible = true;
+
 			if (person == null || string.IsNullOrEmpty(person.STATUS))     // new user
 			{
                 winUserEdit.Title = hfAddUser.Value;

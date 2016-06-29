@@ -87,7 +87,7 @@ namespace SQM.Website
 		string BuildReport(decimal problemCaseId)
 		{
 			var sb = new StringBuilder();
-			sb.AppendFormat("<a href=\"/EHS/EHS_Alert_PDF.aspx?pcid={0}\" target=\"_blank\" style=\"border: none;\">", EncryptionManager.Encrypt(problemCaseId.ToString()));
+			sb.AppendFormat("<a href=\"/Reports/EHS_5Phase.aspx?pcid={0}\" target=\"_blank\" style=\"border: none;\">", EncryptionManager.Encrypt(problemCaseId.ToString()));
 			sb.Append("<img src=\"/images/ico-download-100x125.png\" alt=\"download\" style=\"border: none;\" /><br /><br />");
 			sb.Append("<strong>View Incident Details</strong><br />");
 			sb.Append("(Printable page, opens in new window)");

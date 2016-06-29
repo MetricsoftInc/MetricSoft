@@ -248,6 +248,7 @@ namespace SQM.Website
 				string redirectPath = (string)ViewState["RedirectPath"];
 				if (string.IsNullOrEmpty(redirectPath))
 				{
+					SessionManager.ClearReturns();
 					Response.Redirect("/Home/Calendar.aspx");
 				}
 				else

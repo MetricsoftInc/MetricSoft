@@ -127,7 +127,7 @@
     <value>Add Another</value>
   </data>
   <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
-    <value>Add Another Final Corrective Action</value>
+    <value>Add Another Corrective Action</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
@@ -214,10 +214,10 @@
     <value>Contact Phone Number</value>
   </data>
   <data name="CorrectiveAction" xml:space="preserve">
-    <value>Corrective Action</value>
+    <value>Final Corrective Action</value>
   </data>
   <data name="CorrectiveActions" xml:space="preserve">
-    <value>Corrective Actions</value>
+    <value>Final Corrective Actions</value>
   </data>
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
@@ -247,7 +247,7 @@
     <value>Delete Incident</value>
   </data>
   <data name="DeleteItem" xml:space="preserve">
-    <value>Delete Item</value>
+    <value>Delete</value>
   </data>
   <data name="Deleting" xml:space="preserve">
     <value>Deleting...</value>
@@ -486,6 +486,9 @@
   <data name="ProblemArea" xml:space="preserve">
     <value>Problem Area</value>
   </data>
+  <data name="ProceduresFollowed" xml:space="preserve">
+    <value>Procedures Followed</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>Question</value>
   </data>
@@ -665,5 +668,44 @@
   </data>
   <data name="LockThisField" xml:space="preserve">
     <value>Protect this field from automatic updates</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_2" xml:space="preserve">
+    <value>Approval Level 2</value>
+  </data>
+  <data name="Causation" xml:space="preserve">
+    <value>Causation</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_1" xml:space="preserve">
+    <value>Approval Level 1</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_3" xml:space="preserve">
+    <value>Approval Level 3</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_35" xml:space="preserve">
+    <value>Approval Level 35</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_4" xml:space="preserve">
+    <value>Approval Level 4</value>
+  </data>
+  <data name="LostTimeHistory" xml:space="preserve">
+    <value>Lost Time History</value>
+  </data>
+  <data name="AddCause" xml:space="preserve">
+    <value>Add Cause</value>
+  </data>
+  <data name="AddProblemSeries" xml:space="preserve">
+    <value>Add Problem Statement</value>
+  </data>
+  <data name="ProblemStatement" xml:space="preserve">
+    <value>Problem Statement</value>
+  </data>
+  <data name="PreventativeMeasure" xml:space="preserve">
+    <value>Preventative Measures</value>
+  </data>
+  <data name="Evidence" xml:space="preserve">
+    <value>Completion Evidence / Documentation</value>
+  </data>
+  <data name="PersonAccountable" xml:space="preserve">
+    <value>Person Accountable</value>
   </data>
 </root>

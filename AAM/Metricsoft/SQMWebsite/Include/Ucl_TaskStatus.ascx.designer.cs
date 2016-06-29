@@ -130,6 +130,33 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbTaskComments;
         
         /// <summary>
+        /// lblAttachments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAttachments;
+        
+        /// <summary>
+        /// lnkAttachments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAttachments;
+        
+        /// <summary>
+        /// uclAttachWin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_Attach uclAttachWin;
+        
+        /// <summary>
         /// btnTaskComplete control.
         /// </summary>
         /// <remarks>

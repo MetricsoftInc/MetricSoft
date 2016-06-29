@@ -330,7 +330,7 @@
 							<img src="/images/defaulticon/16x16/files.png" alt="" style="vertical-align: middle; margin-left: 4px;" /> 8D Report
 							</asp:LinkButton>
 							&nbsp;
-							<asp:HyperLink ID="hlReport" runat="server" ForeColor="#000066" meta:resourcekey="hlReportResource1" NavigateUrl='<%# "/EHS/EHS_Alert_PDF.aspx?pcid=" + Eval("ProbCase.PROBCASE_ID") %>' Target="_blank" Visible="False">
+							<asp:HyperLink ID="hlReport" runat="server" ForeColor="#000066" meta:resourcekey="hlReportResource1" NavigateUrl='<%# "/Reports/EHS_5Phase.aspx?pcid=" + Eval("ProbCase.PROBCASE_ID") %>' Target="_blank" Visible="False">
 							<img src="/images/defaulticon/16x16/open-in-new-window.png" alt="" style="vertical-align: middle;" /> Incident Alert
 						</asp:HyperLink>
 							<asp:HiddenField ID="hfProblemCaseType" runat="server" Value='<%# Eval("ProbCase.PROBCASE_TYPE") %>' />
@@ -476,6 +476,7 @@
 
 <asp:Panel ID="pnlIncidentListRepeater" runat="server" Visible="False" meta:resourcekey="pnlIncidentListRepeaterResource1">
 	<div>
+		<asp:HiddenField id="hfIncidentListOptions" runat="server"/>
 		<telerik:RadGrid ID="rgIncidentList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="True" PageSize="20"
 			AutoGenerateColumns="False" OnItemDataBound="rgIncidentList_ItemDataBound" OnSortCommand="rgIncidentList_SortCommand"
 			OnPageIndexChanged="rgIncidentList_PageIndexChanged" OnPageSizeChanged="rgIncidentList_PageSizeChanged" Width="100%" GroupPanelPosition="Top" meta:resourcekey="rgIncidentListResource1">
@@ -485,28 +486,10 @@
 				<Columns>
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn column" HeaderText="Incident ID" meta:resourcekey="GridTemplateColumnResource17" SortExpression="Incident.INCIDENT_ID" UniqueName="TemplateColumn">
 						<ItemTemplate>
-							<table class="innerTable">
-								<tr>
-									<td>
-										<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbIncidentIdResource2" OnClick="lnkEditIncident" ToolTip="Edit incident">
-											<span style="white-space: nowrap;">
-					<%--							<img src="/images/ico16-edit.png" alt="" style="vertical-align: top; margin-right: 3px; border: 0" />--%>
-									<%--			<asp:Label runat="server" Text='<%# string.Format("{0:000000}", Eval("Incident.INCIDENT_ID")) %>' Font-Bold="True" ForeColor="#000066" ID="lblIncidentId" meta:resourcekey="lblIncidentIdResource3"></asp:Label>--%>
-											</span>
-										</asp:LinkButton>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<asp:LinkButton ID="lb8d" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lb8dResource1" OnClick="lnkProblemCaseRedirect" ToolTip="Edit 8D problem case" Visible="False">
-											<span class="tableLink" style="color: #a00000; white-space: nowrap;">Edit 8D</span>
-										</asp:LinkButton>
-										<asp:LinkButton ID="lbEditReport" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' meta:resourcekey="lbEditReportResource1" OnClick="lbEditReport_Click" ToolTip="Edit Incident Report" Visible="False">
-											<span class="tableLink" style="color: #006080; white-space: nowrap;">Edit Report</span>
-										</asp:LinkButton>
-									</td>
-								</tr>
-							</table>
+							<span style="white-space: nowrap;">
+								<asp:LinkButton ID="lbIncidentId" runat="server" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' Font-Bold="True" ForeColor="#000066" meta:resourcekey="lbIncidentIdResource2" OnClick="lnkEditIncident" ToolTip="Edit incident"></asp:LinkButton>
+								<asp:ImageButton id="btnViewOnly" runat="server" ImageUrl="/images/defaulticon/16x16/grid-dot.png" CommandArgument='<%# Eval("Incident.INCIDENT_ID") %>' OnClick="btnViewIncident" style="margin-left: 3px; vertical-align: middle; border: 0px;"/>
+							</span>
 						</ItemTemplate>
 						<ItemStyle Width="100px" />
 					</telerik:GridTemplateColumn>
@@ -539,11 +522,15 @@
 							<asp:Label ID="lblAttach" runat="server" meta:resourcekey="lblAttachResource2"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" UniqueName="TemplateColumn5">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" UniqueName="TemplateColumn5" ItemStyle-Width="12%">
 						<ItemTemplate>
 							<asp:Label ID="lblIncStatus" runat="server" meta:resourcekey="lblIncStatusResource1"></asp:Label>
-							   <asp:HyperLink ID="hlReport" runat="server" ForeColor="#000088" Target="_blank" ToolTip="view Incident summary report">
-									<img src="/images/defaulticon/16x16/document.png" alt="Report" style="margin-top: -3px; vertical-align: middle;" /></asp:HyperLink>
+							<br />
+							<div style="margin-top: 4px;">
+								<asp:HyperLink ID="hlReport0" runat="server" visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
+								<asp:HyperLink ID="hlReport1" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
+								<asp:HyperLink ID="hlReport2" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
+							</div>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
 				</Columns>
