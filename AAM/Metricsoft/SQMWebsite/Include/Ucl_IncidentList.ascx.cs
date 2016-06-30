@@ -690,17 +690,11 @@ namespace SQM.Website
 			SETTINGS sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS");
 			if (sets != null)
 			{
-				foreach (string rs in sets.VALUE.Split(','))
+				foreach (string rs in sets.VALUE.Split('|'))
 				{
-					incidentReportList.Add(rs);
-				}
-				sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS_LABELS");
-				if (sets != null)
-				{
-					foreach (string rl in sets.VALUE.Split(','))
-					{
-						incidentReportLabelList.Add(rl);
-					}
+					string[] args = rs.Split(',');
+					incidentReportList.Add(args[0]);
+					incidentReportLabelList.Add(args[1]);
 				}
 			}
 
