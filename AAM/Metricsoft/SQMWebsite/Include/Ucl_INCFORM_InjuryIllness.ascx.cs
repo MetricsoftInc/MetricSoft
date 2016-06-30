@@ -1127,6 +1127,10 @@ namespace SQM.Website
 				{
 					btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
 				}
+				else
+				{
+					btnSubnavAlert.Visible = false;
+				}
 				// optional approval steps
 				btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;
 				btnSubnavApproval_1.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_1;
