@@ -18,8 +18,8 @@ namespace SQM.Website
 		static string staticAppContext;
 		static int baseRowIndex;
 
-		static string[] incidentReportList;
-		static string[] incidentReportLabelList;
+		static List<string> incidentReportList;
+		static List<string> incidentReportLabelList;
 
 		RadPersistenceManager persistenceManager;
 
@@ -685,13 +685,23 @@ namespace SQM.Website
 				}
 			}
 
+			incidentReportList = new List<string>();
+			incidentReportLabelList = new List<string>();
 			SETTINGS sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS");
 			if (sets != null)
 			{
-				incidentReportList = sets.VALUE.Split(',');
+				foreach (string rs in sets.VALUE.Split(','))
+				{
+					incidentReportList.Add(rs);
+				}
 				sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS_LABELS");
 				if (sets != null)
-					incidentReportLabelList = sets.VALUE.Split(',');
+				{
+					foreach (string rl in sets.VALUE.Split(','))
+					{
+						incidentReportLabelList.Add(rl);
+					}
+				}
 			}
 
 			if (showImages)
@@ -796,14 +806,15 @@ namespace SQM.Website
                     string uri = "~/";
 					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
 					{
-						if (!string.IsNullOrEmpty(incidentReportList[0]))
+						if (incidentReportList.Count > 0 &&  !string.IsNullOrEmpty(incidentReportList[0]))
 						{
 							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
 							hlk.Text = incidentReportLabelList[0];
 							hlk.ToolTip = incidentReportList[0];
+							hlk.Visible = true;
 						}
 
-						if (!string.IsNullOrEmpty(incidentReportList[1]))
+						if (incidentReportList.Count > 1 && !string.IsNullOrEmpty(incidentReportList[1]))
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport1");
 							hlk.NavigateUrl = uri + "Reporting/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
@@ -811,7 +822,7 @@ namespace SQM.Website
 							hlk.Text = incidentReportLabelList[1];
 							hlk.Visible = true;
 						}
-						if (!string.IsNullOrEmpty(incidentReportList[2]))
+						if (incidentReportList.Count > 2 && !string.IsNullOrEmpty(incidentReportList[2]))
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport2");
 							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
