@@ -543,7 +543,7 @@ namespace SQM.Website
 			lblFormTitle.Text = Resources.LocalizedText.Incident;
 			btnSubnavIncident.Enabled = false;
 			btnSubnavIncident.CssClass = "buttonLinkDisabled";
-			rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(IncidentId);
+			rptWitness.DataSource = EHSIncidentMgr.GetWitnessList(Math.Max(IncidentId, EditIncidentId));
 			rptWitness.DataBind();
 
 		}
