@@ -288,7 +288,7 @@ namespace SQM.Website.Reports
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.Colspan = 2;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TEAMLIST").DESCRIPTION, detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.causation.TEAM_LIST, detailTxtFont));
+			cell.AddElement(new Paragraph(pageData.causation == null ? "" : pageData.causation.TEAM_LIST, detailTxtFont));
 			tableCause.AddCell(cell);
 
 			if (pageData.root5YList.Where(l => l.ITEM_TYPE == 1).Count() == 0)
@@ -439,6 +439,11 @@ namespace SQM.Website.Reports
 			cell.Colspan = 4;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "PREVENT_TITLE").DESCRIPTION, detailHdrFont));
 			tableAlert.AddCell(cell);
+
+			if (pageData.incidentAlert == null)
+			{
+				return tableAlert;
+			}
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.Colspan = 4;
