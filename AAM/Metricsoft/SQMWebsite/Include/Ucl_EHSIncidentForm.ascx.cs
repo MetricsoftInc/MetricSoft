@@ -2343,13 +2343,23 @@ namespace SQM.Website
 			LinkButton btn = (LinkButton)sender;
 
 			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
-			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = true;
+			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavAlert.Enabled = true;
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
 			//btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
 			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = "buttonLink";
 			//btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
+
+			// incident alert
+			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
+			{
+				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
+			}
+			else
+			{
+				btnSubnavAlert.Visible = false;
+			}
 
 			btnSubnavSave.Visible = btnDelete.Visible = false;
 			lblPageTitle.Text = Resources.LocalizedText.Incident;

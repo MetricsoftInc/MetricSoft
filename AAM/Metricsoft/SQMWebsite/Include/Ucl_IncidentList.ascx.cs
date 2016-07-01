@@ -693,8 +693,11 @@ namespace SQM.Website
 				foreach (string rs in sets.VALUE.Split('|'))
 				{
 					string[] args = rs.Split(',');
-					incidentReportList.Add(args[0]);
-					incidentReportLabelList.Add(args[1]);
+					if (args.Length > 1)
+					{
+						incidentReportList.Add(args[0]);
+						incidentReportLabelList.Add(args[1]);
+					}
 				}
 			}
 

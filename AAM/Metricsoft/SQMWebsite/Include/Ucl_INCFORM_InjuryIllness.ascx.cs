@@ -1233,14 +1233,24 @@ namespace SQM.Website
 			LinkButton btn = (LinkButton)sender;
 
 			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = false;   //divSubnavPage.Visible =
-			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = true;
+			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavAlert.Enabled = true;
+			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
 			btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
 			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = "buttonLink";
 			btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
 			btnSubnavSave.Visible = btnDeleteInc.Visible = false;
+
+			// incident alert
+			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
+			{
+				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
+			}
+			else
+			{
+				btnSubnavAlert.Visible = false;
+			}
 
 			lblFormTitle.Text = Resources.LocalizedText.Incident;
 
