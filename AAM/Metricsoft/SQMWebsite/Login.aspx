@@ -88,7 +88,7 @@
 					<div class="clearfix visible-xs"></div>
 					<br class="visible-xs-block" />
 
-					<telerik:RadButton ID="btnLogin" runat="server" meta:resourcekey="btnLoginResource1" Skin="Metro" Style="width: 85px;  margin: 5px 10px 0 5px; background-color: #A3461F;"
+					<telerik:RadButton ID="btnLogin" runat="server" meta:resourcekey="btnLoginResource1" text="Login" Skin="Metro" Style="width: 85px;  margin: 5px 10px 0 5px; background-color: #A3461F;"
 						OnClick="btnLogin_Click" SingleClick="true"/>
 
 					<%--<asp:Button runat="server" Text="Login" ID="btnLogin" CssClass="buttonEmphasis" Style="width: 80px;  margin: 5px 10px 0 5px;"
