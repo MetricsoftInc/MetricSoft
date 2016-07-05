@@ -144,4 +144,7 @@
   <data name="pnlPostingResource1.GroupingText" xml:space="preserve">
     <value>Corporate Objectives &amp; Performance</value>
   </data>
+  <data name="btnLoginResource1" xml:space="preserve">
+    <value>Login</value>
+  </data>
 </root>
