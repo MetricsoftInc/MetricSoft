@@ -2825,7 +2825,7 @@
       <LastGenOutput>RadTreeList.Main.pl.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_LocalResources\Login.aspx.pl.resx" />
-    <EmbeddedResource Include="App_LocalResources\Login.aspx.resx" />
+    <Content Include="App_LocalResources\Login.aspx.resx" />
     <Content Include="Home\App_LocalResources\Calendar.aspx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskStatus.ascx.es.resx" />
     <Content Include="Include\App_LocalResources\Ucl_DashboardArea.ascx.es.resx" />

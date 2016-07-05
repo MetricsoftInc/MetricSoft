@@ -414,6 +414,25 @@ span.RadButton_Metro.rbVerticalButton .rbDecorated
 }
 
 span.RadButton_Metro.rbSkinnedButton,
+span.RadButton_Metro .rbDecorated,
+span.RadButton_Metro.rbVerticalButton,
+span.RadButton_Metro.rbVerticalButton .rbEmphasis
+{
+    border: 0;
+    color: #fff;
+    font-size: 12px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: #A3461F;
+    padding: 3px 12px;
+    text-align: center;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    behavior: url(/css/PIE.htc); /* IE8 rounded corners */
+}
+
+span.RadButton_Metro.rbSkinnedButton,
 span.RadButton_Metro.rbVerticalButton
 {
 	height: 32px;
@@ -707,4 +726,6 @@ select, input {
             margin: 0 1px;
             border-width: 1px 0;
     }
+
+
 
