@@ -1275,7 +1275,7 @@ namespace SQM.Website
 			if (period1.RecordableCase + period1.FirstAidCase == 0)
 				period1.OtherCase = 1;
 
-			if (incident.INCFORM_LOSTTIME_HIST == null || incident.INCFORM_LOSTTIME_HIST.Count == 0)
+			if (incident.INCFORM_INJURYILLNESS.LOST_TIME != true  || incident.INCFORM_LOSTTIME_HIST == null || incident.INCFORM_LOSTTIME_HIST.Count == 0)
 			{
 				return periodList;
 			}
