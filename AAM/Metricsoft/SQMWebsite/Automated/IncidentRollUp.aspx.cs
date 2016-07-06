@@ -197,6 +197,7 @@ namespace SQM.Website.Automated
 						pa.FIRST_AID_CASES = period.FirstAidCase;
 						pa.LAST_UPD_DT = DateTime.UtcNow;
 						pa.LAST_UPD_BY = "automated";
+
 						EHSModel.UpdatePlantAccounting(entities, pa);
 					}
 				}
