@@ -413,10 +413,11 @@ span.RadButton_Metro.rbVerticalButton .rbDecorated
     behavior: url(/css/PIE.htc); /* IE8 rounded corners */
 }
 
+/*
 span.RadButton_Metro.rbSkinnedButton,
 span.RadButton_Metro .rbDecorated,
 span.RadButton_Metro.rbVerticalButton,
-span.RadButton_Metro.rbVerticalButton .rbEmphasis
+span.RadButton_Metro.rbVerticalButton  .rbEmphasis
 {
     border: 0;
     color: #fff;
@@ -429,8 +430,9 @@ span.RadButton_Metro.rbVerticalButton .rbEmphasis
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    behavior: url(/css/PIE.htc); /* IE8 rounded corners */
+    behavior: url(/css/PIE.htc);
 }
+*/
 
 span.RadButton_Metro.rbSkinnedButton,
 span.RadButton_Metro.rbVerticalButton
