@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace SQM.Website.EHS
 {
-	public partial class EHS_Assessments : System.Web.UI.Page
+	public partial class EHS_Assessments : SQMBasePage
 	{
 		protected enum DisplayState
 		{
