@@ -187,6 +187,7 @@
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, Type %>" SortExpression="AuditType.TITLE" UniqueName="TemplateColumn4">
 						<ItemTemplate>
 							<asp:Label ID="lblType" runat="server" Text='<%# (string)Eval("AuditType.TITLE") %>'></asp:Label>
+							<asp:Label ID="lblDescription" runat="server" Visible="false"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, AssessmentBy %>" SortExpression="Audit.AUDIT_PERSON" UniqueName="TemplateColumn5">

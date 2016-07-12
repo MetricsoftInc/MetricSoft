@@ -185,12 +185,13 @@ namespace SQM.Website
 				LinkButton lnk = (LinkButton)e.Item.FindControl("lbAuditId");
 				lnk.Text = WebSiteCommon.FormatID(data.Audit.AUDIT_ID, 6);
 
+				/*
 				if (data.Audit.DESCRIPTION.Length > 120)
 				{
 					lbl = (Label)e.Item.FindControl("lblDescription");
 					lbl.Text = data.Audit.DESCRIPTION.Substring(0, 117) + "...";
 				}
-
+				*/
 				//lbl = (Label)e.Item.FindControl("lblDescription");
 				//lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
 
