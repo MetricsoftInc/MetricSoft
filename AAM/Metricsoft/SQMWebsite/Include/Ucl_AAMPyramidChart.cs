@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Security.Permissions;
 using System.Web;
 using System.Web.UI;
@@ -107,7 +108,7 @@ namespace SQM.Website
 			};
 			tspan.Attributes.Add("x", x.ToString());
 			tspan.Attributes.Add("text-anchor", "middle");
-			tspan.Attributes.Add("dy", (this.Font.GetFont().SizeInPoints * 1.1f) + "pt");
+			tspan.Attributes.Add("dy", (this.Font.GetFont().SizeInPoints * 1.1f).ToString(CultureInfo.InvariantCulture) + "pt");
 			text.Controls.Add(tspan);
 
 			this.SVG.Controls.Add(text);
