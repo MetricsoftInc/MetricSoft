@@ -819,4 +819,7 @@
   <data name="Timestamp" xml:space="preserve">
     <value>Timestamp</value>
   </data>
+  <data name="VideoSpeakerAudio" xml:space="preserve">
+    <value>Is there speaker audio in your video?</value>
+  </data>
 </root>

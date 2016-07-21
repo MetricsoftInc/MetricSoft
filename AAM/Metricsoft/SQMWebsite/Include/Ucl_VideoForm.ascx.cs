@@ -183,6 +183,8 @@ namespace SQM.Website
 				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, listXLAT.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
 				rcbStatusSelect.SelectedValue = videoData.Video.VIDEO_STATUS;
 
+				cbVideoText.Checked = videoData.Video.SPEAKER_AUDIO;
+
 				// populate release form list
 				if (videoData.Video.RELEASE_REQUIRED)
 				{
@@ -231,6 +233,7 @@ namespace SQM.Website
 					ddlAvailability.Enabled = false;
 					cbReleaseForms.Enabled = false;
 					cbVideoText.Enabled = false;
+					cbSpeakerAudio.Enabled = false;
 
 				}
 			}
@@ -691,6 +694,7 @@ namespace SQM.Website
 				video.VIDEO_STATUS = rcbStatusSelect.SelectedValue.ToString();
 				video.RELEASE_REQUIRED = cbReleaseForms.Checked;
 				video.TEXT_ADDED = cbVideoText.Checked;
+				video.SPEAKER_AUDIO = cbSpeakerAudio.Checked;
 				entities.SaveChanges();
 			}
 

@@ -2095,6 +2095,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is there speaker audio in your video?.
+        /// </summary>
+        internal static string VideoSpeakerAudio {
+            get {
+                return ResourceManager.GetString("VideoSpeakerAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want text added to your video?.
         /// </summary>
         internal static string VideoTextAdded {

@@ -175,6 +175,15 @@
 									</tr>
 									<tr>
 										<td class="columnHeader" width="24%" style="vertical-align: top;">
+											<asp:Label ID="Label1" runat="server" Text="<%$ Resources:LocalizedText, VideoSpeakerAudio %>"></asp:Label>
+										</td>
+										<td class="tableDataAlt">&nbsp;</td>
+										<td class="tableDataAlt" width="75%">
+											<asp:CheckBox Text="" TextAlign="right" runat="server" ID="cbSpeakerAudio" />
+										</td>
+									</tr>
+									<tr>
+										<td class="columnHeader" width="24%" style="vertical-align: top;">
 											<asp:Label ID="lblReleaseForms" runat="server" Text="<%$ Resources:LocalizedText, VideoReleaseFormsRequired %>"></asp:Label>
 										</td>
 										<td class="tableDataAlt">&nbsp;</td>
