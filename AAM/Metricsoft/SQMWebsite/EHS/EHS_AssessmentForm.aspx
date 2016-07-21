@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_AdminTabs.ascx" TagName="AdminTabs" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_Attach.ascx" TagName="AttachWin" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideoWin" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 
@@ -223,7 +224,8 @@
                                                                         <td class="greyCell" style="width: 10%;">
                                                                             <asp:LinkButton ID="LnkAttachment" runat="server" ToolTip="Attachments" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddAttach" CausesValidation="false">
                                                                                 <img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
-                                                                            </asp:LinkButton>
+                                                                            </asp:LinkButton>&nbsp;
+																			<asp:LinkButton ID="LnkVideos" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton> 
                                                                         </td>
                                                                     </tr>
                                                                 </ItemTemplate>
@@ -251,6 +253,7 @@
                                                     </FooterTemplate>
                                                 </asp:Repeater>
                                                 <asp:HiddenField runat="server" ID="hdnAttachClick" />
+												<asp:HiddenField runat="server" ID="hdnVideoClick" />
                                             </div>
                                         </div>
                                             <table style="width: 100%;">
@@ -258,6 +261,7 @@
                                                     <td style="text-align: right;"><asp:CheckBox runat="server" ID="cbClose" Text="<%$ Resources:LocalizedText, CloseAudit %>" /></td>
                                                     <td>
                                                         <asp:LinkButton ID="LnkAuditAttachment" runat="server" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" CssClass="buttonAttach buttonPopupOpen" OnClick="lnkAddAttach" CausesValidation="false"></asp:LinkButton>
+														&nbsp;&nbsp;<asp:LinkButton ID="LnkAuditVideo" runat="server" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CssClass="buttonAttach buttonPopupOpen" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton> 
                                                     </td>
                                                 </tr>
                                                 <tr><td colspan="2">&nbsp;</td></tr>
@@ -296,4 +300,5 @@
 </telerik:RadWindow>
 
     <Ucl:AttachWin ID="uclAttachWin" runat="server" />
+    <Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />
 </asp:Content>

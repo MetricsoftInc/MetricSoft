@@ -84,6 +84,7 @@ namespace SQM.Website.EHS
 			//uclAuditForm.OnAttachmentListItemClick += OpenFileUpload;
 			//uclAuditForm.OnExceptionListItemClick += AddTask;
 			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
+			uclAttachVideoWin.AttachmentEvent += OnVideoUpdate;
 			uclTask.OnTaskAdd += UpdateTaskList;
 
 		}
@@ -267,6 +268,77 @@ namespace SQM.Website.EHS
 
 		}
 
+		protected void lnkAddVideo(Object sender, EventArgs e)
+		{
+			LinkButton lnk = (LinkButton)sender;
+			string[] cmd = lnk.CommandArgument.Split(',');
+			EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(Convert.ToDecimal(cmd[0].ToString()), Convert.ToDecimal(cmd[1].ToString()));
+			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), Convert.ToDecimal(cmd[0].ToString()));
+			int recordType = (int)TaskRecordType.Audit;
+			// before we call the radWindow, we need to update the page?
+			hdnVideoClick.Value = lnk.CommandArgument;
+			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", 0, 0);
+		}
+
+		private void OnVideoUpdate(string cmd)
+		{
+			// we want to be able to update the attachment count on the specific button
+			LinkButton lnk;
+			Repeater rptQuestions;
+			HiddenField hdn;
+			decimal quesionId;
+			string[] args = hdnVideoClick.Value.ToString().Split(',');
+			decimal recordID;
+			decimal recordSubID;
+
+			try
+			{
+				recordID = Convert.ToDecimal(args[0].ToString());
+				recordSubID = Convert.ToDecimal(args[1].ToString());
+				if (recordSubID > 0)
+				{
+					foreach (RepeaterItem riTopic in rptAuditFormTopics.Items)
+					{
+						rptQuestions = (Repeater)riTopic.FindControl("rptAuditFormQuestions");
+						foreach (RepeaterItem riQuestion in rptQuestions.Items)
+						{
+							hdn = (HiddenField)riQuestion.FindControl("hdnQuestionId");
+							args = hdn.Value.ToString().Split(',');
+							try
+							{
+								quesionId = Convert.ToDecimal(args[1].ToString());
+							}
+							catch
+							{
+								quesionId = 0;
+							}
+							if (quesionId == recordSubID)
+							{
+								try
+								{
+									EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
+									lnk = (LinkButton)riQuestion.FindControl("LnkVideos");
+									string buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
+									lnk.Text = buttonText;
+									lnk.Focus();
+								}
+								catch
+								{
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetVideoCountByRecord(50, recordID, "0", "");
+					LnkAuditVideo.Text = attachCount == 0 ? Resources.LocalizedText.Videos : (Resources.LocalizedText.Videos + " (" + attachCount.ToString() + ")");
+				}
+			}
+			catch { }
+
+		}
+
 		private void UpdateTaskList(string cmd, decimal recordID, decimal recordSubID)
 		{
 			// we want to be able to update the attachment count on the specific button
@@ -402,11 +474,15 @@ namespace SQM.Website.EHS
 				btnDelete.CommandArgument = EditAuditId.ToString();
 
 				cbClose.Checked = false;
-				LnkAuditAttachment.Visible = true;
 				LnkAuditAttachment.CommandArgument = EditAuditId.ToString() + ",0";
 				int attachCount = SQM.Website.Classes.SQMDocumentMgr.GetAttachmentCountByRecord(50, EditAuditId, "0", "");
 				LnkAuditAttachment.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
 				LnkAuditAttachment.Visible = true;
+
+				LnkAuditVideo.CommandArgument = EditAuditId.ToString() + ",0";
+				attachCount = SQM.Website.Classes.SQMDocumentMgr.GetVideoCountByRecord(50, EditAuditId, "0", "");
+				LnkAuditVideo.Text = attachCount == 0 ? Resources.LocalizedText.Videos : (Resources.LocalizedText.Videos + " (" + attachCount.ToString() + ")");
+				LnkAuditVideo.Visible = true;
 
 				if (IsEditContext && CurrentStep < 2)
 				{
@@ -1214,6 +1290,9 @@ namespace SQM.Website.EHS
 					lnk.Text = buttonText;
 					lnk = (LinkButton)e.Item.FindControl("LnkAttachment");
 					buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
+					lnk.Text = buttonText;
+					lnk = (LinkButton)e.Item.FindControl("LnkVideos");
+					buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
 					lnk.Text = buttonText;
 
 					var validator = new RequiredFieldValidator();

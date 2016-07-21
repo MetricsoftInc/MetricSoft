@@ -53,7 +53,74 @@ namespace SQM.Website.Shared
 								context.Response.OutputStream.Write(a.ATTACHMENT_FILE.ATTACHMENT_DATA, 0, a.ATTACHMENT_FILE.ATTACHMENT_DATA.Length);
 								context.Response.Flush();
                                 break;
-                            default: // document
+							case "v": // video
+								VIDEO v = MediaVideoMgr.SelectVideoById(doc_id);
+								fileType = Path.GetExtension(v.FILE_NAME);
+
+								//if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
+								//	fileName = context.Request.QueryString["FILE_NAME"];
+								//else
+								//	fileName += fileType;
+
+								//mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
+								//context.Response.ContentType = mimeType;
+								////context.Response.BinaryWrite(a.ATTACHMENT_FILE.ATTACHMENT_DATA);  
+
+								//// mt  - use below for video streams ?
+								//context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								//context.Response.AddHeader("content-length", v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length.ToString());
+								//context.Response.OutputStream.Write(v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA, 0, v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length);
+								//context.Response.Flush();
+
+								fileName = context.Server.MapPath(v.FILE_NAME);
+								System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileName);
+
+								try
+								{
+									if (fileInfo.Exists)
+									{
+										context.Response.Clear();
+										context.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileInfo.Name + "\"");
+										context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
+										context.Response.ContentType = "application/octet-stream";
+										context.Response.TransmitFile(fileInfo.FullName);
+										context.Response.Flush();
+									}
+									else
+									{
+										throw new Exception("File not found");
+									}
+								}
+								catch (Exception ex)
+								{
+									context.Response.ContentType = "text/plain";
+									context.Response.Write(ex.Message);
+								}
+								finally
+								{
+									context.Response.End();
+								}
+								break;
+							case "va": // video attachment
+								VIDEO_ATTACHMENT va = SQMDocumentMgr.GetVideoAttachment(doc_id);
+								fileType = Path.GetExtension(va.FILE_NAME);
+
+								if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
+									fileName = context.Request.QueryString["FILE_NAME"];
+								else
+									fileName += fileType;
+
+								mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
+								context.Response.ContentType = mimeType;
+								//context.Response.BinaryWrite(a.ATTACHMENT_FILE.ATTACHMENT_DATA);  
+
+								// mt  - use below for video streams ?
+								context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								context.Response.AddHeader("content-length", va.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length.ToString());
+								context.Response.OutputStream.Write(va.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA, 0, va.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length);
+								context.Response.Flush();
+								break;
+							default: // document
                                 DOCUMENT d = SQMDocumentMgr.GetDocument(doc_id);
                                 fileType = Path.GetExtension(d.FILE_NAME);
                                 // set this to whatever your format is of the image

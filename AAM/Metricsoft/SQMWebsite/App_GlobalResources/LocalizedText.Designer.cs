@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class LocalizedText {
@@ -277,11 +277,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Availability.
+        /// </summary>
+        internal static string Availability {
+            get {
+                return ResourceManager.GetString("Availability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Billing Currency.
         /// </summary>
         internal static string BillingCurrency {
             get {
                 return ResourceManager.GetString("BillingCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body Part.
+        /// </summary>
+        internal static string BodyPart {
+            get {
+                return ResourceManager.GetString("BodyPart", resourceCulture);
             }
         }
         
@@ -633,6 +651,15 @@ namespace Resources {
         internal static string EditIncident {
             get {
                 return ResourceManager.GetString("EditIncident", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing.
+        /// </summary>
+        internal static string Editing {
+            get {
+                return ResourceManager.GetString("Editing", resourceCulture);
             }
         }
         
@@ -1015,6 +1042,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Injury Type.
+        /// </summary>
+        internal static string InjuryType {
+            get {
+                return ResourceManager.GetString("InjuryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inspection Date.
         /// </summary>
         internal static string InspectionDate {
@@ -1173,6 +1209,24 @@ namespace Resources {
         internal static string LostTimeHistory {
             get {
                 return ResourceManager.GetString("LostTimeHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Media - Videos.
+        /// </summary>
+        internal static string MediaVideos {
+            get {
+                return ResourceManager.GetString("MediaVideos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add or update Videos below..
+        /// </summary>
+        internal static string MediaVideosInstruct {
+            get {
+                return ResourceManager.GetString("MediaVideosInstruct", resourceCulture);
             }
         }
         
@@ -1501,6 +1555,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Return to List.
+        /// </summary>
+        internal static string ReturnToList {
+            get {
+                return ResourceManager.GetString("ReturnToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Root Cause.
         /// </summary>
         internal static string RootCause {
@@ -1771,6 +1834,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timestamp.
+        /// </summary>
+        internal static string Timestamp {
+            get {
+                return ResourceManager.GetString("Timestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please provide a file title..
+        /// </summary>
+        internal static string TitleRequired {
+            get {
+                return ResourceManager.GetString("TitleRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         internal static string To {
@@ -1798,11 +1888,254 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose a file to upload..
+        /// </summary>
+        internal static string UploadError {
+            get {
+                return ResourceManager.GetString("UploadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         internal static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video.
+        /// </summary>
+        internal static string Video {
+            get {
+                return ResourceManager.GetString("Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Video.
+        /// </summary>
+        internal static string VideoAdd {
+            get {
+                return ResourceManager.GetString("VideoAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Date.
+        /// </summary>
+        internal static string VideoDate {
+            get {
+                return ResourceManager.GetString("VideoDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date that the video was taken..
+        /// </summary>
+        internal static string VideoDateDesc {
+            get {
+                return ResourceManager.GetString("VideoDateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Video and all associated attachments.
+        /// </summary>
+        internal static string VideoDelete {
+            get {
+                return ResourceManager.GetString("VideoDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video deleted..
+        /// </summary>
+        internal static string VideoDeleted {
+            get {
+                return ResourceManager.GetString("VideoDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Description.
+        /// </summary>
+        internal static string VideoDescription {
+            get {
+                return ResourceManager.GetString("VideoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Video.
+        /// </summary>
+        internal static string VideoDownload {
+            get {
+                return ResourceManager.GetString("VideoDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit video information.
+        /// </summary>
+        internal static string VideoEdit {
+            get {
+                return ResourceManager.GetString("VideoEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error deleting video..
+        /// </summary>
+        internal static string VideoErrorDeleting {
+            get {
+                return ResourceManager.GetString("VideoErrorDeleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Library.
+        /// </summary>
+        internal static string VideoLibary {
+            get {
+                return ResourceManager.GetString("VideoLibary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List videos.
+        /// </summary>
+        internal static string VideoList {
+            get {
+                return ResourceManager.GetString("VideoList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only my videos.
+        /// </summary>
+        internal static string VideoOwn {
+            get {
+                return ResourceManager.GetString("VideoOwn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Owner.
+        /// </summary>
+        internal static string VideoOwner {
+            get {
+                return ResourceManager.GetString("VideoOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (ONLY needed if filming individual non-employees or minors).
+        /// </summary>
+        internal static string VideoReleaseFormsDesc {
+            get {
+                return ResourceManager.GetString("VideoReleaseFormsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are release forms required?.
+        /// </summary>
+        internal static string VideoReleaseFormsRequired {
+            get {
+                return ResourceManager.GetString("VideoReleaseFormsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Videos.
+        /// </summary>
+        internal static string Videos {
+            get {
+                return ResourceManager.GetString("Videos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select video by owner.
+        /// </summary>
+        internal static string VideoSelectOwner {
+            get {
+                return ResourceManager.GetString("VideoSelectOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select video based on status.
+        /// </summary>
+        internal static string VideoSelectStatus {
+            get {
+                return ResourceManager.GetString("VideoSelectStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select types of videos to list.
+        /// </summary>
+        internal static string VideoSelectType {
+            get {
+                return ResourceManager.GetString("VideoSelectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Source Type.
+        /// </summary>
+        internal static string VideoSourceType {
+            get {
+                return ResourceManager.GetString("VideoSourceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want text added to your video?.
+        /// </summary>
+        internal static string VideoTextAdded {
+            get {
+                return ResourceManager.GetString("VideoTextAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the point in the video(ex: 1:45) and the text you want added. Text should be in bullet form or short sentences, and should emphasize a point or identify a speaker if needed. Try to keep it to no more than 4 bullets per screen. All text will be in Helvetica 10-point font. All text needs to be in English unless the video is for local use only..
+        /// </summary>
+        internal static string VideoTextDisclaimer {
+            get {
+                return ResourceManager.GetString("VideoTextDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Type.
+        /// </summary>
+        internal static string VideoType {
+            get {
+                return ResourceManager.GetString("VideoType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Video.
+        /// </summary>
+        internal static string VideoUpload {
+            get {
+                return ResourceManager.GetString("VideoUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To upload a video, fill out all the file information and then click &apos;browse&apos; to search for the appropriate file from your desktop or device, or to take a video from your device..
+        /// </summary>
+        internal static string VideoUploadInstruction {
+            get {
+                return ResourceManager.GetString("VideoUploadInstruction", resourceCulture);
             }
         }
         

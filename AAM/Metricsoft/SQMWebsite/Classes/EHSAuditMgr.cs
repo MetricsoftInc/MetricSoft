@@ -36,6 +36,7 @@ namespace SQM.Website
 		public DateTime CompleteDate { get; set; }
 		public int TasksAssigned { get; set; }
 		public int FilesAttached { get; set; }
+		public int VideosAttached { get; set; }
 	}
 
 	public class EHSAuditAnswerChoice
@@ -460,6 +461,10 @@ namespace SQM.Website
 											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
 											 select a.TASK_ID).ToList();
 
+					List<decimal> videoIds = (from a in entities.VIDEO
+												   where a.SOURCE_TYPE == 50 && a.SOURCE_ID == auditId && a.SOURCE_STEP == strQuestion
+												   select a.VIDEO_ID).ToList();
+
 					var newQuestion = new EHSAuditQuestion()
 					{
 						AuditId = auditId,
@@ -476,7 +481,8 @@ namespace SQM.Website
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
 						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 						FilesAttached = attachmentIds.Count,
-						TasksAssigned = taskIds.Count
+						TasksAssigned = taskIds.Count,
+						VideosAttached = videoIds.Count
 					};
 
 					if (auditAnswer != null)
@@ -706,6 +712,10 @@ namespace SQM.Website
 											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
 											 select a.TASK_ID).ToList();
 
+					List<decimal> videoIds = (from a in entities.VIDEO
+											  where a.SOURCE_TYPE == 50 && a.SOURCE_ID == auditId && a.SOURCE_STEP == strQuestion
+											  select a.VIDEO_ID).ToList();
+
 					// need to redo this logic to only process if the answer is negative
 					var newQuestion = new EHSAuditQuestion()
 					{ 
@@ -728,7 +738,8 @@ namespace SQM.Website
 						ResolutionComment = auditAnswer.RESOLUTION_COMMENT,
 						ChoicePositive = auditAnswer.CHOICE_POSITIVE,
 						FilesAttached = attachmentIds.Count,
-						TasksAssigned = taskIds.Count
+						TasksAssigned = taskIds.Count,
+						VideosAttached = videoIds.Count
 					};
 
 					if (auditAnswer.COMPLETE_DATE != null)
@@ -853,6 +864,10 @@ namespace SQM.Website
 										 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == questionID
 										 select a.TASK_ID).ToList();
 
+				List<decimal> videoIds = (from a in entities.VIDEO
+										  where a.SOURCE_TYPE == 50 && a.SOURCE_ID == auditId && a.SOURCE_STEP == strQuestion
+										  select a.VIDEO_ID).ToList();
+
 				newQuestion = new EHSAuditQuestion()
 				{
 					AuditId = auditId,
@@ -869,7 +884,8 @@ namespace SQM.Website
 					TopicId = topicInfo.AUDIT_TOPIC_ID,
 					TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 					FilesAttached = attachmentIds.Count,
-					TasksAssigned = taskIds.Count
+					TasksAssigned = taskIds.Count,
+					VideosAttached = videoIds.Count
 				};
 				if (auditAnswer != null)
 				{

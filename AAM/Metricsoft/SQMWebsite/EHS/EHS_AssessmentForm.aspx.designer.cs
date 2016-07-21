@@ -355,6 +355,15 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.WebControls.HiddenField hdnAttachClick;
         
         /// <summary>
+        /// hdnVideoClick control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnVideoClick;
+        
+        /// <summary>
         /// cbClose control.
         /// </summary>
         /// <remarks>
@@ -371,6 +380,15 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LnkAuditAttachment;
+        
+        /// <summary>
+        /// LnkAuditVideo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LnkAuditVideo;
         
         /// <summary>
         /// btnSaveReturn control.
@@ -425,5 +443,14 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_Attach uclAttachWin;
+        
+        /// <summary>
+        /// uclAttachVideoWin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_AttachVideo uclAttachVideoWin;
     }
 }

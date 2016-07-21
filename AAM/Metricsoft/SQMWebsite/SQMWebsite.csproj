@@ -480,7 +480,12 @@
     <Content Include="images\status\waste-bak.png" />
     <Content Include="images\status\waste.png" />
     <Content Include="images\step_01.gif" />
+    <Content Include="Include\Ucl_AttachVideoText.ascx" />
+    <Content Include="Include\Ucl_AttachVideo.ascx" />
     <Content Include="Include\Ucl_AuditExceptionList.ascx" />
+    <Content Include="Include\Ucl_RadAsyncUploadVideo.ascx" />
+    <Content Include="Include\Ucl_VideoForm.ascx" />
+    <Content Include="Include\Ucl_VideoList.ascx" />
     <Content Include="Include\Ucl_AuditScheduleList.ascx" />
     <Content Include="Include\Ucl_AuditList.ascx" />
     <Content Include="Include\Ucl_EHSAuditAdd.ascx" />
@@ -562,6 +567,8 @@
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
+    <Content Include="Media\Media_Videos.aspx" />
+    <Content Include="Media\Media_Upload.aspx" />
     <Content Include="Properties\PublishProfiles\TIStaging - Rackspace.user" />
     <Content Include="Quality\ControlMethodList.aspx" />
     <Content Include="Quality\QualityIssueList.aspx" />
@@ -1354,6 +1361,7 @@
     <Compile Include="Automated\ENVDataRollUp.aspx.designer.cs">
       <DependentUpon>ENVDataRollUp.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MediaVideoMgr.cs" />
     <Compile Include="Classes\EHSAuditTypeId.cs" />
     <Compile Include="Classes\EHSAuditMgr.cs" />
     <Compile Include="Classes\EHSAuditQuestionType.cs" />
@@ -1396,7 +1404,6 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Audit_PDF.aspx.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Audit_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
@@ -1438,7 +1445,6 @@
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.designer.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
@@ -1635,12 +1641,47 @@
     <Compile Include="Home\TaskAction.aspx.designer.cs">
       <DependentUpon>TaskAction.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Include\Ucl_AttachVideoText.ascx.cs">
+      <DependentUpon>Ucl_AttachVideoText.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AttachVideoText.ascx.designer.cs">
+      <DependentUpon>Ucl_AttachVideoText.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_AttachVideo.ascx.cs">
+      <DependentUpon>Ucl_AttachVideo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AttachVideo.ascx.designer.cs">
+      <DependentUpon>Ucl_AttachVideo.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Include\Ucl_AuditExceptionList.ascx.cs">
       <DependentUpon>Ucl_AuditExceptionList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_AuditExceptionList.ascx.designer.cs">
       <DependentUpon>Ucl_AuditExceptionList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_RadAsyncUploadVideo.ascx.cs">
+      <DependentUpon>Ucl_RadAsyncUploadVideo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_RadAsyncUploadVideo.ascx.designer.cs">
+      <DependentUpon>Ucl_RadAsyncUploadVideo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_VideoForm.ascx.cs">
+      <DependentUpon>Ucl_VideoForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_VideoForm.ascx.designer.cs">
+      <DependentUpon>Ucl_VideoForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_VideoList.ascx.cs">
+      <DependentUpon>Ucl_VideoList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_VideoList.ascx.designer.cs">
+      <DependentUpon>Ucl_VideoList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Include\Ucl_AuditScheduleList.ascx.cs">
       <DependentUpon>Ucl_AuditScheduleList.ascx</DependentUpon>
@@ -1954,7 +1995,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -1968,7 +2008,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -2092,6 +2131,20 @@
     <Compile Include="images\Problem\Problem_Rpt.aspx.designer.cs">
       <DependentUpon>Problem_Rpt.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Media\Media_Videos.aspx.cs">
+      <DependentUpon>Media_Videos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Media\Media_Videos.aspx.designer.cs">
+      <DependentUpon>Media_Videos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Media\Media_Upload.aspx.cs">
+      <DependentUpon>Media_Upload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Media\Media_Upload.aspx.designer.cs">
+      <DependentUpon>Media_Upload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PSMaster.Master.cs">
       <DependentUpon>PSMaster.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2101,7 +2154,6 @@
     </Compile>
     <Compile Include="Reporting\EHS_12HourReport.aspx.cs">
       <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reporting\EHS_12HourReport.aspx.designer.cs">
       <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
@@ -2115,7 +2167,6 @@
     </Compile>
     <Compile Include="Reporting\EHS_5Phase.aspx.cs">
       <DependentUpon>EHS_5Phase.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reporting\EHS_5Phase.aspx.designer.cs">
       <DependentUpon>EHS_5Phase.aspx</DependentUpon>
@@ -2303,7 +2354,9 @@
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Videos\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />

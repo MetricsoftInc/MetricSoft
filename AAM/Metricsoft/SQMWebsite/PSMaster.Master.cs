@@ -63,7 +63,7 @@ namespace SQM.Website
 
 					if (menuXLATList == null || menuXLATList.Count == 0)
 					{
-						menuXLATList = SQMBasePage.SelectXLATList(new string[7] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM" });
+						menuXLATList = SQMBasePage.SelectXLATList(new string[8] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM", "MENU_MEDIA" });
 					}
 
                     SessionManager.CurrentAdminPage = "";
@@ -190,8 +190,16 @@ namespace SQM.Website
 							}
 						}
 					}
-                }
-            }
+
+					if (UserContext.GetScopePrivileges(SysScope.media).Count() > 0)
+					{
+						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_MEDIA", "0").DESCRIPTION);
+						RadMenu1.Items.Add(EHSMenu2);
+						if (UserContext.GetScopePrivileges(SysScope.media).Count() > 0)
+							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_MEDIA", "11").DESCRIPTION, GetMenu("MENU_MEDIA", "11").DESCRIPTION_SHORT));
+					}
+				}
+			}
 
             catch (Exception ex)
             {

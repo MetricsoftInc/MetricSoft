@@ -10,348 +10,429 @@
 namespace SQM.Website {
     
     
-    public partial class Ucl_AdminTabs {
+    public partial class Ucl_VideoForm {
         
         /// <summary>
-        /// pnlCompanyTabs control.
+        /// divVideoForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCompanyTabs;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divVideoForm;
         
         /// <summary>
-        /// tdCompanyDetail control.
+        /// ahReturn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCompanyDetail;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor ahReturn;
         
         /// <summary>
-        /// lbCompanyDetail_tab control.
+        /// divPageBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCompanyDetail_tab;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPageBody;
         
         /// <summary>
-        /// Td1 control.
+        /// RadAjaxPanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Td1;
+        protected global::Telerik.Web.UI.RadAjaxPanel RadAjaxPanel1;
         
         /// <summary>
-        /// lbCompanyNotify_tab control.
+        /// lblResults control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCompanyNotify_tab;
+        protected global::System.Web.UI.WebControls.Label lblResults;
         
         /// <summary>
-        /// tdCompanyStd control.
+        /// pnlVideoHeader control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCompanyStd;
+        protected global::System.Web.UI.WebControls.Panel pnlVideoHeader;
         
         /// <summary>
-        /// lbUomStds_tab control.
+        /// lblAddOrEditVideo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbUomStds_tab;
+        protected global::System.Web.UI.WebControls.Label lblAddOrEditVideo;
         
         /// <summary>
-        /// tdCompanyDocs control.
+        /// litVideoLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCompanyDocs;
+        protected global::System.Web.UI.WebControls.Literal litVideoLink;
         
         /// <summary>
-        /// lbCompanyDocs_tab control.
+        /// lblSourceType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCompanyDocs_tab;
+        protected global::System.Web.UI.WebControls.Label lblSourceType;
         
         /// <summary>
-        /// tdCompanyTargets control.
+        /// lblVideoSourceType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCompanyTargets;
+        protected global::System.Web.UI.WebControls.Label lblVideoSourceType;
         
         /// <summary>
-        /// lbCompanyTargets_tab control.
+        /// lblType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCompanyTargets_tab;
+        protected global::System.Web.UI.WebControls.Label lblType;
         
         /// <summary>
-        /// tdPrivilegeGroups control.
+        /// lblVideoType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdPrivilegeGroups;
+        protected global::System.Web.UI.WebControls.Label lblVideoType;
         
         /// <summary>
-        /// lbPrivilegeGroups_tab control.
+        /// lblLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPrivilegeGroups_tab;
+        protected global::System.Web.UI.WebControls.Label lblLocation;
         
         /// <summary>
-        /// pnlOrgTabs control.
+        /// lblVideoLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlOrgTabs;
+        protected global::System.Web.UI.WebControls.Label lblVideoLocation;
         
         /// <summary>
-        /// lbBusOrgDetail_tab control.
+        /// hdnVideoLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbBusOrgDetail_tab;
+        protected global::System.Web.UI.WebControls.HiddenField hdnVideoLocation;
         
         /// <summary>
-        /// lbDepartment_tab control.
+        /// lblVideoPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbDepartment_tab;
+        protected global::System.Web.UI.WebControls.Label lblVideoPerson;
         
         /// <summary>
-        /// lbBUNotify_tab control.
+        /// lblVideoPersonName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbBUNotify_tab;
+        protected global::System.Web.UI.WebControls.Label lblVideoPersonName;
         
         /// <summary>
-        /// pnlPlantTabs control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPlantTabs;
+        protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
-        /// lbPLantDetail_tab control.
+        /// lblVideoDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPLantDetail_tab;
+        protected global::System.Web.UI.WebControls.Label lblVideoDate;
         
         /// <summary>
-        /// lbPlantUsers_tab control.
+        /// lblIncidentDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantUsers_tab;
+        protected global::System.Web.UI.WebControls.Label lblIncidentDate;
         
         /// <summary>
-        /// lbPLantDepartment_tab control.
+        /// lblVideoIncidentDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPLantDepartment_tab;
+        protected global::System.Web.UI.WebControls.Label lblVideoIncidentDate;
         
         /// <summary>
-        /// lbPlantLine_tab control.
+        /// lblInjuryType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantLine_tab;
+        protected global::System.Web.UI.WebControls.Label lblInjuryType;
         
         /// <summary>
-        /// Td3 control.
+        /// lblVideoInjuryType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Td3;
+        protected global::System.Web.UI.WebControls.Label lblVideoInjuryType;
         
         /// <summary>
-        /// lbPlantNotify_tab control.
+        /// lblBodyPart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPlantNotify_tab;
+        protected global::System.Web.UI.WebControls.Label lblBodyPart;
         
         /// <summary>
-        /// pnlPartTabs control.
+        /// lblVideoBodyPart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPartTabs;
+        protected global::System.Web.UI.WebControls.Label lblVideoBodyPart;
         
         /// <summary>
-        /// lbPartDetail_tab control.
+        /// pnlAddEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPartDetail_tab;
+        protected global::System.Web.UI.WebControls.Panel pnlAddEdit;
         
         /// <summary>
-        /// lbPartUsed_tab control.
+        /// divForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPartUsed_tab;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
-        /// lbPartCust_tab control.
+        /// lblStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPartCust_tab;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
         
         /// <summary>
-        /// pnlUserTabs control.
+        /// rcbStatusSelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlUserTabs;
+        protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
         
         /// <summary>
-        /// lbUserContact_tab control.
+        /// lblTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbUserContact_tab;
+        protected global::System.Web.UI.WebControls.Label lblTitle;
         
         /// <summary>
-        /// lbUserResponsible_tab control.
+        /// tbTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbUserResponsible_tab;
+        protected global::System.Web.UI.WebControls.TextBox tbTitle;
         
         /// <summary>
-        /// pnlQualityTabs control.
+        /// rfvTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlQualityTabs;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTitle;
         
         /// <summary>
-        /// lbQSDocs_tab control.
+        /// lblDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbQSDocs_tab;
+        protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
-        /// lbQSNonConf_tab control.
+        /// tbDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbQSNonConf_tab;
+        protected global::System.Web.UI.WebControls.TextBox tbDescription;
         
         /// <summary>
-        /// pnlEHSTabs control.
+        /// lblAvailablity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlEHSTabs;
+        protected global::System.Web.UI.WebControls.Label lblAvailablity;
         
         /// <summary>
-        /// lbEHSDocs_tab control.
+        /// ddlAvailability control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbEHSDocs_tab;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAvailability;
         
         /// <summary>
-        /// LinkButton1 control.
+        /// lblReleaseForms control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.Label lblReleaseForms;
         
         /// <summary>
-        /// lbEHSMeasure_tab control.
+        /// cbReleaseForms control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbEHSMeasure_tab;
+        protected global::System.Web.UI.WebControls.CheckBox cbReleaseForms;
+        
+        /// <summary>
+        /// dvAttach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAttach;
+        
+        /// <summary>
+        /// uploadReleases control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_RadAsyncUploadVideo uploadReleases;
+        
+        /// <summary>
+        /// lblTextAttachments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTextAttachments;
+        
+        /// <summary>
+        /// cbVideoText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbVideoText;
+        
+        /// <summary>
+        /// dvText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvText;
+        
+        /// <summary>
+        /// uploadText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_AttachVideoText uploadText;
+        
+        /// <summary>
+        /// btnSaveReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnSaveReturn;
+        
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnDelete;
+        
+        /// <summary>
+        /// divAuditReportForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAuditReportForm;
     }
 }
