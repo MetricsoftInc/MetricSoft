@@ -795,7 +795,7 @@ namespace SQM.Website
 					{
 						QuestionId = questionInfo.INCIDENT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
-						QuestionText = IncidentQuestionText(questionInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
+                        QuestionText = IncidentQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
 						QuestionType = (EHSIncidentQuestionType)questionInfo.INCIDENT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
