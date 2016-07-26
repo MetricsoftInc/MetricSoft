@@ -156,9 +156,9 @@ namespace SQM.Website.Automated
 								var closedAuditsForDay = closedAuditsForPlant.Where(a => EntityFunctions.TruncateTime(a.CLOSE_DATE_DATA_COMPLETE) == currDate.Date);
 								if (closedAuditsForDay.Any())
 								{
-									plantManagerAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "Plant Manager Audit");
-									ehsAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "DGA Safety Audit");
-									supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE1.TITLE == "AAM Supervisor Safety Audit");
+									plantManagerAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 1);
+									ehsAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 2);
+									supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 3);
 								}
 
 								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, activePlant.PLANT_ID, currDate, auditMeasureIDs, true, updateIndicator);
