@@ -795,7 +795,7 @@ namespace SQM.Website
 					{
 						QuestionId = questionInfo.INCIDENT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
-						QuestionText = IncidentQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						QuestionText = IncidentQuestionText(questionInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 						QuestionType = (EHSIncidentQuestionType)questionInfo.INCIDENT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
@@ -1290,17 +1290,23 @@ namespace SQM.Website
 				INCFORM_LOSTTIME_HIST histLast = histList.Last();
 				string workStatus = hist.WORK_STATUS;
 
-				DateTime startDate = hist.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date : WebSiteCommon.LocalTime((DateTime)incident.INCIDENT_DT, localeTimezone).Date;
-				DateTime endDate = histLast.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
+				//DateTime startDate = hist.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date : WebSiteCommon.LocalTime((DateTime)incident.INCIDENT_DT, localeTimezone).Date;
+				//DateTime endDate = histLast.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
+
+				DateTime startDate = (DateTime)hist.BEGIN_DT;
+				DateTime endDate = (DateTime)histLast.BEGIN_DT;
+
+				/*
 				if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
 				{
 					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
 				}
+				*/
 
 				// truncate time accural to current day in case of erroneous lost/restricted time entry
 				if (endDate > DateTime.UtcNow)
 				{
-					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow.AddDays(-1), localeTimezone);
+					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow, localeTimezone);
 				}
 
 				int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan
