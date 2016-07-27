@@ -393,6 +393,7 @@ namespace SQM.Website
 			{
 				PopulateInjuryTypeDropDown();
 				PopulateBodyPartDropDown();
+				PopulateVideoTypeDropDown();
 			}
 			dmFromDate.SelectedDate = SourceDate;
 			if (_injuryType == 0)
@@ -403,6 +404,10 @@ namespace SQM.Website
 				rdlBodyPart.SelectedValue = "";
 			else
 				rdlBodyPart.SelectedValue = _bodyPart.ToString();
+			if (_videoType.Length == 0)
+				ddlVideoType.SelectedValue = "";
+			else
+				ddlVideoType.SelectedValue = _videoType.ToString();
 
 		}
 
@@ -471,6 +476,21 @@ namespace SQM.Website
 			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[1] { "INJURY_PART" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 			SQMBasePage.SetCategorizedDropDownItems(rdlBodyPart, xlatList.Where(l => l.XLAT_GROUP == "INJURY_PART").ToList(), categorize);
 		}
+
+		void PopulateVideoTypeDropDown()
+		{
+			List<EHSMetaData> videotype = EHSMetaDataMgr.SelectMetaDataList("MEDIA_VIDEO_TYPE");
+			if (videotype != null && videotype.Count > 0)
+			{
+				foreach (var s in videotype)
+				{
+					{
+						ddlVideoType.Items.Add(new ListItem(s.Text, s.Value));
+					}
+				}
+			}
+		}
+
 		protected void btnSave_Click(object sender, EventArgs e)
 		{
 			//SessionManager.DocumentContext = new SQM.Shared.DocumentScope().CreateNew(1, "", staticScope.RecordType, "", staticScope.RecordID, staticScope.RecordStep, new decimal[0] {});
@@ -481,7 +501,10 @@ namespace SQM.Website
 
 			string name = "";
 			string fileType = "";
-			raUpload.TargetFolder = "~/Videos/";
+			//raUpload.TargetFolder = "~/Videos/";
+
+			int i = 0;
+
 			//if (flFileUpload.HasFile)
 			foreach (UploadedFile file in raUpload.UploadedFiles) // there should only be 1
 			{
@@ -494,23 +517,28 @@ namespace SQM.Website
 				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(raUpload.TargetFolder, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), _videoType, (DateTime)dmFromDate.SelectedDate, SourceDate);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream);
 
 				// next, save the video to the server; file name = VIDEO_ID
-				if (video != null)
-				{
-					try
-					{
-						file.SaveAs(Path.Combine(Server.MapPath(raUpload.TargetFolder), video.VIDEO_ID.ToString() + fileType.Trim()));
-						SessionManager.ReturnRecordID = video.VIDEO_ID;
-						SessionManager.ReturnObject = "AddVideo";
-						SessionManager.ReturnStatus = true;
-					}
-					catch (Exception ex)
-					{
-						// put up an error
-					}
-				}
+				//////if (video != null)
+				//////{
+				//////	try
+				//////	{
+				//////		file.SaveAs(Path.Combine(Server.MapPath(raUpload.TargetFolder), video.VIDEO_ID.ToString() + fileType.Trim()));
+				//////		SessionManager.ReturnRecordID = video.VIDEO_ID;
+				//////		SessionManager.ReturnObject = "AddVideo";
+				//////		SessionManager.ReturnStatus = true;
+				//////	}
+				//////	catch (Exception ex)
+				//////	{
+				//////		// put up an error
+				//////	}
+				//////}
+
+				pnlListVideo.Visible = false;
+				SessionManager.ReturnRecordID = video.VIDEO_ID;
+				SessionManager.ReturnObject = "AddVideo";
+				SessionManager.ReturnStatus = true;
 
 				if (AttachmentEvent != null)
 				{
@@ -524,6 +552,7 @@ namespace SQM.Website
 			SessionManager.ReturnRecordID = 0;
 			SessionManager.ReturnObject = "DisplayVideos";
 			SessionManager.ReturnStatus = true;
+			pnlListVideo.Visible = false;
 			if (AttachmentEvent != null)
 			{
 				AttachmentEvent("cancel");

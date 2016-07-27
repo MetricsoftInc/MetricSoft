@@ -54,52 +54,60 @@ namespace SQM.Website.Shared
 								context.Response.Flush();
                                 break;
 							case "v": // video
+									  // the following is the code for finding the file in the database
 								VIDEO v = MediaVideoMgr.SelectVideoById(doc_id);
+								VIDEO_FILE vf = MediaVideoMgr.SelectVideoFileById(doc_id);
+
 								fileType = Path.GetExtension(v.FILE_NAME);
 
-								//if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
-								//	fileName = context.Request.QueryString["FILE_NAME"];
-								//else
-								//	fileName += fileType;
+								if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
+									fileName = context.Request.QueryString["FILE_NAME"];
+								else
+									fileName += fileType;
 
-								//mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
-								//context.Response.ContentType = mimeType;
-								////context.Response.BinaryWrite(a.ATTACHMENT_FILE.ATTACHMENT_DATA);  
+								mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
+								context.Response.ContentType = mimeType;
 
-								//// mt  - use below for video streams ?
-								//context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
-								//context.Response.AddHeader("content-length", v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length.ToString());
-								//context.Response.OutputStream.Write(v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA, 0, v.VIDEO_ATTACHMENT_FILE.VIDEO_ATTACH_DATA.Length);
-								//context.Response.Flush();
+								// mt  - use below for video streams ?
+								context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								context.Response.AddHeader("content-length", vf.VIDEO_DATA.Length.ToString());
+								//context.Response.OutputStream.Write(vf.VIDEO_DATA, 0, vf.VIDEO_DATA.Length);
+								context.Response.BinaryWrite(vf.VIDEO_DATA);
 
-								fileName = context.Server.MapPath(v.FILE_NAME);
-								System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileName);
+								context.Response.Flush();
 
-								try
-								{
-									if (fileInfo.Exists)
-									{
-										context.Response.Clear();
-										context.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileInfo.Name + "\"");
-										context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
-										context.Response.ContentType = "application/octet-stream";
-										context.Response.TransmitFile(fileInfo.FullName);
-										context.Response.Flush();
-									}
-									else
-									{
-										throw new Exception("File not found");
-									}
-								}
-								catch (Exception ex)
-								{
-									context.Response.ContentType = "text/plain";
-									context.Response.Write(ex.Message);
-								}
-								finally
-								{
-									context.Response.End();
-								}
+								// the following is the code for finding the file on the server
+								//VIDEO v = MediaVideoMgr.SelectVideoById(doc_id);
+								//fileType = Path.GetExtension(v.FILE_NAME);
+
+								//fileName = context.Server.MapPath(v.FILE_NAME);
+								//System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileName);
+
+								//try
+								//{
+								//	if (fileInfo.Exists)
+								//	{
+								//		context.Response.Clear();
+								//		context.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileInfo.Name + "\"");
+								//		context.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
+								//		context.Response.ContentType = "application/octet-stream";
+								//		context.Response.TransmitFile(fileInfo.FullName);
+								//		context.Response.Flush();
+								//	}
+								//	else
+								//	{
+								//		throw new Exception("File not found");
+								//	}
+								//}
+								//catch (Exception ex)
+								//{
+								//	context.Response.ContentType = "text/plain";
+								//	context.Response.Write(ex.Message);
+								//}
+								//finally
+								//{
+								//	context.Response.End();
+								//}
 								break;
 							case "va": // video attachment
 								VIDEO_ATTACHMENT va = SQMDocumentMgr.GetVideoAttachment(doc_id);

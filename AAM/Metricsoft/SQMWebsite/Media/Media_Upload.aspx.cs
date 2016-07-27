@@ -78,30 +78,30 @@ namespace SQM.Website
 
 				Stream stream = flFileUpload.FileContent;
 				// first we need to create the video header (String fileLocation, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string docScope, DateTime videoDate, DateTime incidentDate)
-				VIDEO video = MediaVideoMgr.Add(name, fileExtension, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), SourceType, SourceId, SourceStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), "", (DateTime)dmFromDate.SelectedDate, SourceDate);
+				VIDEO video = MediaVideoMgr.Add(name, fileExtension, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), SourceType, SourceId, SourceStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), "", (DateTime)dmFromDate.SelectedDate, SourceDate, stream);
 				// next, save the video to the server; file name = VIDEO_ID
-				string fileName = "";
-				DateTime dtIncidentDate = new DateTime();
-				// next we create the video header
-				if (video != null)
-				{
-					// Bind_gvUploadedFiles(); - we are NOT going to bind the video, because we are only allowing ONE at a time
-					// mt - put the new document and upload status in session so that we can retrieve it (if necessary) from the calling page
-					try
-					{
-						flFileUpload.SaveAs(video.FILE_NAME);
-						SessionManager.ReturnObject = video;
-						SessionManager.ReturnStatus = true;
-					}
-					catch (Exception ex)
-					{
-						// put up an error
-					}
-				}
-				else
-				{
-					SessionManager.ClearReturns();
-				}
+				//////string fileName = "";
+				//////DateTime dtIncidentDate = new DateTime();
+				//////// next we create the video header
+				//////if (video != null)
+				//////{
+				//////	// Bind_gvUploadedFiles(); - we are NOT going to bind the video, because we are only allowing ONE at a time
+				//////	// mt - put the new document and upload status in session so that we can retrieve it (if necessary) from the calling page
+				//////	try
+				//////	{
+				//////		flFileUpload.SaveAs(video.FILE_NAME);
+				//////		SessionManager.ReturnObject = video;
+				//////		SessionManager.ReturnStatus = true;
+				//////	}
+				//////	catch (Exception ex)
+				//////	{
+				//////		// put up an error
+				//////	}
+				//////}
+				//////else
+				//////{
+				//////	SessionManager.ClearReturns();
+				//////}
 
 			}
         }

@@ -61,15 +61,6 @@
                                         </tr>
                                         <tr runat="server">
                                             <td class="columnHeader">
-                                                <asp:Label ID="lblType" runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Label>
-                                            </td>
-                                            <td class="tableDataAlt" width="1%">&nbsp;</td>
-                                            <td class="tableDataAlt">
-                                                <asp:Label runat="server" ID="lblVideoType"></asp:Label>
-                                            </td>
-                                        </tr>
-                                        <tr runat="server">
-                                            <td class="columnHeader">
                                                 <asp:Label ID="lblLocation" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                                             </td>
                                             <td class="required" width="1%">&nbsp;</td>
@@ -161,6 +152,15 @@
 											<asp:TextBox ID="tbDescription" TextMode="MultiLine" Rows="2" Columns="50" MaxLength="250" runat="server"></asp:TextBox>
 										</td>
 									</tr>
+									<tr runat="server">
+										<td class="columnHeader">
+											<asp:Label ID="lblType" runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Label>
+										</td>
+										<td class="tableDataAlt">&nbsp;</td>
+										<td class="tableDataAlt">
+											<asp:DropDownList ID="ddlVideoType" runat="server"></asp:DropDownList>
+										</td>
+									</tr>
 									<tr>
 										<td class="columnHeader" width="24%">
 											<asp:Label ID="lblAvailablity" runat="server" Text="<%$ Resources:LocalizedText, Availability %>"></asp:Label>
@@ -184,11 +184,11 @@
 									</tr>
 									<tr>
 										<td class="columnHeader" width="24%" style="vertical-align: top;">
-											<asp:Label ID="lblReleaseForms" runat="server" Text="<%$ Resources:LocalizedText, VideoReleaseFormsRequired %>"></asp:Label>
+											<asp:Label ID="lblReleaseForms" runat="server" Text="<%$ Resources:LocalizedText, VideoReleaseFormsRequired %>"></asp:Label><asp:Label ID="lblVideoReleaseFormsDesc" runat="server" Text="<%$ Resources:LocalizedText, VideoReleaseFormsDesc %>"></asp:Label>
 										</td>
 										<td class="tableDataAlt">&nbsp;</td>
 										<td class="tableDataAlt" width="75%">
-											<asp:CheckBox Text="<%$ Resources:LocalizedText, VideoReleaseFormsDesc %>" TextAlign="right" runat="server" ID="cbReleaseForms" OnClick="javascript:toggle_visibility('dvAttach');" />
+											<asp:CheckBox Text="" TextAlign="right" runat="server" ID="cbReleaseForms" OnClick="javascript:toggle_visibility('dvAttach');" />
 											<br />
 											<div id="dvAttach" runat="server" class="col-xs-12 col-sm-8 text-left greyControlCol">
 												<span style="border: 0 none !important;">

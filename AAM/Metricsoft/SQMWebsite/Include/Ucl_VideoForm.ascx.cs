@@ -32,10 +32,10 @@ namespace SQM.Website
 		protected decimal auditTypeId;
 		protected string auditType;
 
-        public void EnableReturnButton(bool bEnabled)
-        {
-            ahReturn.Visible = bEnabled;
-        }
+		public void EnableReturnButton(bool bEnabled)
+		{
+			ahReturn.Visible = bEnabled;
+		}
 
 		public bool IsEditContext
 		{
@@ -154,7 +154,7 @@ namespace SQM.Website
 		public void LoadVideoInformation()
 		{
 			// populate all the fields
-			List<XLAT> listXLAT = SQMBasePage.SelectXLATList(new string[4] { "INJURY_PART", "INJURY_TYPE", "MEDIA_VIDEO_TYPE", "MEDIA_VIDEO_STATUS" }, 1);
+			List<XLAT> listXLAT = SQMBasePage.SelectXLATList(new string[5] { "INJURY_PART", "INJURY_TYPE", "MEDIA_VIDEO_SOURCE", "MEDIA_VIDEO_STATUS", "MEDIA_VIDEO_TYPE" }, 1);
 			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoDataById(entities, EditVideoId);
 			if (videos != null)
 			{
@@ -163,7 +163,6 @@ namespace SQM.Website
 				lblVideoSourceType.Text = ((TaskRecordType)videoData.Video.SOURCE_TYPE).ToString();
 				if ((TaskRecordType)videoData.Video.SOURCE_TYPE != TaskRecordType.Media)
 					lblVideoSourceType.Text += " " + videoData.Video.SOURCE_ID;
-				lblVideoType.Text = videoData.Video.VIDEO_TYPE;
 				lblVideoLocation.Text = location.Plant.PLANT_NAME + " " + location.BusinessOrg.ORG_NAME;
 				lblVideoPersonName.Text = videoData.Person.LAST_NAME + ", " + videoData.Person.FIRST_NAME;
 				DateTime dt = (DateTime)videoData.Video.VIDEO_DT;
@@ -175,6 +174,14 @@ namespace SQM.Website
 
 				tbTitle.Text = videoData.Video.TITLE;
 				tbDescription.Text = videoData.Video.DESCRIPTION;
+				if (ddlVideoType.Items.Count == 0)
+				{
+					PopulateVideoTypeDropDown();
+				}
+				if (videoData.Video.VIDEO_TYPE == null)
+					ddlVideoType.SelectedValue = "";
+				else
+					ddlVideoType.SelectedValue = videoData.Video.VIDEO_TYPE;
 				if (videoData.Video.VIDEO_AVAILABILITY == null)
 					ddlAvailability.SelectedIndex = 0;
 				else
@@ -231,6 +238,7 @@ namespace SQM.Website
 					tbTitle.Enabled = false;
 					tbDescription.Enabled = false;
 					ddlAvailability.Enabled = false;
+					ddlVideoType.Enabled = false;
 					cbReleaseForms.Enabled = false;
 					cbVideoText.Enabled = false;
 					cbSpeakerAudio.Enabled = false;
@@ -245,349 +253,6 @@ namespace SQM.Website
 			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
 			// is there anything else to do?
 		}
-
-		//void BuildFilteredUsersDropdownList()
-		//{
-		//	if (rddlLocation != null)
-		//	{
-		//		if (!string.IsNullOrEmpty(rddlLocation.SelectedValue))
-		//			this.SelectedLocationId = Convert.ToDecimal(rddlLocation.SelectedValue);
-		//		else
-		//			this.SelectedLocationId = 0;
-		//	}
-
-		//	if (rddlFilteredUsers != null)
-		//	{
-		//		rddlFilteredUsers.Items.Clear();
-		//		rddlFilteredUsers.Items.Add(new DropDownListItem("", ""));
-
-		//		var locationPersonList = new List<PERSON>();
-		//		if (this.SelectedLocationId > 0)
-		//		{
-		//			locationPersonList = EHSAuditMgr.SelectEhsPeopleAtPlant(this.SelectedLocationId);
-		//		}
-		//		//else
-		//		//	locationPersonList = EHSAuditMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
-
-		//		if (locationPersonList.Count > 0)
-		//		{
-		//			foreach (PERSON p in locationPersonList)
-		//			{
-		//				string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
-		//				// Check for duplicate list items
-		//				var ddli = rddlFilteredUsers.FindItemByValue(Convert.ToString(p.PERSON_ID));
-		//				if (ddli == null)
-		//					rddlFilteredUsers.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
-		//			}
-
-		//			// If only one user, select by default
-		//			if (rddlFilteredUsers.Items.Count() == 2)
-		//				rddlFilteredUsers.SelectedIndex = 1;
-		//		}
-		//		else
-		//		{
-		//			rddlFilteredUsers.Items[0].Text = "[No valid users - please change location]";
-		//		}
-		//	}
-		//}
-
-		//void UpdateClosedQuestions()
-		//{
-		//	// Close checkbox
-		//	int chInt = (int)EHSAuditQuestionId.CloseAudit;
-		//	string chString = chInt.ToString();
-		//	CheckBox closeCh = (CheckBox)pnlForm.FindControl(chString);
-
-		//	if (closeCh != null)
-		//	{
-		//		// Completion date
-		//		int cdInt = (int)EHSAuditQuestionId.CompletionDate;
-		//		string cdString = cdInt.ToString();
-		//		RadDatePicker cdFormControl = (RadDatePicker)pnlForm.FindControl(cdString);
-
-		//		// Completed by
-		//		int cbInt = (int)EHSAuditQuestionId.CompletedBy;
-		//		string cbString = cbInt.ToString();
-		//		RadTextBox cbFormControl = (RadTextBox)pnlForm.FindControl(cbString);
-
-		//		if (closeCh.Checked)
-		//		{
-		//			// Check if audit report required fields are filled out
-		//			if (AuditReportRequiredFieldsComplete() == true)
-		//			{
-		//				if (cbFormControl != null)
-		//				{
-		//					cbFormControl.Text = SessionManager.UserContext.UserName();
-		//					cbFormControl.Enabled = false;
-		//				}
-		//				if (cdFormControl != null)
-		//				{
-		//					cdFormControl.SelectedDate = SessionManager.UserContext.LocalTime;
-		//					cdFormControl.Enabled = false;
-		//				}
-		//			}
-		//			else
-		//			{
-		//				closeCh.Checked = false;
-		//				//string script = string.Format("alert('{0}');", "You must complete all required fields on this page to close the assessment.");
-		//				string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentIncompleteMsg);
-		//				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-		//			}
-		//		}
-		//		else
-		//		{
-		//			if (cbFormControl != null)
-		//			{
-		//				cbFormControl.Text = "";
-		//				cbFormControl.Enabled = false;
-		//			}
-		//			if (cdFormControl != null)
-		//			{
-		//				cdFormControl.Clear();
-		//				cbFormControl.Enabled = false;
-		//			}
-		//		}
-		//	}
-		//}
-
-		//protected void ProcessQuestionControlEvent(decimal questionId)
-		//{
-		//	//controlQuestionChanged = true;
-
-		//	//decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
-		//	//if (typeId < 1)
-		//	//	return;
-		//	//questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
-		//	//EHSAuditQuestion question = questions.Where(q => q.QuestionId == questionId).FirstOrDefault();
-		//	//ProcessQuestionControls(question, 0);
-
-		//	//controlQuestionChanged = false;
-		//}
-
-		//protected void UpdateControlledQuestions()
-		//{
-		//	//decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
-		//	//if (typeId < 1)
-		//	//	return;
-
-		//	//// why do we keep getting the questions?
-		//	//questions = EHSAuditMgr.SelectAuditQuestionList(typeId, 0, EditAuditId);
-		//	//UpdateAnswersFromForm();
-
-		//	//foreach (var q in questions)
-		//	//{
-		//	//	if (q.QuestionControls != null && q.QuestionControls.Count > 0)
-		//	//		ProcessQuestionControls(q, 0);
-		//	//}
-
-		//	//UpdateButtonText(); // One last check to fix 8d button text
-		//}
-
-		//protected void ProcessQuestionControls(EHSAuditQuestion question, int depth)
-		//{
-		//	if (depth > 1)
-		//		return;
-
-		//	depth++;
-
-		//	if (question.QuestionControls != null)
-		//	{
-		//		foreach (AUDIT_QUESTION_CONTROL control in question.QuestionControls)
-		//		{
-		//			Panel containerControl = (Panel)pnlForm.FindControl("Panel" + control.AUDIT_QUESTION_AFFECTED_ID);
-		//			Label formLabel = (Label)pnlForm.FindControl("Label" + control.AUDIT_QUESTION_AFFECTED_ID);
-		//			var formControl = pnlForm.FindControl(control.AUDIT_QUESTION_AFFECTED_ID.ToString());
-
-		//			string answer = question.AnswerText;
-		//			var triggerVal = control.TRIGGER_VALUE;
-		//			bool criteriaIsMet = false;
-		//			if (triggerVal.Contains("|"))
-		//			{
-		//				var arrTrigger = triggerVal.Split('|');
-		//				criteriaIsMet = arrTrigger.Contains(answer);
-		//			}
-		//			else
-		//			{
-		//				criteriaIsMet = (answer == triggerVal);
-		//			}
-
-		//			if (criteriaIsMet)
-		//			{
-		//				// Check for optional secondary criteria on control question
-		//				if (control.SECONDARY_QUESTION_ID != null && control.SECONDARY_TRIGGER_VALUE != null)
-		//				{
-		//					var secondaryControl = pnlForm.FindControl(control.SECONDARY_QUESTION_ID.ToString());
-
-		//					if (secondaryControl is RadDropDownList)
-		//					{
-		//						string secondaryValue = (secondaryControl as RadDropDownList).SelectedValue;
-		//						criteriaIsMet = (control.SECONDARY_TRIGGER_VALUE == secondaryValue);
-		//					}
-		//				}
-		//			}
-
-		//			var localControl = control;
-		//			EHSAuditQuestion affectedQuestion = questions.FirstOrDefault(q => q.QuestionId == localControl.AUDIT_QUESTION_AFFECTED_ID);
-
-		//			if (containerControl != null && affectedQuestion != null)
-		//			{
-		//				switch (control.ACTION)
-		//				{
-		//					case "Show":
-
-		//						if (criteriaIsMet)
-		//						{
-		//							containerControl.Enabled = true;
-		//							formLabel.ForeColor = System.Drawing.Color.Black;
-		//							if (formControl is CheckBox)
-		//								(formControl as CheckBox).ForeColor = System.Drawing.Color.Black;
-		//							else if (formControl is RadioButtonList)
-		//								(formControl as RadioButtonList).ForeColor = System.Drawing.Color.Black;
-		//							else if (formControl is RadDropDownList)
-		//							{
-		//								(formControl as RadDropDownList).Enabled = true;
-		//							}
-		//						}
-		//						else
-		//						{
-		//							var greyColor = System.Drawing.Color.FromArgb(200, 200, 200);
-		//							containerControl.Enabled = false;
-		//							formLabel.ForeColor = greyColor;
-		//							if (formControl is CheckBox)
-		//							{
-		//								(formControl as CheckBox).Checked = false;
-		//								(formControl as CheckBox).ForeColor = greyColor;
-		//							}
-		//							else if (formControl is RadioButtonList)
-		//							{
-		//								(formControl as RadioButtonList).SelectedValue = Resources.LocalizedText.No;
-		//								(formControl as RadioButtonList).ForeColor = greyColor;
-		//							}
-		//							else if (formControl is RadDropDownList)
-		//							{
-		//								(formControl as RadDropDownList).SelectedValue = "";
-		//								(formControl as RadDropDownList).Enabled = false;
-		//							}
-		//						}
-
-		//						break;
-
-		//					case "Force":
-		//						if (formControl is CheckBox)
-		//						{
-		//							var cb = (formControl as CheckBox);
-		//							if (criteriaIsMet)
-		//							{
-		//								cb.Checked = true;
-
-		//								affectedQuestion.AnswerText = "Yes";
-
-		//								// Recursively process any other controls triggered by a forced checkbox
-		//								if (affectedQuestion.QuestionControls != null && affectedQuestion.QuestionControls.Count > 0)
-		//									ProcessQuestionControls(affectedQuestion, depth);
-		//							}
-		//							else
-		//							{
-		//								// Only force to false if the result of a parent checkbox changing (avoids changes on form rebuilds)
-		//								if (controlQuestionChanged)
-		//									cb.Checked = false;
-		//							}
-
-		//							cb.Enabled = (answer != triggerVal);
-		//						}
-		//						else if (formControl is RadioButtonList)
-		//						{
-		//							var rbl = (formControl as RadioButtonList);
-		//							if (criteriaIsMet)
-		//							{
-		//								rbl.SelectedValue = Resources.LocalizedText.Yes;
-		//								affectedQuestion.AnswerText = "Yes";
-
-		//								// Recursively process any other controls triggered by a forced checkbox
-		//								if (affectedQuestion.QuestionControls != null && affectedQuestion.QuestionControls.Count > 0)
-		//									ProcessQuestionControls(affectedQuestion, depth);
-		//							}
-		//							else
-		//							{
-		//								// Only force to false if the result of a parent checkbox changing (avoids changes on form rebuilds)
-		//								if (controlQuestionChanged)
-		//									rbl.SelectedValue = Resources.LocalizedText.No;
-		//							}
-
-		//							rbl.Enabled = (answer != triggerVal);
-		//						}
-
-		//						break;
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
-
-		//void rblp_SelectedIndexChanged(object sender, EventArgs e)
-		//{
-		//	decimal typeId = (IsEditContext) ? EditAuditTypeId : SelectedTypeId;
-		//	if (typeId < 1)
-		//		return;
-		//	// add the logic to recalculate the percentages
-		//	UpdateAnswersFromForm();
-		//	CalculatePercentages(questions);
-		//}
-
-		//protected RadComboBox CreateReferencesDropdown(string standard)
-		//{
-		//	List<STANDARDS_REFERENCES> srList = SQMStandardsReferencesMgr.SelectReferencesByStandard("IMS");
-		//	var rcb = new RadComboBox();
-		//	rcb.Items.Add(new RadComboBoxItem(""));
-		//	foreach (var s in srList)
-		//	{
-		//		string combined = s.SECTION + " - " + s.DESCRIPTION;
-		//		rcb.Items.Add(new RadComboBoxItem(combined, combined));
-		//	}
-		//	return rcb;
-		//}
-
-		//protected void AddToolTip(Panel container, EHSAuditQuestion question)
-		//{
-		//	var imgHelp = new System.Web.UI.WebControls.Image()
-		//	{
-		//		ID = "help_" + question.QuestionId.ToString(),
-		//		ImageUrl = "/images/ico-question.png",
-		//	};
-
-		//	var rttHelp = new RadToolTip()
-		//	{
-		//		Text = "<div style=\"font-size: 11px; line-height: 1.5em;\" data-html=\"true\" >" + question.HelpText + "</div>",
-		//		TargetControlID = imgHelp.ID,
-		//		IsClientID = false,
-		//		RelativeTo = ToolTipRelativeDisplay.Element,
-		//		Width = 400,
-		//		Height = 200,
-		//		Animation = ToolTipAnimation.Fade,
-		//		Position = ToolTipPosition.MiddleRight,
-		//		ContentScrolling = ToolTipScrolling.Auto,
-		//		Skin = "Metro",
-		//		HideEvent = ToolTipHideEvent.LeaveTargetAndToolTip
-		//	};
-		//	pnlForm.Controls.Add(new LiteralControl("<span style=\"float: right;\">"));
-		//	container.Controls.Add(imgHelp);
-		//	pnlForm.Controls.Add(new LiteralControl("</span>"));
-		//	container.Controls.Add(rttHelp);
-		//}
-
-		//public void CheckForSingleType()
-		//{
-		//	if (rddlAuditType.Items.Count == 1)
-		//	{
-		//		string selectedTypeId = rddlAuditType.Items[0].Value;
-		//		if (!string.IsNullOrEmpty(selectedTypeId))
-		//		{
-		//			SelectedTypeId = Convert.ToDecimal(selectedTypeId);
-		//			IsEditContext = false;
-		//			BuildForm();
-		//		}
-		//	}
-		//}
 
 		#endregion
 
@@ -628,7 +293,7 @@ namespace SQM.Website
 
 		protected void Save(bool shouldReturn)
 		{
-            VIDEO theVideo = null;
+			VIDEO theVideo = null;
 			decimal videoId = 0;
 			string result = "<h3>EHS Assessment " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 
@@ -690,6 +355,7 @@ namespace SQM.Website
 			{
 				video.TITLE = tbTitle.Text.ToString();
 				video.DESCRIPTION = tbDescription.Text.ToString();
+				video.VIDEO_TYPE = ddlVideoType.SelectedValue.ToString();
 				video.VIDEO_AVAILABILITY = ddlAvailability.SelectedValue.ToString();
 				video.VIDEO_STATUS = rcbStatusSelect.SelectedValue.ToString();
 				video.RELEASE_REQUIRED = cbReleaseForms.Checked;
@@ -724,33 +390,8 @@ namespace SQM.Website
 			//}
 		}
 
-		//protected void GoToNextStep(decimal auditId)
-		//{
-		//	// Go to next step (report)
-		//	SessionManager.ReturnStatus = true;
-		//	SessionManager.ReturnObject = "Report";
-		//	SessionManager.ReturnRecordID = auditId;
-		//}
-
-		//protected void ShowAuditDetails(decimal auditId, string result)
-		//{
-		//	rddlAuditType.SelectedIndex = 0;
-
-		//	// Display audit details control
-		//	btnDelete.Visible = false;
-		//	lblResults.Text = result.ToString();
-		//	uclAuditDetails.Visible = true;
-		//	var displaySteps = new int[] { CurrentStep };
-		//	uclAuditDetails.Refresh(auditId, displaySteps);
-		//}
-
 		#endregion
 
-
-		//public void ClearControls()
-		//{
-		//	pnlForm.Controls.Clear();
-		//}
 
 		protected void RefreshPageContext()
 		{
@@ -814,7 +455,7 @@ namespace SQM.Website
 			switch (recordType)
 			{
 				case (int)MediaAttachmentType.ReleaseForm:
-					uploadReleases.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnDelete" };
+					uploadReleases.RAVideoUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnDelete" };
 					int px = 128;
 					uploadReleases.GetUploadedFiles(recordType, videoId);
 					break;
@@ -839,6 +480,19 @@ namespace SQM.Website
 			//// Set the html Div height based on number of attachments to be displayed in the grid:
 			//dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
 			//dvAttach.Style.Add("height", px.ToString() + "px !important");
+		}
+		void PopulateVideoTypeDropDown()
+		{
+			List<EHSMetaData> videotype = EHSMetaDataMgr.SelectMetaDataList("MEDIA_VIDEO_TYPE");
+			if (videotype != null && videotype.Count > 0)
+			{
+				foreach (var s in videotype)
+				{
+					{
+						ddlVideoType.Items.Add(new ListItem(s.Text, s.Value));
+					}
+				}
+			}
 		}
 
 

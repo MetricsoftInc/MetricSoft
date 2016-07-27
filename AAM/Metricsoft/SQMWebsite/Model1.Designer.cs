@@ -2457,6 +2457,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PERSPECTIVE_VIEW_LANG> _PERSPECTIVE_VIEW_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<VIDEO_FILE> VIDEO_FILE
+        {
+            get
+            {
+                if ((_VIDEO_FILE == null))
+                {
+                    _VIDEO_FILE = base.CreateObjectSet<VIDEO_FILE>("VIDEO_FILE");
+                }
+                return _VIDEO_FILE;
+            }
+        }
+        private ObjectSet<VIDEO_FILE> _VIDEO_FILE;
 
         #endregion
 
@@ -3580,6 +3596,14 @@ namespace SQM.Website
         public void AddToPERSPECTIVE_VIEW_LANG(PERSPECTIVE_VIEW_LANG pERSPECTIVE_VIEW_LANG)
         {
             base.AddObject("PERSPECTIVE_VIEW_LANG", pERSPECTIVE_VIEW_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the VIDEO_FILE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToVIDEO_FILE(VIDEO_FILE vIDEO_FILE)
+        {
+            base.AddObject("VIDEO_FILE", vIDEO_FILE);
         }
 
         #endregion
@@ -51436,6 +51460,116 @@ namespace SQM.Website
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="VIDEO_FILE")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class VIDEO_FILE : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new VIDEO_FILE object.
+        /// </summary>
+        /// <param name="vIDEO_FILE_ID">Initial value of the VIDEO_FILE_ID property.</param>
+        /// <param name="vIDEO_ID">Initial value of the VIDEO_ID property.</param>
+        public static VIDEO_FILE CreateVIDEO_FILE(global::System.Guid vIDEO_FILE_ID, global::System.Decimal vIDEO_ID)
+        {
+            VIDEO_FILE vIDEO_FILE = new VIDEO_FILE();
+            vIDEO_FILE.VIDEO_FILE_ID = vIDEO_FILE_ID;
+            vIDEO_FILE.VIDEO_ID = vIDEO_ID;
+            return vIDEO_FILE;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid VIDEO_FILE_ID
+        {
+            get
+            {
+                return _VIDEO_FILE_ID;
+            }
+            set
+            {
+                if (_VIDEO_FILE_ID != value)
+                {
+                    OnVIDEO_FILE_IDChanging(value);
+                    ReportPropertyChanging("VIDEO_FILE_ID");
+                    _VIDEO_FILE_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("VIDEO_FILE_ID");
+                    OnVIDEO_FILE_IDChanged();
+                }
+            }
+        }
+        private global::System.Guid _VIDEO_FILE_ID;
+        partial void OnVIDEO_FILE_IDChanging(global::System.Guid value);
+        partial void OnVIDEO_FILE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal VIDEO_ID
+        {
+            get
+            {
+                return _VIDEO_ID;
+            }
+            set
+            {
+                if (_VIDEO_ID != value)
+                {
+                    OnVIDEO_IDChanging(value);
+                    ReportPropertyChanging("VIDEO_ID");
+                    _VIDEO_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("VIDEO_ID");
+                    OnVIDEO_IDChanged();
+                }
+            }
+        }
+        private global::System.Decimal _VIDEO_ID;
+        partial void OnVIDEO_IDChanging(global::System.Decimal value);
+        partial void OnVIDEO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] VIDEO_DATA
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_VIDEO_DATA);
+            }
+            set
+            {
+                OnVIDEO_DATAChanging(value);
+                ReportPropertyChanging("VIDEO_DATA");
+                _VIDEO_DATA = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("VIDEO_DATA");
+                OnVIDEO_DATAChanged();
+            }
+        }
+        private global::System.Byte[] _VIDEO_DATA;
+        partial void OnVIDEO_DATAChanging(global::System.Byte[] value);
+        partial void OnVIDEO_DATAChanged();
+
+        #endregion
+
+    
     }
     
     /// <summary>

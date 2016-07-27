@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace SQM.Website	
 {
@@ -24,12 +25,17 @@ namespace SQM.Website
 			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
 			this.lblStatus.Text = Resources.LocalizedText.Status + ":";
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
+			this.lblVideoSource.Text = Resources.LocalizedText.VideoSourceType + ":";
+			this.lblVideoOwner.Text = Resources.LocalizedText.VideoOwner + ":";
 			this.lblVideoType.Text = Resources.LocalizedText.VideoType + ":";
+			this.lblBodyPart.Text = Resources.LocalizedText.BodyPart + ":";
+			this.lblInjuryType.Text = Resources.LocalizedText.InjuryType + ":";
+
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclVideoList.VideoListEhsGrid);
-			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoType);
+			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoSource);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoOwner);
 
 		}
@@ -210,13 +216,22 @@ namespace SQM.Website
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 
-				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[2] { "MEDIA_VIDEO_TYPE", "MEDIA_VIDEO_STATUS" }, 1);
-				rcbVideoType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoType, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_TYPE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
-				rcbVideoType.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
-				rcbVideoType.SelectedIndex = 0;
+				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[5] { "INJURY_PART", "INJURY_TYPE", "MEDIA_VIDEO_SOURCE", "MEDIA_VIDEO_STATUS", "MEDIA_VIDEO_TYPE" }, 1);
+				rcbVideoSource = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoSource, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_SOURCE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				rcbVideoSource.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				rcbVideoSource.SelectedIndex = 0;
 				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
 				rcbStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
 				rcbStatusSelect.SelectedIndex = 0;
+				rcbVideoType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoType, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_TYPE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				//rcbStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				//rcbStatusSelect.SelectedIndex = 0;
+				rcbInjuryType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInjuryType, xlatList.Where(l => l.XLAT_GROUP == "INJURY_TYPE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				rcbInjuryType.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				rcbInjuryType.SelectedIndex = 0;
+				rcbBodyPart = SQMBasePage.SetComboBoxItemsFromXLAT(rcbBodyPart, xlatList.Where(l => l.XLAT_GROUP == "INJURY_PART" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				rcbBodyPart.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				rcbBodyPart.SelectedIndex = 0;
 			}
 
 			divVideoList.Visible = true;
@@ -285,21 +300,46 @@ namespace SQM.Website
 			toDate = new DateTime(toDate.Year, toDate.Month, toDate.Day, 23, 59, 59);
 
 			List<decimal> plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
+			List<string> videoTypes = SQMBasePage.GetComboBoxCheckedItems(rcbVideoType).Select(i => i.Value).ToList();
 
-			string selectedType = rcbVideoType.SelectedValue.ToString();
+			string selectedType = rcbVideoSource.SelectedValue.ToString();
 			List<decimal> types = new List<decimal>();
-			if (rcbVideoType.SelectedValue.ToString().Equals(""))
+			if (rcbVideoSource.SelectedValue.ToString().Equals(""))
 				types.Add(0);
 			else
 			{
-				foreach (ListItem item in rcbVideoType.Items)
+				foreach (RadComboBoxItem item in rcbVideoSource.Items)
 				{
-					if (!item.Value.Equals(""))
+					if (!item.Value.Equals("") && item.Selected)
 						types.Add(Convert.ToDecimal(item.Value.ToString()));
 				}
 			}
 
-			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString());
+			List<string> injuryTypes = new List<string>();
+			if (rcbInjuryType.SelectedValue.ToString().Equals(""))
+				injuryTypes.Add("0");
+			else
+			{
+				foreach (RadComboBoxItem item in rcbInjuryType.Items)
+				{
+					if (!item.Value.Equals("") && item.Selected)
+						injuryTypes.Add(item.Value.ToString());
+				}
+			}
+
+			List<string> bodyParts = new List<string>();
+			if (rcbBodyPart.SelectedValue.ToString().Equals(""))
+				bodyParts.Add("0");
+			else
+			{
+				foreach (RadComboBoxItem item in rcbBodyPart.Items)
+				{
+					if (!item.Value.Equals("") && item.Selected)
+						bodyParts.Add(item.Value.ToString());
+				}
+			}
+
+			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString(), injuryTypes, bodyParts, videoTypes);
 			uclVideoList.BindVideoListRepeater(videos, "Media");
 			//List<string> statusList = new List<string>();
 

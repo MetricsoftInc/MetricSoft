@@ -2,9 +2,9 @@
 	Inherits="SQM.Website.Ucl_RadAsyncUploadVideo" EnableViewState="true" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
-<telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_OnDeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
+<telerik:RadGrid ID="rgVideoFiles" runat="server" Skin="Metro" OnDeleteCommand="rgVideoFiles_OnDeleteCommand" OnItemDataBound="rgVideoFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
  MasterTableView-BorderColor="LightGray" HeaderStyle-Font-Size="11px" MasterTableView-BorderWidth="0" MasterTableView-Font-Size="11px" MasterTableView-ForeColor="#444444">
-	<MasterTableView DataKeyNames="VideoId" Width="100%" AutoGenerateColumns="False">
+	<MasterTableView DataKeyNames="VideoAttachId" Width="100%" AutoGenerateColumns="False">
 		<Columns>
 			<telerik:GridTemplateColumn UniqueName="FileNameColumn" HeaderText="File" HeaderStyle-Width="100">
 				<ItemTemplate>
@@ -36,7 +36,7 @@
     <br style="clear: both;" /><%--<br />--%>
 <table cellpadding="0" cellspacing="0"><tr>
     <td id="tdUploadImg" runat="server" style="vertical-align: bottom; padding-bottom: 16px;"><img src="/images/defaulticon/16x16/attachment.png" alt="" style="border: 0; cursor: pointer;" onclick="$telerik.$('.ruFileInput').click();" /></td>
-    <td><telerik:RadAsyncUpload runat="server" ID="raUpload" MultipleFileSelection="Disabled" MaxFileInputsCount="10" Localization-Select="Browse..."
+    <td><telerik:RadAsyncUpload runat="server" ID="raVideoUpload" MultipleFileSelection="Disabled" MaxFileInputsCount="10" Localization-Select="Browse..."
 	skin="Metro" OnClientFileUploaded="onClientFileUploadedVideo" /></td></table>
 <asp:HiddenField ID="hfListId" runat="server" />
 <asp:HiddenField ID="hfDescriptions" runat="server" />

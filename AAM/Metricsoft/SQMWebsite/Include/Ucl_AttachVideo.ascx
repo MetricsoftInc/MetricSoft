@@ -16,7 +16,7 @@
         <asp:ImageButton ID="imbVideo" runat="server" tooltip="add or view videos" ImageUrl="~/images/attach.png"  OnClientClick="PopupCenter('../Shared/Shared_Attach.aspx', 'newPage', 800, 600);  return false;" />
 </asp:Panel>
 
-<asp:Panel ID="pnlListVideo" runat="server" class="listingImageContainerTop">
+<asp:Panel ID="pnlListVideo" runat="server" class="listingImageContainerTop" Visible="false">
 	<telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_DeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
 		MasterTableView-BorderColor="LightGray" HeaderStyle-Font-Size="11px" MasterTableView-BorderWidth="0" MasterTableView-Font-Size="11px" MasterTableView-ForeColor="#444444">
 		<MasterTableView DataKeyNames="VideoId" Width="100%" AutoGenerateColumns="False">
@@ -87,6 +87,11 @@
 					MaxLength="1000" Width="392px"></asp:TextBox>
 				<br /><br />
 				<asp:Panel ID="pnlDisplayArea" runat="server" Visible="true" CssClass="tableDataAlt">
+					<span class="confirm">
+						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Literal></span>
+					<br />
+					<asp:DropDownList ID="ddlVideoType" runat="server"></asp:DropDownList>
+					<br /><br />
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, InjuryType %>"></asp:Literal></span>
 					<br />

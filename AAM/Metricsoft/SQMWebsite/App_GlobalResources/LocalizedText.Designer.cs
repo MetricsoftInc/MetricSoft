@@ -1096,6 +1096,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key Word Search:.
+        /// </summary>
+        internal static string KeyWordSearch {
+            get {
+                return ResourceManager.GetString("KeyWordSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter keywords that may be in the title or description fields to help narrow your search. Separate words with a space..
+        /// </summary>
+        internal static string KeyWordSearchDesc {
+            get {
+                return ResourceManager.GetString("KeyWordSearchDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language/Culture.
         /// </summary>
         internal static string LanguageCulture {
@@ -1942,6 +1960,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Video Date From:.
+        /// </summary>
+        internal static string VideoDateFrom {
+            get {
+                return ResourceManager.GetString("VideoDateFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Video and all associated attachments.
         /// </summary>
         internal static string VideoDelete {
@@ -2032,7 +2059,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (ONLY needed if filming individual non-employees or minors).
+        ///   Looks up a localized string similar to &lt;br&gt;(release forms are ONLY needed if filming individual non-employees or minors).
         /// </summary>
         internal static string VideoReleaseFormsDesc {
             get {
@@ -2041,7 +2068,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are release forms required?.
+        ///   Looks up a localized string similar to Are release forms/additional documentation required?.
         /// </summary>
         internal static string VideoReleaseFormsRequired {
             get {
@@ -2064,6 +2091,15 @@ namespace Resources {
         internal static string VideoSelectOwner {
             get {
                 return ResourceManager.GetString("VideoSelectOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select video based on source of upload.
+        /// </summary>
+        internal static string VideoSelectSource {
+            get {
+                return ResourceManager.GetString("VideoSelectSource", resourceCulture);
             }
         }
         

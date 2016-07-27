@@ -2125,6 +2125,17 @@ warning 6002: The table/view 'AAM.dbo.UOM_XREF' does not have a primary key defi
           <Property Name="VIDEO_ATTACH_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="VIDEO_ATTACH_DATA" Type="image" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AAM.dbo.VIDEO_FILE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VIDEO_FILE">
+          <Key>
+            <PropertyRef Name="VIDEO_FILE_ID" />
+            <PropertyRef Name="VIDEO_ID" />
+          </Key>
+          <Property Name="VIDEO_FILE_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="VIDEO_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="VIDEO_DATA" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="XLAT">
           <Key>
             <PropertyRef Name="XLAT_LANGUAGE" />
@@ -3948,6 +3959,13 @@ warning 6002: The table/view 'AAM.dbo.vw_MetricDataByPlant' does not have a prim
 [UOM_XREF].[OPERATOR] AS [OPERATOR]
 FROM [dbo].[UOM_XREF] AS [UOM_XREF]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VIDEO_FILE" EntityType="Self.VIDEO_FILE" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[VIDEO_FILE].[VIDEO_FILE_ID] AS [VIDEO_FILE_ID], 
+[VIDEO_FILE].[VIDEO_ID] AS [VIDEO_ID], 
+[VIDEO_FILE].[VIDEO_DATA] AS [VIDEO_DATA]
+FROM [dbo].[VIDEO_FILE] AS [VIDEO_FILE]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="XLAT_DAYS_TO_CLOSE_TRANS" EntityType="Self.XLAT_DAYS_TO_CLOSE_TRANS" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [XLAT_DAYS_TO_CLOSE_TRANS].[XLAT_CODE] AS [XLAT_CODE], 
@@ -5250,6 +5268,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="PERSPECTIVE_VIEW" EntitySet="PERSPECTIVE_VIEW" />
             <End Role="PERSPECTIVE_VIEW_LANG" EntitySet="PERSPECTIVE_VIEW_LANG" />
           </AssociationSet>
+          <EntitySet Name="VIDEO_FILE" EntityType="PSsqmModel.VIDEO_FILE" />
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -9501,6 +9520,15 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VIDEO_FILE">
+          <Key>
+            <PropertyRef Name="VIDEO_FILE_ID" />
+            <PropertyRef Name="VIDEO_ID" />
+          </Key>
+          <Property Name="VIDEO_FILE_ID" Type="Guid" Nullable="false" />
+          <Property Name="VIDEO_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="VIDEO_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11744,6 +11772,15 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VIDEO_FILE">
+            <EntityTypeMapping TypeName="PSsqmModel.VIDEO_FILE">
+              <MappingFragment StoreEntitySet="VIDEO_FILE">
+                <ScalarProperty Name="VIDEO_DATA" ColumnName="VIDEO_DATA" />
+                <ScalarProperty Name="VIDEO_ID" ColumnName="VIDEO_ID" />
+                <ScalarProperty Name="VIDEO_FILE_ID" ColumnName="VIDEO_FILE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -12054,6 +12091,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_VIEW_ITEM_LANG" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="PSsqmModel.PERSPECTIVE_VIEW_LANG" Width="1.5" PointX="7.75" PointY="41.25" />
         <AssociationConnector Association="PSsqmModel.FK_PERSPECTIVE_VIEW_LANG_PERSPECTIVE_VIEW" />
+        <EntityTypeShape EntityType="PSsqmModel.VIDEO_FILE" Width="1.5" PointX="18" PointY="0.75" />
         </Diagram>
     </Diagrams>
   </Designer>

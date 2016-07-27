@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -47,7 +48,7 @@ namespace SQM.Website
 
 	public static class MediaVideoMgr
 	{
-		public static VIDEO Add(String fileLocation, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate)
+		public static VIDEO Add(String fileName, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate, Stream file)
 		{
 			VIDEO ret = null;
 			try
@@ -73,11 +74,28 @@ namespace SQM.Website
 					video.INJURY_TYPES = injuryType;
 					video.BODY_PARTS = bodyPart;
 					video.VIDEO_STATUS = "";
-
+					video.FILE_NAME = fileName;
 
 					entities.AddToVIDEO(video);
 					entities.SaveChanges();
-					video.FILE_NAME = fileLocation.Trim() + video.VIDEO_ID.ToString().Trim() + fileExtention.Trim();
+
+					//read in the file contents
+					if (file != null)
+					{
+						file.Seek(0, SeekOrigin.Begin);
+						BinaryReader rdr = new BinaryReader(file);
+						byte[] fileData = rdr.ReadBytes((int)file.Length);
+						rdr.Close();
+						file.Close();
+
+						string cmdText = "INSERT INTO VIDEO_FILE VALUES (NEWID(), @VIDEO_ID, @VIDEO_DATA)";
+						SqlParameter[] parameters = new[]{
+							new SqlParameter("@VIDEO_ID",  video.VIDEO_ID),
+							new SqlParameter("@VIDEO_DATA", fileData)
+						};
+
+						int status = entities.ExecuteStoreCommand(cmdText, parameters);
+					}
 					entities.SaveChanges();
 
 					ret = video;
@@ -127,14 +145,23 @@ namespace SQM.Website
 			return videoData;
 		}
 
-		public static List<MediaVideoData> SelectVideoList(List<decimal> plantIdList, List<decimal> videoTypeList, DateTime fromDate, DateTime toDate, string videoStatus)
+		public static List<MediaVideoData> SelectVideoList(List<decimal> plantIdList, List<decimal> sourceTypeList, DateTime fromDate, DateTime toDate, string videoStatus, string keywords, List<string> injuryTypeList, List<string> bodyPartList, List<string> videoTypeList)
 		{
 			var videoList = new List<MediaVideoData>();
+
 			var entities = new PSsqmEntities();
+			String[] keyword = keywords.Split(' ');
+			bool allTypes = false;
+			foreach (string item in videoTypeList)
+			{
+				if (item == "")
+					allTypes = true;
+			}
 
 			try
 			{
-				videoList = (from v in entities.VIDEO
+				if (sourceTypeList.Count == 0 || (sourceTypeList.Count == 1 && sourceTypeList[0] == 0))
+					videoList = (from v in entities.VIDEO
 								 join p in entities.PLANT on v.PLANT_ID equals p.PLANT_ID
 								 join r in entities.PERSON on v.VIDEO_PERSON equals r.PERSON_ID
 								 where ((v.VIDEO_DT >= fromDate && v.VIDEO_DT <= toDate)
@@ -145,6 +172,36 @@ namespace SQM.Website
 									 Plant = p,
 									 Person = r
 								 }).OrderByDescending(l => l.Video.VIDEO_DT).ToList();
+				else
+					videoList = (from v in entities.VIDEO
+								 join p in entities.PLANT on v.PLANT_ID equals p.PLANT_ID
+								 join r in entities.PERSON on v.VIDEO_PERSON equals r.PERSON_ID
+								 where ((v.VIDEO_DT >= fromDate && v.VIDEO_DT <= toDate)
+								 && plantIdList.Contains((decimal)v.PLANT_ID)
+								 && sourceTypeList.Contains((decimal)v.SOURCE_TYPE))
+								 select new MediaVideoData
+								 {
+									 Video = v,
+									 Plant = p,
+									 Person = r
+								 }).OrderByDescending(l => l.Video.VIDEO_DT).ToList();
+
+				// select only specified status
+				if (videoStatus.Length > 0)
+					videoList = videoList.Where(l => l.Video.VIDEO_STATUS == videoStatus).ToList();
+
+				// select specific key words
+				if (keywords.Count() > 0)
+					videoList = videoList.Where(q => keywords.All(k => q.Video.TITLE.Contains(k)) || keywords.All(k => q.Video.DESCRIPTION.Contains(k))).ToList();
+
+				if (videoTypeList.Count > 0 && !allTypes)
+					videoList = videoList.Where(q => videoTypeList.All(k => q.Video.VIDEO_TYPE != null && q.Video.VIDEO_TYPE.Contains(k))).ToList();
+
+				if (injuryTypeList.Count > 0 && injuryTypeList[0] != "0")
+					videoList = videoList.Where(q => injuryTypeList.All(k => q.Video.INJURY_TYPES.Contains(k))).ToList();
+
+				if (bodyPartList.Count > 0 && bodyPartList[0] != "0")
+					videoList = videoList.Where(q => bodyPartList.All(k => q.Video.BODY_PARTS.Contains(k))).ToList();
 
 				if (videoList != null)
 				{
@@ -160,9 +217,7 @@ namespace SQM.Website
 						data.ReleaseFormList.AddRange(vaList.Where(l => l.VIDEO_ID == data.Video.VIDEO_ID && (MediaAttachmentType)l.RECORD_TYPE == MediaAttachmentType.ReleaseForm).ToList());
 					}
 
-					// select only specified status
-					if (videoStatus.Length > 0)  
-						videoList = videoList.Where(l => l.Video.VIDEO_STATUS == videoStatus).ToList();
+
 				}
 			}
 			catch (Exception e)
@@ -234,6 +289,12 @@ namespace SQM.Website
 			return videos;
 		}
 
+		public static VIDEO_FILE SelectVideoFileById(decimal videoId)
+		{
+			var entities = new PSsqmEntities();
+			return (from i in entities.VIDEO_FILE where i.VIDEO_ID == videoId select i).FirstOrDefault();
+		}
+
 		public static int DeleteVideo(decimal videoId, string fileName)
 		{
 			int status = 0;
@@ -254,21 +315,24 @@ namespace SQM.Website
 						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_ATTACHMENT WHERE VIDEO_ATTACH_ID IN (" + String.Join(",", attachmentIds) + ")");
 					}
 
-					// need to delete video file from the server
-					if (System.IO.File.Exists(fileName))
-					{
-						// Use a try block to catch IOExceptions, to
-						// handle the case of the file already being
-						// opened by another process.
-						try
-						{
-							System.IO.File.Delete(fileName);
-						}
-						catch (System.IO.IOException e)
-						{
-							//Console.WriteLine(e.Message);
-						}
-					}
+					// need to delete video file from the server (if file is stored on server)
+					////if (System.IO.File.Exists(fileName))
+					////{
+					////	// Use a try block to catch IOExceptions, to
+					////	// handle the case of the file already being
+					////	// opened by another process.
+					////	try
+					////	{
+					////		System.IO.File.Delete(fileName);
+					////	}
+					////	catch (System.IO.IOException e)
+					////	{
+					////		//Console.WriteLine(e.Message);
+					////	}
+					////}
+
+					// delete video from database, when stored in database
+					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID" + delCmd);
 
 					// delete the video header
 					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE VIDEO_ID" + delCmd);

@@ -59,6 +59,117 @@
 									CssClass="metroIconButton" Skin="Metro" OnClick="rbNew_Click" CausesValidation="False" style="position: relative;" />
 							</span>
 						</div>
+							<div style="float: right; position:relative;">
+								<div class="demo-container size-thin" style="float: right; padding-left: 20px;">
+									<a id="videoProcess" href="javascript:void(0);">Video Process</a>
+									<telerik:RadToolTip RenderMode="Lightweight" ID="RadToolTip2" runat="server" IsClientID="true" HideEvent="ManualClose" Position="MiddleLeft" OffsetX="35"
+										RelativeTo="Element" EnableRoundedCorners="true" TargetControlID="videoProcess" EnableShadow="true"
+										ShowEvent="OnClick" Width="700px" Height="130px" VisibleOnPageLoad="false" Modal="true">
+										II.	American Axle Video Process - Process steps<br />
+										<ol>
+											<li>Record
+												<ol>
+												<li>Turn on your iPad and select the “Camera” app icon.></li>
+												<li>Hold your iPad in landscape (the long edges are the top and bottom).</li>
+												<li>Choose “Video” from the right-side options.
+													<ul>
+														<li>If you must use zoom, pinch the middle of the screen.</li>
+													</ul>
+												</li>
+												<li>Select the red button to start recording.</li>
+												<li>Select the red button to stop recording.</li>
+											</ol>
+											</li>
+											<li>View
+												<ol>
+													<li>Select the “Photos” app from your iPad Home screen.</li>
+													<li>Select the video you wish to view.</li>
+												</ol>
+											</li>
+											<li>Trim
+												<ol>
+													<li>Tap the top of your screen to bring up the status bar.</li>
+													<li>Grab the arrow in a black box on the left and drag to the right to trim the start of a video.</li>
+													<li>Grab the arrow at the other end and drag to the left to trim the end. The on-screen preview will help you judge your edit.</li>
+													<li>When you are satisfied with the edit, tap the word “Trim” in the upper-right corner and choose the option “Save as a new clip.” Do not click “Trim Original” as this will save over your original. It is best to keep the original in case it is needed later.</li>
+												</ol>
+											</li>
+											<li>Save
+												<ol>
+													<li>Click the <b>Save</b> button on the iPad.</li>
+												</ol>
+											</li>
+										</ol>
+									</telerik:RadToolTip>
+								</div>
+								<div class="demo-container size-thin" style="float: right;">
+									<a id="videoTips" href="javascript:void(0);">Best Practices to take a video</a>
+									<telerik:RadToolTip RenderMode="Lightweight" ID="RadToolTip1" runat="server" IsClientID="true" HideEvent="ManualClose" Position="MiddleLeft" OffsetX="35"
+										RelativeTo="Element" EnableRoundedCorners="true" TargetControlID="videoTips" EnableShadow="true"
+										ShowEvent="OnClick"  Width="700px" Height="130px" VisibleOnPageLoad="false" Modal="true">
+										I.	American Axle Video Best Practices<br />
+										<ol>
+											<li>Lighting
+												<ul>
+													<li>Do video in a well-lit area.
+														<ul>
+															<li>Filming in dark areas will cause the iPad camera to compensate and add “video noise” (graininess).</li>
+														</ul>
+													</li>
+													<li>Do ensure the foreground (not the background) is well lit.
+														<ul>
+															<li>Keep windows behind you when filming inside.</li>
+															<li>Keep the sun behind you when filming outside.</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>Steadiness and Zoom
+												<ul>
+													<li>Do minimize iPad movement.
+														<ul>
+															<li>In lieu of having a tripod, providing any type of support, such as leaning your iPad against a wall, will minimize movement and enhance your video. </li>
+															<li>If you want to follow action by moving your iPad, do it very slowly. </li>
+														</ul>
+													</li>
+													<li>Do not use the digital zoom on your iPad; it will decrease quality.
+														<ul>
+															<li>Film close to your subject. If you use zoom instead, any movement made with the iPad will be greatly exaggerated. </li>
+															<li>If you must use zoom, set it before recording and do not change it while recording.</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>Sound
+												<ul>
+													<li>Do video in a quiet environment away from machine noises, traffic, air handling, excessive wind, etc.</li>
+													<li>Do make sure your subject(s) speak clearly and directly to the camera at all times. 
+														<ul>
+															<li>The closer the subject is to the iPad, the clearer the sound will be.</li>
+															<li><b>Note:</b> At this time, all subjects should speak in English. However, if your video is not a safety video and is only to be shown at your local plant, the speaker may speak in his/her native language.</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li>Other Best Practices
+												<ul>
+													<li>Videos should be no more than 5 minutes in length.</li>
+													<li>Do video some “establishing shots.” 
+														<ul>
+															<li>For example, if filming a video about a specific machine, record the machine for at least 10 seconds with no narration. This footage can be used as background material when text is added over it.</li>
+														</ul>
+													</li>
+													<li>Do video in landscape (horizontal) mode. Do not video holding your iPad vertically. </li>
+													<li>What you see is what you get. If your video looks poor on your screen, it will look poor when posted to the plant monitors. </li>
+													<li>Do obtain a video release statement from all non-AAM employees. This only applies if you are filming an individual in a non-safety plant video. If you are filming a crowd on plant property, you do not need a release.</li>
+													<li>Do not film minors without the expressed written permission of a parent or guardian, who must be an AAM employee. This only applies if you are filming an individual in a non-safety plant video. If you are filming a crowd on plant property, you do not need a release, but you should try not to film the minors in the crowd.</li>
+													<li>Do make employees aware when you are filming them. They can opt out of being filmed.</li>
+												</ul>
+											</li>
+										</ol>
+									</telerik:RadToolTip>
+								</div>
+							</div>
 
 						<br class="clearfix visible-xs-block" />
 
@@ -90,14 +201,40 @@
                     <div class="row-fluid">
 
                         <span style="float: left; width: 160px;">
-                            <asp:Label runat="server" ID="lblVideoType" CssClass="prompt" Text="<%$ Resources:LocalizedText, Type %>"></asp:Label>
+                            <asp:Label runat="server" ID="lblVideoSource" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoSourceType %>"></asp:Label>
                         </span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-                        <telerik:RadComboBox ID="rcbVideoType" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, VideoSelectType %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+                        <telerik:RadComboBox ID="rcbVideoSource" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, VideoSelectSource %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
 
                         <div class="visible-xs"></div>
                         <br class="visible-xs-block" style="margin-top: 7px;" />
 
+						<span>
+								<asp:Label runat="server" ID="lblVideoType" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Label>
+						</span>&nbsp;&nbsp;
+						<br class="visible-xs-block" />
+                                            <telerik:RadComboBox ID="rcbVideoType" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectType %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="true" CheckBoxes="true">
+											</telerik:RadComboBox>
+                    </div>
+
+                    <div class="row-fluid" style="margin-top: 7px;">
+
+                        <span style="float: left; width: 160px;">
+								<asp:Label runat="server" ID="lblInjuryType" CssClass="prompt" Text="<%$ Resources:LocalizedText, InjuryType %>"></asp:Label>
+						</span>&nbsp;&nbsp;
+						<br class="visible-xs-block" />
+                                            <telerik:RadComboBox ID="rcbInjuryType" runat="server" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="false">
+											</telerik:RadComboBox>
+							<br class="visible-xs-block" />
+
+                        <div class="visible-xs"></div>
+                        <br class="visible-xs-block" style="margin-top: 7px;" />
+
+						<span>
+							                            <asp:Label runat="server" ID="lblBodyPart" CssClass="prompt" Text="<%$ Resources:LocalizedText, BodyPart %>"></asp:Label>
+                        </span>&nbsp;&nbsp;
+									<br class="visible-xs-block" />
+                        <telerik:RadComboBox ID="rcbBodyPart" runat="server" Style="margin-right: 15px;" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
                     </div>
 
 					<asp:PlaceHolder ID="phVideo" runat="server">
@@ -117,7 +254,7 @@
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" style="margin-top: 7px;" />
 
-							<span style="padding-left: 12px;">
+							<span style="padding-left: 120px;">
 								<asp:Label runat="server" ID="lblStatus" CssClass="prompt" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>&nbsp;&nbsp;
                                             <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectStatus %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false">
 											</telerik:RadComboBox>
@@ -129,13 +266,27 @@
 						</div>
 					</asp:PlaceHolder>
 
+                    <div class="row-fluid" style="margin-top: 7px;">
+
+                        <span style="float: left; width: 160px;">
+                            <asp:Label runat="server" ID="lbrKeyWord" CssClass="prompt" Text="<%$ Resources:LocalizedText, KeyWordSearch %>"></asp:Label>&nbsp;<asp:Image runat="server" ID="imgHelp" ImageUrl="/images/ico-question.png" /><telerik:RadToolTip runat="server" TargetControlID="imgHelp" ID="rttKeywordToolTip" IsClientID="false" RelativeTo="Element" OffsetX="35" EnableRoundedCorners="true" EnableShadow="true" Width="200" Height="100" Animation="Fade" Position="MiddleRight" ContentScrolling="Auto" HideEvent="LeaveTargetAndToolTip" RenderMode="Lightweight"><asp:Literal runat="server" ID="litKeywordHelp" Text="<%$ Resources:LocalizedText, KeyWordSearchDesc %>"></asp:Literal></telerik:RadToolTip>
+                        </span>&nbsp;&nbsp;
+									<br class="visible-xs-block" />
+                        <asp:TextBox ID="tbKeyWord" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, KeyWordSearchDesc %>" Width="500px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></asp:TextBox>
+
+                        <div class="visible-xs"></div>
+                        <br class="visible-xs-block" style="margin-top: 7px;" />
+
+                    </div>
+
 					<div class="row-fluid" style="margin-top: 7px;">
 
 
 						<span style="float: left; margin-top: 4px;">
 							<span style="padding-right: 20px;">
-								<asp:Label runat="server" ID="lblVideoDate" Text="<%$ Resources:LocalizedText, AssessmentDateFrom %>" CssClass="prompt"></asp:Label></span>
-							<span style="margin-right: -10px !important;">
+								<asp:Label runat="server" ID="lblVideoDate" Text="<%$ Resources:LocalizedText, VideoDateFrom %>" CssClass="prompt"></asp:Label></span>
+							<%--<span style="margin-right: -10px !important;">--%>
+							<span>
 								<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmFromDateResource1">
 									<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
@@ -200,6 +351,7 @@
 						</span>
 
 					</div>
+
 				</div>
 
 				<%--	$$$$$$$$$$$$$$ Video Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>

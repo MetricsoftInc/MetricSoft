@@ -49,6 +49,24 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadButton rbNew;
         
         /// <summary>
+        /// RadToolTip2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip RadToolTip2;
+        
+        /// <summary>
+        /// RadToolTip1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip RadToolTip1;
+        
+        /// <summary>
         /// lblPageInstructions control.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,24 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox ddlPlantSelect;
         
         /// <summary>
+        /// lblVideoSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVideoSource;
+        
+        /// <summary>
+        /// rcbVideoSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbVideoSource;
+        
+        /// <summary>
         /// lblVideoType control.
         /// </summary>
         /// <remarks>
@@ -110,6 +146,42 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbVideoType;
+        
+        /// <summary>
+        /// lblInjuryType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInjuryType;
+        
+        /// <summary>
+        /// rcbInjuryType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbInjuryType;
+        
+        /// <summary>
+        /// lblBodyPart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBodyPart;
+        
+        /// <summary>
+        /// rcbBodyPart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbBodyPart;
         
         /// <summary>
         /// phVideo control.
@@ -155,6 +227,51 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
+        
+        /// <summary>
+        /// lbrKeyWord control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbrKeyWord;
+        
+        /// <summary>
+        /// imgHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgHelp;
+        
+        /// <summary>
+        /// rttKeywordToolTip control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttKeywordToolTip;
+        
+        /// <summary>
+        /// litKeywordHelp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litKeywordHelp;
+        
+        /// <summary>
+        /// tbKeyWord control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbKeyWord;
         
         /// <summary>
         /// lblVideoDate control.

@@ -784,10 +784,10 @@
     <value>Return to List</value>
   </data>
   <data name="VideoReleaseFormsDesc" xml:space="preserve">
-    <value>(ONLY needed if filming individual non-employees or minors)</value>
+    <value>&lt;br&gt;(release forms are ONLY needed if filming individual non-employees or minors)</value>
   </data>
   <data name="VideoReleaseFormsRequired" xml:space="preserve">
-    <value>Are release forms required?</value>
+    <value>Are release forms/additional documentation required?</value>
   </data>
   <data name="VideoSourceType" xml:space="preserve">
     <value>Video Source Type</value>
@@ -821,5 +821,17 @@
   </data>
   <data name="VideoSpeakerAudio" xml:space="preserve">
     <value>Is there speaker audio in your video?</value>
+  </data>
+  <data name="VideoSelectSource" xml:space="preserve">
+    <value>Select video based on source of upload</value>
+  </data>
+  <data name="KeyWordSearch" xml:space="preserve">
+    <value>Key Word Search:</value>
+  </data>
+  <data name="KeyWordSearchDesc" xml:space="preserve">
+    <value>Enter keywords that may be in the title or description fields to help narrow your search. Separate words with a space.</value>
+  </data>
+  <data name="VideoDateFrom" xml:space="preserve">
+    <value>Video Date From:</value>
   </data>
 </root>

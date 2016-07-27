@@ -13,13 +13,13 @@ namespace SQM.Website {
     public partial class Ucl_RadAsyncUploadVideo {
         
         /// <summary>
-        /// rgFiles control.
+        /// rgVideoFiles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgFiles;
+        protected global::Telerik.Web.UI.RadGrid rgVideoFiles;
         
         /// <summary>
         /// tdUploadImg control.
@@ -31,13 +31,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdUploadImg;
         
         /// <summary>
-        /// raUpload control.
+        /// raVideoUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAsyncUpload raUpload;
+        protected global::Telerik.Web.UI.RadAsyncUpload raVideoUpload;
         
         /// <summary>
         /// hfListId control.

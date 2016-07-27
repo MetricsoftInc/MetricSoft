@@ -103,24 +103,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblVideoSourceType;
         
         /// <summary>
-        /// lblType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblType;
-        
-        /// <summary>
-        /// lblVideoType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVideoType;
-        
-        /// <summary>
         /// lblLocation control.
         /// </summary>
         /// <remarks>
@@ -319,6 +301,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbDescription;
         
         /// <summary>
+        /// lblType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblType;
+        
+        /// <summary>
+        /// ddlVideoType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlVideoType;
+        
+        /// <summary>
         /// lblAvailablity control.
         /// </summary>
         /// <remarks>
@@ -362,6 +362,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReleaseForms;
+        
+        /// <summary>
+        /// lblVideoReleaseFormsDesc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVideoReleaseFormsDesc;
         
         /// <summary>
         /// cbReleaseForms control.

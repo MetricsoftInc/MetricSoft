@@ -14,9 +14,9 @@ namespace SQM.Website
         public delegate void AttachmentDelete(VIDEO_ATTACHMENT attachment);
         public event AttachmentDelete OnAttachmentDelete;
 
-		public RadAsyncUpload RAUpload
+		public RadAsyncUpload RAVideoUpload
 		{
-			get { return raUpload; }
+			get { return raVideoUpload; }
 		}
 
 		public void SetAttachmentRecordStep(string step)
@@ -27,21 +27,21 @@ namespace SQM.Website
         public void SetViewMode(bool visible)
         {
 			hfMode.Value = visible.ToString();
-			this.raUpload.Visible = visible;
+			this.raVideoUpload.Visible = visible;
 			tdUploadImg.Visible = visible;
-			rgFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
-			rgFiles.MasterTableView.GetColumn("DeleteButtonColumn").Visible = visible;
-            rgFiles.Width = new System.Web.UI.WebControls.Unit("99%");
+			rgVideoFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
+			rgVideoFiles.MasterTableView.GetColumn("DeleteButtonColumn").Visible = visible;
+			rgVideoFiles.Width = new System.Web.UI.WebControls.Unit("99%");
         }
 
         public void SetReportOption(bool visible)
         {
-            rgFiles.MasterTableView.GetColumn(" DisplayTypeColumn").Visible = visible;
+			rgVideoFiles.MasterTableView.GetColumn(" DisplayTypeColumn").Visible = visible;
         }
 
 		public void SetSizeOption(bool visible)
 		{
-			rgFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
+			rgVideoFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
 		}
 
 		protected int _recordType
@@ -66,7 +66,7 @@ namespace SQM.Website
 		{
 			string script =
 			"function pageLoad() {\n" +
-			"	var radAsyncUploadVideo = $find(\"" + raUpload.ClientID + "\")\n" +
+			"	var radAsyncUploadVideo = $find(\"" + raVideoUpload.ClientID + "\")\n" +
 			"   var hfDescriptionsVideo = document.getElementById('" + hfDescriptions.ClientID + "');\n" +
 			"   if (hfDescriptionsVideo != null && hfDescriptionsVideo.value != null) {\n" +
 			"      var descriptionsVideo = hfDescriptionsVideo.value.split('|');\n" +
@@ -146,7 +146,7 @@ namespace SQM.Website
 			"	 return label;\n" +
 			"}\n";
 
-			ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raUpload.ClientID, script, true);
+			ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raVideoUpload.ClientID, script, true);
 		}
 
 		public void GetUploadedFiles(int recordType, decimal recordId)
@@ -169,10 +169,10 @@ namespace SQM.Website
 							 DisplayType = a.DISPLAY_TYPE
 						 }).ToList();
 
-			rgFiles.DataSource = files;
-			rgFiles.DataBind();
+			rgVideoFiles.DataSource = files;
+			rgVideoFiles.DataBind();
 
-			rgFiles.Visible = (files.Count > 0);
+			rgVideoFiles.Visible = (files.Count > 0);
 		}
 
 		public void SaveFiles(int recordType, decimal recordId)
@@ -180,7 +180,7 @@ namespace SQM.Website
 			string[] descriptions = hfDescriptions.Value.Split('|');
 
 			int i = 0;
-			foreach (UploadedFile file in raUpload.UploadedFiles)
+			foreach (UploadedFile file in raVideoUpload.UploadedFiles)
 			{
 				string description = (i < descriptions.Count()) ? descriptions[i] : "";
 				decimal displayType = (file.FileName.ToLower().Contains(".jpeg") || file.FileName.ToLower().Contains(".jpg") ||
@@ -217,7 +217,7 @@ namespace SQM.Website
 			}
 
 			// Update "display" status of existing files
-			foreach (GridDataItem item in rgFiles.Items)
+			foreach (GridDataItem item in rgVideoFiles.Items)
 			{
 				decimal attachmentId = Convert.ToDecimal(item.GetDataKeyValue("VideoAttachId"));
 				CheckBox cb = (CheckBox)item["DisplayTypeColumn"].FindControl("checkBox");
@@ -226,7 +226,7 @@ namespace SQM.Website
 			}
 		}
 
-		protected void rgFiles_OnDeleteCommand(object source, GridCommandEventArgs e)
+		protected void rgVideoFiles_OnDeleteCommand(object source, GridCommandEventArgs e)
 		{
 			GridEditableItem item = (GridEditableItem)e.Item;
 			decimal attachmentId = (decimal)item.GetDataKeyValue("VideoAttachId");
@@ -240,7 +240,7 @@ namespace SQM.Website
             }
 		} 
 
-		protected void rgFiles_ItemDataBound(object sender, GridItemEventArgs e)
+		protected void rgVideoFiles_ItemDataBound(object sender, GridItemEventArgs e)
 		{
 			if (e.Item is GridDataItem)
 			{
