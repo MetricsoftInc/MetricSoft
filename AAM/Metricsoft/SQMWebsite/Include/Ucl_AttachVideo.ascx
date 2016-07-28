@@ -12,6 +12,7 @@
 <asp:HiddenField id="hfTitle" runat="server"/> 
 <asp:HiddenField ID="hfDesc" runat="server" />
 
+
 <asp:Panel runat="server" ID="pnlManageVideos" Visible="false" >
         <asp:ImageButton ID="imbVideo" runat="server" tooltip="add or view videos" ImageUrl="~/images/attach.png"  OnClientClick="PopupCenter('../Shared/Shared_Attach.aspx', 'newPage', 800, 600);  return false;" />
 </asp:Panel>

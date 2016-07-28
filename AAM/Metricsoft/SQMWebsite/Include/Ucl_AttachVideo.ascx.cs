@@ -73,6 +73,7 @@ namespace SQM.Website
 			set { ViewState["VideoType"] = value; }
 		}
 
+
 		protected void Page_Load(object sender, EventArgs e)
         {
 			string script =
