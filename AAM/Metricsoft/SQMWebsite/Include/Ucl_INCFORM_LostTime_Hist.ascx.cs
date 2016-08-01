@@ -125,7 +125,7 @@ namespace SQM.Website
 			//String selectedLanguage = "es";
 			if (SessionManager.SessionContext != null)
 			{
-				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				String selectedLanguage = SessionManager.UserContext.Language.NLS_LANGUAGE;
 				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
 				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
 

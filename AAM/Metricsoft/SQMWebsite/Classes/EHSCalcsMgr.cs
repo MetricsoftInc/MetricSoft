@@ -15,26 +15,64 @@ namespace SQM.Website
     public enum SStat { none, value, sum, pctChange, deltaDy, sumCost, count, cost, pct, pctReduce};
     public enum HSAttr { none, type};
 
-    public class AttributeValue
-    {
-        public string Key
-        {
-            get;
-            set;
-        }
-        public decimal Value
-        {
-            get;
-            set;
-        }
+	public class AttributeValue
+	{
+		public string Group
+		{
+			get;
+			set;
+		}
+		public string Key
+		{
+			get;
+			set;
+		}
+		public decimal Value
+		{
+			get;
+			set;
+		}
 
-        public AttributeValue CreateNew(string key, decimal value)
-        {
-            this.Key = key;
-            this.Value = value;
-            return this;
-        }
-    }
+		public AttributeValue CreateNew(string group, string key, decimal value)
+		{
+			this.Group = group;
+			this.Key = key;
+			this.Value = value;
+			return this;
+		}
+
+		public AttributeValue CreateNew(string key, decimal value)
+		{
+			this.Group = "";
+			this.Key = key;
+			this.Value = value;
+			return this;
+		}
+	}
+
+	public class MetricData
+	{
+		public EHS_METRIC_HISTORY MetricRec
+		{
+			get;
+			set;
+		}
+		public EHS_MEASURE Measure
+		{
+			get;
+			set;
+		}
+		public List<AttributeValue> AtrList
+		{
+			get;
+			set;
+		}
+		public decimal DataID
+		{
+			get;
+			set;
+		}
+	}
 
     public class CalcsResult
     {
@@ -200,7 +238,7 @@ namespace SQM.Website
         public int NumMeasures;
         public decimal result;
 
-        public List<EHS_METRIC_HISTORY> Metrics
+        public List<MetricData> Metrics
         {
             get;
             set;
@@ -220,11 +258,6 @@ namespace SQM.Website
             get;
             set;
         }
-        public Dictionary<string, string> AttributeXref
-        {
-            get;
-            set;
-        }
         public List<DateTime> FromDates
         {
             get;
@@ -235,27 +268,40 @@ namespace SQM.Website
             get;
             set;
         }
-        public List<AttributeValue> AttrList
-        {
-            get;
-            set;
-        }
+		public List<AttributeValue> AttrList
+		{
+			get;
+			set;
+		}
+		public List<XLAT> XLATSeries
+		{
+			get;
+			set;
+		}
 
-        public List<EHS_METRIC_HISTORY> Select(DateTime fromDate, DateTime toDate, decimal[] plantArray, decimal[] measureArray)
+        public List<MetricData> Select(DateTime fromDate, DateTime toDate, decimal[] plantArray, decimal[] measureArray)
         {
-            this.Metrics = this.Metrics.Where(l => new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, DateTime.DaysInMonth(l.PERIOD_YEAR, l.PERIOD_MONTH)) <= toDate).ToList();
+            this.Metrics = this.Metrics.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= toDate).ToList();
 
             if ((NumPlants = plantArray.Length) > 0)
             {
-                this.Metrics = this.Metrics.Where(l => plantArray.Contains(l.PLANT_ID)).ToList();
+                this.Metrics = this.Metrics.Where(l => plantArray.Contains(l.MetricRec.PLANT_ID)).ToList();
             }
             if ((NumMeasures = measureArray.Length) > 0)
             {
-                this.Metrics = this.Metrics.Where(l => measureArray.Contains(l.MEASURE_ID)).ToList();
+				this.Metrics = this.Metrics.Where(l => measureArray.Contains(l.MetricRec.MEASURE_ID)).ToList();
             }
 
             return this.Metrics;
         }
+
+		public List<MetricData> SelectByAttribute(DateTime fromDate, DateTime toDate, decimal[] plantArray, string group, string attributeValue)
+		{
+
+			this.Metrics = this.Metrics.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= toDate && plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList.Any(a => a.Group == group && a.Key == attributeValue)).ToList();
+
+			return this.Metrics;
+		}
 
         // EHS Incident filter
         public List<EHSIncidentData> SelectIncidents(DateTime fromDate, DateTime toDate, decimal[] plantArray, decimal[] topicArray)
@@ -287,7 +333,12 @@ namespace SQM.Website
         //                            0               1               2               3                   4               5               6           7           8           9                   10            11              12              13              14          15          16
         public enum MetricElement { value, cost };
         public enum AccountingElement { cost, revenue, production, throughput, timeworked, timelost, recordedcases, timelostcases};
- 
+
+		public string Perspective
+		{
+			get;
+			set;
+		}
         public DateIntervalType DateInterval
         {
             get;
@@ -303,7 +354,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public List<EHS_METRIC_HISTORY> MetricHst
+        public List<MetricData> MetricHst
         {
             get;
             set;
@@ -338,7 +389,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public TargetCalcsMgr TargetCtl 
+        public TargetMgr TargetCtl
         {
             get;
             set;
@@ -388,6 +439,11 @@ namespace SQM.Website
             get;
             set;
         }
+		public string Filter
+		{
+			get;
+			set;
+		}
         public EHSCalcsCtl.SeriesOrder Seriesorder
         {
             get;
@@ -399,15 +455,15 @@ namespace SQM.Website
             set;
         }
 
-        public EHSCalcsCtl CreateNew(int FYStartMonth, DateSpanOption dateSpanType)
+        public EHSCalcsCtl CreateNew(int FYStartMonth, DateSpanOption dateSpanType, string perspective)
         {
-            this.MetricHst = new List<EHS_METRIC_HISTORY>();
+			this.Perspective = perspective;
+            this.MetricHst = new List<MetricData>();
             this.PlantHst = new List<PLANT_ACCOUNTING>();
             this.Entities = new PSsqmEntities();
             this.Calc = new EHSCalcs();
-            this.Calc.Metrics = new List<EHS_METRIC_HISTORY>();
+            this.Calc.Metrics = new List<MetricData>();
             this.Calc.Accounting = new List<PLANT_ACCOUNTING>();
-            this.Calc.AttributeXref = new Dictionary<string, string>();
             this.Results = new CalcsResult().Initialize();
             this.FYStartMonth = FYStartMonth;   // use for year over year calculations
             this.DateInterval = DateIntervalType.fuzzy;
@@ -418,7 +474,7 @@ namespace SQM.Website
             return this;
         }
 
-        public EHSCalcsCtl SetCalcParams(string calcsMethod, string scope, string stat, int seriesOrder)
+        public EHSCalcsCtl SetCalcParams(string calcsMethod, string scope, string stat, int seriesOrder, string filter)
         {
             this.CalcsMethod = calcsMethod;
             string[] scopeArgs = WebSiteCommon.SplitString(scope, '|');
@@ -452,6 +508,8 @@ namespace SQM.Website
                     this.Stat = (SStat)Enum.Parse(typeof(SStat), stat, true);
                 }
 
+				this.Filter = filter;
+
             }
             catch
             {
@@ -462,7 +520,7 @@ namespace SQM.Website
             return this;
         }
 
-        public EHSCalcsCtl SetTargets(TargetCalcsMgr targetMgr)
+        public EHSCalcsCtl SetTargets(TargetMgr targetMgr)
         {
             this.TargetCtl = targetMgr;
             return this;
@@ -479,14 +537,12 @@ namespace SQM.Website
 
         public PLANT GetPlant(decimal plantID)
         {
-           // PLANT plant = SessionManager.PlantList.Where(l => l.Plant.PLANT_ID == plantID).Select(l => l.Plant).FirstOrDefault();
             PLANT plant = this.PlantList.Where(l => l.PLANT_ID == plantID).FirstOrDefault();
             if (plant == null)
             {
                 plant = (from pl in this.Entities.PLANT.Include("EHS_PROFILE").Include("EHS_PROFILE.EHS_PROFILE_FACT")
                                     where pl.PLANT_ID == plantID select pl).Single();
                 this.PlantList.Add(plant);
-                //this.PlantList.Add(SessionManager.PlantList.Where(l => l.Plant.PLANT_ID == plantID).Select(l => l.Plant).FirstOrDefault());
             }
 
             return plant;
@@ -494,10 +550,12 @@ namespace SQM.Website
         public EHS_MEASURE GetMeasure(decimal measureID)
         {
             EHS_MEASURE measure = null;
-            if (measureID < 0)
+
+            if (this.Calc.XLATSeries != null  &&  this.Calc.XLATSeries.Count > 0)
             {
                 measure = new EHS_MEASURE();
-                measure.MEASURE_NAME = this.Calc.AttributeXref.ElementAt((int)Math.Abs(measureID)-1).Value;
+				measure.MEASURE_NAME = this.Calc.XLATSeries.ElementAt((int)measureID).XLAT_CODE;
+				measure.MEASURE_DESC = this.Calc.XLATSeries.ElementAt((int)measureID).DESCRIPTION_SHORT;
             }
             else if (measureID == 0)
             {
@@ -505,21 +563,27 @@ namespace SQM.Website
             }
             else
             {
-                measure = this.MetricHst.Where(l => l.MEASURE_ID == measureID).Select(l => l.EHS_MEASURE).FirstOrDefault();
+                measure = this.MetricHst.Where(l => l.Measure.MEASURE_ID == measureID).Select(l => l.Measure).FirstOrDefault();
                 if (measure == null)
                     measure = EHSModel.LookupEHSMeasure(this.Entities, measureID, "");
             }
             return measure;
         }
 
+		public string MeasureLabel(EHS_MEASURE measure)
+		{
+			// return measure description if it represents a member of an XLAT (iterating thru attrubute list)
+			return measure.MEASURE_ID > 0 ? measure.MEASURE_NAME.Trim() : measure.MEASURE_DESC.Trim();
+		}
 
         public decimal[] GetPlantsByScope(decimal[] plantIDS)
         {
+			List<PLANT> plantList = this.PlantList.Where(p => plantIDS.Contains(p.PLANT_ID)).ToList();
+
             switch (this.CalcsMethod)
             {
                 case "E":
-                    //List<PLANT> plantList = SQMModelMgr.SelectPlantList(plantIDS).Where(l => l.TRACK_EW_DATA == true).ToList();
-                    List<PLANT> plantList = this.PlantList.Where(l => l.TRACK_EW_DATA == true).ToList();
+                    plantList = this.PlantList.Where(l => l.TRACK_EW_DATA == true).ToList();
                     switch (this.SubScope)
                     {
                         case "":
@@ -556,86 +620,129 @@ namespace SQM.Website
                         default:
                             break;
                     }
-                    return plantList.Select(l => l.PLANT_ID).ToArray();
+                    //return plantList.Select(l => l.PLANT_ID).ToArray();
                     break;
                 case "HS":
                 case "IN":
-                    //List<PLANT> plantList = plantList.Where(l => l.TRACK_HS_DATA == true).ToList();
-                    // return plantList.Select(l => l.PLANT_ID).ToArray();
                     break;
                 default:
                     break;
             }
 
-            return plantIDS;
+			if (!string.IsNullOrEmpty(this.Filter))
+			{
+				string[] filterArgs = WebSiteCommon.SplitString(this.Filter, ':');		// ex:  BU|2,4,5
+				if (filterArgs.Length > 1)
+				{
+					string[] filterItems = WebSiteCommon.SplitString(filterArgs[1], ',');
+					try
+					{
+						switch (filterArgs[0])	// filter type 
+						{
+							case "B":	// bus orgs
+								if (filterItems.Length > 0)
+								{
+									plantList = plantList.Where(p => filterItems.Contains(p.BUS_ORG_ID.ToString())).ToList();
+								}
+								break;
+							case "P":	// plants
+								if (filterItems.Length > 0)
+								{
+									plantList = plantList.Where(p => filterItems.Contains(p.PLANT_ID.ToString())).ToList();
+								}
+								break;
+							case "L":	// location code  (country ?)
+								if (filterItems.Length > 0)
+								{
+									plantList = plantList.Where(p => filterItems.Contains(p.LOCATION_CODE)).ToList();
+								}
+								break;
+							case "R":	// region
+								if (filterItems.Length > 0)
+								{
+									plantList = plantList.Where(p => filterItems.Contains(p.COMP_INT_ID)).ToList();
+								}
+								break;
+							default:
+								break;
+						}
+					}
+					catch
+					{
+					}
+				}
+			}
+
+			return plantList.Select(l => l.PLANT_ID).ToArray();
+            //return plantIDS;
         }
 
 
         public decimal[] GetMetricsByScope()
         {
-            decimal[] measureArray;
+			List<decimal> measureList = new List<decimal>();
             int id = 0;
-            int n;
             string s;
+
+			this.Calc.XLATSeries = new List<XLAT>();
 
             if (this.MetricScope.Contains(',') || int.TryParse(this.MetricScope, out id))
             {
                 string[] ids = this.MetricScope.Split(',');
-                measureArray = ids.Select(i => decimal.Parse(i)).ToArray();
+                measureList = ids.Select(i => decimal.Parse(i)).ToList();
             }
             else if (this.MetricScope.Contains("EFM_"))  // get specific efm type
             {
                 string[] efm = this.MetricScope.Split('_');
-                measureArray = this.MetricHst.Where(m => m.EHS_MEASURE.EFM_TYPE == efm[1]).Select(m => m.MEASURE_ID).Distinct().ToArray();
+                measureList = this.MetricHst.Where(m => m.Measure.EFM_TYPE == efm[1]).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
             }
             else if (this.MetricScope.ToUpper().Contains("CO2")  ||  this.MetricScope.ToUpper().Contains("GHG"))
             {
-                measureArray = this.MetricHst.Where(m => m.EHS_MEASURE.MEASURE_CATEGORY == "ENGY").Select(m => m.MEASURE_ID).Distinct().ToArray();
+                measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY == "ENGY").Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
             }
             else // get all metrics of a specified catetory
             {
                 switch (this.MetricScope)
                 {
                     case "WASTE":
-                        measureArray = this.MetricHst.Where(m => m.EHS_MEASURE.MEASURE_CATEGORY.StartsWith("EW")).Select(m => m.MEASURE_ID).Distinct().ToArray();
+                        measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY.StartsWith("EW")).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
                         break;
                     case "WASTE_CAT":
-                        this.Calc.AttributeXref = WebSiteCommon.GetXlatList("measureCategoryEHS", "", "short").Where(l => l.Key.StartsWith("EW")).ToDictionary(l => l.Key, l => l.Value);
-                        measureArray = new decimal[this.Calc.AttributeXref.Count];
-                        n = -1;
-                        foreach (KeyValuePair<string, string> xItem in this.Calc.AttributeXref)
-                        {
-                            measureArray[++n] = (n + 1) * -1;
-                        }
+						this.Calc.XLATSeries.AddRange(SQMBasePage.SelectXLATList(new string[1] { "MEASURE_CATEGORY" }, SessionManager.UserContext.Language.LANGUAGE_ID).Where(x=> x.XLAT_CODE.StartsWith("EW")).ToList());
+						for (int i = 0; i < this.Calc.XLATSeries.Count; i++)
+						{
+							measureList.Add(i);
+						}
                         break;
-                    case "REG_STATUS":
-                        this.Calc.AttributeXref = WebSiteCommon.GetXlatList("regulatoryStatus", "", "short");
-                        measureArray = new decimal[this.Calc.AttributeXref.Count];
-                        n = -1;
-                        foreach (KeyValuePair<string, string> xItem in this.Calc.AttributeXref)
-                        {
-                            measureArray[++n] = (n + 1) * -1;
-                        }
-                        break;
-                    case "DISPOSAL":
-                        this.Calc.AttributeXref = WebSiteCommon.GetXlatList("disposal", "", "short");
-                        measureArray = new decimal[this.Calc.AttributeXref.Count];
-                        n = -1;
-                        foreach (KeyValuePair<string, string> xItem in this.Calc.AttributeXref)
-                        {
-                            measureArray[++n] = (n + 1) * -1;
-                        }
-                        break;
+					case "DISPOSAL":
+					case "REG_STATUS":
+					case "INJURY_TYPE":
+					case "INJURY_PART":
+					case "INJURY_TENURE":
+					case "INJURY_CAUSE":
+					case "INJURY_DAYS_TO_CLOSE":
+						this.Calc.XLATSeries.AddRange(SQMBasePage.SelectXLATList(new string[1] { this.MetricScope }, SessionManager.UserContext.Language.LANGUAGE_ID));
+						for (int i = 0; i < this.Calc.XLATSeries.Count; i++)
+						{
+							measureList.Add(i);
+						}
+						break;
                     default:
-                        measureArray = this.MetricHst.Where(m => m.EHS_MEASURE.MEASURE_CATEGORY == this.MetricScope).Select(m => m.MEASURE_ID).Distinct().ToArray();
+                        measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY == this.MetricScope).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
                         break;
                 }
-                if (measureArray.Length == 0)
-                    measureArray = new decimal[1] { 0 };
+
+				if (measureList.Count == 0)
+					measureList.Add(0);
             }
 
-            return measureArray;
+			return measureList.ToArray();		// for backwards compatibility with all the other related methods 
         }
+
+		public decimal[] GetMetricsByFieldName(string fieldName)
+		{
+			return this.MetricHst.Where(m => m.Measure.PLANT_ACCT_FIELD == fieldName).Select(m => m.Measure.MEASURE_ID).Distinct().ToArray();
+		}
 
         public decimal[] GetIncidentTopics()
         {
@@ -693,24 +800,90 @@ namespace SQM.Website
             return topicArray;
         }
 
+		public EHSCalcsCtl LoadEHSData(decimal[] plantIDS, DateTime startDate, DateTime endDate, DateIntervalType dateIntervalType)
+		{
+			this.DateInterval = dateIntervalType;
+			this.MetricHst = new List<MetricData>();
+			this.PlantHst = new List<PLANT_ACCOUNTING>();
+			DateTime fromDate = WebSiteCommon.PeriodFromDate(startDate);
+			DateTime toDate = WebSiteCommon.PeriodToDate(endDate);
+
+			try
+			{
+				this.PlantList = (from pl in this.Entities.PLANT 
+								  where (plantIDS.Contains((decimal)pl.PLANT_ID))
+								  select pl).ToList();
+
+				var query = (from h in this.Entities.EHS_DATA
+								  join m in this.Entities.EHS_MEASURE on h.MEASURE_ID equals m.MEASURE_ID into m_h
+								  from m in m_h.DefaultIfEmpty()
+								  join o in Entities.EHS_DATA_ORD on h.DATA_ID equals o.DATA_ID into ordlist 
+								  where (
+										plantIDS.Contains((decimal)h.PLANT_ID)
+										&& h.DATE >= fromDate && h.DATE <= toDate
+										  )
+								  select new 
+								  {
+									  EhsData = h,
+									  Measure = m,
+									  DataID = h.DATA_ID,
+									  OrdList = ordlist
+								  });
+
+				this.MetricHst = query.ToList().Select(r => new MetricData
+				{
+					MetricRec = new EHS_METRIC_HISTORY() { PLANT_ID = r.EhsData.PLANT_ID, MEASURE_ID = r.EhsData.MEASURE_ID, PERIOD_YEAR = r.EhsData.DATE.Year, PERIOD_MONTH = r.EhsData.DATE.Month, LAST_UPD_DT = r.EhsData.DATE, MEASURE_VALUE = r.EhsData.VALUE.HasValue ? (decimal)r.EhsData.VALUE : 0, STATUS = r.EhsData.VALUE.HasValue ? "A" : "N" },
+					Measure = r.Measure,
+					DataID = r.DataID,
+					AtrList = TransformOrdList((List<EHS_DATA_ORD>)r.OrdList)
+				}).ToList();
+
+			}
+			catch (Exception ex)
+			{
+				; //   SQMLogger.LogException(ex);
+			}
+
+			return this;
+		}
+
+		public List<AttributeValue> TransformOrdList(List<EHS_DATA_ORD> ordList)
+		{
+			List<AttributeValue> atrList = new List<AttributeValue>();
+
+			foreach (EHS_DATA_ORD ord in ordList)
+			{
+				atrList.Add(new AttributeValue().CreateNew(ord.XLAT_GROUP, ord.XLAT_CODE, ord.VALUE.HasValue ? (decimal)ord.VALUE : 0));
+			}
+
+			return atrList;
+		}
+
         public EHSCalcsCtl LoadMetricHistory(decimal[] plantIDS, DateTime startDate, DateTime endDate, DateIntervalType dateIntervalType, bool loadPlantAccounting)
         {
             this.DateInterval = dateIntervalType;
-            this.MetricHst = new List<EHS_METRIC_HISTORY>();
+            this.MetricHst = new List<MetricData>();
             this.PlantHst = new List<PLANT_ACCOUNTING>();
             DateTime fromDate = WebSiteCommon.PeriodFromDate(startDate);
             DateTime toDate = WebSiteCommon.PeriodToDate(endDate);
 
             try
             {
-                this.PlantList = (from pl in this.Entities.PLANT.Include("EHS_PROFILE").Include("EHS_PROFILE.EHS_PROFILE_FACT")
+				this.PlantList = (from pl in this.Entities.PLANT.Include("EHS_PROFILE").Include("EHS_PROFILE.EHS_PROFILE_FACT").Include("EHS_PROFILE.EHS_PROFILE_MEASURE")
                          where (plantIDS.Contains((decimal)pl.PLANT_ID))
                          select pl).ToList();
 
-                this.MetricHst = (from h in this.Entities.EHS_METRIC_HISTORY.Include("EHS_MEASURE") 
-                                  where (plantIDS.Contains((decimal)h.PLANT_ID)
-                                          && EntityFunctions.CreateDateTime(h.PERIOD_YEAR,h.PERIOD_MONTH,1,0,0,0) >= fromDate &&  EntityFunctions.CreateDateTime(h.PERIOD_YEAR,h.PERIOD_MONTH,1,0,0,0) <= toDate) 
-                                  select h).OrderBy(h=> h.PERIOD_YEAR).ThenBy(h=> h.PERIOD_MONTH).ToList();
+				this.MetricHst = (from h in this.Entities.EHS_METRIC_HISTORY
+								  join m in this.Entities.EHS_MEASURE on h.MEASURE_ID equals m.MEASURE_ID into m_h
+								  from m in m_h.DefaultIfEmpty()
+								  where (plantIDS.Contains((decimal)h.PLANT_ID)
+										  && EntityFunctions.CreateDateTime(h.PERIOD_YEAR, h.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(h.PERIOD_YEAR, h.PERIOD_MONTH, 1, 0, 0, 0) <= toDate)
+								  select new MetricData
+								  {
+									  MetricRec = h,
+									  Measure = m,
+									  AtrList = new List<AttributeValue>()
+								  }).ToList();
 
                 if (loadPlantAccounting)
                 {
@@ -719,45 +892,47 @@ namespace SQM.Website
                     string[] paNames = new string[8];
                     try
                     {
-                        paNames[0] = MetricHst.Where(h => h.EHS_MEASURE.PLANT_ACCT_FIELD == "OPER_COST").Select(h => h.EHS_MEASURE.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
-                        paNames[1] = MetricHst.Where(h => h.EHS_MEASURE.PLANT_ACCT_FIELD == "REVENUE").Select(h => h.EHS_MEASURE.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
-                        paNames[4] = MetricHst.Where(h => h.EHS_MEASURE.PLANT_ACCT_FIELD == "TIME_WORKED").Select(h => h.EHS_MEASURE.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
-                        paNames[5] = MetricHst.Where(h => h.EHS_MEASURE.PLANT_ACCT_FIELD == "TIME_LOST").Select(h => h.EHS_MEASURE.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
+                        paNames[0] = MetricHst.Where(h => h.Measure.PLANT_ACCT_FIELD == "OPER_COST").Select(h => h.Measure.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
+                        paNames[1] = MetricHst.Where(h => h.Measure.PLANT_ACCT_FIELD == "REVENUE").Select(h => h.Measure.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
+                        paNames[4] = MetricHst.Where(h => h.Measure.PLANT_ACCT_FIELD == "TIME_WORKED").Select(h => h.Measure.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
+                        paNames[5] = MetricHst.Where(h => h.Measure.PLANT_ACCT_FIELD == "TIME_LOST").Select(h => h.Measure.MEASURE_NAME).FirstOrDefault();  // get equivalent measure names for plant accounting metrics
                     }
                     catch { }
 
                     foreach (PLANT_ACCOUNTING pac in this.PlantHst)
                     {
-                        EHS_METRIC_HISTORY[] mstArray = new EHS_METRIC_HISTORY[10];
                         try
                         {
                             for (int n = 0; n < 10; n++)
                             {
-                                mstArray[n] = new EHS_METRIC_HISTORY();
-                                mstArray[n].EHS_MEASURE = new EHS_MEASURE();
-                                mstArray[n].MEASURE_ID = mstArray[n].EHS_MEASURE.MEASURE_ID = 1000000m + (decimal)n;
-                                mstArray[n].EHS_MEASURE.MEASURE_CATEGORY = "PROD";
-                                mstArray[n].PLANT = pac.PLANT;
-                                mstArray[n].PLANT_ID = pac.PLANT_ID;
-                                mstArray[n].PERIOD_YEAR = pac.PERIOD_YEAR;
-                                mstArray[n].PERIOD_MONTH = pac.PERIOD_MONTH;
-                                mstArray[n].MEASURE_COST = 0;
+								MetricData data = new MetricData();
+								EHS_METRIC_HISTORY rec = new EHS_METRIC_HISTORY();
+								EHS_MEASURE measure = new EHS_MEASURE();
+								data.MetricRec = rec;
+								data.Measure = measure;
+                                rec.MEASURE_ID = measure.MEASURE_ID = 1000000m + (decimal)n;
+                                rec.EHS_MEASURE.MEASURE_CATEGORY = "PROD";
+                                rec.PLANT = pac.PLANT;
+                                rec.PLANT_ID = pac.PLANT_ID;
+                                rec.PERIOD_YEAR = pac.PERIOD_YEAR;
+                                rec.PERIOD_MONTH = pac.PERIOD_MONTH;
+                                rec.MEASURE_COST = 0;
                                 if (!string.IsNullOrEmpty(paNames[4]))
-                                    mstArray[n].EHS_MEASURE.MEASURE_NAME = paNames[4]; 
+                                    measure.MEASURE_NAME = paNames[4]; 
                                 switch (n)
                                 {
-                                    case 0: mstArray[n].MEASURE_VALUE = pac.OPER_COST.HasValue ? (decimal)pac.OPER_COST : 0; break;
-                                    case 1: mstArray[n].MEASURE_VALUE = pac.REVENUE.HasValue ? (decimal)pac.REVENUE : 0; break;
-                                    case 2: mstArray[n].MEASURE_VALUE = pac.PRODUCTION.HasValue ? (decimal)pac.PRODUCTION : 0; break;
-                                    case 3: mstArray[n].MEASURE_VALUE = pac.THROUGHPUT.HasValue ? (decimal)pac.THROUGHPUT : 0; break;
-                                    case 4: mstArray[n].MEASURE_VALUE = pac.TIME_WORKED.HasValue ? (decimal)pac.TIME_WORKED : 0; break;
-                                    case 5: mstArray[n].MEASURE_VALUE = pac.TIME_LOST.HasValue ? (decimal)pac.TIME_LOST : 0; break;
-                                    case 6: mstArray[n].MEASURE_VALUE = pac.TIME_LOST_CASES.HasValue ? (decimal)pac.TIME_LOST_CASES : 0; break;
-                                    case 7: mstArray[n].MEASURE_VALUE = pac.RECORDED_CASES.HasValue ? (decimal)pac.RECORDED_CASES : 0; break;
-                                    case 8: mstArray[n].LAST_UPD_DT = pac.APPROVAL_DT.HasValue ? pac.APPROVAL_DT : null; break;
-                                    case 9: mstArray[n].LAST_UPD_BY = pac.LAST_UPD_BY;  break;
+									case 0: rec.MEASURE_VALUE = pac.OPER_COST.HasValue ? (decimal)pac.OPER_COST : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "OPER_COST"; break;
+									case 1: rec.MEASURE_VALUE = pac.REVENUE.HasValue ? (decimal)pac.REVENUE : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "REVENUE"; break;
+									case 2: rec.MEASURE_VALUE = pac.PRODUCTION.HasValue ? (decimal)pac.PRODUCTION : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "PRODUCTION"; break;
+									case 3: rec.MEASURE_VALUE = pac.THROUGHPUT.HasValue ? (decimal)pac.THROUGHPUT : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "THROUGHPUT"; break;
+									case 4: rec.MEASURE_VALUE = pac.TIME_WORKED.HasValue ? (decimal)pac.TIME_WORKED : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "TIME_WORKED"; break;
+									case 5: rec.MEASURE_VALUE = pac.TIME_LOST.HasValue ? (decimal)pac.TIME_LOST : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "TIME_LOST"; break;
+									case 6: rec.MEASURE_VALUE = pac.TIME_LOST_CASES.HasValue ? (decimal)pac.TIME_LOST_CASES : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "TIME_LOST_CASES"; break;
+									case 7: rec.MEASURE_VALUE = pac.RECORDED_CASES.HasValue ? (decimal)pac.RECORDED_CASES : 0; rec.EHS_MEASURE.PLANT_ACCT_FIELD = "RECORDED_CASES"; break;
+                                    case 8: rec.LAST_UPD_DT = pac.APPROVAL_DT.HasValue ? pac.APPROVAL_DT : null; break;
+                                    case 9: rec.LAST_UPD_BY = pac.LAST_UPD_BY;  break;
                                 }
-                                this.MetricHst.Add(mstArray[n]);
+                                this.MetricHst.Add(data);
                             }
                         }
                         catch (Exception ee)
@@ -766,6 +941,17 @@ namespace SQM.Website
                         }
                     }
                 }
+	
+				PLANT plant = null;
+				EHS_PROFILE_MEASURE pm = null;
+				foreach (MetricData md in this.MetricHst)
+				{
+					plant = this.PlantList.Where(p => p.PLANT_ID == md.MetricRec.PLANT_ID).FirstOrDefault();
+					pm = plant.EHS_PROFILE.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == md.MetricRec.MEASURE_ID).FirstOrDefault();
+					md.AtrList.Add(new AttributeValue().CreateNew("WASTE_CAT", md.Measure.MEASURE_CATEGORY, 1m));
+					md.AtrList.Add(new AttributeValue().CreateNew("UN_CODE", pm.UN_CODE, 1m));
+					md.AtrList.Add(new AttributeValue().CreateNew("REG_STATUS", pm.REG_STATUS, 1m));
+				}
                 
             }
             catch (Exception ex)
@@ -1369,7 +1555,7 @@ namespace SQM.Website
                         seriesName = "";
                         EHS_MEASURE measure = this.InputsList.Where(l => l.PRMR_ID == measureIDS[0]).Select(l => l.EHS_PROFILE_MEASURE.EHS_MEASURE).FirstOrDefault();
                         if (measure != null  &&  measure.MEASURE_NAME != null)
-                            seriesName = measure.MEASURE_NAME.Trim();
+							seriesName = MeasureLabel(measure);
                         series = new GaugeSeries().CreateNew(1, seriesName, "");
                         foreach (WebSiteCommon.DatePeriod pd in pdList)
                         {
@@ -1457,7 +1643,7 @@ namespace SQM.Website
                             EHS_MEASURE measure = GetMeasure(measureID);
                             if (EHMetric(plantIDS, new decimal[1] { measureID }, fromDate, toDate))
                             {
-                                series.AddItem(item++, measure.MEASURE_NAME.Trim(), this.Results);
+								series.AddItem(item++, MeasureLabel(measure), this.Results);
                             }
                         }
                         this.Results.metricSeries.Add(series);
@@ -1469,7 +1655,7 @@ namespace SQM.Website
                         foreach (decimal measureID in measureIDS)
                         {
                             EHS_MEASURE measure = GetMeasure(measureID);
-                            series = new GaugeSeries().CreateNew(1, measure.MEASURE_NAME.Trim(), "");
+							series = new GaugeSeries().CreateNew(1, MeasureLabel(measure), "");
                             ns = 0;
                             foreach (WebSiteCommon.DatePeriod pd in pdList)
                             {
@@ -1486,7 +1672,7 @@ namespace SQM.Website
                             foreach (decimal measureID in measureIDS)
                             {
                                 EHS_MEASURE measure = GetMeasure(measureID);
-                                series = new GaugeSeries().CreateNew(1, measure.MEASURE_NAME.Trim(), "");
+								series = new GaugeSeries().CreateNew(1, MeasureLabel(measure), "");
                                 ns = 0;
                                 foreach (WebSiteCommon.DatePeriod pd in pdList)
                                 {
@@ -1574,7 +1760,7 @@ namespace SQM.Website
                         foreach (decimal measureID in measureIDS)
                         {
                             EHS_MEASURE measure = GetMeasure(measureID);
-                            series = new GaugeSeries().CreateNew(1, measure.MEASURE_NAME.Trim(), "");
+							series = new GaugeSeries().CreateNew(1, MeasureLabel(measure), "");
                             foreach (decimal plantID in plantIDS)
                             {
                                 plant = GetPlant(plantID);
@@ -1594,7 +1780,7 @@ namespace SQM.Website
                         if (this.DateSpanType == DateSpanOption.FYYearOverYear)  // don't deduct start year because it was already done upstream
                             pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.FYyear, this.DateSpanType, "");
                         else
-                            pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(-1), toDate, DateIntervalType.FYyear, this.DateSpanType, "");
+                            pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(0), toDate, DateIntervalType.year, this.DateSpanType, "");
 
                         foreach (WebSiteCommon.DatePeriod pd in pdList)
                         {
@@ -1741,7 +1927,7 @@ namespace SQM.Website
                     switch (this.Calculation)
                     {
                         case "cost":
-                            value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_COST).ToList().Sum();
+							value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
                             break;
                         case "gwp":
                         case "gwp20":
@@ -1778,16 +1964,16 @@ namespace SQM.Website
                             if (factMeasure != null  &&  factMeasure.MEASURE_ID > 0)
                             {
                                 decimal sumVal;
-                                this.Results.FactorText = factMeasure.MEASURE_NAME;
+								this.Results.FactorText = MeasureLabel(factMeasure);
                                 if (Calculation == "normCost")
                                 {
-                                    sumVal = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_COST).ToList().Sum();
+									sumVal = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
                                 }
                                 else
                                 {
-                                    sumVal = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_VALUE).ToList().Sum();
+									sumVal = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                                 }
-                                decimal sumFact = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { factMeasure.MEASURE_ID }).Select(l => l.MEASURE_VALUE).ToList().Sum();
+								decimal sumFact = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { factMeasure.MEASURE_ID }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                                 if (sumFact != 0 && factMeasure.STD_UOM.HasValue)
                                 {
                                     if ((sumFact = (decimal)SQMResourcesMgr.ConvertUOM((decimal)factMeasure.STD_UOM, (decimal)factMeasure.STD_UOM, (double)sumFact, true)) != 0)
@@ -1799,9 +1985,9 @@ namespace SQM.Website
                             }
                             break;
                         case "eeff":
-                            decimal sumE = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            decimal sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            decimal sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
+							decimal sumE = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							decimal sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							decimal sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                             if (sumE > 0 && sumPCost > 0 && sumPRevenue > 0)
                             {
                                 value = sumE / (sumPRevenue - sumPCost);
@@ -1810,9 +1996,9 @@ namespace SQM.Website
                                 valid = false;
                             break;
                         case "eSeff":
-                            decimal sumESpend = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_COST).ToList().Sum();
-                            sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
+							decimal sumESpend = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
+							sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                             if (sumESpend > 0 && sumPCost > 0 && sumPRevenue > 0)
                             {
                                 value = sumESpend / (sumPRevenue - sumPCost);
@@ -1821,7 +2007,7 @@ namespace SQM.Website
                                 valid = false;
                             break;
                         default:   // undefined calculation - just return the sum of measure values
-                            value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_VALUE).ToList().Sum();
+							value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                             break;
                     }
                 }
@@ -1831,58 +2017,81 @@ namespace SQM.Website
                     {
                         // rcr, ltcr, ltsr should return zero and valid result if no occurences found
                         case "rcr":
-                            temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
-                            temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000007 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            if (temp2 != 0)
-                                value = (temp * temp3) / temp2;
-                            break;
+							if (this.Perspective == "XD")
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("RECORDED_CASES")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();		// recorded cases
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("TIME_WORKED")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							}
+							else
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000007 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();		// recorded cases
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							}
+							if (temp2 != 0)
+								value = (temp * temp3) / temp2;
+							break;
                         case "ltcr":
-                            temp3 = ProRateWorkHours(fromDate, toDate, plantArray);     // hours basis
-                            temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000006 }).Select(l => l.MEASURE_VALUE).ToList().Sum();  // lost time cases
-                            temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MEASURE_VALUE).ToList().Sum();  // hrs worked
-                            if (temp2 != 0)
-                                value = (temp * temp3) / temp2;
+							if (this.Perspective == "XD")
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);     // hours basis
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("TIME_LOST_CASES")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();  // lost time cases
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("TIME_WORKED")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();  // hrs worked
+							}
+							else
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);     // hours basis
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000006 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();  // lost time cases
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();  // hrs worked
+							}
+							if (temp2 != 0)
+								value = (temp * temp3) / temp2;
                             break;
                         case "ltsr":
-                            temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
-                            temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000005 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                            if (temp2 != 0)
-                                value = (temp * temp3) / temp2;
+							if (this.Perspective == "XD")
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("TIME_LOST")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();		// time lost
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, GetMetricsByFieldName("TIME_WORKED")).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							}
+							else
+							{
+								temp3 = ProRateWorkHours(fromDate, toDate, plantArray);
+								temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000005 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();		// time lost
+								temp2 = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000004 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							}
+							if (temp2 != 0)
+								value = (temp * temp3) / temp2;
                             break;
                         case "cost":
                             //value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_COST).ToList().Sum();
                             break;
-                        case "WASTE_CAT":
-                        case "REG_STATUS":
-                        case "DISPOSAL":
-                            string attributeValue = this.Calc.AttributeXref.ElementAt((int)Math.Abs(measureArray[0]) - 1).Key;
-                            decimal[] measuresForAttribute = SelectMeasureByAttribute(this.MetricScope, attributeValue, plantArray);
-
-                            if (attributeValue == "EWMR")
+						case "DISPOSAL":
+						case "REG_STATUS":
+						case "INJURY_TYPE":
+						case "INJURY_PART":
+						case "INJURY_TENURE":
+						case "INJURY_CAUSE":
+						case "INJURY_DAYS_TO_CLOSE":
+							// in this case the measure id will be an iteration thru the attribute xlat elements 
+							string attributeValue = this.Calc.XLATSeries.ElementAt((int)measureArray[0]).XLAT_CODE;
+                            if (this.Stat == SStat.cost)
+								value = this.InitCalc().Calc.SelectByAttribute(fromDate, toDate, plantArray, this.MetricScope, attributeValue).Select(l => (decimal)l.MetricRec.MEASURE_COST).ToList().Sum();
+                            else
                             {
-                                ;
-                            }
-                            if (measuresForAttribute != null && measuresForAttribute.Length > 0)
-                            {
-                                if (this.Stat == SStat.cost)
-                                    value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measuresForAttribute).Select(l => l.MEASURE_COST).ToList().Sum();
-                                else
-                                {
-                                    foreach (decimal plantID in plantArray)
-                                    {
-                                        measuresForAttribute = SelectMeasureByAttribute(this.MetricScope, attributeValue, new decimal[1] {plantID});
-                                        value += this.InitCalc().Calc.Select(fromDate, toDate, new decimal[1] { plantID }, measuresForAttribute).Select(l => l.MEASURE_VALUE).ToList().Sum();
-                                    }
-                                }
+								value = this.InitCalc().Calc.SelectByAttribute(fromDate, toDate, plantArray, this.MetricScope, attributeValue).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+								if (this.Stat == SStat.pct && value == 0)
+								{
+									valid = false;
+								}
                             }
                             break;
                         default:
                             if (this.Stat == SStat.cost)
-                                value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_COST).ToList().Sum();
+								value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
                             else
-                                value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MEASURE_VALUE).ToList().Sum();
+								value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                             break;
                     }
                 }
@@ -1897,29 +2106,12 @@ namespace SQM.Website
 
         public decimal[] SelectMeasureByAttribute(string attribute, string attributeValue, decimal[] plantArray)
         {
+			// get distinct list of measures that have the specified attribute
             decimal[] measureArray = null;
   
             try
             {
-                switch (attribute)
-                {
-                    case "WASTE_CAT":  // specific waste category
-                        measureArray = (from m in this.Entities.EHS_PROFILE_MEASURE.Include("EHS_MEASURE")
-                                        where (plantArray.Contains((decimal)m.PLANT_ID) && m.EHS_MEASURE.MEASURE_CATEGORY == attributeValue)
-                                select m.MEASURE_ID).ToArray();
-                        break;
-                    case "REG_STATUS":
-                        measureArray =  (from m in this.Entities.EHS_PROFILE_MEASURE.Include("EHS_MEASURE")
-                                         where (plantArray.Contains((decimal)m.PLANT_ID) && m.REG_STATUS == attributeValue)
-                                                    select m.MEASURE_ID).ToArray();
-                        break;
-                    case "DISPOSAL":
-                        measureArray = (from m in this.Entities.EHS_PROFILE_MEASURE.Include("EHS_MEASURE")
-                                                    where (plantArray.Contains((decimal)m.PLANT_ID) && m.UN_CODE.StartsWith(attributeValue))
-                                                    select m.MEASURE_ID).ToArray();
-                        break;
-                    default: break;
-                }
+				measureArray = this.MetricHst.Where(l => plantArray.Contains(l.MetricRec.PLANT_ID) &&  l.AtrList.Any(a => a.Group == attribute && a.Key == attributeValue)).Select(l => l.Measure.MEASURE_ID).Distinct().ToArray();
             }
             catch { ; }
 
@@ -1950,13 +2142,13 @@ namespace SQM.Website
 
 			foreach (decimal measID in measureArray)
 			{
-				EHS_MEASURE meas = this.MetricHst.Where(l => l.MEASURE_ID == measID).Select(l => l.EHS_MEASURE).FirstOrDefault();
+				EHS_MEASURE meas = this.MetricHst.Where(l => l.Measure.MEASURE_ID == measID).Select(l => l.Measure).FirstOrDefault();
 				if (meas != null && !string.IsNullOrEmpty(meas.EFM_TYPE))
 				{
 					foreach (WebSiteCommon.DatePeriod pd in pdList)
 					{
-						decimal metricQty = this.InitCalc().Calc.Select(pd.FromDate, pd.ToDate, new decimal[1] { plantID }, new decimal[1] { measID }).Select(l => l.MEASURE_VALUE).Sum();
-						EHS_METRIC_HISTORY hist1 = this.Calc.Metrics.FirstOrDefault();
+						decimal metricQty = this.InitCalc().Calc.Select(pd.FromDate, pd.ToDate, new decimal[1] { plantID }, new decimal[1] { measID }).Select(l => l.MetricRec.MEASURE_VALUE).Sum();
+						MetricData hist1 = this.Calc.Metrics.FirstOrDefault();
 
 						if (hist1 != null)
 						{
@@ -1973,8 +2165,8 @@ namespace SQM.Website
 									decimal ghgUOM = 17; // calculated in kg
 									try
 									{
-										EHSModel.GHGResult ghgRrec = new EHSModel.GHGResult().CreateNew(plant, meas, 0, hist1.INPUT_UOM_ID.HasValue ? (decimal)hist1.INPUT_UOM_ID : 0,
-											metricQty, hist1.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, metricQty * ghg, ghgCode, gwp, ghgQty, ghgUOM);
+										EHSModel.GHGResult ghgRrec = new EHSModel.GHGResult().CreateNew(plant, meas, 0, hist1.MetricRec.INPUT_UOM_ID.HasValue ? (decimal)hist1.MetricRec.INPUT_UOM_ID : 0,
+											metricQty, hist1.MetricRec.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, metricQty * ghg, ghgCode, gwp, ghgQty, ghgUOM);
 										ghgTable.AddResult(ghgRrec);
 									}
 									catch

@@ -76,7 +76,7 @@ namespace SQM.Website.EHS
 					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == startOfWeek.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
-						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
+						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "F" || measure.DATA_TYPE == "O" ? true : false;
 						string value = "";
 						decimal dataID = -1;
 						bool readOnly = false;
@@ -87,7 +87,9 @@ namespace SQM.Website.EHS
 							{
 								dataID = data.DATA_ID;
 								if (measureIsValue)
-									value = data.VALUE.ToString();
+								{
+									value = measure.DATA_TYPE == "F" ? SQMBasePage.FormatValue((decimal)data.VALUE, 2) : SQMBasePage.FormatValue((decimal)data.VALUE, 0);
+								}
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									value = data.ATTRIBUTE;
 								readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
@@ -137,7 +139,9 @@ namespace SQM.Website.EHS
 					if (data != null)
 					{
 						if (measure.DATA_TYPE == "V")
-							value = data.VALUE.ToString();
+							value = SQMBasePage.FormatValue((decimal)data.VALUE, 0);
+						else if (measure.DATA_TYPE == "F")
+							value = SQMBasePage.FormatValue((decimal)data.VALUE, 2);
 						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
@@ -183,9 +187,12 @@ namespace SQM.Website.EHS
 					if (data != null)
 					{
 						if (measure.DATA_TYPE == "V")
-							value = data.VALUE.ToString();
+							value = SQMBasePage.FormatValue((decimal)data.VALUE, 0);
+						else if (measure.DATA_TYPE == "F")
+							value = SQMBasePage.FormatValue((decimal)data.VALUE, 2);
 						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							value = data.ATTRIBUTE;
+
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
 					if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
@@ -319,7 +326,7 @@ namespace SQM.Website.EHS
 					var dayData = entities.EHS_DATA.Where(d => EntityFunctions.TruncateTime(d.DATE) == currentDay.Date && d.PLANT_ID == plantID);
 					foreach (var measure in measures)
 					{
-						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "O";
+						bool measureIsValue = measure.DATA_TYPE == "V" || measure.DATA_TYPE == "F" || measure.DATA_TYPE == "O";
 						var measure_data = allData[dayName + "|" + measure.MEASURE_ID];
 						string text = measure_data["value"];
 						bool hasText = !string.IsNullOrWhiteSpace(text);
@@ -432,7 +439,7 @@ namespace SQM.Website.EHS
 							// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
 							if (hasText)
 							{
-								if (measure.DATA_TYPE == "V")
+								if (measure.DATA_TYPE == "V" || measure.DATA_TYPE == "F")
 									data.VALUE = decimal.Parse(text);
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									data.ATTRIBUTE = text;
@@ -487,7 +494,7 @@ namespace SQM.Website.EHS
 							// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
 							if (hasText)
 							{
-								if (measure.DATA_TYPE == "V")
+								if (measure.DATA_TYPE == "V"  ||  measure.DATA_TYPE == "F")
 									data.VALUE = decimal.Parse(text);
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									data.ATTRIBUTE = text;
@@ -641,7 +648,7 @@ namespace SQM.Website.EHS
 		{
 			if (!this.IsPostBack)
 			{
-				this.hfLang.Value = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				this.hfLang.Value = SessionManager.UserContext.Language.NLS_LANGUAGE;
 
 				string frequency;
 				string frequencyName = this.Request.QueryString["type"];
@@ -712,13 +719,15 @@ namespace SQM.Website.EHS
 					return;
 				if (dataItem.DATA_TYPE == "O")
 				{
-					var rtbTotal = new RadTextBox()
+					var rtbTotal = new RadNumericTextBox()
 					{
 						ID = "rtb" + this.Suffix,
 						Skin = "Metro",
 						Width = new Unit("35px"),
 						CssClass = "WarnIfChanged"
 					};
+					rtbTotal.NumberFormat.DecimalDigits = 0;
+					rtbTotal.NumberFormat.AllowRounding = false;
 					rtbTotal.Style.Add("vertical-align", "middle");
 					rtbTotal.Style.Add("margin-right", "5px");
 					container.Controls.Add(rtbTotal);
@@ -780,24 +789,50 @@ namespace SQM.Website.EHS
 				}
 				else
 				{
-					var rtbData = new RadTextBox()
+					if (dataItem.DATA_TYPE == "V" || dataItem.DATA_TYPE == "F")
 					{
-						ID = "rtb" + this.Suffix,
-						Skin = "Metro",
-						Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width),
-						CssClass = "WarnIfChanged"
-					};
-					container.Controls.Add(rtbData);
-					container.Controls.Add(new CompareValidator()
+						var rtbData = new RadNumericTextBox()
+						{
+							ID = "rtb" + this.Suffix,
+							Skin = "Metro",
+							Width = 100,
+							CssClass = "WarnIfChanged"
+						};
+						rtbData.NumberFormat.DecimalDigits = dataItem.DATA_TYPE == "F" ? 2 : 0;
+						rtbData.NumberFormat.AllowRounding = false;
+						container.Controls.Add(rtbData);
+						container.Controls.Add(new CompareValidator()
+						{
+							ID = "cmp" + this.Suffix,
+							ControlToValidate = rtbData.ID,
+							Display = ValidatorDisplay.Dynamic,
+							Text = "*",
+							ForeColor = Color.Red,
+							Operator = ValidationCompareOperator.DataTypeCheck,
+							EnableClientScript = true
+						});
+					}
+					else
 					{
-						ID = "cmp" + this.Suffix,
-						ControlToValidate = rtbData.ID,
-						Display = ValidatorDisplay.Dynamic,
-						Text = "*",
-						ForeColor = Color.Red,
-						Operator = ValidationCompareOperator.DataTypeCheck,
-						EnableClientScript = true
-					});
+						var rtbData = new RadTextBox()
+						{
+							ID = "rtb" + this.Suffix,
+							Skin = "Metro",
+							Width = dataItem.DATA_TYPE == "V" ? 100 : (dataItem.DATA_TYPE == "A" ? 1200 : this.Width),
+							CssClass = "WarnIfChanged"
+						};
+						container.Controls.Add(rtbData);
+						container.Controls.Add(new CompareValidator()
+						{
+							ID = "cmp" + this.Suffix,
+							ControlToValidate = rtbData.ID,
+							Display = ValidatorDisplay.Dynamic,
+							Text = "*",
+							ForeColor = Color.Red,
+							Operator = ValidationCompareOperator.DataTypeCheck,
+							EnableClientScript = true
+						});
+					}
 				}
 			}
 		}

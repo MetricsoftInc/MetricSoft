@@ -22,6 +22,7 @@ namespace SQM.Website.EHS
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			PSsqmEntities ctx = new PSsqmEntities();
 			string delimStr = "~";
 			char[] delimiter = delimStr.ToCharArray();
 			string[] exportParms = null;
@@ -41,9 +42,9 @@ namespace SQM.Website.EHS
 
 			DateTime dtFrom = Convert.ToDateTime(exportParms[2]);
 			DateTime dtTo = Convert.ToDateTime(exportParms[3]);
-            EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange);
+            EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange, "E");
 			esMgr.LoadMetricHistory(plantIDs, dtFrom, dtTo, DateIntervalType.month, false);
-			List<EHS_METRIC_HISTORY> metric_history = esMgr.MetricHst.OrderBy(l => l.PLANT).ThenBy(l => l.PERIOD_YEAR).ThenBy(l => l.PERIOD_MONTH).ThenBy(l => l.EHS_MEASURE.MEASURE_CATEGORY).ThenBy(l => l.EHS_MEASURE.MEASURE_CD).ToList();
+			List<MetricData> metric_history = esMgr.MetricHst.OrderBy(l => l.MetricRec.PLANT_ID).ThenBy(l => l.MetricRec.PERIOD_YEAR).ThenBy(l => l.MetricRec.PERIOD_MONTH).ThenBy(l => l.Measure.MEASURE_CATEGORY).ThenBy(l => l.Measure.MEASURE_CD).ToList();
 			string uom_cd;
 			string uom_input_cd;
 			decimal uom_id = 0;
@@ -83,7 +84,7 @@ namespace SQM.Website.EHS
 				{
 					int rownum = irows + 1;
 					UOM uom = null;
-					uom_id = metric_history[irows].UOM_ID;
+					uom_id = metric_history[irows].MetricRec.UOM_ID;
 					uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == uom_id);
 					if (uom != null)
 						uom_cd = uom.UOM_CD;
@@ -91,7 +92,7 @@ namespace SQM.Website.EHS
 						uom_cd = "";
 					try
 					{
-						uom_id = Convert.ToDecimal(metric_history[irows].INPUT_UOM_ID.ToString());
+						uom_id = Convert.ToDecimal(metric_history[irows].MetricRec.INPUT_UOM_ID.ToString());
 						uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == uom_id);
 						if (uom != null)
 							uom_input_cd = uom.UOM_CD;
@@ -101,8 +102,8 @@ namespace SQM.Website.EHS
 					catch { uom_input_cd = ""; }
 					// create a column for each field we want
 
-					PLANT plant = SQMModelMgr.LookupPlant(metric_history[irows].PLANT_ID);
-					EHS_MEASURE measure = metric_history[irows].EHS_MEASURE as EHS_MEASURE;
+					PLANT plant = SQMModelMgr.LookupPlant(ctx, metric_history[irows].MetricRec.PLANT_ID, ""); //metric_history[irows].Plant;
+					EHS_MEASURE measure = metric_history[irows].Measure as EHS_MEASURE;
 
 					row = sheet1.CreateRow(rownum);
 					try
@@ -139,7 +140,7 @@ namespace SQM.Website.EHS
 					}
 					try
 					{
-						row.CreateCell(4).SetCellValue(metric_history[irows].PERIOD_YEAR);
+						row.CreateCell(4).SetCellValue(metric_history[irows].MetricRec.PERIOD_YEAR);
 					}
 					catch
 					{
@@ -147,7 +148,7 @@ namespace SQM.Website.EHS
 					}
 					try
 					{
-						row.CreateCell(5).SetCellValue(metric_history[irows].PERIOD_MONTH);
+						row.CreateCell(5).SetCellValue(metric_history[irows].MetricRec.PERIOD_MONTH);
 					}
 					catch
 					{
@@ -157,7 +158,7 @@ namespace SQM.Website.EHS
 					{
 						cellNumeric = row.CreateCell(6);
 						cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MEASURE_VALUE));
+						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MetricRec.MEASURE_VALUE));
 					}
 					catch
 					{
@@ -175,7 +176,7 @@ namespace SQM.Website.EHS
 					{
 						cellNumeric = row.CreateCell(8);
 						cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].INPUT_VALUE));
+						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MetricRec.INPUT_VALUE));
 					}
 					catch
 					{
@@ -193,7 +194,7 @@ namespace SQM.Website.EHS
 					{
 						cellNumeric = row.CreateCell(10);
 						cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MEASURE_COST));
+						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MetricRec.MEASURE_COST));
 					}
 					catch
 					{
@@ -201,7 +202,7 @@ namespace SQM.Website.EHS
 					}
 					try
 					{
-						row.CreateCell(11).SetCellValue(metric_history[irows].CURRENCY_CODE);
+						row.CreateCell(11).SetCellValue(metric_history[irows].MetricRec.CURRENCY_CODE);
 					}
 					catch
 					{
@@ -211,7 +212,7 @@ namespace SQM.Website.EHS
 					{
 						cellNumeric = row.CreateCell(12);
 						cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].INPUT_COST));
+						cellNumeric.SetCellValue(Convert.ToDouble(metric_history[irows].MetricRec.INPUT_COST));
 					}
 					catch
 					{
@@ -219,7 +220,7 @@ namespace SQM.Website.EHS
 					}
 					try
 					{
-						row.CreateCell(13).SetCellValue(metric_history[irows].INPUT_CURRENCY_CODE);
+						row.CreateCell(13).SetCellValue(metric_history[irows].MetricRec.INPUT_CURRENCY_CODE);
 					}
 					catch
 					{

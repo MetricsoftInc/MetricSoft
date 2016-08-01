@@ -45,7 +45,7 @@ namespace SQM.Website
 					{
 						// only option is currently # days since lost time case 
 						SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", DateTime.UtcNow, DateTime.UtcNow, new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID });
-						stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+						stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 						stsmgr.ehsCtl.ElapsedTimeSeries(new decimal[1] { SessionManager.UserContext.HRLocation.Plant.PLANT_ID }, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
 						if (stsmgr.ehsCtl.Results.ValidResult)
 						{
@@ -520,9 +520,6 @@ namespace SQM.Website
 					SessionManager.SessionContext = new SessionContext();
 
 					SessionManager.SessionContext.SetPrimaryCompany(SQMModelMgr.LookupPrimaryCompany(new PSsqmEntities()));   // get the primary company (QAI customer));
-
-					// load the user's preferred language definition
-					SessionManager.SessionContext.SetLanguage(userContext.Person.PREFERRED_LANG_ID.HasValue ?  (int)userContext.Person.PREFERRED_LANG_ID : 1);
 				}
 				catch (Exception e)
 				{
@@ -733,6 +730,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public LOCAL_LANGUAGE Language
+		{
+			get;
+			set;
+		}
 		public int InboxReviews
 		{
 			get;
@@ -823,6 +825,7 @@ namespace SQM.Website
 							this.Credentials = access;
 							this.TimeZoneID = this.HRLocation.Plant.LOCAL_TIMEZONE;
 							this.LocalTime = !string.IsNullOrEmpty(this.TimeZoneID) ? WebSiteCommon.LocalTime(DateTime.UtcNow, this.TimeZoneID) : DateTime.UtcNow;
+							this.Language = SQMModelMgr.LookupLanguage(ctx, "", this.Person.PREFERRED_LANG_ID.HasValue ? (int)this.Person.PREFERRED_LANG_ID : 1, false);
 
 							if (SessionManager.CreateSessionContext(this) == null)
 							{
@@ -981,30 +984,6 @@ namespace SQM.Website
 			{
 			}
 			return success;
-		}
-
-		public bool SetLanguage(int langIDIn)
-		{
-		   // this.BaseClear(); // !!! clear all app pages when new language - to ensure a refresh from the db
-			int langID = langIDIn;
-			this.BaseRemove("Language");
-			if (langIDIn < 1)
-			{
-				langID = 1;
-			}
-			return (this.Add("Language", SQMModelMgr.LookupLanguage(new PSsqmEntities(), "", langID, false)));
-		}
-		public LOCAL_LANGUAGE Language()
-		{
-			LOCAL_LANGUAGE lang = null;
-			try
-			{
-				lang = (LOCAL_LANGUAGE)this.BaseGet("Language");
-			}
-			catch
-			{
-			}
-			return lang;
 		}
  
 		public void SetPrimaryCompany(COMPANY company)

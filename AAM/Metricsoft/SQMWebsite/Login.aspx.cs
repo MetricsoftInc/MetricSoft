@@ -113,7 +113,7 @@ namespace SQM.Website
 							COMPANY company = new COMPANY();
 							decimal[] plantIDS = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.LOCATION_TYPE == "P").OrderBy(l => l.PLANT_NAME).Select(l => l.PLANT_ID).ToArray();
 							SQMMetricMgr stsmgr = new SQMMetricMgr().CreateNew(company, "0", DateTime.Now, DateTime.Now, plantIDS);
-							stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+							stsmgr.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "E");
 							stsmgr.ehsCtl.ElapsedTimeSeries(plantIDS, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
 
 							GaugeDefinition tikCfg = new GaugeDefinition().Initialize();

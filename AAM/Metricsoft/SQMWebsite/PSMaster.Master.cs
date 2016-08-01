@@ -191,15 +191,15 @@ namespace SQM.Website
 						}
 					}
 
+
 					if (UserContext.GetScopePrivileges(SysScope.media).Count() > 0)
 					{
 						RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_MEDIA", "0").DESCRIPTION);
 						RadMenu1.Items.Add(EHSMenu2);
-						if (UserContext.GetScopePrivileges(SysScope.media).Count() > 0)
-							EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_MEDIA", "11").DESCRIPTION, GetMenu("MENU_MEDIA", "11").DESCRIPTION_SHORT));
+						EHSMenu2.Items.Add(new Telerik.Web.UI.RadMenuItem(GetMenu("MENU_MEDIA", "11").DESCRIPTION, GetMenu("MENU_MEDIA", "11").DESCRIPTION_SHORT));
 					}
-				}
-			}
+                }
+            }
 
             catch (Exception ex)
             {
@@ -301,7 +301,8 @@ namespace SQM.Website
 			if (!string.IsNullOrEmpty(ddlUserLang.SelectedValue))
 			{
 				user.PREFERRED_LANG_ID = Convert.ToInt32(ddlUserLang.SelectedValue);
-				SessionManager.SessionContext.SetLanguage((int)user.PREFERRED_LANG_ID);
+				SessionManager.UserContext.Language = SQMModelMgr.LookupLanguage(ctx, "", (int)user.PREFERRED_LANG_ID, false);
+				//SessionManager.SessionContext.SetLanguage((int)user.PREFERRED_LANG_ID);
 			}
 			user = SQMModelMgr.UpdatePerson(ctx, user, SessionManager.UserContext.UserName());
 			if (user != null)

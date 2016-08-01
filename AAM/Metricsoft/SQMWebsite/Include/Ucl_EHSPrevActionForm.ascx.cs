@@ -252,7 +252,7 @@ namespace SQM.Website
 									select a.ANSWER_VALUE).FirstOrDefault();
 				}
 
-				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.UserContext.Language.NLS_LANGUAGE) == false)
 				{
 					continue;
 				}
@@ -818,7 +818,7 @@ namespace SQM.Website
 				}
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
-				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.UserContext.Language.NLS_LANGUAGE) == false)
 				{
 					continue;
 				}

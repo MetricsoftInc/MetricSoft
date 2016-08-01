@@ -5,7 +5,12 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <script type="text/javascript">
+
+	function OpenLocationSelectWindow() {
+		$find("<%=winLocationSelect.ClientID %>").show();
+			}
 </script>
+
 <asp:Panel ID="pnlDashboardArea" runat="server">
     <div id="divPerspective" runat="server" style="margin-top: 3px; margin-bottom: 3px;" class="noprint">
         <asp:Label runat="server" ID="lblPerspective" CssClass="instructText" Text="Select a view representing the detailed analysis you wish to explore. Views are listed according to system topics or data types represented." style="margin: 5px;" meta:resourcekey="lblPerspectiveResource1"></asp:Label>
@@ -30,9 +35,12 @@
                         <asp:Label ID="lblPlantSelect" runat="server" CssClass="prompt"></asp:Label>
                     </td>
                      <td class=summaryDataEnd>
-                        <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" HorizontalAlign="NotSet">
-                            <telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex=9000 Skin="Metro" height="350px" Width="650px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
-                        </telerik:RadAjaxPanel>
+						 <span>
+							<%--<telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1" HorizontalAlign="NotSet">--%>
+								<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex=9000 Skin="Metro" height="350px" Width="650px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
+							<%--</telerik:RadAjaxPanel>--%>
+							&nbsp;<b><asp:LinkButton id="btnLocationSelect" runat="server" CssClass="buttonLink" OnClick="btnLocationSelect_Click" Text="<%$ Resources:LocalizedText, SelectOrgRegion %>"/></asp:LinkButton></b>
+						</span>
                     </td>
                 </tr>
                 <tr>
@@ -97,7 +105,7 @@
                             </telerik:RadComboBox>
                             </span>
                            <span style="float: right; margin-right: 20px;" class="noprint">
-                                <asp:LinkButton ID="btnRefreshDashboard" runat="server" ToolTip="Refresh the dashboard display" CSSClass="buttonRefresh"  text="Refresh View"  OnClick="btnRefreshDashboard_Click" meta:resourcekey="btnRefreshDashboardResource1"></asp:LinkButton>
+                                <asp:LinkButton ID="btnRefreshDashboard" runat="server" ToolTip="Refresh the dashboard display" CSSClass="buttonRefresh" OnClick="btnRefreshDashboard_Click" Text="<%$ Resources:LocalizedText, Refresh %>"></asp:LinkButton>
                                 <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" style="margin-left: 5px;" OnClientClick="javascript:window.print()"></asp:LinkButton>
                                 <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExportClick"></asp:LinkButton>
                             </span>
@@ -460,3 +468,38 @@
             </div>
     </div>
 </asp:Panel>
+
+<telerik:RadWindow runat="server" ID="winLocationSelect" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="270px" Width="400px" Behaviors="Close, Move" Title="<%$ Resources:LocalizedText, SelectOrgRegionTitle %>">
+	<ContentTemplate>
+		<div class="container-fluid" style="margin-top: 10px;">
+			<asp:Label ID="lblLocationSelectInstruction" runat="server" CssClass="instructText" Text="<%$ Resources:LocalizedText, SelectOrgRegionInstruct %>"></asp:Label>
+			<div class="row" style="margin-top: 7px;">
+				<div class="col-sm-4 hidden-xs text-left">
+					<asp:Label ID="lblBusOrg" runat="server" Text="<%$ Resources:LocalizedText, BusinessOrg %>" CssClass="prompt"></asp:Label>
+				</div>
+				<div class="col-xs-12 col-sm-8 text-left">
+					<telerik:RadComboBox ID="ddlBusOrg" runat="server" Skin="Metro" CheckBoxes="true" EnableCheckAllItemsCheckBox ="false" ZIndex="9000" Height="200px" Width="95%" Font-Size="Small"
+						ToolTip="Select all locations of a business organization" EmptyMessage="<%$ Resources:LocalizedText, Select %>"></telerik:RadComboBox>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="col-sm-4 hidden-xs text-left">
+					<asp:Label ID="lblRegion" runat="server" Text="<%$ Resources:LocalizedText, CountryRegion %>" CssClass="prompt"></asp:Label>
+				</div>
+				<div class="col-xs-12 col-sm-8 text-left">
+					<telerik:RadComboBox ID="ddlRegion" runat="server" Skin="Metro" CheckBoxes="true" EnableCheckAllItemsCheckBox ="false" ZIndex="9000" Height="200px" Width="95%" Font-Size="Small"
+						ToolTip="Select all locations within a country or region" EmptyMessage="<%$ Resources:LocalizedText, Select %>"> </telerik:RadComboBox>
+				</div>
+			</div>
+			<div style="margin: 10px;">
+				<center>
+					<span>
+						<asp:Button ID="btnLocationApply" CSSclass="buttonEmphasis" runat="server" text="Apply" style="margin: 5px;" onclick="btnLocationApply_Click"></asp:Button>
+						<asp:Button ID="btnLocationCancel" CSSclass="buttonStd" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnLocationCancel_Click"></asp:Button>
+					</span>
+				</center>
+            </div>
+		</div>
+	</ContentTemplate>
+</telerik:RadWindow>

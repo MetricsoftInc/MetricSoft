@@ -85,7 +85,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_CAUSE_PROB_CASE", "PROB_CASE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PROB_CASE), "PROB_CAUSE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PROB_CAUSE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_CAUSE_STEP_PROB_CAUSE", "PROB_CAUSE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PROB_CAUSE), "PROB_CAUSE_STEP", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_CAUSE_STEP), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COMPANY_ACTIVITY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "COMPANY_ACTIVITY", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.COMPANY_ACTIVITY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_QI_OCCUR_PART", "PART", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PART), "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NC_OCCUR_ITEM_NC_OCCUR", "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.QI_OCCUR), "QI_OCCUR_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR_ITEM), true)]
@@ -140,10 +139,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY", "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_LANG), true)]
@@ -165,6 +161,11 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), "PERSPECTIVE_VIEW_ITEM_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_VIDEO_ATTACHMENT_FILE_VIDEO_ATTACHMENT", "VIDEO_ATTACHMENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.VIDEO_ATTACHMENT), "VIDEO_ATTACHMENT_FILE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.VIDEO_ATTACHMENT_FILE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_LANG_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_LANG), true)]
 
@@ -633,22 +634,6 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PERSPECTIVE_TARGET_CALC> _PERSPECTIVE_TARGET_CALC;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEM
-        {
-            get
-            {
-                if ((_PERSPECTIVE_VIEW_ITEM == null))
-                {
-                    _PERSPECTIVE_VIEW_ITEM = base.CreateObjectSet<PERSPECTIVE_VIEW_ITEM>("PERSPECTIVE_VIEW_ITEM");
-                }
-                return _PERSPECTIVE_VIEW_ITEM;
-            }
-        }
-        private ObjectSet<PERSPECTIVE_VIEW_ITEM> _PERSPECTIVE_VIEW_ITEM;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2061,22 +2046,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<EHS_DATA> EHS_DATA
-        {
-            get
-            {
-                if ((_EHS_DATA == null))
-                {
-                    _EHS_DATA = base.CreateObjectSet<EHS_DATA>("EHS_DATA");
-                }
-                return _EHS_DATA;
-            }
-        }
-        private ObjectSet<EHS_DATA> _EHS_DATA;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
         {
             get
@@ -2381,6 +2350,70 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                if ((_EHS_DATA == null))
+                {
+                    _EHS_DATA = base.CreateObjectSet<EHS_DATA>("EHS_DATA");
+                }
+                return _EHS_DATA;
+            }
+        }
+        private ObjectSet<EHS_DATA> _EHS_DATA;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEM
+        {
+            get
+            {
+                if ((_PERSPECTIVE_VIEW_ITEM == null))
+                {
+                    _PERSPECTIVE_VIEW_ITEM = base.CreateObjectSet<PERSPECTIVE_VIEW_ITEM>("PERSPECTIVE_VIEW_ITEM");
+                }
+                return _PERSPECTIVE_VIEW_ITEM;
+            }
+        }
+        private ObjectSet<PERSPECTIVE_VIEW_ITEM> _PERSPECTIVE_VIEW_ITEM;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PERSPECTIVE_VIEW_ITEM_LANG> PERSPECTIVE_VIEW_ITEM_LANG
+        {
+            get
+            {
+                if ((_PERSPECTIVE_VIEW_ITEM_LANG == null))
+                {
+                    _PERSPECTIVE_VIEW_ITEM_LANG = base.CreateObjectSet<PERSPECTIVE_VIEW_ITEM_LANG>("PERSPECTIVE_VIEW_ITEM_LANG");
+                }
+                return _PERSPECTIVE_VIEW_ITEM_LANG;
+            }
+        }
+        private ObjectSet<PERSPECTIVE_VIEW_ITEM_LANG> _PERSPECTIVE_VIEW_ITEM_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<VIDEO> VIDEO
+        {
+            get
+            {
+                if ((_VIDEO == null))
+                {
+                    _VIDEO = base.CreateObjectSet<VIDEO>("VIDEO");
+                }
+                return _VIDEO;
+            }
+        }
+        private ObjectSet<VIDEO> _VIDEO;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<VIDEO_ATTACHMENT> VIDEO_ATTACHMENT
         {
             get
@@ -2413,34 +2446,18 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<VIDEO> VIDEO
+        public ObjectSet<VIDEO_FILE> VIDEO_FILE
         {
             get
             {
-                if ((_VIDEO == null))
+                if ((_VIDEO_FILE == null))
                 {
-                    _VIDEO = base.CreateObjectSet<VIDEO>("VIDEO");
+                    _VIDEO_FILE = base.CreateObjectSet<VIDEO_FILE>("VIDEO_FILE");
                 }
-                return _VIDEO;
+                return _VIDEO_FILE;
             }
         }
-        private ObjectSet<VIDEO> _VIDEO;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PERSPECTIVE_VIEW_ITEM_LANG> PERSPECTIVE_VIEW_ITEM_LANG
-        {
-            get
-            {
-                if ((_PERSPECTIVE_VIEW_ITEM_LANG == null))
-                {
-                    _PERSPECTIVE_VIEW_ITEM_LANG = base.CreateObjectSet<PERSPECTIVE_VIEW_ITEM_LANG>("PERSPECTIVE_VIEW_ITEM_LANG");
-                }
-                return _PERSPECTIVE_VIEW_ITEM_LANG;
-            }
-        }
-        private ObjectSet<PERSPECTIVE_VIEW_ITEM_LANG> _PERSPECTIVE_VIEW_ITEM_LANG;
+        private ObjectSet<VIDEO_FILE> _VIDEO_FILE;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2457,22 +2474,6 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PERSPECTIVE_VIEW_LANG> _PERSPECTIVE_VIEW_LANG;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<VIDEO_FILE> VIDEO_FILE
-        {
-            get
-            {
-                if ((_VIDEO_FILE == null))
-                {
-                    _VIDEO_FILE = base.CreateObjectSet<VIDEO_FILE>("VIDEO_FILE");
-                }
-                return _VIDEO_FILE;
-            }
-        }
-        private ObjectSet<VIDEO_FILE> _VIDEO_FILE;
 
         #endregion
 
@@ -2684,14 +2685,6 @@ namespace SQM.Website
         public void AddToPERSPECTIVE_TARGET_CALC(PERSPECTIVE_TARGET_CALC pERSPECTIVE_TARGET_CALC)
         {
             base.AddObject("PERSPECTIVE_TARGET_CALC", pERSPECTIVE_TARGET_CALC);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PERSPECTIVE_VIEW_ITEM EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPERSPECTIVE_VIEW_ITEM(PERSPECTIVE_VIEW_ITEM pERSPECTIVE_VIEW_ITEM)
-        {
-            base.AddObject("PERSPECTIVE_VIEW_ITEM", pERSPECTIVE_VIEW_ITEM);
         }
     
         /// <summary>
@@ -3399,14 +3392,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the EHS_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToEHS_DATA(EHS_DATA eHS_DATA)
-        {
-            base.AddObject("EHS_DATA", eHS_DATA);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_LOSTTIME_HIST EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_LOSTTIME_HIST(INCFORM_LOSTTIME_HIST iNCFORM_LOSTTIME_HIST)
@@ -3559,6 +3544,38 @@ namespace SQM.Website
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_DATA(EHS_DATA eHS_DATA)
+        {
+            base.AddObject("EHS_DATA", eHS_DATA);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PERSPECTIVE_VIEW_ITEM EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPERSPECTIVE_VIEW_ITEM(PERSPECTIVE_VIEW_ITEM pERSPECTIVE_VIEW_ITEM)
+        {
+            base.AddObject("PERSPECTIVE_VIEW_ITEM", pERSPECTIVE_VIEW_ITEM);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PERSPECTIVE_VIEW_ITEM_LANG EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPERSPECTIVE_VIEW_ITEM_LANG(PERSPECTIVE_VIEW_ITEM_LANG pERSPECTIVE_VIEW_ITEM_LANG)
+        {
+            base.AddObject("PERSPECTIVE_VIEW_ITEM_LANG", pERSPECTIVE_VIEW_ITEM_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the VIDEO EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToVIDEO(VIDEO vIDEO)
+        {
+            base.AddObject("VIDEO", vIDEO);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the VIDEO_ATTACHMENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToVIDEO_ATTACHMENT(VIDEO_ATTACHMENT vIDEO_ATTACHMENT)
@@ -3575,19 +3592,11 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the VIDEO EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the VIDEO_FILE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToVIDEO(VIDEO vIDEO)
+        public void AddToVIDEO_FILE(VIDEO_FILE vIDEO_FILE)
         {
-            base.AddObject("VIDEO", vIDEO);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PERSPECTIVE_VIEW_ITEM_LANG EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPERSPECTIVE_VIEW_ITEM_LANG(PERSPECTIVE_VIEW_ITEM_LANG pERSPECTIVE_VIEW_ITEM_LANG)
-        {
-            base.AddObject("PERSPECTIVE_VIEW_ITEM_LANG", pERSPECTIVE_VIEW_ITEM_LANG);
+            base.AddObject("VIDEO_FILE", vIDEO_FILE);
         }
     
         /// <summary>
@@ -3596,14 +3605,6 @@ namespace SQM.Website
         public void AddToPERSPECTIVE_VIEW_LANG(PERSPECTIVE_VIEW_LANG pERSPECTIVE_VIEW_LANG)
         {
             base.AddObject("PERSPECTIVE_VIEW_LANG", pERSPECTIVE_VIEW_LANG);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the VIDEO_FILE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToVIDEO_FILE(VIDEO_FILE vIDEO_FILE)
-        {
-            base.AddObject("VIDEO_FILE", vIDEO_FILE);
         }
 
         #endregion
@@ -16633,6 +16634,28 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD")]
+        public EntityCollection<EHS_DATA_ORD> EHS_DATA_ORD
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA_ORD>("PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA_ORD>("PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT")]
         public PLANT PLANT
         {
@@ -16661,28 +16684,6 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PLANT>("PSsqmModel.FK_EHS_DATA_PLANT", "PLANT", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD")]
-        public EntityCollection<EHS_DATA_ORD> EHS_DATA_ORD
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA_ORD>("PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA_ORD>("PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA_ORD", value);
                 }
             }
         }
@@ -34251,28 +34252,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM")]
-        public EntityCollection<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEM
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON")]
         public PERSON PERSON
         {
@@ -34301,6 +34280,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSON>("PSsqmModel.FK_PERSPECTIVE_VIEW_PERSON", "PERSON", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM")]
+        public EntityCollection<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEM
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW_ITEM", value);
                 }
             }
         }
@@ -35066,6 +35067,30 @@ namespace SQM.Website
         private global::System.String _STATUS;
         partial void OnSTATUSChanging(global::System.String value);
         partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FILTER
+        {
+            get
+            {
+                return _FILTER;
+            }
+            set
+            {
+                OnFILTERChanging(value);
+                ReportPropertyChanging("FILTER");
+                _FILTER = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FILTER");
+                OnFILTERChanged();
+            }
+        }
+        private global::System.String _FILTER;
+        partial void OnFILTERChanging(global::System.String value);
+        partial void OnFILTERChanged();
 
         #endregion
 
@@ -35106,6 +35131,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSPECTIVE_VIEW>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM_LANG")]
+        public EntityCollection<PERSPECTIVE_VIEW_ITEM_LANG> PERSPECTIVE_VIEW_ITEM_LANG
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PERSPECTIVE_VIEW_ITEM_LANG>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM_LANG");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PERSPECTIVE_VIEW_ITEM_LANG>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM_LANG", value);
                 }
             }
         }
@@ -35290,10 +35337,76 @@ namespace SQM.Website
         private global::System.String _STATUS;
         partial void OnSTATUSChanging(global::System.String value);
         partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OPTIONS
+        {
+            get
+            {
+                return _OPTIONS;
+            }
+            set
+            {
+                OnOPTIONSChanging(value);
+                ReportPropertyChanging("OPTIONS");
+                _OPTIONS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OPTIONS");
+                OnOPTIONSChanged();
+            }
+        }
+        private global::System.String _OPTIONS;
+        partial void OnOPTIONSChanging(global::System.String value);
+        partial void OnOPTIONSChanged();
 
         #endregion
 
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM")]
+        public PERSPECTIVE_VIEW_ITEM PERSPECTIVE_VIEW_ITEM
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEMReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSPECTIVE_VIEW_ITEM>("PSsqmModel.FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -35448,6 +35561,30 @@ namespace SQM.Website
         private global::System.String _STATUS;
         partial void OnSTATUSChanging(global::System.String value);
         partial void OnSTATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OPTIONS
+        {
+            get
+            {
+                return _OPTIONS;
+            }
+            set
+            {
+                OnOPTIONSChanging(value);
+                ReportPropertyChanging("OPTIONS");
+                _OPTIONS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OPTIONS");
+                OnOPTIONSChanged();
+            }
+        }
+        private global::System.String _OPTIONS;
+        partial void OnOPTIONSChanging(global::System.String value);
+        partial void OnOPTIONSChanged();
 
         #endregion
 
@@ -36435,28 +36572,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "EHS_DATA")]
-        public EntityCollection<EHS_DATA> EHS_DATA
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PLANT_ACTIVE_PLANT", "PLANT_ACTIVE")]
         public EntityCollection<PLANT_ACTIVE> PLANT_ACTIVE
         {
@@ -36469,6 +36584,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PLANT_ACTIVE>("PSsqmModel.FK_PLANT_ACTIVE_PLANT", "PLANT_ACTIVE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "EHS_DATA")]
+        public EntityCollection<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_PLANT", "EHS_DATA", value);
                 }
             }
         }

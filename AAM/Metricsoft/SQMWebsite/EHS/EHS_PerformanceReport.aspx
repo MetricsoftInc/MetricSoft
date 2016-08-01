@@ -358,6 +358,7 @@
 				});
 			});
 
+
 			function resetCSS()
 			{
 				// Sets all the CSS on the RadGrid in its style tag, so it'll export properly to PDF.

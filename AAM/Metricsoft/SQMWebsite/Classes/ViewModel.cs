@@ -23,11 +23,11 @@ namespace SQM.Website
                 using (PSsqmEntities ctx = new PSsqmEntities())
                 {
                     if (string.IsNullOrEmpty(perspective))
-                        viewList = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM")
+						viewList = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM").Include("PERSPECTIVE_VIEW_LANG")
                                     where (v.COMPANY_ID == companyID)
                                     select v).ToList();
                     else
-                        viewList = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM")
+						viewList = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM").Include("PERSPECTIVE_VIEW_LANG")
                                     where (v.PERSPECTIVE == perspective && v.COMPANY_ID == companyID)
                                     select v).ToList();
                 }
@@ -36,7 +36,7 @@ namespace SQM.Website
             return viewList;
         }
 
-        public static List<PERSPECTIVE_VIEW> SelectFilteredViewList(string perspective, decimal personID, decimal companyID, decimal busOrgID, decimal plantID, bool activeOnly)
+		public static List<PERSPECTIVE_VIEW> SelectFilteredViewList(string perspective, decimal personID, decimal companyID, decimal busOrgID, decimal plantID, bool activeOnly, string nlsLanguage)
         {
             List<PERSPECTIVE_VIEW> viewList = SelectViewList(perspective, companyID);
             List<PERSPECTIVE_VIEW> outList = new List<PERSPECTIVE_VIEW>();
@@ -59,26 +59,67 @@ namespace SQM.Website
                     }
                 }
             }
+
+			// get alternate language texts
+			if (nlsLanguage != "en")	
+			{
+				PERSPECTIVE_VIEW_LANG langView = null;
+				{
+					foreach (PERSPECTIVE_VIEW view in outList)
+					{
+						if ((langView = view.PERSPECTIVE_VIEW_LANG.Where(v => v.NLS_LANGUAGE.ToLower() == nlsLanguage.ToLower()).FirstOrDefault()) != null)
+						{
+							view.VIEW_NAME = langView.VIEW_NAME;
+							view.VIEW_DESC = langView.VIEW_DESC;
+						}
+					}
+				}
+			}
+
             return outList;
         }
 
-        public static PERSPECTIVE_VIEW LookupView(PSsqmEntities ctx, string perspective, string viewName, decimal viewID)
+		public static PERSPECTIVE_VIEW LookupView(PSsqmEntities ctx, string perspective, string viewName, decimal viewID, string nlsLanguage)
         {
             PERSPECTIVE_VIEW view = null;
             try
             {
                 if (viewID > 0)
                 {
-                  view = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM")
+					view = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM").Include("PERSPECTIVE_VIEW_LANG").Include("PERSPECTIVE_VIEW_ITEM.PERSPECTIVE_VIEW_ITEM_LANG") 
                      where (v.VIEW_ID == viewID)
-                     select v).Single();
+                     select v).SingleOrDefault();
                 }
                 else
                 {
-                   view = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM")
+					view = (from v in ctx.PERSPECTIVE_VIEW.Include("PERSPECTIVE_VIEW_ITEM").Include("PERSPECTIVE_VIEW_LANG").Include("PERSPECTIVE_VIEW_ITEM.PERSPECTIVE_VIEW_ITEM_LANG") 
                      where (v.PERSPECTIVE == perspective && v.VIEW_NAME == viewName)
-                     select v).Single();
+                     select v).SingleOrDefault();
                 }
+
+
+				if (view != null && nlsLanguage.ToLower() != "en")
+				{
+					PERSPECTIVE_VIEW_LANG lang = view.PERSPECTIVE_VIEW_LANG.Where(v => v.NLS_LANGUAGE.ToLower() == nlsLanguage.ToLower()).FirstOrDefault();
+					if (lang != null)
+					{
+						view.VIEW_NAME = lang.VIEW_NAME;
+						view.VIEW_DESC = lang.VIEW_DESC;
+						PERSPECTIVE_VIEW_ITEM_LANG langItem = null;
+						foreach (PERSPECTIVE_VIEW_ITEM item in view.PERSPECTIVE_VIEW_ITEM)
+						{
+							if ((langItem = item.PERSPECTIVE_VIEW_ITEM_LANG.Where(i => i.NLS_LANGUAGE.ToLower() == nlsLanguage.ToLower()).FirstOrDefault()) != null)
+							{
+								item.TITLE = langItem.TITLE;
+								item.SCALE_LABEL = langItem.SCALE_LABEL;
+								item.A_LABEL = langItem.A_LABEL;
+								if (!string.IsNullOrEmpty(langItem.OPTIONS))
+									item.OPTIONS = langItem.OPTIONS;
+							}
+						}
+					}
+				}
+
             }
             catch (Exception ex)
             {
@@ -346,118 +387,37 @@ namespace SQM.Website
             return ret;
         }
 
-
-        public static PERSPECTIVE_TARGET_CALC CreateTargetCalc(decimal targetID)
-        {
-           PERSPECTIVE_TARGET_CALC tc = new PERSPECTIVE_TARGET_CALC();
-           tc.TARGET_ID = targetID;
-           tc.PERIOD_YEAR = tc.PERIOD_MONTH = 0;
-           tc.VALUE_IND = false;
-           return tc;
-        }
-
-        static PERSPECTIVE_TARGET_CALC LookupTargetCalc(PSsqmEntities ctx, decimal targetID, decimal plantID, int year, int month, bool createNew)
-        {
-            PERSPECTIVE_TARGET_CALC tc = null;
-
-            try
-            {
-                tc = (from c in ctx.PERSPECTIVE_TARGET_CALC 
-                          where (c.TARGET_ID == targetID  &&  c.PLANT_ID == plantID  &&  c.PERIOD_YEAR == year  &&  c.PERIOD_MONTH == month)
-                          select c).Single();
-            }
-            catch
-            { ; }
-
-            if (tc == null && createNew)
-            {
-                tc = CreateTargetCalc(targetID);
-                tc.PLANT_ID = plantID;
-                tc.PERIOD_YEAR = year;
-                tc.PERIOD_MONTH = month;
-            }
-
-            return tc;
-        }
-
-        public static List<PERSPECTIVE_TARGET_CALC> SelectTargetCalcList(PSsqmEntities ctx, decimal plantID, int year, int month)
-        {
-            List<PERSPECTIVE_TARGET_CALC> tcList = new List<PERSPECTIVE_TARGET_CALC>();
-
-            try
-            {
-                if (plantID > 0)
-                {
-                    tcList = (from c in ctx.PERSPECTIVE_TARGET_CALC
-                              where (c.PERIOD_YEAR == year && c.PERIOD_MONTH == month && (c.PLANT_ID == plantID ||  c.PLANT_ID == null))
-                              select c).ToList();
-                }
-                else
-                {
-                    tcList = (from c in ctx.PERSPECTIVE_TARGET_CALC
-                              where (c.PERIOD_YEAR == year && c.PERIOD_MONTH == month)
-                              select c).OrderBy(l=> l.PLANT_ID).ToList();
-                }
-            }
-            catch (Exception e)
-            {
-           //     SQMLogger.LogException(e);
-            }
-
-            return tcList;
-        }
-
-
-        public static PERSPECTIVE_TARGET_CALC UpdateTargetCalc(PSsqmEntities ctx, PERSPECTIVE_TARGET_CALC tc, string updateBy)
-        {
-            PERSPECTIVE_TARGET_CALC ret = null;
-
-            tc = (PERSPECTIVE_TARGET_CALC)SQMModelMgr.SetObjectTimestamp(tc, updateBy, tc.EntityState);
-            if (tc.EntityState == EntityState.Detached)
-                ctx.AddToPERSPECTIVE_TARGET_CALC(tc);
-            if (ctx.SaveChanges() > 0)
-                ret = tc;
-
-            return ret;
-        }
-
-        public static int UpdateTargetCalcList(PSsqmEntities ctx, List<PERSPECTIVE_TARGET_CALC> tcList, string updateBy)
-        {
-            int status = 0;
-
-            try
-            {
-                for (int n = 0; n < tcList.Count; n++)
-                {
-                    PERSPECTIVE_TARGET_CALC tc = tcList[n];
-                    if (tc.EntityState != EntityState.Unchanged)
-                    {
-                        tc = (PERSPECTIVE_TARGET_CALC)SQMModelMgr.SetObjectTimestamp(tc, updateBy, tc.EntityState);
-                        if (tc.EntityState == EntityState.Detached)
-                            ctx.AddToPERSPECTIVE_TARGET_CALC(tc);
-                    }
-                }
-                status = ctx.SaveChanges();
-            }
-            catch (Exception e)
-            {
-               // SQMLogger.LogException(e);
-            }
-
-            return status;
-        }
-
         #endregion
     }
 
     #region targetkpimgr
-    public class TargetCalcsMgr
+
+	public class TargetStruct
+	{
+		public decimal? CompanyID
+		{
+			get;
+			set;
+		}
+		public decimal? BusOrgID
+		{
+			get;
+			set;
+		}
+		public decimal? PlantID
+		{
+			get;
+			set;
+		}
+		public PERSPECTIVE_TARGET Target
+		{
+			get;
+			set;
+		}
+	}
+
+    public class TargetMgr
     {
-        public decimal CompanyID
-        {
-            get;
-            set;
-        }
         public DateTime FromDate
         {
             get;
@@ -473,12 +433,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public List<PERSPECTIVE_TARGET> TargetList
-        {
-            get;
-            set;
-        }
-        public CalcsResult Results
+        public List<TargetStruct> TargetList
         {
             get;
             set;
@@ -489,246 +444,101 @@ namespace SQM.Website
             set;
         }
 
-        public TargetCalcsMgr CreateNew(decimal companyID, DateTime fromDate, DateTime toDate)
+        public TargetMgr CreateNew(string perspective, decimal companyID, DateTime fromDate, DateTime toDate)
         {
             this.Entities = new PSsqmEntities();
-            this.CompanyID = companyID;
             this.FromDate = fromDate;
             this.ToDate = toDate;
             this.DateInterval = DateIntervalType.fuzzy;
-            this.TargetList = ViewModel.SelectTargets(this.Entities, companyID, fromDate.Year);
-            this.Results = new CalcsResult().Initialize();
+			this.SelectTargets(perspective);
 
             return this;
         }
 
-        public TargetCalcsMgr InitCalc()
+		public TargetMgr SelectTargets(string perspective)
+		{
+			this.TargetList = new List<TargetStruct>();
+			string calcScope = "";
+
+			if (perspective == "XD")
+			{
+				List<EHS_TARGETS> ehsTargets = (from t in Entities.EHS_TARGETS
+												select t).ToList();
+				// standardize EHS_TARGET to general target structure
+				foreach (EHS_TARGETS et in ehsTargets)
+				{
+					TargetStruct ts = new TargetStruct() {CompanyID = et.COMPANY_ID, BusOrgID = et.BUS_ORG_ID, PlantID = et.PLANT_ID};
+					switch (et.TYPE)
+					{
+						case "TRIR":
+							calcScope = "rcr";
+							break;
+						case "FREQUENCY":
+							calcScope = "ltcr";
+							break;
+						case "SEVERITY":
+							calcScope = "ltsr";
+							break;
+						default:
+							calcScope = et.TYPE;
+							break;
+					}
+
+					ts.Target = new PERSPECTIVE_TARGET() {PERSPECTIVE = "XD", CALCS_SCOPE = calcScope, VALUE = et.TARGET_VALUE, MIN_MAX = et.MIN_MAX.HasValue ? et.MIN_MAX : 0, DESCR_SHORT = et.TYPE, EFF_YEAR = DateTime.UtcNow.Year };
+					this.TargetList.Add(ts);
+				}
+			}
+			else
+			{
+				List<PERSPECTIVE_TARGET> pvTargets = (from t in Entities.PERSPECTIVE_TARGET
+													  where t.PERSPECTIVE == perspective 
+													  select t).ToList();
+				// insert PERSPECTIVE_TARGETS into target structure
+				foreach (PERSPECTIVE_TARGET pt in pvTargets)
+				{
+					TargetStruct ts = new TargetStruct() { CompanyID = pt.COMPANY_ID };
+					ts.Target = pt;
+					this.TargetList.Add(ts);
+				}
+			}
+
+			return this;
+		}
+
+        public PERSPECTIVE_TARGET GetTarget(string perspective, string calcScope, string calcStat, decimal companyID, decimal busOrgID, decimal plantID, int effYear)
         {
-            this.Results = new CalcsResult();
-            this.Results.Status = 0;
-            return this;
-        }
+			PERSPECTIVE_TARGET target = null;
 
-        public PERSPECTIVE_TARGET GetTarget(decimal targetID, string calcScope)
-        {
-            if (targetID > 0)
-                return this.TargetList.Where(l => l.TARGET_ID == targetID).FirstOrDefault();
-            else
-                return this.TargetList.Where(l => l.CALCS_SCOPE == calcScope).FirstOrDefault();
-        }
+			bool byYear = effYear == 0 ? false : true;
+			bool byStat = this.TargetList.Where(l => l.Target.SSTAT != null && l.Target.SSTAT != "").Count() > 0 ? true : false;
+			bool byPlant = this.TargetList.Where(l => l.PlantID != null && l.PlantID > 0).Count() > 0  &&  plantID > 0 ? true : false;
+			bool byBusOrg = this.TargetList.Where(l => l.BusOrgID != null && l.BusOrgID > 0).Count() > 0  &&  busOrgID > 0  && !byPlant ? true : false;
+			bool byCompany = !byBusOrg && !byPlant ? true : false;		// finally default to getting the company targets
 
-        public DateTime LastCalcDate()
-        {
-            DateTime lastUpdDt;
+			this.TargetList.Where(l => l.PlantID != null && l.PlantID > 0).Count();
 
-            try
-            {
-                lastUpdDt = (DateTime)(from c in this.Entities.PERSPECTIVE_TARGET_CALC
-                             select c.LAST_UPD_DT).Max();
-            }
-            catch
-            {
-                lastUpdDt = DateTime.MinValue;
-            }
+			if (byYear)
+			{
+				// get most current effyear target
+				target = this.TargetList.Where(l => l.Target.PERSPECTIVE == perspective && l.Target.CALCS_SCOPE == calcScope
+						&& (!byStat || l.Target.SSTAT == calcStat)
+						&& (!byCompany || l.CompanyID == companyID)
+						&& (!byBusOrg || l.BusOrgID == busOrgID)
+						&& (!byPlant || l.PlantID == plantID)
+						&&  l.Target.EFF_YEAR <= effYear
+					).Select(l => l.Target).LastOrDefault();
+			}
+			else
+			{
+				target = this.TargetList.Where(l => l.Target.PERSPECTIVE == perspective && l.Target.CALCS_SCOPE == calcScope 
+						&& (!byStat || l.Target.SSTAT == calcStat)
+						&& (!byCompany || l.CompanyID == companyID)
+						&& (!byBusOrg || l.BusOrgID == busOrgID)
+						&& (!byPlant || l.PlantID == plantID)
+					).Select(l => l.Target).FirstOrDefault();
+			}
 
-            return lastUpdDt;
-        }
-
-        public TargetCalcsMgr LoadCurrentMetrics(bool periodYearOnly, bool companyOverallOnly, DateIntervalType dateIntervalType)
-        {
-            this.DateInterval = dateIntervalType;
- 
-            try
-            {
-                decimal[] targetArray = this.TargetList.Select(l=> l.TARGET_ID).ToArray();
-                List<PERSPECTIVE_TARGET_CALC> tcList;
-                if (dateIntervalType == DateIntervalType.month)
-                {
-                    tcList = (from c in this.Entities.PERSPECTIVE_TARGET_CALC
-                              where (targetArray.Contains(c.TARGET_ID) &&  c.PERIOD_YEAR == this.ToDate.Year && c.PERIOD_MONTH == this.ToDate.Month) 
-                              select c).OrderByDescending(l => l.TARGET_ID).ToList();
-                }
-                else if (dateIntervalType == DateIntervalType.year)
-                {
-                    tcList = (from c in this.Entities.PERSPECTIVE_TARGET_CALC
-                                where(targetArray.Contains(c.TARGET_ID) && EntityFunctions.CreateDateTime(c.PERIOD_YEAR,c.PERIOD_MONTH,1,0,0,0) >= this.FromDate &&  EntityFunctions.CreateDateTime(c.PERIOD_YEAR,c.PERIOD_MONTH,1,0,0,0) <= this.ToDate) 
-                                select c).OrderByDescending(c => EntityFunctions.CreateDateTime(c.PERIOD_YEAR, c.PERIOD_MONTH, 1, 0, 0, 0)).ThenBy(l => l.TARGET_ID).ToList();
-                }
-                else
-                {
-                    tcList = (from c in this.Entities.PERSPECTIVE_TARGET_CALC
-                                where (targetArray.Contains(c.TARGET_ID))
-                                select c).OrderByDescending(c => EntityFunctions.CreateDateTime(c.PERIOD_YEAR, c.PERIOD_MONTH, 1, 0, 0, 0)).ThenBy(l => l.TARGET_ID).ToList();
-                }
-
-                if (tcList != null)
-                {
-                    foreach (PERSPECTIVE_TARGET_CALC tc in tcList)
-                    {
-                        this.TargetList.Where(t => t.TARGET_ID == tc.TARGET_ID).FirstOrDefault().PERSPECTIVE_TARGET_CALC.Add(tc);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                //   SQMLogger.LogException(e);
-            }
-
-            return this;
-        }
-
-        public int TargetMetric(string targetScope, decimal[] plantIDS, DateTime targetDate)
-        {
-            int status = 0;
-            this.Results.ValidResult = false;
-  
-            try
-            {
-                PERSPECTIVE_TARGET target = this.TargetList.Where(t => t.CALCS_SCOPE == targetScope).FirstOrDefault();
-                PERSPECTIVE_TARGET_CALC tc = null;
-
-                if (targetDate > DateTime.MinValue)
-                {   // get specific date period
-                    if (plantIDS.Length == 1)   // get specific plant
-                        tc = target.PERSPECTIVE_TARGET_CALC.Where(l => l.PLANT_ID != null && plantIDS.Contains((decimal)l.PLANT_ID) && (l.PERIOD_YEAR == targetDate.Year && l.PERIOD_MONTH == targetDate.Month)).FirstOrDefault();
-                    else
-                        tc = target.PERSPECTIVE_TARGET_CALC.Where(l => l.PLANT_ID == null && (l.PERIOD_YEAR == targetDate.Year && l.PERIOD_MONTH == targetDate.Month)).FirstOrDefault();
-                }
-                else
-                {   // get the most recent results
-                    if (plantIDS.Length == 1)
-                        tc = target.PERSPECTIVE_TARGET_CALC.Where(l => l.PLANT_ID != null && plantIDS.Contains((decimal)l.PLANT_ID) && l.VALUE_IND == true).FirstOrDefault();
-                    else
-                        tc = target.PERSPECTIVE_TARGET_CALC.Where(l => l.PLANT_ID == null &&  l.VALUE_IND == true).FirstOrDefault();
-                       
-                }
-                if (tc != null)
-                {
-                    this.Results.Text = this.TargetList.Where(t => t.CALCS_SCOPE == targetScope).Select(t => t.DESCR_LONG).FirstOrDefault();
-                    this.Results.ValidResult = (bool)tc.VALUE_IND;
-                    this.Results.Result = (decimal)tc.VALUE;
-                    this.Results.ResultDate = new DateTime(tc.PERIOD_YEAR, tc.PERIOD_MONTH, DateTime.DaysInMonth(tc.PERIOD_YEAR, tc.PERIOD_MONTH));
-                }
-            }
-            catch
-            {
-                status = -1;
-            }
-
-            return status;
-        }
-
-        public int MetricSeries(EHSCalcsCtl.SeriesOrder seriesOrder, decimal[] plantIDS, string targetScope)
-        {
-            int status = 0;
-            int item = 0;
-            GaugeSeries series = null;
-            this.Results.Initialize();
-            PLANT plant = null;
-
-            switch (seriesOrder)
-            {
-                case EHSCalcsCtl.SeriesOrder.PlantMeasure:
-                    int numYears = this.ToDate.Year - this.FromDate.Year + 1;
-                    int numPeriods = ((this.ToDate.Year - this.FromDate.Year) * 12) + (this.ToDate.Month - this.FromDate.Month) + 1;
-                    foreach (decimal plantID in plantIDS)
-                    {
-                        try
-                        {
-                            if (plantID > 0)
-                            {
-                                plant = SQMModelMgr.LookupPlant(plantID);
-                                series = new GaugeSeries().CreateNew(1, plant.PLANT_NAME, "");
-                            }
-                            else
-                            {
-                                series = new GaugeSeries().CreateNew(1, "overall", "");
-                            }
-
-                            for (int n = 0; n < numPeriods; n++)
-                            {
-                                DateTime thePeriod = this.FromDate.AddMonths(n);
-                                if (TargetMetric(targetScope, new decimal[1] { plantID }, thePeriod) >= 0 && this.Results.ValidResult)
-                                    series.ItemList.Add(new GaugeSeriesItem().CreateNew(1, n + 1, 0, this.Results.Result, SQMBasePage.FormatDate(thePeriod, "yyyy/MM", false)));
-                                else 
-                                    series.ItemList.Add(new GaugeSeriesItem().CreateNew(1, n + 1, 0, 0, SQMBasePage.FormatDate(thePeriod, "yyyy/MM", false)));
-                            }
-
-                            this.Results.metricSeries.Add(series);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    break;
-
-                default:
-                    series = new GaugeSeries().CreateNew(1, "", "");
-                    foreach (decimal plantID in plantIDS)
-                    {
-                        plant = SQMModelMgr.LookupPlant(plantID);
-                       
-                        if (TargetMetric(targetScope, new decimal[1] { plantID }, DateTime.MinValue) >= 0 && this.Results.ValidResult)
-                        {
-                            series.ItemList.Add(new GaugeSeriesItem().CreateNew(1, item++, 0, this.Results.Result, plant.PLANT_NAME));
-                            series.Name = this.Results.Text;
-                        }
-                    }
-                    this.Results.metricSeries.Add(series);
-                    break;
-            }
-
-            if (this.Results.metricSeries.Count > 0)
-                this.Results.ValidResult = true;
-
-            return status;
-        }
-
-        public PERSPECTIVE_VIEW CreateCorpTargetView(decimal companyID, int effYear, string viewTitle)
-        {
-            PERSPECTIVE_VIEW targetView = new PERSPECTIVE_VIEW();
-            PERSPECTIVE_VIEW_ITEM vi = null;
-
-            targetView.PERSPECTIVE = "0";
-            targetView.DFLT_TIMEFRAME = 1;
-            targetView.VIEW_DESC = viewTitle;
-            int seq = -1;
-            string perspective = "";
-            foreach (PERSPECTIVE_TARGET pt in this.TargetList.OrderBy(l => l.PERSPECTIVE).ToList())
-            {
-                vi = new PERSPECTIVE_VIEW_ITEM();
-                vi.ITEM_SEQ = ++seq;
-                vi.DISPLAY_TYPE = 1;
-                vi.SERIES_ORDER = 1;
-                vi.MULTIPLIER = vi.SCALE_MIN = vi.SCALE_MAX = vi.SCALE_UNIT = 0;
-                vi.CALCS_METHOD = pt.PERSPECTIVE;  // important diff
-                vi.CALCS_STAT = pt.SSTAT;
-                vi.CALCS_SCOPE = pt.CALCS_SCOPE;
-                vi.TITLE = vi.A_LABEL = pt.DESCR_SHORT;
-                vi.SCALE_LABEL = pt.DESCR_SHORT;
-                vi.DISPLAY_TARGET_ID = pt.TARGET_ID;
-               // vi.INDICATOR_1_VALUE = vi.INDICATOR_2_VALUE = vi.INDICATOR_3_VALUE = 0;
-               // vi.INDICATOR_1_COLOR = vi.INDICATOR_2_COLOR = vi.INDICATOR_3_COLOR = "";
-                vi.COLOR_PALLETE = vi.OPTIONS = "";
-                vi.STATUS = "0";
-                vi.ITEM_WIDTH = 280;
-               // if (pt.PERSPECTIVE != perspective)
-               //     vi.NEW_ROW = true;
-               // else
-                    vi.NEW_ROW = false;
-
-                vi.CONTROL_TYPE = 60;  // vi.CONTROL_TYPE = 1;
-                vi.ITEM_WIDTH = 185;
-                vi.ITEM_HEIGHT = 150;
-                vi.OPTIONS = "N";
-                vi.SCALE_LABEL = "";
-                vi.SCALE_MIN = -100; vi.SCALE_MAX = 100; vi.SCALE_UNIT = 25;
-
-                perspective = pt.PERSPECTIVE;
-                targetView.PERSPECTIVE_VIEW_ITEM.Add(vi);
-            }
-
-            return targetView;
+            return target;
         }
     }
     #endregion

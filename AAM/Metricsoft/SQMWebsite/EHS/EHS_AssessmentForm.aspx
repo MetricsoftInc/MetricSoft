@@ -12,58 +12,58 @@
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
 
-        $(window).load(function () {
-            document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-            document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-        });
+    	$(window).load(function () {
+    		document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
+    		document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
+    	});
 
-        $(window).resize(function () {
-            document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-            document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-        });
+    	$(window).resize(function () {
+    		document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
+    		document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
+    	});
 
-        function StandardConfirm(sender, args) {
+    	function StandardConfirm(sender, args) {
 
-            // Some pages will have no validators, so skip
-            if (typeof Page_ClientValidate === "function") {
-                var validated = Page_ClientValidate('Val');
+    		// Some pages will have no validators, so skip
+    		if (typeof Page_ClientValidate === "function") {
+    			var validated = Page_ClientValidate('Val');
 
-                if (!validated)
-                    alert("Please fill out all required fields.");
-            }
-        }
+    			if (!validated)
+    				alert("Please fill out all required fields.");
+    		}
+    	}
 
-        function DeleteConfirm(button, args) {
-            args.set_cancel(!confirm("Delete assessment - are you sure?  Assessments cannot be undeleted."));
-        }
+    	function DeleteConfirm(button, args) {
+    		args.set_cancel(!confirm("Delete assessment - are you sure?  Assessments cannot be undeleted."));
+    	}
 
-        function LeaveConfirm(button, args) {
-            confirm("If you have made changes and not hit the Save button, changes may be lost. Leave Page?");
-        }
+    	function LeaveConfirm(button, args) {
+    		confirm("If you have made changes and not hit the Save button, changes may be lost. Leave Page?");
+    	}
 
-        var body = document.body;
-        var docElem = document.documentElement;
-        var bodyScrollTop = 0;
-        var bodyScrollLeft = 0;
-        var docElemScrollTop = 0;
-        var docElemScrollLeft = 0;
-        function OnClientBeforeOpen(sender, args) {
-            bodyScrollTop = body.scrollTop;
-            bodyScrollLeft = body.scrollLeft;
-            docElemScrollTop = docElem.scrollTop;
-            docElemScrollLeft = docElem.scrollLeft;
-        }
-        function OnClientClose() {
-            setTimeout(function () {
-                body.scrollTop = bodyScrollTop;
-                body.scrollLeft = bodyScrollLeft;
-                docElem.scrollTop = docElemScrollTop;
-                docElem.scrollLeft = docElemScrollLeft;
-            }, 30);
-        }
+    	var body = document.body;
+    	var docElem = document.documentElement;
+    	var bodyScrollTop = 0;
+    	var bodyScrollLeft = 0;
+    	var docElemScrollTop = 0;
+    	var docElemScrollLeft = 0;
+    	function OnClientBeforeOpen(sender, args) {
+    		bodyScrollTop = body.scrollTop;
+    		bodyScrollLeft = body.scrollLeft;
+    		docElemScrollTop = docElem.scrollTop;
+    		docElemScrollLeft = docElem.scrollLeft;
+    	}
+    	function OnClientClose() {
+    		setTimeout(function () {
+    			body.scrollTop = bodyScrollTop;
+    			body.scrollLeft = bodyScrollLeft;
+    			docElem.scrollTop = docElemScrollTop;
+    			docElem.scrollLeft = docElemScrollLeft;
+    		}, 30);
+    	}
 
-        function OpenTaskWindow() {
-            $find("<%=winUpdateTask.ClientID %>").show();
+    	function OpenTaskWindow() {
+    		$find("<%=winUpdateTask.ClientID %>").show();
         }
 
     </script>
@@ -134,7 +134,7 @@
                                                     </div>
                                                 </div>
                                                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
-                                                    <tr runat="server">
+                                                    <tr id="Tr1" runat="server">
                                                         <td class="columnHeader">
                                                             <asp:Label ID="lblLocation" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                                                         </td>

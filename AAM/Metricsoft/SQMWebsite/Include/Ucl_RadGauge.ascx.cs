@@ -67,6 +67,11 @@ namespace SQM.Website
             get;
             set;
         }
+		public bool ScaleToMax
+		{
+			get;
+			set;
+		}
         public decimal? Multiplier
         {
             get;
@@ -210,6 +215,7 @@ namespace SQM.Website
 			this.OverlaySeries = 0;
 			this.ContainerHeight = this.ContainerWidth = 0;
 			this.OnLoad = null;
+			this.ScaleToMax = false;
 		}
 
 		public GaugeDefinition Initialize()
@@ -217,15 +223,42 @@ namespace SQM.Website
 			return new GaugeDefinition();
         }
 
+		public GaugeDefinition InitializeAll()
+		{
+			this.IndicatorList = new List<GaugeIndicator>();
+			this.DefaultScaleColor = "#20B2AA"; // "#008B8B"; // "#191970";
+			this.DefaultPointColor = "#2F4F4F"; //"#CC6600";
+			this.DefaultValueFormat = "#.#";
+			// this.ColorPallete = "chartSeriesColor";
+			this.MinorTics = true;
+			this.DisplayTitle = false;
+			this.DisplayLegend = true;
+			this.LegendPosition = ChartLegendPosition.Bottom;
+			this.LegendBackgroundColor = Color.White;
+			this.DisplayTooltip = true;
+			this.TooltipBackgroundColor = Color.White;
+			this.NewRow = false;
+			this.DisplayLabel = true;
+			this.Target = null;
+			this.LabelSubList = new Dictionary<string, string>();
+			this.TotalIndicator = false;
+			this.OverlaySeries = 0;
+			this.ContainerHeight = this.ContainerWidth = 0;
+			this.OnLoad = null;
+			this.ScaleToMax = false;
+
+			return this;
+		}
+
         public int AddIndicator(GaugeIndicator rgi)
         {
             this.IndicatorList.Add(rgi);
             return this.IndicatorList.Count;
         }
 
-        public GaugeDefinition ConfigureControl(PERSPECTIVE_VIEW_ITEM vi, TargetCalcsMgr targetCtl, string addTitle, bool forceNewRow, int containerWidth, int containerHeight)
+        public GaugeDefinition ConfigureControl(PERSPECTIVE_VIEW_ITEM vi, TargetMgr targetCtl, string addTitle, bool forceNewRow, int containerWidth, int containerHeight)
         {
-            this.Initialize();
+			this.InitializeAll();
 
             this.ControlType = vi.CONTROL_TYPE;
             this.Height = vi.ITEM_HEIGHT;
@@ -290,15 +323,18 @@ namespace SQM.Website
             if (!string.IsNullOrEmpty(vi.OPTIONS))
             {
                 this.ItemVisual = vi.OPTIONS;
-                string[] opts = vi.OPTIONS.Split(',');
-                foreach (string s in opts)
+				foreach (string s in WebSiteCommon.SplitString(vi.OPTIONS, ','))
                 {
-                    if (s.Contains("#"))        // label and value number format
-                        this.ValueFormat = s;
+					if (s.Contains("#"))        // label and value number format
+					{
+						this.ValueFormat = s;
+					}
                     if (s.Contains("TOTIND"))
                         this.TotalIndicator = true;
                     if (s.Contains("OVER"))
                         this.OverlaySeries = 2;
+					if (s.Contains("SCALETOMAX"))
+						this.ScaleToMax = true;
                 }
             }
 
@@ -318,9 +354,11 @@ namespace SQM.Website
             if (vi.CONTROL_TYPE == 10 || vi.CONTROL_TYPE == 20 || vi.CONTROL_TYPE == 60)
                 this.DisplayLabel = true;
 
+			// get company-level target for this metric
+			// this may be overridden later if BU or plant level targets are specified for this view_item
             if (vi.DISPLAY_TARGET_ID > 0  &&  targetCtl != null)
             {
-                this.Target = targetCtl.GetTarget(0, vi.CALCS_SCOPE);
+                this.Target = targetCtl.GetTarget(vi.PERSPECTIVE_VIEW.PERSPECTIVE, vi.CALCS_SCOPE, vi.CALCS_STAT, 1, 0, 0, DateTime.UtcNow.Year);
             }
 
             return this;
@@ -735,7 +773,8 @@ namespace SQM.Website
             System.Web.UI.HtmlControls.HtmlGenericControl div = new System.Web.UI.HtmlControls.HtmlGenericControl();
             div.Style.Add("TEXT-ALIGN", "center");
 
-            if (sectionDiv != null && rgCfg.ItemVisual.Contains("CENTER"))
+            //if (sectionDiv != null && rgCfg.ItemVisual.Contains("CENTER"))
+			if (rgCfg.ItemVisual.Contains("CENTER"))
             {
                 div.Style.Add("DISPLAY", "INLINE-BLOCK");
             }
@@ -1106,34 +1145,65 @@ namespace SQM.Website
             if (rgCfg.Width > 0)
                 rad.Width = rgCfg.Width;
 
-            if (rgCfg.ScaleMin != rgCfg.ScaleMax)
-            {
-                rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
-                rad.Scale.Max = rgCfg.ScaleMax;
-                rad.Scale.MajorUnit = rgCfg.Unit;
-            }
+			if (rgCfg.ScaleMin != rgCfg.ScaleMax)
+			{
+				rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
+				rad.Scale.Max = rgCfg.ScaleMax;
+				rad.Scale.MajorUnit = rgCfg.Unit;
+
+				if (result.Result > rad.Scale.Max  &&  rgCfg.ScaleToMax == true)
+				{
+					rad.Scale.Max = WebSiteCommon.RoundToBaseFraction(result.Result, rgCfg.Unit);
+					if ((rad.Scale.Max - rad.Scale.Min) / rgCfg.Unit > 10)
+					{
+						rgCfg.Unit = rgCfg.Unit * 2.0m;
+					}
+					rad.Scale.MajorUnit = rgCfg.Unit;
+				}
+			}
 
             rad.Scale.Labels.Visible = true;
-            rad.Scale.Labels.Format = "{0} " + rgCfg.LabelV;
+			rad.Scale.Labels.Format = "{0} " + rgCfg.LabelV;
             rad.Scale.Labels.Position = Telerik.Web.UI.Gauge.ScaleLabelsPosition.Outside;
             rad.ToolTip = SQMBasePage.FormatValue(result.Result, SetValuePrecision(rgCfg, "#.####")) + " " + rgCfg.LabelV;
             rad.Pointer.Cap.Size = .10f;
-           // rad.Pointer.Color = System.Drawing.ColorTranslator.FromHtml("#CC6600"); 
             rad.Pointer.Color = System.Drawing.ColorTranslator.FromHtml("#191970" /*"#2F4F4F"*/);
 
+			GaugeRange range = null;
             if (rgCfg.IndicatorList == null || rgCfg.IndicatorList.Count == 0)
             {
-                GaugeRange range = new GaugeRange();
-                range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
-                range.To = rgCfg.ScaleMax;
-                range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
-                rad.Scale.Ranges.Add(range);
+				if (rgCfg.Target != null)
+				{
+					range = new GaugeRange();
+					range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
+					range.To = (decimal)rgCfg.Target.VALUE - (rgCfg.Unit / 4.0m);
+					range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
+					rad.Scale.Ranges.Add(range);
+					range = new GaugeRange();
+					range.From = (decimal)rgCfg.Target.VALUE - (rgCfg.Unit / 4.0m);
+					range.To = (decimal)rgCfg.Target.VALUE + (rgCfg.Unit / 4.0m);
+					range.Color = System.Drawing.Color.Firebrick;
+					rad.Scale.Ranges.Add(range);
+					range = new GaugeRange();
+					range.From = (decimal)rgCfg.Target.VALUE + (rgCfg.Unit / 4.0m);
+					range.To = rgCfg.ScaleMax;
+					range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
+					rad.Scale.Ranges.Add(range);
+				}
+				else
+				{
+					range = new GaugeRange();
+					range.From = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
+					range.To = rgCfg.ScaleMax;
+					range.Color = System.Drawing.ColorTranslator.FromHtml(rgCfg.DefaultScaleColor);
+					rad.Scale.Ranges.Add(range);
+				}
             }
             else
             {
                 foreach (GaugeIndicator rgi in rgCfg.IndicatorList)
                 {
-                    GaugeRange range = new GaugeRange();
+                    range = new GaugeRange();
                     range.From = rgi.FromValue;
                     range.To = rgi.ToValue;
                     if (rgi.Color.ToLower() == "default")
@@ -1169,8 +1239,8 @@ namespace SQM.Website
             int status = 0;
 
             RadLinearGauge rad = new RadLinearGauge();
-          //  rad.Skin = "Metro";
             rad.Scale.Vertical = false;
+			/*
             if (rgCfg.Height > 0 && rgCfg.Width > 0)
             {
                 rad.Height = rgCfg.Height;
@@ -1182,8 +1252,32 @@ namespace SQM.Website
                 rad.Scale.Max = (result.Result * 1.10m);
             else 
                 rad.Scale.Max = rgCfg.ScaleMax;
+
             if (rgCfg.Unit != 0)
                 rad.Scale.MajorUnit = rgCfg.Unit;
+			*/
+
+			if (rgCfg.Height > 0)
+				rad.Height = rgCfg.Height;
+			if (rgCfg.Width > 0)
+				rad.Width = rgCfg.Width;
+
+			if (rgCfg.ScaleMin != rgCfg.ScaleMax)
+			{
+				rad.Scale.Min = rgCfg.ScaleMin.HasValue ? rgCfg.ScaleMin.Value : 0;
+				rad.Scale.Max = rgCfg.ScaleMax;
+				rad.Scale.MajorUnit = rgCfg.Unit;
+
+				if (result.Result > rad.Scale.Max && rgCfg.ScaleToMax)
+				{
+					rad.Scale.Max = WebSiteCommon.RoundToBaseFraction(result.Result, rgCfg.Unit);
+					if ((rad.Scale.Max - rad.Scale.Min) / rgCfg.Unit > 10)
+					{
+						rgCfg.Unit = rgCfg.Unit * 2.0m;
+					}
+					rad.Scale.MajorUnit = rgCfg.Unit;
+				}
+			}
 
             rad.Scale.Labels.Format = "{0} " + rgCfg.LabelV;
             rad.ToolTip = SQMBasePage.FormatValue(result.Result, SetValuePrecision(rgCfg, "#.####")) + " " + rgCfg.LabelV;
@@ -1656,9 +1750,9 @@ namespace SQM.Website
             int minWidth = (maxLabelLen - 1) * 8 * seriesData.Count;
             if (rgCfg.Width > 0  &&  minWidth > rgCfg.Width)
             {
-                rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 60;
+                rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 70;
                 if (rgCfg.Height > 0)
-                    rad.Height = rgCfg.Height + 90;
+                    rad.Height = rgCfg.Height + 110;
             }
 
             IndicatorLine(rgCfg, seriesData.Count(), rad);
@@ -1781,9 +1875,9 @@ namespace SQM.Website
             int minWidth = (maxLabelLen - 1) * 8 * seriesItemCount;
             if (rgCfg.Width > 0  &&  minWidth > rgCfg.Width)
             {
-                rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 60;
+                rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 70;
                 if (rgCfg.Height > 0)
-                    rad.Height = rgCfg.Height + 90;
+                    rad.Height = rgCfg.Height + 110;
             }
 
             if (rgCfg.Grouping == 2)
@@ -1912,9 +2006,9 @@ namespace SQM.Website
                     series.SeriesItems.Add(item);
                     if (series.SeriesItems.Count > 9)
                     {
-                        rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 60;
+                        rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 70;
                         if (rgCfg.Height > 0)
-                            rad.Height = rgCfg.Height + 90;
+                            rad.Height = rgCfg.Height + 110;
                     }
 
                 }
@@ -2142,7 +2236,7 @@ namespace SQM.Website
             //series.LabelsAppearance.Position = Telerik.Web.UI.HtmlChart.BarColumnLabelsPosition.InsideEnd;
             series.LabelsAppearance.Position = BarColumnLabelsPosition.Center;
             if (seriesData.Count > 6)
-            rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 60;
+            rad.PlotArea.XAxis.LabelsAppearance.RotationAngle = 70;
             rad.PlotArea.Series.Add(series);
 
             AxisY lorenzeAxis = new AxisY()

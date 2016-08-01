@@ -62,7 +62,7 @@ namespace SQM.Website
 
 					if (menuXLATList == null || menuXLATList.Count == 0)
 					{
-						menuXLATList = SQMBasePage.SelectXLATList(new string[8] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM", "MENU_MEDIA" });
+						menuXLATList = SQMBasePage.SelectXLATList(new string[8] { "MENU_HOME", "MENU_ORG", "MENU_ENV", "MENU_HS", "MENU_AUDIT", "MENU_DATA", "MENU_RM", "MENU_MEDIA"});
 					}
 
 					SessionManager.CurrentAdminPage = "";
@@ -305,7 +305,8 @@ namespace SQM.Website
 			if (!string.IsNullOrEmpty(ddlUserLang.SelectedValue))
 			{
 				user.PREFERRED_LANG_ID = Convert.ToInt32(ddlUserLang.SelectedValue);
-				SessionManager.SessionContext.SetLanguage((int)user.PREFERRED_LANG_ID);
+				SessionManager.UserContext.Language = SQMModelMgr.LookupLanguage(ctx, "", (int)user.PREFERRED_LANG_ID, false);
+				//SessionManager.SessionContext.SetLanguage((int)user.PREFERRED_LANG_ID);
 			}
 			user = SQMModelMgr.UpdatePerson(ctx, user, SessionManager.UserContext.UserName());
 			if (user != null)

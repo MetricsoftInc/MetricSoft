@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Web.UI;
 using Telerik.Web.UI.HtmlChart;
 
@@ -30,17 +29,17 @@ namespace SQM.Website
 			int annualizeMonths = DateTime.Today.Month == 1 ? 12 : DateTime.Today.Month - 1;
 
 			var left = (EHS.EHS_PerformanceReport.gaugeDef.Width - 420 - this.pyramid.Width.ToPixels()) / 2;
-			this.pyramid.Style.Add("left", left.ToString(CultureInfo.InvariantCulture) + "px");
+			this.pyramid.Style.Add("left", left + "px");
 			this.pyramid.Fatalities = this.Fatalities;
 			this.pyramid.LostTimeCases = this.LostTimeCases;
 			this.pyramid.RecordableInjuries = this.RecordableInjuries;
 			this.pyramid.FirstAidCases = this.FirstAidCases;
 			this.pyramid.NearMisses = this.NearMisses;
 
-			var rowHeight = (this.pyramid.Height.Divide(5).ToPixels() * 0.996m).ToString(CultureInfo.InvariantCulture);
+			var rowHeight = this.pyramid.Height.Divide(5).ToPixels() * 0.996m;
 			var halfWidth = this.pyramid.Width.Divide(2).ToPixels();
-			this.pyramidTable.Style.Add("left", (halfWidth + left).ToString(CultureInfo.InvariantCulture) + "px");
-			this.pyramidTable_column1.Style.Add("width", (halfWidth + 20).ToString(CultureInfo.InvariantCulture) + "px");
+			this.pyramidTable.Style.Add("left", (halfWidth + left) + "px");
+			this.pyramidTable_column1.Style.Add("width", (halfWidth + 20) + "px");
 			this.pyramidTable_columnAnnualized.InnerText = "Annualized " + DateTime.Today.Year;
 			this.pyramidTable_columnPreviousYear.InnerText = (DateTime.Today.Year - 1).ToString();
 

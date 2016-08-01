@@ -280,7 +280,7 @@ namespace SQM.Website
 				catch { }
 			}
 
-			foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE))
+			foreach (INCIDENT_TYPE ip in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.PrimaryCompany().COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE))
 			{
 				RadComboBoxItem item = new RadComboBoxItem(ip.TITLE, ip.INCIDENT_TYPE_ID.ToString());
 				item.Checked = true;
@@ -288,7 +288,7 @@ namespace SQM.Website
 			}
 
 			// lookup charts defined for this module & app context
-			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
+			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0, SessionManager.UserContext.Language.NLS_LANGUAGE);
 			if (view != null)
 			{
 				ddlChartType.Items.Clear();
@@ -315,7 +315,7 @@ namespace SQM.Website
 			locationList = UserContext.FilterPlantAccessList(locationList);
 			SQMBasePage.SetLocationList(ddlIncidentLocation, locationList, 0, true);
 
-			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId, SessionManager.SessionContext.Language().NLS_LANGUAGE);
+			var incidentTypeList = EHSIncidentMgr.SelectIncidentTypeList(companyId, SessionManager.UserContext.Language.NLS_LANGUAGE);
 			rddlNewIncidentType.DataSource = incidentTypeList;
 			rddlNewIncidentType.DataTextField = "TITLE";
 			rddlNewIncidentType.DataValueField = "INCIDENT_TYPE_ID";
@@ -384,7 +384,8 @@ namespace SQM.Website
 				PERSPECTIVE_VIEW view = null;
 				divChart.Controls.Clear();
 
-				view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0);
+				LOCAL_LANGUAGE lang = SQMModelMgr.LookupLanguage(entities, "", SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1, false);
+				view = ViewModel.LookupView(entities, "HSIR", "HSIR", 0, lang.NLS_LANGUAGE);
 
 				if (view != null)
 				{
@@ -393,7 +394,7 @@ namespace SQM.Website
 					{
 						GaugeDefinition ggCfg = new GaugeDefinition().Initialize().ConfigureControl(vi, null, "", false, !string.IsNullOrEmpty(hfwidth.Value) ? Convert.ToInt32(hfwidth.Value) - 62 : 0, 0);
 						ggCfg.Position = null;
-						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), SessionManager.UserContext.LocalTime.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
+						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER, vi.FILTER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), SessionManager.UserContext.LocalTime.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
 						uclChart.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, HSCalcs().ehsCtl.Results, divChart);
 						pnlChartSection.Style.Add("display", "inline");
 						lnkChartClose.Visible = lnkPrint.Visible = true;
@@ -441,7 +442,7 @@ namespace SQM.Website
 			selectedValue = rcbStatusSelect.SelectedValue;
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
-			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
 			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);

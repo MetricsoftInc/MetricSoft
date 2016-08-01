@@ -89,7 +89,7 @@ namespace SQM.Website
                     SQMBasePage.SetLocationList(uclIssueSearch.DDLPlantSelect, UserContext.FilterPlantAccessList(locationList), -1);
                 }
 
-                PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, appContext, appContext, 0);
+                PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, appContext, appContext, 0, "en");
                 if (view != null)
                 {
                     ddlChartType.Items.Clear();
@@ -333,7 +333,7 @@ namespace SQM.Website
             else
             {
                 divChart.Controls.Clear();
-                PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, IssueCtl().Context, IssueCtl().Context, 0);
+                PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, IssueCtl().Context, IssueCtl().Context, 0, "en");
                 if (view != null)
                 {
                     PERSPECTIVE_VIEW_ITEM vi = view.PERSPECTIVE_VIEW_ITEM.Where(i => i.ITEM_SEQ.ToString() == ddlChartType.SelectedValue).FirstOrDefault();

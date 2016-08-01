@@ -883,6 +883,23 @@ namespace SQM.Website
                 return (prefix + 0.ToString().PadLeft(len, '0'));
         }
 
+
+		public static decimal RoundToBaseFraction(decimal value, decimal basefraction)
+		{
+			decimal result = 0;
+			decimal b = basefraction == 0 ? 1.0m : basefraction;
+			decimal q = value / b;
+			decimal r = Math.Round(q, 0);
+			decimal a = 0.0m;
+			if (q > r)
+			{
+				a = b;
+			}
+			result = a + r * b;
+
+			return result;
+		}
+
         public class SelectItem
         {
             public string Context

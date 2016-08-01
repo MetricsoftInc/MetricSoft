@@ -576,7 +576,7 @@ namespace SQM.Website.EHS
 				{
 					BusOrgID = plant.BUS_ORG_ID,
 					BusinessUnit = plant.BUS_ORG_ID == 99 ? " " : entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
-					Plant = plant.DISP_PLANT_NAME,
+					Plant = plant.DUNS_CODE,
 					manHours2YearsAgo,
 					manHoursPreviousYear,
 					manHoursYTD,
@@ -708,7 +708,7 @@ namespace SQM.Website.EHS
 				{
 					BusOrgID = plant.BUS_ORG_ID,
 					BusinessUnit = plant.BUS_ORG_ID == 99 ? " " : entities.BUSINESS_ORG.First(bu => bu.BUS_ORG_ID == plant.BUS_ORG_ID).ORG_NAME,
-					Plant = plant.DISP_PLANT_NAME,
+					Plant = plant.DUNS_CODE,
 					RecPreviousYear = incidentsPreviousYear,
 					RecYTD = incidentsYTD,
 					RecAnnualized = incidentsAnnualized,

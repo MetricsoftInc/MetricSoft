@@ -63,7 +63,7 @@ namespace SQM.Website
 				if (SessionManager.SessionContext != null)
 				{
 					// do we really need to do this on user controls ???
-					String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+					String selectedLanguage = SessionManager.UserContext.Language.NLS_LANGUAGE;
 					Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
 					Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
 

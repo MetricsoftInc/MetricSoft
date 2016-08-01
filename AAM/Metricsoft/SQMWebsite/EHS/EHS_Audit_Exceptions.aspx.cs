@@ -314,7 +314,7 @@ namespace SQM.Website
 			}
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
-			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			//HSCalcs().ObjAny = cbShowImage.Checked;
 
 			HSCalcs().ehsCtl.SelectAuditExceptionList(plantIDS, typeList, fromDate, toDate, true);

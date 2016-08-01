@@ -42,7 +42,7 @@ namespace SQM.Website
                 {
 					try
 					{
-						string lang = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+						string lang = SessionManager.UserContext.Language.NLS_LANGUAGE;
 						UICulture = lang;
 						Culture = lang;
 						System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
@@ -59,7 +59,7 @@ namespace SQM.Website
         public static string CultureInfo(int option)
         {
             string cultureInfo = "";
-            CultureInfo culture = new CultureInfo(SessionManager.SessionContext.Language().NLS_LANGUAGE);
+			CultureInfo culture = new CultureInfo(SessionManager.UserContext.Language.NLS_LANGUAGE);
 
             cultureInfo = culture.NativeName;
             return cultureInfo;
@@ -119,8 +119,8 @@ namespace SQM.Website
                 if (value != null)
                 {
                     CultureInfo culture;
-                    if (SessionManager.SessionContext != null && SessionManager.SessionContext.Language() != null)
-                        culture = new CultureInfo(SessionManager.SessionContext.Language().NLS_LANGUAGE);
+					if (SessionManager.SessionContext != null && SessionManager.UserContext.Language.NLS_LANGUAGE != null)
+						culture = new CultureInfo(SessionManager.UserContext.Language.NLS_LANGUAGE);
                     else
                         culture = new CultureInfo("en");
 
@@ -141,7 +141,7 @@ namespace SQM.Website
 
             try
             {
-                CultureInfo culture = new CultureInfo(SessionManager.SessionContext.Language().NLS_LANGUAGE);
+				CultureInfo culture = new CultureInfo(SessionManager.UserContext.Language.NLS_LANGUAGE);
                 strValue = date.ToString(fmt, culture);
             }
             catch { }

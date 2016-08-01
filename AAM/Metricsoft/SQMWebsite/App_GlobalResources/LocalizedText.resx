@@ -175,7 +175,7 @@
     <value>Business Location</value>
   </data>
   <data name="BusinessOrg" xml:space="preserve">
-    <value>Business Org</value>
+    <value>Business Organization</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -708,14 +708,62 @@
   <data name="PersonAccountable" xml:space="preserve">
     <value>Person Accountable</value>
   </data>
+  <data name="CountryRegion" xml:space="preserve">
+    <value>Country / Region</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SelectOrgRegion" xml:space="preserve">
+    <value>Org / Region...</value>
+  </data>
+  <data name="SelectOrgRegionInstruct" xml:space="preserve">
+    <value>Select locations to report based on business organization and/or country region.</value>
+  </data>
+  <data name="SelectOrgRegionTitle" xml:space="preserve">
+    <value>Select Organizations Or Regions</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
   <data name="VideoAdd" xml:space="preserve">
     <value>Add Video</value>
   </data>
-  <data name="MediaVideos" xml:space="preserve">
-    <value>Manage Media - Videos</value>
+  <data name="VideoDate" xml:space="preserve">
+    <value>Video Date</value>
   </data>
-  <data name="MediaVideosInstruct" xml:space="preserve">
-    <value>Add or update Videos below.</value>
+  <data name="VideoDateDesc" xml:space="preserve">
+    <value>Date that the video was taken.</value>
+  </data>
+  <data name="VideoDateFrom" xml:space="preserve">
+    <value>Video Date From:</value>
+  </data>
+  <data name="VideoDelete" xml:space="preserve">
+    <value>Delete Video and all associated attachments</value>
+  </data>
+  <data name="VideoDeleted" xml:space="preserve">
+    <value>Video deleted.</value>
+  </data>
+  <data name="VideoDescription" xml:space="preserve">
+    <value>Video Description</value>
+  </data>
+  <data name="VideoDownload" xml:space="preserve">
+    <value>Download Video</value>
+  </data>
+  <data name="VideoEdit" xml:space="preserve">
+    <value>Edit video information</value>
+  </data>
+  <data name="VideoErrorDeleting" xml:space="preserve">
+    <value>Error deleting video.</value>
+  </data>
+  <data name="VideoLibary" xml:space="preserve">
+    <value>Video Library</value>
+  </data>
+  <data name="VideoList" xml:space="preserve">
+    <value>List videos</value>
   </data>
   <data name="VideoOwn" xml:space="preserve">
     <value>Only my videos</value>
@@ -723,20 +771,53 @@
   <data name="VideoOwner" xml:space="preserve">
     <value>Video Owner</value>
   </data>
+  <data name="VideoReleaseFormsDesc" xml:space="preserve">
+    <value>&lt;br&gt;(release forms are ONLY needed if filming individual non-employees or minors)</value>
+  </data>
+  <data name="VideoReleaseFormsRequired" xml:space="preserve">
+    <value>Are release forms/additional documentation required?</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videos</value>
+  </data>
   <data name="VideoSelectOwner" xml:space="preserve">
     <value>Select video by owner</value>
+  </data>
+  <data name="VideoSelectSource" xml:space="preserve">
+    <value>Select video based on source of upload</value>
+  </data>
+  <data name="VideoSelectStatus" xml:space="preserve">
+    <value>Select video based on status</value>
   </data>
   <data name="VideoSelectType" xml:space="preserve">
     <value>Select types of videos to list</value>
   </data>
+  <data name="VideoSourceType" xml:space="preserve">
+    <value>Video Source Type</value>
+  </data>
+  <data name="VideoSpeakerAudio" xml:space="preserve">
+    <value>Is there speaker audio in your video?</value>
+  </data>
+  <data name="VideoTextAdded" xml:space="preserve">
+    <value>Do you want text added to your video?</value>
+  </data>
+  <data name="VideoTextDisclaimer" xml:space="preserve">
+    <value>Enter the point in the video(ex: 1:45) and the text you want added. Text should be in bullet form or short sentences, and should emphasize a point or identify a speaker if needed. Try to keep it to no more than 4 bullets per screen. All text will be in Helvetica 10-point font. All text needs to be in English unless the video is for local use only.</value>
+  </data>
   <data name="VideoType" xml:space="preserve">
     <value>Video Type</value>
   </data>
-  <data name="VideoList" xml:space="preserve">
-    <value>List videos</value>
+  <data name="VideoUpload" xml:space="preserve">
+    <value>Upload Video</value>
   </data>
-  <data name="VideoSelectStatus" xml:space="preserve">
-    <value>Select video based on status</value>
+  <data name="VideoUploadInstruction" xml:space="preserve">
+    <value>To upload a video, fill out all the file information and then click 'browse' to search for the appropriate file from your desktop or device, or to take a video from your device.</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Availability</value>
+  </data>
+  <data name="Timestamp" xml:space="preserve">
+    <value>Timestamp</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
@@ -747,83 +828,11 @@
   <data name="UploadError" xml:space="preserve">
     <value>Please choose a file to upload.</value>
   </data>
-  <data name="VideoDate" xml:space="preserve">
-    <value>Video Date</value>
-  </data>
-  <data name="VideoDateDesc" xml:space="preserve">
-    <value>Date that the video was taken.</value>
-  </data>
-  <data name="VideoDescription" xml:space="preserve">
-    <value>Video Description</value>
-  </data>
-  <data name="VideoLibary" xml:space="preserve">
-    <value>Video Library</value>
-  </data>
-  <data name="VideoUpload" xml:space="preserve">
-    <value>Upload Video</value>
-  </data>
-  <data name="VideoUploadInstruction" xml:space="preserve">
-    <value>To upload a video, fill out all the file information and then click 'browse' to search for the appropriate file from your desktop or device, or to take a video from your device.</value>
-  </data>
   <data name="BodyPart" xml:space="preserve">
     <value>Body Part</value>
   </data>
-  <data name="Video" xml:space="preserve">
-    <value>Video</value>
-  </data>
-  <data name="VideoEdit" xml:space="preserve">
-    <value>Edit video information</value>
-  </data>
-  <data name="Availability" xml:space="preserve">
-    <value>Availability</value>
-  </data>
   <data name="InjuryType" xml:space="preserve">
     <value>Injury Type</value>
-  </data>
-  <data name="ReturnToList" xml:space="preserve">
-    <value>Return to List</value>
-  </data>
-  <data name="VideoReleaseFormsDesc" xml:space="preserve">
-    <value>&lt;br&gt;(release forms are ONLY needed if filming individual non-employees or minors)</value>
-  </data>
-  <data name="VideoReleaseFormsRequired" xml:space="preserve">
-    <value>Are release forms/additional documentation required?</value>
-  </data>
-  <data name="VideoSourceType" xml:space="preserve">
-    <value>Video Source Type</value>
-  </data>
-  <data name="VideoTextAdded" xml:space="preserve">
-    <value>Do you want text added to your video?</value>
-  </data>
-  <data name="VideoTextDisclaimer" xml:space="preserve">
-    <value>Enter the point in the video(ex: 1:45) and the text you want added. Text should be in bullet form or short sentences, and should emphasize a point or identify a speaker if needed. Try to keep it to no more than 4 bullets per screen. All text will be in Helvetica 10-point font. All text needs to be in English unless the video is for local use only.</value>
-  </data>
-  <data name="Editing" xml:space="preserve">
-    <value>Editing</value>
-  </data>
-  <data name="VideoDelete" xml:space="preserve">
-    <value>Delete Video and all associated attachments</value>
-  </data>
-  <data name="VideoDeleted" xml:space="preserve">
-    <value>Video deleted.</value>
-  </data>
-  <data name="VideoErrorDeleting" xml:space="preserve">
-    <value>Error deleting video.</value>
-  </data>
-  <data name="VideoDownload" xml:space="preserve">
-    <value>Download Video</value>
-  </data>
-  <data name="Videos" xml:space="preserve">
-    <value>Videos</value>
-  </data>
-  <data name="Timestamp" xml:space="preserve">
-    <value>Timestamp</value>
-  </data>
-  <data name="VideoSpeakerAudio" xml:space="preserve">
-    <value>Is there speaker audio in your video?</value>
-  </data>
-  <data name="VideoSelectSource" xml:space="preserve">
-    <value>Select video based on source of upload</value>
   </data>
   <data name="KeyWordSearch" xml:space="preserve">
     <value>Key Word Search:</value>
@@ -831,10 +840,16 @@
   <data name="KeyWordSearchDesc" xml:space="preserve">
     <value>Enter keywords that may be in the title or description fields to help narrow your search. Separate words with a space.</value>
   </data>
-  <data name="VideoDateFrom" xml:space="preserve">
-    <value>Video Date From:</value>
+  <data name="MediaVideos" xml:space="preserve">
+    <value>Manage Media - Videos</value>
   </data>
-  <data name="Undefined" xml:space="preserve">
-    <value>Undefined</value>
+  <data name="MediaVideosInstruct" xml:space="preserve">
+    <value>Add or update Videos below.</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Editing</value>
+  </data>
+  <data name="ReturnToList" xml:space="preserve">
+    <value>Return to List</value>
   </data>
 </root>

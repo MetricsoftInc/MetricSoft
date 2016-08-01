@@ -229,7 +229,7 @@ namespace SQM.Website
 			List<decimal> typeList = ddlExportIncidentType.Items.Where(i => i.Checked == true).Select(i => Convert.ToDecimal(i.Value)).ToList();
 
 			HSCalcs = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", dtFrom, dtTo, new decimal[0]);
-			HSCalcs.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+			HSCalcs.ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
             HSCalcs.ehsCtl.SelectIncidentList(plantIDS, typeList, dtFrom, dtTo, ddlExportStatusSelect.SelectedValue, false, 0);
 		    GenerateIncidentExportExcel(HSCalcs.ehsCtl.IncidentHst);
             uclProgress.ProgressComplete();
@@ -251,7 +251,7 @@ namespace SQM.Website
                         DateTime fromDate = (DateTime)radExportDateSelect1.SelectedDate;
                         DateTime toDate = new DateTime(radExportDateSelect2.SelectedDate.Value.Year, radExportDateSelect2.SelectedDate.Value.Month, DateTime.DaysInMonth(radExportDateSelect1.SelectedDate.Value.Year, radExportDateSelect1.SelectedDate.Value.Month));
 
-                        EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange).LoadMetricHistory(new decimal[1] { profile.Plant.PLANT_ID }, fromDate, toDate, DateIntervalType.month, false);
+                        EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange, "E").LoadMetricHistory(new decimal[1] { profile.Plant.PLANT_ID }, fromDate, toDate, DateIntervalType.month, false);
                         uclHistoryList.BindHistoryList(profile, esMgr.MetricHst);
                     }
                 }
@@ -514,7 +514,7 @@ namespace SQM.Website
                 decimal[] plantArray = Array.ConvertAll(plantList.Split(','), new Converter<string, decimal>(decimal.Parse));
                 SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "E", radExportDateSelect1.SelectedDate.Value, radExportDateSelect2.SelectedDate.Value, plantArray); 
                 metricMgr.Load(DateIntervalType.month, DateSpanOption.SelectRange);
-                CalcsResult rslt = metricMgr.CalcsMethods(plantArray, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant);
+                CalcsResult rslt = metricMgr.CalcsMethods(plantArray, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant, "");
                 EHSModel.GHGResultList ghgTable = (EHSModel.GHGResultList)rslt.ResultObj;
                 uclGHGReport.BindGHGReport(ghgTable);
             }
@@ -531,7 +531,7 @@ namespace SQM.Website
             string cmdID = lnk.CommandArgument;
             string id = lnk.ID;
             CheckBox cb;
-            EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange);
+            EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange, "E");
 
             foreach (RepeaterItem r in rptProfile.Items)
             {

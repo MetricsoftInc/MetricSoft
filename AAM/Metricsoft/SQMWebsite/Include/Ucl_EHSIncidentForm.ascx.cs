@@ -277,7 +277,7 @@ namespace SQM.Website
 									select a.ANSWER_VALUE).FirstOrDefault();
 				}
 
-				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.UserContext.Language.NLS_LANGUAGE) == false)
 				{
 					continue;
 				}
@@ -839,7 +839,7 @@ namespace SQM.Website
 				}
 				bool shouldPopulate = IsEditContext && !string.IsNullOrEmpty(q.AnswerText);
 
-				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
+				if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.UserContext.Language.NLS_LANGUAGE) == false)
 				{
 					continue;
 				}
@@ -1732,7 +1732,7 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;

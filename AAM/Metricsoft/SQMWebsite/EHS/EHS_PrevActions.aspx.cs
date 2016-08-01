@@ -193,7 +193,7 @@ namespace SQM.Website
 				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[4] { "IQ_81", "IQ_82", "IQ_83", "STATUS_SELECT" }, 1);
 				rcbInspectionType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInspectionType, xlatList.Where(l => l.XLAT_GROUP == "IQ_81" && l.STATUS == "A").ToList(), "SHORT");
 				rcbRecommendType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbRecommendType, xlatList.Where(l => l.XLAT_GROUP == "IQ_83").ToList(), "SHORT");
-				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "STATUS_SELECT").ToList(), "SHORT");
+				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "STATUS_SELECT").Where(l=> new string[] {"A","C","P","U"}.Contains(l.XLAT_CODE)).ToList(), "SHORT");
 				rcbStatusSelect.SelectedValue = "A";
 
 				// work-around for problem w/ radwindow combobox not retaining items created/set from a basepage method ?
@@ -241,7 +241,7 @@ namespace SQM.Website
 			}
 
 			// lookup charts defined for this module & app context
-			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
+			PERSPECTIVE_VIEW view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0, SessionManager.UserContext.Language.NLS_LANGUAGE);
 			if (view != null)
 			{
 				ddlChartType.Items.Clear();
@@ -327,7 +327,7 @@ namespace SQM.Website
 				PERSPECTIVE_VIEW view = null;
 				divChart.Controls.Clear();
 
-				view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0);
+				view = ViewModel.LookupView(entities, "HSCA", "HSCA", 0, "en");
 
 				if (view != null)
 				{
@@ -336,7 +336,7 @@ namespace SQM.Website
 					{
 						GaugeDefinition ggCfg = new GaugeDefinition().Initialize().ConfigureControl(vi, null, "", false, !string.IsNullOrEmpty(hfwidth.Value) ? Convert.ToInt32(hfwidth.Value) - 62 : 0, 0);
 						ggCfg.Position = null;
-						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), SessionManager.UserContext.LocalTime.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
+						HSCalcs().ehsCtl.SetCalcParams(vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, (int)vi.SERIES_ORDER, vi.FILTER).IncidentSeries((EHSCalcsCtl.SeriesOrder)vi.SERIES_ORDER, SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToArray(), new DateTime(1900, 1, 1), SessionManager.UserContext.LocalTime.AddYears(100), HSCalcs().ehsCtl.GetIncidentTopics());
 						uclChart.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, HSCalcs().ehsCtl.Results, divChart);
 						pnlChartSection.Style.Add("display", "inline");
 						lnkChartClose.Visible = lnkPrint.Visible = true;
@@ -379,7 +379,7 @@ namespace SQM.Website
 			}
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
-			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);
+			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
 			var typeList = new List<decimal>();

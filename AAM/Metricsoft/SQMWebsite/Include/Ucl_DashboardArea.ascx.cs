@@ -283,8 +283,65 @@ namespace SQM.Website
                     }
                     break;
             }
-
         }
+
+		protected void btnLocationSelect_Click(object sender, EventArgs e)
+		{
+			if (ddlBusOrg.Items.Count == 0)
+			{
+				PSsqmEntities ctx = new PSsqmEntities();
+				ddlBusOrg.DataSource = localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList();
+				ddlBusOrg.DataValueField = "BUS_ORG_ID";
+				ddlBusOrg.DataTextField = "ORG_NAME";
+				ddlBusOrg.DataBind();
+
+				Dictionary<string, string> regionDCL = WebSiteCommon.GetXlatList("countryCode", "", "long");
+				foreach (string region in localCriteria.PlantList.Select(l => l.Plant).Select(l => l.LOCATION_CODE).Distinct().ToList())
+				{
+					if (!string.IsNullOrEmpty(region))
+					{
+						ddlRegion.Items.Add(new RadComboBoxItem(regionDCL[region], region));
+					}
+				}
+			}
+
+			string script = "function f(){OpenLocationSelectWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+
+		protected void btnLocationApply_Click(object sender, EventArgs e)
+		{
+			List<decimal> plantList = new List<decimal>();
+
+			if (ddlBusOrg.CheckedItems.Count > 0)
+			{
+				plantList.AddRange(localCriteria.PlantList.Where(l => ddlBusOrg.CheckedItems.Select(i=> i.Value).Contains(l.Plant.BUS_ORG_ID.ToString())).Select(l => l.Plant.PLANT_ID).ToList());
+			}
+			else
+			{
+				plantList.AddRange(localCriteria.PlantList.Select(l => l.Plant.PLANT_ID).ToList());
+			}
+
+			if (ddlRegion.CheckedItems.Count > 0)
+			{
+				List<decimal> prList = localCriteria.PlantList.Where(l => ddlRegion.CheckedItems.Select(i=> i.Value).Contains(l.Plant.LOCATION_CODE)).Select(l => l.Plant.PLANT_ID).ToList();
+				plantList = plantList.Intersect(prList).ToList();
+			}
+
+			foreach (RadComboBoxItem item in ddlPlantSelect.Items.Where(i=> i.Enabled == true).ToList())
+			{
+				item.Checked = false;
+				decimal plantID = 0;
+				if (decimal.TryParse(item.Value, out plantID)  &&  plantList.Contains(plantID))
+				{
+					item.Checked = true;
+				}
+			}
+		}
+		protected void btnLocationCancel_Click(object sender, EventArgs e)
+		{
+			;
+		}
 
         protected void onViewLayoutClick(object o, EventArgs e)
         {
@@ -300,7 +357,7 @@ namespace SQM.Website
             }
             else
             {
-                BindViewLayout((localView = ViewModel.LookupView(localCtx, "", "", Convert.ToDecimal(ddlViewList.SelectedValue))), btn.CommandArgument);
+				BindViewLayout((localView = ViewModel.LookupView(localCtx, "", "", Convert.ToDecimal(ddlViewList.SelectedValue), SessionManager.UserContext.Language.NLS_LANGUAGE)), btn.CommandArgument);
                 hfViewMode.Value = "l";
             }
 
@@ -415,7 +472,7 @@ namespace SQM.Website
             List<PERSPECTIVE_VIEW> viewList = ViewModel.SelectFilteredViewList("", SessionManager.UserContext.Person.PERSON_ID,
                  SessionManager.UserContext.HRLocation.Company.COMPANY_ID,
                   SessionManager.UserContext.HRLocation.BusinessOrg.BUS_ORG_ID,
-                 SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true);
+				 SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, SessionManager.UserContext.Language.NLS_LANGUAGE);
 
             string perspective = "0";
             RadComboBoxItem li;
@@ -457,8 +514,8 @@ namespace SQM.Website
             try
             {
                 decimal viewID = Convert.ToDecimal(ddlViewList.SelectedValue);
- 
-                localView = ViewModel.LookupView(localCtx, "", "", viewID);
+
+				localView = ViewModel.LookupView(localCtx, "", "", viewID, SessionManager.UserContext.Language.NLS_LANGUAGE);
                 if (localView == null)
                 {
                     MessageDisplay(lblViewLoadError);
@@ -669,10 +726,10 @@ namespace SQM.Website
 							  if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
 							  {
 								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.FYyear, localCriteria.DateSpanType, "");
-								  List<EHS_METRIC_HISTORY> exportList = new List<EHS_METRIC_HISTORY>();
+								  List<MetricData> exportList = new List<MetricData>();
 								  foreach (WebSiteCommon.DatePeriod pd in pdList)
 								  {
-									  exportList.AddRange(metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, 1) >= pd.FromDate && new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, DateTime.DaysInMonth(l.PERIOD_YEAR, l.PERIOD_MONTH)) <= pd.ToDate).ToList());
+									  exportList.AddRange(metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pd.FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pd.ToDate).ToList());
 								  }
 								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), exportList, false);
 							  }
@@ -680,7 +737,7 @@ namespace SQM.Website
 							  {
 								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.year, localCriteria.DateSpanType, "");
 								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(),
-									  metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, 1) >= pdList.ElementAt(0).FromDate && new DateTime(l.PERIOD_YEAR, l.PERIOD_MONTH, DateTime.DaysInMonth(l.PERIOD_YEAR, l.PERIOD_MONTH)) <= pdList.ElementAt(0).ToDate).ToList(),
+									  metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pdList.ElementAt(0).FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pdList.ElementAt(0).ToDate).ToList(),
 									  false);
 							  }
 
@@ -700,17 +757,68 @@ namespace SQM.Website
                 {
                     plantNameArray = localCriteria.PlantList.Where(l => localCriteria.PlantArray.Contains(l.Plant.PLANT_ID)).Select(l => l.Plant.PLANT_NAME).ToArray();
 
+					// array of graphs
                     if (vi.DISPLAY_TYPE == 2)
                     {
                         if (!localCriteria.Options.HasFlag(DashboardOpts.TotalsOnly))
                         {
-                            int nplant = -1;
-                            foreach (decimal plantID in localCriteria.PlantArray)
-                            {
-                                ++nplant;
-                                ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, plantNameArray[nplant], nplant == 0 ? true : false, 0, 0);
-                                status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER), "divDashboardArea");
-                            }
+							int nitem = -1;
+							bool showEmpty = true;
+							decimal[] plantArray;
+							switch (vi.FILTER)
+							{
+								case "B":	// business org
+									foreach (BUSINESS_ORG org in localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList())
+									{
+										plantArray = localCriteria.PlantList.Where(p => p.Plant.BUS_ORG_ID == org.BUS_ORG_ID).Select(p => p.Plant.PLANT_ID).ToArray();
+										++nitem;
+										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, org.ORG_NAME, nitem == 0 ? true : false, 0, 0);
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+									}
+									break;
+								case "L":	// location code  (country ?)
+									foreach (string locationCode in localCriteria.PlantList.Select(l => l.Plant.LOCATION_CODE).Distinct().ToList())
+									{
+										if (string.IsNullOrEmpty(locationCode))
+										{
+											if (!showEmpty)
+												continue;
+											plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == "" || p.Plant.LOCATION_CODE == null).Select(p => p.Plant.PLANT_ID).ToArray();
+											showEmpty = false;
+										}
+										else
+											plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == locationCode).Select(p => p.Plant.PLANT_ID).ToArray();
+										++nitem;
+										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, WebSiteCommon.GetXlatValueLong("countryCode", string.IsNullOrEmpty(locationCode) ? Resources.LocalizedText.Undefined : locationCode), nitem == 0 ? true : false, 0, 0);
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+									}
+									break;
+								case "R":	// region
+									foreach (string regionCode in localCriteria.PlantList.Select(l => l.Plant.COMP_INT_ID).Distinct().ToList())
+									{
+										if (string.IsNullOrEmpty(regionCode))
+										{
+											if (!showEmpty)
+												continue;
+											plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == "" || p.Plant.COMP_INT_ID == null).Select(p => p.Plant.PLANT_ID).ToArray();
+											showEmpty = false;
+										}
+										else
+											plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == regionCode).Select(p => p.Plant.PLANT_ID).ToArray();
+										++nitem;
+										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, string.IsNullOrEmpty(regionCode) ? Resources.LocalizedText.Undefined : regionCode, nitem == 0 ? true : false, 0, 0);
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+									}
+									break;
+								default:	// plant
+									foreach (decimal plantID in localCriteria.PlantArray)
+									{
+										++nitem;
+										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, plantNameArray[nitem], nitem == 0 ? true : false, 0, 0);
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+									}
+									break;
+							}
                         }
                     }
                     else
@@ -718,7 +826,7 @@ namespace SQM.Website
                         ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl,  "", false, 0, 0);
                         if (vi.CONTROL_TYPE == 1 && localCriteria.Options.HasFlag(DashboardOpts.TotalsOnly))
                             ggCfg.NewRow = false;
-                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER), "divDashboardArea");
+                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
                     }
 
                     MessageDisplay(null);
@@ -927,7 +1035,7 @@ namespace SQM.Website
             MessageDisplay(null);
             
             if (commitChanges  &&  localView.STATUS != "N")
-                localView = ViewModel.LookupView(localCtx, "", "", localView.VIEW_ID);
+				localView = ViewModel.LookupView(localCtx, "", "", localView.VIEW_ID, SessionManager.UserContext.Language.NLS_LANGUAGE);
 
             localView.VIEW_NAME = tbViewName.Text;
             localView.VIEW_DESC = tbViewDesc.Text;

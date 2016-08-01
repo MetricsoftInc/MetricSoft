@@ -355,12 +355,13 @@ namespace SQM.Website.EHS
 				{
 					hdn = (HiddenField)riQuestion.FindControl("hdnQuestionId");
 					args = hdn.Value.ToString().Split(',');
-					try{
+					try
+					{
 						quesionId = Convert.ToDecimal(args[1].ToString());
 					}
-					catch 
+					catch
 					{
-						quesionId=0;
+						quesionId = 0;
 					}
 					if (quesionId == recordSubID)
 					{
@@ -772,7 +773,7 @@ namespace SQM.Website.EHS
 				{
 					SessionManager.ReturnStatus = false;
 					SessionManager.ReturnObject = "DisplayAudits";
-					Response.Redirect("/EHS/EHS_Assessments.aspx"); 
+					Response.Redirect("/EHS/EHS_Assessments.aspx");
 				}
 			}
 
@@ -983,7 +984,7 @@ namespace SQM.Website.EHS
 			return audit;
 
 		}
-		
+
 		protected void BuildForm()
 		{
 			// build repeater for the topics
@@ -1420,7 +1421,7 @@ namespace SQM.Website.EHS
 					// populate required indicators
 					lit = (Literal)e.Item.FindControl("litRequiredStar");
 					if (q.IsRequired)
-						 lit.Text = "<span class=\"requiredStar\">&bull;</span>";
+						lit.Text = "<span class=\"requiredStar\">&bull;</span>";
 					if (q.IsRequiredClose)
 						lit.Text += "<span class=\"requiredCloseStar\">&bull;</span>";
 
@@ -1474,7 +1475,7 @@ namespace SQM.Website.EHS
 		{
 			SessionManager.ReturnStatus = false;
 			SessionManager.ReturnObject = "DisplayAudits";
-			Response.Redirect("/EHS/EHS_Assessments.aspx"); 
+			Response.Redirect("/EHS/EHS_Assessments.aspx");
 		}
 	}
 

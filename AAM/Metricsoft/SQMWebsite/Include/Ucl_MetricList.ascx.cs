@@ -218,7 +218,7 @@ namespace SQM.Website
                     ggCfg.DisplayLegend = false;
 
                     ggCfg.LabelV = "Quantity";
-                    status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, "I", calcScopeID.ToString(), "sum", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure), divInputsListReviewArea);
+                    status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, "I", calcScopeID.ToString(), "sum", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, ""), divInputsListReviewArea);
 
                     if (string.IsNullOrEmpty(metric.EHS_MEASURE.PLANT_ACCT_FIELD) && metric.EHS_MEASURE.MEASURE_CATEGORY != "FACT")
                     {
@@ -226,7 +226,7 @@ namespace SQM.Website
                         ggCfg.Title = "";
                         ggCfg.DisplayLabel = false;
                         ggCfg.LabelV = "Cost";
-                        status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, "I", calcScopeID.ToString(), "cost", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure), divInputsListReviewArea);
+                        status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, "I", calcScopeID.ToString(), "cost", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, ""), divInputsListReviewArea);
                     }
                 }
             }
@@ -242,16 +242,16 @@ namespace SQM.Website
 
         #region historylist
 
-        public int BindHistoryList(EHSProfile profile, List<EHS_METRIC_HISTORY> historyList)
+        public int BindHistoryList(EHSProfile profile, List<MetricData> dataList)
         {
             int status = 0;
 
-            if (profile != null && historyList.Count > 0)
+            if (profile != null && dataList.Count > 0)
             {
                 currentProfile = profile;
                 pnlHSTMetricsList.Visible = true;
 
-                gvHSTMetricsList.DataSource = historyList.OrderBy(l => l.EHS_MEASURE.MEASURE_CATEGORY).ThenBy(l => l.EHS_MEASURE.MEASURE_CD).ToList();
+				gvHSTMetricsList.DataSource = dataList.OrderBy(l => l.Measure.MEASURE_CATEGORY).ThenBy(l => l.Measure.MEASURE_CD).Select(l => l.MetricRec).ToList();
                 gvHSTMetricsList.DataBind();
                 if (gvHSTMetricsList.Rows.Count > 15)
                 {

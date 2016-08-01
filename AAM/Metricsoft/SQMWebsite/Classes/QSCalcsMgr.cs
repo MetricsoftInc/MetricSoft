@@ -36,7 +36,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public TargetCalcsMgr TargetsCtl
+        public TargetMgr TargetsCtl
         {
             get;
             set;
@@ -93,7 +93,7 @@ namespace SQM.Website
                 this.FYStartMonth = 1;
 
             if (SessionManager.SessionContext != null)
-                this.TargetsCtl = new TargetCalcsMgr().CreateNew(this.Company.COMPANY_ID, SessionManager.FYStartDate(), toDate);
+                this.TargetsCtl = new TargetMgr().CreateNew(perspective, this.Company.COMPANY_ID, SessionManager.FYStartDate(), toDate);
 
             return this;
         }
@@ -109,29 +109,27 @@ namespace SQM.Website
             switch (this.perspective)
             {
                 case "0":  // overall company targets YTD
-                    this.TargetsCtl = new TargetCalcsMgr().CreateNew(this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate).LoadCurrentMetrics(true, true, DateIntervalType.month);
-                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType).LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).SetTargets(this.TargetsCtl);
+					this.TargetsCtl = new TargetMgr().CreateNew(this.perspective, this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate);
+                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, "E").LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).SetTargets(this.TargetsCtl);
                     break;
                 case "E":
-                    this.TargetsCtl = new TargetCalcsMgr().CreateNew(this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate).LoadCurrentMetrics(true, true, DateIntervalType.month);
-                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType).LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).SetTargets(this.TargetsCtl);
+					this.TargetsCtl = new TargetMgr().CreateNew(this.perspective, this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate);
+                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).SetTargets(this.TargetsCtl);
                     break;
                 case "HS":
                     //this.TargetsCtl.LoadCurrentMetrics(true, true, DateIntervalType.year);
-                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType).LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).LoadIncidentHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval).SetTargets(this.TargetsCtl);
+                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadMetricHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, true).LoadIncidentHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval).SetTargets(this.TargetsCtl);
                     break;
+				case "XD":
+					this.TargetsCtl = new TargetMgr().CreateNew(this.perspective, this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate);
+					this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadEHSData(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval).SetTargets(this.TargetsCtl);
+					break;
                 case "I":
-                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType).LoadMetricInputs(this.FromDate, this.ToDate, this.PlantArray);
+                    this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, "E").LoadMetricInputs(this.FromDate, this.ToDate, this.PlantArray);
                      break;
                 case "IR":
-                     this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType).LoadMetricInputs(this.FromDate, this.ToDate, this.PlantArray, "IR");
+                     this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadMetricInputs(this.FromDate, this.ToDate, this.PlantArray, "IR");
                      break;
-                case "QS":
-                case "CST":
-                case "RCV":
-                     this.TargetsCtl.LoadCurrentMetrics(true, true, DateIntervalType.year);
-                    this.qsCtl = new QSCalcsCtl().CreateNew().LoadIncidentHistory(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, this.perspective, dateInterval).SetTargets(this.TargetsCtl);
-                    break;
                 default:
                     break;
             }
@@ -139,7 +137,7 @@ namespace SQM.Website
             return this;
         }
 
-        public CalcsResult CalcsMethods(decimal[] plantArray, string itemCalcsMethod, string calcsScope, string calcsStat, int controlType, int seriesOrder)
+        public CalcsResult CalcsMethods(decimal[] plantArray, string itemCalcsMethod, string calcsScope, string calcsStat, int controlType, int seriesOrder, string filter)
         {
             if (controlType == 1 || string.IsNullOrEmpty(calcsScope))
                 return new CalcsResult().Initialize();
@@ -167,25 +165,37 @@ namespace SQM.Website
             {
                 case "ESTAT":  // environment stats
                 case "HSSTAT": // HS stats
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "ESERIES":  // environment series
                 case "HSSERIES":  // HS series
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
                     rslt = this.ehsCtl.Results;
                     break;
+
+				// EHS_DATA stats
+				case "XDSTAT":
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    rslt = this.ehsCtl.Results;
+					break;
+				// EHS_DATA series
+				case "XDSERIES":
+                   this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
+                    rslt = this.ehsCtl.Results;
+					break;
+
                 case "ISERIES":
                 case "IRSERIES":
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder).InputsSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).InputsSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "INSTAT": // incident stats
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder).IncidentStat(plantArray, this.ehsCtl.GetIncidentTopics(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).IncidentStat(plantArray, this.ehsCtl.GetIncidentTopics(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "INSERIES":  // incident series
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder).IncidentSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, fromDate, this.ToDate, this.ehsCtl.GetIncidentTopics());
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).IncidentSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, fromDate, this.ToDate, this.ehsCtl.GetIncidentTopics());
                     rslt = this.ehsCtl.Results;
                     break;
 
@@ -210,7 +220,7 @@ namespace SQM.Website
             CalcsResult results = new CalcsResult().Initialize();
 
             SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(company, "HS", DateTime.UtcNow, DateTime.UtcNow, plantArray).Load(DateIntervalType.fuzzy, DateSpanOption.SelectRange);
-            metricMgr.CalcsMethods(plantArray, "HS", "63", SStat.deltaDy.ToString(), 5, 1);
+            metricMgr.CalcsMethods(plantArray, "HS", "63", SStat.deltaDy.ToString(), 5, 1, "");
             results = metricMgr.ehsCtl.Results;
             if (!results.ValidResult)
             {
@@ -325,7 +335,7 @@ namespace SQM.Website
             get;
             set;
         }
-        public TargetCalcsMgr TargetCtl
+        public TargetMgr TargetCtl
         {
             get;
             set;
@@ -398,7 +408,7 @@ namespace SQM.Website
             this.DateInterval = DateIntervalType.fuzzy;
             return this;
         }
-        public QSCalcsCtl SetTargets(TargetCalcsMgr targetMgr)
+        public QSCalcsCtl SetTargets(TargetMgr targetMgr)
         {
             this.TargetCtl = targetMgr;
             return this;

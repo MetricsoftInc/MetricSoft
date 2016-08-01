@@ -679,9 +679,9 @@ namespace SQM.Website
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
 			{
 				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
-				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).ToList())
+				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
 				{
-					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.SessionContext.Language().NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
+					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
 				}
 			}
 
@@ -719,9 +719,9 @@ namespace SQM.Website
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
 			{
 				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
-				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).ToList())
+				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
 				{
-					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.SessionContext.Language().NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
+					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
 				}
 			}
 

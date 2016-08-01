@@ -255,7 +255,7 @@ namespace SQM.Website
 			//String selectedLanguage = "es";
 			if (SessionManager.SessionContext != null)
 			{
-				String selectedLanguage = SessionManager.SessionContext.Language().NLS_LANGUAGE;
+				String selectedLanguage = SessionManager.UserContext.Language.NLS_LANGUAGE;
 				Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(selectedLanguage);
 				Thread.CurrentThread.CurrentUICulture = new CultureInfo(selectedLanguage);
 				if (CultureSettings.gregorianCalendarOverrides.Contains(selectedLanguage))
@@ -273,7 +273,7 @@ namespace SQM.Website
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;
@@ -343,7 +343,7 @@ namespace SQM.Website
 			{
 				incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 				SelectedTypeId = (decimal)incident.ISSUE_TYPE_ID;
-				SelectedTypeText = EHSIncidentMgr.SelectIncidentType((decimal)incident.ISSUE_TYPE_ID, SessionManager.SessionContext.Language().NLS_LANGUAGE).TITLE;
+				SelectedTypeText = EHSIncidentMgr.SelectIncidentType((decimal)incident.ISSUE_TYPE_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = (decimal)incident.CREATE_PERSON;
 				IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
 

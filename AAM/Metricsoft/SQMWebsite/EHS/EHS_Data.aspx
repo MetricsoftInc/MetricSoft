@@ -676,7 +676,7 @@
 					if (sum != count)
 					{
 						var column_uppercase = column.substr(0, 1).toUpperCase() + column.substr(1).replace(space_regex, '$1 $2');
-						errors += '\n* ' + column_uppercase + ' (Got ' + sum + ' instead)';
+						errors += '\n* ' + column_uppercase + ' (Entered ' + sum + ' instead)';
 					}
 				});
 

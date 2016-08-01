@@ -154,7 +154,7 @@ namespace SQM.Website
 				//days = this.DaysToClose = (int)Math.Abs(Math.Truncate(closeDT.Subtract(this.Audit.AUDIT_DT).TotalDays));
 				days = this.DaysOpen = this.DaysToClose = 0;
 			}
-			else 
+			else
 			{
 				// comapre to local date of plant, not server date
 				days = this.DaysOpen = (int)Math.Abs(Math.Truncate(localTime.Date.Subtract(this.Audit.AUDIT_DT).TotalDays));
@@ -236,14 +236,14 @@ namespace SQM.Website
 
 				if (activeOnly)
 					auditTypeList = (from itc in entities.AUDIT_TYPE
-										where !itc.INACTIVE
-										orderby itc.TITLE
-										select itc).ToList();
+									 where !itc.INACTIVE
+									 orderby itc.TITLE
+									 select itc).ToList();
 				else
 				{
 					auditTypeList = (from itc in entities.AUDIT_TYPE
-										orderby itc.TITLE
-										select itc).ToList();
+									 orderby itc.TITLE
+									 select itc).ToList();
 				}
 			}
 			catch (Exception e)
@@ -267,17 +267,17 @@ namespace SQM.Website
 				if (plantIdList == null)
 				{
 					audits = (from i in entities.AUDIT
-								 where i.AUDIT_TYPE.ToUpper() == "EHS"
-								 orderby i.AUDIT_ID descending
-								 select i).ToList();
+							  where i.AUDIT_TYPE.ToUpper() == "EHS"
+							  orderby i.AUDIT_ID descending
+							  select i).ToList();
 				}
 				else
 				{
 					audits = (from i in entities.AUDIT
-								 where i.AUDIT_TYPE.ToUpper() == "EHS"
-									 && plantIdList.Contains((decimal)i.DETECT_PLANT_ID)
-								 orderby i.AUDIT_ID descending
-								 select i).ToList();
+							  where i.AUDIT_TYPE.ToUpper() == "EHS"
+								  && plantIdList.Contains((decimal)i.DETECT_PLANT_ID)
+							  orderby i.AUDIT_ID descending
+							  select i).ToList();
 				}
 			}
 			catch (Exception e)
@@ -302,17 +302,17 @@ namespace SQM.Website
 				if (plantIdList == null)
 				{
 					audits = (from i in entities.AUDIT
-								 where i.AUDIT_TYPE.ToUpper() == "EHS" && (i.CLOSE_DATE == date1900 || i.CLOSE_DATE == null)
-								 orderby i.AUDIT_ID descending
-								 select i).ToList();
+							  where i.AUDIT_TYPE.ToUpper() == "EHS" && (i.CLOSE_DATE == date1900 || i.CLOSE_DATE == null)
+							  orderby i.AUDIT_ID descending
+							  select i).ToList();
 				}
 				else
 				{
 					audits = (from i in entities.AUDIT
-								 where i.AUDIT_TYPE.ToUpper() == "EHS" && (i.CLOSE_DATE == date1900 || i.CLOSE_DATE == null)
-								 && plantIdList.Contains((decimal)i.DETECT_PLANT_ID)
-								 orderby i.AUDIT_ID descending
-								 select i).ToList();
+							  where i.AUDIT_TYPE.ToUpper() == "EHS" && (i.CLOSE_DATE == date1900 || i.CLOSE_DATE == null)
+							  && plantIdList.Contains((decimal)i.DETECT_PLANT_ID)
+							  orderby i.AUDIT_ID descending
+							  select i).ToList();
 				}
 			}
 			catch (Exception e)
@@ -388,8 +388,8 @@ namespace SQM.Website
 				if (auditId > 0)
 				{
 					auditAnswers = (from a in entities.AUDIT_ANSWER
-										where a.AUDIT_ID == auditId
-										select a.AUDIT_QUESTION_ID).ToList();
+									where a.AUDIT_ID == auditId
+									select a.AUDIT_QUESTION_ID).ToList();
 				}
 				if (auditTopicId > 0)
 				{
@@ -397,7 +397,7 @@ namespace SQM.Website
 					{
 						// no audit id means add mode, so we only want to get active questions
 						activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-											  where q.AUDIT_TYPE_ID == auditTypeId && q.AUDIT_TOPIC_ID == auditTopicId && !q.INACTIVE 
+											  where q.AUDIT_TYPE_ID == auditTypeId && q.AUDIT_TOPIC_ID == auditTopicId && !q.INACTIVE
 											  orderby q.SORT_ORDER
 											  select q
 									).ToList();
@@ -446,7 +446,7 @@ namespace SQM.Website
 
 					var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 									 where aq.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
-									select tp).FirstOrDefault();
+									 select tp).FirstOrDefault();
 
 					var auditAnswer = (from a in entities.AUDIT_ANSWER
 									   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
@@ -462,15 +462,15 @@ namespace SQM.Website
 											 select a.TASK_ID).ToList();
 
 					List<decimal> videoIds = (from a in entities.VIDEO
-												   where a.SOURCE_TYPE == 50 && a.SOURCE_ID == auditId && a.SOURCE_STEP == strQuestion
-												   select a.VIDEO_ID).ToList();
+											  where a.SOURCE_TYPE == 50 && a.SOURCE_ID == auditId && a.SOURCE_STEP == strQuestion
+											  select a.VIDEO_ID).ToList();
 
 					var newQuestion = new EHSAuditQuestion()
 					{
 						AuditId = auditId,
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
-						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						QuestionText = AuditQuestionText(questionInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 						QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
@@ -479,7 +479,7 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						TopicTitle = AuditTopicText(topicInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 						FilesAttached = attachmentIds.Count,
 						TasksAssigned = taskIds.Count,
 						VideosAttached = videoIds.Count
@@ -572,13 +572,13 @@ namespace SQM.Website
 					{
 						List<EHSMetaData> xlats = EHSMetaDataMgr.SelectMetaDataList("AQ");
 						List<EHSAuditAnswerChoice> choices = (from qc in entities.AUDIT_QUESTION_CHOICE
-																 where qc.AUDIT_QUESTION_ID == q.AUDIT_QUESTION_ID
-																 orderby qc.SORT_ORDER
-																 select new EHSAuditAnswerChoice
-																 {
-																	 Value = qc.QUESTION_CHOICE_VALUE,
-																	 IsCategoryHeading = qc.IS_CATEGORY_HEADING
-																 }).ToList();
+															  where qc.AUDIT_QUESTION_ID == q.AUDIT_QUESTION_ID
+															  orderby qc.SORT_ORDER
+															  select new EHSAuditAnswerChoice
+															  {
+																  Value = qc.QUESTION_CHOICE_VALUE,
+																  IsCategoryHeading = qc.IS_CATEGORY_HEADING
+															  }).ToList();
 						if (choices.Count > 0)
 						{
 							foreach (EHSAuditAnswerChoice choice in choices)
@@ -700,8 +700,8 @@ namespace SQM.Website
 									 select tp).FirstOrDefault();
 
 					var auditAnswer = (from a in entities.AUDIT_ANSWER
-								  where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
-								  select a).FirstOrDefault();
+									   where a.AUDIT_ID == auditId && a.AUDIT_QUESTION_ID == aq.AUDIT_QUESTION_ID
+									   select a).FirstOrDefault();
 
 					string strQuestion = aq.AUDIT_QUESTION_ID.ToString();
 					List<decimal> attachmentIds = (from a in entities.ATTACHMENT
@@ -718,11 +718,11 @@ namespace SQM.Website
 
 					// need to redo this logic to only process if the answer is negative
 					var newQuestion = new EHSAuditQuestion()
-					{ 
+					{
 						AuditId = auditAnswer.AUDIT_ID,
 						QuestionId = questionInfo.AUDIT_QUESTION_ID,
 						//QuestionText = questionInfo.QUESTION_TEXT,
-						QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						QuestionText = AuditQuestionText(questionInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 						QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
 						HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 						IsRequired = questionInfo.IS_REQUIRED,
@@ -731,7 +731,7 @@ namespace SQM.Website
 						HelpText = questionInfo.HELP_TEXT,
 						StandardType = questionInfo.STANDARD_TYPE,
 						TopicId = topicInfo.AUDIT_TOPIC_ID,
-						TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+						TopicTitle = AuditTopicText(topicInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 						AnswerText = auditAnswer.ANSWER_VALUE,
 						AnswerComment = auditAnswer.COMMENT,
 						Status = auditAnswer.STATUS,
@@ -831,7 +831,7 @@ namespace SQM.Website
 			try
 			{
 				var entities = new PSsqmEntities();
-				var	audit = (from a in entities.AUDIT
+				var audit = (from a in entities.AUDIT
 							 where auditId == a.AUDIT_ID
 							 select a).FirstOrDefault();
 
@@ -844,9 +844,9 @@ namespace SQM.Website
 								select ti).FirstOrDefault();
 
 				var auditTypeTopic = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
-								  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
-								  select q).FirstOrDefault();
-				
+									  where q.AUDIT_TYPE_ID == audit.AUDIT_TYPE_ID && q.AUDIT_QUESTION_ID == questionID
+									  select q).FirstOrDefault();
+
 				var topicInfo = (from tp in entities.AUDIT_TOPIC.Include("AUDIT_TOPIC_LANG")
 								 where auditTypeTopic.AUDIT_TOPIC_ID == tp.AUDIT_TOPIC_ID
 								 select tp).FirstOrDefault();
@@ -873,7 +873,7 @@ namespace SQM.Website
 					AuditId = auditId,
 					QuestionId = questionInfo.AUDIT_QUESTION_ID,
 					//QuestionText = questionInfo.QUESTION_TEXT,
-					QuestionText = AuditQuestionText(questionInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+					QuestionText = AuditQuestionText(questionInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 					QuestionType = (EHSAuditQuestionType)questionInfo.AUDIT_QUESTION_TYPE_ID,
 					HasMultipleChoices = typeInfo.HAS_MULTIPLE_CHOICES,
 					IsRequired = questionInfo.IS_REQUIRED,
@@ -882,7 +882,7 @@ namespace SQM.Website
 					HelpText = questionInfo.HELP_TEXT,
 					StandardType = questionInfo.STANDARD_TYPE,
 					TopicId = topicInfo.AUDIT_TOPIC_ID,
-					TopicTitle = AuditTopicText(topicInfo, SessionManager.SessionContext.Language().NLS_LANGUAGE),
+					TopicTitle = AuditTopicText(topicInfo, SessionManager.UserContext.Language.NLS_LANGUAGE),
 					FilesAttached = attachmentIds.Count,
 					TasksAssigned = taskIds.Count,
 					VideosAttached = videoIds.Count
@@ -1016,7 +1016,7 @@ namespace SQM.Website
 			catch { }
 			return status;
 		}
-		
+
 		public static string SelectPlantNameById(decimal plantId)
 		{
 			var entities = new PSsqmEntities();
@@ -1155,8 +1155,8 @@ namespace SQM.Website
 
 					// delete all tasks assigned
 					List<decimal> taskIds = (from a in ctx.TASK_STATUS
-												   where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId
-												   select a.TASK_ID).ToList();
+											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId
+											 select a.TASK_ID).ToList();
 
 					if (taskIds != null && taskIds.Count > 0)
 					{
@@ -1255,17 +1255,17 @@ namespace SQM.Website
 				if (plantIdList == null)
 				{
 					auditschedules = (from i in entities.AUDIT_SCHEDULER
-							  where i.INACTIVE == false
-							  orderby i.AUDIT_SCHEDULER_ID descending
-							  select i).ToList();
+									  where i.INACTIVE == false
+									  orderby i.AUDIT_SCHEDULER_ID descending
+									  select i).ToList();
 				}
 				else
 				{
 					auditschedules = (from i in entities.AUDIT_SCHEDULER
 									  where i.INACTIVE == false
 								  && plantIdList.Contains((decimal)i.PLANT_ID)
-							  orderby i.AUDIT_SCHEDULER_ID descending
-							  select i).ToList();
+									  orderby i.AUDIT_SCHEDULER_ID descending
+									  select i).ToList();
 				}
 			}
 			catch (Exception e)
@@ -1303,9 +1303,9 @@ namespace SQM.Website
 			List<TASK_STATUS> actionList = new List<TASK_STATUS>();
 
 			if (questionId > 0)
-				actionList =  (from t in entities.TASK_STATUS
-											where t.RECORD_TYPE == (int)TaskRecordType.Audit && t.RECORD_ID == auditId && t.RECORD_SUBID == questionId
-											select t).ToList();
+				actionList = (from t in entities.TASK_STATUS
+							  where t.RECORD_TYPE == (int)TaskRecordType.Audit && t.RECORD_ID == auditId && t.RECORD_SUBID == questionId
+							  select t).ToList();
 			else
 				actionList = (from t in entities.TASK_STATUS
 							  where t.RECORD_TYPE == (int)TaskRecordType.Audit && t.RECORD_ID == auditId
