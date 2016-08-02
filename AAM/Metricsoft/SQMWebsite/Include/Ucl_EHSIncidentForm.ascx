@@ -167,8 +167,8 @@
 								</div>
 							</div>
 						</asp:Panel>
-
 					</telerik:RadAjaxPanel>
+
 					<div id="divAttachVid" runat="server" visible="false">
 						<asp:LinkButton ID="lnkAttachVid" runat="server"  CssClass="buttonAttach buttonPopupOpen" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CausesValidation="false" OnClientClick="ChangeClear(null, null);" OnClick="lnkAttachVid_Click" style="margin-left: 10px;"></asp:LinkButton>
 					</div>

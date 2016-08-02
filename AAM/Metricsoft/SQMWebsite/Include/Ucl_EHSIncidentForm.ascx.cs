@@ -171,9 +171,11 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
-				if (uclContainment.Visible == true || uclRootCause.Visible == true || uclAction.Visible == true || uclApproval.Visible == true  || uclAlert.Visible == true)
+				string senderControl = Request.Params["__EVENTTARGET"].ToString();
+				if (senderControl.ToLower().Contains("btnsubnav") || uclContainment.Visible == true || uclRootCause.Visible == true || uclCausation.Visible == true || uclAction.Visible == true || uclApproval.Visible == true || uclAlert.Visible == true)
 				{
-					return;
+					if (!senderControl.Contains("btnSubnavSave"))
+						return;
 				}
 
 				LoadHeaderInformation();
@@ -2244,6 +2246,7 @@ namespace SQM.Website
 			if (context == "new")
 			{
 				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
+				divAttachVid.Visible = false;
 				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
 				btnDelete.Visible = false;
 			}
@@ -2371,6 +2374,7 @@ namespace SQM.Website
 			LinkButton btn = (LinkButton)sender;
 
 			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
+			divAttachVid.Visible = false;
 			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
@@ -2396,6 +2400,7 @@ namespace SQM.Website
 			{
 				case "2":
 					lblPageTitle.Text = "Initial Corrective Actions";
+					divAttachVid.Visible = false;
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
 					uclContainment.Visible = divSubnavPage.Visible = true;
