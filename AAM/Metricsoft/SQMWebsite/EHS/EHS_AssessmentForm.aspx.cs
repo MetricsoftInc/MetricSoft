@@ -277,7 +277,7 @@ namespace SQM.Website.EHS
 			int recordType = (int)TaskRecordType.Audit;
 			// before we call the radWindow, we need to update the page?
 			hdnVideoClick.Value = lnk.CommandArgument;
-			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", 0, 0);
+			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "");
 		}
 
 		private void OnVideoUpdate(string cmd)
