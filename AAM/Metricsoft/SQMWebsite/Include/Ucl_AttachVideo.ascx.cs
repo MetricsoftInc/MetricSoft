@@ -182,125 +182,125 @@ namespace SQM.Website
             SessionManager.DocumentContext = staticScope;
         }
 
-        public void BindAttachments(int recordType, string sessionID, decimal recordID, string recordStep, List<ATTACHMENT> attachList)
-        {
-   //         SetAttachmentsScope(recordType, sessionID, recordID, recordStep);
-			//pnlManageVideos.Visible = true;
-   //         foreach (ATTACHMENT attach in attachList)
-   //         {
-   //             LinkButton lnk = new LinkButton();
-   //             lnk.Text = attach.FILE_NAME;
-   //             lnk.ToolTip = attach.FILE_DESC;
-   //             lnk.CssClass = "buttonRefLink";
-   //             lnk.Style.Add("MARGIN-LEFT", "15px");
-   //             lnk.OnClientClick = "Popup('../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID=" + attach.ATTACHMENT_ID.ToString() + "', 'newPage', 800, 600); return false;";
-			//	//  lnk.PostBackUrl = "../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID="+attach.ATTACHMENT_ID.ToString();
-			//	pnlManageVideos.Controls.Add(lnk);
-   //         }
-        }
+   //     public void BindAttachments(int recordType, string sessionID, decimal recordID, string recordStep, List<ATTACHMENT> attachList)
+   //     {
+   ////         SetAttachmentsScope(recordType, sessionID, recordID, recordStep);
+			////pnlManageVideos.Visible = true;
+   ////         foreach (ATTACHMENT attach in attachList)
+   ////         {
+   ////             LinkButton lnk = new LinkButton();
+   ////             lnk.Text = attach.FILE_NAME;
+   ////             lnk.ToolTip = attach.FILE_DESC;
+   ////             lnk.CssClass = "buttonRefLink";
+   ////             lnk.Style.Add("MARGIN-LEFT", "15px");
+   ////             lnk.OnClientClick = "Popup('../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID=" + attach.ATTACHMENT_ID.ToString() + "', 'newPage', 800, 600); return false;";
+			////	//  lnk.PostBackUrl = "../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID="+attach.ATTACHMENT_ID.ToString();
+			////	pnlManageVideos.Controls.Add(lnk);
+   ////         }
+   //     }
 
-        public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum)
-        {
-            return BindListAttachment(attachList, recordStep, attachNum, true);
-        }
+        //public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum)
+        //{
+        //    return BindListAttachment(attachList, recordStep, attachNum, true);
+        //}
 
-        public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum, bool scrollEnabled)
-        {
-            int count = 0;
-            //List<ATTACHMENT> tempList = new List<ATTACHMENT>();
+        //public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum, bool scrollEnabled)
+        //{
+        //    int count = 0;
+        //    //List<ATTACHMENT> tempList = new List<ATTACHMENT>();
 
-            //if (attachNum == 0)
-            //{
-            //    tempList.AddRange(attachList.Where(a => a.RECORD_STEP == recordStep).ToList());
-            //    if ((count = tempList.Count) > 0)
-            //    {
-            //        if (scrollEnabled)
-            //        {
-            //            rptListAttachment.DataSource = attachList;
-            //            rptListAttachment.DataBind();
-            //            pnlListAttachment.Visible = true;
-            //        }
-            //        else
-            //        {
-            //            rptAttachmentsSmall.DataSource = attachList;
-            //            rptAttachmentsSmall.DataBind();
-            //            pnlDisplayAttachmentsSmall.Visible = true;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (attachNum == 1)
-            //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).FirstOrDefault());
-            //    else
-            //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).LastOrDefault());
+        //    //if (attachNum == 0)
+        //    //{
+        //    //    tempList.AddRange(attachList.Where(a => a.RECORD_STEP == recordStep).ToList());
+        //    //    if ((count = tempList.Count) > 0)
+        //    //    {
+        //    //        if (scrollEnabled)
+        //    //        {
+        //    //            rptListAttachment.DataSource = attachList;
+        //    //            rptListAttachment.DataBind();
+        //    //            pnlListAttachment.Visible = true;
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            rptAttachmentsSmall.DataSource = attachList;
+        //    //            rptAttachmentsSmall.DataBind();
+        //    //            pnlDisplayAttachmentsSmall.Visible = true;
+        //    //        }
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    if (attachNum == 1)
+        //    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).FirstOrDefault());
+        //    //    else
+        //    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).LastOrDefault());
 
-            //    if (tempList.Count > 0 && tempList[0] != null)
-            //    {
-            //        if (scrollEnabled)
-            //        {
-            //            rptListAttachment.DataSource = tempList;
-            //            rptListAttachment.DataBind();
-            //            pnlListAttachment.Visible = true;
-            //        }
-            //        else
-            //        {
-            //            rptAttachmentsSmall.DataSource = tempList;
-            //            rptAttachmentsSmall.DataBind();
-            //            pnlDisplayAttachmentsSmall.Visible = true;
-            //        }
-            //        count = 1;
-            //    }
-            //}
+        //    //    if (tempList.Count > 0 && tempList[0] != null)
+        //    //    {
+        //    //        if (scrollEnabled)
+        //    //        {
+        //    //            rptListAttachment.DataSource = tempList;
+        //    //            rptListAttachment.DataBind();
+        //    //            pnlListAttachment.Visible = true;
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            rptAttachmentsSmall.DataSource = tempList;
+        //    //            rptAttachmentsSmall.DataBind();
+        //    //            pnlDisplayAttachmentsSmall.Visible = true;
+        //    //        }
+        //    //        count = 1;
+        //    //    }
+        //    //}
 
-            //if (scrollEnabled &&  count < 2)
-            //    pnlListAttachment.Attributes.Remove("Class");
+        //    //if (scrollEnabled &&  count < 2)
+        //    //    pnlListAttachment.Attributes.Remove("Class");
 
-            return count;
-        }
+        //    return count;
+        //}
 
-        public int BindDisplayAttachments(int recordType, decimal recordID, string recordStep, decimal displayType)
-        {
-            int fileCount = 0;
+   //     public int BindDisplayAttachments(int recordType, decimal recordID, string recordStep, decimal displayType)
+   //     {
+   //         int fileCount = 0;
 
-            //try
-            //{
-            //    var entities = new PSsqmEntities();
-            //    List<ATTACHMENT> attachList = (from a in entities.ATTACHMENT
-            //                 where
-            //                    (a.RECORD_TYPE == recordType && a.RECORD_ID == recordID) &&  (string.IsNullOrEmpty(a.RECORD_STEP)  ||  a.RECORD_STEP == recordStep) 
-            //                 orderby a.RECORD_TYPE, a.FILE_NAME
-            //                 select a).ToList();
+			//try
+			//{
+			//	var entities = new PSsqmEntities();
+			//	List<VIDEO> attachList = (from a in entities.VIDEO
+			//								   where
+			//									  (a.SOURCE_TYPE == recordType && a.SOURCE_ID == recordID) && (string.IsNullOrEmpty(a.SOURCE_STEP) || a.SOURCE_STEP == recordStep)
+			//								   orderby a.SOURCE_TYPE, a.FILE_NAME
+			//								   select a).ToList();
 
 
-            //    if (displayType == 0)
-            //    {
-            //        if ((fileCount=attachList.Count) > 0)
-            //        {
-            //            rptAttachments.DataSource = attachList;
-            //            rptAttachments.DataBind();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if ((fileCount = attachList.Where(f => f.DISPLAY_TYPE == displayType).Count()) > 0)
-            //        {
-            //            rptAttachments.DataSource = attachList.Where(f => f.DISPLAY_TYPE == displayType).ToList();
-            //            rptAttachments.DataBind();
-            //        }
-            //    }
-            //}
+			//	//if (displayType == 0)
+			//	//{
+			//		if ((fileCount = attachList.Count) > 0)
+			//		{
+			//			rgFiles.DataSource = attachList;
+			//			rgFiles.DataBind();
+			//		}
+			//	//}
+			//	//else
+			//	//{
+			//	//	if ((fileCount = attachList.Where(f => f. == displayType).Count()) > 0)
+			//	//	{
+			//	//		rgFiles.DataSource = attachList.Where(f => f.DISPLAY_TYPE == displayType).ToList();
+			//	//		rgFiles.DataBind();
+			//	//	}
+			//	//}
+			//}
 
-            //catch (Exception ex)
-            //{
-            //    ;
-            //}
+			//catch (Exception ex)
+			//{
+			//	;
+			//}
 
-            //if (fileCount > 0)
-            //    pnlDisplayAttachments.Visible = true;
+			//if (fileCount > 0)
+			//	pnlListVideo.Visible = true;
 
-            return fileCount;
-        }
+			//return fileCount;
+   //     }
 
         public void rptAttachList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -425,6 +425,7 @@ namespace SQM.Website
 							 RecordStep = a.SOURCE_STEP,
 							 FileName = a.FILE_NAME,
 							 Description = a.DESCRIPTION,
+							 Title = a.TITLE,
 							 Size = a.FILE_SIZE
 						 }).ToList();
 
@@ -443,12 +444,12 @@ namespace SQM.Website
 
 			if (files.Count > 0 && (_recordType == (int)TaskRecordType.Audit || _recordType == (int)TaskRecordType.HealthSafetyIncident))
 			{
-				//pnlListVideo.Visible = true;
+				pnlListVideo.Visible = true;
 				rgFiles.Visible = true;
 			}
 			else
 			{
-				//pnlListVideo.Visible = false;
+				pnlListVideo.Visible = false;
 				rgFiles.Visible = false;
 			}
 			//rgFiles.Visible = (files.Count > 0);
@@ -585,7 +586,17 @@ namespace SQM.Website
 			string filename = Server.MapPath(video.FILE_NAME);
 			int status = MediaVideoMgr.DeleteVideo(videoId, filename);
 
-			this.GetUploadedFiles();
+			//			this.GetUploadedFiles();
+			pnlListVideo.Visible = false;
+			SessionManager.ReturnRecordID = video.VIDEO_ID;
+			SessionManager.ReturnObject = "AddVideo";
+			SessionManager.ReturnStatus = true;
+
+			if (AttachmentEvent != null)
+			{
+				AttachmentEvent("delete");
+			}
+
 		}
 
 		protected void rgFiles_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)

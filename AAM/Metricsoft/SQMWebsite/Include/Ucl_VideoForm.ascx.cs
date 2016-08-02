@@ -170,7 +170,7 @@ namespace SQM.Website
 				dt = (DateTime)videoData.Video.INCIDENT_DT;
 				lblVideoIncidentDate.Text = dt.ToString("MM/dd/yyyy");
 				lblVideoInjuryType.Text = SQMBasePage.GetXLAT(listXLAT, "INJURY_TYPE", videoData.Video.INJURY_TYPES).DESCRIPTION; // for now we assume only one
-				lblVideoBodyPart.Text = SQMBasePage.GetXLAT(listXLAT, "INJURY_PART", videoData.Video.INJURY_TYPES).DESCRIPTION; // for now we assume only one
+				lblVideoBodyPart.Text = SQMBasePage.GetXLAT(listXLAT, "INJURY_PART", videoData.Video.BODY_PARTS).DESCRIPTION; // for now we assume only one
 
 				tbTitle.Text = videoData.Video.TITLE;
 				tbDescription.Text = videoData.Video.DESCRIPTION;

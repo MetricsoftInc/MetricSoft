@@ -49,24 +49,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.ImageButton imbVideo;
         
         /// <summary>
-        /// pnlListVideo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlListVideo;
-        
-        /// <summary>
-        /// rgFiles control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgFiles;
-        
-        /// <summary>
         /// winManageVideos control.
         /// </summary>
         /// <remarks>
@@ -92,6 +74,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUpload;
+        
+        /// <summary>
+        /// pnlListVideo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlListVideo;
+        
+        /// <summary>
+        /// rgFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgFiles;
         
         /// <summary>
         /// dmFromDate control.

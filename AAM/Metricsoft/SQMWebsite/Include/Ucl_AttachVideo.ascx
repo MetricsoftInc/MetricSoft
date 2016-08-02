@@ -17,42 +17,42 @@
         <asp:ImageButton ID="imbVideo" runat="server" tooltip="add or view videos" ImageUrl="~/images/attach.png"  OnClientClick="PopupCenter('../Shared/Shared_Attach.aspx', 'newPage', 800, 600);  return false;" />
 </asp:Panel>
 
-<asp:Panel ID="pnlListVideo" runat="server" class="listingImageContainerTop" Visible="false">
-	<telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_DeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
-		MasterTableView-BorderColor="LightGray" HeaderStyle-Font-Size="11px" MasterTableView-BorderWidth="0" MasterTableView-Font-Size="11px" MasterTableView-ForeColor="#444444">
-		<MasterTableView DataKeyNames="VideoId" Width="100%" AutoGenerateColumns="False">
-			<Columns>
-				<telerik:GridTemplateColumn UniqueName="FileNameColumn" HeaderText="File" HeaderStyle-Width="100">
-					<ItemTemplate>
-						<div class="rfeFileExtension <%# GetFileExtension(DataBinder.Eval(Container.DataItem, "FileName").ToString().ToLower()) %>">
-							<a href="/Shared/FileHandler.ashx?DOC=a&DOC_ID=<%# DataBinder.Eval(Container.DataItem, "VideoId").ToString() %>&FILE_NAME=<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>"
-								style="text-decoration: underline;" target="_blank">
-								<asp:Literal ID="ltrFileName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>' />
-							</a>
-						</div>
-					</ItemTemplate>
-				</telerik:GridTemplateColumn>
-				<telerik:GridBoundColumn UniqueName="DescriptionColumn" DataField="Description" HeaderText="<%$ Resources:LocalizedText, Description %>">
-				</telerik:GridBoundColumn>
-				<telerik:GridBoundColumn UniqueName="SizeColumn" DataField="Size" HeaderText="<%$ Resources:LocalizedText, Size %>" DataFormatString="{0:n0} KB">
-				</telerik:GridBoundColumn>
-				<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="LinkButton" ConfirmTitle="<%$ Resources:LocalizedText, Delete %>"
-					ConfirmText="Delete Video - Are You Sure?" CommandName="Delete" Text="<%$ Resources:LocalizedText, Delete %>"
-					ItemStyle-Font-Underline="true">
-				</telerik:GridButtonColumn>
-			</Columns>
-		</MasterTableView>
-		<ClientSettings EnableAlternatingItems="false"></ClientSettings>
-	</telerik:RadGrid>
-</asp:Panel>
-
 <telerik:RadWindow runat="server" ID="winManageVideos" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="575px" Width="500px" Title="Manage Videos" Behavior="Close, Move">
 	<ContentTemplate>
 		<div style="margin: 5px;">
 			<asp:Label ID="lblManageVideos" runat="server" CssClass="prompt"></asp:Label>
 			<div id="divUpload" runat="server" style="margin-top: 5px;">
 				<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoUploadInstruction %>"></asp:Literal>
-				<br /><br />
+				<br />
+				<asp:Panel ID="pnlListVideo" runat="server" class="listingImageContainerTop" Visible="false" Width="100%">
+					<telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_DeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
+						MasterTableView-BorderColor="LightGray" HeaderStyle-Font-Size="11px" MasterTableView-BorderWidth="0" MasterTableView-Font-Size="11px" MasterTableView-ForeColor="#444444">
+						<MasterTableView DataKeyNames="VideoId" Width="100%" AutoGenerateColumns="False">
+							<Columns>
+								<telerik:GridTemplateColumn UniqueName="FileNameColumn" HeaderText="File" HeaderStyle-Width="100">
+									<ItemTemplate>
+										<div class="rfeFileExtension <%# GetFileExtension(DataBinder.Eval(Container.DataItem, "FileName").ToString().ToLower()) %>">
+											<a href="/Shared/FileHandler.ashx?DOC=v&DOC_ID=<%# DataBinder.Eval(Container.DataItem, "VideoId").ToString() %>&FILE_NAME=<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>"
+												style="text-decoration: underline;" target="_blank">
+												<asp:Literal ID="ltrFileName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>' />
+											</a>
+										</div>
+									</ItemTemplate>
+								</telerik:GridTemplateColumn>
+								<telerik:GridBoundColumn UniqueName="TitleColumn" DataField="Title" HeaderText="<%$ Resources:LocalizedText, Title %>">
+								</telerik:GridBoundColumn>
+								<telerik:GridBoundColumn UniqueName="SizeColumn" DataField="Size" HeaderText="<%$ Resources:LocalizedText, Size %>" DataFormatString="{0:n0} KB">
+								</telerik:GridBoundColumn>
+								<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="LinkButton" ConfirmTitle="<%$ Resources:LocalizedText, Delete %>"
+									ConfirmText="Delete Video - Are You Sure?" CommandName="Delete" Text="<%$ Resources:LocalizedText, Delete %>"
+									ItemStyle-Font-Underline="true">
+								</telerik:GridButtonColumn>
+							</Columns>
+						</MasterTableView>
+						<ClientSettings EnableAlternatingItems="false"></ClientSettings>
+					</telerik:RadGrid>
+				</asp:Panel>
+				<br /><br style="clear: both;" />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDate %>"></asp:Literal></span><br />
 				<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>">

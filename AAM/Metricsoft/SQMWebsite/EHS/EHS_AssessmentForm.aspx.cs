@@ -480,10 +480,15 @@ namespace SQM.Website.EHS
 				LnkAuditAttachment.Text = attachCount == 0 ? Resources.LocalizedText.Attachments : (Resources.LocalizedText.Attachments + " (" + attachCount.ToString() + ")");
 				LnkAuditAttachment.Visible = true;
 
-				LnkAuditVideo.CommandArgument = EditAuditId.ToString() + ",0";
-				attachCount = SQM.Website.Classes.SQMDocumentMgr.GetVideoCountByRecord(50, EditAuditId, "0", "");
-				LnkAuditVideo.Text = attachCount == 0 ? Resources.LocalizedText.Videos : (Resources.LocalizedText.Videos + " (" + attachCount.ToString() + ")");
-				LnkAuditVideo.Visible = true;
+				if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+				{
+					LnkAuditVideo.CommandArgument = EditAuditId.ToString() + ",0";
+					attachCount = SQM.Website.Classes.SQMDocumentMgr.GetVideoCountByRecord(50, EditAuditId, "0", "");
+					LnkAuditVideo.Text = attachCount == 0 ? Resources.LocalizedText.Videos : (Resources.LocalizedText.Videos + " (" + attachCount.ToString() + ")");
+					LnkAuditVideo.Visible = true;
+				}
+				else
+					LnkAuditVideo.Visible = false;
 
 				if (IsEditContext && CurrentStep < 2)
 				{
@@ -1293,8 +1298,14 @@ namespace SQM.Website.EHS
 					buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
 					lnk.Text = buttonText;
 					lnk = (LinkButton)e.Item.FindControl("LnkVideos");
-					buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
-					lnk.Text = buttonText;
+					if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+					{
+						buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
+						lnk.Text = buttonText;
+						lnk.Visible = true;
+					}
+					else
+						lnk.Visible = false;
 
 					var validator = new RequiredFieldValidator();
 					//bool shouldPopulate = ((IsEditContext && !string.IsNullOrEmpty(q.AnswerValue)) || !IsEditContext);
