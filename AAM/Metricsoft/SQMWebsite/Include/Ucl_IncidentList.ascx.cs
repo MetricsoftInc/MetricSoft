@@ -801,8 +801,8 @@ namespace SQM.Website
 					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
 					//string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
                     string uri = "~/";
-					if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
-					{
+					//if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
+					//{
 						if (incidentReportList.Count > 0 &&  !string.IsNullOrEmpty(incidentReportList[0]))
 						{
 							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
@@ -827,7 +827,7 @@ namespace SQM.Website
 							hlk.Text = incidentReportLabelList[2];
 							hlk.Visible = true;
 						}
-					}
+					//}
 				
 					if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
 					{

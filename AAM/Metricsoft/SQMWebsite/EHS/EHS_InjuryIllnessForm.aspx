@@ -9,8 +9,6 @@
 <%@ Register Src="~/Include/Ucl_Export.ascx" TagName="Export" TagPrefix="Ucl" %>
 
 
-<%@ Reference Control="~/Include/Ucl_RadAsyncUpload.ascx" %>
-
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
 	<script type="text/javascript">
 

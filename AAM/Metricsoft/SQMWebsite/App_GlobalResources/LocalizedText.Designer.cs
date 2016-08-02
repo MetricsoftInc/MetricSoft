@@ -1996,6 +1996,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Video Attachments.
+        /// </summary>
+        internal static string VideoAttachments {
+            get {
+                return ResourceManager.GetString("VideoAttachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Video Date.
         /// </summary>
         internal static string VideoDate {

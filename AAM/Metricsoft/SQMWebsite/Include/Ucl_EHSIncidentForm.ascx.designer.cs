@@ -139,24 +139,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlForm;
         
         /// <summary>
-        /// btnSaveReturn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSaveReturn;
-        
-        /// <summary>
-        /// btnSaveContinue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSaveContinue;
-        
-        /// <summary>
         /// divSubnav control.
         /// </summary>
         /// <remarks>
@@ -353,6 +335,33 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
+        
+        /// <summary>
+        /// divAttachVid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAttachVid;
+        
+        /// <summary>
+        /// lnkAttachVid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAttachVid;
+        
+        /// <summary>
+        /// uclAttachVideoWin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_AttachVideo uclAttachVideoWin;
         
         /// <summary>
         /// divIncidentReportForm control.

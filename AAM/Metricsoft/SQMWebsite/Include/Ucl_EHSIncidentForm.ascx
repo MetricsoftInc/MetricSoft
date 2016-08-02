@@ -7,18 +7,19 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="Action" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Alert.ascx" TagName="Alert" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideoWin" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 	function OnEditorClientLoad(editor) {
 		editor.attachEventHandler("ondblclick", function (e) {
-				var sel = editor.getSelection().getParentElement(); //get the currently selected element
-				var href = null;
-				if (sel.tagName === "A") {
-					href = sel.href; //get the href value of the selected link
-					window.open(href, null, "height=500,width=500,status=no,toolbar=no,menubar=no,location=no");
-					return false;
-				}
+			var sel = editor.getSelection().getParentElement(); //get the currently selected element
+			var href = null;
+			if (sel.tagName === "A") {
+				href = sel.href; //get the href value of the selected link
+				window.open(href, null, "height=500,width=500,status=no,toolbar=no,menubar=no,location=no");
+				return false;
 			}
+		}
 		);
 	}
 
@@ -97,7 +98,7 @@
 							<div id="divForm" runat="server" visible="False">
 								<asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
 								</asp:Panel>
-								<table style="width: 100%;">
+		<%--						<table style="width: 100%;">
 									<tr>
 										<td style="width: 33%;">
 											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="False"
@@ -112,7 +113,7 @@
 											</telerik:RadButton>
 										</td>
 									</tr>
-								</table>
+								</table>--%>
 								<div id="divSubnav" runat="server">
 									<div id="divSubnavPage" runat="server" visible="False">
 										<ucl:Containment id="uclContainment" runat="server" Visible="False" />
@@ -132,7 +133,7 @@
 												OnClientClicking="function(sender,args){RadConfirmAction(sender, args, 'Delete this Incident');}" OnClick="btnDelete_Click" CssClass="UseSubmitAction" />
 										</center>
 									</div>
-									<div style="margin: 10px;">
+									<div style="margin-top: 10px;">
 										<center>
 											<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="0" />
@@ -168,6 +169,9 @@
 						</asp:Panel>
 
 					</telerik:RadAjaxPanel>
+					<div id="divAttachVid" runat="server" visible="false">
+						<asp:LinkButton ID="lnkAttachVid" runat="server"  CssClass="buttonAttach buttonPopupOpen" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CausesValidation="false" OnClientClick="ChangeClear(null, null);" OnClick="lnkAttachVid_Click" style="margin-left: 10px;"></asp:LinkButton>
+					</div>
 					<br />
 					<br />
 				</div>
@@ -175,6 +179,8 @@
 		</tr>
 	</table>
 </div>
+
+<Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />
 
 <div id="divIncidentReportForm" runat="server" visible="false">
 

@@ -116,7 +116,6 @@ namespace SQM.Website
 			}
 		}
 
-
 		protected override void FrameworkInitialize()
 		{
 			//String selectedLanguage = "es";

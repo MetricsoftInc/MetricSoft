@@ -82,6 +82,12 @@ namespace SQM.Website
 			set { ViewState["CurrentStep"] = value; }
 		}
 
+		public decimal TempIncidentId
+		{
+			get { return ViewState["TempIncidentId"] == null ? 0 : (decimal)ViewState["TempIncidentId"]; }
+			set { ViewState["TempIncidentId"] = value; }
+		}
+
 		public decimal EditIncidentId
 		{
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
@@ -173,33 +179,8 @@ namespace SQM.Website
 
 		protected override void OnInit(EventArgs e)
 		{
+			//uclAttachWin.AttachmentEvent += OnVideoUpdate;
 			base.OnInit(e);
-
-			//try
-			//{
-			//	RadAjaxManager rajaxmgr = null;
-			//	Control ctl = this.Parent;
-			//	while (true)
-			//	{
-			//		rajaxmgr = (RadAjaxManager)ctl.FindControl("RadAjaxManager1");
-			//		if (rajaxmgr == null)
-			//		{
-			//			ctl = ctl.Parent;
-			//			if (ctl.Parent == null)
-			//			{
-			//				return;
-			//			}
-			//			continue;
-			//		}
-			//		break;
-			//	}
-
-			//	if (rajaxmgr != null)
-			//		rajaxmgr.AjaxSettings.AddAjaxSetting(rsbInvolvedPerson, lbSupervisor);
-			//}
-			//catch
-			//{
-			//}
 		}
 		
 		protected void Page_Load(object sender, EventArgs e)
@@ -265,6 +246,10 @@ namespace SQM.Website
 			}
 		}
 
+		private void OnVideoUpdate(string cmd)
+		{
+		}
+
 		public void InitNewIncident(decimal newTypeID, decimal newLocationID)
 		{
 			if (newTypeID > 0)
@@ -276,6 +261,7 @@ namespace SQM.Website
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
+				TempIncidentId = DateTime.UtcNow.Ticks * -1.0m;
 				IncidentStepCompleted = 0;
 				IsEditContext = false;
 				PopulateInitialForm();
@@ -287,6 +273,7 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
+			TempIncidentId = 0;
 			IncidentStepCompleted = 0;
 			PageMode = PageUseMode.EditEnabled;
 			PopulateInitialForm();
@@ -297,6 +284,7 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
+			TempIncidentId = 0;
 			IncidentStepCompleted = 0;
 			PageMode = PageUseMode.ViewOnly;
 			PopulateInitialForm();
@@ -337,6 +325,11 @@ namespace SQM.Website
 			if (addFields.Contains("employment"))
 			{
 				divEmploymentTenure.Visible = true;
+			}
+
+			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+			{
+				divAttachVid.Visible = true;
 			}
 
 			if (IsEditContext == true)
@@ -516,11 +509,11 @@ namespace SQM.Website
 
 			if (PageMode == PageUseMode.ViewOnly)
 			{
-				pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+				pnlBaseForm.Enabled = btnSubnavSave.Visible = lnkAttachVid.Enabled = btnSubnavSave.Enabled = false;
 			}
 			else
 			{
-				pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
+				pnlBaseForm.Enabled = btnSubnavSave.Visible = lnkAttachVid.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
 			}
 		}
 
@@ -1507,6 +1500,11 @@ namespace SQM.Website
 
 		}
 
+		protected void lnkAttachVid_Click(Object sender, EventArgs e)
+		{
+			uclAttachVideoWin.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, TempIncidentId < 0 ? TempIncidentId : EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this assessment question", "", rddlInjuryType.SelectedValue, rddlBodyPart.SelectedValue);
+		}
+
 		#region Save Methods
 
 
@@ -1537,6 +1535,11 @@ namespace SQM.Website
 
 			entities.SaveChanges();
 			incidentId = newIncident.INCIDENT_ID;
+
+			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+			{
+				EHSIncidentMgr.UpdateIncidentMediaAttachments(entities, TempIncidentId, incidentId);
+			}
 
 			return newIncident;
 		}

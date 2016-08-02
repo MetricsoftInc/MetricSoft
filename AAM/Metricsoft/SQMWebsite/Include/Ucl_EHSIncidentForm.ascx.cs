@@ -77,6 +77,12 @@ namespace SQM.Website
 			set { ViewState["CurrentSubnav"] = value; }
 		}
 
+		public decimal TempIncidentId
+		{
+			get { return ViewState["TempIncidentId"] == null ? 0 : (decimal)ViewState["TempIncidentId"]; }
+			set { ViewState["TempIncidentId"] = value; }
+		}
+
 		public decimal EditIncidentId
 		{
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
@@ -153,7 +159,7 @@ namespace SQM.Website
 			controlQuestionChanged = false;
 
 			ahReturn.HRef = "/EHS/EHS_Incidents.aspx";
-			btnSaveReturn.Visible = btnSaveContinue.Visible = false;
+			//btnSaveReturn.Visible = btnSaveContinue.Visible = false;
 
 			var sourceId = Page.Request[Page.postEventSourceID];
 			if (sourceId != null && (sourceId.EndsWith("btnSaveContinue") || sourceId.EndsWith("btnSaveReturn")))
@@ -250,14 +256,20 @@ namespace SQM.Website
 			//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
 			lblResults.Visible = false;
 
+			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+			{
+				divAttachVid.Visible = true;
+			}
+
 			if (PageMode == PageUseMode.ViewOnly)
 			{
-				pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+				pnlForm.Enabled = lnkAttachVid.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
 			}
 			else
 			{
-				pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+				pnlForm.Enabled = btnSubnavSave.Visible = lnkAttachVid.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
 			}
+
 
 			questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
@@ -772,7 +784,7 @@ namespace SQM.Website
 			}
 
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
-			pnlForm.Controls.Add(new LiteralControl("<br/><br/>")); { }
+			pnlForm.Controls.Add(new LiteralControl("<br/>")); { }
 
 			UpdateAnswersFromForm();
 
@@ -815,8 +827,8 @@ namespace SQM.Website
 				pnlForm.Controls.Add(new LiteralControl("<br/>"));
 				pnlForm.Controls.Add(preventionLocationForm);
 				pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
-				btnSaveReturn.Visible = false;
-				btnSaveContinue.Visible = false;
+				//btnSaveReturn.Visible = false;
+				//btnSaveContinue.Visible = false;
 				return;
 			}
 
@@ -1272,7 +1284,7 @@ namespace SQM.Website
 			}
 
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
-			pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+			pnlForm.Controls.Add(new LiteralControl("<br/>"));
 
 			UpdateAnswersFromForm();
 
@@ -1299,7 +1311,7 @@ namespace SQM.Website
 		void UpdateButtonText()
 		{
 
-			btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
+			//btnSaveReturn.Text = Resources.LocalizedText.SaveAndReturn;
 
 			int chInt = (int)EHSQuestionId.Create8D;
 			string chString = chInt.ToString();
@@ -1307,17 +1319,21 @@ namespace SQM.Website
 
 			if (create8dCh != null && create8dCh.Checked == true)
 			{
+				/*
 				if (IsEditContext)
 					btnSaveContinue.Text = "Save & Edit 8D";
 				else
 					btnSaveContinue.Text = "Save & Create 8D";
+				*/
 			}
 			else
 			{
+				/*
 				if (IsEditContext)
 					btnSaveContinue.Text = "Save & Edit Report";
 				else
 					btnSaveContinue.Text = Resources.LocalizedText.SaveAndCreateReport;
+			*/
 			}
 
 			if (IsEditContext)
@@ -1387,6 +1403,10 @@ namespace SQM.Website
 			}
 		}
 
+		protected void lnkAttachVid_Click(Object sender, EventArgs e)
+		{
+			uclAttachVideoWin.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, TempIncidentId < 0 ? TempIncidentId : EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "");
+		}
 
 		void UpdateClosedQuestions()
 		{
@@ -1734,6 +1754,7 @@ namespace SQM.Website
 				SelectedTypeId = Convert.ToDecimal(newTypeID);
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
+				TempIncidentId = DateTime.UtcNow.Ticks * -1.0m;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;
 				IsEditContext = false;
@@ -1744,6 +1765,7 @@ namespace SQM.Website
 		public void BindIncident(decimal incidentID)
 		{
 			IsEditContext = true;
+			TempIncidentId = 0;
 			EditIncidentId = incidentID;
 			PageMode = PageUseMode.EditEnabled;
 			IncidentStepCompleted = 0;
@@ -1753,6 +1775,7 @@ namespace SQM.Website
 		public void BindIncidentAlert(decimal incidentID)
 		{
 			IsEditContext = true;
+			TempIncidentId = 0;
 			EditIncidentId = incidentID;
 			PageMode = PageUseMode.ViewOnly;
 			IncidentStepCompleted = 0;
@@ -1800,8 +1823,8 @@ namespace SQM.Website
 				divForm.Visible = false;
 				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
-				btnSaveReturn.Visible = false;
-				btnSaveContinue.Visible = false;
+				//btnSaveReturn.Visible = false;
+				//btnSaveContinue.Visible = false;
 				btnDelete.Visible = false;
 				lblResults.Visible = true;
 				int delStatus = EHSIncidentMgr.DeleteIncident(EditIncidentId);
@@ -1826,8 +1849,8 @@ namespace SQM.Website
 				//divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
 				pnlAddEdit.Visible = false;
-				btnSaveReturn.Visible = false;
-				btnSaveContinue.Visible = false;
+				//btnSaveReturn.Visible = false;
+				//btnSaveContinue.Visible = false;
 
 				RadCodeBlock rcbWarnNavigate = (RadCodeBlock)this.Parent.Parent.FindControl("rcbWarnNavigate");
 				if (rcbWarnNavigate != null)
@@ -2093,6 +2116,11 @@ namespace SQM.Website
 			entities.AddToINCIDENT(newIncident);
 			entities.SaveChanges();
 			incidentId = newIncident.INCIDENT_ID;
+
+			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+			{
+				EHSIncidentMgr.UpdateIncidentMediaAttachments(entities, TempIncidentId, incidentId);
+			}
 
 			return newIncident;
 		}

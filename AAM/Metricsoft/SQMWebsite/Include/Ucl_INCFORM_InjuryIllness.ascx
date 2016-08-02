@@ -11,6 +11,7 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Alert.ascx" TagName="INCFORMAlert" TagPrefix="Ucl" %>
 
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideoWin" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_RadScriptBlock.ascx" TagName="RadScript" TagPrefix="Ucl" %>
 
 
@@ -817,11 +818,12 @@
 				</div>
 			</div>
 		</telerik:RadAjaxPanel>
-
+	</div
+	<div id="divAttachVid" runat="server" visible="false">
+		<br />
+		<asp:LinkButton ID="lnkAttachVid" runat="server"  CssClass="buttonAttach buttonPopupOpen" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CausesValidation="false" OnClientClick="ChangeClear(null, null);" OnClick="lnkAttachVid_Click" style="margin: 10px;"></asp:LinkButton>
 	</div>
-
 	<br />
-
 </asp:Panel>
 
 <asp:Panel ID="pnlBaseForm2" Visible="False" runat="server">
@@ -835,6 +837,7 @@
 
 </asp:Panel>
 
+<Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />
 <Ucl:INCFORMLostTimeHist ID="ucllosttime" runat="server" />
 <Ucl:INCFORMContain ID="uclcontain" runat="server" />
 <Ucl:INCFORMRoot5Y ID="uclroot5y" runat="server" />

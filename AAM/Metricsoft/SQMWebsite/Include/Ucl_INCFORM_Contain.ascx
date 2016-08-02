@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_INCFORM_Contain.ascx.cs" Inherits="SQM.Website.Ucl_INCFORM_Contain" %>
+
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 
 <script type="text/javascript">
@@ -125,3 +126,4 @@
         </telerik:RadAjaxPanel>
     </div>
 </asp:Panel>
+

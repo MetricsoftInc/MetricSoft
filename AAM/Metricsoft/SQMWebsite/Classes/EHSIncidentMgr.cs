@@ -1513,6 +1513,15 @@ namespace SQM.Website
 		}
 
 
+		public static int UpdateIncidentMediaAttachments(PSsqmEntities ctx, decimal tempID, decimal incidentID)
+		{
+			int status = 0;
+
+			status = ctx.ExecuteStoreCommand("UPDATE VIDEO SET SOURCE_ID = " + incidentID + " WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+
+			return status;
+		}
+
 		public static int DeleteIncident(decimal incidentId)
 		{
 			int status = 0;

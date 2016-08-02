@@ -852,4 +852,7 @@
   <data name="ReturnToList" xml:space="preserve">
     <value>Return to List</value>
   </data>
+  <data name="VideoAttachments" xml:space="preserve">
+    <value>Video Attachments</value>
+  </data>
 </root>
