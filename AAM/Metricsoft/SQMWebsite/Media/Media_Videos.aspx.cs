@@ -177,7 +177,7 @@ namespace SQM.Website
 					divVideoList.Visible = false;
 					uclVideoForm.Visible = false;
 					recordType = (int)TaskRecordType.Media;
-					uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", 0, 0);
+					uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "");
 
 					//uclVideoForm.Visible = true;
 					//uclVideoForm.IsEditContext = false;
