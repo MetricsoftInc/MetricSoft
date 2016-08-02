@@ -611,6 +611,7 @@ namespace SQM.Website.EHS
 				cbClose.Checked = false;
 				cbClose.Visible = false;
 				LnkAuditAttachment.Visible = false;
+				LnkAuditVideo.Visible = false;
 			}
 		}
 
