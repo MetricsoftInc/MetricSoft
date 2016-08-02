@@ -55,15 +55,15 @@ namespace SQM.Website
 			set { ViewState["RecordStep"] = value; }
 		}
 
-		public int _bodyPart
+		public string _bodyPart
 		{
-			get { return ViewState["BodyPart"] == null ? 0 : (int)ViewState["BodyPart"]; }
+			get { return ViewState["BodyPart"] == null ? "" : (string)ViewState["BodyPart"]; }
 			set { ViewState["BodyPart"] = value; }
 		}
 
-		public int _injuryType
+		public string _injuryType
 		{
-			get { return ViewState["InjuryType"] == null ? 0 : (int)ViewState["InjuryType"]; }
+			get { return ViewState["InjuryType"] == null ? "" : (string)ViewState["InjuryType"]; }
 			set { ViewState["InjuryType"] = value; }
 		}
 
@@ -338,11 +338,11 @@ namespace SQM.Website
 		}
 
 		#region attachwindow
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, int injuryType, int bodyPart)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart)
 		{
 			OpenManageVideosWindow(recordType, recordID, recordStep, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled);
 		}
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, int injuryType, int bodyPart, PageUseMode viewMode)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode)
 		{
 			_recordType = recordType;
 			_recordId = recordID;
@@ -397,14 +397,14 @@ namespace SQM.Website
 				PopulateVideoTypeDropDown();
 			}
 			dmFromDate.SelectedDate = SourceDate;
-			if (_injuryType == 0)
+			if (string.IsNullOrEmpty(_injuryType))
 				ddlInjuryType.SelectedValue = "";
 			else
-				ddlInjuryType.SelectedValue = _injuryType.ToString();
-			if (_bodyPart == 0)
+				ddlInjuryType.SelectedValue = _injuryType;
+			if (string.IsNullOrEmpty(_bodyPart))
 				rdlBodyPart.SelectedValue = "";
 			else
-				rdlBodyPart.SelectedValue = _bodyPart.ToString();
+				rdlBodyPart.SelectedValue = _bodyPart;
 			if (_videoType.Length == 0)
 				ddlVideoType.SelectedValue = "";
 			else
