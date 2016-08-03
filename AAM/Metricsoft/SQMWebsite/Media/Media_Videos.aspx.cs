@@ -340,6 +340,8 @@ namespace SQM.Website
 			}
 
 			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString(), injuryTypes, bodyParts, videoTypes);
+			// we don't want to list any videos that have a negative source id. these could be videos in process or orphaned on the Incident pages
+			videos = videos.Where(q => q.Video.SOURCE_ID >= 0).ToList();
 			uclVideoList.BindVideoListRepeater(videos, "Media");
 			//List<string> statusList = new List<string>();
 
