@@ -183,7 +183,7 @@ namespace SQM.Website
 
 					if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
 					{
-						if (UserContext.GetScopePrivileges(SysScope.media).Count() > 0)
+						if (UserContext.GetMaxScopePrivilege(SysScope.media) <= SysPriv.originate)
 						{
 							RadMenuItem EHSMenu2 = new RadMenuItem(GetMenu("MENU_MEDIA", "0").DESCRIPTION);
 							RadMenu1.Items.Add(EHSMenu2);
