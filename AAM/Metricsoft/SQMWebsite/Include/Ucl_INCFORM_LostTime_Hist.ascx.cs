@@ -150,7 +150,7 @@ namespace SQM.Website
 						IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 
 				}
-				catch { }
+				catch { return; }
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 

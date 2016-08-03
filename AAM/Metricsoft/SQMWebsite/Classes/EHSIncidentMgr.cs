@@ -1517,7 +1517,13 @@ namespace SQM.Website
 		{
 			int status = 0;
 
-			status = ctx.ExecuteStoreCommand("UPDATE VIDEO SET SOURCE_ID = " + incidentID + " WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+			if (incidentID > 0)
+				status = ctx.ExecuteStoreCommand("UPDATE VIDEO SET SOURCE_ID = " + incidentID + " WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+			else
+			{
+				status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID IN (SELECT VIDEO_ID FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString() + ")");
+				status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+			}
 
 			return status;
 		}

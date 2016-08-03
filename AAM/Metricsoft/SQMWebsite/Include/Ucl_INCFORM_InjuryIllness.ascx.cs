@@ -1533,8 +1533,10 @@ namespace SQM.Website
 
 			entities.AddToINCIDENT(newIncident);
 
-			entities.SaveChanges();
-			incidentId = newIncident.INCIDENT_ID;
+			if (entities.SaveChanges() > 0)
+			{
+				incidentId = newIncident.INCIDENT_ID;
+			}
 
 			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
 			{
