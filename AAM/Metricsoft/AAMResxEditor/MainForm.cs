@@ -11,6 +11,8 @@ using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace AAMResxEditor
 {
@@ -445,6 +447,58 @@ namespace AAMResxEditor
 		public bool KeyExists(string key)
 		{
 			return this.strings[this.lblFile.Text].ContainsKey(key);
+		}
+
+		void btnExcelExport_Click(object sender, EventArgs e)
+		{
+			if (this.saveFileDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				var checkedLanguages = this.clbLanguages.CheckedItems.Cast<Language>().ToList();
+				var newFile = new FileInfo(this.saveFileDialog.FileName);
+				if (newFile.Exists)
+					newFile.Delete();
+
+				using (var excel = new ExcelPackage(newFile))
+				{
+					foreach (var file in this.folders)
+					{
+						var ws = excel.Workbook.Worksheets.Add(file.Key);
+
+						ws.Cells["A1"].Value = "Key";
+						ws.Cells["A1"].Style.Font.Bold = true;
+						ws.Cells["A1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+						ws.Cells["A1"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+						int col = 2;
+						foreach (var lang in checkedLanguages)
+						{
+							ws.Cells[1, col].Value = lang.Name;
+							ws.Cells[1, col].Style.Font.Bold = true;
+							ws.Cells[1, col].Style.Fill.PatternType = ExcelFillStyle.Solid;
+							ws.Cells[1, col++].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+						}
+
+						int row = 2;
+						foreach (var stringValues in this.strings[file.Key].OrderBy(v => v.Key))
+						{
+							ws.Cells[row, 1].Value = stringValues.Key;
+							for (int i = 0; i < checkedLanguages.Count; ++i)
+							{
+								ws.Cells[row, i + 2].Style.WrapText = true;
+								if (stringValues.Value.ContainsKey(checkedLanguages[i].Value))
+									ws.Cells[row, i + 2].Value = stringValues.Value[checkedLanguages[i].Value];
+							}
+							++row;
+						}
+
+						ws.Column(1).AutoFit();
+						for (int i = 0; i < checkedLanguages.Count; ++i)
+							ws.Column(i + 2).Width = 100;
+					}
+					excel.Save();
+				}
+
+				MessageBox.Show(this, $"Excel file was created at {this.saveFileDialog.FileName}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+			}
 		}
 	}
 }

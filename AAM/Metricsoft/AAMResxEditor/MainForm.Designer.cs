@@ -40,17 +40,19 @@
 			this.lblLanguageFile = new System.Windows.Forms.Label();
 			this.tlpStrings = new System.Windows.Forms.TableLayoutPanel();
 			this.lblFile = new System.Windows.Forms.Label();
-			this.btnAddNewValues = new System.Windows.Forms.Button();
 			this.tlpCopy = new System.Windows.Forms.TableLayoutPanel();
 			this.btnCopyAll = new System.Windows.Forms.Button();
 			this.cbCopyFrom = new System.Windows.Forms.ComboBox();
 			this.lblTo = new System.Windows.Forms.Label();
 			this.cbCopyTo = new System.Windows.Forms.ComboBox();
 			this.btnCopyMissing = new System.Windows.Forms.Button();
+			this.tlpAddNewValues = new System.Windows.Forms.TableLayoutPanel();
+			this.btnAddNewValues = new System.Windows.Forms.Button();
+			this.btnAddNewValuesDev = new System.Windows.Forms.Button();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnAddNewFile = new System.Windows.Forms.Button();
-			this.tlpAddNewValues = new System.Windows.Forms.TableLayoutPanel();
-			this.btnAddNewValuesDev = new System.Windows.Forms.Button();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.btnExcelExport = new System.Windows.Forms.Button();
 			this.tlpStrings.SuspendLayout();
 			this.tlpCopy.SuspendLayout();
 			this.tlpAddNewValues.SuspendLayout();
@@ -182,18 +184,6 @@
 			this.lblFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lblFile.Visible = false;
 			// 
-			// btnAddNewValues
-			// 
-			this.btnAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnAddNewValues.Location = new System.Drawing.Point(0, 0);
-			this.btnAddNewValues.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-			this.btnAddNewValues.Name = "btnAddNewValues";
-			this.btnAddNewValues.Size = new System.Drawing.Size(308, 23);
-			this.btnAddNewValues.TabIndex = 1;
-			this.btnAddNewValues.Text = "Add New Value(s)";
-			this.btnAddNewValues.UseVisualStyleBackColor = true;
-			this.btnAddNewValues.Click += new System.EventHandler(this.btnAddNewValues_Click);
-			// 
 			// tlpCopy
 			// 
 			this.tlpCopy.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -271,6 +261,47 @@
 			this.btnCopyMissing.UseVisualStyleBackColor = true;
 			this.btnCopyMissing.Click += new System.EventHandler(this.btnCopyMissing_Click);
 			// 
+			// tlpAddNewValues
+			// 
+			this.tlpAddNewValues.ColumnCount = 2;
+			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.Controls.Add(this.btnAddNewValues, 0, 0);
+			this.tlpAddNewValues.Controls.Add(this.btnAddNewValuesDev, 1, 0);
+			this.tlpAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpAddNewValues.Location = new System.Drawing.Point(1, 247);
+			this.tlpAddNewValues.Margin = new System.Windows.Forms.Padding(0);
+			this.tlpAddNewValues.Name = "tlpAddNewValues";
+			this.tlpAddNewValues.RowCount = 1;
+			this.tlpAddNewValues.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpAddNewValues.Size = new System.Drawing.Size(623, 23);
+			this.tlpAddNewValues.TabIndex = 3;
+			this.tlpAddNewValues.Visible = false;
+			// 
+			// btnAddNewValues
+			// 
+			this.btnAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnAddNewValues.Location = new System.Drawing.Point(0, 0);
+			this.btnAddNewValues.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+			this.btnAddNewValues.Name = "btnAddNewValues";
+			this.btnAddNewValues.Size = new System.Drawing.Size(308, 23);
+			this.btnAddNewValues.TabIndex = 1;
+			this.btnAddNewValues.Text = "Add New Value(s)";
+			this.btnAddNewValues.UseVisualStyleBackColor = true;
+			this.btnAddNewValues.Click += new System.EventHandler(this.btnAddNewValues_Click);
+			// 
+			// btnAddNewValuesDev
+			// 
+			this.btnAddNewValuesDev.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnAddNewValuesDev.Location = new System.Drawing.Point(314, 0);
+			this.btnAddNewValuesDev.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+			this.btnAddNewValuesDev.Name = "btnAddNewValuesDev";
+			this.btnAddNewValuesDev.Size = new System.Drawing.Size(309, 23);
+			this.btnAddNewValuesDev.TabIndex = 2;
+			this.btnAddNewValuesDev.Text = "Add New Value(s) [Developer]";
+			this.btnAddNewValuesDev.UseVisualStyleBackColor = true;
+			this.btnAddNewValuesDev.Click += new System.EventHandler(this.btnAddNewValuesDev_Click);
+			// 
 			// btnSave
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -293,40 +324,28 @@
 			this.btnAddNewFile.UseVisualStyleBackColor = true;
 			this.btnAddNewFile.Click += new System.EventHandler(this.btnAddNewFile_Click);
 			// 
-			// tlpAddNewValues
+			// saveFileDialog
 			// 
-			this.tlpAddNewValues.ColumnCount = 2;
-			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpAddNewValues.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpAddNewValues.Controls.Add(this.btnAddNewValues, 0, 0);
-			this.tlpAddNewValues.Controls.Add(this.btnAddNewValuesDev, 1, 0);
-			this.tlpAddNewValues.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tlpAddNewValues.Location = new System.Drawing.Point(1, 247);
-			this.tlpAddNewValues.Margin = new System.Windows.Forms.Padding(0);
-			this.tlpAddNewValues.Name = "tlpAddNewValues";
-			this.tlpAddNewValues.RowCount = 1;
-			this.tlpAddNewValues.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpAddNewValues.Size = new System.Drawing.Size(623, 23);
-			this.tlpAddNewValues.TabIndex = 3;
-			this.tlpAddNewValues.Visible = false;
+			this.saveFileDialog.DefaultExt = "xlsx";
+			this.saveFileDialog.Filter = "Excel files|*.xlsx|All files|*.*";
 			// 
-			// btnAddNewValuesDev
+			// btnExcelExport
 			// 
-			this.btnAddNewValuesDev.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnAddNewValuesDev.Location = new System.Drawing.Point(314, 0);
-			this.btnAddNewValuesDev.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-			this.btnAddNewValuesDev.Name = "btnAddNewValuesDev";
-			this.btnAddNewValuesDev.Size = new System.Drawing.Size(309, 23);
-			this.btnAddNewValuesDev.TabIndex = 2;
-			this.btnAddNewValuesDev.Text = "Add New Value(s) [Developer]";
-			this.btnAddNewValuesDev.UseVisualStyleBackColor = true;
-			this.btnAddNewValuesDev.Click += new System.EventHandler(this.btnAddNewValuesDev_Click);
+			this.btnExcelExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnExcelExport.Location = new System.Drawing.Point(662, 385);
+			this.btnExcelExport.Name = "btnExcelExport";
+			this.btnExcelExport.Size = new System.Drawing.Size(100, 23);
+			this.btnExcelExport.TabIndex = 22;
+			this.btnExcelExport.Text = "Export to Excel";
+			this.btnExcelExport.UseVisualStyleBackColor = true;
+			this.btnExcelExport.Click += new System.EventHandler(this.btnExcelExport_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(855, 420);
+			this.Controls.Add(this.btnExcelExport);
 			this.Controls.Add(this.btnAddNewFile);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.tlpStrings);
@@ -339,7 +358,7 @@
 			this.Controls.Add(this.btnSearchFolder);
 			this.Controls.Add(this.tbAAMProject);
 			this.Controls.Add(this.lblAAMProject);
-			this.MinimumSize = new System.Drawing.Size(871, 458);
+			this.MinimumSize = new System.Drawing.Size(871, 459);
 			this.Name = "MainForm";
 			this.Text = "AAM Resx Editor";
 			this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -378,6 +397,8 @@
 		private System.Windows.Forms.Button btnAddNewFile;
 		private System.Windows.Forms.TableLayoutPanel tlpAddNewValues;
 		private System.Windows.Forms.Button btnAddNewValuesDev;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog;
+		private System.Windows.Forms.Button btnExcelExport;
 	}
 }
 
