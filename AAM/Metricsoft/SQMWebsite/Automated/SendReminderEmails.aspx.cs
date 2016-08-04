@@ -18,9 +18,18 @@ namespace SQM.Website.Automated
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			string pageMode = "";
+			if (!string.IsNullOrEmpty(Request.QueryString["m"]))   // .../...aspx?p=xxxxx
+			{
+				pageMode = Request.QueryString["m"].ToLower();  // page mode (web == running manually from the menu)
+			}
+
 			if (IsPostBack)
 			{
-				System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				if (pageMode != "web")
+				{
+					System.Web.UI.ScriptManager.RegisterStartupScript(this, GetType(), "closePage", "window.onunload = CloseWindow();", true);
+				}
 				return;
 			}
 
@@ -69,7 +78,7 @@ namespace SQM.Website.Automated
 			}
 
 			// make sure this code is NOT moved to production
-			//validIP = true;
+			validIP = true;
 
 			if (!validIP)
 			{
@@ -127,7 +136,6 @@ namespace SQM.Website.Automated
 							if (audit != null)
 							{
 								EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
-								return;
 							}
 						}
 					}

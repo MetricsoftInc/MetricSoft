@@ -61,19 +61,29 @@ namespace SQM.Website
 			
 			//todo: filter notifyList by task status
 
-			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // corp level
-			notifyPersonList.AddRange(SQMModelMgr.SelectPrivgroupPersonList(ParseNotifyGroups(notifyList).ToArray()));
+			try
+			{
+				notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // corp level
+				notifyPersonList.AddRange(SQMModelMgr.SelectPrivgroupPersonList(ParseNotifyGroups(notifyList).ToArray()));
+			}
+			catch { }
 
-			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), (decimal)plant.BUS_ORG_ID, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // BU level
-			notifyPersonList.AddRange(SQMModelMgr.SelectBusOrgPrivgroupPersonList((decimal)plant.BUS_ORG_ID, ParseNotifyGroups(notifyList).ToArray()));
+			try
+			{
+				notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), (decimal)plant.BUS_ORG_ID, null).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // BU level
+				notifyPersonList.AddRange(SQMModelMgr.SelectBusOrgPrivgroupPersonList((decimal)plant.BUS_ORG_ID, ParseNotifyGroups(notifyList).ToArray()));
+			}
+			catch { }
 
-			notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // plant level
-			notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray(), true));
+			try
+			{
+				notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // plant level
+				notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray(), true));
+			}
+			catch { }
 
 			// convert all email addresses to lower case to allow distinct filtering down-stream  (trying to eliminate sending duplicate emails to persons having multiple user id's w/ same email)
 			return notifyPersonList.Select(l => { l.EMAIL = l.EMAIL.ToLower(); return l; }).ToList().GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
-
-			//return notifyPersonList.GroupBy(l => l.PERSON_ID).Select(l => l.First()).ToList();
 		}
 
 		static List<string> ParseNotifyGroups(List<NOTIFYACTION> notifyList)
@@ -273,59 +283,69 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-			// 1st send to the person responsible
-			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
+			try
 			{
-				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.Person);
-				string assignedTo = "";
-				string emailTo = theTaskItem.Person.EMAIL;
-				string actionText = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
-				string emailSubject = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-				string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
-								plant.PLANT_NAME + "<br/>" +
-								incident.ISSUE_TYPE + "<br/>" +
-								"<br/>" +
-								theTask.DETAIL + "<br/>" +
-								"<br/>" +
-								theTask.DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
-								"<br/>" +
-								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+				// 1st send to the person responsible
+				if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
+				{
+					LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.Person);
+					string assignedTo = "";
+					string emailTo = theTaskItem.Person.EMAIL;
+					string actionText = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+					string emailSubject = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+					string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+									plant.PLANT_NAME + "<br/>" +
+									incident.ISSUE_TYPE + "<br/>" +
+									"<br/>" +
+									theTask.DETAIL + "<br/>" +
+									"<br/>" +
+									theTask.DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
-				thread.IsBackground = true;
-				thread.Start();
-				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update", rtn, "");
+					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
+					thread.IsBackground = true;
+					thread.Start();
+					WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update", rtn, "");
+				}
+
+				// send to supervisor if this is an escalation
+				if (theTaskItem.EscalatePerson != null && !string.IsNullOrEmpty(theTaskItem.EscalatePerson.EMAIL))
+				{
+					LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.EscalatePerson);
+					string assignedTo = SQMModelMgr.FormatPersonListItem(theTaskItem.Person, false);
+					string emailTo = theTaskItem.EscalatePerson.EMAIL;
+					string actionText = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+					string emailSubject = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+					string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+									plant.PLANT_NAME + "<br/>" +
+									incident.ISSUE_TYPE + "<br/>" +
+									"<br/>" +
+									theTask.DETAIL + "<br/>" +
+									"<br/>" +
+									theTask.DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
+					thread.IsBackground = true;
+					thread.Start();
+					WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update escalation", rtn, "");
+				}
 			}
 
-			// send to supervisor if this is an escalation
-			if (theTaskItem.EscalatePerson != null && !string.IsNullOrEmpty(theTaskItem.EscalatePerson.EMAIL))
+			catch 
 			{
-				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.EscalatePerson);
-				string assignedTo = SQMModelMgr.FormatPersonListItem(theTaskItem.Person, false);
-				string emailTo = theTaskItem.EscalatePerson.EMAIL;
-				string actionText = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
-				string emailSubject = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-				string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
-								plant.PLANT_NAME + "<br/>" +
-								incident.ISSUE_TYPE + "<br/>" +
-								"<br/>" +
-								theTask.DETAIL + "<br/>" +
-								"<br/>" +
-								theTask.DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
-								"<br/>" +
-								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
-				thread.IsBackground = true;
-				thread.Start();
-				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task status update escalation", rtn, "");
+				TaskItem erritem = theTaskItem;
+				INCIDENT errincident = incident;
+				bool er = true;
 			}
 
 			return status;

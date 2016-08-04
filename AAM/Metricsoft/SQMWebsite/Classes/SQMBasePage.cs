@@ -1298,7 +1298,10 @@ namespace SQM.Website
 			if (xlat == null)
 			{
 				if ((xlat = xlatList.Where(l => l.XLAT_GROUP == xlatGroup && l.XLAT_CODE == xlatCode && (string.IsNullOrEmpty(language) || l.XLAT_LANGUAGE == "en")).FirstOrDefault()) == null)
-				xlat = new XLAT();
+				{
+					xlat = new XLAT();
+					xlat.DESCRIPTION = xlat.DESCRIPTION_SHORT = "";
+				}
 			}
 			return xlat;
 		}
