@@ -130,6 +130,15 @@ namespace SQM.Website.Automated
 								}
 							}
 						}
+						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
+						{
+							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+							if (incident != null)
+							{
+								// notify assigned person and escalation person if over-over due
+								EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+							}
+						}
 						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)
 						{
 							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);

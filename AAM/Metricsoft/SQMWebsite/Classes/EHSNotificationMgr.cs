@@ -343,9 +343,7 @@ namespace SQM.Website
 
 			catch 
 			{
-				TaskItem erritem = theTaskItem;
-				INCIDENT errincident = incident;
-				bool er = true;
+				;
 			}
 
 			return status;
@@ -663,59 +661,65 @@ namespace SQM.Website
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
 			// 1st send to the person responsible
-			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
+			try
 			{
-				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.Person);
-				string assignedTo = "";
-				string emailTo = theTaskItem.Person.EMAIL;
-				string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
-				string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-				string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
-								plant.PLANT_NAME + "<br/>" +
-								incident.ISSUE_TYPE + "<br/>" +
-								"<br/>" +
-								theTask.DETAIL + "<br/>" +
-								"<br/>" +
-								theTask.DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
-								"<br/>" +
-								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+				if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
+				{
+					LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.Person);
+					string assignedTo = "";
+					string emailTo = theTaskItem.Person.EMAIL;
+					string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+					string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+					string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)theTaskItem.Taskstatus).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+									plant.PLANT_NAME + "<br/>" +
+									incident.ISSUE_TYPE + "<br/>" +
+									"<br/>" +
+									theTask.DETAIL + "<br/>" +
+									"<br/>" +
+									theTask.DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
-				// rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null);
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
-				thread.IsBackground = true;
-				thread.Start();
-				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task update", rtn, "");
+					// rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null);
+					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
+					thread.IsBackground = true;
+					thread.Start();
+					WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task update", rtn, "");
+				}
+
+				// send to supervisor if this is an escalation
+				if (theTaskItem.EscalatePerson != null && !string.IsNullOrEmpty(theTaskItem.EscalatePerson.EMAIL))
+				{
+					LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.EscalatePerson);
+					string assignedTo = SQMModelMgr.FormatPersonListItem(theTaskItem.Person, false);
+					string emailTo = theTaskItem.EscalatePerson.EMAIL;
+					string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
+					string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
+					string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+									plant.PLANT_NAME + "<br/>" +
+									incident.ISSUE_TYPE + "<br/>" +
+									"<br/>" +
+									theTask.DETAIL + "<br/>" +
+									"<br/>" +
+									theTask.DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
+					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
+					thread.IsBackground = true;
+					thread.Start();
+					WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task status escalation", rtn, "");
+				}
 			}
-
-			// send to supervisor if this is an escalation
-			if (theTaskItem.EscalatePerson != null && !string.IsNullOrEmpty(theTaskItem.EscalatePerson.EMAIL))
+			catch
 			{
-				LOCAL_LANGUAGE lang = SQMModelMgr.LookupPersonLanguage(new PSsqmEntities(), theTaskItem.EscalatePerson);
-				string assignedTo = SQMModelMgr.FormatPersonListItem(theTaskItem.Person, false);
-				string emailTo = theTaskItem.EscalatePerson.EMAIL;
-				string actionText = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION;
-				string emailSubject = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", "UPDATE", lang.NLS_LANGUAGE).DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
-				string emailBody = SQMBasePage.GetXLAT(XLATList, "PREVACTION_NOTIFY", ((int)TaskStatus.EscalationLevel1).ToString(), lang.NLS_LANGUAGE).DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Preventative Action ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
-								plant.PLANT_NAME + "<br/>" +
-								incident.ISSUE_TYPE + "<br/>" +
-								"<br/>" +
-								theTask.DETAIL + "<br/>" +
-								"<br/>" +
-								theTask.DESCRIPTION + "<br/>" +
-								"<br/>" +
-								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
-								"<br/>" +
-								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
-				Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
-				thread.IsBackground = true;
-				thread.Start();
-				WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.PreventativeAction, incident.INCIDENT_ID, "preventative action task status escalation", rtn, "");
 			}
 
 			return status;
