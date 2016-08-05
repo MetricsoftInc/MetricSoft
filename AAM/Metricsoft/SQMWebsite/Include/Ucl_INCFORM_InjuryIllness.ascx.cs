@@ -82,12 +82,6 @@ namespace SQM.Website
 			set { ViewState["CurrentStep"] = value; }
 		}
 
-		public decimal TempIncidentId
-		{
-			get { return ViewState["TempIncidentId"] == null ? 0 : (decimal)ViewState["TempIncidentId"]; }
-			set { ViewState["TempIncidentId"] = value; }
-		}
-
 		public decimal EditIncidentId
 		{
 			get { return ViewState["EditIncidentId"] == null ? 0 : (decimal)ViewState["EditIncidentId"]; }
@@ -246,10 +240,6 @@ namespace SQM.Website
 			}
 		}
 
-		private void OnVideoUpdate(string cmd)
-		{
-		}
-
 		public void InitNewIncident(decimal newTypeID, decimal newLocationID)
 		{
 			if (newTypeID > 0)
@@ -261,7 +251,6 @@ namespace SQM.Website
 				SelectedTypeText = EHSIncidentMgr.SelectIncidentType(newTypeID, SessionManager.UserContext.Language.NLS_LANGUAGE).TITLE;
 				CreatePersonId = 0;
 				EditIncidentId = 0;
-				TempIncidentId = DateTime.UtcNow.Ticks * -1.0m;
 				IncidentStepCompleted = 0;
 				IsEditContext = false;
 				PopulateInitialForm();
@@ -273,7 +262,6 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
-			TempIncidentId = 0;
 			IncidentStepCompleted = 0;
 			PageMode = PageUseMode.EditEnabled;
 			PopulateInitialForm();
@@ -284,7 +272,6 @@ namespace SQM.Website
 		{
 			IsEditContext = true;
 			EditIncidentId = incidentID;
-			TempIncidentId = 0;
 			IncidentStepCompleted = 0;
 			PageMode = PageUseMode.ViewOnly;
 			PopulateInitialForm();
@@ -325,11 +312,6 @@ namespace SQM.Website
 			if (addFields.Contains("employment"))
 			{
 				divEmploymentTenure.Visible = true;
-			}
-
-			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
-			{
-				divAttachVid.Visible = true;
 			}
 
 			if (IsEditContext == true)
@@ -509,11 +491,11 @@ namespace SQM.Website
 
 			if (PageMode == PageUseMode.ViewOnly)
 			{
-				pnlBaseForm.Enabled = btnSubnavSave.Visible = lnkAttachVid.Enabled = btnSubnavSave.Enabled = false;
+				pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
 			}
 			else
 			{
-				pnlBaseForm.Enabled = btnSubnavSave.Visible = lnkAttachVid.Enabled = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
+				pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
 			}
 		}
 
@@ -1067,15 +1049,15 @@ namespace SQM.Website
 		{
 			if (context == "new")
 			{
-				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;
-				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
+				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
+				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
 				btnSubnavApproval_1.Visible = btnSubnavApproval_2.Visible = btnSubnavApproval_3.Visible = btnSubnavApproval_35.Visible = btnSubnavApproval_4.Visible = false;
 				btnDeleteInc.Visible = false;
 				uploader.SetViewMode(true);
 			}
 			else if (context == "alert")
 			{
-				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
+				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
 				btnSubnavApproval_1.Visible = btnSubnavApproval_2.Visible = btnSubnavApproval_3.Visible = btnSubnavApproval_35.Visible = btnSubnavApproval_4.Visible = false;
 				uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = true;
 				uploader.SetViewMode(false);
@@ -1107,8 +1089,8 @@ namespace SQM.Website
 			}
 			else
 			{
-				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = false;
-				btnSubnavLostTime.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
+				btnSubnavLostTime.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavVideo.Visible = true;
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -1123,6 +1105,15 @@ namespace SQM.Website
 				else
 				{
 					btnSubnavAlert.Visible = false;
+				}
+
+				if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+				{
+					btnSubnavVideo.Visible = true;
+				}
+				else
+				{
+					btnSubnavVideo.Visible = false;
 				}
 				// optional approval steps
 				btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;
@@ -1144,7 +1135,7 @@ namespace SQM.Website
 			int status = 0;
 			bool isEdit = IsEditContext;
 
-			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavContainment.Visible = true;
+			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavContainment.Visible = btnSubnavVideo.Visible = true;
 
 			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
@@ -1225,13 +1216,13 @@ namespace SQM.Website
 		{
 			LinkButton btn = (LinkButton)sender;
 
-			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = false;   //divSubnavPage.Visible =
+			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;  
 			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
+			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = true;
 			btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
-			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = "buttonLink";
+			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
 			btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
 			btnSubnavSave.Visible = btnDeleteInc.Visible = false;
 
@@ -1243,6 +1234,15 @@ namespace SQM.Website
 			else
 			{
 				btnSubnavAlert.Visible = false;
+			}
+
+			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+			{
+				btnSubnavVideo.Visible = true;
+			}
+			else
+			{
+				btnSubnavVideo.Visible = false;
 			}
 
 			lblFormTitle.Text = Resources.LocalizedText.Incident;
@@ -1400,6 +1400,13 @@ namespace SQM.Website
 					uclAlert.Visible = true;
 					uclAlert.PopulateInitialForm(entities);
 					break;
+				case "60":
+					lblFormTitle.Text = Resources.LocalizedText.VideoUpload;
+					uclVideoPanel.Visible = true;
+					btnSubnavVideo.Enabled = false;
+					btnSubnavVideo.CssClass = "buttonLinkDisabled";
+					uclVideoPanel.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "");
+					break;
 				case "0":
 				default:
 					lblFormTitle.Text = Resources.LocalizedText.Incident;
@@ -1500,11 +1507,6 @@ namespace SQM.Website
 
 		}
 
-		protected void lnkAttachVid_Click(Object sender, EventArgs e)
-		{
-			uclAttachVideoWin.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, TempIncidentId < 0 ? TempIncidentId : EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this assessment question", "", rddlInjuryType.SelectedValue, rddlBodyPart.SelectedValue);
-		}
-
 		#region Save Methods
 
 
@@ -1536,11 +1538,6 @@ namespace SQM.Website
 			if (entities.SaveChanges() > 0)
 			{
 				incidentId = newIncident.INCIDENT_ID;
-			}
-
-			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
-			{
-				EHSIncidentMgr.UpdateIncidentMediaAttachments(entities, TempIncidentId, incidentId);
 			}
 
 			return newIncident;

@@ -564,6 +564,7 @@
     <Content Include="Include\Ucl_INCFORM_Alert.ascx" />
     <Content Include="Include\Ucl_VideoForm.ascx" />
     <Content Include="Include\Ucl_VideoList.ascx" />
+    <Content Include="Include\Ucl_AttachVideoPanel.ascx" />
     <Content Include="Login.aspx" />
     <Content Include="images\Problem\Problem_Case.aspx" />
     <Content Include="images\Problem\Problem_Rpt.aspx" />
@@ -2113,6 +2114,13 @@
     </Compile>
     <Compile Include="Include\Ucl_VideoList.ascx.designer.cs">
       <DependentUpon>Ucl_VideoList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Include\Ucl_AttachVideoPanel.ascx.cs">
+      <DependentUpon>Ucl_AttachVideoPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Include\Ucl_AttachVideoPanel.ascx.designer.cs">
+      <DependentUpon>Ucl_AttachVideoPanel.ascx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

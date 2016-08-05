@@ -11,7 +11,7 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Alert.ascx" TagName="INCFORMAlert" TagPrefix="Ucl" %>
 
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
-<%@ Register src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideoWin" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="AttachVideoPanel" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_RadScriptBlock.ascx" TagName="RadScript" TagPrefix="Ucl" %>
 
 
@@ -819,10 +819,6 @@
 			</div>
 		</telerik:RadAjaxPanel>
 	</div
-	<div id="divAttachVid" runat="server" visible="false">
-		<br />
-		<asp:LinkButton ID="lnkAttachVid" runat="server"  CssClass="buttonAttach buttonPopupOpen" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CausesValidation="false" OnClientClick="ChangeClear(null, null);" OnClick="lnkAttachVid_Click" style="margin: 10px;"></asp:LinkButton>
-	</div>
 	<br />
 </asp:Panel>
 
@@ -837,7 +833,6 @@
 
 </asp:Panel>
 
-<Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />
 <Ucl:INCFORMLostTimeHist ID="ucllosttime" runat="server" />
 <Ucl:INCFORMContain ID="uclcontain" runat="server" />
 <Ucl:INCFORMRoot5Y ID="uclroot5y" runat="server" />
@@ -845,6 +840,7 @@
 <Ucl:INCFORMAction ID="uclaction" runat="server" />
 <Ucl:INCFORMApproval ID="uclapproval" runat="server" />
 <Ucl:INCFORMAlert ID="uclAlert" runat="server" />
+<Ucl:AttachVideoPanel id="uclVideoPanel" runat="server" Visible="false"/>
 
 
 <asp:Panel ID="pnlButtons" runat="server">
@@ -871,6 +867,8 @@
 			<center>
 				<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="0" />
+				<asp:LinkButton ID="btnSubnavVideo" runat="server"  Text="<%$ Resources:LocalizedText, VideoUpload %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="true"/>
 				<asp:LinkButton ID="btnSubnavLostTime" runat="server" Text="Lost time History" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="6" meta:resourcekey="btnSubnavLostTimeResource1"/>
 				<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"

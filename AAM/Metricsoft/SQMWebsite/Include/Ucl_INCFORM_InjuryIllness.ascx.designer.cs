@@ -1102,24 +1102,6 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_RadAsyncUpload uploader;
         
         /// <summary>
-        /// divAttachVid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAttachVid;
-        
-        /// <summary>
-        /// lnkAttachVid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkAttachVid;
-        
-        /// <summary>
         /// pnlBaseForm2 control.
         /// </summary>
         /// <remarks>
@@ -1127,15 +1109,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm2;
-        
-        /// <summary>
-        /// uclAttachVideoWin control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_AttachVideo uclAttachVideoWin;
         
         /// <summary>
         /// ucllosttime control.
@@ -1201,6 +1174,15 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_INCFORM_Alert uclAlert;
         
         /// <summary>
+        /// uclVideoPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_AttachVideoPanel uclVideoPanel;
+        
+        /// <summary>
         /// pnlButtons control.
         /// </summary>
         /// <remarks>
@@ -1244,6 +1226,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavIncident;
+        
+        /// <summary>
+        /// btnSubnavVideo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavVideo;
         
         /// <summary>
         /// btnSubnavLostTime control.

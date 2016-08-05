@@ -7,7 +7,7 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Action.ascx" TagName="Action" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Alert.ascx" TagName="Alert" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
-<%@ Register src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideoWin" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="AttachVideoPanel" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 	function OnEditorClientLoad(editor) {
@@ -98,22 +98,6 @@
 							<div id="divForm" runat="server" visible="False">
 								<asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
 								</asp:Panel>
-		<%--						<table style="width: 100%;">
-									<tr>
-										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveReturn" runat="server" Text="<%$ Resources:LocalizedText, SaveAndReturn %>" Visible="False"
-												CssClass="UseSubmitAction" Width="88%" Skin="Metro" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
-												OnClick="btnSaveReturn_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val" CommandArgument ="0" />
-										</td>
-										<td style="width: 33%;">
-											<telerik:RadButton ID="btnSaveContinue" runat="server" Text="<%$ Resources:LocalizedText, SaveAndCreateReport %>" Visible="False" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Saving %>"
-												CssClass="UseSubmitAction metroIconButtonSecondary" Width="88%" Skin="Metro"
-												OnClick="btnSaveContinue_Click" OnClientClicking="StandardConfirm" ValidationGroup="Val">
-												<Icon SecondaryIconUrl="/images/ico-arr-rt-wht.png" />
-											</telerik:RadButton>
-										</td>
-									</tr>
-								</table>--%>
 								<div id="divSubnav" runat="server">
 									<div id="divSubnavPage" runat="server" visible="False">
 										<ucl:Containment id="uclContainment" runat="server" Visible="False" />
@@ -122,6 +106,7 @@
 										<ucl:Action id="uclAction" runat="server" Visible="False"/>
 										<ucl:Approval id="uclApproval" runat="server" Visible="False"/>
 										<Ucl:Alert ID="uclAlert" runat="server" Visible="false" />
+										<Ucl:AttachVideoPanel id="uclVideoPanel" runat="server" Visible="false"/>
 									</div>
 
 									<div>
@@ -137,6 +122,8 @@
 										<center>
 											<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="0" />
+											<asp:LinkButton ID="btnSubnavVideo" runat="server"  Text="<%$ Resources:LocalizedText, VideoUpload %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="true"/>
 											<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
 											<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
@@ -168,10 +155,6 @@
 							</div>
 						</asp:Panel>
 					</telerik:RadAjaxPanel>
-
-					<div id="divAttachVid" runat="server" visible="false">
-						<asp:LinkButton ID="lnkAttachVid" runat="server"  CssClass="buttonAttach buttonPopupOpen" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CausesValidation="false" OnClientClick="ChangeClear(null, null);" OnClick="lnkAttachVid_Click" style="margin-left: 10px;"></asp:LinkButton>
-					</div>
 					<br />
 					<br />
 				</div>
@@ -179,8 +162,6 @@
 		</tr>
 	</table>
 </div>
-
-<Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />
 
 <div id="divIncidentReportForm" runat="server" visible="false">
 

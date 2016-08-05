@@ -10,357 +10,276 @@
 namespace SQM.Website {
     
     
-    public partial class Ucl_EHSIncidentForm {
+    public partial class Ucl_AttachVideoPanel {
         
         /// <summary>
-        /// divIncidentForm control.
+        /// hfTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncidentForm;
+        protected global::System.Web.UI.WebControls.HiddenField hfTitle;
         
         /// <summary>
-        /// hfChangeUpdate control.
+        /// hfDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfChangeUpdate;
+        protected global::System.Web.UI.WebControls.HiddenField hfDesc;
         
         /// <summary>
-        /// divPageBody control.
+        /// pnlManageVideos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPageBody;
+        protected global::System.Web.UI.WebControls.Panel pnlManageVideos;
         
         /// <summary>
-        /// RadAjaxPanel1 control.
+        /// imbVideo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxPanel RadAjaxPanel1;
+        protected global::System.Web.UI.WebControls.ImageButton imbVideo;
         
         /// <summary>
-        /// lblResults control.
+        /// pnlManageAttachVideos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResults;
+        protected global::System.Web.UI.WebControls.Panel pnlManageAttachVideos;
         
         /// <summary>
-        /// pnlAddEdit control.
+        /// lblManageVideos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlAddEdit;
+        protected global::System.Web.UI.WebControls.Label lblManageVideos;
         
         /// <summary>
-        /// pnlIncidentHeader control.
+        /// divUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlIncidentHeader;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUpload;
         
         /// <summary>
-        /// lblAddOrEditIncident control.
+        /// Literal1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAddOrEditIncident;
+        protected global::System.Web.UI.WebControls.Literal Literal1;
         
         /// <summary>
-        /// ahReturn control.
+        /// pnlListVideo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ahReturn;
+        protected global::System.Web.UI.WebControls.Panel pnlListVideo;
         
         /// <summary>
-        /// lblIncidentLocation control.
+        /// rgFiles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIncidentLocation;
+        protected global::Telerik.Web.UI.RadGrid rgFiles;
         
         /// <summary>
-        /// lblIncidentType control.
+        /// pnlAttachVideoBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIncidentType;
+        protected global::System.Web.UI.WebControls.Panel pnlAttachVideoBody;
         
         /// <summary>
-        /// lblPageTitle control.
+        /// Literal2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPageTitle;
+        protected global::System.Web.UI.WebControls.Literal Literal2;
         
         /// <summary>
-        /// divForm control.
+        /// dmFromDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
+        protected global::Telerik.Web.UI.RadDatePicker dmFromDate;
         
         /// <summary>
-        /// pnlForm control.
+        /// Literal3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlForm;
+        protected global::System.Web.UI.WebControls.Literal Literal3;
         
         /// <summary>
-        /// divSubnav control.
+        /// tbTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubnav;
+        protected global::System.Web.UI.WebControls.TextBox tbTitle;
         
         /// <summary>
-        /// divSubnavPage control.
+        /// Literal4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubnavPage;
+        protected global::System.Web.UI.WebControls.Literal Literal4;
         
         /// <summary>
-        /// uclContainment control.
+        /// tbFileDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Contain uclContainment;
+        protected global::System.Web.UI.WebControls.TextBox tbFileDescription;
         
         /// <summary>
-        /// uclRootCause control.
+        /// pnlDisplayArea control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Root5Y uclRootCause;
+        protected global::System.Web.UI.WebControls.Panel pnlDisplayArea;
         
         /// <summary>
-        /// uclCausation control.
+        /// Literal5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Causation uclCausation;
+        protected global::System.Web.UI.WebControls.Literal Literal5;
         
         /// <summary>
-        /// uclAction control.
+        /// ddlVideoType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Action uclAction;
+        protected global::System.Web.UI.WebControls.DropDownList ddlVideoType;
         
         /// <summary>
-        /// uclApproval control.
+        /// Literal6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Approval uclApproval;
+        protected global::System.Web.UI.WebControls.Literal Literal6;
         
         /// <summary>
-        /// uclAlert control.
+        /// ddlInjuryType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Alert uclAlert;
+        protected global::System.Web.UI.WebControls.DropDownList ddlInjuryType;
         
         /// <summary>
-        /// uclVideoPanel control.
+        /// Literal7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_AttachVideoPanel uclVideoPanel;
+        protected global::System.Web.UI.WebControls.Literal Literal7;
         
         /// <summary>
-        /// btnSubnavSave control.
+        /// rdlBodyPart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnSubnavSave;
+        protected global::Telerik.Web.UI.RadDropDownList rdlBodyPart;
         
         /// <summary>
-        /// btnDelete control.
+        /// raUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton btnDelete;
+        protected global::Telerik.Web.UI.RadAsyncUpload raUpload;
         
         /// <summary>
-        /// btnSubnavIncident control.
+        /// hfListId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavIncident;
+        protected global::System.Web.UI.WebControls.HiddenField hfListId;
         
         /// <summary>
-        /// btnSubnavVideo control.
+        /// hfDescriptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavVideo;
+        protected global::System.Web.UI.WebControls.HiddenField hfDescriptions;
         
         /// <summary>
-        /// btnSubnavContainment control.
+        /// hfMode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavContainment;
+        protected global::System.Web.UI.WebControls.HiddenField hfMode;
         
         /// <summary>
-        /// btnSubnavRootCause control.
+        /// btnSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavRootCause;
+        protected global::Telerik.Web.UI.RadButton btnSave;
         
         /// <summary>
-        /// btnSubnavCausation control.
+        /// btnCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavCausation;
-        
-        /// <summary>
-        /// btnSubnavAction control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAction;
-        
-        /// <summary>
-        /// btnSubnavAlert control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAlert;
-        
-        /// <summary>
-        /// btnSubnavApproval_1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_1;
-        
-        /// <summary>
-        /// btnSubnavApproval_2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_2;
-        
-        /// <summary>
-        /// btnSubnavApproval_3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_3;
-        
-        /// <summary>
-        /// btnSubnavApproval_35 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_35;
-        
-        /// <summary>
-        /// btnSubnavApproval_4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_4;
-        
-        /// <summary>
-        /// btnSubnavApproval control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
-        
-        /// <summary>
-        /// divIncidentReportForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncidentReportForm;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
     }
 }
