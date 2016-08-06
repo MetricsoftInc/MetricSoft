@@ -185,126 +185,6 @@ namespace SQM.Website
 			SessionManager.DocumentContext = staticScope;
 		}
 
-		//     public void BindAttachments(int recordType, string sessionID, decimal recordID, string recordStep, List<ATTACHMENT> attachList)
-		//     {
-		////         SetAttachmentsScope(recordType, sessionID, recordID, recordStep);
-		////pnlManageVideos.Visible = true;
-		////         foreach (ATTACHMENT attach in attachList)
-		////         {
-		////             LinkButton lnk = new LinkButton();
-		////             lnk.Text = attach.FILE_NAME;
-		////             lnk.ToolTip = attach.FILE_DESC;
-		////             lnk.CssClass = "buttonRefLink";
-		////             lnk.Style.Add("MARGIN-LEFT", "15px");
-		////             lnk.OnClientClick = "Popup('../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID=" + attach.ATTACHMENT_ID.ToString() + "', 'newPage', 800, 600); return false;";
-		////	//  lnk.PostBackUrl = "../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID="+attach.ATTACHMENT_ID.ToString();
-		////	pnlManageVideos.Controls.Add(lnk);
-		////         }
-		//     }
-
-		//public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum)
-		//{
-		//    return BindListAttachment(attachList, recordStep, attachNum, true);
-		//}
-
-		//public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum, bool scrollEnabled)
-		//{
-		//    int count = 0;
-		//    //List<ATTACHMENT> tempList = new List<ATTACHMENT>();
-
-		//    //if (attachNum == 0)
-		//    //{
-		//    //    tempList.AddRange(attachList.Where(a => a.RECORD_STEP == recordStep).ToList());
-		//    //    if ((count = tempList.Count) > 0)
-		//    //    {
-		//    //        if (scrollEnabled)
-		//    //        {
-		//    //            rptListAttachment.DataSource = attachList;
-		//    //            rptListAttachment.DataBind();
-		//    //            pnlListAttachment.Visible = true;
-		//    //        }
-		//    //        else
-		//    //        {
-		//    //            rptAttachmentsSmall.DataSource = attachList;
-		//    //            rptAttachmentsSmall.DataBind();
-		//    //            pnlDisplayAttachmentsSmall.Visible = true;
-		//    //        }
-		//    //    }
-		//    //}
-		//    //else
-		//    //{
-		//    //    if (attachNum == 1)
-		//    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).FirstOrDefault());
-		//    //    else
-		//    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).LastOrDefault());
-
-		//    //    if (tempList.Count > 0 && tempList[0] != null)
-		//    //    {
-		//    //        if (scrollEnabled)
-		//    //        {
-		//    //            rptListAttachment.DataSource = tempList;
-		//    //            rptListAttachment.DataBind();
-		//    //            pnlListAttachment.Visible = true;
-		//    //        }
-		//    //        else
-		//    //        {
-		//    //            rptAttachmentsSmall.DataSource = tempList;
-		//    //            rptAttachmentsSmall.DataBind();
-		//    //            pnlDisplayAttachmentsSmall.Visible = true;
-		//    //        }
-		//    //        count = 1;
-		//    //    }
-		//    //}
-
-		//    //if (scrollEnabled &&  count < 2)
-		//    //    pnlListAttachment.Attributes.Remove("Class");
-
-		//    return count;
-		//}
-
-		//     public int BindDisplayAttachments(int recordType, decimal recordID, string recordStep, decimal displayType)
-		//     {
-		//         int fileCount = 0;
-
-		//try
-		//{
-		//	var entities = new PSsqmEntities();
-		//	List<VIDEO> attachList = (from a in entities.VIDEO
-		//								   where
-		//									  (a.SOURCE_TYPE == recordType && a.SOURCE_ID == recordID) && (string.IsNullOrEmpty(a.SOURCE_STEP) || a.SOURCE_STEP == recordStep)
-		//								   orderby a.SOURCE_TYPE, a.FILE_NAME
-		//								   select a).ToList();
-
-
-		//	//if (displayType == 0)
-		//	//{
-		//		if ((fileCount = attachList.Count) > 0)
-		//		{
-		//			rgFiles.DataSource = attachList;
-		//			rgFiles.DataBind();
-		//		}
-		//	//}
-		//	//else
-		//	//{
-		//	//	if ((fileCount = attachList.Where(f => f. == displayType).Count()) > 0)
-		//	//	{
-		//	//		rgFiles.DataSource = attachList.Where(f => f.DISPLAY_TYPE == displayType).ToList();
-		//	//		rgFiles.DataBind();
-		//	//	}
-		//	//}
-		//}
-
-		//catch (Exception ex)
-		//{
-		//	;
-		//}
-
-		//if (fileCount > 0)
-		//	pnlListVideo.Visible = true;
-
-		//return fileCount;
-		//     }
-
 		public void rptAttachList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
 		{
 
@@ -366,16 +246,22 @@ namespace SQM.Website
 			if (viewMode == PageUseMode.ViewOnly)
 			{
 				//uclUpload.SetViewMode(false);
+				pnlAttachVideoBody.Enabled = false;
+				raUpload.Enabled = false;
 				btnSave.Visible = false;
+				rgFiles.MasterTableView.GetColumn("DeleteButtonColumn").Visible = false;
 			}
 			else
 			{
+				pnlAttachVideoBody.Enabled = true;
 				btnSave.Visible = true;
 			}
 
 			LoadDefaults();
 
 			GetUploadedFiles();
+
+			tbTitle.Text = tbFileDescription.Text = "";
 
 			lblManageVideos.Text = description;
 			pnlManageAttachVideos.Visible = true;
@@ -456,12 +342,13 @@ namespace SQM.Website
 			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
 			if (injtype != null && injtype.Count > 0)
 			{
-				ddlInjuryType.Items.Add(new ListItem("", ""));
+
+				ddlInjuryType.Items.Add(new DropDownListItem("", ""));
 
 				foreach (var s in injtype)
 				{
 					{
-						ddlInjuryType.Items.Add(new ListItem(s.Text, s.Value));
+						ddlInjuryType.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
@@ -483,7 +370,7 @@ namespace SQM.Website
 				foreach (var s in videotype)
 				{
 					{
-						ddlVideoType.Items.Add(new ListItem(s.Text, s.Value));
+						ddlVideoType.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
@@ -491,12 +378,6 @@ namespace SQM.Website
 
 		protected void btnSave_Click(object sender, EventArgs e)
 		{
-			//SessionManager.DocumentContext = new SQM.Shared.DocumentScope().CreateNew(1, "", staticScope.RecordType, "", staticScope.RecordID, staticScope.RecordStep, new decimal[0] {});
-			//SessionManager.DocumentContext.RecordType = staticScope.RecordType;
-			//SessionManager.DocumentContext.RecordID = staticScope.RecordID;
-			//SessionManager.DocumentContext.RecordStep = staticScope.RecordStep;
-			//uclUpload.SaveFiles();
-
 			string name = "";
 			string fileType = "";
 			//raUpload.TargetFolder = "~/Videos/";
@@ -509,29 +390,10 @@ namespace SQM.Website
 				//name = flFileUpload.FileName;
 				name = file.FileName;
 				fileType = file.GetExtension();
-				// check to see if this is a video?
-
-				//Stream stream = flFileUpload.FileContent;
-				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
 				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream);
 
-				// next, save the video to the server; file name = VIDEO_ID
-				//////if (video != null)
-				//////{
-				//////	try
-				//////	{
-				//////		file.SaveAs(Path.Combine(Server.MapPath(raUpload.TargetFolder), video.VIDEO_ID.ToString() + fileType.Trim()));
-				//////		SessionManager.ReturnRecordID = video.VIDEO_ID;
-				//////		SessionManager.ReturnObject = "AddVideo";
-				//////		SessionManager.ReturnStatus = true;
-				//////	}
-				//////	catch (Exception ex)
-				//////	{
-				//////		// put up an error
-				//////	}
-				//////}
 
 				pnlListVideo.Visible = false;
 
@@ -605,8 +467,6 @@ namespace SQM.Website
 			if (e.Item is GridDataItem)
 			{
 				GridDataItem dataItem = e.Item as GridDataItem;
-				//string fileName = ((Literal)dataItem["FileNameColumn"].FindControl("ltrFileName")).Text.ToLower();
-
 			}
 		}
 	}

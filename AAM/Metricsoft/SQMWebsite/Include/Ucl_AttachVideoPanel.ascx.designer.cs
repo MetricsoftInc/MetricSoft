@@ -112,13 +112,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlAttachVideoBody;
         
         /// <summary>
-        /// Literal2 control.
+        /// lblVideoDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
+        protected global::System.Web.UI.WebControls.Label lblVideoDate;
         
         /// <summary>
         /// dmFromDate control.
@@ -130,13 +130,13 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDatePicker dmFromDate;
         
         /// <summary>
-        /// Literal3 control.
+        /// lblVideoTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal3;
+        protected global::System.Web.UI.WebControls.Label lblVideoTitle;
         
         /// <summary>
         /// tbTitle control.
@@ -148,13 +148,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbTitle;
         
         /// <summary>
-        /// Literal4 control.
+        /// lblVideoDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal4;
+        protected global::System.Web.UI.WebControls.Label lblVideoDesc;
         
         /// <summary>
         /// tbFileDescription control.
@@ -166,22 +166,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.TextBox tbFileDescription;
         
         /// <summary>
-        /// pnlDisplayArea control.
+        /// lblVideoType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDisplayArea;
-        
-        /// <summary>
-        /// Literal5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal5;
+        protected global::System.Web.UI.WebControls.Label lblVideoType;
         
         /// <summary>
         /// ddlVideoType control.
@@ -190,16 +181,16 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlVideoType;
+        protected global::Telerik.Web.UI.RadDropDownList ddlVideoType;
         
         /// <summary>
-        /// Literal6 control.
+        /// lblInjuryType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal6;
+        protected global::System.Web.UI.WebControls.Label lblInjuryType;
         
         /// <summary>
         /// ddlInjuryType control.
@@ -208,16 +199,16 @@ namespace SQM.Website {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInjuryType;
+        protected global::Telerik.Web.UI.RadDropDownList ddlInjuryType;
         
         /// <summary>
-        /// Literal7 control.
+        /// lblBodyPart control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal7;
+        protected global::System.Web.UI.WebControls.Label lblBodyPart;
         
         /// <summary>
         /// rdlBodyPart control.
@@ -227,6 +218,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDropDownList rdlBodyPart;
+        
+        /// <summary>
+        /// lblVideoAttach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVideoAttach;
         
         /// <summary>
         /// raUpload control.
