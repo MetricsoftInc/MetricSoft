@@ -246,15 +246,12 @@ namespace SQM.Website
 			if (viewMode == PageUseMode.ViewOnly)
 			{
 				//uclUpload.SetViewMode(false);
-				pnlAttachVideoBody.Enabled = false;
-				raUpload.Enabled = false;
-				btnSave.Visible = false;
+				pnlAttachVideoBody.Visible = btnSave.Visible = false;
 				rgFiles.MasterTableView.GetColumn("DeleteButtonColumn").Visible = false;
 			}
 			else
 			{
-				pnlAttachVideoBody.Enabled = true;
-				btnSave.Visible = true;
+				pnlAttachVideoBody.Visible = btnSave.Visible = true;
 			}
 
 			LoadDefaults();
@@ -356,8 +353,7 @@ namespace SQM.Website
 
 		void PopulateBodyPartDropDown()
 		{
-			//bool categorize = EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault() != null && EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault().VALUE.ToUpper() == "Y" ? true : false;
-			bool categorize = false;
+			bool categorize = SessionManager.GetUserSetting("EHS", "INJURYPART_CATEGORIZE") != null && SessionManager.GetUserSetting("EHS", "INJURYPART_CATEGORIZE").VALUE == "Y" ? true : false;
 			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[1] { "INJURY_PART" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 			SQMBasePage.SetCategorizedDropDownItems(rdlBodyPart, xlatList.Where(l => l.XLAT_GROUP == "INJURY_PART").ToList(), categorize);
 		}
