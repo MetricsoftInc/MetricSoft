@@ -2,6 +2,7 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadUpload" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_Progress.ascx" TagName="Progress" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 
@@ -81,6 +82,7 @@
 			</telerik:RadGrid>
 		</asp:Panel>
 		<br style="clear: both;" />
+		<Ucl:Progress id="uclProgress" runat="server"/>
 		<asp:Panel ID="pnlAttachVideoBody" runat="server">
 			<table width="99%" border="0"  class="lightTable">
 				<tr>

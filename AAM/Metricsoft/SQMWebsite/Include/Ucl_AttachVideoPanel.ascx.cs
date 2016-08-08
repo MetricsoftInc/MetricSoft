@@ -394,12 +394,16 @@ namespace SQM.Website
 				return;
 			}
 
+			uclProgress.BindProgressDisplay(100, "Save uploaded video... ");
+			uclProgress.UpdateDisplay(1, 40, "Save uploaded video...");
+
 
 			int i = 0;
 
 			//if (flFileUpload.HasFile)
 			foreach (UploadedFile file in raUpload.UploadedFiles) // there should only be 1
 			{
+				uclProgress.UpdateDisplay(1, 50 + (i*10), "Save uploaded video...");
 				//name = flFileUpload.FileName;
 				name = file.FileName;
 				fileType = file.GetExtension();
@@ -410,10 +414,12 @@ namespace SQM.Website
 				pnlAttachMsg.Visible = false;
 				pnlListVideo.Visible = false;
 
+				uclProgress.ProgressComplete();
+
 				if (video != null)
 				{
-					string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
-					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+					//string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+					//ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 
 					if (AttachmentEvent != null)
 					{
