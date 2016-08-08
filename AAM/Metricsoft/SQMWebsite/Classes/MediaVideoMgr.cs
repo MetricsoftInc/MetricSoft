@@ -48,7 +48,7 @@ namespace SQM.Website
 
 	public static class MediaVideoMgr
 	{
-		public static VIDEO Add(String fileName, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate, Stream file)
+		public static VIDEO Add(String fileName, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate, Stream file, decimal plantId)
 		{
 			VIDEO ret = null;
 			try
@@ -63,9 +63,20 @@ namespace SQM.Website
 					video.SOURCE_ID = sourceId;
 					video.SOURCE_STEP = sourceStep;
 
-					video.COMPANY_ID = SessionManager.EffLocation.Company.COMPANY_ID;
-					video.BUS_ORG_ID = SessionManager.UserContext.Person.BUS_ORG_ID;
-					video.PLANT_ID = SessionManager.UserContext.Person.PLANT_ID;
+					if (plantId > 0)
+					{
+						PLANT plant = SQMModelMgr.LookupPlant(plantId);
+						video.COMPANY_ID = (decimal)plant.COMPANY_ID;
+						video.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
+						video.PLANT_ID = plantId;
+					}
+					else
+					{
+						video.COMPANY_ID = SessionManager.EffLocation.Company.COMPANY_ID;
+						video.BUS_ORG_ID = SessionManager.UserContext.Person.BUS_ORG_ID;
+						video.PLANT_ID = SessionManager.UserContext.Person.PLANT_ID;
+					}
+
 					video.VIDEO_PERSON = SessionManager.UserContext.Person.PERSON_ID;
 					video.CREATE_DT = WebSiteCommon.CurrentUTCTime();
 					video.VIDEO_TYPE = videoType; // this is the injury/incident type.  Default to 0 for Media & audit

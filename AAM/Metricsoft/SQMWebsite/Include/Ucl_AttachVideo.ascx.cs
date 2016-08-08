@@ -73,6 +73,12 @@ namespace SQM.Website
 			set { ViewState["VideoType"] = value; }
 		}
 
+		protected decimal _plantId
+		{
+			get { return ViewState["PlantId"] == null ? 0 : (decimal)ViewState["PlantId"]; }
+			set { ViewState["PlantId"] = value; }
+		}
+
 
 		protected void Page_Load(object sender, EventArgs e)
         {
@@ -338,11 +344,11 @@ namespace SQM.Website
 		}
 
 		#region attachwindow
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart, decimal plantId)
 		{
-			OpenManageVideosWindow(recordType, recordID, recordStep, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled);
+			OpenManageVideosWindow(recordType, recordID, recordStep, windowTitle, description, videoType, injuryType, bodyPart, plantId, PageUseMode.EditEnabled);
 		}
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart, decimal plantId, PageUseMode viewMode)
 		{
 			_recordType = recordType;
 			_recordId = recordID;
@@ -350,6 +356,7 @@ namespace SQM.Website
 			_injuryType = injuryType;
 			_bodyPart = bodyPart;
 			_videoType = videoType;
+			_plantId = plantId;
 
 			staticScope = new DocumentScope();
 			staticScope.CompanyID = 1;
@@ -519,7 +526,7 @@ namespace SQM.Website
 				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
 
 				// next, save the video to the server; file name = VIDEO_ID
 				//////if (video != null)

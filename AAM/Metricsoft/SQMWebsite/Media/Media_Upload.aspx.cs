@@ -78,7 +78,7 @@ namespace SQM.Website
 
 				Stream stream = flFileUpload.FileContent;
 				// first we need to create the video header (String fileLocation, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string docScope, DateTime videoDate, DateTime incidentDate)
-				VIDEO video = MediaVideoMgr.Add(name, fileExtension, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), SourceType, SourceId, SourceStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), "", (DateTime)dmFromDate.SelectedDate, SourceDate, stream);
+				VIDEO video = MediaVideoMgr.Add(name, fileExtension, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), SourceType, SourceId, SourceStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), "", (DateTime)dmFromDate.SelectedDate, SourceDate, stream, 0);
 				// next, save the video to the server; file name = VIDEO_ID
 				//////string fileName = "";
 				//////DateTime dtIncidentDate = new DateTime();
