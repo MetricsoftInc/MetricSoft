@@ -2521,7 +2521,7 @@ namespace SQM.Website
 					btnSubnavVideo.CssClass = "buttonLinkDisabled";
 					INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
 					PageUseMode viewMode = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED) == true ? PageUseMode.EditEnabled : PageUseMode.ViewOnly;
-					uclVideoPanel.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "", viewMode, false);
+					uclVideoPanel.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, EditIncidentId, "1", "Upload Videos", "Upload or view videos associated with this incident", "", "", "", viewMode, false);
 					break;
 				case "0":
 				default:

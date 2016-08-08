@@ -262,6 +262,7 @@ namespace SQM.Website
 
 			lblManageVideos.Text = description;
 			pnlManageAttachVideos.Visible = true;
+			pnlAttachMsg.Visible = false;
 
 			btnCancel.Visible = showCancel;
 		}
@@ -376,7 +377,14 @@ namespace SQM.Website
 		{
 			string name = "";
 			string fileType = "";
-			//raUpload.TargetFolder = "~/Videos/";
+
+			if (string.IsNullOrEmpty(tbTitle.Text.Trim()) ||  string.IsNullOrEmpty(tbFileDescription.Text.Trim()) ||  raUpload.UploadedFiles.Count == 0)
+			{
+				pnlAttachMsg.Visible = true;
+				lblAttachMsg.Text = Resources.LocalizedText.RequiredFieldsMustBeCompleted;
+				return;
+			}
+
 
 			int i = 0;
 
@@ -390,7 +398,7 @@ namespace SQM.Website
 				// first we need to create the video header so that we have the video id
 				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream);
 
-
+				pnlAttachMsg.Visible = false;
 				pnlListVideo.Visible = false;
 
 				if (AttachmentEvent != null)
@@ -403,7 +411,7 @@ namespace SQM.Website
 				else
 				{
 					GetUploadedFiles();
-					//OpenManageVideosWindow(_recordType, _recordId, _recordStep, "", "", _videoType, _injuryType, _bodyPart, _bo
+					tbTitle.Text = tbFileDescription.Text = "";
 				}
 			}
 		}

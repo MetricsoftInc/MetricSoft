@@ -31,24 +31,6 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.HiddenField hfDesc;
         
         /// <summary>
-        /// pnlManageVideos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlManageVideos;
-        
-        /// <summary>
-        /// imbVideo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imbVideo;
-        
-        /// <summary>
         /// pnlManageAttachVideos control.
         /// </summary>
         /// <remarks>
@@ -263,6 +245,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hfMode;
+        
+        /// <summary>
+        /// pnlAttachMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAttachMsg;
+        
+        /// <summary>
+        /// lblAttachMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAttachMsg;
         
         /// <summary>
         /// btnSave control.
