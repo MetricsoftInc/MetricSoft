@@ -410,17 +410,23 @@ namespace SQM.Website
 				pnlAttachMsg.Visible = false;
 				pnlListVideo.Visible = false;
 
-				if (AttachmentEvent != null)
+				if (video != null)
 				{
-					SessionManager.ReturnRecordID = video.VIDEO_ID;
-					SessionManager.ReturnObject = "AddVideo";
-					SessionManager.ReturnStatus = true;
-					AttachmentEvent("save");
-				}
-				else
-				{
-					GetUploadedFiles();
-					tbTitle.Text = tbFileDescription.Text = "";
+					string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+
+					if (AttachmentEvent != null)
+					{
+						SessionManager.ReturnRecordID = video.VIDEO_ID;
+						SessionManager.ReturnObject = "AddVideo";
+						SessionManager.ReturnStatus = true;
+						AttachmentEvent("save");
+					}
+					else
+					{
+						GetUploadedFiles();
+						tbTitle.Text = tbFileDescription.Text = "";
+					}
 				}
 			}
 		}
