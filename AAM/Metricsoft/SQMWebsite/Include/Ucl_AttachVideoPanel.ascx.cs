@@ -403,7 +403,7 @@ namespace SQM.Website
 				fileType = file.GetExtension();
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
 
 				pnlAttachMsg.Visible = false;
 				pnlListVideo.Visible = false;
