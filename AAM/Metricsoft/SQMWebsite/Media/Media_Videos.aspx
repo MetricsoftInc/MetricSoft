@@ -185,100 +185,91 @@
 
 				<div class="container-fluid summaryDataEnd" style="padding: 3px 4px 7px 0">
 
-					<div class="row-fluid">
+					<div class="row-fluid" style="position: relative;">
 
-						<span style="float: left; width: 160px;">
+						<div style="float: left; width: 160px;">
 							<asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
-						</span>&nbsp;&nbsp;
-									<br class="visible-xs-block" />
-						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
-
-						<div class="visible-xs"></div>
-						<br class="visible-xs-block" style="margin-top: 7px;" />
-
+						</div>
+						<div style="float: left;">
+							<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
+						</div>
 					</div>
+					<div class="clearfix"></div>
 
-                    <div class="row-fluid">
+					<div class="row-fluid" style="margin-top: 3px; position: relative;">
 
-                        <span style="float: left; width: 160px;">
-                            <asp:Label runat="server" ID="lblVideoSource" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoSourceType %>"></asp:Label>
-                        </span>&nbsp;&nbsp;
-									<br class="visible-xs-block" />
-                        <telerik:RadComboBox ID="rcbVideoSource" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, VideoSelectSource %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+						<div style="float: left; width: 160px;">
+							<asp:Label runat="server" ID="lblVideoSource" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoSourceType %>"></asp:Label>
+						</div>
+						<div style="float: left;">
+							<telerik:RadComboBox ID="rcbVideoSource" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectSource %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+						</div>
+						<div style="float: left; width: 160px; padding-left: 10px;">
+							<asp:Label runat="server" ID="lblVideoType" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Label>
+						</div>
+						<div style="float: left;">
+							<telerik:RadComboBox ID="rcbVideoType" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectType %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="true" CheckBoxes="true">
+							</telerik:RadComboBox>
+						</div>
+					</div>
+					<div class="clearfix"></div>
 
-                        <div class="visible-xs"></div>
-                        <br class="visible-xs-block" style="margin-top: 7px;" />
+					<div class="row-fluid" style="position: relative;">
 
-						<span>
-								<asp:Label runat="server" ID="lblVideoType" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Label>
-						</span>&nbsp;&nbsp;
-						<br class="visible-xs-block" />
-                                            <telerik:RadComboBox ID="rcbVideoType" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectType %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="true" CheckBoxes="true">
-											</telerik:RadComboBox>
-                    </div>
-
-                    <div class="row-fluid" style="margin-top: 7px;">
-
-                        <span style="float: left; width: 160px;">
-								<asp:Label runat="server" ID="lblInjuryType" CssClass="prompt" Text="<%$ Resources:LocalizedText, InjuryType %>"></asp:Label>
-						</span>&nbsp;&nbsp;
-						<br class="visible-xs-block" />
-                                            <telerik:RadComboBox ID="rcbInjuryType" runat="server" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="false">
-											</telerik:RadComboBox>
-							<br class="visible-xs-block" />
-
-                        <div class="visible-xs"></div>
-                        <br class="visible-xs-block" style="margin-top: 7px;" />
-
-						<span>
-							                            <asp:Label runat="server" ID="lblBodyPart" CssClass="prompt" Text="<%$ Resources:LocalizedText, BodyPart %>"></asp:Label>
-                        </span>&nbsp;&nbsp;
-									<br class="visible-xs-block" />
-                        <telerik:RadComboBox ID="rcbBodyPart" runat="server" Style="margin-right: 15px;" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
-                    </div>
+						<div style="float: left; width: 160px;">
+							<asp:Label runat="server" ID="lblInjuryType" CssClass="prompt" Text="<%$ Resources:LocalizedText, InjuryType %>"></asp:Label>
+						</div>
+						<div style="float: left;">
+							<telerik:RadComboBox ID="rcbInjuryType" runat="server" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false" EnableCheckAllItemsCheckBox="false">
+							</telerik:RadComboBox>
+						</div>
+						<div style="float: left; width: 160px; padding-left: 10px;">
+							<asp:Label runat="server" ID="lblBodyPart" CssClass="prompt" Text="<%$ Resources:LocalizedText, BodyPart %>"></asp:Label>
+						</div>
+						<div style="float: left;">
+							<telerik:RadComboBox ID="rcbBodyPart" runat="server" Style="width: 256px;" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+						</div>
+					</div>
+					<div class="clearfix"></div>
 
 					<asp:PlaceHolder ID="phVideo" runat="server">
 
-						<div class="row-fluid">
-							<span style="float: left; width: 160px;">
+						<div class="row-fluid" style="position: relative;">
+							<div style="float: left; width: 160px;">
 								<asp:Label runat="server" ID="lblVideoOwner" CssClass="prompt" Text="<%$ Resources:LocalizedText, VideoOwner %>"></asp:Label>
-							</span>&nbsp;&nbsp;
-									<br class="visible-xs-block" />
-							<telerik:RadComboBox ID="rcbVideoOwner" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, VideoSelectOwner %>" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
-								<Items>
-									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="all" />
-									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, VideoOwn %>" Value="own" />
-								</Items>
-							</telerik:RadComboBox>
+							</div>
+							<div style="float: left; width: 256px;">
+								<telerik:RadComboBox ID="rcbVideoOwner" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectOwner %>" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+									<Items>
+										<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="all" />
+										<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, VideoOwn %>" Value="own" />
+									</Items>
+								</telerik:RadComboBox>
+							</div>
 
-							<div class="clearfix visible-xs"></div>
-							<br class="visible-xs-block" style="margin-top: 7px;" />
-
-							<span style="padding-left: 120px;">
-								<asp:Label runat="server" ID="lblStatus" CssClass="prompt" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>&nbsp;&nbsp;
-                                            <telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectStatus %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false">
-											</telerik:RadComboBox>
-							</span>
-
-							<div class="clearfix visible-xs"></div>
-							<br class="visible-xs-block" />
+							<div style="float: left; width: 160px; padding-left: 10px;">
+								<asp:Label runat="server" ID="lblStatus" CssClass="prompt" Text="<%$ Resources:LocalizedText, Status %>"></asp:Label>
+							</div>
+							<div style="float: left;">
+								<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoSelectStatus %>" Width="256px" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+								</telerik:RadComboBox>
+							</div>
 
 						</div>
+						<div class="clearfix"></div>
 					</asp:PlaceHolder>
 
-                    <div class="row-fluid" style="margin-top: 7px;">
+					<div class="row-fluid" style="margin-top: 7px; position: relative;">
 
-                        <span style="float: left; width: 160px;">
-                            <asp:Label runat="server" ID="lbrKeyWord" CssClass="prompt" Text="<%$ Resources:LocalizedText, KeyWordSearch %>"></asp:Label>&nbsp;<asp:Image runat="server" ID="imgHelp" ImageUrl="/images/ico-question.png" /><telerik:RadToolTip runat="server" TargetControlID="imgHelp" ID="rttKeywordToolTip" IsClientID="false" RelativeTo="Element" OffsetX="35" EnableRoundedCorners="true" EnableShadow="true" Width="200" Height="100" Animation="Fade" Position="MiddleRight" ContentScrolling="Auto" HideEvent="LeaveTargetAndToolTip" RenderMode="Lightweight"><asp:Literal runat="server" ID="litKeywordHelp" Text="<%$ Resources:LocalizedText, KeyWordSearchDesc %>"></asp:Literal></telerik:RadToolTip>
-                        </span>&nbsp;&nbsp;
-									<br class="visible-xs-block" />
-                        <asp:TextBox ID="tbKeyWord" runat="server" Style="margin-right: 15px;" ToolTip="<%$ Resources:LocalizedText, KeyWordSearchDesc %>" Width="500px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></asp:TextBox>
-
-                        <div class="visible-xs"></div>
-                        <br class="visible-xs-block" style="margin-top: 7px;" />
-
-                    </div>
-
+						<div style="float: left; width: 160px;">
+							<asp:Label runat="server" ID="lbrKeyWord" CssClass="prompt" Text="<%$ Resources:LocalizedText, KeyWordSearch %>"></asp:Label>&nbsp;<asp:Image runat="server" ID="imgHelp" ImageUrl="/images/ico-question.png" /><telerik:RadToolTip runat="server" TargetControlID="imgHelp" ID="rttKeywordToolTip" IsClientID="false" RelativeTo="Element" OffsetX="35" EnableRoundedCorners="true" EnableShadow="true" Width="200" Height="100" Animation="Fade" Position="MiddleRight" ContentScrolling="Auto" HideEvent="LeaveTargetAndToolTip" RenderMode="Lightweight">
+								<asp:Literal runat="server" ID="litKeywordHelp" Text="<%$ Resources:LocalizedText, KeyWordSearchDesc %>"></asp:Literal></telerik:RadToolTip>
+						</div>
+						<div style="float: left;">
+							<asp:TextBox ID="tbKeyWord" runat="server" ToolTip="<%$ Resources:LocalizedText, KeyWordSearchDesc %>" Width="500px" ZIndex="9000" Skin="Metro" AutoPostBack="false"></asp:TextBox>
+						</div>
+					</div>
+					<div class="clearfix"></div>
 					<div class="row-fluid" style="margin-top: 7px;">
 
 

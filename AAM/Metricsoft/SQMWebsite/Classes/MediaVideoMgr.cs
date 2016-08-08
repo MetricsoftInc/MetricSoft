@@ -86,6 +86,7 @@ namespace SQM.Website
 					video.BODY_PARTS = bodyPart;
 					video.VIDEO_STATUS = "";
 					video.FILE_NAME = fileName;
+					video.FILE_SIZE = file.Length;
 
 					entities.AddToVIDEO(video);
 					entities.SaveChanges();
@@ -156,7 +157,7 @@ namespace SQM.Website
 			return videoData;
 		}
 
-		public static List<MediaVideoData> SelectVideoList(List<decimal> plantIdList, List<decimal> sourceTypeList, DateTime fromDate, DateTime toDate, string videoStatus, string keywords, List<string> injuryTypeList, List<string> bodyPartList, List<string> videoTypeList)
+		public static List<MediaVideoData> SelectVideoList(List<decimal> plantIdList, List<decimal> sourceTypeList, DateTime fromDate, DateTime toDate, string videoStatus, string keywords, List<string> injuryTypeList, List<string> bodyPartList, List<string> videoTypeList, decimal videoOwnerId)
 		{
 			var videoList = new List<MediaVideoData>();
 
@@ -197,13 +198,26 @@ namespace SQM.Website
 									 Person = r
 								 }).OrderByDescending(l => l.Video.VIDEO_DT).ToList();
 
+				// select only videos for a specific person, if ID is provided
+				if (videoOwnerId > 0)
+					videoList = videoList.Where(l => l.Video.VIDEO_PERSON == videoOwnerId).ToList();
+
 				// select only specified status
 				if (videoStatus.Length > 0)
 					videoList = videoList.Where(l => l.Video.VIDEO_STATUS == videoStatus).ToList();
 
 				// select specific key words
 				if (keywords.Count() > 0)
-					videoList = videoList.Where(q => keywords.All(k => q.Video.TITLE.Contains(k)) || keywords.All(k => q.Video.DESCRIPTION.Contains(k))).ToList();
+				{
+					//videoList = videoList.Where(q => keywords.All(k => q.Video.TITLE.ToLower().Contains(k)) || keywords.All(k => q.Video.DESCRIPTION.ToLower().Contains(k))).ToList();
+					foreach (string word in keyword)
+					{
+						string keywordCopy = word;
+
+						// Look for a hit on the keyword in the MyItem
+						videoList = videoList.Where(x => x.Video.TITLE.ToLower().Contains(word) || x.Video.DESCRIPTION.ToLower().Contains(word)).ToList();
+					}
+				}
 
 				if (videoTypeList.Count > 0 && !allTypes)
 					videoList = videoList.Where(q => videoTypeList.All(k => q.Video.VIDEO_TYPE != null && q.Video.VIDEO_TYPE.Contains(k))).ToList();

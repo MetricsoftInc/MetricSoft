@@ -339,7 +339,12 @@ namespace SQM.Website
 				}
 			}
 
-			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString(), injuryTypes, bodyParts, videoTypes);
+			string videoOwner = rcbVideoOwner.SelectedValue.ToString();
+			decimal videoOwnerId = 0;
+			if (videoOwner == "own")
+				videoOwnerId = SessionManager.UserContext.Person.PERSON_ID;
+
+			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString().ToLower(), injuryTypes, bodyParts, videoTypes, videoOwnerId);
 			// we don't want to list any videos that have a negative source id. these could be videos in process or orphaned on the Incident pages
 			videos = videos.Where(q => q.Video.SOURCE_ID >= 0).ToList();
 			uclVideoList.BindVideoListRepeater(videos, "Media");
