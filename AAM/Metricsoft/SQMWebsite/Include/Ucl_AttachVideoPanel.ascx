@@ -31,6 +31,7 @@
 
 
 <asp:Panel ID="pnlManageAttachVideos" runat="server"  style="margin: 5px;" Visible="false">
+<telerik:RadAjaxPanel ID="rapManageVideos"  runat="server">
 	<asp:Label ID="lblManageVideos" runat="server" CssClass="prompt"></asp:Label>
 	<div id="divUpload" runat="server" style="margin-top: 5px;">
 		<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:LocalizedText, VideoUploadInstruction %>"></asp:Literal>
@@ -161,5 +162,6 @@
 			</center>
 		</div>
 	</div>
+</telerik:RadAjaxPanel>
 </asp:Panel>
 

@@ -40,6 +40,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlManageAttachVideos;
         
         /// <summary>
+        /// rapManageVideos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel rapManageVideos;
+        
+        /// <summary>
         /// lblManageVideos control.
         /// </summary>
         /// <remarks>

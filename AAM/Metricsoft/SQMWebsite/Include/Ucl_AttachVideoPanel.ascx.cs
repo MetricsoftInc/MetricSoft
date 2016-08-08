@@ -53,6 +53,12 @@ namespace SQM.Website
 			set { ViewState["RecordStep"] = value; }
 		}
 
+		protected decimal _plantId
+		{
+			get { return ViewState["PlantId"] == null ? 0 : (decimal)ViewState["PlantId"]; }
+			set { ViewState["PlantId"] = value; }
+		}
+
 		public string _bodyPart
 		{
 			get { return ViewState["BodyPart"] == null ? "" : (string)ViewState["BodyPart"]; }
@@ -221,15 +227,16 @@ namespace SQM.Website
 		}
 
 		#region attachwindow
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, decimal plantID, string windowTitle, string description, string videoType, string injuryType, string bodyPart)
 		{
-			OpenManageVideosWindow(recordType, recordID, recordStep, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled, false);
+			OpenManageVideosWindow(recordType, recordID, recordStep, plantID, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled, false);
 		}
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode, bool showCancel)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, decimal plantID, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode, bool showCancel)
 		{
 			_recordType = recordType;
 			_recordId = recordID;
 			_recordStep = recordStep;
+			_plantId = plantID;
 			_injuryType = injuryType;
 			_bodyPart = bodyPart;
 			_videoType = videoType;
