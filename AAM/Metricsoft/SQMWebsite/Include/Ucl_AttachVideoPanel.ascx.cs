@@ -130,6 +130,7 @@ namespace SQM.Website
 			"		document.getElementById('" + hfListId.ClientID + "').value = parentList.id;\n" +
 			"		input.onchange = inputChanged;\n" +
 			"		row.appendChild( br );\n" +
+			"       ChangeUpdate(); \n" +
 				//"		row.appendChild( label );\n" +
 				//"		row.appendChild( input );\n" +
 			"	}\n" +
