@@ -855,4 +855,7 @@
   <data name="VideoAttachments" xml:space="preserve">
     <value>Video Attachments</value>
   </data>
+  <data name="VideoForIncident" xml:space="preserve">
+    <value>Upload or view videos associated with this incident</value>
+  </data>
 </root>

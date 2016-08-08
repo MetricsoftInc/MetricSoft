@@ -2086,6 +2086,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload or view videos associated with this incident.
+        /// </summary>
+        internal static string VideoForIncident {
+            get {
+                return ResourceManager.GetString("VideoForIncident", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Video Library.
         /// </summary>
         internal static string VideoLibary {
