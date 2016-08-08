@@ -259,6 +259,7 @@ namespace SQM.Website
 			else
 			{
 				pnlAttachVideoBody.Visible = btnSave.Visible = true;
+				dmFromDate.ShowPopupOnFocus = true;
 			}
 
 			LoadDefaults();

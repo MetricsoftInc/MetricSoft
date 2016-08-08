@@ -5,6 +5,22 @@
 
 <script type="text/javascript">
 
+	window.onload = function () {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = "";
+	}
+	window.onbeforeunload = function () {
+		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value == '1') {
+			return 'You have unsaved changes on this page.';
+		}
+	}
+	function ChangeUpdate(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = '1';
+		return true;
+	}
+	function ChangeClear(sender, args) {
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = '0';
+	}
+
 	function ValidateOnSave(sender, args) {
 		var valid = false;
 		try {
@@ -28,6 +44,7 @@
 
 <asp:HiddenField id="hfTitle" runat="server"/> 
 <asp:HiddenField ID="hfDesc" runat="server" />
+<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
 
 
 <asp:Panel ID="pnlManageAttachVideos" runat="server"  style="margin: 5px;" Visible="false">
@@ -74,7 +91,7 @@
 					<td class="tableDataAlt">
 						<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>">
 							<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" ShowPopupOnFocus="true" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
-							<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+							<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" OnClientDateChanged="ChangeUpdate">
 								<EmptyMessageStyle Resize="None"></EmptyMessageStyle>
 								<ReadOnlyStyle Resize="None"></ReadOnlyStyle>
 								<FocusedStyle Resize="None"></FocusedStyle>
@@ -93,7 +110,7 @@
 					</td>
 					<td class="required">&nbsp;</td>
 					<td class="tableDataAlt">
-						<asp:TextBox ID="tbTitle" runat="server" CssClas="textStd" MaxLength="100" Width="450px"></asp:TextBox>
+						<asp:TextBox ID="tbTitle" runat="server" CssClas="textStd" MaxLength="100" Width="450px" onChange="ChangeUpdate()"></asp:TextBox>
 					</td>
 				</tr>
 				<tr>
@@ -102,7 +119,7 @@
 					</td>
 					<td class="required">&nbsp;</td>
 					<td class="tableDataAlt">
-						<asp:TextBox ID="tbFileDescription" runat="server" CssClass="textStd" TextMode="MultiLine" Rows="3" MaxLength="1000" Width="450px"></asp:TextBox>
+						<asp:TextBox ID="tbFileDescription" runat="server" CssClass="textStd" TextMode="MultiLine" Rows="3" MaxLength="1000" Width="450px" onChange="ChangeUpdate()"></asp:TextBox>
 					</td>
 				</tr>
 				<tr>
@@ -111,7 +128,7 @@
 					</td>
 					<td class="required">&nbsp;</td>
 					<td class="tableDataAlt">
-						<telerik:RadDropDownList ID="ddlVideoType" runat="server" Skin="Metro"></telerik:RadDropDownList>
+						<telerik:RadDropDownList ID="ddlVideoType" runat="server" Skin="Metro" Width="450" OnClientSelectedIndexChanged="ChangeUpdate" ></telerik:RadDropDownList>
 					</td>
 				</tr>
 				<tr>
@@ -120,7 +137,7 @@
 					</td>
 					<td class="tableDataAlt">&nbsp;</td>
 					<td class="tableDataAlt">
-						<telerik:RadDropDownList ID="ddlInjuryType" runat="server" Skin="Metro" DropDownHeight="300px" ExpandDirection="Up"></telerik:RadDropDownList>
+						<telerik:RadDropDownList ID="ddlInjuryType" runat="server" Skin="Metro" Width="450" DropDownHeight="300px" ExpandDirection="Up" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 					</td>
 				</tr>
 				<tr>
@@ -129,7 +146,7 @@
 					</td>
 					<td class="tableDataAlt">&nbsp;</td>
 					<td class="tableDataAlt">
-						<telerik:RadDropDownList runat="server" ID="rdlBodyPart" Skin="Metro" DropDownHeight="300px" ExpandDirection="Up"></telerik:RadDropDownList>
+						<telerik:RadDropDownList runat="server" ID="rdlBodyPart" Skin="Metro" Width="450" DropDownHeight="300px" ExpandDirection="Up" OnClientSelectedIndexChanged="ChangeUpdate" ></telerik:RadDropDownList>
 					</td>
 				</tr>
 				<tr>
@@ -155,7 +172,7 @@
 			<center>
 			<span>
 				<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
-						OnClick="btnSave_Click"  SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+						OnClientClicked="ChangeClear" OnClick="btnSave_Click"  SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 				<%--<asp:Button ID="btnSave" CSSclass="buttonStd buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>--%>
 				<asp:Button ID="btnCancel" CSSclass= "buttonEmphasis buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click" CausesValidation="false"></asp:Button>
 			</span>
