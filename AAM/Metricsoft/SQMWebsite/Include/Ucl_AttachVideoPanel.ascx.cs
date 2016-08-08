@@ -420,6 +420,8 @@ namespace SQM.Website
 				{
 					//string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 					//ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+					lblAttachMsg.Text = Resources.LocalizedText.SaveSuccess;
+					pnlAttachMsg.Visible = true;
 
 					if (AttachmentEvent != null)
 					{
