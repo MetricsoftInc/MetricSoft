@@ -200,14 +200,6 @@ namespace SQM.Website
 
 		#region Form
 
-		private void OnVideoUpdate(string cmd)
-		{
-			uclVideoPanel.Visible = false;
-			SetSubnav("edit");
-			btnSubnav_Click(btnSubnavIncident, null);
-		}
-
-
 		protected void LoadHeaderInformation()
 		{
 			// set up for adding the header info
@@ -2366,8 +2358,10 @@ namespace SQM.Website
 				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 
+				/*
 				if(!isEdit && (CurrentSubnav == "0"  || CurrentSubnav == "I"))
 					btnSubnav_Click(btnSubnavContainment, null);
+				*/
 			}
 		}
 
