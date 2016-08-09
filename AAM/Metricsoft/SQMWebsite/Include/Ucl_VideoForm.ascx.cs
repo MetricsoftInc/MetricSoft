@@ -210,7 +210,7 @@ namespace SQM.Website
 				uploadReleases.SetViewMode(true);
 				// populate text list
 				GetAttachments(EditVideoId, (int)MediaAttachmentType.Text, videoData.VideoTextList.Count);
-				if (videoData.Video.TEXT_ADDED)
+				if (videoData.Video.TEXT_ADDED || videoData.VideoTextList.Count > 0)
 				{
 					cbVideoText.Checked = true;
 					//dvText.Visible = true;

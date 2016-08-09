@@ -55,8 +55,8 @@
 				<br /><br style="clear: both;" />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDate %>"></asp:Literal></span><br />
-				<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>">
-					<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" ShowPopupOnFocus="true" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+				<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>" ShowPopupOnFocus="true">
+					<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
 					<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
 						<EmptyMessageStyle Resize="None"></EmptyMessageStyle>

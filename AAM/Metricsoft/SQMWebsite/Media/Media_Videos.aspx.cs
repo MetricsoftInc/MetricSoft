@@ -235,6 +235,7 @@ namespace SQM.Website
 			}
 
 			divVideoList.Visible = true;
+			rbNew.Visible = true;
 
 			dmFromDate.ShowPopupOnFocus = dmToDate.ShowPopupOnFocus = true;
 			// ABW 1/5/16 - use user's default plant local time for search default
