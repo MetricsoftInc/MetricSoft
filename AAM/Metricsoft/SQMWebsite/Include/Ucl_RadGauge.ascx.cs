@@ -216,6 +216,7 @@ namespace SQM.Website
 			this.ContainerHeight = this.ContainerWidth = 0;
 			this.OnLoad = null;
 			this.ScaleToMax = false;
+			this.ItemVisual = "";
 		}
 
 		public GaugeDefinition Initialize()
@@ -246,6 +247,7 @@ namespace SQM.Website
 			this.ContainerHeight = this.ContainerWidth = 0;
 			this.OnLoad = null;
 			this.ScaleToMax = false;
+			this.ItemVisual = "";
 
 			return this;
 		}
