@@ -123,7 +123,7 @@
 											<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="0" />
 											<asp:LinkButton ID="btnSubnavVideo" runat="server"  Text="<%$ Resources:LocalizedText, VideoUpload %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="true"/>
+												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="false"/>
 											<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 												OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="2" meta:resourcekey="btnSubnavContainmentResource1"/>
 											<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
