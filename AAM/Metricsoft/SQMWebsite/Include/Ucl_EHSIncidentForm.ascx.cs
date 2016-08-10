@@ -2274,26 +2274,28 @@ namespace SQM.Website
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
 				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
+
+				// incident alert
+				if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
+				{
+					btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
+				}
+				else
+				{
+					btnSubnavAlert.Visible = false;
+				}
+
+				if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+				{
+					btnSubnavVideo.Visible = true;
+				}
+				else
+				{
+					btnSubnavVideo.Visible = false;
+				}
 			}
 
-			// incident alert
-			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
-			{
-				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
-			}
-			else
-			{
-				btnSubnavAlert.Visible = false;
-			}
 
-			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
-			{
-				btnSubnavVideo.Visible = true;
-			}
-			else
-			{
-				btnSubnavVideo.Visible = false;
-			}
 			// optional approval steps
 			/*
 			btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;
