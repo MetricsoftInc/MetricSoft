@@ -535,7 +535,7 @@ namespace SQM.Website
 				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, rtbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
 
 				// next, save the video to the server; file name = VIDEO_ID
 				//////if (video != null)

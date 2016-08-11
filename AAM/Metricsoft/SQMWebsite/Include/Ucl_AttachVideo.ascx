@@ -80,15 +80,17 @@
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, Title %>"></asp:Literal></span><br />
 				<%--<asp:TextBox ID="tbTitle" runat="server" MaxLength="100" Width="392px"></asp:TextBox>--%>
-				<telerik:RadTextBox ID="rtbTitle" runat="server" MaxLength="100" Width="392px"></telerik:RadTextBox>
+				<telerik:RadTextBox ID="rtbTitle" runat="server" MaxLength="100" Width="392px" TextMode="MultiLine"></telerik:RadTextBox>
 				<%--<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="<%$ Resources:LocalizedText, TitleRequired %>" ControlToValidate="tbTitle"></asp:RequiredFieldValidator>--%>
 				<br />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDescription %>"></asp:Literal></span><br />
-				<asp:TextBox ID="tbFileDescription" runat="server" TextMode="MultiLine"
-					MaxLength="1000" Width="392px"></asp:TextBox>
-				<br /><br />
 				<asp:Panel ID="pnlDisplayArea" runat="server" Visible="true" CssClass="tableDataAlt">
+				<%--<asp:TextBox ID="tbFileDescription" runat="server" TextMode="MultiLine"
+					MaxLength="1000" Width="392px"></asp:TextBox>--%>
+				<telerik:RadTextBox runat="server" ID="rtbFileDescription" TextMode="MultiLine"
+					MaxLength="1000" Width="392px"></telerik:RadTextBox>
+				<br /><br />
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Literal></span>
 					<br />

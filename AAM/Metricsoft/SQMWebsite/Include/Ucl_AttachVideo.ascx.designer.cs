@@ -112,15 +112,6 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadTextBox rtbTitle;
         
         /// <summary>
-        /// tbFileDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbFileDescription;
-        
-        /// <summary>
         /// pnlDisplayArea control.
         /// </summary>
         /// <remarks>
@@ -128,6 +119,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlDisplayArea;
+        
+        /// <summary>
+        /// rtbFileDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox rtbFileDescription;
         
         /// <summary>
         /// rddlVideoType control.
