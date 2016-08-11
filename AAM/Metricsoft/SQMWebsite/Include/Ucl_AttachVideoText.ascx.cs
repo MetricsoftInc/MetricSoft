@@ -198,10 +198,10 @@ namespace SQM.Website
 			tbText.Text = "";
 			hdnVideoAttachId.Value = "";
 
-			if (AttachmentEvent != null)
-			{
+			//if (AttachmentEvent != null)
+			//{
 				AttachmentEvent("save");
-			}
+			//}
 		}
 
 		protected void btnCancel_Click(object sender, EventArgs e)

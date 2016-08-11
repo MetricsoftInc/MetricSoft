@@ -186,11 +186,11 @@ namespace SQM.Website
 				//else
 				//	lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~C";
 
-				lnk = (LinkButton)e.Item.FindControl("lbDelete");
+				RadButton rlnk = (RadButton)e.Item.FindControl("lbnDelete");
 				if (data.Video.SOURCE_TYPE == (int)TaskRecordType.Audit || data.Video.SOURCE_TYPE == (int)TaskRecordType.HealthSafetyIncident)
-					lnk.Visible = false;
+					rlnk.Visible = false;
 				else
-					lnk.Visible = true;
+					rlnk.Visible = true;
 
 				if (data.Video.TITLE.Length > 120)
 				{
@@ -235,7 +235,7 @@ namespace SQM.Website
 
 		protected void lbDelete_Click(object sender, EventArgs e)
 		{
-			LinkButton lb = (LinkButton)sender;
+			RadButton lb = (RadButton)sender;
 
 			decimal videoId = 0;
 			try

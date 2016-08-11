@@ -404,6 +404,7 @@ namespace SQM.Website
 				PopulateVideoTypeDropDown();
 			}
 			dmFromDate.SelectedDate = SourceDate;
+			dmFromDate.MaxDate = DateTime.Now;
 			if (string.IsNullOrEmpty(_injuryType))
 				ddlInjuryType.SelectedValue = "";
 			else
@@ -507,6 +508,14 @@ namespace SQM.Website
 			//SessionManager.DocumentContext.RecordID = staticScope.RecordID;
 			//SessionManager.DocumentContext.RecordStep = staticScope.RecordStep;
 			//uclUpload.SaveFiles();
+
+			if (dmFromDate.SelectedDate == null || dmFromDate.SelectedDate > dmFromDate.MaxDate || raUpload.UploadedFiles.Count == 0)
+			{
+				dmFromDate.SelectedDate = DateTime.Today;
+				string script = "function f(){OpenManageVideosWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+				return;
+			}
 
 			string name = "";
 			string fileType = "";

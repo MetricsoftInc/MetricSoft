@@ -17,7 +17,7 @@
         <asp:ImageButton ID="imbVideo" runat="server" tooltip="add or view videos" ImageUrl="~/images/attach.png"  OnClientClick="PopupCenter('../Shared/Shared_Attach.aspx', 'newPage', 800, 600);  return false;" />
 </asp:Panel>
 
-<telerik:RadWindow runat="server" ID="winManageVideos" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="575px" Width="500px" Title="Manage Videos" Behavior="Close, Move">
+<telerik:RadWindow runat="server" ID="winManageVideos" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="575px" Width="500px" Title="Manage Videos" Behavior="Move">
 	<ContentTemplate>
 		<div style="margin: 5px;">
 			<asp:Label ID="lblManageVideos" runat="server" CssClass="prompt"></asp:Label>
@@ -55,7 +55,7 @@
 				<br /><br style="clear: both;" />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDate %>"></asp:Literal></span><br />
-				<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>" ShowPopupOnFocus="true">
+				<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" ToolTip="<%$ Resources:LocalizedText, VideoDateDesc %>" ShowPopupOnFocus="true" >
 					<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
 
 					<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">

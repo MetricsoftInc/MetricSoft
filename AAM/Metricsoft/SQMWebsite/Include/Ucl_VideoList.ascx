@@ -157,7 +157,11 @@
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn9 column" HeaderText="<%$ Resources:LocalizedText, Delete %>" UniqueName="TemplateColumn9">
-                        <ItemTemplate><asp:LinkButton ID="lbDelete" CausesValidation="false" runat="server" ForeColor="#000066" Visible="true" Text="<%$ Resources:LocalizedText, Delete %>" CommandName='<%# Eval("Video.FILE_NAME") %>' CommandArgument='<%# Eval("Video.VIDEO_ID") %>' OnClick="lbDelete_Click"></asp:LinkButton></ItemTemplate>
+						<ItemTemplate>
+							<telerik:RadButton ID="lbnDelete" runat="server" ButtonType="LinkButton" BorderStyle="None" Visible="true"
+                                                            Text="<%$ Resources:LocalizedText, Delete %>" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Deleting %>"
+                                                            OnClick="lbDelete_Click" OnClientClicking="DeleteConfirm" CommandName='<%# Eval("Video.FILE_NAME") %>' CommandArgument='<%# Eval("Video.VIDEO_ID") %>' CssClass="radDelete" BackColor="" />
+						</ItemTemplate>
                     </telerik:GridTemplateColumn>
 				</Columns>
 				<PagerStyle AlwaysVisible="True" />

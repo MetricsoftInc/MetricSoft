@@ -200,11 +200,11 @@ namespace SQM.Website
 
 				// select only videos for a specific person, if ID is provided
 				if (videoOwnerId > 0)
-					videoList = videoList.Where(l => l.Video.VIDEO_PERSON == videoOwnerId).ToList();
+					videoList = videoList.Where(l => l.Video.VIDEO_PERSON == videoOwnerId).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 
 				// select only specified status
 				if (videoStatus.Length > 0)
-					videoList = videoList.Where(l => l.Video.VIDEO_STATUS == videoStatus).ToList();
+					videoList = videoList.Where(l => l.Video.VIDEO_STATUS == videoStatus).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 
 				// select specific key words
 				if (keywords.Count() > 0)
@@ -215,18 +215,18 @@ namespace SQM.Website
 						string keywordCopy = word;
 
 						// Look for a hit on the keyword in the MyItem
-						videoList = videoList.Where(x => x.Video.TITLE.ToLower().Contains(word) || x.Video.DESCRIPTION.ToLower().Contains(word)).ToList();
+						videoList = videoList.Where(x => x.Video.TITLE.ToLower().Contains(word) || x.Video.DESCRIPTION.ToLower().Contains(word)).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 					}
 				}
 
 				if (videoTypeList.Count > 0 && !allTypes)
-					videoList = videoList.Where(q => videoTypeList.All(k => q.Video.VIDEO_TYPE != null && q.Video.VIDEO_TYPE.Contains(k))).ToList();
+					videoList = videoList.Where(q => videoTypeList.All(k => q.Video.VIDEO_TYPE != null && q.Video.VIDEO_TYPE.Contains(k))).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 
 				if (injuryTypeList.Count > 0 && injuryTypeList[0] != "0")
-					videoList = videoList.Where(q => injuryTypeList.All(k => q.Video.INJURY_TYPES.Contains(k))).ToList();
+					videoList = videoList.Where(q => injuryTypeList.All(k => q.Video.INJURY_TYPES.Contains(k))).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 
 				if (bodyPartList.Count > 0 && bodyPartList[0] != "0")
-					videoList = videoList.Where(q => bodyPartList.All(k => q.Video.BODY_PARTS.Contains(k))).ToList();
+					videoList = videoList.Where(q => bodyPartList.All(k => q.Video.BODY_PARTS.Contains(k))).OrderByDescending(q => q.Video.VIDEO_DT).ToList();
 
 				if (videoList != null)
 				{

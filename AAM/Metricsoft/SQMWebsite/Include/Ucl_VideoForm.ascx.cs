@@ -83,8 +83,15 @@ namespace SQM.Website
 			set { ViewState["SelectedLocationId"] = value; }
 		}
 
+		protected void Page_Init(object sender, EventArgs e)
+		{
+			//uclAuditForm.OnAttachmentListItemClick += OpenFileUpload;
+			//uclAuditForm.OnExceptionListItemClick += AddTask;
+			
+			uploadText.AttachmentEvent += OnTextUpdate;
 
-		
+		}
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
@@ -94,7 +101,7 @@ namespace SQM.Website
 
 			bool returnFromClick = false;
 			var sourceId = Page.Request[Page.postEventSourceID];
-			if (sourceId != null && (sourceId.EndsWith("btnSaveContinue") || sourceId.EndsWith("btnSaveReturn")))
+			if (sourceId != null && (sourceId.EndsWith("btnSaveContinue") || sourceId.EndsWith("btnSaveReturn") || sourceId.EndsWith("btnSave")))
 			{
 				// Stop extra script warning in when not actually editing a form
 				string script = string.Format("$(window).unbind('beforeunload'); unsaved = false;");
@@ -188,8 +195,8 @@ namespace SQM.Website
 					ddlAvailability.SelectedValue = videoData.Video.VIDEO_AVAILABILITY;
 				litVideoLink.Text = "<a href='/Shared/FileHandler.ashx?DOC=v&DOC_ID=" + EditVideoId + "&FILE_NAME=" + videoData.Video.FILE_NAME + "' target='_blank'>" + Resources.LocalizedText.VideoDownload + "</a>";
 				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, listXLAT.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				rcbStatusSelect.Items.Insert(0, new RadComboBoxItem("Select a status", ""));
 				rcbStatusSelect.SelectedValue = videoData.Video.VIDEO_STATUS;
-
 				cbVideoText.Checked = videoData.Video.SPEAKER_AUDIO;
 
 				// populate release form list
@@ -493,6 +500,30 @@ namespace SQM.Website
 					}
 				}
 			}
+		}
+
+		private void OnTextUpdate(string cmd)
+		{
+			// update the page
+			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoDataById(entities, EditVideoId);
+			if (videos != null)
+			{
+				MediaVideoData videoData = videos[0];
+				GetAttachments(EditVideoId, (int)MediaAttachmentType.Text, videoData.VideoTextList.Count);
+				if (videoData.Video.TEXT_ADDED || videoData.VideoTextList.Count > 0)
+				{
+					cbVideoText.Checked = true;
+					//dvText.Visible = true;
+					dvText.Style.Add("display", "block");
+				}
+				else
+				{
+					cbVideoText.Checked = false;
+					//dvText.Visible = false;
+					dvText.Style.Add("display", "none");
+				}
+			}
+
 		}
 
 
