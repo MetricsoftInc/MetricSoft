@@ -80,7 +80,7 @@
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, Title %>"></asp:Literal></span><br />
 				<%--<asp:TextBox ID="tbTitle" runat="server" MaxLength="100" Width="392px"></asp:TextBox>--%>
-				<telerik:RadTextBox ID="rtbTitle" runat="server" MaxLength="100" Width="392px" TextMode="MultiLine"></telerik:RadTextBox>
+				<telerik:RadTextBox ID="rtbTitle" runat="server" MaxLength="100" Width="392px"></telerik:RadTextBox>
 				<%--<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="<%$ Resources:LocalizedText, TitleRequired %>" ControlToValidate="tbTitle"></asp:RequiredFieldValidator>--%>
 				<br />
 				<span class="confirm">
