@@ -60,10 +60,16 @@ namespace SQM.Website
 				ddlScopeTiming.DataValueField = "XLAT_CODE";
 				ddlScopeTiming.DataTextField = "DESCRIPTION";
 				ddlScopeTiming.DataBind();
-
+				/*
 				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList(new SysPriv[2] { SysPriv.admin, SysPriv.notify }, SysScope.incident, "A").ToList())
 				{
 					ddlNotifyPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
+				}
+				*/
+				foreach (PRIVGROUP pg in SQMModelMgr.SelectPrivGroupList("A", false).ToList())
+				{
+					if (pg.PRIV_GROUP.ToUpper() != "COMMON")
+						ddlNotifyPrivGroup.Items.Add(new RadComboBoxItem(SQMModelMgr.FormatPrivGroup(pg), pg.PRIV_GROUP));
 				}
 			}
 
@@ -172,41 +178,46 @@ namespace SQM.Website
 
 		protected void ddlEdit_OnIndexChanged(object sender, EventArgs e)
 		{
+			try
+			{
+				if (new string[1] { "IN-0" }.Contains(ddlNotifyScope.SelectedValue))
+				{
+					ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = true;
+				}
+				else
+				{
+					ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = false;
+				}
 
-			if (new string[1] { "IN-0" }.Contains(ddlNotifyScope.SelectedValue))
-			{
-				ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = true;
-			}
-			else
-			{
-				ddlScopeTask.Items.Where(i => i.Value == "400").First().Enabled = false;
-			}
+				if (new string[2] { "350", "380" }.Contains(ddlScopeTask.SelectedValue))
+				{
+					ddlScopeStatus.Enabled = true;
+				}
+				else if (new string[1] { "400" }.Contains(ddlScopeTask.SelectedValue))
+				{
+					ddlNotifyScope.SelectedValue = "IN-0";
+					ddlScopeTiming.Enabled = false;
+				}
+				else
+				{
+					ddlScopeStatus.SelectedValue = "380";
+					ddlScopeStatus.Enabled = false;
+					ddlScopeTiming.SelectedValue = "0";
+					ddlScopeTiming.Enabled = false;
+				}
 
-			if (new string[2] { "350", "380" }.Contains(ddlScopeTask.SelectedValue))
-			{
-				ddlScopeStatus.Enabled = true;
+				if (new string[1] { "400" }.Contains(ddlScopeStatus.SelectedValue))
+				{
+					ddlScopeTiming.Enabled = true;
+				}
+				else
+				{
+					ddlScopeTiming.SelectedValue = "0";
+					ddlScopeTiming.Enabled = false;
+				}
 			}
-			else if (new string[1] { "400" }.Contains(ddlScopeTask.SelectedValue))
+			catch
 			{
-				ddlNotifyScope.SelectedValue = "IN-0";
-				ddlScopeTiming.Enabled = false;
-			}
-			else
-			{
-				ddlScopeStatus.SelectedValue = "380";
-				ddlScopeStatus.Enabled = false;
-				ddlScopeTiming.SelectedValue = "0";
-				ddlScopeTiming.Enabled = false;
-			}
-
-			if (new string[1] { "400" }.Contains(ddlScopeStatus.SelectedValue))
-			{
-				ddlScopeTiming.Enabled = true;
-			}
-			else
-			{
-				ddlScopeTiming.SelectedValue = "0";
-				ddlScopeTiming.Enabled = false;
 			}
 		}
 
