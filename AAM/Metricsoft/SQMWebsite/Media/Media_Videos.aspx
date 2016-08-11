@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Media_Videos" Language="C#" MasterPageFile="~/PSMaster.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Media_Videos.aspx.cs" Inherits="SQM.Website.Media_Videos" ValidateRequest="false" meta:resourcekey="PageResource1" %>
+﻿<%@ Page Title="Media_Videos" Language="C#" MasterPageFile="~/RspPSMaster.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Media_Videos.aspx.cs" Inherits="SQM.Website.Media_Videos" ValidateRequest="false" meta:resourcekey="PageResource1" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_VideoList.ascx" TagName="VideoList" TagPrefix="Ucl" %>
