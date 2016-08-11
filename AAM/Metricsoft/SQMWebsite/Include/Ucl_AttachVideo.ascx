@@ -85,12 +85,12 @@
 				<br />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDescription %>"></asp:Literal></span><br />
-				<asp:Panel ID="pnlDisplayArea" runat="server" Visible="true" CssClass="tableDataAlt">
 				<%--<asp:TextBox ID="tbFileDescription" runat="server" TextMode="MultiLine"
 					MaxLength="1000" Width="392px"></asp:TextBox>--%>
 				<telerik:RadTextBox runat="server" ID="rtbFileDescription" TextMode="MultiLine"
 					MaxLength="1000" Width="392px"></telerik:RadTextBox>
 				<br /><br />
+				<asp:Panel ID="pnlDisplayArea" runat="server" Visible="true" CssClass="tableDataAlt">
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Literal></span>
 					<br />
