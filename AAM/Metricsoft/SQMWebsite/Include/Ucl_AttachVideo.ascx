@@ -79,7 +79,8 @@
 				<br /><br />
 				<span class="confirm">
 					<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, Title %>"></asp:Literal></span><br />
-				<asp:TextBox ID="tbTitle" runat="server" MaxLength="100" Width="392px"></asp:TextBox>
+				<%--<asp:TextBox ID="tbTitle" runat="server" MaxLength="100" Width="392px"></asp:TextBox>--%>
+				<telerik:RadTextBox ID="rtbTitle" runat="server" MaxLength="100" Width="392px"></telerik:RadTextBox>
 				<%--<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="<%$ Resources:LocalizedText, TitleRequired %>" ControlToValidate="tbTitle"></asp:RequiredFieldValidator>--%>
 				<br />
 				<span class="confirm">
@@ -91,12 +92,12 @@
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoType %>"></asp:Literal></span>
 					<br />
-					<asp:DropDownList ID="ddlVideoType" runat="server"></asp:DropDownList>
+					<telerik:RadDropDownList ID="rddlVideoType" runat="server"></telerik:RadDropDownList>
 					<br /><br />
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, InjuryType %>"></asp:Literal></span>
 					<br />
-					<asp:DropDownList ID="ddlInjuryType" runat="server"></asp:DropDownList>
+					<telerik:RadDropDownList ID="rddlInjuryType" runat="server"></telerik:RadDropDownList>
 					<br /><br />
 					<span class="confirm">
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, BodyPart %>"></asp:Literal></span>

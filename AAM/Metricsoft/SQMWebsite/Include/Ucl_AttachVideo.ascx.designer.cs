@@ -103,13 +103,13 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDatePicker dmFromDate;
         
         /// <summary>
-        /// tbTitle control.
+        /// rtbTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTitle;
+        protected global::Telerik.Web.UI.RadTextBox rtbTitle;
         
         /// <summary>
         /// tbFileDescription control.
@@ -130,22 +130,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlDisplayArea;
         
         /// <summary>
-        /// ddlVideoType control.
+        /// rddlVideoType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlVideoType;
+        protected global::Telerik.Web.UI.RadDropDownList rddlVideoType;
         
         /// <summary>
-        /// ddlInjuryType control.
+        /// rddlInjuryType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlInjuryType;
+        protected global::Telerik.Web.UI.RadDropDownList rddlInjuryType;
         
         /// <summary>
         /// rdlBodyPart control.

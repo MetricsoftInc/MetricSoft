@@ -397,7 +397,7 @@ namespace SQM.Website
 		private void LoadDefaults()
 		{
 			//lbUpload.Attributes.Add("onmouseup", "ShowModalDialog();");
-			if (ddlInjuryType.Items.Count == 0)
+			if (rddlInjuryType.Items.Count == 0)
 			{
 				PopulateInjuryTypeDropDown();
 				PopulateBodyPartDropDown();
@@ -406,17 +406,17 @@ namespace SQM.Website
 			dmFromDate.SelectedDate = SourceDate;
 			dmFromDate.MaxDate = DateTime.Now;
 			if (string.IsNullOrEmpty(_injuryType))
-				ddlInjuryType.SelectedValue = "";
+				rddlInjuryType.SelectedValue = "";
 			else
-				ddlInjuryType.SelectedValue = _injuryType;
+				rddlInjuryType.SelectedValue = _injuryType;
 			if (string.IsNullOrEmpty(_bodyPart))
 				rdlBodyPart.SelectedValue = "";
 			else
 				rdlBodyPart.SelectedValue = _bodyPart;
 			if (_videoType.Length == 0)
-				ddlVideoType.SelectedValue = "";
+				rddlVideoType.SelectedValue = "";
 			else
-				ddlVideoType.SelectedValue = _videoType.ToString();
+				rddlVideoType.SelectedValue = _videoType.ToString();
 
 		}
 
@@ -468,12 +468,12 @@ namespace SQM.Website
 			List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE");
 			if (injtype != null && injtype.Count > 0)
 			{
-				ddlInjuryType.Items.Add(new ListItem("", ""));
+				rddlInjuryType.Items.Add(new DropDownListItem("", ""));
 
 				foreach (var s in injtype)
 				{
 					{
-						ddlInjuryType.Items.Add(new ListItem(s.Text, s.Value));
+						rddlInjuryType.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
@@ -495,7 +495,7 @@ namespace SQM.Website
 				foreach (var s in videotype)
 				{
 					{
-						ddlVideoType.Items.Add(new ListItem(s.Text, s.Value));
+						rddlVideoType.Items.Add(new DropDownListItem(s.Text, s.Value));
 					}
 				}
 			}
@@ -535,7 +535,7 @@ namespace SQM.Website
 				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), tbTitle.Text.ToString(), _recordType, _recordId, _recordStep, ddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), ddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, tbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
 
 				// next, save the video to the server; file name = VIDEO_ID
 				//////if (video != null)
