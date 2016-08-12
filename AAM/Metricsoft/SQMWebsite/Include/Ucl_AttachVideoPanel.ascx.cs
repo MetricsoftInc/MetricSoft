@@ -395,16 +395,15 @@ namespace SQM.Website
 				return;
 			}
 
-			//uclProgress.BindProgressDisplay(100, "Save uploaded video... ");
-			//uclProgress.UpdateDisplay(1, 40, "Save uploaded video...");
-
+			uclProgress.BindProgressDisplay(100, "Save uploaded video... ");
+			uclProgress.UpdateDisplay(1, 40, "Save uploaded video...");
 
 			int i = 0;
 
 			//if (flFileUpload.HasFile)
 			foreach (UploadedFile file in raUpload.UploadedFiles) // there should only be 1
 			{
-				//uclProgress.UpdateDisplay(1, 50 + (i*10), "Save uploaded video...");
+				uclProgress.UpdateDisplay(1, 50 + (i*10), "Save uploaded video...");
 				//name = flFileUpload.FileName;
 				name = file.FileName;
 				fileType = file.GetExtension();
@@ -415,7 +414,7 @@ namespace SQM.Website
 				pnlAttachMsg.Visible = false;
 				pnlListVideo.Visible = false;
 
-				//uclProgress.ProgressComplete();
+				uclProgress.ProgressComplete();
 
 				if (video != null)
 				{
@@ -477,14 +476,13 @@ namespace SQM.Website
 			string filename = Server.MapPath(video.FILE_NAME);
 			int status = MediaVideoMgr.DeleteVideo(videoId, filename);
 
-			//			this.GetUploadedFiles();
-			pnlListVideo.Visible = false;
-			SessionManager.ReturnRecordID = video.VIDEO_ID;
-			SessionManager.ReturnObject = "AddVideo";
-			SessionManager.ReturnStatus = true;
+			this.GetUploadedFiles();
 
 			if (AttachmentEvent != null)
 			{
+				SessionManager.ReturnRecordID = video.VIDEO_ID;
+				SessionManager.ReturnObject = "AddVideo";
+				SessionManager.ReturnStatus = true;
 				AttachmentEvent("delete");
 			}
 

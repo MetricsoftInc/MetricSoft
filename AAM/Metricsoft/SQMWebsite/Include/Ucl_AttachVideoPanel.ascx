@@ -2,24 +2,14 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadUpload" TagPrefix="Ucl" %>
-<%--<%@ Register src="~/Include/Ucl_Progress.ascx" TagName="Progress" TagPrefix="Ucl" %>--%>
+<%@ Register src="~/Include/Ucl_Progress.ascx" TagName="Progress" TagPrefix="Ucl" %>
 
 <script type="text/javascript">
 
-	window.onload = function () {
-		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = "";
-	}
-	window.onbeforeunload = function () {
-		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value == '1') {
-			return 'You have unsaved changes on this page.';
-		}
-	}
 	function ChangeUpdate(sender, args) {
-		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = '1';
 		return true;
 	}
 	function ChangeClear(sender, args) {
-		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclVideoPanel_hfChangeUpdate').value = '0';
 	}
 
 	function ValidateOnSave(sender, args) {
@@ -82,7 +72,7 @@
 			</telerik:RadGrid>
 		</asp:Panel>
 		<br style="clear: both;" />
-<%--		<Ucl:Progress id="uclProgress" runat="server"/>--%>
+		<Ucl:Progress id="uclProgress" runat="server"/>
 		<asp:Panel ID="pnlAttachVideoBody" runat="server">
 			<table width="99%" border="0"  class="lightTable">
 				<tr>
@@ -174,8 +164,7 @@
 			<center>
 			<span>
 				<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
-						 OnClick="btnSave_Click"  SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
-				<%--OnClientClicked="ChangeClear" OnClick="btnSave_Click"  AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>--%>
+				OnClientClicked="ChangeClear" OnClick="btnSave_Click"  AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 				<%--<asp:Button ID="btnSave" CSSclass="buttonStd buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>--%>
 				<asp:Button ID="btnCancel" CSSclass= "buttonEmphasis buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click" CausesValidation="false"></asp:Button>
 			</span>
