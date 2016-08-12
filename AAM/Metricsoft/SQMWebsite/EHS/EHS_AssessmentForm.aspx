@@ -70,8 +70,7 @@
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
-    <asp:HiddenField ID="hfwidth" runat="server" />
-    <asp:HiddenField ID="hfheight" runat="server" />
+	<asp:HiddenField id="hfVideoOption" runat="server"/>
     <div class="pageWrapper">
 
         <div class="container-fluid tabActiveTableBg">
@@ -226,6 +225,7 @@
                                                                                 <img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
                                                                             </asp:LinkButton>&nbsp;
 																			<asp:LinkButton ID="LnkVideos" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton> 
+																			<asp:LinkButton ID="LnkVideosAlt" runat="server" text="Alt Video" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton> 
                                                                         </td>
                                                                     </tr>
                                                                 </ItemTemplate>

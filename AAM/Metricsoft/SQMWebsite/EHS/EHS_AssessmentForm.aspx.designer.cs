@@ -13,22 +13,13 @@ namespace SQM.Website.EHS {
     public partial class EHS_AssessmentForm {
         
         /// <summary>
-        /// hfwidth control.
+        /// hfVideoOption control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfwidth;
-        
-        /// <summary>
-        /// hfheight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfheight;
+        protected global::System.Web.UI.WebControls.HiddenField hfVideoOption;
         
         /// <summary>
         /// lblViewEHSRezTitle control.

@@ -10,16 +10,6 @@
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
 	<script type="text/javascript">
 
-		$(window).load(function () {
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-		});
-
-		$(window).resize(function () {
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-		});
-
 		function StandardConfirm(sender, args) {
 
 			// Some pages will have no validators, so skip
