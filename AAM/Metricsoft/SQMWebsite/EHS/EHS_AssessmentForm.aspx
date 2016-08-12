@@ -9,6 +9,8 @@
 <%@ Register src="~/Include/Ucl_TaskList.ascx" TagName="TaskList" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_TaskStatus.ascx" TagName="Task" TagPrefix="Ucl" %>
 
+<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="VideoUpload" TagPrefix="Ucl" %>
+
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
 
@@ -64,7 +66,15 @@
 
     	function OpenTaskWindow() {
     		$find("<%=winUpdateTask.ClientID %>").show();
-        }
+    	}
+
+    	function OpenVideoUploadWindow() {
+    		$find("<%=winVideoUpload.ClientID %>").show();
+		}
+
+		function CloseVideoUploadWindow() {
+			$find("<%=winVideoUpload.ClientID %>").close();
+		}
 
     </script>
 </asp:Content>
@@ -293,11 +303,19 @@
 
         </div>
     </div>
-<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="700px" Title="View/Add Task" Behavior="Close, Move" OnClientClose="OnClientClose">
-	<ContentTemplate>
-		<Ucl:Task ID="uclTask" runat="server" />
-	</ContentTemplate>
-</telerik:RadWindow>
+
+	<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="700px" Title="View/Add Task" Behavior="Close, Move" OnClientClose="OnClientClose">
+		<ContentTemplate>
+			<Ucl:Task ID="uclTask" runat="server" />
+		</ContentTemplate>
+	</telerik:RadWindow>
+
+	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="550px" Width="650px" Title="Upload Video" Behavior="Move, Close">
+		<ContentTemplate>
+			<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
+		</ContentTemplate>
+	</telerik:RadWindow>
+
 
     <Ucl:AttachWin ID="uclAttachWin" runat="server" />
     <Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />

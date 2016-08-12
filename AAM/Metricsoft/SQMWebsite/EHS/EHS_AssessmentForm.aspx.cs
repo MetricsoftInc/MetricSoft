@@ -86,7 +86,7 @@ namespace SQM.Website.EHS
 			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 			uclAttachVideoWin.AttachmentEvent += OnVideoUpdate;
 			uclTask.OnTaskAdd += UpdateTaskList;
-
+			uclVideoUpload.AttachmentEvent += OnVideoUpdate;
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -277,7 +277,11 @@ namespace SQM.Website.EHS
 			int recordType = (int)TaskRecordType.Audit;
 			// before we call the radWindow, we need to update the page?
 			hdnVideoClick.Value = lnk.CommandArgument;
-			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "", (decimal)audit.DETECT_PLANT_ID);
+			//uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "", (decimal)audit.DETECT_PLANT_ID);
+
+			uclVideoUpload.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), (decimal)audit.DETECT_PLANT_ID, "Upload Video", "Upload or view videos associated with this assessment question", "", "", "", PageUseMode.EditEnabled, true);
+			string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}
 
 		private void OnVideoUpdate(string cmd)
@@ -290,6 +294,9 @@ namespace SQM.Website.EHS
 			string[] args = hdnVideoClick.Value.ToString().Split(',');
 			decimal recordID;
 			decimal recordSubID;
+
+			string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 
 			try
 			{

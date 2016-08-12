@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_VideoList.ascx" TagName="VideoList" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_VideoForm.ascx" TagName="VideoForm" TagPrefix="Ucl" %>
-<%@ Register Src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideo" TagPrefix="Ucl" %>
+<%--<%@ Register Src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideo" TagPrefix="Ucl" %>--%>
 
 <%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="VideoUpload" TagPrefix="Ucl" %>
 
@@ -392,7 +392,7 @@
 		</div>
 	</div>
 
-	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />
+<%--	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />--%>
 
 	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="650px" Title="Upload Video" Behavior="Move, Close">
 		<ContentTemplate>

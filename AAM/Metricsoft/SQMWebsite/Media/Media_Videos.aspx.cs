@@ -23,8 +23,8 @@ namespace SQM.Website
 		{
 			uclVideoUpload.AttachmentEvent += AddVideoResponse;
 			base.OnInit(e);
-
 		}
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			this.Title = Resources.LocalizedText.MediaVideos;
