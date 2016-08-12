@@ -39,6 +39,9 @@
 			$find("<%=winVideoUpload.ClientID %>").show();
 			}
 
+		function CloseVideoUploadWindow() {
+			$find("<%=winVideoUpload.ClientID %>").close();
+				}
 	</script>
 </asp:Content>
 <%--<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -391,7 +394,7 @@
 
 	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />
 
-	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="600px" Width="600px" Title="Upload Video" Behavior="Move, Close">
+	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="525px" Width="650px" Title="Upload Video" Behavior="Move">
 		<ContentTemplate>
 			<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
 		</ContentTemplate>

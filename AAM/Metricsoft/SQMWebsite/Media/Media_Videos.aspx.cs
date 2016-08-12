@@ -19,6 +19,12 @@ namespace SQM.Website
 			VideoDisplay
 		}
 
+		protected override void OnInit(EventArgs e)
+		{
+			uclVideoUpload.AttachmentEvent += AddVideoResponse;
+			base.OnInit(e);
+
+		}
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			this.Title = Resources.LocalizedText.MediaVideos;
@@ -159,6 +165,13 @@ namespace SQM.Website
 			//	ucl.BindDocumentSelect("EHS", 2, true, true, "");
 			//}
 
+		}
+
+		protected void AddVideoResponse(string cmd)
+		{
+			string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			UpdateDisplayState(DisplayState.VideoList);
 		}
 
 		protected void UpdateDisplayState(DisplayState state)
