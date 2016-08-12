@@ -40,7 +40,7 @@ namespace SQM.Website
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
-			RadPersistenceManager1.PersistenceSettings.AddSetting(uclVideoList.VideoListEhsGrid);
+			//RadPersistenceManager1.PersistenceSettings.AddSetting(uclVideoList.VideoListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoSource);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoOwner);
 
@@ -171,7 +171,8 @@ namespace SQM.Website
 		{
 			string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
-			UpdateDisplayState(DisplayState.VideoList);
+			//UpdateDisplayState(DisplayState.VideoList);
+			btnSearch_Click(rbNew, null);
 		}
 
 		protected void UpdateDisplayState(DisplayState state)
@@ -187,8 +188,8 @@ namespace SQM.Website
 					break;
 
 				case DisplayState.VideoNew:
-					divVideoList.Visible = false;
-					uclVideoForm.Visible = false;
+					//divVideoList.Visible = false;
+					//uclVideoForm.Visible = false;
 					recordType = (int)TaskRecordType.Media;
 					//uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "", 0);
 

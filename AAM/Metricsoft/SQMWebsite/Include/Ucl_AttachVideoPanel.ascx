@@ -2,7 +2,7 @@
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadUpload" TagPrefix="Ucl" %>
-<%@ Register src="~/Include/Ucl_Progress.ascx" TagName="Progress" TagPrefix="Ucl" %>
+<%--<%@ Register src="~/Include/Ucl_Progress.ascx" TagName="Progress" TagPrefix="Ucl" %>--%>
 
 <script type="text/javascript">
 
@@ -82,7 +82,7 @@
 			</telerik:RadGrid>
 		</asp:Panel>
 		<br style="clear: both;" />
-		<Ucl:Progress id="uclProgress" runat="server"/>
+<%--		<Ucl:Progress id="uclProgress" runat="server"/>--%>
 		<asp:Panel ID="pnlAttachVideoBody" runat="server">
 			<table width="99%" border="0"  class="lightTable">
 				<tr>
@@ -174,7 +174,8 @@
 			<center>
 			<span>
 				<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
-						OnClientClicked="ChangeClear" OnClick="btnSave_Click"  SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+						 OnClick="btnSave_Click"  SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
+				<%--OnClientClicked="ChangeClear" OnClick="btnSave_Click"  AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>--%>
 				<%--<asp:Button ID="btnSave" CSSclass="buttonStd buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>--%>
 				<asp:Button ID="btnCancel" CSSclass= "buttonEmphasis buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click" CausesValidation="false"></asp:Button>
 			</span>

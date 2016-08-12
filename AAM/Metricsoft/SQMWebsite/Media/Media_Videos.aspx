@@ -394,7 +394,7 @@
 
 	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />
 
-	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="525px" Width="650px" Title="Upload Video" Behavior="Move">
+	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="525px" Width="650px" Title="Upload Video" Behavior="Move, Close">
 		<ContentTemplate>
 			<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
 		</ContentTemplate>
