@@ -80,7 +80,7 @@ namespace SQM.Website.EHS
 			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 			//uclAttachVideoWin.AttachmentEvent += OnVideoUpdate;
 			uclTask.OnTaskAdd += UpdateTaskList;
-			uclVideoUpload.AttachmentEvent += OnVideoUpdate;
+			//uclVideoUpload.AttachmentEvent += OnVideoUpdate;
 
 			base.OnInit(e);
 		}
@@ -287,7 +287,7 @@ namespace SQM.Website.EHS
 			hdnVideoClick.Value = lnk.CommandArgument;
 			//uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "", (decimal)audit.DETECT_PLANT_ID);
 
-			uclVideoUpload.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), (decimal)audit.DETECT_PLANT_ID, "Upload Video", "Upload or view videos associated with this assessment question", "", "", "", PageUseMode.EditEnabled, true);
+			uclVideoUpload.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), (decimal)audit.DETECT_PLANT_ID, "Upload Video", "Upload or view videos associated with this assessment question", "", "", "", PageUseMode.EditEnabled, false);
 			string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}

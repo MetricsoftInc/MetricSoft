@@ -14,8 +14,6 @@
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
 
-  
-
     	function StandardConfirm(sender, args) {
 
     		// Some pages will have no validators, so skip
