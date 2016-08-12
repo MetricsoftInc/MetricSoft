@@ -298,6 +298,7 @@ namespace SQM.Website.EHS
 			string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 
+			/*
 			try
 			{
 				recordID = Convert.ToDecimal(args[0].ToString());
@@ -343,6 +344,7 @@ namespace SQM.Website.EHS
 				}
 			}
 			catch { }
+			*/
 
 		}
 
