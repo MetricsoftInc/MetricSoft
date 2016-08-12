@@ -5,6 +5,8 @@
 <%@ Register Src="~/Include/Ucl_VideoForm.ascx" TagName="VideoForm" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideo" TagPrefix="Ucl" %>
 
+<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="VideoUpload" TagPrefix="Ucl" %>
+
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
 	<script type="text/javascript">
 
@@ -31,6 +33,11 @@
 		function DeleteConfirm(button, args) {
 			args.set_cancel(!confirm("Delete video - are you sure?  Videos cannot be undeleted."));
 		}
+
+
+		function OpenVideoUploadWindow() {
+			$find("<%=winVideoUpload.ClientID %>").show();
+			}
 
 	</script>
 </asp:Content>
@@ -384,4 +391,13 @@
 
 	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />
 
+	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="600px" Width="600px" Title="Upload Video" Behavior="Move, Close">
+		<ContentTemplate>
+			<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
+		</ContentTemplate>
+	</telerik:RadWindow>
+
 </asp:Content>
+
+
+

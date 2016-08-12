@@ -177,7 +177,11 @@ namespace SQM.Website
 					divVideoList.Visible = false;
 					uclVideoForm.Visible = false;
 					recordType = (int)TaskRecordType.Media;
-					uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "", 0);
+					//uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "", 0);
+
+					uclVideoUpload.OpenManageVideosWindow(recordType, 0, "", SessionManager.UserContext.HRLocation.Plant.PLANT_ID, "Upload Video", "Upload New Video", "", "", "", PageUseMode.EditEnabled, true);
+					string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+					ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 
 					//uclVideoForm.Visible = true;
 					//uclVideoForm.IsEditContext = false;
