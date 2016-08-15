@@ -48,10 +48,7 @@ namespace SQM.Website
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
-
-			bool uploadVideoAccess = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.media);
-			rbNew.Visible = uploadVideoAccess;
-
+			SetSubnav("setup");
 
 			if (IsPostBack)
 			{
@@ -167,11 +164,20 @@ namespace SQM.Website
 
 		}
 
+		protected void SetSubnav(string context)
+		{
+			bool uploadVideoAccess = SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.media);
+			rbNew.Enabled = uploadVideoAccess;
+		}
+
 		protected void AddVideoResponse(string cmd)
 		{
-			string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			//string script = "function f(){CloseVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			//ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			//UpdateDisplayState(DisplayState.VideoList);
+			divVideoUpload.Visible = false;
+			rbNew.Visible = true;
+			SetSubnav("list");
 			btnSearch_Click(rbNew, null);
 		}
 
@@ -194,8 +200,12 @@ namespace SQM.Website
 					//uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "", 0);
 
 					uclVideoUpload.OpenManageVideosWindow(recordType, 0, "", SessionManager.UserContext.HRLocation.Plant.PLANT_ID, "Upload Video", "Upload New Video", "", "", "", PageUseMode.EditEnabled, true);
-					string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-					ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+					divVideoUpload.Visible = true;
+					divVideoList.Visible = false; 
+					rbNew.Visible = false;
+					//string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+					//ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+
 
 					//uclVideoForm.Visible = true;
 					//uclVideoForm.IsEditContext = false;
@@ -291,6 +301,7 @@ namespace SQM.Website
 		protected void rbNew_Click(object sender, EventArgs e)
 		{
 			rbNew.Visible = false;
+			rbNew.Enabled = false;
 
 			UpdateDisplayState(DisplayState.VideoNew);
 		}

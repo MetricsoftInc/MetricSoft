@@ -343,7 +343,7 @@ namespace SQM.Website
 			{
 				SessionManager.ReturnStatus = false;
 				SessionManager.ReturnObject = "DisplayVideos";
-				Response.Redirect("/Media/Media_Videos.aspx");  // mt - temporary
+				Response.Redirect("/Media/Media_Videos.aspx");  
 			}
 
 		}
