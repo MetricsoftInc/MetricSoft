@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_AttachVideoPanel.ascx.cs" Inherits="SQM.Website.Ucl_AttachVideoPanel" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_AttachVideoPanel.ascx.cs" Inherits="SQM.Website.Ucl_AttachVideoPanel" ClientIDMode="Static" %>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="RadUpload" TagPrefix="Ucl" %>
@@ -6,10 +6,20 @@
 
 <script type="text/javascript">
 
+	window.onload = function () {
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "";
+	}
+	window.onbeforeunload = function () {
+		if (document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value == '1') {
+			return 'You have unsaved changes on this page.';
+		}
+	}
 	function ChangeUpdate(sender, args) {
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "1";
 		return true;
 	}
 	function ChangeClear(sender, args) {
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
 	}
 
 	function ValidateOnSave(sender, args) {

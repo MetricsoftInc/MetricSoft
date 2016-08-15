@@ -4,19 +4,19 @@
 <script type="text/javascript">
 
 	window.onload = function () {
-			document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_ucllosttime_hfChangeUpdate').value = "";
-		}
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "";
+	}
 	window.onbeforeunload = function () {
-		if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_ucllosttime_hfChangeUpdate').value == '1') {
+		if (document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value == '1') {
 			return 'You have unsaved changes on this page.';
 		}
 	}
 	function ChangeUpdate(sender, args) {
-		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_ucllosttime_hfChangeUpdate').value = '1';
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "1";
 		return true;
 	}
 	function ChangeClear(sender, args) {
-		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_ucllosttime_hfChangeUpdate').value = '0';
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
 	}
 
 </script>
