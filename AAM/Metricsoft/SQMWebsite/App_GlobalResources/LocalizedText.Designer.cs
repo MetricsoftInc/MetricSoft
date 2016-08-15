@@ -2158,6 +2158,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The video file has been uploaded.
+        /// </summary>
+        internal static string VideoSaveSuccess {
+            get {
+                return ResourceManager.GetString("VideoSaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select video by owner.
         /// </summary>
         internal static string VideoSelectOwner {

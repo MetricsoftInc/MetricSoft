@@ -179,14 +179,11 @@ namespace SQM.Website
 			//UpdateDisplayState(DisplayState.VideoList);
 			rbNew.Visible = true;
 			SetSubnav("list");
-			/*
 			if (cmd == "save")
 			{
-				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.VideoSaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 			}
-			*/
-			//btnSearch_Click(rbNew, null);
 		}
 
 		protected void UpdateDisplayState(DisplayState state)
