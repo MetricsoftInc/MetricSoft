@@ -288,7 +288,7 @@ namespace SQM.Website.EHS
 			if (lnk.ID == "LnkVideosAlt")
 			{
 				hfVideoOption.Value = lnk.ID;
-				uclVideoUpload.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), (decimal)audit.DETECT_PLANT_ID, "Upload Video", "Upload or view videos associated with this assessment question", "", "", "", PageUseMode.EditEnabled, true);
+				uclVideoUpload.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), (decimal)audit.DETECT_PLANT_ID, "Upload Video", "Upload or view videos associated with this assessment question", "", "", "", PageUseMode.EditEnabled, true, "");
 				string script = "function f(){OpenVideoUploadWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			}

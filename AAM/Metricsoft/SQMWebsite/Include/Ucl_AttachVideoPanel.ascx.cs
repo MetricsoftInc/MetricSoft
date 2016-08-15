@@ -230,9 +230,9 @@ namespace SQM.Website
 		#region attachwindow
 		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, decimal plantID, string windowTitle, string description, string videoType, string injuryType, string bodyPart)
 		{
-			OpenManageVideosWindow(recordType, recordID, recordStep, plantID, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled, false);
+			OpenManageVideosWindow(recordType, recordID, recordStep, plantID, windowTitle, description, videoType, injuryType, bodyPart, PageUseMode.EditEnabled, false, "");
 		}
-		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, decimal plantID, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode, bool showCancel)
+		public void OpenManageVideosWindow(int recordType, decimal recordID, string recordStep, decimal plantID, string windowTitle, string description, string videoType, string injuryType, string bodyPart, PageUseMode viewMode, bool showCancel, string context)
 		{
 			_recordType = recordType;
 			_recordId = recordID;
@@ -261,6 +261,17 @@ namespace SQM.Website
 			{
 				pnlAttachVideoBody.Visible = btnSave.Visible = true;
 				dmFromDate.ShowPopupOnFocus = true;
+			}
+
+			if (context == "mediapage")
+			{
+				btnSave.Visible = false;
+				btnSaveNA.Visible = true;
+			}
+			else
+			{
+				btnSave.Visible = true;
+				btnSaveNA.Visible = false;
 			}
 
 			LoadDefaults();
@@ -422,11 +433,10 @@ namespace SQM.Website
 					//ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
 					lblAttachMsg.Text = Resources.LocalizedText.SaveSuccess;
 					pnlAttachMsg.Visible = true;
-
 					if (AttachmentEvent != null)
 					{
 						SessionManager.ReturnRecordID = video.VIDEO_ID;
-						SessionManager.ReturnObject = "AddVideo";
+						SessionManager.ReturnObject = "DisplayVideos";
 						SessionManager.ReturnStatus = true;
 						AttachmentEvent("save");
 					}

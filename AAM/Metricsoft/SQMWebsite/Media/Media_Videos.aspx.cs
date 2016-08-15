@@ -176,9 +176,17 @@ namespace SQM.Website
 			//ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			//UpdateDisplayState(DisplayState.VideoList);
 			divVideoUpload.Visible = false;
+			//UpdateDisplayState(DisplayState.VideoList);
 			rbNew.Visible = true;
 			SetSubnav("list");
-			btnSearch_Click(rbNew, null);
+			/*
+			if (cmd == "save")
+			{
+				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+			}
+			*/
+			//btnSearch_Click(rbNew, null);
 		}
 
 		protected void UpdateDisplayState(DisplayState state)
@@ -199,7 +207,7 @@ namespace SQM.Website
 					recordType = (int)TaskRecordType.Media;
 					//uclAttachVideo.OpenManageVideosWindow(recordType, 0, "", "Upload Video", "Upload new video", "", "", "", 0);
 
-					uclVideoUpload.OpenManageVideosWindow(recordType, 0, "", SessionManager.UserContext.HRLocation.Plant.PLANT_ID, "Upload Video", "Upload New Video", "", "", "", PageUseMode.EditEnabled, true);
+					uclVideoUpload.OpenManageVideosWindow(recordType, 0, "", SessionManager.UserContext.HRLocation.Plant.PLANT_ID, "Upload Video", "Upload New Video", "", "", "", PageUseMode.EditEnabled, true, "mediapage");
 					divVideoUpload.Visible = true;
 					divVideoList.Visible = false; 
 					rbNew.Visible = false;

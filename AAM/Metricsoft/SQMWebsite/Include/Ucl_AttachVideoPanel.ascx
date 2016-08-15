@@ -20,7 +20,12 @@
 	}
 	function ChangeClear(sender, args) {
 		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+		return true;
 	}
+	function ChangeClearNA() {
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+			return true;
+		}
 
 	function ValidateOnSave(sender, args) {
 		var valid = false;
@@ -176,6 +181,7 @@
 				<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 				OnClientClicked="ChangeClear" OnClick="btnSave_Click"  AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 				<%--<asp:Button ID="btnSave" CSSclass="buttonStd buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" Onclick="btnSave_Click"></asp:Button>--%>
+				<asp:Button ID="btnSaveNA" CSSclass= "buttonStd" Height="30px" Width="80px" runat="server" Text="<%$ Resources:LocalizedText, Save %>" style="margin: 5px;" OnClientClick="ChangeClearNA();" OnClick="btnSave_Click" UseSubmitBehavior="true" CausesValidation="false"></asp:Button>
 				<asp:Button ID="btnCancel" CSSclass= "buttonEmphasis buttonPopupClose" runat="server" Text="<%$ Resources:LocalizedText, Cancel %>" style="margin: 5px;" OnClick="btnCancel_Click" CausesValidation="false"></asp:Button>
 			</span>
 			</center>
