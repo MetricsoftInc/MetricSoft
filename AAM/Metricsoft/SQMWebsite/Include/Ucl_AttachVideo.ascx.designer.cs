@@ -49,13 +49,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.ImageButton imbVideo;
         
         /// <summary>
-        /// winManageVideos control.
+        /// pnlAddVideos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow winManageVideos;
+        protected global::System.Web.UI.WebControls.Panel pnlAddVideos;
         
         /// <summary>
         /// lblManageVideos control.

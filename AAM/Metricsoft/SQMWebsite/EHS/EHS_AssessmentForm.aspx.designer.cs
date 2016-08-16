@@ -364,6 +364,15 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.WebControls.HiddenField hdnVideoClick;
         
         /// <summary>
+        /// tblButtons control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable tblButtons;
+        
+        /// <summary>
         /// cbClose control.
         /// </summary>
         /// <remarks>
@@ -434,24 +443,6 @@ namespace SQM.Website.EHS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_TaskStatus uclTask;
-        
-        /// <summary>
-        /// winVideoUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow winVideoUpload;
-        
-        /// <summary>
-        /// uclVideoUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_AttachVideoPanel uclVideoUpload;
         
         /// <summary>
         /// uclAttachWin control.

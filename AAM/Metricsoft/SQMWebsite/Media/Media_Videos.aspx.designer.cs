@@ -391,6 +391,15 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_VideoForm uclVideoForm;
         
         /// <summary>
+        /// uclAttachVideo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_AttachVideo uclAttachVideo;
+        
+        /// <summary>
         /// RadAjaxManager1 control.
         /// </summary>
         /// <remarks>

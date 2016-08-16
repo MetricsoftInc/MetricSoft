@@ -3,9 +3,7 @@
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/Include/Ucl_VideoList.ascx" TagName="VideoList" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_VideoForm.ascx" TagName="VideoForm" TagPrefix="Ucl" %>
-<%--<%@ Register Src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideo" TagPrefix="Ucl" %>--%>
-
-<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="VideoUpload" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_AttachVideo.ascx" TagName="AttachVideo" TagPrefix="Ucl" %>
 
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
 	<script type="text/javascript">
@@ -172,11 +170,6 @@
 
 			<br style="clear: both;" />
 			<telerik:RadPersistenceManager ID="RadPersistenceManager1" runat="server"></telerik:RadPersistenceManager>
-
-
-			<div id="divVideoUpload" runat="server" visible="false">
-				<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
-			</div>
 
 			<div id="divVideoList" runat="server" visible="true">
 				<%--	$$$$$$$$$$$$$$ Video Selection START $$$$$$$$$$$$$$$$$$$$$$$ --%>
@@ -374,19 +367,13 @@
 			</div>
 
 			<Ucl:VideoForm ID="uclVideoForm" runat="server" />
+			<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />
 
             <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" meta:resourcekey="RadAjaxManager1Resource1">
             </telerik:RadAjaxManager>
 		</div>
 	</div>
 
-<%--	<Ucl:AttachVideo ID="uclAttachVideo" runat="server" />--%>
-
-<%--	<telerik:RadWindow runat="server" ID="winVideoUpload" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="650px" Title="Upload Video" Behavior="Move, Close">
-		<ContentTemplate>
-			<Ucl:VideoUpload id="uclVideoUpload" runat="server"/>
-		</ContentTemplate>
-	</telerik:RadWindow>--%>
 
 </asp:Content>
 

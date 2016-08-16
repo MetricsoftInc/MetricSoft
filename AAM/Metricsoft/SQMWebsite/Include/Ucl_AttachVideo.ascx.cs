@@ -369,12 +369,14 @@ namespace SQM.Website
 			if (viewMode == PageUseMode.ViewOnly)
 			{
 				//uclUpload.SetViewMode(false);
-				winManageVideos.Visible = false;
+				//winManageVideos.Visible = false;
+				pnlAddVideos.Visible = false;
 				btnSave.Visible = false;
 			}
 			else
 			{
-				winManageVideos.Visible = true;
+				//winManageVideos.Visible = true;
+				pnlAddVideos.Visible = true;
 				btnSave.Visible = true;
 			}
 
@@ -388,10 +390,11 @@ namespace SQM.Website
 			else
 				pnlListVideo.Visible = false;
 
-			winManageVideos.Title = windowTitle;
+			//winManageVideos.Title = windowTitle;
 			lblManageVideos.Text = description;
-			string script = "function f(){OpenManageVideosWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			//string script = "function f(){OpenManageVideosWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			//ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			pnlAddVideos.Visible = true;
 		}
 
 		private void LoadDefaults()
