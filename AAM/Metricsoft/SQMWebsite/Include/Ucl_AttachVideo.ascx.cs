@@ -377,6 +377,8 @@ namespace SQM.Website
 			{
 				//winManageVideos.Visible = true;
 				pnlAddVideos.Visible = true;
+				rtbTitle.Text = "";
+				rtbFileDescription.Text = "";
 				btnSave.Visible = true;
 			}
 
