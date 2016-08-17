@@ -2346,7 +2346,9 @@
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\AAMStaging - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <None Include="Properties\PublishProfiles\NSK - Rackspace.pubxml" />
+    <None Include="Properties\PublishProfiles\NSK - Rackspace.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\NSKStaging - Rackspace.pubxml">
       <SubType>Designer</SubType>
     </None>
