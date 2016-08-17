@@ -235,7 +235,7 @@ namespace HourlyTasks
 		{
 			try
 			{
-				string logPath = HttpContext.Current.Server.MapPath("~") + "\\log\\";
+				string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\log\\";
 				if (!Directory.Exists(logPath))
 					Directory.CreateDirectory(logPath);
 
