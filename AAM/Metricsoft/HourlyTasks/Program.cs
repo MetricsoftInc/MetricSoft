@@ -23,8 +23,22 @@ namespace HourlyTasks
 			entities = new PSsqmEntities();
 			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
-			// Close & Schedule Audits from the Scheduler, based on local plant date & time
-			AuditScheduler();
+
+			// arguments:
+			// no arguments supplied == exec all tasks
+			// audit == schedule audits only
+			// notify == run ehsData rollup only
+
+			if (args.Length == 0 || args.Contains("audit"))
+			{
+				// Close & Schedule Audits from the Scheduler, based on local plant date & time
+				AuditScheduler();
+			}
+
+			if (args.Length > 0 && args.Contains("notify"))
+			{
+				OverdueTaskNotifications();
+			}
 
 			// After all Hourly processes are complete, wrap up the output log
 			WriteLine("");
@@ -231,6 +245,91 @@ namespace HourlyTasks
 		}
 		#endregion
 
+		#region notifications
+
+		static string OverdueTaskNotifications()
+		{
+			string nextStep = "";
+			DateTime thisPeriod = DateTime.UtcNow;
+			decimal updateIndicator = thisPeriod.Ticks;
+			decimal locationID = 0;
+
+			WriteLine("OVERDUE TASK NOTIFICATIONS Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
+
+			try
+			{
+				entities = new PSsqmEntities();
+
+				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
+				if (openAuditList.Count > 0)
+				{
+					WriteLine("Open Audits ...");
+					foreach (TaskItem taskItem in openAuditList)
+					{
+						WriteLine("Audit: " + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+						AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+						if (audit != null)
+						{
+							EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+						}
+					}
+				}
+
+				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(DateTime.UtcNow);
+				if (openTaskList.Count > 0)
+				{
+					WriteLine("Open Tasks ...");
+					foreach (TaskItem taskItem in openTaskList)
+					{
+						WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+						if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident)
+						{
+							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+							if (incident != null)
+							{
+								// notify assigned person and escalation person if over-over due
+								EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+								if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
+								{
+									// send to notification list for plant, BU, ...
+									EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+								}
+							}
+						}
+						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
+						{
+							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+							if (incident != null)
+							{
+								// notify assigned person and escalation person if over-over due
+								EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+							}
+						}
+						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)
+						{
+							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+							if (audit != null)
+							{
+								EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+							}
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				WriteLine("OVERDUE TASK NOTIFICATIONS Error - " + ex.ToString());
+			}
+
+			WriteLine("OVERDUE TASK NOTIFICATIONS Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
+
+			return nextStep;
+
+		}
+
+		#endregion
+
+		#region logs
 		static void WriteLogFile()
 		{
 			try
@@ -266,7 +365,7 @@ namespace HourlyTasks
 		{
 			output.AppendLine(text);
 		}
-
+		#endregion
 
 	}
 }

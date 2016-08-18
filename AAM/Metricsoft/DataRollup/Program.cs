@@ -263,8 +263,6 @@ namespace DataRollup
 		static string ProcessEHSData()
 		{
 			string nextStep = "";
-			DateTime fromDate;
-			SETTINGS setting = null;
 
 			WriteLine("EHSDATA Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
