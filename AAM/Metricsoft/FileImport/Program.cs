@@ -36,8 +36,16 @@ namespace FileImport
 
 			try
 			{
-				// Process resource file
-				ProcessFile("Reference");
+				// arguments:
+				// no arguments supplied == process all files
+				// ref == import references files only
+				// person == import person files only
+
+				if (args.Length == 0 || args.Contains("ref"))
+				{
+					// Process resource file
+					ProcessFile("Reference");
+				}
 			}
 			catch (Exception ex)
 			{
@@ -46,8 +54,11 @@ namespace FileImport
 
 			try
 			{
-				// Process Person Input file from PeopleSoft
-				ProcessFile("Person");
+				if (args.Length == 0 || args.Contains("person"))
+				{
+					// Process Person Input file from PeopleSoft
+					ProcessFile("Person");
+				}
 			}
 			catch (Exception ex)
 			{

@@ -26,7 +26,7 @@ namespace DataRollup
 			// arguments:
 			// no arguments supplied == run all rollup processes
 			// env == run environmental rollup only
-			// hs  == run incidents rollup only  (will also chain the ehsdata rollup if the ROLLUP_NEXTPAGE setting = "EHSDataRollUp"
+			// inc  == run incidents rollup only  (will also chain the ehsdata rollup if the ROLLUP_NEXTPAGE setting = "EHSDataRollUp"
 			// ehsdata == run ehsData rollup only
 
 			if (args.Length == 0  ||  args.Contains("env"))
@@ -34,7 +34,7 @@ namespace DataRollup
 				ProcessEnvironmental();
 			}
 			
-			if (args.Length == 0  ||  args.Contains("hs"))
+			if (args.Length == 0  ||  args.Contains("inc"))
 			{
 				nextStep = ProcessIncidents();
 				if (nextStep == "EHSDataRollUp")
