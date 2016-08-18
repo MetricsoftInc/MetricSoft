@@ -252,7 +252,6 @@ namespace HourlyTasks
 			string nextStep = "";
 			DateTime thisPeriod = DateTime.UtcNow;
 			decimal updateIndicator = thisPeriod.Ticks;
-			decimal locationID = 0;
 
 			WriteLine("OVERDUE TASK NOTIFICATIONS Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
