@@ -22,6 +22,9 @@ namespace FileImport
 
         static void Main(string[] args)
         {
+			output = new StringBuilder();
+			plantDataMultiplier = 1.0;
+
 			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			entities = new PSsqmEntities();
