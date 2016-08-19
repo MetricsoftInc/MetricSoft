@@ -27,7 +27,7 @@ namespace HourlyTasks
 			// arguments:
 			// no arguments supplied == exec all tasks
 			// audit == schedule audits only
-			// notify == run ehsData rollup only
+			// notify == send notifications only
 
 			if (args.Length == 0 || args.Contains("audit"))
 			{

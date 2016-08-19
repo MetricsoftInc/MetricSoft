@@ -996,10 +996,17 @@ namespace SQM.Website
 			// ABW 20150826 send emails to a default email if this is a development environment
 			string environment = "";
 			string altEmail = "";
+
+			List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+			SETTINGS setting = new SETTINGS();
+
 			try
 			{
-				environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
-				altEmail = System.Configuration.ConfigurationManager.AppSettings["altEmail"].ToString();
+				if ((setting = MailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null) ;
+				{
+					environment = "dev";
+					altEmail = setting.VALUE.Trim();
+				}
 			}
 			catch { }
 
@@ -1026,8 +1033,7 @@ namespace SQM.Website
 			bool _mailEnableSsl = true;
 			int _mailSmtpPort = 587;
 
-			List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
-			SETTINGS setting = new SETTINGS();
+
 			setting = MailSettings.Find(x => x.SETTING_CD == "MailServer");
 			if (setting != null)
 				_mailServer = setting.VALUE;
@@ -1114,17 +1120,19 @@ namespace SQM.Website
 			// ABW 20150826 send emails to a default email if this is a development environment
 			string environment = "";
 			string altEmail = "";
+			SETTINGS setting = new SETTINGS();
+
 			try
 			{
-				environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
-				altEmail = System.Configuration.ConfigurationManager.AppSettings["altEmail"].ToString();
+				if ((setting = MailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null) ;
+				{
+					environment = "dev";
+					altEmail = setting.VALUE.Trim();
+				}
 			}
 			catch { }
 
-			// ABW 20140805 - get the parameters from the SETTINGS table instead of Web or App Config
 
-			//List<SETTINGS> MailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
-			SETTINGS setting = new SETTINGS();
 			setting = MailSettings.Find(x => x.SETTING_CD == "MailServer");
 			if (setting != null)
 				_mailServer = setting.VALUE;
