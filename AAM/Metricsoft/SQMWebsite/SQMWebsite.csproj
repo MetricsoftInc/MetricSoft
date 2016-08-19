@@ -165,6 +165,9 @@
     <Content Include="Automated\ENVDataRollUp.aspx" />
     <Content Include="bin\AjaxControlToolkit.dll" />
     <Content Include="bin\ComponentArt.Web.UI.dll" />
+    <Content Include="bin\DataRollup.exe" />
+    <Content Include="bin\FileImport.exe" />
+    <Content Include="bin\HourlyTasks.exe" />
     <Content Include="bin\HtmlAgilityPack.dll" />
     <Content Include="bin\ICSharpCode.SharpZipLib.dll" />
     <Content Include="bin\itextsharp.dll" />
@@ -2343,6 +2346,9 @@
     <Content Include="images\fonts\Ubuntu-LightItalic.ttf" />
     <Content Include="images\fonts\OpenSans-Bold.ttf" />
     <Content Include="bin\Select.Html.dep" />
+    <Content Include="bin\DataRollup.exe.config" />
+    <Content Include="bin\FileImport.exe.config" />
+    <Content Include="bin\HourlyTasks.exe.config" />
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\AAMStaging - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />

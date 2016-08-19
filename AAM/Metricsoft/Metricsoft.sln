@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB930DA6-036A-49A3-9179-8B1A9D06AADD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQMWebsite", "SQMWebsite\SQMWebsite.csproj", "{38694B6A-13DE-482E-94A4-11CC231B9C33}"
@@ -15,7 +17,7 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://10.0.0.15:8080/tfs/luxcollection
+		SccTeamFoundationServer = http://plato:8080/tfs/luxcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = SQMWebsite\\SQMWebsite.csproj
 		SccProjectName1 = SQMWebsite
