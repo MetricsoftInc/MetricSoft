@@ -398,6 +398,15 @@ namespace SQM.Website
 				tzID = WebSiteCommon.GetXlatValue("timeZone", tzValue);
 			}
 
+			// if it is blank, try to get it from the database
+			if (string.IsNullOrEmpty(tzID))
+			{
+				List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[1] { "TIMEZONE" }, 0);
+				tzID = SQMBasePage.GetXLAT(XLATList, "TIMEZONE", tzValue, "en").DESCRIPTION_SHORT;
+
+			}
+
+			// if it is still blank, then default
 			if (string.IsNullOrEmpty(tzID))
 				tzID = "GMT Standard Time";  // use UTC as default
 
