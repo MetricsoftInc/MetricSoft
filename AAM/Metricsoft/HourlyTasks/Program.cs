@@ -25,7 +25,6 @@ namespace HourlyTasks
 
 			WriteLine("Started: " + currentTime.ToString("hh:mm MM/dd/yyyy"));
 
-
 			// arguments:
 			// no arguments supplied == exec all tasks
 			// audit == schedule audits only
@@ -274,6 +273,7 @@ namespace HourlyTasks
 				// execute if SETTING exists and is valid and matches the current hour this task is running
 				if (!execNow)
 				{
+					WriteLine("OVERDUE TASK NOTIFICATIONS Not Scheduled Or Not Scheduled Time");
 					return nextStep;
 				}
 
