@@ -21,23 +21,24 @@ namespace HourlyTasks
 		{
 			output = new StringBuilder();
 			entities = new PSsqmEntities();
-			WriteLine("Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
+			DateTime currentTime = DateTime.UtcNow;
+
+			WriteLine("Started: " + currentTime.ToString("hh:mm MM/dd/yyyy"));
 
 
 			// arguments:
 			// no arguments supplied == exec all tasks
 			// audit == schedule audits only
 			// notify == send notifications only
-
 			if (args.Length == 0 || args.Contains("audit"))
 			{
 				// Close & Schedule Audits from the Scheduler, based on local plant date & time
 				AuditScheduler();
 			}
 
-			if (args.Length > 0 && args.Contains("notify"))
+			if (args.Length == 0 || args.Contains("notify"))
 			{
-				OverdueTaskNotifications();
+				OverdueTaskNotifications(currentTime);
 			}
 
 			// After all Hourly processes are complete, wrap up the output log
@@ -247,16 +248,35 @@ namespace HourlyTasks
 
 		#region notifications
 
-		static string OverdueTaskNotifications()
+		static string OverdueTaskNotifications(DateTime currentTime)
 		{
 			string nextStep = "";
 			DateTime thisPeriod = DateTime.UtcNow;
 			decimal updateIndicator = thisPeriod.Ticks;
+			bool execNow = false;
 
 			WriteLine("OVERDUE TASK NOTIFICATIONS Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
+			SETTINGS setting = null;
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "");
+
 			try
 			{
+				// execute at specified hour of day (e.g. TASKNOTIFY_TIME == 01:00)
+				if ((setting = sets.Where(x => x.SETTING_CD == "TASKNOTIFY_TIME").FirstOrDefault()) != null)
+				{
+					// throwing an error here if the setting format was incorrect will be helpful for debugging
+					if (currentTime.Hour == int.Parse(WebSiteCommon.SplitString(setting.VALUE, ':').First()))
+					{
+						execNow = true;
+					}
+				}
+				// execute if SETTING exists and is valid and matches the current hour this task is running
+				if (!execNow)
+				{
+					return nextStep;
+				}
+
 				entities = new PSsqmEntities();
 
 				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
