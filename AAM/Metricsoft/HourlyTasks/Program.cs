@@ -25,6 +25,9 @@ namespace HourlyTasks
 
 			WriteLine("Started: " + currentTime.ToString("hh:mm MM/dd/yyyy"));
 
+			//OverdueTaskNotifications(currentTime);
+			//return;
+
 			// arguments:
 			// no arguments supplied == exec all tasks
 			// audit == schedule audits only
@@ -319,7 +322,7 @@ namespace HourlyTasks
 								if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
 								{
 									// send to notification list for plant, BU, ...
-									EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+									//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
 								}
 							}
 						}
