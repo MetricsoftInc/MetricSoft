@@ -1013,8 +1013,11 @@ namespace SQM.Website
 			{
 				if ((setting = MailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null)
 				{
-					environment = "dev";
-					altEmail = setting.VALUE.Trim();
+					if (!string.IsNullOrEmpty(setting.VALUE.Trim()))
+					{
+						environment = "dev";
+						altEmail = setting.VALUE.Trim();
+					}
 				}
 			}
 			catch { }
@@ -1135,8 +1138,11 @@ namespace SQM.Website
 			{
 				if ((setting = MailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null)
 				{
-					environment = "dev";
-					altEmail = setting.VALUE.Trim();
+					if (!string.IsNullOrEmpty(setting.VALUE.Trim()))
+					{
+						environment = "dev";
+						altEmail = setting.VALUE.Trim();
+					}
 				}
 			}
 			catch { }

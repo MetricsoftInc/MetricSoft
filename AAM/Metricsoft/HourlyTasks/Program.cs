@@ -45,7 +45,6 @@ namespace HourlyTasks
 			WriteLine("Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			WriteLogFile();
-
 		}
 
 		#region ScheduleAudits
@@ -250,8 +249,9 @@ namespace HourlyTasks
 		static string OverdueTaskNotifications(DateTime currentTime)
 		{
 			string nextStep = "";
-			DateTime thisPeriod = DateTime.UtcNow;
-			decimal updateIndicator = thisPeriod.Ticks;
+			//DateTime thisPeriod = DateTime.UtcNow;
+			//decimal updateIndicator = thisPeriod.Ticks;
+			DateTime openFromDate = new DateTime(2000, 1, 1);
 			bool execNow = false;
 
 			WriteLine("OVERDUE TASK NOTIFICATIONS Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
@@ -268,6 +268,14 @@ namespace HourlyTasks
 					if (currentTime.Hour == int.Parse(WebSiteCommon.SplitString(setting.VALUE, ':').First()))
 					{
 						execNow = true;
+						if ((setting = sets.Where(x => x.SETTING_CD == "TASKNOTIFY_MAXAGE").FirstOrDefault()) != null)
+						{
+							int maxAge = 0;
+							if (int.TryParse(setting.VALUE, out maxAge))
+							{
+								openFromDate = DateTime.UtcNow.AddDays(maxAge * -1);
+							}
+						}
 					}
 				}
 				// execute if SETTING exists and is valid and matches the current hour this task is running
@@ -279,7 +287,7 @@ namespace HourlyTasks
 
 				entities = new PSsqmEntities();
 
-				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
+				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(openFromDate);
 				if (openAuditList.Count > 0)
 				{
 					WriteLine("Open Audits ...");
@@ -294,7 +302,7 @@ namespace HourlyTasks
 					}
 				}
 
-				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(DateTime.UtcNow);
+				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(openFromDate);
 				if (openTaskList.Count > 0)
 				{
 					WriteLine("Open Tasks ...");
