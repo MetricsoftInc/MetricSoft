@@ -297,10 +297,17 @@ namespace HourlyTasks
 					foreach (TaskItem taskItem in openAuditList)
 					{
 						WriteLine("Audit: " + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
-						AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-						if (audit != null)
+						try
 						{
-							EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+							if (audit != null)
+							{
+								EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+							}
+						}
+						catch (Exception ex)
+						{
+							WriteLine("Error: " + ex.ToString());
 						}
 					}
 				}
@@ -312,36 +319,46 @@ namespace HourlyTasks
 					foreach (TaskItem taskItem in openTaskList)
 					{
 						WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
-						if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident)
+						try
 						{
-							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
-							if (incident != null)
+							if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident)
 							{
-								// notify assigned person and escalation person if over-over due
-								EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
-								if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
+								INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+								if (incident != null)
 								{
-									// send to notification list for plant, BU, ...
-									//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+									// notify assigned person and escalation person if over-over due
+									EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+									if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
+									{
+										// send to notification list for plant, BU, ...
+										//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+									}
+								}
+							}
+							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
+							{
+								INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
+								if (incident != null)
+								{
+									// notify assigned person and escalation person if over-over due
+									EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+								}
+							}
+							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)  
+							{
+								if (taskItem.Task.TASK_STEP != "0")
+								{
+									AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+									if (audit != null)
+									{
+										EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+									}
 								}
 							}
 						}
-						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
+						catch (Exception ex)
 						{
-							INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
-							if (incident != null)
-							{
-								// notify assigned person and escalation person if over-over due
-								EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
-							}
-						}
-						else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)
-						{
-							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-							if (audit != null)
-							{
-								EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
-							}
+							WriteLine("Error: " + ex.ToString());
 						}
 					}
 				}
