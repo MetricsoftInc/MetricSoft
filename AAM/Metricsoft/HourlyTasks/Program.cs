@@ -290,30 +290,6 @@ namespace HourlyTasks
 
 				entities = new PSsqmEntities();
 
-				/*
-				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(currentTime);
-				if (openAuditList.Count > 0)
-				{
-					WriteLine("Open Audits ...");
-					foreach (TaskItem taskItem in openAuditList)
-					{
-						WriteLine("Audit: " + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
-						try
-						{
-							AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-							if (audit != null)
-							{
-								EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
-							}
-						}
-						catch (Exception ex)
-						{
-							WriteLine("Error: " + ex.ToString());
-						}
-					}
-				}
-				*/
-
 				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(currentTime, openFromDate);
 				if (openTaskList.Count > 0)
 				{

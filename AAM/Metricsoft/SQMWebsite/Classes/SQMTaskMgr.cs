@@ -556,20 +556,25 @@ namespace SQM.Website
 
         public static TaskStatus CalculateTaskStatus(TASK_STATUS task)
         {
-            TaskStatus status = (TaskStatus)Convert.ToInt32(task.STATUS);
-
-			if (task.DUE_DT != null  &&  status != TaskStatus.Complete)
-            {
-                DateTime duedate = (DateTime)task.DUE_DT;
-                TimeSpan delta = duedate.Subtract(DateTime.UtcNow);
-                if (delta.Days < 2)
-                    status = TaskStatus.Due;
-                if (delta.Days < 0)
-                    status = TaskStatus.Overdue;
-            }
-
-            return status;
+			return CalculateTaskStatus(task, DateTime.UtcNow);
         }
+
+		public static TaskStatus CalculateTaskStatus(TASK_STATUS task, DateTime currentDate)
+		{
+			TaskStatus status = (TaskStatus)Convert.ToInt32(task.STATUS);
+
+			if (task.DUE_DT != null && status != TaskStatus.Complete)
+			{
+				DateTime duedate = (DateTime)task.DUE_DT;
+				TimeSpan delta = duedate.Subtract(currentDate);
+				if (delta.Days < 2)
+					status = TaskStatus.Due;
+				if (delta.Days < 0)
+					status = TaskStatus.Overdue;
+			}
+
+			return status;
+		}
 
         public static string TaskStatusImage(TaskStatus status)
         {
@@ -1346,7 +1351,7 @@ namespace SQM.Website
 					List<PERSON> escalateToList = (from ep in entities.PERSON where supvList.Contains(ep.EMP_ID) select ep).ToList();
 					foreach (TaskItem taskItem in taskList)
 					{
-						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+						taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task, currentDate);
 						if (taskItem.Taskstatus == TaskStatus.Overdue)
 						{
 							if (SetEscalation(0, taskItem) > TaskStatus.Overdue)
