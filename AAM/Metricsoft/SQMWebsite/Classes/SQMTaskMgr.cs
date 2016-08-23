@@ -1307,7 +1307,7 @@ namespace SQM.Website
 							taskItem.Task.DUE_DT = audit.Audit.AUDIT_DT.AddDays(audit.AuditType.DAYS_TO_COMPLETE);
 							taskItem.Task.STATUS = "0";  // assume open status;
 							taskItem.Person = audit.Person;
-							taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task);
+							taskItem.Taskstatus = CalculateTaskStatus(taskItem.Task, currentDate);
 							taskList.Add(taskItem);
 						}
 					}
