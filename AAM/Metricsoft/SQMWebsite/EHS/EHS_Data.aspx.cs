@@ -40,7 +40,7 @@ namespace SQM.Website.EHS
 			return jan1.AddDays(daysOffset).AddDays(cal.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek) * 7 - 7);
 		}
 
-		static List<string> measuresToProtectIfPlantActive = new List<string>()
+		static List<string> IncidentMeasuresToProtectIfPlantActive = new List<string>()
 		{
 			"S20001",
 			"S20002",
@@ -53,6 +53,13 @@ namespace SQM.Website.EHS
 			"S60003"
 		};
 
+		static List<string> AuditMeasuresToProtectIfPlantActive = new List<string>()
+		{
+			"S30001",
+			"S30002",
+			"S30003",
+		};
+
 
 		[WebMethod]
 		public static dynamic GetDailyData(decimal plantID, DateTime day, string lang)
@@ -60,7 +67,8 @@ namespace SQM.Website.EHS
 			var culture = System.Globalization.CultureInfo.CreateSpecificCulture(lang);
 			using (var entities = new PSsqmEntities())
 			{
-				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var IncidentPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var AuditPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.Audit && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "D"
 							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
@@ -92,13 +100,27 @@ namespace SQM.Website.EHS
 								}
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									value = data.ATTRIBUTE;
+
 								readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 							}
 						}
-						if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
-							(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfWeek.Date : true) &&
-							(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfWeek.Date : true))
-							readOnly = true;
+
+						if (IncidentPlantActive != null && IncidentPlantActive.EFF_START_DATE.HasValue && IncidentPlantActive.EFF_START_DATE <= startOfWeek)
+						{
+							if (IncidentMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+							{
+								readOnly = true;
+							}
+						}
+
+						if (AuditPlantActive != null && AuditPlantActive.EFF_START_DATE.HasValue  &&  AuditPlantActive.EFF_START_DATE <= startOfWeek)
+						{
+							if (AuditMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+							{
+								readOnly = true;
+							}
+						}
+
 						dynamic dataToAdd = new ExpandoObject();
 						dataToAdd.value = value;
 						dataToAdd.readOnly = readOnly;
@@ -124,7 +146,8 @@ namespace SQM.Website.EHS
 		{
 			using (var entities = new PSsqmEntities())
 			{
-				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var IncidentPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var AuditPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.Audit && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "W"
 							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
@@ -146,10 +169,23 @@ namespace SQM.Website.EHS
 							value = data.ATTRIBUTE;
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
-						(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= endOfWeek.Date : true) &&
-						(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= endOfWeek.Date : true))
-						readOnly = true;
+
+					if (IncidentPlantActive != null && IncidentPlantActive.EFF_START_DATE.HasValue && IncidentPlantActive.EFF_START_DATE <= startOfWeek)
+					{
+						if (IncidentMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+						{
+							readOnly = true;
+						}
+					}
+
+					if (AuditPlantActive != null && AuditPlantActive.EFF_START_DATE.HasValue && AuditPlantActive.EFF_START_DATE <= startOfWeek)
+					{
+						if (AuditMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+						{
+							readOnly = true;
+						}
+					}
+
 					allData.Add(measure.MEASURE_ID.ToString(), new
 					{
 						value,
@@ -173,7 +209,8 @@ namespace SQM.Website.EHS
 		{
 			using (var entities = new PSsqmEntities())
 			{
-				var plantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var IncidentPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident && p.PLANT_ID == plantID);
+				var AuditPlantActive = entities.PLANT_ACTIVE.FirstOrDefault(p => p.RECORD_TYPE == (int)TaskRecordType.Audit && p.PLANT_ID == plantID);
 				var measures = from m in entities.EHS_MEASURE
 							   where m.MEASURE_CATEGORY == "SAFE" && m.MEASURE_SUBCATEGORY == "SAFE1" && m.STATUS == "A" && m.FREQUENCY == "M"
 							   select new { m.MEASURE_ID, m.MEASURE_CD, m.DATA_TYPE };
@@ -195,10 +232,23 @@ namespace SQM.Website.EHS
 
 						readOnly = data.UPDATE_IND.HasValue && data.UPDATE_IND.Value > 0;
 					}
-					if (plantActive != null && measuresToProtectIfPlantActive.Contains(measure.MEASURE_CD) &&
-						(plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE.Value.Date <= startOfMonth.Date : true) &&
-						(plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE.Value.Date >= startOfMonth.Date : true))
-						readOnly = true;
+
+					if (IncidentPlantActive != null && IncidentPlantActive.EFF_START_DATE.HasValue && IncidentPlantActive.EFF_START_DATE <= startOfMonth)
+					{
+						if (IncidentMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+						{
+							readOnly = true;
+						}
+					}
+
+					if (AuditPlantActive != null && AuditPlantActive.EFF_START_DATE.HasValue && AuditPlantActive.EFF_START_DATE <= startOfMonth)
+					{
+						if (AuditMeasuresToProtectIfPlantActive.Contains(measure.MEASURE_CD))
+						{
+							readOnly = true;
+						}
+					}
+
 					allData.Add(measure.MEASURE_ID.ToString(), new
 					{
 						value,
