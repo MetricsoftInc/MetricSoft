@@ -94,7 +94,7 @@ namespace SQM.Website.Automated
 			{
 				PSsqmEntities entities = new PSsqmEntities();
 
-				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow);
+				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(DateTime.UtcNow, DateTime.UtcNow);
 				if (openAuditList.Count > 0)
 				{
 					WriteLine("Open Audits ...");
@@ -109,7 +109,7 @@ namespace SQM.Website.Automated
 					}
 				}
 
-				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(DateTime.UtcNow);
+				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(DateTime.UtcNow, DateTime.UtcNow);
 				if (openTaskList.Count > 0)
 				{
 				   WriteLine("Open Tasks ...");

@@ -290,7 +290,8 @@ namespace HourlyTasks
 
 				entities = new PSsqmEntities();
 
-				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(openFromDate);
+				/*
+				List<TaskItem> openAuditList = TaskMgr.SelectOpenAudits(currentTime);
 				if (openAuditList.Count > 0)
 				{
 					WriteLine("Open Audits ...");
@@ -311,8 +312,9 @@ namespace HourlyTasks
 						}
 					}
 				}
+				*/
 
-				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(openFromDate);
+				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(currentTime, openFromDate);
 				if (openTaskList.Count > 0)
 				{
 					WriteLine("Open Tasks ...");
@@ -346,13 +348,14 @@ namespace HourlyTasks
 							}
 							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)  
 							{
-								if (taskItem.Task.TASK_STEP != "0")
+								AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
+								if (taskItem.Task.TASK_STEP == "0")
 								{
-									AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-									if (audit != null)
-									{
-										EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
-									}
+									EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+								}
+								else
+								{
+									EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
 								}
 							}
 						}

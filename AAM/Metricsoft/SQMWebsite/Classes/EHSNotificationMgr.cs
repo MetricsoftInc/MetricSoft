@@ -778,7 +778,7 @@ namespace SQM.Website
 
 			AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
 			string auditType = type.TITLE;
-			DateTime dueDate = audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE);
+			DateTime dueDate = taskItem.Task.DUE_DT.HasValue ? (DateTime)taskItem.Task.DUE_DT : audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE);
 
 			if (ShouldNotifyPlant((decimal)audit.DETECT_PLANT_ID, TaskRecordType.Audit) == false)
 			{

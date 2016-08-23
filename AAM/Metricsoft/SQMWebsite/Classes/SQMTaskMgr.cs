@@ -1260,7 +1260,7 @@ namespace SQM.Website
             return taskList;
         }
 
-		public static List<TaskItem> SelectOpenAudits(DateTime auditFromDate)
+		public static List<TaskItem> SelectOpenAudits(DateTime currentDate, DateTime auditFromDate)
 		{
 			// fetch empty or incomplete audits that are near due
 			List<TaskItem> taskList = new List<TaskItem>();
@@ -1276,7 +1276,7 @@ namespace SQM.Website
 									 join t in entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID into t_a 
 									 join p in entities.PERSON on a.AUDIT_PERSON equals p.PERSON_ID into p_a
 									 where (
-										a.AUDIT_DT >= auditFromDate 
+										(a.AUDIT_DT < currentDate && a.AUDIT_DT >= auditFromDate)
 										&& !excludeStatus.Contains(a.CURRENT_STATUS)
 									 )
 									 from t in t_a.DefaultIfEmpty()
@@ -1315,7 +1315,7 @@ namespace SQM.Website
 			return taskList;
 		}
 
-		public static List<TaskItem> SelectOpenTasks(DateTime taskFromDate)
+		public static List<TaskItem> SelectOpenTasks(DateTime currentDate, DateTime taskFromDate)
 		{
 			List<TaskItem> taskList = new List<TaskItem>();
 			List<string> excludeStatus = new List<string>();
@@ -1329,8 +1329,8 @@ namespace SQM.Website
 					taskList = (from t in entities.TASK_STATUS
 								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
 								where (
-									t.DUE_DT != null  &&  t.COMPLETE_DT == null 
-									&& t.DUE_DT >= taskFromDate 
+									(t.DUE_DT != null && t.DUE_DT < currentDate && t.DUE_DT >= taskFromDate)
+									&& t.COMPLETE_DT == null 
 									&&  !excludeStatus.Contains(t.STATUS)
 								)
 								from p in p_t.DefaultIfEmpty()
