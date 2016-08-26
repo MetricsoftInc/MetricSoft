@@ -252,10 +252,9 @@ namespace HourlyTasks
 		static string OverdueTaskNotifications(DateTime currentTime)
 		{
 			string nextStep = "";
-			//DateTime thisPeriod = DateTime.UtcNow;
-			//decimal updateIndicator = thisPeriod.Ticks;
 			DateTime openFromDate = new DateTime(2000, 1, 1);
-			bool execNow = false;
+			DateTime localTime;
+			int execAtHour = 10;	// set exec time default to 5 am EST
 
 			WriteLine("OVERDUE TASK NOTIFICATIONS Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
@@ -268,27 +267,13 @@ namespace HourlyTasks
 				if ((setting = sets.Where(x => x.SETTING_CD == "TASKNOTIFY_TIME").FirstOrDefault()) != null)
 				{
 					// throwing an error here if the setting format was incorrect will be helpful for debugging
-					if (currentTime.Hour == int.Parse(WebSiteCommon.SplitString(setting.VALUE, ':').First()))
-					{
-						execNow = true;
-						if ((setting = sets.Where(x => x.SETTING_CD == "TASKNOTIFY_MAXAGE").FirstOrDefault()) != null)
-						{
-							int maxAge = 0;
-							if (int.TryParse(setting.VALUE, out maxAge))
-							{
-								openFromDate = DateTime.UtcNow.AddDays(maxAge * -1);
-							}
-						}
-					}
-				}
-				// execute if SETTING exists and is valid and matches the current hour this task is running
-				if (!execNow)
-				{
-					WriteLine("OVERDUE TASK NOTIFICATIONS Not Scheduled Or Not Scheduled Time");
-					return nextStep;
+					execAtHour  =  int.Parse(WebSiteCommon.SplitString(setting.VALUE, ':').First());
 				}
 
 				entities = new PSsqmEntities();
+
+				List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0);
+				PLANT plant = null;
 
 				List<TaskItem> openTaskList = TaskMgr.SelectOpenTasks(currentTime, openFromDate);
 				if (openTaskList.Count > 0)
@@ -296,42 +281,56 @@ namespace HourlyTasks
 					WriteLine("Open Tasks ...");
 					foreach (TaskItem taskItem in openTaskList)
 					{
-						WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
 						try
 						{
 							if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident)
 							{
 								INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
-								if (incident != null)
+								if (incident != null &&  (plant=plantList.Where(l=> l.PLANT_ID == incident.DETECT_PLANT_ID).FirstOrDefault()) != null)
 								{
-									// notify assigned person and escalation person if over-over due
-									EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
-									if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
+									if (execAtHour == WebSiteCommon.LocalTime(currentTime, plant.LOCAL_TIMEZONE).Hour)
 									{
-										// send to notification list for plant, BU, ...
-										//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+										WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+										// notify assigned person and escalation person if over-over due
+										EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+										if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
+										{
+											// send to notification list for plant, BU, ...
+											//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+										}
 									}
 								}
 							}
 							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
 							{
 								INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, taskItem.Task.RECORD_ID);
-								if (incident != null)
+								if (incident != null  &&  (plant=plantList.Where(l=> l.PLANT_ID == incident.DETECT_PLANT_ID).FirstOrDefault()) != null)
 								{
-									// notify assigned person and escalation person if over-over due
-									EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+									if (execAtHour == WebSiteCommon.LocalTime(currentTime, plant.LOCAL_TIMEZONE).Hour)
+									{
+										WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+										// notify assigned person and escalation person if over-over due
+										EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+									}
 								}
 							}
 							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)  
 							{
 								AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-								if (taskItem.Task.TASK_STEP == "0")
+								if ((plant = plantList.Where(l => l.PLANT_ID == audit.DETECT_PLANT_ID).FirstOrDefault()) != null)
 								{
-									EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
-								}
-								else
-								{
-									EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+									if (execAtHour == WebSiteCommon.LocalTime(currentTime, plant.LOCAL_TIMEZONE).Hour)
+									{
+										WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
+										if (taskItem.Task.TASK_STEP == "0")
+										{
+											EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+										}
+										else
+										{
+											EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+										}
+									}
 								}
 							}
 						}
