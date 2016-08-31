@@ -267,11 +267,25 @@ namespace DataRollup
 			WriteLine("EHSDATA Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
 			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK"); // ABW 20140805
+
 			try
 			{
 				using (var entities = new PSsqmEntities())
 				{
 					long updateIndicator = DateTime.UtcNow.Ticks;
+					SETTINGS setting = null;
+
+					// get any AUTOMATE settings
+
+					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-12);
+					DateTime rollupToDate = DateTime.UtcNow;
+					int rollupMonthsAhead = 0;
+					setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
+					if (setting != null && !string.IsNullOrEmpty(setting.VALUE))
+					{
+						int.TryParse(setting.VALUE, out rollupMonthsAhead);
+						rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
+					}
 
 					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
 					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
@@ -310,19 +324,32 @@ namespace DataRollup
 					decimal injuryIllnessIssueTypeID = entities.INCIDENT_TYPE.First(i => i.TITLE == "Injury/Illness").INCIDENT_TYPE_ID;
 					decimal nearMissIssueTypeID = entities.INCIDENT_TYPE.First(i => i.TITLE == "Near Miss").INCIDENT_TYPE_ID;
 
+
+					List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.STATUS == "A").ToList();
+					PLANT_ACTIVE pact = null;
+
 					var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
 					var incidents = entities.INCIDENT.Include("INCFORM_INJURYILLNESS").Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
 					var activePlants = entities.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&
 						closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
-					foreach (var activePlant in activePlants)
-					{
-						// AUDITS
-						var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == activePlant.PLANT_ID);
-						var minDate = new[] { activePlant.EFF_START_DATE, closedAuditsForPlant.Min(a => a.CLOSE_DATE_DATA_COMPLETE) }.Max();
-						var maxDate = new[] { activePlant.EFF_END_DATE, closedAuditsForPlant.Max(a => a.CLOSE_DATE_DATA_COMPLETE) }.Min();
 
-						if (minDate.HasValue && maxDate.HasValue)
-							for (var currDate = minDate.Value; currDate <= maxDate; currDate = currDate.AddDays(1))
+
+					// AUDITS
+					foreach (var plant in plantList)
+					{
+						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.Audit select a).SingleOrDefault();
+						if (pact != null && pact.EFF_START_DATE.HasValue)	// plant is active
+						{
+							var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
+							//var minDate = new[] { pact.EFF_START_DATE, closedAuditsForPlant.Min(a => a.CLOSE_DATE_DATA_COMPLETE) }.Max();
+							//var maxDate = new[] { pact.EFF_END_DATE, closedAuditsForPlant.Max(a => a.CLOSE_DATE_DATA_COMPLETE) }.Min();
+							// new timespan logic 
+							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
+							DateTime toDate = pact.EFF_END_DATE.HasValue && (DateTime)pact.EFF_END_DATE < rollupToDate ? (DateTime)pact.EFF_END_DATE : rollupToDate;
+
+							WriteLine("AUDIT Rollup For Plant " + pact.PLANT_ID + "  from date = " + fromDate.ToShortDateString() + "  to date = " + toDate.ToShortDateString());
+
+							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
 							{
 								int plantManagerAudits = 0;
 								int ehsAudits = 0;
@@ -336,7 +363,7 @@ namespace DataRollup
 									supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 3);
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, activePlant.PLANT_ID, currDate, auditMeasureIDs, true, updateIndicator);
+								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, auditMeasureIDs, true, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, plantManagerAuditsMeasureID, plantManagerAudits, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, ehsAuditsMeasureID, ehsAudits, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, supervisorAuditsMeasureID, supervisorAudits, updateIndicator);
@@ -346,14 +373,25 @@ namespace DataRollup
 									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
 										entities.DeleteObject(data);
 							}
+						}
+					}
 
-						// INCIDENTS
-						var incidentsForPlant = incidents.Where(i => i.DETECT_PLANT_ID == activePlant.PLANT_ID);
-						minDate = new[] { activePlant.EFF_START_DATE, incidentsForPlant.Min(i => (DateTime?)i.INCIDENT_DT) }.Max();
-						maxDate = new[] { activePlant.EFF_END_DATE, incidentsForPlant.Max(i => (DateTime?)i.INCIDENT_DT) }.Min();
+					// INCIDENTS
+					foreach (var plant in plantList)
+					{
+						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
+						if (pact != null && pact.EFF_START_DATE.HasValue)	// plant is active
+						{
+							var incidentsForPlant = incidents.Where(i => i.DETECT_PLANT_ID == plant.PLANT_ID);
+							//var minDate = new[] { pact.EFF_START_DATE, incidentsForPlant.Min(i => (DateTime?)i.INCIDENT_DT) }.Max();
+							//var maxDate = new[] { pact.EFF_END_DATE, incidentsForPlant.Max(i => (DateTime?)i.INCIDENT_DT) }.Min();
+							// new timespan logic 
+							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
+							DateTime toDate = pact.EFF_END_DATE.HasValue && (DateTime)pact.EFF_END_DATE < rollupToDate ? (DateTime)pact.EFF_END_DATE : rollupToDate;
 
-						if (minDate.HasValue && maxDate.HasValue)
-							for (var currDate = minDate.Value; currDate <= maxDate; currDate = currDate.AddDays(1))
+							WriteLine("INCIDENT Rollup For Plant " + pact.PLANT_ID + "  from date = " + fromDate.ToShortDateString() + "  to date = " + toDate.ToShortDateString());
+
+							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
 							{
 								int nearMisses = 0;
 								int firstAidCases = 0;
@@ -363,21 +401,21 @@ namespace DataRollup
 								int closedInvestigations = 0;
 
 								var firstAidOrdinals = new Dictionary<string, Dictionary<string, int>>()
-								{
-									{ "type", null },
-									{ "bodyPart", null },
-									{ "rootCause", null },
-									{ "tenure", null },
-									{ "daysToClose", null }
-								};
+							{
+								{ "type", null },
+								{ "bodyPart", null },
+								{ "rootCause", null },
+								{ "tenure", null },
+								{ "daysToClose", null }
+							};
 								var recordableOrdinals = new Dictionary<string, Dictionary<string, int>>()
-								{
-									{ "type", null },
-									{ "bodyPart", null },
-									{ "rootCause", null },
-									{ "tenure", null },
-									{ "daysToClose", null }
-								};
+							{
+								{ "type", null },
+								{ "bodyPart", null },
+								{ "rootCause", null },
+								{ "tenure", null },
+								{ "daysToClose", null }
+							};
 
 								var incidentsForDay = incidentsForPlant.Where(i => EntityFunctions.TruncateTime(i.INCIDENT_DT) == currDate.Date);
 								if (incidentsForDay.Any())
@@ -431,7 +469,7 @@ namespace DataRollup
 										x.Key ?? "", x => x.Count());
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, activePlant.PLANT_ID, currDate, incidentMeasureIDs, true, updateIndicator);
+								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMeasureIDs, true, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, nearMissMeasureID, nearMisses, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, firstAidMeasureID, firstAidCases, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, recordableMeasureID, recordables, updateIndicator);
@@ -439,6 +477,7 @@ namespace DataRollup
 								EHSDataMapping.SetEHSDataValue(dataList, fatalityMeasureID, fatalities, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, closedInvestigationMeasureID, closedInvestigations, updateIndicator);
 								foreach (var data in dataList)
+								{
 									if (data.VALUE != 0)
 									{
 										if (data.EntityState == EntityState.Detached)
@@ -467,18 +506,17 @@ namespace DataRollup
 										}
 										entities.DeleteObject(data);
 									}
+								}
 							}
 
-						// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
-						var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == activePlant.PLANT_ID);
-						minDate = new[] { activePlant.EFF_START_DATE, accountingForPlant.AsEnumerable().Min(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Max();
-						maxDate = new[] { activePlant.EFF_END_DATE, accountingForPlant.AsEnumerable().Max(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Min();
+							// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
+							var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == plant.PLANT_ID);
+							//var minDateA = new[] { pact.EFF_START_DATE, accountingForPlant.AsEnumerable().Min(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Max();
+							//var maxDateA = new[] { pact.EFF_END_DATE, accountingForPlant.AsEnumerable().Max(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Min();
 
-						if (minDate.HasValue && maxDate.HasValue)
-						{
-							minDate = new DateTime(minDate.Value.Year, minDate.Value.Month, 1);
-							maxDate = new DateTime(maxDate.Value.Year, maxDate.Value.Month, 1);
-							for (var currDate = minDate.Value; currDate <= maxDate; currDate = currDate.AddMonths(1))
+							//minDateA = new DateTime(minDateA.Value.Year, minDateA.Value.Month, 1);
+							//maxDateA = new DateTime(maxDateA.Value.Year, maxDateA.Value.Month, 1);
+							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddMonths(1))
 							{
 								decimal timeLost = 0;
 								decimal timeRestricted = 0;
@@ -490,7 +528,7 @@ namespace DataRollup
 									timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, activePlant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
+								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
 								foreach (var data in dataList)
@@ -504,12 +542,10 @@ namespace DataRollup
 
 					entities.SaveChanges();
 				}
-
-				WriteLine("EHSDATA Rollup Completed: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 			}
 			catch (Exception ex)
 			{
-				WriteLine("EHSDATA RollUp Error: " + ex.ToString());
+				output.AppendFormat("EHS Data RollUp Error - {0}", ex);
 			}
 
 			return nextStep;
