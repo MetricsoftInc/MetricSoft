@@ -66,9 +66,9 @@ namespace SQM.Website
 			if (ehsData != null)
 			{
 				ehsData.UPDATE_IND = updateIndicator;
-				if (ehsData.VALUE.HasValue)
-					ehsData.VALUE += addValue;
-				else
+				//if (ehsData.VALUE.HasValue)
+				//	ehsData.VALUE += addValue;
+				//else
 					ehsData.VALUE = addValue;
 
 				status = 0;
