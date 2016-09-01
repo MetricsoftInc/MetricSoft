@@ -124,6 +124,7 @@ namespace SQM.Website.Automated
 					decimal recordableMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20004").MEASURE_ID;
 					decimal lostTimeCaseMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20005").MEASURE_ID;
 					decimal fatalityMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20006").MEASURE_ID;
+					decimal otherIncidentsID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20001").MEASURE_ID;
 					decimal closedInvestigationMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20007").MEASURE_ID;
 					var incidentMeasureIDs = new List<decimal>()
 					{
@@ -132,6 +133,7 @@ namespace SQM.Website.Automated
 						recordableMeasureID,
 						lostTimeCaseMeasureID,
 						fatalityMeasureID,
+						otherIncidentsID,
 						closedInvestigationMeasureID
 					};
 
@@ -220,31 +222,32 @@ namespace SQM.Website.Automated
 								int recordables = 0;
 								int lostTimeCases = 0;
 								int fatalities = 0;
+								int otherIncidents = 0;
 								int closedInvestigations = 0;
 
 								var firstAidOrdinals = new Dictionary<string, Dictionary<string, int>>()
-							{
-								{ "type", null },
-								{ "bodyPart", null },
-								{ "rootCause", null },
-								{ "tenure", null },
-								{ "daysToClose", null }
-							};
+								{
+									{ "type", null },
+									{ "bodyPart", null },
+									{ "rootCause", null },
+									{ "tenure", null },
+									{ "daysToClose", null }
+								};
 								var recordableOrdinals = new Dictionary<string, Dictionary<string, int>>()
-							{
-								{ "type", null },
-								{ "bodyPart", null },
-								{ "rootCause", null },
-								{ "tenure", null },
-								{ "daysToClose", null }
-							};
+								{
+									{ "type", null },
+									{ "bodyPart", null },
+									{ "rootCause", null },
+									{ "tenure", null },
+									{ "daysToClose", null }
+								};
 
 								var incidentsForDay = incidentsForPlant.Where(i => EntityFunctions.TruncateTime(i.INCIDENT_DT) == currDate.Date);
 								if (incidentsForDay.Any())
 								{
 									var firstAidIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.FIRST_AID);
 									var recordableIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.RECORDABLE);
-
+									otherIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID != injuryIllnessIssueTypeID).Count();
 									// Basic data
 									nearMisses = incidentsForDay.Count(i => i.ISSUE_TYPE_ID == nearMissIssueTypeID);
 									firstAidCases = firstAidIncidents.Count();
@@ -297,6 +300,7 @@ namespace SQM.Website.Automated
 								EHSDataMapping.SetEHSDataValue(dataList, recordableMeasureID, recordables, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, lostTimeCaseMeasureID, lostTimeCases, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, fatalityMeasureID, fatalities, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(dataList, otherIncidentsID, otherIncidents, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, closedInvestigationMeasureID, closedInvestigations, updateIndicator);
 								foreach (var data in dataList)
 								{
@@ -343,21 +347,27 @@ namespace SQM.Website.Automated
 								decimal timeLost = 0;
 								decimal timeRestricted = 0;
 
-								var accountingForMonth = accountingForPlant.FirstOrDefault(a => a.PERIOD_YEAR == currDate.Year && a.PERIOD_MONTH == currDate.Month);
-								if (accountingForMonth != null)
+								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
+
+								if (currDate.Day == 1)
 								{
-									timeLost = accountingForMonth.TIME_LOST ?? 0;
-									timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
+									var accountingForMonth = accountingForPlant.FirstOrDefault(a => a.PERIOD_YEAR == currDate.Year && a.PERIOD_MONTH == currDate.Month);
+									if (accountingForMonth != null)
+									{
+										timeLost = accountingForMonth.TIME_LOST ?? 0;
+										timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
+									}
+									EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
 								foreach (var data in dataList)
-									if (data.EntityState == EntityState.Detached && data.VALUE != 0)
+								{
+									if (data.EntityState == EntityState.Detached && data.VALUE.HasValue && currDate.Day == 1)
 										entities.EHS_DATA.AddObject(data);
-									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
+									else if (data.EntityState != EntityState.Detached && currDate.Day != 1)
 										entities.DeleteObject(data);
+								}
 							}
 						}
 					}
