@@ -741,10 +741,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.prevent))
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.prevent))
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
@@ -1235,10 +1235,10 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
-				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.prevent))
+				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved && !UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.prevent))
 					pnl.Visible = false;
 
-				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.prevent))
+				if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.prevent))
 					pnl.Visible = false;
 
 				pnlForm.Controls.Add(pnl);
