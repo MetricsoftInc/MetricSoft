@@ -338,6 +338,8 @@ namespace SQM.Website.Automated
 							// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
 							var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == plant.PLANT_ID);
 
+							WriteLine("ACCOUNTING Rollup For Plant " + pact.PLANT_ID);
+
 							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddMonths(1))
 							{
 								decimal timeLost = 0;
