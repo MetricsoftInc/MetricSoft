@@ -30,7 +30,8 @@ namespace SQM.Website
 			// clear the existing data values if they were created via a prior rollup process
 			if (updateIndicator > 0)
 			{
-				foreach (EHS_DATA ehsData in dataList.Where(l=> l.UPDATE_IND > 0  &&  l.UPDATE_IND != updateIndicator).ToList())
+				//foreach (EHS_DATA ehsData in dataList.Where(l=> l.UPDATE_IND > 0  &&  l.UPDATE_IND != updateIndicator).ToList())
+				foreach (EHS_DATA ehsData in dataList.Where(l => l.UPDATE_IND != updateIndicator).ToList())
 				{
 					ehsData.VALUE = null;
 					ehsData.ATTRIBUTE = null;
@@ -58,7 +59,7 @@ namespace SQM.Website
 			return dataList;
 		}
 
-		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal addValue, decimal updateIndicator)
+		public static int SetEHSDataValue(List<EHS_DATA> dataList, decimal measureID, decimal value, decimal updateIndicator)
 		{
 			int status = -1;
 
@@ -69,7 +70,7 @@ namespace SQM.Website
 				//if (ehsData.VALUE.HasValue)
 				//	ehsData.VALUE += addValue;
 				//else
-					ehsData.VALUE = addValue;
+					ehsData.VALUE = value;
 
 				status = 0;
 			}
