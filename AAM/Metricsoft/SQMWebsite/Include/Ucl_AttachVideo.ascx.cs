@@ -14,23 +14,23 @@ using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types
 
 namespace SQM.Website
 {
-    public delegate void UpdateAttachmentVideo(string cmd);
+	public delegate void UpdateAttachmentVideo(string cmd);
 
-    public partial class Ucl_AttachVideo : System.Web.UI.UserControl
-    {
+	public partial class Ucl_AttachVideo : System.Web.UI.UserControl
+	{
 		public string storageURL;
 		public string storageContainer;
 		public string storageQueryString;
 
 		public event CommandClick AttachmentEvent;
 
-        public DocumentScope staticScope 
-        {
-            get { return ViewState["attachScope"] == null ? new DocumentScope() : (DocumentScope)ViewState["attachScope"]; }
-            set { ViewState["attachScope"] = value; }
-        }
+		public DocumentScope staticScope 
+		{
+			get { return ViewState["attachScope"] == null ? new DocumentScope() : (DocumentScope)ViewState["attachScope"]; }
+			set { ViewState["attachScope"] = value; }
+		}
 
-        public event UpdateAttachmentVideo OnUpdateAttachment;
+		public event UpdateAttachmentVideo OnUpdateAttachment;
 
 		public DateTime SourceDate
 		{
@@ -88,7 +88,7 @@ namespace SQM.Website
 
 
 		protected void Page_Load(object sender, EventArgs e)
-        {
+		{
 			string script =
 			"function pageLoad() {\n" +
 			"	var radAsyncUpload = $find(\"" + raUpload.ClientID + "\")\n" +
@@ -174,60 +174,60 @@ namespace SQM.Website
 			ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raUpload.ClientID, script, true);
 
 			if (Page.IsPostBack)
-            {
-                if ((bool)SessionManager.ReturnStatus)
-                {
-                    if (SessionManager.ReturnObject.GetType().ToString().ToUpper().Contains("ATTACHMENT_VIDEO"))
-                    {
-                        SessionManager.ClearReturns();
-                        if (OnUpdateAttachment != null)
-                        {
-                            OnUpdateAttachment("");
-                        }
-                    }
-                }
-            }
-        }
+			{
+				if ((bool)SessionManager.ReturnStatus)
+				{
+					if (SessionManager.ReturnObject.GetType().ToString().ToUpper().Contains("ATTACHMENT_VIDEO"))
+					{
+						SessionManager.ClearReturns();
+						if (OnUpdateAttachment != null)
+						{
+							OnUpdateAttachment("");
+						}
+					}
+				}
+			}
+		}
 
-        private void SetAttachmentsScope(int recordType, string sessionID, decimal recordID, string recordStep)
-        {
-            staticScope = new DocumentScope().CreateNew("REC",recordType, sessionID, recordID, recordStep);
-            SessionManager.DocumentContext = staticScope;
-        }
+		private void SetAttachmentsScope(int recordType, string sessionID, decimal recordID, string recordStep)
+		{
+			staticScope = new DocumentScope().CreateNew("REC",recordType, sessionID, recordID, recordStep);
+			SessionManager.DocumentContext = staticScope;
+		}
 
-        public void rptAttachList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            
-            if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
-            {
-                string[] fileTypes = { ".mov", ".qt", ".wmv", ".yuv", ".m4v", ".3gp", ".3g2", ".nsv" };
+		public void rptAttachList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+		{
+			
+			if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
+			{
+				string[] fileTypes = { ".mov", ".qt", ".wmv", ".yuv", ".m4v", ".3gp", ".3g2", ".nsv" };
 
-                try
-                {
-                    ATTACHMENT attachment = (ATTACHMENT)e.Item.DataItem;
-                    if (fileTypes.Any(attachment.FILE_NAME.ToLower().Contains) == false)
-                    {
-                        Image img = (Image)e.Item.FindControl("imgBindAttachment");
-                        string[] args = attachment.FILE_NAME.Split('.');
-                        if (args.Length > 0)
-                        {
-                            string ext = args[args.Length - 1];
-                            img.ImageUrl = "~/images/filetype/icon_" + ext.ToLower() + ".jpg";
-                            img.CssClass = "";
-                        }
-                        else
-                        {
-                            img.Visible = false;
-                        }
+				try
+				{
+					ATTACHMENT attachment = (ATTACHMENT)e.Item.DataItem;
+					if (fileTypes.Any(attachment.FILE_NAME.ToLower().Contains) == false)
+					{
+						Image img = (Image)e.Item.FindControl("imgBindAttachment");
+						string[] args = attachment.FILE_NAME.Split('.');
+						if (args.Length > 0)
+						{
+							string ext = args[args.Length - 1];
+							img.ImageUrl = "~/images/filetype/icon_" + ext.ToLower() + ".jpg";
+							img.CssClass = "";
+						}
+						else
+						{
+							img.Visible = false;
+						}
 
 						pnlListVideo.Attributes.Remove("Class");
-                        System.Web.UI.HtmlControls.HtmlGenericControl div = (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("divAttachment");
-                        div.Attributes.Remove("Class");
-                    }
-                }
-                catch
-                { }
-            }
+						System.Web.UI.HtmlControls.HtmlGenericControl div = (System.Web.UI.HtmlControls.HtmlGenericControl)e.Item.FindControl("divAttachment");
+						div.Attributes.Remove("Class");
+					}
+				}
+				catch
+				{ }
+			}
 		}
 
 		#region attachwindow
@@ -424,6 +424,7 @@ namespace SQM.Website
 			//if (flFileUpload.HasFile)
 			foreach (UploadedFile file in raUpload.UploadedFiles) // there should only be 1
 			{
+				uclProgress.UpdateDisplay(1, 50 + (i * 10), "Save uploaded video...");
 				//name = flFileUpload.FileName;
 				name = file.FileName;
 				fileType = file.GetExtension();
@@ -449,6 +450,8 @@ namespace SQM.Website
 					CloudBlockBlob blockBlob = container.GetBlockBlobReference(video.VIDEO_ID.ToString() + fileType);
 					blockBlob.UploadFromStream(file.InputStream);
 				}
+
+				uclProgress.ProgressComplete();
 
 				pnlListVideo.Visible = false;
 				SessionManager.ReturnRecordID = video.VIDEO_ID;
@@ -496,8 +499,8 @@ namespace SQM.Website
 			GridEditableItem item = (GridEditableItem)e.Item;
 			decimal videoId = (decimal)item.GetDataKeyValue("VideoId");
 			VIDEO video = MediaVideoMgr.SelectVideoById(videoId);
-			string filename = Server.MapPath(video.FILE_NAME);
-			int status = MediaVideoMgr.DeleteVideo(videoId, filename);
+			//string filename = Server.MapPath(video.FILE_NAME);
+			int status = MediaVideoMgr.DeleteVideo(videoId, video.FILE_NAME);
 
 			//			this.GetUploadedFiles();
 			pnlListVideo.Visible = false;
@@ -525,7 +528,7 @@ namespace SQM.Website
 				//{ fileType = lnk.Text.ToString().Substring(index); }
 				//catch { }
 				//lnk.PostBackUrl = storageURL + storageContainer + "/" + dataItem.KeyValues.Trim() + fileType + storageQueryString;
- 			}
+			}
 		}
 	}
 }

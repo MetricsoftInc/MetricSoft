@@ -245,8 +245,8 @@ namespace SQM.Website
 			if (videoId > 0)
 			{
 
-				string videoname = Server.MapPath(lb.CommandName.ToString());
-				int status = MediaVideoMgr.DeleteVideo(videoId, videoname);
+				//string videoname = Server.MapPath(lb.CommandName.ToString());
+				int status = MediaVideoMgr.DeleteVideo(videoId, lb.CommandName.ToString());
 			}
 			SessionManager.ReturnStatus = true;
 			SessionManager.ReturnObject = "DisplayVideos";

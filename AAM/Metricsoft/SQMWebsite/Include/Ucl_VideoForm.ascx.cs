@@ -193,7 +193,8 @@ namespace SQM.Website
 					ddlAvailability.SelectedIndex = 0;
 				else
 					ddlAvailability.SelectedValue = videoData.Video.VIDEO_AVAILABILITY;
-				litVideoLink.Text = "<a href='/Shared/FileHandler.ashx?DOC=v&DOC_ID=" + EditVideoId + "&FILE_NAME=" + videoData.Video.FILE_NAME + "' target='_blank'>" + Resources.LocalizedText.VideoDownload + "</a>";
+				litVideoDownloadLink.Text = "<a href='/Shared/FileHandler.ashx?DOC=v&DOC_ID=" + EditVideoId + "&FILE_NAME=" + videoData.Video.FILE_NAME + "' target='_blank'>" + Resources.LocalizedText.VideoDownload + "</a>";
+				litVideoViewLink.Text = "<a href='/Shared/VideoHandler.aspx?DOC=v&DOC_ID=" + EditVideoId + "' target='_blank'>" + Resources.LocalizedText.VideoView + "</a>";
 				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, listXLAT.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
 				rcbStatusSelect.Items.Insert(0, new RadComboBoxItem("Select a status", ""));
 				rcbStatusSelect.SelectedValue = videoData.Video.VIDEO_STATUS;
@@ -289,8 +290,8 @@ namespace SQM.Website
 				btnDelete.Visible = false;
 				lblResults.Visible = true;
 				VIDEO video = MediaVideoMgr.SelectVideoById(EditVideoId);
-				string filename = Server.MapPath(video.FILE_NAME);
-				int delStatus = MediaVideoMgr.DeleteVideo(EditVideoId, filename);
+				//string filename = Server.MapPath(video.FILE_NAME);
+				int delStatus = MediaVideoMgr.DeleteVideo(EditVideoId, video.FILE_NAME);
 				// delete the task
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
 				lblResults.Text += (delStatus == 1) ? Resources.LocalizedText.VideoDeleted : Resources.LocalizedText.VideoErrorDeleting;

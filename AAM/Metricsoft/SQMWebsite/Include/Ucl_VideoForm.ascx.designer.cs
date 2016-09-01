@@ -76,13 +76,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblAddOrEditVideo;
         
         /// <summary>
-        /// litVideoLink control.
+        /// litVideoDownloadLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litVideoLink;
+        protected global::System.Web.UI.WebControls.Literal litVideoDownloadLink;
+        
+        /// <summary>
+        /// litVideoViewLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litVideoViewLink;
         
         /// <summary>
         /// lblSourceType control.

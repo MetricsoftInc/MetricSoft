@@ -43,10 +43,10 @@
 
                                     <div class="row-fluid">
 
-                                        <div class="col-xs-12  text-left">
-
-                                            <asp:Label ID="lblAddOrEditVideo" class="textStd" runat="server" Text="<%$ Resources:LocalizedText, VideoEdit %>:"><strong></strong></asp:Label>&nbsp;&nbsp;&nbsp;<asp:Literal runat="server" ID="litVideoLink"></asp:Literal>
-
+                                        <div class="col-xs-12  text-left" style="position: relative;">
+											<div style="float: left;"><asp:Label ID="lblAddOrEditVideo" class="textStd" runat="server" Text="<%$ Resources:LocalizedText, VideoEdit %>:"><strong></strong></asp:Label></div>
+                                            <div style="float: left; padding-left: 25px;"><asp:Literal runat="server" ID="litVideoDownloadLink"></asp:Literal></div>
+											<div style="float: left; padding-left: 25px;"><asp:Literal runat="server" ID="litVideoViewLink"></asp:Literal></div>
                                         </div>
                                     </div>
                                     <table width="100%" align="center" border="0" cellspacing="0" cellpadding="5" class="borderSoft">

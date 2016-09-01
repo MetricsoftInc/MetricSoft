@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+using Microsoft.Azure; // Namespace for CloudConfigurationManager
+using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
+using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types
 
 namespace SQM.Website
 {
@@ -412,8 +415,29 @@ namespace SQM.Website
 					////}
 
 					// delete video from database, when stored in database
-					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID" + delCmd);
+					//status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID" + delCmd);
 
+					// delete the video from the Azure blob
+					// Retrieve storage account from connection string.
+					List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+					string storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
+					string storageURL = sets.Find(x => x.SETTING_CD == "STORAGE_URL").VALUE.ToString();
+					string storageQueryString = sets.Find(x => x.SETTING_CD == "STORAGE_QUERY").VALUE.ToString();
+					string fileType = Path.GetExtension(fileName);
+					CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+						CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+					// Create the blob client.
+					CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+					// Retrieve reference to a previously created container.
+					CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+
+					// Retrieve reference to a blob named "myblob.txt".
+					CloudBlockBlob blockBlob = container.GetBlockBlobReference(videoId.ToString() + fileType);
+
+					// Delete the blob.
+					blockBlob.Delete();
 					// delete the video header
 					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE VIDEO_ID" + delCmd);
 				}
