@@ -99,7 +99,7 @@ namespace SQM.Website.Automated
 					// get any AUTOMATE settings
 					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
-					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-12);
+					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-6);	// this should be a setting 
 					DateTime rollupToDate = DateTime.UtcNow;
 					int rollupMonthsAhead = 0;
 					setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
@@ -337,30 +337,34 @@ namespace SQM.Website.Automated
 
 							// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
 							var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == plant.PLANT_ID);
+							List<EHS_DATA> ehsdataList;
 
-							WriteLine("ACCOUNTING Rollup For Plant " + pact.PLANT_ID);
-
-							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddMonths(1))
+							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
 							{
 								decimal timeLost = 0;
 								decimal timeRestricted = 0;
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
-
 								if (currDate.Day == 1)
 								{
+									// get or create data records for the 1st day of the month
+									ehsdataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
 									var accountingForMonth = accountingForPlant.FirstOrDefault(a => a.PERIOD_YEAR == currDate.Year && a.PERIOD_MONTH == currDate.Month);
 									if (accountingForMonth != null)
 									{
 										timeLost = accountingForMonth.TIME_LOST ?? 0;
 										timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
 									}
-									EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
-									EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(ehsdataList, timeLostMeasureID, timeLost, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(ehsdataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
 									WriteLine("ACCOUNTING Rollup For Plant " + pact.PLANT_ID + " date = " + currDate.ToShortDateString());
 								}
+								else
+								{
+									// get any spurrious data that might have been entered manually. we will want to delete these
+									ehsdataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, false, updateIndicator);
+								}
 
-								foreach (var data in dataList)
+								foreach (var data in ehsdataList)
 								{
 									if (data.EntityState == EntityState.Detached && data.VALUE.HasValue && currDate.Day == 1)
 										entities.EHS_DATA.AddObject(data);
