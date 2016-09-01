@@ -70,7 +70,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\itextsharp.xmlworker.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
     </Reference>
@@ -88,6 +104,18 @@
       <HintPath>bin\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceModel.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.1\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\NPOI.dll</HintPath>
@@ -114,6 +142,10 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -1408,7 +1440,6 @@
     <Compile Include="Classes\SQMShared.cs" />
     <Compile Include="EHS\EHS_Audit_PDF.aspx.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_Audit_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Audit_PDF.aspx</DependentUpon>
@@ -1450,7 +1481,6 @@
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EHS\EHS_DataReport.aspx.designer.cs">
       <DependentUpon>EHS_DataReport.aspx</DependentUpon>
@@ -1987,7 +2017,6 @@
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_RadGauge.ascx.designer.cs">
       <DependentUpon>Ucl_RadGauge.ascx</DependentUpon>
@@ -2001,7 +2030,6 @@
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Include\Ucl_DashboardArea.ascx.designer.cs">
       <DependentUpon>Ucl_DashboardArea.ascx</DependentUpon>
@@ -2169,7 +2197,6 @@
     </Compile>
     <Compile Include="Reporting\EHS_12HourReport.aspx.cs">
       <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reporting\EHS_12HourReport.aspx.designer.cs">
       <DependentUpon>EHS_12HourReport.aspx</DependentUpon>
@@ -2183,7 +2210,6 @@
     </Compile>
     <Compile Include="Reporting\EHS_5Phase.aspx.cs">
       <DependentUpon>EHS_5Phase.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Reporting\EHS_5Phase.aspx.designer.cs">
       <DependentUpon>EHS_5Phase.aspx</DependentUpon>
@@ -2301,6 +2327,13 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\VideoHandler.aspx.cs">
+      <DependentUpon>VideoHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shared\VideoHandler.aspx.designer.cs">
+      <DependentUpon>VideoHandler.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Model1.edmx">
@@ -2367,6 +2400,7 @@
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Shared\VideoHandler.aspx" />
     <Content Include="WebResource.axd" />
     <Content Include="scripts\jquery-1.9.1.min.map" />
     <Content Include="RspQAILogin.Master" />

@@ -151,7 +151,12 @@
 							<asp:Label ID="lblVideoStatus" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn8 column" HeaderText="<%$ Resources:LocalizedText, VideoDownload %>" UniqueName="TemplateColumn8">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn8 column" HeaderText="<%$ Resources:LocalizedText, VideoView %>" UniqueName="TemplateColumn8">
+						<ItemTemplate>
+							<a href='<%# "/Shared/VideoHandler.aspx?DOC=v&DOC_ID="+ Eval("Video.VIDEO_ID").ToString() %>' target="_blank"><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoView %>"></asp:Literal></a>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn8a column" HeaderText="<%$ Resources:LocalizedText, VideoDownload %>" UniqueName="TemplateColumn8a">
 						<ItemTemplate>
 							<a href='<%# "/Shared/FileHandler.ashx?DOC=v&DOC_ID="+ Eval("Video.VIDEO_ID").ToString() + "&FILE_NAME=" + Eval("Video.FILE_NAME").ToString() %>' target="_blank"><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoDownload %>"></asp:Literal></a>
 						</ItemTemplate>

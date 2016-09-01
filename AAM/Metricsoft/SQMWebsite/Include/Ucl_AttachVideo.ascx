@@ -32,7 +32,7 @@
 							<telerik:GridTemplateColumn UniqueName="FileNameColumn" HeaderText="File" HeaderStyle-Width="30%" ItemStyle-HorizontalAlign="Left">
 								<ItemTemplate>
 									<div class="rfeFileExtension <%# GetFileExtension(DataBinder.Eval(Container.DataItem, "FileName").ToString().ToLower()) %>">
-										<a href="/Shared/FileHandler.ashx?DOC=v&DOC_ID=<%# DataBinder.Eval(Container.DataItem, "VideoId").ToString() %>&FILE_NAME=<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>"
+										<a href='<%# "/Shared/VideoHandler.aspx?DOC=v&DOC_ID="+ Eval("VideoId").ToString() %>'
 											style="text-decoration: underline;" target="_blank">
 											<asp:Literal ID="ltrFileName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "FileName").ToString() %>' />
 										</a>

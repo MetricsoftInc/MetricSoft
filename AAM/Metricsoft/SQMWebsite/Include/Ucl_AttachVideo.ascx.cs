@@ -8,6 +8,9 @@ using SQM.Website.Classes;
 using SQM.Shared;
 using System.IO;
 using Telerik.Web.UI;
+using Microsoft.Azure; // Namespace for CloudConfigurationManager
+using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
+using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types
 
 namespace SQM.Website
 {
@@ -15,6 +18,10 @@ namespace SQM.Website
 
     public partial class Ucl_AttachVideo : System.Web.UI.UserControl
     {
+		public string storageURL;
+		public string storageContainer;
+		public string storageQueryString;
+
 		public event CommandClick AttachmentEvent;
 
         public DocumentScope staticScope 
@@ -188,126 +195,6 @@ namespace SQM.Website
             SessionManager.DocumentContext = staticScope;
         }
 
-   //     public void BindAttachments(int recordType, string sessionID, decimal recordID, string recordStep, List<ATTACHMENT> attachList)
-   //     {
-   ////         SetAttachmentsScope(recordType, sessionID, recordID, recordStep);
-			////pnlManageVideos.Visible = true;
-   ////         foreach (ATTACHMENT attach in attachList)
-   ////         {
-   ////             LinkButton lnk = new LinkButton();
-   ////             lnk.Text = attach.FILE_NAME;
-   ////             lnk.ToolTip = attach.FILE_DESC;
-   ////             lnk.CssClass = "buttonRefLink";
-   ////             lnk.Style.Add("MARGIN-LEFT", "15px");
-   ////             lnk.OnClientClick = "Popup('../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID=" + attach.ATTACHMENT_ID.ToString() + "', 'newPage', 800, 600); return false;";
-			////	//  lnk.PostBackUrl = "../Shared/SQMImageHandler.ashx?DOC=a&DOC_ID="+attach.ATTACHMENT_ID.ToString();
-			////	pnlManageVideos.Controls.Add(lnk);
-   ////         }
-   //     }
-
-        //public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum)
-        //{
-        //    return BindListAttachment(attachList, recordStep, attachNum, true);
-        //}
-
-        //public int BindListAttachment(List<ATTACHMENT> attachList, string recordStep, int attachNum, bool scrollEnabled)
-        //{
-        //    int count = 0;
-        //    //List<ATTACHMENT> tempList = new List<ATTACHMENT>();
-
-        //    //if (attachNum == 0)
-        //    //{
-        //    //    tempList.AddRange(attachList.Where(a => a.RECORD_STEP == recordStep).ToList());
-        //    //    if ((count = tempList.Count) > 0)
-        //    //    {
-        //    //        if (scrollEnabled)
-        //    //        {
-        //    //            rptListAttachment.DataSource = attachList;
-        //    //            rptListAttachment.DataBind();
-        //    //            pnlListAttachment.Visible = true;
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            rptAttachmentsSmall.DataSource = attachList;
-        //    //            rptAttachmentsSmall.DataBind();
-        //    //            pnlDisplayAttachmentsSmall.Visible = true;
-        //    //        }
-        //    //    }
-        //    //}
-        //    //else
-        //    //{
-        //    //    if (attachNum == 1)
-        //    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).FirstOrDefault());
-        //    //    else
-        //    //        tempList.Add(attachList.Where(a => a.RECORD_STEP == recordStep).LastOrDefault());
-
-        //    //    if (tempList.Count > 0 && tempList[0] != null)
-        //    //    {
-        //    //        if (scrollEnabled)
-        //    //        {
-        //    //            rptListAttachment.DataSource = tempList;
-        //    //            rptListAttachment.DataBind();
-        //    //            pnlListAttachment.Visible = true;
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            rptAttachmentsSmall.DataSource = tempList;
-        //    //            rptAttachmentsSmall.DataBind();
-        //    //            pnlDisplayAttachmentsSmall.Visible = true;
-        //    //        }
-        //    //        count = 1;
-        //    //    }
-        //    //}
-
-        //    //if (scrollEnabled &&  count < 2)
-        //    //    pnlListAttachment.Attributes.Remove("Class");
-
-        //    return count;
-        //}
-
-   //     public int BindDisplayAttachments(int recordType, decimal recordID, string recordStep, decimal displayType)
-   //     {
-   //         int fileCount = 0;
-
-			//try
-			//{
-			//	var entities = new PSsqmEntities();
-			//	List<VIDEO> attachList = (from a in entities.VIDEO
-			//								   where
-			//									  (a.SOURCE_TYPE == recordType && a.SOURCE_ID == recordID) && (string.IsNullOrEmpty(a.SOURCE_STEP) || a.SOURCE_STEP == recordStep)
-			//								   orderby a.SOURCE_TYPE, a.FILE_NAME
-			//								   select a).ToList();
-
-
-			//	//if (displayType == 0)
-			//	//{
-			//		if ((fileCount = attachList.Count) > 0)
-			//		{
-			//			rgFiles.DataSource = attachList;
-			//			rgFiles.DataBind();
-			//		}
-			//	//}
-			//	//else
-			//	//{
-			//	//	if ((fileCount = attachList.Where(f => f. == displayType).Count()) > 0)
-			//	//	{
-			//	//		rgFiles.DataSource = attachList.Where(f => f.DISPLAY_TYPE == displayType).ToList();
-			//	//		rgFiles.DataBind();
-			//	//	}
-			//	//}
-			//}
-
-			//catch (Exception ex)
-			//{
-			//	;
-			//}
-
-			//if (fileCount > 0)
-			//	pnlListVideo.Visible = true;
-
-			//return fileCount;
-   //     }
-
         public void rptAttachList_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             
@@ -427,6 +314,11 @@ namespace SQM.Website
 
 		public void GetUploadedFiles()
 		{
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+			storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
+			storageURL = sets.Find(x => x.SETTING_CD == "STORAGE_URL").VALUE.ToString();
+			storageQueryString = sets.Find(x => x.SETTING_CD == "STORAGE_QUERY").VALUE.ToString();
+
 			var entities = new PSsqmEntities();
 
 			var files = (from a in entities.VIDEO
@@ -517,8 +409,9 @@ namespace SQM.Website
 			if (dmFromDate.SelectedDate == null || dmFromDate.SelectedDate > dmFromDate.MaxDate || raUpload.UploadedFiles.Count == 0)
 			{
 				dmFromDate.SelectedDate = DateTime.Today;
-				string script = "function f(){OpenManageVideosWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+				//string script = "function f(){OpenManageVideosWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				//ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+				// probably should have some error messaging here... 
 				return;
 			}
 
@@ -540,23 +433,22 @@ namespace SQM.Website
 				//Stream stream = file.InputStream;
 
 				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, rtbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, rtbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, _plantId, file.InputStream.Length);
 
-				// next, save the video to the server; file name = VIDEO_ID
-				//////if (video != null)
-				//////{
-				//////	try
-				//////	{
-				//////		file.SaveAs(Path.Combine(Server.MapPath(raUpload.TargetFolder), video.VIDEO_ID.ToString() + fileType.Trim()));
-				//////		SessionManager.ReturnRecordID = video.VIDEO_ID;
-				//////		SessionManager.ReturnObject = "AddVideo";
-				//////		SessionManager.ReturnStatus = true;
-				//////	}
-				//////	catch (Exception ex)
-				//////	{
-				//////		// put up an error
-				//////	}
-				//////}
+				// next, save the video to Azure; file name = VIDEO_ID
+				if (video != null)
+				{
+					// get the container from the settings table
+					List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+					storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
+
+					CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+						CloudConfigurationManager.GetSetting("StorageConnectionString"));
+					CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+					CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+					CloudBlockBlob blockBlob = container.GetBlockBlobReference(video.VIDEO_ID.ToString() + fileType);
+					blockBlob.UploadFromStream(file.InputStream);
+				}
 
 				pnlListVideo.Visible = false;
 				SessionManager.ReturnRecordID = video.VIDEO_ID;
@@ -626,8 +518,14 @@ namespace SQM.Website
 			{
 				GridDataItem dataItem = e.Item as GridDataItem;
 				//string fileName = ((Literal)dataItem["FileNameColumn"].FindControl("ltrFileName")).Text.ToLower();
-
-			}
+				//LinkButton lnk = (LinkButton)dataItem["FileNameColumn"].FindControl("lnkFile");
+				//int index = lnk.Text.ToString().IndexOf(".");
+				//string fileType = "";
+				//try
+				//{ fileType = lnk.Text.ToString().Substring(index); }
+				//catch { }
+				//lnk.PostBackUrl = storageURL + storageContainer + "/" + dataItem.KeyValues.Trim() + fileType + storageQueryString;
+ 			}
 		}
 	}
 }

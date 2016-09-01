@@ -861,4 +861,7 @@
   <data name="VideoSaveSuccess" xml:space="preserve">
     <value>The video file has been uploaded</value>
   </data>
+  <data name="VideoView" xml:space="preserve">
+    <value>View Video</value>
+  </data>
 </root>

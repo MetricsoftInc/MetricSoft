@@ -18,7 +18,6 @@ namespace SQM.Website
 		static int baseRowIndex;
 		List<XLAT> listXLAT;
 
-
 		RadPersistenceManager persistenceManager;
 
 		public event GridItemClick OnQualityIssueClick;

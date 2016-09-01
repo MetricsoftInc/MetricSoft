@@ -7,6 +7,9 @@ using System.Drawing.Imaging;
 using System.Web.SessionState;
 using System.IO;
 using SQM.Website.Classes;
+using Microsoft.Azure; // Namespace for CloudConfigurationManager
+using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
+using Microsoft.WindowsAzure.Storage.Blob; // Namespace for Blob storage types
 
 namespace SQM.Website.Shared
 {
@@ -54,10 +57,9 @@ namespace SQM.Website.Shared
 								context.Response.Flush();
 								break;
 							case "v": // video
-								// the following is the code for finding the file in the database
 								VIDEO v = MediaVideoMgr.SelectVideoById(doc_id);
-								VIDEO_FILE vf = MediaVideoMgr.SelectVideoFileById(doc_id);
 
+								// get the file from Azure
 								fileType = Path.GetExtension(v.FILE_NAME);
 
 								if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
@@ -65,19 +67,69 @@ namespace SQM.Website.Shared
 								else
 									fileName += fileType;
 
+								List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+								string storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
+								string storageURL = sets.Find(x => x.SETTING_CD == "STORAGE_URL").VALUE.ToString();
+								string storageQueryString = sets.Find(x => x.SETTING_CD == "STORAGE_QUERY").VALUE.ToString();
+								
+								// Retrieve storage account from connection string.
+								CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+									CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+								// Create the blob client.
+								CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+								// Retrieve reference to a previously created container.
+								CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+
+								// Retrieve reference to a blob named "photo1.jpg".
+								CloudBlockBlob blockBlob = container.GetBlockBlobReference(v.VIDEO_ID + fileType);
+
+								// Save blob contents to a file.
+								//using (var fileStream = System.IO.File.OpenWrite(@"path\myfile"))
+								//{
+								//	blockBlob.DownloadToStream(fileStream);
+								//}
+
 								mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
 								context.Response.ContentType = mimeType;
 
-								// mt  - use below for video streams ?
-								context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
-								context.Response.AddHeader("content-length", vf.VIDEO_DATA.Length.ToString());
-								//context.Response.OutputStream.Write(vf.VIDEO_DATA, 0, vf.VIDEO_DATA.Length);
-								context.Response.BinaryWrite(vf.VIDEO_DATA);
+								byte[] b = new byte[16 * 1024];
+								using (MemoryStream memoryStream = new MemoryStream())
+								{
+									blockBlob.DownloadToStream(memoryStream);
+									//memoryStream.WriteTo(HttpContext.Current.Response.OutputStream);
+									//memoryStream.Close();
+									b = memoryStream.ToArray();
+								}
 
+								context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								context.Response.AddHeader("content-length", v.FILE_SIZE.ToString());
+								context.Response.BinaryWrite(b);
 								context.Response.Flush();
 
-								// the following is the code for finding the file on the server
-								//VIDEO v = MediaVideoMgr.SelectVideoById(doc_id);
+								//// the following is the code for finding the file in the database
+								//VIDEO_FILE vf = MediaVideoMgr.SelectVideoFileById(doc_id);
+
+								//fileType = Path.GetExtension(v.FILE_NAME);
+
+								//if (!string.IsNullOrEmpty(context.Request.QueryString["FILE_NAME"]))
+								//	fileName = context.Request.QueryString["FILE_NAME"];
+								//else
+								//	fileName += fileType;
+
+								//mimeType = SQM.Website.Classes.FileExtensionConverter.ToMIMEType(fileType);
+								//context.Response.ContentType = mimeType;
+
+								//// mt  - use below for video streams ?
+								//context.Response.AddHeader("content-disposition", "inline; filename=" + fileName);
+								//context.Response.AddHeader("content-length", vf.VIDEO_DATA.Length.ToString());
+								////context.Response.OutputStream.Write(vf.VIDEO_DATA, 0, vf.VIDEO_DATA.Length);
+								//context.Response.BinaryWrite(vf.VIDEO_DATA);
+
+								//context.Response.Flush();
+
+								//// the following is the code for finding the file on the server
 								//fileType = Path.GetExtension(v.FILE_NAME);
 
 								//fileName = context.Server.MapPath(v.FILE_NAME);
