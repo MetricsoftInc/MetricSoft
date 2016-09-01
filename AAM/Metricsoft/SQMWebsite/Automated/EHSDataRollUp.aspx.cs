@@ -337,11 +337,7 @@ namespace SQM.Website.Automated
 
 							// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
 							var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == plant.PLANT_ID);
-							//var minDateA = new[] { pact.EFF_START_DATE, accountingForPlant.AsEnumerable().Min(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Max();
-							//var maxDateA = new[] { pact.EFF_END_DATE, accountingForPlant.AsEnumerable().Max(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Min();
 
-							//minDateA = new DateTime(minDateA.Value.Year, minDateA.Value.Month, 1);
-							//maxDateA = new DateTime(maxDateA.Value.Year, maxDateA.Value.Month, 1);
 							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddMonths(1))
 							{
 								decimal timeLost = 0;
@@ -359,6 +355,7 @@ namespace SQM.Website.Automated
 									}
 									EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
 									EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
+									WriteLine("ACCOUNTING Rollup For Plant " + pact.PLANT_ID + " date = " + currDate.ToShortDateString());
 								}
 
 								foreach (var data in dataList)
