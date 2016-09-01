@@ -424,7 +424,7 @@ namespace SQM.Website
 			//if (flFileUpload.HasFile)
 			foreach (UploadedFile file in raUpload.UploadedFiles) // there should only be 1
 			{
-				uclProgress.UpdateDisplay(1, 50 + (i * 10), "Save uploaded video...");
+				//uclProgress.UpdateDisplay(1, 50 + (i * 10), "Save uploaded video...");
 				//name = flFileUpload.FileName;
 				name = file.FileName;
 				fileType = file.GetExtension();
@@ -451,7 +451,7 @@ namespace SQM.Website
 					blockBlob.UploadFromStream(file.InputStream);
 				}
 
-				uclProgress.ProgressComplete();
+				//uclProgress.ProgressComplete();
 
 				pnlListVideo.Visible = false;
 				SessionManager.ReturnRecordID = video.VIDEO_ID;
