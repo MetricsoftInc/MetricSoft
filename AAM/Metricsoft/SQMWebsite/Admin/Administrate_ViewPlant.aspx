@@ -229,7 +229,8 @@
 																</telerik:GridTemplateColumn>
 																<telerik:GridTemplateColumn HeaderText="Active<br>From Date">
 																	<ItemTemplate>
-																	<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" Width="120px" runat="server" ShowPopupOnFocus="True">
+																		<telerik:RadMonthYearPicker ID="rdpStartDate" ShowPopupOnFocus="true" runat="server" CssClass="textStd" Width="165" Skin="Metro"></telerik:RadMonthYearPicker>
+																	<%--<telerik:RadDatePicker ID="rdpStartDate" Skin="Metro" Width="120px" runat="server" ShowPopupOnFocus="True">
 																	<Calendar ID="Calendar1" runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 																	</Calendar>
 																	<DateInput ID="DateInput1" runat="server" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -242,12 +243,13 @@
 																		<EnabledStyle Resize="None" />
 																	</DateInput>
 																	<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-																</telerik:RadDatePicker>
+																</telerik:RadDatePicker>--%>
 																	</ItemTemplate>
 																</telerik:GridTemplateColumn>
 																<telerik:GridTemplateColumn HeaderText="Active<br>To Date">
 																	<ItemTemplate>
-																<telerik:RadDatePicker ID="rdpStopDate" Skin="Metro" Width="120px" runat="server" ShowPopupOnFocus="True">
+																		<telerik:RadMonthYearPicker ID="rdpStopDate" ShowPopupOnFocus="true" runat="server" CssClass="textStd" Width="165" Skin="Metro"></telerik:RadMonthYearPicker>
+<%--																<telerik:RadDatePicker ID="rdpStopDate" Skin="Metro" Width="120px" runat="server" ShowPopupOnFocus="True">
 																	<Calendar ID="Calendar2" runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 																	</Calendar>
 																	<DateInput ID="DateInput2" runat="server" DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="">
@@ -260,7 +262,7 @@
 																		<EnabledStyle Resize="None" />
 																	</DateInput>
 																	<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-																</telerik:RadDatePicker>
+																</telerik:RadDatePicker>--%>
 																	</ItemTemplate>
 																</telerik:GridTemplateColumn>
 																<telerik:GridTemplateColumn HeaderText="Notify<br>Email">

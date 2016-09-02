@@ -435,8 +435,8 @@ namespace SQM.Website
 					PLANT_ACTIVE pa = null;
 
 					HiddenField hfRecType = (HiddenField)item.FindControl("hfRecordType");
-					RadDatePicker rdp1 = (RadDatePicker)item.FindControl("rdpStartDate");
-					RadDatePicker rdp2 = (RadDatePicker)item.FindControl("rdpStopDate");
+					RadMonthYearPicker rdp1 = (RadMonthYearPicker)item.FindControl("rdpStartDate");
+					RadMonthYearPicker rdp2 = (RadMonthYearPicker)item.FindControl("rdpStopDate");
 					CheckBox cb1 = (CheckBox)item.FindControl("cbEnableEmail");
 					CheckBox cb2 = (CheckBox)item.FindControl("cbViewInactiveHist");
 
@@ -523,10 +523,10 @@ namespace SQM.Website
 					Label lbl = (Label)item.FindControl("lblModule");
 					lbl.Text = ((TaskRecordType)plantActive.RECORD_TYPE).ToString();
 
-					RadDatePicker rdp = (RadDatePicker)item.FindControl("rdpStartDate");
+					RadMonthYearPicker rdp = (RadMonthYearPicker)item.FindControl("rdpStartDate");
 					rdp.SelectedDate = plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE : null;
 
-					rdp = (RadDatePicker)item.FindControl("rdpStopDate");
+					rdp = (RadMonthYearPicker)item.FindControl("rdpStopDate");
 					rdp.SelectedDate = plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE : null;
 
 					CheckBox cb = (CheckBox)item.FindControl("cbEnableEmail");
