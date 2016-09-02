@@ -41,8 +41,9 @@ namespace SQM.Website.Automated
 			int workdays = 7;
 			string pageURI = HttpContext.Current.Request.Url.AbsoluteUri;
 			string nextPage = "";
-			fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
-			DateTime rollupToDate = DateTime.UtcNow;
+			fromDate = DateTime.UtcNow.AddMonths(-11);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
+			// set end date to end of current month to clear spurrious entries ?
+			DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
 
 			WriteLine("Incident Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
@@ -66,7 +67,7 @@ namespace SQM.Website.Automated
 					nextPage = setting.VALUE;
 				}
 
-
+				/*
 				int rollupMonthsAhead = 0;
 				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
 				if (setting != null  &&  !string.IsNullOrEmpty(setting.VALUE))
@@ -74,7 +75,7 @@ namespace SQM.Website.Automated
 					int.TryParse(setting.VALUE, out rollupMonthsAhead);
 					rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
 				}
-
+				*/
 				/*
 				if (strValidIP.Equals(currentIP))
 				{

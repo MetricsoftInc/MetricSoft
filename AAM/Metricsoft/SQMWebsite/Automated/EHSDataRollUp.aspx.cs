@@ -100,7 +100,10 @@ namespace SQM.Website.Automated
 					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
 					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-6);	// this should be a setting 
-					DateTime rollupToDate = DateTime.UtcNow;
+					// set end date to end of current month to clear spurrious entries ?
+					DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
+
+					/*
 					int rollupMonthsAhead = 0;
 					setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
 					if (setting != null && !string.IsNullOrEmpty(setting.VALUE))
@@ -108,6 +111,7 @@ namespace SQM.Website.Automated
 						int.TryParse(setting.VALUE, out rollupMonthsAhead);
 						rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
 					}
+					*/
 
 					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
 					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
@@ -165,8 +169,7 @@ namespace SQM.Website.Automated
 						if (pact != null  &&  pact.EFF_START_DATE.HasValue)	// plant is active
 						{
 							var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
-							//var minDate = new[] { pact.EFF_START_DATE, closedAuditsForPlant.Min(a => a.CLOSE_DATE_DATA_COMPLETE) }.Max();
-							//var maxDate = new[] { pact.EFF_END_DATE, closedAuditsForPlant.Max(a => a.CLOSE_DATE_DATA_COMPLETE) }.Min();
+
 							// new timespan logic 
 							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
 							DateTime toDate = pact.EFF_END_DATE.HasValue && (DateTime)pact.EFF_END_DATE < rollupToDate ? (DateTime)pact.EFF_END_DATE : rollupToDate;

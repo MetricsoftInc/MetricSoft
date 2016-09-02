@@ -1293,8 +1293,8 @@ namespace SQM.Website
 				//DateTime startDate = hist.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)hist.BEGIN_DT, localeTimezone).Date : WebSiteCommon.LocalTime((DateTime)incident.INCIDENT_DT, localeTimezone).Date;
 				//DateTime endDate = histLast.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
 
-				DateTime startDate = (DateTime)hist.BEGIN_DT;
-				DateTime endDate = (DateTime)histLast.BEGIN_DT;
+				DateTime startDate = ((DateTime)hist.BEGIN_DT).Date;
+				DateTime endDate = ((DateTime)histLast.BEGIN_DT).Date;
 
 				/*
 				if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
@@ -1304,9 +1304,16 @@ namespace SQM.Website
 				*/
 
 				// truncate time accural to current day in case of erroneous lost/restricted time entry
+				/*
+				if (incident.DETECT_PLANT_ID == 37)
+				{
+					bool dbg = true;
+					bool dd = dbg;
+				}
+				*/
 				if (endDate > DateTime.UtcNow)
 				{
-					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow, localeTimezone);
+					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow, localeTimezone).Date;
 				}
 
 				int numDays = Convert.ToInt32((endDate - startDate).TotalDays);		// get total # days of the incident timespan

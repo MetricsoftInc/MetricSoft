@@ -63,8 +63,9 @@ namespace DataRollup
 			int workdays = 7;
 			int rollupMonthsAhead = 0;
 			string nextStep = "";
-			DateTime fromDate = DateTime.UtcNow.AddMonths(-12);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
-			DateTime rollupToDate = DateTime.UtcNow;
+			DateTime fromDate = DateTime.UtcNow.AddMonths(-11);    // set the incident 'select from' date.  TODO: get this from SETTINGS table
+			// set end date to end of current month to clear spurrious entries ?
+			DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
 
 			WriteLine("INCIDENT Rollup Started: " + DateTime.UtcNow.ToString("hh:mm MM/dd/yyyy"));
 
@@ -85,14 +86,14 @@ namespace DataRollup
 				{
 					nextStep = setting.VALUE;
 				}
-
+				/*
 				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
 				if (setting != null && !string.IsNullOrEmpty(setting.VALUE))
 				{
 					int.TryParse(setting.VALUE, out rollupMonthsAhead);
 					rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
 				}
-
+				*/
 				// fetch all incidents occurring after the minimum reporting date
 				List<INCIDENT> incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS")
 											   where
@@ -276,9 +277,13 @@ namespace DataRollup
 					SETTINGS setting = null;
 
 					// get any AUTOMATE settings
+					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
-					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-12);
-					DateTime rollupToDate = DateTime.UtcNow;
+					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-6);	// this should be a setting 
+					// set end date to end of current month to clear spurrious entries ?
+					DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
+
+					/*
 					int rollupMonthsAhead = 0;
 					setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
 					if (setting != null && !string.IsNullOrEmpty(setting.VALUE))
@@ -286,6 +291,7 @@ namespace DataRollup
 						int.TryParse(setting.VALUE, out rollupMonthsAhead);
 						rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
 					}
+					*/
 
 					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
 					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
@@ -302,6 +308,7 @@ namespace DataRollup
 					decimal recordableMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20004").MEASURE_ID;
 					decimal lostTimeCaseMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20005").MEASURE_ID;
 					decimal fatalityMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20006").MEASURE_ID;
+					decimal otherIncidentsID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20001").MEASURE_ID;
 					decimal closedInvestigationMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20007").MEASURE_ID;
 					var incidentMeasureIDs = new List<decimal>()
 					{
@@ -310,6 +317,7 @@ namespace DataRollup
 						recordableMeasureID,
 						lostTimeCaseMeasureID,
 						fatalityMeasureID,
+						otherIncidentsID,
 						closedInvestigationMeasureID
 					};
 
@@ -341,8 +349,7 @@ namespace DataRollup
 						if (pact != null && pact.EFF_START_DATE.HasValue)	// plant is active
 						{
 							var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
-							//var minDate = new[] { pact.EFF_START_DATE, closedAuditsForPlant.Min(a => a.CLOSE_DATE_DATA_COMPLETE) }.Max();
-							//var maxDate = new[] { pact.EFF_END_DATE, closedAuditsForPlant.Max(a => a.CLOSE_DATE_DATA_COMPLETE) }.Min();
+
 							// new timespan logic 
 							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
 							DateTime toDate = pact.EFF_END_DATE.HasValue && (DateTime)pact.EFF_END_DATE < rollupToDate ? (DateTime)pact.EFF_END_DATE : rollupToDate;
@@ -398,31 +405,32 @@ namespace DataRollup
 								int recordables = 0;
 								int lostTimeCases = 0;
 								int fatalities = 0;
+								int otherIncidents = 0;
 								int closedInvestigations = 0;
 
 								var firstAidOrdinals = new Dictionary<string, Dictionary<string, int>>()
-							{
-								{ "type", null },
-								{ "bodyPart", null },
-								{ "rootCause", null },
-								{ "tenure", null },
-								{ "daysToClose", null }
-							};
+								{
+									{ "type", null },
+									{ "bodyPart", null },
+									{ "rootCause", null },
+									{ "tenure", null },
+									{ "daysToClose", null }
+								};
 								var recordableOrdinals = new Dictionary<string, Dictionary<string, int>>()
-							{
-								{ "type", null },
-								{ "bodyPart", null },
-								{ "rootCause", null },
-								{ "tenure", null },
-								{ "daysToClose", null }
-							};
+								{
+									{ "type", null },
+									{ "bodyPart", null },
+									{ "rootCause", null },
+									{ "tenure", null },
+									{ "daysToClose", null }
+								};
 
 								var incidentsForDay = incidentsForPlant.Where(i => EntityFunctions.TruncateTime(i.INCIDENT_DT) == currDate.Date);
 								if (incidentsForDay.Any())
 								{
 									var firstAidIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.FIRST_AID);
 									var recordableIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.RECORDABLE);
-
+									otherIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID != injuryIllnessIssueTypeID).Count();
 									// Basic data
 									nearMisses = incidentsForDay.Count(i => i.ISSUE_TYPE_ID == nearMissIssueTypeID);
 									firstAidCases = firstAidIncidents.Count();
@@ -475,6 +483,7 @@ namespace DataRollup
 								EHSDataMapping.SetEHSDataValue(dataList, recordableMeasureID, recordables, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, lostTimeCaseMeasureID, lostTimeCases, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, fatalityMeasureID, fatalities, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(dataList, otherIncidentsID, otherIncidents, updateIndicator);
 								EHSDataMapping.SetEHSDataValue(dataList, closedInvestigationMeasureID, closedInvestigations, updateIndicator);
 								foreach (var data in dataList)
 								{
@@ -511,31 +520,40 @@ namespace DataRollup
 
 							// MONTHLY INCIDENTS (from PLANT_ACCOUNTING)
 							var accountingForPlant = entities.PLANT_ACCOUNTING.Where(a => a.PLANT_ID == plant.PLANT_ID);
-							//var minDateA = new[] { pact.EFF_START_DATE, accountingForPlant.AsEnumerable().Min(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Max();
-							//var maxDateA = new[] { pact.EFF_END_DATE, accountingForPlant.AsEnumerable().Max(i => (DateTime?)new DateTime(i.PERIOD_YEAR, i.PERIOD_MONTH, 1)) }.Min();
+							List<EHS_DATA> ehsdataList;
 
-							//minDateA = new DateTime(minDateA.Value.Year, minDateA.Value.Month, 1);
-							//maxDateA = new DateTime(maxDateA.Value.Year, maxDateA.Value.Month, 1);
-							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddMonths(1))
+							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
 							{
 								decimal timeLost = 0;
 								decimal timeRestricted = 0;
 
-								var accountingForMonth = accountingForPlant.FirstOrDefault(a => a.PERIOD_YEAR == currDate.Year && a.PERIOD_MONTH == currDate.Month);
-								if (accountingForMonth != null)
+								if (currDate.Day == 1)
 								{
-									timeLost = accountingForMonth.TIME_LOST ?? 0;
-									timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
+									// get or create data records for the 1st day of the month
+									ehsdataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
+									var accountingForMonth = accountingForPlant.FirstOrDefault(a => a.PERIOD_YEAR == currDate.Year && a.PERIOD_MONTH == currDate.Month);
+									if (accountingForMonth != null)
+									{
+										timeLost = accountingForMonth.TIME_LOST ?? 0;
+										timeRestricted = accountingForMonth.TOTAL_DAYS_RESTRICTED ?? 0;
+									}
+									EHSDataMapping.SetEHSDataValue(ehsdataList, timeLostMeasureID, timeLost, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(ehsdataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
+									WriteLine("ACCOUNTING Rollup For Plant " + pact.PLANT_ID + " date = " + currDate.ToShortDateString());
+								}
+								else
+								{
+									// get any spurrious data that might have been entered manually. we will want to delete these
+									ehsdataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, false, updateIndicator);
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMonthlyMeasureIDs, true, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, timeLostMeasureID, timeLost, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, timeRestrictedMeasureID, timeRestricted, updateIndicator);
-								foreach (var data in dataList)
-									if (data.EntityState == EntityState.Detached && data.VALUE != 0)
+								foreach (var data in ehsdataList)
+								{
+									if (data.EntityState == EntityState.Detached && data.VALUE.HasValue && currDate.Day == 1)
 										entities.EHS_DATA.AddObject(data);
-									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
+									else if (data.EntityState != EntityState.Detached && currDate.Day != 1)
 										entities.DeleteObject(data);
+								}
 							}
 						}
 					}
