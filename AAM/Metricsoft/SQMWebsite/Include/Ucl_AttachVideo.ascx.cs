@@ -454,6 +454,7 @@ namespace SQM.Website
 				//uclProgress.ProgressComplete();
 
 				pnlListVideo.Visible = false;
+				pnlAddVideos.Visible = false;
 				SessionManager.ReturnRecordID = video.VIDEO_ID;
 				SessionManager.ReturnObject = "AddVideo";
 				SessionManager.ReturnStatus = true;
@@ -471,6 +472,7 @@ namespace SQM.Website
 			SessionManager.ReturnObject = "DisplayVideos";
 			SessionManager.ReturnStatus = true;
 			pnlListVideo.Visible = false;
+			pnlAddVideos.Visible = false;
 			if (AttachmentEvent != null)
 			{
 				AttachmentEvent("cancel");
@@ -504,6 +506,7 @@ namespace SQM.Website
 
 			//			this.GetUploadedFiles();
 			pnlListVideo.Visible = false;
+			pnlAddVideos.Visible = false;
 			SessionManager.ReturnRecordID = video.VIDEO_ID;
 			SessionManager.ReturnObject = "AddVideo";
 			SessionManager.ReturnStatus = true;
