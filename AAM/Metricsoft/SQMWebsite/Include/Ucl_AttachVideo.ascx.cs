@@ -433,23 +433,7 @@ namespace SQM.Website
 				//Stream stream = flFileUpload.FileContent;
 				//Stream stream = file.InputStream;
 
-				// first we need to create the video header so that we have the video id
-				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, rtbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, _plantId, file.InputStream.Length);
-
-				// next, save the video to Azure; file name = VIDEO_ID
-				if (video != null)
-				{
-					// get the container from the settings table
-					List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
-					storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
-
-					CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
-						CloudConfigurationManager.GetSetting("StorageConnectionString"));
-					CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-					CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
-					CloudBlockBlob blockBlob = container.GetBlockBlobReference(video.VIDEO_ID.ToString() + fileType);
-					blockBlob.UploadFromStream(file.InputStream);
-				}
+				VIDEO video = MediaVideoMgr.Add(file.FileName, fileType, rtbFileDescription.Text.ToString(), rtbTitle.Text.ToString(), _recordType, _recordId, _recordStep, rddlInjuryType.SelectedValue.ToString(), rdlBodyPart.SelectedValue.ToString(), rddlVideoType.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, SourceDate, file.InputStream, _plantId);
 
 				//uclProgress.ProgressComplete();
 

@@ -2257,6 +2257,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no videos for this incident and it has been completed. Videos can no longer be added..
+        /// </summary>
+        internal static string VideoUploadIncidentClosed {
+            get {
+                return ResourceManager.GetString("VideoUploadIncidentClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To upload a video, fill out all the file information and then click &apos;browse&apos; to search for the appropriate file from your desktop or device, or to take a video from your device..
         /// </summary>
         internal static string VideoUploadInstruction {

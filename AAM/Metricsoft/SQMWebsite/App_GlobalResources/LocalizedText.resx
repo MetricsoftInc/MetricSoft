@@ -864,4 +864,7 @@
   <data name="VideoView" xml:space="preserve">
     <value>View Video</value>
   </data>
+  <data name="VideoUploadIncidentClosed" xml:space="preserve">
+    <value>There are no videos for this incident and it has been completed. Videos can no longer be added.</value>
+  </data>
 </root>

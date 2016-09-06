@@ -57,7 +57,7 @@
 <telerik:RadAjaxPanel ID="rapManageVideos"  runat="server">
 	<asp:Label ID="lblManageVideos" runat="server" CssClass="prompt"></asp:Label>
 	<div id="divUpload" runat="server" style="margin-top: 5px;">
-		<asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:LocalizedText, VideoUploadInstruction %>"></asp:Literal>
+		<asp:Literal ID="litInstructions" runat="server" Text="<%$ Resources:LocalizedText, VideoUploadInstruction %>"></asp:Literal>
 		<br />
 		<asp:Panel ID="pnlListVideo" runat="server"  Visible="false" Width="99%" style="margin-bottom: 7px;">
 			<telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_DeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" >
@@ -85,6 +85,9 @@
 				</MasterTableView>
 				<ClientSettings EnableAlternatingItems="false"></ClientSettings>
 			</telerik:RadGrid>
+		</asp:Panel>
+		<asp:Panel ID="pnlNoVideosClosed" runat="server" Visible="false" Width="80%" Style="margin: 10px;">
+			<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoUploadIncidentClosed %>"></asp:Literal>
 		</asp:Panel>
 		<br style="clear: both;" />
 		<Ucl:Progress id="uclProgress" runat="server"/>

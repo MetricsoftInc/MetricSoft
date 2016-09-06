@@ -51,61 +51,6 @@ namespace SQM.Website
 
 	public static class MediaVideoMgr
 	{
-		public static VIDEO Add(String fileName, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate, decimal plantId, decimal fileSize)
-		{
-			VIDEO ret = null;
-			try
-			{
-				using (PSsqmEntities entities = new PSsqmEntities())
-				{
-					VIDEO video = new VIDEO();
-					//video.FILE_NAME = filename;
-					video.DESCRIPTION = description;
-					video.TITLE = videoTitle;
-					video.SOURCE_TYPE = sourceType;
-					video.SOURCE_ID = sourceId;
-					video.SOURCE_STEP = sourceStep;
-
-					if (plantId > 0)
-					{
-						PLANT plant = SQMModelMgr.LookupPlant(plantId);
-						video.COMPANY_ID = (decimal)plant.COMPANY_ID;
-						video.BUS_ORG_ID = (decimal)plant.BUS_ORG_ID;
-						video.PLANT_ID = plantId;
-					}
-					else
-					{
-						video.COMPANY_ID = SessionManager.EffLocation.Company.COMPANY_ID;
-						video.BUS_ORG_ID = SessionManager.UserContext.Person.BUS_ORG_ID;
-						video.PLANT_ID = SessionManager.UserContext.Person.PLANT_ID;
-					}
-
-					video.VIDEO_PERSON = SessionManager.UserContext.Person.PERSON_ID;
-					video.CREATE_DT = WebSiteCommon.CurrentUTCTime();
-					video.VIDEO_TYPE = videoType; // this is the injury/incident type.  Default to 0 for Media & audit
-					video.VIDEO_DT = videoDate;
-					video.INCIDENT_DT = incidentDate;
-					video.INJURY_TYPES = injuryType;
-					video.BODY_PARTS = bodyPart;
-					video.VIDEO_STATUS = "";
-					video.FILE_NAME = fileName;
-					video.FILE_SIZE = fileSize;
-
-					entities.AddToVIDEO(video);
-					entities.SaveChanges();
-
-					ret = video;
-				}
-			}
-			catch (Exception e)
-			{
-				//SQMLogger.LogException(e);
-				ret = null;
-			}
-
-			return ret;
-		}
-
 		public static VIDEO Add(String fileName, String fileExtention, String description, string videoTitle, int sourceType, decimal sourceId, string sourceStep, string injuryType, string bodyPart, string videoType, DateTime videoDate, DateTime incidentDate, Stream file, decimal plantId)
 		{
 			VIDEO ret = null;
@@ -150,23 +95,39 @@ namespace SQM.Website
 					entities.SaveChanges();
 
 					//read in the file contents
-					if (file != null)
+					// this is the logic for adding the file to the database table
+					//if (file != null)
+					//{
+					//	file.Seek(0, SeekOrigin.Begin);
+					//	BinaryReader rdr = new BinaryReader(file);
+					//	byte[] fileData = rdr.ReadBytes((int)file.Length);
+					//	rdr.Close();
+					//	file.Close();
+
+					//	string cmdText = "INSERT INTO VIDEO_FILE VALUES (NEWID(), @VIDEO_ID, @VIDEO_DATA)";
+					//	SqlParameter[] parameters = new[]{
+					//		new SqlParameter("@VIDEO_ID",  video.VIDEO_ID),
+					//		new SqlParameter("@VIDEO_DATA", fileData)
+					//	};
+
+					//	int status = entities.ExecuteStoreCommand(cmdText, parameters);
+					//}
+					//entities.SaveChanges();
+
+					// this is the code for saving the file in the Azure cloud
+					if (video != null)
 					{
-						file.Seek(0, SeekOrigin.Begin);
-						BinaryReader rdr = new BinaryReader(file);
-						byte[] fileData = rdr.ReadBytes((int)file.Length);
-						rdr.Close();
-						file.Close();
+						// get the container from the settings table
+						List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+						string storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
 
-						string cmdText = "INSERT INTO VIDEO_FILE VALUES (NEWID(), @VIDEO_ID, @VIDEO_DATA)";
-						SqlParameter[] parameters = new[]{
-							new SqlParameter("@VIDEO_ID",  video.VIDEO_ID),
-							new SqlParameter("@VIDEO_DATA", fileData)
-						};
-
-						int status = entities.ExecuteStoreCommand(cmdText, parameters);
+						CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+							CloudConfigurationManager.GetSetting("StorageConnectionString"));
+						CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+						CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+						CloudBlockBlob blockBlob = container.GetBlockBlobReference(video.VIDEO_ID.ToString() + fileExtention);
+						blockBlob.UploadFromStream(file);
 					}
-					entities.SaveChanges();
 
 					ret = video;
 				}
