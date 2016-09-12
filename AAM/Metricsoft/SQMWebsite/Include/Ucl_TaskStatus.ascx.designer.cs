@@ -76,6 +76,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblTaskDetailValue;
         
         /// <summary>
+        /// lblCreatedBy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCreatedBy;
+        
+        /// <summary>
+        /// lblCreatedByValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCreatedByValue;
+        
+        /// <summary>
         /// lblTaskDueDT control.
         /// </summary>
         /// <remarks>

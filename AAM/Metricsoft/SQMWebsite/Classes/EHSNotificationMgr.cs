@@ -234,6 +234,17 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				string createByName = "";
+				if (createBy == null)
+				{
+					createByName = Resources.LocalizedText.AutomatedScheduler;
+				}
+				else
+				{
+					createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+				}
+
 				string emailTo = person.EMAIL;
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
 				string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_NOTIFY" && x.XLAT_CODE == "UPDATE").FirstOrDefault().DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
@@ -249,6 +260,8 @@ namespace SQM.Website
 								theTask.DESCRIPTION + "<br/>" +
 								"<br/>" +
 								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "<br/>" +
+								"<br/>" +
+								Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 								"<br/>" +
 								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION_SHORT;
 
@@ -283,6 +296,18 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			string createByName = "";
+
+			if (createBy == null)
+			{
+				createByName = Resources.LocalizedText.AutomatedScheduler;
+			}
+			else
+			{
+				createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+			}
+
 			try
 			{
 				// 1st send to the person responsible
@@ -304,6 +329,8 @@ namespace SQM.Website
 									theTask.DESCRIPTION + "<br/>" +
 									"<br/>" +
 									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 									"<br/>" +
 									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
@@ -484,6 +511,17 @@ namespace SQM.Website
 				//emailSubject = emailSubject.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
 				//emailSubject = emailSubject.Replace("II", incidentLabel);
 
+				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				string createByName = "";
+				if (createBy == null)
+				{
+					createByName = Resources.LocalizedText.AutomatedScheduler;
+				}
+				else
+				{
+					createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+				}
+
 				string emailBody = SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION;
 				emailBody = emailBody.Replace("PP", plant.PLANT_NAME);
 				emailBody = emailBody.Replace("II", incidentLabel);
@@ -494,10 +532,12 @@ namespace SQM.Website
 								"<br/>" +
 								"Recorded By : " + incident.LAST_UPD_BY +
 								"<br/><br/>" +
-								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION + "<br>" + 
-								"Affected Processes: " + task.DESCRIPTION + "<br><br>" + 
-								"Implementation Recommendations: " + task.DETAIL + "<br><br>" + 
-								SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_03", lang.NLS_LANGUAGE).DESCRIPTION + "<br><br>" + (appUrl + incidentAlertPath + incident.INCIDENT_ID.ToString());
+								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "ALERT_02", lang.NLS_LANGUAGE).DESCRIPTION + "<br>" +
+								"Affected Processes: " + task.DESCRIPTION + "<br><br>" +
+								"Implementation Recommendations: " + task.DETAIL + "<br><br>" +
+								SQMBasePage.GetXLAT(XLATList, "INCIDENT_NOTIFY", "ALERT_03", lang.NLS_LANGUAGE).DESCRIPTION + "<br><br>" + (appUrl + incidentAlertPath + incident.INCIDENT_ID.ToString()) +
+								"<br/><br/>" +
+								Resources.LocalizedText.CreatedBy + ": " + createByName;
 
 				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
 				thread.IsBackground = true;
@@ -612,6 +652,17 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				string createByName = "";
+				if (createBy == null)
+				{
+					createByName = Resources.LocalizedText.AutomatedScheduler;
+				}
+				else
+				{
+					createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+				}
+
 				string emailTo = person.EMAIL;
 				string actionText = XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION;
 				string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "PREVACTION_NOTIFY" && x.XLAT_CODE == "UPDATE").FirstOrDefault().DESCRIPTION_SHORT + actionText + ": " + incident.ISSUE_TYPE + " (" + plant.PLANT_NAME + ")";
@@ -627,6 +678,8 @@ namespace SQM.Website
 								theTask.DESCRIPTION + "<br/>" +
 								"<br/>" +
 								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "<br/>" +
+								"<br/>" +
+								Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 								"<br/>" +
 								XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_03").FirstOrDefault().DESCRIPTION_SHORT;
 
@@ -660,6 +713,17 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			string createByName = "";
+			if (createBy == null)
+			{
+				createByName = Resources.LocalizedText.AutomatedScheduler;
+			}
+			else
+			{
+				createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+			}
+
 			// 1st send to the person responsible
 			try
 			{
@@ -681,6 +745,8 @@ namespace SQM.Website
 									theTask.DESCRIPTION + "<br/>" +
 									"<br/>" +
 									"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+									"<br/>" +
+									Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 									"<br/>" +
 									SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
@@ -844,6 +910,17 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			string createByName = "";
+			if (createBy == null)
+			{
+				createByName = Resources.LocalizedText.AutomatedScheduler;
+			}
+			else
+			{
+				createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+			}
+
 			// 1st send to the person responsible
 			if (theTaskItem.Person != null && !string.IsNullOrEmpty(theTaskItem.Person.EMAIL))
 			{
@@ -863,6 +940,8 @@ namespace SQM.Website
 								theTask.DESCRIPTION + "<br/>" +
 								"<br/>" +
 								"Due : " + SQMBasePage.FormatDate(Convert.ToDateTime(theTask.DUE_DT), "d", false) + "&nbsp;&nbsp;" + assignedTo + "<br/>" +
+								"<br/>" +
+								Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION + (appUrl + incidentActionPath) + SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_03", lang.NLS_LANGUAGE).DESCRIPTION_SHORT;
 
@@ -916,6 +995,17 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
+				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				string createByName = "";
+				if (createBy == null)
+				{
+					createByName = Resources.LocalizedText.AutomatedScheduler;
+				}
+				else
+				{
+					createByName = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+				}
+
 				string recordTypeValue = SQMBasePage.GetXLAT(XLATList, "RECORD_TYPE", recordType.ToString()).DESCRIPTION;
 				string taskStepValue = SQMBasePage.GetXLAT(XLATList, "NOTIFY_SCOPE_TASK", taskStep).DESCRIPTION;
 				string emailTo = person.EMAIL;
@@ -924,6 +1014,8 @@ namespace SQM.Website
 					"Task Type: " + recordTypeValue + " " + taskStepValue +
 								"<br/>" +
 					"Due Date: " + dueDate.ToString("dddd MM/dd/yyyy") +
+								"<br/>" +
+								Resources.LocalizedText.CreatedBy + ": " + createByName + "<br/>" +
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_TASK_ASSIGN", "EMAIL_02").DESCRIPTION + "(" + appUrl + auditPath + ")";
 

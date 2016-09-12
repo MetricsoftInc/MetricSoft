@@ -9,8 +9,8 @@ using SQM.Shared;
 
 namespace SQM.Website
 {
-    public partial class Ucl_TaskStatus : System.Web.UI.UserControl
-    {
+	public partial class Ucl_TaskStatus : System.Web.UI.UserControl
+	{
 		public event GridActionCommand OnTaskUpdate;
 		public event GridActionCommand2 OnTaskAdd;
 		public event EditItemClick OnTaskListClick;
@@ -100,7 +100,19 @@ namespace SQM.Website
 			}
 
 			lblTaskDescriptionValue.Text = task.DESCRIPTION;  // command of what to do
-			lblTaskDetailValue.Text = task.DETAIL;				// incident description or audit question 
+			lblTaskDetailValue.Text = task.DETAIL;              // incident description or audit question 
+
+			// get the Create By person name and display
+			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(ctx, task.CREATE_ID.ToString());
+			if (createBy == null)
+			{
+				lblCreatedByValue.Text = Resources.LocalizedText.AutomatedScheduler;
+			}
+			else
+			{
+				lblCreatedByValue.Text = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
+			}
+			
 			rdpTaskDueDT.SelectedDate = (DateTime)task.DUE_DT;
 			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION;
 			tbTaskComments.Text = task.COMMENTS;

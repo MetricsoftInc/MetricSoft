@@ -39,6 +39,14 @@
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<asp:Label ID="lblCreatedBy" runat="server" Text="<%$ Resources:LocalizedText, CreatedBy %>" CssClass="prompt"></asp:Label>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<asp:Label ID="lblCreatedByValue" runat="server" CssClass="textStd"></asp:Label>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 				<asp:Label ID="lblTaskDueDT" runat="server" Text="<%$ Resources:LocalizedText, DueDate %>" CssClass="prompt"></asp:Label>
 			</div>

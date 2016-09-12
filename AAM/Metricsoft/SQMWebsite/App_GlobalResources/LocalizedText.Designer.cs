@@ -277,6 +277,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automated Scheduler.
+        /// </summary>
+        internal static string AutomatedScheduler {
+            get {
+                return ResourceManager.GetString("AutomatedScheduler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Availability.
         /// </summary>
         internal static string Availability {
@@ -480,6 +489,15 @@ namespace Resources {
         internal static string CountryRegion {
             get {
                 return ResourceManager.GetString("CountryRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        internal static string CreatedBy {
+            get {
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
             }
         }
         
