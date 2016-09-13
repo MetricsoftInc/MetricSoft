@@ -33,10 +33,11 @@ namespace SQM.Website
 
 
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
-			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
+			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoStatusSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclVideoList.VideoListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoSource);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoOwner);
+			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbVideoType);
 
 		}
 
@@ -49,6 +50,7 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
+				RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
 				RadPersistenceManager1.SaveState();
 
 				if (SessionManager.ReturnStatus == true)
@@ -144,6 +146,7 @@ namespace SQM.Website
 
 			try
 			{
+				RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
 				RadPersistenceManager1.LoadState();
 			}
 			catch
@@ -215,12 +218,12 @@ namespace SQM.Website
 				rcbVideoSource = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoSource, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_SOURCE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
 				rcbVideoSource.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
 				rcbVideoSource.SelectedIndex = 0;
-				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
-				rcbStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
-				rcbStatusSelect.SelectedIndex = 0;
+				rcbVideoStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_STATUS" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
+				rcbVideoStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				rcbVideoStatusSelect.SelectedIndex = 0;
 				rcbVideoType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbVideoType, xlatList.Where(l => l.XLAT_GROUP == "MEDIA_VIDEO_TYPE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
-				//rcbStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
-				//rcbStatusSelect.SelectedIndex = 0;
+				//rcbVideoStatusSelect.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
+				//rcbVideoStatusSelect.SelectedIndex = 0;
 				rcbInjuryType = SQMBasePage.SetComboBoxItemsFromXLAT(rcbInjuryType, xlatList.Where(l => l.XLAT_GROUP == "INJURY_TYPE" && l.STATUS == "A").OrderBy(h => h.SORT_ORDER).ToList(), "SHORT");
 				rcbInjuryType.Items.Insert(0, new Telerik.Web.UI.RadComboBoxItem("All", ""));
 				rcbInjuryType.SelectedIndex = 0;
@@ -340,14 +343,14 @@ namespace SQM.Website
 			if (videoOwner == "own")
 				videoOwnerId = SessionManager.UserContext.Person.PERSON_ID;
 
-			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString().ToLower(), injuryTypes, bodyParts, videoTypes, videoOwnerId);
+			List<MediaVideoData> videos = MediaVideoMgr.SelectVideoList(plantIDS, types, fromDate, toDate, rcbVideoStatusSelect.SelectedValue.ToString(), tbKeyWord.Text.ToString().ToLower(), injuryTypes, bodyParts, videoTypes, videoOwnerId);
 			// we don't want to list any videos that have a negative source id. these could be videos in process or orphaned on the Incident pages
 			videos = videos.Where(q => q.Video.SOURCE_ID >= 0).ToList();
 			uclVideoList.BindVideoListRepeater(videos, "Media");
 			//List<string> statusList = new List<string>();
 
 			//	typeList = rcbVideoType.Items.Where(c => c.Checked).Select(c => Convert.ToDecimal(c.Value)).ToList();
-			//	selectedValue = rcbStatusSelect.SelectedValue;
+			//	selectedValue = rcbVideoStatusSelect.SelectedValue;
 
 			//SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			//HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange);

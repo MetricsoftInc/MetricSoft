@@ -80,6 +80,9 @@ namespace SQM.Website
 
 			if (IsPostBack)
 			{
+				RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
+				RadPersistenceManager1.SaveState();
+
 				if (SessionManager.ReturnStatus == true)
 				{
 					if (SessionManager.ReturnObject is string)
@@ -170,6 +173,7 @@ namespace SQM.Website
 
 			try
 			{
+				RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
 				RadPersistenceManager1.LoadState();
 			}
 			catch

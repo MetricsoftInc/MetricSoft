@@ -87,7 +87,10 @@ namespace SQM.Website.EHS
 			if (IsPostBack)
 			{
 				if (!uclAssessmentForm.IsEditContext)
+				{
+					RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
 					RadPersistenceManager1.SaveState();
+				}
 
 				if (SessionManager.ReturnStatus == true)
 				{
@@ -209,6 +212,7 @@ namespace SQM.Website.EHS
 
 			try
 			{
+				RadPersistenceManager1.StorageProviderKey = SessionManager.UserContext.Person.PERSON_ID.ToString();
 				RadPersistenceManager1.LoadState();
 			}
 			catch

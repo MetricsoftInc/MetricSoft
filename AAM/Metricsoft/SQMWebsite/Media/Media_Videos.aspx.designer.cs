@@ -85,24 +85,6 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadPersistenceManager RadPersistenceManager1;
         
         /// <summary>
-        /// divVideoUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divVideoUpload;
-        
-        /// <summary>
-        /// uclVideoUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_AttachVideoPanel uclVideoUpload;
-        
-        /// <summary>
         /// divVideoList control.
         /// </summary>
         /// <remarks>
@@ -238,13 +220,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblStatus;
         
         /// <summary>
-        /// rcbStatusSelect control.
+        /// rcbVideoStatusSelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
+        protected global::Telerik.Web.UI.RadComboBox rcbVideoStatusSelect;
         
         /// <summary>
         /// lbrKeyWord control.
