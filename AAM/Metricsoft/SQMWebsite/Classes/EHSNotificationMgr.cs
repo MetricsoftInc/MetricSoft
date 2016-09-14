@@ -828,10 +828,10 @@ namespace SQM.Website
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_02").DESCRIPTION + " (" + appUrl + auditPath + ")";
 
 				string rtn = "";
-				WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
-				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web"));
-				//thread.IsBackground = true;
-				//thread.Start();
+				//WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
+				Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
+				thread.IsBackground = true;
+				thread.Start();
 				WriteEmailLog(entities, person.EMAIL, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.Audit, audit.AUDIT_ID, "audit created and assigned", rtn, "");
 			}
 		}
