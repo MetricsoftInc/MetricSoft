@@ -1325,33 +1325,33 @@ namespace SQM.Website
 					}
 				}
 
-				Task.Factory.StartNew(() =>
-				{
-					SmtpClient client = new SmtpClient();
-					//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
-					if (!string.IsNullOrEmpty(_mailPassword))
-						client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
-					else
-						client.UseDefaultCredentials = true;
-					client.Port = _mailSmtpPort; // Gmail works on this port
-					client.Host = _mailServer;
-					client.EnableSsl = _mailEnableSsl;
-
-					client.Send(msg);
-				}).Wait();
-
-			}
-			catch (SmtpException ex)
-			{
 				try
 				{
-					//SQMLogger.LogException(ex);
-					strStatus = "SMTP Error: " + ex.Message;
+					Task.Factory.StartNew(() =>
+					{
+						SmtpClient client = new SmtpClient();
+					//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+					if (!string.IsNullOrEmpty(_mailPassword))
+							client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+						else
+							client.UseDefaultCredentials = true;
+						client.Port = _mailSmtpPort; // Gmail works on this port
+					client.Host = _mailServer;
+						client.EnableSsl = _mailEnableSsl;
+
+						client.Send(msg);
+					}).Wait();
 				}
-				catch (Exception ex2)
+				catch (SmtpException se)
 				{
-					strStatus = "Error on Error: " + ex2.Message;
+					strStatus = "Inner Error: " + se.Message;
 				}
+
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+				strStatus = "Outer Error: " + ex.Message;
 			}
 
 			return strStatus;
