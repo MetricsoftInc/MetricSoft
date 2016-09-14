@@ -1341,10 +1341,10 @@ namespace SQM.Website
 				}).Wait();
 
 			}
-			catch (Exception ex)
+			catch (SmtpException ex)
 			{
 				//SQMLogger.LogException(ex);
-				strStatus = "Error: " + ex.Message;
+				strStatus = "Error: " + ex.StatusCode + " -- " + ex.Message;
 			}
 
 			return strStatus;
