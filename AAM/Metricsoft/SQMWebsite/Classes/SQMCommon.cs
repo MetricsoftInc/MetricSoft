@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Security;
@@ -1324,17 +1325,20 @@ namespace SQM.Website
 					}
 				}
 
-				SmtpClient client = new SmtpClient();
-				//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
-				if (!string.IsNullOrEmpty(_mailPassword))
-					client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
-				else
-					client.UseDefaultCredentials = true;
-				client.Port = _mailSmtpPort; // Gmail works on this port
-				client.Host = _mailServer;
-				client.EnableSsl = _mailEnableSsl;
+				Task.Factory.StartNew(() =>
+				{
+					SmtpClient client = new SmtpClient();
+					//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+					if (!string.IsNullOrEmpty(_mailPassword))
+						client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+					else
+						client.UseDefaultCredentials = true;
+					client.Port = _mailSmtpPort; // Gmail works on this port
+					client.Host = _mailServer;
+					client.EnableSsl = _mailEnableSsl;
 
-				client.Send(msg);
+					client.Send(msg);
+				}).Wait();
 
 			}
 			catch (Exception ex)
