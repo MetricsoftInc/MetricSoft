@@ -1327,22 +1327,19 @@ namespace SQM.Website
 
 				try
 				{
-					//Task.Factory.StartNew(() =>
-					//{
 						SmtpClient client = new SmtpClient();
 					//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
 					if (!string.IsNullOrEmpty(_mailPassword))
-							client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
-						else
-							client.UseDefaultCredentials = true;
-						client.Port = _mailSmtpPort; // Gmail works on this port
-						client.Host = _mailServer;
-						client.EnableSsl = _mailEnableSsl;
+						client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+					else
+						client.UseDefaultCredentials = true;
+					client.Port = _mailSmtpPort; // Gmail works on this port
+					client.Host = _mailServer;
+					client.EnableSsl = _mailEnableSsl;
 
-						client.Send(msg);
-					System.Threading.Thread.Sleep(4000);//will wait for 4 seconds
-					
-					//}).Wait();
+					client.Send(msg);
+					System.Threading.Thread.Sleep(2000); //will wait for 2 seconds to allow Google Mail to process requests
+
 				}
 				catch (Exception se)
 				{
