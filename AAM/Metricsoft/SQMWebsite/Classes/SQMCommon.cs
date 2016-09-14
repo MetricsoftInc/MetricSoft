@@ -1232,6 +1232,120 @@ namespace SQM.Website
             return strStatus;
         }
 
+		public static string SendEmailAwait(string emailAddress, string emailSubject, string emailBody, string cc, string context, List<ATTACHMENT> attachList, List<SETTINGS> MailSettings)
+		{
+			string strStatus = "";
+			string _mailServer = "";
+			string _mailFrom = "";
+			string _mailPassword = "";
+			string _strSSL = "true";
+			bool _mailEnableSsl = true;
+			int _mailSmtpPort = 587;
+
+			// ABW 20150826 send emails to a default email if this is a development environment
+			string environment = "";
+			string altEmail = "";
+			SETTINGS setting = new SETTINGS();
+
+			try
+			{
+				if ((setting = MailSettings.Find(x => x.SETTING_CD == "MailToOverride")) != null)
+				{
+					if (!string.IsNullOrEmpty(setting.VALUE.Trim()))
+					{
+						environment = "dev";
+						altEmail = setting.VALUE.Trim();
+					}
+				}
+			}
+			catch { }
+
+			setting = MailSettings.Find(x => x.SETTING_CD == "MailServer");
+			if (setting != null)
+				_mailServer = setting.VALUE;
+			setting = MailSettings.Find(x => x.SETTING_CD == "MailFrom");
+			if (setting != null)
+				_mailFrom = setting.VALUE;
+			setting = MailSettings.Find(x => x.SETTING_CD == "MailPassword");
+			if (setting != null)
+				_mailPassword = setting.VALUE;
+			setting = MailSettings.Find(x => x.SETTING_CD == "MailSMTPPort");
+			if (setting != null)
+				_mailSmtpPort = Convert.ToInt16(setting.VALUE);
+			setting = MailSettings.Find(x => x.SETTING_CD == "MailEnableSSL");
+			if (setting != null)
+			{
+				_strSSL = setting.VALUE;
+				if (_strSSL.ToLower().Contains("false"))
+					_mailEnableSsl = false;
+			}
+
+			try
+			{
+				MailMessage msg = new MailMessage();
+				// ABW 20150826 send emails to a default email if this is a development environment
+				if (environment.ToLower().Equals("dev"))
+				{
+					msg.To.Add(altEmail.Trim());
+				}
+				else
+				{
+					foreach (string mailto in emailAddress.Split(','))
+					{
+						msg.To.Add(mailto.Trim());
+					}
+
+					if (!string.IsNullOrEmpty(cc))
+					{
+						foreach (string ccto in cc.Split(','))
+						{
+							msg.CC.Add(ccto.Trim());
+						}
+					}
+				}
+				msg.From = new MailAddress(_mailFrom);
+				msg.Subject = emailSubject;
+				msg.Body = emailBody;
+				msg.Priority = MailPriority.Normal;
+				msg.IsBodyHtml = true;
+
+				if (attachList != null && attachList.Count > 0)
+				{
+					decimal attachSize = 0;
+					foreach (ATTACHMENT attach in attachList)
+					{
+						attachSize += (decimal)attach.FILE_SIZE;
+						if (attachSize <= 9000000)   // limit to 9 mb
+						{
+							MemoryStream ms = new MemoryStream(SQM.Website.Classes.SQMDocumentMgr.GetAttachmentByteArray(attach.ATTACHMENT_ID));
+							if (ms != null)
+								msg.Attachments.Add(new Attachment(ms, attach.FILE_NAME));
+						}
+					}
+				}
+
+				SmtpClient client = new SmtpClient();
+				//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+				if (!string.IsNullOrEmpty(_mailPassword))
+					client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
+				else
+					client.UseDefaultCredentials = true;
+				client.Port = _mailSmtpPort; // Gmail works on this port
+				client.Host = _mailServer;
+				client.EnableSsl = _mailEnableSsl;
+
+				//client.Send(msg);
+
+			}
+			catch (Exception ex)
+			{
+				//SQMLogger.LogException(ex);
+				strStatus = "Error: " + ex.Message;
+			}
+
+			return strStatus;
+		}
+
 		public static string GeneratePassword(int minLength, int maxLength)
 		{
 			if (minLength <= 0 || maxLength <= 0 || minLength > maxLength)
