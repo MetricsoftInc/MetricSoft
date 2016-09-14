@@ -1334,7 +1334,7 @@ namespace SQM.Website
 				client.Host = _mailServer;
 				client.EnableSsl = _mailEnableSsl;
 
-				//client.Send(msg);
+				client.Send(msg);
 
 			}
 			catch (Exception ex)
