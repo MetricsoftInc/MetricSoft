@@ -1344,7 +1344,7 @@ namespace SQM.Website
 			catch (SmtpException ex)
 			{
 				//SQMLogger.LogException(ex);
-				strStatus = "Error: " + ex.StatusCode + " -- " + ex.Message;
+				strStatus = "Error: " + ex.StatusCode.ToString() + " -- " + ex.Message;
 			}
 
 			return strStatus;
