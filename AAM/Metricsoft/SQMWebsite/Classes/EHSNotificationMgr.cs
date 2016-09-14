@@ -823,7 +823,7 @@ namespace SQM.Website
 				string emailSubject = SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_SUBJECT").DESCRIPTION + ": " + auditType;
 				string emailBody = SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_01").DESCRIPTION + " " + dueDate.ToString("dddd MM/dd/yyyy") + ".<br/>" +
 								"<br/>" +
-								auditType + "<br/>" +
+								auditType + ": " + audit.AUDIT_ID + "<br/>" +
 								"<br/>" +
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_02").DESCRIPTION + " (" + appUrl + auditPath + ")";
 
