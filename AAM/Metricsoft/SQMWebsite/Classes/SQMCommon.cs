@@ -1336,13 +1336,13 @@ namespace SQM.Website
 						else
 							client.UseDefaultCredentials = true;
 						client.Port = _mailSmtpPort; // Gmail works on this port
-					client.Host = _mailServer;
+						client.Host = _mailServer;
 						client.EnableSsl = _mailEnableSsl;
 
 						client.Send(msg);
 					}).Wait();
 				}
-				catch (SmtpException se)
+				catch (Exception se)
 				{
 					strStatus = "Inner Error: " + se.Message;
 				}
