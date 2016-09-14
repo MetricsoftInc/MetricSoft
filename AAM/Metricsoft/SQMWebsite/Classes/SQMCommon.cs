@@ -1343,8 +1343,15 @@ namespace SQM.Website
 			}
 			catch (SmtpException ex)
 			{
-				//SQMLogger.LogException(ex);
-				strStatus = "Error: " + ex.StatusCode.ToString() + " -- " + ex.Message;
+				try
+				{
+					//SQMLogger.LogException(ex);
+					strStatus = "SMTP Error: " + ex.Message;
+				}
+				catch (Exception ex2)
+				{
+					strStatus = "Error on Error: " + ex2.Message;
+				}
 			}
 
 			return strStatus;
