@@ -1327,8 +1327,8 @@ namespace SQM.Website
 
 				try
 				{
-					Task.Factory.StartNew(() =>
-					{
+					//Task.Factory.StartNew(() =>
+					//{
 						SmtpClient client = new SmtpClient();
 					//client.Credentials = new System.Net.NetworkCredential(_mailFrom, _mailPassword);
 					if (!string.IsNullOrEmpty(_mailPassword))
@@ -1340,7 +1340,9 @@ namespace SQM.Website
 						client.EnableSsl = _mailEnableSsl;
 
 						client.Send(msg);
-					}).Wait();
+					System.Threading.Thread.Sleep(4000);//will wait for 4 seconds
+					
+					//}).Wait();
 				}
 				catch (Exception se)
 				{
