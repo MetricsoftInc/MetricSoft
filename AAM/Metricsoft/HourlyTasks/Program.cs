@@ -16,6 +16,7 @@ namespace HourlyTasks
 		static StringBuilder output;
 		static string startRange;
 		static string endRange;
+		static int timer = 2000;
 
 		static void Main(string[] args)
 		{
@@ -184,6 +185,7 @@ namespace HourlyTasks
 
 									// send an email
 									EHSNotificationMgr.NotifyOnAuditCreate(auditId, person.PERSON_ID);
+									System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 
 									WriteLine(person.LAST_NAME + ", " + person.FIRST_NAME + " - assessment added");
 								}
@@ -293,10 +295,13 @@ namespace HourlyTasks
 										WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
 										// notify assigned person and escalation person if over-over due
 										EHSNotificationMgr.NotifyIncidentTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+										System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
+
 										if (taskItem.Taskstatus >= SQM.Website.TaskStatus.Overdue)
 										{
 											// send to notification list for plant, BU, ...
 											//EHSNotificationMgr.NotifyIncidentStatus(incident, taskItem.Task.TASK_STEP, ((int)SysPriv.notify).ToString(), "");
+											//System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 										}
 									}
 								}
@@ -311,6 +316,7 @@ namespace HourlyTasks
 										WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS);
 										// notify assigned person and escalation person if over-over due
 										EHSNotificationMgr.NotifyPrevActionTaskStatus(incident, taskItem, ((int)SysPriv.action).ToString());
+										System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 									}
 								}
 							}
@@ -325,10 +331,12 @@ namespace HourlyTasks
 										if (taskItem.Task.TASK_STEP == "0")
 										{
 											EHSNotificationMgr.NotifyAuditStatus(audit, taskItem);
+											System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 										}
 										else
 										{
 											EHSNotificationMgr.NotifyAuditTaskStatus(audit, taskItem, ((int)SysPriv.action).ToString());
+											System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 										}
 									}
 								}

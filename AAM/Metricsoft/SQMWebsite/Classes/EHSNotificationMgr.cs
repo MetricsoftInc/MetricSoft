@@ -828,7 +828,7 @@ namespace SQM.Website
 								SQMBasePage.GetXLAT(XLATList, "NOTIFY_AUDIT_ASSIGN", "EMAIL_02").DESCRIPTION + " (" + appUrl + auditPath + ")";
 
 				string rtn = "";
-				rtn = WebSiteCommon.SendEmailAwait(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
+				rtn = WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings);
 				//Thread thread = new Thread(() => WebSiteCommon.SendEmail(person.EMAIL, emailSubject, emailBody, "", "web", null, mailSettings));
 				//thread.IsBackground = true;
 				//thread.Start();
