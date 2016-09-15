@@ -1163,6 +1163,7 @@ namespace SQM.Website
 						status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE TASK_ID IN (" + String.Join(",", taskIds) + ")");
 					}
 
+					status = MediaVideoMgr.DeleteAllSourceVideos(auditId, 50, "");
 
 					status = ctx.ExecuteStoreCommand("DELETE FROM AUDIT_ANSWER WHERE AUDIT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM AUDIT WHERE AUDIT_ID" + delCmd);

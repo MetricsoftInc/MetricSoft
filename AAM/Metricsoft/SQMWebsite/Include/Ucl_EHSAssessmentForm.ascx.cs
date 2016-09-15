@@ -2108,6 +2108,7 @@ namespace SQM.Website
 				//btnSaveContinue.Visible = false;
 				btnDelete.Visible = false;
 				lblResults.Visible = true;
+				int delVideoStatus = MediaVideoMgr.DeleteAllSourceVideos(EditAuditId, 50, "");
 				int delStatus = EHSAuditMgr.DeleteAudit(EditAuditId);
 				// delete the task
 				if (delStatus == 1)

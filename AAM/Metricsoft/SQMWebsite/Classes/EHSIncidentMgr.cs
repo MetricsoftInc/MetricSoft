@@ -1528,8 +1528,9 @@ namespace SQM.Website
 				status = ctx.ExecuteStoreCommand("UPDATE VIDEO SET SOURCE_ID = " + incidentID + " WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
 			else
 			{
-				status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID IN (SELECT VIDEO_ID FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString() + ")");
-				status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+				//status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID IN (SELECT VIDEO_ID FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString() + ")");
+				//status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID = " + tempID.ToString());
+				status = MediaVideoMgr.DeleteAllSourceVideos(tempID, 40, "");
 			}
 
 			return status;
@@ -1564,10 +1565,9 @@ namespace SQM.Website
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ALERT WHERE INCIDENT_ID" + delCmd);
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID" + delCmd);
+					status = MediaVideoMgr.DeleteAllSourceVideos(incidentId, 40, "");
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);
 
-					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID IN (SELECT VIDEO_ID FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID " + delCmd);
-					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_TYPE = 40 AND SOURCE_ID " + delCmd);
 				}
 				catch (Exception ex)
 				{

@@ -94,26 +94,6 @@ namespace SQM.Website
 					entities.AddToVIDEO(video);
 					entities.SaveChanges();
 
-					//read in the file contents
-					// this is the logic for adding the file to the database table
-					//if (file != null)
-					//{
-					//	file.Seek(0, SeekOrigin.Begin);
-					//	BinaryReader rdr = new BinaryReader(file);
-					//	byte[] fileData = rdr.ReadBytes((int)file.Length);
-					//	rdr.Close();
-					//	file.Close();
-
-					//	string cmdText = "INSERT INTO VIDEO_FILE VALUES (NEWID(), @VIDEO_ID, @VIDEO_DATA)";
-					//	SqlParameter[] parameters = new[]{
-					//		new SqlParameter("@VIDEO_ID",  video.VIDEO_ID),
-					//		new SqlParameter("@VIDEO_DATA", fileData)
-					//	};
-
-					//	int status = entities.ExecuteStoreCommand(cmdText, parameters);
-					//}
-					//entities.SaveChanges();
-
 					// this is the code for saving the file in the Azure cloud
 					if (video != null)
 					{
@@ -333,12 +313,18 @@ namespace SQM.Website
 			return videos;
 		}
 
-		public static VIDEO_FILE SelectVideoFileById(decimal videoId)
-		{
-			var entities = new PSsqmEntities();
-			return (from i in entities.VIDEO_FILE where i.VIDEO_ID == videoId select i).FirstOrDefault();
-		}
+		//public static VIDEO_FILE SelectVideoFileById(decimal videoId)
+		//{
+		//	var entities = new PSsqmEntities();
+		//	return (from i in entities.VIDEO_FILE where i.VIDEO_ID == videoId select i).FirstOrDefault();
+		//}
 
+		/// <summary>
+		/// Delete all information for a specific video.
+		/// </summary>
+		/// <param name="videoId"></param>
+		/// <param name="fileName"></param> Filename specified on the video record. Must be provided for file extension info.
+		/// <returns></returns>
 		public static int DeleteVideo(decimal videoId, string fileName)
 		{
 			int status = 0;
@@ -358,25 +344,6 @@ namespace SQM.Website
 						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_ATTACHMENT_FILE WHERE VIDEO_ATTACH_ID IN (" + String.Join(",", attachmentIds) + ")");
 						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_ATTACHMENT WHERE VIDEO_ATTACH_ID IN (" + String.Join(",", attachmentIds) + ")");
 					}
-
-					// need to delete video file from the server (if file is stored on server)
-					////if (System.IO.File.Exists(fileName))
-					////{
-					////	// Use a try block to catch IOExceptions, to
-					////	// handle the case of the file already being
-					////	// opened by another process.
-					////	try
-					////	{
-					////		System.IO.File.Delete(fileName);
-					////	}
-					////	catch (System.IO.IOException e)
-					////	{
-					////		//Console.WriteLine(e.Message);
-					////	}
-					////}
-
-					// delete video from database, when stored in database
-					//status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_FILE WHERE VIDEO_ID" + delCmd);
 
 					// delete the video from the Azure blob
 					// Retrieve storage account from connection string.
@@ -411,5 +378,90 @@ namespace SQM.Website
 			return status;
 		}
 
+		/// <summary>
+		///  Delete a ALL Video and attachment records for a specific source (Incident/Audit)
+		/// </summary>
+		/// <param name="sourceId"></param>
+		/// <param name="sourceType"></param>
+		/// <param name="sourceStep"></param> This is the question Id for Audit videos. If left blank, all videos for a specific audit will be deleted
+		/// <returns></returns>
+		public static int DeleteAllSourceVideos(decimal sourceId, int sourceType, string sourceStep)
+		{
+			int status = 0;
+			var videos = new List<VIDEO>();
+
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				try
+				{
+					// select all videos for a source Id & source type
+					if (sourceStep.Trim().Length > 0)
+					{
+						videos = (from i in ctx.VIDEO
+								  where (i.SOURCE_ID == sourceId && i.SOURCE_TYPE == sourceType && i.SOURCE_STEP == sourceStep.Trim())
+								  orderby i.VIDEO_ID descending
+								  select i).ToList();
+					}
+					else
+					{
+						videos = (from i in ctx.VIDEO
+								  where (i.SOURCE_ID == sourceId && i.SOURCE_TYPE == sourceType)
+								  orderby i.VIDEO_ID descending
+								  select i).ToList();
+					}
+					decimal[] ids = videos.Select(v => v.VIDEO_ID).Distinct().ToArray();
+
+					// delete all attachments for all the videos
+					List<decimal> attachmentIds = (from a in ctx.VIDEO_ATTACHMENT
+												   where ids.Contains(a.VIDEO_ID)
+												   select a.VIDEO_ATTACH_ID).ToList();
+
+					if (attachmentIds != null && attachmentIds.Count > 0)
+					{
+						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_ATTACHMENT_FILE WHERE VIDEO_ATTACH_ID IN (" + String.Join(",", attachmentIds) + ")");
+						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO_ATTACHMENT WHERE VIDEO_ATTACH_ID IN (" + String.Join(",", attachmentIds) + ")");
+					}
+
+
+					// delete the videos from the Azure blob
+					// Retrieve storage account from connection string.
+					List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("MEDIA_UPLOAD", "");
+					string storageContainer = sets.Find(x => x.SETTING_CD == "STORAGE_CONTAINER").VALUE.ToString();
+					string storageURL = sets.Find(x => x.SETTING_CD == "STORAGE_URL").VALUE.ToString();
+					string storageQueryString = sets.Find(x => x.SETTING_CD == "STORAGE_QUERY").VALUE.ToString();
+					foreach (VIDEO video in videos)
+					{
+						string fileType = Path.GetExtension(video.FILE_NAME);
+						CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+							CloudConfigurationManager.GetSetting("StorageConnectionString"));
+
+						// Create the blob client.
+						CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+						// Retrieve reference to a previously created container.
+						CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+
+						// Retrieve reference to a blob named "myblob.txt".
+						CloudBlockBlob blockBlob = container.GetBlockBlobReference(video.VIDEO_ID.ToString() + fileType);
+
+						// Delete the blob.
+						blockBlob.Delete();
+					}
+
+					// delete the video headers
+					if (sourceStep.Trim().Length > 0)
+						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_ID = " + sourceId + " AND SOURCE_TYPE = " + sourceType + " AND SOURCE_STEP = '" + sourceStep.Trim() + "'");
+					else
+						status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE SOURCE_ID = " + sourceId + " AND SOURCE_TYPE = " + sourceType);
+
+				}
+				catch (Exception ex)
+				{
+					SQMLogger.LogException(ex);
+				}
+			}
+
+			return status;
+		}
 	}
 }
