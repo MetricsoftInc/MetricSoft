@@ -170,18 +170,7 @@
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" />
 
-							<span style="padding-left:12px;">
-							<asp:Label runat="server" ID="lblOSHACategory" CssClass="prompt"></asp:Label>
-							<telerik:RadComboBox ID="rcbOSHACategory" runat="server" ToolTip="Select incident status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" >
-								<Items>
-									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="" />
-									<telerik:RadComboBoxItem Text="All Open" Value="A" meta:resourcekey="RadComboBoxItemResource2" />
-									<telerik:RadComboBoxItem Text="All Closed" Value="C" meta:resourcekey="RadComboBoxItemResource3" />
-								</Items>
-							</telerik:RadComboBox></span>
-
-							<div class="clearfix visible-xs"></div>
-							<br class="visible-xs-block" />
+							
 						</div>
 					</asp:PlaceHolder>
 
