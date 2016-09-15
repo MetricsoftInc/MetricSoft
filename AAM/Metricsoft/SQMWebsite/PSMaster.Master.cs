@@ -273,16 +273,22 @@ namespace SQM.Website
 		protected void lbLogout_Click(object sender, EventArgs e)
 		{
             string loginURL = SessionManager.LoginURL;
-			SessionManager.Clear();
-			Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
-            try
-            {
-                Response.Redirect(loginURL);
-            }
-            catch
-            {
-                Response.Redirect("/Login.aspx");
-            }
+			try
+			{
+				SessionManager.Clear();
+				Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
+				try
+				{
+					Response.Redirect(loginURL);
+				}
+				catch
+				{
+					Response.Redirect("/Login.aspx");
+				}
+			}
+			catch
+			{
+			}
 		}
 
 		protected void btnSave_Click(object sender, EventArgs e)

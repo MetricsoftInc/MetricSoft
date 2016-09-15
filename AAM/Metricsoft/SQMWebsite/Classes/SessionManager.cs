@@ -496,13 +496,14 @@ namespace SQM.Website
 				HttpContext.Current.Session.Clear();
 				HttpContext.Current.Session.RemoveAll();
 				HttpContext.Current.Session.Abandon();
+
+				UserContext = null;
+				SessionContext = null;
 			}
 			catch
 			{
 			}
 
-			UserContext = null;
-			SessionContext = null;
 		}
 
 		public static void RemoveValue(String value)
