@@ -312,6 +312,10 @@ namespace HourlyTasks
 										}
 									}
 								}
+								else
+								{
+									WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS + "  This task does not have a corresponding incident or plant record");
+								}
 							}
 							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.PreventativeAction)
 							{
@@ -326,11 +330,15 @@ namespace HourlyTasks
 										System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 									}
 								}
+								else
+								{
+									WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS + "  This task does not have a corresponding preventative action or plant record");
+								}
 							}
 							else if (taskItem.Task.RECORD_TYPE == (int)TaskRecordType.Audit)  
 							{
 								AUDIT audit = EHSAuditMgr.SelectAuditById(entities, taskItem.Task.RECORD_ID);
-								if ((plant = plantList.Where(l => l.PLANT_ID == audit.DETECT_PLANT_ID).FirstOrDefault()) != null)
+								if (audit != null && (plant = plantList.Where(l => l.PLANT_ID == audit.DETECT_PLANT_ID).FirstOrDefault()) != null)
 								{
 									if (execAtHour == WebSiteCommon.LocalTime(currentTime, plant.LOCAL_TIMEZONE).Hour)
 									{
@@ -346,6 +354,10 @@ namespace HourlyTasks
 											System.Threading.Thread.Sleep(timer); //will wait for 2 seconds to allow Google Mail to process email requests
 										}
 									}
+								}
+								else
+								{
+									WriteLine("Task: " + taskItem.Task.TASK_ID.ToString() + " RecordType:  " + taskItem.Task.RECORD_TYPE.ToString() + "  " + "RecordID:" + taskItem.Task.RECORD_ID.ToString() + "  Status = " + taskItem.Task.STATUS + "  This task does not have a corresponding audit or plant record");
 								}
 							}
 						}
