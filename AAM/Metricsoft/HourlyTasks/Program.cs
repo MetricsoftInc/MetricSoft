@@ -222,28 +222,35 @@ namespace HourlyTasks
 			List<AUDIT> openAudits = EHSAuditMgr.SelectOpenAudits(0, null);
 			foreach (AUDIT audit in openAudits)
 			{
-				AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
-				PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
-				DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE + 1));  // add one to the date and it will default to the next day at 00:00:00, which means midnight
-				DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
-				if (closeDT.CompareTo(localTime) < 0)
+				try
 				{
-					// close the audit
-					// valid status codes... A = active, C = complete, I = incomplete/in-process, E = Expired. We are closing audits that are past due, so Expired.
-					try
+					AUDIT_TYPE type = EHSAuditMgr.SelectAuditTypeById(entities, audit.AUDIT_TYPE_ID);
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)audit.DETECT_PLANT_ID);
+					DateTime closeDT = Convert.ToDateTime(audit.AUDIT_DT.AddDays(type.DAYS_TO_COMPLETE + 1));  // add one to the date and it will default to the next day at 00:00:00, which means midnight
+					DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, plant.LOCAL_TIMEZONE);
+					if (closeDT.CompareTo(localTime) < 0)
 					{
-						status = audit.CURRENT_STATUS;
-						if (status != "C")
+						// close the audit
+						// valid status codes... A = active, C = complete, I = incomplete/in-process, E = Expired. We are closing audits that are past due, so Expired.
+						try
+						{
+							status = audit.CURRENT_STATUS;
+							if (status != "C")
+								status = "E";
+						}
+						catch
+						{
 							status = "E";
-					}
-					catch
-					{
-						status = "E";
-					}
-					EHSAuditMgr.CloseAudit(audit.AUDIT_ID, status, closeDT.AddDays(-1)); // now take the one day back off so that the close date sets correctly
-																						 // now mark the Task as expired too!
-					EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status, 0);
+						}
+						EHSAuditMgr.CloseAudit(audit.AUDIT_ID, status, closeDT.AddDays(-1)); // now take the one day back off so that the close date sets correctly
+																							 // now mark the Task as expired too!
+						EHSAuditMgr.CreateOrUpdateTask(audit.AUDIT_ID, (decimal)audit.AUDIT_PERSON, 50, closeDT.AddDays(-1), status, 0);
 
+					}
+				}
+				catch (Exception ex)
+				{
+					WriteLine("Audit/Task could not be closed: " + audit.AUDIT_ID.ToString() + "  " + ex.Message);
 				}
 			}
 		}
@@ -367,7 +374,10 @@ namespace HourlyTasks
 		{
 			try
 			{
-				string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\log\\";
+				//string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\log\\";
+				string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				logPath = logPath.Substring(0, logPath.IndexOf("\\bin"));
+				logPath = logPath + "\\log\\";
 				if (!Directory.Exists(logPath))
 					Directory.CreateDirectory(logPath);
 

@@ -626,7 +626,10 @@ namespace DataRollup
 		{
 			try
 			{
-				string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\log\\";
+				//string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\log\\";
+				string logPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				logPath = logPath.Substring(0, logPath.IndexOf("\\bin"));
+				logPath = logPath + "\\log\\";
 				if (!Directory.Exists(logPath))
 					Directory.CreateDirectory(logPath);
 
