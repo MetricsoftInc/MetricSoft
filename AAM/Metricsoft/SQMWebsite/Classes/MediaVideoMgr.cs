@@ -88,7 +88,8 @@ namespace SQM.Website
 					video.INJURY_TYPES = injuryType;
 					video.BODY_PARTS = bodyPart;
 					video.VIDEO_STATUS = "";
-					video.FILE_NAME = fileName;
+					//video.FILE_NAME = fileName;
+					video.FILE_NAME = video.VIDEO_ID.ToString() + fileExtention;
 					video.FILE_SIZE = file.Length;
 
 					entities.AddToVIDEO(video);
