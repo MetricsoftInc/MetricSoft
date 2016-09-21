@@ -89,10 +89,13 @@ namespace SQM.Website
 					video.BODY_PARTS = bodyPart;
 					video.VIDEO_STATUS = "";
 					//video.FILE_NAME = fileName;
-					video.FILE_NAME = video.VIDEO_ID.ToString() + fileExtention;
 					video.FILE_SIZE = file.Length;
 
 					entities.AddToVIDEO(video);
+					entities.SaveChanges();
+
+					// use the video id, but have to save video 
+					video.FILE_NAME = video.VIDEO_ID.ToString() + fileExtention;
 					entities.SaveChanges();
 
 					// this is the code for saving the file in the Azure cloud
