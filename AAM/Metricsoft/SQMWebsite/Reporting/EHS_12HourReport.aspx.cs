@@ -281,7 +281,10 @@ namespace SQM.Website.Reports
 					document.Add(HeaderSection(pageData));
 					document.Add(IncidentSection(pageData));
 					document.Add(ContainmentSection(pageData));
-					document.Add(ProcedureSection(pageData));
+					if (pageData.incident.INCFORM_INJURYILLNESS != null)
+					{
+						document.Add(ProcedureSection(pageData));
+					}
 
 					document.Add(table4);	// attachments
 
@@ -541,7 +544,7 @@ namespace SQM.Website.Reports
 				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
 				if (row == approvalCount)
 					cell.BorderWidthBottom = .25f;
-				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", SQMBasePage.FormatDate((DateTime)approval.APPROVAL_DATE, "d", false)), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", approval.APPROVAL_DATE.HasValue ? SQMBasePage.FormatDate((DateTime)approval.APPROVAL_DATE, "d", false) : ""), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
