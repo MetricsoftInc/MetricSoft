@@ -380,10 +380,10 @@ namespace SQM.Website
 			set;
 		}
 		public PSsqmEntities Entities
-        {
-            get;
-            set;
-        }
+		{
+			get;
+			set;
+		}
         public EHSCalcs Calc
         {
             get;
@@ -881,8 +881,7 @@ namespace SQM.Website
 								  select new MetricData
 								  {
 									  MetricRec = h,
-									  Measure = m,
-									  AtrList = new List<AttributeValue>()
+									  Measure = m
 								  }).ToList();
 
                 if (loadPlantAccounting)
@@ -946,6 +945,7 @@ namespace SQM.Website
 				EHS_PROFILE_MEASURE pm = null;
 				foreach (MetricData md in this.MetricHst)
 				{
+					md.AtrList = new List<AttributeValue>();
 					plant = this.PlantList.Where(p => p.PLANT_ID == md.MetricRec.PLANT_ID).FirstOrDefault();
 					pm = plant.EHS_PROFILE.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == md.MetricRec.MEASURE_ID).FirstOrDefault();
 					md.AtrList.Add(new AttributeValue().CreateNew("WASTE_CAT", md.Measure.MEASURE_CATEGORY, 1m));
