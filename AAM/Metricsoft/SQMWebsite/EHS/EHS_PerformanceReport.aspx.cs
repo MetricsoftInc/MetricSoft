@@ -14,6 +14,8 @@ namespace SQM.Website.EHS
 {
 	public partial class EHS_PerformanceReport : SQMBasePage
 	{
+		public static int TRIRGraphHeight = 375;
+
 		[Flags]
 		public enum DataToUse
 		{
@@ -1069,7 +1071,8 @@ namespace SQM.Website.EHS
 			}
 			if (trirBusiness)
 			{
-				gaugeDef.Height = 395;
+				// TRIR BY BU
+				gaugeDef.Height = TRIRGraphHeight; // 395;
 				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
@@ -1177,11 +1180,12 @@ namespace SQM.Website.EHS
 			}
 			else if (e.Argument == "trirBusinessUnit")
 			{
+				// TRIR BY BU
 				var pnlTRIRBusinessOutput = new Panel();
 
 				dynamic data = PullTRIRByBusinessUnit(this.entities, companyID, year);
 
-				gaugeDef.Height = 395;
+				gaugeDef.Height = TRIRGraphHeight; // 395;
 				int count = 0, len = (data as List<dynamic>).Count;
 				foreach (var businessOrgData in data)
 				{
