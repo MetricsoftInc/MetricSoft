@@ -664,7 +664,7 @@
     <value>Alternate Location Code</value>
   </data>
   <data name="CloseAudit" xml:space="preserve">
-    <value>This assessment is complete</value>
+    <value>This assessment should be marked complete</value>
   </data>
   <data name="LockThisField" xml:space="preserve">
     <value>Protect this field from automatic updates</value>
@@ -872,5 +872,8 @@
   </data>
   <data name="CreatedBy" xml:space="preserve">
     <value>Created By</value>
+  </data>
+  <data name="CloseAuditMessage" xml:space="preserve">
+    <value>Please note that the assessment will not be considered complete until the checkbox has been selected.</value>
   </data>
 </root>

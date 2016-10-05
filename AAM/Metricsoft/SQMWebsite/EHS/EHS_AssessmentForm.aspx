@@ -272,8 +272,8 @@
 								</div>
 								<table style="width: 100%;" runat="server" id="tblButtons">
 									<tr>
-										<td style="text-align: right;">
-											<asp:CheckBox runat="server" ID="cbClose" Text="<%$ Resources:LocalizedText, CloseAudit %>" /></td>
+										<td style="text-align: left;">
+											<asp:CheckBox runat="server" ID="cbClose" Text="<%$ Resources:LocalizedText, CloseAudit %>" CssClass="instructTextEmphasis" style="font-size: larger;" /><div style="padding-left:10px;"><asp:Label runat="server" Text="<%$ Resources:LocalizedText, CloseAuditMessage %>"></asp:Label></div></td>
 										<td>
 											<asp:LinkButton ID="LnkAuditAttachment" runat="server" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" CssClass="buttonAttach buttonPopupOpen" OnClick="lnkAddAttach" CausesValidation="false"></asp:LinkButton>
 											&nbsp;&nbsp;<asp:LinkButton ID="LnkAuditVideo" runat="server" Text="<%$ Resources:LocalizedText, VideoUpload %>" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CssClass="buttonAttach buttonPopupOpen" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton>

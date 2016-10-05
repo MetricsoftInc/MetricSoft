@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -544,8 +545,11 @@ namespace SQM.Website.EHS
 							// If we had some text in the RadTextBox, then we'll update the entry, otherwise we'll delete it.
 							if (hasText)
 							{
-								if (measure.DATA_TYPE == "V"  ||  measure.DATA_TYPE == "F")
-									data.VALUE = decimal.Parse(text);
+								if (measure.DATA_TYPE == "V" || measure.DATA_TYPE == "F")
+								{
+									string newValue = Regex.Replace(text, "[^0-9]", "");
+									data.VALUE = decimal.Parse(newValue);
+								}
 								else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 									data.ATTRIBUTE = text;
 							}
@@ -563,7 +567,10 @@ namespace SQM.Website.EHS
 							DATE = startOfMonth
 						};
 						if (measure.DATA_TYPE == "V")
-							newData.VALUE = decimal.Parse(text);
+						{
+							string newValue = Regex.Replace(text, "[^0-9]", "");
+							newData.VALUE = decimal.Parse(newValue);
+						}
 						else if (measure.DATA_TYPE == "A" || measure.DATA_TYPE == "Y")
 							newData.ATTRIBUTE = text;
 						entities.EHS_DATA.AddObject(newData);

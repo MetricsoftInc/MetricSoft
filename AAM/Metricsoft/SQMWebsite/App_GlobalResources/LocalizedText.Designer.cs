@@ -394,11 +394,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This assessment is complete.
+        ///   Looks up a localized string similar to This assessment should be marked complete.
         /// </summary>
         internal static string CloseAudit {
             get {
                 return ResourceManager.GetString("CloseAudit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please note that the assessment will not be considered complete until the checkbox has been selected..
+        /// </summary>
+        internal static string CloseAuditMessage {
+            get {
+                return ResourceManager.GetString("CloseAuditMessage", resourceCulture);
             }
         }
         
