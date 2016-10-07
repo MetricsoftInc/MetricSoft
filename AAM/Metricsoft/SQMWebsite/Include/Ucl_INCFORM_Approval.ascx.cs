@@ -211,15 +211,17 @@ namespace SQM.Website
 					cba.Checked = approval.IsAccepted;
 					rda.SelectedDate = approval.APPROVAL_DATE;
 
-					// Set user access:
-					if (SessionManager.CheckUserPrivilege((SysPriv)approval.ITEM_SEQ, SysScope.incident))
+					if (!cba.Checked)
 					{
-						lba.Text = SessionManager.UserContext.UserName();
-						cba.Enabled = true;
-					}
-					else
-					{
-						cba.Enabled = false;
+						if (SessionManager.CheckUserPrivilege((SysPriv)approval.ITEM_SEQ, SysScope.incident))
+						{
+							lba.Text = SessionManager.UserContext.UserName();
+							cba.Enabled = true;
+						}
+						else
+						{
+							cba.Enabled = false;
+						}
 					}
 
 				}

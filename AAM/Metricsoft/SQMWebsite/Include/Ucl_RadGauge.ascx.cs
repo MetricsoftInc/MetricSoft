@@ -578,7 +578,8 @@ namespace SQM.Website
                     status = CreateTable(ggCfg, results, container);
                     break;
                 case SQMChartType.Linear:
-                    ggCfg.DefaultPointColor = "cyan";
+					ggCfg.DefaultPointColor = "#191970";	// navy blue
+					//ggCfg.DefaultScaleColor = "darkslategray";
                     ggCfg.DisplayTitle = true;
                     status = CreateLinear(ggCfg, results, container);
                     break;
@@ -1280,6 +1281,9 @@ namespace SQM.Website
 					rad.Scale.MajorUnit = rgCfg.Unit;
 				}
 			}
+
+			if (!rgCfg.DisplayLabel)
+				rad.Scale.Labels.Color = Color.Transparent;
 
             rad.Scale.Labels.Format = "{0} " + rgCfg.LabelV;
             rad.ToolTip = SQMBasePage.FormatValue(result.Result, SetValuePrecision(rgCfg, "#.####")) + " " + rgCfg.LabelV;

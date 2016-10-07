@@ -66,6 +66,11 @@ namespace SQM.Website
             get;
             set;
         }
+		public decimal[] MeasureArray
+		{
+			get;
+			set;
+		}
         public decimal[] IncidentTypeArray
         {
             get;
@@ -77,7 +82,12 @@ namespace SQM.Website
             set;
         }
 
-        public SQMMetricMgr CreateNew(COMPANY company, string perspective, DateTime fromDate, DateTime toDate, int addFromYear, decimal[] plantArray)
+		public SQMMetricMgr CreateNew(COMPANY company, string perspective, DateTime fromDate, DateTime toDate, int addFromYear, decimal[] plantArray)
+		{
+			return CreateNew(company, perspective, fromDate, toDate, addFromYear, plantArray, new decimal[0] { });
+		}
+
+        public SQMMetricMgr CreateNew(COMPANY company, string perspective, DateTime fromDate, DateTime toDate, int addFromYear, decimal[] plantArray, decimal[] measureArray)
         {
             this.Company = company;
             this.perspective = perspective;
@@ -85,6 +95,7 @@ namespace SQM.Website
             this.ToDate = toDate;
             this.AddFromYear = addFromYear;
             this.PlantArray = plantArray;
+			this.MeasureArray = measureArray;
             this.ObjAny = null;
 
             if (company.COMPANY_ID > 0 && company.FYSTART_MONTH.HasValue)
@@ -122,7 +133,7 @@ namespace SQM.Website
                     break;
 				case "XD":
 					this.TargetsCtl = new TargetMgr().CreateNew(this.perspective, this.Company.COMPANY_ID, SessionManager.FYStartDate(), this.ToDate);
-					this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadEHSData(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval).SetTargets(this.TargetsCtl);
+					this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, this.perspective).LoadEHSData(this.PlantArray, this.FromDate.AddYears(this.AddFromYear), this.ToDate, dateInterval, this.MeasureArray).SetTargets(this.TargetsCtl);
 					break;
                 case "I":
                     this.ehsCtl = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, dateSpanType, "E").LoadMetricInputs(this.FromDate, this.ToDate, this.PlantArray);

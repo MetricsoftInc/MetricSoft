@@ -712,8 +712,59 @@ namespace SQM.Website
                     break;
 
                 default:
-                     metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray);
-                     metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
+					if (localView.PERSPECTIVE == "XD")
+					{
+						// for ehs_data dashboards, try to determine a finite list of measure ID's used to populate all the views/graphs in the dashboard ..
+						// .. in order to reduce the number of records processed. 
+						// ehs_data table contains a shit-load of records for any given month and seems slow to process 
+						List<EHS_MEASURE> measureList = EHSModel.SelectEHSMeasureList("", false);
+						List<decimal> measureIDS = new List<decimal>();
+						decimal measureID = 0;
+						foreach (PERSPECTIVE_VIEW_ITEM vi in localView.PERSPECTIVE_VIEW_ITEM)
+						{
+							switch (vi.CALCS_SCOPE)
+							{
+								case "ltcr":
+								case "ltsr":
+								case "rcr":
+									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60002").FirstOrDefault().MEASURE_ID);	// time worked
+									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20004").FirstOrDefault().MEASURE_ID);	// recordable cases
+									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20005").FirstOrDefault().MEASURE_ID);	// time lost cases
+									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60001").FirstOrDefault().MEASURE_ID);	// time lost days
+									break;
+								case "INJURY_TYPE":
+								case "INJURY_PART":
+								case "INJURY_TENURE":
+								case "INJURY_CAUSE":
+								case "INJURY_DAYS_TO_CLOSE":
+									measureIDS.AddRange(measureList.Where(l => l.DATA_TYPE == "O").Select(l => l.MEASURE_ID).ToList());	// all ordinal measures
+									break;
+								default:
+									if (vi.CALCS_SCOPE.Contains('|'))
+									{
+										string scopes = vi.CALCS_SCOPE.Replace("|", ",");
+										foreach (string s in scopes.Split(','))
+										{
+											if (decimal.TryParse(s, out measureID))
+												measureIDS.Add(measureID);
+										}
+									}
+									else
+									{
+										if (decimal.TryParse(vi.CALCS_SCOPE, out measureID))
+											measureIDS.Add(measureID);
+									}
+									break;
+							}
+						}
+						metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray, measureIDS.Distinct().ToArray());
+					}
+					else
+					{
+						metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray);
+					}
+                     
+					 metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
                     //if (UserContext.RoleAccess() >= AccessMode.Plant)
                           lnkExport.Visible = true;
 						  if (context == "export")

@@ -293,9 +293,12 @@ namespace DataRollup
 					}
 					*/
 
-					decimal plantManagerAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
-					decimal ehsAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
-					decimal supervisorAuditsMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S30002").MEASURE_ID;
+					List<EHS_MEASURE> measureList = (from e in entities.EHS_MEASURE select e).ToList();
+
+					decimal plantManagerAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
+					decimal ehsAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
+					decimal supervisorAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30002").MEASURE_ID;
+					decimal allAuditsMeasureID = measureList.FirstOrDefault(m => m.MEASURE_CD == "S30000") != null ? measureList.First(m => m.MEASURE_CD == "S30000").MEASURE_ID : 0;
 					var auditMeasureIDs = new List<decimal>()
 					{
 						plantManagerAuditsMeasureID,
@@ -303,13 +306,13 @@ namespace DataRollup
 						supervisorAuditsMeasureID
 					};
 
-					decimal nearMissMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20002").MEASURE_ID;
-					decimal firstAidMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20003").MEASURE_ID;
-					decimal recordableMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20004").MEASURE_ID;
-					decimal lostTimeCaseMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20005").MEASURE_ID;
-					decimal fatalityMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20006").MEASURE_ID;
-					decimal otherIncidentsID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20001").MEASURE_ID;
-					decimal closedInvestigationMeasureID = entities.EHS_MEASURE.First(m => m.MEASURE_CD == "S20007").MEASURE_ID;
+					decimal nearMissMeasureID = measureList.First(m => m.MEASURE_CD == "S20002").MEASURE_ID;
+					decimal firstAidMeasureID = measureList.First(m => m.MEASURE_CD == "S20003").MEASURE_ID;
+					decimal recordableMeasureID = measureList.First(m => m.MEASURE_CD == "S20004").MEASURE_ID;
+					decimal lostTimeCaseMeasureID = measureList.First(m => m.MEASURE_CD == "S20005").MEASURE_ID;
+					decimal fatalityMeasureID = measureList.First(m => m.MEASURE_CD == "S20006").MEASURE_ID;
+					decimal otherIncidentsID = measureList.First(m => m.MEASURE_CD == "S20001").MEASURE_ID;
+					decimal closedInvestigationMeasureID = measureList.First(m => m.MEASURE_CD == "S20007").MEASURE_ID;
 					var incidentMeasureIDs = new List<decimal>()
 					{
 						nearMissMeasureID,
@@ -336,11 +339,11 @@ namespace DataRollup
 					List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.STATUS == "A").ToList();
 					PLANT_ACTIVE pact = null;
 
-					var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
+					var createdAudits = entities.AUDIT.Where(a => new decimal[3] { 1, 2, 3 }.Contains(a.AUDIT_TYPE_ID));
+					//var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
 					var incidents = entities.INCIDENT.Include("INCFORM_INJURYILLNESS").Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
-					var activePlants = entities.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&
-						closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
-
+					//var activePlants = entities.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&
+					//	closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
 
 					// AUDITS
 					foreach (var plant in plantList)
@@ -348,13 +351,39 @@ namespace DataRollup
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.Audit select a).SingleOrDefault();
 						if (pact != null && pact.EFF_START_DATE.HasValue)	// plant is active
 						{
-							var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
+							//var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
+
+							var allAuditsForPlant = createdAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
+							var closedAuditsForPlant = createdAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID  &&  a.CURRENT_STATUS == "C");
 
 							// new timespan logic 
 							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
 							DateTime toDate = pact.EFF_END_DATE.HasValue && (DateTime)pact.EFF_END_DATE < rollupToDate ? (DateTime)pact.EFF_END_DATE : rollupToDate;
 
 							WriteLine("AUDIT Rollup For Plant " + pact.PLANT_ID + "  from date = " + fromDate.ToShortDateString() + "  to date = " + toDate.ToShortDateString());
+
+							// count all audits created on a monthly basis
+							if (allAuditsMeasureID > 0)
+							{
+								for (DateTime dt = fromDate; dt <= toDate; dt = dt.AddMonths(1))
+								{
+									int allAudits = 0;
+									var allAuditsForMonth = allAuditsForPlant.Where(a => ((DateTime)a.CREATE_DT).Month == dt.Month);
+									if (allAuditsForMonth.Any())
+									{
+										allAudits = allAuditsForMonth.Count();
+									}
+
+									var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, new DateTime(dt.Year, dt.Month, 1), new decimal[1] { allAuditsMeasureID }.ToList(), true, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(dataList, allAuditsMeasureID, allAudits, updateIndicator);	// all audits created 
+									foreach (var data in dataList)
+										if (data.EntityState == EntityState.Detached && data.VALUE != 0)
+											entities.EHS_DATA.AddObject(data);
+										else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
+											entities.DeleteObject(data);
+									WriteLine("Audits created for " + dt.Year.ToString() + "/" + dt.Month.ToString() + " = " + allAudits.ToString());
+								}
+							}
 
 							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
 							{
@@ -382,6 +411,8 @@ namespace DataRollup
 							}
 						}
 					}
+
+					entities.SaveChanges();
 
 					// INCIDENTS
 					foreach (var plant in plantList)

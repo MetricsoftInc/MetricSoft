@@ -161,13 +161,13 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), "PERSPECTIVE_VIEW_ITEM_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_VIDEO_ATTACHMENT_FILE_VIDEO_ATTACHMENT", "VIDEO_ATTACHMENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.VIDEO_ATTACHMENT), "VIDEO_ATTACHMENT_FILE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.VIDEO_ATTACHMENT_FILE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_LANG_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_LANG), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 
 #endregion
 
@@ -2350,22 +2350,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<EHS_DATA> EHS_DATA
-        {
-            get
-            {
-                if ((_EHS_DATA == null))
-                {
-                    _EHS_DATA = base.CreateObjectSet<EHS_DATA>("EHS_DATA");
-                }
-                return _EHS_DATA;
-            }
-        }
-        private ObjectSet<EHS_DATA> _EHS_DATA;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<PERSPECTIVE_VIEW_ITEM> PERSPECTIVE_VIEW_ITEM
         {
             get
@@ -2458,6 +2442,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<PERSPECTIVE_VIEW_LANG> _PERSPECTIVE_VIEW_LANG;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EHS_DATA> EHS_DATA
+        {
+            get
+            {
+                if ((_EHS_DATA == null))
+                {
+                    _EHS_DATA = base.CreateObjectSet<EHS_DATA>("EHS_DATA");
+                }
+                return _EHS_DATA;
+            }
+        }
+        private ObjectSet<EHS_DATA> _EHS_DATA;
 
         #endregion
 
@@ -3528,14 +3528,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the EHS_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToEHS_DATA(EHS_DATA eHS_DATA)
-        {
-            base.AddObject("EHS_DATA", eHS_DATA);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the PERSPECTIVE_VIEW_ITEM EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPERSPECTIVE_VIEW_ITEM(PERSPECTIVE_VIEW_ITEM pERSPECTIVE_VIEW_ITEM)
@@ -3581,6 +3573,14 @@ namespace SQM.Website
         public void AddToPERSPECTIVE_VIEW_LANG(PERSPECTIVE_VIEW_LANG pERSPECTIVE_VIEW_LANG)
         {
             base.AddObject("PERSPECTIVE_VIEW_LANG", pERSPECTIVE_VIEW_LANG);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_DATA EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_DATA(EHS_DATA eHS_DATA)
+        {
+            base.AddObject("EHS_DATA", eHS_DATA);
         }
 
         #endregion
