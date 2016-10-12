@@ -248,6 +248,7 @@ namespace SQM.Website
 			this.OnLoad = null;
 			this.ScaleToMax = false;
 			this.ItemVisual = "";
+			this.ScaleMin = this.ScaleMax = 0;
 
 			return this;
 		}
@@ -261,6 +262,12 @@ namespace SQM.Website
         public GaugeDefinition ConfigureControl(PERSPECTIVE_VIEW_ITEM vi, TargetMgr targetCtl, string addTitle, bool forceNewRow, int containerWidth, int containerHeight)
         {
 			this.InitializeAll();
+
+			if (vi.ITEM_SEQ == 82)
+			{
+				bool dbg = true;
+				bool dd = dbg;
+			}
 
             this.ControlType = vi.CONTROL_TYPE;
             this.Height = vi.ITEM_HEIGHT;
@@ -1524,11 +1531,6 @@ namespace SQM.Website
 
 			if (!string.IsNullOrWhiteSpace(rgCfg.OnLoad))
 				rad.ClientEvents.OnLoad = rgCfg.OnLoad;
-
-			if (rgCfg.ScaleMin.HasValue)
-				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
-			if (rgCfg.ScaleMax != 0)
-                rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
           
             rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
@@ -1548,14 +1550,24 @@ namespace SQM.Website
             rad.PlotArea.YAxis.MinorGridLines.Visible = rgCfg.MinorTics;
             rad.PlotArea.XAxis.MinorGridLines.Visible = false;
 
+			decimal? Ymax = null;
             foreach (GaugeSeries gs in gaugeSeries)
             {
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
                      if (data.YValue < 0)
                         negScale = true;
+					 if (!Ymax.HasValue || data.YValue > Ymax)
+						 Ymax = data.YValue;
                 }
             }
+
+			if (rgCfg.ScaleMin.HasValue)
+				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			if (rgCfg.ScaleMax != 0)
+			{
+				rad.PlotArea.YAxis.MaxValue = Math.Max(rgCfg.ScaleMax, (decimal)Ymax);
+			}
 
             int numItems = 0;
             int numBars = 0;

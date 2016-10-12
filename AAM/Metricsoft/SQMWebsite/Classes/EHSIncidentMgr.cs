@@ -1294,7 +1294,7 @@ namespace SQM.Website
 				//DateTime endDate = histLast.BEGIN_DT.HasValue ? WebSiteCommon.LocalTime((DateTime)histLast.BEGIN_DT, localeTimezone).Date : startDate;
 
 				DateTime startDate = ((DateTime)hist.BEGIN_DT).Date;
-				DateTime endDate = ((DateTime)histLast.BEGIN_DT).Date;
+				DateTime endDate = histLast.INCIDENT_LOSTTIME_HIST_ID == hist.INCIDENT_LOSTTIME_HIST_ID ? DateTime.UtcNow : ((DateTime)histLast.BEGIN_DT).Date;
 
 				/*
 				if (histList.Last().WORK_STATUS != "02")  // if last record is not a return to work, assume last work status is still in effect
@@ -1304,13 +1304,7 @@ namespace SQM.Website
 				*/
 
 				// truncate time accural to current day in case of erroneous lost/restricted time entry
-				/*
-				if (incident.DETECT_PLANT_ID == 37)
-				{
-					bool dbg = true;
-					bool dd = dbg;
-				}
-				*/
+
 				if (endDate > DateTime.UtcNow)
 				{
 					endDate = WebSiteCommon.LocalTime(DateTime.UtcNow, localeTimezone).Date;
