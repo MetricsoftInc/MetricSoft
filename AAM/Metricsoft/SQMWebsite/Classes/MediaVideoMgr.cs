@@ -356,20 +356,28 @@ namespace SQM.Website
 					string storageURL = sets.Find(x => x.SETTING_CD == "STORAGE_URL").VALUE.ToString();
 					string storageQueryString = sets.Find(x => x.SETTING_CD == "STORAGE_QUERY").VALUE.ToString();
 					string fileType = Path.GetExtension(fileName);
-					CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+					try
+					{
+						CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
 						CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
-					// Create the blob client.
-					CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+						// Create the blob client.
+						CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
-					// Retrieve reference to a previously created container.
-					CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
+						// Retrieve reference to a previously created container.
+						CloudBlobContainer container = blobClient.GetContainerReference(storageContainer);
 
-					// Retrieve reference to a blob named "myblob.txt".
-					CloudBlockBlob blockBlob = container.GetBlockBlobReference(videoId.ToString() + fileType);
+						// Retrieve reference to a blob named "myblob.txt".
+						CloudBlockBlob blockBlob = container.GetBlockBlobReference(videoId.ToString() + fileType);
 
-					// Delete the blob.
-					blockBlob.Delete();
+						// Delete the blob.
+						blockBlob.Delete();
+					}
+					catch (Exception videoEx)
+					{
+						// what to do if there is an exception? Just log the exception for now
+						SQMLogger.LogException(videoEx);
+					}
 					// delete the video header
 					status = ctx.ExecuteStoreCommand("DELETE FROM VIDEO WHERE VIDEO_ID" + delCmd);
 				}
