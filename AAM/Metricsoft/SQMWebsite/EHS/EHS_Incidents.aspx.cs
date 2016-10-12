@@ -783,7 +783,7 @@ namespace SQM.Website
 									{
 										hist.INCIDENT_ID = incident.INCIDENT_ID;
 										hist.WORK_STATUS = "03";
-										hist.WORK_STATUS = "Lost Time";
+										hist.ITEM_DESCRIPTION = "Lost Time";
 										hist.BEGIN_DT = incident.INCIDENT_DT;
 										answer = incident.INCIDENT_ANSWER.Where(a => a.INCIDENT_QUESTION_ID == 3).FirstOrDefault(); // expected return date
 										if (answer != null && !string.IsNullOrEmpty(answer.ANSWER_VALUE))
