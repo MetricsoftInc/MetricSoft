@@ -148,7 +148,7 @@ namespace SQM.Website
             return this;
         }
 
-        public CalcsResult CalcsMethods(decimal[] plantArray, string itemCalcsMethod, string calcsScope, string calcsStat, int controlType, int seriesOrder, string filter)
+        public CalcsResult CalcsMethods(decimal[] plantArray, string itemCalcsMethod, string calcsScope, string calcsStat, int controlType, int seriesOrder, string filter, string options)
         {
             if (controlType == 1 || string.IsNullOrEmpty(calcsScope))
                 return new CalcsResult().Initialize();
@@ -176,37 +176,37 @@ namespace SQM.Website
             {
                 case "ESTAT":  // environment stats
                 case "HSSTAT": // HS stats
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "ESERIES":  // environment series
                 case "HSSERIES":  // HS series
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
                     rslt = this.ehsCtl.Results;
                     break;
 
 				// EHS_DATA stats
 				case "XDSTAT":
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).EHMetric(this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
 					break;
 				// EHS_DATA series
 				case "XDSERIES":
-                   this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
+                   this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).MetricSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, fromDate, this.ToDate, this.ehsCtl.GetPlantsByScope(plantArray), this.ehsCtl.GetMetricsByScope(), 0m);
                     rslt = this.ehsCtl.Results;
 					break;
 
                 case "ISERIES":
                 case "IRSERIES":
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).InputsSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).InputsSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, this.ehsCtl.GetMetricsByScope(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "INSTAT": // incident stats
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).IncidentStat(plantArray, this.ehsCtl.GetIncidentTopics(), fromDate, this.ToDate);
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).IncidentStat(plantArray, this.ehsCtl.GetIncidentTopics(), fromDate, this.ToDate);
                     rslt = this.ehsCtl.Results;
                     break;
                 case "INSERIES":  // incident series
-                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter).IncidentSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, fromDate, this.ToDate, this.ehsCtl.GetIncidentTopics());
+                    this.ehsCtl.SetCalcParams(itemCalcsMethod, calcsScope, calcsStat, seriesOrder, filter, options).IncidentSeries((EHSCalcsCtl.SeriesOrder)seriesOrder, plantArray, fromDate, this.ToDate, this.ehsCtl.GetIncidentTopics());
                     rslt = this.ehsCtl.Results;
                     break;
 
@@ -231,7 +231,7 @@ namespace SQM.Website
             CalcsResult results = new CalcsResult().Initialize();
 
             SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(company, "HS", DateTime.UtcNow, DateTime.UtcNow, plantArray).Load(DateIntervalType.fuzzy, DateSpanOption.SelectRange);
-            metricMgr.CalcsMethods(plantArray, "HS", "63", SStat.deltaDy.ToString(), 5, 1, "");
+            metricMgr.CalcsMethods(plantArray, "HS", "63", SStat.deltaDy.ToString(), 5, 1, "", "");
             results = metricMgr.ehsCtl.Results;
             if (!results.ValidResult)
             {

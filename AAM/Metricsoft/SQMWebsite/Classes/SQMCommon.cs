@@ -1495,7 +1495,12 @@ namespace SQM.Website
 			return period;
 		}
 
-        public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
+		public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label)
+		{
+			return CalcDatePeriods(fromDate, toDate, periodType, dateSpanType, label, 0);
+		}
+
+        public static List<DatePeriod> CalcDatePeriods(DateTime fromDate, DateTime toDate, DateIntervalType periodType, DateSpanOption dateSpanType, string label, int maxperiods)
         {
             List<DatePeriod> periodList = new List<DatePeriod>();
             DateTime startDate = new DateTime(fromDate.Year, fromDate.Month, 1);
@@ -1540,6 +1545,15 @@ namespace SQM.Website
 					break;
                 case DateIntervalType.month:
                 default:
+					int increment = 1;
+					if (maxperiods > 0)
+					{
+						double monthSpan = endDate.Subtract(fromDate).Days / (365.25 / 12);
+						if (monthSpan > maxperiods)
+							increment = 3;	// quarters
+						else if (monthSpan > maxperiods * 3)
+							increment = 12;		// years
+					}
                     while (startDate < endDate)
                     {
                         period = new DatePeriod();
@@ -1547,7 +1561,7 @@ namespace SQM.Website
                         period.ToDate = new DateTime(startDate.Year, startDate.Month, DateTime.DaysInMonth(startDate.Year, startDate.Month));
                         period.Label = period.FromDate.Year.ToString() + "/" + period.FromDate.Month.ToString();
                         periodList.Add(period);
-                        startDate = startDate.AddMonths(1);
+                        startDate = startDate.AddMonths(increment);
                     }
                     break;
             }

@@ -514,7 +514,7 @@ namespace SQM.Website
                 decimal[] plantArray = Array.ConvertAll(plantList.Split(','), new Converter<string, decimal>(decimal.Parse));
                 SQMMetricMgr metricMgr = new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "E", radExportDateSelect1.SelectedDate.Value, radExportDateSelect2.SelectedDate.Value, plantArray); 
                 metricMgr.Load(DateIntervalType.month, DateSpanOption.SelectRange);
-                CalcsResult rslt = metricMgr.CalcsMethods(plantArray, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant, "");
+                CalcsResult rslt = metricMgr.CalcsMethods(plantArray, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant, "", "");
                 EHSModel.GHGResultList ghgTable = (EHSModel.GHGResultList)rslt.ResultObj;
                 uclGHGReport.BindGHGReport(ghgTable);
             }

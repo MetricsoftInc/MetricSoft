@@ -497,7 +497,7 @@
     <xlat code="2" short="#FFA500" long="orange"/>
     <xlat code="3" short="#808000" long="olive"/>
     <xlat code="4" short="#A52A2A" long="brown"/>
-    <xlat code="5" short="#FFFF00" long="yellow"/>
+    <xlat code="5" short="#00FFFF" long="cyan"/>
     <xlat code="6" short="#1E90FF" long="dodgerblue"/>
     <xlat code="7" short="#B22222" long="firebrick"/>
     <xlat code="8" short="#696969" long="dimgray"/>
@@ -525,7 +525,7 @@
   <chartSeriesColorAttr>
     <xlat code="1" short="#CD853F" long="peru"/>
     <xlat code="2" short="#2E8B57" long="seagreen"/>
-    <xlat code="3" short="#696969" long="dimgray"/>
+    <xlat code="3" short="#0000CD" long="mediumblue"/>
   </chartSeriesColorAttr>
   <chartSeriesColorOverlay>
     <xlat code="1" short="#CD853F" long="cyan"/>

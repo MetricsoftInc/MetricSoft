@@ -329,8 +329,8 @@ namespace SQM.Website
 
     public class EHSCalcsCtl
     {
-		public enum SeriesOrder { MeasureSeries, MeasurePlant, PlantMeasure, PeriodMeasurePlant, YearMeasurePlant, PeriodMeasure, YearMeasure, YearPlant, YearPlantAvg, PlantMeasureTotal, PlantMeasureAvg, SumTotal, TimespanSeries, PeriodMeasureYOY, PeriodSum, PeriodSumYOY, YearSum, MeasurePlantTotal };
-        //                            0               1               2               3                   4               5               6           7           8           9                   10            11              12              13              14          15      16		17
+		public enum SeriesOrder { MeasureSeries, MeasurePlant, PlantMeasure, PeriodMeasurePlant, YearMeasurePlant, PeriodMeasure, YearMeasure, YearPlant, YearPlantAvg, PlantMeasureTotal, PlantMeasureAvg, SumTotal, TimespanSeries, PeriodMeasureYOY, PeriodSum, PeriodSumYOY, YearSum, MeasurePlantTotal, PeriodMeasurePlantTotal };
+        //                            0               1               2               3                   4               5               6           7           8           9                   10            11              12              13              14          15      16		17					18
         public enum MetricElement { value, cost };
         public enum AccountingElement { cost, revenue, production, throughput, timeworked, timelost, recordedcases, timelostcases};
 
@@ -444,6 +444,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public string Options 
+		{
+			get;
+			set;
+		}
         public EHSCalcsCtl.SeriesOrder Seriesorder
         {
             get;
@@ -474,7 +479,7 @@ namespace SQM.Website
             return this;
         }
 
-        public EHSCalcsCtl SetCalcParams(string calcsMethod, string scope, string stat, int seriesOrder, string filter)
+        public EHSCalcsCtl SetCalcParams(string calcsMethod, string scope, string stat, int seriesOrder, string filter, string options)
         {
             this.CalcsMethod = calcsMethod;
             string[] scopeArgs = WebSiteCommon.SplitString(scope, '|');
@@ -509,6 +514,7 @@ namespace SQM.Website
                 }
 
 				this.Filter = filter;
+				this.Options = options;
 
             }
             catch
@@ -1701,7 +1707,7 @@ namespace SQM.Website
                         if (seriesOrder == SeriesOrder.YearSum)
                             pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.year, this.DateSpanType, "");
                         else 
-                            pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "");
+                            pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
                         series = new GaugeSeries().CreateNew(1, "1", "");
                         ns = 0;
                         foreach (WebSiteCommon.DatePeriod pd in pdList)
@@ -1733,6 +1739,7 @@ namespace SQM.Website
                         break;
 
                     case EHSCalcsCtl.SeriesOrder.PeriodMeasurePlant:
+					case EHSCalcsCtl.SeriesOrder.PeriodMeasurePlantTotal:
                     case EHSCalcsCtl.SeriesOrder.YearMeasurePlant:
                         foreach (decimal plantID in plantIDS)
                         {
@@ -1762,8 +1769,26 @@ namespace SQM.Website
                                     }
                                 }
                             }
+
                             this.Results.metricSeries.Add(series);
                         }
+
+						if (seriesOrder == SeriesOrder.PeriodMeasurePlantTotal)
+						{
+							GaugeSeries totalsSeries = new GaugeSeries().CreateNew(1, "Total", "");
+							totalsSeries.SeriesType = 9; // totals series - need enum for this ...
+							pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "");
+							ns = 0;
+							foreach (WebSiteCommon.DatePeriod pd in pdList)
+							{
+								if (EHMetric(plantIDS, measureIDS, pd.FromDate, pd.ToDate))
+								{
+									totalsSeries.ItemList.Add(new GaugeSeriesItem().CreateNew(1, ++ns, SQMBasePage.FormatDate(pd.FromDate, "yyyy/MM", false), this.Results));
+								}
+							}
+							this.Results.metricSeries.Insert(0, totalsSeries);
+						}
+
                         break;
                     case EHSCalcsCtl.SeriesOrder.MeasurePlant:
 					case EHSCalcsCtl.SeriesOrder.MeasurePlantTotal:

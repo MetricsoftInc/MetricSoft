@@ -952,7 +952,7 @@ namespace SQM.Website
                         ggCfg.DisplayLegend = false;
 
                         ggCfg.LabelV = "Quantity";
-                        status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { LocalProfile().Profile.PLANT_ID }, "I", calcScopeID.ToString(), "sum", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, ""), reviewArea);
+                        status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { LocalProfile().Profile.PLANT_ID }, "I", calcScopeID.ToString(), "sum", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, "", ""), reviewArea);
                        
                         if (string.IsNullOrEmpty(metric.EHS_MEASURE.PLANT_ACCT_FIELD)  &&  metric.EHS_MEASURE.MEASURE_CATEGORY != "FACT")
                         {
@@ -960,7 +960,7 @@ namespace SQM.Website
                             ggCfg.Title = "";
                             ggCfg.DisplayLabel = false;
                             ggCfg.LabelV = "Cost";
-                            status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { LocalProfile().Profile.PLANT_ID }, "I", calcScopeID.ToString(), "cost", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, ""), reviewArea);
+                            status = uclGauge.CreateControl(SQMChartType.MultiLine, ggCfg, metricMgr.CalcsMethods(new decimal[1] { LocalProfile().Profile.PLANT_ID }, "I", calcScopeID.ToString(), "cost", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasure, "", ""), reviewArea);
                         }
                     }
                 }

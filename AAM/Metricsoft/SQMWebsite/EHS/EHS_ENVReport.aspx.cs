@@ -232,7 +232,7 @@ namespace SQM.Website
 				//metricMgr.Load(DateIntervalType.month, DateSpanOption.SelectRange);
 				//CalcsResult rslt = metricMgr.CalcsMethods(PlantIDS, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.YearMeasurePlant);
 				metricMgr.Load(DateIntervalType.span, DateSpanOption.SelectRange);
-				CalcsResult rslt = metricMgr.CalcsMethods(PlantIDS, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.MeasurePlant, "");
+				CalcsResult rslt = metricMgr.CalcsMethods(PlantIDS, "E", "ghg|co2,ch4,n2o", "gwp100|sum", 22, (int)EHSCalcsCtl.SeriesOrder.MeasurePlant, "", "");
 				EHSModel.GHGResultList ghgTable = (EHSModel.GHGResultList)rslt.ResultObj;
 				uclGHG.BindGHGReport(ghgTable);
 				divGHG.Visible = true;
@@ -275,7 +275,7 @@ namespace SQM.Website
 				if (vi.STATUS != "I")
 				{
 					GaugeDefinition cfg = new GaugeDefinition().Initialize().ConfigureControl(vi, null, "", false, !string.IsNullOrEmpty(hfwidth.Value) ? Convert.ToInt32(hfwidth.Value) - 62 : 0, 0);
-					uclView.CreateControl((SQMChartType)cfg.ControlType, cfg, metricMgr.CalcsMethods(PlantIDS, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), divView);
+					uclView.CreateControl((SQMChartType)cfg.ControlType, cfg, metricMgr.CalcsMethods(PlantIDS, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), divView);
 				}
 			}
 

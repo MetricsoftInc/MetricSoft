@@ -501,6 +501,11 @@ namespace SQM.Website
             get;
             set;
         }
+		public int SeriesType
+		{
+			get;
+			set;
+		}
         public int YAxisCount
         {
             get;
@@ -531,6 +536,7 @@ namespace SQM.Website
 			this.YAxisCount = 1;
 			this.ObjData = null;
 			this.DisplayLabels = false;
+			this.SeriesType = 0;
 		}
 
 		public GaugeSeries CreateNew(int seriesNum, string seriesName, string color)
@@ -663,7 +669,8 @@ namespace SQM.Website
                 colorList = WebSiteCommon.GetXlatList(palleteName, "", "short");
                 currentPallete = palleteName;
             }
-            if (colorNum < colorList.Count)
+			if (colorNum < colorList.Count)
+				//color = System.Drawing.Color.FromName(colorList[colorNum.ToString()]);
                color = System.Drawing.ColorTranslator.FromHtml(colorList[colorNum.ToString()]);
 
             return color;
@@ -1456,10 +1463,13 @@ namespace SQM.Website
             series.TooltipsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
             series.TooltipsAppearance.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("white");
 
+			
            foreach (GaugeSeriesItem item in seriesData)
            {
                SeriesItem si = new SeriesItem();
                si.YValue = Convert(item.YValue ?? 0, rgCfg.Multiplier);
+			   if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
+				   si.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
                series.Items.Add(si);
            }
 
@@ -1582,9 +1592,8 @@ namespace SQM.Website
                 series.LabelsAppearance.Visible = false;
                 series.TooltipsAppearance.Visible = true;
 				series.Name = gs.Name.Replace("\r\n", "");
-                ++numItems;
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
-                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numItems);
+                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
 
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
@@ -1692,18 +1701,20 @@ namespace SQM.Website
         public int CreateColumnChart(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, System.Web.UI.HtmlControls.HtmlGenericControl container)
         {
             int status = 0;
+			int numItems = 0;
 
             if (gaugeSeries == null || gaugeSeries.Count == 0 ||  gaugeSeries[0].ItemList.Count == 0)
                 return -1;
 
             List<GaugeSeriesItem> seriesData = gaugeSeries[0].ItemList;
             // gotta do this to get rad to display zero label values
+			/*
             foreach (GaugeSeriesItem item in seriesData)
             {
                 if (item.YValue == 0)
                     item.YValue = telerikBugValue;
             }
-
+			*/
             bool exploded = rgCfg.ItemVisual == "E" ? true : false;
 
             RadHtmlChart rad = new RadHtmlChart();
@@ -1740,6 +1751,8 @@ namespace SQM.Website
             {
                 SeriesItem si = new SeriesItem();
                 si.YValue = Convert(item.YValue ?? 0, rgCfg.Multiplier);
+				if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
+					si.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
                 series.Items.Add(si);
             }
 
@@ -2003,15 +2016,21 @@ namespace SQM.Website
                 series.MarkersAppearance.MarkersType = MarkersType.Square;
                 series.MarkersAppearance.Size = 3m;
                 series.MarkersAppearance.BorderWidth = 3;
-
                 series.LabelsAppearance.Visible = gs.DisplayLabels;
 				series.Name = gs.Name.Replace("\r\n", "");
-                ++numItems;
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
-                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numItems);
+                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
+
+				if (gs.SeriesType == 9)		// totals series
+				{
+					series.MarkersAppearance.MarkersType = MarkersType.Cross;
+					series.LineAppearance.LineStyle = Telerik.Web.UI.HtmlChart.Enums.ExtendedLineStyle.Step;
+					series.Appearance.FillStyle.BackgroundColor = System.Drawing.Color.Gray;
+					series.LineAppearance.Width = 2;
+				}
  
                 decimal sumY = 0;
-                foreach (GaugeSeriesItem data in gs.ItemList)
+                foreach (GaugeSeriesItem data in gs.ItemList)	// points
                 {
                     CategorySeriesItem item = new CategorySeriesItem();
 					if (data.YValue.HasValue)

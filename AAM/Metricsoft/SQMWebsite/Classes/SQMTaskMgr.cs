@@ -999,7 +999,7 @@ namespace SQM.Website
                         plantProfileList.Add(profile);
                     }
 
-                    CalcsResult rslt = metricMgr.CalcsMethods(new decimal[1] { plantID }, "IR", calcsScope.TrimEnd(','), "count", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasurePlant, "");
+                    CalcsResult rslt = metricMgr.CalcsMethods(new decimal[1] { plantID }, "IR", calcsScope.TrimEnd(','), "count", 32, (int)EHSCalcsCtl.SeriesOrder.PeriodMeasurePlant, "", "");
                     if (rslt.ValidResult  &&  rslt.metricSeries.Count > 0)
                     {
                         foreach (GaugeSeriesItem item in rslt.metricSeries[0].ItemList)  // iterate by monthly period

@@ -273,6 +273,7 @@ namespace SQM.Website
                 default:
                     if (localView.DFLT_TIMEFRAME > 1900)
                     {
+						dmPeriodFrom.Visible = dmPeriodTo.Visible = true;
                         dmPeriodFrom.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYStartDate().Month, 1);
                         dmPeriodTo.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYEndDate((DateTime)dmPeriodFrom.SelectedDate).Month, 28);
                     }
@@ -824,7 +825,7 @@ namespace SQM.Website
 										plantArray = localCriteria.PlantList.Where(p => p.Plant.BUS_ORG_ID == org.BUS_ORG_ID).Select(p => p.Plant.PLANT_ID).ToArray();
 										++nitem;
 										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, org.ORG_NAME, nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
 									}
 									break;
 								case "L":	// location code  (country ?)
@@ -841,7 +842,7 @@ namespace SQM.Website
 											plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == locationCode).Select(p => p.Plant.PLANT_ID).ToArray();
 										++nitem;
 										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, WebSiteCommon.GetXlatValueLong("countryCode", string.IsNullOrEmpty(locationCode) ? Resources.LocalizedText.Undefined : locationCode), nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
 									}
 									break;
 								case "R":	// region
@@ -858,7 +859,7 @@ namespace SQM.Website
 											plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == regionCode).Select(p => p.Plant.PLANT_ID).ToArray();
 										++nitem;
 										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, string.IsNullOrEmpty(regionCode) ? Resources.LocalizedText.Undefined : regionCode, nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
 									}
 									break;
 								default:	// plant
@@ -866,7 +867,7 @@ namespace SQM.Website
 									{
 										++nitem;
 										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, plantNameArray[nitem], nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
 									}
 									break;
 							}
@@ -877,7 +878,7 @@ namespace SQM.Website
                         ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl,  "", false, 0, 0);
                         if (vi.CONTROL_TYPE == 1 && localCriteria.Options.HasFlag(DashboardOpts.TotalsOnly))
                             ggCfg.NewRow = false;
-                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER), "divDashboardArea");
+						status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
                     }
 
                     MessageDisplay(null);
