@@ -19,7 +19,7 @@ namespace SQM.Website
     public enum ViewCriteriaOption { NoDefaults, EnableOverride, NoOverride, SelectLocs, SelectSpan, DefaultView };
 
     [Flags]
-    public enum DashboardOpts {None = 0, TotalsOnly=2 };
+    public enum DashboardOpts { None = 0, TotalsOnly = 2 };
 
     public partial class DashboardCriteria
     {
@@ -110,17 +110,17 @@ namespace SQM.Website
         static PSsqmEntities localCtx;
         static DashboardCriteria localCriteria;
         static List<RadComboBoxItem> scopeList;
- 
+
         #region events
 
         public event EditItemClick OnViewModeChange;
         public event UclDashboardModeChanged OnDashboardModeChange;
 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
-			this.lblPeriodFrom.Text = this.lblYearFrom.Text = Resources.LocalizedText.From + ": ";
-			this.lblPeriodTo.Text = this.lblYearTo.Text = Resources.LocalizedText.To + ": ";
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
+            this.lblPeriodFrom.Text = this.lblYearFrom.Text = Resources.LocalizedText.From + ": ";
+            this.lblPeriodTo.Text = this.lblYearTo.Text = Resources.LocalizedText.To + ": ";
         }
 
         protected override void OnInit(EventArgs e)
@@ -130,7 +130,7 @@ namespace SQM.Website
 
         private void MessageDisplay(Label displayLabel)
         {
-           LblViewSaveError.Visible = lblWorking.Visible = lblViewLoadError.Visible = false;
+            LblViewSaveError.Visible = lblWorking.Visible = lblViewLoadError.Visible = false;
 
             if (displayLabel != null)
                 displayLabel.Visible = true;
@@ -160,7 +160,7 @@ namespace SQM.Website
             {
                 if (localCriteria.DateSpanType == DateSpanOption.FYYearOverYear)
                 {
-                    dmPeriodFrom.SelectedDate = new DateTime(Convert.ToInt32(ddlYearFrom.SelectedValue)-1, SessionManager.FYStartDate().Month, 1);
+                    dmPeriodFrom.SelectedDate = new DateTime(Convert.ToInt32(ddlYearFrom.SelectedValue) - 1, SessionManager.FYStartDate().Month, 1);
                     DateTime toDate = new DateTime(Convert.ToInt32(ddlYearTo.SelectedValue), SessionManager.FYStartDate().Month == 1 ? 12 : SessionManager.FYStartDate().Month - 1, 1);
                     dmPeriodTo.SelectedDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month));
                 }
@@ -170,7 +170,7 @@ namespace SQM.Website
                     dmPeriodTo.SelectedDate = new DateTime(Convert.ToInt32(ddlYearTo.SelectedValue), 12, 31);
                 }
             }
-     
+
             localCriteria.FromDate = new DateTime(dmPeriodFrom.SelectedDate.Value.Year, dmPeriodFrom.SelectedDate.Value.Month, 1);
             localCriteria.ToDate = new DateTime(dmPeriodTo.SelectedDate.Value.Year, dmPeriodTo.SelectedDate.Value.Month, DateTime.DaysInMonth(dmPeriodTo.SelectedDate.Value.Year, dmPeriodTo.SelectedDate.Value.Month));
             localCriteria.DateInterval = (DateIntervalType)Enum.Parse(typeof(DateIntervalType), ddlDateInterval.SelectedValue);
@@ -179,12 +179,12 @@ namespace SQM.Website
             localCriteria.MetricArray = new decimal[0];
             localCriteria.MetricNameArray = new string[0];
 
-			// final 'from' date reset when querying for FY YTD
-			if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
-			{
-				dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
-				localCriteria.FromDate = Convert.ToDateTime(dmPeriodFrom.SelectedDate).AddYears(1);
-			}
+            // final 'from' date reset when querying for FY YTD
+            if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+            {
+                dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
+                localCriteria.FromDate = Convert.ToDateTime(dmPeriodFrom.SelectedDate).AddYears(1);
+            }
 
             string[] optionSels = ddlOptions.Items.Where(i => i.Checked == true).Select(i => i.Value).ToArray();
 
@@ -192,7 +192,7 @@ namespace SQM.Website
                 localCriteria.SetOption(DashboardOpts.TotalsOnly);
             else
                 localCriteria.RemoveOption(DashboardOpts.TotalsOnly);
-  
+
             DisplayView("");
 
             uclProgress.UpdateDisplay(3, 90, "Drawing...");
@@ -203,7 +203,7 @@ namespace SQM.Website
             localCriteria.DateSpanType = (DateSpanOption)Convert.ToInt32(ddlDateSpan.SelectedValue);
 
             DateTime lastYear;
-            int fyMonth =  Convert.ToInt32(Math.Max(1,(decimal)SessionManager.PrimaryCompany().FYSTART_MONTH));
+            int fyMonth = Convert.ToInt32(Math.Max(1, (decimal)SessionManager.PrimaryCompany().FYSTART_MONTH));
 
             //dmPeriodFrom.Visible = dmPeriodTo.Visible = true;
             //ddlYearFrom.Visible = ddlYearTo.Visible = false;
@@ -219,7 +219,7 @@ namespace SQM.Website
                     break;
                 case DateSpanOption.YearOverYear:      // year over year
                     dmPeriodFrom.SelectedDate = SessionManager.UserContext.LocalTime.AddYears(-1);
-					dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
+                    dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
                     ddlYearFrom.SelectedValue = (SessionManager.UserContext.LocalTime.Year - 1).ToString();
                     ddlYearTo.SelectedValue = SessionManager.UserContext.LocalTime.Year.ToString();
                     //dmPeriodFrom.Visible = dmPeriodTo.Visible = false;
@@ -229,7 +229,7 @@ namespace SQM.Website
                     break;
                 case DateSpanOption.FYYearOverYear:  // fy uear over year
                     dmPeriodFrom.SelectedDate = SessionManager.UserContext.LocalTime.AddYears(-1);
-					dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
+                    dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
                     ddlYearFrom.SelectedValue = (SessionManager.UserContext.LocalTime.Year - 1).ToString();
                     ddlYearTo.SelectedValue = SessionManager.UserContext.LocalTime.Year.ToString();
                     //dmPeriodFrom.Visible = dmPeriodTo.Visible = false;
@@ -242,22 +242,22 @@ namespace SQM.Website
                     dmPeriodFrom.SelectedDate = new DateTime(lastYear.Year, 1, 1);
                     dmPeriodTo.SelectedDate = new DateTime(lastYear.Year, 12, 1);
                     break;
-				case DateSpanOption.FYYearToDate:       // fy ytd
-					dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
-					dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
-					lblPeriodFrom.Visible = dmPeriodFrom.Visible = false;
+                case DateSpanOption.FYYearToDate:       // fy ytd
+                    dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                    dmPeriodFrom.SelectedDate = WebSiteCommon.PriorFYPeriod((DateTime)dmPeriodTo.SelectedDate).FromDate;
+                    lblPeriodFrom.Visible = dmPeriodFrom.Visible = false;
 
-					if (localView.PERSPECTIVE == "0" || localView.PERSPECTIVE == "E")
-					{
-						dmPeriodTo.SelectedDate = localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT < dmPeriodTo.SelectedDate ? localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT : dmPeriodTo.SelectedDate;
-						if (dmPeriodTo.SelectedDate < dmPeriodFrom.SelectedDate)
-						{
-							DateTime dt = Convert.ToDateTime(localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT).AddYears(-1);
-							dt = new DateTime(dt.Year, (int)localCompany.FYSTART_MONTH, 1);
-							dmPeriodFrom.SelectedDate = dt;
-						}
-					}
-					break;
+                    if (localView.PERSPECTIVE == "0" || localView.PERSPECTIVE == "E")
+                    {
+                        dmPeriodTo.SelectedDate = localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT < dmPeriodTo.SelectedDate ? localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT : dmPeriodTo.SelectedDate;
+                        if (dmPeriodTo.SelectedDate < dmPeriodFrom.SelectedDate)
+                        {
+                            DateTime dt = Convert.ToDateTime(localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT).AddYears(-1);
+                            dt = new DateTime(dt.Year, (int)localCompany.FYSTART_MONTH, 1);
+                            dmPeriodFrom.SelectedDate = dt;
+                        }
+                    }
+                    break;
                 case DateSpanOption.FYEffTimespan:
                     if (localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_FROM_DT.HasValue && localCompany.COMPANY_ACTIVITY.EFF_EHS_METRIC_DT.HasValue)
                     {
@@ -273,81 +273,81 @@ namespace SQM.Website
                 default:
                     if (localView.DFLT_TIMEFRAME > 1900)	// specific year
                     {
-						dmPeriodFrom.Visible = dmPeriodTo.Visible = true;
+                        dmPeriodFrom.Visible = dmPeriodTo.Visible = true;
                         dmPeriodFrom.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYStartDate().Month, 1);
                         dmPeriodTo.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYEndDate((DateTime)dmPeriodFrom.SelectedDate).Month, 28);
                     }
-					else if (localView.DFLT_TIMEFRAME < 0)	// starting n months in the past
-					{
-						dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-						dmPeriodFrom.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths((int)localView.DFLT_TIMEFRAME);
-					}
-					else
-					{
-						dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-						dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-					}
+                    else if (localView.DFLT_TIMEFRAME < 0)	// starting n months in the past
+                    {
+                        dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                        dmPeriodFrom.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths((int)localView.DFLT_TIMEFRAME);
+                    }
+                    else
+                    {
+                        dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
+                        dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    }
                     break;
             }
         }
 
-		protected void btnLocationSelect_Click(object sender, EventArgs e)
-		{
-			if (ddlBusOrg.Items.Count == 0)
-			{
-				PSsqmEntities ctx = new PSsqmEntities();
-				ddlBusOrg.DataSource = localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList();
-				ddlBusOrg.DataValueField = "BUS_ORG_ID";
-				ddlBusOrg.DataTextField = "ORG_NAME";
-				ddlBusOrg.DataBind();
+        protected void btnLocationSelect_Click(object sender, EventArgs e)
+        {
+            if (ddlBusOrg.Items.Count == 0)
+            {
+                PSsqmEntities ctx = new PSsqmEntities();
+                ddlBusOrg.DataSource = localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList();
+                ddlBusOrg.DataValueField = "BUS_ORG_ID";
+                ddlBusOrg.DataTextField = "ORG_NAME";
+                ddlBusOrg.DataBind();
 
-				Dictionary<string, string> regionDCL = WebSiteCommon.GetXlatList("countryCode", "", "long");
-				foreach (string region in localCriteria.PlantList.Select(l => l.Plant).Select(l => l.LOCATION_CODE).Distinct().ToList())
-				{
-					if (!string.IsNullOrEmpty(region))
-					{
-						ddlRegion.Items.Add(new RadComboBoxItem(regionDCL[region], region));
-					}
-				}
-			}
+                Dictionary<string, string> regionDCL = WebSiteCommon.GetXlatList("countryCode", "", "long");
+                foreach (string region in localCriteria.PlantList.Select(l => l.Plant).Select(l => l.LOCATION_CODE).Distinct().ToList())
+                {
+                    if (!string.IsNullOrEmpty(region))
+                    {
+                        ddlRegion.Items.Add(new RadComboBoxItem(regionDCL[region], region));
+                    }
+                }
+            }
 
-			string script = "function f(){OpenLocationSelectWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
-		}
+            string script = "function f(){OpenLocationSelectWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+        }
 
-		protected void btnLocationApply_Click(object sender, EventArgs e)
-		{
-			List<decimal> plantList = new List<decimal>();
+        protected void btnLocationApply_Click(object sender, EventArgs e)
+        {
+            List<decimal> plantList = new List<decimal>();
 
-			if (ddlBusOrg.CheckedItems.Count > 0)
-			{
-				plantList.AddRange(localCriteria.PlantList.Where(l => ddlBusOrg.CheckedItems.Select(i=> i.Value).Contains(l.Plant.BUS_ORG_ID.ToString())).Select(l => l.Plant.PLANT_ID).ToList());
-			}
-			else
-			{
-				plantList.AddRange(localCriteria.PlantList.Select(l => l.Plant.PLANT_ID).ToList());
-			}
+            if (ddlBusOrg.CheckedItems.Count > 0)
+            {
+                plantList.AddRange(localCriteria.PlantList.Where(l => ddlBusOrg.CheckedItems.Select(i => i.Value).Contains(l.Plant.BUS_ORG_ID.ToString())).Select(l => l.Plant.PLANT_ID).ToList());
+            }
+            else
+            {
+                plantList.AddRange(localCriteria.PlantList.Select(l => l.Plant.PLANT_ID).ToList());
+            }
 
-			if (ddlRegion.CheckedItems.Count > 0)
-			{
-				List<decimal> prList = localCriteria.PlantList.Where(l => ddlRegion.CheckedItems.Select(i=> i.Value).Contains(l.Plant.LOCATION_CODE)).Select(l => l.Plant.PLANT_ID).ToList();
-				plantList = plantList.Intersect(prList).ToList();
-			}
+            if (ddlRegion.CheckedItems.Count > 0)
+            {
+                List<decimal> prList = localCriteria.PlantList.Where(l => ddlRegion.CheckedItems.Select(i => i.Value).Contains(l.Plant.LOCATION_CODE)).Select(l => l.Plant.PLANT_ID).ToList();
+                plantList = plantList.Intersect(prList).ToList();
+            }
 
-			foreach (RadComboBoxItem item in ddlPlantSelect.Items.Where(i=> i.Enabled == true).ToList())
-			{
-				item.Checked = false;
-				decimal plantID = 0;
-				if (decimal.TryParse(item.Value, out plantID)  &&  plantList.Contains(plantID))
-				{
-					item.Checked = true;
-				}
-			}
-		}
-		protected void btnLocationCancel_Click(object sender, EventArgs e)
-		{
-			;
-		}
+            foreach (RadComboBoxItem item in ddlPlantSelect.Items.Where(i => i.Enabled == true).ToList())
+            {
+                item.Checked = false;
+                decimal plantID = 0;
+                if (decimal.TryParse(item.Value, out plantID) && plantList.Contains(plantID))
+                {
+                    item.Checked = true;
+                }
+            }
+        }
+        protected void btnLocationCancel_Click(object sender, EventArgs e)
+        {
+            ;
+        }
 
         protected void onViewLayoutClick(object o, EventArgs e)
         {
@@ -356,14 +356,14 @@ namespace SQM.Website
 
             if (btn.CommandArgument == "new")
             {
-                BindViewLayout((localView = ViewModel.CreateView(ddlPerspective.SelectedValue, 
+                BindViewLayout((localView = ViewModel.CreateView(ddlPerspective.SelectedValue,
                     SessionManager.UserContext.HRLocation.Company.COMPANY_ID, SessionManager.UserContext.HRLocation.BusinessOrg.BUS_ORG_ID, SessionManager.UserContext.HRLocation.Plant.PLANT_ID,
                     SessionManager.UserContext.Person.PERSON_ID)), btn.CommandArgument);
                 hfViewMode.Value = "l";
             }
             else
             {
-				BindViewLayout((localView = ViewModel.LookupView(localCtx, "", "", Convert.ToDecimal(ddlViewList.SelectedValue), SessionManager.UserContext.Language.NLS_LANGUAGE)), btn.CommandArgument);
+                BindViewLayout((localView = ViewModel.LookupView(localCtx, "", "", Convert.ToDecimal(ddlViewList.SelectedValue), SessionManager.UserContext.Language.NLS_LANGUAGE)), btn.CommandArgument);
                 hfViewMode.Value = "l";
             }
 
@@ -393,7 +393,7 @@ namespace SQM.Website
                     ddlViewList.Items.Add(new RadComboBoxItem(localView.VIEW_NAME, localView.VIEW_ID.ToString()));
                     ddlViewList.SelectedValue = localView.VIEW_ID.ToString();
                 }
-                else 
+                else
                 {
                     ; // report error
                 }
@@ -429,7 +429,7 @@ namespace SQM.Website
             DisplayView("");
         }
 
- 
+
         #endregion
 
         #region setup
@@ -456,10 +456,10 @@ namespace SQM.Website
             localView = null;
             ddlDateSpan.SelectedIndex = 1;
             dmPeriodFrom.SelectedDate = new DateTime(SessionManager.UserContext.LocalTime.Year, 1, 1);
-			dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
+            dmPeriodTo.SelectedDate = SessionManager.UserContext.LocalTime;
             dmPeriodFrom.ShowPopupOnFocus = dmPeriodTo.ShowPopupOnFocus = true;
-            ddlYearFrom.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (SessionManager.UserContext.LocalTime.Year - 2000)+1, ""));
-            ddlYearTo.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (SessionManager.UserContext.LocalTime.Year - 2000)+2, ""));
+            ddlYearFrom.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (SessionManager.UserContext.LocalTime.Year - 2000) + 1, ""));
+            ddlYearTo.Items.AddRange(WebSiteCommon.PopulateComboBoxListNums(2000, (SessionManager.UserContext.LocalTime.Year - 2000) + 2, ""));
             btnNewView.Enabled = true;
             localCriteria = new DashboardCriteria().Initialize();
 
@@ -472,17 +472,17 @@ namespace SQM.Website
 
             localCriteria.PlantList = new List<BusinessLocation>();
             localCriteria.PlantList = SessionManager.PlantList;
-           // localCriteria.PlantList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
+            // localCriteria.PlantList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
             SQMBasePage.SetLocationList(ddlPlantSelect, localCriteria.PlantList, 0);
-            
+
             List<PERSPECTIVE_VIEW> viewList = ViewModel.SelectFilteredViewList("", SessionManager.UserContext.Person.PERSON_ID,
                  SessionManager.UserContext.HRLocation.Company.COMPANY_ID,
                   SessionManager.UserContext.HRLocation.BusinessOrg.BUS_ORG_ID,
-				 SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, SessionManager.UserContext.Language.NLS_LANGUAGE);
+                 SessionManager.UserContext.HRLocation.Plant.PLANT_ID, true, SessionManager.UserContext.Language.NLS_LANGUAGE);
 
             string perspective = "0";
             RadComboBoxItem li;
-            foreach (PERSPECTIVE_VIEW view in viewList.Where(l=> l.AVAILABILTY > 0).OrderBy(l => l.DISPLAY_SEQ).ThenBy(l => l.VIEW_NAME).ToList())
+            foreach (PERSPECTIVE_VIEW view in viewList.Where(l => l.AVAILABILTY > 0).OrderBy(l => l.DISPLAY_SEQ).ThenBy(l => l.VIEW_NAME).ToList())
             {
                 if (viewList.Count > 8)
                 {
@@ -494,7 +494,7 @@ namespace SQM.Website
                         perspective = view.PERSPECTIVE;
                     }
                 }
-                
+
                 li = new RadComboBoxItem(view.VIEW_NAME, view.VIEW_ID.ToString());
                 li.ToolTip = view.VIEW_DESC;
                 ddlViewList.Items.Add(li);
@@ -503,7 +503,7 @@ namespace SQM.Website
             ddlViewList.SelectedIndex = 0;
             ddlPlantSelect.Enabled = ddlDateSpan.Enabled = btnRefreshDashboard.Enabled = true;
             LoadView();
-          
+
 
             return this;
         }
@@ -516,12 +516,12 @@ namespace SQM.Website
             divDashboardArea.ViewStateMode = System.Web.UI.ViewStateMode.Disabled;
 
             MessageDisplay(lblWorking);
-          
+
             try
             {
                 decimal viewID = Convert.ToDecimal(ddlViewList.SelectedValue);
 
-				localView = ViewModel.LookupView(localCtx, "", "", viewID, SessionManager.UserContext.Language.NLS_LANGUAGE);
+                localView = ViewModel.LookupView(localCtx, "", "", viewID, SessionManager.UserContext.Language.NLS_LANGUAGE);
                 if (localView == null)
                 {
                     MessageDisplay(lblViewLoadError);
@@ -537,14 +537,14 @@ namespace SQM.Website
                 if (localView.PERSPECTIVE == "E")
                 {
                     SQMBasePage.SetLocationList(ddlPlantSelect, localCriteria.PlantList.Where(l => l.Plant.TRACK_EW_DATA == true).ToList(), 0);
-                        
+
                 }
                 else
                 {
                     SQMBasePage.SetLocationList(ddlPlantSelect, localCriteria.PlantList, 0);
-                        
+
                 }
-              
+
                 hfPerspective.Value = localView.PERSPECTIVE;
                 ddlPlantSelect.ClearCheckedItems();
                 ddlPlantSelect.EnableCheckAllItemsCheckBox = true;
@@ -596,22 +596,22 @@ namespace SQM.Website
                         ci.Enabled = true;
                 }
 
-				SETTINGS sets = SQMSettings.GetSetting("DASHBOARD", "DATEOPTIONS");
-				if (sets != null)
-				{
-					ddlDateSpan.Items.Select(i => { i.Visible = false; return i; }).ToList();
-					foreach (string opt in WebSiteCommon.SplitString(sets.VALUE, ','))
-					{
-						if (ddlDateSpan.Items.FindItemByValue(opt) != null)
-						{
-							ddlDateSpan.Items.FindItemByValue(opt).Visible = true;
-						}
-					}
-					if (ddlDateSpan.Items.Where(i => i.Visible == true).Count() < 2)
-					{
-						ddlDateSpan.Visible = false;
-					}
-				}
+                SETTINGS sets = SQMSettings.GetSetting("DASHBOARD", "DATEOPTIONS");
+                if (sets != null)
+                {
+                    ddlDateSpan.Items.Select(i => { i.Visible = false; return i; }).ToList();
+                    foreach (string opt in WebSiteCommon.SplitString(sets.VALUE, ','))
+                    {
+                        if (ddlDateSpan.Items.FindItemByValue(opt) != null)
+                        {
+                            ddlDateSpan.Items.FindItemByValue(opt).Visible = true;
+                        }
+                    }
+                    if (ddlDateSpan.Items.Where(i => i.Visible == true).Count() < 2)
+                    {
+                        ddlDateSpan.Visible = false;
+                    }
+                }
 
                 if (localView.DFLT_TIMEFRAME.HasValue)
                 {
@@ -625,11 +625,11 @@ namespace SQM.Website
                         ddlDateSpan.SelectedValue = localView.DFLT_TIMEFRAME.ToString();
                     }
                     ddlDateSpanChange(ddlDateSpan, null);
-					sets = SQMSettings.GetSetting("DASHBOARD", "DATEOFFSET");
-					if (sets != null  &&  !string.IsNullOrEmpty(sets.VALUE))
-					{
-						dmPeriodTo.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths(Convert.ToInt32(sets.VALUE));
-					}
+                    sets = SQMSettings.GetSetting("DASHBOARD", "DATEOFFSET");
+                    if (sets != null && !string.IsNullOrEmpty(sets.VALUE))
+                    {
+                        dmPeriodTo.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths(Convert.ToInt32(sets.VALUE));
+                    }
                 }
 
                 bool autoDisplay = false;
@@ -666,16 +666,16 @@ namespace SQM.Website
                         break;
                 }
 
-				if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
-				{
-					dmPeriodFrom.Enabled = false;
-				}
+                if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+                {
+                    dmPeriodFrom.Enabled = false;
+                }
 
                 // auto display w/ options section closed if the default view
                 if (localView.PERSPECTIVE == "0")
                 {
                     autoDisplay = true;
-                   // pnlDashboardSelects.Style.Add("display", "none");
+                    // pnlDashboardSelects.Style.Add("display", "none");
                 }
 
                 if (ddlPlantSelect.CheckedItems.Count > 0 && dmPeriodFrom.SelectedDate != null && dmPeriodTo.SelectedDate != null)
@@ -685,7 +685,7 @@ namespace SQM.Website
                 ddlOptions.Items.FindItemByValue(Convert.ToInt32(Enum.Parse(typeof(DashboardOpts), DashboardOpts.TotalsOnly.ToString())).ToString()).Checked = false;
                 ddlOptions.Items.FindItemByValue(Convert.ToInt32(Enum.Parse(typeof(DashboardOpts), DashboardOpts.TotalsOnly.ToString())).ToString()).Enabled = ViewModel.HasArrays(localView);
 
-                 MessageDisplay(null);
+                MessageDisplay(null);
 
                 // auto display view 
                 if (autoDisplay)
@@ -703,16 +703,16 @@ namespace SQM.Website
         #endregion
 
         #region displayview
-       
+
         protected void lnkExportClick(object sender, EventArgs e)
         {
             DisplayView("export");
         }
 
-        public int  DisplayView(string context)
+        public int DisplayView(string context)
         {
             uclProgress.UpdateDisplay(2, 30, "Calculating...");
-            
+
             divDashboardArea.ViewStateMode = System.Web.UI.ViewStateMode.Disabled;
             if (hfViewMode.Value == "a")
             {
@@ -729,8 +729,8 @@ namespace SQM.Website
             int status = 0;
             GaugeDefinition ggCfg = new GaugeDefinition();
 
-            SQMMetricMgr metricMgr = new SQMMetricMgr(); 
-           
+            SQMMetricMgr metricMgr = new SQMMetricMgr();
+
             switch (localView.PERSPECTIVE)
             {
                 case "QS":
@@ -740,172 +740,172 @@ namespace SQM.Website
                     break;
 
                 default:
-					if (localView.PERSPECTIVE == "XD")
-					{
-						// for ehs_data dashboards, try to determine a finite list of measure ID's used to populate all the views/graphs in the dashboard ..
-						// .. in order to reduce the number of records processed. 
-						// ehs_data table contains a shit-load of records for any given month and seems slow to process 
-						List<EHS_MEASURE> measureList = EHSModel.SelectEHSMeasureList("", false);
-						List<decimal> measureIDS = new List<decimal>();
-						decimal measureID = 0;
-						foreach (PERSPECTIVE_VIEW_ITEM vi in localView.PERSPECTIVE_VIEW_ITEM)
-						{
-							switch (vi.CALCS_SCOPE)
-							{
-								case "ltcr":
-								case "ltsr":
-								case "rcr":
-									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60002").FirstOrDefault().MEASURE_ID);	// time worked
-									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20004").FirstOrDefault().MEASURE_ID);	// recordable cases
-									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20005").FirstOrDefault().MEASURE_ID);	// time lost cases
-									measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60001").FirstOrDefault().MEASURE_ID);	// time lost days
-									break;
-								case "INJURY_TYPE":
-								case "INJURY_PART":
-								case "INJURY_TENURE":
-								case "INJURY_CAUSE":
-								case "INJURY_DAYS_TO_CLOSE":
-									measureIDS.AddRange(measureList.Where(l => l.DATA_TYPE == "O").Select(l => l.MEASURE_ID).ToList());	// all ordinal measures
-									break;
-								default:
-									if (vi.CALCS_SCOPE.Contains('|'))
-									{
-										string scopes = vi.CALCS_SCOPE.Replace("|", ",");
-										foreach (string s in scopes.Split(','))
-										{
-											if (decimal.TryParse(s, out measureID))
-												measureIDS.Add(measureID);
-										}
-									}
-									else
-									{
-										if (decimal.TryParse(vi.CALCS_SCOPE, out measureID))
-											measureIDS.Add(measureID);
-									}
-									break;
-							}
-						}
-						metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray, measureIDS.Distinct().ToArray());
-					}
-					else
-					{
-						metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray);
-					}
-                     
-					 metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
+                    if (localView.PERSPECTIVE == "XD")
+                    {
+                        // for ehs_data dashboards, try to determine a finite list of measure ID's used to populate all the views/graphs in the dashboard ..
+                        // .. in order to reduce the number of records processed. 
+                        // ehs_data table contains a shit-load of records for any given month and seems slow to process 
+                        List<EHS_MEASURE> measureList = EHSModel.SelectEHSMeasureList("", false);
+                        List<decimal> measureIDS = new List<decimal>();
+                        decimal measureID = 0;
+                        foreach (PERSPECTIVE_VIEW_ITEM vi in localView.PERSPECTIVE_VIEW_ITEM)
+                        {
+                            switch (vi.CALCS_SCOPE)
+                            {
+                                case "ltcr":
+                                case "ltsr":
+                                case "rcr":
+                                    measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60002").FirstOrDefault().MEASURE_ID);	// time worked
+                                    measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20004").FirstOrDefault().MEASURE_ID);	// recordable cases
+                                    measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S20005").FirstOrDefault().MEASURE_ID);	// time lost cases
+                                    measureIDS.Add(measureList.Where(l => l.MEASURE_CD == "S60001").FirstOrDefault().MEASURE_ID);	// time lost days
+                                    break;
+                                case "INJURY_TYPE":
+                                case "INJURY_PART":
+                                case "INJURY_TENURE":
+                                case "INJURY_CAUSE":
+                                case "INJURY_DAYS_TO_CLOSE":
+                                    measureIDS.AddRange(measureList.Where(l => l.DATA_TYPE == "O").Select(l => l.MEASURE_ID).ToList());	// all ordinal measures
+                                    break;
+                                default:
+                                    if (vi.CALCS_SCOPE.Contains('|'))
+                                    {
+                                        string scopes = vi.CALCS_SCOPE.Replace("|", ",");
+                                        foreach (string s in scopes.Split(','))
+                                        {
+                                            if (decimal.TryParse(s, out measureID))
+                                                measureIDS.Add(measureID);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (decimal.TryParse(vi.CALCS_SCOPE, out measureID))
+                                            measureIDS.Add(measureID);
+                                    }
+                                    break;
+                            }
+                        }
+                        metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray, measureIDS.Distinct().ToArray());
+                    }
+                    else
+                    {
+                        metricMgr.CreateNew(SessionManager.PrimaryCompany(), localView.PERSPECTIVE, localCriteria.FromDate, localCriteria.ToDate, ViewModel.AddFromYear(localView), localCriteria.PlantArray);
+                    }
+
+                    metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
                     //if (UserContext.RoleAccess() >= AccessMode.Plant)
-                          lnkExport.Visible = true;
-						  if (context == "export")
-						  {
-							  uclProgress.ProgressComplete();
-							  uclProgress.BindProgressDisplay(100, "Exporting...");
-							  uclProgress.UpdateDisplay(2, 50, "Exporting...");
+                    lnkExport.Visible = true;
+                    if (context == "export")
+                    {
+                        uclProgress.ProgressComplete();
+                        uclProgress.BindProgressDisplay(100, "Exporting...");
+                        uclProgress.UpdateDisplay(2, 50, "Exporting...");
 
-							  List<WebSiteCommon.DatePeriod> pdList;
-							  if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
-							  {
-								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.FYyear, localCriteria.DateSpanType, "");
-								  List<MetricData> exportList = new List<MetricData>();
-								  foreach (WebSiteCommon.DatePeriod pd in pdList)
-								  {
-									  exportList.AddRange(metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pd.FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pd.ToDate).ToList());
-								  }
-								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), exportList, false);
-							  }
-							  else
-							  {
-								  pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.year, localCriteria.DateSpanType, "");
-								  uclExport.GenerateExportHistoryExcel(new PSsqmEntities(),
-									  metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pdList.ElementAt(0).FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pdList.ElementAt(0).ToDate).ToList(),
-									  false);
-							  }
+                        List<WebSiteCommon.DatePeriod> pdList;
+                        if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
+                        {
+                            pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.FYyear, localCriteria.DateSpanType, "");
+                            List<MetricData> exportList = new List<MetricData>();
+                            foreach (WebSiteCommon.DatePeriod pd in pdList)
+                            {
+                                exportList.AddRange(metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pd.FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pd.ToDate).ToList());
+                            }
+                            uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), exportList, false);
+                        }
+                        else
+                        {
+                            pdList = WebSiteCommon.CalcDatePeriods(localCriteria.FromDate, localCriteria.ToDate, DateIntervalType.year, localCriteria.DateSpanType, "");
+                            uclExport.GenerateExportHistoryExcel(new PSsqmEntities(),
+                                metricMgr.ehsCtl.MetricHst.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= pdList.ElementAt(0).FromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= pdList.ElementAt(0).ToDate).ToList(),
+                                false);
+                        }
 
-							  // uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), metricMgr.ehsCtl.MetricHst, false);
-							  uclProgress.ProgressComplete();
-							  return 1;
-						  }
-                     break;
+                        // uclExport.GenerateExportHistoryExcel(new PSsqmEntities(), metricMgr.ehsCtl.MetricHst, false);
+                        uclProgress.ProgressComplete();
+                        return 1;
+                    }
+                    break;
             }
 
             string[] plantNameArray;
 
-            foreach (PERSPECTIVE_VIEW_ITEM vi in localView.PERSPECTIVE_VIEW_ITEM.Where(l=> l.STATUS != "I").OrderBy(l => l.ITEM_SEQ))
+            foreach (PERSPECTIVE_VIEW_ITEM vi in localView.PERSPECTIVE_VIEW_ITEM.Where(l => l.STATUS != "I").OrderBy(l => l.ITEM_SEQ))
             {
                 object controlData = null;
                 try
                 {
                     plantNameArray = localCriteria.PlantList.Where(l => localCriteria.PlantArray.Contains(l.Plant.PLANT_ID)).Select(l => l.Plant.PLANT_NAME).ToArray();
 
-					// array of graphs
+                    // array of graphs
                     if (vi.DISPLAY_TYPE == 2)
                     {
                         if (!localCriteria.Options.HasFlag(DashboardOpts.TotalsOnly))
                         {
-							int nitem = -1;
-							bool showEmpty = true;
-							decimal[] plantArray;
-							switch (vi.FILTER)
-							{
-								case "B":	// business org
-									foreach (BUSINESS_ORG org in localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList())
-									{
-										plantArray = localCriteria.PlantList.Where(p => p.Plant.BUS_ORG_ID == org.BUS_ORG_ID).Select(p => p.Plant.PLANT_ID).ToArray();
-										++nitem;
-										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, org.ORG_NAME, nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
-									}
-									break;
-								case "L":	// location code  (country ?)
-									foreach (string locationCode in localCriteria.PlantList.Select(l => l.Plant.LOCATION_CODE).Distinct().ToList())
-									{
-										if (string.IsNullOrEmpty(locationCode))
-										{
-											if (!showEmpty)
-												continue;
-											plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == "" || p.Plant.LOCATION_CODE == null).Select(p => p.Plant.PLANT_ID).ToArray();
-											showEmpty = false;
-										}
-										else
-											plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == locationCode).Select(p => p.Plant.PLANT_ID).ToArray();
-										++nitem;
-										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, WebSiteCommon.GetXlatValueLong("countryCode", string.IsNullOrEmpty(locationCode) ? Resources.LocalizedText.Undefined : locationCode), nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
-									}
-									break;
-								case "R":	// region
-									foreach (string regionCode in localCriteria.PlantList.Select(l => l.Plant.COMP_INT_ID).Distinct().ToList())
-									{
-										if (string.IsNullOrEmpty(regionCode))
-										{
-											if (!showEmpty)
-												continue;
-											plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == "" || p.Plant.COMP_INT_ID == null).Select(p => p.Plant.PLANT_ID).ToArray();
-											showEmpty = false;
-										}
-										else
-											plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == regionCode).Select(p => p.Plant.PLANT_ID).ToArray();
-										++nitem;
-										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, string.IsNullOrEmpty(regionCode) ? Resources.LocalizedText.Undefined : regionCode, nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
-									}
-									break;
-								default:	// plant
-									foreach (decimal plantID in localCriteria.PlantArray)
-									{
-										++nitem;
-										ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, plantNameArray[nitem], nitem == 0 ? true : false, 0, 0);
-										status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
-									}
-									break;
-							}
+                            int nitem = -1;
+                            bool showEmpty = true;
+                            decimal[] plantArray;
+                            switch (vi.FILTER)
+                            {
+                                case "B":	// business org
+                                    foreach (BUSINESS_ORG org in localCriteria.PlantList.Select(l => l.BusinessOrg).Distinct().ToList())
+                                    {
+                                        plantArray = localCriteria.PlantList.Where(p => p.Plant.BUS_ORG_ID == org.BUS_ORG_ID).Select(p => p.Plant.PLANT_ID).ToArray();
+                                        ++nitem;
+                                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, org.ORG_NAME, nitem == 0 ? true : false, 0, 0);
+                                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
+                                    }
+                                    break;
+                                case "L":	// location code  (country ?)
+                                    foreach (string locationCode in localCriteria.PlantList.Select(l => l.Plant.LOCATION_CODE).Distinct().ToList())
+                                    {
+                                        if (string.IsNullOrEmpty(locationCode))
+                                        {
+                                            if (!showEmpty)
+                                                continue;
+                                            plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == "" || p.Plant.LOCATION_CODE == null).Select(p => p.Plant.PLANT_ID).ToArray();
+                                            showEmpty = false;
+                                        }
+                                        else
+                                            plantArray = localCriteria.PlantList.Where(p => p.Plant.LOCATION_CODE == locationCode).Select(p => p.Plant.PLANT_ID).ToArray();
+                                        ++nitem;
+                                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, WebSiteCommon.GetXlatValueLong("countryCode", string.IsNullOrEmpty(locationCode) ? Resources.LocalizedText.Undefined : locationCode), nitem == 0 ? true : false, 0, 0);
+                                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
+                                    }
+                                    break;
+                                case "R":	// region
+                                    foreach (string regionCode in localCriteria.PlantList.Select(l => l.Plant.COMP_INT_ID).Distinct().ToList())
+                                    {
+                                        if (string.IsNullOrEmpty(regionCode))
+                                        {
+                                            if (!showEmpty)
+                                                continue;
+                                            plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == "" || p.Plant.COMP_INT_ID == null).Select(p => p.Plant.PLANT_ID).ToArray();
+                                            showEmpty = false;
+                                        }
+                                        else
+                                            plantArray = localCriteria.PlantList.Where(p => p.Plant.COMP_INT_ID == regionCode).Select(p => p.Plant.PLANT_ID).ToArray();
+                                        ++nitem;
+                                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, string.IsNullOrEmpty(regionCode) ? Resources.LocalizedText.Undefined : regionCode, nitem == 0 ? true : false, 0, 0);
+                                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(plantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
+                                    }
+                                    break;
+                                default:	// plant
+                                    foreach (decimal plantID in localCriteria.PlantArray)
+                                    {
+                                        ++nitem;
+                                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, plantNameArray[nitem], nitem == 0 ? true : false, 0, 0);
+                                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(new decimal[1] { plantID }, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
+                                    }
+                                    break;
+                            }
                         }
                     }
                     else
                     {
-                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl,  "", false, 0, 0);
+                        ggCfg.ConfigureControl(vi, metricMgr.TargetsCtl, "", false, 0, 0);
                         if (vi.CONTROL_TYPE == 1 && localCriteria.Options.HasFlag(DashboardOpts.TotalsOnly))
                             ggCfg.NewRow = false;
-						status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
+                        status = uclGauge.CreateControl((SQMChartType)vi.CONTROL_TYPE, ggCfg, metricMgr.CalcsMethods(localCriteria.PlantArray, vi.CALCS_METHOD, vi.CALCS_SCOPE, vi.CALCS_STAT, vi.CONTROL_TYPE, (int)vi.SERIES_ORDER, vi.FILTER, vi.OPTIONS), "divDashboardArea");
                     }
 
                     MessageDisplay(null);
@@ -913,7 +913,7 @@ namespace SQM.Website
                 catch (Exception e)
                 {
                     MessageDisplay(lblViewLoadError);
-                   //SQMLogger.LogException(e);
+                    //SQMLogger.LogException(e);
                 }
             }
 
@@ -923,7 +923,7 @@ namespace SQM.Website
         #endregion
 
         #region gauges
- 
+
         #endregion
 
         #region layout
@@ -1022,8 +1022,8 @@ namespace SQM.Website
                             cbi.IsSeparator = true;
                             scopeList.Add(cbi);
                         }
-                        else 
-                            scopeList.Add(new RadComboBoxItem(si.Text, si.Value));   
+                        else
+                            scopeList.Add(new RadComboBoxItem(si.Text, si.Value));
                     }
                     foreach (System.Collections.Generic.KeyValuePair<string, string> xlat in WebSiteCommon.GetXlatList("measureCategoryEHS", "", "short"))
                     {
@@ -1052,7 +1052,7 @@ namespace SQM.Website
                             cbi.IsSeparator = true;
                             scopeList.Add(cbi);
                         }
-                        else 
+                        else
                             scopeList.Add(new RadComboBoxItem(si.Text, si.Value));
                     }
                     foreach (System.Collections.Generic.KeyValuePair<string, string> xlat in WebSiteCommon.GetXlatList("measureCategoryEHS", "", "short"))
@@ -1076,7 +1076,7 @@ namespace SQM.Website
                     cbi.IsSeparator = true;
                     cbi.Enabled = false;
                     scopeList.Add(cbi);
-                    foreach (INCIDENT_QUESTION topic in EHSIncidentMgr.SelectIncidentQuestionList(new decimal[] {12,13,62,63}))
+                    foreach (INCIDENT_QUESTION topic in EHSIncidentMgr.SelectIncidentQuestionList(new decimal[] { 12, 13, 62, 63 }))
                     {
                         cbi = new RadComboBoxItem(topic.QUESTION_TEXT.TrimEnd('?'), topic.INCIDENT_QUESTION_ID.ToString());
                         scopeList.Add(cbi);
@@ -1112,9 +1112,9 @@ namespace SQM.Website
             decimal decVal = 0;
 
             MessageDisplay(null);
-            
-            if (commitChanges  &&  localView.STATUS != "N")
-				localView = ViewModel.LookupView(localCtx, "", "", localView.VIEW_ID, SessionManager.UserContext.Language.NLS_LANGUAGE);
+
+            if (commitChanges && localView.STATUS != "N")
+                localView = ViewModel.LookupView(localCtx, "", "", localView.VIEW_ID, SessionManager.UserContext.Language.NLS_LANGUAGE);
 
             localView.VIEW_NAME = tbViewName.Text;
             localView.VIEW_DESC = tbViewDesc.Text;
@@ -1145,7 +1145,7 @@ namespace SQM.Website
                 vi.CONTROL_TYPE = Convert.ToInt16(cdl.SelectedValue) > 200 ? Convert.ToInt16(cdl.SelectedValue) - 200 : Convert.ToInt16(cdl.SelectedValue);
                 RadButton cb = (RadButton)item.FindControl("cbVINewRow");
                 vi.NEW_ROW = cb.Checked;
- 
+
                 int intval = 0;
                 tb = (RadTextBox)item.FindControl("tbVIHeight");
                 if (int.TryParse(tb.Text, out intval))
@@ -1162,7 +1162,7 @@ namespace SQM.Website
                 vi.CALCS_SCOPE = "";
                 foreach (RadComboBoxItem cdi in cdl.Items)
                 {
-                    if (cdi.Checked ||  cdi.Selected)
+                    if (cdi.Checked || cdi.Selected)
                     {
                         if (vi.CALCS_SCOPE.Length > 0)
                             vi.CALCS_SCOPE += ",";
@@ -1229,7 +1229,7 @@ namespace SQM.Website
             switch (localView.PERSPECTIVE)
             {
                 case "E":
-                    if (sender.SelectedValue.Contains("eeff") || sender.SelectedValue.Contains("eSeff")  ||  sender.SelectedValue.Contains("o2"))
+                    if (sender.SelectedValue.Contains("eeff") || sender.SelectedValue.Contains("eSeff") || sender.SelectedValue.Contains("o2"))
                     {
                         foreach (RadComboBoxItem item in cdl.Items)
                             item.Checked = false;
@@ -1237,7 +1237,7 @@ namespace SQM.Website
                     }
                     break;
                 case "HS":
-                    if (sender.SelectedValue == "rcr" || sender.SelectedValue == "ltcr"  ||  sender.SelectedValue == "ltsr")
+                    if (sender.SelectedValue == "rcr" || sender.SelectedValue == "ltcr" || sender.SelectedValue == "ltsr")
                     {
                         foreach (RadComboBoxItem item in cdl.Items)
                             item.Checked = false;
@@ -1245,10 +1245,10 @@ namespace SQM.Website
                         cdl.Enabled = false;
                     }
                     if (sender.SelectedValue == "deltaDy")
-                       foreach (RadComboBoxItem item in cdl.Items)
+                        foreach (RadComboBoxItem item in cdl.Items)
                             item.Checked = false;
-                        cdl.Items.FindItemByValue("63").Checked = true;
-                        break;
+                    cdl.Items.FindItemByValue("63").Checked = true;
+                    break;
                     break;
                 default: break;
             }
@@ -1275,9 +1275,9 @@ namespace SQM.Website
         {
             if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
             {
-				(e.Item.FindControl("lblTarget") as Label).Text = Resources.LocalizedText.Target + ":";
+                (e.Item.FindControl("lblTarget") as Label).Text = Resources.LocalizedText.Target + ":";
 
-				try
+                try
                 {
                     PERSPECTIVE_VIEW_ITEM vi = (PERSPECTIVE_VIEW_ITEM)e.Item.DataItem;
                     DropDownList ddl;
@@ -1287,8 +1287,8 @@ namespace SQM.Website
                     int nc = 0;
 
                     cdl = (RadComboBox)e.Item.FindControl("ddlVISeq");
-                    for (int n=1; n<=50; n++)
-                        cdl.Items.Add(new RadComboBoxItem(n.ToString(),n.ToString()));
+                    for (int n = 1; n <= 50; n++)
+                        cdl.Items.Add(new RadComboBoxItem(n.ToString(), n.ToString()));
                     cdl.SelectedValue = vi.ITEM_SEQ.ToString();
                     if (vi.STATUS == "N")
                         cdl.Focus();
@@ -1342,7 +1342,7 @@ namespace SQM.Website
                     {
                         cdl.CheckBoxes = false;
                     }
- 
+
                     string[] scopeSels = vi.CALCS_SCOPE.Split(',');
                     foreach (string sel in scopeSels)
                     {
@@ -1354,7 +1354,7 @@ namespace SQM.Website
                                 cbi.Selected = true;
                         }
                     }
-  
+
                     cdl = (RadComboBox)e.Item.FindControl("ddlVISeriesOrder");
                     if (cdl.Items.FindItemByValue(vi.SERIES_ORDER.ToString()) != null)
                         cdl.SelectedValue = vi.SERIES_ORDER.ToString();
