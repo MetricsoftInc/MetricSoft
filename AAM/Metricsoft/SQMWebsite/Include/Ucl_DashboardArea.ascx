@@ -8,7 +8,8 @@
 
 	function OpenLocationSelectWindow() {
 		$find("<%=winLocationSelect.ClientID %>").show();
-			}
+	}
+
 </script>
 
 <asp:Panel ID="pnlDashboardArea" runat="server">

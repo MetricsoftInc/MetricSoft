@@ -271,17 +271,22 @@ namespace SQM.Website
                     }
                     break;
                 default:
-                    if (localView.DFLT_TIMEFRAME > 1900)
+                    if (localView.DFLT_TIMEFRAME > 1900)	// specific year
                     {
 						dmPeriodFrom.Visible = dmPeriodTo.Visible = true;
                         dmPeriodFrom.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYStartDate().Month, 1);
                         dmPeriodTo.SelectedDate = new DateTime((int)localView.DFLT_TIMEFRAME, SessionManager.FYEndDate((DateTime)dmPeriodFrom.SelectedDate).Month, 28);
                     }
-                    else
-                    {
-                        dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
-                        dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    }
+					else if (localView.DFLT_TIMEFRAME < 0)	// starting n months in the past
+					{
+						dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+						dmPeriodFrom.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths((int)localView.DFLT_TIMEFRAME);
+					}
+					else
+					{
+						dmPeriodFrom.SelectedDate = SessionManager.FYStartDate();
+						dmPeriodTo.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+					}
                     break;
             }
         }
@@ -591,9 +596,26 @@ namespace SQM.Website
                         ci.Enabled = true;
                 }
 
+				SETTINGS sets = SQMSettings.GetSetting("DASHBOARD", "DATEOPTIONS");
+				if (sets != null)
+				{
+					ddlDateSpan.Items.Select(i => { i.Visible = false; return i; }).ToList();
+					foreach (string opt in WebSiteCommon.SplitString(sets.VALUE, ','))
+					{
+						if (ddlDateSpan.Items.FindItemByValue(opt) != null)
+						{
+							ddlDateSpan.Items.FindItemByValue(opt).Visible = true;
+						}
+					}
+					if (ddlDateSpan.Items.Where(i => i.Visible == true).Count() < 2)
+					{
+						ddlDateSpan.Visible = false;
+					}
+				}
+
                 if (localView.DFLT_TIMEFRAME.HasValue)
                 {
-                    if (localView.DFLT_TIMEFRAME > 1900)
+                    if (localView.DFLT_TIMEFRAME > 1900 || localView.DFLT_TIMEFRAME < 0)
                     {
                         ddlDateSpan.SelectedIndex = 0;
 
@@ -603,6 +625,11 @@ namespace SQM.Website
                         ddlDateSpan.SelectedValue = localView.DFLT_TIMEFRAME.ToString();
                     }
                     ddlDateSpanChange(ddlDateSpan, null);
+					sets = SQMSettings.GetSetting("DASHBOARD", "DATEOFFSET");
+					if (sets != null  &&  !string.IsNullOrEmpty(sets.VALUE))
+					{
+						dmPeriodTo.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths(Convert.ToInt32(sets.VALUE));
+					}
                 }
 
                 bool autoDisplay = false;

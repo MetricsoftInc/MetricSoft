@@ -1560,7 +1560,7 @@ namespace SQM.Website
             string seriesName = "";
             GaugeSeries series = null;
             this.Results.Initialize();
-            List<WebSiteCommon.DatePeriod> pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType,  "");
+			List<WebSiteCommon.DatePeriod> pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
            
             switch (seriesOrder)
             {
@@ -1666,7 +1666,7 @@ namespace SQM.Website
 
                     case EHSCalcsCtl.SeriesOrder.PeriodMeasure:
                     case EHSCalcsCtl.SeriesOrder.PeriodMeasureYOY:
-                        pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType,  "");
+						pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
                         foreach (decimal measureID in measureIDS)
                         {
                             EHS_MEASURE measure = GetMeasure(measureID);
@@ -1683,7 +1683,7 @@ namespace SQM.Website
                         }
                         if (seriesOrder == SeriesOrder.PeriodMeasureYOY)
                         {
-                            pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(-1), toDate.AddYears(-1), DateIntervalType.month, this.DateSpanType, "");
+							pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(-1), toDate.AddYears(-1), DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
                             foreach (decimal measureID in measureIDS)
                             {
                                 EHS_MEASURE measure = GetMeasure(measureID);
@@ -1724,7 +1724,7 @@ namespace SQM.Website
 
                         if (seriesOrder == SeriesOrder.PeriodSumYOY)
                         {
-                            pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(-1), toDate.AddYears(-1), DateIntervalType.month, this.DateSpanType, "");
+							pdList = WebSiteCommon.CalcDatePeriods(fromDate.AddYears(-1), toDate.AddYears(-1), DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
                             ns = 0;
                             series = new GaugeSeries().CreateNew(2, "2", "");
                             foreach (WebSiteCommon.DatePeriod pd in pdList)
@@ -1760,7 +1760,7 @@ namespace SQM.Website
                             else
                             {
                                 ns = 0;
-                                pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "");
+								pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
                                 foreach (WebSiteCommon.DatePeriod pd in pdList)
                                 {
                                     if (EHMetric(new decimal[1] { plantID }, measureIDS, pd.FromDate, pd.ToDate))
@@ -1777,7 +1777,7 @@ namespace SQM.Website
 						{
 							GaugeSeries totalsSeries = new GaugeSeries().CreateNew(1, "Total", "");
 							totalsSeries.SeriesType = 9; // totals series - need enum for this ...
-							pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "");
+							pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
 							ns = 0;
 							foreach (WebSiteCommon.DatePeriod pd in pdList)
 							{
