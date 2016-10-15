@@ -1708,7 +1708,7 @@ namespace SQM.Website
                             pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.year, this.DateSpanType, "");
                         else 
                             pdList = WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, this.DateSpanType, "", this.Options.ToUpper().Contains("MAX12") ? 12 : 0);
-                        series = new GaugeSeries().CreateNew(1, "1", "");
+                        series = new GaugeSeries().CreateNew(1, "", "");
                         ns = 0;
                         foreach (WebSiteCommon.DatePeriod pd in pdList)
                         {

@@ -2017,7 +2017,14 @@ namespace SQM.Website
                 series.MarkersAppearance.Size = 3m;
                 series.MarkersAppearance.BorderWidth = 3;
                 series.LabelsAppearance.Visible = gs.DisplayLabels;
-				series.Name = gs.Name.Replace("\r\n", "");
+				if (gaugeSeries.Count == 1  &&  string.IsNullOrEmpty(gs.Name))
+				{
+					series.Name = rgCfg.LabelA;
+				}
+				else
+				{
+					series.Name = gs.Name.Replace("\r\n", "");
+				}
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
                     series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
 
