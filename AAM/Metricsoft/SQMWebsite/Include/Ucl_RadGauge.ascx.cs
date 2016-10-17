@@ -1414,6 +1414,7 @@ namespace SQM.Website
             int status = 0;
             int numItems = 0;
             bool negScale = false;
+			double actualMinValue = 0;
 
             if (gaugeSeries == null || gaugeSeries.Count == 0)
                 return -1;
@@ -1422,10 +1423,13 @@ namespace SQM.Website
             // gotta do this to get rad to display zero label values
             foreach (GaugeSeriesItem item in seriesData)
             {
-                if (item.YValue == 0)
-                    item.YValue = telerikBugValue;
-                if (item.YValue < 0)
-                    negScale = true;
+               // if (item.YValue == 0)
+               //     item.YValue = telerikBugValue;
+				if (item.YValue < 0)
+				{
+					negScale = true;
+					actualMinValue = Math.Min(actualMinValue, (double)item.YValue);
+				}
             }
 
             bool exploded = rgCfg.ItemVisual == "E" ? true : false;
@@ -1448,7 +1452,12 @@ namespace SQM.Website
             }
 
 			if (rgCfg.ScaleMin.HasValue)
-				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			{
+				if (negScale)
+					rad.PlotArea.YAxis.MinValue = (decimal)actualMinValue;
+				else 
+					rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			}
 			if (rgCfg.ScaleMax != 0)
                 rad.PlotArea.YAxis.MaxValue = rgCfg.ScaleMax;
             
@@ -1461,6 +1470,7 @@ namespace SQM.Website
             series.LabelsAppearance.Position = BarColumnLabelsPosition.OutsideEnd;
             series.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
             series.TooltipsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
+			rad.PlotArea.YAxis.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
             series.TooltipsAppearance.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("white");
 
 			
@@ -1526,6 +1536,7 @@ namespace SQM.Website
             bool negScale = false;
             int axisItemsCount = 0;
             int radHeight = 0;
+			double actualMinValue = 0;
 
             if (gaugeSeries == null || gaugeSeries.Count == 0)
                 return -1;
@@ -1565,19 +1576,29 @@ namespace SQM.Website
             {
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
-                     if (data.YValue < 0)
-                        negScale = true;
+					if (data.YValue < 0)
+					{
+						negScale = true;
+						actualMinValue = Math.Min(actualMinValue, (double)data.YValue);
+					}
 					 if (!Ymax.HasValue || data.YValue > Ymax)
 						 Ymax = data.YValue;
                 }
             }
 
 			if (rgCfg.ScaleMin.HasValue)
-				rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			{
+				if (negScale)
+					rad.PlotArea.YAxis.MinValue = (decimal)actualMinValue;
+				else
+					rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin.Value;
+			}
 			if (rgCfg.ScaleMax != 0)
 			{
 				rad.PlotArea.YAxis.MaxValue = Math.Max(rgCfg.ScaleMax, (decimal)Ymax);
 			}
+
+			rad.PlotArea.YAxis.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
 
             int numItems = 0;
             int numBars = 0;
@@ -1600,7 +1621,7 @@ namespace SQM.Website
                     CategorySeriesItem item = new CategorySeriesItem();
                     if (data.YValue == 0)
                     {
-                        item.Y = telerikBugValue;
+                       // item.Y = telerikBugValue;
                     }
                     else
                     {
@@ -1866,7 +1887,7 @@ namespace SQM.Website
                     CategorySeriesItem item = new CategorySeriesItem();
                     if (data.YValue == 0 && !(bool)series.Stacked)
                     {
-                        item.Y = telerikBugValue;
+                      //  item.Y = telerikBugValue;
                     }
                     else
                     {
