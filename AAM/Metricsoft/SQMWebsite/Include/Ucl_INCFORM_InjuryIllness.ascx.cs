@@ -1493,17 +1493,7 @@ namespace SQM.Website
 			{
 				if (incidentId == 0)
 					incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-				
-				//GetAttachments(incidentId);
-				//InitializeForm(CurrentStep);
-				/*
-				decimal finalPlantId = 0;
-				var finalIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentId);
-				if (finalIncident != null)
-					finalPlantId = (decimal)finalIncident.DETECT_PLANT_ID;
-				else
-					finalPlantId = IncidentLocationId;
-				*/
+				IsEditContext = true;
 			}
 
 			return theincidentId;
