@@ -2026,7 +2026,7 @@ namespace SQM.Website
 							decimal sumE = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
 							decimal sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
 							decimal sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
-                            if (sumE > 0 && sumPCost > 0 && sumPRevenue > 0)
+                            if (sumE > 0 && (sumPRevenue - sumPCost != 0))
                             {
                                 value = sumE / (sumPRevenue - sumPCost);
                             }
@@ -2037,7 +2037,7 @@ namespace SQM.Website
 							decimal sumESpend = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
 							sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
 							sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
-                            if (sumESpend > 0 && sumPCost > 0 && sumPRevenue > 0)
+							if (sumESpend > 0 && (sumPRevenue - sumPCost != 0))
                             {
                                 value = sumESpend / (sumPRevenue - sumPCost);
                             }
