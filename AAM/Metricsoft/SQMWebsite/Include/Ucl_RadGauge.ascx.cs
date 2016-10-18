@@ -1428,7 +1428,7 @@ namespace SQM.Website
 				if (item.YValue < 0)
 				{
 					negScale = true;
-					actualMinValue = Math.Min(actualMinValue, (double)item.YValue);
+					actualMinValue = Math.Min(actualMinValue, (double)Convert(item.YValue ?? 0, rgCfg.Multiplier));
 				}
             }
 
@@ -1579,7 +1579,7 @@ namespace SQM.Website
 					if (data.YValue < 0)
 					{
 						negScale = true;
-						actualMinValue = Math.Min(actualMinValue, (double)data.YValue);
+						actualMinValue = Math.Min(actualMinValue, (double)Convert(data.YValue ?? 0, rgCfg.Multiplier));
 					}
 					 if (!Ymax.HasValue || data.YValue > Ymax)
 						 Ymax = data.YValue;
@@ -1621,7 +1621,7 @@ namespace SQM.Website
                     CategorySeriesItem item = new CategorySeriesItem();
                     if (data.YValue == 0)
                     {
-                       // item.Y = telerikBugValue;
+                        item.Y = telerikBugValue;
                     }
                     else
                     {
@@ -2038,7 +2038,7 @@ namespace SQM.Website
                 series.MarkersAppearance.Size = 3m;
                 series.MarkersAppearance.BorderWidth = 3;
                 series.LabelsAppearance.Visible = gs.DisplayLabels;
-				if (gaugeSeries.Count == 1  &&  string.IsNullOrEmpty(gs.Name))
+				if (gaugeSeries.Count == 1  &&  !string.IsNullOrEmpty(rgCfg.LabelA)) //  &&  string.IsNullOrEmpty(gs.Name))
 				{
 					series.Name = rgCfg.LabelA;
 				}

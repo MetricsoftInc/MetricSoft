@@ -298,7 +298,15 @@ namespace SQM.Website
 		public List<MetricData> SelectByAttribute(DateTime fromDate, DateTime toDate, decimal[] plantArray, string group, string attributeValue)
 		{
 
-			this.Metrics = this.Metrics.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= toDate && plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList.Any(a => a.Group == group && a.Key == attributeValue)).ToList();
+			//decimal[] mds = this.Metrics.Where(l => l.AtrList != null  &&  l.AtrList.Any(a => a.Group == group && a.Key == attributeValue)).Select(m => m.Measure.MEASURE_ID).Distinct().ToArray();
+			if (group == "DISPOSAL")
+			{
+				this.Metrics = this.Metrics.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= toDate && plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList != null && l.AtrList.Any(a => a.Group == group && a.Key.StartsWith(attributeValue))).ToList();
+			}
+			else
+			{
+				this.Metrics = this.Metrics.Where(l => new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, 1) >= fromDate && new DateTime(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH, DateTime.DaysInMonth(l.MetricRec.PERIOD_YEAR, l.MetricRec.PERIOD_MONTH)) <= toDate && plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList != null && l.AtrList.Any(a => a.Group == group && a.Key == attributeValue)).ToList();
+			}
 
 			return this.Metrics;
 		}
@@ -966,6 +974,7 @@ namespace SQM.Website
 					md.AtrList.Add(new AttributeValue().CreateNew("WASTE_CAT", md.Measure.MEASURE_CATEGORY, 1m));
 					md.AtrList.Add(new AttributeValue().CreateNew("UN_CODE", pm.UN_CODE, 1m));
 					md.AtrList.Add(new AttributeValue().CreateNew("REG_STATUS", pm.REG_STATUS, 1m));
+					md.AtrList.Add(new AttributeValue().CreateNew("DISPOSAL", !string.IsNullOrEmpty(pm.UN_CODE) ? pm.UN_CODE.Substring(0,1) : "", 1m));
 				}
                 
             }
@@ -2107,6 +2116,7 @@ namespace SQM.Website
                             break;
 						case "DISPOSAL":
 						case "REG_STATUS":
+						case "WASTE_CAT":
 						case "INJURY_TYPE":
 						case "INJURY_PART":
 						case "INJURY_TENURE":
@@ -2165,7 +2175,14 @@ namespace SQM.Website
   
             try
             {
-				measureArray = this.MetricHst.Where(l => plantArray.Contains(l.MetricRec.PLANT_ID) &&  l.AtrList.Any(a => a.Group == attribute && a.Key == attributeValue)).Select(l => l.Measure.MEASURE_ID).Distinct().ToArray();
+				if (attribute == "DISPOSAL")
+				{
+					measureArray = this.MetricHst.Where(l => plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList.Any(a => a.Group == attribute && a.Key.StartsWith(attributeValue))).Select(l => l.Measure.MEASURE_ID).Distinct().ToArray();
+				}
+				else
+				{
+					measureArray = this.MetricHst.Where(l => plantArray.Contains(l.MetricRec.PLANT_ID) && l.AtrList.Any(a => a.Group == attribute && a.Key == attributeValue)).Select(l => l.Measure.MEASURE_ID).Distinct().ToArray();
+				}
             }
             catch { ; }
 
