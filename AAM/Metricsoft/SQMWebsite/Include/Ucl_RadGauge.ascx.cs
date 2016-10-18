@@ -1039,7 +1039,8 @@ namespace SQM.Website
                 si0.YValue = 0;
                 series0.Items.Add(si0);
                 rad0.PlotArea.XAxis.Items.Add(new AxisItem(item.Text));
-                maxLabelLen = Math.Max(maxLabelLen, item.Text.Length);
+				if (!string.IsNullOrEmpty(item.Text))
+					maxLabelLen = Math.Max(maxLabelLen, item.Text.Length);
             }
             rad0.PlotArea.Series.Add(series0);
             rad0.Height = (rgCfg0.Height - 15) - legendHeight;
@@ -1794,7 +1795,8 @@ namespace SQM.Website
             foreach (GaugeSeriesItem data in seriesData)
             {
                 rad.PlotArea.XAxis.Items.Add(new AxisItem(data.Text));
-                maxLabelLen = Math.Max(maxLabelLen, data.Text.Length);
+				if (!string.IsNullOrEmpty(data.Text))
+					maxLabelLen = Math.Max(maxLabelLen, data.Text.Length);
             }
 
             rad.PlotArea.Series.Add(series);
@@ -1898,7 +1900,8 @@ namespace SQM.Website
                     if (numSeries == 1)
                     {
                         rad.PlotArea.XAxis.Items.Add(new AxisItem(data.Text));
-                        maxLabelLen = Math.Max(maxLabelLen, data.Text.Length);
+						if (!string.IsNullOrEmpty(data.Text))
+							maxLabelLen = Math.Max(maxLabelLen, data.Text.Length);
                     }
 
                     series.SeriesItems.Add(item);
