@@ -514,10 +514,10 @@ namespace SQM.Website
                 this.Seriesorder = (EHSCalcsCtl.SeriesOrder)seriesOrder;
 
 
-                if (scope == "eeff")
+				if (scope == "eeff" || scope == "eSeff" || scope == "eReff" || scope == "eReffCost")
                 {
                     this.MetricScope = "ENGY";
-                    this.Calculation = "eeff";
+					this.Calculation = scope;
                     this.Stat = (SStat)Enum.Parse(typeof(SStat), stat, true);
                 }
 
@@ -604,11 +604,12 @@ namespace SQM.Website
                             plantList = plantList.Where(l => plantIDS.Contains(l.PLANT_ID)).ToList();
                             break;
                         default:
-                            if (!string.IsNullOrEmpty(this.SubScope))
+                            if (!string.IsNullOrEmpty(this.SubScope)  && this.Calculation.ToLower().Contains("norm"))
                             {
                                 int id;
                                 if (int.TryParse(this.SubScope, out id))
                                 {
+									// this logic special for TI - requires the plant profile to use the metric ID as it's normalization factor
                                     plantList = plantList.Where(l => l.EHS_PROFILE != null && l.EHS_PROFILE.EHS_PROFILE_FACT != null
                                        && (l.EHS_PROFILE.EHS_PROFILE_FACT.Where(f=> f.CALCS_STAT.ToLower() == this.Calculation.ToLower() && f.FACTOR_ID == id).Count() > 0)
                                        ).ToList();
@@ -620,6 +621,8 @@ namespace SQM.Website
                     {
                         case "eeff":
                         case "eSeff":
+						case "eReff":
+						case "eReffCost":
                             plantList = plantList.Where(l => l.TRACK_FIN_DATA == true).ToList();
                             break;
                         default:
@@ -629,6 +632,8 @@ namespace SQM.Website
                     {
                         case "eeff":
                         case "eSeff":
+						case "eReff":
+						case "eReffCost":
                             plantList = plantList.Where(l => l.TRACK_FIN_DATA == true).ToList();
                             break;
                         default:
@@ -691,32 +696,36 @@ namespace SQM.Website
             //return plantIDS;
         }
 
-
-        public decimal[] GetMetricsByScope()
+		public decimal[] GetMetricsByScope()
+		{
+			return GetMetricsByScope("");
+		}
+        public decimal[] GetMetricsByScope(string scopeOverride)
         {
 			List<decimal> measureList = new List<decimal>();
+			string scope = !string.IsNullOrEmpty(scopeOverride) ? scopeOverride : this.MetricScope;
             int id = 0;
             string s;
 
 			this.Calc.XLATSeries = new List<XLAT>();
 
-            if (this.MetricScope.Contains(',') || int.TryParse(this.MetricScope, out id))
+            if (scope.Contains(',') || int.TryParse(scope, out id))
             {
-                string[] ids = this.MetricScope.Split(',');
+                string[] ids = scope.Split(',');
                 measureList = ids.Select(i => decimal.Parse(i)).ToList();
             }
-            else if (this.MetricScope.Contains("EFM_"))  // get specific efm type
+            else if (scope.Contains("EFM_"))  // get specific efm type
             {
-                string[] efm = this.MetricScope.Split('_');
+                string[] efm = scope.Split('_');
                 measureList = this.MetricHst.Where(m => m.Measure.EFM_TYPE == efm[1]).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
             }
-            else if (this.MetricScope.ToUpper().Contains("CO2")  ||  this.MetricScope.ToUpper().Contains("GHG"))
+            else if (scope.ToUpper().Contains("CO2")  ||  scope.ToUpper().Contains("GHG"))
             {
                 measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY == "ENGY").Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
             }
             else // get all metrics of a specified catetory
             {
-                switch (this.MetricScope)
+                switch (scope)
                 {
                     case "WASTE":
                         measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY.StartsWith("EW")).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
@@ -735,7 +744,7 @@ namespace SQM.Website
 					case "INJURY_TENURE":
 					case "INJURY_CAUSE":
 					case "INJURY_DAYS_TO_CLOSE":
-						this.Calc.XLATSeries.AddRange(SQMBasePage.SelectXLATList(new string[1] { this.MetricScope }, SessionManager.UserContext.Language.LANGUAGE_ID));
+						this.Calc.XLATSeries.AddRange(SQMBasePage.SelectXLATList(new string[1] { scope }, SessionManager.UserContext.Language.LANGUAGE_ID));
 						for (int i = 0; i < this.Calc.XLATSeries.Count; i++)
 						{
 							measureList.Add(i);
@@ -745,7 +754,7 @@ namespace SQM.Website
 						measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CD.StartsWith("S3") && !m.Measure.MEASURE_CD.EndsWith("0")).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
 						break;
                     default:
-                        measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY == this.MetricScope).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
+                        measureList = this.MetricHst.Where(m => m.Measure.MEASURE_CATEGORY == scope).Select(m => m.Measure.MEASURE_ID).Distinct().ToList();
                         break;
                 }
 
@@ -790,13 +799,13 @@ namespace SQM.Website
                             break;
                         case "TYPE_INCIDENT":
                             this.IncidentTypeList = (from t in this.Entities.INCIDENT_TYPE
-                                                     where t.INCIDENT_TYPE_ID != 10 && t.INCIDENT_TYPE_ID != 5 && t.INCIDENT_TYPE_ID != 11
+													 where t.INCIDENT_TYPE_ID != 10 && t.INCIDENT_TYPE_ID != 5 && t.INCIDENT_TYPE_ID != 11 && t.INCIDENT_TYPE_ID != 12
                                                      select t).ToList();
                             topicArray = IncidentTypeList.Select(l => l.INCIDENT_TYPE_ID).ToArray();
                             break;
-                        case "TYPE_AUDIT":
-                            this.IncidentTypeList = (from t in this.Entities.INCIDENT_TYPE
-                                                     where t.INCIDENT_TYPE_ID == 5 || t.INCIDENT_TYPE_ID == 11
+                        case "TYPE_AUDIT":		// IMS audit, EHS walk, Near miss
+                            this.IncidentTypeList = (from t in this.Entities.INCIDENT_TYPE	
+													 where t.INCIDENT_TYPE_ID == 5 || t.INCIDENT_TYPE_ID == 11 || t.INCIDENT_TYPE_ID == 12 
                                                      select t).ToList();
                             topicArray = IncidentTypeList.Select(l => l.INCIDENT_TYPE_ID).ToArray();
                             break;
@@ -2032,8 +2041,9 @@ namespace SQM.Website
                             }
                             break;
                         case "eeff":
+						case "eReff":
 							decimal sumE = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
-							decimal sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							decimal sumPCost = this.Calculation == "eReff" ? 0 : this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
 							decimal sumPRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
                             if (sumE > 0 && (sumPRevenue - sumPCost != 0))
                             {
@@ -2042,6 +2052,16 @@ namespace SQM.Website
                             else
                                 valid = false;
                             break;
+						case "eReffCost":
+							decimal sumECost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => (decimal)l.MetricRec.MEASURE_COST).ToList().Sum();
+							decimal sumRRevenue = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+							if (sumRRevenue != 0)
+							{
+								value = sumECost / (sumRRevenue);
+							}
+							else
+								valid = false;
+							break;
                         case "eSeff":
 							decimal sumESpend = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
 							sumPCost = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, new decimal[1] { 1000000 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
@@ -2139,8 +2159,8 @@ namespace SQM.Website
 							if (this.Stat == SStat.ratio  ||  this.Stat == SStat.ratioPct)
 							{
 								// ratio of two measures (nnn|nnn) e.g. pct of audits complete, jsa's / jsa's required,  observations / people
-								decimal[] numeratorIDS = this.MetricScope.Split(',').Select(x => decimal.Parse(x)).ToArray();
-								decimal[] denominatorIDS = this.SubScope.Split(',').Select(x => decimal.Parse(x)).ToArray();
+								decimal[] numeratorIDS = GetMetricsByScope(this.MetricScope); // this.MetricScope.Split(',').Select(x => decimal.Parse(x)).ToArray();
+								decimal[] denominatorIDS = GetMetricsByScope(this.SubScope); // this.SubScope.Split(',').Select(x => decimal.Parse(x)).ToArray();
 								if ((temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, denominatorIDS).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum()) != 0)
 								{
 									value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, numeratorIDS).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum() / temp;
