@@ -127,6 +127,11 @@ namespace SQM.Website
             get;
             set;
         }
+		public int TopN
+		{
+			get;
+			set;
+		}
 		public ChartLegendPosition LegendPosition { get; set; }
 		public Color LegendBackgroundColor { get; set; }
 		public bool DisplayTooltip { get; set; }
@@ -217,6 +222,7 @@ namespace SQM.Website
 			this.OnLoad = null;
 			this.ScaleToMax = false;
 			this.ItemVisual = "";
+			this.TopN = 0;
 		}
 
 		public GaugeDefinition Initialize()
@@ -249,6 +255,7 @@ namespace SQM.Website
 			this.ScaleToMax = false;
 			this.ItemVisual = "";
 			this.ScaleMin = this.ScaleMax = 0;
+			this.TopN = 0;
 
 			return this;
 		}
@@ -344,6 +351,14 @@ namespace SQM.Website
                         this.OverlaySeries = 2;
 					if (s.Contains("SCALETOMAX"))
 						this.ScaleToMax = true;
+					if (s.Contains("TOP5"))
+					{
+						this.TopN = 5;
+					}
+					if (s.Contains("TOP10"))
+					{
+						this.TopN = 10;
+					}
                 }
             }
 
@@ -2177,19 +2192,6 @@ namespace SQM.Website
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
 
-			//List<GaugeSeries> gaugeSeries = new List<GaugeSeries>();
-			//GaugeSeries g = new GaugeSeries();
-			//g.Name = "Position";
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 159m, "Soft Skills"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 170m, "Sector knowledge"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 100m, "Finance knowledge"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 140m, "Work experience"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 160m, "Win7 skills"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 103m, "MS Office skills"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 173m, "Programming skills"));
-			//g.ItemList.Add(new GaugeSeriesItem(0, 0, 0, 107m, "Database Skills"));
-			//gaugeSeries.Add(g);
-
 			foreach (GaugeSeries gs in gaugeSeries)
 			{
 				RadarAreaSeries series = new RadarAreaSeries();
@@ -2277,7 +2279,7 @@ namespace SQM.Website
             else
                 series.Appearance.FillStyle.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("#CD5C5C");
 
-            rad.DataSource = seriesData;
+			rad.DataSource = rgCfg.TopN == 0 ? seriesData : seriesData.Take(rgCfg.TopN).ToList();
             rad.DataBind();
 
             if (!string.IsNullOrEmpty(rgCfg.LabelV))
@@ -2295,7 +2297,7 @@ namespace SQM.Website
             rad.PlotArea.YAxis.MinorGridLines.Visible = false;
             rad.PlotArea.XAxis.MinorGridLines.Visible = false;
 
-            foreach (GaugeSeriesItem data in seriesData)
+			foreach (GaugeSeriesItem data in rgCfg.TopN == 0 ? seriesData : seriesData.Take(rgCfg.TopN).ToList())
             {
                 rad.PlotArea.XAxis.Items.Add(new AxisItem(data.Text));
             }
@@ -2328,18 +2330,22 @@ namespace SQM.Website
             lorenzeSeries.Appearance.FillStyle.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("red");
             decimal total = seriesData.Select(l => l.YValue ?? 0).Sum();
             decimal totalPct = 0;
+			int itemCount = 0;
             foreach (GaugeSeriesItem item in seriesData)
             {
-                if (total == 0)
-                    lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
-                else
-                {
-                    totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
-                    if (item == seriesData.Last())
-                        totalPct = 100m;
-                    lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));
-                    //lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(item.YValue / total * 100m, 2))));
-                }
+				if (rgCfg.TopN == 0 || ++itemCount <= rgCfg.TopN)
+				{
+					if (total == 0)
+						lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
+					else
+					{
+						totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
+						if (item == seriesData.Last())
+							totalPct = 100m;
+						lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));
+						//lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(item.YValue / total * 100m, 2))));
+					}
+				}
             }
 
             rad.PlotArea.Series.Add(lorenzeSeries);
@@ -2395,7 +2401,7 @@ namespace SQM.Website
 
             series.TooltipsAppearance.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("white");
 
-            rad.DataSource = seriesData;
+            rad.DataSource = rgCfg.TopN == 0 ? seriesData : seriesData.Take(rgCfg.TopN).ToList();
             rad.DataBind();
             rad.PlotArea.YAxis.MaxValue = seriesData.Sum(l => l.YValue);
 
@@ -2434,18 +2440,22 @@ namespace SQM.Website
             lorenzeSeries.Appearance.FillStyle.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("red");
             decimal total = seriesData.Select(l => l.YValue ?? 0).Sum();
             decimal totalPct = 0;
+			int itemCount = 0;
             foreach (GaugeSeriesItem item in seriesData)
             {
-                if (total == 0)
-                    lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
-                else
-                {
-                    totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
-                    if (item == seriesData.Last())
-                        totalPct = 100m;
-                    lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));
-                   // lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(item.YValue / total * 100m, 2))));
-                }
+				if (rgCfg.TopN == 0 || ++itemCount <= rgCfg.TopN)
+				{
+					if (total == 0)
+						lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(0 * 100m, 2))));
+					else
+					{
+						totalPct += Decimal.Round((item.YValue ?? 0) / total * 100m, 2);
+						if (item == seriesData.Last())
+							totalPct = 100m;
+						lorenzeSeries.SeriesItems.Add(new CategorySeriesItem(totalPct));
+						// lorenzeSeries.SeriesItems.Add(new CategorySeriesItem((totalPct += Decimal.Round(item.YValue / total * 100m, 2))));
+					}
+				}
             }
 
             rad.PlotArea.Series.Add(lorenzeSeries);

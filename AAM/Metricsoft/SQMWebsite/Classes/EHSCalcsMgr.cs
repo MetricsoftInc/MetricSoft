@@ -12,7 +12,7 @@ using SQM.Website.Classes;
 
 namespace SQM.Website
 {
-    public enum SStat { none, value, sum, pctChange, deltaDy, sumCost, count, cost, pct, pctReduce, ratio, ratioPct};
+    public enum SStat { none, value, sum, pctChange, deltaDy, sumCost, count, cost, pct, pctReduce, ratio, ratioPct, normRev};
     public enum HSAttr { none, type};
 
 	public class AttributeValue
@@ -1995,9 +1995,12 @@ namespace SQM.Website
                             }
                             foreach (decimal plantID in plantArray)
                             {
-                                EHSModel.GHGResultList ghgTable =  CalcGHG(fromDate, toDate, plantID, measureArray);
+                                EHSModel.GHGResultList ghgTable =  CalcGHG(fromDate, toDate, plantID, measureArray, 0);
                                 ((EHSModel.GHGResultList)this.Results.ResultObj).AddResultRange(ghgTable);
-                                value += ghgTable.GHGTotal;
+								decimal normValue = 1;
+								if (this.Stat == SStat.normRev)
+									normValue = this.InitCalc().Calc.Select(fromDate, toDate, new decimal[1] {plantID}, new decimal[1] { 1000001 }).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum();
+                                value += normValue == 0 ? ghgTable.GHGTotal : ghgTable.GHGTotal / normValue;
                             }
                             break;
                         case "norm":
@@ -2222,7 +2225,7 @@ namespace SQM.Website
             return hrsFactor;
         }
 
-		public EHSModel.GHGResultList CalcGHG(DateTime fromDate, DateTime toDate, decimal plantID, decimal[] measureArray)
+		public EHSModel.GHGResultList CalcGHG(DateTime fromDate, DateTime toDate, decimal plantID, decimal[] measureArray, decimal normMeasure)
 		{
 			PLANT plant = this.GetPlant(plantID);
 			EHSModel.Emissions emc = new EHSModel.Emissions().Initialize(plant.LOCATION_CODE, plant.COMP_INT_ID);
@@ -2257,7 +2260,7 @@ namespace SQM.Website
 									try
 									{
 										EHSModel.GHGResult ghgRrec = new EHSModel.GHGResult().CreateNew(plant, meas, 0, hist1.MetricRec.INPUT_UOM_ID.HasValue ? (decimal)hist1.MetricRec.INPUT_UOM_ID : 0,
-											metricQty, hist1.MetricRec.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, metricQty * ghg, ghgCode, gwp, ghgQty, ghgUOM);
+											metricQty, hist1.MetricRec.UOM_ID, meas.EFM_TYPE, gasSeq, ghg, (metricQty * ghg), ghgCode, gwp, ghgQty, ghgUOM);
 										ghgTable.AddResult(ghgRrec);
 									}
 									catch
