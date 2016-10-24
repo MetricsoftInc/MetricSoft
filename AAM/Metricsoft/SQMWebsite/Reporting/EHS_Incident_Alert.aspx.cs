@@ -7,12 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
+
 namespace SQM.Website.EHS
 {
 
 
 	public partial class EHS_Incident_Alert : System.Web.UI.Page
 	{
+		public string iid;
 
 		public List<XLAT> reportXLAT
 		{
@@ -67,7 +69,8 @@ namespace SQM.Website.EHS
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-5PhaseReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
+			
+			Response.AddHeader("Content-Disposition", "attachment; filename=EHS-Incident-Alert-" + iid + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();
@@ -106,7 +109,7 @@ namespace SQM.Website.EHS
 			{
 				string query = Request.QueryString["iid"];
 				query = query.Replace(" ", "+");
-				string iid = EncryptionManager.Decrypt(query);
+				iid = EncryptionManager.Decrypt(query);
 				pageData = PopulateByIncidentId(Convert.ToDecimal(iid));
 			}
 			else
@@ -187,15 +190,18 @@ namespace SQM.Website.EHS
 					// Table 4 - Photos
 					//
 
-					var table4 = new PdfPTable(new float[] { 540f, }); //new PdfPTable(new float[] { 180f, 180f, 180f });
+					var table4 = new PdfPTable(new float[] { 220f, 220f });
 					table4.TotalWidth = 540f;
 					table4.LockedWidth = true;
+					table4.SpacingBefore = 15f;
 
 					try
 					{
 						if (pageData.photoData != null && pageData.photoData.Count() > 0)
 						{
-							table4.AddCell(new PdfPCell(new Phrase("Photos", detailHdrFont)) { Padding = 5f, Border = 0, Colspan = 3 });
+							PdfPCell cell = new PdfPCell(new Phrase("Photos", detailHdrFont)) { Padding = 5f, Border = 0, Colspan = 2 };
+							cell.BorderWidthTop = .25f;
+							table4.AddCell(cell);
 							table4.SpacingBefore = 5f;
 							var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
 
@@ -337,7 +343,6 @@ namespace SQM.Website.EHS
 			PdfPCell cell;
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CONTAINMENT").DESCRIPTION, detailHdrFont));
 			tableContain.AddCell(cell);
@@ -390,10 +395,10 @@ namespace SQM.Website.EHS
 			tableAction.TotalWidth = 540f;
 			tableAction.LockedWidth = true;
 			tableAction.SpacingBefore = 15f;
+			tableAction.SpacingAfter = 15f;
 			PdfPCell cell;
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.Colspan = 3;
 			cell.BorderWidthTop = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ACTION").DESCRIPTION, detailHdrFont));
 			tableAction.AddCell(cell);
