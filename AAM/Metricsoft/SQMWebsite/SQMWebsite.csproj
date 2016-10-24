@@ -620,6 +620,7 @@
     <Content Include="Reporting\EHS_48HourReport.aspx" />
     <Content Include="Reporting\EHS_5Phase.aspx" />
     <Content Include="Reporting\EHS_Alert_PDF.aspx" />
+    <Content Include="Reporting\EHS_Incident_Alert.aspx" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\common.js" />
@@ -2219,6 +2220,13 @@
     </Compile>
     <Compile Include="Reporting\EHS_Alert_PDF.aspx.designer.cs">
       <DependentUpon>EHS_Alert_PDF.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\EHS_Incident_Alert.aspx.cs">
+      <DependentUpon>EHS_Incident_Alert.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\EHS_Incident_Alert.aspx.designer.cs">
+      <DependentUpon>EHS_Incident_Alert.aspx</DependentUpon>
     </Compile>
     <Compile Include="RspPSMaster.Master.cs">
       <DependentUpon>RspPSMaster.Master</DependentUpon>
