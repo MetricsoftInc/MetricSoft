@@ -6,54 +6,86 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
-
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 
 namespace SQM.Website.EHS
 {
-
+	[Serializable]
+	public class ReportCell
+	{
+		public int Row
+		{
+			get;
+			set;
+		}
+		public int Col
+		{
+			get;
+			set;
+		}
+		public string Type
+		{
+			get;
+			set;
+		}
+		public string Text
+		{
+			get;
+			set;
+		}
+		public object Obj
+		{
+			get;
+			set;
+		}
+	}
 
 	public partial class EHS_Incident_Alert : System.Web.UI.Page
 	{
 		public string iid;
+		public string exportOption;
+		public List<ReportCell> exportList;
+		public int exportRow;
 
 		public List<XLAT> reportXLAT
 		{
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
 			set { ViewState["ReportXLAT"] = value; }
 		}
-		public Font detailHdrFont
+		public iTextSharp.text.Font detailHdrFont
 		{
-			get { return ViewState["DetailHdrFont"] == null ? null : (Font)ViewState["DetailHdrFont"]; }
+			get { return ViewState["DetailHdrFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailHdrFont"]; }
 			set { ViewState["DetailHdrFont"] = value; }
 		}
-		public Font infoFont
+		public iTextSharp.text.Font infoFont
 		{
-			get { return ViewState["InfoFont"] == null ? null : (Font)ViewState["InfoFont"]; }
+			get { return ViewState["InfoFont"] == null ? null : (iTextSharp.text.Font)ViewState["InfoFont"]; }
 			set { ViewState["InfoFont"] = value; }
 		}
-		public Font detailTxtFont
+		public iTextSharp.text.Font detailTxtFont
 		{
-			get { return ViewState["DetailTxtFont"] == null ? null : (Font)ViewState["DetailTxtFont"]; }
+			get { return ViewState["DetailTxtFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtFont"]; }
 			set { ViewState["DetailTxtFont"] = value; }
 		}
-		public Font detailTxtBoldFont
+		public iTextSharp.text.Font detailTxtBoldFont
 		{
-			get { return ViewState["DetailTxtBoldFont"] == null ? null : (Font)ViewState["DetailTxtBoldFont"]; }
+			get { return ViewState["DetailTxtBoldFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtBoldFont"]; }
 			set { ViewState["DetailTxtBoldFont"] = value; }
 		}
-		public Font detailTxtItalicFont
+		public iTextSharp.text.Font detailTxtItalicFont
 		{
-			get { return ViewState["DetailTxtItalicFont"] == null ? null : (Font)ViewState["DetailTxtItalicFont"]; }
+			get { return ViewState["DetailTxtItalicFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtItalicFont"]; }
 			set { ViewState["DetailTxtItalicFont"] = value; }
 		}
-		public Font labelTxtFont
+		public iTextSharp.text.Font labelTxtFont
 		{
-			get { return ViewState["LabelTxtFont"] == null ? null : (Font)ViewState["LabelTxtFont"]; }
+			get { return ViewState["LabelTxtFont"] == null ? null : (iTextSharp.text.Font)ViewState["LabelTxtFont"]; }
 			set { ViewState["LabelTxtFont"] = value; }
 		}
-		public Font colHdrFont
+		public iTextSharp.text.Font colHdrFont
 		{
-			get { return ViewState["ColHdrFont"] == null ? null : (Font)ViewState["ColHdrFont"]; }
+			get { return ViewState["ColHdrFont"] == null ? null : (iTextSharp.text.Font)ViewState["ColHdrFont"]; }
 			set { ViewState["ColHdrFont"] = value; }
 		}
 
@@ -61,21 +93,79 @@ namespace SQM.Website.EHS
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			/*
+			ExcelPackage export = new ExcelPackage();
+			exportSheet = export.Workbook.Worksheets.Add("EHS Incident Alert");
+			exportSheet.Cells[1, 1].Value = "test cell";
+
+			MemoryStream ms = new MemoryStream(SQM.Website.Classes.SQMDocumentMgr.GetAttachmentByteArray(6m));
+			ExcelPicture pic = exportSheet.Drawings.AddPicture("pic", System.Drawing.Image.FromStream(ms));
+			pic.SetPosition(50, 1);
+
+			MemoryStream ms = new MemoryStream(pageData.photoData[i]);
+			ExcelPicture pic = exportSheet.Drawings.AddPicture("pic", System.Drawing.Image.FromStream(ms));
+			pic.SetPosition((++exportRow * 25) + 25, 1);
+
+			export.Workbook.Properties.Title = "test";
+			Response.Clear();
+			Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			Response.AddHeader(
+					  "content-disposition",
+					  string.Format("attachment;  filename={0}", "ExcellData.xlsx"));
+			Response.BinaryWrite(export.GetAsByteArray());
+			Response.End();
+			Response.Flush();
+			Response.Close();
+			*/
+
 			ShowPdf(BuildPdf());
 		}
 
+
 		private void ShowPdf(byte[] strS)
 		{
-			Response.ClearContent();
-			Response.ClearHeaders();
-			Response.ContentType = "application/pdf";
-			
-			Response.AddHeader("Content-Disposition", "attachment; filename=EHS-Incident-Alert-" + iid + ".pdf");
 
-			Response.BinaryWrite(strS);
+			if (exportOption == "xls")
+			{
+				ExcelPackage export = new ExcelPackage();
+				ExcelWorksheet exportSheet = export.Workbook.Worksheets.Add(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TITLE").DESCRIPTION);
+				export.Workbook.Properties.Title = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TITLE").DESCRIPTION;
+
+				int imageCount = 0;
+				foreach (ReportCell c in exportList)
+				{
+					if (c.Type == "img")
+					{
+						++imageCount;
+						ExcelPicture pic = exportSheet.Drawings.AddPicture(!string.IsNullOrEmpty(c.Text) ? c.Text : imageCount.ToString(), System.Drawing.Image.FromStream((MemoryStream)c.Obj));
+						pic.SetSize(176, 132);
+						pic.SetPosition((c.Row * 20) + ((imageCount - 1) * 132), 1);
+					}
+					else
+					{
+						exportSheet.Cells[c.Row, c.Col].Value = c.Text;
+					}
+				}
+
+				Response.Clear();
+				Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+				Response.AddHeader(
+							"content-disposition",
+							string.Format("attachment;  filename={0}", " EHS-Incident-Alert-" + iid.ToString() + ".xlsx"));
+				Response.BinaryWrite(export.GetAsByteArray());
+				Response.Flush();
+			}
+			else
+			{
+				Response.ClearContent();
+				Response.ClearHeaders();
+				Response.ContentType = "application/pdf";
+				Response.AddHeader("Content-Disposition", "attachment; filename=EHS-Incident-Alert-" + iid + ".pdf");
+				Response.BinaryWrite(strS);
+				Response.Flush();
+			}
+
 			Response.End();
-			Response.Flush();
-			Response.Clear();
 		}
 
 		private byte[] BuildPdf()
@@ -110,6 +200,12 @@ namespace SQM.Website.EHS
 				string query = Request.QueryString["iid"];
 				query = query.Replace(" ", "+");
 				iid = EncryptionManager.Decrypt(query);
+
+				if (Request.QueryString["opt"] != null)
+				{
+					exportOption = Request.QueryString["opt"];
+				}
+
 				pageData = PopulateByIncidentId(Convert.ToDecimal(iid));
 			}
 			else
@@ -135,18 +231,18 @@ namespace SQM.Website.EHS
 			BaseColor whiteColor = new BaseColor(1.0f, 1.0f, 1.0f);
 			BaseColor blackColor = new BaseColor(0.0f, 0.0f, 0.0f);
 
-			Font textFont = GetTextFont();
-			Font headerFont = GetHeaderFont();
-			Font labelFont = GetLabelFont();
-			Font colHeaderFont = GetTextFont();
-			Font textItalicFont = GetTextFont();
+			iTextSharp.text.Font textFont = GetTextFont();
+			iTextSharp.text.Font headerFont = GetHeaderFont();
+			iTextSharp.text.Font labelFont = GetLabelFont();
+			iTextSharp.text.Font colHeaderFont = GetTextFont();
+			iTextSharp.text.Font textItalicFont = GetTextFont();
 
-			detailHdrFont = new Font(headerFont.BaseFont, 13, 0, lightGrayColor);
-			detailTxtFont = new Font(textFont.BaseFont, 10, 0, blackColor);
-			labelTxtFont = new Font(labelFont.BaseFont, 12, 0, blackColor);
-			colHdrFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.UNDERLINE, blackColor);
-			detailTxtItalicFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
-			detailTxtBoldFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD, blackColor);
+			detailHdrFont = new iTextSharp.text.Font(headerFont.BaseFont, 13, 0, lightGrayColor);
+			detailTxtFont = new iTextSharp.text.Font(textFont.BaseFont, 10, 0, blackColor);
+			labelTxtFont = new iTextSharp.text.Font(labelFont.BaseFont, 12, 0, blackColor);
+			colHdrFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.UNDERLINE, blackColor);
+			detailTxtItalicFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+			detailTxtBoldFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD, blackColor);
 
 			// Create new PDF document
 			Document document = new Document(PageSize.A4, 35f, 35f, 35f, 35f);
@@ -177,7 +273,7 @@ namespace SQM.Website.EHS
 					imgCell.AddElement(img);
 					table1.AddCell(imgCell);
 
-					var hdrFont = new Font(headerFont.BaseFont, 24, 0, darkGrayColor);
+					var hdrFont = new iTextSharp.text.Font(headerFont.BaseFont, 24, 0, darkGrayColor);
 					table1.AddCell(new PdfPCell(new Phrase(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TITLE").DESCRIPTION, hdrFont))
 					{
 						HorizontalAlignment = Element.ALIGN_LEFT,
@@ -186,10 +282,25 @@ namespace SQM.Website.EHS
 					});
 
 
+					// export to Excel
+					if (exportOption == "xls")
+					{
+						exportList = new List<ReportCell>();
+						exportRow = 1;
+						exportList.Add(new ReportCell() { Row = 1, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TITLE").DESCRIPTION });
+					}
+
+					document.Add(table1);
+					document.Add(IDSection(pageData));
+					document.Add(HeaderSection(pageData));
+					document.Add(IncidentSection(pageData));
+					document.Add(ContainmentSection(pageData));
+					document.Add(CauseSection(pageData));
+					document.Add(ActionSection(pageData));
+
 					//
 					// Table 4 - Photos
 					//
-
 					var table4 = new PdfPTable(new float[] { 220f, 220f });
 					table4.TotalWidth = 540f;
 					table4.LockedWidth = true;
@@ -203,7 +314,13 @@ namespace SQM.Website.EHS
 							cell.BorderWidthTop = .25f;
 							table4.AddCell(cell);
 							table4.SpacingBefore = 5f;
-							var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
+							var captionFont = new iTextSharp.text.Font(textFont.BaseFont, 11, 0, darkGrayColor);
+
+							if (exportOption == "xls")
+							{
+								exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+								exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "Photos"});
+							}
 
 							int i = 0;
 							for (i = 0; i < pageData.photoData.Count; i++)
@@ -216,8 +333,14 @@ namespace SQM.Website.EHS
 								photoCell.AddElement(photo);
 
 								photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
-
 								table4.AddCell(photoCell);
+
+								if (exportOption == "xls")
+								{
+									MemoryStream ms = new MemoryStream(pageData.photoData[i]);
+									exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Type = "img", Text = pageData.photoCaptions[i], Obj = ms });
+								}
+
 							}
 							// pad remaining cells in row or else table will be corrupt
 							int currentCol = i % 3;
@@ -227,13 +350,6 @@ namespace SQM.Website.EHS
 					}
 					catch { }
 
-					document.Add(table1);
-					document.Add(IDSection(pageData));
-					document.Add(HeaderSection(pageData));
-					document.Add(IncidentSection(pageData));
-					document.Add(ContainmentSection(pageData));
-					document.Add(CauseSection(pageData));
-					document.Add(ActionSection(pageData));
 					document.Add(table4);
 
 					document.Close();
@@ -256,9 +372,15 @@ namespace SQM.Website.EHS
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 6, Border = 0 };
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "INCIDENTTYPE").DESCRIPTION_SHORT + ":", detailHdrFont));
 			tableIncident.AddCell(cell);
+
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 4, Border = 0 };
 			cell.AddElement(new Paragraph(string.Format(pageData.incidentType + "   ( # {0} )", pageData.incidentNumber), labelTxtFont));
 			tableIncident.AddCell(cell);
+
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = (SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "INCIDENTTYPE").DESCRIPTION_SHORT + ": " + string.Format(pageData.incidentType + "   ( # {0} )", pageData.incidentNumber)) });
+			}
 
 			return tableIncident;
 		}
@@ -280,6 +402,13 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept), detailTxtFont));
 			tableHeader.AddCell(cell);
 
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation) });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept) });
+			}
+
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthBottom = cell.BorderWidthRight = .25f;
 			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT,pageData.incidentDate), detailTxtFont));
@@ -288,6 +417,12 @@ namespace SQM.Website.EHS
 			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthRight = .25f;
 			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT, pageData.incidentTime), detailTxtFont));
 			tableHeader.AddCell(cell);
+
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT, pageData.incidentDate) });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT, pageData.incidentTime) });
+			}
 
 			return tableHeader;
 		}
@@ -331,6 +466,12 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(pageData.incidentDescription, detailTxtFont));
 			tableIncident.AddCell(cell);
 
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = pageData.incidentDescription });
+			}
+
 			return tableIncident;
 		}
 
@@ -347,15 +488,31 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CONTAINMENT").DESCRIPTION, detailHdrFont));
 			tableContain.AddCell(cell);
 
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CONTAINMENT").DESCRIPTION });
+			}
+
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CONTAINMENT").DESCRIPTION_SHORT, colHdrFont));
 			tableContain.AddCell(cell);
 
+			int n = 0;
 			foreach (var cc in pageData.containList)
 			{
-				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(cc.ITEM_DESCRIPTION, detailTxtFont));
-				tableContain.AddCell(cell);
+				List<string> descList = cc.ITEM_DESCRIPTION.Split('\r').ToList();
+				foreach (string desc in descList)
+				{
+					cell = new PdfPCell() { Padding = 1f, Border = 0 };
+					cell.AddElement(new Paragraph(desc.Replace("\n",""), detailTxtFont));
+					tableContain.AddCell(cell);
+
+					if (exportOption == "xls")
+					{
+						exportList.Add(new ReportCell() { Row = ++n == 1 ? exportRow : ++exportRow, Col = 2, Text = desc.Replace("\n","") });
+					}
+				}
 			}
 
 			return tableContain;
@@ -374,9 +531,24 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ROOTCAUSE").DESCRIPTION, detailHdrFont));
 			tableCause.AddCell(cell);
 
-			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph(pageData.incidentDescription, detailTxtItalicFont));
-			tableCause.AddCell(cell);
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ROOTCAUSE").DESCRIPTION });
+			}
+
+			if (pageData.root5YList != null && pageData.root5YList.Count > 0)
+			{
+
+				cell = new PdfPCell() { Padding = 1f, Border = 0 };
+				cell.AddElement(new Paragraph(pageData.root5YList.Last().ITEM_DESCRIPTION, detailTxtItalicFont));
+				tableCause.AddCell(cell);
+
+				if (exportOption == "xls")
+				{
+					exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.root5YList.Last().ITEM_DESCRIPTION });
+				}
+			}
 
 			if (pageData.causation != null && !string.IsNullOrEmpty(pageData.causation.CAUSEATION_CD))
 			{
@@ -384,6 +556,12 @@ namespace SQM.Website.EHS
 				cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CAUSATION").DESCRIPTION, detailHdrFont));
 				cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION, detailTxtFont));
 				tableCause.AddCell(cell);
+
+				if (exportOption == "xls")
+				{
+					exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "CAUSATION").DESCRIPTION });
+					exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = SQMBasePage.GetXLAT(reportXLAT, "INJURY_CAUSE", pageData.causation.CAUSEATION_CD).DESCRIPTION });
+				}
 			}
 
 			return tableCause;
@@ -403,15 +581,30 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ACTION").DESCRIPTION, detailHdrFont));
 			tableAction.AddCell(cell);
 
+			if (exportOption == "xls")
+			{
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ACTION").DESCRIPTION });
+			}
+
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "ACTION").DESCRIPTION_SHORT, colHdrFont));
 			tableAction.AddCell(cell);
 
+			int n = 0;
 			foreach (var ac in pageData.actionList)
 			{
-				cell = new PdfPCell() { Padding = 1f, Border = 0 };
-				cell.AddElement(new Paragraph(ac.DESCRIPTION, detailTxtFont));
-				tableAction.AddCell(cell);
+				List<string> descList = ac.DESCRIPTION.Split('\r').ToList();
+				foreach (string desc in descList)
+				{
+					cell = new PdfPCell() { Padding = 1f, Border = 0 };
+					cell.AddElement(new Paragraph(desc.Replace("\n",""), detailTxtFont));
+					tableAction.AddCell(cell);
+
+					if (exportOption == "xls")
+					{
+						exportList.Add(new ReportCell() { Row = ++n == 1 ? exportRow : ++exportRow, Col = 2, Text = desc.Replace("\n", "") });
+					}
+				}
 			}
 
 			return tableAction;
@@ -545,6 +738,7 @@ namespace SQM.Website.EHS
 								 {
 									 Data = (from f in entities.ATTACHMENT_FILE where f.ATTACHMENT_ID == a.ATTACHMENT_ID select f.ATTACHMENT_DATA).FirstOrDefault(),
 									 Description = (string.IsNullOrEmpty(a.FILE_DESC)) ? "" : a.FILE_DESC,
+									 ID = a.ATTACHMENT_ID
 								 }).ToList();
 
 
@@ -554,9 +748,11 @@ namespace SQM.Website.EHS
 					{
 						d.photoData = new List<byte[]>();
 						d.photoCaptions = new List<string>();
+						d.photoIDList = new List<decimal>();
 
 						foreach (var f in files)
 						{
+							d.photoIDList.Add(f.ID);
 							d.photoData.Add(f.Data);
 							d.photoCaptions.Add(f.Description);
 						}

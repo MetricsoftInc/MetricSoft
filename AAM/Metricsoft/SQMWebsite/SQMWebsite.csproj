@@ -55,6 +55,10 @@
     <Reference Include="ComponentArt.Web.UI, Version=2011.1.1134.4, Culture=neutral, PublicKeyToken=9bc9f846553156bb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\SanitizerProviders\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -2424,7 +2428,6 @@
     <None Include="Web.Debug.config" />
     <None Include="Web.Release.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="EHS\App_LocalResources\EHS_Incidents.aspx.resx" />
     <Content Include="Include\App_LocalResources\Ucl_TaskList.ascx.resx" />

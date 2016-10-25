@@ -20,6 +20,7 @@ namespace SQM.Website
 
 		static List<string> incidentReportList;
 		static List<string> incidentReportLabelList;
+		static List<string> incidentReportOptionList;
 
 		RadPersistenceManager persistenceManager;
 
@@ -687,6 +688,7 @@ namespace SQM.Website
 
 			incidentReportList = new List<string>();
 			incidentReportLabelList = new List<string>();
+			incidentReportOptionList = new List<string>();
 			SETTINGS sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS");
 			if (sets != null)
 			{
@@ -697,6 +699,10 @@ namespace SQM.Website
 					{
 						incidentReportList.Add(args[0]);
 						incidentReportLabelList.Add(args[1]);
+						if (args.Length > 2)
+							incidentReportOptionList.Add(args[2]);
+						else
+							incidentReportOptionList.Add("");
 					}
 				}
 			}
@@ -806,6 +812,10 @@ namespace SQM.Website
 						if (incidentReportList.Count > 0 &&  !string.IsNullOrEmpty(incidentReportList[0]))
 						{
 							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							if (!string.IsNullOrEmpty(incidentReportOptionList[0]))
+							{
+								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[0]);
+							}
 							hlk.Text = incidentReportLabelList[0];
 							hlk.ToolTip = incidentReportList[0];
 							hlk.Visible = true;
@@ -815,6 +825,10 @@ namespace SQM.Website
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport1");
 							hlk.NavigateUrl = uri + "Reporting/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							if (!string.IsNullOrEmpty(incidentReportOptionList[1]))
+							{
+								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[1]);
+							}
 							hlk.ToolTip = incidentReportList[1];
 							hlk.Text = incidentReportLabelList[1];
 							hlk.Visible = true;
@@ -823,6 +837,10 @@ namespace SQM.Website
 						{
 							hlk = (HyperLink)e.Item.FindControl("hlReport2");
 							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							if (!string.IsNullOrEmpty(incidentReportOptionList[2]))
+							{
+								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[2]);
+							}
 							hlk.ToolTip = incidentReportList[2];
 							hlk.Text = incidentReportLabelList[2];
 							hlk.Visible = true;

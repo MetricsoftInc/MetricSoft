@@ -24,6 +24,7 @@ namespace SQM.Website.EHS
 
 		public List<byte[]> photoData;
 		public List<string> photoCaptions;
+		public List<decimal> photoIDList;
 
 		public INCIDENT incident;
 		public List<INCIDENT_ANSWER> answerList;
