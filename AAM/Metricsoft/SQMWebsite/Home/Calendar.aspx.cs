@@ -236,10 +236,14 @@ namespace SQM.Website
 			}
 			taskScheduleList.AddRange(taskList);
 			taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false));
+
+			//taskScheduleList.Clear();
+			//respForList.Clear();
+			//respForList.Add(24);
 			taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, respPlantList.ToArray(), SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
 			enableItemLinks = true;
 
-			uclTaskSchedule.BindTaskSchedule(taskScheduleList.GroupBy(l => l.Task.TASK_ID).Select(p => p.First()).ToList(), selectedDate, enableItemLinks);
+			uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
 
 			// get task escalations 
 			respForList = new List<decimal>();
