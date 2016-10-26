@@ -138,13 +138,19 @@ namespace SQM.Website.EHS
 					{
 						++imageCount;
 						ExcelPicture pic = exportSheet.Drawings.AddPicture(!string.IsNullOrEmpty(c.Text) ? c.Text : imageCount.ToString(), System.Drawing.Image.FromStream((MemoryStream)c.Obj));
-						pic.SetSize(176, 132);
-						pic.SetPosition((c.Row * 20) + ((imageCount - 1) * 132), 1);
+						pic.SetSize(214, 161);
+						pic.SetPosition((c.Row * 20) + ((imageCount - 1) * 170), 1);
 					}
 					else
 					{
 						exportSheet.Cells[c.Row, c.Col].Value = c.Text;
 					}
+					exportSheet.Cells[1, 1].Style.Font.Bold = true;
+					exportSheet.Column(1).Width = 50;
+					exportSheet.Column(1).Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
+					exportSheet.Column(2).Width = 75;
+					exportSheet.Column(2).Style.WrapText = true;
+					exportSheet.Column(2).Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
 				}
 
 				Response.Clear();
@@ -379,7 +385,9 @@ namespace SQM.Website.EHS
 
 			if (exportOption == "xls")
 			{
-				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = (SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "INCIDENTTYPE").DESCRIPTION_SHORT + ": " + string.Format(pageData.incidentType + "   ( # {0} )", pageData.incidentNumber)) });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "INCIDENTTYPE").DESCRIPTION_SHORT });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = string.Format(pageData.incidentType + "   ( # {0} )", pageData.incidentNumber) });
 			}
 
 			return tableIncident;
@@ -405,8 +413,10 @@ namespace SQM.Website.EHS
 			if (exportOption == "xls")
 			{
 				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
-				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation) });
-				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept) });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "PLANT").DESCRIPTION_SHORT });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.incidentLocation });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.incidentDept });
 			}
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
@@ -420,8 +430,10 @@ namespace SQM.Website.EHS
 
 			if (exportOption == "xls")
 			{
-				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT, pageData.incidentDate) });
-				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT, pageData.incidentTime) });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.incidentDate });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.incidentTime });
 			}
 
 			return tableHeader;
@@ -459,7 +471,7 @@ namespace SQM.Website.EHS
 			PdfPCell cell;
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
-			cell.AddElement(new Paragraph("Description:", detailHdrFont));
+			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DESCRIPTION").DESCRIPTION, detailHdrFont));
 			tableIncident.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 1f, Border = 0 };
@@ -469,7 +481,8 @@ namespace SQM.Website.EHS
 			if (exportOption == "xls")
 			{
 				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = "" });
-				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = pageData.incidentDescription });
+				exportList.Add(new ReportCell() { Row = ++exportRow, Col = 1, Text = SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DESCRIPTION").DESCRIPTION });
+				exportList.Add(new ReportCell() { Row = exportRow, Col = 2, Text = pageData.incidentDescription });
 			}
 
 			return tableIncident;
