@@ -706,6 +706,7 @@ namespace SQM.Website
             List<TaskItem> taskList = new List<TaskItem>();
             List<EHSProfile> plantProfileList = new List<EHSProfile>();
             List<EHS_PROFILE_MEASURE> reqList = new List<EHS_PROFILE_MEASURE>();
+			EHS_PROFILE_MEASURE measure = null;
 
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
@@ -718,6 +719,72 @@ namespace SQM.Website
                                where ((plantIDS.Contains(i.PLANT_ID) || responsibleIDS.Contains((decimal)i.RESPONSIBLE_ID))) /* && i.IS_REQUIRED == true) */
                                select i).OrderBy(l => l.PLANT_ID).ToList();
 
+					// create metric input task per responsible person and plant 
+					foreach (decimal responsibleID in responsibleIDS)
+					{
+						foreach (decimal plantID in reqList.GroupBy(g => g.EHS_PROFILE.PLANT_ID).Select(p => p.First().EHS_PROFILE.PLANT_ID).ToList())
+						{
+							foreach (WebSiteCommon.DatePeriod period in WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, DateSpanOption.SelectRange, ""))
+							{
+								TaskItem taskItem = null;
+								List<decimal> prmrList = new List<decimal>();
+								int dayDue = 0;
+								if ((measure=reqList.Where(l => l.PLANT_ID == plantID && l.RESPONSIBLE_ID == responsibleID).FirstOrDefault()) != null)
+								{
+									dayDue = measure.EHS_PROFILE.DAY_DUE;
+								}
+								// idenfity all measures person is responsible for and create tasks per due days
+								foreach (EHS_PROFILE_MEASURE meas in reqList.Where(l => l.PLANT_ID == plantID && l.RESPONSIBLE_ID == responsibleID).OrderBy(l=> l.DAY_DUE).ToList())
+								{
+									if (taskItem == null  || (meas.DAY_DUE.HasValue && meas.DAY_DUE != dayDue))
+									{
+										taskItem = new TaskItem();
+										taskList.Add(taskItem);
+										taskItem.Taskstatus = TaskStatus.Pending;
+										taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "30").FirstOrDefault().DESCRIPTION;
+										taskItem.Plant = meas.EHS_PROFILE.PLANT;
+										taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
+										taskItem.Description = "";
+										taskItem.Detail = null;
+										taskItem.Task = new TASK_STATUS();
+										taskItem.Task.COMPLETE_ID = 0;
+										taskItem.Task.STATUS = "0";
+										taskItem.Task.TASK_TYPE = "C";
+										if (responsibleIDS.Count > 0)
+											taskItem.NotifyType = SetNotifyType(responsibleIDS[0], responsibleID, taskItem.Taskstatus);
+										dayDue = meas.DAY_DUE.HasValue ? (int)meas.DAY_DUE : dayDue;
+										taskItem.TaskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, dayDue);
+										taskItem.Task.DUE_DT = taskItem.TaskDate;
+										taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInput);
+										if (taskItem.TaskDate <= new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)))
+											taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plantID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
+										else
+											taskItem.RecordKey = "";  // don't allow data input beyond current month
+
+										//prmrList.Clear();
+									}
+									taskItem.Description += (meas.EHS_MEASURE.MEASURE_NAME + ", ");
+									//prmrList.Add(meas.PRMR_ID);
+								}
+
+								/*
+								if (period.ToDate < DateTime.UtcNow)	// prior month
+								{
+									int numInputs = (from i in entities.EHS_PROFILE_INPUT 
+													 where i.PERIOD_YEAR == period.ToDate.Year &&  i.PERIOD_MONTH == period.ToDate.Month 
+													 && prmrList.Contains(i.PRMR_ID) 
+													 select i).Count();
+									if (numInputs < prmrList.Count)
+									{
+										// overdue inputs
+									}
+								}
+								*/
+							}
+						}
+					}
+
+					/*
                     foreach (WebSiteCommon.DatePeriod period in WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, DateSpanOption.SelectRange, ""))
                     {
                         decimal[] plantArray = reqList.Select(l => l.PLANT_ID).Distinct().ToArray();
@@ -782,6 +849,7 @@ namespace SQM.Website
                             }
                         }
                     }
+					*/
                 }
             }
             catch

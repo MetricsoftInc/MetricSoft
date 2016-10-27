@@ -1426,6 +1426,7 @@
           <Property Name="INPUT_SNAPSHOT" Type="varchar" MaxLength="500" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="UOM_FACTOR" Type="numeric" Precision="38" Scale="8" />
+          <Property Name="DAY_DUE" Type="int" />
         </EntityType>
         <EntityType Name="EHS_PROFILE_MEASURE_EXT">
           <Key>
@@ -5026,24 +5027,7 @@
           <EntitySet Name="GWP_FACTOR" EntityType="PSsqmModel.GWP_FACTOR" />
           <EntitySet Name="GHG_FACTOR" EntityType="PSsqmModel.GHG_FACTOR" />
           <EntitySet Name="RESPONSE" EntityType="PSsqmModel.RESPONSE" />
-          <EntitySet Name="EHS_PROFILE_MEASURE" EntityType="PSsqmModel.EHS_PROFILE_MEASURE" />
-          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_EHS_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE">
-            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_EHS_PROFILE" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE">
-            <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE">
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-            <End Role="EHS_PROFILE_INPUT" EntitySet="EHS_PROFILE_INPUT" />
-          </AssociationSet>
           <EntitySet Name="EHS_PROFILE_MEASURE_EXT" EntityType="PSsqmModel.EHS_PROFILE_MEASURE_EXT" />
-          <AssociationSet Name="FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE">
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-            <End Role="EHS_PROFILE_MEASURE_EXT" EntitySet="EHS_PROFILE_MEASURE_EXT" />
-          </AssociationSet>
           <EntitySet Name="CURRENCY_XREF" EntityType="PSsqmModel.CURRENCY_XREF" />
           <AssociationSet Name="FK_CURRENCY_XREF_CURRENCY" Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY">
             <End Role="CURRENCY" EntitySet="CURRENCY" />
@@ -5194,10 +5178,6 @@
             <End Role="PERSON" EntitySet="PERSON" />
             <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
           </AssociationSet>
-          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON">
-            <End Role="PERSON" EntitySet="PERSON" />
-            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
-          </AssociationSet>
           <AssociationSet Name="FK_PERSON_JOBCODE" Association="PSsqmModel.FK_PERSON_JOBCODE">
             <End Role="JOBCODE" EntitySet="JOBCODE" />
             <End Role="PERSON" EntitySet="PERSON" />
@@ -5291,6 +5271,27 @@
           <AssociationSet Name="FK_EHS_DATA_PLANT" Association="PSsqmModel.FK_EHS_DATA_PLANT">
             <End Role="PLANT" EntitySet="PLANT" />
             <End Role="EHS_DATA" EntitySet="EHS_DATA" />
+          </AssociationSet>
+          <EntitySet Name="EHS_PROFILE_MEASURE" EntityType="PSsqmModel.EHS_PROFILE_MEASURE" />
+          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_EHS_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE">
+            <End Role="EHS_MEASURE" EntitySet="EHS_MEASURE" />
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_EHS_PROFILE" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE">
+            <End Role="EHS_PROFILE" EntitySet="EHS_PROFILE" />
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE">
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
+            <End Role="EHS_PROFILE_INPUT" EntitySet="EHS_PROFILE_INPUT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" Association="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE">
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
+            <End Role="EHS_PROFILE_MEASURE_EXT" EntitySet="EHS_PROFILE_MEASURE_EXT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EHS_PROFILE_MEASURE_PERSON" Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="EHS_PROFILE_MEASURE" EntitySet="EHS_PROFILE_MEASURE" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -5670,8 +5671,8 @@
           <Property Type="Int32" Name="WASTE_MONTH_SPAN" />
           <NavigationProperty Name="PLANT" Relationship="PSsqmModel.FK_EHS_PROFILE_PLANT" FromRole="EHS_PROFILE" ToRole="PLANT" />
           <NavigationProperty Name="EHS_PROFILE_FACT" Relationship="PSsqmModel.FK_EHS_PROFILE_FACT_EHS_PROFILE" FromRole="EHS_PROFILE" ToRole="EHS_PROFILE_FACT" />
-          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" FromRole="EHS_PROFILE" ToRole="EHS_PROFILE_MEASURE" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="EHS_PROFILE" ToRole="PERSON" />
+          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" FromRole="EHS_PROFILE" ToRole="EHS_PROFILE_MEASURE" />
         </EntityType>
         <EntityType Name="LABOR_TYPE">
           <Key>
@@ -6701,11 +6702,11 @@
           <NavigationProperty Name="EHS_MEASURE11" Relationship="PSsqmModel.FK_EHS_MEASURE_EHS_MEASURE1" FromRole="EHS_MEASURE" ToRole="EHS_MEASURE1" />
           <NavigationProperty Name="EHS_MEASURE3" Relationship="PSsqmModel.FK_EHS_MEASURE_EHS_MEASURE1" FromRole="EHS_MEASURE1" ToRole="EHS_MEASURE" />
           <NavigationProperty Name="EHS_METRIC_HISTORY" Relationship="PSsqmModel.FK_EHS_METRIC_HISTORY_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_METRIC_HISTORY" />
-          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_PROFILE_MEASURE" />
           <Property Type="String" Name="FREQUENCY" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="DATA_TYPE" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SUMMARY_TYPE" MaxLength="2" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EHS_DATA" Relationship="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_DATA" />
+          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" FromRole="EHS_MEASURE" ToRole="EHS_PROFILE_MEASURE" />
           </EntityType>
         <EntityType Name="EHS_METRIC_HISTORY">
           <Key>
@@ -8047,69 +8048,6 @@
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="RESPONSE" ToRole="PERSON" />
         </EntityType>
-        <EntityType Name="EHS_PROFILE_MEASURE">
-          <Key>
-            <PropertyRef Name="PRMR_ID" />
-          </Key>
-          <Property Type="Decimal" Name="PRMR_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="MEASURE_ID" Nullable="false" Precision="35" Scale="0" />
-          <Property Type="Int32" Name="INPUT_SEQ" Nullable="false" />
-          <Property Type="String" Name="MEASURE_PROMPT" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="UN_CODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="REG_STATUS" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DEFAULT_CURRENCY_CODE" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="DEFAULT_UOM" Precision="35" Scale="0" />
-          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
-          <Property Type="Boolean" Name="NEG_VALUE_ALLOWED" />
-          <Property Type="Boolean" Name="IS_REQUIRED" />
-          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="WASTE_CODE" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="INPUT_SNAPSHOT" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
-          <Property Type="Decimal" Name="UOM_FACTOR" Precision="38" Scale="8" />
-          <NavigationProperty Name="EHS_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_MEASURE" />
-          <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE" />
-          <NavigationProperty Name="EHS_PROFILE_INPUT" Relationship="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE_INPUT" />
-          <NavigationProperty Name="EHS_PROFILE_MEASURE_EXT" Relationship="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE_MEASURE_EXT" />
-          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="EHS_PROFILE_MEASURE" ToRole="PERSON" />
-        </EntityType>
-        <Association Name="FK_EHS_PROFILE_MEASURE_EHS_MEASURE">
-          <End Type="PSsqmModel.EHS_MEASURE" Role="EHS_MEASURE" Multiplicity="1" />
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="MEASURE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_PROFILE_MEASURE_EHS_PROFILE">
-          <End Type="PSsqmModel.EHS_PROFILE" Role="EHS_PROFILE" Multiplicity="1" />
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_PROFILE">
-              <PropertyRef Name="PLANT_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="PLANT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE">
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="1" />
-          <End Type="PSsqmModel.EHS_PROFILE_INPUT" Role="EHS_PROFILE_INPUT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="PRMR_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_INPUT">
-              <PropertyRef Name="PRMR_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EHS_PROFILE_MEASURE_EXT">
           <Key>
             <PropertyRef Name="PRMR_ID" />
@@ -8129,18 +8067,6 @@
           <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" FromRole="EHS_PROFILE_MEASURE_EXT" ToRole="EHS_PROFILE_MEASURE" />
         </EntityType>
-        <Association Name="FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE">
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="1" />
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE_EXT" Role="EHS_PROFILE_MEASURE_EXT" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="PRMR_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_MEASURE_EXT">
-              <PropertyRef Name="PRMR_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="CURRENCY_XREF">
           <Key>
             <PropertyRef Name="EFF_YEAR" />
@@ -8980,7 +8906,6 @@
           <NavigationProperty Name="ADDRESS" Relationship="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" FromRole="PERSON" ToRole="ADDRESS" />
           <NavigationProperty Name="COST_REPORT" Relationship="PSsqmModel.FK_COST_REPORT_PERSON" FromRole="PERSON" ToRole="COST_REPORT" />
           <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE" />
-          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
           <NavigationProperty Name="JOBCODE" Relationship="PSsqmModel.FK_PERSON_JOBCODE" FromRole="PERSON" ToRole="JOBCODE" />
           <NavigationProperty Name="PERSON1" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON" ToRole="PERSON1" />
           <NavigationProperty Name="PERSON2" Relationship="PSsqmModel.FK_PERSON_PERSON" FromRole="PERSON1" ToRole="PERSON" />
@@ -8989,6 +8914,7 @@
           <NavigationProperty Name="PROB_PREVENT" Relationship="PSsqmModel.FK_PROB_PREVENT_PROB_PREVENT" FromRole="PERSON" ToRole="PROB_PREVENT" />
           <NavigationProperty Name="RESPONSE" Relationship="PSsqmModel.FK_RESPONSE_PERSON" FromRole="PERSON" ToRole="RESPONSE" />
           <NavigationProperty Name="TASK_STATUS" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="PERSON" ToRole="TASK_STATUS" />
+          <NavigationProperty Name="EHS_PROFILE_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="PERSON" ToRole="EHS_PROFILE_MEASURE" />
         </EntityType>
         <Association Name="FK_ADDRESS_REFERENCE_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -9023,18 +8949,6 @@
             </Principal>
             <Dependent Role="EHS_PROFILE">
               <PropertyRef Name="APPROVER_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EHS_PROFILE_MEASURE_PERSON">
-          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
-          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERSON">
-              <PropertyRef Name="PERSON_ID" />
-            </Principal>
-            <Dependent Role="EHS_PROFILE_MEASURE">
-              <PropertyRef Name="RESPONSIBLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9557,6 +9471,94 @@
             </Principal>
             <Dependent Role="EHS_DATA">
               <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EHS_PROFILE_MEASURE">
+          <Key>
+            <PropertyRef Name="PRMR_ID" />
+          </Key>
+          <Property Type="Decimal" Name="PRMR_ID" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="PLANT_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="MEASURE_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int32" Name="INPUT_SEQ" Nullable="false" />
+          <Property Type="String" Name="MEASURE_PROMPT" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UN_CODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REG_STATUS" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DEFAULT_CURRENCY_CODE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="DEFAULT_UOM" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="RESPONSIBLE_ID" Precision="35" Scale="0" />
+          <Property Type="Boolean" Name="NEG_VALUE_ALLOWED" />
+          <Property Type="Boolean" Name="IS_REQUIRED" />
+          <Property Type="String" Name="STATUS" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="WASTE_CODE" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="INPUT_SNAPSHOT" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="LAST_UPD_DT" Precision="3" />
+          <Property Type="Decimal" Name="UOM_FACTOR" Precision="38" Scale="8" />
+          <Property Type="Int32" Name="DAY_DUE" />
+          <NavigationProperty Name="EHS_MEASURE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_MEASURE" />
+          <NavigationProperty Name="EHS_PROFILE" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE" />
+          <NavigationProperty Name="EHS_PROFILE_INPUT" Relationship="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE_INPUT" />
+          <NavigationProperty Name="EHS_PROFILE_MEASURE_EXT" Relationship="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" FromRole="EHS_PROFILE_MEASURE" ToRole="EHS_PROFILE_MEASURE_EXT" />
+          <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" FromRole="EHS_PROFILE_MEASURE" ToRole="PERSON" />
+        </EntityType>
+        <Association Name="FK_EHS_PROFILE_MEASURE_EHS_MEASURE">
+          <End Type="PSsqmModel.EHS_MEASURE" Role="EHS_MEASURE" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="MEASURE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_MEASURE_EHS_PROFILE">
+          <End Type="PSsqmModel.EHS_PROFILE" Role="EHS_PROFILE" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_PROFILE">
+              <PropertyRef Name="PLANT_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="PLANT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE">
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_PROFILE_INPUT" Role="EHS_PROFILE_INPUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="PRMR_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_INPUT">
+              <PropertyRef Name="PRMR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE">
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="1" />
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE_EXT" Role="EHS_PROFILE_MEASURE_EXT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="PRMR_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_MEASURE_EXT">
+              <PropertyRef Name="PRMR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EHS_PROFILE_MEASURE_PERSON">
+          <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
+          <End Type="PSsqmModel.EHS_PROFILE_MEASURE" Role="EHS_PROFILE_MEASURE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Principal>
+            <Dependent Role="EHS_PROFILE_MEASURE">
+              <PropertyRef Name="RESPONSIBLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10984,29 +10986,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EHS_PROFILE_MEASURE">
-            <EntityTypeMapping TypeName="PSsqmModel.EHS_PROFILE_MEASURE">
-              <MappingFragment StoreEntitySet="EHS_PROFILE_MEASURE">
-                <ScalarProperty Name="UOM_FACTOR" ColumnName="UOM_FACTOR" />
-                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
-                <ScalarProperty Name="INPUT_SNAPSHOT" ColumnName="INPUT_SNAPSHOT" />
-                <ScalarProperty Name="WASTE_CODE" ColumnName="WASTE_CODE" />
-                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
-                <ScalarProperty Name="IS_REQUIRED" ColumnName="IS_REQUIRED" />
-                <ScalarProperty Name="NEG_VALUE_ALLOWED" ColumnName="NEG_VALUE_ALLOWED" />
-                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
-                <ScalarProperty Name="DEFAULT_UOM" ColumnName="DEFAULT_UOM" />
-                <ScalarProperty Name="DEFAULT_CURRENCY_CODE" ColumnName="DEFAULT_CURRENCY_CODE" />
-                <ScalarProperty Name="REG_STATUS" ColumnName="REG_STATUS" />
-                <ScalarProperty Name="UN_CODE" ColumnName="UN_CODE" />
-                <ScalarProperty Name="MEASURE_PROMPT" ColumnName="MEASURE_PROMPT" />
-                <ScalarProperty Name="INPUT_SEQ" ColumnName="INPUT_SEQ" />
-                <ScalarProperty Name="MEASURE_ID" ColumnName="MEASURE_ID" />
-                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
-                <ScalarProperty Name="PRMR_ID" ColumnName="PRMR_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EHS_PROFILE_MEASURE_EXT">
             <EntityTypeMapping TypeName="PSsqmModel.EHS_PROFILE_MEASURE_EXT">
               <MappingFragment StoreEntitySet="EHS_PROFILE_MEASURE_EXT">
@@ -11806,6 +11785,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EHS_PROFILE_MEASURE">
+            <EntityTypeMapping TypeName="PSsqmModel.EHS_PROFILE_MEASURE">
+              <MappingFragment StoreEntitySet="EHS_PROFILE_MEASURE">
+                <ScalarProperty Name="DAY_DUE" ColumnName="DAY_DUE" />
+                <ScalarProperty Name="UOM_FACTOR" ColumnName="UOM_FACTOR" />
+                <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
+                <ScalarProperty Name="INPUT_SNAPSHOT" ColumnName="INPUT_SNAPSHOT" />
+                <ScalarProperty Name="WASTE_CODE" ColumnName="WASTE_CODE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="IS_REQUIRED" ColumnName="IS_REQUIRED" />
+                <ScalarProperty Name="NEG_VALUE_ALLOWED" ColumnName="NEG_VALUE_ALLOWED" />
+                <ScalarProperty Name="RESPONSIBLE_ID" ColumnName="RESPONSIBLE_ID" />
+                <ScalarProperty Name="DEFAULT_UOM" ColumnName="DEFAULT_UOM" />
+                <ScalarProperty Name="DEFAULT_CURRENCY_CODE" ColumnName="DEFAULT_CURRENCY_CODE" />
+                <ScalarProperty Name="REG_STATUS" ColumnName="REG_STATUS" />
+                <ScalarProperty Name="UN_CODE" ColumnName="UN_CODE" />
+                <ScalarProperty Name="MEASURE_PROMPT" ColumnName="MEASURE_PROMPT" />
+                <ScalarProperty Name="INPUT_SEQ" ColumnName="INPUT_SEQ" />
+                <ScalarProperty Name="MEASURE_ID" ColumnName="MEASURE_ID" />
+                <ScalarProperty Name="PLANT_ID" ColumnName="PLANT_ID" />
+                <ScalarProperty Name="PRMR_ID" ColumnName="PRMR_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -12010,12 +12013,7 @@
         <EntityTypeShape EntityType="PSsqmModel.GWP_FACTOR" Width="1.5" PointX="3.9002086016816122" PointY="3.6589711474529332" />
         <EntityTypeShape EntityType="PSsqmModel.GHG_FACTOR" Width="1.5" PointX="9.5280224091969536" PointY="8.39453277382745" />
         <EntityTypeShape EntityType="PSsqmModel.RESPONSE" Width="1.5" PointX="9.84928527374253" PointY="28.042111990992964" />
-        <EntityTypeShape EntityType="PSsqmModel.EHS_PROFILE_MEASURE" Width="1.5" PointX="9.8797675901464039" PointY="7.0241315844581145" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" />
         <EntityTypeShape EntityType="PSsqmModel.EHS_PROFILE_MEASURE_EXT" Width="1.5" PointX="4.8175574116490587" PointY="27.399754775408542" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" />
         <EntityTypeShape EntityType="PSsqmModel.CURRENCY_XREF" Width="1.5" PointX="0.31477152757103161" PointY="8.4929721842021557" />
         <AssociationConnector Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY" />
         <EntityTypeShape EntityType="PSsqmModel.INCFORM_POWEROUTAGE" Width="1.5" PointX="4.75" PointY="36.125" />
@@ -12082,7 +12080,6 @@
         <AssociationConnector Association="PSsqmModel.FK_ADDRESS_REFERENCE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_COST_REPORT_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_PERSON" />
-        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_JOBCODE" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_PERSON" />
         <AssociationConnector Association="PSsqmModel.FK_PERSON_PRIVGROUP" />
@@ -12117,6 +12114,12 @@
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_EHS_MEASURE" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_ORD_EHS_DATA" />
         <AssociationConnector Association="PSsqmModel.FK_EHS_DATA_PLANT" />
+        <EntityTypeShape EntityType="PSsqmModel.EHS_PROFILE_MEASURE" Width="1.5" PointX="7.9167930949091883" PointY="19.205469661953611" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE" />
+        <AssociationConnector Association="PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON" />
         </Diagram>
     </Diagrams>
   </Designer>

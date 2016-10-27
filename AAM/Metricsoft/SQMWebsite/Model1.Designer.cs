@@ -115,10 +115,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE", "INCIDENT_QUESTION_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_TYPE), "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS", "INCIDENT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL_ACTION), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_INPUT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_INPUT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_POWEROUTAGE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_POWEROUTAGE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
@@ -147,7 +143,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_ADDRESS_REFERENCE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "ADDRESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.ADDRESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "COST_REPORT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSON1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSON_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PRIVGROUP), "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSON), true)]
@@ -168,6 +163,11 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_ORD_EHS_DATA", "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_DATA), "EHS_DATA_ORD", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA_ORD), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_DATA_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "EHS_DATA", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_DATA), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_MEASURE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_INPUT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_INPUT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 
 #endregion
 
@@ -1598,22 +1598,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
-        {
-            get
-            {
-                if ((_EHS_PROFILE_MEASURE == null))
-                {
-                    _EHS_PROFILE_MEASURE = base.CreateObjectSet<EHS_PROFILE_MEASURE>("EHS_PROFILE_MEASURE");
-                }
-                return _EHS_PROFILE_MEASURE;
-            }
-        }
-        private ObjectSet<EHS_PROFILE_MEASURE> _EHS_PROFILE_MEASURE;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<EHS_PROFILE_MEASURE_EXT> EHS_PROFILE_MEASURE_EXT
         {
             get
@@ -2458,6 +2442,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<EHS_DATA> _EHS_DATA;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
+        {
+            get
+            {
+                if ((_EHS_PROFILE_MEASURE == null))
+                {
+                    _EHS_PROFILE_MEASURE = base.CreateObjectSet<EHS_PROFILE_MEASURE>("EHS_PROFILE_MEASURE");
+                }
+                return _EHS_PROFILE_MEASURE;
+            }
+        }
+        private ObjectSet<EHS_PROFILE_MEASURE> _EHS_PROFILE_MEASURE;
 
         #endregion
 
@@ -3152,14 +3152,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the EHS_PROFILE_MEASURE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToEHS_PROFILE_MEASURE(EHS_PROFILE_MEASURE eHS_PROFILE_MEASURE)
-        {
-            base.AddObject("EHS_PROFILE_MEASURE", eHS_PROFILE_MEASURE);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the EHS_PROFILE_MEASURE_EXT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToEHS_PROFILE_MEASURE_EXT(EHS_PROFILE_MEASURE_EXT eHS_PROFILE_MEASURE_EXT)
@@ -3581,6 +3573,14 @@ namespace SQM.Website
         public void AddToEHS_DATA(EHS_DATA eHS_DATA)
         {
             base.AddObject("EHS_DATA", eHS_DATA);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EHS_PROFILE_MEASURE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEHS_PROFILE_MEASURE(EHS_PROFILE_MEASURE eHS_PROFILE_MEASURE)
+        {
+            base.AddObject("EHS_PROFILE_MEASURE", eHS_PROFILE_MEASURE);
         }
 
         #endregion
@@ -17488,28 +17488,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE")]
-        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_DATA_EHS_MEASURE", "EHS_DATA")]
         public EntityCollection<EHS_DATA> EHS_DATA
         {
@@ -17522,6 +17500,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_DATA>("PSsqmModel.FK_EHS_DATA_EHS_MEASURE", "EHS_DATA", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE")]
+        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_MEASURE", "EHS_PROFILE_MEASURE", value);
                 }
             }
         }
@@ -18403,28 +18403,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE")]
-        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_PERSON", "PERSON")]
         public PERSON PERSON
         {
@@ -18453,6 +18431,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PERSON>("PSsqmModel.FK_EHS_PROFILE_PERSON", "PERSON", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE")]
+        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_EHS_PROFILE", "EHS_PROFILE_MEASURE", value);
                 }
             }
         }
@@ -19709,6 +19709,30 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _UOM_FACTOR;
         partial void OnUOM_FACTORChanging(Nullable<global::System.Decimal> value);
         partial void OnUOM_FACTORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DAY_DUE
+        {
+            get
+            {
+                return _DAY_DUE;
+            }
+            set
+            {
+                OnDAY_DUEChanging(value);
+                ReportPropertyChanging("DAY_DUE");
+                _DAY_DUE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DAY_DUE");
+                OnDAY_DUEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DAY_DUE;
+        partial void OnDAY_DUEChanging(Nullable<global::System.Int32> value);
+        partial void OnDAY_DUEChanged();
 
         #endregion
 
@@ -32647,28 +32671,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE")]
-        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_PERSON_JOBCODE", "JOBCODE")]
         public JOBCODE JOBCODE
         {
@@ -32899,6 +32901,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TASK_STATUS>("PSsqmModel.FK_TASK_STATUS_PERSON", "TASK_STATUS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE")]
+        public EntityCollection<EHS_PROFILE_MEASURE> EHS_PROFILE_MEASURE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EHS_PROFILE_MEASURE>("PSsqmModel.FK_EHS_PROFILE_MEASURE_PERSON", "EHS_PROFILE_MEASURE", value);
                 }
             }
         }

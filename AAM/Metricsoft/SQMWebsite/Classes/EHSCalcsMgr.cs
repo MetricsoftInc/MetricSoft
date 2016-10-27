@@ -1982,6 +1982,21 @@ namespace SQM.Website
                 {
                     switch (this.Calculation)
                     {
+						case "ratio":
+						case "ratioPct":
+							// ratio of two measures (nnn|nnn) e.g. pct of audits complete, jsa's / jsa's required,  observations / people
+							decimal[] denominatorIDS = GetMetricsByScope(this.SubScope); // this.SubScope.Split(',').Select(x => decimal.Parse(x)).ToArray();
+							if ((temp = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, denominatorIDS).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum()) != 0)
+							{
+								value = this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_VALUE).ToList().Sum() / temp;
+								if (this.Calculation == "ratioPct")
+									value = value * 100;
+							}
+							else
+							{
+								value = 0;
+							}
+							break;
                         case "cost":
 							value = (decimal)this.InitCalc().Calc.Select(fromDate, toDate, plantArray, measureArray).Select(l => l.MetricRec.MEASURE_COST).ToList().Sum();
                             break;
