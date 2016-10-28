@@ -180,6 +180,9 @@ namespace SQM.Website
             if (ddlMetricDisposalCode.Items.Count == 0)
             {
                 ddlDayDue.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(1, 31));
+
+				ddlMetricDue.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(1, 31));
+
                 ddlWarningDays.Items.AddRange(WebSiteCommon.PopulateDropDownListNums(0, 11));
 
                 ddlMetricDisposalCode.DataSource = SessionManager.DisposalCodeList;
@@ -532,6 +535,15 @@ namespace SQM.Website
             btnMetricCancel.Enabled = true;
             DisplayErrorMessage(null);
 
+			if (SessionManager.GetUserSetting("EHS", "PROFILE_METRIC_DAYDUE") != null && SessionManager.GetUserSetting("EHS", "PROFILE_METRIC_DAYDUE").VALUE.ToUpper() == "Y")
+			{
+				trMetricDue.Visible = true;
+			}
+			else
+			{
+				trMetricDue.Visible = false;
+			}
+
 			try
 			{
 				if (pm == null)
@@ -546,6 +558,7 @@ namespace SQM.Website
 					tbValueDflt.Text = tbCostDflt.Text = "";
 					cbEnableOverride.Checked = false;
 					cbMetricRequired.Checked = true;
+					ddlMetricDue.SelectedValue = ddlDayDue.SelectedValue;
 				}
 				else
 				{
@@ -559,6 +572,15 @@ namespace SQM.Website
 						ddlCategoryChanged(ddlMetricCategory, null);
 						ddlMetricID.SelectedValue = WebSiteCommon.PackItemValue(pm.EHS_MEASURE.MEASURE_CATEGORY, pm.EHS_MEASURE.EFM_TYPE, pm.EHS_MEASURE.MEASURE_ID.ToString());
 						lblMetricName.Text = pm.EHS_MEASURE.MEASURE_CD;
+
+						if (pm.DAY_DUE.HasValue)
+						{
+							ddlMetricDue.SelectedValue = pm.DAY_DUE.ToString();
+						}
+						else
+						{
+							ddlMetricDue.SelectedValue = ddlDayDue.SelectedValue;
+						}
 
 						if (pm.EHS_MEASURE.MEASURE_CATEGORY != "PROD" && pm.EHS_MEASURE.MEASURE_CATEGORY != "SAFE" && pm.EHS_MEASURE.MEASURE_CATEGORY != "FACT" && ddlMetricCurrency.Items.FindByValue(pm.DEFAULT_CURRENCY_CODE) != null)
 							ddlMetricCurrency.SelectedValue = pm.DEFAULT_CURRENCY_CODE;
@@ -708,6 +730,11 @@ namespace SQM.Website
             pm.REG_STATUS = ddlMetricRegStatus.SelectedValue;
             pm.UN_CODE = ddlMetricDisposalCode.SelectedValue;
             pm.WASTE_CODE = tbWasteCode.Text;
+
+			if (trMetricDue.Visible == true &&  ddlMetricDue.SelectedIndex != null && ddlMetricDue.SelectedIndex > -1)
+				pm.DAY_DUE = Convert.ToInt32(ddlMetricDue.SelectedValue);
+			else
+				pm.DAY_DUE = Convert.ToInt32(ddlDayDue.SelectedValue);
 
             pm.DEFAULT_CURRENCY_CODE = ddlMetricCurrency.SelectedValue;
             if (ddlMetricResponsible.SelectedIndex > 0)

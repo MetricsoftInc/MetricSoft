@@ -489,20 +489,24 @@ namespace SQM.Website
             RadComboBoxItem li;
             foreach (PERSPECTIVE_VIEW view in viewList.Where(l=> l.AVAILABILTY > 0).OrderBy(l => l.DISPLAY_SEQ).ThenBy(l => l.VIEW_NAME).ToList())
             {
-                if (viewList.Count > 8)
-                {
-                    if (view.PERSPECTIVE != perspective)
-                    {
-                        li = new RadComboBoxItem(WebSiteCommon.GetXlatValueLong("viewPerspective", view.PERSPECTIVE), WebSiteCommon.GetXlatValue("viewPerspective", view.PERSPECTIVE));
-                        li.IsSeparator = true;
-                        ddlViewList.Items.Add(li);
-                        perspective = view.PERSPECTIVE;
-                    }
-                }
-                
-                li = new RadComboBoxItem(view.VIEW_NAME, view.VIEW_ID.ToString());
-                li.ToolTip = view.VIEW_DESC;
-                ddlViewList.Items.Add(li);
+                //if (viewList.Count > 8)
+                //{
+                    //if (view.PERSPECTIVE != perspective)
+				if (view.PERSPECTIVE == "BR")	// separator
+				{
+					li = new RadComboBoxItem(WebSiteCommon.GetXlatValueLong("viewPerspective", view.PERSPECTIVE), WebSiteCommon.GetXlatValue("viewPerspective", view.PERSPECTIVE));
+					li.IsSeparator = true;
+					li.Text = view.VIEW_NAME;
+					ddlViewList.Items.Add(li);
+					// perspective = view.PERSPECTIVE;
+				}
+				//}
+				else
+				{
+					li = new RadComboBoxItem(view.VIEW_NAME, view.VIEW_ID.ToString());
+					li.ToolTip = view.VIEW_DESC;
+					ddlViewList.Items.Add(li);
+				}
             }
 
             ddlViewList.SelectedIndex = 0;

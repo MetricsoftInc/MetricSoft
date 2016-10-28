@@ -1771,6 +1771,7 @@ namespace SQM.Website
             rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
+			rad.ChartTitle.Appearance.TextStyle.Margin = "8 0 12 0";
 
             rad.Skin = "Metro";
             rad.Legend.Appearance.Position = rgCfg.LegendPosition;
@@ -1868,6 +1869,7 @@ namespace SQM.Website
             rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
+			rad.ChartTitle.Appearance.TextStyle.Margin = "8 0 12 0";
             //  rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin;
             rad.Skin = "Metro";
 
@@ -2263,6 +2265,7 @@ namespace SQM.Website
 			rad.ChartTitle.Text = rgCfg.Title;
             rad.ChartTitle.Appearance.TextStyle.FontSize = 12;
             rad.ChartTitle.Appearance.TextStyle.Bold = true;
+			rad.ChartTitle.Appearance.TextStyle.Margin = "8 0 12 0";
 
             //rad.PlotArea.YAxis.MinValue = rgCfg.ScaleMin;
             rad.Skin = "Metro";

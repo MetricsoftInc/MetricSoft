@@ -241,6 +241,15 @@
                                                     <asp:DropDownList ID="ddlMetricResponsible" runat="server" CssClass="WarnIfChanged" Width="250px"></asp:DropDownList>
                                                 </td>
                                             </tr>
+										   <tr id="trMetricDue" runat="server">
+												<td class="columnHeader">
+													<asp:Label ID="lblMetricDue" runat="server" text="Day Due" meta:resourcekey="lblInputsDueResource1"></asp:Label>
+												</td>
+												<td class="tableDataAlt">&nbsp;</td>
+												<td CLASS="tableDataAlt">
+													<asp:DropDownList ID="ddlMetricDue" runat="server" CssClass="WarnIfChanged"></asp:DropDownList>
+												</td>
+											</tr>
                                             <asp:PlaceHolder ID="phCostWaste" runat="server">
                                                 <tr>
                                                     <td class="columnHeader">
