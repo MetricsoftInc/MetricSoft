@@ -803,7 +803,7 @@ namespace SQM.Website
                      
 					 metricMgr.Load(localCriteria.DateInterval, localCriteria.DateSpanType);
                     //if (UserContext.RoleAccess() >= AccessMode.Plant)
-                          lnkExport.Visible = true;
+                          //lnkExport.Visible = true;
 						  if (context == "export")
 						  {
 							  uclProgress.ProgressComplete();

@@ -803,12 +803,14 @@ namespace SQM.Website
         private System.Web.UI.HtmlControls.HtmlGenericControl CreateContainer(GaugeDefinition rgCfg, string detailHTML)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl div = new System.Web.UI.HtmlControls.HtmlGenericControl();
-            div.Style.Add("TEXT-ALIGN", "center");
+            //div.Style.Add("TEXT-ALIGN", "center");
 
             //if (sectionDiv != null && rgCfg.ItemVisual.Contains("CENTER"))
 			if (rgCfg.ItemVisual.Contains("CENTER"))
             {
-                div.Style.Add("DISPLAY", "INLINE-BLOCK");
+                div.Style.Add("text-align", "center");
+				if (!rgCfg.NewRow)
+					div.Style.Add("DISPLAY", "INLINE-BLOCK");
             }
             else
             {
@@ -859,6 +861,7 @@ namespace SQM.Website
             if (rgCfg.NewRow)
             {
                 sectionDiv.Style.Add("WIDTH", "99.5%");
+				sectionDiv.Style.Add("text-align", "center");
             }
             if (!rgCfg.ItemVisual.Contains("NOBORDER"))
             {

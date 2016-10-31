@@ -108,7 +108,7 @@
                            <span style="float: right; margin-right: 20px;" class="noprint">
                                 <asp:LinkButton ID="btnRefreshDashboard" runat="server" ToolTip="Refresh the dashboard display" CSSClass="buttonRefresh" OnClick="btnRefreshDashboard_Click" Text="<%$ Resources:LocalizedText, Refresh %>"></asp:LinkButton>
                                 <asp:LinkButton ID="lnkPrint" runat="server" CssClass="buttonPrint" Text="<%$ Resources:LocalizedText, Print %>" style="margin-left: 5px;" OnClientClick="javascript:window.print()"></asp:LinkButton>
-                                <asp:LinkButton  ID="lnkExport" runat="server" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExportClick"></asp:LinkButton>
+                                <asp:LinkButton  ID="lnkExport" runat="server" visible="false" Text="<%$ Resources:LocalizedText, Export %>" ToolTip="<%$ Resources:LocalizedText, ExportDataToExcelFormat %>" CssClass="buttonDownload" style="margin-left: 5px;" OnClick="lnkExportClick"></asp:LinkButton>
                             </span>
                          </telerik:RadAjaxPanel>
                     </td>
