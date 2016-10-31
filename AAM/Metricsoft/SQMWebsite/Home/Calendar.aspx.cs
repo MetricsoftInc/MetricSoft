@@ -231,16 +231,15 @@ namespace SQM.Website
 
 			if (UserContext.CheckUserPrivilege(SysPriv.view, SysScope.inbox))
 			{
-				taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(SessionManager.UserContext.LocalTime.Year, SessionManager.UserContext.LocalTime.Month, SessionManager.UserContext.LocalTime.Day), respForList, respPlantList));
+				//taskList.AddRange(TaskMgr.ProfileInputStatus(new DateTime(fromDate.Year, fromDate.Month, 1), new DateTime(SessionManager.UserContext.LocalTime.Year, SessionManager.UserContext.LocalTime.Month, SessionManager.UserContext.LocalTime.Day), respForList, respPlantList));
+				DateTime inputFromDate = new DateTime(DateTime.UtcNow.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, 1);
+				taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(inputFromDate, toDate, respForList, respPlantList.ToArray(), SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
 				taskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, false));
 			}
 			taskScheduleList.AddRange(taskList);
 			taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false));
 
-			//taskScheduleList.Clear();
-			//respForList.Clear();
-			//respForList.Add(24);
-			taskScheduleList.AddRange(TaskMgr.ProfileInputSchedule(DateTime.Now, toDate, respForList, respPlantList.ToArray(), SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.busorg)));
+
 			enableItemLinks = true;
 
 			uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);

@@ -727,7 +727,7 @@ namespace SQM.Website
 							foreach (WebSiteCommon.DatePeriod period in WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, DateSpanOption.SelectRange, ""))
 							{
 								TaskItem taskItem = null;
-								List<decimal> prmrList = new List<decimal>();
+								List<EHS_PROFILE_MEASURE> prmrList = new List<EHS_PROFILE_MEASURE>();
 								int dayDue = 0;
 								if ((measure=reqList.Where(l => l.PLANT_ID == plantID && l.RESPONSIBLE_ID == responsibleID).FirstOrDefault()) != null)
 								{
@@ -760,96 +760,57 @@ namespace SQM.Website
 											taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plantID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
 										else
 											taskItem.RecordKey = "";  // don't allow data input beyond current month
-
-										//prmrList.Clear();
 									}
 									taskItem.Description += (meas.EHS_MEASURE.MEASURE_NAME + ", ");
-									//prmrList.Add(meas.PRMR_ID);
+									if (meas.IS_REQUIRED.HasValue  &&  meas.IS_REQUIRED == true)	// check for required inputs
+										prmrList.Add(meas);
 								}
 
-								/*
-								if (period.ToDate < DateTime.UtcNow)	// prior month
+								if (period.ToDate.Date < DateTime.UtcNow.Date)	// check if required inputs were entered for prior months
 								{
-									int numInputs = (from i in entities.EHS_PROFILE_INPUT 
-													 where i.PERIOD_YEAR == period.ToDate.Year &&  i.PERIOD_MONTH == period.ToDate.Month 
-													 && prmrList.Contains(i.PRMR_ID) 
-													 select i).Count();
-									if (numInputs < prmrList.Count)
+									decimal[] idArray = prmrList.Select(p => p.PRMR_ID).ToArray();
+									var inputs = (from i in entities.EHS_PROFILE_INPUT
+												  where i.PERIOD_YEAR == period.ToDate.Year && i.PERIOD_MONTH == period.ToDate.Month
+												  && idArray.Contains(i.PRMR_ID)
+												  select new
+												  {
+													  PRMRID = i.PRMR_ID,
+													  value = i.MEASURE_VALUE
+												  }).ToList();
+									taskItem = null;
+									foreach (EHS_PROFILE_MEASURE meas in prmrList.Distinct().ToList())
 									{
-										// overdue inputs
+										if (inputs.Where(i => i.PRMRID == meas.PRMR_ID).Count() == 0)
+										{
+											if (taskItem == null || (meas.DAY_DUE.HasValue && meas.DAY_DUE != dayDue))
+											{
+												taskItem = new TaskItem();
+												taskList.Add(taskItem);
+												taskItem.Taskstatus = TaskStatus.Overdue;
+												taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "30").FirstOrDefault().DESCRIPTION;
+												taskItem.Plant = meas.EHS_PROFILE.PLANT;
+												taskItem.LongTitle = taskItem.Plant.PLANT_NAME + " - " + taskItem.Title;
+												taskItem.Description = "";
+												taskItem.Detail = null;
+												taskItem.Task = new TASK_STATUS();
+												taskItem.Task.COMPLETE_ID = 0;
+												taskItem.Task.STATUS = "0";
+												taskItem.Task.TASK_TYPE = "C";
+												if (responsibleIDS.Count > 0)
+													taskItem.NotifyType = SetNotifyType(responsibleIDS[0], responsibleID, taskItem.Taskstatus);
+												dayDue = meas.DAY_DUE.HasValue ? (int)meas.DAY_DUE : dayDue;
+												taskItem.TaskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, dayDue);
+												taskItem.Task.DUE_DT = taskItem.TaskDate;
+												taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInput);
+												taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + plantID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
+											}
+											taskItem.Description += (meas.EHS_MEASURE.MEASURE_NAME + ", ");
+										}
 									}
 								}
-								*/
 							}
 						}
 					}
-
-					/*
-                    foreach (WebSiteCommon.DatePeriod period in WebSiteCommon.CalcDatePeriods(fromDate, toDate, DateIntervalType.month, DateSpanOption.SelectRange, ""))
-                    {
-                        decimal[] plantArray = reqList.Select(l => l.PLANT_ID).Distinct().ToArray();
-                        EHSProfile profile = null;
-                        foreach (int plantID in plantArray)
-                        {
-                            string respMeasures = "";
-                            string reqMeasures = "";
-                            string reqResponsible = "";
-                            decimal responsibleID = 0;
-                            bool isResponsible = false;
-                            bool isReqResponsible = false;
-                            foreach (EHS_PROFILE_MEASURE pm in reqList.Where(l => l.PLANT_ID == plantID))
-                            {
-                                if (responsibleIDS.Contains((decimal)pm.RESPONSIBLE_ID))
-                                {
-                                    responsibleID = (decimal)pm.RESPONSIBLE_ID;
-                                    if (string.IsNullOrEmpty(pm.MEASURE_PROMPT))
-                                        respMeasures += (pm.EHS_MEASURE.MEASURE_NAME.Trim() + ",");
-                                    else
-                                        respMeasures += (pm.MEASURE_PROMPT.Trim() + ",");    // use measure prompt if exists
-                                   
-                                    isResponsible = true;
-                                    if (string.IsNullOrEmpty(reqResponsible) || !reqResponsible.Contains(SQMModelMgr.FormatPersonListItem(pm.PERSON)))
-                                        reqResponsible += (SQMModelMgr.FormatPersonListItem(pm.PERSON) + ",");
-                                }
-
-                                if ((profile = plantProfileList.Where(l => l.Plant.PLANT_ID == plantID).FirstOrDefault()) == null)
-                                {
-                                    profile = new EHSProfile();
-                                    profile.Profile = reqList.Where(l => l.PLANT_ID == plantID).Select(l => l.EHS_PROFILE).FirstOrDefault();
-                                    profile.Plant = reqList.Where(l => l.PLANT_ID == plantID).Select(l => l.EHS_PROFILE.PLANT).FirstOrDefault();
-                                    profile.PeriodList = new List<EHSProfilePeriod>();
-                                    plantProfileList.Add(profile);
-                                }
-                            }
-                            // only display inputs beyond today's date
-                            DateTime taskDate = new DateTime(period.FromDate.Year, period.FromDate.Month, profile.Profile.DAY_DUE);
-                            if (taskDate.Date > DateTime.UtcNow.Date)
-                            {
-                                TaskItem taskItem = new TaskItem();
-                                taskItem.RecordType = Convert.ToInt32(TaskRecordType.ProfileInput);
-                                taskItem.TaskDate = taskDate;
-                                if (taskItem.TaskDate <= new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month)))
-                                    taskItem.RecordKey = taskItem.RecordType.ToString() + "|" + profile.Plant.PLANT_ID + "~" + period.FromDate.Year + "~" + period.FromDate.Month;
-                                else
-                                    taskItem.RecordKey = "";  // don't allow data input beyond current month
-                                taskItem.Taskstatus = TaskStatus.Pending;
-                                taskItem.Plant = profile.Plant;
-								taskItem.Title = XLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == "30").FirstOrDefault().DESCRIPTION;
-                                taskItem.LongTitle = profile.Plant.PLANT_NAME + " - " + taskItem.Title;
-                                taskItem.Description = respMeasures.TrimEnd(',');
-                                taskItem.Detail = reqResponsible.TrimEnd(',');
-                                taskItem.Task = new TASK_STATUS();
-                                taskItem.Task.DUE_DT = new DateTime(period.FromDate.Year, period.FromDate.Month, profile.Profile.DAY_DUE);
-                                taskItem.Task.COMPLETE_ID = 0;
-                                taskItem.Task.STATUS = "0";
-                                taskItem.Task.TASK_TYPE = "C";
-                                if (responsibleIDS.Count > 0)
-                                    taskItem.NotifyType = SetNotifyType(responsibleIDS[0], responsibleID, taskItem.Taskstatus);
-                                taskList.Add(taskItem);
-                            }
-                        }
-                    }
-					*/
                 }
             }
             catch
