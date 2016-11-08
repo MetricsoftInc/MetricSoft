@@ -298,6 +298,7 @@
     <xlat code="PROD" short="Accounting" long="Plant accounting"/>
     <xlat code="SAFE" short="Safety" long="Helth &amp; Safety" />
     <xlat code="FACT" short="Factor" long="Normalization factor e.g. qty consumed/produced/sold, revenue..." />
+	<xlat code="SEWG" short="Sewage" long="Sewage"/>
   </measureCategoryEHS>
   <invoiceSpan>
     <xlat code="MINDATE" short="6" long="6" />
