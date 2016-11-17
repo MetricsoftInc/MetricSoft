@@ -21,6 +21,7 @@ namespace SQM.Website.Reports
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
 			set { ViewState["ReportXLAT"] = value; }
 		}
+		/*
 		public Font detailHdrFont
 		{
 			get { return ViewState["DetailHdrFont"] == null ? null : (Font)ViewState["DetailHdrFont"]; }
@@ -61,7 +62,16 @@ namespace SQM.Website.Reports
 			get { return ViewState["ColHdrFont"] == null ? null : (Font)ViewState["ColHdrFont"]; }
 			set { ViewState["ColHdrFont"] = value; }
 		}
-
+		*/
+		public iTextSharp.text.Font detailHdrFont;
+		public iTextSharp.text.Font detailLblFont;
+		public iTextSharp.text.Font infoFont;
+		public iTextSharp.text.Font detailTxtFont;
+		public iTextSharp.text.Font detailTxtBoldFont;
+		public iTextSharp.text.Font detailTxtBoldItalicFont;
+		public iTextSharp.text.Font detailTxtItalicFont;
+		public iTextSharp.text.Font labelTxtFont;
+		public iTextSharp.text.Font colHdrFont;
 		string baseApplicationUrl;
 
 		protected void Page_Load(object sender, EventArgs e)
