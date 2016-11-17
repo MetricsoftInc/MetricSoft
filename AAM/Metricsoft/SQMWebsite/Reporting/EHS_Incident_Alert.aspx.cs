@@ -58,6 +58,11 @@ namespace SQM.Website.EHS
 			get { return ViewState["DetailHdrFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailHdrFont"]; }
 			set { ViewState["DetailHdrFont"] = value; }
 		}
+		public iTextSharp.text.Font detailLblFont
+		{
+			get { return ViewState["DetailLblFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailLblFont"]; }
+			set { ViewState["DetailLblFont"] = value; }
+		}
 		public iTextSharp.text.Font infoFont
 		{
 			get { return ViewState["InfoFont"] == null ? null : (iTextSharp.text.Font)ViewState["InfoFont"]; }
@@ -93,31 +98,6 @@ namespace SQM.Website.EHS
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			/*
-			ExcelPackage export = new ExcelPackage();
-			exportSheet = export.Workbook.Worksheets.Add("EHS Incident Alert");
-			exportSheet.Cells[1, 1].Value = "test cell";
-
-			MemoryStream ms = new MemoryStream(SQM.Website.Classes.SQMDocumentMgr.GetAttachmentByteArray(6m));
-			ExcelPicture pic = exportSheet.Drawings.AddPicture("pic", System.Drawing.Image.FromStream(ms));
-			pic.SetPosition(50, 1);
-
-			MemoryStream ms = new MemoryStream(pageData.photoData[i]);
-			ExcelPicture pic = exportSheet.Drawings.AddPicture("pic", System.Drawing.Image.FromStream(ms));
-			pic.SetPosition((++exportRow * 25) + 25, 1);
-
-			export.Workbook.Properties.Title = "test";
-			Response.Clear();
-			Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-			Response.AddHeader(
-					  "content-disposition",
-					  string.Format("attachment;  filename={0}", "ExcellData.xlsx"));
-			Response.BinaryWrite(export.GetAsByteArray());
-			Response.End();
-			Response.Flush();
-			Response.Close();
-			*/
-
 			ShowPdf(BuildPdf());
 		}
 
@@ -183,6 +163,7 @@ namespace SQM.Website.EHS
 					incidentDate = "N/A",
 					incidentTime = "N/A",
 					incidentLocation = "N/A",
+					locationNLS = "en",
 					incidentDept = "N/A",
 					incidentNumber = "N/A",
 					incidentType = "N/A",
@@ -243,12 +224,27 @@ namespace SQM.Website.EHS
 			iTextSharp.text.Font colHeaderFont = GetTextFont();
 			iTextSharp.text.Font textItalicFont = GetTextFont();
 
+			// Chinese text font
+			iTextSharp.text.Font textFontZH = GetZHFont();
+
 			detailHdrFont = new iTextSharp.text.Font(headerFont.BaseFont, 13, 0, lightGrayColor);
-			detailTxtFont = new iTextSharp.text.Font(textFont.BaseFont, 10, 0, blackColor);
+			detailLblFont = new iTextSharp.text.Font(textFont.BaseFont, 10, 0, blackColor);
 			labelTxtFont = new iTextSharp.text.Font(labelFont.BaseFont, 12, 0, blackColor);
 			colHdrFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.UNDERLINE, blackColor);
-			detailTxtItalicFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+
 			detailTxtBoldFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD, blackColor);
+
+			switch (pageData.locationNLS)
+			{
+				case "zh":
+					detailTxtFont = new iTextSharp.text.Font(textFontZH.BaseFont, 10, 0, blackColor);
+					detailTxtItalicFont = new iTextSharp.text.Font(textFontZH.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+					break;
+				default:
+					detailTxtFont = new iTextSharp.text.Font(textFont.BaseFont, 10, 0, blackColor);
+					detailTxtItalicFont = new iTextSharp.text.Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+					break;
+			}
 
 			// Create new PDF document
 			Document document = new Document(PageSize.A4, 35f, 35f, 35f, 35f);
@@ -403,11 +399,11 @@ namespace SQM.Website.EHS
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation), detailLblFont));
 			tableHeader.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "LOCATION").DESCRIPTION_SHORT + ":  {0}", pageData.incidentDept), detailLblFont));
 			tableHeader.AddCell(cell);
 
 			if (exportOption == "xls")
@@ -421,11 +417,11 @@ namespace SQM.Website.EHS
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthBottom = cell.BorderWidthRight = .25f;
-			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT,pageData.incidentDate), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "DATE").DESCRIPTION_SHORT,pageData.incidentDate), detailLblFont));
 			tableHeader.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthRight = .25f;
-			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT, pageData.incidentTime), detailTxtFont));
+			cell.AddElement(new Paragraph(String.Format("{0}" + ":  {1}", SQMBasePage.GetXLAT(reportXLAT, "HS_ALERT", "TIME").DESCRIPTION_SHORT, pageData.incidentTime), detailLblFont));
 			tableHeader.AddCell(cell);
 
 			if (exportOption == "xls")
@@ -635,9 +631,12 @@ namespace SQM.Website.EHS
 			{
 				try
 				{
-					string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
+					//string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
+					PLANT plant = SQMModelMgr.LookupPlant((decimal)d.incident.DETECT_PLANT_ID);
+					string plantName = plant.PLANT_NAME;
 					d.incidentLocation = plantName;
-					d.incidentNumber = iid.ToString();
+					if (plant.LOCAL_LANGUAGE.HasValue)
+						d.locationNLS = SQMModelMgr.LookupLanguage(entities, "", (int)plant.LOCAL_LANGUAGE, false).NLS_LANGUAGE;
 
 					string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
 					decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);
@@ -808,6 +807,17 @@ namespace SQM.Website.EHS
 			if (!FontFactory.IsRegistered(fontName))
 			{
 				var fontPath = Server.MapPath("~") + "images\\fonts\\Ubuntu-Regular.ttf";
+				FontFactory.Register(fontPath);
+			}
+			return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		}
+
+		public iTextSharp.text.Font GetZHFont()		// chinese font
+		{
+			var fontName = "simhei";
+			if (!FontFactory.IsRegistered(fontName))
+			{
+				var fontPath = Server.MapPath("~") + "images\\fonts\\simhei.ttf";
 				FontFactory.Register(fontPath);
 			}
 			return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);

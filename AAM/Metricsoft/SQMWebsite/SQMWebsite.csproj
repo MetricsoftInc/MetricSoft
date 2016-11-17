@@ -2400,6 +2400,7 @@
     <Content Include="bin\DataRollup.exe.config" />
     <Content Include="bin\FileImport.exe.config" />
     <Content Include="bin\HourlyTasks.exe.config" />
+    <Content Include="images\fonts\simhei.ttf" />
     <None Include="Properties\PublishProfiles\AAM - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\AAMStaging - Rackspace.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />

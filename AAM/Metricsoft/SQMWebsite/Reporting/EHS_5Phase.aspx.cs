@@ -14,6 +14,7 @@ namespace SQM.Website.EHS
 		public string incidentDate;
 		public string incidentTime;
 		public string incidentLocation;
+		public string locationNLS;
 		public string incidentDept;
 		public string incidentNumber;
 		public string incidentType;
@@ -39,6 +40,7 @@ namespace SQM.Website.EHS
 			incidentDate = "N/A";
 			incidentTime = "N/A";
 			incidentLocation = "N/A";
+			locationNLS = "en";
 			incidentDept = "N/A";
 			incidentNumber = "N/A";
 			incidentType = "N/A";
