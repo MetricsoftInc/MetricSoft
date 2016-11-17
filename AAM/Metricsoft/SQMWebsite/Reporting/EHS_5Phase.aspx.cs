@@ -634,7 +634,7 @@ namespace SQM.Website.EHS
 				{
 					string plantName = EHSIncidentMgr.SelectPlantNameById((decimal)d.incident.DETECT_PLANT_ID);
 					d.incidentLocation = plantName;
-					d.incidentNumber = iid.ToString();
+					d.incidentNumber = WebSiteCommon.FormatID(iid, 6);
 
 					string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
 					decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);

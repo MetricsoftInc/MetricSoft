@@ -648,6 +648,7 @@ namespace SQM.Website.EHS
 					if (plant.LOCAL_LANGUAGE.HasValue)
 						d.locationNLS = SQMModelMgr.LookupLanguage(entities, "", (int)plant.LOCAL_LANGUAGE, false).NLS_LANGUAGE;
 
+					d.incidentNumber = WebSiteCommon.FormatID(iid, 6);
 					string incidentType = EHSIncidentMgr.SelectIncidentTypeByIncidentId(iid);
 					decimal incidentTypeId = EHSIncidentMgr.SelectIncidentTypeIdByIncidentId(iid);
 					decimal companyId = d.incident.DETECT_COMPANY_ID;
