@@ -80,43 +80,6 @@ namespace SQM.Website.Reports
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
 			set { ViewState["ReportXLAT"] = value; }
 		}
-		/*
-		public Font detailHdrFont
-		{
-			get { return ViewState["DetailHdrFont"] == null ? null : (Font)ViewState["DetailHdrFont"]; }
-			set { ViewState["DetailHdrFont"] = value; }
-		}
-		public Font infoFont
-		{
-			get { return ViewState["InfoFont"] == null ? null : (Font)ViewState["InfoFont"]; }
-			set { ViewState["InfoFont"] = value; }
-		}
-		public Font detailTxtFont
-		{
-			get { return ViewState["DetailTxtFont"] == null ? null : (Font)ViewState["DetailTxtFont"]; }
-			set { ViewState["DetailTxtFont"] = value; }
-		}
-		public Font detailTxtItalicFont
-		{
-			get { return ViewState["DetailTxtItalicFont"] == null ? null : (Font)ViewState["DetailTxtItalicFont"]; }
-			set { ViewState["DetailTxtItalicFont"] = value; }
-		}
-		public Font detailTxtBoldFont
-		{
-			get { return ViewState["DetailTxtBoldFont"] == null ? null : (Font)ViewState["DetailTxtBoldFont"]; }
-			set { ViewState["DetailTxtBoldFont"] = value; }
-		}
-		public Font labelTxtFont
-		{
-			get { return ViewState["LabelTxtFont"] == null ? null : (Font)ViewState["LabelTxtFont"]; }
-			set { ViewState["LabelTxtFont"] = value; }
-		}
-		public Font colHdrFont
-		{
-			get { return ViewState["ColHdrFont"] == null ? null : (Font)ViewState["ColHdrFont"]; }
-			set { ViewState["ColHdrFont"] = value; }
-		}
-		*/
 
 		public iTextSharp.text.Font detailHdrFont;
 		public iTextSharp.text.Font detailLblFont;

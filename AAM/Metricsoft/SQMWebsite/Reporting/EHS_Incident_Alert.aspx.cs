@@ -53,48 +53,6 @@ namespace SQM.Website.EHS
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
 			set { ViewState["ReportXLAT"] = value; }
 		}
-		/*
-		public iTextSharp.text.Font detailHdrFont
-		{
-			get { return ViewState["DetailHdrFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailHdrFont"]; }
-			set { ViewState["DetailHdrFont"] = value; }
-		}
-		public iTextSharp.text.Font detailLblFont
-		{
-			get { return ViewState["DetailLblFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailLblFont"]; }
-			set { ViewState["DetailLblFont"] = value; }
-		}
-		public iTextSharp.text.Font infoFont
-		{
-			get { return ViewState["InfoFont"] == null ? null : (iTextSharp.text.Font)ViewState["InfoFont"]; }
-			set { ViewState["InfoFont"] = value; }
-		}
-		public iTextSharp.text.Font detailTxtFont
-		{
-			get { return ViewState["DetailTxtFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtFont"]; }
-			set { ViewState["DetailTxtFont"] = value; }
-		}
-		public iTextSharp.text.Font detailTxtBoldFont
-		{
-			get { return ViewState["DetailTxtBoldFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtBoldFont"]; }
-			set { ViewState["DetailTxtBoldFont"] = value; }
-		}
-		public iTextSharp.text.Font detailTxtItalicFont
-		{
-			get { return ViewState["DetailTxtItalicFont"] == null ? null : (iTextSharp.text.Font)ViewState["DetailTxtItalicFont"]; }
-			set { ViewState["DetailTxtItalicFont"] = value; }
-		}
-		public iTextSharp.text.Font labelTxtFont
-		{
-			get { return ViewState["LabelTxtFont"] == null ? null : (iTextSharp.text.Font)ViewState["LabelTxtFont"]; }
-			set { ViewState["LabelTxtFont"] = value; }
-		}
-		public iTextSharp.text.Font colHdrFont
-		{
-			get { return ViewState["ColHdrFont"] == null ? null : (iTextSharp.text.Font)ViewState["ColHdrFont"]; }
-			set { ViewState["ColHdrFont"] = value; }
-		}
-		*/
 
 		public iTextSharp.text.Font detailHdrFont;
 		public iTextSharp.text.Font detailLblFont;
