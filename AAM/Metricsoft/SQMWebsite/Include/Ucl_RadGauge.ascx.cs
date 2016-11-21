@@ -1916,7 +1916,8 @@ namespace SQM.Website
                         item.Y = Convert(data.YValue ?? 0, rgCfg.Multiplier);
                     }
 
-                    sumY += Math.Abs((decimal)item.Y);
+					
+                    sumY += item.Y.HasValue ?  Math.Abs((decimal)item.Y) : 0;
                     if (numSeries == 1)
                     {
                         rad.PlotArea.XAxis.Items.Add(new AxisItem(data.Text));
