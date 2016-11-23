@@ -141,8 +141,14 @@ namespace SQM.Website
 
             try
             {
-				CultureInfo culture = new CultureInfo(SessionManager.UserContext.Language.NLS_LANGUAGE);
-                strValue = date.ToString(fmt, culture);
+				if (CultureSettings.gregorianCalendarOverrides.Contains(SessionManager.UserContext.Language.NLS_LANGUAGE))
+				{
+					strValue = date.ToString(fmt, new CultureInfo("en"));
+				}
+				else
+				{
+					strValue = date.ToString(fmt, new CultureInfo(SessionManager.UserContext.Language.NLS_LANGUAGE));
+				}
             }
             catch { }
 
