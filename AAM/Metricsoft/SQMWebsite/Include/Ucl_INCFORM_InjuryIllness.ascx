@@ -771,7 +771,7 @@
 				</div>
 			</div>
 			<asp:Label ID="lblIncidentMsg" runat="server" Visible="false" CssClass="labelEmphasis"></asp:Label>
-			<div id="divRecordableHist" runat="server" class="borderSoft tableData" style="margin-top: 5px; margin-bottom: 10px; width: 100%;">
+			<div id="divRecordableHist" runat="server" class="borderSoft tableData" style="margin-top: 10px; width: 100%;">
 				<center>
 				<div>
 					<br />
@@ -786,7 +786,7 @@
 	<br />
 
 	<telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
-		<div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 5px;">
+		<div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 10px;">
 			<center>
 				<br />
 				<asp:Label ID="lbAttachemnt" runat="server" CssClass="sectionTitlesSmall" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label>
