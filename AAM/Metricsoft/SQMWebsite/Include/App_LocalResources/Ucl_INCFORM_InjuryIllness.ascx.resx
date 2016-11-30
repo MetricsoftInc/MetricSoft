@@ -160,7 +160,13 @@
     <value>Local Description</value>
   </data>
   <data name="lbLostTimeResource1.Text" xml:space="preserve">
-    <value>Lost Or Restricted Time?</value>
+    <value>Lost Time?</value>
+  </data>
+	<data name="lbRestrictedTimeResource1.Text" xml:space="preserve">
+    <value>Restricted Time?</value>
+  </data>
+	<data name="lbRecordableHistResource1.Text" xml:space="preserve">
+    <value>Lost And Restricted Time History</value>
   </data>
   <data name="lblSubmittedResource1.Text" xml:space="preserve">
     <value>Power Outage submitted.</value>

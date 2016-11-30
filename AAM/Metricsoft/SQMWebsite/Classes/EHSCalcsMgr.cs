@@ -1117,13 +1117,15 @@ namespace SQM.Website
             return this;
         }
 
-        public List<EHSIncidentData> SelectIncidentList(List<decimal> plantIdList, List<decimal> incidentTypeList, DateTime fromDate, DateTime toDate, string incidentStatus, bool selectAttachments, decimal createID)
+        public List<EHSIncidentData> SelectIncidentList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string> severityList, DateTime fromDate, DateTime toDate, string incidentStatus, bool selectAttachments, decimal createID)
         {
             try
             {
 				this.IncidentHst = (from i in this.Entities.INCIDENT 
                                     join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
                                     join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
+									join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i
+									from d in d_i.DefaultIfEmpty()
                                     where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
 									&& (createID == 0  ||  i.CREATE_PERSON == createID)
                                     && incidentTypeList.Contains((decimal)i.ISSUE_TYPE_ID) && plantIdList.Contains((decimal)i.DETECT_PLANT_ID))
@@ -1131,8 +1133,14 @@ namespace SQM.Website
                                     {
                                         Incident = i,
                                         Plant = p,
-                                        Person = r
+                                        Person = r,
+										InjuryDetail = d
                                     }).ToList();
+
+				if (severityList != null && severityList.Count > 0)
+				{
+					this.IncidentHst = this.IncidentHst.Where(l => l.MatchSeverity(severityList) == true).ToList();
+				}
 
                 if (this.IncidentHst != null)
                 {

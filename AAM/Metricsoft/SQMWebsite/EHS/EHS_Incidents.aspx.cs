@@ -53,6 +53,7 @@ namespace SQM.Website
 			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbIncidentType);
+			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbSeverity);
 		  
 			this.Mode = IncidentMode.Incident;
 		}
@@ -239,11 +240,12 @@ namespace SQM.Website
 		{
 			if (ddlPlantSelect.Items.Count < 1)
 			{
-				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[1] { "STATUS_SELECT" }, 1);
+				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[2] { "STATUS_SELECT","INCIDENT_SEVERITY" }, 1);
 				List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true);
 				SQMBasePage.SetLocationList(ddlPlantSelect, UserContext.FilterPlantAccessList(locationList), 0);
 				rcbStatusSelect = SQMBasePage.SetComboBoxItemsFromXLAT(rcbStatusSelect, xlatList.Where(l => l.XLAT_GROUP == "STATUS_SELECT" &&  new string[3]{"","A","C"}.Contains(l.XLAT_CODE)).ToList(), "SHORT");
 				rcbStatusSelect.SelectedValue = "A";
+				rcbSeverity = SQMBasePage.SetComboBoxItemsFromXLAT(rcbSeverity, xlatList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY").OrderBy(l=> l.SORT_ORDER).ToList(), "SHORT");
 			}
 			divIncidentList.Visible = true;
 			pnlChartSection.Style.Add("display", "none");
@@ -433,7 +435,7 @@ namespace SQM.Website
 			List<decimal>  plantIDS = SQMBasePage.GetComboBoxCheckedItems(ddlPlantSelect).Select(i => Convert.ToDecimal(i.Value)).ToList();
 			
 			var typeList = new List<decimal>();
-			List<string> statusList = new List<string>();
+			List<string> severityList = new List<string>();
 
 			if (HSCalcs() == null)
 			{
@@ -441,13 +443,22 @@ namespace SQM.Website
 					item.Checked = true;
 			}
 			typeList = rcbIncidentType.Items.Where(c => c.Checked).Select(c => Convert.ToDecimal(c.Value)).ToList();
+			if (typeList.Contains((decimal)EHSIncidentTypeId.InjuryIllness))
+			{
+				severityList = rcbSeverity.Items.Where(c => c.Checked).Select(c => c.Value).ToList();
+			}
+			else
+			{
+				severityList.Clear();
+				rcbSeverity.Items.ToList().ForEach(i => i.Checked = false);
+			}
 			selectedValue = rcbStatusSelect.SelectedValue;
 
 			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
-			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, fromDate, toDate, selectedValue, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
+			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, severityList, fromDate, toDate, selectedValue, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
 				
 			if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 				HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();

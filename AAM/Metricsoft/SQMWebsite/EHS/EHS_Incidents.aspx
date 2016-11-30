@@ -132,22 +132,19 @@
 				<div class="container-fluid summaryDataEnd" style="padding: 3px 4px 7px 0">
 
 					<div class="row-fluid">
-
 						<span style="float: left; width: 160px;">
 							<asp:Label runat="server" ID="lblPlantSelect" CssClass="prompt"></asp:Label>
 						</span>&nbsp;&nbsp;
 									<br class="visible-xs-block" />
-						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="256px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
+						<telerik:RadComboBox ID="ddlPlantSelect" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="350px" Width="457px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 
 						<div class="visible-xs"></div>
 						<br class="visible-xs-block" style="margin-top: 7px;" />
-
 					</div>
 
 					<asp:PlaceHolder ID="phIncident" runat="server">
 
 						<div class="row-fluid">
-
 							<span style="float: left; width: 160px;">
 								<asp:Label runat="server" ID="lblIncidentType" CssClass="prompt"></asp:Label>
 							</span>&nbsp;&nbsp;
@@ -156,7 +153,16 @@
 
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" style="margin-top: 7px;" />
+						</div>
+						<div class="row-fluid">
+							<span style="float: left; width: 160px;">
+								<asp:Label runat="server" ID="lblSeverity" CssClass="prompt" Text="Severity"></asp:Label>
+							</span>&nbsp;&nbsp;
+										<br class="visible-xs-block" />
+							<telerik:RadComboBox ID="rcbSeverity" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="150px" Width="256px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
 
+							<div class="visible-xs"></div>
+							<br class="visible-xs-block" style="margin-top: 7px;" />
 							<span style="padding-left:12px;">
 							<asp:Label runat="server" ID="lblStatus" CssClass="prompt"></asp:Label>
 							<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="Select incident status to list" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false" meta:resourcekey="rcbStatusSelectResource1">
@@ -169,8 +175,6 @@
 
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" />
-
-							
 						</div>
 					</asp:PlaceHolder>
 

@@ -181,6 +181,11 @@ namespace SQM.Website
 			get;
 			set;
 		}
+		public INCFORM_INJURYILLNESS InjuryDetail
+		{
+			get;
+			set;
+		}
 		public PROB_CASE ProbCase
 		{
 			get;
@@ -275,6 +280,45 @@ namespace SQM.Website
 			}
 
 			return days;
+		}
+
+		public bool MatchSeverity(List<string> severityList)
+		{
+			bool status = severityList == null || severityList.Count == 0 ? true : false;
+
+			if (this.InjuryDetail != null)
+			{
+				foreach (string severity in severityList)
+				{
+					switch (severity)
+					{
+						case "FIRSTAID":
+							if (this.InjuryDetail.FIRST_AID == true)
+								status = true;
+							break;
+						case "RECORDABLE":
+							if (this.InjuryDetail.RECORDABLE == true)
+								status = true;
+							break;
+						case "LOSTTIME":
+							if (this.InjuryDetail.LOST_TIME == true)
+								status = true;
+							break;
+						case "RESTRICTEDTIME":
+							if (this.InjuryDetail.RESTRICTED_TIME == true)
+								status = true;
+							break;
+						case "FATALITY":
+							if (this.InjuryDetail.FATALITY == true)
+								status = true;
+							break;
+						default:
+							break;
+					}
+				}
+			}
+
+			return status;
 		}
 
 		public EHSIncidentTimeAccounting IncidentAccounting(int workdays)
@@ -1242,7 +1286,8 @@ namespace SQM.Website
 
 				losttime.ITEM_DESCRIPTION = "";
 				losttime.WORK_STATUS = "";
-				losttime.BEGIN_DT = DateTime.UtcNow;
+				losttime.BEGIN_DT = null;
+				//losttime.BEGIN_DT = DateTime.UtcNow;
 				losttime.NEXT_MEDAPPT_DT = null;
 				losttime.RETURN_EXPECTED_DT = null;
 				losttime.RETURN_TOWORK_DT = null;

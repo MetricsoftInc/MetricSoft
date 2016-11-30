@@ -1003,49 +1003,94 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lbLostTimeXS;
         
         /// <summary>
-        /// rdoLostTime control.
+        /// cbLostTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdoLostTime;
+        protected global::System.Web.UI.WebControls.CheckBox cbLostTime;
         
         /// <summary>
-        /// pnlExpReturnDT control.
+        /// lblLostTimeCalc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlExpReturnDT;
+        protected global::System.Web.UI.WebControls.Label lblLostTimeCalc;
         
         /// <summary>
-        /// lbExpectReturnDTSM control.
+        /// lbRestrictedTimeSM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbExpectReturnDTSM;
+        protected global::System.Web.UI.WebControls.Label lbRestrictedTimeSM;
         
         /// <summary>
-        /// lbExpectReturnDTXS control.
+        /// lbRestrictedTimeXS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbExpectReturnDTXS;
+        protected global::System.Web.UI.WebControls.Label lbRestrictedTimeXS;
         
         /// <summary>
-        /// rdpExpectReturnDT control.
+        /// cbRestrictedTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker rdpExpectReturnDT;
+        protected global::System.Web.UI.WebControls.CheckBox cbRestrictedTime;
+        
+        /// <summary>
+        /// lblRestrictedTimeCalc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRestrictedTimeCalc;
+        
+        /// <summary>
+        /// lblIncidentMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIncidentMsg;
+        
+        /// <summary>
+        /// divRecordableHist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRecordableHist;
+        
+        /// <summary>
+        /// lblRecordableHist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRecordableHist;
+        
+        /// <summary>
+        /// uclRecordableHist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Ucl_INCFORM_LostTime_Hist uclRecordableHist;
         
         /// <summary>
         /// rapAttach control.
@@ -1057,33 +1102,6 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadAjaxPanel rapAttach;
         
         /// <summary>
-        /// dvAttachLbl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAttachLbl;
-        
-        /// <summary>
-        /// lbAttachemntSM control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbAttachemntSM;
-        
-        /// <summary>
-        /// lbAttachemntXS control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbAttachemntXS;
-        
-        /// <summary>
         /// dvAttach control.
         /// </summary>
         /// <remarks>
@@ -1091,6 +1109,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvAttach;
+        
+        /// <summary>
+        /// lbAttachemnt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbAttachemnt;
         
         /// <summary>
         /// uploader control.
@@ -1109,15 +1136,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm2;
-        
-        /// <summary>
-        /// ucllosttime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_LostTime_Hist ucllosttime;
         
         /// <summary>
         /// uclcontain control.
@@ -1235,15 +1253,6 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavVideo;
-        
-        /// <summary>
-        /// btnSubnavLostTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavLostTime;
         
         /// <summary>
         /// btnSubnavContainment control.

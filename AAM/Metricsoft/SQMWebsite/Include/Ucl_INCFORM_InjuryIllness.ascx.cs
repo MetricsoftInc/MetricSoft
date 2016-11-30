@@ -15,7 +15,6 @@ namespace SQM.Website
 {
 	public partial class Ucl_INCFORM_InjuryIllness : System.Web.UI.UserControl
 	{
-
 		const Int32 MaxTextLength = 4000;
 
 		static List<PLANT> plantList;
@@ -173,7 +172,7 @@ namespace SQM.Website
 
 		protected override void OnInit(EventArgs e)
 		{
-			//uclAttachWin.AttachmentEvent += OnVideoUpdate;
+			uclRecordableHist.LostTimeUpdateEvent += LostTimeUpdate;
 			base.OnInit(e);
 		}
 		
@@ -417,12 +416,12 @@ namespace SQM.Website
 							tbProcedures.Text = injuryIllnessDetails.STD_PROCS_DESC;
 						}
 
-						Severity_Changed(rdoFirstAid, null);
-
-						SetLostTime(IsFullPagePostback, injuryIllnessDetails);  // why are we calling this ?
+						SetSeverityControls(injuryIllnessDetails);
 					}
 
 					GetAttachments(EditIncidentId);
+
+					RecordableHist(injuryIllnessDetails.RECORDABLE == true ? true : false);
 				}
 			}
 			else
@@ -447,8 +446,7 @@ namespace SQM.Website
 					rdoTrainingProvided.SelectedValue = "";
 					rdoFirstAid.SelectedValue = "";
 					rdoRecordable.SelectedValue = "";
-					rdoLostTime.SelectedValue = "";
-					rdpExpectReturnDT.Clear();
+					cbLostTime.Checked = cbRestrictedTime.Checked = false;
 					rddlJobTenure.Items.Clear();
 					rddlEmploymentTenure.Items.Clear();
 					rddlInjuryType.Items.Clear();
@@ -476,11 +474,11 @@ namespace SQM.Website
 
 					PopulateDepartmentDropDown(IncidentLocationId);
 
-					SetLostTime(IsFullPagePostback, null);
-
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
 					GetAttachments(0);
+
+					RecordableHist(false);
 				}
 			}
 
@@ -514,7 +512,6 @@ namespace SQM.Website
 			uclcontain.Visible = false;
 			uclaction.Visible = false;
 			uclapproval.Visible = false;
-			ucllosttime.Visible = false;
 			lblFormTitle.Text = Resources.LocalizedText.Incident;
 			btnSubnavIncident.Enabled = false;
 			btnSubnavIncident.CssClass = "buttonLinkDisabled";
@@ -545,47 +542,66 @@ namespace SQM.Website
 
 		protected void Severity_Changed(object sender, EventArgs e)
 		{
-			RadioButtonList rbl = (RadioButtonList)sender;
+			string rblId = "";
+			RadioButtonList rbl = null;
+			if (sender != null)
+			{
+				rbl = (RadioButtonList)sender;
+				rblId = rbl.ID;
+			}
 
-			switch (rbl.ID)
+			lblIncidentMsg.Visible = false;
+
+			switch (rblId)
 			{
 				case "rdoFirstAid":
 					if (rbl.SelectedValue == "1")
 					{
-						rdoRecordable.Enabled = rdoFatality.Enabled = rdoLostTime.Enabled = false;
+						if (uclRecordableHist.CheckForkWorkStatus("01") > 0 || uclRecordableHist.CheckForkWorkStatus("03") > 0)
+						{
+							rdoFirstAid.SelectedValue = "0";
+							lblIncidentMsg.Visible = true;
+							lblIncidentMsg.Text = Resources.LocalizedText.RecordableIncidentMsg;
+							return;
+						}
+
+						rdoRecordable.Enabled = rdoFatality.Enabled = false;
 						rdoRecordable.SelectedValue = "0";
 						rdoFatality.SelectedValue = "0";
-						rdoLostTime.SelectedValue = "0";
+						cbLostTime.Checked = cbRestrictedTime.Checked = false;
 					}
 					else
 					{
-						rdoRecordable.Enabled = rdoFatality.Enabled = rdoLostTime.Enabled = true;
+						rdoRecordable.Enabled = true;
+						rdoRecordable.SelectedValue = "1";
+						RecordableHist(true);
+						rdoFatality.Enabled = true;
 					}
 					break;
 				case "rdoRecordable":
 					if (rbl.SelectedValue == "1")
 					{
-						rdoFatality.Enabled = rdoLostTime.Enabled = true;
+						rdoFatality.Enabled = true;
+						RecordableHist(true);
 					}
 					else
 					{
+						if (uclRecordableHist.CheckForkWorkStatus("01") > 0 || uclRecordableHist.CheckForkWorkStatus("03") > 0)
+						{
+							rdoRecordable.SelectedValue = "1";
+							lblIncidentMsg.Visible = true;
+							lblIncidentMsg.Text = lblIncidentMsg.Text = Resources.LocalizedText.RecordableIncidentMsg;
+							return;
+						}
+						rdoFirstAid.Enabled = true;
+						rdoFirstAid.SelectedValue = "1";
+						rdoFatality.Enabled = false;
 						rdoFatality.SelectedValue = "0";
-						rdoLostTime.SelectedValue = "0";
-						rdoFatality.Enabled = rdoLostTime.Enabled = false;
+						cbLostTime.Checked = cbRestrictedTime.Checked = false;
+						RecordableHist(false);
 					}
 					break;
 				case "rdoFatality":
-					if (rbl.SelectedValue == "1")
-					{
-						rdoLostTime.Enabled = false;
-						rdoLostTime.SelectedValue = "0";
-					}
-					else
-					{
-						rdoLostTime.Enabled = true;
-					}
-					break;
-				case "rdoLostTime":
 					break;
 				default:
 					break;
@@ -593,69 +609,79 @@ namespace SQM.Website
 			
 		}
 
-		void SetLostTime(bool isPostBack, INCFORM_INJURYILLNESS injuryIllnessDetails)
+		protected void SetSeverityControls(INCFORM_INJURYILLNESS incformDetails)
 		{
-			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
-
-			//PSsqmEntities entities = new PSsqmEntities();
-			//var injuryIllnessDetails = EHSIncidentMgr.SelectInjuryIllnessDetailsById(entities, incidentId);
-
-
-			int lthCount = 0;
-			//if (injuryIllnessDetails != null)
-			//	lthCount = (from lth in entities.INCFORM_LOSTTIME_HIST where (lth.INCIDENT_ID == injuryIllnessDetails.INCIDENT_ID) select lth).Count();
-
-			if (!isPostBack)
+			if (incformDetails.FIRST_AID == true)
 			{
-				rdoLostTime.SelectedValue = "0";
-				//rdpExpectReturnDT.Clear();
-				//pnlExpReturnDT.Visible = false;
-
-				if (injuryIllnessDetails != null)
-				{
-					if (injuryIllnessDetails.LOST_TIME == true)
-					{
-						rdoLostTime.SelectedValue = "1";
-						//pnlExpReturnDT.Visible = true;
-						//if (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null)
-						//	rdpExpectReturnDT.SelectedDate = injuryIllnessDetails.EXPECTED_RETURN_WORK_DT;
-						//else
-						//	rdpExpectReturnDT.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
-					}
-				}
-
+				rdoFirstAid.SelectedValue = "1";
+				rdoFirstAid.Enabled = true;
+				rdoRecordable.SelectedValue = rdoFatality.SelectedValue = "0";
+				rdoRecordable.Enabled = rdoFatality.Enabled = false;
+				cbLostTime.Checked = cbRestrictedTime.Checked = false;
 			}
 			else
 			{
-				/*
-				if (lthCount != null && lthCount > 0)
+				rdoFirstAid.SelectedValue = "0";
+				if (incformDetails.RECORDABLE == true)
 				{
-
+					rdoFirstAid.Enabled = false;
+					rdoRecordable.SelectedValue = "1";
+					rdoRecordable.Enabled = rdoFatality.Enabled = true;
+					if (incformDetails.LOST_TIME == true)
+						cbLostTime.Checked = true;
+					if (incformDetails.RESTRICTED_TIME == true)
+						cbRestrictedTime.Checked = true;
 				}
 				else
 				{
-
-					rdpExpectReturnDT.Clear();
-					pnlExpReturnDT.Visible = false;
-
-					if (rdoLostTime.SelectedValue == "1")
-					{
-						pnlExpReturnDT.Visible = true;
-
-						if (injuryIllnessDetails != null)
-						{
-							if (injuryIllnessDetails.LOST_TIME == true)
-								rdpExpectReturnDT.SelectedDate = (injuryIllnessDetails.EXPECTED_RETURN_WORK_DT != null) ? injuryIllnessDetails.EXPECTED_RETURN_WORK_DT : null;
-							else
-								rdpExpectReturnDT.SelectedDate = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
-						}
-					}
+					rdoFirstAid.Enabled = true;
+					rdoFatality.Enabled = false;
 				}
-				*/
+			}
+		}
+
+		protected void LostTimeUpdate(string cmd)
+		{
+			if (uclRecordableHist.CheckForkWorkStatus("01") > 0)
+				cbRestrictedTime.Checked = true;
+			else
+				cbRestrictedTime.Checked = false;
+
+			if (uclRecordableHist.CheckForkWorkStatus("03") > 0)
+				cbLostTime.Checked = true;
+			else
+				cbLostTime.Checked = false;
+
+			hfChangeUpdate.Value = "1";
+		}
+
+		void RecordableHist(bool enabled)
+		{
+			divRecordableHist.Visible = enabled;
+			uclRecordableHist.Visible = enabled;
+			if (enabled)
+			{
+				uclRecordableHist.IsEditContext = true;
+				uclRecordableHist.IncidentId = EditIncidentId;
+				uclRecordableHist.PopulateInitialForm("embeded");
+			}
+		}
+
+		private INCFORM_INJURYILLNESS SetLostTime(INCFORM_INJURYILLNESS injuryIllnessDetails)
+		{
+			injuryIllnessDetails.LOST_TIME = injuryIllnessDetails.RESTRICTED_TIME = false;
+
+			if (uclRecordableHist.CheckForkWorkStatus("03") > 0)
+			{
+				injuryIllnessDetails.LOST_TIME = true;
 			}
 
-			//if (IsEditContext)
-			//	rdoLostTime.Enabled = (lthCount != null && lthCount > 0) ? rdoLostTime.Enabled == false : true;  // ???
+			if (uclRecordableHist.CheckForkWorkStatus("01") > 0)
+			{
+				injuryIllnessDetails.RESTRICTED_TIME = true;
+			}
+
+			return injuryIllnessDetails;
 		}
 
 
@@ -808,8 +834,10 @@ namespace SQM.Website
 		private void GetAttachments(decimal incidentId)
 		{
 			uploader.SetAttachmentRecordStep("1");
+			uploader.SetReportOption(false);
+			uploader.SetDescription(true);
 			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavLostTime", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval"};
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval"};
 
 			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
 			int px = 128;
@@ -818,12 +846,14 @@ namespace SQM.Website
 			{
 				px = px + (attCnt * 30) + 35;
 				uploader.GetUploadedFiles(40, incidentId, "");
-
 			}
 
+			/*
+
+			*/
 			// Set the html Div height based on number of attachments to be displayed in the grid:
-			dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
-			dvAttach.Style.Add("height", px.ToString() + "px !important");
+			//dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+			//dvAttach.Style.Add("height", px.ToString() + "px !important");
 		}
 
 
@@ -1025,7 +1055,6 @@ namespace SQM.Website
 
 				btnSubnavSave.Visible = false;
 				btnSubnavIncident.Visible = false;
-				btnSubnavLostTime.Visible = false;
 				btnSubnavContainment.Visible = false;
 				btnSubnavRootCause.Visible = false;
 				btnSubnavCausation.Visible = false;
@@ -1049,18 +1078,19 @@ namespace SQM.Website
 		{
 			if (context == "new")
 			{
-				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
-				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+				uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
 				btnSubnavApproval_1.Visible = btnSubnavApproval_2.Visible = btnSubnavApproval_3.Visible = btnSubnavApproval_35.Visible = btnSubnavApproval_4.Visible = false;
 				btnDeleteInc.Visible = false;
 				uploader.SetViewMode(true);
 			}
 			else if (context == "alert")
 			{
-				btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
 				btnSubnavApproval_1.Visible = btnSubnavApproval_2.Visible = btnSubnavApproval_3.Visible = btnSubnavApproval_35.Visible = btnSubnavApproval_4.Visible = false;
 				uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = true;
 				uploader.SetViewMode(false);
+				uploader.SetReportOption(false);
 
 				uclcontain.IsEditContext = true;
 				uclcontain.IncidentId = EditIncidentId;
@@ -1089,13 +1119,14 @@ namespace SQM.Website
 			}
 			else
 			{
-				ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
-				btnSubnavLostTime.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavVideo.Visible = true;
+				uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
+				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavVideo.Visible = true;
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
 				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				uploader.SetViewMode(btnSubnavSave.Enabled);
+				uploader.SetReportOption(false);
 				btnDeleteInc.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 				// incident alert
 				if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
@@ -1135,7 +1166,7 @@ namespace SQM.Website
 			int status = 0;
 			bool isEdit = IsEditContext;
 
-			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavContainment.Visible = btnSubnavVideo.Visible = true;
+			btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavContainment.Visible = btnSubnavVideo.Visible = true;
 
 			decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
@@ -1181,10 +1212,6 @@ namespace SQM.Website
 					if ((status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId, 0)) >= 0)
 						btnSubnav_Click(btnSubnavApproval, null);
 					break;
-				case "6":
-					if ((status = ucllosttime.AddUpdateINCFORM_LOSTTIME_HIST(incidentId)) >= 0)
-						btnSubnav_Click(btnSubnavLostTime, null);
-					break;
 				case "10":
 					// save cross-plant alerts
 					break;
@@ -1198,18 +1225,6 @@ namespace SQM.Website
 			{
 				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-				/*
-				if((CurrentSubnav == "0"  || CurrentSubnav == "I")  &&  TheINCFORM != null)
-				{
-					if (TheINCFORM.LOST_TIME == true)
-						btnSubnav_Click(btnSubnavLostTime, null);
-					else
-					{
-						if (!isEdit)
-							btnSubnav_Click(btnSubnavContainment, null);
-					}
-				}
-				*/
 			}
 		}
 
@@ -1217,13 +1232,13 @@ namespace SQM.Website
 		{
 			LinkButton btn = (LinkButton)sender;
 
-			pnlBaseForm.Visible = ucllosttime.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;  
-			btnSubnavLostTime.Visible = btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+			pnlBaseForm.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;  
+			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavLostTime.Enabled = btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = true;
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = true;
 			btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
-			btnSubnavLostTime.CssClass = btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
+			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
 			btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
 			btnSubnavSave.Visible = btnDeleteInc.Visible = false;
 
@@ -1298,20 +1313,6 @@ namespace SQM.Website
 					uclaction.PopulateInitialForm();
 					/*
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					*/
-					break;
-				case "6":
-					lblFormTitle.Text = Resources.LocalizedText.LostTimeHistory;
-					btnSubnavLostTime.Enabled = false;
-					btnSubnavLostTime.CssClass = "buttonLinkDisabled";
-					ucllosttime.Visible = true;
-					ucllosttime.IsEditContext = true;
-					ucllosttime.IncidentId = EditIncidentId;
-					ucllosttime.PopulateInitialForm();
-					/*
-					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);  // can log lost time ?
-					if (btnSubnavSave.Visible == false)
-						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, IncidentStepCompleted, (int)IncidentStepStatus.workstatus);  // check if has closed incident priv
 					*/
 					break;
 				// approval steps
@@ -1422,6 +1423,7 @@ namespace SQM.Website
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 					btnDeleteInc.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 					uploader.SetViewMode(btnSubnavSave.Enabled);
+					uploader.SetReportOption(false);
 					break;
 			}
 		}
@@ -1494,6 +1496,13 @@ namespace SQM.Website
 				if (incidentId == 0)
 					incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 				IsEditContext = true;
+
+				if (TheINCFORM.LOST_TIME == true ||  TheINCFORM.RESTRICTED_TIME == true)
+				{
+					uclRecordableHist.IncidentId = TheIncident.INCIDENT_ID;
+					uclRecordableHist.WorkStatusIncident = TheIncident;
+					uclRecordableHist.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+				}
 			}
 
 			return theincidentId;
@@ -1645,12 +1654,6 @@ namespace SQM.Website
 			if (!String.IsNullOrEmpty(rdoFatality.SelectedValue))
 				newInjryIllnessDetails.FATALITY = Convert.ToBoolean((Convert.ToInt32(rdoFatality.SelectedValue)));
 
-			if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
-				newInjryIllnessDetails.LOST_TIME =  Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
-
-			if (rdpExpectReturnDT.SelectedDate != null)
-				newInjryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
-
 			if (!String.IsNullOrEmpty(rddlInjuryType.SelectedValue))
 				newInjryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
 
@@ -1670,6 +1673,8 @@ namespace SQM.Website
 				newInjryIllnessDetails.STD_PROCS_DESC = tbProcedures.Text.Trim();
 			}
 
+			newInjryIllnessDetails = SetLostTime(newInjryIllnessDetails); 
+
 			entities.AddToINCFORM_INJURYILLNESS(newInjryIllnessDetails);
 
 			entities.SaveChanges();
@@ -1677,6 +1682,8 @@ namespace SQM.Website
 			AddUpdate_Witnesses(incidentId);
 
 			UpdateInicidentAnswers(incidentId, newInjryIllnessDetails);
+
+			lblIncidentMsg.Visible = false;
 
 			return newInjryIllnessDetails;
 		}
@@ -1753,43 +1760,6 @@ namespace SQM.Website
 					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
 
 					entities.AddToINCFORM_WITNESS(newItem);
-					entities.SaveChanges();
-				}
-			}
-		}
-
-
-		private void SaveLostTime(decimal incidentId, List<INCFORM_LOSTTIME_HIST> itemList)
-		{
-
-			PSsqmEntities entities = new PSsqmEntities();
-
-			using (var ctx = new PSsqmEntities())
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID = {0}", incidentId);
-			}
-
-			int seq = 0;
-
-			foreach (INCFORM_LOSTTIME_HIST item in itemList)
-			{
-				var newItem = new INCFORM_LOSTTIME_HIST();
-
-				if (item.WORK_STATUS != "")
-				{
-					newItem.INCIDENT_ID = incidentId;
-					newItem.ITEM_DESCRIPTION = item.ITEM_DESCRIPTION;
-
-					newItem.WORK_STATUS = item.WORK_STATUS;
-					newItem.BEGIN_DT = item.BEGIN_DT;
-					newItem.RETURN_TOWORK_DT = item.RETURN_TOWORK_DT;
-					newItem.NEXT_MEDAPPT_DT = item.NEXT_MEDAPPT_DT;
-					newItem.RETURN_EXPECTED_DT = item.RETURN_EXPECTED_DT;
-
-					newItem.LAST_UPD_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
-					newItem.LAST_UPD_DT = WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ);
-
-					entities.AddToINCFORM_LOSTTIME_HIST(newItem);
 					entities.SaveChanges();
 				}
 			}
@@ -1879,12 +1849,6 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(rdoFatality.SelectedValue))
 					injuryIllnessDetails.FATALITY = Convert.ToBoolean((Convert.ToInt32(rdoFatality.SelectedValue)));
 
-				if (!String.IsNullOrEmpty(rdoLostTime.SelectedValue))
-					injuryIllnessDetails.LOST_TIME = Convert.ToBoolean((Convert.ToInt32(rdoLostTime.SelectedValue)));
-
-				if (rdpExpectReturnDT.SelectedDate != null)
-					injuryIllnessDetails.EXPECTED_RETURN_WORK_DT = rdpExpectReturnDT.SelectedDate;
-
 				if (!String.IsNullOrEmpty(rddlInjuryType.SelectedValue))
 					injuryIllnessDetails.INJURY_TYPE = rddlInjuryType.SelectedValue;
 
@@ -1904,10 +1868,14 @@ namespace SQM.Website
 					injuryIllnessDetails.STD_PROCS_DESC = tbProcedures.Text.Trim();
 				}
 
+				injuryIllnessDetails = SetLostTime(injuryIllnessDetails); 
+
 				entities.SaveChanges();
 				AddUpdate_Witnesses(incidentId);
 
 				UpdateInicidentAnswers(incidentId, injuryIllnessDetails);
+
+				lblIncidentMsg.Visible = false;
 			}
 			return injuryIllnessDetails;
 		}

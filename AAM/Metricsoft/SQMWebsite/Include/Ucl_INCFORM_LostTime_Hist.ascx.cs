@@ -32,6 +32,8 @@ namespace SQM.Website
 
 		public decimal theincidentId { get; set; }
 
+		public event CommandClick LostTimeUpdateEvent;
+
 		public bool IsEditContext
 		{
 			get { return ViewState["IsEditContext"] == null ? false : (bool)ViewState["IsEditContext"]; }
@@ -78,16 +80,19 @@ namespace SQM.Website
 
 		protected void Page_Init(object sender, EventArgs e)
 		{
+			/*
 			if (SessionManager.SessionContext != null)
 			{
 				if (IsFullPagePostback)
 					rptLostTime.DataBind();
 			}
+			*/
 		}
 
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			/*
 			PSsqmEntities entities = new PSsqmEntities();
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 
@@ -117,6 +122,7 @@ namespace SQM.Website
 
 			//if (!IsFullPagePostback)
 			//	PopulateInitialForm();
+			*/
 		}
 
 
@@ -136,12 +142,20 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
+			PopulateInitialForm("");
+		}
+		public void PopulateInitialForm(string context)
+		{
 			lblStatusMsg.Visible = false;
 			PSsqmEntities entities = new PSsqmEntities();
+			hfContext.Value = context;
 
 			IncidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 
+			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
+
 			if (IncidentId > 0)
+			{
 				try
 				{
 					WorkStatusIncident = (from i in entities.INCIDENT where i.INCIDENT_ID == IncidentId select i).Single();
@@ -151,6 +165,12 @@ namespace SQM.Website
 
 				}
 				catch { return; }
+			}
+			else
+			{
+				WorkStatusIncident = new INCIDENT();
+				WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED = 100;
+			}
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
@@ -167,7 +187,7 @@ namespace SQM.Website
 
 			//SetUserAccess("INCFORM_LOSTTIME_HIST");
 
-			if (IncidentId > 0)
+			if (IncidentId >= 0)
 			{
 				pnlLostTime.Visible = true;
 				if (PageMode == PageUseMode.ViewOnly)
@@ -179,6 +199,39 @@ namespace SQM.Website
 				rptLostTime.DataBind();
 				//EHSIncidentMgr.CalculateWorkStatusSummary(EHSIncidentMgr.CalculateWorkStatusAccounting(new PSsqmEntities(), IncidentId, null, null));
 			}
+		}
+
+		public int CheckForkWorkStatus(string workStatus)
+		{
+			int count = 0;
+			// 01 = RESTRICTED DUTY
+			// 03 = LOST TIME
+
+			foreach (RepeaterItem losttimeitem in rptLostTime.Items)
+			{
+				if (losttimeitem.ItemType == ListItemType.AlternatingItem || losttimeitem.ItemType == ListItemType.Item)
+				{
+					INCFORM_LOSTTIME_HIST item = new INCFORM_LOSTTIME_HIST();
+
+					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
+					if (rddlw.SelectedValue == workStatus)
+					{
+						++count;
+					}
+				}
+			}
+
+			return count;
+		}
+
+		public bool CheckForChange()
+		{
+			bool changed = false;
+
+			if (hfChangeUpdate.Value == "1")
+				changed = true;
+
+			return changed;
 		}
 
 		public void rptLostTime_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -269,11 +322,19 @@ namespace SQM.Website
 			if (btnSave.Visible == false)
 				btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED, (int)IncidentStepStatus.workstatus);  // check if has closed incident priv
 			btnAddLostTime.Visible = btnSave.Visible;
+
+			if (hfContext.Value == "embeded")
+				btnSave.Visible = false;
 		}
 
 		protected void AddDelete_Click(object sender, EventArgs e)
 		{
+			hfChangeUpdate.Value = "1";
 			rptLostTime_ItemCommand(sender, null);
+			if (LostTimeUpdateEvent != null)
+			{
+				LostTimeUpdateEvent("AddOrDelete");
+			}
 		}
 
 		public int AddUpdateINCFORM_LOSTTIME_HIST(decimal incidentId)
@@ -381,12 +442,12 @@ namespace SQM.Website
 			{
 				EHSIncidentMgr.UpdateIncidentStatus(incidentId, IncidentStepStatus.workstatus, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 			}
-
+			/*
 			if (status > -1)
 			{
 				EHSNotificationMgr.NotifyIncidentStatus(WorkStatusIncident, ((int)SysPriv.update).ToString(), "Work status updated");
 			}
-
+			*/
 			return status;
 		}
 
@@ -408,6 +469,7 @@ namespace SQM.Website
 			if (cmd == "AddAnother")
 			{
 				var itemList = new List<INCFORM_LOSTTIME_HIST>();
+				bool hasEmptyItem = false;
 
 				foreach (RepeaterItem losttimeitem in rptLostTime.Items)
 				{
@@ -416,7 +478,6 @@ namespace SQM.Website
 					Label lb = (Label)losttimeitem.FindControl("lbItemSeq");
 
 					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
-					//rddlw.SelectedIndexChanged += rddlw_SelectedIndexChanged;
 
 					TextBox tbr = (TextBox)losttimeitem.FindControl("tbRestrictDesc");
 					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
@@ -436,6 +497,11 @@ namespace SQM.Website
 					if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
 						item.WORK_STATUS = rddlw.SelectedValue;
 
+					if (rddlw.SelectedIndex == -1  ||  string.IsNullOrEmpty(rddlw.SelectedValue))
+					{
+						hasEmptyItem = true;
+					}
+
 					item.ITEM_DESCRIPTION = tbr.Text;
 					item.BEGIN_DT = bd.SelectedDate;
 					//item.RETURN_TOWORK_DT = rd.SelectedDate;
@@ -445,23 +511,30 @@ namespace SQM.Website
 					itemList.Add(item);
 				}
 
-				var emptyItem = new INCFORM_LOSTTIME_HIST();
+				if (!hasEmptyItem)
+				{
+					var emptyItem = new INCFORM_LOSTTIME_HIST();
 
-				emptyItem.ITEM_DESCRIPTION = "";
-				emptyItem.WORK_STATUS = null;
-				emptyItem.BEGIN_DT = null;
-				emptyItem.RETURN_TOWORK_DT = null;
-				emptyItem.NEXT_MEDAPPT_DT = null;
-				emptyItem.RETURN_EXPECTED_DT = null;
-
-				itemList.Add(emptyItem);
-
+					emptyItem.ITEM_DESCRIPTION = "";
+					emptyItem.WORK_STATUS = null;
+					emptyItem.BEGIN_DT = null;
+					emptyItem.RETURN_TOWORK_DT = null;
+					emptyItem.NEXT_MEDAPPT_DT = null;
+					emptyItem.RETURN_EXPECTED_DT = null;
+					itemList.Add(emptyItem);
+				
+				}
 				rptLostTime.DataSource = itemList;
 				rptLostTime.DataBind();
 
 				Label lbResultsCtl = (Label)this.Page.FindControl("lbResults");
 				if (lbResultsCtl != null)
 					lbResultsCtl.Text = "";
+
+				if (LostTimeUpdateEvent != null)
+				{
+					LostTimeUpdateEvent("AddOrDelete");
+				}
 			}
 
 			else if (cmd == "Delete")
@@ -514,6 +587,11 @@ namespace SQM.Website
 				decimal incidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 				SaveLostTime(incidentId, itemList);
 
+				if (LostTimeUpdateEvent != null)
+				{
+					LostTimeUpdateEvent("AddOrDelete");
+				}
+
 			}
 		}
 
@@ -538,6 +616,12 @@ namespace SQM.Website
 				RadDatePicker md = (RadDatePicker)losttimeitem.FindControl("rdpNextMedDate");
 				RadDatePicker ed = (RadDatePicker)losttimeitem.FindControl("rdpExpectedReturnDT");
 
+				item.ITEM_DESCRIPTION = tbr.Text;
+				item.BEGIN_DT = bd.SelectedDate;
+				//item.RETURN_TOWORK_DT = rd.SelectedDate;
+				item.NEXT_MEDAPPT_DT = md.SelectedDate;
+				item.RETURN_EXPECTED_DT = ed.SelectedDate;
+
 				rddlw.Items.Add(new DropDownListItem("", ""));
 				List<EHSMetaData> statuses = EHSMetaDataMgr.SelectMetaDataList("WORK_STATUS");
 				foreach (var s in statuses)
@@ -546,13 +630,13 @@ namespace SQM.Website
 				}
 
 				if (!string.IsNullOrEmpty(rddlw.SelectedValue) && (rddlw.SelectedValue != ""))
+				{
 					item.WORK_STATUS = rddlw.SelectedValue;
-
-				item.ITEM_DESCRIPTION = tbr.Text;
-				item.BEGIN_DT = bd.SelectedDate;
-				//item.RETURN_TOWORK_DT = rd.SelectedDate;
-				item.NEXT_MEDAPPT_DT = md.SelectedDate;
-				item.RETURN_EXPECTED_DT = ed.SelectedDate;
+					if (!item.BEGIN_DT.HasValue)
+					{
+						item.BEGIN_DT = DateTime.UtcNow;
+					}
+				}
 
 				itemList.Add(item);
 			}

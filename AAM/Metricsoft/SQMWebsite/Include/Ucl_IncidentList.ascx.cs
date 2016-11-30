@@ -679,7 +679,7 @@ namespace SQM.Website
 
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
 			{
-				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
+				IncidentXLATList = SQMBasePage.SelectXLATList(new string[5] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS", "INCIDENT_SEVERITY" });
 				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
 				{
 					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
@@ -724,7 +724,7 @@ namespace SQM.Website
 
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
 			{
-				IncidentXLATList = SQMBasePage.SelectXLATList(new string[4] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS" });
+				IncidentXLATList = SQMBasePage.SelectXLATList(new string[5] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS", "INCIDENT_SEVERITY" });
 				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
 				{
 					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
@@ -804,6 +804,29 @@ namespace SQM.Website
 						LinkButton lbEditReport = (LinkButton)e.Item.FindControl("lbEditReport");
 						lbEditReport.Visible = false;
 					}
+
+					if (data.InjuryDetail != null)
+					{
+						lbl = (Label)e.Item.FindControl("lblSeverity");
+						lbl.Visible = true;
+						if (data.InjuryDetail.FIRST_AID == true)
+						{
+							lbl.Text = IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY" && l.XLAT_CODE == "FIRSTAID").FirstOrDefault().DESCRIPTION_SHORT;
+						}
+						else if (data.InjuryDetail.RECORDABLE == true)
+						{
+							lbl.Text = IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY" && l.XLAT_CODE == "RECORDABLE").FirstOrDefault().DESCRIPTION_SHORT;
+							if (data.InjuryDetail.LOST_TIME == true)
+							{
+								lbl.Text += ("  +  " + IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY" && l.XLAT_CODE == "LOSTTIME").FirstOrDefault().DESCRIPTION_SHORT);
+							}
+							if (data.InjuryDetail.RESTRICTED_TIME == true)
+							{
+								lbl.Text += ("  +  " + IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY" && l.XLAT_CODE == "RESTRICTEDTIME").FirstOrDefault().DESCRIPTION_SHORT);
+							}
+						}
+					}
+
 					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
 					//string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
                     string uri = "~/";

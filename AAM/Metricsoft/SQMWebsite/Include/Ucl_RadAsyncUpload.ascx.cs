@@ -36,12 +36,17 @@ namespace SQM.Website
 
         public void SetReportOption(bool visible)
         {
-            rgFiles.MasterTableView.GetColumn(" DisplayTypeColumn").Visible = visible;
+            rgFiles.MasterTableView.GetColumn("DisplayTypeColumn").Visible = visible;
         }
 
 		public void SetSizeOption(bool visible)
 		{
 			rgFiles.MasterTableView.GetColumn("SizeColumn").Visible = visible;
+		}
+
+		public void SetDescription(bool visible)
+		{
+			trAttachDesc.Visible = visible;
 		}
 
 		protected int _recordType
@@ -149,6 +154,7 @@ namespace SQM.Website
 			ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raUpload.ClientID, script, true);
 		}
 
+
         public void GetUploadedFiles(int recordType, decimal recordId)
         {
             GetUploadedFiles(recordType, recordId, "");
@@ -188,6 +194,8 @@ namespace SQM.Website
 			rgFiles.DataBind();
 
 			rgFiles.Visible = (files.Count > 0);
+
+			tbAttachDesc.Text = "";
 		}
 
 		public void GetUploadedFilesProblemCase(List<ATTACHMENT> attachList)
@@ -211,7 +219,12 @@ namespace SQM.Website
 
 		public void SaveFiles()
 		{
-			string[] descriptions = hfDescriptions.Value.Split('|');
+			string[] descriptions;
+
+			if (trAttachDesc.Visible == true)
+				descriptions = tbAttachDesc.Text.Split('|');
+			else 
+				descriptions = hfDescriptions.Value.Split('|');
 
 			int i = 0;
 			foreach (UploadedFile file in raUpload.UploadedFiles)

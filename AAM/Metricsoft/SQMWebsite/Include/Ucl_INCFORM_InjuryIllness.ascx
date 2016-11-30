@@ -145,9 +145,9 @@
 				<span>
 					<asp:Label ID="lbIncidentDateXS" runat="server" Text="<%$ Resources:LocalizedText, IncidentDate %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDatePicker ID="rdpIncidentDate" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UsetanLabelColsAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
 					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
 						<EmptyMessageStyle Resize="None" />
@@ -175,9 +175,9 @@
 				<span>
 					<asp:Label ID="lbReportDateXS" runat="server" Text="Report Date"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDatePicker ID="rdpReportDate" Skin="Metro" Enabled="False" Width="278px" runat="server">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UsetanLabelColsAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
 					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
 						<EmptyMessageStyle Resize="None" />
@@ -204,8 +204,8 @@
 				<span>
 					<asp:Label ID="lbDescriptionXS" runat="server" Text="<%$ Resources:LocalizedText, Description %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
+				<asp:TextBox ID="tbDescription" Rows="5" Height="95px" Width="80%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
 				<asp:RequiredFieldValidator runat="server" ID="rfvDescription" ControlToValidate="tbDescription" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
@@ -222,8 +222,8 @@
 					<span>
 						<asp:Label ID="lbLocalDescXS" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStar">*</span></span>
 				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-					<asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
+				<div class="col-xs-12 col-sm-8 text-left greyControlColX">
+					<asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="80%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
 					<asp:RequiredFieldValidator runat="server" ID="rfvLocalDescription" ControlToValidate="tbLocalDescription" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 				</div>
 			</div>
@@ -239,33 +239,10 @@
 				<span>
 					<asp:Label ID="lbIncidentTimeXS" runat="server" Text="<%$ Resources:LocalizedText, TimeOfIncident %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadTimePicker ID="rtpIncidentTime" runat="server"  ZIndex="9000" PopupDirection="BottomRight" Skin="Metro" ShowPopupOnFocus="true">
 					<TimeView Interval="00:30:00"></TimeView> 
 				</telerik:RadTimePicker>
-<%--				<telerik:RadTimePicker ID="rtpIncidentTime" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-					</Calendar>
-					<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-					<TimeView CellSpacing="-1">
-						<HeaderTemplate>
-							Time Picker
-						</HeaderTemplate>
-						<TimeTemplate>
-							<a id="A1" runat="server" href="#"></a>
-						</TimeTemplate>
-					</TimeView>
-					<TimePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
-						<EmptyMessageStyle Resize="None" />
-						<ReadOnlyStyle Resize="None" />
-						<FocusedStyle Resize="None" />
-						<DisabledStyle Resize="None" />
-						<InvalidStyle Resize="None" />
-						<HoveredStyle Resize="None" />
-						<EnabledStyle Resize="None" />
-					</DateInput>
-				</telerik:RadTimePicker>--%>
 				<asp:RequiredFieldValidator runat="server" ID="rfvIncidentTime" ControlToValidate="rtpIncidentTime" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
 		</div>
@@ -280,7 +257,7 @@
 				<span>
 					<asp:Label ID="lbShiftXS" runat="server" Text="Shift" meta:resourcekey="lbShiftResource1"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDropDownList ID="rddlShiftID" Skin="Metro" ZIndex="9000"  ExpandDirection="Up" DropDownHeight="100px" Width="278px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 				<asp:RequiredFieldValidator runat="server" ID="rfvShift" ControlToValidate="rddlShiftID" Display="None" InitialValue="[Select One]" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -296,8 +273,8 @@
 				<span>
 					<asp:Label ID="lblDeptTestXS" runat="server" Text="<%$ Resources:LocalizedText, Department %>"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbDepartment" Width="75%" Height="24px" SkinID="Metro" runat="server" MaxLength="80" Visible="false" onChange="ChangeUpdate()"></asp:TextBox>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
+				<asp:TextBox ID="tbDepartment" Width="80%" Height="24px" SkinID="Metro" runat="server" MaxLength="80" Visible="false" onChange="ChangeUpdate()"></asp:TextBox>
 				<telerik:RadDropDownList ID="rddlDeptTest" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px" DropDownWidth="360px" Width="360px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -312,9 +289,9 @@
 				<span>
 					<asp:Label ID="lbInvolvedPersonXS" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Panel ID="pnlInvolvedPerson" runat="server" Visible="false">
-					<asp:TextBox ID="tbInvolvedPerson" Width="75%" Height="24px" SkinID="Metro" runat="server" MaxLength="80" onChange="ChangeUpdate()"></asp:TextBox>
+					<asp:TextBox ID="tbInvolvedPerson" Width="80%" Height="24px" SkinID="Metro" runat="server" MaxLength="80" onChange="ChangeUpdate()"></asp:TextBox>
 				</asp:Panel>
 				<telerik:RadAjaxPanel ID="rajxInvolvedPerson" runat="server" HorizontalAlign="NotSet">
 						<telerik:RadSearchBox ID="rsbInvolvedPerson" runat="server" MaxResultCount="400" DataKeyNames="PersonId" Skin="Metro" OnSearch="rsbInvolvedPerson_Search" OnClientSearch="ChangeUpdate"
@@ -366,8 +343,8 @@
 				<span>
 					<asp:Label ID="lbInvPersonStatementXS" runat="server" Text="Involved Person's Statement" meta:resourcekey="lbInvPersonStatementResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbInvPersonStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
+				<asp:TextBox ID="tbInvPersonStatement" Rows="5" Height="95px" Width="80%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
 			</div>
 		</div>
 
@@ -382,9 +359,9 @@
 				<span>
 					<asp:Label ID="lbSupvInformedDateXS" runat="server" Text="Date Supervisor Informed" meta:resourcekey="lbSupvInformedDateResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDatePicker ID="rdpSupvInformedDate" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
-					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
+					<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UsetanLabelColsAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
 					<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
 						<EmptyMessageStyle Resize="None" />
@@ -411,8 +388,8 @@
 				<span>
 					<asp:Label ID="lbSupervisorStatementXS" runat="server" Text="Supervisor's Statement" meta:resourcekey="lbSupervisorStatementResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbSupervisorStatement" Rows="5" Height="95px" Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
+				<asp:TextBox ID="tbSupervisorStatement" Rows="5" Height="95px" Width="80%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
 			</div>
 		</div>
 
@@ -445,7 +422,7 @@
 						<asp:Label ID="lbRqd2" runat="server" CssClass="requiredCloseStar" Text="*"></asp:Label>
 						</span>
 					</div>
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
+					<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 100px; padding-bottom: 4px; padding-top: 7px;">
 						<div class="row">
 							<div class="col-xs-12 col-sm-4 text-left">
 								<asp:Label ID="lbWitNamePrompt" runat="server"></asp:Label>
@@ -510,7 +487,7 @@
 				<span>
 					<asp:Label ID="lbInsideOutsideXS" runat="server" Text="Inside or Outside Building" meta:resourcekey="lbInsideOutsideResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoInside" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="Inside" meta:resourcekey="ListItemResource1"></asp:ListItem>
@@ -528,7 +505,7 @@
 				<span>
 					<asp:Label ID="lbDirectSupvXS" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 greyControlCol">
+			<div class="col-xs-12 col-sm-8 greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoDirectSupv" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
@@ -546,7 +523,7 @@
 				<span>
 					<asp:Label ID="lbJobCodeXS" runat="server" Text="Occupation" meta:resourcekey="lbJobCode"></asp:Label><span class="requiredStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDropDownList ID="rddlJobCode" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="300px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -560,7 +537,7 @@
 				<span>
 					<asp:Label ID="lbErgConcernXS" runat="server" Text="Ergonomic Concerns" meta:resourcekey="lbErgConcernResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 greyControlCol">
+			<div class="col-xs-12 col-sm-8 greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoErgConcern" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
@@ -578,7 +555,7 @@
 				<span>
 					<asp:Label ID="lbStdProcsFollowedXS" runat="server" Text="Standard Work Procedures Followed ?" meta:resourcekey="lbStdProcsFollowedResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 greyControlCol">
+			<div class="col-xs-12 col-sm-8 greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoStdProcsFollowed" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="Standard" meta:resourcekey="ListItemResource7"></asp:ListItem>
@@ -597,7 +574,7 @@
 				<span>
 					<asp:Label ID="lbProceduresXS" runat="server" Text="<%$ Resources:LocalizedText, ProceduresFollowed%>"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 50px;">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 50px;">
 				<asp:TextBox ID="tbProcedures" Rows="2"  Width="75%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
 				<asp:RequiredFieldValidator runat="server" ID="rfvProcedures" ControlToValidate="tbProcedures" Display="None" ErrorMessage="<%$ Resources:LocalizedText, Required %>" ValidationGroup="Val_InjuryIllness"></asp:RequiredFieldValidator>
 			</div>
@@ -612,7 +589,7 @@
 				<span>
 					<asp:Label ID="lbTrainingProvidedXS" runat="server" Text="Was Training for this Task Provided?" meta:resourcekey="lbTrainingProvidedResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 greyControlCol">
+			<div class="col-xs-12 col-sm-8 greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoTrainingProvided" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
@@ -630,7 +607,7 @@
 				<span>
 					<asp:Label ID="lbTaskYearsXS" runat="server" Text="How long has associate been doing this job/specific task ?" meta:resourcekey="lbTaskYearsResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 40px;">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 40px;">
 				<telerik:RadDropDownList ID="rddlJobTenure" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="250px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -644,7 +621,7 @@
 				<span>
 					<asp:Label ID="lbEmploymentTenureXS" runat="server" Text="How long has associate been employed ?" meta:resourcekey="lbEmploymentTenureResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 40px;">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 40px;">
 				<telerik:RadDropDownList ID="rddlEmploymentTenure" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="250px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -658,7 +635,7 @@
 				<span>
 					<asp:Label ID="lbInjuryTypeXS" runat="server" Text="Type of Injury" meta:resourcekey="lbInjuryTypeResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDropDownList ID="rddlInjuryType" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="300px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -673,7 +650,7 @@
 				<span>
 					<asp:Label ID="lbBodyPartXS" runat="server" Text="Body Part" meta:resourcekey="lbBodyPartResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDropDownList ID="rddlBodyPart" Skin="Metro" ZIndex="9000" ExpandDirection="Up" DropDownHeight="300px"  Width="278px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
@@ -687,7 +664,7 @@
 				<span>
 					<asp:Label ID="lbReoccurXS" runat="server" Text="Body Part" meta:resourcekey="lbReoccurResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoReoccur" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" AutoPostBack="False" onclick="ChangeUpdate()">
 						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
@@ -707,12 +684,13 @@
 					<span>
 						<asp:Label ID="lbFirstAidXS" runat="server" Text="First Aid?" meta:resourcekey="lbFirstAidResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
-				<div class="col-xs-12 col-sm-8 greyControlCol">
+				<div class="col-xs-12 col-sm-8 greyControlColX">
 					<span>
 						<asp:RadioButtonList ID="rdoFirstAid" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" OnSelectedIndexChanged="Severity_Changed" AutoPostBack="True" onclick="ChangeUpdate()">
 							<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
 							<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, No %>"></asp:ListItem>
-						</asp:RadioButtonList></span>
+						</asp:RadioButtonList>
+					</span>
 				</div>
 			</div>
 			<div class="row">
@@ -725,25 +703,28 @@
 					<span>
 						<asp:Label ID="lbRecordableXS" runat="server" Text="Recordable?" meta:resourcekey="lbRecordableResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
 				</div>
-				<div class="col-xs-12 col-sm-8 greyControlCol">
+				<div class="col-xs-12 col-sm-8 greyControlColX">
 					<span>
 						<asp:RadioButtonList ID="rdoRecordable" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" OnSelectedIndexChanged="Severity_Changed" AutoPostBack="True" onclick="ChangeUpdate()">
 							<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
 							<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, No %>"></asp:ListItem>
-						</asp:RadioButtonList></span>
+						</asp:RadioButtonList>
+					</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbFatalitySM" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbFatalitySM" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStarFloat">*</span>
+					</span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbFatalityXS" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbFatalityXS" runat="server" Text="Fatality?" meta:resourcekey="lbFatalityResource1"></asp:Label><span class="requiredCloseStar">*</span>
+					</span>
 				</div>
-				<div class="col-xs-12 col-sm-8 greyControlCol">
+				<div class="col-xs-12 col-sm-8 greyControlColX">
 					<span>
 						<asp:RadioButtonList ID="rdoFatality" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" runat="server" OnSelectedIndexChanged="Severity_Changed" AutoPostBack="True" onclick="ChangeUpdate()">
 							<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
@@ -754,71 +735,67 @@
 			<div class="row">
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<span>
-						<asp:Label ID="lbLostTimeSM" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbLostTimeSM" runat="server" Text="Lost Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStarFloat">*</span>
+					</span>
 				</div>
 				<div class="col-xs-12 visible-xs text-left-more">
 					<br />
 					<span>
-						<asp:Label ID="lbLostTimeXS" runat="server" Text="Lost Or Restricted Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbLostTimeXS" runat="server" Text="Lost Time?" meta:resourcekey="lbLostTimeResource1"></asp:Label><span class="requiredCloseStar">*</span>
+					</span>
 				</div>
-				<div class="col-xs-12 col-sm-8 greyControlCol">
+				<div class="col-xs-12 col-sm-8 greyControlColX">
 					<span>
-						<asp:RadioButtonList ID="rdoLostTime" CssClass="radioListHorizontal" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="True" runat="server" onclick="ChangeUpdate()">
-							<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Yes %>"></asp:ListItem>
-							<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, No %>"></asp:ListItem>
-						</asp:RadioButtonList></span>
-				</div>
-			</div>
-			<asp:Panel ID="pnlExpReturnDT" runat="server" Visible="False">
-				<div class="row">
-					<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-						<span>
-							<asp:Label ID="lbExpectReturnDTSM" runat="server" Text="<%$ Resources:LocalizedText, ExpectedReturnDate %>"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
-					</div>
-					<div class="col-xs-12 visible-xs text-left-more">
-						<br />
-						<span>
-							<asp:Label ID="lbExpectReturnDTXS" runat="server" Text="<%$ Resources:LocalizedText, ExpectedReturnDate %>"></asp:Label><span class="requiredCloseStar">*</span></span>
-					</div>
-					<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-						<telerik:RadDatePicker ID="rdpExpectReturnDT" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
-							<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
-							</Calendar>
-							<DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
-								<EmptyMessageStyle Resize="None" />
-								<ReadOnlyStyle Resize="None" />
-								<FocusedStyle Resize="None" />
-								<DisabledStyle Resize="None" />
-								<InvalidStyle Resize="None" />
-								<HoveredStyle Resize="None" />
-								<EnabledStyle Resize="None" />
-							</DateInput>
-							<DatePopupButton CssClass="" HoverImageUrl="" ImageUrl="" />
-						</telerik:RadDatePicker>
-					</div>
-				</div>
-			</asp:Panel>
-		</telerik:RadAjaxPanel>
-
-		<telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
-			<div class="row">
-				<div id="dvAttachLbl" runat="server" class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 128px;">
-					<span>
-						<asp:Label ID="lbAttachemntSM" runat="server" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label></span>
-				</div>
-				<div class="col-xs-12 visible-xs text-left-more">
-					<br />
-					<span>
-						<asp:Label ID="lbAttachemntXS" runat="server" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label></span>
-				</div>
-				<div id="dvAttach" runat="server" class="col-xs-12 col-sm-8 text-left greyControlCol" style="height: 128px;">
-					<span style="border: 0 none !important;">
-						<Ucl:UploadAttachment ID="uploader" runat="server" />
+						<asp:CheckBox id="cbLostTime" runat="server"  onclick="ChangeUpdate()" Enabled="false" ToolTip = "<%$ Resources:LocalizedText, WorkStatusCalcMsg %>"/>
+						&nbsp;<asp:Label ID="lblLostTimeCalc" runat="server" CssClass="instructText" text="<%$ Resources:LocalizedText, WorkStatusCalcMsg %>"></asp:Label>
 					</span>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+					<span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbRestrictedTimeSM" runat="server" Text="Restricted Time?" meta:resourcekey="lbRestrictedTimeResource1"></asp:Label><span class="requiredCloseStarFloat">*</span>
+					</span>
+				</div>
+				<div class="col-xs-12 visible-xs text-left-more">
+					<br />
+					<span>
+						&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="lbRestrictedTimeXS" runat="server" Text="Restricted Time?" meta:resourcekey="lbRestrictedTimeResource1"></asp:Label><span class="requiredCloseStar">*</span>
+					</span>
+				</div>
+				<div class="col-xs-12 col-sm-8 greyControlColX">
+					<span>
+						<asp:CheckBox id="cbRestrictedTime" runat="server" onclick="ChangeUpdate()" Enabled="false" ToolTip ="<%$ Resources:LocalizedText, WorkStatusCalcMsg %>"/>
+						&nbsp;<asp:Label ID="lblRestrictedTimeCalc" runat="server" CssClass="instructText" Text="<%$ Resources:LocalizedText, WorkStatusCalcMsg %>"></asp:Label>
+					</span>
+				</div>
+			</div>
+			<asp:Label ID="lblIncidentMsg" runat="server" Visible="false" CssClass="labelEmphasis"></asp:Label>
+			<div id="divRecordableHist" runat="server" class="borderSoft tableData" style="margin-top: 5px; margin-bottom: 10px; width: 100%;">
+				<center>
+				<div>
+					<br />
+					<asp:Label ID="lblRecordableHist" runat="server" Text="Lost And Restricted Time History" CssClass="sectionTitlesSmall"  meta:resourcekey="lbRecordableHistResource1"></asp:Label>
+					<br /><br />
+					<Ucl:INCFORMLostTimeHist ID="uclRecordableHist" runat="server" />
+				</div>
+				</center>
+			</div>
 		</telerik:RadAjaxPanel>
 	</div
+	<br />
+
+	<telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
+		<div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 5px;">
+			<center>
+				<br />
+				<asp:Label ID="lbAttachemnt" runat="server" CssClass="sectionTitlesSmall" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label>
+				<br />
+				<Ucl:UploadAttachment ID="uploader" runat="server" />
+			</center>
+		</div>
+	</telerik:RadAjaxPanel>
+
 	<br />
 </asp:Panel>
 
@@ -833,7 +810,7 @@
 
 </asp:Panel>
 
-<Ucl:INCFORMLostTimeHist ID="ucllosttime" runat="server" />
+<%--<Ucl:INCFORMLostTimeHist ID="ucllosttime" runat="server" />--%>
 <Ucl:INCFORMContain ID="uclcontain" runat="server" />
 <Ucl:INCFORMRoot5Y ID="uclroot5y" runat="server" />
 <ucl:Causation id="uclCausation" runat="server" Visible="False"/>
@@ -869,8 +846,6 @@
 					OnClick="btnSubnav_Click" CommandArgument="0" />
 				<asp:LinkButton ID="btnSubnavVideo" runat="server"  Text="<%$ Resources:LocalizedText, VideoUpload %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="false"/>
-				<asp:LinkButton ID="btnSubnavLostTime" runat="server" Text="Lost time History" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClick="btnSubnav_Click" CommandArgument="6" meta:resourcekey="btnSubnavLostTimeResource1"/>
 				<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="2"/>
 				<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"

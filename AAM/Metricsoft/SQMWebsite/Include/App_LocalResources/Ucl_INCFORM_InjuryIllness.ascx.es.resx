@@ -160,7 +160,13 @@
     <value>Descripción Local</value>
   </data>
   <data name="lbLostTimeResource1.Text" xml:space="preserve">
-    <value>¿Tiempo perdido o restringido?</value>
+    <value>¿Tiempo perdido ?</value>
+  </data>
+	<data name="lbRestrictedTimeResource1.Text" xml:space="preserve">
+    <value>¿Tiempo restringido?</value>
+  </data>
+	<data name="lbRecordableHistResource1.Text" xml:space="preserve">
+    <value>Lost And Restricted Time History</value>
   </data>
   <data name="lblSubmittedResource1.Text" xml:space="preserve">
     <value>Corte de energía presentó.</value>

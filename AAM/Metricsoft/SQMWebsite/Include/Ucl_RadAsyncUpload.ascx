@@ -25,7 +25,7 @@
 				    <asp:CheckBox ID="checkBox" runat="server" Checked='<%# GetChecked(Convert.ToInt32(DataBinder.Eval(Container.DataItem, "DisplayType"))) %>' />
 				</ItemTemplate>
             </telerik:GridTemplateColumn>
-			<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="LinkButton" ConfirmTitle="<%$ Resources:LocalizedText, Delete %>"
+			<telerik:GridButtonColumn UniqueName="DeleteButtonColumn" ButtonType="PushButton" ItemStyle-ForeColor="DarkRed" ItemStyle-BorderStyle="None" ItemStyle-BorderWidth="0" ConfirmTitle="<%$ Resources:LocalizedText, Delete %>"
 				ConfirmText="Delete Attachment - Are You Sure?" CommandName="Delete" Text="<%$ Resources:LocalizedText, Delete %>"
 				ItemStyle-Font-Underline="true">
 			</telerik:GridButtonColumn>
@@ -34,10 +34,21 @@
     <ClientSettings  EnableAlternatingItems="false"></ClientSettings>
 </telerik:RadGrid>
     <br style="clear: both;" /><%--<br />--%>
-<table cellpadding="0" cellspacing="0"><tr>
-    <td id="tdUploadImg" runat="server" style="vertical-align: bottom; padding-bottom: 16px;"><img src="/images/defaulticon/16x16/attachment.png" alt="" style="border: 0; cursor: pointer;" onclick="$telerik.$('.ruFileInput').click();" /></td>
-    <td><telerik:RadAsyncUpload runat="server" ID="raUpload" MultipleFileSelection="Disabled" MaxFileInputsCount="10" Localization-Select="Browse..."
-	skin="Metro" OnClientFileUploaded="onClientFileUploaded" /></td></table>
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<td id="tdUploadImg" runat="server" style="vertical-align: bottom; padding-bottom: 16px;"><img src="/images/defaulticon/16x16/attachment.png" alt="" style="border: 0; cursor: pointer;" onclick="$telerik.$('.ruFileInput').click();" />
+		</td>
+		<td>
+			<telerik:RadAsyncUpload runat="server" ID="raUpload" MultipleFileSelection="Disabled" MaxFileInputsCount="10" Localization-Select="Browse..."
+			skin="Metro" OnClientFileUploaded="onClientFileUploaded" />
+		</td>
+	</tr>
+	<tr id="trAttachDesc" runat="server" visible="false">
+		<td colspan="2" style="vertical-align: bottom; padding-bottom: 16px;"><img src="/images/defaulticon/16x16/edit-document.png" alt="" style="border: 0; cursor: pointer;">
+			</asp:Label><asp:TextBox id="tbAttachDesc" runat="server" maxlength="400" columns="40" CssClass="textStd" ToolTip="<%$ Resources:LocalizedText, AttachmentDescription %>"></asp:TextBox>
+		</td>
+	</tr>
+</table>
 <asp:HiddenField ID="hfListId" runat="server" />
 <asp:HiddenField ID="hfDescriptions" runat="server" />
 <asp:HiddenField ID="hfMode" runat="server" />

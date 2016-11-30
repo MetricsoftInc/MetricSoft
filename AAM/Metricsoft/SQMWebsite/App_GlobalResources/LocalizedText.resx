@@ -876,4 +876,16 @@
   <data name="CloseAuditMessage" xml:space="preserve">
     <value>Please note that the assessment will not be considered complete until the checkbox has been selected.</value>
   </data>
+  <data name="RecordableIncidentMsg" xml:space="preserve">
+    <value>Lost or restricted time has been recorded. You must update the actual lost/restricted time history prior to changing the incident's recordable status.</value>
+  </data>
+  <data name="WorkStatusMsg" xml:space="preserve">
+    <value>Select Work Status</value>
+  </data>
+  <data name="AttachmentDescription" xml:space="preserve">
+    <value>Attachment description</value>
+  </data>
+  <data name="WorkStatusCalcMsg" xml:space="preserve">
+    <value>(determined when the incident and any lost/restricted time is saved)</value>
+  </data>
 </root>

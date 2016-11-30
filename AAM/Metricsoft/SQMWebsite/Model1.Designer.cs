@@ -152,7 +152,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT5Y), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ALERT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ALERT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
@@ -168,6 +167,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_INPUT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_INPUT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
 
 #endregion
 
@@ -2270,22 +2270,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESS
-        {
-            get
-            {
-                if ((_INCFORM_INJURYILLNESS == null))
-                {
-                    _INCFORM_INJURYILLNESS = base.CreateObjectSet<INCFORM_INJURYILLNESS>("INCFORM_INJURYILLNESS");
-                }
-                return _INCFORM_INJURYILLNESS;
-            }
-        }
-        private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_CONTAIN> INCFORM_CONTAIN
         {
             get
@@ -2458,6 +2442,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<EHS_PROFILE_MEASURE> _EHS_PROFILE_MEASURE;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESS
+        {
+            get
+            {
+                if ((_INCFORM_INJURYILLNESS == null))
+                {
+                    _INCFORM_INJURYILLNESS = base.CreateObjectSet<INCFORM_INJURYILLNESS>("INCFORM_INJURYILLNESS");
+                }
+                return _INCFORM_INJURYILLNESS;
+            }
+        }
+        private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
 
         #endregion
 
@@ -3488,14 +3488,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCFORM_INJURYILLNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
-        {
-            base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_CONTAIN EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_CONTAIN(INCFORM_CONTAIN iNCFORM_CONTAIN)
@@ -3581,6 +3573,14 @@ namespace SQM.Website
         public void AddToEHS_PROFILE_MEASURE(EHS_PROFILE_MEASURE eHS_PROFILE_MEASURE)
         {
             base.AddObject("EHS_PROFILE_MEASURE", eHS_PROFILE_MEASURE);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_INJURYILLNESS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
+        {
+            base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
         }
 
         #endregion
@@ -22669,7 +22669,8 @@ namespace SQM.Website
         /// <param name="fIRST_AID">Initial value of the FIRST_AID property.</param>
         /// <param name="rECORDABLE">Initial value of the RECORDABLE property.</param>
         /// <param name="lOST_TIME">Initial value of the LOST_TIME property.</param>
-        public static INCFORM_INJURYILLNESS CreateINCFORM_INJURYILLNESS(global::System.Decimal iNCIDENT_ID, global::System.Boolean cOMPANY_SUPERVISED, global::System.Boolean eRGONOMIC_CONCERN, global::System.Boolean sTD_PROCS_FOLLOWED, global::System.Boolean tRAINING_PROVIDED, global::System.Boolean fIRST_AID, global::System.Boolean rECORDABLE, global::System.Boolean lOST_TIME)
+        /// <param name="rESTRICTED_TIME">Initial value of the RESTRICTED_TIME property.</param>
+        public static INCFORM_INJURYILLNESS CreateINCFORM_INJURYILLNESS(global::System.Decimal iNCIDENT_ID, global::System.Boolean cOMPANY_SUPERVISED, global::System.Boolean eRGONOMIC_CONCERN, global::System.Boolean sTD_PROCS_FOLLOWED, global::System.Boolean tRAINING_PROVIDED, global::System.Boolean fIRST_AID, global::System.Boolean rECORDABLE, global::System.Boolean lOST_TIME, global::System.Boolean rESTRICTED_TIME)
         {
             INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS = new INCFORM_INJURYILLNESS();
             iNCFORM_INJURYILLNESS.INCIDENT_ID = iNCIDENT_ID;
@@ -22680,6 +22681,7 @@ namespace SQM.Website
             iNCFORM_INJURYILLNESS.FIRST_AID = fIRST_AID;
             iNCFORM_INJURYILLNESS.RECORDABLE = rECORDABLE;
             iNCFORM_INJURYILLNESS.LOST_TIME = lOST_TIME;
+            iNCFORM_INJURYILLNESS.RESTRICTED_TIME = rESTRICTED_TIME;
             return iNCFORM_INJURYILLNESS;
         }
 
@@ -23505,6 +23507,30 @@ namespace SQM.Website
         private global::System.String _EMPLOYMENT_TENURE;
         partial void OnEMPLOYMENT_TENUREChanging(global::System.String value);
         partial void OnEMPLOYMENT_TENUREChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean RESTRICTED_TIME
+        {
+            get
+            {
+                return _RESTRICTED_TIME;
+            }
+            set
+            {
+                OnRESTRICTED_TIMEChanging(value);
+                ReportPropertyChanging("RESTRICTED_TIME");
+                _RESTRICTED_TIME = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RESTRICTED_TIME");
+                OnRESTRICTED_TIMEChanged();
+            }
+        }
+        private global::System.Boolean _RESTRICTED_TIME;
+        partial void OnRESTRICTED_TIMEChanging(global::System.Boolean value);
+        partial void OnRESTRICTED_TIMEChanged();
 
         #endregion
 
@@ -25776,44 +25802,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS")]
-        public INCFORM_INJURYILLNESS INCFORM_INJURYILLNESS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESSReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN")]
         public EntityCollection<INCFORM_CONTAIN> INCFORM_CONTAIN
         {
@@ -25848,6 +25836,44 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS")]
+        public INCFORM_INJURYILLNESS INCFORM_INJURYILLNESS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESSReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
                 }
             }
         }

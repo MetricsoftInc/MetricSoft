@@ -4,19 +4,22 @@
 <script type="text/javascript">
 
 	window.onload = function () {
-		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "";
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0"; 
 	}
 	window.onbeforeunload = function () {
 		if (document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value == '1') {
 			return 'You have unsaved changes on this page.';
 		}
 	}
+	function Changed() {
+		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "1"; 
+	}
 	function ChangeUpdate(sender, args) {
-		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "1";
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclRecordableHist_hfChangeUpdate').value = '1';
 		return true;
 	}
 	function ChangeClear(sender, args) {
-		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+		document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclRecordableHist_hfChangeUpdate').value = '0';
 	}
 
 </script>
@@ -24,16 +27,26 @@
 <asp:Panel ID="pnlLostTime" Visible="False" runat="server" meta:resourcekey="pnlLostTimeResource1">
 
 	<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
+	<asp:HiddenField ID="hfContext" runat="server" Value="" />
 
-	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 5px 0 5px 0;">
+<%--	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 5px 0 5px 0;">
 		<div class="row text_center">
 			<div class="col-xs-12 col-sm-12 text-center">
 				<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
 			</div>
 		</div>
+	</div>--%>
+
+	<div id="divTitle" runat="server" visible="false" style="margin: 5px 0 5px 0;">
+		<div class="text_center">
+			<div class="text-center">
+				<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
+			</div>
+		</div>
 	</div>
 
-	<div class="container-fluid">
+	<div onblur="Changed()"> <%--class="container-fluid">--%>
+
 
 		<telerik:RadAjaxPanel ID="rapLostTime" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapLostTimeResource1">
 
@@ -51,10 +64,13 @@
 								&nbsp;
 								<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1" Visible="False"></asp:Label>
 							</td>
-							<td class="required" width="1%">&nbsp;</td>
+							<td class="requiredX" width="1%">&nbsp;</td>
 							<td class="tableDataAlt" width="79%">
-								<telerik:RadDropDownList ID="rddlWorkStatus" runat="server" AutoPostBack="True" ExpandDirection="Up" Height="100" meta:resourcekey="rddlWorkStatusResource1"  OnSelectedIndexChanged="rddlw_SelectedIndexChanged" Skin="Metro" Width="300px" ZIndex="9000" OnClientSelectedIndexChanged="ChangeUpdate">
+								<telerik:RadDropDownList ID="rddlWorkStatus" runat="server" AutoPostBack="True" ExpandDirection="Up" Height="100" meta:resourcekey="rddlWorkStatusResource1"  OnSelectedIndexChanged="rddlw_SelectedIndexChanged" Skin="Metro" Width="300px" ZIndex="9000" OnClientSelectedIndexChanged="ChangeUpdate"  EmptyMessage="<%$ Resources:LocalizedText, WorkStatusMsg %>">
 								</telerik:RadDropDownList>
+								&nbsp;&nbsp;
+								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
+								</telerik:RadButton>
 							</td>
 						</tr>
 						<tr>
@@ -70,7 +86,7 @@
 							<td class="columnHeader">
 								<asp:Label ID="lbBeginDate" runat="server" Text="<%$ Resources:LocalizedText, EffectiveDate %>"></asp:Label>
 							</td>
-							<td class="required">&nbsp;</td>
+							<td class="requiredX">&nbsp;</td>
 							<td class="tableDataAlt">
 								<telerik:RadDatePicker ID="rdpBeginDate" runat="server" CssClass="WarnIfChanged" meta:resourcekey="rdpBeginDateResource1" ShowPopupOnFocus="True" Skin="Metro" Width="125">
 									<Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
@@ -132,12 +148,12 @@
 								</telerik:RadDatePicker>
 							</td>
 						</tr>
-						<tr>
+<%--						<tr>
 							<td class="text-left-more" colspan="3">
 								<telerik:RadButton ID="btnItemDelete" runat="server" BorderStyle="None" ButtonType="LinkButton" CommandArgument="Delete" ForeColor="DarkRed" OnClientClicking="DeleteConfirmItem" SingleClick="True" SingleClickText="<%$ Resources:LocalizedText, Deleting %>" Text="<%$ Resources:LocalizedText, DeleteItem %>">
 								</telerik:RadButton>
 							</td>
-						</tr>
+						</tr>--%>
 						<tr><td colspan="3" style="height: 10px;"></td></tr>
 					</tbody>
 				</ItemTemplate>
@@ -145,14 +161,14 @@
 					</table>
 				</FooterTemplate>
 			</asp:Repeater>
-			<div class="row">
-				<center>
+			<div class="row" style="margin-bottom: 5px; margin-left: 20px;">
+<%--				<center>--%>
 					<span>
 						<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 							OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 						<asp:Button ID="btnAddLostTime" CssClass="buttonAdd" runat="server" OnClick="AddDelete_Click" ToolTip="<%$ Resources:LocalizedText, AddAnotherFinalCorrectiveAction %>" Text="<%$ Resources:LocalizedText, AddAnother %>" Style="margin-left: 15px;" CommandArgument="AddAnother"></asp:Button>
 					</span>
-				</center>
+<%--				</center>--%>
 			</div>
 		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
 	</telerik:RadAjaxPanel>

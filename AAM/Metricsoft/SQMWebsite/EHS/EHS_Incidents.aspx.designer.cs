@@ -121,6 +121,24 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox rcbIncidentType;
         
         /// <summary>
+        /// lblSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSeverity;
+        
+        /// <summary>
+        /// rcbSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbSeverity;
+        
+        /// <summary>
         /// lblStatus control.
         /// </summary>
         /// <remarks>
