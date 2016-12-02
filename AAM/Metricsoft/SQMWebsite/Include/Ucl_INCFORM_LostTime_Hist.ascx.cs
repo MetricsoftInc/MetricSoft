@@ -26,7 +26,6 @@ namespace SQM.Website
 		protected bool IsFullPagePostback = false;
 
 		PSsqmEntities entities;
-		List<EHSFormControlStep> formSteps;
 
 		public PageUseMode PageMode { get; set; }
 
@@ -174,8 +173,9 @@ namespace SQM.Website
 
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
-			formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
-			totalFormSteps = formSteps.Count();
+			// what the fuck does this do ?
+			//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+			//totalFormSteps = formSteps.Count();
 
 			InitializeForm();
 		}
@@ -214,7 +214,8 @@ namespace SQM.Website
 					INCFORM_LOSTTIME_HIST item = new INCFORM_LOSTTIME_HIST();
 
 					RadDropDownList rddlw = (RadDropDownList)losttimeitem.FindControl("rddlWorkStatus");
-					if (rddlw.SelectedValue == workStatus)
+					RadDatePicker bd = (RadDatePicker)losttimeitem.FindControl("rdpBeginDate");
+					if (rddlw.SelectedValue == workStatus  &&  bd.SelectedDate.HasValue)
 					{
 						++count;
 					}
@@ -634,7 +635,7 @@ namespace SQM.Website
 					item.WORK_STATUS = rddlw.SelectedValue;
 					if (!item.BEGIN_DT.HasValue)
 					{
-						item.BEGIN_DT = DateTime.UtcNow;
+						item.BEGIN_DT = (WorkStatusIncident != null  &&  WorkStatusIncident.INCIDENT_DT != null) && WorkStatusIncident.INCIDENT_DT > DateTime.MinValue ?  WorkStatusIncident.INCIDENT_DT.AddDays(1) :  DateTime.UtcNow.AddDays(1);
 					}
 				}
 
