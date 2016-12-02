@@ -174,13 +174,6 @@ namespace DataRollup
 					}
 					periodDate = new DateTime(period.PeriodYear, period.PeriodMonth, 1);
 
-					if (plant.PLANT_ID == 29 && periodDate.Year == 2016 && periodDate.Month == 9)
-					{
-						bool dbg = true;
-						bool dd = dbg;
-					}
-
-
 					if (pact != null && pact.EFF_START_DATE.HasValue && periodDate >= pact.EFF_START_DATE)
 					{
 						// write PLANT_ACCOUNTING metrics
