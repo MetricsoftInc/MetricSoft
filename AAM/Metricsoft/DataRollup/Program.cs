@@ -105,10 +105,12 @@ namespace DataRollup
 				PLANT plant = null;
 
 				// fetch all the plant accounting records for the target timespan
+				DateTime minDate = incidentList.Select(l => l.INCIDENT_DT).Min();
+				minDate = minDate.AddMonths(-1);
 				PLANT_ACCOUNTING pa = null;
 				List<PLANT_ACCOUNTING> paList = (from a in entities.PLANT_ACCOUNTING
 												 where
-												 EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= fromDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= rollupToDate
+												 EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) >= minDate && EntityFunctions.CreateDateTime(a.PERIOD_YEAR, a.PERIOD_MONTH, 1, 0, 0, 0) <= rollupToDate
 												 select a).OrderBy(l => l.PLANT_ID).ThenBy(l => l.PERIOD_YEAR).ThenBy(l => l.PERIOD_MONTH).ToList();
 
 				List<EHSIncidentTimeAccounting> summaryList = new List<EHSIncidentTimeAccounting>();
@@ -171,6 +173,14 @@ namespace DataRollup
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident select a).SingleOrDefault();
 					}
 					periodDate = new DateTime(period.PeriodYear, period.PeriodMonth, 1);
+
+					if (plant.PLANT_ID == 29 && periodDate.Year == 2016 && periodDate.Month == 9)
+					{
+						bool dbg = true;
+						bool dd = dbg;
+					}
+
+
 					if (pact != null && pact.EFF_START_DATE.HasValue && periodDate >= pact.EFF_START_DATE)
 					{
 						// write PLANT_ACCOUNTING metrics
