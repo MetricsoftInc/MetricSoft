@@ -237,7 +237,9 @@ namespace SQM.Website
 				taskList.AddRange(TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, respPlantList, false));
 			}
 			taskScheduleList.AddRange(taskList);
-			taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false));
+			// MT - removed below logic because I don't know WTF 
+			//List<TaskItem> schedTasks = TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false);
+			//taskScheduleList.AddRange(TaskMgr.IncidentTaskSchedule(SessionManager.PrimaryCompany().COMPANY_ID, DateTime.Now, toDate, respForList, respPlantList.ToArray(), false));
 
 
 			enableItemLinks = true;
