@@ -71,11 +71,11 @@ namespace SQM.Website
 		{
 			string script =
 			"function pageLoad() {\n" +
-			"	var radAsyncUpload = $find(\"" + raUpload.ClientID + "\")\n" +
-			"   var hfDescriptions = document.getElementById('" + hfDescriptions.ClientID + "');\n" +
+			"	var radAsyncUpload = $find('<%=raUpload.ClientID%>')\n" +
+			"   var hfDescriptions = document.getElementById('<%= hfDescriptions.ClientID%>');\n" +
 			"   if (hfDescriptions != null && hfDescriptions.value != null) {\n" +
 			"      var descriptions = hfDescriptions.value.split('|');\n" +
-			"	   var hfListId = document.getElementById('" + hfListId.ClientID + "');\n" +
+			"	   var hfListId = document.getElementById('<%= hfListId.ClientID%>');\n" +
 			"      if (hfListId.value != null) {\n" +
 			"	       var parentList = document.getElementById(hfListId.value);\n" +
 			"	       if (parentList != null) {\n" +
@@ -111,7 +111,8 @@ namespace SQM.Website
 			"		label = createLabel(inputID);\n" +
 			"		br = document.createElement( 'br' );\n" +
 			"		parentList = row.parentNode;\n" +
-			"		document.getElementById('" + hfListId.ClientID + "').value = parentList.id;\n" +
+			//"		document.getElementById('" + hfListId.ClientID + "').value = parentList.id;\n" +
+			"		document.getElementById('<%=hfListId.ClientID%>').value = parentList.id;\n" +
 			"		input.onchange = inputChanged;\n" +
 			"		row.appendChild( br );\n" +
 			"		row.appendChild( label );\n" +
@@ -122,7 +123,7 @@ namespace SQM.Website
 			"	var parentList = this.parentNode.parentNode;\n" +
 			"	if (parentList != null) {\n" +
 			"		var rows = parentList.childNodes;\n" +
-			"		var descField = document.getElementById('" + hfDescriptions.ClientID + "');\n" +
+			"		var descField = document.getElementById('<%=hfDescriptions.ClientID%>');\n" +
 			"		descField.value = '';\n" +
 			"		for (i = 0; i < rows.length - 1; i++) {\n" +
 			"			var textBox = rows[i].childNodes[4];\n" +
@@ -151,7 +152,7 @@ namespace SQM.Website
 			"	 return label;\n" +
 			"}\n";
 
-			ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raUpload.ClientID, script, true);
+			//ScriptManager.RegisterClientScriptBlock(this.Page, GetType(), "script" + raUpload.ClientID, script, true);
 		}
 
 

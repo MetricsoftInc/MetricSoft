@@ -2,6 +2,50 @@
 	Inherits="SQM.Website.Ucl_RadAsyncUpload" EnableViewState="true" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
+<script type="text/javascript">
+	function onClientFileUploadedJS(sender, args) {
+		var contentType = args.get_fileInfo().ContentType;
+		//alert(contentType);
+		//alert(document.getElementById('<%=tbAttachDesc.ClientID%>'));
+		//alert(document.getElementById('<%=tbAttachDesc.ClientID%>').value);
+		//var desc = document.getElementById('<%=tbAttachDesc.ClientID%>').value;
+		//alert(desc);
+		var radAsyncUpload = $find('<%=raUpload.ClientID%>');
+		//alert(radAsyncUpload);
+		//document.getElementById('<%=hfDescriptions.ClientID%>').value += (desc + '|');
+		//alert(document.getElementById('<%=hfDescriptions.ClientID%>').value);
+
+		var row = args.get_row();
+		if (radAsyncUpload != null) {
+			var inputName = radAsyncUpload.getAdditionalFieldID('TextBox');
+			var inputType = 'text';
+			var inputID = inputName;
+			var input = createInput(inputType, inputID, inputName);
+			var label = createLabel(inputID);
+			var br = document.createElement('br');
+			var parentList = row.parentNode;
+			document.getElementById('<%=hfListId.ClientID%>').value = parentList.id;
+			input.onchange = inputChanged;
+			row.appendChild(br);
+			row.appendChild(label);
+			row.appendChild(input);
+		}
+	}
+
+	function inputChanged() {
+		var parentList = this.parentNode.parentNode;
+		if (parentList != null) {
+			var rows = parentList.childNodes;
+			var descField = document.getElementById('<%=hfDescriptions.ClientID%>');
+			descField.value = '';
+			for (i = 0; i < rows.length - 1; i++) {
+				var textBox = rows[i].childNodes[4];
+				descField.value += textBox.value + '|';
+			}
+		}
+	}
+	</script>
+
 <telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_OnDeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"
  MasterTableView-BorderColor="LightGray" HeaderStyle-Font-Size="11px" MasterTableView-BorderWidth="0" MasterTableView-Font-Size="11px" MasterTableView-ForeColor="#444444">
 	<MasterTableView DataKeyNames="AttachmentId" Width="100%" AutoGenerateColumns="False">
@@ -40,7 +84,7 @@
 		</td>
 		<td>
 			<telerik:RadAsyncUpload runat="server" ID="raUpload" MultipleFileSelection="Disabled" MaxFileInputsCount="10" Localization-Select="Browse..."
-			skin="Metro" OnClientFileUploaded="onClientFileUploaded" />
+			skin="Metro" OnClientFileUploaded="onClientFileUploadedJS" />
 		</td>
 	</tr>
 	<tr id="trAttachDesc" runat="server" visible="false">

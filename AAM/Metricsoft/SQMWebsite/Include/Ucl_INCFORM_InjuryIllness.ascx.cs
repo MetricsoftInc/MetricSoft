@@ -45,7 +45,6 @@ namespace SQM.Website
 
 		PSsqmEntities entities;
 		List<EHSIncidentQuestion> questions;
-		List<EHSFormControlStep> formSteps;
 
 
 		//public bool IsEditContext { get; set; }
@@ -835,7 +834,7 @@ namespace SQM.Website
 		{
 			uploader.SetAttachmentRecordStep("1");
 			uploader.SetReportOption(false);
-			uploader.SetDescription(true);
+			uploader.SetDescription(false);
 			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
 			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval"};
 
@@ -1063,7 +1062,6 @@ namespace SQM.Website
 
 				btnDeleteInc.Visible = false;
 				lblResults.Visible = true;
-				//int delStatus = EHSIncidentMgr.DeleteCustomIncident(EditIncidentId, typeId);
 				int delStatus = EHSIncidentMgr.DeleteIncident(EditIncidentId);
 				lblResults.Text = "<div style=\"text-align: center; font-weight: bold; padding: 10px;\">";
 				lblResults.Text += (delStatus == 1) ? "Incident deleted." : "Error deleting incident.";
