@@ -2054,6 +2054,7 @@ namespace SQM.Website
             decimal minYValue = 999999999;
             foreach (GaugeSeries gs in gaugeSeries)
             {
+				++numItems;
                 LineSeries series = new LineSeries();
                 series.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
                 series.TooltipsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
@@ -2061,7 +2062,7 @@ namespace SQM.Website
                 series.MarkersAppearance.MarkersType = MarkersType.Square;
                 series.MarkersAppearance.Size = 3m;
                 series.MarkersAppearance.BorderWidth = 3;
-                series.LabelsAppearance.Visible = gs.DisplayLabels;
+				series.LabelsAppearance.Visible = gs.DisplayLabels;
 				if (gaugeSeries.Count == 1  &&  !string.IsNullOrEmpty(rgCfg.LabelA)) //  &&  string.IsNullOrEmpty(gs.Name))
 				{
 					series.Name = rgCfg.LabelA;
@@ -2071,7 +2072,7 @@ namespace SQM.Website
 					series.Name = gs.Name.Replace("\r\n", "");
 				}
                 if (!string.IsNullOrEmpty(rgCfg.ColorPallete))
-                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, ++numItems);
+                    series.Appearance.FillStyle.BackgroundColor = GetColor(rgCfg.ColorPallete, numItems);
 
 				if (gs.SeriesType == 9)		// totals series
 				{
