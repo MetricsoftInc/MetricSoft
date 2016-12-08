@@ -86,7 +86,7 @@ namespace SQM.Website
 				if (incident == null  || incident.INCFORM_ROOT5Y == null  ||  incident.INCFORM_ROOT5Y.Count == 0)
 				{
 					lblNoneRootCause.Visible = true;
-					divCausation.Visible = false;
+					divCausation.Visible = btnSave.Visible = false;
 				}
 				else
 				{
