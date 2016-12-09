@@ -11,7 +11,7 @@ namespace SQM.Website
 {
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
-	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, release=390, release1=391, release2=392, release3=393, release4=394, notify=400, view=500, none=900 }
+	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, approve5=385, release=390, release1=391, release2=392, release3=393, release4=394, release5=395, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata, media }
 
 	public static class CultureSettings
@@ -882,7 +882,17 @@ namespace SQM.Website
 					else
 					{
 						if (SessionManager.UserContext.PrivList.Where(p => p.PRIV == (int)priv && p.SCOPE.ToLower() == scope.ToString()).FirstOrDefault() != null)  // check specific priv & scope combination
+						{
 							hasPriv = true;
+						}
+						else
+						{
+							// check if config or admin privs for this scope
+							if (SessionManager.UserContext.PrivList.Where(p => p.SCOPE == scope.ToString() && p.PRIV <= (int)SysPriv.config).FirstOrDefault() != null)
+							{
+								hasPriv = true;
+							}
+						}
 					}
 				}
 			}
