@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml;
+using System.Xml.Serialization;
 using Telerik.Web.UI;
 
 namespace SQM.Website
@@ -198,18 +200,30 @@ namespace SQM.Website
             return (T)((object)val);
         }
 
-        public static XmlDocument GetAppSettingsDoc()
+		public static XmlDocument GetAppSettingsDoc()
         {
             XmlDocument xDoc;
+			CustomXmlData cd = new CustomXmlData();
+			System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
 
-            if (HttpContext.Current.Session["AppSettingsDoc"] == null)
-            {
-                xDoc = new XmlDocument();
-                xDoc.Load(HttpContext.Current.Server.MapPath("/settings.xml"));
-                HttpContext.Current.Session["AppSettingsDoc"] = xDoc;
-            }
-            else
-                xDoc = (XmlDocument)HttpContext.Current.Session["AppSettingsDoc"];
+			if (HttpContext.Current.Session["AppSettingsDoc"] == null)
+			{
+				xDoc = new XmlDocument();
+				xDoc.Load(HttpContext.Current.Server.MapPath("/settings.xml"));
+				cd.InnerXML = xDoc.InnerXml;
+				// now you have serializable object
+				XmlSerializer x = new XmlSerializer(cd.GetType());
+				x.Serialize(memoryStream, cd);
+				HttpContext.Current.Session["AppSettingsDoc"] = cd;
+			}
+			else
+			{
+				BinaryFormatter bf = new BinaryFormatter();
+				memoryStream = (System.IO.MemoryStream)HttpContext.Current.Session["AppSettingsDoc"];
+				cd = (CustomXmlData)bf.Deserialize(memoryStream);
+				xDoc = new XmlDocument();
+				xDoc.InnerXml = cd.InnerXML;
+			}
 
             return xDoc;
         }

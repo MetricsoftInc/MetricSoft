@@ -10,7 +10,8 @@ using System.Threading;
 namespace SQM.Website
 {
 
-    public class PartIssueItem
+	[Serializable]
+	public class PartIssueItem
     {
         public string PART_NUM
         {
@@ -34,8 +35,9 @@ namespace SQM.Website
         }
     }
 
- 
-    public class QualityIncidentData
+
+	[Serializable]
+	public class QualityIncidentData
     {
         public decimal INCIDENT_ID
         {
@@ -110,9 +112,10 @@ namespace SQM.Website
         }
     }
 
-    #region qualityissue
+	#region qualityissue
 
-    public class QualityIssueCtl
+	[Serializable]
+	public class QualityIssueCtl
     {
         public QualityIssue qualityIssue
         {
@@ -187,7 +190,8 @@ namespace SQM.Website
         }
     }
 
-    public class QualityIssue
+	[Serializable]
+	public class QualityIssue
     {
         public enum UpdateStatus { Success, Pending, SaveError, RequiredInputs, Incomplete};
 
@@ -1060,7 +1064,9 @@ namespace SQM.Website
 
     #region costreport
     public enum IncidentCostReportStatus { Normal, NoIncidents, InputError, OutOFRange };
-    public class IncidentCostReport
+
+	[Serializable]
+	public class IncidentCostReport
     {
         public COST_REPORT CostReport
         {

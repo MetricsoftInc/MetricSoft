@@ -511,6 +511,53 @@ namespace SQM.Website
 			return this;
 		}
 
+		public TaskStatusMgr SelectTaskList(int[] recordTypes, string[] taskSteps, decimal personID, List<decimal> responsibleIDs, string openOnly, DateTime fromDate, DateTime toDate, bool createdBy)
+		{
+			try
+			{
+				if (openOnly.ToLower().Equals("o"))
+				{
+					if (createdBy)
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null) && t.CREATE_ID == personID)
+										 select t).OrderBy(l => l.DUE_DT).ToList();
+					else
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null))
+										 select t).OrderBy(l => l.DUE_DT).ToList();
+
+				}
+				else if (openOnly.ToLower().Equals("c"))
+				{
+					if (createdBy)
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+									 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null) && t.CREATE_ID == personID)
+									 select t).OrderBy(l => l.DUE_DT).ToList();
+					else
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null))
+										 select t).OrderBy(l => l.DUE_DT).ToList();
+				}
+				else
+				{
+					if (createdBy)
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+									 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate) && t.CREATE_ID == personID)
+									 select t).OrderBy(l => l.DUE_DT).ToList();
+					else
+						this.TaskList = (from t in this.Entities.TASK_STATUS
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate))
+										 select t).OrderBy(l => l.DUE_DT).ToList();
+				}
+
+			}
+			catch (Exception ex)
+			{
+				;
+			}
+			return this;
+		}
+
 		public TaskStatusMgr SelectTaskList(int recordType, decimal responsibleID, bool openOnly)
 		{
 			try
@@ -1401,7 +1448,7 @@ namespace SQM.Website
 
 		public static List<TaskItem> ExceptionTaskListByRecord(int recordType, decimal recordID, decimal recordSubID)
 		{
-			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString() };
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString(), ((int)TaskStatus.Complete).ToString() };
 			DateTime forwardDate = DateTime.UtcNow;
 			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[4] { "NOTIFY_SCOPE", "NOTIFY_SCOPE_TASK", "NOTIFY_TASK_STATUS", "RECORD_TYPE" });
 
@@ -1414,7 +1461,7 @@ namespace SQM.Website
 								join a in entities.AUDIT on t.RECORD_ID equals a.AUDIT_ID
 								join p in entities.PERSON on t.RESPONSIBLE_ID equals p.PERSON_ID into p_t
 								join l in entities.PLANT on a.DETECT_PLANT_ID equals l.PLANT_ID into l_i
-								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350")
+								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350" && statusIDS.Contains(t.STATUS))
 								from p in p_t.DefaultIfEmpty()
 								from l in l_i.DefaultIfEmpty()
 								select new TaskItem
@@ -1464,7 +1511,7 @@ namespace SQM.Website
 				using (PSsqmEntities entities = new PSsqmEntities())
 				{
 					taskList = (from t in entities.TASK_STATUS
-								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350")
+								where (t.RECORD_TYPE == recordType && t.RECORD_ID == recordID && t.RECORD_SUBID == recordSubID && t.TASK_STEP == "350" && statusIDS.Contains(t.STATUS))
 								select t).OrderBy(l => l.DUE_DT).ToList();
 
 				}

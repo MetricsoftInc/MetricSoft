@@ -89,7 +89,7 @@
 	</tr>
 	<tr id="trAttachDesc" runat="server" visible="false">
 		<td colspan="2" style="vertical-align: bottom; padding-bottom: 16px;"><img src="/images/defaulticon/16x16/edit-document.png" alt="" style="border: 0; cursor: pointer;">
-			</asp:Label><asp:TextBox id="tbAttachDesc" runat="server" maxlength="400" columns="40" CssClass="textStd" ToolTip="<%$ Resources:LocalizedText, AttachmentDescription %>"></asp:TextBox>
+			<%--</asp:Label>--%><asp:TextBox id="tbAttachDesc" runat="server" maxlength="400" columns="40" CssClass="textStd" ToolTip="<%$ Resources:LocalizedText, AttachmentDescription %>"></asp:TextBox>
 		</td>
 	</tr>
 </table>

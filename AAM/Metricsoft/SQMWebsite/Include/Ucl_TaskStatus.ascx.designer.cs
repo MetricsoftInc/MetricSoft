@@ -49,13 +49,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblTaskDescription;
         
         /// <summary>
-        /// lblTaskDescriptionValue control.
+        /// tbTaskDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTaskDescriptionValue;
+        protected global::System.Web.UI.WebControls.TextBox tbTaskDescription;
         
         /// <summary>
         /// lblTaskDetail control.
@@ -74,6 +74,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTaskDetailValue;
+        
+        /// <summary>
+        /// lblAssignPersonUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssignPersonUpdate;
+        
+        /// <summary>
+        /// lblAssignPersonValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssignPersonValue;
         
         /// <summary>
         /// lblCreatedBy control.
@@ -173,6 +191,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_Attach uclAttachWin;
+        
+        /// <summary>
+        /// btnTaskUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTaskUpdate;
         
         /// <summary>
         /// btnTaskComplete control.
@@ -310,6 +337,33 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDatePicker rdpTaskDueDTAdd;
         
         /// <summary>
+        /// lblPlantAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPlantAdd;
+        
+        /// <summary>
+        /// ddlScheduleScopeAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox ddlScheduleScopeAdd;
+        
+        /// <summary>
+        /// mnuScheduleScopeAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMenu mnuScheduleScopeAdd;
+        
+        /// <summary>
         /// lblAssignPersonAdd control.
         /// </summary>
         /// <remarks>
@@ -344,6 +398,24 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTaskStatusValueAdd;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// lblCreatedByAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCreatedByAdd;
         
         /// <summary>
         /// btnTaskAdd control.
@@ -389,6 +461,33 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadWindow winAssignTask;
+        
+        /// <summary>
+        /// lblPlant control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPlant;
+        
+        /// <summary>
+        /// ddlScheduleScope control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox ddlScheduleScope;
+        
+        /// <summary>
+        /// mnuScheduleScope control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMenu mnuScheduleScope;
         
         /// <summary>
         /// lblAssignPerson control.

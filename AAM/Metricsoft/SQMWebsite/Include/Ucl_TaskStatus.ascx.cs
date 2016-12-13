@@ -44,15 +44,18 @@ namespace SQM.Website
 			CurrentTask = task;
 
 			pnlUpdateTask.Visible = true;
-			btnTaskComplete.CommandArgument = task.TASK_ID.ToString();
-			btnTaskAssign.CommandArgument = task.TASK_ID.ToString();
+			btnTaskUpdate.CommandArgument = btnTaskComplete.CommandArgument = btnTaskAssign.CommandArgument = task.TASK_ID.ToString();
+
 			if (task.STATUS == ((int)TaskStatus.Complete).ToString())
 			{
-				btnTaskComplete.Visible = btnTaskAssign.Visible = false;
+				btnTaskComplete.Visible = btnTaskUpdate.Visible = btnTaskAssign.Visible = false;
+				tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = false;
+				 
 			}
 			else
 			{
-				btnTaskComplete.Visible = btnTaskAssign.Visible = true;
+				btnTaskComplete.Visible = btnTaskUpdate.Visible = btnTaskAssign.Visible = true;
+				tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = true;
 			}
 
 			switch ((TaskRecordType)task.RECORD_TYPE)
@@ -99,11 +102,11 @@ namespace SQM.Website
 					break;
 			}
 
-			lblTaskDescriptionValue.Text = task.DESCRIPTION;  // command of what to do
+			tbTaskDescription.Text = task.DESCRIPTION;  // command of what to do
 			lblTaskDetailValue.Text = task.DETAIL;              // incident description or audit question 
 
 			// get the Create By person name and display
-			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(ctx, task.CREATE_ID.ToString());
+			PERSON createBy = SQMModelMgr.LookupPerson(ctx, (decimal)task.CREATE_ID, "", false);
 			if (createBy == null)
 			{
 				lblCreatedByValue.Text = Resources.LocalizedText.AutomatedScheduler;
@@ -112,7 +115,17 @@ namespace SQM.Website
 			{
 				lblCreatedByValue.Text = SQMModelMgr.FormatPersonListItem(createBy, false, "LF");
 			}
-			
+
+			PERSON assignTo = SQMModelMgr.LookupPerson(ctx, (decimal)task.RESPONSIBLE_ID, "", false);
+			if (assignTo == null)
+			{
+				lblAssignPersonValue.Text = Resources.LocalizedText.AutomatedScheduler;
+			}
+			else
+			{
+				lblAssignPersonValue.Text = SQMModelMgr.FormatPersonListItem(assignTo, false, "LF");
+			}
+
 			rdpTaskDueDT.SelectedDate = (DateTime)task.DUE_DT;
 			lblTaskStatusValue.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION;
 			tbTaskComments.Text = task.COMMENTS;
@@ -154,6 +167,42 @@ namespace SQM.Website
 			lblTaskDetailValueAdd.Text = originalDetail;  // cause of the requirement
 			rdpTaskDueDTAdd.SelectedDate = SessionManager.UserContext.LocalTime; // default to today?
 			lblTaskStatusValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == (0).ToString()).FirstOrDefault().DESCRIPTION; // default to the "Open" status
+
+			ddlScheduleScope.Items.Clear();
+
+			BusinessLocation location = new BusinessLocation().Initialize(plantID);
+			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
+			{
+				List<BusinessLocation> locationList = SessionManager.PlantList;
+				locationList = UserContext.FilterPlantAccessList(locationList);
+
+				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
+				{
+					ddlScheduleScopeAdd.Visible = false;
+					mnuScheduleScopeAdd.Visible = true;
+					SQMBasePage.SetLocationList(mnuScheduleScopeAdd, locationList, plantID, location.Plant.PLANT_NAME, "TOP", true);
+					//RadMenuItem mi = new RadMenuItem();
+					//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
+					//mi.Value = "0";
+					//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+					//mnuScheduleScope.Items[0].Items.Insert(0, mi);
+				}
+				else
+				{
+					ddlScheduleScopeAdd.Visible = true;
+					mnuScheduleScopeAdd.Visible = false;
+					SQMBasePage.SetLocationList(ddlScheduleScopeAdd, locationList, plantID, true);
+				}
+			}
+			else
+			{
+				ddlScheduleScopeAdd.Visible = true;
+				mnuScheduleScopeAdd.Visible = false;
+				//ddlScheduleScopeAdd.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
+				//ddlScheduleScopeAdd.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+			}
+
 			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
 			SQMBasePage.SetPersonList(ddlAssignPersonAdd, personList, "", 0, false, "LF");
 
@@ -164,6 +213,10 @@ namespace SQM.Website
 				pnlListTasks.Visible = true;
 			else
 				pnlListTasks.Visible = false;
+
+			btnTaskAdd.Visible = true;
+			btnTaskUpdate.Visible = false;
+
 
 		}
 
@@ -278,9 +331,17 @@ namespace SQM.Website
 				{
 					TaskItem item = (TaskItem)e.Item.DataItem;
 
-					Label lbl = (Label)e.Item.FindControl("lblDueDate");
+					LinkButton lbl = (LinkButton)e.Item.FindControl("lblDueDate");
+					LinkButton lnkDelete = (LinkButton)e.Item.FindControl("lnkDeleteTask");
 					lbl.Text = SQMBasePage.FormatDate((DateTime)item.Task.DUE_DT, "d", false);
+					if (item.Taskstatus == TaskStatus.Complete)
+					{
+						lbl.Enabled = false;
+						lnkDelete.Visible = false;
+					}
 
+					Label lblStatus = (Label)e.Item.FindControl("lblTaskStatus");
+					lblStatus.Text = item.Taskstatus.ToString();
 					if (item.Taskstatus == TaskStatus.EscalationLevel1 || item.Taskstatus == TaskStatus.EscalationLevel2)
 					{
 						ImageButton img = (ImageButton)e.Item.FindControl("imgTaskStatus");
@@ -327,6 +388,7 @@ namespace SQM.Website
 
 		protected void btnTaskAdd_Click(object sender, EventArgs e)
 		{
+			PSsqmEntities ctx = new PSsqmEntities();
 			lblErrorMessage.Text = "";
 			Button btn = (Button)sender;
 			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
@@ -334,7 +396,7 @@ namespace SQM.Website
 				return;
 			}
 
-			string[] cmd = btn.CommandArgument.Split('~'); // recordType, recordID, recordSubID, taskStep, taskType
+			string[] cmd = btn.CommandArgument.Split('~'); // recordType, recordID, recordSubID, taskStep, taskType, plantID
 			int recordType = Convert.ToInt32(cmd[0]);
 			decimal recordID = Convert.ToDecimal(cmd[1]);
 			decimal recordSubID = Convert.ToDecimal(cmd[2]);
@@ -347,9 +409,10 @@ namespace SQM.Website
 			// make sure that the Assign To Employee has been selected
 			if (ddlAssignPersonAdd.SelectedValue.ToString().Equals(""))
 			{
-				BindTaskAdd(recordType, recordID, recordSubID, "350", "T", lblTaskDetailValueAdd.Text.ToString(), plantID, "");
+				// I don't think we need to bind the list at this point
+				BindTaskAdd(recordType, recordID, recordSubID, taskStep, taskType, lblTaskDetailValueAdd.Text.ToString(), plantID, "");
 				lblErrorMessage.Text = lblErrRequiredInputs.Text.ToString();
-				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			}
 			else
@@ -375,11 +438,13 @@ namespace SQM.Website
 				taskMgr.CreateTask(task);
 				taskMgr.UpdateTaskList(task.RECORD_ID);
 				// send email
-				EHSNotificationMgr.NotifyTaskAssigment(task, plantID);
+				PERSON assignTo = SQMModelMgr.LookupPerson(ctx, (decimal)task.RESPONSIBLE_ID, "", false);
+				EHSNotificationMgr.NotifyTaskAssigment(task, assignTo.PLANT_ID);
 
 				// reset the fields for the next add
-				ddlAssignPersonAdd.SelectedIndex = 0;
+				ddlAssignPersonAdd.SelectedValue = "";
 				tbTaskDescriptionAdd.Text = "";
+				rdpTaskDueDTAdd.SelectedDate = DateTime.Today;
 
 				if (OnTaskAdd != null)
 				{
@@ -394,9 +459,103 @@ namespace SQM.Website
 						auditQuestion.Status = "02";
 						EHSAuditMgr.UpdateAnswer(auditQuestion);
 					}
+					//SessionManager.ReturnRecordID = task.RECORD_ID;
+					//SessionManager.ReturnObject = "AddTask";
+					//SessionManager.ReturnStatus = true;
+				}
+
+				if (Page.Request.Url.ToString().Contains("AssessmentForm"))
+				{
+					// now update the list and stay on the popup
+					BindTaskAdd(recordType, recordID, recordSubID, taskStep, taskType, lblTaskDetailValueAdd.Text.ToString(), plantID, "");
+					lblErrorMessage.Text = "";
+					string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+					ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+				}
+				else
+				{
 					SessionManager.ReturnRecordID = task.RECORD_ID;
 					SessionManager.ReturnObject = "AddTask";
 					SessionManager.ReturnStatus = true;
+				}
+			}
+		}
+
+		protected void btnTaskUpdate_Click(object sender, EventArgs e)
+		{
+			PSsqmEntities ctx = new PSsqmEntities();
+			lblErrorMessage.Text = "";
+			Button btn = (Button)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+
+			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+			TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
+
+			//task.RECORD_TYPE = recordType;
+			//task.RECORD_ID = recordID;
+			//task.RECORD_SUBID = recordSubID;
+			//task.TASK_STEP = taskStep;
+			//task.TASK_TYPE = taskType;
+			//task.TASK_SEQ = 0;
+			task.DUE_DT = rdpTaskDueDT.SelectedDate;
+			//task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPerson.SelectedValue.ToString());
+			//task.DETAIL = lblTaskDetailValue.Text.ToString(); // this is the original detail, so we don't change it.
+			task.DESCRIPTION = tbTaskDescription.Text.ToString();
+			task.COMMENTS = tbTaskComments.Text.ToString();
+			//task.STATUS = ((int)TaskStatus.New).ToString();
+			//task.CREATE_DT = SessionManager.UserContext.LocalTime != null ? SessionManager.UserContext.LocalTime : DateTime.UtcNow;
+			//task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
+
+			taskMgr.UpdateTask(task);
+			taskMgr.UpdateTaskList(task.RECORD_ID);
+			// send email
+			PERSON assignTo = SQMModelMgr.LookupPerson(ctx, (decimal)task.RESPONSIBLE_ID, "", false);
+			EHSNotificationMgr.NotifyTaskAssigment(task, assignTo.PLANT_ID);
+
+			// reset the fields for the next add
+			ddlAssignPersonAdd.SelectedValue = "";
+			tbTaskDescriptionAdd.Text = "";
+			rdpTaskDueDTAdd.SelectedDate = DateTime.Today;
+
+			if (OnTaskAdd != null)
+			{
+				OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
+			}
+			if (task.RECORD_TYPE == (int)TaskRecordType.Audit) // update the Question Status when adding tasks for an audit followup.
+			{
+				EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(task.RECORD_ID, (decimal)task.RECORD_SUBID);
+
+				if (auditQuestion != null)
+				{
+					auditQuestion.Status = "02";
+					EHSAuditMgr.UpdateAnswer(auditQuestion);
+				}
+				//SessionManager.ReturnRecordID = task.RECORD_ID;
+				//SessionManager.ReturnObject = "AddTask";
+				//SessionManager.ReturnStatus = true;
+			}
+
+			if (Page.Request.Url.ToString().Contains("AssessmentForm"))
+			{
+				// now update the list and stay on the popup if adding through assessment form
+				BindTaskAdd(task.RECORD_TYPE, task.RECORD_ID, (decimal)task.RECORD_SUBID, task.TASK_STEP, task.TASK_TYPE, lblTaskDetailValue.Text.ToString(), assignTo.PLANT_ID, "");
+				lblErrorMessage.Text = "";
+
+				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
+			else
+			{
+				SessionManager.ReturnRecordID = task.RECORD_ID;
+				SessionManager.ReturnObject = "UpdateTask";
+				SessionManager.ReturnStatus = true;
+
+				if (OnTaskUpdate != null)
+				{
+					OnTaskUpdate("update");
 				}
 			}
 		}
@@ -432,6 +591,7 @@ namespace SQM.Website
 
 		protected void btnTaskAssign_Click(object sender, EventArgs e)
 		{
+			PSsqmEntities ctx = new PSsqmEntities();
 			Button btn = (Button)sender;
 			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
 			{
@@ -442,7 +602,42 @@ namespace SQM.Website
 			TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
 			btnAssignSave.CommandArgument = task.TASK_ID.ToString();
 
-			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, GetTaskLocation(task)).Where(l=> !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l=> l.LAST_NAME).ToList();
+			decimal plantID = GetTaskLocation(task);
+			BusinessLocation location = new BusinessLocation().Initialize(plantID);
+			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
+			{
+				List<BusinessLocation> locationList = SessionManager.PlantList;
+				locationList = UserContext.FilterPlantAccessList(locationList);
+
+				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
+				{
+					ddlScheduleScope.Visible = false;
+					mnuScheduleScope.Visible = true;
+					SQMBasePage.SetLocationList(mnuScheduleScope, locationList, location.Plant.PLANT_ID, location.Plant.PLANT_NAME, "TOP", true);
+					//RadMenuItem mi = new RadMenuItem();
+					//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
+					//mi.Value = "0";
+					//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+					//mnuScheduleScope.Items[0].Items.Insert(0, mi);
+				}
+				else
+				{
+					ddlScheduleScope.Visible = true;
+					mnuScheduleScope.Visible = false;
+					SQMBasePage.SetLocationList(ddlScheduleScope, locationList, location.Plant.PLANT_ID, true);
+				}
+			}
+			else
+			{
+				ddlScheduleScope.Visible = true;
+				mnuScheduleScope.Visible = false;
+				//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
+				//ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+			}
+
+
+			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l=> !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l=> l.LAST_NAME).ToList();
 			SQMBasePage.SetPersonList(ddlAssignPerson, personList, "", 0, false, "LF");
 			tbAssignComment.Text = task.COMMENTS;
 
@@ -478,9 +673,84 @@ namespace SQM.Website
 
 		protected void btnTaskCancel_Click(object sender, EventArgs e)
 		{
+			// reset the fields for the next add
+			ddlAssignPersonAdd.SelectedIndex = 0;
+			tbTaskDescriptionAdd.Text = "";
+			rdpTaskDueDTAdd.SelectedDate = DateTime.Today;
+			lblCreatedByAdd.Text = "";
+
 			if (OnTaskUpdate != null)
 			{
 				OnTaskUpdate("cancel");
+			}
+		}
+
+		protected void lblDueDate_OnClick(object sender, EventArgs e)
+		{
+			lblErrorMessage.Text = "";
+			LinkButton btn = (LinkButton)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+
+			PSsqmEntities ctx = new PSsqmEntities();
+			int recordType;
+			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+			TASK_STATUS task = new TASK_STATUS();
+
+			AUDIT audit = new AUDIT();
+
+			try
+			{
+				decimal recordID = Convert.ToDecimal(btn.CommandArgument.ToString());
+				if (TaskXLATList == null || TaskXLATList.Count == 0)
+					TaskXLATList = SQMBasePage.SelectXLATList(new string[5] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK", "ACTION_CATEGORY" });
+				task = taskMgr.SelectTask(recordID);
+				BindTaskUpdate(task, "");
+
+			}
+			catch (Exception ex)
+			{
+				lblErrorMessage.Text = ex.Message.ToString();
+			}
+			pnlAddTask.Visible = false;
+			pnlUpdateTask.Visible = true;
+
+			string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+		}
+
+		protected void lnkDeleteTask_OnClick(object sender, EventArgs e)
+		{
+			// we are only marking the status as deleteded, not physically deleting the task.
+			lblErrorMessage.Text = "";
+			LinkButton btn = (LinkButton)sender;
+			if (btn == null || string.IsNullOrEmpty(btn.CommandArgument))
+			{
+				return;
+			}
+			TaskStatusMgr taskMgr = new TaskStatusMgr().CreateNew(0, 0);
+			TASK_STATUS task = taskMgr.SelectTask(Convert.ToDecimal(btn.CommandArgument));
+			taskMgr.UpdateTaskStatus(task, TaskStatus.Delete);
+			taskMgr.UpdateTask(task);
+			taskMgr.UpdateTaskList(task.RECORD_ID);
+			if (OnTaskAdd != null)
+			{
+				OnTaskAdd("added", task.RECORD_ID, (decimal)task.RECORD_SUBID);
+			}
+			if (task.RECORD_TYPE == (int)TaskRecordType.Audit) // update the Question Status when adding tasks for an audit followup.
+			{
+				EHSAuditQuestion auditQuestion = EHSAuditMgr.SelectAuditQuestion(task.RECORD_ID, (decimal)task.RECORD_SUBID);
+
+				if (auditQuestion != null)
+				{
+					auditQuestion.Status = "02";
+					EHSAuditMgr.UpdateAnswer(auditQuestion);
+				}
+				SessionManager.ReturnRecordID = task.RECORD_ID;
+				SessionManager.ReturnObject = "AddTask";
+				SessionManager.ReturnStatus = true;
 			}
 		}
 
@@ -539,6 +809,47 @@ namespace SQM.Website
 			HiddenField hf = (HiddenField)this.Page.Master.FindControl("hfSubmitReset");
 			if (hf != null)
 				hf.Value = "true";
+		}
+
+		protected void ScheduleScope_Select(object sender, EventArgs e)
+		{
+			decimal plantID = 0;
+			string scopId = "";
+			try
+			{
+				if (sender is RadMenu)
+				{
+					RadMenu scope = (RadMenu)sender;
+					scope.Items[0].Text = scope.SelectedItem.Text;
+					plantID = Convert.ToDecimal(scope.SelectedValue);
+					scopId = scope.ID;
+				}
+				else
+				{
+					RadComboBox scope = (RadComboBox)sender;
+					plantID = Convert.ToDecimal(scope.SelectedValue);
+					scopId = scope.ID;
+				}
+
+				List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
+				if (scopId.EndsWith("Add"))
+					SQMBasePage.SetPersonList(ddlAssignPersonAdd, personList, "", 0, false, "LF");
+				else
+					SQMBasePage.SetPersonList(ddlAssignPerson, personList, "", 0, false, "LF");
+
+			}
+			catch { }
+
+			if (scopId.EndsWith("Add"))
+			{
+				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
+			else
+			{
+				string script = "function f(){OpenAssignTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+			}
 		}
 
 	}

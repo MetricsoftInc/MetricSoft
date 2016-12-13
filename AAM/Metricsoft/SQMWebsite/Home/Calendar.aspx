@@ -55,7 +55,7 @@
 
 						<span style="padding-right: 3px;">
 							<telerik:RadComboBox ID="ddlScheduleScope" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
-								AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="Select either yourself or an accesible business location" meta:resourcekey="ddlScheduleScopeResource1"></telerik:RadComboBox>
+								AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectYourselfBusinessLocation %>"></telerik:RadComboBox>
 							<telerik:RadMenu ID="mnuScheduleScope" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select">
 								<DefaultGroupSettings RepeatDirection="Horizontal" />
 						</telerik:RadMenu>
@@ -91,10 +91,121 @@
 		</div>
 
 		<div id="divTaskList" runat="server" style="margin-top: 4px;" visible="False">
-			<div style="margin: 5px;" class="noprint">
+			<div style="width: 99%; margin: 5px;" class="noprint">
 				<asp:Label ID="LlblActionsTitle" runat="server"  CssClass="pageTitles" Text="Actions Assigned To Me" meta:resourcekey="LlblActionsTitleResource1" ></asp:Label>
 				<br />
 				<asp:Label ID="lblActionsInstruct" runat="server" CssClass="instructText" Text="Tasks assigned to you. Click on the Task ID to view details or to update its status." meta:resourcekey="lblActionsInstructResource1"></asp:Label>
+			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12  text-left">
+						<span style="float: left; margin-left: -7px; padding-top: 5px; padding-right: 5px;">
+							<asp:Label ID="lblTaskScope" runat="server" Text="<%$ Resources:LocalizedText, DisplayTasksFor %>" CssClass="prompt"></asp:Label>
+							&nbsp;&nbsp;</span>
+						<span style="padding-right: 3px;">
+							<telerik:RadComboBox ID="ddlTaskScope" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
+								AutoPostBack="True" OnSelectedIndexChanged="TaskScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectYourselfBusinessLocation %>">
+							</telerik:RadComboBox>
+							<telerik:RadMenu ID="mnuTaskScope" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="TaskScope_Select">
+								<DefaultGroupSettings RepeatDirection="Horizontal" />
+							</telerik:RadMenu>
+						</span>
+						<div class="clearfix visible-xs"></div>
+						<span style="padding-right: 3px;">
+							<asp:Label runat="server" ID="lblStatus" CssClass="prompt"></asp:Label>
+						</span>
+						<span style="padding-right: 3px;">
+							<telerik:RadComboBox ID="rcbStatusSelect" runat="server" ToolTip="<%$ Resources:LocalizedText, SelectAssessmentStatus %>" Width="135" ZIndex="9000" Skin="Metro" AutoPostBack="false">
+								<Items>
+									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Open %>" Value="o" />
+									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, Closed %>" Value="c" />
+									<telerik:RadComboBoxItem Text="<%$ Resources:LocalizedText, All %>" Value="a" />
+								</Items>
+							</telerik:RadComboBox>
+						</span>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 7px;">
+					<div class="col-xs-12  text-left">
+						<span style="float: left; margin-left: -7px; padding-right: 5px;">
+							<span style="padding-right: 25px;">
+								<asp:Label runat="server" ID="lblTaskDate" Text="<%$ Resources:LocalizedText, TaskDateFrom %>" CssClass="prompt"></asp:Label></span>
+							<span>
+								<telerik:RadDatePicker ID="dmFromDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmFromDateResource1">
+									<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;"></Calendar>
+
+									<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="">
+										<EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+
+										<ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+
+										<FocusedStyle Resize="None"></FocusedStyle>
+
+										<DisabledStyle Resize="None"></DisabledStyle>
+
+										<InvalidStyle Resize="None"></InvalidStyle>
+
+										<HoveredStyle Resize="None"></HoveredStyle>
+
+										<EnabledStyle Resize="None"></EnabledStyle>
+									</DateInput>
+
+									<DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
+								</telerik:RadDatePicker>
+							</span>
+						</span>
+
+						<div class="clearfix visible-xs"></div>
+						<br class="visible-xs-block" />
+
+						<span>
+							<span style="margin-left: 14px; padding-right: 8px;">
+								<asp:Label runat="server" ID="lblToDate" CssClass="prompt"></asp:Label>
+								<telerik:RadDatePicker ID="dmToDate" runat="server" CssClass="textStd" Width="145px" Skin="Metro" DateInput-Skin="Metro" DateInput-Font-Size="Small" meta:resourcekey="dmToDateResource1">
+									<Calendar UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" runat="server"></Calendar>
+
+									<DateInput DisplayDateFormat="M/d/yyyy" DateFormat="M/d/yyyy" LabelWidth="64px" Skin="Metro" Font-Size="Small" Width="" runat="server">
+										<EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+
+										<ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+
+										<FocusedStyle Resize="None"></FocusedStyle>
+
+										<DisabledStyle Resize="None"></DisabledStyle>
+
+										<InvalidStyle Resize="None"></InvalidStyle>
+
+										<HoveredStyle Resize="None"></HoveredStyle>
+
+										<EnabledStyle Resize="None"></EnabledStyle>
+									</DateInput>
+
+									<DatePopupButton ImageUrl="" HoverImageUrl="" CssClass=""></DatePopupButton>
+								</telerik:RadDatePicker>
+							</span>
+						</span>
+
+						<div class="clearfix visible-xs"></div>
+						<br class="visible-xs-block" style="margin-top: 7px;" />
+
+						<span>
+							<span style="margin-left: 14px; padding-right: 8px;">
+								<label for="cbOnlyCreated" style="padding-right: 5px;"><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, OnlyTasksCreated %>"></asp:Literal>:</label>
+								<input id="cbCreatedByMe" type="checkbox" runat="server"/>
+								<%--<asp:CheckBox runat="server" ID="cbOnlyCreated" TextAlign="Left"/>--%>
+							</span>
+						</span>
+
+						<div class="clearfix visible-xs"></div>
+						<br class="visible-xs-block" style="margin-top: 7px;" />
+
+						<span class="noprint">
+							<%--<asp:Label ID="lblShowImage" runat="server" Text="Display Initial Image" CssClass="prompt"></asp:Label>
+                                        <span style="padding-top: 10px;""><asp:CheckBox id="cbShowImage" runat="server" Checked="false"/></span>--%>
+							<asp:Button ID="btnSearch" runat="server" Style="margin-left: 20px;" CssClass="buttonEmphasis" Text="<%$ Resources:LocalizedText, Search %>" ToolTip="<%$ Resources:LocalizedText, ListAssessments %>" OnClick="TaskScope_Select" />
+						</span>
+					</div>
+				</div>
 			</div>
 			<br />
 			<div class="container-fluid">

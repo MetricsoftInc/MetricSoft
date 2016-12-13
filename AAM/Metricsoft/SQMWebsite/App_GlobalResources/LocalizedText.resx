@@ -888,4 +888,22 @@
   <data name="WorkStatusCalcMsg" xml:space="preserve">
     <value>(determined when the incident and any lost/restricted time is saved)</value>
   </data>
+  <data name="TaskUpdateConfirm" xml:space="preserve">
+    <value>return confirmAction('update the Task');</value>
+  </data>
+  <data name="SelectBusinessLocation" xml:space="preserve">
+    <value>Select an accesible business location</value>
+  </data>
+  <data name="DisplayTasksFor" xml:space="preserve">
+    <value>Display Tasks For:</value>
+  </data>
+  <data name="SelectYourselfBusinessLocation" xml:space="preserve">
+    <value>Select either yourself or an accesible business location</value>
+  </data>
+  <data name="TaskDateFrom" xml:space="preserve">
+    <value>Task Date From:</value>
+  </data>
+  <data name="OnlyTasksCreated" xml:space="preserve">
+    <value>Only tasks I created</value>
+  </data>
 </root>

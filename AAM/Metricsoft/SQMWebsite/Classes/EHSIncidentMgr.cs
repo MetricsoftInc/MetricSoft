@@ -1524,7 +1524,8 @@ namespace SQM.Website
 			if (task == null)
 			{
 				task = taskMgr.CreateTask(((int)SysPriv.action).ToString(), "T", taskSeq, !string.IsNullOrEmpty(taskDescription) ? taskDescription : incident.ISSUE_TYPE, dueDate, responsiblePersonId);
-				task.DETAIL = detail;
+				//task.DETAIL = detail;
+				task.DETAIL = incident.ISSUE_TYPE;
 				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 				if (recordTypeId == (int)TaskRecordType.PreventativeAction)
 				{

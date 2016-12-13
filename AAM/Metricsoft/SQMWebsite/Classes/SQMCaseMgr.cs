@@ -11,7 +11,8 @@ namespace SQM.Website
 {
     public enum CaseUpdateStatus { Success, SaveError, IncidentError, RequiredInputs, Incomplete, CompleteError, RootCauseError};
 
-    public class ProblemCaseCtl
+	[Serializable]
+	public class ProblemCaseCtl
     {
         public ProblemCase problemCase
         {
@@ -153,7 +154,8 @@ namespace SQM.Website
         }
     }
 
-    public class ProblemCase
+	[Serializable]
+	public class ProblemCase
     {
         public PROB_CASE ProbCase
         {

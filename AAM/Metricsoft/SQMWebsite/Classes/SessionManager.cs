@@ -679,6 +679,7 @@ namespace SQM.Website
 
 	#region usercontext
 
+	[Serializable]
 	public class UserContext
 	{
 		public SQM_ACCESS Credentials 
@@ -967,12 +968,13 @@ namespace SQM.Website
 		}
 
 	}
-	#endregion  
+	#endregion
 
 
 
 	#region sessioncontext
 
+	[Serializable]
 	public class SessionContext : NameObjectCollectionBase
 	{
 		public COMPANY PrimaryCompany
@@ -1003,6 +1005,7 @@ namespace SQM.Website
 		}
 	}
 
+	[Serializable]
 	public class IndexedSet : NameObjectCollectionBase
 	{
 		public IndexedSet()
@@ -1046,6 +1049,14 @@ namespace SQM.Website
 			}
 			return obj;
 		}
+	}
+
+	[Serializable]
+	public class CustomXmlData
+	{
+		public CustomXmlData() { }
+		private string innerXML = string.Empty;
+		public string InnerXML { get { return innerXML; } set { innerXML = value; } }
 	}
 	#endregion
 

@@ -2112,7 +2112,7 @@ namespace SQM.Website
 
 			if (dueDate > DateTime.MinValue && responsiblePersonId > 0)
 			{
-				EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.update).ToString(), 0, responsiblePersonId, 45, dueDate, "", detailDesc);
+				EHSIncidentMgr.CreateOrUpdateTask(incidentId, ((int)SysPriv.update).ToString(), 0, responsiblePersonId, 45, dueDate, detailDesc, "");
 			}
 		}
 

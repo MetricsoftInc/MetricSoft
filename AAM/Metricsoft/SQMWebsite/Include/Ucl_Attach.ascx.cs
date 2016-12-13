@@ -220,11 +220,13 @@ namespace SQM.Website
 			if (viewMode == PageUseMode.ViewOnly)
 			{
 				uclUpload.SetViewMode(false);
+				uclUpload.SetDescription(false);
 				btnSave.Visible = false;
 			}
 			else
 			{
 				uclUpload.SetViewMode(true);
+				uclUpload.SetDescription(true);
 				btnSave.Visible = true;
 			}
 			uclUpload.GetUploadedFiles(recordType, recordID, recordStep);

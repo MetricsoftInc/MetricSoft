@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class LocalizedText {
@@ -651,6 +651,15 @@ namespace Resources {
         internal static string DisplayPrompt {
             get {
                 return ResourceManager.GetString("DisplayPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display Tasks For:.
+        /// </summary>
+        internal static string DisplayTasksFor {
+            get {
+                return ResourceManager.GetString("DisplayTasksFor", resourceCulture);
             }
         }
         
@@ -1375,6 +1384,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only tasks I created.
+        /// </summary>
+        internal static string OnlyTasksCreated {
+            get {
+                return ResourceManager.GetString("OnlyTasksCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         internal static string Open {
@@ -1789,6 +1807,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select an accesible business location.
+        /// </summary>
+        internal static string SelectBusinessLocation {
+            get {
+                return ResourceManager.GetString("SelectBusinessLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select incident types to list.
         /// </summary>
         internal static string SelectIncidentTypes {
@@ -1839,6 +1866,15 @@ namespace Resources {
         internal static string SelectResponsibleSupplierLocations {
             get {
                 return ResourceManager.GetString("SelectResponsibleSupplierLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select either yourself or an accesible business location.
+        /// </summary>
+        internal static string SelectYourselfBusinessLocation {
+            get {
+                return ResourceManager.GetString("SelectYourselfBusinessLocation", resourceCulture);
             }
         }
         
@@ -1924,11 +1960,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Task Date From:.
+        /// </summary>
+        internal static string TaskDateFrom {
+            get {
+                return ResourceManager.GetString("TaskDateFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to return confirmAction(&apos;re-assign this Task&apos;);.
         /// </summary>
         internal static string TaskReAssignConfirm {
             get {
                 return ResourceManager.GetString("TaskReAssignConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to return confirmAction(&apos;update the Task&apos;);.
+        /// </summary>
+        internal static string TaskUpdateConfirm {
+            get {
+                return ResourceManager.GetString("TaskUpdateConfirm", resourceCulture);
             }
         }
         

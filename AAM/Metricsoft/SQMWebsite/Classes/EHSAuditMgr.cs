@@ -378,6 +378,8 @@ namespace SQM.Website
 		/// </summary>
 		public static List<EHSAuditQuestion> SelectAuditQuestionList(decimal auditTypeId, decimal auditTopicId, decimal auditId)
 		{
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString(), ((int)TaskStatus.Complete).ToString() };
+
 			var questionList = new List<EHSAuditQuestion>();
 
 			try
@@ -458,7 +460,7 @@ namespace SQM.Website
 												   select a.ATTACHMENT_ID).ToList();
 
 					List<decimal> taskIds = (from a in entities.TASK_STATUS
-											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
+											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID && statusIDS.Contains(a.STATUS)
 											 select a.TASK_ID).ToList();
 
 					List<decimal> videoIds = (from a in entities.VIDEO
@@ -663,6 +665,8 @@ namespace SQM.Website
 		/// </summary>
 		public static List<EHSAuditQuestion> SelectAuditQuestionExceptionList(decimal auditId, decimal auditTypeId, bool includeWithTasks)
 		{
+			// we want to see the completed/overdue tasks in the exception list... 
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString(), ((int)TaskStatus.Complete).ToString() };
 			var questionList = new List<EHSAuditQuestion>();
 			bool answerIsNegative = false;
 
@@ -709,7 +713,7 @@ namespace SQM.Website
 												   select a.ATTACHMENT_ID).ToList();
 
 					List<decimal> taskIds = (from a in entities.TASK_STATUS
-											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID
+											 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == aq.AUDIT_QUESTION_ID && statusIDS.Contains(a.STATUS)
 											 select a.TASK_ID).ToList();
 
 					List<decimal> videoIds = (from a in entities.VIDEO
@@ -826,6 +830,7 @@ namespace SQM.Website
 
 		public static EHSAuditQuestion SelectAuditQuestion(decimal auditId, decimal questionID)
 		{
+			string[] statusIDS = { ((int)TaskStatus.New).ToString(), ((int)TaskStatus.Pending).ToString(), ((int)TaskStatus.Due).ToString(), ((int)TaskStatus.Overdue).ToString(), ((int)TaskStatus.AwaitingClosure).ToString(), ((int)TaskStatus.Complete).ToString() };
 			var newQuestion = new EHSAuditQuestion();
 
 			try
@@ -861,7 +866,7 @@ namespace SQM.Website
 											   select a.ATTACHMENT_ID).ToList();
 
 				List<decimal> taskIds = (from a in entities.TASK_STATUS
-										 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == questionID
+										 where a.RECORD_TYPE == 50 && a.RECORD_ID == auditId && a.RECORD_SUBID == questionID && statusIDS.Contains(a.STATUS)
 										 select a.TASK_ID).ToList();
 
 				List<decimal> videoIds = (from a in entities.VIDEO

@@ -80,7 +80,8 @@ namespace SQM.Website
         }
     }
 
-    public class BusinessLocation
+	[Serializable]
+	public class BusinessLocation
     {
         public COMPANY Company
         {
@@ -267,7 +268,8 @@ namespace SQM.Website
         }
     }
 
-    public class ReceiptData
+	[Serializable]
+	public class ReceiptData
     {
         public RECEIPT Receipt
         {
@@ -296,7 +298,8 @@ namespace SQM.Website
         }
     }
 
-	
+
+	[Serializable]
 	public class PersonData
 	{
 		public decimal PersonId
