@@ -30,8 +30,6 @@ namespace SQM.Website
 		public PageUseMode PageMode { get; set; }
 
 		PSsqmEntities entities;
-		List<EHSFormControlStep> formSteps;
-
 
 		public bool IsEditContext
 		{

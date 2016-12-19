@@ -23,37 +23,45 @@ namespace SQM.Website
 		{
 			List<EHS_DATA> dataList = new List<EHS_DATA>();
 
-			dataList = (from d in ctx.EHS_DATA.Include("EHS_DATA_ORD")
-							  where d.PLANT_ID == plantID && d.DATE == periodDate.Date && (measureList.Count == 0  ||  measureList.Contains(d.MEASURE_ID))
-							  select d).ToList();
-
-			// clear the existing data values if they were created via a prior rollup process
-			if (updateIndicator > 0)
+			try
 			{
-				//foreach (EHS_DATA ehsData in dataList.Where(l=> l.UPDATE_IND > 0  &&  l.UPDATE_IND != updateIndicator).ToList())
-				foreach (EHS_DATA ehsData in dataList.Where(l => l.UPDATE_IND != updateIndicator).ToList())
-				{
-					ehsData.VALUE = null;
-					ehsData.ATTRIBUTE = null;
-				}
-			}
 
-			// create new data elements as needed to fulfil the Measures we are calculating
-			if (createNew  &&  measureList != null)
-			{
-				EHS_DATA ehsData = null;
-				foreach (decimal measureID in measureList)
+				dataList = (from d in ctx.EHS_DATA.Include("EHS_DATA_ORD")
+							where d.PLANT_ID == plantID && d.DATE == periodDate.Date && (measureList.Count == 0 || measureList.Contains(d.MEASURE_ID))
+							select d).ToList();
+
+				// clear the existing data values if they were created via a prior rollup process
+				if (updateIndicator > 0)
 				{
-					if ((ehsData = dataList.Where(l => l.MEASURE_ID == measureID).SingleOrDefault()) == null)
+					//foreach (EHS_DATA ehsData in dataList.Where(l=> l.UPDATE_IND > 0  &&  l.UPDATE_IND != updateIndicator).ToList())
+					foreach (EHS_DATA ehsData in dataList.Where(l => l.UPDATE_IND != updateIndicator).ToList())
 					{
-						ehsData = new EHS_DATA();
-						ehsData.MEASURE_ID = measureID;
-						ehsData.PLANT_ID = plantID;
-						ehsData.DATE = periodDate.Date;
-						ehsData.UPDATE_IND = updateIndicator;
-						dataList.Add(ehsData);
+						ehsData.VALUE = null;
+						ehsData.ATTRIBUTE = null;
 					}
 				}
+
+				// create new data elements as needed to fulfil the Measures we are calculating
+				if (createNew && measureList != null)
+				{
+					EHS_DATA ehsData = null;
+					foreach (decimal measureID in measureList)
+					{
+						if ((ehsData = dataList.Where(l => l.MEASURE_ID == measureID).FirstOrDefault()) == null)
+						{
+							ehsData = new EHS_DATA();
+							ehsData.MEASURE_ID = measureID;
+							ehsData.PLANT_ID = plantID;
+							ehsData.DATE = periodDate.Date;
+							ehsData.UPDATE_IND = updateIndicator;
+							dataList.Add(ehsData);
+						}
+					}
+				}
+			}
+			catch
+			{
+				;
 			}
 
 			return dataList;

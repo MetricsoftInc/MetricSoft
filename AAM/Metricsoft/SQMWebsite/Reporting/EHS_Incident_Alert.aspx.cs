@@ -145,7 +145,7 @@ namespace SQM.Website.EHS
 					root5YList = new List<INCFORM_ROOT5Y>(),
 					causation = null,
 					actionList = new List<TASK_STATUS>(),
-					approvalList = new List<INCFORM_APPROVAL>()
+					approvalList = new List<EHSIncidentApproval>()
 				};
 
 			baseApplicationUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + ResolveUrl("~/");
@@ -723,7 +723,7 @@ namespace SQM.Website.EHS
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null, 0);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(entities, (decimal)d.incident.ISSUE_TYPE_ID, 10.0m, iid, null, 0);
 
 					if (files.Count > 0)
 					{

@@ -44,7 +44,9 @@ namespace SQM.Website
 		protected RadDropDownList rddlFilteredUsers;
 
 		// Incident Custom Forms:
-		protected Ucl_INCFORM_InjuryIllness injuryIllnessForm;
+		//protected Ucl_INCFORM_InjuryIllness injuryIllnessForm;
+
+		protected static List<INCFORM_TYPE_CONTROL> incidentStepList;
 
 
 		// Special answers used in INCIDENT table
@@ -146,14 +148,6 @@ namespace SQM.Website
 			set { ViewState["XLATList"] = value; }
 		}
 
-		/*
-		protected override void OnInit(EventArgs e)
-		{
-			uclVideoPanel.AttachmentEvent += OnVideoUpdate;
-			base.OnInit(e);
-		}
-		*/
-
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
@@ -174,7 +168,7 @@ namespace SQM.Website
 			if (IsPostBack)
 			{
 				string senderControl = Request.Params["__EVENTTARGET"].ToString();
-				if (senderControl.ToLower().Contains("btnsubnav") || uclContainment.Visible == true || uclRootCause.Visible == true || uclCausation.Visible == true || uclAction.Visible == true || uclApproval.Visible == true || uclAlert.Visible == true  ||  uclVideoPanel.Visible == true)
+				if (senderControl.ToLower().Contains("btnsubnav") || uclcontain.Visible == true || uclroot5y.Visible == true || uclCausation.Visible == true || uclaction.Visible == true || uclapproval.Visible == true || uclAlert.Visible == true || uclVideoPanel.Visible == true)
 				{
 					if (!senderControl.Contains("btnSubnavSave"))
 						return;
@@ -185,8 +179,8 @@ namespace SQM.Website
 			}
 			else
 			{
+				incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1m);
 				XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_STEP" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
-				//RefreshPageContext();
 			}
 		}
 
@@ -219,7 +213,7 @@ namespace SQM.Website
 
 		private RadDropDownList HandleDepartmentList(EHSIncidentQuestion q, INCIDENT incident, bool shouldPopulate, RadDropDownList rddl)
 		{
-			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, shouldPopulate ? (decimal)incident.DETECT_PLANT_ID : SessionManager.IncidentLocation.Plant.PLANT_ID);
+			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, (decimal)incident.DETECT_PLANT_ID);
 			foreach (DEPARTMENT dept in deptList)
 			{
 				rddl.Items.Add(new DropDownListItem(dept.DEPT_NAME, dept.DEPT_ID.ToString()));
@@ -2231,85 +2225,67 @@ namespace SQM.Website
 		{
 			if (context == "new")
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
+				uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
 				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+				btnSubnavInitialActionApproval.Visible = btnSubnavCorrectiveActionApproval.Visible = false;
 				btnDelete.Visible = false;
+				uploader.SetViewMode(true);
 			}
 			else if (context == "alert")
 			{
-				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = false;
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = true;
+				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+				btnSubnavInitialActionApproval.Visible = btnSubnavCorrectiveActionApproval.Visible = false;
+				uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = true;
+				uploader.SetViewMode(false);
+				uploader.SetReportOption(false);
 
-				uclContainment.IsEditContext = true;
-				uclContainment.IncidentId = EditIncidentId;
-				uclContainment.PageMode = PageUseMode.ViewOnly;
-				uclContainment.PopulateInitialForm();
+				uclcontain.IsEditContext = true;
+				uclcontain.IncidentId = EditIncidentId;
+				uclcontain.PageMode = PageUseMode.ViewOnly;
+				uclcontain.PopulateInitialForm();
 
-				uclRootCause.IsEditContext = true;
-				uclRootCause.IncidentId = EditIncidentId;
-				uclRootCause.PageMode = PageUseMode.ViewOnly;
-				uclRootCause.PopulateInitialForm();
+				uclroot5y.IsEditContext = true;
+				uclroot5y.IncidentId = EditIncidentId;
+				uclroot5y.PageMode = PageUseMode.ViewOnly;
+				uclroot5y.PopulateInitialForm();
 
 				uclCausation.IsEditContext = true;
 				uclCausation.IncidentId = EditIncidentId;
 				uclCausation.PageMode = PageUseMode.ViewOnly;
 				uclCausation.PopulateInitialForm(entities);
 
-				uclAction.IsEditContext = true;
-				uclAction.IncidentId = EditIncidentId;
-				uclAction.PageMode = PageUseMode.ViewOnly;
-				uclAction.PopulateInitialForm();
+				uclaction.IsEditContext = true;
+				uclaction.IncidentId = EditIncidentId;
+				uclaction.PageMode = PageUseMode.ViewOnly;
+				uclaction.PopulateInitialForm();
 
-				uclApproval.IsEditContext = true;
-				uclApproval.IncidentId = EditIncidentId;
-				uclApproval.PageMode = PageUseMode.ViewOnly;
-				uclApproval.PopulateInitialForm(0);
+				uclapproval.IsEditContext = true;
+				uclapproval.IncidentId = EditIncidentId;
+				uclapproval.PageMode = PageUseMode.ViewOnly;
+				uclapproval.PopulateInitialForm(10.0m);
 			}
 			else
 			{
-				divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = false;
-				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
+				divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
+				btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavVideo.Visible = true;
 				btnSubnavIncident.Visible = true;
 				btnSubnavIncident.Enabled = false;
 				btnSubnavIncident.CssClass = "buttonLinkDisabled";
 				btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 				btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 
-				// incident alert
-				if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
-				{
-					btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
-				}
-				else
-				{
-					btnSubnavAlert.Visible = false;
-				}
+				btnSubnavVideo.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 1.1m);
+				btnSubnavVideo.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavVideo.Text;
+				btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 11.0m);
+				btnSubnavAlert.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "PreventativeMeasure").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavAlert.Text;
 
-				if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
-				{
-					btnSubnavVideo.Visible = true;
-				}
-				else
-				{
-					btnSubnavVideo.Visible = false;
-				}
+				btnSubnavInitialActionApproval.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 2.5m);
+				btnSubnavInitialActionApproval.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "InitialActionApproval").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "InitialActionApproval").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavInitialActionApproval.Text;
+				btnSubnavCorrectiveActionApproval.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 5.5m);
+				btnSubnavCorrectiveActionApproval.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "CorrectiveActionApproval").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "CorrectiveActionApproval").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavCorrectiveActionApproval.Text;
+
+				btnSubnavApproval.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "Approvals").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "Approvals").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavApproval.Text;
 			}
-
-
-			// optional approval steps
-			/*
-			btnSubnavApproval_1.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_1").Count() == 0 ? false : true;
-			btnSubnavApproval_1.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_1;
-			btnSubnavApproval_2.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_2").Count() == 0 ? false : true;
-			btnSubnavApproval_2.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_2;
-			btnSubnavApproval_3.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_3").Count() == 0 ? false : true;
-			btnSubnavApproval_3.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_3;
-			btnSubnavApproval_35.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_35").Count() == 0 ? false : true;
-			btnSubnavApproval_35.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_35;
-			btnSubnavApproval_4.Visible = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_APPROVALS_4").Count() == 0 ? false : true;
-			btnSubnavApproval_4.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.INCIDENT_APPROVAL_4;
-			*/
-			//btnSubnavApproval.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_0").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_0").FirstOrDefault().DESCRIPTION_SHORT : Resources.LocalizedText.Approvals;
 		}
 
 		protected void btnSubnavSave_Click(object sender, EventArgs e)
@@ -2317,29 +2293,42 @@ namespace SQM.Website
 			int status = 0;
 			bool isEdit = IsEditContext;
 
+			btnSubnavIncident.Visible = btnSubnavApproval.Visible = btnSubnavAction.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavContainment.Visible = btnSubnavVideo.Visible = true;
+
+			decimal incidentId = EditIncidentId;
+			//decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
+
 			switch (CurrentSubnav)
 			{
 				case "2":
-					if ((status = uclContainment.AddUpdateINCFORM_CONTAIN(EditIncidentId)) >= 0)
+					if ((status = uclcontain.AddUpdateINCFORM_CONTAIN(incidentId)) >= 0)
 						btnSubnav_Click(btnSubnavContainment, null);
 					break;
+				case "2.5":
+					if ((status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId, "save")) >= 0)
+						btnSubnav_Click(btnSubnavInitialActionApproval, null);
+					break;
 				case "3":
-					status = uclRootCause.AddUpdateINCFORM_ROOT5Y(EditIncidentId);
-					btnSubnav_Click(btnSubnavRootCause, null);
+					if ((status = uclroot5y.AddUpdateINCFORM_ROOT5Y(incidentId)) >= 0)
+						btnSubnav_Click(btnSubnavRootCause, null);
 					break;
 				case "4":
-					if ((status = uclAction.AddUpdateINCFORM_ACTION(EditIncidentId)) >= 0)
-						btnSubnav_Click(btnSubnavAction, null);
+					if ((status = uclCausation.UpdateCausation(EditIncidentId)) >= 0)
+						btnSubnav_Click(btnSubnavCausation, null);
 					break;
 				case "5":
-					status = uclApproval.AddUpdateINCFORM_APPROVAL(EditIncidentId, 0);
-					btnSubnav_Click(btnSubnavApproval, null);
+					if ((status = uclaction.AddUpdateINCFORM_ACTION(incidentId)) >= 0)
+						btnSubnav_Click(btnSubnavAction, null);
 					break;
-				case "35":
-					status = uclCausation.UpdateCausation(EditIncidentId);
-					btnSubnav_Click(btnSubnavCausation, null);
+				case "5.5":
+					if ((status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId, "save")) >= 0)
+						btnSubnav_Click(btnSubnavInitialActionApproval, null);
 					break;
 				case "10":
+					if ((status = uclapproval.AddUpdateINCFORM_APPROVAL(incidentId, "save")) >= 0)
+						btnSubnav_Click(btnSubnavApproval, null);
+					break;
+				case "11":
 					// save cross-plant alerts
 					break;
 				default:
@@ -2353,17 +2342,13 @@ namespace SQM.Website
 						btnSaveReturn_Click(sender, null);
 					}
 					break;
+					break;
 			}
+
 			if (status >= 0)
 			{
-				//string script = string.Format("alert('{0}');", "Your updates have been saved.");
 				string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
 				ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-
-				/*
-				if(!isEdit && (CurrentSubnav == "0"  || CurrentSubnav == "I"))
-					btnSubnav_Click(btnSubnavContainment, null);
-				*/
 			}
 		}
 
@@ -2371,170 +2356,124 @@ namespace SQM.Website
 		{
 			LinkButton btn = (LinkButton)sender;
 
-			pnlForm.Visible =  divSubnavPage.Visible = uclContainment.Visible = uclRootCause.Visible = uclCausation.Visible = uclAction.Visible = uclApproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
+			pnlForm.Visible = divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
 			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = true;
-			//btnSubnavApproval_2.Enabled = btnSubnavApproval_4.Enabled = true;
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = true;
 			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
-			//btnSubnavApproval_2.CssClass = btnSubnavApproval_4.CssClass = "buttonLink";
-
-			// incident alert
-			if (SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT") != null && SessionManager.GetUserSetting("EHS", "INCIDENT_ALERT").VALUE.ToUpper() == "Y")
-			{
-				btnSubnavAlert.Visible = SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.incident);
-			}
-			else
-			{
-				btnSubnavAlert.Visible = false;
-			}
-
-			if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
-			{
-				btnSubnavVideo.Visible =  true;
-			}
-			else
-			{
-				btnSubnavVideo.Visible = false;
-			}
-
 			btnSubnavSave.Visible = btnDelete.Visible = false;
+
+			btnSubnavVideo.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 1.1m);
+			btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 11.0m);
+
+			btnSubnavInitialActionApproval.Visible = btnSubnavInitialActionApproval.Enabled = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 2.5m);
+			btnSubnavInitialActionApproval.CssClass = "buttonLink";
+			btnSubnavCorrectiveActionApproval.Visible = btnSubnavCorrectiveActionApproval.Enabled = EHSIncidentMgr.IsStepActive(incidentStepList, SelectedTypeId, 5.5m);
+			btnSubnavCorrectiveActionApproval.CssClass = "buttonLink";
+
 			lblPageTitle.Text = Resources.LocalizedText.Incident;
+
+			//decimal incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
 
 			switch (btn.CommandArgument)
 			{
+				case "1.1":
+					lblPageTitle.Text = btnSubnavVideo.Text;
+					uclVideoPanel.Visible = divSubnavPage.Visible = true;
+					btnSubnavVideo.Enabled = false;
+					btnSubnavVideo.CssClass = "buttonLinkDisabled";
+					INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
+					PageUseMode viewMode = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED) == true ? PageUseMode.EditEnabled : PageUseMode.ViewOnly;
+					uclVideoPanel.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, EditIncidentId, "1", (decimal)incident.DETECT_PLANT_ID, Resources.LocalizedText.VideoUpload, Resources.LocalizedText.VideoForIncident, "", "", "", viewMode, false, "");
+					break;
 				case "2":
-					lblPageTitle.Text = Resources.LocalizedText.InitialAction;
+					lblPageTitle.Text = btnSubnavContainment.Text;
 					btnSubnavContainment.Enabled = false;
 					btnSubnavContainment.CssClass = "buttonLinkDisabled";
-					uclContainment.Visible = divSubnavPage.Visible = true;
-					uclContainment.IsEditContext = true;
-					uclContainment.IncidentId = EditIncidentId;
-					uclContainment.PopulateInitialForm();
-					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					uclcontain.Visible = divSubnavPage.Visible = true;
+					uclcontain.IsEditContext = true;
+					uclcontain.IncidentId = EditIncidentId;
+					uclcontain.PopulateInitialForm();
 					break;
 				case "3":
-					lblPageTitle.Text = Resources.LocalizedText.RootCause;
+					lblPageTitle.Text = btnSubnavRootCause.Text;
 					btnSubnavRootCause.Enabled = false;
 					btnSubnavRootCause.CssClass = "buttonLinkDisabled";
-					uclRootCause.Visible = divSubnavPage.Visible = true;
-					uclRootCause.IsEditContext = true;
-					uclRootCause.IncidentId = EditIncidentId;
-					uclRootCause.PopulateInitialForm();
-					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
+					uclroot5y.Visible = divSubnavPage.Visible = true;
+					uclroot5y.IsEditContext = true;
+					uclroot5y.IncidentId = EditIncidentId;
+					uclroot5y.PopulateInitialForm();
 					break;
 				case "4":
-					lblPageTitle.Text = Resources.LocalizedText.CorrectiveAction;
-					btnSubnavAction.Enabled = false;
-					btnSubnavAction.CssClass = "buttonLinkDisabled";
-					uclAction.Visible = divSubnavPage.Visible = true;
-					uclAction.IsEditContext = true;
-					uclAction.IncidentId = EditIncidentId;
-					uclAction.PopulateInitialForm();
-					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					break;
-				case "35":
-					lblPageTitle.Text = Resources.LocalizedText.Causation;
+					lblPageTitle.Text = btnSubnavCausation.Text;
 					btnSubnavCausation.Enabled = false;
 					btnSubnavCausation.CssClass = "buttonLinkDisabled";
 					uclCausation.Visible = divSubnavPage.Visible = true;
 					uclCausation.IsEditContext = true;
 					uclCausation.IncidentId = EditIncidentId;
 					uclCausation.PopulateInitialForm(entities);
-					//btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, IncidentStepCompleted);
-					break;
-				case "1.1":
-					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_1").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
-					btnSubnavApproval_1.Enabled = false;
-					btnSubnavApproval_1.CssClass = "buttonLinkDisabled";
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.Visible = true;
-					uclApproval.PopulateInitialForm(1);
-					break;
-				case "2.1":
-					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_2").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
-					btnSubnavApproval_2.Enabled = false;
-					btnSubnavApproval_2.CssClass = "buttonLinkDisabled";
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.Visible = true;
-					uclApproval.PopulateInitialForm(2);
-					break;
-				case "3.1":
-					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_3").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
-					btnSubnavApproval_3.Enabled = false;
-					btnSubnavApproval_3.CssClass = "buttonLinkDisabled";
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.Visible = true;
-					uclApproval.PopulateInitialForm(3);
-					break;
-				case "35.1":
-					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_35").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
-					btnSubnavApproval_35.Enabled = false;
-					btnSubnavApproval_35.CssClass = "buttonLinkDisabled";
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.Visible = true;
-					uclApproval.PopulateInitialForm(35);
-					break;
-				case "4.1":
-					lblPageTitle.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "INCIDENT_APPROVAL_4").FirstOrDefault().DESCRIPTION : Resources.LocalizedText.Approvals;
-					btnSubnavApproval_4.Enabled = false;
-					btnSubnavApproval_4.CssClass = "buttonLinkDisabled";
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.Visible = true;
-					uclApproval.PopulateInitialForm(4);
 					break;
 				case "5":
-					lblPageTitle.Text = Resources.LocalizedText.Approvals;
-					btnSubnavApproval.Enabled = false;
-					btnSubnavApproval.CssClass = "buttonLinkDisabled";
-					uclApproval.Visible = divSubnavPage.Visible = true;
-					uclApproval.IsEditContext = true;
-					uclApproval.IncidentId = EditIncidentId;
-					uclApproval.PopulateInitialForm(0);
-					/*
-					if ((btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve1, IncidentStepCompleted)) == false)
-						btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.approve2, IncidentStepCompleted);
-					*/
+					lblPageTitle.Text = btnSubnavAction.Text;
+					btnSubnavAction.Enabled = false;
+					btnSubnavAction.CssClass = "buttonLinkDisabled";
+					uclaction.Visible = divSubnavPage.Visible = true;
+					uclaction.IsEditContext = true;
+					uclaction.IncidentId = EditIncidentId;
+					uclaction.PopulateInitialForm();
+					break;
+				// approval steps
+				case "2.5":
+					lblPageTitle.Text = btnSubnavInitialActionApproval.Text;
+					btnSubnavInitialActionApproval.Enabled = false;
+					btnSubnavInitialActionApproval.CssClass = "buttonLinkDisabled";
+					uclapproval.IsEditContext = true;
+					uclapproval.IncidentId = EditIncidentId;
+					uclapproval.Visible = divSubnavPage.Visible = true;
+					uclapproval.PopulateInitialForm(2.5m);
+					break;
+				case "5.5":
+					lblPageTitle.Text = btnSubnavCorrectiveActionApproval.Text;
+					btnSubnavCorrectiveActionApproval.Enabled = false;
+					btnSubnavCorrectiveActionApproval.CssClass = "buttonLinkDisabled";
+					uclapproval.IsEditContext = true;
+					uclapproval.IncidentId = EditIncidentId;
+					uclapproval.Visible = divSubnavPage.Visible = true;
+					uclapproval.PopulateInitialForm(5.5m);
 					break;
 				case "10":
-					lblPageTitle.Text = Resources.LocalizedText.PreventativeMeasure;
+					lblPageTitle.Text = btnSubnavApproval.Text;
+					btnSubnavApproval.Enabled = false;
+					btnSubnavApproval.CssClass = "buttonLinkDisabled";
+					uclapproval.IsEditContext = true;
+					uclapproval.IncidentId = EditIncidentId;
+					uclapproval.Visible = divSubnavPage.Visible = true;
+					uclapproval.PopulateInitialForm(10.0m);
+					break;
+				case "11":
+					lblPageTitle.Text = btnSubnavAlert.Text;
 					btnSubnavAlert.Enabled = false;
 					btnSubnavAlert.CssClass = "buttonLinkDisabled";
 					uclAlert.IncidentId = EditIncidentId;
 					uclAlert.Visible = divSubnavPage.Visible = true;
 					uclAlert.PopulateInitialForm(entities);
 					break;
-				case "60":
-					lblPageTitle.Text = Resources.LocalizedText.VideoUpload;
-					uclVideoPanel.Visible = true;
-					divSubnavPage.Visible = true;
-					btnSubnavVideo.CssClass = "buttonLinkDisabled";
-					INCIDENT incident = EHSIncidentMgr.SelectIncidentById(entities, EditIncidentId);
-					PageUseMode viewMode = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED) == true ? PageUseMode.EditEnabled : PageUseMode.ViewOnly;
-					uclVideoPanel.OpenManageVideosWindow((int)TaskRecordType.HealthSafetyIncident, EditIncidentId, "1", (decimal)incident.DETECT_PLANT_ID, Resources.LocalizedText.VideoUpload, Resources.LocalizedText.VideoForIncident, "", "", "", viewMode, false, "");
-					break;
 				case "0":
 				default:
-					lblPageTitle.Text = Resources.LocalizedText.Incident;
+					lblPageTitle.Text = btnSubnavIncident.Text;
 					btnSubnavIncident.Visible = true;
 					btnSubnavIncident.Enabled = false;
 					btnSubnavIncident.CssClass = "buttonLinkDisabled";
 					if (pnlForm.Visible == false)
 					{
-						pnlForm.Visible = true;
 						BuildForm();
+						pnlForm.Visible = true;
 					}
 					btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
 					btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
 					break;
 			}
-
 		}
 		#endregion
 

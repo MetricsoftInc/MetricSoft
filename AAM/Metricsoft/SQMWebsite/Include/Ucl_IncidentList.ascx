@@ -529,9 +529,10 @@
 							<asp:Label ID="lblIncStatus" runat="server" meta:resourcekey="lblIncStatusResource1"></asp:Label>
 							<br />
 							<div style="margin-top: 4px;">
-								<asp:HyperLink ID="hlReport0" runat="server" visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
-								<asp:HyperLink ID="hlReport1" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
-								<asp:HyperLink ID="hlReport2" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
+								<asp:HyperLink ID="hlReport0" runat="server" visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>&nbsp;
+								<asp:HyperLink ID="hlReport1" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>&nbsp;
+								<asp:HyperLink ID="hlReport2" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>&nbsp;
+								<asp:HyperLink ID="hlReport3" runat="server" Visible="false" CssClass="buttonLinkSmall" Target="_blank"></asp:HyperLink>
 							</div>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>

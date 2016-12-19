@@ -24,7 +24,7 @@
 <asp:Panel ID="pnlApproval" Visible="False" runat="server" meta:resourcekey="pnlApprovalResource1">
 	<asp:HiddenField id="hfChangeUpdate" runat="server" Value=""/>
 
-	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 5px 0 5px 0;">
+	<div id="divTitle" runat="server" visible="false" class="container" style="margin: 10px 0 10px 0;">
 		<div class="row text_center">
 			<div class="col-xs-12 col-sm-12 text-center">
 				<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
@@ -46,11 +46,17 @@
 					<div class="col-xs-12 col-sm-2 text-left">
 						<asp:HiddenField ID="hfItemSeq" runat="server" />
 						<asp:HiddenField ID="hfPersonID" runat="server" />
-						<span><b>
-						<asp:Label ID="lbApproverJob" runat="server" meta:resourcekey="lbApproverJobResource1" SkinID="Metro"></asp:Label>
-						<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>
-						</b>&nbsp;&nbsp;
-						<asp:Label ID="lbApprover" runat="server" meta:resourcekey="lbApproverResource1" SkinID="Metro" Width="75%"></asp:Label>
+						<span>
+							<asp:PlaceHolder ID="phOnBehalfOf" runat="server" Visible="false">
+								<asp:Label runat="server" ID="lblOnBehalfOf" CssClass="refText" Text="<%$ Resources:LocalizedText, OnBehalfOf %>"></asp:Label>
+								<br />
+							</asp:PlaceHolder>
+							<b>
+							<asp:Label ID="lbApproverJob" runat="server" meta:resourcekey="lbApproverJobResource1" SkinID="Metro"></asp:Label>
+							<asp:Label ID="lbItemSeq" runat="server" meta:resourcekey="lbItemSeqResource1"></asp:Label>
+							</b>
+							<br />
+							<asp:Label ID="lbApprover" runat="server" meta:resourcekey="lbApproverResource1" SkinID="Metro" Width="75%"></asp:Label>
 						</span>
 					</div>
 					<div class="col-xs-12 col-sm-3  text-left">

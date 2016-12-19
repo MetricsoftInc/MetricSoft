@@ -190,7 +190,7 @@ namespace SQM.Website
 
 		private RadDropDownList HandleDepartmentList(EHSIncidentQuestion q, INCIDENT incident, bool shouldPopulate, RadDropDownList rddl)
 		{
-			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, shouldPopulate ? (decimal)incident.DETECT_PLANT_ID : SessionManager.IncidentLocation.Plant.PLANT_ID);
+			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, (decimal)incident.DETECT_PLANT_ID);
 			foreach (DEPARTMENT dept in deptList)
 			{
 				rddl.Items.Add(new DropDownListItem(dept.DEPT_NAME, dept.DEPT_ID.ToString()));

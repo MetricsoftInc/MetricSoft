@@ -11,7 +11,7 @@ namespace SQM.Website
 		Prevent
 	}
 
-	public enum IncidentStepStatus { unknown=0, defined=100, workstatus=105, containment=110, containmentComplete=115,  rootcause=120, rootcauseComplete=125, correctiveaction=130, correctiveactionComplete=135, signoff1=151, signoff2=152, signoffComplete=155, awaitingFunding=156}
+	public enum IncidentStepStatus { unknown=0, defined=100, workstatus=105, containment=110, containmentComplete=115,  rootcause=120, rootcauseComplete=125, correctiveaction=130, correctiveactionComplete=135, signoff = 150, signoff1=151, signoff2=152, signoff3 = 153, signoff4 = 154, signoffComplete=155, awaitingFunding=156}
 
 	public class EHSIncidentQuestion
 	{
@@ -42,12 +42,12 @@ namespace SQM.Website
 		public DateTime CommentDate { get; set; }
 	}
 
-	public class EHSFormControlStep
+
+	[Serializable]
+	public class EHSIncidentApproval
 	{
-		public decimal IncidentId { get; set; }
-		public int StepNumber { get; set; }
-		public string StepFormName { get; set; }
-		public string StepHeadingText { get; set; }
+		public INCFORM_APPROVAL approval { get; set; }
+		public INCFORM_STEP_PRIV stepPriv { get; set; }
 	}
 
 
@@ -237,6 +237,12 @@ namespace SQM.Website
 
 			return this.Status;
 		}
+
+		public bool IsDependentStatus(decimal ? dependentStatus)
+		{
+			return EHSIncidentMgr.IsDependentStatus(this.Incident, dependentStatus);
+		}
+
 		public int DaysOpen
 		{
 			get;
@@ -341,6 +347,48 @@ namespace SQM.Website
 
 	public static class EHSIncidentMgr
 	{
+		public static List<INCFORM_TYPE_CONTROL> SelectIncidentSteps(PSsqmEntities entities, decimal typeID)
+		{
+			List<INCFORM_TYPE_CONTROL> incidentStepList = new List<INCFORM_TYPE_CONTROL>();
+
+			if (typeID == -1)	// get all
+				incidentStepList = (from s in entities.INCFORM_TYPE_CONTROL select s).ToList();
+			else
+			{
+				// get specific
+				incidentStepList = (from s in entities.INCFORM_TYPE_CONTROL where s.INCIDENT_TYPE_ID == (decimal)typeID select s).ToList();
+				if (incidentStepList.Count == 0)
+				{
+					// if specific incident type not found, get common (0)
+					incidentStepList = (from s in entities.INCFORM_TYPE_CONTROL where s.INCIDENT_TYPE_ID == 0 select s).ToList();
+				}
+			}
+
+			return incidentStepList;
+		}
+
+		public static List<INCFORM_TYPE_CONTROL> GetIncidentSteps(List<INCFORM_TYPE_CONTROL> stepList, decimal typeID)
+		{
+			List<INCFORM_TYPE_CONTROL> incidentStepList = new List<INCFORM_TYPE_CONTROL>();
+
+			incidentStepList = stepList.Where(l => l.INCIDENT_TYPE_ID == typeID).ToList();
+			if (incidentStepList.Count == 0)
+			{
+				incidentStepList = stepList.Where(l => l.INCIDENT_TYPE_ID == 0).ToList();
+			}
+
+			return incidentStepList;
+		}
+
+		public static bool IsStepActive(List<INCFORM_TYPE_CONTROL> stepList, decimal typeID, decimal step)
+		{
+			bool isActive = false;
+
+			isActive = GetIncidentSteps(stepList, typeID).Where(l => l.STEP == step).Count() > 0 ? true : false;
+
+			return isActive;
+		}
+
 		public static INCIDENT SelectIncidentById(PSsqmEntities entities, decimal incidentId)
 		{
 			return (SelectIncidentById(entities, incidentId, false));
@@ -417,16 +465,48 @@ namespace SQM.Website
 			return (decimal)problemCaseId;
 		}
 
-		public static string SelectBaseFormNameByIncidentTypeId(decimal incidentTypeId)
+		public static bool IsDependentStatus(INCIDENT incident, decimal? dependentStatus)
 		{
-			string baseFormName = "";
-			var entities = new PSsqmEntities();
-			baseFormName = (from itc in entities.INCFORM_TYPE_CONTROL 
-							where itc.INCIDENT_TYPE_ID == incidentTypeId && itc.STEP_NUMBER == 1
-							select itc.STEP_FORM).FirstOrDefault(); 
-			if (baseFormName == null)
-				baseFormName = "";
-			return baseFormName;
+			bool status = false;
+
+			if (!dependentStatus.HasValue || dependentStatus == 0)
+				return true;
+
+			if ((dependentStatus % 1) == 0)
+			{
+				if (incident.INCFORM_LAST_STEP_COMPLETED >= (int)dependentStatus)
+				{
+					status = true;
+				}
+			}
+			else
+			{
+				if (incident.LAST_APPROVAL_STEP.HasValue && incident.LAST_APPROVAL_STEP >= dependentStatus)
+				{
+					status = true;
+				}
+			}
+
+			return status;
+		}
+
+		public static int UpdateIncidentApprovalStatus(decimal incidentID, decimal approvalStep)
+		{
+			int status = -1;
+			using (PSsqmEntities ctx = new PSsqmEntities())
+			{
+				INCIDENT incident = (from i in ctx.INCIDENT where i.INCIDENT_ID == incidentID select i).SingleOrDefault();
+				if (incident != null)
+				{
+					if (incident.LAST_APPROVAL_STEP.HasValue == false  || approvalStep > incident.LAST_APPROVAL_STEP)
+					{
+						incident.LAST_APPROVAL_STEP = approvalStep;
+						status = ctx.SaveChanges();
+					}
+				}
+			}
+
+			return status;
 		}
 
 		public static IncidentStepStatus UpdateIncidentStatus(decimal incidentID, IncidentStepStatus currentStepStatus, DateTime ? defaultDate)
@@ -495,10 +575,12 @@ namespace SQM.Website
 							calcStatus = IncidentStepStatus.signoff2;
 						}
 
-						if ((closeIncident  ||  closeByApproval) && !incident.CLOSE_DATE.HasValue)
+						if ((closeIncident  ||  closeByApproval))
 						{
 							PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
 							incident.CLOSE_DATE = incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
+							calcStatus = IncidentStepStatus.signoffComplete;
+							incident.LAST_APPROVAL_STEP = 10.0m;
 							isUpdated = true;
 						}
 					}
@@ -512,30 +594,6 @@ namespace SQM.Website
 			}
 
 			return calcStatus;
-		}
-
-		public static List<EHSFormControlStep> GetStepsForincidentTypeId(decimal incidentTypeId)
-		{
-			var formStepList = new List<EHSFormControlStep>();
-
-			try
-			{
-				var entities = new PSsqmEntities();
-				formStepList = (from itc in entities.INCFORM_TYPE_CONTROL
-								where itc.INCIDENT_TYPE_ID == incidentTypeId
-								select new EHSFormControlStep()
-								{	IncidentId = itc.INCIDENT_TYPE_ID,
-									StepNumber = itc.STEP_NUMBER,
-									StepFormName = itc.STEP_FORM,
-									StepHeadingText = itc.STEP_HEADING_TEXT
-								}).ToList();
-			}
-			catch (Exception e)
-			{
-				//SQMLogger.LogException(e);
-			}
-
-			return formStepList;
 		}
 
 		public static List<INCIDENT_TYPE> SelectIncidentTypeList(decimal companyId)
@@ -626,17 +684,10 @@ namespace SQM.Website
 					canUpdate = true;
 				}
 
-				if (stepCompleted >= (int)IncidentStepStatus.signoff1 && stepCompleted <= (int)IncidentStepStatus.signoffComplete)
+				//if (incident != null  && incident.LAST_APPROVAL_STEP.HasValue  && incident.LAST_APPROVAL_STEP >= 10.0m)
+				if (incident != null && incident.CLOSE_DATE.HasValue)
 				{
-					if (stepCompleted == (int)IncidentStepStatus.signoff2)  // incident is closed
-					{
-						canUpdate = false;
-					}
-
-					if (stepToUpdate == (int)IncidentStepStatus.workstatus && SessionManager.CheckUserPrivilege(privNeeded, SysScope.incident))
-					{
-						canUpdate = true;
-					}
+					canUpdate = false;
 				}
 			}
 			else  // assume edit context will be false for new incidents an any user can create/save a new incident
@@ -652,8 +703,11 @@ namespace SQM.Website
 		{
 			bool canDelete = false;
 
-			if (UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
+			if (UserContext.CheckUserPrivilege(SysPriv.approve, SysScope.incident)	||
+				UserContext.CheckUserPrivilege(SysPriv.approve1, SysScope.incident) ||
 				UserContext.CheckUserPrivilege(SysPriv.approve2, SysScope.incident) ||
+				UserContext.CheckUserPrivilege(SysPriv.approve3, SysScope.incident) ||
+				UserContext.CheckUserPrivilege(SysPriv.approve4, SysScope.incident) ||
 				UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident) ||
 				SessionManager.UserContext.Person.PERSON_ID == createPersonID)
 			{
@@ -1448,42 +1502,47 @@ namespace SQM.Website
 			return periodList;
 		}
 
-		public static List<INCFORM_APPROVAL> GetApprovalList(decimal incidentId, DateTime ? defaultDate, int approvalLevel)
+
+		public static List<EHSIncidentApproval> GetApprovalList(PSsqmEntities ctx, decimal typeID, decimal step,  decimal incidentID, DateTime? defaultDate, int approvalLevel)
 		{
+			// get required approvals for this step
+			decimal incidentTypeID = typeID;
 
-			PSsqmEntities entities = new PSsqmEntities();
-
-			SETTINGS sets;
-
-			if (approvalLevel > 0)
-				sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS_"+approvalLevel.ToString()); // get approvals required for a specific step
-			else
-				sets = SQMSettings.GetSetting("EHS", "INCIDENT_APPROVALS");		// assume final approvals
-
-			var approvals = new List<INCFORM_APPROVAL>();
-			approvals = (from c in entities.INCFORM_APPROVAL
-						  where c.INCIDENT_ID == incidentId
-						  select c).ToList();
-
-			int approvalCount = 0;
-			foreach (string approveRole in sets.VALUE.Split(','))
+			// use default 0 incident type if specific type not defined in the priv table
+			if ((from p in ctx.INCFORM_STEP_PRIV where p.INCIDENT_TYPE == typeID select p.PRIV).Count() == 0)
 			{
-				++approvalCount;
-				if (approvals.Where(l => l.ITEM_SEQ.ToString() == approveRole  &&  (approvalLevel == 0  &&  l.APPROVAL_LEVEL == null  || l.APPROVAL_LEVEL == approvalLevel)).FirstOrDefault() == null)
+				incidentTypeID = 0;
+			}
+
+			List<EHSIncidentApproval> approvalList = (from p in ctx.INCFORM_STEP_PRIV
+													  join a in ctx.INCFORM_APPROVAL on p.STEP equals a.STEP into p_a
+													  from a in p_a.Where(a=> a.INCIDENT_ID == incidentID  &&  a.ITEM_SEQ == p.PRIV).DefaultIfEmpty()
+													  where p.INCIDENT_TYPE == incidentTypeID && p.STEP == step
+													  select new EHSIncidentApproval
+													  {
+														  stepPriv = p,
+														  approval = a
+													  }).OrderBy(l=> l.stepPriv.SIGN_ORDER).ToList();
+
+			// seed the step approvals with existing and required placeholders
+			foreach (EHSIncidentApproval rec in approvalList)
+			{
+				if (rec.approval == null)
 				{
 					INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
-					approval.INCIDENT_APPROVAL_ID = incidentId;
-					approval.ITEM_SEQ = Convert.ToInt32(approveRole);
-					approval.APPROVAL_LEVEL = approvalLevel;
+					approval.INCIDENT_ID = incidentID;
+					approval.STEP = step;
+					approval.ITEM_SEQ = (int)rec.stepPriv.PRIV;
+					approval.APPROVAL_LEVEL = 0;
 					approval.APPROVAL_MESSAGE = "";
 					approval.APPROVER_TITLE = "";
 					approval.APPROVAL_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
 					approval.IsAccepted = false;
-					approvals.Insert(approvalCount - 1, approval);
+					rec.approval = approval;
 				}
 			}
 
-			return approvals;
+			return approvalList;
 		}
 
 
@@ -1607,42 +1666,6 @@ namespace SQM.Website
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT_ANSWER WHERE INCIDENT_ID" + delCmd);
 					status = MediaVideoMgr.DeleteAllSourceVideos(incidentId, 40, "");
 					status = ctx.ExecuteStoreCommand("DELETE FROM INCIDENT WHERE INCIDENT_ID" + delCmd);
-
-				}
-				catch (Exception ex)
-				{
-					SQMLogger.LogException(ex);
-				}
-			}
-
-			return status;
-		}
-
-
-		public static int DeleteCustomIncident(decimal incidentId, decimal typeId)
-		{
-			int status = 0;
-			string delCmd = " IN (" + incidentId + ") ";
-
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				try
-				{
-					string customFormName = (from it in ctx.INCFORM_TYPE_CONTROL where it.INCIDENT_TYPE_ID == typeId && it.STEP_NUMBER == 1 select it.STEP_FORM ).FirstOrDefault();
-
-					if (!String.IsNullOrEmpty(customFormName))
-					{
-						switch (customFormName)
-						{
-							case "INCFORM_INJURYILLNESS":
-								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
-								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_WITNESS WHERE INCIDENT_ID" + delCmd);
-								status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_INJURYILLNESS WHERE INCIDENT_ID" + delCmd);
-								break;
-						}
-					}
-
-					DeleteIncident(incidentId);
 
 				}
 				catch (Exception ex)

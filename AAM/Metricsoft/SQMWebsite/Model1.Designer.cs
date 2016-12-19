@@ -129,7 +129,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_BUSINESS_ORG", "BUSINESS_ORG", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.BUSINESS_ORG), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_NOTIFY_PLAN_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PLANT), "NOTIFYACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.NOTIFYACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PRIVLIST_PRIVGROUP", "PRIVGROUP", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PRIVGROUP), "PRIVLIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PRIVLIST), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCFORM_TYPE_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_TYPE_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
@@ -149,7 +148,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT5Y), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ALERT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ALERT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
@@ -168,6 +166,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
 
 #endregion
 
@@ -1806,22 +1805,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
-        {
-            get
-            {
-                if ((_INCFORM_TYPE_CONTROL == null))
-                {
-                    _INCFORM_TYPE_CONTROL = base.CreateObjectSet<INCFORM_TYPE_CONTROL>("INCFORM_TYPE_CONTROL");
-                }
-                return _INCFORM_TYPE_CONTROL;
-            }
-        }
-        private ObjectSet<INCFORM_TYPE_CONTROL> _INCFORM_TYPE_CONTROL;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_ACTION> INCFORM_ACTION
         {
             get
@@ -2222,22 +2205,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCFORM_APPROVAL> INCFORM_APPROVAL
-        {
-            get
-            {
-                if ((_INCFORM_APPROVAL == null))
-                {
-                    _INCFORM_APPROVAL = base.CreateObjectSet<INCFORM_APPROVAL>("INCFORM_APPROVAL");
-                }
-                return _INCFORM_APPROVAL;
-            }
-        }
-        private ObjectSet<INCFORM_APPROVAL> _INCFORM_APPROVAL;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_ROOT5Y> INCFORM_ROOT5Y
         {
             get
@@ -2458,6 +2425,54 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_INJURYILLNESS> _INCFORM_INJURYILLNESS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_STEP_PRIV> INCFORM_STEP_PRIV
+        {
+            get
+            {
+                if ((_INCFORM_STEP_PRIV == null))
+                {
+                    _INCFORM_STEP_PRIV = base.CreateObjectSet<INCFORM_STEP_PRIV>("INCFORM_STEP_PRIV");
+                }
+                return _INCFORM_STEP_PRIV;
+            }
+        }
+        private ObjectSet<INCFORM_STEP_PRIV> _INCFORM_STEP_PRIV;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_APPROVAL> INCFORM_APPROVAL
+        {
+            get
+            {
+                if ((_INCFORM_APPROVAL == null))
+                {
+                    _INCFORM_APPROVAL = base.CreateObjectSet<INCFORM_APPROVAL>("INCFORM_APPROVAL");
+                }
+                return _INCFORM_APPROVAL;
+            }
+        }
+        private ObjectSet<INCFORM_APPROVAL> _INCFORM_APPROVAL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
+        {
+            get
+            {
+                if ((_INCFORM_TYPE_CONTROL == null))
+                {
+                    _INCFORM_TYPE_CONTROL = base.CreateObjectSet<INCFORM_TYPE_CONTROL>("INCFORM_TYPE_CONTROL");
+                }
+                return _INCFORM_TYPE_CONTROL;
+            }
+        }
+        private ObjectSet<INCFORM_TYPE_CONTROL> _INCFORM_TYPE_CONTROL;
 
         #endregion
 
@@ -3256,14 +3271,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCFORM_TYPE_CONTROL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCFORM_TYPE_CONTROL(INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL)
-        {
-            base.AddObject("INCFORM_TYPE_CONTROL", iNCFORM_TYPE_CONTROL);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_ACTION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_ACTION(INCFORM_ACTION iNCFORM_ACTION)
@@ -3464,14 +3471,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCFORM_APPROVAL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCFORM_APPROVAL(INCFORM_APPROVAL iNCFORM_APPROVAL)
-        {
-            base.AddObject("INCFORM_APPROVAL", iNCFORM_APPROVAL);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_ROOT5Y EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_ROOT5Y(INCFORM_ROOT5Y iNCFORM_ROOT5Y)
@@ -3581,6 +3580,30 @@ namespace SQM.Website
         public void AddToINCFORM_INJURYILLNESS(INCFORM_INJURYILLNESS iNCFORM_INJURYILLNESS)
         {
             base.AddObject("INCFORM_INJURYILLNESS", iNCFORM_INJURYILLNESS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_STEP_PRIV EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_STEP_PRIV(INCFORM_STEP_PRIV iNCFORM_STEP_PRIV)
+        {
+            base.AddObject("INCFORM_STEP_PRIV", iNCFORM_STEP_PRIV);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_APPROVAL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_APPROVAL(INCFORM_APPROVAL iNCFORM_APPROVAL)
+        {
+            base.AddObject("INCFORM_APPROVAL", iNCFORM_APPROVAL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCFORM_TYPE_CONTROL EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCFORM_TYPE_CONTROL(INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL)
+        {
+            base.AddObject("INCFORM_TYPE_CONTROL", iNCFORM_TYPE_CONTROL);
         }
 
         #endregion
@@ -22031,6 +22054,30 @@ namespace SQM.Website
         private Nullable<global::System.Int32> _APPROVAL_LEVEL;
         partial void OnAPPROVAL_LEVELChanging(Nullable<global::System.Int32> value);
         partial void OnAPPROVAL_LEVELChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> STEP
+        {
+            get
+            {
+                return _STEP;
+            }
+            set
+            {
+                OnSTEPChanging(value);
+                ReportPropertyChanging("STEP");
+                _STEP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("STEP");
+                OnSTEPChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _STEP;
+        partial void OnSTEPChanging(Nullable<global::System.Decimal> value);
+        partial void OnSTEPChanged();
 
         #endregion
 
@@ -24389,6 +24436,217 @@ namespace SQM.Website
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_STEP_PRIV")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCFORM_STEP_PRIV : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCFORM_STEP_PRIV object.
+        /// </summary>
+        /// <param name="iNCIDENT_TYPE">Initial value of the INCIDENT_TYPE property.</param>
+        /// <param name="sTEP">Initial value of the STEP property.</param>
+        /// <param name="sIGN_ORDER">Initial value of the SIGN_ORDER property.</param>
+        public static INCFORM_STEP_PRIV CreateINCFORM_STEP_PRIV(global::System.Decimal iNCIDENT_TYPE, global::System.Decimal sTEP, global::System.Int32 sIGN_ORDER)
+        {
+            INCFORM_STEP_PRIV iNCFORM_STEP_PRIV = new INCFORM_STEP_PRIV();
+            iNCFORM_STEP_PRIV.INCIDENT_TYPE = iNCIDENT_TYPE;
+            iNCFORM_STEP_PRIV.STEP = sTEP;
+            iNCFORM_STEP_PRIV.SIGN_ORDER = sIGN_ORDER;
+            return iNCFORM_STEP_PRIV;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_TYPE
+        {
+            get
+            {
+                return _INCIDENT_TYPE;
+            }
+            set
+            {
+                if (_INCIDENT_TYPE != value)
+                {
+                    OnINCIDENT_TYPEChanging(value);
+                    ReportPropertyChanging("INCIDENT_TYPE");
+                    _INCIDENT_TYPE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("INCIDENT_TYPE");
+                    OnINCIDENT_TYPEChanged();
+                }
+            }
+        }
+        private global::System.Decimal _INCIDENT_TYPE;
+        partial void OnINCIDENT_TYPEChanging(global::System.Decimal value);
+        partial void OnINCIDENT_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal STEP
+        {
+            get
+            {
+                return _STEP;
+            }
+            set
+            {
+                if (_STEP != value)
+                {
+                    OnSTEPChanging(value);
+                    ReportPropertyChanging("STEP");
+                    _STEP = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("STEP");
+                    OnSTEPChanged();
+                }
+            }
+        }
+        private global::System.Decimal _STEP;
+        partial void OnSTEPChanging(global::System.Decimal value);
+        partial void OnSTEPChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SIGN_ORDER
+        {
+            get
+            {
+                return _SIGN_ORDER;
+            }
+            set
+            {
+                if (_SIGN_ORDER != value)
+                {
+                    OnSIGN_ORDERChanging(value);
+                    ReportPropertyChanging("SIGN_ORDER");
+                    _SIGN_ORDER = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SIGN_ORDER");
+                    OnSIGN_ORDERChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SIGN_ORDER;
+        partial void OnSIGN_ORDERChanging(global::System.Int32 value);
+        partial void OnSIGN_ORDERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> PRIV
+        {
+            get
+            {
+                return _PRIV;
+            }
+            set
+            {
+                OnPRIVChanging(value);
+                ReportPropertyChanging("PRIV");
+                _PRIV = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PRIV");
+                OnPRIVChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _PRIV;
+        partial void OnPRIVChanging(Nullable<global::System.Int32> value);
+        partial void OnPRIVChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> REQUIRED_COMPLETE
+        {
+            get
+            {
+                return _REQUIRED_COMPLETE;
+            }
+            set
+            {
+                OnREQUIRED_COMPLETEChanging(value);
+                ReportPropertyChanging("REQUIRED_COMPLETE");
+                _REQUIRED_COMPLETE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("REQUIRED_COMPLETE");
+                OnREQUIRED_COMPLETEChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _REQUIRED_COMPLETE;
+        partial void OnREQUIRED_COMPLETEChanging(Nullable<global::System.Boolean> value);
+        partial void OnREQUIRED_COMPLETEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> SIGN_MULTIPLE
+        {
+            get
+            {
+                return _SIGN_MULTIPLE;
+            }
+            set
+            {
+                OnSIGN_MULTIPLEChanging(value);
+                ReportPropertyChanging("SIGN_MULTIPLE");
+                _SIGN_MULTIPLE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SIGN_MULTIPLE");
+                OnSIGN_MULTIPLEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _SIGN_MULTIPLE;
+        partial void OnSIGN_MULTIPLEChanging(Nullable<global::System.Int32> value);
+        partial void OnSIGN_MULTIPLEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COMMENTS
+        {
+            get
+            {
+                return _COMMENTS;
+            }
+            set
+            {
+                OnCOMMENTSChanging(value);
+                ReportPropertyChanging("COMMENTS");
+                _COMMENTS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMMENTS");
+                OnCOMMENTSChanged();
+            }
+        }
+        private global::System.String _COMMENTS;
+        partial void OnCOMMENTSChanging(global::System.String value);
+        partial void OnCOMMENTSChanged();
+
+        #endregion
+
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCFORM_TYPE_CONTROL")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -24400,13 +24658,13 @@ namespace SQM.Website
         /// Create a new INCFORM_TYPE_CONTROL object.
         /// </summary>
         /// <param name="iNCIDENT_TYPE_ID">Initial value of the INCIDENT_TYPE_ID property.</param>
-        /// <param name="sTEP_NUMBER">Initial value of the STEP_NUMBER property.</param>
+        /// <param name="sTEP">Initial value of the STEP property.</param>
         /// <param name="sTEP_FORM">Initial value of the STEP_FORM property.</param>
-        public static INCFORM_TYPE_CONTROL CreateINCFORM_TYPE_CONTROL(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Int32 sTEP_NUMBER, global::System.String sTEP_FORM)
+        public static INCFORM_TYPE_CONTROL CreateINCFORM_TYPE_CONTROL(global::System.Decimal iNCIDENT_TYPE_ID, global::System.Decimal sTEP, global::System.String sTEP_FORM)
         {
             INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL = new INCFORM_TYPE_CONTROL();
             iNCFORM_TYPE_CONTROL.INCIDENT_TYPE_ID = iNCIDENT_TYPE_ID;
-            iNCFORM_TYPE_CONTROL.STEP_NUMBER = sTEP_NUMBER;
+            iNCFORM_TYPE_CONTROL.STEP = sTEP;
             iNCFORM_TYPE_CONTROL.STEP_FORM = sTEP_FORM;
             return iNCFORM_TYPE_CONTROL;
         }
@@ -24447,27 +24705,27 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 STEP_NUMBER
+        public global::System.Decimal STEP
         {
             get
             {
-                return _STEP_NUMBER;
+                return _STEP;
             }
             set
             {
-                if (_STEP_NUMBER != value)
+                if (_STEP != value)
                 {
-                    OnSTEP_NUMBERChanging(value);
-                    ReportPropertyChanging("STEP_NUMBER");
-                    _STEP_NUMBER = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("STEP_NUMBER");
-                    OnSTEP_NUMBERChanged();
+                    OnSTEPChanging(value);
+                    ReportPropertyChanging("STEP");
+                    _STEP = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("STEP");
+                    OnSTEPChanged();
                 }
             }
         }
-        private global::System.Int32 _STEP_NUMBER;
-        partial void OnSTEP_NUMBERChanging(global::System.Int32 value);
-        partial void OnSTEP_NUMBERChanged();
+        private global::System.Decimal _STEP;
+        partial void OnSTEPChanging(global::System.Decimal value);
+        partial void OnSTEPChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -24516,52 +24774,82 @@ namespace SQM.Website
         private global::System.String _STEP_HEADING_TEXT;
         partial void OnSTEP_HEADING_TEXTChanging(global::System.String value);
         partial void OnSTEP_HEADING_TEXTChanged();
-
-        #endregion
-
-    
-        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE")]
-        public INCIDENT_TYPE INCIDENT_TYPE
+        public Nullable<global::System.Decimal> DEPENDENT_STATUS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE").Value;
+                return _DEPENDENT_STATUS;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE").Value = value;
+                OnDEPENDENT_STATUSChanging(value);
+                ReportPropertyChanging("DEPENDENT_STATUS");
+                _DEPENDENT_STATUS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DEPENDENT_STATUS");
+                OnDEPENDENT_STATUSChanged();
             }
         }
+        private Nullable<global::System.Decimal> _DEPENDENT_STATUS;
+        partial void OnDEPENDENT_STATUSChanging(Nullable<global::System.Decimal> value);
+        partial void OnDEPENDENT_STATUSChanged();
+    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [BrowsableAttribute(false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public EntityReference<INCIDENT_TYPE> INCIDENT_TYPEReference
+        public global::System.String COMMENTS
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE");
+                return _COMMENTS;
             }
             set
             {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT_TYPE>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCIDENT_TYPE", value);
-                }
+                OnCOMMENTSChanging(value);
+                ReportPropertyChanging("COMMENTS");
+                _COMMENTS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMMENTS");
+                OnCOMMENTSChanged();
             }
         }
+        private global::System.String _COMMENTS;
+        partial void OnCOMMENTSChanging(global::System.String value);
+        partial void OnCOMMENTSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> NOTIFY_CYCLE
+        {
+            get
+            {
+                return _NOTIFY_CYCLE;
+            }
+            set
+            {
+                OnNOTIFY_CYCLEChanging(value);
+                ReportPropertyChanging("NOTIFY_CYCLE");
+                _NOTIFY_CYCLE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NOTIFY_CYCLE");
+                OnNOTIFY_CYCLEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _NOTIFY_CYCLE;
+        partial void OnNOTIFY_CYCLEChanging(Nullable<global::System.Int32> value);
+        partial void OnNOTIFY_CYCLEChanged();
 
         #endregion
 
+    
     }
     
     /// <summary>
@@ -25494,6 +25782,30 @@ namespace SQM.Website
         private global::System.Int32 _INCFORM_LAST_STEP_COMPLETED;
         partial void OnINCFORM_LAST_STEP_COMPLETEDChanging(global::System.Int32 value);
         partial void OnINCFORM_LAST_STEP_COMPLETEDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> LAST_APPROVAL_STEP
+        {
+            get
+            {
+                return _LAST_APPROVAL_STEP;
+            }
+            set
+            {
+                OnLAST_APPROVAL_STEPChanging(value);
+                ReportPropertyChanging("LAST_APPROVAL_STEP");
+                _LAST_APPROVAL_STEP = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LAST_APPROVAL_STEP");
+                OnLAST_APPROVAL_STEPChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _LAST_APPROVAL_STEP;
+        partial void OnLAST_APPROVAL_STEPChanging(Nullable<global::System.Decimal> value);
+        partial void OnLAST_APPROVAL_STEPChanged();
 
         #endregion
 
@@ -25736,28 +26048,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL")]
-        public EntityCollection<INCFORM_APPROVAL> INCFORM_APPROVAL
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y")]
         public EntityCollection<INCFORM_ROOT5Y> INCFORM_ROOT5Y
         {
@@ -25874,6 +26164,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL")]
+        public EntityCollection<INCFORM_APPROVAL> INCFORM_APPROVAL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
                 }
             }
         }
@@ -27802,28 +28114,6 @@ namespace SQM.Website
 
     
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL")]
-        public EntityCollection<INCFORM_TYPE_CONTROL> INCFORM_TYPE_CONTROL
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_TYPE_CONTROL>("PSsqmModel.FK_INCIDENT_TYPE_INCIDENT_TYPE__ID", "INCFORM_TYPE_CONTROL", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.

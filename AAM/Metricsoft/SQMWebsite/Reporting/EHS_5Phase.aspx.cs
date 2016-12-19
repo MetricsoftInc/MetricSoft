@@ -33,7 +33,7 @@ namespace SQM.Website.EHS
 		public List<INCFORM_ROOT5Y> root5YList;
 		public INCFORM_CAUSATION causation;
 		public List<TASK_STATUS> actionList;
-		public List<INCFORM_APPROVAL> approvalList;
+		public List<EHSIncidentApproval> approvalList;
 
 		public AlertData()
 		{
@@ -54,7 +54,7 @@ namespace SQM.Website.EHS
 			root5YList = new List<INCFORM_ROOT5Y>();
 			causation = null;
 			actionList = new List<TASK_STATUS>();
-			approvalList = new List<INCFORM_APPROVAL>();
+			approvalList = new List<EHSIncidentApproval>();
 		}
 	}
 
@@ -532,7 +532,7 @@ namespace SQM.Website.EHS
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "REVIEW_1").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
 
-			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve1).FirstOrDefault()) == null)
+			if ((reviewer = pageData.approvalList.Where(l => l.approval.ITEM_SEQ == (int)SysPriv.approve1).Select(l=> l.approval).FirstOrDefault()) == null)
 			{
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
@@ -559,7 +559,7 @@ namespace SQM.Website.EHS
 			cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "REVIEW_2").DESCRIPTION_SHORT, detailTxtFont));
 			tableReview.AddCell(cell);
-			if ((reviewer = pageData.approvalList.Where(l => l.ITEM_SEQ == (int)SysPriv.approve2).FirstOrDefault()) == null)
+			if ((reviewer = pageData.approvalList.Where(l => l.approval.ITEM_SEQ == (int)SysPriv.approve2).Select(l=> l.approval).FirstOrDefault()) == null)
 			{
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthBottom = cell.BorderWidthLeft = .25f;
@@ -731,7 +731,7 @@ namespace SQM.Website.EHS
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null, 0);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(entities, (decimal)d.incident.ISSUE_TYPE_ID, 10.0m, iid, null, 0);
 
 					if (files.Count > 0)
 					{

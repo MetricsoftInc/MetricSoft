@@ -18,9 +18,7 @@ namespace SQM.Website
 		static string staticAppContext;
 		static int baseRowIndex;
 
-		static List<string> incidentReportList;
-		static List<string> incidentReportLabelList;
-		static List<string> incidentReportOptionList;
+		protected static List<INCFORM_TYPE_CONTROL> incidentStepList;
 
 		RadPersistenceManager persistenceManager;
 
@@ -684,27 +682,9 @@ namespace SQM.Website
 				{
 					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
 				}
-			}
 
-			incidentReportList = new List<string>();
-			incidentReportLabelList = new List<string>();
-			incidentReportOptionList = new List<string>();
-			SETTINGS sets = SessionManager.GetUserSetting("EHS", "INCIDENT_REPORTS");
-			if (sets != null)
-			{
-				foreach (string rs in sets.VALUE.Split('|'))
-				{
-					string[] args = rs.Split(',');
-					if (args.Length > 1)
-					{
-						incidentReportList.Add(args[0]);
-						incidentReportLabelList.Add(args[1]);
-						if (args.Length > 2)
-							incidentReportOptionList.Add(args[2]);
-						else
-							incidentReportOptionList.Add("");
-					}
-				}
+				if (incidentStepList == null  || incidentStepList.Count == 0)
+					incidentStepList = EHSIncidentMgr.SelectIncidentSteps(new PSsqmEntities(), -1m);
 			}
 
 			if (showImages)
@@ -767,14 +747,6 @@ namespace SQM.Website
 						lbl.Text = data.Incident.ISSUE_TYPE;
 					}
 
-					/*
-					if (data.Incident.DESCRIPTION.Length > 120)
-					{
-						lbl = (Label)e.Item.FindControl("lblDescription");
-						lbl.Text = data.Incident.DESCRIPTION.Substring(0, 117) + "...";
-					}
-					*/
-
 					lbl = (Label)e.Item.FindControl("lblDescription");
 					lbl.Text = HttpUtility.HtmlEncode(lbl.Text);
 
@@ -791,7 +763,15 @@ namespace SQM.Website
 					}
 					else
 					{
-						lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+						if (data.Incident.INCFORM_LAST_STEP_COMPLETED > (int)IncidentStepStatus.signoff && data.Incident.INCFORM_LAST_STEP_COMPLETED < (int)IncidentStepStatus.signoffComplete)
+						{
+							lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == ((int)IncidentStepStatus.signoff).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+							lbl.Text += ("-" + (data.Incident.INCFORM_LAST_STEP_COMPLETED - (int)IncidentStepStatus.signoff).ToString());
+						}
+						else
+						{
+							lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Incident.INCFORM_LAST_STEP_COMPLETED.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+						}
 					}
 
 					if (data.Status == "C")
@@ -809,6 +789,7 @@ namespace SQM.Website
 					{
 						lbl = (Label)e.Item.FindControl("lblSeverity");
 						lbl.Visible = true;
+
 						if (data.InjuryDetail.FIRST_AID == true)
 						{
 							lbl.Text = IncidentXLATList.Where(l => l.XLAT_GROUP == "INCIDENT_SEVERITY" && l.XLAT_CODE == "FIRSTAID").FirstOrDefault().DESCRIPTION_SHORT;
@@ -827,48 +808,25 @@ namespace SQM.Website
 						}
 					}
 
-					HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport0");
-					//string uri = HttpContext.Current.Request.Url.AbsoluteUri.Substring(0, HttpContext.Current.Request.Url.AbsoluteUri.IndexOf("EHS"));
-                    string uri = "~/";
-					//if (data.Incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
-					//{
-						if (incidentReportList.Count > 0 &&  !string.IsNullOrEmpty(incidentReportList[0]))
+					// get incident reports 
+					int reportNum = -1;
+					string uri = "~/";
+					foreach (INCFORM_TYPE_CONTROL step in  EHSIncidentMgr.GetIncidentSteps(incidentStepList, (decimal)data.Incident.ISSUE_TYPE_ID).Where(l=> l.STEP > 200  &&  l.STEP < 300).ToList())
+					{
+						if (data.IsDependentStatus(step.DEPENDENT_STATUS))
 						{
-							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[0] + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
-							if (!string.IsNullOrEmpty(incidentReportOptionList[0]))
+							++reportNum;
+							HyperLink hlk = (HyperLink)e.Item.FindControl("hlReport" + reportNum.ToString());
+							hlk.NavigateUrl = uri + "Reporting/" + step.STEP_FORM + ".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
+							if (!string.IsNullOrEmpty(step.COMMENTS))
 							{
-								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[0]);
+								hlk.NavigateUrl += ("&opt=" + step.COMMENTS);
 							}
-							hlk.Text = incidentReportLabelList[0];
-							hlk.ToolTip = incidentReportList[0];
+							hlk.Text = step.STEP_HEADING_TEXT;
+							hlk.ToolTip = step.STEP_HEADING_TEXT;
 							hlk.Visible = true;
 						}
-
-						if (incidentReportList.Count > 1 && !string.IsNullOrEmpty(incidentReportList[1]))
-						{
-							hlk = (HyperLink)e.Item.FindControl("hlReport1");
-							hlk.NavigateUrl = uri + "Reporting/"+incidentReportList[1]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
-							if (!string.IsNullOrEmpty(incidentReportOptionList[1]))
-							{
-								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[1]);
-							}
-							hlk.ToolTip = incidentReportList[1];
-							hlk.Text = incidentReportLabelList[1];
-							hlk.Visible = true;
-						}
-						if (incidentReportList.Count > 2 && !string.IsNullOrEmpty(incidentReportList[2]))
-						{
-							hlk = (HyperLink)e.Item.FindControl("hlReport2");
-							hlk.NavigateUrl = uri + "Reporting/" + incidentReportList[2]+".aspx?iid=" + EncryptionManager.Encrypt(data.Incident.INCIDENT_ID.ToString());
-							if (!string.IsNullOrEmpty(incidentReportOptionList[2]))
-							{
-								hlk.NavigateUrl += ("&opt=" + incidentReportOptionList[2]);
-							}
-							hlk.ToolTip = incidentReportList[2];
-							hlk.Text = incidentReportLabelList[2];
-							hlk.Visible = true;
-						}
-					//}
+					}
 				
 					if (rgIncidentList.MasterTableView.GetColumn("Attach").Visible && data.AttachList != null)
 					{

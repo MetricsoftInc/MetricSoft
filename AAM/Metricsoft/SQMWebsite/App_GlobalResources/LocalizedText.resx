@@ -906,4 +906,7 @@
   <data name="OnlyTasksCreated" xml:space="preserve">
     <value>Only tasks I created</value>
   </data>
+  <data name="OnBehalfOf" xml:space="preserve">
+    <value>On Behalf Of</value>
+  </data>
 </root>

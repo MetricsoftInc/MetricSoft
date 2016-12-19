@@ -157,22 +157,22 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubnavPage;
         
         /// <summary>
-        /// uclContainment control.
+        /// uclcontain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Contain uclContainment;
+        protected global::SQM.Website.Ucl_INCFORM_Contain uclcontain;
         
         /// <summary>
-        /// uclRootCause control.
+        /// uclroot5y control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Root5Y uclRootCause;
+        protected global::SQM.Website.Ucl_INCFORM_Root5Y uclroot5y;
         
         /// <summary>
         /// uclCausation control.
@@ -184,22 +184,22 @@ namespace SQM.Website {
         protected global::SQM.Website.Ucl_INCFORM_Causation uclCausation;
         
         /// <summary>
-        /// uclAction control.
+        /// uclaction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Action uclAction;
+        protected global::SQM.Website.Ucl_INCFORM_Action uclaction;
         
         /// <summary>
-        /// uclApproval control.
+        /// uclapproval control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::SQM.Website.Ucl_INCFORM_Approval uclApproval;
+        protected global::SQM.Website.Ucl_INCFORM_Approval uclapproval;
         
         /// <summary>
         /// uclAlert control.
@@ -265,6 +265,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavContainment;
         
         /// <summary>
+        /// btnSubnavInitialActionApproval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavInitialActionApproval;
+        
+        /// <summary>
         /// btnSubnavRootCause control.
         /// </summary>
         /// <remarks>
@@ -292,58 +301,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavAction;
         
         /// <summary>
-        /// btnSubnavAlert control.
+        /// btnSubnavCorrectiveActionApproval control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAlert;
-        
-        /// <summary>
-        /// btnSubnavApproval_1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_1;
-        
-        /// <summary>
-        /// btnSubnavApproval_2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_2;
-        
-        /// <summary>
-        /// btnSubnavApproval_3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_3;
-        
-        /// <summary>
-        /// btnSubnavApproval_35 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_35;
-        
-        /// <summary>
-        /// btnSubnavApproval_4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval_4;
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavCorrectiveActionApproval;
         
         /// <summary>
         /// btnSubnavApproval control.
@@ -353,6 +317,15 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavApproval;
+        
+        /// <summary>
+        /// btnSubnavAlert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnSubnavAlert;
         
         /// <summary>
         /// divIncidentReportForm control.

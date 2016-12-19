@@ -124,7 +124,7 @@
 	</asp:Panel>
 </div>
 
-<div class="container" style="margin: 5px 0 5px 0;">
+<div class="container" style="margin: 10px 0 10px 0;">
 	<div class="row text_center">
 		<div class="col-xs-12 col-sm-12 text-center">
 			<asp:Label ID="lblFormTitle" runat="server" Font-Bold="True" CssClass="pageTitles"></asp:Label>
@@ -843,34 +843,34 @@
 		<div style="margin: 10px;">
 			<center>
 				<asp:LinkButton ID="btnSubnavIncident" runat="server" Text="<%$ Resources:LocalizedText, Incident %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClick="btnSubnav_Click" CommandArgument="0" />
+					OnClick="btnSubnav_Click" CommandArgument="1" />
+
 				<asp:LinkButton ID="btnSubnavVideo" runat="server"  Text="<%$ Resources:LocalizedText, VideoUpload %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="60" visible="false"/>
+					OnClientClick="return CheckChange();" OnClick="btnSubnav_Click" CommandArgument="1.1" visible="false"/>
+
 				<asp:LinkButton ID="btnSubnavContainment" runat="server" Text="<%$ Resources:LocalizedText, InitialAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="2"/>
+
+				<asp:LinkButton ID="btnSubnavInitialActionApproval" runat="server" Text="<%$ Resources:LocalizedText, InitialActionApproval %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="2.5"/>
+
 				<asp:LinkButton ID="btnSubnavRootCause" runat="server" Text="<%$ Resources:LocalizedText, RootCause %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="3"/>
+
 				<asp:LinkButton ID="btnSubnavCausation" runat="server" Text="<%$ Resources:LocalizedText, Causation %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClick="btnSubnav_Click" CommandArgument="35"/>
-				<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="4"/>
+
+				<asp:LinkButton ID="btnSubnavAction" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveAction %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="5"/>
+
+				<asp:LinkButton ID="btnSubnavCorrectiveActionApproval" runat="server" Text="<%$ Resources:LocalizedText, CorrectiveActionApproval %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="5.5"/>
+
+				<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+							OnClick="btnSubnav_Click" CommandArgument="10"/>
+
 				<asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClick="btnSubnav_Click" CommandArgument="10" visible="false"/>
-				<br />
-				<div style="margin-top: 5px;">
-					<asp:LinkButton ID="btnSubnavApproval_1" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_1 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-						OnClick="btnSubnav_Click" CommandArgument="1.1" Visible="false"/>
-					<asp:LinkButton ID="btnSubnavApproval_2" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_2 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-							OnClick="btnSubnav_Click" CommandArgument="2.1" Visible="false"/>
-					<asp:LinkButton ID="btnSubnavApproval_3" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_3 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-						OnClick="btnSubnav_Click" CommandArgument="3.1" Visible="false"/>
-					<asp:LinkButton ID="btnSubnavApproval_35" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_35 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-						OnClick="btnSubnav_Click" CommandArgument="35.1" Visible="false"/>
-					<asp:LinkButton ID="btnSubnavApproval_4" runat="server" Text="<%$ Resources:LocalizedText, INCIDENT_APPROVAL_4 %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-							OnClick="btnSubnav_Click" CommandArgument="4.1" Visible="false"/>
-					<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-							OnClick="btnSubnav_Click" CommandArgument="5"/>
-				</div>
+					OnClick="btnSubnav_Click" CommandArgument="11" visible="false"/>
 			</center>
 		</div>
 		<br />

@@ -22,7 +22,6 @@ namespace SQM.Website
 		protected bool IsFullPagePostback = false;
 
 		PSsqmEntities entities;
-		List<EHSFormControlStep> formSteps;
 
 		public PageUseMode PageMode { get; set; }
 		public decimal theincidentId { get; set; }

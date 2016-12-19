@@ -29,7 +29,6 @@ namespace SQM.Website
 		public PageUseMode PageMode { get; set; }
 
 		PSsqmEntities entities;
-		List<EHSFormControlStep> formSteps;
 
 		public decimal theincidentId { get; set; }
 
@@ -164,8 +163,9 @@ namespace SQM.Website
 
 				decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 
-				formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
-				totalFormSteps = formSteps.Count();
+				// what the fuck does this do ?
+				//formSteps = EHSIncidentMgr.GetStepsForincidentTypeId(typeId);
+				//totalFormSteps = formSteps.Count();
 
 				InitializeForm();
 			}

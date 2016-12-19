@@ -86,14 +86,7 @@ namespace DataRollup
 				{
 					nextStep = setting.VALUE;
 				}
-				/*
-				setting = sets.Where(x => x.SETTING_CD == "ROLLUP_MONTHS_AHEAD").FirstOrDefault();
-				if (setting != null && !string.IsNullOrEmpty(setting.VALUE))
-				{
-					int.TryParse(setting.VALUE, out rollupMonthsAhead);
-					rollupToDate = rollupToDate.AddMonths(rollupMonthsAhead);
-				}
-				*/
+
 				// fetch all incidents occurring after the minimum reporting date
 				List<INCIDENT> incidentList = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS")
 											   where
@@ -123,26 +116,6 @@ namespace DataRollup
 						incident.INCFORM_LOSTTIME_HIST.Load();
 					plant = plantList.Where(l => l.PLANT_ID == (decimal)incident.DETECT_PLANT_ID).FirstOrDefault();
 					summaryList = EHSIncidentMgr.SummarizeIncidentAccounting(summaryList, EHSIncidentMgr.CalculateIncidentAccounting(incident, plant.LOCAL_TIMEZONE, workdays));
-					/*
-					List<EHSIncidentTimeAccounting> periodList = EHSIncidentMgr.CalculateIncidentAccounting(incident, plant.LOCAL_TIMEZONE, workdays);
-					EHSIncidentTimeAccounting period = null;
-					foreach (EHSIncidentTimeAccounting ipa in periodList)
-					{
-						if ((period = summaryList.Where(p => p.PeriodYear == ipa.PeriodYear && p.PeriodMonth == ipa.PeriodMonth && p.PlantID == ipa.PlantID).FirstOrDefault()) == null)
-						{
-							summaryList.Add((period = new EHSIncidentTimeAccounting().CreateNew(ipa.PeriodYear, ipa.PeriodMonth, 0, ipa.PlantID)));
-						}
-						period.NearMiss += ipa.NearMiss;
-						period.FatalityCase += ipa.FatalityCase;
-						period.FirstAidCase += ipa.FirstAidCase;
-						period.LostTime += ipa.LostTime;
-						period.LostTimeCase += ipa.LostTimeCase;
-						period.RecordableCase += ipa.RecordableCase;
-						period.OtherCase += ipa.OtherCase;
-						period.RestrictedTime += ipa.RestrictedTime;
-						period.WorkTime += ipa.WorkTime;
-					}
-					*/
 				}
 
 				plant = null;

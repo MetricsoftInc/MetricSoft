@@ -482,7 +482,7 @@ namespace SQM.Website.Reports
 			tableReview.LockedWidth = true;
 			tableReview.SpacingAfter = 5f;
 			PdfPCell cell;
-			int approvalCount = pageData.approvalList.Where(l => l.APPROVER_PERSON_ID.HasValue).Count();
+			int approvalCount = pageData.approvalList.Where(l => l.approval.APPROVER_PERSON_ID.HasValue).Count();
 			int row = 0;
 
 			cell = new PdfPCell() { Padding = 1f, PaddingBottom = 5f, Border = 0 };
@@ -490,28 +490,28 @@ namespace SQM.Website.Reports
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "REVIEW").DESCRIPTION, detailHdrFont));
 			tableReview.AddCell(cell);
 
-			foreach (INCFORM_APPROVAL approval in pageData.approvalList.Where(l => l.APPROVER_PERSON_ID.HasValue).ToList())
+			foreach (EHSIncidentApproval approval in pageData.approvalList.Where(l => l.approval.APPROVER_PERSON_ID.HasValue).ToList())
 			{
 				++row;
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
 				if (row == approvalCount)
 					cell.BorderWidthBottom = .25f;
-				cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "INCIDENT_APPROVALS", approval.ITEM_SEQ.ToString()).DESCRIPTION_SHORT, detailTxtBoldFont));
+				cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "INCIDENT_APPROVALS", approval.approval.ITEM_SEQ.ToString()).DESCRIPTION_SHORT, detailTxtBoldFont));
 				tableReview.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
 				if (row == approvalCount)
 					cell.BorderWidthBottom = .25f;
-				cell.AddElement(new Paragraph(approval.APPROVER_PERSON, detailTxtFont));
+				cell.AddElement(new Paragraph(approval.approval.APPROVER_PERSON, detailTxtFont));
 				tableReview.AddCell(cell);
 
 				cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 				cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
 				if (row == approvalCount)
 					cell.BorderWidthBottom = .25f;
-				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", approval.APPROVAL_DATE.HasValue ? SQMBasePage.FormatDate((DateTime)approval.APPROVAL_DATE, "d", false) : ""), detailTxtFont));
+				cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DATED").DESCRIPTION_SHORT + ":  {0}", approval.approval.APPROVAL_DATE.HasValue ? SQMBasePage.FormatDate((DateTime)approval.approval.APPROVAL_DATE, "d", false) : ""), detailTxtFont));
 				tableReview.AddCell(cell);
 			}
 
@@ -677,7 +677,7 @@ namespace SQM.Website.Reports
 								 }).ToList();
 
 
-					d.approvalList = EHSIncidentMgr.GetApprovalList(iid, null, 0);
+					d.approvalList = EHSIncidentMgr.GetApprovalList(entities, (decimal)d.incident.ISSUE_TYPE_ID, 5.5m, iid, null, 0);
 
 					if (files.Count > 0)
 					{
