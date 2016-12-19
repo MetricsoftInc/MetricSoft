@@ -5452,6 +5452,30 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _DEPT_ID;
         partial void OnDEPT_IDChanging(Nullable<global::System.Decimal> value);
         partial void OnDEPT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AUDITING_ID
+        {
+            get
+            {
+                return _AUDITING_ID;
+            }
+            set
+            {
+                OnAUDITING_IDChanging(value);
+                ReportPropertyChanging("AUDITING_ID");
+                _AUDITING_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDITING_ID");
+                OnAUDITING_IDChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AUDITING_ID;
+        partial void OnAUDITING_IDChanging(Nullable<global::System.Decimal> value);
+        partial void OnAUDITING_IDChanged();
 
         #endregion
 
@@ -25141,7 +25165,8 @@ namespace SQM.Website
         /// <param name="iNCIDENT_TYPE">Initial value of the INCIDENT_TYPE property.</param>
         /// <param name="iNCIDENT_DT">Initial value of the INCIDENT_DT property.</param>
         /// <param name="iNCFORM_LAST_STEP_COMPLETED">Initial value of the INCFORM_LAST_STEP_COMPLETED property.</param>
-        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT, global::System.Int32 iNCFORM_LAST_STEP_COMPLETED)
+        /// <param name="rESTRICTED_TIME">Initial value of the RESTRICTED_TIME property.</param>
+        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT, global::System.Int32 iNCFORM_LAST_STEP_COMPLETED, global::System.Boolean rESTRICTED_TIME)
         {
             INCIDENT iNCIDENT = new INCIDENT();
             iNCIDENT.INCIDENT_ID = iNCIDENT_ID;
@@ -25149,6 +25174,7 @@ namespace SQM.Website
             iNCIDENT.INCIDENT_TYPE = iNCIDENT_TYPE;
             iNCIDENT.INCIDENT_DT = iNCIDENT_DT;
             iNCIDENT.INCFORM_LAST_STEP_COMPLETED = iNCFORM_LAST_STEP_COMPLETED;
+            iNCIDENT.RESTRICTED_TIME = rESTRICTED_TIME;
             return iNCIDENT;
         }
 
@@ -25806,6 +25832,31 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _LAST_APPROVAL_STEP;
         partial void OnLAST_APPROVAL_STEPChanging(Nullable<global::System.Decimal> value);
         partial void OnLAST_APPROVAL_STEPChanged();
+
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean RESTRICTED_TIME
+        {
+            get
+            {
+                return _RESTRICTED_TIME;
+            }
+            set
+            {
+                OnRESTRICTED_TIMEChanging(value);
+                ReportPropertyChanging("RESTRICTED_TIME");
+                _RESTRICTED_TIME = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RESTRICTED_TIME");
+                OnRESTRICTED_TIMEChanged();
+            }
+        }
+        private global::System.Boolean _RESTRICTED_TIME;
+        partial void OnRESTRICTED_TIMEChanging(global::System.Boolean value);
+        partial void OnRESTRICTED_TIMEChanged();
 
         #endregion
 
