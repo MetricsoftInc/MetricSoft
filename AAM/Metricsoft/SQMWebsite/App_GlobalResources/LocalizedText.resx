@@ -921,4 +921,10 @@
   <data name="InitialActionApproval" xml:space="preserve">
     <value>Initial Action Signoff</value>
   </data>
+  <data name="Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>(determined when the incident and any lost/restricted time is saved)</value>
+  </data>
 </root>

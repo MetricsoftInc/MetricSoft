@@ -43,6 +43,7 @@ namespace SQM.Website
 			this.Title = Resources.LocalizedText.EHSIncidents;
 			this.lblPlantSelect.Text = Resources.LocalizedText.Locations + ":";
 			this.lblIncidentType.Text = Resources.LocalizedText.IncidentType + ":";
+			this.lbSeverity.Text = Resources.LocalizedText.Severity + ":";
 			this.lblStatus.Text = Resources.LocalizedText.Status + ": ";
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
 
