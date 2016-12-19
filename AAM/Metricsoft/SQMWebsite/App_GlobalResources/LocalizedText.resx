@@ -915,4 +915,10 @@
   <data name="ReAuditTip" xml:space="preserve">
     <value>Perform a ReAudit on this assessment</value>
   </data>
+  <data name="CorrectiveActionApproval" xml:space="preserve">
+    <value>Corrective Action Signoff</value>
+  </data>
+  <data name="InitialActionApproval" xml:space="preserve">
+    <value>Initial Action Signoff</value>
+  </data>
 </root>

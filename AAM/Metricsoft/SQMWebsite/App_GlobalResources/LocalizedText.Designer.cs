@@ -484,6 +484,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Corrective Action Signoff.
+        /// </summary>
+        internal static string CorrectiveActionApproval {
+            get {
+                return ResourceManager.GetString("CorrectiveActionApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Final Corrective Actions.
         /// </summary>
         internal static string CorrectiveActions {
@@ -1092,6 +1101,15 @@ namespace Resources {
         internal static string InitialAction {
             get {
                 return ResourceManager.GetString("InitialAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial Action Signoff.
+        /// </summary>
+        internal static string InitialActionApproval {
+            get {
+                return ResourceManager.GetString("InitialActionApproval", resourceCulture);
             }
         }
         
