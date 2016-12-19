@@ -1594,19 +1594,11 @@ namespace SQM.Website
             rad.PlotArea.YAxis.MinorGridLines.Visible = rgCfg.MinorTics;
             rad.PlotArea.XAxis.MinorGridLines.Visible = false;
 
-			List<decimal> itemTotals = new List<decimal>();
 			decimal? Ymax = null;
             foreach (GaugeSeries gs in gaugeSeries)
             {
-				int i = -1;
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
-					++i;
-					if (itemTotals.Count <= i)
-					{
-						itemTotals.Add(0);
-					}
-					itemTotals[i] += (decimal)data.YValue;
 					if (data.YValue < 0)
 					{
 						negScale = true;
