@@ -222,9 +222,19 @@ namespace SQM.Website
 				}
 
 				lnk = (LinkButton)e.Item.FindControl("lbAuditId");
+				LinkButton lnkReAudit = (LinkButton)e.Item.FindControl("lbReAudit");
+				HiddenField hdnId = (HiddenField)e.Item.FindControl("hdnAuditingId");
+
+				if (!SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit))
+				{
+					lnkReAudit.Visible = false;
+				}
 
 				if (SessionManager.UserContext.Person.PERSON_ID == data.Person.PERSON_ID)
+				{
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;
+					lnkReAudit.Visible = false;
+				}
 				else if (!data.Status.Equals("C"))
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~D";
 				else
@@ -444,5 +454,12 @@ namespace SQM.Website
 
 		#endregion
 
+		protected void lbReAudit_Click(object sender, EventArgs e)
+		{
+			LinkButton lnk = (LinkButton)sender;
+			SessionManager.ReturnObject = "ReAudit";
+			SessionManager.ReturnRecordID = Convert.ToDecimal(lnk.CommandArgument.ToString());
+			SessionManager.ReturnStatus = true;
+		}
 	}
 }

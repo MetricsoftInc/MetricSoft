@@ -130,7 +130,7 @@
 					<div class="row-fluid" style="margin-top: 7px;">
 
 
-						<span style="float: left; margin-top: 4px;">
+						<span style="float: left; margin-top: 4px; width: 30%;">
 							<span style="padding-right: 20px;">
 								<asp:Label runat="server" ID="lblAuditDate" Text="<%$ Resources:LocalizedText, AssessmentDateFrom %>" CssClass="prompt"></asp:Label></span>
 							<span style="margin-right: -10px !important;">

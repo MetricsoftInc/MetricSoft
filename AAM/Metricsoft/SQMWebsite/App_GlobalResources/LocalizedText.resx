@@ -909,4 +909,10 @@
   <data name="OnBehalfOf" xml:space="preserve">
     <value>On Behalf Of</value>
   </data>
+  <data name="ReAudit" xml:space="preserve">
+    <value>ReAudit</value>
+  </data>
+  <data name="ReAuditTip" xml:space="preserve">
+    <value>Perform a ReAudit on this assessment</value>
+  </data>
 </root>

@@ -168,7 +168,8 @@ namespace SQM.Website
 			rdpTaskDueDTAdd.SelectedDate = SessionManager.UserContext.LocalTime; // default to today?
 			lblTaskStatusValueAdd.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == (0).ToString()).FirstOrDefault().DESCRIPTION; // default to the "Open" status
 
-			ddlScheduleScope.Items.Clear();
+			ddlScheduleScopeAdd.Items.Clear();
+			mnuScheduleScopeAdd.Items.Clear();
 
 			BusinessLocation location = new BusinessLocation().Initialize(plantID);
 			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
@@ -183,10 +184,11 @@ namespace SQM.Website
 					mnuScheduleScopeAdd.Visible = true;
 					SQMBasePage.SetLocationList(mnuScheduleScopeAdd, locationList, plantID, location.Plant.PLANT_NAME, "TOP", true);
 					//RadMenuItem mi = new RadMenuItem();
-					//mi.Text = (SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME);
-					//mi.Value = "0";
-					//mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-					//mnuScheduleScope.Items[0].Items.Insert(0, mi);
+					//mi.Text = (location.Plant.PLANT_NAME);
+					//mi.Value = plantID.ToString();
+					////mi.ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+					//mnuScheduleScopeAdd.Items[0].Items.Insert(0, mi);
+					//mnuScheduleScopeAdd.Attributes.Add("z-index", "9");
 				}
 				else
 				{
@@ -412,7 +414,7 @@ namespace SQM.Website
 				// I don't think we need to bind the list at this point
 				BindTaskAdd(recordType, recordID, recordSubID, taskStep, taskType, lblTaskDetailValueAdd.Text.ToString(), plantID, "");
 				lblErrorMessage.Text = lblErrRequiredInputs.Text.ToString();
-				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			}
 			else
@@ -469,7 +471,7 @@ namespace SQM.Website
 					// now update the list and stay on the popup
 					BindTaskAdd(recordType, recordID, recordSubID, taskStep, taskType, lblTaskDetailValueAdd.Text.ToString(), plantID, "");
 					lblErrorMessage.Text = "";
-					string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+					string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 					ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 				}
 				else
@@ -544,7 +546,7 @@ namespace SQM.Website
 				BindTaskAdd(task.RECORD_TYPE, task.RECORD_ID, (decimal)task.RECORD_SUBID, task.TASK_STEP, task.TASK_TYPE, lblTaskDetailValue.Text.ToString(), assignTo.PLANT_ID, "");
 				lblErrorMessage.Text = "";
 
-				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			}
 			else
@@ -717,7 +719,7 @@ namespace SQM.Website
 			pnlAddTask.Visible = false;
 			pnlUpdateTask.Visible = true;
 
-			string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}
 
@@ -842,7 +844,7 @@ namespace SQM.Website
 
 			if (scopId.EndsWith("Add"))
 			{
-				string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+				string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 				ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 			}
 			else

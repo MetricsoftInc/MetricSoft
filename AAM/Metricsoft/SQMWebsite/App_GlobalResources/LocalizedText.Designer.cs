@@ -1564,6 +1564,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ReAudit.
+        /// </summary>
+        internal static string ReAudit {
+            get {
+                return ResourceManager.GetString("ReAudit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perform a ReAudit on this assessment.
+        /// </summary>
+        internal static string ReAuditTip {
+            get {
+                return ResourceManager.GetString("ReAuditTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receipt Number.
         /// </summary>
         internal static string ReceiptNumber {

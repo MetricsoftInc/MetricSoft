@@ -122,6 +122,28 @@ namespace SQM.Website.EHS
 								}
 								break;
 
+							case "ReAudit":
+								decimal reauditId = CreateReAudit(SessionManager.ReturnRecordID);
+								if (reauditId > 0)
+								{
+									SessionManager.ReturnRecordID = reauditId;
+									uclAssessmentForm.EditAuditId = reauditId;
+									rbNew.Visible = false;
+									UpdateDisplayState(DisplayState.AuditNotificationEdit);
+
+									if (isDirected)
+									{
+										uclAssessmentForm.EnableReturnButton(false);
+									}
+								}
+								else
+								{
+									// probably need to show some sort of error message...
+									rbNew.Visible = createAuditAccess;
+									UpdateDisplayState(DisplayState.AuditList);
+								}
+								break;
+
 							case "Closed":
 								uclAssessmentForm.EditAuditId = SessionManager.ReturnRecordID;
 								UpdateDisplayState(DisplayState.AuditNotificationClosed);
@@ -382,6 +404,63 @@ namespace SQM.Website.EHS
 		{
 			rbNew.Visible = false;
 			UpdateDisplayState(DisplayState.AuditNotificationNew);
+		}
+
+		protected decimal CreateReAudit(decimal auditId)
+		{
+			decimal reauditId = 0;
+			PSsqmEntities entities = new PSsqmEntities();
+
+			AUDIT oldAudit = EHSAuditMgr.SelectAuditById(entities, auditId);
+
+			if (oldAudit != null)
+			{
+				// create the copy
+				PLANT auditPlant = SQMModelMgr.LookupPlant((decimal)oldAudit.DETECT_PLANT_ID);
+				DateTime localTime = WebSiteCommon.LocalTime(DateTime.UtcNow, auditPlant.LOCAL_TIMEZONE);
+				AUDIT reAudit = new AUDIT()
+				{
+					DETECT_COMPANY_ID = Convert.ToDecimal(oldAudit.DETECT_COMPANY_ID),
+					DETECT_BUS_ORG_ID = oldAudit.DETECT_BUS_ORG_ID,
+					DETECT_PLANT_ID = oldAudit.DETECT_PLANT_ID,
+					DEPT_ID = oldAudit.DEPT_ID,
+					AUDIT_TYPE = oldAudit.AUDIT_TYPE,
+					CREATE_DT = localTime,
+					CREATE_BY = SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME,
+					DESCRIPTION = oldAudit.DESCRIPTION,
+					CREATE_PERSON = SessionManager.UserContext.Person.PERSON_ID, // do we want to set this to admin?
+					AUDIT_DT = localTime,
+					AUDIT_TYPE_ID = oldAudit.AUDIT_TYPE_ID,
+					AUDIT_PERSON = SessionManager.UserContext.Person.PERSON_ID,
+					CURRENT_STATUS = "A",
+					PERCENT_COMPLETE = 0,
+					TOTAL_SCORE = 0,
+					AUDITING_ID = auditId
+				};
+
+				entities.AddToAUDIT(reAudit);
+				entities.SaveChanges();
+				reauditId = reAudit.AUDIT_ID;
+
+				AUDIT_ANSWER answer = null;
+				List<EHSAuditQuestion> questions = EHSAuditMgr.SelectAuditQuestionList(reAudit.AUDIT_TYPE_ID, 0, auditId);
+				foreach (var q in questions)
+				{
+					answer = new AUDIT_ANSWER()
+					{
+						AUDIT_ID = reauditId,
+						AUDIT_QUESTION_ID = q.QuestionId,
+						ANSWER_VALUE = "",
+						ORIGINAL_QUESTION_TEXT = q.QuestionText,
+						//COMMENT = q.AnswerComment
+					};
+					entities.AddToAUDIT_ANSWER(answer);
+				}
+				entities.SaveChanges();
+
+			}
+
+			return reauditId;
 		}
 
 		#region auditaging

@@ -40,7 +40,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
-				<asp:Label ID="lblAssignPersonUpdate" runat="server" Text="Assign To Person*" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
+				<asp:Label ID="lblAssignPersonUpdate" runat="server" Text="Assign To Person" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
 				<asp:Label ID="lblAssignPersonValue" runat="server" CssClass="textStd"></asp:Label>
@@ -185,15 +185,17 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
-				<asp:Label ID="lblPlantAdd" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>*" CssClass="prompt" ></asp:Label>
+				<asp:Label ID="lblPlantAdd" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>" CssClass="prompt" ></asp:Label>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<telerik:RadComboBox ID="ddlScheduleScopeAdd" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
-					AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectBusinessLocation %>">
-				</telerik:RadComboBox>
-				<telerik:RadMenu ID="mnuScheduleScopeAdd" runat="server" Width="280px" Style="z-index: 9;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select">
-					<DefaultGroupSettings RepeatDirection="Horizontal" />
-				</telerik:RadMenu>
+				<span>
+					<telerik:RadComboBox ID="ddlScheduleScopeAdd" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
+						AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectBusinessLocation %>">
+					</telerik:RadComboBox>
+					<telerik:RadMenu ID="mnuScheduleScopeAdd" runat="server" Width="280px" Style="z-index: 9000 !important;" EnableAutoScroll="True" OnItemClick="ScheduleScope_Select">
+						<DefaultGroupSettings RepeatDirection="Horizontal" Flow="Vertical" />
+					</telerik:RadMenu>
+				</span>
 			</div>
 		</div>
 		<div class="row">
