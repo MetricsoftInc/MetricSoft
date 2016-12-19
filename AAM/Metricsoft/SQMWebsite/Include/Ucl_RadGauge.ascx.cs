@@ -1006,7 +1006,7 @@ namespace SQM.Website
             return status;
         }
 
-        private LineSeries OverlaySummaryLine(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, int axisItemsCount, bool drawMarkers, bool drawLines, bool drawLabels)
+        private LineSeries OverlaySummaryLine(GaugeDefinition rgCfg, List<GaugeSeries> gaugeSeries, int axisItemsCount, bool drawMarkers, bool drawLines, bool drawLabels, string labelPos)
         {
             decimal axisMin = 9999999999m;
             decimal axisMax = 0;
@@ -1014,6 +1014,10 @@ namespace SQM.Website
             LineSeries newSeries = new LineSeries();
             newSeries.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#"); 
             newSeries.LabelsAppearance.Visible = drawLabels;
+			if (labelPos == "right")
+			{
+				newSeries.LabelsAppearance.Position = LineAndScatterLabelsPosition.Right;
+			}
             newSeries.TooltipsAppearance.Visible = false;
             newSeries.MarkersAppearance.Visible = drawMarkers;
             newSeries.LineAppearance.Width = drawLines == true ? 2 : 0;
@@ -1491,7 +1495,7 @@ namespace SQM.Website
             series.TooltipsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
 			rad.PlotArea.YAxis.LabelsAppearance.DataFormatString = SetValueFormat(rgCfg, "#.#");
             series.TooltipsAppearance.BackgroundColor = System.Drawing.ColorTranslator.FromHtml("white");
-
+			//series.Gap = .10; series.Spacing = .10;
 			
            foreach (GaugeSeriesItem item in seriesData)
            {
@@ -1590,11 +1594,19 @@ namespace SQM.Website
             rad.PlotArea.YAxis.MinorGridLines.Visible = rgCfg.MinorTics;
             rad.PlotArea.XAxis.MinorGridLines.Visible = false;
 
+			List<decimal> itemTotals = new List<decimal>();
 			decimal? Ymax = null;
             foreach (GaugeSeries gs in gaugeSeries)
             {
+				int i = -1;
                 foreach (GaugeSeriesItem data in gs.ItemList)
                 {
+					++i;
+					if (itemTotals.Count <= i)
+					{
+						itemTotals.Add(0);
+					}
+					itemTotals[i] += (decimal)data.YValue;
 					if (data.YValue < 0)
 					{
 						negScale = true;
@@ -1672,7 +1684,7 @@ namespace SQM.Website
 
                 if ((bool)series.Stacked)
                 {
-                    series.LabelsAppearance.Visible = false;
+					series.LabelsAppearance.Visible = false;
                 }
                 else
                 {
@@ -1714,8 +1726,8 @@ namespace SQM.Website
             {
                 if (rgCfg.Grouping == 2)
                 {
-                    LineSeries summaryLine = OverlaySummaryLine(rgCfg, gaugeSeries, axisItemsCount, false, false, true);
-                    rad.PlotArea.Series.Add(summaryLine);
+                    LineSeries summaryLine = OverlaySummaryLine(rgCfg, gaugeSeries, axisItemsCount, false, false, true, "right");
+					rad.PlotArea.Series.Add(summaryLine);
                 }
             }
             
@@ -1965,7 +1977,7 @@ namespace SQM.Website
                 }
                 else
                 {
-                    rad.PlotArea.Series.Add(OverlaySummaryLine(rgCfg, gaugeSeries, rad.PlotArea.XAxis.Items.Count, false, false, true));
+                    rad.PlotArea.Series.Add(OverlaySummaryLine(rgCfg, gaugeSeries, rad.PlotArea.XAxis.Items.Count, false, false, true, ""));
                 }
             }
 
