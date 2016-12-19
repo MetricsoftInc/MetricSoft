@@ -25832,7 +25832,6 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _LAST_APPROVAL_STEP;
         partial void OnLAST_APPROVAL_STEPChanging(Nullable<global::System.Decimal> value);
         partial void OnLAST_APPROVAL_STEPChanged();
-
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -808,6 +808,7 @@
           <Property Name="CURRENT_STATUS" Type="varchar" MaxLength="4" />
           <Property Name="TOTAL_SCORE" Type="numeric" Nullable="false" Precision="35" />
           <Property Name="DEPT_ID" Type="numeric" Precision="35" />
+          <Property Name="AUDITING_ID" Type="numeric" Precision="35" />
         </EntityType>
         <EntityType Name="AUDIT_ANSWER">
           <Key>
@@ -1713,6 +1714,7 @@
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="int" Nullable="false" />
+          <Property Name="RESTRICTED_TIME" Type="bit" Nullable="false" />
           <Property Name="LAST_APPROVAL_STEP" Type="numeric" Precision="8" Scale="2" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
@@ -7702,6 +7704,7 @@
           <NavigationProperty Name="INCFORM_INJURYILLNESS" Relationship="PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_INJURYILLNESS" />
           <NavigationProperty Name="INCFORM_APPROVAL" Relationship="PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID" FromRole="INCIDENT" ToRole="INCFORM_APPROVAL" />
           <Property Type="Decimal" Name="LAST_APPROVAL_STEP" Precision="8" Scale="2" />
+          <Property Type="Boolean" Name="RESTRICTED_TIME" Nullable="false" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -8345,6 +8348,7 @@
           <Property Name="TOTAL_SCORE" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Type="Decimal" Name="DEPT_ID" Precision="35" Scale="0" />
           <NavigationProperty Name="AUDIT_TYPE1" Relationship="PSsqmModel.FK_AUDIT_AUDIT_TYPE" FromRole="AUDIT" ToRole="AUDIT_TYPE" />
+          <Property Type="Decimal" Name="AUDITING_ID" Precision="35" Scale="0" />
         </EntityType>
         <EntityType Name="AUDIT_ANSWER">
           <Key>
@@ -10821,6 +10825,7 @@
           <EntitySetMapping Name="INCIDENT">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT">
               <MappingFragment StoreEntitySet="INCIDENT">
+                <ScalarProperty Name="RESTRICTED_TIME" ColumnName="RESTRICTED_TIME" />
                 <ScalarProperty Name="LAST_APPROVAL_STEP" ColumnName="LAST_APPROVAL_STEP" />
                 <ScalarProperty Name="INCFORM_LAST_STEP_COMPLETED" ColumnName="INCFORM_LAST_STEP_COMPLETED" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
@@ -11192,6 +11197,7 @@
           <EntitySetMapping Name="AUDIT">
             <EntityTypeMapping TypeName="PSsqmModel.AUDIT">
               <MappingFragment StoreEntitySet="AUDIT">
+                <ScalarProperty Name="AUDITING_ID" ColumnName="AUDITING_ID" />
                 <ScalarProperty Name="DEPT_ID" ColumnName="DEPT_ID" />
                 <ScalarProperty Name="TOTAL_SCORE" ColumnName="TOTAL_SCORE" />
                 <ScalarProperty Name="CURRENT_STATUS" ColumnName="CURRENT_STATUS" />
