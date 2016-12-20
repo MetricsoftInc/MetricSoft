@@ -68,6 +68,16 @@ namespace SQM.Website.EHS
 		protected decimal totalPositive;
 
 
+		protected decimal totalTopicPositiveReAudit;
+		protected decimal totalTopicWeightScoreReAudit;
+		protected decimal totalWeightScoreReAudit;
+		protected decimal possibleScoreReAudit;
+		protected decimal totalPossibleScoreReAudit;
+		protected decimal totalTopicPossibleScoreReAudit;
+		protected decimal totalPercentReAudit;
+		protected decimal totalPositiveReAudit;
+
+
 		protected bool IsEditContext;
 		protected int CurrentStep;
 		protected decimal EditAuditId;
@@ -199,7 +209,7 @@ namespace SQM.Website.EHS
 			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), Convert.ToDecimal(cmd[0].ToString()));
 			//uclTaskList.TaskWindow(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID);
 			uclTask.BindTaskAdd(recordType, auditQuestion.AuditId, auditQuestion.QuestionId, "350", "T", auditQuestion.QuestionText, (decimal)audit.DETECT_PLANT_ID, "");
-			string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+			string script = "function f(){OpenUpdateTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
 			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
 		}
 
@@ -252,7 +262,15 @@ namespace SQM.Website.EHS
 								try
 								{
 									EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
-									lnk = (LinkButton)riQuestion.FindControl("LnkAttachment");
+									if (recordID.ToString().Trim().Equals(hdnAuditingId.Value.ToString().Trim()))
+									{
+										lnk = (LinkButton)riQuestion.FindControl("LnkAttachmentReAudit");
+									}
+									else
+									{
+										lnk = (LinkButton)riQuestion.FindControl("LnkAttachment");
+									}
+
 									string buttonText = Resources.LocalizedText.Attachments + "(" + q.FilesAttached.ToString() + ")";
 									lnk.Text = buttonText;
 									lnk.Focus();
@@ -325,7 +343,14 @@ namespace SQM.Website.EHS
 								try
 								{
 									EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
-									lnk = (LinkButton)riQuestion.FindControl("LnkVideos");
+									if (recordID.ToString().Trim().Equals(hdnAuditingId.Value.ToString().Trim()))
+									{
+										lnk = (LinkButton)riQuestion.FindControl("LnkVideosReAudit");
+									}
+									else
+									{
+										lnk = (LinkButton)riQuestion.FindControl("LnkVideos");
+									}
 									string buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
 									lnk.Text = buttonText;
 									lnk.Focus();
@@ -378,7 +403,14 @@ namespace SQM.Website.EHS
 						try
 						{
 							EHSAuditQuestion q = EHSAuditMgr.SelectAuditQuestion(recordID, recordSubID);
-							lnk = (LinkButton)riQuestion.FindControl("lnkAddTask");
+							if (recordID.ToString().Trim().Equals(hdnAuditingId.Value.ToString().Trim()))
+							{
+								lnk = (LinkButton)riQuestion.FindControl("lnkAddTaskReAudit");
+							}
+							else
+							{
+								lnk = (LinkButton)riQuestion.FindControl("lnkAddTask");
+							}
 							string buttonText = Resources.LocalizedText.AssignTask + "(" + q.TasksAssigned.ToString() + ")";
 							lnk.Text = buttonText;
 							lnk.Focus();
@@ -447,6 +479,7 @@ namespace SQM.Website.EHS
 				// in edit mode, load the header field values and make all fields display only
 				AUDIT audit = EHSAuditMgr.SelectAuditById(entities, EditAuditId);
 				EditAuditTypeId = audit.AUDIT_TYPE_ID;
+				hdnAuditingId.Value = audit.AUDITING_ID.ToString();
 				BusinessLocation location = new BusinessLocation().Initialize((decimal)audit.DETECT_PLANT_ID);
 				rddlAuditType.Enabled = false;
 				rddlAuditType.Visible = false;
@@ -594,6 +627,7 @@ namespace SQM.Website.EHS
 					}
 				}
 				// set defaults for add mode
+				hdnAuditingId.Value = "";
 				rddlAuditType.Enabled = true;
 				rddlAuditType.Visible = true;
 				lblAuditLocation.Visible = false;
@@ -1023,6 +1057,7 @@ namespace SQM.Website.EHS
 			previousTopicId = 0;
 			foreach (EHSAuditQuestion question in questions)
 			{
+				// BUILD THE TOPIC LIST
 				if (question.TopicId != previousTopicId)
 				{
 					topic = new AUDIT_TOPIC();
@@ -1241,10 +1276,16 @@ namespace SQM.Website.EHS
 						questions = EHSAuditMgr.SelectAuditQuestionList(EditAuditTypeId, topic.AUDIT_TOPIC_ID, EditAuditId);
 					}
 
+
 					totalTopicQuestions = 0;
 					totalTopicPositive = 0;
 					totalTopicWeightScore = 0;
 					totalTopicPossibleScore = 0;
+
+					totalTopicPositiveReAudit = 0;
+					totalTopicWeightScoreReAudit = 0;
+					totalTopicPossibleScoreReAudit = 0;
+
 					Repeater rpt = (Repeater)e.Item.FindControl("rptAuditFormQuestions");
 					rpt.DataSource = questions;
 					rpt.DataBind();
@@ -1258,6 +1299,24 @@ namespace SQM.Website.EHS
 						else
 							totalPercent = 0;
 						lbl.Text = string.Format("{0:0%}", totalPercent);
+					}
+					else
+						lbl.Visible = false;
+
+					lbl = (Label)e.Item.FindControl("lblTopicTotalReAudit");
+					if (hdnAuditingId.Value.ToString().Length > 0)
+					{
+						if (totalTopicQuestions > 0)
+						{
+							lbl.Visible = true;
+							if (totalTopicPossibleScoreReAudit > 0)
+								totalPercentReAudit = totalTopicWeightScoreReAudit / totalTopicPossibleScore;
+							else
+								totalPercentReAudit = 0;
+							lbl.Text = string.Format("Original: {0:0%}", totalPercentReAudit);
+						}
+						else
+							lbl.Visible = false;
 					}
 					else
 						lbl.Visible = false;
@@ -1290,6 +1349,32 @@ namespace SQM.Website.EHS
 						totalPercent = 0;
 					lbl.Text = string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent);
 				}
+
+				lbl = (Label)e.Item.FindControl("lblTotalPossiblePointsReAudit");
+				if (hdnAuditingId.Value.ToString().Length > 0)
+				{
+					if (lbl != null)
+					{
+						lbl.Text = string.Format("Original Total Possible Points:   {0:0}", totalPossibleScoreReAudit);
+					}
+					lbl = (Label)e.Item.FindControl("lblTotalPointsAchievedReAudit");
+					if (lbl != null)
+					{
+						lbl.Text = string.Format("Original Total Points Achieved:   {0:0}", totalWeightScoreReAudit);
+					}
+					lbl = (Label)e.Item.FindControl("lblTotalPointsPercentageReAudit");
+					if (lbl != null)
+					{
+						if (totalPossibleScoreReAudit > 0)
+							totalPercentReAudit = totalWeightScoreReAudit / totalPossibleScoreReAudit;
+						else
+							totalPercentReAudit = 0;
+						lbl.Text = string.Format("Original Percentage of Points Achieved:   {0:0%}", totalPercentReAudit);
+					}
+				}
+				else
+					lbl.Visible = false;
+
 			}
 		}
 
@@ -1465,11 +1550,126 @@ namespace SQM.Website.EHS
 						rbl.Enabled = false;
 					}
 
+					HtmlTableRow reAuditRow = (HtmlTableRow)e.Item.FindControl("trReAuditQuestion");
+					if (hdnAuditingId.Value.ToString().Length > 0)
+					{
+						try
+						{
+							reAuditRow.Visible = true;
+							decimal reAuditId = Convert.ToDecimal(hdnAuditingId.Value.ToString());
+							EHSAuditQuestion reauditQuestion = EHSAuditMgr.SelectAuditQuestion(reAuditId, q.QuestionId);
+
+							// populate the number of tasks/attachments
+							lnk = (LinkButton)e.Item.FindControl("lnkAddTaskReAudit");
+							buttonText = Resources.LocalizedText.AssignTask + "(" + reauditQuestion.TasksAssigned.ToString() + ")";
+							lnk.Text = buttonText;
+							lnk.CommandArgument = reAuditId.ToString().Trim() + "," + q.QuestionId.ToString().Trim();
+							lnk = (LinkButton)e.Item.FindControl("LnkAttachmentReAudit");
+							buttonText = Resources.LocalizedText.Attachments + "(" + reauditQuestion.FilesAttached.ToString() + ")";
+							lnk.Text = buttonText;
+							lnk.CommandArgument = reAuditId.ToString().Trim() + "," + q.QuestionId.ToString().Trim();
+							lnk = (LinkButton)e.Item.FindControl("LnkVideosReAudit");
+							if (SessionManager.GetUserSetting("MODULE", "MEDIA") != null && SessionManager.GetUserSetting("MODULE", "MEDIA").VALUE.ToUpper() == "A")
+							{
+								buttonText = Resources.LocalizedText.Videos + "(" + q.VideosAttached.ToString() + ")";
+								lnk.Text = buttonText;
+								lnk.CommandArgument = reAuditId.ToString().Trim() + "," + q.QuestionId.ToString().Trim();
+								lnk.Visible = true;
+							}
+							else
+							{
+								lnk.Visible = false;
+							}
+
+							//bool shouldPopulate = ((IsEditContext && !string.IsNullOrEmpty(q.AnswerValue)) || !IsEditContext);
+							shouldPopulate = (!string.IsNullOrEmpty(reauditQuestion.AnswerValue));
+
+							answerIsPositive = true;
+							questionAnswered = false;
+
+							// populate the possible answers to radiobuttonlist
+							rbl = (RadioButtonList)e.Item.FindControl("rblAnswersReAudit");
+							answerIsPositive = false;
+							possibleScoreReAudit = 0;
+							foreach (var choice in reauditQuestion.AnswerChoices)
+							{
+								var li = new ListItem(choice.Text, choice.Value);
+								// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+								if (shouldPopulate)
+								{
+									if (choice.Value == reauditQuestion.AnswerValue)
+										li.Selected = true;
+								}
+								rbl.Items.Add(li);
+								if (reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+								{
+									if (choice.ChoiceWeight > possibleScoreReAudit)
+										possibleScoreReAudit = choice.ChoiceWeight;
+									if (choice.Value == reauditQuestion.AnswerValue)
+									{
+										if (choice.ChoicePositive)
+											answerIsPositive = true;
+										totalWeightScoreReAudit += choice.ChoiceWeight;
+										totalTopicWeightScoreReAudit += choice.ChoiceWeight;
+									}
+								}
+							}
+
+
+							if (reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+							{
+								//totalQuestionsReAudit += 1;
+								//totalTopicQuestionsReAudit += 1;
+								totalPossibleScoreReAudit += possibleScoreReAudit;
+								totalTopicPossibleScoreReAudit += possibleScoreReAudit;
+								if (answerIsPositive)
+								{
+									totalPositiveReAudit += 1;
+									totalTopicPositiveReAudit += 1;
+								}
+							}
+
+							// populate  & format comment texts
+							if (reauditQuestion.QuestionType == EHSAuditQuestionType.RadioCommentLeft || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+							{
+								rtbActive = (RadTextBox)e.Item.FindControl("rtbCommentLeftReAudit");
+								//lblActive = (Label)e.Item.FindControl("lblCommentLeft");
+								td = (HtmlTableCell)e.Item.FindControl("tdCommentRightReAudit");
+								rtbInactive = (RadTextBox)e.Item.FindControl("rtbCommentRightReAudit");
+								//lblInactive = (Label)e.Item.FindControl("lblCommentRight");
+							}
+							else
+							{
+								rtbActive = (RadTextBox)e.Item.FindControl("rtbCommentRightReAudit");
+								//lblActive = (Label)e.Item.FindControl("lblCommentRight");
+								td = (HtmlTableCell)e.Item.FindControl("tdCommentLeftReAudit");
+								rtbInactive = (RadTextBox)e.Item.FindControl("rtbCommentLeftReAudit");
+								//lblInactive = (Label)e.Item.FindControl("lblCommentLeft");
+							}
+
+							rtbInactive.Visible = false;
+							td.Visible = false;
+							rtbActive.Visible = true;
+							rtbActive.MaxLength = MaxTextLength;
+							rtbActive.Text = reauditQuestion.AnswerComment;
+
+						}
+						catch (Exception ex)
+						{
+							reAuditRow.Visible = false;
+						}
+					}
+					else
+					{
+						// hide the reaudit row
+						reAuditRow.Visible = false;
+					}
 				}
 				catch (Exception ex)
 				{
 					;
 				}
+
 			}
 		}
 

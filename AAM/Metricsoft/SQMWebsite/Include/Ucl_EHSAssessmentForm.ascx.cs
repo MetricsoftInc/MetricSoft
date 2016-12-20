@@ -55,10 +55,10 @@ namespace SQM.Website
 			get { return uclAuditDetails; }
 		}
 
-        public void EnableReturnButton(bool bEnabled)
-        {
-            ahReturn.Visible = bEnabled;
-        }
+		public void EnableReturnButton(bool bEnabled)
+		{
+			ahReturn.Visible = bEnabled;
+		}
 
 		// Mode should be "audit" (standard) or "prevent" (RMCAR)
 		public AuditMode Mode
@@ -374,10 +374,19 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			decimal reauditId = 0;
+			List<EHSAuditQuestion>reauditQuestions = null;
+			EHSAuditQuestion reauditQuestion = null;
 			AUDIT audit = null;
 			if (EditAuditId > 0)
 			{
 				audit = (from aud in entities.AUDIT where aud.AUDIT_ID == EditAuditId select aud).FirstOrDefault();
+				try
+				{
+					reauditId = (decimal)audit.AUDITING_ID;
+					reauditQuestions = EHSAuditMgr.SelectAuditQuestionList(audit.AUDIT_TYPE_ID, 0, reauditId);
+				}
+				catch { }
 			}
 
 			string typeText = SelectedTypeText;
@@ -401,6 +410,7 @@ namespace SQM.Website
 			string tid = "";
 			string ptid = "";
 			int percentInTopic = 0; // used to determine if the percentage value should show for the specific topic.
+			int reauditPercentInTopic = 0;
 			bool showTotals = false; // are we showing totals at all for the audit?
 
 			foreach (var q in questions)
@@ -419,6 +429,20 @@ namespace SQM.Website
 					q.AnswerComment = auditAnswer.COMMENT;
 				}
 
+				// Look up reaudit answers if necessary
+				if (reauditId > 0 && reauditQuestions != null)
+				{
+					reauditQuestion = reauditQuestions.Where(rq => rq.QuestionId == q.QuestionId).FirstOrDefault();
+					var auditAnswer = (from a in entities.AUDIT_ANSWER
+									   where a.AUDIT_ID == reauditId
+										   && a.AUDIT_QUESTION_ID == reauditQuestion.QuestionId
+									   select a).FirstOrDefault();
+					reauditQuestion.AnswerText = auditAnswer.ANSWER_VALUE;
+					reauditQuestion.AnswerComment = auditAnswer.COMMENT;
+				}
+				else
+					reauditQuestion = new EHSAuditQuestion();
+
 				//if (q.QuestionType == (decimal)EHSAuditQuestionType.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
 				//{
 				//	continue;
@@ -436,7 +460,18 @@ namespace SQM.Website
 					{
 						// need to add a display for the topic percentage
 						var pnlPercent = new Panel() { ID = "Panel" + ptid };
-						pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+						if (reauditId > 0)
+						{
+							pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+							if (reauditPercentInTopic > 0)
+								pnlPercent.Controls.Add(new Label() { ID = "LabelReAudit" + ptid, Text = "0%" }); // we will populate the values later
+							pnlPercent.Controls.Add(new LiteralControl("</td>"));
+							pnlPercent.Controls.Add(new LiteralControl("<td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+						}
+						else
+						{
+							pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+						}
 						if (percentInTopic > 0)
 							pnlPercent.Controls.Add(new Label() { ID = "Label" + ptid, Text = "0%" }); // we will populate the values later
 						pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
@@ -449,6 +484,7 @@ namespace SQM.Website
 					pnlForm.Controls.Add(pnlTopic);
 					previousTopic = q.TopicId.ToString();
 					percentInTopic = 0;
+					reauditPercentInTopic = 0;
 				}
 
 				var pnl = new Panel() { ID = "Panel" + qid };
@@ -463,6 +499,10 @@ namespace SQM.Website
 					pnl.Controls.Add(new LiteralControl("<span class=\"requiredStar\">&bull;</span>"));
 				if (q.IsRequiredClose)
 					pnl.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
+
+				// if we are reauditing, need to do a table inside the question area
+				if (reauditId > 0)
+					pnl.Controls.Add(new LiteralControl("</td><td><table width=\"100%\"><tr><td>"));
 
 				// Add a comment box that hides/shows via a link to certain field types
 				if (q.QuestionType == EHSAuditQuestionType.RadioCommentLeft || q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
@@ -963,6 +1003,459 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
+				if (reauditId > 0)
+				{
+					if (reauditQuestion != null)
+					{
+						pnl.Controls.Add(new LiteralControl("<tr><td>"));
+						string reauditQid = "reaudit" + qid;
+						shouldPopulate = !string.IsNullOrEmpty(reauditQuestion.AnswerText);
+
+						// Add a comment box that hides/shows via a link to certain field types
+						if (reauditQuestion.QuestionType == EHSAuditQuestionType.RadioCommentLeft || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+							string cid = "Comment" + reauditQid;
+							var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+							comment.TextMode = InputMode.MultiLine;
+							comment.Rows = 2;
+							comment.Resize = ResizeMode.Both;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Enabled = false;
+							pnl.Controls.Add(comment);
+						}
+
+						pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+
+						switch (reauditQuestion.QuestionType)
+						{
+							case EHSAuditQuestionType.TextField:
+								var tf = new RadTextBox() { ID = reauditQid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								if (shouldPopulate)
+									tf.Text = reauditQuestion.AnswerText;
+								tf.Enabled = false;
+								pnl.Controls.Add(tf);
+								break;
+
+							case EHSAuditQuestionType.TextBox:
+								var tb = new RadTextBox() { ID = reauditQid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								if (shouldPopulate)
+									tb.Text = reauditQuestion.AnswerText;
+								tb.Enabled = false;
+								pnl.Controls.Add(tb);
+
+								break;
+
+							case EHSAuditQuestionType.NativeLangTextBox:
+								var nltb = new RadTextBox() { ID = reauditQid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								if (shouldPopulate)
+									nltb.Text = reauditQuestion.AnswerText;
+								nltb.Enabled = false;
+								pnl.Controls.Add(nltb);
+								break;
+
+							case EHSAuditQuestionType.RichTextBox:
+								var re = new RadEditor() { ID = reauditQid, Width = 550, Height = 300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
+								re.EditModes = EditModes.Design;
+								re.ToolsFile = "~/RadEditorToolsFile.xml";
+								re.ContentAreaCssFile = "~/css/RadEditor.css";
+								re.OnClientLoad = "OnEditorClientLoad";
+								if (shouldPopulate)
+									re.Content = reauditQuestion.AnswerText;
+								re.Enabled = false;
+								pnl.Controls.Add(re);
+								pnl.Controls.Add(new Literal() { Text = "<br style=\"clear: both;\"/><span style=\"font-size: 10px;\">Double-click links to preview</a>" });
+								break;
+
+							case EHSAuditQuestionType.Radio:
+							case EHSAuditQuestionType.RadioCommentLeft:
+								var rbl = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged auditanswer" };
+								rbl.RepeatDirection = RepeatDirection.Horizontal;
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+									if (shouldPopulate)
+									{
+										if (choice.Value == reauditQuestion.AnswerText)
+											li.Selected = true;
+									}
+									rbl.Items.Add(li);
+								}
+								//if (!shouldPopulate)
+								//	rbl.SelectedIndex = 0; // Default to first
+								rbl.Enabled = false;
+								pnl.Controls.Add(rbl);
+								break;
+
+							case EHSAuditQuestionType.RadioPercentage:
+							case EHSAuditQuestionType.RadioPercentageCommentLeft:
+								var rblp = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged auditanswer" };
+								rblp.RepeatDirection = RepeatDirection.Horizontal;
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+									if (shouldPopulate)
+									{
+										if (choice.Value == reauditQuestion.AnswerText)
+											li.Selected = true;
+									}
+									rblp.Items.Add(li);
+								}
+								// all RBL will cause the percentages to change
+								//rblp.AutoPostBack = true;
+								//rblp.SelectedIndexChanged += rblp_SelectedIndexChanged;
+
+								//if (!shouldPopulate)
+								//	rbl.SelectedIndex = 0; // Default to first
+								rblp.Enabled = false;
+								pnl.Controls.Add(rblp);
+								percentInTopic += 1; // increase the value so we know if we should show the percentage value for the topic
+								showTotals = true;
+								break;
+
+							case EHSAuditQuestionType.CheckBox:
+								var cbl = new CheckBoxList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									if (shouldPopulate)
+									{
+										string[] answers = reauditQuestion.AnswerText.Split('|');
+										if (answers.Contains(choice.Value))
+											li.Selected = true;
+									}
+									cbl.Items.Add(li);
+								}
+								cbl.Enabled = false;
+								pnl.Controls.Add(cbl);
+								break;
+
+							case EHSAuditQuestionType.Dropdown:
+								var rddl = new RadDropDownList() { ID = reauditQid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val" };
+								rddl.Items.Add(new DropDownListItem("", ""));
+
+								if (reauditQuestion.AnswerChoices != null && reauditQuestion.AnswerChoices.Count > 0)
+								{
+									// Check for any category headings
+									var matches = reauditQuestion.AnswerChoices.Where(ac => ac.IsCategoryHeading == true);
+									bool containsCategoryHeadings = (matches.Count() > 0);
+
+									foreach (var choice in reauditQuestion.AnswerChoices)
+									{
+										if (containsCategoryHeadings == true)
+										{
+											if (choice.IsCategoryHeading)
+												rddl.Items.Add(new DropDownListItem(choice.Value, "") { CssClass = "dropdownItemHeading", Enabled = false });
+											else
+												rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Text, choice.Value));
+										}
+										else
+										{
+											rddl.Items.Add(new DropDownListItem(choice.Text, choice.Value));
+										}
+									}
+
+									rddl.ClearSelection();
+									if (shouldPopulate)
+										if (!string.IsNullOrEmpty(reauditQuestion.AnswerText))
+											rddl.SelectedValue = reauditQuestion.AnswerText;
+								}
+								rddl.Enabled = false;
+								rddl.AutoPostBack = true;
+								pnl.Controls.Add(rddl);
+								break;
+
+							case EHSAuditQuestionType.Date:
+								var rdp = new RadDatePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								rdp.ShowPopupOnFocus = true;
+
+								if (shouldPopulate)
+								{
+									DateTime parseDate;
+									if (DateTime.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+										rdp.SelectedDate = parseDate;
+								}
+								rdp.Enabled = false;
+								pnl.Controls.Add(rdp);
+								break;
+
+							case EHSAuditQuestionType.Time:
+								var rtp = new RadTimePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rtp.ShowPopupOnFocus = true;
+								rtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								if (shouldPopulate)
+								{
+									TimeSpan parseTime;
+									if (TimeSpan.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), out parseTime))
+										rtp.SelectedTime = parseTime;
+								}
+								rtp.Enabled = false;
+								pnl.Controls.Add(rtp);
+								break;
+
+							case EHSAuditQuestionType.DateTime:
+								var rdtp = new RadDateTimePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rdtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								if (shouldPopulate)
+								{
+									DateTime parseDate;
+									if (DateTime.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+										rdtp.SelectedDate = parseDate;
+								}
+								rdtp.Enabled = false;
+								pnl.Controls.Add(rdtp);
+								break;
+
+							case EHSAuditQuestionType.BooleanCheckBox:
+								pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
+								var bcb = new CheckBox() { ID = reauditQid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
+
+								if (shouldPopulate)
+									bcb.Checked = (reauditQuestion.AnswerText.ToLower() == "yes") ? true : false;
+								bcb.Enabled = false;
+								pnl.Controls.Add(bcb);
+
+								pnl.Controls.Add(new LiteralControl("</div>"));
+								break;
+
+							case EHSAuditQuestionType.Attachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.DocumentAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.ImageAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.PageOneAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("1");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "1");
+								break;
+
+							//case EHSAuditQuestionType.CurrencyTextBox:
+							//	var ctb = new RadNumericTextBox() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Number };
+							//	ctb.NumberFormat.DecimalDigits = 2;
+							//	if (shouldPopulate)
+							//		ctb.Text = reauditQuestion.AnswerText;
+
+							//	if (EditAuditId > 0 && Mode == AuditMode.Prevent)
+							//	{
+							//		AUDIT audit = (from inc in entities.AUDIT where inc.AUDIT_ID == EditAuditId select inc).FirstOrDefault();
+							//		if (audit != null)
+							//		{
+							//			string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSAuditQuestionId.RecommendationType);
+							//			if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
+							//			{
+							//				ctb.Enabled = false;
+							//				pnl.Visible = false;
+							//			}
+							//		}
+							//	}
+
+							//	pnl.Controls.Add(ctb);
+							//	break;
+
+							case EHSAuditQuestionType.PercentTextBox:
+								var ptb = new RadNumericTextBox() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Percent };
+								if (shouldPopulate)
+									ptb.Text = reauditQuestion.AnswerText;
+								ptb.Enabled = false;
+								pnl.Controls.Add(ptb);
+								break;
+
+							case EHSAuditQuestionType.StandardsReferencesDropdown:
+								RadComboBox rcb = CreateReferencesDropdown(reauditQuestion.StandardType);
+								rcb.ID = reauditQid;
+								rcb.Skin = "Metro";
+								rcb.CssClass = "WarnIfChanged";
+								rcb.Font.Size = 8;
+								rcb.Width = 320;
+								rcb.DropDownWidth = 400;
+								rcb.Height = 300;
+								if (shouldPopulate)
+									rcb.SelectedValue = reauditQuestion.AnswerText;
+								rcb.Enabled = false;
+								pnl.Controls.Add(rcb);
+								break;
+
+							case EHSAuditQuestionType.LocationDropdown:
+								rddlLocation = new RadDropDownList() { ID = reauditQid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+								var plantIdList = SelectPlantIdsByAccessLevel();
+								if (plantIdList.Count > 1)
+									rddlLocation.Items.Add(new DropDownListItem("", ""));
+								foreach (decimal pid in plantIdList)
+								{
+									string plantName = EHSAuditMgr.SelectPlantNameById(pid);
+									rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
+								}
+								if (shouldPopulate)
+								{
+									rddlLocation.SelectedValue = reauditQuestion.AnswerText;
+									this.SelectedLocationId = Convert.ToDecimal(reauditQuestion.AnswerText);
+								}
+								rddlLocation.SelectedIndexChanged += rddlLocation_SelectedIndexChanged;
+								rddlLocation.AutoPostBack = true;
+								rddlLocation.Enabled = false;
+								pnl.Controls.Add(rddlLocation);
+								break;
+
+							case EHSAuditQuestionType.UsersDropdown:
+								var rddl3 = new RadDropDownList() { ID = reauditQid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+								rddl3.Items.Add(new DropDownListItem("", ""));
+
+								var personList = new List<PERSON>();
+								if (CurrentStep == 1)
+									personList = EHSAuditMgr.SelectAuditPersonList(EditAuditId);
+								else if (CurrentStep == 0)
+									personList = EHSAuditMgr.SelectCompanyPersonList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID);
+
+								foreach (PERSON p in personList)
+								{
+									string displayName = string.Format("{0}, {1} ({2})", p.LAST_NAME, p.FIRST_NAME, p.EMAIL);
+									rddl3.Items.Add(new DropDownListItem(displayName, Convert.ToString(p.PERSON_ID)));
+								}
+
+								if (shouldPopulate)
+									rddl3.SelectedValue = reauditQuestion.AnswerText;
+								rddl3.Enabled = false;
+								pnl.Controls.Add(rddl3);
+								break;
+
+							case EHSAuditQuestionType.RequiredYesNoRadio:
+								var rblYN = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								rblYN.RepeatDirection = RepeatDirection.Horizontal;
+								rblYN.RepeatColumns = 2;
+								rblYN.AutoPostBack = true;
+								var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
+								foreach (var choice in choices)
+								{
+									var li = new ListItem(choice);
+									rblYN.Items.Add(li);
+								}
+								if (shouldPopulate)
+									rblYN.SelectedValue = reauditQuestion.AnswerText;
+								if (reauditQuestion.QuestionControls != null && reauditQuestion.QuestionControls.Count > 0)
+								{
+									rblYN.SelectedIndexChanged += rblYN_SelectedIndexChanged;
+								}
+								rblYN.Enabled = false;
+								pnl.Controls.Add(rblYN);
+								break;
+
+							case EHSAuditQuestionType.UsersDropdownLocationFiltered:
+								rddlFilteredUsers = new RadDropDownList() { ID = reauditQid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+								BuildFilteredUsersDropdownList();
+
+								if (shouldPopulate)
+									rddlFilteredUsers.SelectedValue = reauditQuestion.AnswerText;
+
+								if (rddlFilteredUsers.Items.Count() == 1)
+									validator.InitialValue = rddlFilteredUsers.Items[0].Text;
+								rddlFilteredUsers.Enabled = false;
+								pnl.Controls.Add(rddlFilteredUsers);
+								break;
+
+						}
+
+						// Add a comment box that hides/shows via a link to certain field types
+						if (reauditQuestion.QuestionType == EHSAuditQuestionType.BooleanCheckBox || reauditQuestion.QuestionType == EHSAuditQuestionType.CheckBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Dropdown || reauditQuestion.QuestionType == EHSAuditQuestionType.PercentTextBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Radio || reauditQuestion.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+							string cid = "Comment" + reauditQid;
+
+							var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+							comment.TextMode = InputMode.MultiLine;
+							comment.Rows = 2;
+							comment.Resize = ResizeMode.Both;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Enabled = false;
+							pnl.Controls.Add(comment);
+						}
+
+						// Add a link to add followup tasks
+						if (reauditQuestion.QuestionType == EHSAuditQuestionType.BooleanCheckBox || reauditQuestion.QuestionType == EHSAuditQuestionType.CheckBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Dropdown || reauditQuestion.QuestionType == EHSAuditQuestionType.PercentTextBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Radio || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioCommentLeft ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+							string lid = "AddTask" + reauditQid;
+							string buttonText = Resources.LocalizedText.AssignTask + "(" + reauditQuestion.TasksAssigned.ToString() + ")";
+							RadButton lnk = new RadButton() { ID = lid, Text = buttonText, CssClass = "WarnIfChanged" };
+							lnk.ToolTip = "Create a Task to complete this exception";
+							lnk.Click += new System.EventHandler(lnkAddTask_Click);
+							lnk.Enabled = true;
+							lnk.AutoPostBack = true;
+							lnk.CommandArgument = reauditQuestion.AuditId.ToString() + "," + qid;
+							pnl.Controls.Add(lnk);
+							pnl.Controls.Add(new LiteralControl("<span style=\"padding-left: 10px;\">"));
+							lid = "FileUpload" + reauditQid;
+							buttonText = Resources.LocalizedText.Attachments + "(" + reauditQuestion.FilesAttached.ToString() + ")";
+							lnk = new RadButton() { ID = lid, Text = buttonText, CssClass = "WarnIfChanged" };
+							lnk.ToolTip = "Upload attachments for this question";
+							lnk.Click += new System.EventHandler(lnkFileUpload_Click);
+							lnk.Enabled = true;
+							lnk.CommandArgument = reauditQuestion.AuditId.ToString() + "," + qid;
+							pnl.Controls.Add(lnk);
+							pnl.Controls.Add(new LiteralControl("</>"));
+						}
+
+						if (reauditQuestion.QuestionType != EHSAuditQuestionType.BooleanCheckBox && reauditQuestion.QuestionType != EHSAuditQuestionType.CheckBox &&
+							reauditQuestion.QuestionType != EHSAuditQuestionType.Dropdown && reauditQuestion.QuestionType != EHSAuditQuestionType.PercentTextBox &&
+							reauditQuestion.QuestionType != EHSAuditQuestionType.Radio && reauditQuestion.QuestionType != EHSAuditQuestionType.RadioCommentLeft &&
+							reauditQuestion.QuestionType != EHSAuditQuestionType.RequiredYesNoRadio &&
+							reauditQuestion.QuestionType != EHSAuditQuestionType.RadioPercentage && reauditQuestion.QuestionType != EHSAuditQuestionType.RadioPercentageCommentLeft)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\"></td><td class=\"greyCell\">"));
+						}
+
+						pnl.Controls.Add(new LiteralControl("</td></tr>"));
+					}
+					pnl.Controls.Add(new LiteralControl("</table></td></tr>"));
+				}
+
 				pnlForm.Controls.Add(pnl);
 			}
 
@@ -971,7 +1464,18 @@ namespace SQM.Website
 			{
 				// need to add a display for the topic percentage
 				Panel pnlPercent = new Panel() { ID = "PanelP" + previousTopic };
-				pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				if (reauditId > 0)
+				{
+					pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					if (reauditPercentInTopic > 0)
+						pnlPercent.Controls.Add(new Label() { ID = "LabelPReAudit" + previousTopic, Text = "0%" }); // we will populate the values later
+					pnlPercent.Controls.Add(new LiteralControl("</td>"));
+					pnlPercent.Controls.Add(new LiteralControl("<td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+				}
+				else
+				{
+					pnlPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+				}
 				if (percentInTopic > 0)
 					pnlPercent.Controls.Add(new Label() { ID = "LabelP" + previousTopic, Text = "0%" }); // we will populate the values later
 				pnlPercent.Controls.Add(new LiteralControl("</td></tr>"));
@@ -984,15 +1488,41 @@ namespace SQM.Website
 				//pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPercent", Text = "Total Positive Score:  0%" }); // we will populate the values later
 				//pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
 				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">&nbsp;</td></tr>"));
-				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePoints", Text = "Total Possible Points:  0" }); // we will populate the values later
-				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
-				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsAchieved", Text = "Total Points Achieved:  0" }); // we will populate the values later
-				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
-				pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
-				pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsPercentage", Text = "Percentage of Points Achieved:  0%" }); // we will populate the values later
-				pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				if (reauditId > 0)
+				{
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePointsReAudit", Text = "Total Possible Points:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td>"));
+					pnlTotalPercent.Controls.Add(new LiteralControl("<td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePoints", Text = "Total Possible Points:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsAchievedReAudit", Text = "Total Points Achieved:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td>"));
+					pnlTotalPercent.Controls.Add(new LiteralControl("<td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsAchieved", Text = "Total Points Achieved:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsPercentageReAudit", Text = "Percentage of Points Achieved:  0%" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td>"));
+					pnlTotalPercent.Controls.Add(new LiteralControl("<td colspan=\"3\" class=\"greyCell\" style=\"width: 50%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsPercentage", Text = "Percentage of Points Achieved:  0%" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				}
+				else
+				{
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPossiblePoints", Text = "Total Possible Points:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsAchieved", Text = "Total Points Achieved:  0" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+					pnlTotalPercent.Controls.Add(new LiteralControl("<tr><td colspan=\"6\" class=\"greyCell\" style=\"width: 100%; text-align: right; font-weight: bold;\">"));
+					pnlTotalPercent.Controls.Add(new Label() { ID = "LabelTotalPointsPercentage", Text = "Percentage of Points Achieved:  0%" }); // we will populate the values later
+					pnlTotalPercent.Controls.Add(new LiteralControl("</td></tr>"));
+				}
 				pnlForm.Controls.Add(pnlTotalPercent);
 			}
 			pnlForm.Controls.Add(new LiteralControl("</table>"));
@@ -1002,7 +1532,7 @@ namespace SQM.Website
 
 			UpdateButtonText();
 
-			CalculatePercentages(questions);
+			CalculatePercentages(questions, reauditQuestions);
 		}
 
 		protected void AuditLocation_Select(object sender, EventArgs e)
@@ -1042,10 +1572,18 @@ namespace SQM.Website
 			if (typeId < 1)
 				return;
 
+			decimal reauditId = 0;
+			List<EHSAuditQuestion> reauditQuestions = null;
+			EHSAuditQuestion reauditQuestion = null;
 			AUDIT audit = null;
 			if (EditAuditId > 0)
 			{
 				audit = (from aud in entities.AUDIT where aud.AUDIT_ID == EditAuditId select aud).FirstOrDefault();
+				try {
+					reauditId = (decimal)audit.AUDITING_ID;
+					reauditQuestions = EHSAuditMgr.SelectAuditQuestionList(audit.AUDIT_TYPE_ID, 0, reauditId);
+				}
+				catch { }
 			}
 
 			pnlForm.Controls.Clear();
@@ -1057,6 +1595,7 @@ namespace SQM.Website
 
 			pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 			string previousTopic = "";
+
 			foreach (var q in questions)
 			{
 				var validator = new RequiredFieldValidator();
@@ -1072,6 +1611,20 @@ namespace SQM.Website
 					q.AnswerText = auditAnswer.ANSWER_VALUE;
 					q.AnswerComment = auditAnswer.COMMENT;
 				}
+
+				// Look up reaudit answers if necessary
+				if (reauditId > 0 && reauditQuestions != null)
+				{
+					reauditQuestion = reauditQuestions.Where(rq => rq.QuestionId == q.QuestionId).FirstOrDefault();
+					var auditAnswer = (from a in entities.AUDIT_ANSWER
+									   where a.AUDIT_ID == reauditId
+										   && a.AUDIT_QUESTION_ID == reauditQuestion.QuestionId
+									   select a).FirstOrDefault();
+					reauditQuestion.AnswerText = auditAnswer.ANSWER_VALUE;
+					reauditQuestion.AnswerComment = auditAnswer.COMMENT;
+				}
+				else
+					reauditQuestion = new EHSAuditQuestion();
 
 				//if (q.QuestionId == (decimal)EHSQuestionId.NativeLangComment && EHSIncidentMgr.EnableNativeLangQuestion(SessionManager.SessionContext.Language().NLS_LANGUAGE) == false)
 				//{
@@ -1111,10 +1664,14 @@ namespace SQM.Website
 				if (q.IsRequiredClose)
 					pnl.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
 
+				// if we are reauditing, need to do a table inside the question area
+				if (reauditId > 0)
+					pnl.Controls.Add(new LiteralControl("</td><td><table width=\"100%\"><tr><td>"));
+
 				// Add a comment box that hides/shows via a link to certain field types
 				if (q.QuestionType == EHSAuditQuestionType.RadioCommentLeft ||q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
 				{
-					pnl.Controls.Add(new LiteralControl("</td> class=\"greyCell\">"));
+					pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
 					string cid = "Comment" + qid;
 					var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 					comment.TextMode = InputMode.MultiLine;
@@ -1516,6 +2073,368 @@ namespace SQM.Website
 
 				pnl.Controls.Add(new LiteralControl("</td></tr>"));
 
+				if (reauditId > 0)
+				{
+					if (reauditQuestion != null)
+					{
+						pnl.Controls.Add(new LiteralControl("<tr><td>"));
+
+						string reauditQid = "reaudit" + qid;
+						// Add a comment box that hides/shows via a link to certain field types
+						if (reauditQuestion.QuestionType == EHSAuditQuestionType.RadioCommentLeft || reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+							string cid = "Comment" + reauditQid;
+							var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+							comment.TextMode = InputMode.MultiLine;
+							comment.Rows = 2;
+							comment.Resize = ResizeMode.Both;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Enabled = false;
+							pnl.Controls.Add(comment);
+						}
+
+						pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+						switch (reauditQuestion.QuestionType)
+						{
+							case EHSAuditQuestionType.TextField:
+								var tf = new RadTextBox() { ID = reauditQid, Width = 550, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								tf.Text = reauditQuestion.AnswerText;
+								tf.Enabled = false;
+								pnl.Controls.Add(tf);
+								break;
+
+							case EHSAuditQuestionType.TextBox:
+								var tb = new RadTextBox() { ID = reauditQid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								tb.Text = reauditQuestion.AnswerText;
+								tb.Enabled = false;
+								pnl.Controls.Add(tb);
+								break;
+
+							case EHSAuditQuestionType.NativeLangTextBox:
+								var nltb = new RadTextBox() { ID = reauditQid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+								nltb.Text = reauditQuestion.AnswerText;
+								nltb.Enabled = false;
+								pnl.Controls.Add(nltb);
+								break;
+
+							case EHSAuditQuestionType.RichTextBox:
+								var re = new RadEditor() { ID = reauditQid, Width = 550, Height = 300, Skin = "Metro", MaxHtmlLength = MaxTextLength, CssClass = "WarnIfChanged" };
+								re.EditModes = EditModes.Design;
+								re.ToolsFile = "~/RadEditorToolsFile.xml";
+								re.ContentAreaCssFile = "~/css/RadEditor.css";
+								re.OnClientLoad = "OnEditorClientLoad";
+								re.Content = reauditQuestion.AnswerText;
+								re.Enabled = false;
+								pnl.Controls.Add(re);
+								//pnl.Controls.Add(new Literal() { Text = "<br style=\"clear: both;\"/><span style=\"font-size: 10px;\">Double-click links to preview</a>" });
+								break;
+
+							case EHSAuditQuestionType.Radio:
+							case EHSAuditQuestionType.RadioCommentLeft:
+								var rbl = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+
+									if (choice.Value == reauditQuestion.AnswerText)
+										li.Selected = true;
+
+									rbl.Items.Add(li);
+								}
+								rbl.Enabled = false;
+								pnl.Controls.Add(rbl);
+								break;
+
+							case EHSAuditQuestionType.RadioPercentage:
+							case EHSAuditQuestionType.RadioPercentageCommentLeft:
+								var rblp = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								rblp.RepeatDirection = RepeatDirection.Horizontal;
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									// Don't try to explicitly set SelectedValue in case answer choice text changed in database
+
+									if (choice.Value == reauditQuestion.AnswerText)
+										li.Selected = true;
+									rblp.Items.Add(li);
+								}
+								// all RBL will cause the percentages to change
+								//rblp.AutoPostBack = true;
+								//rblp.SelectedIndexChanged += rblp_SelectedIndexChanged;
+
+								rblp.Enabled = false;
+								pnl.Controls.Add(rblp);
+								break;
+
+							case EHSAuditQuestionType.CheckBox:
+								var cbl = new CheckBoxList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								foreach (var choice in reauditQuestion.AnswerChoices)
+								{
+									var li = new ListItem(choice.Text, choice.Value);
+									string[] answers = reauditQuestion.AnswerText.Split('|');
+									if (answers.Contains(choice.Value))
+										li.Selected = true;
+									cbl.Items.Add(li);
+								}
+								cbl.Enabled = false;
+								pnl.Controls.Add(cbl);
+								break;
+
+							case EHSAuditQuestionType.Dropdown:
+								var rddl = new RadDropDownList() { ID = reauditQid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val" };
+								rddl.Items.Add(new DropDownListItem("", ""));
+
+								if (reauditQuestion.AnswerChoices != null && reauditQuestion.AnswerChoices.Count > 0)
+								{
+									// Check for any category headings
+									var matches = reauditQuestion.AnswerChoices.Where(ac => ac.IsCategoryHeading == true);
+									bool containsCategoryHeadings = (matches.Count() > 0);
+
+									foreach (var choice in reauditQuestion.AnswerChoices)
+									{
+										if (containsCategoryHeadings == true)
+										{
+											if (choice.IsCategoryHeading)
+												rddl.Items.Add(new DropDownListItem(choice.Text, "") { CssClass = "dropdownItemHeading", Enabled = false });
+											else
+												rddl.Items.Add(new DropDownListItem(" ∙ " + choice.Text, choice.Value));
+										}
+										else
+										{
+											rddl.Items.Add(new DropDownListItem(choice.Text, choice.Value));
+										}
+									}
+
+									rddl.ClearSelection();
+
+									if (!string.IsNullOrEmpty(reauditQuestion.AnswerText))
+										rddl.SelectedValue = reauditQuestion.AnswerText;
+								}
+								//rddl.AutoPostBack = true;
+								rddl.Enabled = false;
+								pnl.Controls.Add(rddl);
+								break;
+
+							case EHSAuditQuestionType.Date:
+								var rdp = new RadDatePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rdp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								rdp.ShowPopupOnFocus = true;
+
+								DateTime parseDate;
+								if (DateTime.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate))
+									rdp.SelectedDate = parseDate;
+
+								rdp.Enabled = false;
+								pnl.Controls.Add(rdp);
+								break;
+
+							case EHSAuditQuestionType.Time:
+								var rtp = new RadTimePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rtp.ShowPopupOnFocus = true;
+								rtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								TimeSpan parseTime;
+								if (TimeSpan.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), out parseTime))
+									rtp.SelectedTime = parseTime;
+								rtp.Enabled = false;
+								pnl.Controls.Add(rtp);
+								break;
+
+							case EHSAuditQuestionType.DateTime:
+								var rdtp = new RadDateTimePicker() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Width = 400 };
+								rdtp.Culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+								DateTime parseDate2;
+								if (DateTime.TryParse(reauditQuestion.AnswerText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeLocal, out parseDate2))
+									rdtp.SelectedDate = parseDate2;
+								rdtp.Enabled = false;
+								pnl.Controls.Add(rdtp);
+								break;
+
+							case EHSAuditQuestionType.BooleanCheckBox:
+								pnl.Controls.Add(new LiteralControl("<div style=\"padding: 0 3px;\">"));
+								var bcb = new CheckBox() { ID = reauditQid, Text = Resources.LocalizedText.Yes, CssClass = "WarnIfChanged" };
+
+								bcb.Checked = (reauditQuestion.AnswerText.ToLower() == "yes") ? true : false;
+								bcb.Enabled = false;
+								pnl.Controls.Add(bcb);
+
+								pnl.Controls.Add(new LiteralControl("</div>"));
+								break;
+
+							case EHSAuditQuestionType.Attachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.DocumentAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.ImageAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("2");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								uploader.RAUpload.FileFilters.Add(new FileFilter("Images (.jpeg, .jpg, .png, .gif)", new string[] { ".jpeg", ".jpg", ".png", ".gif" }));
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "2");
+								break;
+
+							case EHSAuditQuestionType.PageOneAttachment:
+								uploader = (Ucl_RadAsyncUpload)LoadControl("~/Include/Ucl_RadAsyncUpload.ascx");
+								uploader.ID = reauditQid;
+								uploader.SetAttachmentRecordStep("1");
+								// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+								uploader.RAUpload.PostbackTriggers = new string[] { "btnSaveReturn", "btnSaveContinue", "btnDelete" };
+								pnl.Controls.Add(uploader);
+								// Data bind after adding the control to avoid radgrid "unwanted expand arrow" bug
+								if (IsEditContext)
+									uploader.GetUploadedFiles(40, reauditId, "1");
+								break;
+
+							//case EHSAuditQuestionType.CurrencyTextBox:
+							//	var ctb = new RadNumericTextBox() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Number };
+							//	ctb.NumberFormat.DecimalDigits = 2;
+							//	if (shouldPopulate)
+							//		ctb.Text = reauditQuestion.AnswerText;
+
+							//	if (EditAuditId > 0 && Mode == AuditMode.Prevent)
+							//	{
+							//		//INCIDENT incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+							//		if (audit != null)
+							//		{
+							//			string answer = EHSAuditMgr.SelectAuditAnswer(audit, (decimal)EHSQuestionId.RecommendationType);
+							//			if (!string.IsNullOrEmpty(answer) && answer.ToLower() != "infrastructure")
+							//			{
+							//				ctb.Enabled = false;
+							//				pnl.Visible = false;
+							//			}
+							//		}
+							//	}
+
+							//	pnl.Controls.Add(ctb);
+							//	break;
+
+							case EHSAuditQuestionType.PercentTextBox:
+								var ptb = new RadNumericTextBox() { ID = reauditQid, Skin = "Metro", CssClass = "WarnIfChanged", Type = NumericType.Percent };
+								ptb.Text = reauditQuestion.AnswerText;
+								ptb.Enabled = false;
+								pnl.Controls.Add(ptb);
+								break;
+
+							case EHSAuditQuestionType.StandardsReferencesDropdown:
+								RadComboBox rcb = CreateReferencesDropdown(reauditQuestion.StandardType);
+								rcb.ID = reauditQid;
+								rcb.Skin = "Metro";
+								rcb.CssClass = "WarnIfChanged";
+								rcb.Font.Size = 8;
+								rcb.Width = 320;
+								rcb.DropDownWidth = 400;
+								rcb.Height = 300;
+								rcb.SelectedValue = reauditQuestion.AnswerText;
+								rcb.Enabled = false;
+								pnl.Controls.Add(rcb);
+								break;
+
+							case EHSAuditQuestionType.LocationDropdown:
+								rddlLocation = new RadDropDownList() { ID = reauditQid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+								var plantIdList = SelectPlantIdsByAccessLevel();
+								if (plantIdList.Count > 1)
+									rddlLocation.Items.Add(new DropDownListItem("", ""));
+								foreach (decimal pid in plantIdList)
+								{
+									string plantName = EHSIncidentMgr.SelectPlantNameById(pid);
+									rddlLocation.Items.Add(new DropDownListItem(plantName, Convert.ToString(pid)));
+								}
+
+								rddlLocation.SelectedValue = reauditQuestion.AnswerText;
+								this.SelectedLocationId = Convert.ToDecimal(reauditQuestion.AnswerText);
+
+								//rddlLocation.SelectedIndexChanged += rddlLocation_SelectedIndexChanged;
+								//rddlLocation.AutoPostBack = true;
+								rddlLocation.Enabled = false;
+								pnl.Controls.Add(rddlLocation);
+								break;
+
+							case EHSAuditQuestionType.RequiredYesNoRadio:
+								var rblYN = new RadioButtonList() { ID = reauditQid, CssClass = "WarnIfChanged" };
+								rblYN.RepeatDirection = RepeatDirection.Horizontal;
+								rblYN.RepeatColumns = 2;
+								rblYN.AutoPostBack = true;
+								var choices = new string[] { Resources.LocalizedText.Yes, Resources.LocalizedText.No };
+								foreach (var choice in choices)
+								{
+									var li = new ListItem(choice);
+									rblYN.Items.Add(li);
+								}
+								rblYN.SelectedValue = reauditQuestion.AnswerText;
+								//if (reauditQuestion.QuestionControls != null && reauditQuestion.QuestionControls.Count > 0)
+								//{
+								//	rblYN.SelectedIndexChanged += rblYN_SelectedIndexChanged;
+								//}
+								rblYN.Enabled = false;
+								pnl.Controls.Add(rblYN);
+								break;
+
+							case EHSAuditQuestionType.UsersDropdownLocationFiltered:
+								rddlFilteredUsers = new RadDropDownList() { ID = reauditQid, Width = 550, Skin = "Metro", CssClass = "WarnIfChanged", ValidationGroup = "Val" };
+								BuildFilteredUsersDropdownList();
+
+								rddlFilteredUsers.SelectedValue = reauditQuestion.AnswerText;
+
+								if (rddlFilteredUsers.Items.Count() == 1)
+									validator.InitialValue = rddlFilteredUsers.Items[0].Text;
+
+								rddlFilteredUsers.Enabled = false;
+								pnl.Controls.Add(rddlFilteredUsers);
+								break;
+
+						}
+
+						// Add a comment box that hides/shows via a link to certain field types
+						if (reauditQuestion.QuestionType == EHSAuditQuestionType.BooleanCheckBox || reauditQuestion.QuestionType == EHSAuditQuestionType.CheckBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Dropdown || reauditQuestion.QuestionType == EHSAuditQuestionType.PercentTextBox ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.Radio || reauditQuestion.QuestionType == EHSAuditQuestionType.RequiredYesNoRadio ||
+							reauditQuestion.QuestionType == EHSAuditQuestionType.RadioPercentage)
+						{
+							pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
+							string cid = "Comment" + reauditQid;
+							var comment = new RadTextBox() { ID = cid, Width = 400, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
+							comment.TextMode = InputMode.MultiLine;
+							comment.Rows = 2;
+							comment.Resize = ResizeMode.Both;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Text = reauditQuestion.AnswerComment;
+							comment.Enabled = false;
+							pnl.Controls.Add(comment);
+						}
+
+						pnl.Controls.Add(new LiteralControl("</td></tr>"));
+
+					}
+
+					pnl.Controls.Add(new LiteralControl("</table></td></tr>"));
+				}
 				if (q.QuestionId == (decimal)EHSQuestionId.FinalAuditStepResolved)
 					pnl.Visible = false;
 
@@ -1956,7 +2875,7 @@ namespace SQM.Website
 				return;
 			// add the logic to recalculate the percentages
 			UpdateAnswersFromForm();
-			CalculatePercentages(questions);
+			CalculatePercentages(questions, null);
 		}
 
 		protected RadComboBox CreateReferencesDropdown(string standard)
@@ -2124,7 +3043,7 @@ namespace SQM.Website
 
 		protected void Save(bool shouldReturn)
 		{
-            AUDIT theAudit = null;
+			AUDIT theAudit = null;
 			decimal auditId = 0;
 			string result = "<h3>EHS Assessment " + ((IsEditContext) ? "Updated" : "Created") + ":</h3>";
 			//if (Mode == AuditMode.Prevent)
@@ -2430,7 +3349,7 @@ namespace SQM.Website
 				InitialPlantId = selectedPlantId;
 		}
 
-		protected void CalculatePercentages(List<EHSAuditQuestion> questions)
+		protected void CalculatePercentages(List<EHSAuditQuestion> questions, List<EHSAuditQuestion> reauditQuestions)
 		{
 			string previousTopic = "";
 			decimal totalQuestions = 0;
@@ -2550,6 +3469,129 @@ namespace SQM.Website
 				else
 					totalPercent = 0;
 				topicLastTotal.Text = string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent);
+			}
+
+			if (reauditQuestions != null)
+			{
+				previousTopic = "";
+				totalQuestions = 0;
+				totalTopicQuestions = 0;
+				totalPositive = 0;
+				totalTopicPositive = 0;
+				totalPercent = 0;
+				totalWeightScore = 0;
+				totalPossibleScore = 0;
+				totalTopicWeightScore = 0;
+				totalTopicPossibleScore = 0;
+				possibleScore = 0;
+				answerIsPositive = false;
+
+				foreach (var q in reauditQuestions)
+				{
+
+					string tid = q.TopicId.ToString();
+
+					string answer = "";
+					// first set topic percent display if the topic has changed
+					if (!previousTopic.Equals(tid))
+					{
+						if (!previousTopic.Equals(""))
+						{
+							Label topicTotal = (Label)pnlForm.FindControl("LabelPReAudit" + previousTopic);
+							if (topicTotal != null)
+							{
+								// AW201602 - Percents will be % of possible score, not # questions answered.  If weight is 0/1, then this should not change.
+								//if (totalTopicQuestions > 0)
+								//	totalPercent = totalTopicPositive / totalTopicQuestions;
+								//else
+								//	totalPercent = 0;
+								if (totalTopicPossibleScore > 0)
+									totalPercent = totalTopicWeightScore / totalTopicPossibleScore;
+								else
+									totalPercent = 0;
+								topicTotal.Text = string.Format("{0:0%}", totalPercent);
+							}
+							totalTopicQuestions = 0;
+							totalTopicPositive = 0;
+							totalTopicWeightScore = 0;
+							totalTopicPossibleScore = 0;
+						}
+						previousTopic = tid;
+					}
+
+					// next, add to totals if the response is a positive one
+					if (q.QuestionType == EHSAuditQuestionType.RadioPercentage || q.QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft)
+					{
+						totalQuestions += 1;
+						totalTopicQuestions += 1;
+						answer = q.AnswerText;
+						answerIsPositive = false;
+						possibleScore = 0;
+						foreach (EHSAuditAnswerChoice choice in q.AnswerChoices)
+						{
+							if (choice.ChoiceWeight > possibleScore)
+								possibleScore = choice.ChoiceWeight;
+							if (choice.Value.Equals(q.AnswerText))
+							{
+								if (choice.ChoicePositive)
+									answerIsPositive = true;
+								totalWeightScore += choice.ChoiceWeight;
+								totalTopicWeightScore += choice.ChoiceWeight;
+							}
+						}
+						totalPossibleScore += possibleScore;
+						totalTopicPossibleScore += possibleScore;
+						if (answerIsPositive)
+						{
+							totalPositive += 1;
+							totalTopicPositive += 1;
+						}
+					}
+				}
+				// update the last topic total
+				topicLastTotal = (Label)pnlForm.FindControl("LabelPReAudit" + previousTopic);
+				if (topicLastTotal != null)
+				{
+					//if (totalTopicQuestions > 0)
+					//	totalPercent = totalTopicPositive / totalTopicQuestions;
+					//else
+					//	totalPercent = 0;
+					if (totalTopicPossibleScore > 0)
+						totalPercent = totalTopicWeightScore / totalTopicPossibleScore;
+					else
+						totalPercent = 0;
+					topicLastTotal.Text = string.Format("{0:0%}", totalPercent);
+				}
+				// update the audit total
+				//topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPercent");
+				//if (topicLastTotal != null)
+				//{
+				//	if (totalQuestions > 0)
+				//		totalPercent = totalPositive / totalQuestions;
+				//	else
+				//		totalPercent = 0;
+				//	topicLastTotal.Text = string.Format("Total Positive Score:   {0:0%}", totalPercent);
+				//}
+				// update point totals
+				topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPossiblePointsReAudit");
+				if (topicLastTotal != null)
+				{
+					topicLastTotal.Text = string.Format("Total Possible Points:   {0:0}", totalPossibleScore);
+				}
+				topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPointsAchievedReAudit");
+				if (topicLastTotal != null)
+				{
+					topicLastTotal.Text = string.Format("Total Points Achieved:   {0:0}", totalWeightScore);
+				}
+				topicLastTotal = (Label)pnlForm.FindControl("LabelTotalPointsPercentageReAudit");
+				if (topicLastTotal != null)
+				{
+					if (totalPossibleScore > 0)
+						totalPercent = totalWeightScore / totalPossibleScore;
+					else
+						totalPercent = 0;
+					topicLastTotal.Text = string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent);
+				}
 			}
 		}
 
@@ -2750,7 +3792,7 @@ namespace SQM.Website
 			//	entities.SaveChanges();
 			//}
 
-            return audit;
+			return audit;
 
 		}
 

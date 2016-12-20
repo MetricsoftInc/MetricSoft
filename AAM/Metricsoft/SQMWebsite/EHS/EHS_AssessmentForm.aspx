@@ -52,7 +52,7 @@
 			}, 30);
 		}
 
-		function OpenTaskWindow() {
+		function OpenUpdateTaskWindow() {
 			$find("<%=winUpdateTask.ClientID %>").show();
 		}
 
@@ -112,7 +112,7 @@
 
 
 														<asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Assessment:</strong></asp:Label>
-														<asp:HiddenField runat="server" ID="hdnAuditId" />
+														<asp:HiddenField runat="server" ID="hdnAuditId" /><asp:HiddenField runat="server" ID="hdnAuditingId" />
 														<span class="hidden-xs" style="float: right; width: 160px; margin-right: 6px;">
 															<span class="requiredStar">&bull;</span> - Required to Create
 														</span>
@@ -209,7 +209,7 @@
 											</HeaderTemplate>
 											<ItemTemplate>
 												<tr>
-													<td colspan="8" class="blueCell" style="width: 100%; font-weight: bold;"><%# Eval("TITLE") %></td>
+													<td colspan="4" class="blueCell" style="width: 100%; font-weight: bold;"><%# Eval("TITLE") %></td>
 												</tr>
 												<asp:Repeater runat="server" ID="rptAuditFormQuestions" ClientIDMode="AutoID" OnItemDataBound="rptAuditFormQuestions_OnItemDataBound">
 													<ItemTemplate>
@@ -221,45 +221,79 @@
 															</td>
 															<td class="tanCell" style="width: 10px; padding-left: 0 !important;">
 																<asp:Literal runat="server" ID="litRequiredStar"></asp:Literal></td>
-															<td class="greyCell" runat="server" id="tdCommentLeft">
-																<telerik:RadTextBox runat="server" ID="rtbCommentLeft" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
-															<td class="greyCell">
-																<asp:RadioButtonList runat="server" ID="rblAnswers" CssClass="WarnIfChanged auditanswer" RepeatDirection="Horizontal"></asp:RadioButtonList></td>
-															<td class="greyCell" runat="server" id="tdCommentRight">
-																<telerik:RadTextBox runat="server" ID="rtbCommentRight" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
-															<td class="greyCell" style="width: 10%;">
-																<asp:LinkButton runat="server" ID="lnkAddTask" OnClientClick="OnClientBeforeOpen" OnClick="lnkAddTask_Click" ToolTip="Create a Task necessary to complete this exception" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CausesValidation="false"></asp:LinkButton>
-															</td>
-															<td class="greyCell" style="width: 10%;">
-																<asp:LinkButton ID="LnkAttachment" runat="server" ToolTip="Attachments" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddAttach" CausesValidation="false">
-																				<img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
-																</asp:LinkButton>&nbsp;
-																			<asp:LinkButton ID="LnkVideos" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton>
+															<td>
+																<table width="100%">
+																	<tr>
+																		<td class="greyCell" runat="server" id="tdCommentLeft">
+																			<telerik:RadTextBox runat="server" ID="rtbCommentLeft" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
+																		<td class="greyCell">
+																			<asp:RadioButtonList runat="server" ID="rblAnswers" CssClass="WarnIfChanged auditanswer" RepeatDirection="Horizontal"></asp:RadioButtonList></td>
+																		<td class="greyCell" runat="server" id="tdCommentRight">
+																			<telerik:RadTextBox runat="server" ID="rtbCommentRight" TextMode="MultiLine" Rows="2" Resize="Both" Width="400"></telerik:RadTextBox></td>
+																		<td class="greyCell" style="width: 10%;">
+																			<asp:LinkButton runat="server" ID="lnkAddTask" OnClientClick="OnClientBeforeOpen" OnClick="lnkAddTask_Click" ToolTip="Create a Task necessary to complete this exception" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CausesValidation="false"></asp:LinkButton>
+																		</td>
+																		<td class="greyCell" style="width: 10%;">
+																			<asp:LinkButton ID="LnkAttachment" runat="server" ToolTip="Attachments" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddAttach" CausesValidation="false">
+																							<img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
+																			</asp:LinkButton>&nbsp;
+																						<asp:LinkButton ID="LnkVideos" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CommandArgument='<%# linkArgs(Eval("AuditId"), Eval("QuestionId")) %>' CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton>
+																		</td>
+																	</tr>
+																	<tr runat="server" id="trReAuditQuestion">
+																		<td class="reauditCell" runat="server" id="tdCommentLeftReAudit">
+																			<telerik:RadTextBox runat="server" ID="rtbCommentLeftReAudit" TextMode="MultiLine" Rows="2" Resize="Both" Width="400" Enabled="false"></telerik:RadTextBox></td>
+																		<td class="reauditCell">
+																			<asp:RadioButtonList runat="server" ID="rblAnswersReAudit" CssClass="WarnIfChanged auditanswer" RepeatDirection="Horizontal" Enabled="false"></asp:RadioButtonList></td>
+																		<td class="reauditCell" runat="server" id="tdCommentRightReAudit">
+																			<telerik:RadTextBox runat="server" ID="rtbCommentRightReAudit" TextMode="MultiLine" Rows="2" Resize="Both" Width="400" Enabled="false"></telerik:RadTextBox></td>
+																		<td class="reauditCell" style="width: 10%;">
+																			<asp:LinkButton runat="server" ID="lnkAddTaskReAudit" OnClientClick="OnClientBeforeOpen" OnClick="lnkAddTask_Click" ToolTip="Create a Task necessary to complete this exception" CausesValidation="false"></asp:LinkButton>
+																		</td>
+																		<td class="reauditCell" style="width: 10%;">
+																			<asp:LinkButton ID="LnkAttachmentReAudit" runat="server" ToolTip="Attachments" CssClass="refTextSmall" OnClick="lnkAddAttach" CausesValidation="false">
+																							<img src="/images/defaulticon/16x16/Attachment.png" alt="" style="vertical-align: middle; border: 0px;" />
+																			</asp:LinkButton>&nbsp;
+																						<asp:LinkButton ID="LnkVideosReAudit" runat="server" ToolTip="<%$ Resources:LocalizedText, VideoUpload %>" CssClass="refTextSmall" OnClick="lnkAddVideo" CausesValidation="false"></asp:LinkButton>
+																		</td>
+																	</tr>
+																</table>
 															</td>
 														</tr>
 													</ItemTemplate>
 												</asp:Repeater>
 												<tr>
-													<td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+													<td colspan="3" class="greyCell" style="text-align: right; font-weight: bold;">
+														<asp:Label runat="server" ID="lblTopicTotalReAudit"></asp:Label></td>
+													<td class="greyCell" style="text-align: right; font-weight: bold;">
 														<asp:Label runat="server" ID="lblTopicTotal"></asp:Label></td>
 												</tr>
 											</ItemTemplate>
 											<FooterTemplate>
 												<tr>
-													<td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">&nbsp;</td>
+													<td colspan="4" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">&nbsp;</td>
 												</tr>
 												<tr>
-													<td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+													<td colspan="3" class="greyCell" style="text-align: right; font-weight: bold;">
+														<asp:Label runat="server" ID="lblTotalPossiblePointsReAudit"></asp:Label>
+													</td>
+													<td class="greyCell" style="text-align: right; font-weight: bold;">
 														<asp:Label runat="server" ID="lblTotalPossiblePoints"></asp:Label>
 													</td>
 												</tr>
 												<tr>
-													<td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+													<td colspan="3" class="greyCell" style="text-align: right; font-weight: bold;">
+														<asp:Label runat="server" ID="lblTotalPointsAchievedReAudit"></asp:Label>
+													</td>
+													<td class="greyCell" style="text-align: right; font-weight: bold;">
 														<asp:Label runat="server" ID="lblTotalPointsAchieved"></asp:Label>
 													</td>
 												</tr>
 												<tr>
-													<td colspan="8" class="greyCell" style="width: 100%; text-align: right; font-weight: bold;">
+													<td colspan="3" class="greyCell" style="text-align: right; font-weight: bold;">
+														<asp:Label runat="server" ID="lblTotalPointsPercentageReAudit"></asp:Label>
+													</td>
+													<td class="greyCell" style="text-align: right; font-weight: bold;">
 														<asp:Label runat="server" ID="lblTotalPointsPercentage"></asp:Label>
 													</td>
 												</tr>
@@ -310,11 +344,21 @@
 
 		</div>
 	</div>
-<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="750px" Title="View/Add Task" Behavior="Close, Move" OnClientClose="OnClientClose">
-	<ContentTemplate>
-		<Ucl:Task ID="uclTask" runat="server" />
-	</ContentTemplate>
-</telerik:RadWindow>
+<%--<telerik:RadWindowManager ID="RadWindowManager1" runat="server" DestroyOnClose="false" 
+						  VisibleStatusbar="false"
+						  Modal="true"
+						  Behaviors="Close"
+						  ShowContentDuringLoad="false"
+						  ReloadOnShow="true"
+						  style="z-index:20000">
+	<Windows>--%>
+		<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="750px" Title="View/Add Task" Behavior="Close, Move" OnClientClose="OnClientClose">
+			<ContentTemplate>
+				<Ucl:Task ID="uclTask" runat="server" />
+			</ContentTemplate>
+		</telerik:RadWindow>
+	<%--</Windows>
+</telerik:RadWindowManager>--%>
 
 	<Ucl:AttachWin ID="uclAttachWin" runat="server" />
 	<Ucl:AttachVideoWin ID="uclAttachVideoWin" runat="server" />

@@ -193,14 +193,6 @@
 				</div>
 			</div>
 
-<telerik:RadWindowManager ID="RadWindowManager1" runat="server" DestroyOnClose="false" 
-						  VisibleStatusbar="false"
-						  Modal="true"
-						  Behaviors="Close"
-						  ShowContentDuringLoad="false"
-						  ReloadOnShow="true"
-						  style="z-index:20000">
-	<Windows>
 			<telerik:RadWindow runat="server" ID="winUpdateTask" RestrictionZoneID="ContentTemplateZone" Skin="Metro" Modal="True" Height="500px" Width="700px" Behaviors="Move, Close" Title="Create Task" Behavior="Move, Close" >
 				<ContentTemplate>
 					<Ucl:Task ID="uclTask" runat="server" />
@@ -238,8 +230,6 @@
 				</ContentTemplate>
 			</telerik:RadWindow>
 
-	</Windows>
-</telerik:RadWindowManager>
 			<Ucl:AttachWin ID="uclAttachWin" runat="server" />
 
 			<telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
