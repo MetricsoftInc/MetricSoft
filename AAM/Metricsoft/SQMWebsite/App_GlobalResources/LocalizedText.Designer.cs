@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option or rebuild the Visual Studio project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class LocalizedText {
@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a New Assessment.
+        /// </summary>
+        internal static string AssessmentAdd {
+            get {
+                return ResourceManager.GetString("AssessmentAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assessment By.
         /// </summary>
         internal static string AssessmentBy {
@@ -282,6 +291,24 @@ namespace Resources {
         internal static string Attachments {
             get {
                 return ResourceManager.GetString("Attachments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload or view files associated with this assessment question.
+        /// </summary>
+        internal static string AttachmentsForAssessment {
+            get {
+                return ResourceManager.GetString("AttachmentsForAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Attachments.
+        /// </summary>
+        internal static string AttachmentsUpload {
+            get {
+                return ResourceManager.GetString("AttachmentsUpload", resourceCulture);
             }
         }
         
@@ -1384,6 +1411,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No valid users - please change location.
+        /// </summary>
+        internal static string NoValidUsers {
+            get {
+                return ResourceManager.GetString("NoValidUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ValidNumeric(this, &apos;please enter numeric values only&apos;);.
         /// </summary>
         internal static string NumericInputConfirm {
@@ -1429,6 +1465,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Original.
+        /// </summary>
+        internal static string Original {
+            get {
+                return ResourceManager.GetString("Original", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Part Number.
         /// </summary>
         internal static string PartNumber {
@@ -1470,6 +1515,33 @@ namespace Resources {
         internal static string Plant {
             get {
                 return ResourceManager.GetString("Plant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percentage of Points Achieved.
+        /// </summary>
+        internal static string PointsPercentageAchieved {
+            get {
+                return ResourceManager.GetString("PointsPercentageAchieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Points Achieve.
+        /// </summary>
+        internal static string PointsTotalAchieved {
+            get {
+                return ResourceManager.GetString("PointsTotalAchieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Possible Points.
+        /// </summary>
+        internal static string PointsTotalPossible {
+            get {
+                return ResourceManager.GetString("PointsTotalPossible", resourceCulture);
             }
         }
         
@@ -1672,6 +1744,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required to Close.
+        /// </summary>
+        internal static string RequiredToClose {
+            get {
+                return ResourceManager.GetString("RequiredToClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required to Create.
+        /// </summary>
+        internal static string RequiredToCreate {
+            get {
+                return ResourceManager.GetString("RequiredToCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolution.
         /// </summary>
         internal static string Resolution {
@@ -1830,6 +1920,15 @@ namespace Resources {
         internal static string SelectAChart {
             get {
                 return ResourceManager.GetString("SelectAChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Location.
+        /// </summary>
+        internal static string SelectALocation {
+            get {
+                return ResourceManager.GetString("SelectALocation", resourceCulture);
             }
         }
         
@@ -2365,6 +2464,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload or view videos associated with this assessment question.
+        /// </summary>
+        internal static string VideosForAssessment {
+            get {
+                return ResourceManager.GetString("VideosForAssessment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Video Source Type.
         /// </summary>
         internal static string VideoSourceType {
@@ -2379,6 +2487,15 @@ namespace Resources {
         internal static string VideoSpeakerAudio {
             get {
                 return ResourceManager.GetString("VideoSpeakerAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Videos.
+        /// </summary>
+        internal static string VideosUpload {
+            get {
+                return ResourceManager.GetString("VideosUpload", resourceCulture);
             }
         }
         

@@ -92,7 +92,7 @@
 			<div runat="server" class="row-fluid" id="divAuditDetails">
 				<div style="width: 100%; text-align: center; margin-bottom: 10px;">
 					<asp:LinkButton runat="server" ID="lnkReturn" OnClick="lnkReturn_Click"><img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
-						Return to List</asp:LinkButton>
+						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, ReturnToList %>"></asp:Literal></asp:LinkButton>
 
 				</div>
 				<table style="width: 100%" class="textStd">
@@ -111,10 +111,10 @@
 													<div class="col-xs-12  text-left">
 
 
-														<asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong>Add a New Assessment:</strong></asp:Label>
+														<asp:Label ID="lblAddOrEditAudit" class="textStd" runat="server"><strong><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, AssessmentAdd %>"></asp:Literal>:</strong></asp:Label>
 														<asp:HiddenField runat="server" ID="hdnAuditId" /><asp:HiddenField runat="server" ID="hdnAuditingId" />
 														<span class="hidden-xs" style="float: right; width: 160px; margin-right: 6px;">
-															<span class="requiredStar">&bull;</span> - Required to Create
+															<span class="requiredStar">&bull;</span> - <asp:Literal runat="server" Text="<%$ Resources:LocalizedText, RequiredToCreate %>"></asp:Literal>
 														</span>
 
 														<div class="clearfix visible-xs-block"></div>
@@ -126,7 +126,7 @@
 														</telerik:RadDropDownList>
 
 														<span class="hidden-xs" style="float: right; width: 160px;">
-															<span class="requiredCloseStar">&bull;</span> - Required to Close
+															<span class="requiredCloseStar">&bull;</span> - <asp:Literal runat="server" Text="<%$ Resources:LocalizedText, RequiredToClose %>"></asp:Literal>
 														</span>
 													</div>
 												</div>
@@ -185,7 +185,7 @@
 											<table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" class="borderSoft">
 												<tr>
 													<td class="columnHeader" width="24%">
-														<asp:Label ID="lblDept" runat="server">Department:</asp:Label>
+														<asp:Label ID="lblDept" runat="server"><asp:Literal runat="server" Text="<%$ Resources:LocalizedText, Department %>"></asp:Literal>:</asp:Label>
 													</td>
 													<td class="required" width="1%">&nbsp;</td>
 													<td class="tableDataAlt" width="75%">

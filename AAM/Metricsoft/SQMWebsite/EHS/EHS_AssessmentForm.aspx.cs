@@ -222,7 +222,7 @@ namespace SQM.Website.EHS
 			int recordType = (int)TaskRecordType.Audit;
 			// before we call the radWindow, we need to update the page?
 			hdnAttachClick.Value = lnk.CommandArgument;
-			uclAttachWin.OpenManageAttachmentsWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Attachments", "Upload or view files associated with this assessment question");
+			uclAttachWin.OpenManageAttachmentsWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), Resources.LocalizedText.AttachmentsUpload.ToString(), Resources.LocalizedText.AttachmentsForAssessment.ToString());
 		}
 
 		private void OnAttachmentsUpdate(string cmd)
@@ -303,7 +303,7 @@ namespace SQM.Website.EHS
 			hdnVideoClick.Value = lnk.CommandArgument;
 			divForm.Visible = false;
 			tblButtons.Visible = false;
-			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Videos", "Upload or view videos associated with this assessment question", "", "", "", (decimal)audit.DETECT_PLANT_ID);
+			uclAttachVideoWin.OpenManageVideosWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), Resources.LocalizedText.VideosUpload.ToString(), Resources.LocalizedText.VideosForAssessment.ToString(), "", "", "", (decimal)audit.DETECT_PLANT_ID);
 		}
 
 		private void OnVideoUpdate(string cmd)
@@ -610,7 +610,7 @@ namespace SQM.Website.EHS
 							ddlAuditLocation.Visible = false;
 							mnuAuditLocation.Visible = true;
 							mnuAuditLocation.Enabled = true;
-							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "[Select a Location]", "", true);
+							SQMBasePage.SetLocationList(mnuAuditLocation, locationList, 0, "[" + Resources.LocalizedText.SelectALocation + "]", "", true);
 						}
 					}
 					else
@@ -649,7 +649,7 @@ namespace SQM.Website.EHS
 				btnSaveReturn.Enabled = true;
 				btnSaveReturn.Visible = true;
 				btnSaveReturn.CommandArgument = "0";
-				lblAddOrEditAudit.Text = "<strong>Add a New Assessment:</strong>";
+				lblAddOrEditAudit.Text = "<strong>" + Resources.LocalizedText.AssessmentAdd.ToString() + ":</strong>";
 				lblAuditType.Visible = false;
 				btnDelete.Visible = false;
 				cbClose.Checked = false;
@@ -739,7 +739,7 @@ namespace SQM.Website.EHS
 				}
 				else
 				{
-					rddlAuditUsers.Items[0].Text = "[No valid users - please change location]";
+					rddlAuditUsers.Items[0].Text = "[" + Resources.LocalizedText.NoValidUsers.ToString() + "]";
 				}
 			}
 		}
@@ -1313,7 +1313,7 @@ namespace SQM.Website.EHS
 								totalPercentReAudit = totalTopicWeightScoreReAudit / totalTopicPossibleScore;
 							else
 								totalPercentReAudit = 0;
-							lbl.Text = string.Format("Original: {0:0%}", totalPercentReAudit);
+							lbl.Text = string.Format(Resources.LocalizedText.Original.ToString() + ": {0:0%}", totalPercentReAudit);
 						}
 						else
 							lbl.Visible = false;
@@ -1333,12 +1333,12 @@ namespace SQM.Website.EHS
 				Label lbl = (Label)e.Item.FindControl("lblTotalPossiblePoints");
 				if (lbl != null)
 				{
-					lbl.Text = string.Format("Total Possible Points:   {0:0}", totalPossibleScore);
+					lbl.Text = string.Format(Resources.LocalizedText.PointsTotalPossible.ToString() + ":   {0:0}", totalPossibleScore);
 				}
 				lbl = (Label)e.Item.FindControl("lblTotalPointsAchieved");
 				if (lbl != null)
 				{
-					lbl.Text = string.Format("Total Points Achieved:   {0:0}", totalWeightScore);
+					lbl.Text = string.Format(Resources.LocalizedText.PointsTotalAchieved.ToString() + ":   {0:0}", totalWeightScore);
 				}
 				lbl = (Label)e.Item.FindControl("lblTotalPointsPercentage");
 				if (lbl != null)
@@ -1347,7 +1347,7 @@ namespace SQM.Website.EHS
 						totalPercent = totalWeightScore / totalPossibleScore;
 					else
 						totalPercent = 0;
-					lbl.Text = string.Format("Percentage of Points Achieved:   {0:0%}", totalPercent);
+					lbl.Text = string.Format(Resources.LocalizedText.PointsPercentageAchieved.ToString() + ":   {0:0%}", totalPercent);
 				}
 
 				lbl = (Label)e.Item.FindControl("lblTotalPossiblePointsReAudit");
@@ -1355,12 +1355,12 @@ namespace SQM.Website.EHS
 				{
 					if (lbl != null)
 					{
-						lbl.Text = string.Format("Original Total Possible Points:   {0:0}", totalPossibleScoreReAudit);
+						lbl.Text = string.Format(Resources.LocalizedText.Original.ToString() + " " + Resources.LocalizedText.PointsTotalPossible.ToString() + ":   {0:0}", totalPossibleScoreReAudit);
 					}
 					lbl = (Label)e.Item.FindControl("lblTotalPointsAchievedReAudit");
 					if (lbl != null)
 					{
-						lbl.Text = string.Format("Original Total Points Achieved:   {0:0}", totalWeightScoreReAudit);
+						lbl.Text = string.Format(Resources.LocalizedText.Original.ToString() + " " + Resources.LocalizedText.PointsTotalAchieved.ToString() + ":   {0:0}", totalWeightScoreReAudit);
 					}
 					lbl = (Label)e.Item.FindControl("lblTotalPointsPercentageReAudit");
 					if (lbl != null)
@@ -1369,7 +1369,7 @@ namespace SQM.Website.EHS
 							totalPercentReAudit = totalWeightScoreReAudit / totalPossibleScoreReAudit;
 						else
 							totalPercentReAudit = 0;
-						lbl.Text = string.Format("Original Percentage of Points Achieved:   {0:0%}", totalPercentReAudit);
+						lbl.Text = string.Format(Resources.LocalizedText.Original.ToString() + " " + Resources.LocalizedText.PointsPercentageAchieved.ToString() + ":   {0:0%}", totalPercentReAudit);
 					}
 				}
 				else

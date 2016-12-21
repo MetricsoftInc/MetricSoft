@@ -927,4 +927,43 @@
   <data name="String1" xml:space="preserve">
     <value>(determined when the incident and any lost/restricted time is saved)</value>
   </data>
+  <data name="AssessmentAdd" xml:space="preserve">
+    <value>Add a New Assessment</value>
+  </data>
+  <data name="AttachmentsForAssessment" xml:space="preserve">
+    <value>Upload or view files associated with this assessment question</value>
+  </data>
+  <data name="AttachmentsUpload" xml:space="preserve">
+    <value>Upload Attachments</value>
+  </data>
+  <data name="NoValidUsers" xml:space="preserve">
+    <value>No valid users - please change location</value>
+  </data>
+  <data name="Original" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="PointsPercentageAchieved" xml:space="preserve">
+    <value>Percentage of Points Achieved</value>
+  </data>
+  <data name="PointsTotalAchieved" xml:space="preserve">
+    <value>Total Points Achieve</value>
+  </data>
+  <data name="PointsTotalPossible" xml:space="preserve">
+    <value>Total Possible Points</value>
+  </data>
+  <data name="SelectALocation" xml:space="preserve">
+    <value>Select a Location</value>
+  </data>
+  <data name="VideosForAssessment" xml:space="preserve">
+    <value>Upload or view videos associated with this assessment question</value>
+  </data>
+  <data name="VideosUpload" xml:space="preserve">
+    <value>Upload Videos</value>
+  </data>
+  <data name="RequiredToClose" xml:space="preserve">
+    <value>Required to Close</value>
+  </data>
+  <data name="RequiredToCreate" xml:space="preserve">
+    <value>Required to Create</value>
+  </data>
 </root>
