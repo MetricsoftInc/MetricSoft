@@ -123,8 +123,17 @@ namespace SQM.Website
 			pnlAuditListRepeater.Visible = true;
 			staticAppContext = appContext;
 
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUDIT", "");
+
+			string expandDetails = sets.Find(x => x.SETTING_CD == "AuditExceptionExpanded").VALUE.ToString();
+			if (expandDetails != null && expandDetails.ToUpper().Equals("Y"))
+				rgAuditList.MasterTableView.GroupsDefaultExpanded = true;
+			else
+				rgAuditList.MasterTableView.GroupsDefaultExpanded = false;
+
 			rgAuditList.DataSource = theList;
 			rgAuditList.DataBind();
+
 		}
 
 		protected void rgAuditList_ItemDataBound(object sender, GridItemEventArgs e)
@@ -192,13 +201,20 @@ namespace SQM.Website
 		protected void rgAuditList_ItemCommand(object sender, GridCommandEventArgs e)
 		{
 			// add this back to the grid to hit this code... OnItemCommand="rgAuditList_ItemCommand"  
-			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
+			// only close if the company setting AuditExceptionExpanded = "N"
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUDIT", "");
+
+			string expandDetails = sets.Find(x => x.SETTING_CD == "AuditExceptionExpanded").VALUE.ToString();
+			if (expandDetails == null || !expandDetails.ToUpper().Equals("Y"))
 			{
-				foreach (GridItem item in e.Item.OwnerTableView.Items)
+				if (e.CommandName == RadGrid.ExpandCollapseCommandName)
 				{
-					if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
+					foreach (GridItem item in e.Item.OwnerTableView.Items)
 					{
-						item.Expanded = false;
+						if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
+						{
+							item.Expanded = false;
+						}
 					}
 				}
 			}
@@ -270,13 +286,20 @@ namespace SQM.Website
 		protected void rgAuditAnswers_ItemCommand(object sender, GridCommandEventArgs e)
 		{
 			// add this back to the grid to hit this code... OnItemCommand="rgAuditAnswers_ItemCommand" 
-			if (e.CommandName == RadGrid.ExpandCollapseCommandName)
+			// only close if the company setting AuditExceptionExpanded = "N"
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUDIT", "");
+
+			string expandDetails = sets.Find(x => x.SETTING_CD == "AuditExceptionExpanded").VALUE.ToString();
+			if (expandDetails == null || !expandDetails.ToUpper().Equals("Y"))
 			{
-				foreach (GridItem item in e.Item.OwnerTableView.Items)
+				if (e.CommandName == RadGrid.ExpandCollapseCommandName)
 				{
-					if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
+					foreach (GridItem item in e.Item.OwnerTableView.Items)
 					{
-						item.Expanded = false;
+						if (item.Expanded && item != e.Item && item.Parent.ID != e.Item.Parent.ID)
+						{
+							item.Expanded = false;
+						}
 					}
 				}
 			}
