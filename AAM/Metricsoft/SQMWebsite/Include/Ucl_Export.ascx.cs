@@ -1041,7 +1041,7 @@ namespace SQM.Website
 
                     try 
                     { 
-                        strDescription = StringHtmlExtensions.TruncateHtml(incident.DESCRIPTION, 1000, "...");
+                        strDescription = StringHtmlExtensions.TruncateHtml(incident.DESCRIPTION, 10000, "...");
                         strDescription =  WebSiteCommon.StripHTML(strDescription);
                     }
                     catch { strDescription = ""; }
@@ -1359,7 +1359,7 @@ namespace SQM.Website
 
                     try
                     {
-                        strDescription = StringHtmlExtensions.TruncateHtml(data.Incident.DESCRIPTION, 1000, "...");
+                        strDescription = StringHtmlExtensions.TruncateHtml(data.Incident.DESCRIPTION, 10000, "...");
                         strDescription = WebSiteCommon.StripHTML(strDescription);
                     }
                     catch { strDescription = ""; }
@@ -1407,7 +1407,7 @@ namespace SQM.Website
 
                    try
                    {    // actions summary
-                       strDescription = StringHtmlExtensions.TruncateHtml(EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 86), 1000, "...");
+                       strDescription = StringHtmlExtensions.TruncateHtml(EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 86), 10000, "...");
                        strDescription = WebSiteCommon.StripHTML(strDescription);
                    }
                    catch { strDescription = ""; }

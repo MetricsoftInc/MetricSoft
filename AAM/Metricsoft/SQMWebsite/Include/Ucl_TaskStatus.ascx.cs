@@ -383,7 +383,7 @@ namespace SQM.Website
 						{
 							item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
 						}
-						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 1000, "...");
+						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 10000, "...");
 						item.Description = WebSiteCommon.StripHTML(item.Description);
 					}
 				}

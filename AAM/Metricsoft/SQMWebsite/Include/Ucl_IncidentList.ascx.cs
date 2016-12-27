@@ -856,7 +856,7 @@ namespace SQM.Website
 				lnk.Text = WebSiteCommon.FormatID(data.Incident.INCIDENT_ID, 6);
 
 				lbl = (Label)e.Item.FindControl("lblDescription");
-				lbl.Text = StringHtmlExtensions.TruncateHtml(data.Incident.DESCRIPTION, 100, "...");
+				lbl.Text = StringHtmlExtensions.TruncateHtml(data.Incident.DESCRIPTION, 10000, "...");
 				lbl.Text = lbl.Text.Replace("<a href", "<a target=\"blank\" href");
 
 				if (data.Person != null)

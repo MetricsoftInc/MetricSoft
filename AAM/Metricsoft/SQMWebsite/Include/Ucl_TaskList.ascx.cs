@@ -181,7 +181,7 @@ namespace SQM.Website
 			{
 				e.Appointment.AllowDelete = false;
 				e.Appointment.AllowEdit = true;
-				e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 1000, "...");
+				e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 10000, "...");
 				e.Appointment.Description = WebSiteCommon.StripHTML(e.Appointment.Description);
 
 				if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < SessionManager.UserContext.LocalTime.Date)
@@ -297,7 +297,7 @@ namespace SQM.Website
 						{
 							item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
 						}
-						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 1000, "...");
+						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 10000, "...");
 						item.Description = WebSiteCommon.StripHTML(item.Description);
 					}
                 }
