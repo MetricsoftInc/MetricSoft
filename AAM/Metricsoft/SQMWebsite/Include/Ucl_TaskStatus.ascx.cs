@@ -104,9 +104,13 @@ namespace SQM.Website
 
 			tbTaskDescription.Text = task.DESCRIPTION;  // command of what to do
 			lblTaskDetailValue.Text = task.DETAIL;              // incident description or audit question 
+			PERSON createBy = null;			// mt - predeclare create by person to better handle NULL CREATE_ID 
 
 			// get the Create By person name and display
-			PERSON createBy = SQMModelMgr.LookupPerson(ctx, (decimal)task.CREATE_ID, "", false);
+			if (task.CREATE_ID.HasValue)
+			{
+				createBy = SQMModelMgr.LookupPerson(ctx, (decimal)task.CREATE_ID, "", false);
+			}
 			if (createBy == null)
 			{
 				lblCreatedByValue.Text = Resources.LocalizedText.AutomatedScheduler;
