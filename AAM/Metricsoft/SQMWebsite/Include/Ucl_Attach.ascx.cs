@@ -226,7 +226,7 @@ namespace SQM.Website
 			else
 			{
 				uclUpload.SetViewMode(true);
-				uclUpload.SetDescription(true);
+				uclUpload.SetDescription(false);
 				btnSave.Visible = true;
 			}
 			uclUpload.GetUploadedFiles(recordType, recordID, recordStep);

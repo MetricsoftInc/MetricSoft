@@ -207,7 +207,7 @@
 							<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 								<asp:Label ID="lblAnswerStatus" runat="server" Text="<%$ Resources:LocalizedText, Status %>" CssClass="prompt"></asp:Label>
 							</div>
-							<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+							<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 								<telerik:RadComboBox ID="ddlAnswerStatus" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="Select status" meta:resourcekey="ddlAnswerStatusResource1"></telerik:RadComboBox>
 							</div>
 						</div>
@@ -215,7 +215,7 @@
 							<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
 								<asp:Label ID="lblResolutionComment" runat="server" Text="<%$ Resources:LocalizedText, Comments %>" CssClass="prompt"></asp:Label>
 							</div>
-							<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+							<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 								<asp:TextBox ID="tbResolutionComment" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
 							</div>
 						</div>

@@ -36,19 +36,26 @@ namespace SQM.Website
 		{
 			base.OnInit(e);
 
-		}
-
-		protected void Page_Init(object sender, EventArgs e)
-		{
 			uclAuditExceptionList.OnExceptionListItemClick += AddTask;
 			uclAuditExceptionList.OnExceptionChangeStatusClick += UpdateAnswerStatus;
 			uclAuditExceptionList.OnExceptionAttachItemClick += AddAttach;
 			uclTask.OnTaskAdd += UpdateTaskList;
 			uclTask.OnTaskUpdate += UpdateTaskList;
-			
-			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 
+			uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
 		}
+
+		//protected void Page_Init(object sender, EventArgs e)
+		//{
+		//	uclAuditExceptionList.OnExceptionListItemClick += AddTask;
+		//	uclAuditExceptionList.OnExceptionChangeStatusClick += UpdateAnswerStatus;
+		//	uclAuditExceptionList.OnExceptionAttachItemClick += AddAttach;
+		//	uclTask.OnTaskAdd += UpdateTaskList;
+		//	uclTask.OnTaskUpdate += UpdateTaskList;
+			
+		//	uclAttachWin.AttachmentEvent += OnAttachmentsUpdate;
+
+		//}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -367,7 +374,7 @@ namespace SQM.Website
 			AUDIT audit = EHSAuditMgr.SelectAuditById(new PSsqmEntities(), auditId);
 			int recordType = (int)TaskRecordType.Audit;
 			// before we call the radWindow, we need to update the page?
-			uclAttachWin.OpenManageAttachmentsWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), "Upload Attachments", "Upload or view files associated with this assessment question");
+			uclAttachWin.OpenManageAttachmentsWindow(recordType, audit.AUDIT_ID, auditQuestion.QuestionId.ToString(), Resources.LocalizedText.AttachmentsUpload.ToString(), Resources.LocalizedText.AttachmentsForAssessment.ToString());
 		}
 
 		private void OnAttachmentsUpdate(string cmd)

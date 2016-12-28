@@ -190,7 +190,7 @@
 										<td class="tableDataAlt" width="75%">
 											<asp:CheckBox Text="" TextAlign="right" runat="server" ID="cbReleaseForms" OnClick="javascript:toggle_visibility('dvAttach');" />
 											<br />
-											<div id="dvAttach" runat="server" class="col-xs-12 col-sm-8 text-left greyControlCol">
+											<div id="dvAttach" runat="server" class="col-xs-12 col-sm-8 text-left greyControlColX">
 												<span style="border: 0 none !important;">
 													<Ucl:UploadAttachment runat="server" ID="uploadReleases" />
 												</span>
@@ -205,7 +205,7 @@
 										<td class="tableDataAlt" width="75%">
 											<asp:CheckBox Text="" TextAlign="right" runat="server" ID="cbVideoText" OnClick="javascript:toggle_visibility('dvText');" />
 											<br />
-											<div id="dvText" runat="server" class="col-xs-12 col-sm-8 text-left greyControlCol">
+											<div id="dvText" runat="server" class="col-xs-12 col-sm-8 text-left greyControlColX">
 												<span style="border: 0 none !important;">
 													<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, VideoTextDisclaimer %>"></asp:Literal>
 													<br /><br />

@@ -222,10 +222,17 @@ namespace SQM.Website
 		{
 			string[] descriptions;
 
-			if (trAttachDesc.Visible == true)
-				descriptions = tbAttachDesc.Text.Split('|');
-			else 
+			//if (trAttachDesc.Visible == true)
+			//	descriptions = tbAttachDesc.Text.Split('|');
+			//else 
+			//	descriptions = hfDescriptions.Value.Split('|');
+
+			if (hfDescriptions.Value.Length > 0)
 				descriptions = hfDescriptions.Value.Split('|');
+			else if (tbAttachDesc.Text.Length > 0)
+				descriptions = tbAttachDesc.Text.Split('|');
+			else
+				descriptions = "".Split('|');
 
 			int i = 0;
 			foreach (UploadedFile file in raUpload.UploadedFiles)

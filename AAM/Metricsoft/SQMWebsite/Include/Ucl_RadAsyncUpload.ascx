@@ -44,6 +44,25 @@
 			}
 		}
 	}
+
+	function createInput(inputType, inputID, inputName) {
+		 var input = document.createElement( 'input' );
+		 input.setAttribute( 'type', inputType);
+		 input.setAttribute( 'id', inputID );
+		 input.setAttribute( 'class', 'descriptionInput' );
+		 input.setAttribute( 'name', inputName );
+		 return input;
+	}
+
+	function createLabel(forArrt) {
+		var label = document.createElement( 'label' );
+
+		 label.setAttribute( 'for', forArrt );
+		 label.setAttribute( 'class', 'descriptionLabel' );
+		 label.innerHTML = 'Description (optional): ';
+
+		 return label;
+	}
 	</script>
 
 <telerik:RadGrid ID="rgFiles" runat="server" Skin="Metro" OnDeleteCommand="rgFiles_OnDeleteCommand" OnItemDataBound="rgFiles_ItemDataBound" MasterTableView-CssClass="RadFileExplorer"

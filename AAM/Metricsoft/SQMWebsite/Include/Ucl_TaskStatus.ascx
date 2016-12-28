@@ -18,15 +18,15 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskType" runat="server" Text="<%$ Resources:LocalizedText, Task %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskTypeValue" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskDescription" runat="server" Text="<%$ Resources:LocalizedText, Description %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<%--<asp:TextBox ID="tbTaskDescription" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:TextBox>--%>
 				<asp:Label ID="lbTaskDescription" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:Label>
 			</div>
@@ -35,7 +35,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskDetail" runat="server" Text="Original Details" CssClass="prompt" meta:resourcekey="lblTaskDetailResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskDetailValue" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
@@ -43,7 +43,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblAssignPersonUpdate" runat="server" Text="Assign To Person" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblAssignPersonValue" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 
@@ -52,7 +52,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblCreatedBy" runat="server" Text="<%$ Resources:LocalizedText, CreatedBy %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblCreatedByValue" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 				<asp:Label ID="lblTaskDueDT" runat="server" Text="<%$ Resources:LocalizedText, DueDate %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDatePicker ID="rdpTaskDueDT" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
 					<Calendar runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
@@ -81,7 +81,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskStatus" runat="server" Text="Current Status" CssClass="prompt" meta:resourcekey="lblTaskStatusResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskStatusValue" runat="server" CssClass="textEmphasis"></asp:Label>
 			</div>
 		</div>
@@ -89,7 +89,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
 				<asp:Label ID="lblTaskComments" runat="server" Text="<%$ Resources:LocalizedText, Comments %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:TextBox ID="tbTaskComments" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblAttachments" runat="server" Text="<%$ Resources:LocalizedText, Evidence %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:LinkButton ID="lnkAttachments" runat="server" CssClass="buttonAttach buttonPopupOpen" visible="false" Text="<%$ Resources:LocalizedText, Attachments %>" ToolTip="<%$ Resources:LocalizedText, Attachments %>" OnClick="lnkAddAttach"></asp:LinkButton>
 				<Ucl:AttachWin ID="uclAttachWin" runat="server" />
 			</div>
@@ -143,7 +143,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskTypeAdd" runat="server" Text="<%$ Resources:LocalizedText, Task %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskTypeValueAdd" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
@@ -151,7 +151,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskDetailAdd" runat="server" Text="Original Details" CssClass="prompt" meta:resourcekey="lblTaskDetailResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskDetailValueAdd" runat="server" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
@@ -159,7 +159,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskDescriptionAdd" runat="server" Text="<%$ Resources:LocalizedText, Description %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:TextBox ID="tbTaskDescriptionAdd" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:TextBox>
 			</div>
 		</div>
@@ -167,7 +167,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 				<asp:Label ID="lblTaskDueDTAdd" runat="server" Text="<%$ Resources:LocalizedText, DueDate %>" CssClass="prompt"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadDatePicker ID="rdpTaskDueDTAdd" Skin="Metro" Width="278px" runat="server" ShowPopupOnFocus="True">
 					<Calendar runat="server" EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UseColumnHeadersAsSelectors="False" UseRowHeadersAsSelectors="False">
 					</Calendar>
@@ -188,7 +188,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 				<asp:Label ID="lblPlantAdd" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>" CssClass="prompt" ></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<span>
 					<telerik:RadComboBox ID="ddlScheduleScopeAdd" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
 						AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectBusinessLocation %>">
@@ -203,7 +203,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 				<asp:Label ID="lblAssignPersonAdd" runat="server" Text="Assign To Person*" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<telerik:RadComboBox ID="ddlAssignPersonAdd" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="select person" meta:resourcekey="ddlAssignPersonResource1"></telerik:RadComboBox>
 				<div style="background-color: #FFFFFF; background-image: url(/images/requiredAlt.gif); background-repeat: no-repeat; background-position: center; width: 10px; float: right; margin-right: 5px;">&nbsp;</div>
 			</div>
@@ -213,7 +213,7 @@
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<asp:Label ID="lblTaskStatusAdd" runat="server" Text="Current Status" CssClass="prompt" meta:resourcekey="lblTaskStatusResource1"></asp:Label>
 			</div>
-			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 				<asp:Label ID="lblTaskStatusValueAdd" runat="server" CssClass="textEmphasis"></asp:Label>
 			</div>
 		</div>
@@ -221,7 +221,7 @@
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 					<asp:Label ID="Label1" runat="server" Text="<%$ Resources:LocalizedText, CreatedBy %>" CssClass="prompt"></asp:Label>
 				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 					<asp:Label runat="server" ID="lblCreatedByAdd" CssClass="textEmphasis"></asp:Label>
 				</div>
 				
@@ -248,7 +248,7 @@
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 					<asp:Label ID="lblPlant" runat="server" Text="<%$ Resources:LocalizedText, BusinessLocation %>" CssClass="prompt"></asp:Label>
 				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 					<telerik:RadComboBox ID="ddlScheduleScope" runat="server" Skin="Metro" Width="280px" ZIndex="10" Font-Size="Small"
 						AutoPostBack="True" OnSelectedIndexChanged="ScheduleScope_Select" ToolTip="<%$ Resources:LocalizedText, SelectBusinessLocation %>">
 					</telerik:RadComboBox>
@@ -261,7 +261,7 @@
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 32px;">
 					<asp:Label ID="lblAssignPerson" runat="server" Text="Assign To Person" CssClass="prompt" meta:resourcekey="lblAssignPersonResource1"></asp:Label>
 				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 					<telerik:RadComboBox ID="ddlAssignPerson" runat="server" Skin="Metro" ZIndex="9000" Width="90%" Height="330px" EmptyMessage="select person" meta:resourcekey="ddlAssignPersonResource1"></telerik:RadComboBox>
 				</div>
 			</div>
@@ -269,7 +269,7 @@
 				<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 84px;">
 					<asp:Label ID="lblAssignComment" runat="server" Text="<%$ Resources:LocalizedText, Comments %>" CssClass="prompt"></asp:Label>
 				</div>
-				<div class="col-xs-12 col-sm-8 text-left greyControlCol">
+				<div class="col-xs-12 col-sm-8 text-left greyControlColX">
 					<asp:TextBox ID="tbAssignComment" Rows="4" Width="98%" TextMode="MultiLine" runat="server" CssClass="textStd"></asp:TextBox>
 				</div>
 			</div>
