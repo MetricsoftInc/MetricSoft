@@ -234,7 +234,13 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				PERSON createBy = new PERSON();
+				try
+				{
+					createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				}
+				catch { }
+
 				string createByName = "";
 				if (createBy == null)
 				{
@@ -296,7 +302,13 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			PERSON createBy = new PERSON();
+			try
+			{
+				createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			}
+			catch { }
+
 			string createByName = "";
 
 			if (createBy == null)
@@ -511,7 +523,13 @@ namespace SQM.Website
 				//emailSubject = emailSubject.Replace("DD", Convert.ToDateTime(incident.INCIDENT_DT).ToShortDateString());
 				//emailSubject = emailSubject.Replace("II", incidentLabel);
 
-				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				PERSON createBy = new PERSON();
+				try
+				{
+					createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				}
+				catch { }
+
 				string createByName = "";
 				if (createBy == null)
 				{
@@ -652,7 +670,13 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				PERSON createBy = new PERSON();
+				try
+				{
+					createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+				}
+				catch { }
+
 				string createByName = "";
 				if (createBy == null)
 				{
@@ -713,7 +737,13 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			PERSON createBy = new PERSON();
+			try
+			{
+				createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			}
+			catch { }
+
 			string createByName = "";
 			if (createBy == null)
 			{
@@ -910,7 +940,13 @@ namespace SQM.Website
 
 			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-			PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			PERSON createBy = new PERSON();
+			try
+			{
+				createBy = SQMModelMgr.LookupPersonByEmpID(entities, theTask.CREATE_ID.ToString());
+			}
+			catch { }
+
 			string createByName = "";
 			if (createBy == null)
 			{
@@ -995,7 +1031,13 @@ namespace SQM.Website
 
 				List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
 
-				PERSON createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				PERSON createBy = new PERSON();
+				try
+				{
+					createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+				}
+				catch { }
+
 				string createByName = "";
 				if (createBy == null)
 				{

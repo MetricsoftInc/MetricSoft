@@ -49,13 +49,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblTaskDescription;
         
         /// <summary>
-        /// tbTaskDescription control.
+        /// lbTaskDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbTaskDescription;
+        protected global::System.Web.UI.WebControls.Label lbTaskDescription;
         
         /// <summary>
         /// lblTaskDetail control.

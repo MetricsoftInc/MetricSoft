@@ -27,7 +27,8 @@
 				<asp:Label ID="lblTaskDescription" runat="server" Text="<%$ Resources:LocalizedText, Description %>" CssClass="prompt"></asp:Label>
 			</div>
 			<div class="col-xs-12 col-sm-8 text-left greyControlCol">
-				<asp:TextBox ID="tbTaskDescription" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:TextBox>
+				<%--<asp:TextBox ID="tbTaskDescription" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:TextBox>--%>
+				<asp:Label ID="lbTaskDescription" runat="server" Rows="4" Width="98%" TextMode="MultiLine" CssClass="textStd"></asp:Label>
 			</div>
 		</div>
 		<div class="row">

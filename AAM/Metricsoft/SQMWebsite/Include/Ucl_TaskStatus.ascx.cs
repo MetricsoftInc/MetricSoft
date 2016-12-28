@@ -49,13 +49,15 @@ namespace SQM.Website
 			if (task.STATUS == ((int)TaskStatus.Complete).ToString())
 			{
 				btnTaskComplete.Visible = btnTaskUpdate.Visible = btnTaskAssign.Visible = false;
-				tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = false;
-				 
+				//tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = false;
+				rdpTaskDueDT.Enabled = tbTaskComments.Enabled = false;
+
 			}
 			else
 			{
 				btnTaskComplete.Visible = btnTaskUpdate.Visible = btnTaskAssign.Visible = true;
-				tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = true;
+				//tbTaskDescription.Enabled = rdpTaskDueDT.Enabled = tbTaskComments.Enabled = true;
+				rdpTaskDueDT.Enabled = tbTaskComments.Enabled = true;
 			}
 
 			switch ((TaskRecordType)task.RECORD_TYPE)
@@ -102,7 +104,8 @@ namespace SQM.Website
 					break;
 			}
 
-			tbTaskDescription.Text = task.DESCRIPTION;  // command of what to do
+			//tbTaskDescription.Text = task.DESCRIPTION;  // command of what to do
+			lbTaskDescription.Text = task.DESCRIPTION;  // command of what to do
 			lblTaskDetailValue.Text = task.DETAIL;              // incident description or audit question 
 			PERSON createBy = null;			// mt - predeclare create by person to better handle NULL CREATE_ID 
 
@@ -509,7 +512,7 @@ namespace SQM.Website
 			task.DUE_DT = rdpTaskDueDT.SelectedDate;
 			//task.RESPONSIBLE_ID = Convert.ToDecimal(ddlAssignPerson.SelectedValue.ToString());
 			//task.DETAIL = lblTaskDetailValue.Text.ToString(); // this is the original detail, so we don't change it.
-			task.DESCRIPTION = tbTaskDescription.Text.ToString();
+			//task.DESCRIPTION = tbTaskDescription.Text.ToString();
 			task.COMMENTS = tbTaskComments.Text.ToString();
 			//task.STATUS = ((int)TaskStatus.New).ToString();
 			//task.CREATE_DT = SessionManager.UserContext.LocalTime != null ? SessionManager.UserContext.LocalTime : DateTime.UtcNow;
