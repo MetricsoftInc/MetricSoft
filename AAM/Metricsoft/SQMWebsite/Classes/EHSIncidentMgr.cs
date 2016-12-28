@@ -1563,6 +1563,8 @@ namespace SQM.Website
 			{
 				task.DETAIL = incident.DESCRIPTION;
 				theTask = (TASK_STATUS)SQMModelMgr.CopyObjectValues(theTask, task, false);
+				if (!task.CREATE_ID.HasValue)
+					task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
 				taskMgr.CreateTask(theTask);
 			}
 
