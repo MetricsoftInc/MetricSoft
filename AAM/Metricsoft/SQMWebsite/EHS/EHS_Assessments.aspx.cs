@@ -225,6 +225,7 @@ namespace SQM.Website.EHS
 			// for now, we will only let 'admin' create audits
 			//if (!SessionManager.UserContext.Person.SSO_ID.ToLower().Equals("admin"))
 			//	rbNew.Visible = false;
+			rbNew.Visible = createAuditAccess;
 
 		}
 

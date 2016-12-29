@@ -91,8 +91,9 @@
 
 			<div runat="server" class="row-fluid" id="divAuditDetails">
 				<div style="width: 100%; text-align: center; margin-bottom: 10px;">
-					<asp:LinkButton runat="server" ID="lnkReturn" OnClick="lnkReturn_Click"><img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
+					<asp:LinkButton Visible="false" runat="server" ID="lnkReturn" OnClick="lnkReturn_Click"><img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" />
 						<asp:Literal runat="server" Text="<%$ Resources:LocalizedText, ReturnToList %>"></asp:Literal></asp:LinkButton>
+					<img src="/images/defaulticon/16x16/arrow-7-up.png" style="vertical-align: middle; border: 0;" border="0" alt="" /><asp:Button runat="server" ID="btnReturn" Text="<%$ Resources:LocalizedText, ReturnToList %>" OnClick="lnkReturn_Click" CssClass="ButtonAsLink" />
 
 				</div>
 				<table style="width: 100%" class="textStd">

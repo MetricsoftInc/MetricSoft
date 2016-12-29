@@ -1663,6 +1663,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ReAuditing.
+        /// </summary>
+        internal static string ReAuditing {
+            get {
+                return ResourceManager.GetString("ReAuditing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perform a ReAudit on this assessment.
         /// </summary>
         internal static string ReAuditTip {

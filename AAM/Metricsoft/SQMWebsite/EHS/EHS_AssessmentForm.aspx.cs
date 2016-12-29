@@ -161,6 +161,7 @@ namespace SQM.Website.EHS
 			{
 				case DisplayState.AuditNotificationNew:
 					lnkReturn.OnClientClick = strConfirmText;
+					btnReturn.OnClientClick = strConfirmText;
 					divAuditDetails.Visible = true;
 					CurrentStep = 0;
 					EditAuditId = 0;
@@ -171,6 +172,7 @@ namespace SQM.Website.EHS
 
 				case DisplayState.AuditNotificationEdit:
 					lnkReturn.OnClientClick = strConfirmText;
+					btnReturn.OnClientClick = strConfirmText;
 					divAuditDetails.Visible = true;
 					CurrentStep = 1;
 					IsEditContext = true;
@@ -181,6 +183,7 @@ namespace SQM.Website.EHS
 				case DisplayState.AuditNotificationDisplay:
 				case DisplayState.AuditNotificationClosed:
 					lnkReturn.OnClientClick = "";
+					btnReturn.OnClientClick = "";
 					divAuditDetails.Visible = true;
 					CurrentStep = 2;
 					IsEditContext = false;
@@ -592,6 +595,9 @@ namespace SQM.Website.EHS
 					IsEditContext = false; // reset this, just in case we got here in edit mode
 					btnDelete.Visible = false;
 					lnkReturn.OnClientClick = "";
+					lnkReturn.Visible = true;
+					btnReturn.OnClientClick = "";
+
 				}
 			}
 			else // Step 0 = add mode

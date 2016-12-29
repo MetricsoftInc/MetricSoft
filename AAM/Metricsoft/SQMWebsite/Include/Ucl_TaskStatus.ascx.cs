@@ -613,9 +613,10 @@ namespace SQM.Website
 
 			decimal plantID = GetTaskLocation(task);
 			BusinessLocation location = new BusinessLocation().Initialize(plantID);
-			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
-			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
-			{
+			// AW 20161229 - if they get this far, they can assign the task to anyone in a plant that they have access... 
+			//SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+			//if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
+			//{
 				List<BusinessLocation> locationList = SessionManager.PlantList;
 				locationList = UserContext.FilterPlantAccessList(locationList);
 
@@ -636,14 +637,14 @@ namespace SQM.Website
 					mnuScheduleScope.Visible = false;
 					SQMBasePage.SetLocationList(ddlScheduleScope, locationList, location.Plant.PLANT_ID, true);
 				}
-			}
-			else
-			{
-				ddlScheduleScope.Visible = true;
-				mnuScheduleScope.Visible = false;
-				//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
-				//ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
-			}
+			//}
+			//else
+			//{
+			//	ddlScheduleScope.Visible = true;
+			//	mnuScheduleScope.Visible = false;
+			//	//ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
+			//	//ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+			//}
 
 
 			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l=> !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l=> l.LAST_NAME).ToList();

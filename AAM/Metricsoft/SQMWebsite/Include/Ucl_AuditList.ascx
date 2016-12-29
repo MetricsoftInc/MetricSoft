@@ -211,6 +211,7 @@
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn8 column" HeaderText="" UniqueName="TemplateColumn9">
 						<ItemTemplate><asp:LinkButton ID="lbReAudit" runat="server" CommandArgument='<%# Eval("Audit.AUDIT_ID") %>' Text="<%$ Resources:LocalizedText, ReAudit %>" Font-Bold="True" ForeColor="#000066" OnClick="lbReAudit_Click" ToolTip="<%$ Resources:LocalizedText, ReAuditTip %>">
 										</asp:LinkButton>
+									<asp:Label runat="server" ID="lblAuditingId"></asp:Label>
 							<asp:HiddenField runat="server" ID="hdnAuditingId" Value='<%# Eval("Audit.AUDITING_ID") %>' />
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>

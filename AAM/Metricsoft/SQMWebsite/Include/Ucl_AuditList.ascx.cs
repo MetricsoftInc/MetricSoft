@@ -203,37 +203,54 @@ namespace SQM.Website
 
 				lbl = (Label)e.Item.FindControl("lblAuditStatus");
 
+				List<XLAT> TaskXLATList = SQMBasePage.SelectXLATList(new string[1] { "AUDIT_STATUS" });
+
 				if (data.Audit.CURRENT_STATUS == "C")
 				{
 					DateTime clsDate = (DateTime)data.Audit.CLOSE_DATE_DATA_COMPLETE;
-					lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "C") + " " + SQMBasePage.FormatDate(clsDate, "d", false);
+					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "C").FirstOrDefault().DESCRIPTION + " " + SQMBasePage.FormatDate(clsDate, "d", false);
 				}
 				else
 				{
 					if (data.DaysToClose == 0)
 					{
 						DateTime tmp = ((DateTime)data.Audit.AUDIT_DT).AddDays(data.AuditType.DAYS_TO_COMPLETE);
-						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "X") + "<br/>(" + SQMBasePage.FormatDate(tmp, "d", false) + ")";
+						lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "X").FirstOrDefault().DESCRIPTION + "<br/>(" + SQMBasePage.FormatDate(tmp, "d", false) + ")";
 					}
 					else if (data.Audit.PERCENT_COMPLETE > 0)
-						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "I") + "<br/>(" + data.DaysToClose + ")";
+						lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "I").FirstOrDefault().DESCRIPTION + "<br/>(" + data.DaysToClose + ")";
 					else
-						lbl.Text = WebSiteCommon.GetXlatValue("auditStatus", "A") + "<br/>(" + data.DaysToClose + ")";
+						lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "A").FirstOrDefault().DESCRIPTION + "<br/>(" + data.DaysToClose + ")";
 				}
 
 				lnk = (LinkButton)e.Item.FindControl("lbAuditId");
 				LinkButton lnkReAudit = (LinkButton)e.Item.FindControl("lbReAudit");
+				Label lblAuditingId = (Label)e.Item.FindControl("lblAuditingId");
 				HiddenField hdnId = (HiddenField)e.Item.FindControl("hdnAuditingId");
 
-				if (!SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit))
+				if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit))
+				{
+					if (hdnId.Value.ToString().Trim().Equals("0") || hdnId.Value.ToString().Trim().Equals(""))
+					{
+						lblAuditingId.Visible = false;
+					}
+					else
+					{
+						lnkReAudit.Visible = false;
+						lblAuditingId.Text = Resources.LocalizedText.ReAuditing + " " + hdnId.Value.ToString();
+					}
+				}
+				else
 				{
 					lnkReAudit.Visible = false;
+					lblAuditingId.Visible = false;
 				}
 
 				if (SessionManager.UserContext.Person.PERSON_ID == data.Person.PERSON_ID)
 				{
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;
 					lnkReAudit.Visible = false;
+					lblAuditingId.Visible = false;
 				}
 				else if (!data.Status.Equals("C"))
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~D";
