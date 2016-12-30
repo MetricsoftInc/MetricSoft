@@ -274,6 +274,7 @@ namespace SQM.Website
 		{
 			var itemList = new List<INCFORM_APPROVAL>();
 			int status = 0;
+			int numRequired = 0;
 			int requiredCount = 0;
 			int approvalCount = 0;
 			bool isRequired;
@@ -292,7 +293,7 @@ namespace SQM.Website
 					HiddenField hfreq = (HiddenField)item.FindControl("hfReqdComplete");
 					if (hfreq.Value.ToLower() == "true")
 					{
-						++requiredCount;
+						++numRequired;
 						isRequired = true;
 					}
 					else
@@ -321,9 +322,11 @@ namespace SQM.Website
 							approval.APPROVER_PERSON = lba.Text;
 						}
 
+						++approvalCount;
+
 						if (isRequired)
 						{
-							++approvalCount;
+							++requiredCount;
 						}
 
 						ctx.AddToINCFORM_APPROVAL(approval);
@@ -336,11 +339,12 @@ namespace SQM.Website
 				if (approvalCount > 0)
 				{
 					IncidentStepStatus stat;
+
 					if (ApprovalStep == 10.0m)
 					{
-						if (approvalCount == requiredCount)
+						if ((numRequired > 0 && requiredCount == numRequired) || approvalCount == rptApprovals.Items.Count)
 						{
-							stat = (IncidentStepStatus)Math.Min(approvalCount + 150, 155);
+							stat = (IncidentStepStatus)Math.Min(rptApprovals.Items.Count + 150, 155);
 							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 							sendNotify = true;
 						}
@@ -352,7 +356,7 @@ namespace SQM.Website
 					}
 					else
 					{
-						if (approvalCount == requiredCount)
+						if ((numRequired > 0 && requiredCount == numRequired) || approvalCount == rptApprovals.Items.Count)
 						{
 							EHSIncidentMgr.UpdateIncidentApprovalStatus(incidentId, ApprovalStep);
 						}
