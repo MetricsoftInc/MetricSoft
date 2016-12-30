@@ -208,6 +208,8 @@ namespace SQM.Website
 					hf.Value = approvalRec.approval.ITEM_SEQ.ToString();
 					hf = (HiddenField)e.Item.FindControl("hfPersonID");
 					hf.Value = approvalRec.approval.APPROVER_PERSON_ID.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfReqdComplete");
+					hf.Value = approvalRec.stepPriv.REQUIRED_COMPLETE.ToString();
 					lb.Visible = false;
 					lba.Text = !string.IsNullOrEmpty(approvalRec.approval.APPROVER_PERSON) ? approvalRec.approval.APPROVER_PERSON : "";
 					cba.Checked = approvalRec.approval.IsAccepted;
@@ -215,7 +217,11 @@ namespace SQM.Website
 
 					canApprove = SessionManager.CheckUserPrivilege((SysPriv)approvalRec.stepPriv.PRIV, SysScope.incident);
 
-					if (!cba.Checked)
+					if (cba.Checked)
+					{
+						cba.Enabled = false;		// don't allow removing approval once it was given
+					}
+					else
 					{
 						if (canApprove  &&  PageMode == PageUseMode.Active)
 						{
@@ -234,7 +240,7 @@ namespace SQM.Website
 									if (cba.Checked)
 										cba.Enabled = false;
 									else
-										cba.Enabled = true;  
+										cba.Enabled = true;
 								}
 							}
 						}
@@ -270,6 +276,7 @@ namespace SQM.Website
 			int status = 0;
 			int requiredCount = 0;
 			int approvalCount = 0;
+			bool isRequired;
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
@@ -277,12 +284,21 @@ namespace SQM.Website
 
 				foreach (RepeaterItem item in rptApprovals.Items)
 				{
-					++requiredCount;
 					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
 					Label lba = (Label)item.FindControl("lbApprover");
 					Label lb = (Label)item.FindControl("lbItemSeq");
 					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
+					HiddenField hfreq = (HiddenField)item.FindControl("hfReqdComplete");
+					if (hfreq.Value.ToLower() == "true")
+					{
+						++requiredCount;
+						isRequired = true;
+					}
+					else
+					{
+						isRequired = false;
+					}
 
 					if (cba.Checked == true)
 					{
@@ -305,7 +321,11 @@ namespace SQM.Website
 							approval.APPROVER_PERSON = lba.Text;
 						}
 
-						++approvalCount;
+						if (isRequired)
+						{
+							++approvalCount;
+						}
+
 						ctx.AddToINCFORM_APPROVAL(approval);
 					}
 				}
