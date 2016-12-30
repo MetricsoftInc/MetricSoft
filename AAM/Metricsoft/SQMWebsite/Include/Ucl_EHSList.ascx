@@ -7,14 +7,14 @@
   <asp:Panel ID="pnlProfileSelectHdr" runat="server" style="margin-top: 4px;" Visible = "False">
         <table cellspacing=0 cellpadding=2 border=0 width="100%">
 			<tr>
-                <td id="tdBusLocSelect" runat="server" class=summaryData valign=top width="25%">
+                <td id="tdBusLocSelect" runat="server" class=summaryData valign=top width="30%">
 				    <SPAN CLASS=summaryHeader>
                         <asp:Label runat="server" ID="lblBusLocSelectHdr" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                     </SPAN>
                     <BR>
-                    <telerik:RadComboBox ID="ddlBusLocSelect" runat="server" Skin="Metro" Width=250px ZIndex=9000 Font-Size=Small  ToolTip="View or modify Metric Profile for the selected location"
+                    <telerik:RadComboBox ID="ddlBusLocSelect" runat="server" Skin="Metro" Width="300" height="325" ZIndex=9000 Font-Size=Small  ToolTip="View or modify Metric Profile for the selected location"
                          AutoPostBack="True" OnSelectedIndexChanged="LocationSelect_Click" meta:resourcekey="ddlBusLocSelectResource1"></telerik:RadComboBox>
-                    <telerik:RadMenu ID="mnuBusLocSelect" runat="server" Width=250px style="z-index: 2900" EnableAutoScroll="True" OnItemClick="LocationSelect_Click"><defaultgroupsettings repeatdirection="Horizontal" /></telerik:RadMenu>
+                    <telerik:RadMenu ID="mnuBusLocSelect" runat="server" Width="300" style="z-index: 2900" EnableAutoScroll="True" OnItemClick="LocationSelect_Click"><defaultgroupsettings repeatdirection="Horizontal" /></telerik:RadMenu>
                     <asp:HiddenField id="hfBusLocProfileUndefined" runat="server" Value=" (undefined profiles are highlighted in red)"/>
 		        </td>
                 <td class=summaryData valign=top>
@@ -47,17 +47,17 @@
 <asp:Panel ID="pnlProfileInputHdr" runat="server" style="margin-top: 4px;" Visible = "False">
     <table cellspacing=0 cellpadding=2 border=0 width="100%">
     	<tr>
-            <td id="tdLocationSelect" runat="server" class=summaryData valign=top width="265px">
+            <td id="tdLocationSelect" runat="server" class=summaryData valign=top width="300px">
 				<SPAN CLASS=summaryHeader>
                     <asp:Label runat="server" ID="lblPlantSelectHdr" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                 </SPAN>
                 <BR>
-                 <telerik:RadComboBox ID="ddlPlantSelect" runat="server" Skin="Metro" Width=250px ZIndex=9000 Font-Size=Small ToolTip="View or enter metric data for the selected location"
+                 <telerik:RadComboBox ID="ddlPlantSelect" runat="server" Skin="Metro" Width="300" Height="325" ZIndex=9000 Font-Size=Small ToolTip="View or enter metric data for the selected location"
                      AutoPostBack="True" OnSelectedIndexChanged="LocationSelect_Click" meta:resourcekey="ddlPlantSelectResource1"></telerik:RadComboBox>
-                <telerik:RadMenu ID="mnuPlantSelect" runat="server" Width=250px style="z-index: 2900" EnableAutoScroll="True" OnItemClick="LocationSelect_Click"><defaultgroupsettings repeatdirection="Horizontal" /></telerik:RadMenu>
+                <telerik:RadMenu ID="mnuPlantSelect" runat="server" Width=300px style="z-index: 2900" EnableAutoScroll="True" OnItemClick="LocationSelect_Click"><defaultgroupsettings repeatdirection="Horizontal" /></telerik:RadMenu>
                 <asp:HiddenField id="hfPlantProfileUndefined" runat="server" Value=" (undefined profiles are not enabled for selection)"/>
 		    </td>
-            <td id="tdLocation" runat="server" class=summaryData valign=top  width="265px;">
+            <td id="tdLocation" runat="server" class=summaryData valign=top  width="300px;">
 				<SPAN CLASS=summaryHeader>
                     <asp:Label runat="server" ID="lblPlantNameHdr" Text="<%$ Resources:LocalizedText, BusinessLocation %>"></asp:Label>
                 </SPAN>

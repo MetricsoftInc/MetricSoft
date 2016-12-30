@@ -61,7 +61,9 @@ namespace SQM.Website
             List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(companyID, busOrgID, true).Where(l => l.Plant.TRACK_EW_DATA == true).ToList();
             locationList = UserContext.FilterPlantAccessList(locationList);
 
-            if (showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1)
+			int maxdesc = locationList.Select(l => l.Plant.PLANT_NAME.Length).Max();
+
+			if (showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && maxdesc < 41)
             {
                 ddlBusLocSelect.Visible = false;
                 mnuBusLocSelect.Visible = true;
@@ -206,7 +208,9 @@ namespace SQM.Website
                 List<BusinessLocation> locationList = SQMModelMgr.SelectBusinessLocationList(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, 0, true).Where(l => l.Plant.TRACK_EW_DATA == true).ToList();
                 locationList = UserContext.FilterPlantAccessList(locationList);
 
-                if (locationList.Count > 1 && showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1)
+				int maxdesc = locationList.Select(l => l.Plant.PLANT_NAME.Length).Max();
+
+                if (locationList.Count > 1 && showExpanded && locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1  &&  maxdesc < 41)
                 {
                     ddlPlantSelect.Visible = false;
                     tdLocation.Visible = false;
