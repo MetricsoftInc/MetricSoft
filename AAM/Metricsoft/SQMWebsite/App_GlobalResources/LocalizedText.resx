@@ -151,7 +151,7 @@
     <value>return confirmAction('update the assessment exception status');</value>
   </data>
   <data name="AssessmentIncompleteMsg" xml:space="preserve">
-    <value>You must complete all required fields on this page to close the assessment.</value>
+    <value>The assessment has been saved, but you must complete all required fields on this page to close the assessment.</value>
   </data>
   <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
     <value>The assessment has been saved, but you must complete all required fields for it to be closed. Complete the fields lined with red.</value>

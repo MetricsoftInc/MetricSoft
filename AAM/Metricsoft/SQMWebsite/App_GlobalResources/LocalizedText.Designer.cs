@@ -214,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must complete all required fields on this page to close the assessment..
+        ///   Looks up a localized string similar to The assessment has been saved, but you must complete all required fields on this page to close the assessment..
         /// </summary>
         internal static string AssessmentIncompleteMsg {
             get {
