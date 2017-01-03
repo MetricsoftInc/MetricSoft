@@ -542,15 +542,22 @@ namespace SQM.Website.EHS
 					btnSaveReturn.Visible = true;
 					btnSaveReturn.CommandArgument = "1";
 					if (CurrentStep > 0)
+					{
 						cbClose.Visible = true;
+						lblCloseMessage.Visible = true;
+					}
 					else
+					{
 						cbClose.Visible = false;
+						lblCloseMessage.Visible = false;
+					}
 				}
 				else
 				{
 					btnSaveReturn.Enabled = false;
 					btnSaveReturn.Visible = false;
 					cbClose.Visible = false;
+					lblCloseMessage.Visible = false;
 				}
 
 				if (rddlDepartment.Items.Count == 0)
@@ -660,6 +667,7 @@ namespace SQM.Website.EHS
 				btnDelete.Visible = false;
 				cbClose.Checked = false;
 				cbClose.Visible = false;
+				lblCloseMessage.Visible = false;
 				LnkAuditAttachment.Visible = false;
 				LnkAuditVideo.Visible = false;
 			}
@@ -912,8 +920,16 @@ namespace SQM.Website.EHS
 				// and send a message that the field need to be entered
 				if (showMsg)
 				{
-					string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsIndicatedMsg);
-					ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+					if (allQuestionsAnswered)
+					{
+						string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentRequiredsIndicatedMsg);
+						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+					}
+					else
+					{
+						string script = string.Format("alert('{0}');", Resources.LocalizedText.AssessmentIncompleteMsg);
+						ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+					}
 				}
 			}
 
@@ -1235,6 +1251,12 @@ namespace SQM.Website.EHS
 			}
 			else
 				audit.CURRENT_STATUS = "A";
+
+			if (cbClose.Checked && totalPercent < 100)
+			{
+				allQuestionsAnswered = false;
+				negativeTextComplete = false;
+			}
 
 			//if (totalQuestions > 0)
 			//	totalPercent = Math.Round((totalPositive / totalQuestions), 2) * 100;
