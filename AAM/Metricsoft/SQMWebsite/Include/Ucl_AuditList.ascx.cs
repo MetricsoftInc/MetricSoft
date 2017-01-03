@@ -270,7 +270,7 @@ namespace SQM.Website
 				{
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~" + data.Status;
 					lnkReAudit.Visible = false;
-					lblAuditingId.Visible = false;
+					//lblAuditingId.Visible = false;
 				}
 				else if (!data.Status.Equals("C"))
 					lnk.CommandArgument = data.Audit.AUDIT_ID.ToString() + "~D";
