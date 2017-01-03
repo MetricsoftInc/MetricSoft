@@ -17,6 +17,8 @@ namespace SQM.Website
 		static string staticAppContext;
 		static int baseRowIndex;
 
+		public string allowReAudits;
+
 		RadPersistenceManager persistenceManager;
 
 		public event GridItemClick OnQualityIssueClick;
@@ -167,6 +169,16 @@ namespace SQM.Website
 			pnlAuditListRepeater.Visible = true;
 			staticAppContext = appContext;
 
+			// first check settings to see if the company allows ReAudits
+			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("AUDIT", ""); // ABW 20140805
+			allowReAudits = "";
+			try
+			{
+				allowReAudits = sets.Find(x => x.SETTING_CD == "AllowReAudit").VALUE;
+			}
+			catch { }
+
+
 			rgAuditList.DataSource = theList;
 			rgAuditList.DataBind();
 		}
@@ -228,16 +240,24 @@ namespace SQM.Website
 				Label lblAuditingId = (Label)e.Item.FindControl("lblAuditingId");
 				HiddenField hdnId = (HiddenField)e.Item.FindControl("hdnAuditingId");
 
-				if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit))
+				if (allowReAudits.ToUpper().Equals("Y"))
 				{
-					if (hdnId.Value.ToString().Trim().Equals("0") || hdnId.Value.ToString().Trim().Equals(""))
+					if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.audit))
 					{
-						lblAuditingId.Visible = false;
+						if (hdnId.Value.ToString().Trim().Equals("0") || hdnId.Value.ToString().Trim().Equals(""))
+						{
+							lblAuditingId.Visible = false;
+						}
+						else
+						{
+							lnkReAudit.Visible = false;
+							lblAuditingId.Text = Resources.LocalizedText.ReAuditing + " " + hdnId.Value.ToString();
+						}
 					}
 					else
 					{
 						lnkReAudit.Visible = false;
-						lblAuditingId.Text = Resources.LocalizedText.ReAuditing + " " + hdnId.Value.ToString();
+						lblAuditingId.Visible = false;
 					}
 				}
 				else
