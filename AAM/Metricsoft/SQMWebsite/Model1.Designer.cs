@@ -100,13 +100,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RECEIPT_PART", "PART", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PART), "RECEIPT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RECEIPT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RECEIPT_PLANT", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "RECEIPT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RECEIPT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RECEIPT_PLANT1", "PLANT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PLANT), "RECEIPT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RECEIPT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_QUESTION_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_ITEM_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "COST_REPORT_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT_ITEM), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "PROB_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_OCCUR), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_QI_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT_QUESTION1", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CHOICE_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_CHOICE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CHOICE), true)]
@@ -116,13 +111,10 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS", "INCIDENT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL_ACTION), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_POWEROUTAGE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_POWEROUTAGE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_ANSWER_AUDIT", "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT), "AUDIT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_JOBCODE_JOBCODE", "JOBCODE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.JOBCODE), "JOBCODE1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.JOBCODE), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_LANG_AUDIT_QUESTION", "AUDIT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION), "AUDIT_QUESTION_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_LANG), true)]
@@ -134,7 +126,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_COMPANY_QUESTION_INCIDENT_TYPE_COMPANY", "INCIDENT_TYPE_COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE_COMPANY), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_TOPIC_LANG_AUDIT_TOPIC", "AUDIT_TOPIC", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TOPIC), "AUDIT_TOPIC_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_TOPIC_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_LANG_INCIDENT_TYPE", "INCIDENT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_TYPE), "INCIDENT_TYPE_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_LANG), true)]
@@ -148,11 +139,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_PREVENT_PROB_PREVENT", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "PROB_PREVENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_PREVENT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_RESPONSE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSON), "RESPONSE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.RESPONSE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT5Y), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ALERT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ALERT), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_TASK_STATUS_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "TASK_STATUS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.TASK_STATUS), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_PERSPECTIVE_VIEW", "PERSPECTIVE_VIEW", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW), "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PERSPECTIVE_VIEW_ITEM_LANG_PERSPECTIVE_VIEW_ITEM", "PERSPECTIVE_VIEW_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM), "PERSPECTIVE_VIEW_ITEM_LANG", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PERSPECTIVE_VIEW_ITEM_LANG), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_VIDEO_ATTACHMENT_FILE_VIDEO_ATTACHMENT", "VIDEO_ATTACHMENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.VIDEO_ATTACHMENT), "VIDEO_ATTACHMENT_FILE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.VIDEO_ATTACHMENT_FILE), true)]
@@ -165,8 +152,21 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_INPUT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_INPUT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_INPUT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_DFLT_EHS_PROFILE_MEASURE", "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.EHS_PROFILE_MEASURE), "EHS_PROFILE_MEASURE_EXT", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.EHS_PROFILE_MEASURE_EXT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_EHS_PROFILE_MEASURE_PERSON", "PERSON", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.PERSON), "EHS_PROFILE_MEASURE", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.EHS_PROFILE_MEASURE), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_COMPANY", "COMPANY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.COMPANY), "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_COST_REPORT_ITEM_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "COST_REPORT_ITEM", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.COST_REPORT_ITEM), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ACTION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ALERT", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ALERT), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_APPROVAL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_APPROVAL), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CAUSATION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CAUSATION), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_CONTAIN", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_CONTAIN), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_INJURYILLNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_INJURYILLNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_LOSTTIME_HIST", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_LOSTTIME_HIST), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_POWEROUTAGE", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SQM.Website.INCFORM_POWEROUTAGE), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_ROOT5Y", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_ROOT5Y), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCFORM_WITNESS", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCFORM_WITNESS), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "PROB_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_OCCUR), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_QI_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR), true)]
 
 #endregion
 
@@ -1389,22 +1389,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<INCIDENT> INCIDENT
-        {
-            get
-            {
-                if ((_INCIDENT == null))
-                {
-                    _INCIDENT = base.CreateObjectSet<INCIDENT>("INCIDENT");
-                }
-                return _INCIDENT;
-            }
-        }
-        private ObjectSet<INCIDENT> _INCIDENT;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCIDENT_ANSWER> INCIDENT_ANSWER
         {
             get
@@ -2473,6 +2457,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCFORM_TYPE_CONTROL> _INCFORM_TYPE_CONTROL;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCIDENT> INCIDENT
+        {
+            get
+            {
+                if ((_INCIDENT == null))
+                {
+                    _INCIDENT = base.CreateObjectSet<INCIDENT>("INCIDENT");
+                }
+                return _INCIDENT;
+            }
+        }
+        private ObjectSet<INCIDENT> _INCIDENT;
 
         #endregion
 
@@ -3063,14 +3063,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the INCIDENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToINCIDENT(INCIDENT iNCIDENT)
-        {
-            base.AddObject("INCIDENT", iNCIDENT);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCIDENT_ANSWER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCIDENT_ANSWER(INCIDENT_ANSWER iNCIDENT_ANSWER)
@@ -3604,6 +3596,14 @@ namespace SQM.Website
         public void AddToINCFORM_TYPE_CONTROL(INCFORM_TYPE_CONTROL iNCFORM_TYPE_CONTROL)
         {
             base.AddObject("INCFORM_TYPE_CONTROL", iNCFORM_TYPE_CONTROL);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCIDENT EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCIDENT(INCIDENT iNCIDENT)
+        {
+            base.AddObject("INCIDENT", iNCIDENT);
         }
 
         #endregion
@@ -9802,28 +9802,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_COMPANY", "INCIDENT")]
-        public EntityCollection<INCIDENT> INCIDENT
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT>("PSsqmModel.FK_INCIDENT_COMPANY", "INCIDENT");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT>("PSsqmModel.FK_INCIDENT_COMPANY", "INCIDENT", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_COMPANY", "INCIDENT_QUESTION_CONTROL")]
         public EntityCollection<INCIDENT_QUESTION_CONTROL> INCIDENT_QUESTION_CONTROL
         {
@@ -9902,6 +9880,28 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TYPE_COMPANY>("PSsqmModel.FK_INCIDENT_TYPE_COMPANY_COMPANY", "INCIDENT_TYPE_COMPANY", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_COMPANY", "INCIDENT")]
+        public EntityCollection<INCIDENT> INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT>("PSsqmModel.FK_INCIDENT_COMPANY", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT>("PSsqmModel.FK_INCIDENT_COMPANY", "INCIDENT", value);
                 }
             }
         }
@@ -25165,8 +25165,7 @@ namespace SQM.Website
         /// <param name="iNCIDENT_TYPE">Initial value of the INCIDENT_TYPE property.</param>
         /// <param name="iNCIDENT_DT">Initial value of the INCIDENT_DT property.</param>
         /// <param name="iNCFORM_LAST_STEP_COMPLETED">Initial value of the INCFORM_LAST_STEP_COMPLETED property.</param>
-        /// <param name="rESTRICTED_TIME">Initial value of the RESTRICTED_TIME property.</param>
-        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT, global::System.Int32 iNCFORM_LAST_STEP_COMPLETED, global::System.Boolean rESTRICTED_TIME)
+        public static INCIDENT CreateINCIDENT(global::System.Decimal iNCIDENT_ID, global::System.Decimal dETECT_COMPANY_ID, global::System.String iNCIDENT_TYPE, global::System.DateTime iNCIDENT_DT, global::System.Int32 iNCFORM_LAST_STEP_COMPLETED)
         {
             INCIDENT iNCIDENT = new INCIDENT();
             iNCIDENT.INCIDENT_ID = iNCIDENT_ID;
@@ -25174,7 +25173,6 @@ namespace SQM.Website
             iNCIDENT.INCIDENT_TYPE = iNCIDENT_TYPE;
             iNCIDENT.INCIDENT_DT = iNCIDENT_DT;
             iNCIDENT.INCFORM_LAST_STEP_COMPLETED = iNCFORM_LAST_STEP_COMPLETED;
-            iNCIDENT.RESTRICTED_TIME = rESTRICTED_TIME;
             return iNCIDENT;
         }
 
@@ -25832,30 +25830,6 @@ namespace SQM.Website
         private Nullable<global::System.Decimal> _LAST_APPROVAL_STEP;
         partial void OnLAST_APPROVAL_STEPChanging(Nullable<global::System.Decimal> value);
         partial void OnLAST_APPROVAL_STEPChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean RESTRICTED_TIME
-        {
-            get
-            {
-                return _RESTRICTED_TIME;
-            }
-            set
-            {
-                OnRESTRICTED_TIMEChanging(value);
-                ReportPropertyChanging("RESTRICTED_TIME");
-                _RESTRICTED_TIME = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RESTRICTED_TIME");
-                OnRESTRICTED_TIMEChanged();
-            }
-        }
-        private global::System.Boolean _RESTRICTED_TIME;
-        partial void OnRESTRICTED_TIMEChanging(global::System.Boolean value);
-        partial void OnRESTRICTED_TIMEChanged();
 
         #endregion
 
@@ -25928,6 +25902,258 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION")]
+        public EntityCollection<INCFORM_ACTION> INCFORM_ACTION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT")]
+        public EntityCollection<INCFORM_ALERT> INCFORM_ALERT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ALERT>("PSsqmModel.FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ALERT>("PSsqmModel.FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL")]
+        public EntityCollection<INCFORM_APPROVAL> INCFORM_APPROVAL
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION")]
+        public EntityCollection<INCFORM_CAUSATION> INCFORM_CAUSATION
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN")]
+        public EntityCollection<INCFORM_CONTAIN> INCFORM_CONTAIN
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS")]
+        public INCFORM_INJURYILLNESS INCFORM_INJURYILLNESS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESSReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST")]
+        public EntityCollection<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE")]
+        public INCFORM_POWEROUTAGE INCFORM_POWEROUTAGE
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCFORM_POWEROUTAGE> INCFORM_POWEROUTAGEReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y")]
+        public EntityCollection<INCFORM_ROOT5Y> INCFORM_ROOT5Y
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ROOT5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ROOT5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS")]
+        public EntityCollection<INCFORM_WITNESS> INCFORM_WITNESS
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_WITNESS>("PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_WITNESS>("PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT_ANSWER")]
         public EntityCollection<INCIDENT_ANSWER> INCIDENT_ANSWER
         {
@@ -25984,258 +26210,6 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<QI_OCCUR>("PSsqmModel.FK_QI_OCCUR_INCIDENT", "QI_OCCUR", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE")]
-        public INCFORM_POWEROUTAGE INCFORM_POWEROUTAGE
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<INCFORM_POWEROUTAGE> INCFORM_POWEROUTAGEReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_POWEROUTAGE>("PSsqmModel.FK_INCIDENT_INCIDENT_ID", "INCFORM_POWEROUTAGE", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION")]
-        public EntityCollection<INCFORM_ACTION> INCFORM_ACTION
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ACTION>("PSsqmModel.FK_INCIDENTACTION_INCIDENT_ID", "INCFORM_ACTION", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS")]
-        public EntityCollection<INCFORM_WITNESS> INCFORM_WITNESS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_WITNESS>("PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_WITNESS>("PSsqmModel.FK_INCIDENTWITNESS_INCIDENT_ID", "INCFORM_WITNESS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST")]
-        public EntityCollection<INCFORM_LOSTTIME_HIST> INCFORM_LOSTTIME_HIST
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_LOSTTIME_HIST>("PSsqmModel.FK_INCIDENTLOSTTIME_INCIDENT_ID", "INCFORM_LOSTTIME_HIST", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y")]
-        public EntityCollection<INCFORM_ROOT5Y> INCFORM_ROOT5Y
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ROOT5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ROOT5Y>("PSsqmModel.FK_INCIDENTROOT5Y_INCIDENT_ID", "INCFORM_ROOT5Y", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT")]
-        public EntityCollection<INCFORM_ALERT> INCFORM_ALERT
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_ALERT>("PSsqmModel.FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_ALERT>("PSsqmModel.FK_INCFORM_ALERT_INCIDENT", "INCFORM_ALERT", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN")]
-        public EntityCollection<INCFORM_CONTAIN> INCFORM_CONTAIN
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CONTAIN>("PSsqmModel.FK_INCIDENTCONTAIN_INCIDENT_ID", "INCFORM_CONTAIN", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION")]
-        public EntityCollection<INCFORM_CAUSATION> INCFORM_CAUSATION
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_CAUSATION>("PSsqmModel.FK_INCFORM_CAUSATION_INCIDENT", "INCFORM_CAUSATION", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS")]
-        public INCFORM_INJURYILLNESS INCFORM_INJURYILLNESS
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<INCFORM_INJURYILLNESS> INCFORM_INJURYILLNESSReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCFORM_INJURYILLNESS>("PSsqmModel.FK_INJURYILLNESS_INCIDENT_ID", "INCFORM_INJURYILLNESS", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL")]
-        public EntityCollection<INCFORM_APPROVAL> INCFORM_APPROVAL
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCFORM_APPROVAL>("PSsqmModel.FK_INCIDENTAPPROVAL_INCIDENT_ID", "INCFORM_APPROVAL", value);
                 }
             }
         }
@@ -26384,44 +26358,6 @@ namespace SQM.Website
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT")]
-        public INCIDENT INCIDENT
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<INCIDENT> INCIDENTReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT_QUESTION", "INCIDENT_QUESTION")]
         public INCIDENT_QUESTION INCIDENT_QUESTION
         {
@@ -26488,6 +26424,44 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT_QUESTION1", "INCIDENT_QUESTION", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", value);
                 }
             }
         }
