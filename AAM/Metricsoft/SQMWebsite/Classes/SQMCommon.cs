@@ -205,9 +205,8 @@ namespace SQM.Website
             XmlDocument xDoc;
 			CustomXmlData cd = new CustomXmlData();
 			System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
-
-			if (HttpContext.Current.Session["AppSettingsDoc"] == null)
-			{
+			//if (HttpContext.Current.Session["AppSettingsDoc"] == null)
+			//{
 				xDoc = new XmlDocument();
 				xDoc.Load(HttpContext.Current.Server.MapPath("/settings.xml"));
 				cd.InnerXML = xDoc.InnerXml;
@@ -215,8 +214,9 @@ namespace SQM.Website
 				XmlSerializer x = new XmlSerializer(cd.GetType());
 				x.Serialize(memoryStream, cd);
 				HttpContext.Current.Session["AppSettingsDoc"] = cd;
-			}
-			else
+			//}
+			//else
+			/*
 			{
 				BinaryFormatter bf = new BinaryFormatter();
 				memoryStream = (System.IO.MemoryStream)HttpContext.Current.Session["AppSettingsDoc"];
@@ -224,7 +224,7 @@ namespace SQM.Website
 				xDoc = new XmlDocument();
 				xDoc.InnerXml = cd.InnerXML;
 			}
-
+			*/
             return xDoc;
         }
 
