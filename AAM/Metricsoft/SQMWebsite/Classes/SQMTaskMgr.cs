@@ -512,7 +512,7 @@ namespace SQM.Website
 			return this;
 		}
 
-		public TaskStatusMgr SelectTaskList(int[] recordTypes, string[] taskSteps, decimal personID, List<decimal> responsibleIDs, string openOnly, DateTime fromDate, DateTime toDate, bool createdBy)
+		public TaskStatusMgr SelectTaskList(int[] recordTypes, string[] taskSteps, decimal personID, List<decimal> responsibleIDs, string openOnly, DateTime fromDate, DateTime toDate, bool createdBy, bool adminList)
 		{
 			try
 			{
@@ -523,32 +523,52 @@ namespace SQM.Website
 										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null) && t.CREATE_ID == personID)
 										 select t).OrderBy(l => l.DUE_DT).ToList();
 					else
-						this.TaskList = (from t in this.Entities.TASK_STATUS
-										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null))
-										 select t).OrderBy(l => l.DUE_DT).ToList();
-
+					{
+						if (adminList)
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+						else
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT == null) && (t.CREATE_ID == personID || t.RESPONSIBLE_ID == personID))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+					}
 				}
 				else if (openOnly.ToLower().Equals("c"))
 				{
 					if (createdBy)
 						this.TaskList = (from t in this.Entities.TASK_STATUS
-									 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null) && t.CREATE_ID == personID)
-									 select t).OrderBy(l => l.DUE_DT).ToList();
-					else
-						this.TaskList = (from t in this.Entities.TASK_STATUS
-										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null))
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null) && t.CREATE_ID == personID)
 										 select t).OrderBy(l => l.DUE_DT).ToList();
+					else
+					{
+						if (adminList)
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+						else
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate && t.COMPLETE_DT != null) && (t.CREATE_ID == personID || t.RESPONSIBLE_ID == personID))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+					}
 				}
 				else
 				{
 					if (createdBy)
 						this.TaskList = (from t in this.Entities.TASK_STATUS
-									 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate) && t.CREATE_ID == personID)
-									 select t).OrderBy(l => l.DUE_DT).ToList();
-					else
-						this.TaskList = (from t in this.Entities.TASK_STATUS
-										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate))
+										 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate) && t.CREATE_ID == personID)
 										 select t).OrderBy(l => l.DUE_DT).ToList();
+					else
+					{
+						if (adminList)
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+						else
+							this.TaskList = (from t in this.Entities.TASK_STATUS
+											 where (recordTypes.Contains(t.RECORD_TYPE) && taskSteps.Contains(t.TASK_STEP) && (responsibleIDs.Contains(0) || responsibleIDs.Contains((decimal)t.RESPONSIBLE_ID)) && (t.DUE_DT >= fromDate && t.DUE_DT <= toDate) && (t.CREATE_ID == personID || t.RESPONSIBLE_ID == personID))
+											 select t).OrderBy(l => l.DUE_DT).ToList();
+					}
 				}
 
 			}

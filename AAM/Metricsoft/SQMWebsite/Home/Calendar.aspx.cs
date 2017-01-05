@@ -139,6 +139,11 @@ namespace SQM.Website
 			else if (mnuTaskScope.SelectedItem != null)
 				selectedValue = mnuTaskScope.SelectedItem.Value;
 
+			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+			bool adminList = false;
+			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
+				adminList = true;
+
 			if (selectedValue == "0" || selectedValue == "TOP")
 			{
 				respTaskForList.Add(SessionManager.UserContext.Person.PERSON_ID);
@@ -153,7 +158,9 @@ namespace SQM.Website
 				}
 				else
 				{   // specific plant
-					respTaskForList.AddRange(SQMModelMgr.SelectPlantPersonList(SessionManager.PrimaryCompany().COMPANY_ID, Convert.ToDecimal(selectedValue), "").Select(l => l.PERSON_ID).ToArray());
+					//respTaskForList.AddRange(SQMModelMgr.SelectPlantPersonList(SessionManager.PrimaryCompany().COMPANY_ID, Convert.ToDecimal(selectedValue), "").Select(l => l.PERSON_ID).ToArray());
+					respTaskForList.AddRange(SQMModelMgr.SelectPlantPersonList(SessionManager.PrimaryCompany().COMPANY_ID, Convert.ToDecimal(selectedValue)).Select(l => l.PERSON_ID).ToArray());
+
 				}
 
 				//if (SessionManager.CheckUserPrivilege(SysPriv.config, SysScope.busorg))
@@ -162,7 +169,7 @@ namespace SQM.Website
 
 			TaskStatusMgr myTasks = new TaskStatusMgr().CreateNew(0, 0);
 
-			myTasks.SelectTaskList(new int[3] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident, (int)TaskRecordType.PreventativeAction }, new string[2] { ((int)SysPriv.action).ToString(), ((int)SysPriv.notify).ToString() }, SessionManager.UserContext.Person.PERSON_ID, respTaskForList, rcbStatusSelect.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, (DateTime)dmToDate.SelectedDate, cbCreatedByMe.Checked);
+			myTasks.SelectTaskList(new int[3] { (int)TaskRecordType.Audit, (int)TaskRecordType.HealthSafetyIncident, (int)TaskRecordType.PreventativeAction }, new string[2] { ((int)SysPriv.action).ToString(), ((int)SysPriv.notify).ToString() }, SessionManager.UserContext.Person.PERSON_ID, respTaskForList, rcbStatusSelect.SelectedValue.ToString(), (DateTime)dmFromDate.SelectedDate, (DateTime)dmToDate.SelectedDate, cbCreatedByMe.Checked, adminList);
 			uclTaskList.BindTaskList(myTasks.TaskList, "");
 		}
 
@@ -183,10 +190,15 @@ namespace SQM.Website
 			ddlTaskScope.Items.Clear();
 
 			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+
+			List<BusinessLocation> locationList = SessionManager.PlantList;
+			locationList = UserContext.FilterPlantAccessList(locationList);
+
 			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
 			{
-				List<BusinessLocation> locationList = SessionManager.PlantList;
-				locationList = UserContext.FilterPlantAccessList(locationList);
+				// AW20170105 - move this up so it can be used by both admin and non admin
+				//List<BusinessLocation> locationList = SessionManager.PlantList;
+				//locationList = UserContext.FilterPlantAccessList(locationList);
 
 				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1  &&  SessionManager.IsUserAgentType("ipad,iphone") == false)
 				{
@@ -223,9 +235,12 @@ namespace SQM.Website
 			{
 				ddlScheduleScope.Visible = true;
 				mnuScheduleScope.Visible = false;
+				// AW20170105 - this is the one on the Calendar page... we are not opening up the list for this one.
+				//SQMBasePage.SetLocationList(ddlScheduleScope, locationList, 0, true);
 				ddlScheduleScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
 				ddlScheduleScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 
+				SQMBasePage.SetLocationList(ddlTaskScope, locationList, 0, true);
 				ddlTaskScope.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
 				ddlTaskScope.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
 				ddlTaskScope.Visible = true;

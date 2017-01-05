@@ -124,17 +124,22 @@
 							<asp:Label ID="lblDescription" runat="server" Text='<%# (string)Eval("DESCRIPTION") %>'></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="Create Date" meta:resourcekey="GridTemplateColumnResource4" SortExpression="CREATE_DT" UniqueName="TemplateColumn3">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn3 column" HeaderText="<%$ Resources:LocalizedText, ResponsiblePerson %>" SortExpression="RESPONSIBLE_ID" UniqueName="TemplateColumn3">
+						<ItemTemplate>
+							<asp:Label ID="lblResponsiblePerson" runat="server" Text='<%# Eval("RESPONSIBLE_ID") %>'></asp:Label>
+						</ItemTemplate>
+					</telerik:GridTemplateColumn>
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="Create Date" meta:resourcekey="GridTemplateColumnResource4" SortExpression="CREATE_DT" UniqueName="TemplateColumn4">
 						<ItemTemplate>
 							<asp:Label ID="lblCreateDT" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, DueDate %>" SortExpression="DUE_DT" UniqueName="TemplateColumn4">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, DueDate %>" SortExpression="DUE_DT" UniqueName="TemplateColumn5">
 						<ItemTemplate>
 							<asp:Label ID="lblDueDT" runat="server"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
-					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn5 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn5">
+					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn6 column" HeaderText="<%$ Resources:LocalizedText, Status %>" UniqueName="TemplateColumn6">
 						<ItemTemplate>
 							<asp:Label ID="lblStatus" runat="server"></asp:Label>
 						</ItemTemplate>

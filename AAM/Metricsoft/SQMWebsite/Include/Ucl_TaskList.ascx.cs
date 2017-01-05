@@ -378,6 +378,21 @@ namespace SQM.Website
 
 					lbl = (Label)e.Item.FindControl("lblStatus");
 					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+
+					lbl = (Label)e.Item.FindControl("lblResponsiblePerson");
+					PERSON responsiblePerson = new PERSON();
+					try
+					{
+						PSsqmEntities entities = new PSsqmEntities();
+						responsiblePerson = SQMModelMgr.LookupPerson((decimal)task.RESPONSIBLE_ID, "");
+					}
+					catch { }
+
+					if (responsiblePerson != null)
+					{
+						lbl.Text = SQMModelMgr.FormatPersonListItem(responsiblePerson, false, "LF");
+					}
+
 				}
 				catch
 				{

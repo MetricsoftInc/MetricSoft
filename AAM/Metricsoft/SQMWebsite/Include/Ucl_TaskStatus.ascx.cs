@@ -180,10 +180,15 @@ namespace SQM.Website
 
 			BusinessLocation location = new BusinessLocation().Initialize(plantID);
 			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
+
+			List<BusinessLocation> locationList = SessionManager.PlantList;
+			locationList = UserContext.FilterPlantAccessList(locationList);
+
 			if (maxPriv <= SysPriv.config)  // is a plant admin or greater ?
 			{
-				List<BusinessLocation> locationList = SessionManager.PlantList;
-				locationList = UserContext.FilterPlantAccessList(locationList);
+				// AW20170105 - move this up so it can be used by both admin and non admin
+				//List<BusinessLocation> locationList = SessionManager.PlantList;
+				//locationList = UserContext.FilterPlantAccessList(locationList);
 
 				if (locationList.Select(l => l.Plant.BUS_ORG_ID).Distinct().Count() > 1 && SessionManager.IsUserAgentType("ipad,iphone") == false)
 				{
@@ -210,6 +215,7 @@ namespace SQM.Website
 				mnuScheduleScopeAdd.Visible = false;
 				//ddlScheduleScopeAdd.Items.Insert(0, new RadComboBoxItem((SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME), "0"));
 				//ddlScheduleScopeAdd.Items[0].ImageUrl = "~/images/defaulticon/16x16/user-alt-2.png";
+				SQMBasePage.SetLocationList(ddlScheduleScopeAdd, locationList, plantID, true);
 			}
 
 			List<PERSON> personList = SQMModelMgr.SelectPlantPersonList(1, plantID).Where(l => !string.IsNullOrEmpty(l.EMAIL)).OrderBy(l => l.LAST_NAME).ToList();
