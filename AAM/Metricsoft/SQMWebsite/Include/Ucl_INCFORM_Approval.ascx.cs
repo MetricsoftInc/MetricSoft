@@ -33,9 +33,16 @@ namespace SQM.Website
 
 		public decimal theincidentId { get; set; }
 
+		/*
 		public decimal ApprovalStep
 		{
 			get { return ViewState["ApprovalStep"] == null ? 0 : (decimal)ViewState["ApprovalStep"]; }
+			set { ViewState["ApprovalStep"] = value; }
+		}
+		*/
+		public INCFORM_TYPE_CONTROL  ApprovalStep
+		{
+			get { return ViewState["ApprovalStep"] == null ? null : (INCFORM_TYPE_CONTROL)ViewState["ApprovalStep"]; }
 			set { ViewState["ApprovalStep"] = value; }
 		}
 
@@ -140,10 +147,10 @@ namespace SQM.Website
 		}
 
 
-		public void PopulateInitialForm(decimal step)
+		public void PopulateInitialForm(INCFORM_TYPE_CONTROL stepRecord)
 		{
 			PSsqmEntities entities = new PSsqmEntities();
-			ApprovalStep = step;
+			ApprovalStep = stepRecord;
 
 			XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_APPROVALS" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 
@@ -168,14 +175,14 @@ namespace SQM.Website
 			pnlApproval.Visible = true;
 
 			// check if incident approval status is greater than this
-			if (LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep)
+			if (LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP)
 			{
 				PageMode = PageUseMode.ViewOnly;
 			}
 
 			incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1);
 			canApproveAny = false;
-			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep, IncidentId, DateTime.UtcNow, 0);
+			rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
 
 			rptApprovals.DataBind();
 		}
@@ -194,17 +201,21 @@ namespace SQM.Website
 					EHSIncidentApproval approvalRec = (EHSIncidentApproval)e.Item.DataItem;
 					bool canApprove = false;
 
-					HiddenField hf = (HiddenField)e.Item.FindControl("hfItemSeq");
+
 					Label lba = (Label)e.Item.FindControl("lbApprover");
 					Label lbm = (Label)e.Item.FindControl("lbApproveMessage");
 					Label lb = (Label)e.Item.FindControl("lbItemSeq");
 					Label lbjobd = (Label)e.Item.FindControl("lbApproverJob");
+					HiddenField hfrole = (HiddenField)e.Item.FindControl("hfRoleDesc");
 					CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
 					RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-					lbjobd.Text = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+					lbjobd.Text = hfrole.Value = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 					lbm.Text = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION;
 
+					HiddenField hf = (HiddenField)e.Item.FindControl("hfApprovalID");
+					hf.Value = approvalRec.approval.INCIDENT_APPROVAL_ID == null ? "0" : approvalRec.approval.INCIDENT_APPROVAL_ID.ToString();
+					hf = (HiddenField)e.Item.FindControl("hfItemSeq");
 					hf.Value = approvalRec.approval.ITEM_SEQ.ToString();
 					hf = (HiddenField)e.Item.FindControl("hfPersonID");
 					hf.Value = approvalRec.approval.APPROVER_PERSON_ID.ToString();
@@ -258,7 +269,7 @@ namespace SQM.Website
 
 			if (PageMode == PageUseMode.Active  && canApproveAny)
 			{
-				btnSave.Visible = pnlApproval.Enabled = EHSIncidentMgr.IsDependentStatus(LocalIncident, EHSIncidentMgr.GetIncidentSteps(incidentStepList, (decimal)LocalIncident.ISSUE_TYPE_ID).Where(l => l.STEP == ApprovalStep).Select(l => l.DEPENDENT_STATUS).FirstOrDefault());
+				btnSave.Visible = pnlApproval.Enabled = EHSIncidentMgr.IsDependentStatus(LocalIncident, EHSIncidentMgr.GetIncidentSteps(incidentStepList, (decimal)LocalIncident.ISSUE_TYPE_ID).Where(l => l.STEP == ApprovalStep.STEP).Select(l => l.DEPENDENT_STATUS).FirstOrDefault());
 			}
 		}
 
@@ -278,50 +289,41 @@ namespace SQM.Website
 			int requiredCount = 0;
 			int approvalCount = 0;
 			bool isRequired;
+			bool isChanged = false;
+
+			List<INCFORM_APPROVAL> approvalList = new List<INCFORM_APPROVAL>();
+
 
 			using (PSsqmEntities ctx = new PSsqmEntities())
 			{
-				status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND STEP = " + ApprovalStep.ToString());
 
 				foreach (RepeaterItem item in rptApprovals.Items)
 				{
-					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
-					Label lba = (Label)item.FindControl("lbApprover");
-					Label lb = (Label)item.FindControl("lbItemSeq");
-					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
-					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
+					isRequired = false;
 					HiddenField hfreq = (HiddenField)item.FindControl("hfReqdComplete");
 					if (hfreq.Value.ToLower() == "true")
 					{
 						++numRequired;
 						isRequired = true;
 					}
-					else
-					{
-						isRequired = false;
-					}
 
-					if (cba.Checked == true)
-					{
-						INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
-						approval.INCIDENT_ID = incidentId;
-						approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
-						approval.APPROVAL_LEVEL = 0;
-						approval.STEP = ApprovalStep;
-						approval.IsAccepted = true;
-						approval.APPROVAL_DATE = rda.SelectedDate;
-						hf = (HiddenField)item.FindControl("hfPersonID");
-						if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
-						{
-							approval.APPROVER_PERSON_ID = SessionManager.UserContext.Person.PERSON_ID;
-							approval.APPROVER_PERSON = SessionManager.UserContext.UserName();
-						}
-						else
-						{
-							approval.APPROVER_PERSON_ID = Convert.ToDecimal(hf.Value);
-							approval.APPROVER_PERSON = lba.Text;
-						}
+					INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
+					approval.INCIDENT_ID = incidentId;
+					approval.APPROVAL_LEVEL = 0;
+					approval.STEP = ApprovalStep.STEP;
+					Label lba = (Label)item.FindControl("lbApprover");
+					Label lb = (Label)item.FindControl("lbItemSeq");
+					CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
+					RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
+					HiddenField hfrole = (HiddenField)item.FindControl("hfRoleDesc");
+					HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
+					approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
+					approval.APPROVER_TITLE = hfrole.Value;
 
+					approvalList.Add(approval);
+
+					if (cba.Checked == true)	// is approved
+					{
 						++approvalCount;
 
 						if (isRequired)
@@ -329,27 +331,52 @@ namespace SQM.Website
 							++requiredCount;
 						}
 
-						ctx.AddToINCFORM_APPROVAL(approval);
+						hf = (HiddenField)item.FindControl("hfApprovalID");
+						if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
+						{
+							// save new approval to db
+							isChanged = true;
+							approval.APPROVAL_DATE = rda.SelectedDate;
+							approval.IsAccepted = true;
+							hf = (HiddenField)item.FindControl("hfPersonID");
+							if (string.IsNullOrEmpty(hf.Value) || hf.Value == "0")
+							{
+								approval.APPROVER_PERSON_ID = SessionManager.UserContext.Person.PERSON_ID;
+								approval.APPROVER_PERSON = SessionManager.UserContext.UserName();
+							}
+							else
+							{
+								approval.APPROVER_PERSON_ID = Convert.ToDecimal(hf.Value);
+								approval.APPROVER_PERSON = lba.Text;
+							}
+
+							ctx.AddToINCFORM_APPROVAL(approval);
+						}
 					}
 				}
 
+				//status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND STEP = " + ApprovalStep.ToString());
 				status = ctx.SaveChanges();
-				bool sendNotify = false;
 
+				bool notifyStepComplete = false;
+				string incidentStep = "";
+
+				// determine step status
 				if (approvalCount > 0)
 				{
-					IncidentStepStatus stat;
-
-					if (ApprovalStep == 10.0m)
+					if (ApprovalStep.STEP == 10.0m)
 					{
+						incidentStep = "Approvals";
+						IncidentStepStatus stat;
 						if ((numRequired > 0 && requiredCount == numRequired) || approvalCount == rptApprovals.Items.Count)
 						{
 							stat = (IncidentStepStatus)Math.Min(rptApprovals.Items.Count + 150, 155);
 							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, true, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
-							sendNotify = true;
+							notifyStepComplete = true;
 						}
 						else
 						{
+							incidentStep = ApprovalStep.STEP == 5.5m ? "CorrectiveActionApproval" : "InitialActionApproval";
 							stat = (IncidentStepStatus)Math.Min(approvalCount + 150, 154);
 							EHSIncidentMgr.UpdateIncidentStatus(incidentId, stat, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 						}
@@ -358,15 +385,48 @@ namespace SQM.Website
 					{
 						if ((numRequired > 0 && requiredCount == numRequired) || approvalCount == rptApprovals.Items.Count)
 						{
-							EHSIncidentMgr.UpdateIncidentApprovalStatus(incidentId, ApprovalStep);
+							EHSIncidentMgr.UpdateIncidentApprovalStatus(incidentId, ApprovalStep.STEP);
+							notifyStepComplete = true;
 						}
 					}
 				}
 
-				if (status > -1  && sendNotify)
+				// only send notifications when approvals are added
+				if (isChanged)
 				{
-					EHSNotificationMgr.NotifyIncidentStatus(LocalIncident, ((int)SysPriv.approve).ToString(), "");
+					NotifyCycle notifyCycle;
+					try
+					{
+						notifyCycle = ApprovalStep.NOTIFY_CYCLE.HasValue ? (NotifyCycle)ApprovalStep.NOTIFY_CYCLE : NotifyCycle.None;
+					}
+					catch
+					{
+						notifyCycle = NotifyCycle.None;
+					}
+
+					if (notifyStepComplete && ApprovalStep.STEP == 10.0m)
+					{
+						EHSNotificationMgr.NotifyIncidentStatus(LocalIncident, ((int)SysPriv.approve).ToString(), "");
+					}
+
+					if (notifyCycle == NotifyCycle.notifyNext)
+					{
+						INCFORM_APPROVAL priorApproval = new INCFORM_APPROVAL();
+						foreach (INCFORM_APPROVAL approval in approvalList)
+						{
+							// notify missing approvers when prior roles approved or the step was completed by 380 or 390 priv
+							if (!approval.APPROVAL_DATE.HasValue && (priorApproval.APPROVAL_DATE.HasValue || notifyStepComplete))
+							{
+								List<string> infoList = new List<string>();
+								infoList.Add(approval.APPROVER_TITLE);
+								infoList.Add(priorApproval.APPROVER_TITLE);
+								EHSNotificationMgr.NotifyIncidentSignoffRequired(LocalIncident, approval, ApprovalStep.STEP_HEADING_TEXT, approval.ITEM_SEQ >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
+							}
+							priorApproval = approval;
+						}
+					}
 				}
+
 			}
 
 			return status;

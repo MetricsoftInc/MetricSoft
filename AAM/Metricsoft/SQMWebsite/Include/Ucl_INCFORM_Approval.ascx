@@ -44,9 +44,11 @@
 			<ItemTemplate>
 				<div class="row">
 					<div class="col-xs-12 col-sm-2 text-left">
+						<asp:HiddenField ID="hfApprovalID" runat="server" />
 						<asp:HiddenField ID="hfItemSeq" runat="server" />
 						<asp:HiddenField ID="hfPersonID" runat="server" />
 						<asp:HiddenField ID="hfReqdComplete" runat="server" />
+						<asp:HiddenField ID="hfRoleDesc" runat="server" />
 						<span>
 							<asp:PlaceHolder ID="phOnBehalfOf" runat="server" Visible="false">
 								<asp:Label runat="server" ID="lblOnBehalfOf" CssClass="refText" Text="<%$ Resources:LocalizedText, OnBehalfOf %>"></asp:Label>

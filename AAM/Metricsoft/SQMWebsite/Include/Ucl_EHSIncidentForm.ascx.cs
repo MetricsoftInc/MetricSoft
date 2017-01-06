@@ -2262,7 +2262,7 @@ namespace SQM.Website
 				uclapproval.IsEditContext = true;
 				uclapproval.IncidentId = EditIncidentId;
 				uclapproval.PageMode = PageUseMode.ViewOnly;
-				uclapproval.PopulateInitialForm(10.0m);
+				uclapproval.PopulateInitialForm(incidentStepList.Where(s => s.INCIDENT_TYPE_ID == SelectedTypeId &&  s.STEP == 10.0m).FirstOrDefault());
 			}
 			else
 			{
@@ -2431,7 +2431,7 @@ namespace SQM.Website
 					uclapproval.IsEditContext = true;
 					uclapproval.IncidentId = EditIncidentId;
 					uclapproval.Visible = divSubnavPage.Visible = true;
-					uclapproval.PopulateInitialForm(2.5m);
+					uclapproval.PopulateInitialForm(incidentStepList.Where(s => s.INCIDENT_TYPE_ID == SelectedTypeId && s.STEP == 2.5m).FirstOrDefault());
 					break;
 				case "5.5":
 					lblPageTitle.Text = btnSubnavCorrectiveActionApproval.Text;
@@ -2440,7 +2440,7 @@ namespace SQM.Website
 					uclapproval.IsEditContext = true;
 					uclapproval.IncidentId = EditIncidentId;
 					uclapproval.Visible = divSubnavPage.Visible = true;
-					uclapproval.PopulateInitialForm(5.5m);
+					uclapproval.PopulateInitialForm(incidentStepList.Where(s => s.INCIDENT_TYPE_ID == SelectedTypeId && s.STEP == 5.5m).FirstOrDefault());
 					break;
 				case "10":
 					lblPageTitle.Text = btnSubnavApproval.Text;
@@ -2449,7 +2449,7 @@ namespace SQM.Website
 					uclapproval.IsEditContext = true;
 					uclapproval.IncidentId = EditIncidentId;
 					uclapproval.Visible = divSubnavPage.Visible = true;
-					uclapproval.PopulateInitialForm(10.0m);
+					uclapproval.PopulateInitialForm(incidentStepList.Where(s => s.INCIDENT_TYPE_ID == SelectedTypeId && s.STEP == 10.0m).FirstOrDefault());
 					break;
 				case "11":
 					lblPageTitle.Text = btnSubnavAlert.Text;

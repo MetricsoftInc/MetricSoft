@@ -310,10 +310,9 @@ namespace SQM.Website
 								profile.InputPeriod.PlantAccounting.APPROVAL_DT = SessionManager.UserContext.LocalTime;
                                 profile.InputPeriod.PlantAccounting.APPROVER_ID = SessionManager.UserContext.Person.PERSON_ID;
                             }
-                            //profile.UpdateMetricHistory();
                             profile.UpdateMetricHistory(periodDate);  // new roll-up logic 
-                            periodDate = periodDate.AddMonths(1);
                         }
+						periodDate = periodDate.AddMonths(1);
                     }
                     uclProgress.ProgressComplete();
                     ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
@@ -357,8 +356,8 @@ namespace SQM.Website
                                     profile.InputPeriod.PlantAccounting.APPROVER_ID = SessionManager.UserContext.Person.PERSON_ID;
                                 }
                                 profile.UpdateMetricHistory(periodDate);  // new roll-up logic 
-                                periodDate = periodDate.AddMonths(1);
                             }
+							periodDate = periodDate.AddMonths(1);
                         }
                     }
 

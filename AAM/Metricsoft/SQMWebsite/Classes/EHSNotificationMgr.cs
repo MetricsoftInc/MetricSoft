@@ -58,7 +58,7 @@ namespace SQM.Website
 		{
 			List<PERSON> notifyPersonList = new List<PERSON>();
 			List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
-			
+			 
 			//todo: filter notifyList by task status
 
 			try
@@ -77,8 +77,15 @@ namespace SQM.Website
 
 			try
 			{
+				// deterine scope of plant notifications (send from only HR location or any responsible location)
+				SETTINGS sets = SessionManager.GetUserSetting("EHS", "PERSON_PLANTNOTIFY");
+				if (sets == null)
+				{
+					sets = SQMSettings.GetSetting("EHS", "PERSON_PLANTNOTIFY");
+				}
+				bool HRPlantOnly = (sets != null && sets.VALUE.ToUpper() == "ALL") ? false : true;
 				notifyList = SQMModelMgr.SelectNotifyActionList(new PSsqmEntities(), null, (decimal)plant.PLANT_ID).Where(l => l.NOTIFY_SCOPE == notifyScope && l.SCOPE_TASK == notifyOnTask && (string.IsNullOrEmpty(notifyOnTaskStatus) || l.TASK_STATUS == notifyOnTaskStatus)).ToList();  // plant level
-				notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray(), true));
+				notifyPersonList.AddRange(SQMModelMgr.SelectPlantPrivgroupPersonList((decimal)plant.PLANT_ID, ParseNotifyGroups(notifyList).ToArray(), HRPlantOnly));
 			}
 			catch { }
 
@@ -385,6 +392,94 @@ namespace SQM.Website
 				;
 			}
 
+			return status;
+		}
+
+		public static int NotifyIncidentSignoffRequired(INCIDENT incident, INCFORM_APPROVAL approval, string incidentStep, string scopeAction, List<string>infoList)
+		{
+			// send email notification of incident step signoff required
+			// determine person notify list by PRIV (i.e. the approval ITEM_SEQ == sysPriv)
+			int status = 0;
+			string rtn = "";
+			PSsqmEntities entities = new PSsqmEntities();
+
+			PLANT plant = SQMModelMgr.LookupPlant(entities, (decimal)incident.DETECT_PLANT_ID, "");
+			if (ShouldNotifyPlant(plant, TaskRecordType.HealthSafetyIncident) == false)
+			{
+				return status;
+			}
+
+			List<PERSON> notifyList = SQMModelMgr.SelectPrivGroupPersonList((SysPriv)approval.ITEM_SEQ, SysScope.incident, (decimal)incident.DETECT_PLANT_ID, true);
+			if (notifyList == null || notifyList.Count == 0)
+			{
+				return -2;
+			}
+
+			List<XLAT> XLATList = SQMBasePage.SelectXLATList(new string[3] { "INCIDENT_STEP", "INCIDENT_NOTIFY", "NOTIFY_TASK_ASSIGN" });
+			string appUrl = SQMSettings.SelectSettingByCode(entities, "MAIL", "TASK", "MailURL").VALUE;
+			if (string.IsNullOrEmpty(appUrl))
+				appUrl = "the website";
+
+			List<SETTINGS> mailSettings = SQMSettings.SelectSettingsGroup("MAIL", "");
+
+			PERSON mailToPerson = null;
+			string ccList = "";
+			foreach (PERSON person in notifyList.Where(l=> string.IsNullOrEmpty(l.EMAIL) == false).ToList())
+			{
+				if (string.IsNullOrEmpty(ccList))
+					mailToPerson = person;
+				ccList += (person.EMAIL + ",");
+			}
+			ccList = ccList.TrimEnd(',');
+
+			string emailTo = mailToPerson.EMAIL;
+			string subject = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_NOTIFY" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION_SHORT.Replace("[0]", infoList.ElementAt(0));
+			string emailSubject = subject + " (" + plant.PLANT_NAME + ")";
+			string body = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_NOTIFY" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION.Replace("[1]", infoList.ElementAt(1));
+			string emailBody = body + "<br/>" +
+							"<br/>" +
+							XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == incidentStep).FirstOrDefault().DESCRIPTION +
+							"<br/><br/>" +
+							"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+							plant.PLANT_NAME + "<br/>" +
+							incident.ISSUE_TYPE + "<br/>" +
+							"<br/>" +
+							incident.DESCRIPTION + "<br/>" +
+							"<br/><br/>" +
+							XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION_SHORT;
+
+			rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, ccList, "web", null, mailSettings);
+			WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
+
+			/*
+			foreach (PERSON person in notifyList)
+			{
+				if (!string.IsNullOrEmpty(person.EMAIL))
+				{
+					string emailTo = person.EMAIL;
+					string emailSubject = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_NOTIFY" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION_SHORT + " (" + plant.PLANT_NAME + ")";
+
+					string emailBody = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_NOTIFY" && x.XLAT_CODE == scopeAction).FirstOrDefault().DESCRIPTION + "<br/>" +
+									"<br/>" +
+									"Incident ID: " + WebSiteCommon.FormatID(incident.INCIDENT_ID, 6) + "<br/>" +
+									plant.PLANT_NAME + "<br/>" +
+									incident.ISSUE_TYPE + "<br/>" +
+									"<br/>" +
+									incident.DESCRIPTION + "<br/>" +
+									"<br/>" +
+									XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == incidentStep).FirstOrDefault().DESCRIPTION +
+									"<br/><br/>" +
+									XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION_SHORT;
+
+			  		Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null, mailSettings));
+					thread.IsBackground = true;
+					Thread thread = new Thread(() => WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, "", "web", null));
+					thread.IsBackground = true;
+					thread.Start();
+					WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
+				}
+			}
+			*/
 			return status;
 		}
 

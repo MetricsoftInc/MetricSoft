@@ -13,6 +13,7 @@ namespace SQM.Website
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
 	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, approve5=385, release=390, release1=391, release2=392, release3=393, release4=394, release5=395, notify=400, view=500, none=900 }
 	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata, media }
+	public enum NotifyCycle { None = 0, notifyNext = 22};
 
 	public static class CultureSettings
 	{
