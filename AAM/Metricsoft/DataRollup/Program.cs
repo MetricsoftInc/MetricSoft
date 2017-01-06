@@ -240,8 +240,8 @@ namespace DataRollup
 							}
 							status = profile.UpdateMetricHistory(periodDate);  // new roll-up logic 
 							WriteLine(" ... " + status.ToString());
-							periodDate = periodDate.AddMonths(1);
 						}
+						periodDate = periodDate.AddMonths(1);
 					}
 				}
 
