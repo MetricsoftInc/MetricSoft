@@ -1129,7 +1129,8 @@ namespace SQM.Website
 				PERSON createBy = new PERSON();
 				try
 				{
-					createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+					//createBy = SQMModelMgr.LookupPersonByEmpID(entities, task.CREATE_ID.ToString());
+					createBy = SQMModelMgr.LookupPerson(entities, (decimal)task.CREATE_ID, "", false);
 				}
 				catch { }
 
