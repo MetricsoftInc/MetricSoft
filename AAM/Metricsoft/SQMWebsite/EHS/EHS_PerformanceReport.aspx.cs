@@ -1052,6 +1052,7 @@ namespace SQM.Website.EHS
 				var YTD = (data.data as List<Data>)[12];
 
 				var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
+				uclPyramid.ForYear = this.rmypYear.SelectedDate.Value.Year;
 				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
 				uclPyramid.Fatalities = YTD.Fatalities;
 				uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;
@@ -1159,6 +1160,7 @@ namespace SQM.Website.EHS
 				var YTD = (data.data as List<Data>)[12];
 
 				var uclPyramid = this.LoadControl<Ucl_PerformanceReport_Pyramid>("~/Include/Ucl_PerformanceReport_Pyramid.ascx");
+				uclPyramid.ForYear = year;
 				uclPyramid.FirstAidCasesPreviousYear = data.previousYTD.Fatalities;
 				uclPyramid.Fatalities = YTD.Fatalities;
 				uclPyramid.LostTimeCasesPreviousYear = data.previousYTD.Frequency;

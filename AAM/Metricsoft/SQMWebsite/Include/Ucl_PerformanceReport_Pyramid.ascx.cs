@@ -8,6 +8,7 @@ namespace SQM.Website
 {
 	public partial class Ucl_PerformanceReport_Pyramid : UserControl
 	{
+		public int ForYear { get; set; }
 		public decimal FatalitiesPreviousYear { get; set; }
 		public decimal Fatalities { get; set; }
 		public decimal LostTimeCasesPreviousYear { get; set; }
@@ -40,8 +41,10 @@ namespace SQM.Website
 			var halfWidth = this.pyramid.Width.Divide(2).ToPixels();
 			this.pyramidTable.Style.Add("left", (halfWidth + left) + "px");
 			this.pyramidTable_column1.Style.Add("width", (halfWidth + 20) + "px");
-			this.pyramidTable_columnAnnualized.InnerText = "Annualized " + DateTime.Today.Year;
-			this.pyramidTable_columnPreviousYear.InnerText = (DateTime.Today.Year - 1).ToString();
+			//this.pyramidTable_columnAnnualized.InnerText = "Annualized " + DateTime.Today.Year;
+			//this.pyramidTable_columnPreviousYear.InnerText = (DateTime.Today.Year - 1).ToString();
+			this.pyramidTable_columnAnnualized.InnerText = "Annualized " + ForYear;
+			this.pyramidTable_columnPreviousYear.InnerText = (ForYear - 1).ToString();
 
 			this.pyramidTable_fatalitiesRow.Style.Add("height", rowHeight + "px");
 			this.pyramidTable_fatalitiesYTD.InnerText = this.Fatalities.ToString();
