@@ -203,17 +203,17 @@ namespace SQM.Website
 		public static XmlDocument GetAppSettingsDoc()
         {
             XmlDocument xDoc;
-			CustomXmlData cd = new CustomXmlData();
+			//CustomXmlData cd = new CustomXmlData();
 			System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
 			//if (HttpContext.Current.Session["AppSettingsDoc"] == null)
 			//{
 				xDoc = new XmlDocument();
 				xDoc.Load(HttpContext.Current.Server.MapPath("/settings.xml"));
-				cd.InnerXML = xDoc.InnerXml;
+				//cd.InnerXML = xDoc.InnerXml;
 				// now you have serializable object
-				XmlSerializer x = new XmlSerializer(cd.GetType());
-				x.Serialize(memoryStream, cd);
-				HttpContext.Current.Session["AppSettingsDoc"] = cd;
+				//XmlSerializer x = new XmlSerializer(cd.GetType());
+				//x.Serialize(memoryStream, cd);
+				//HttpContext.Current.Session["AppSettingsDoc"] = cd;
 			//}
 			//else
 			/*

@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<td class="columnHeader">
-						<asp:Label ID="lblComments" runat="server" text="Implementation / Verficiation Recommendations"></asp:Label>
+						<asp:Label ID="lblComments" runat="server" text="Implementation / Verification Recommendations"></asp:Label>
 					</td>
 					<td class="tableDataAlt" >&nbsp;</td>
 					<td class="tableDataAlt" >
