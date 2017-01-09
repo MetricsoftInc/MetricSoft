@@ -969,4 +969,7 @@
   <data name="ReAuditing" xml:space="preserve">
     <value>ReAuditing</value>
   </data>
+  <data name="IncidentReportIncomplete" xml:space="preserve">
+    <value>This Incident does not have sufficient information or steps completed to be approved.</value>
+  </data>
 </root>

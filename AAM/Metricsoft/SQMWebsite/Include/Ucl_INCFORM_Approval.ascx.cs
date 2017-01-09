@@ -173,6 +173,7 @@ namespace SQM.Website
 			SetUserAccess("INCFORM_APPROVAL");
 
 			pnlApproval.Visible = true;
+			lblStatusMsg.Visible = false;
 
 			// check if incident approval status is greater than this
 			if (LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP)
@@ -270,6 +271,11 @@ namespace SQM.Website
 			if (PageMode == PageUseMode.Active  && canApproveAny)
 			{
 				btnSave.Visible = pnlApproval.Enabled = EHSIncidentMgr.IsDependentStatus(LocalIncident, EHSIncidentMgr.GetIncidentSteps(incidentStepList, (decimal)LocalIncident.ISSUE_TYPE_ID).Where(l => l.STEP == ApprovalStep.STEP).Select(l => l.DEPENDENT_STATUS).FirstOrDefault());
+				if (!btnSave.Visible)
+				{
+					lblStatusMsg.Text = Resources.LocalizedText.IncidentReportIncomplete;
+					lblStatusMsg.Visible = true;
+				}
 			}
 		}
 

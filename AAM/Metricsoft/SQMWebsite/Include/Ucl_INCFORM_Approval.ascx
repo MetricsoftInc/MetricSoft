@@ -100,6 +100,7 @@
 			<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 				OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" Visibl="false" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 		</center>
+		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis" Visible="false"></asp:Label>
 	</div>
 </asp:Panel>
 
