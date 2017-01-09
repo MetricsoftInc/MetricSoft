@@ -638,7 +638,12 @@ namespace SQM.Website
 					if (sets != null  &&  !string.IsNullOrEmpty(sets.VALUE))
 					{
 						dmPeriodTo.SelectedDate = ((DateTime)dmPeriodTo.SelectedDate).AddMonths(Convert.ToInt32(sets.VALUE));
-					}
+						if (dmPeriodTo.SelectedDate < dmPeriodFrom.SelectedDate)
+						{
+							DateTime dt = Convert.ToDateTime(dmPeriodFrom.SelectedDate);
+							dmPeriodTo.SelectedDate = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+						}
+					}		
                 }
 
                 bool autoDisplay = false;
