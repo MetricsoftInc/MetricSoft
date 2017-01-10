@@ -139,44 +139,57 @@ namespace SQM.Website
 
 		protected void UpdateDisplayState(DisplayState state, decimal incidentID)
 		{
-			string key;
-			switch (state)
+			try
 			{
-				case DisplayState.IncidentList:
-					SearchIncidents();
-					SessionManager.ClearReturns();
-					break;
-				case DisplayState.IncidentNotificationNew:
-					SessionManager.ClearReturns();
-					if (rddlNewActionType.SelectedItem != null)
-					{
-						INCIDENT newIncident = new INCIDENT();
-						newIncident.DETECT_PLANT_ID = Convert.ToDecimal(ddlActionLocation.SelectedValue);
-						newIncident.ISSUE_TYPE_ID = (decimal)EHSIncidentTypeId.PreventativeAction;
-						newIncident.ISSUE_TYPE = rddlNewActionType.SelectedValue;
-						SessionManager.ReturnObject = newIncident;
-						SessionManager.ReturnStatus = true;
-						Response.Redirect("/EHS/EHS_PrevActionForm.aspx");
-					}
-					break;
-				case DisplayState.IncidentNotificationEdit:
-					SessionManager.ClearReturns();
-					INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
-					if (theIncident != null)
-					{
-						SessionManager.ReturnObject = theIncident;
-						SessionManager.ReturnStatus = true;
-						string stepCmd = "";
-						if (!string.IsNullOrEmpty(Request.QueryString["s"]))   // from inbox/calendar assume this is a task assignment. direct to corrective actions page
+				switch (state)
+				{
+					case DisplayState.IncidentList:
+						SearchIncidents();
+						SessionManager.ClearReturns();
+						break;
+					case DisplayState.IncidentNotificationNew:
+						SessionManager.ClearReturns();
+						if (rddlNewActionType.SelectedItem != null)
 						{
-							stepCmd = ("?s=" +  Request.QueryString["s"]);
+							INCIDENT newIncident = new INCIDENT();
+							newIncident.DETECT_PLANT_ID = Convert.ToDecimal(ddlActionLocation.SelectedValue);
+							newIncident.ISSUE_TYPE_ID = (decimal)EHSIncidentTypeId.PreventativeAction;
+							newIncident.ISSUE_TYPE = rddlNewActionType.SelectedValue;
+							if (newIncident.DETECT_PLANT_ID < 1 || newIncident.ISSUE_TYPE_ID < 1)
+							{
+								ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Error creating new PrevAction');", true);
+							}
+							else
+							{
+								SessionManager.ReturnObject = newIncident;
+								SessionManager.ReturnStatus = true;
+								Response.Redirect("/EHS/EHS_PrevActionForm.aspx");
+							}
 						}
-						Response.Redirect("/EHS/EHS_PrevActionForm.aspx"+stepCmd);
-					}
-					break;
-				default:
-					SessionManager.ClearReturns();
-					break;
+						break;
+					case DisplayState.IncidentNotificationEdit:
+						SessionManager.ClearReturns();
+						INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
+						if (theIncident != null)
+						{
+							SessionManager.ReturnObject = theIncident;
+							SessionManager.ReturnStatus = true;
+							string stepCmd = "";
+							if (!string.IsNullOrEmpty(Request.QueryString["s"]))   // from inbox/calendar assume this is a task assignment. direct to corrective actions page
+							{
+								stepCmd = ("?s=" + Request.QueryString["s"]);
+							}
+							Response.Redirect("/EHS/EHS_PrevActionForm.aspx" + stepCmd);
+						}
+						break;
+					default:
+						SessionManager.ClearReturns();
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Error updating PrevAction display state:'" + ex.Message + ");", true);
 			}
 		}
 
