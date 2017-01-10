@@ -173,7 +173,7 @@ namespace SQM.Website
 			SetUserAccess("INCFORM_APPROVAL");
 
 			pnlApproval.Visible = true;
-			lblStatusMsg.Visible = false;
+			divStatus.Visible = false;
 
 			// check if incident approval status is greater than this
 			if (LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP)
@@ -274,7 +274,7 @@ namespace SQM.Website
 				if (!btnSave.Visible)
 				{
 					lblStatusMsg.Text = Resources.LocalizedText.IncidentReportIncomplete;
-					lblStatusMsg.Visible = true;
+					divStatus.Visible = true;
 				}
 			}
 		}

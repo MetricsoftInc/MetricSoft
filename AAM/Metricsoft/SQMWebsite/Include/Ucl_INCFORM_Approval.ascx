@@ -34,6 +34,9 @@
 
 	<div class="container-fluid">
 
+		<div id="divStatus" runat="server" visible="false" style="margin: 10px;">
+			<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
+		</div>
 		<telerik:RadAjaxPanel ID="rapApprovals" runat="server" HorizontalAlign="NotSet" meta:resourcekey="rapApprovalsResource1">
 
 		<asp:Repeater runat="server" ID="rptApprovals" ClientIDMode="AutoID" OnItemDataBound="rptApprovals_OnItemDataBound" OnItemCommand="rptApprovals_ItemCommand">
@@ -100,7 +103,6 @@
 			<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 				OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" Visibl="false" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>
 		</center>
-		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis" Visible="false"></asp:Label>
 	</div>
 </asp:Panel>
 
