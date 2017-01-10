@@ -170,58 +170,73 @@ namespace SQM.Website
 
 		protected void UpdateDisplayState(DisplayState state, decimal incidentID)
 		{
-			string key;
-			switch (state)
-			{
-				case DisplayState.IncidentList:
-					SearchIncidents();
-					SessionManager.ClearReturns();
-					break;
-				case DisplayState.IncidentNotificationNew:
-					SessionManager.ClearReturns();
-					if (rddlNewIncidentType.SelectedItem != null)
-					{
-						INCIDENT newIncident = new INCIDENT();
-						newIncident.DETECT_PLANT_ID = Convert.ToDecimal(ddlIncidentLocation.SelectedValue);
-						newIncident.ISSUE_TYPE_ID = Convert.ToDecimal(rddlNewIncidentType.SelectedValue);
-						SessionManager.ReturnObject = newIncident;
-						SessionManager.ReturnStatus = true;
-						if (EHSIncidentMgr.IsUseCustomForm(Convert.ToDecimal(rddlNewIncidentType.SelectedValue)))
-						{
-							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
-						}
-						else
-						{
-							Response.Redirect("/EHS/EHS_IncidentForm.aspx");
-						}
-					}
-					break;
-				case DisplayState.IncidentNotificationEdit:
-				case DisplayState.IncidentAlert:
-					SessionManager.ClearReturns();
-					INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
-					if (theIncident != null)
-					{
-						SessionManager.ReturnObject = theIncident;
-						SessionManager.ReturnStatus = true;
-						if (state == DisplayState.IncidentAlert)
-						{
-							SessionManager.ReturnContext = "a";	// pass 'alert' context to incident pages
-						}
-						if (EHSIncidentMgr.IsUseCustomForm((decimal)theIncident.ISSUE_TYPE_ID))
-						{
-							Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
-						}
-						else
-						{
-							Response.Redirect("/EHS/EHS_IncidentForm.aspx");
-						}
-					}
 
-					break;
-				default:
-					SessionManager.ClearReturns();
-					break;
+			try
+			{
+				switch (state)
+				{
+					case DisplayState.IncidentList:
+						SearchIncidents();
+						SessionManager.ClearReturns();
+						break;
+					case DisplayState.IncidentNotificationNew:
+						SessionManager.ClearReturns();
+						if (rddlNewIncidentType.SelectedItem != null)
+						{
+							INCIDENT newIncident = new INCIDENT();
+							newIncident.DETECT_PLANT_ID = Convert.ToDecimal(ddlIncidentLocation.SelectedValue);
+							newIncident.ISSUE_TYPE_ID = Convert.ToDecimal(rddlNewIncidentType.SelectedValue);
+
+							if (newIncident.DETECT_PLANT_ID < 1 || newIncident.ISSUE_TYPE_ID < 1)
+							{
+								ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Error creating new Incident');", true);
+							}
+							else
+							{
+								SessionManager.ReturnObject = newIncident;
+								SessionManager.ReturnStatus = true;
+								if (EHSIncidentMgr.IsUseCustomForm(Convert.ToDecimal(rddlNewIncidentType.SelectedValue)))
+								{
+									Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
+								}
+								else
+								{
+									Response.Redirect("/EHS/EHS_IncidentForm.aspx");
+								}
+							}
+						}
+						break;
+					case DisplayState.IncidentNotificationEdit:
+					case DisplayState.IncidentAlert:
+						SessionManager.ClearReturns();
+						INCIDENT theIncident = EHSIncidentMgr.SelectIncidentById(entities, incidentID);
+						if (theIncident != null)
+						{
+							SessionManager.ReturnObject = theIncident;
+							SessionManager.ReturnStatus = true;
+							if (state == DisplayState.IncidentAlert)
+							{
+								SessionManager.ReturnContext = "a";	// pass 'alert' context to incident pages
+							}
+							if (EHSIncidentMgr.IsUseCustomForm((decimal)theIncident.ISSUE_TYPE_ID))
+							{
+								Response.Redirect("/EHS/EHS_InjuryIllnessForm.aspx");
+							}
+							else
+							{
+								Response.Redirect("/EHS/EHS_IncidentForm.aspx");
+							}
+						}
+
+						break;
+					default:
+						SessionManager.ClearReturns();
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
+				ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Error updating Incident display state:'"+ex.Message+");", true);
 			}
 		}
 
