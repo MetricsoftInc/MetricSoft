@@ -652,19 +652,19 @@ namespace SQM.Website
                 {
                     case ViewCriteriaOption.NoDefaults:
                         ddlPlantSelect.Enabled = ddlDateSpan.Enabled = false;
-                        dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
+                        //dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
                         ddlPlantSelect.ClearCheckedItems();
                         //pnlDashboardSelects.Style.Add("display", "inline");
                         break;
                     case ViewCriteriaOption.NoOverride:
                         ddlPlantSelect.Enabled = ddlDateSpan.Enabled = false;
-                        dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
+                        //dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
                         //pnlDashboardSelects.Style.Add("display", "none");
                         autoDisplay = true;
                         break;
                     case ViewCriteriaOption.SelectLocs:
                         ddlPlantSelect.Enabled = true;
-                        ddlDateSpan.Enabled = dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
+                        //ddlDateSpan.Enabled = dmPeriodFrom.Enabled = dmPeriodTo.Enabled = false;
                         //pnlDashboardSelects.Style.Add("display", "inline");
                         break;
                     case ViewCriteriaOption.SelectSpan:
@@ -682,7 +682,7 @@ namespace SQM.Website
 
 				if (localCriteria.DateSpanType == DateSpanOption.FYYearToDate)
 				{
-					dmPeriodFrom.Enabled = false;
+					//dmPeriodFrom.Enabled = false;
 				}
 
                 // auto display w/ options section closed if the default view
