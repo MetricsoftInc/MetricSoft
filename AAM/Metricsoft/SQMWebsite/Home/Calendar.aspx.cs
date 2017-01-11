@@ -189,6 +189,13 @@ namespace SQM.Website
 			ddlScheduleScope.Items.Clear();
 			ddlTaskScope.Items.Clear();
 
+			// only show escalations if company is using the supervisor field ?
+			SETTINGS setting = SessionManager.GetUserSetting("COMPANY", "PERSON_ADD_FIELDS");
+			if (setting != null && setting.VALUE.ToLower().Contains("supv"))
+			{
+				btnEscalateView.Visible = true;
+			}
+
 			SysPriv maxPriv = UserContext.GetMaxScopePrivilege(SysScope.busloc);
 
 			List<BusinessLocation> locationList = SessionManager.PlantList;
@@ -252,6 +259,7 @@ namespace SQM.Website
 			rcbStatusSelect.SelectedValue = "a";
 
 			++SessionManager.UserContext.InboxReviews;
+
 		}
 
 		private void DisplayCalendar(DateTime selectedDate)
@@ -335,13 +343,16 @@ namespace SQM.Website
 			uclTaskSchedule.BindTaskSchedule(taskScheduleList, selectedDate, enableItemLinks);
 
 			// get task escalations 
-			respForList = new List<decimal>();
-			respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
-			if (respForList.Count > 0)
+			if (btnEscalateView.Visible)
 			{
-				// has escalation persons
-				List<TaskItem> escalateList = TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, new List<decimal>(), false);
-				uclTaskStrip.BindTaskStrip(escalateList.Where(l => !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l => l.Task.DUE_DT).ToList());
+				respForList = new List<decimal>();
+				respForList.AddRange(SQMModelMgr.SelectPersonListBySupvID(SessionManager.UserContext.Person.EMP_ID).Select(l => l.PERSON_ID).ToList());
+				if (respForList.Count > 0)
+				{
+					// has escalation persons
+					List<TaskItem> escalateList = TaskMgr.IncidentTaskStatus(SessionManager.UserContext.HRLocation.Company.COMPANY_ID, respForList, new List<decimal>(), false);
+					uclTaskStrip.BindTaskStrip(escalateList.Where(l => !String.IsNullOrEmpty(l.LongTitle)).OrderBy(l => l.Task.DUE_DT).ToList());
+				}
 			}
 
 			divTaskList.Visible = divEscalate.Visible = false;

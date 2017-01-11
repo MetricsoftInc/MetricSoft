@@ -33,7 +33,7 @@
 	<div style="margin: 8px;">
 		<asp:Button id="btnCalendarView" runat="server" Text="Calendar View" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="C" meta:resourcekey="btnCalendarViewResource1"/>
 		<asp:Button id="btnTaskView" runat="server" Text="Actions Assigned" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="T" meta:resourcekey="btnTaskViewResource1"/>
-		<asp:Button id="btnEscalateView" runat="server" Text="Task Escalations" CssClass="buttonStd" OnClick="btnChangeView_Click" CommandArgument="E" meta:resourcekey="btnEscalateViewResource1"/>
+		<asp:Button id="btnEscalateView" runat="server" Text="Task Escalations" CssClass="buttonStd" Visible="false" OnClick="btnChangeView_Click" CommandArgument="E" meta:resourcekey="btnEscalateViewResource1"/>
 	</div>
 
 	<asp:Panel runat="server" ID="pnlCalendar" Width="100%">
