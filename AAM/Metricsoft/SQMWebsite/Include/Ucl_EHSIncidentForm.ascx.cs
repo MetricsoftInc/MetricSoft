@@ -154,6 +154,11 @@ namespace SQM.Website
 			entities = new PSsqmEntities();
 			controlQuestionChanged = false;
 
+			if (IsEditContext == null)
+			{
+				IsEditContext = new bool();
+			}
+
 			ahReturn.HRef = "/EHS/EHS_Incidents.aspx";
 			//btnSaveReturn.Visible = btnSaveContinue.Visible = false;
 
@@ -213,7 +218,8 @@ namespace SQM.Website
 
 		private RadDropDownList HandleDepartmentList(EHSIncidentQuestion q, INCIDENT incident, bool shouldPopulate, RadDropDownList rddl)
 		{
-			List<DEPARTMENT> deptList = SQMModelMgr.SelectDepartmentList(entities, (decimal)incident.DETECT_PLANT_ID);
+			decimal plantID = incident != null ? (decimal)incident.DETECT_PLANT_ID : IncidentLocationId;
+			List<DEPARTMENT> deptList =     SQMModelMgr.SelectDepartmentList(entities, plantID);
 			foreach (DEPARTMENT dept in deptList)
 			{
 				rddl.Items.Add(new DropDownListItem(dept.DEPT_NAME, dept.DEPT_ID.ToString()));
@@ -1735,6 +1741,7 @@ namespace SQM.Website
 		{
 			if (newTypeID > 0)
 			{
+				IsEditContext = false;
 				SessionManager.SetIncidentLocation(newLocationID);
 				IncidentLocationId = newLocationID;
 				IncidentLocationTZ = SessionManager.IncidentLocation.Plant.LOCAL_TIMEZONE;
@@ -1743,7 +1750,6 @@ namespace SQM.Website
 				CreatePersonId = 0;
 				EditIncidentId = 0;
 				IncidentStepCompleted = 0;
-				IsEditContext = false;
 				BuildForm();
 			}
 		}
@@ -2229,7 +2235,8 @@ namespace SQM.Website
 				btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
 				btnSubnavInitialActionApproval.Visible = btnSubnavCorrectiveActionApproval.Visible = false;
 				btnDelete.Visible = false;
-				uploader.SetViewMode(true);
+				if (uploader != null)
+					uploader.SetViewMode(true);
 			}
 			else if (context == "alert")
 			{
