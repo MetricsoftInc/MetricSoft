@@ -102,7 +102,7 @@
           <Property Name="AUDIT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="AUDIT_QUESTION_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="ANSWER_VALUE" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ORIGINAL_QUESTION_TEXT" Type="nvarchar" MaxLength="500" />
+          <Property Name="ORIGINAL_QUESTION_TEXT" Type="nvarchar(max)" Nullable="false" />
           <Property Name="COMMENT" Type="nvarchar" MaxLength="1000" />
           <Property Name="CHOICE_POSITIVE" Type="bit" Nullable="false" />
           <Property Name="STATUS" Type="varchar" MaxLength="4" />
@@ -8222,7 +8222,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Type="Decimal" Name="AUDIT_ID" Nullable="false" Precision="35" Scale="0" />
           <Property Type="Decimal" Name="AUDIT_QUESTION_ID" Nullable="false" Precision="35" Scale="0" />
           <Property Type="String" Name="ANSWER_VALUE" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ORIGINAL_QUESTION_TEXT" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ORIGINAL_QUESTION_TEXT" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Type="String" Name="COMMENT" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AUDIT" Relationship="PSsqmModel.FK_AUDIT_ANSWER_AUDIT" FromRole="AUDIT_ANSWER" ToRole="AUDIT" />
           <Property Type="Boolean" Name="CHOICE_POSITIVE" Nullable="false" />

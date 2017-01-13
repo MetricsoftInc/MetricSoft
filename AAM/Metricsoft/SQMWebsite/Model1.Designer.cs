@@ -5599,12 +5599,14 @@ namespace SQM.Website
         /// </summary>
         /// <param name="aUDIT_ID">Initial value of the AUDIT_ID property.</param>
         /// <param name="aUDIT_QUESTION_ID">Initial value of the AUDIT_QUESTION_ID property.</param>
+        /// <param name="oRIGINAL_QUESTION_TEXT">Initial value of the ORIGINAL_QUESTION_TEXT property.</param>
         /// <param name="cHOICE_POSITIVE">Initial value of the CHOICE_POSITIVE property.</param>
-        public static AUDIT_ANSWER CreateAUDIT_ANSWER(global::System.Decimal aUDIT_ID, global::System.Decimal aUDIT_QUESTION_ID, global::System.Boolean cHOICE_POSITIVE)
+        public static AUDIT_ANSWER CreateAUDIT_ANSWER(global::System.Decimal aUDIT_ID, global::System.Decimal aUDIT_QUESTION_ID, global::System.String oRIGINAL_QUESTION_TEXT, global::System.Boolean cHOICE_POSITIVE)
         {
             AUDIT_ANSWER aUDIT_ANSWER = new AUDIT_ANSWER();
             aUDIT_ANSWER.AUDIT_ID = aUDIT_ID;
             aUDIT_ANSWER.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
+            aUDIT_ANSWER.ORIGINAL_QUESTION_TEXT = oRIGINAL_QUESTION_TEXT;
             aUDIT_ANSWER.CHOICE_POSITIVE = cHOICE_POSITIVE;
             return aUDIT_ANSWER;
         }
@@ -5694,7 +5696,7 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String ORIGINAL_QUESTION_TEXT
         {
@@ -5706,7 +5708,7 @@ namespace SQM.Website
             {
                 OnORIGINAL_QUESTION_TEXTChanging(value);
                 ReportPropertyChanging("ORIGINAL_QUESTION_TEXT");
-                _ORIGINAL_QUESTION_TEXT = StructuralObject.SetValidValue(value, true);
+                _ORIGINAL_QUESTION_TEXT = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ORIGINAL_QUESTION_TEXT");
                 OnORIGINAL_QUESTION_TEXTChanged();
             }
