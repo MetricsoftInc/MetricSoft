@@ -891,6 +891,38 @@ namespace SQM.Website
 
         #region UIhelpers
 
+		public static void DisableControls(System.Web.UI.Control control, string[] excludeTypes, string [] excludeIDS)
+		{
+			foreach (System.Web.UI.Control c in control.Controls)
+			{
+				// Get the Enabled property by reflection.
+				Type type = c.GetType();
+
+				// exclude this control AND its children
+				if (c.ID != null && excludeIDS.Contains(c.ID))
+				{
+					continue;
+				}
+				else 
+				{
+					if (!excludeTypes.Contains(type.ToString()))
+					{
+						System.Reflection.PropertyInfo pInfo = type.GetProperty("Enabled");
+						if (pInfo != null)
+						{
+							pInfo.SetValue(c, false, null);
+						}
+					}
+				}
+
+				// Recurse into child controls.
+				if (c.Controls.Count > 0)
+				{
+					DisableControls(c, excludeTypes, excludeIDS);
+				}
+			}
+		}
+
         public bool SetFindControlValue(string ctlID, HiddenField hfBase, string value)
         {
             return SetFindControlValue(ctlID, hfBase, value, null);

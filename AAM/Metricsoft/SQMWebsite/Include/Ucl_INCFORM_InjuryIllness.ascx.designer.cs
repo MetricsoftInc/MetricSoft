@@ -112,6 +112,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Panel pnlBaseForm;
         
         /// <summary>
+        /// divBaseForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBaseForm;
+        
+        /// <summary>
+        /// divIncidentDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncidentDate;
+        
+        /// <summary>
         /// lbIncidentDateSM control.
         /// </summary>
         /// <remarks>

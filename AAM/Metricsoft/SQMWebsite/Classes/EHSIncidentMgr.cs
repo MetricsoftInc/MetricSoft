@@ -670,10 +670,10 @@ namespace SQM.Website
 
 		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted)
 		{
-			return CanUpdateIncident(incident, IsEditContext, privNeeded, stepCompleted, -1);
+			return CanUpdateIncident(incident, IsEditContext, privNeeded, stepCompleted, true);
 		}
 
-		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted, int stepToUpdate)
+		public static bool CanUpdateIncident(INCIDENT incident, bool IsEditContext, SysPriv privNeeded, int stepCompleted, bool checkIfClosed)
 		{
 			bool canUpdate = false;
 
@@ -684,10 +684,12 @@ namespace SQM.Website
 					canUpdate = true;
 				}
 
-				//if (incident != null  && incident.LAST_APPROVAL_STEP.HasValue  && incident.LAST_APPROVAL_STEP >= 10.0m)
-				if (incident != null && incident.CLOSE_DATE.HasValue)
+				if (checkIfClosed)
 				{
-					canUpdate = false;
+					if (incident != null && incident.CLOSE_DATE.HasValue)
+					{
+						canUpdate = false;
+					}
 				}
 			}
 			else  // assume edit context will be false for new incidents an any user can create/save a new incident
@@ -696,6 +698,13 @@ namespace SQM.Website
 			}
 
 			return canUpdate;
+		}
+
+		public static bool IsIncidentClosed(INCIDENT incident)
+		{
+			bool status = incident != null && incident.CLOSE_DATE.HasValue ? true : false;
+
+			return status;
 		}
 
 
@@ -1677,94 +1686,6 @@ namespace SQM.Website
 			}
 
 			return status;
-		}
-
-
-		public static void TryCloseIncident(decimal incidentId, DateTime ? defaultDate)
-		{
-			var entities = new PSsqmEntities();
-
-			INCIDENT incident = SelectIncidentById(entities, incidentId);
-
-			if (ShouldIncidentReportClose(incident))
-			{
-				incident.CLOSE_DATE = defaultDate != null ? defaultDate :  DateTime.UtcNow;
-				SetTaskComplete(incidentId, 40);
-			}
-			else
-			{
-				incident.CLOSE_DATE = null;
-			}
-
-			if (ShouldIncidentCloseDataComplete(incident))
-				incident.CLOSE_DATE_DATA_COMPLETE = defaultDate != null ? defaultDate : DateTime.UtcNow;
-			else
-				incident.CLOSE_DATE_DATA_COMPLETE = null;
-
-			entities.SaveChanges();
-		}
-
-
-		public static bool ShouldIncidentReportClose(INCIDENT incident)
-		{
-			var entities = new PSsqmEntities();
-			int incidentClosedScore = 0;
-
-			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 1);
-			foreach (var q in questionList)
-			{
-				string answer = (from a in entities.INCIDENT_ANSWER
-								 where a.INCIDENT_ID == incident.INCIDENT_ID && a.INCIDENT_QUESTION_ID == q.QuestionId
-								 select a.ANSWER_VALUE).FirstOrDefault();
-
-				if (q.QuestionId == (decimal)EHSQuestionId.CompletionDate && !string.IsNullOrEmpty(answer))
-					incidentClosedScore++;
-
-				if (q.QuestionId == (decimal)EHSQuestionId.CompletedBy && !string.IsNullOrEmpty(answer))
-					incidentClosedScore++;
-			}
-
-			return (incidentClosedScore >= 2);
-		}
-
-
-		public static bool ShouldIncidentCloseDataComplete(INCIDENT incident)
-		{
-			var entities = new PSsqmEntities();
-
-			var questionList = SelectIncidentQuestionList((decimal)incident.ISSUE_TYPE_ID, incident.DETECT_COMPANY_ID, 0);
-			var requiredQuestionIds = (from q in questionList where q.IsRequiredClose == true select q.QuestionId).ToList();
-
-			// Remove lost time date questions from required questions if not a lost time case
-			if (incident.ISSUE_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness)
-			{
-				var lostTimeQuestion = (from q in questionList where q.QuestionId == (decimal)EHSQuestionId.LostTimeCase select q).FirstOrDefault();
-				if (lostTimeQuestion != null)
-				{
-					var answerText = SelectIncidentAnswer(incident, (decimal)EHSQuestionId.LostTimeCase);
-
-					if (answerText != "Yes")
-					{
-						requiredQuestionIds.Remove((decimal)EHSQuestionId.ExpectedReturnDate);
-						requiredQuestionIds.Remove((decimal)EHSQuestionId.ActualReturnDate);
-					}
-				}
-			}
-
-			var answers = (from a in entities.INCIDENT_ANSWER
-						   where a.INCIDENT_ID == incident.INCIDENT_ID && requiredQuestionIds.Contains(a.INCIDENT_QUESTION_ID)
-						   select a.ANSWER_VALUE).ToList();
-
-			bool shouldClose = true;
-			foreach (var a in answers)
-			{
-				if (string.IsNullOrEmpty(a))
-				{
-					shouldClose = false;
-					break;
-				}
-			}
-			return shouldClose;
 		}
 
 		public static string SelectIncidentAnswer(INCIDENT incident, decimal questionId)

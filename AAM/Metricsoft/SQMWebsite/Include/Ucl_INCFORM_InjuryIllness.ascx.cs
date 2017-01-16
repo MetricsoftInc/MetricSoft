@@ -491,7 +491,22 @@ namespace SQM.Website
 			}
 			else
 			{
-				pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted);
+				bool isClosed = EHSIncidentMgr.IsIncidentClosed(incident);
+				bool canUPdate = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, IncidentStepCompleted, false);
+				if (isClosed)
+				{
+					if (canUPdate)
+					{
+						SQMBasePage.DisableControls(divBaseForm, new string[1] { "Telerik.Web.UI.RadAjaxPanel" }, new string[2] {"uclRecordableHist", "divRecordableHist" });
+						SQMBasePage.DisableControls(rapAttach, new string[] {}, new string[] {});
+					}
+					else
+						pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+				}
+				else
+				{
+					pnlBaseForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = canUPdate;
+				}
 			}
 		}
 
@@ -1371,11 +1386,6 @@ namespace SQM.Website
 					TheIncident = UpdateIncident(incidentId);
 					TheINCFORM = UpdateInjuryIllnessDetails(incidentId);
 					SaveAttachments(incidentId);
-
-					if (Mode == IncidentMode.Incident)
-					{
-						EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
-					}
 				}
 
 				theincidentId = incidentId;

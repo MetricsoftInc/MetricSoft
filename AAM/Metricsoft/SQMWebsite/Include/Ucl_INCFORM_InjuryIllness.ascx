@@ -134,8 +134,8 @@
 
 <asp:Panel ID="pnlBaseForm" runat="server">
 
-	<div class="container-fluid">
-		<div class="row">
+	<div ID="divBaseForm" runat="server" class="container-fluid">
+		<div id="divIncidentDate" runat="server"  class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
 					<asp:Label ID="lbIncidentDateSM" runat="server" Text="<%$ Resources:LocalizedText, IncidentDate %>"></asp:Label><span class="requiredStarFloat">*</span></span>
@@ -320,8 +320,6 @@
 									</table>
 								</HeaderTemplate>
 							</DropDownSettings>
-			<%--				<SearchContext DataSourceID="" Enabled="True" TabIndex="0" ShowDefaultItem = "false">
-							</SearchContext>--%>
 						</telerik:RadSearchBox>
 						<span>
 							&nbsp;&nbsp;
@@ -453,8 +451,6 @@
 												</table>
 											</HeaderTemplate>
 										</DropDownSettings>
-			<%--							<SearchContext DataSourceID="" Enabled="False" TabIndex="0" ShowDefaultItem = "False">
-										</SearchContext>--%>
 									</telerik:RadSearchBox>
 								</telerik:RadAjaxPanel>
 							</div>
@@ -782,7 +778,7 @@
 				</center>
 			</div>
 		</telerik:RadAjaxPanel>
-	</div
+	</div>
 	<br />
 
 	<telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">

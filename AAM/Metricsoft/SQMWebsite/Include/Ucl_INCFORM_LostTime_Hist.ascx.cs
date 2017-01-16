@@ -321,7 +321,7 @@ namespace SQM.Website
 
 			btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.action, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED);  // can log lost time ?
 			if (btnSave.Visible == false)
-				btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED, (int)IncidentStepStatus.workstatus);  // check if has closed incident priv
+				btnSave.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.config, WorkStatusIncident.INCFORM_LAST_STEP_COMPLETED);  // check if has closed incident priv
 			btnAddLostTime.Visible = btnSave.Visible;
 
 			if (hfContext.Value == "embeded")

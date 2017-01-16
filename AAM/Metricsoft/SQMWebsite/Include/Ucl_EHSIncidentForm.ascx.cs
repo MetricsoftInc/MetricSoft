@@ -1871,9 +1871,7 @@ namespace SQM.Website
 					incidentId = EditIncidentId;
 					if (incidentId > 0)
 					{
-						theIncident = UpdateIncident(incidentId);
-						EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
-					}
+						theIncident = UpdateIncident(incidentId);					}
 				}
 				if (incidentId > 0)
 				{
@@ -1892,7 +1890,6 @@ namespace SQM.Website
 					SaveAttachments(incidentId);
 
 					UpdateTaskInfo(questions, incidentId, DateTime.Now);
-					EHSIncidentMgr.TryCloseIncident(incidentId, WebSiteCommon.LocalTime(DateTime.UtcNow, IncidentLocationTZ));
 				}
 			}
 
