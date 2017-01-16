@@ -202,6 +202,13 @@
 								 </telerik:RadAjaxPanel>
 								   <br />
 								<div id="divForm" runat="server">
+									<div class="row-fluid" runat="server" id="divLegend" style="margin-top: 5px;">
+										<div class="col-xs-hidden col-sm-6"></div>
+										<div class="col-xs-12 col-sm-6">
+											<asp:Label ID="lblLegend" runat="server"></asp:Label>
+										</div>
+									</div>
+
 									<div id="divFormRepeater" runat="server" class="" visible="false" style="margin-top: 5px;">
 										<asp:Repeater runat="server" ID="rptAuditFormTopics" ClientIDMode="AutoID" OnItemDataBound="rptAuditFormTopics_OnItemDataBound">
 											<HeaderTemplate>

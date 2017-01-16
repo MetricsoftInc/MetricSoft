@@ -1099,6 +1099,14 @@ namespace SQM.Website.EHS
 				rptAuditFormTopics.DataBind();
 				divForm.Visible = true;
 				divFormRepeater.Visible = true;
+				List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[1] { "AUDIT_LEGENDS" });
+				XLAT xlat = xlatList.Where(l => l.XLAT_CODE == EditAuditTypeId.ToString()).FirstOrDefault();
+				if (xlat != null)
+
+				{
+					divLegend.Visible = true;
+					lblLegend.Text = xlat.DESCRIPTION;
+				}
 			}
 			else
 			{

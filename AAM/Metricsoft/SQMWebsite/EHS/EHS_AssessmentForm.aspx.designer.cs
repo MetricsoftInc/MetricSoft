@@ -346,6 +346,24 @@ namespace SQM.Website.EHS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
+        /// divLegend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLegend;
+        
+        /// <summary>
+        /// lblLegend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLegend;
+        
+        /// <summary>
         /// divFormRepeater control.
         /// </summary>
         /// <remarks>
