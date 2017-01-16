@@ -119,11 +119,14 @@ namespace SQM.Website
 				if (hf != null && tb != null)
 				{
 					string currencyCode = hf.Value;
-					decimal rate = 0;
-					Decimal.TryParse(tb.Text, out rate);
+					//decimal rate = 0;
+					//Decimal.TryParse(tb.Text, out rate);
+					double rateVal = 0;
+					Double.TryParse(tb.Text, out rateVal);
 
-					if (rate > 0)
+					if (rateVal > 0)
 					{
+						//rate = (decimal)rateVal;
 						var entities = new PSsqmEntities();
 						var queryObject = (from cx in entities.CURRENCY_XREF where cx.EFF_YEAR == currentYear &&
 											cx.EFF_MONTH == currentMonth &&
@@ -137,13 +140,13 @@ namespace SQM.Website
 								EFF_YEAR = currentYear,
 								EFF_MONTH = currentMonth,
 								CURRENCY_CODE = currencyCode,
-								BASE_CURRENCY_RATE = rate
+								BASE_CURRENCY_RATE = (decimal)rateVal
 							};
 							entities.CURRENCY_XREF.AddObject(cur);
 						}
 						else
 						{
-							queryObject.BASE_CURRENCY_RATE = rate;
+							queryObject.BASE_CURRENCY_RATE = (decimal)rateVal;
 						}
 						entities.SaveChanges();
 					}
