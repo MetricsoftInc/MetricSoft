@@ -322,7 +322,12 @@ namespace SQM.Website
             if (responsibleID > 0)
                 task.RESPONSIBLE_ID = responsibleID;
             task.STATUS = ((int)TaskStatus.New).ToString();
-			task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
+			try
+			{
+				task.CREATE_ID = SessionManager.UserContext.Person.PERSON_ID;
+			}
+			catch
+			{ }
 			this.TaskList.Add(task);
             return task;
         }
