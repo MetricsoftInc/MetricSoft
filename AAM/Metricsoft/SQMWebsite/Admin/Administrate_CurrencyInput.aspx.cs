@@ -19,14 +19,6 @@ namespace SQM.Website
 {
     public partial class Administrate_CurrencyInput : SQMBasePage
     {
-        static string selectedFile;
-        static SQMFileReader fileReader;
-		static char[] fileDelimiter;
-		static double plantDataMultiplier;
-
-		HSSFWorkbook hssfworkbook;
-		XSSFWorkbook xssfworkbook;
-		IWorkbook wb;
 
 		DataSet dsCurrency;
 		int periodYear;
