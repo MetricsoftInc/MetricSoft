@@ -110,7 +110,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE", "INCIDENT_QUESTION_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_TYPE), "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TYPE_INCIDENT_QUESTION_INCIDENT_QUESTION", "INCIDENT_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION), "INCIDENT_TYPE_COMPANY_QUESTION", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TYPE_COMPANY_QUESTION), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_QUESTION_CONTROL_INCIDENT_QUESTION_CONTROL_ACTIONS", "INCIDENT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL_ACTION), "INCIDENT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_QUESTION_CONTROL), true)]
-[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_QUESTION_CONTROL_ACTIONS", "AUDIT_QUESTION_CONTROL_ACTION", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_QUESTION_CONTROL_ACTION), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_QUESTION_CONTROL_AUDIT_TYPE", "AUDIT_TYPE", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT_TYPE), "AUDIT_QUESTION_CONTROL", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_QUESTION_CONTROL), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_AUDIT_ANSWER_AUDIT", "AUDIT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.AUDIT), "AUDIT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.AUDIT_ANSWER), true)]
@@ -167,6 +166,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_ANSWER_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCIDENT_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_ANSWER), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "PROB_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_OCCUR), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_QI_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
 
 #endregion
 
@@ -1597,22 +1597,6 @@ namespace SQM.Website
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<CURRENCY_XREF> CURRENCY_XREF
-        {
-            get
-            {
-                if ((_CURRENCY_XREF == null))
-                {
-                    _CURRENCY_XREF = base.CreateObjectSet<CURRENCY_XREF>("CURRENCY_XREF");
-                }
-                return _CURRENCY_XREF;
-            }
-        }
-        private ObjectSet<CURRENCY_XREF> _CURRENCY_XREF;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<INCFORM_POWEROUTAGE> INCFORM_POWEROUTAGE
         {
             get
@@ -2473,6 +2457,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<INCIDENT> _INCIDENT;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CURRENCY_XREF> CURRENCY_XREF
+        {
+            get
+            {
+                if ((_CURRENCY_XREF == null))
+                {
+                    _CURRENCY_XREF = base.CreateObjectSet<CURRENCY_XREF>("CURRENCY_XREF");
+                }
+                return _CURRENCY_XREF;
+            }
+        }
+        private ObjectSet<CURRENCY_XREF> _CURRENCY_XREF;
 
         #endregion
 
@@ -3167,14 +3167,6 @@ namespace SQM.Website
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the CURRENCY_XREF EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToCURRENCY_XREF(CURRENCY_XREF cURRENCY_XREF)
-        {
-            base.AddObject("CURRENCY_XREF", cURRENCY_XREF);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the INCFORM_POWEROUTAGE EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToINCFORM_POWEROUTAGE(INCFORM_POWEROUTAGE iNCFORM_POWEROUTAGE)
@@ -3604,6 +3596,14 @@ namespace SQM.Website
         public void AddToINCIDENT(INCIDENT iNCIDENT)
         {
             base.AddObject("INCIDENT", iNCIDENT);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CURRENCY_XREF EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCURRENCY_XREF(CURRENCY_XREF cURRENCY_XREF)
+        {
+            base.AddObject("CURRENCY_XREF", cURRENCY_XREF);
         }
 
         #endregion

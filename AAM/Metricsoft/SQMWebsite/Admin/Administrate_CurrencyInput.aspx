@@ -76,7 +76,7 @@
                                     <td>
                                         <telerik:RadNumericTextBox runat="server" Text='<%# Eval("currentValue") %>' ID="tbRate" clientid='<%# "Input_" + Eval("currencyCode") %>'
                                             ClientEvents-OnValueChanged='<%# "function (sender,args){checkInputValue(\"" + Eval("currencyCode") + "\");}"%>'
-                                            Width="100" NumberFormat-DecimalDigits="6" EnableViewState="true" IncrementSettings-InterceptMouseWheel="false" MinValue="0">
+                                            Width="165" NumberFormat-DecimalDigits="8" EnableViewState="true" IncrementSettings-InterceptMouseWheel="false" MinValue="0">
                                         </telerik:RadNumericTextBox>
                                     </td>
                                     <td>
