@@ -116,9 +116,15 @@ namespace SQM.Website.EHS
 		{
 			int year = date.Year;
 			int weekOfYear = cal.GetWeekOfYear(date, calendarWeekRule, firstDayOfWeek);
+			// crazy bug in above - overcalculates the week for CY 2017 !!!!
+			if (year == 2017)
+			{
+				weekOfYear = weekOfYear - 1;
+			}
 			var jan1 = new DateTime(year, 1, 1);
 			int daysOffset = (int)firstDayOfWeek - (int)jan1.DayOfWeek;
 			var firstWeekDay = jan1.AddDays(daysOffset);
+			//DateTime firstWeekDay = jan1.AddDays(daysOffset);
 			int firstWeek = cal.GetWeekOfYear(jan1, calendarWeekRule, firstDayOfWeek);
 			if (firstWeek <= 1 || firstWeek > 50)
 				--weekOfYear;
@@ -142,6 +148,7 @@ namespace SQM.Website.EHS
 			var cal = this.rdpEndOfWeek.Calendar;
 			var startOfWeek = FirstDayOfWeek(e.NewDate.Value, cal.Calendar, cal.DateTimeFormat.CalendarWeekRule, (DayOfWeek)cal.FirstDayOfWeek);
 			this.rdpEndOfWeek.SelectedDate = startOfWeek.AddDays(6);
+
 			var startOfNextWeek = startOfWeek.AddDays(7);
 			var measure_columns = from c in this.rgData.MasterTableView.Columns.OfType<GridBoundColumn>()
 								  where !string.IsNullOrWhiteSpace(c.UniqueName) && c.UniqueName.StartsWith("measure_")
