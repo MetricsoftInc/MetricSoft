@@ -136,8 +136,9 @@
 						<%--GroupingText="Corporate Objectives & Performance"--%>
 						<asp:Label ID="lblPosting" runat="server" CssClass="sectionTitles" Text="Corporate Objectives & Performance"></asp:Label>
 						<center>
-							<div id="divTicker" runat="server" visible="False">
+							<div id="divTicker" runat="server" visible="False" style="margin-top: 5px;">
 								<asp:Label ID="lblStats" runat="server" CssClass="prompt" Text="Number Of Days Without A Lost Time Case" meta:resourcekey="lblStatsResource1"></asp:Label>
+								<br />
 								<Ucl:RadGauge ID="uclGauge" runat="server" />
 							</div>
 							<img runat="server" id="imgPostingEHS" style="height: auto; width: auto;" />

@@ -117,7 +117,7 @@ namespace SQM.Website
 							stsmgr.ehsCtl.ElapsedTimeSeries(plantIDS, new decimal[1] { 8 }, new decimal[1] { 63 }, "YES", true);
 
 							GaugeDefinition tikCfg = new GaugeDefinition().Initialize();
-							tikCfg.Width = 0;
+							tikCfg.Width = 450; // 0;
 							tikCfg.Unit = args.Length > 1 ? Convert.ToInt32(args[1]) : 80;
 							tikCfg.Position = "none";
 							tikCfg.NewRow = false;
