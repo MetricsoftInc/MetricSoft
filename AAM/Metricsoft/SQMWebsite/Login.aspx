@@ -119,7 +119,7 @@
 
 		<div class="row-fluid">
 			<div class="col-xs-12 text-left">
-				<div id="divLinks" runat="server" style="margin-top: 10px;" visible="false">
+				<div id="divLinks" runat="server" style="margin-top: 7px;" visible="false">
 				</div>
 			</div>
 		</div>
@@ -127,13 +127,14 @@
 		<div class="row-fluid">
 			<div class="col-xs-12 text-left">
 
-				<div id="divAnnouncements" runat="server" style="margin-top: 10px;">
+				<div id="divAnnouncements" runat="server" style="margin-top: 7px;">
 					<div id="divLoginMessage" runat="server" class="borderSoft" style="width: 98%; padding: 4px; margin-bottom: 7px;" visible="false">
 						<asp:Label ID="lblLoginMessage" runat="server" CssClass="instructText"></asp:Label>
 					</div>
 
-					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" CssClass="" Width="99%" Visible="False">
+					<asp:Panel ID="pnlPosting" runat="server" HorizontalAlign="Center" CssClass="" Width="100%" Visible="False">
 						<%--GroupingText="Corporate Objectives & Performance"--%>
+						<hr width="99%" style="color: #c1c1c1; background-color: #c1c1c1; height:1px;"></hr>
 						<asp:Label ID="lblPosting" runat="server" CssClass="sectionTitles" Text="Corporate Objectives & Performance"></asp:Label>
 						<center>
 							<div id="divTicker" runat="server" visible="False" style="margin-top: 5px;">
