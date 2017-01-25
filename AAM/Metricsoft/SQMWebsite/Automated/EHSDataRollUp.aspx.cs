@@ -77,6 +77,12 @@ namespace SQM.Website.Automated
 			UpdateOrdinalData(entities, ehs_data, daysToCloses, data["daysToClose"]);
 		}
 
+
+		public static DateTime? TruncateTime(DateTime? date)
+		{
+			return date.HasValue ? date.Value.Date : (DateTime?)null;
+		}
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			string pageMode = "";
@@ -99,7 +105,7 @@ namespace SQM.Website.Automated
 					// get any AUTOMATE settings
 					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
-					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-6);	// this should be a setting 
+					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-9);	// this should be a setting 
 					// set end date to end of current month to clear spurrious entries ?
 					DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
 
@@ -118,12 +124,22 @@ namespace SQM.Website.Automated
 					decimal plantManagerAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30003").MEASURE_ID;
 					decimal ehsAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30001").MEASURE_ID;
 					decimal supervisorAuditsMeasureID = measureList.First(m => m.MEASURE_CD == "S30002").MEASURE_ID;
-					decimal allAuditsMeasureID = measureList.FirstOrDefault(m => m.MEASURE_CD == "S30000") != null ? measureList.First(m => m.MEASURE_CD == "S30000").MEASURE_ID : 0;
-					var auditMeasureIDs = new List<decimal>()
+					decimal plantManagerAuditsCreatedMeasureID = measureList.First(m => m.MEASURE_CD == "S3C003").MEASURE_ID;
+					decimal ehsAuditsCreatedMeasureID = measureList.First(m => m.MEASURE_CD == "S3C001").MEASURE_ID;
+					decimal supervisorAuditsCreatedMeasureID = measureList.First(m => m.MEASURE_CD == "S3C002").MEASURE_ID;
+					decimal allAuditsCreatedMeasureID = measureList.FirstOrDefault(m => m.MEASURE_CD == "S3C000").MEASURE_ID;
+					var auditDailyMeasureIDs = new List<decimal>()
 					{
 						plantManagerAuditsMeasureID,
 						ehsAuditsMeasureID,
-						supervisorAuditsMeasureID
+						supervisorAuditsMeasureID,
+					};
+					var auditMonthlyMeasureIDs = new List<decimal>()
+					{
+						plantManagerAuditsCreatedMeasureID,
+						ehsAuditsCreatedMeasureID,
+						supervisorAuditsCreatedMeasureID,
+						allAuditsCreatedMeasureID
 					};
 
 					decimal nearMissMeasureID = measureList.First(m => m.MEASURE_CD == "S20002").MEASURE_ID;
@@ -159,11 +175,8 @@ namespace SQM.Website.Automated
 					List<PLANT> plantList = SQMModelMgr.SelectPlantList(entities, 1, 0).Where(l => l.STATUS == "A").ToList();
 					PLANT_ACTIVE pact = null;
 
-					var createdAudits = entities.AUDIT.Where(a => new decimal[3] { 1, 2, 3 }.Contains(a.AUDIT_TYPE_ID));
-					//var closedAudits = entities.AUDIT.Where(a => a.CURRENT_STATUS == "C");
-					var incidents = entities.INCIDENT.Include("INCFORM_INJURYILLNESS").Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID);
-					//var activePlants = entities.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == (int)TaskRecordType.HealthSafetyIncident &&
-					//	closedAudits.Select(a => a.DETECT_PLANT_ID).Concat(incidents.Select(i => i.DETECT_PLANT_ID)).Distinct().Contains(p.PLANT_ID));
+					var createdAudits = (from a in entities.AUDIT where a.AUDIT_DT >= rollupFromDate && new decimal[3] { 1, 2, 3 }.Contains(a.AUDIT_TYPE_ID) select a).ToList();
+					var incidents = (from i in entities.INCIDENT where i.INCIDENT_DT >= rollupFromDate && (i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID) select i).ToList();
 
 					// AUDITS
 					foreach (var plant in plantList)
@@ -171,10 +184,7 @@ namespace SQM.Website.Automated
 						pact = (from a in entities.PLANT_ACTIVE where a.PLANT_ID == plant.PLANT_ID && a.RECORD_TYPE == (int)TaskRecordType.Audit select a).SingleOrDefault();
 						if (pact != null && pact.EFF_START_DATE.HasValue)	// plant is active
 						{
-							//var closedAuditsForPlant = closedAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
-
-							var allAuditsForPlant = createdAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID);
-							var closedAuditsForPlant = createdAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID && a.CURRENT_STATUS == "C");
+							var auditsForPlant = createdAudits.Where(a => a.DETECT_PLANT_ID == plant.PLANT_ID && a.CURRENT_STATUS != "I");
 
 							// new timespan logic 
 							DateTime fromDate = rollupFromDate > (DateTime)pact.EFF_START_DATE ? rollupFromDate : (DateTime)pact.EFF_START_DATE;
@@ -182,57 +192,64 @@ namespace SQM.Website.Automated
 
 							WriteLine("AUDIT Rollup For Plant " + pact.PLANT_ID + "  from date = " + fromDate.ToShortDateString() + "  to date = " + toDate.ToShortDateString());
 
-							// count all audits created on a monthly basis
-							if (allAuditsMeasureID > 0)
+							// loop by month to get audits created for month and then by day to calculate completions
+							for (DateTime dt = fromDate; dt <= toDate; dt = dt.AddMonths(1))
 							{
-								for (DateTime dt = fromDate; dt <= toDate; dt = dt.AddMonths(1))
+								int plantManagerAuditsCreatedMonth = 0;
+								int ehsAuditsCreatedMonth = 0;
+								int supervisorAuditsCreatedMonth = 0;
+								int auditsCreatedMonth = 0;
+
+								for (var currDate = new System.DateTime(dt.Year, dt.Month, 1); currDate <= new System.DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month)); currDate = currDate.AddDays(1))
 								{
-									int allAudits = 0;
-									var allAuditsForMonth = allAuditsForPlant.Where(a => ((DateTime)a.CREATE_DT).Month == dt.Month);
-									if (allAuditsForMonth.Any())
+									int plantManagerAudits = 0;
+									int ehsAudits = 0;
+									int supervisorAudits = 0;
+
+									// fetch audits scheduled for this day
+									var auditsForDay = auditsForPlant.Where(a => TruncateTime(a.AUDIT_DT) == currDate.Date);
+									if (auditsForDay.Any())
 									{
-										allAudits = allAuditsForMonth.Count();
+										auditsCreatedMonth += auditsForDay.Count();
+										plantManagerAuditsCreatedMonth += auditsForDay.Count(a => a.AUDIT_TYPE_ID == 1);
+										ehsAuditsCreatedMonth += auditsForDay.Count(a => a.AUDIT_TYPE_ID == 2);
+										supervisorAuditsCreatedMonth += auditsForDay.Count(a => a.AUDIT_TYPE_ID == 3);
+									}
+									// get audits scheduled for this day that have been completed
+									var closedAuditsForDay = auditsForDay.Where(a => a.CLOSE_DATE_DATA_COMPLETE != null);
+									if (closedAuditsForDay.Any())
+									{
+										plantManagerAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 1);
+										ehsAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 2);
+										supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 3);
 									}
 
-									var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, new DateTime(dt.Year, dt.Month, 1), new decimal[1] { allAuditsMeasureID }.ToList(), true, updateIndicator);
-									EHSDataMapping.SetEHSDataValue(dataList, allAuditsMeasureID, allAudits, updateIndicator);	// all audits created 
-									foreach (var data in dataList)
+									var dailyData = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, auditDailyMeasureIDs, true, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(dailyData, plantManagerAuditsMeasureID, plantManagerAudits, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(dailyData, ehsAuditsMeasureID, ehsAudits, updateIndicator);
+									EHSDataMapping.SetEHSDataValue(dailyData, supervisorAuditsMeasureID, supervisorAudits, updateIndicator);
+									foreach (var data in dailyData)
 										if (data.EntityState == EntityState.Detached && data.VALUE != 0)
 											entities.EHS_DATA.AddObject(data);
 										else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
 											entities.DeleteObject(data);
-									WriteLine("Audits created for " + dt.Year.ToString() + "/" + dt.Month.ToString() + " = " + allAudits.ToString());
-								}
-							}
-
-							for (var currDate = fromDate; currDate <= toDate; currDate = currDate.AddDays(1))
-							{
-								int plantManagerAudits = 0;
-								int ehsAudits = 0;
-								int supervisorAudits = 0;
-
-								var closedAuditsForDay = closedAuditsForPlant.Where(a => EntityFunctions.TruncateTime(a.CLOSE_DATE_DATA_COMPLETE) == currDate.Date);
-								if (closedAuditsForDay.Any())
-								{
-									plantManagerAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 1);
-									ehsAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 2);
-									supervisorAudits = closedAuditsForDay.Count(a => a.AUDIT_TYPE_ID == 3);
 								}
 
-								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, auditMeasureIDs, true, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, plantManagerAuditsMeasureID, plantManagerAudits, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, ehsAuditsMeasureID, ehsAudits, updateIndicator);
-								EHSDataMapping.SetEHSDataValue(dataList, supervisorAuditsMeasureID, supervisorAudits, updateIndicator);
-								foreach (var data in dataList)
+								var monthlyData = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, new DateTime(dt.Year, dt.Month, 1), auditMonthlyMeasureIDs, true, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(monthlyData, plantManagerAuditsCreatedMeasureID, plantManagerAuditsCreatedMonth, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(monthlyData, supervisorAuditsCreatedMeasureID, supervisorAuditsCreatedMonth, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(monthlyData, ehsAuditsCreatedMeasureID, ehsAuditsCreatedMonth, updateIndicator);
+								EHSDataMapping.SetEHSDataValue(monthlyData, allAuditsCreatedMeasureID, auditsCreatedMonth, updateIndicator);
+								foreach (var data in monthlyData)
 									if (data.EntityState == EntityState.Detached && data.VALUE != 0)
 										entities.EHS_DATA.AddObject(data);
 									else if (data.EntityState != EntityState.Detached && data.VALUE == 0)
 										entities.DeleteObject(data);
+
+								entities.SaveChanges();
 							}
 						}
 					}
-
-					entities.SaveChanges();
 
 					// INCIDENTS
 					foreach (var plant in plantList)
@@ -276,19 +293,19 @@ namespace SQM.Website.Automated
 									{ "daysToClose", null }
 								};
 
-								var incidentsForDay = incidentsForPlant.Where(i => EntityFunctions.TruncateTime(i.INCIDENT_DT) == currDate.Date);
+								var incidentsForDay = incidentsForPlant.Where(i => TruncateTime(i.INCIDENT_DT) == currDate.Date);
 								if (incidentsForDay.Any())
 								{
-									var firstAidIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.FIRST_AID);
-									var recordableIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.RECORDABLE);
+									var firstAidIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null &&  i.INCFORM_INJURYILLNESS.FIRST_AID);
+									var recordableIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null  && i.INCFORM_INJURYILLNESS.RECORDABLE);
 									otherIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID != injuryIllnessIssueTypeID).Count();
 									// Basic data
 									nearMisses = incidentsForDay.Count(i => i.ISSUE_TYPE_ID == nearMissIssueTypeID);
 									firstAidCases = firstAidIncidents.Count();
 									recordables = recordableIncidents.Count();
-									lostTimeCases = incidentsForDay.Count(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.LOST_TIME);
+									lostTimeCases = incidentsForDay.Count(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null && i.INCFORM_INJURYILLNESS.LOST_TIME);
 									fatalities = incidentsForDay.Count(i =>
-										i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS.FATALITY.HasValue && i.INCFORM_INJURYILLNESS.FATALITY.Value);
+										i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null && i.INCFORM_INJURYILLNESS.FATALITY.HasValue && i.INCFORM_INJURYILLNESS != null && i.INCFORM_INJURYILLNESS.FATALITY.Value);
 									closedInvestigations = incidentsForDay.Count(i => i.CLOSE_DATE.HasValue);
 
 									// First Aid ordinals
@@ -407,6 +424,8 @@ namespace SQM.Website.Automated
 								}
 							}
 						}
+
+						entities.SaveChanges();
 					}
 
 					entities.SaveChanges();
