@@ -89,7 +89,7 @@
 													<asp:Label ID="lblPlantDescEdit" runat="server" text="Location Description"></asp:Label>
 												</td>
 												<td class="tableDataAlt">&nbsp;</td>
-												<td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantDesc" TextMode="multiline" rows="2" maxlength="100" CssClass="textStd" runat="server" style="width: 97%;"/></td>
+												<td CLASS="tableDataAlt"><asp:TextBox ID="tbPlantDesc" size="60" maxlength="100" runat="server"/></td>
 											</tr>
 											 <tr>
 												<td class="columnHeader">
