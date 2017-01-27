@@ -59,7 +59,7 @@ namespace SQM.Website.EHS
 			"S30001",
 			"S30002",
 			"S30003",
-			"S30000",
+			"S3C000",
 			"S3C001",
 			"S3C002",
 			"S3C003"
