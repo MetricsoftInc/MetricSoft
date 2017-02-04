@@ -279,7 +279,7 @@ namespace DataRollup
 					// get any AUTOMATE settings
 					sets = SQMSettings.SelectSettingsGroup("AUTOMATE", "TASK");
 
-					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-9);	// this should be a setting 
+					DateTime rollupFromDate = DateTime.UtcNow.AddMonths(-11);	// this should be a setting 
 					// set end date to end of current month to clear spurrious entries ?
 					DateTime rollupToDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.DaysInMonth(DateTime.UtcNow.Year, DateTime.UtcNow.Month));
 
@@ -351,8 +351,9 @@ namespace DataRollup
 					PLANT_ACTIVE pact = null;
 
 					var createdAudits = (from a in entities.AUDIT where a.AUDIT_DT >= rollupFromDate && new decimal[3] { 1, 2, 3 }.Contains(a.AUDIT_TYPE_ID) select a).ToList();
-					var incidents = (from i in entities.INCIDENT where i.INCIDENT_DT >= rollupFromDate && (i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID) select i).ToList();
-
+					//var incidents = (from i in entities.INCIDENT where i.INCIDENT_DT >= rollupFromDate && (i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID) select i).ToList();
+					var incidents = (from i in entities.INCIDENT.Include("INCFORM_INJURYILLNESS") where i.INCIDENT_DT >= rollupFromDate && (i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID || i.ISSUE_TYPE_ID == nearMissIssueTypeID) select i).ToList();
+					
 					// AUDITS
 					foreach (var plant in plantList)
 					{
@@ -424,6 +425,7 @@ namespace DataRollup
 								entities.SaveChanges();
 							}
 						}
+						entities.SaveChanges();
 					}
 
 					// INCIDENTS
@@ -469,7 +471,8 @@ namespace DataRollup
 								};
 
 								var incidentsForDay = incidentsForPlant.Where(i => TruncateTime(i.INCIDENT_DT) == currDate.Date);
-								if (incidentsForDay.Any())
+								//if (incidentsForDay.Any())
+								if (incidentsForDay.Count() > 0)
 								{
 									var firstAidIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null && i.INCFORM_INJURYILLNESS.FIRST_AID);
 									var recordableIncidents = incidentsForDay.Where(i => i.ISSUE_TYPE_ID == injuryIllnessIssueTypeID && i.INCFORM_INJURYILLNESS != null && i.INCFORM_INJURYILLNESS.RECORDABLE);
@@ -496,10 +499,18 @@ namespace DataRollup
 									if (setFirstAid != null && setFirstAid.VALUE.Contains("tenure"))
 										firstAidOrdinals["tenure"] = firstAidIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
 									if (setFirstAid != null && setFirstAid.VALUE.Contains("daysToClose"))
+									{
 										firstAidOrdinals["daysToClose"] = firstAidIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
-										EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
+										((TimeSpan)(i.INCIDENT_DT - i.CLOSE_DATE)).Days).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
 										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
 										x.Key ?? "", x => x.Count());
+										/*
+										firstAidOrdinals["daysToClose"] = firstAidIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
+			EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
+			(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
+			x.Key ?? "", x => x.Count());
+										 */
+									}
 
 									// Recordable ordinals
 									// check which ordinal data we wish to capture
@@ -514,10 +525,19 @@ namespace DataRollup
 									if (setRecordable != null && setRecordable.VALUE.Contains("tenure"))
 										recordableOrdinals["tenure"] = recordableIncidents.GroupBy(i => i.INCFORM_INJURYILLNESS.JOB_TENURE).ToDictionary(t => t.Key ?? "", t => t.Count());
 									if (setRecordable != null && setRecordable.VALUE.Contains("daysToClose"))
+									{
+
 										recordableOrdinals["daysToClose"] = recordableIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
+										((TimeSpan)(i.INCIDENT_DT - i.CLOSE_DATE)).Days).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
+										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
+										x.Key ?? "", x => x.Count());
+										/*
+										 										recordableOrdinals["daysToClose"] = recordableIncidents.Where(i => i.CLOSE_DATE.HasValue).Select(i =>
 										EntityFunctions.DiffDays(i.INCIDENT_DT, i.CLOSE_DATE)).Select(d => entities.XLAT_DAYS_TO_CLOSE_TRANS.FirstOrDefault(x =>
 										(x.MIN_DAYS.HasValue ? d >= x.MIN_DAYS : true) && (x.MAX_DAYS.HasValue ? d <= x.MAX_DAYS : true)).XLAT_CODE).GroupBy(x => x).ToDictionary(x =>
 										x.Key ?? "", x => x.Count());
+										 */
+									}
 								}
 
 								var dataList = EHSDataMapping.SelectEHSDataPeriodList(entities, plant.PLANT_ID, currDate, incidentMeasureIDs, true, updateIndicator);
