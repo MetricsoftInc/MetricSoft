@@ -219,8 +219,21 @@ namespace SQM.Website
 
 				if (data.Audit.CURRENT_STATUS == "C")
 				{
+					// TODO: This throws a null reference error when the database field is NULL (which is valid)
 					DateTime clsDate = (DateTime)data.Audit.CLOSE_DATE_DATA_COMPLETE;
 					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "C").FirstOrDefault().DESCRIPTION + " " + SQMBasePage.FormatDate(clsDate, "d", false);
+
+					// TODO: Possible fix
+					//DateTime? clsDate = data.Audit.CLOSE_DATE;
+					//if (data.Audit.CLOSE_DATE_DATA_COMPLETE.HasValue)
+					//{
+					//	clsDate = data.Audit.CLOSE_DATE_DATA_COMPLETE;
+					//}
+					
+					//if (clsDate.HasValue)
+					//{
+					//	lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "AUDIT_STATUS" && l.XLAT_CODE == "C").FirstOrDefault().DESCRIPTION + " " + SQMBasePage.FormatDate(clsDate.Value, "d", false);
+					//}
 				}
 				else
 				{
