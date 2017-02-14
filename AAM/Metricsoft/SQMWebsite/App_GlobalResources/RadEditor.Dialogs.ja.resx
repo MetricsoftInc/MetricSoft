@@ -1,0 +1,1982 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>Copyright 2002-2015 ©Telerik  All rights reserved.</value>
+  </data>
+  <data name="About_Title" xml:space="preserve">
+    <value>RadEditor by Telerik</value>
+  </data>
+  <data name="Border_title" xml:space="preserve">
+    <value>ボーダー</value>
+  </data>
+  <data name="Common_ActualSize" xml:space="preserve">
+    <value>実際のサイズ</value>
+  </data>
+  <data name="Common_Add" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="Common_AddCustomColor" xml:space="preserve">
+    <value>カスタムカラーの追加</value>
+  </data>
+  <data name="Common_AddCustomTarget" xml:space="preserve">
+    <value>カスタム目標の追加</value>
+  </data>
+  <data name="Common_All" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="Common_AllowedExtensions" xml:space="preserve">
+    <value>許可されるファイル拡張子</value>
+  </data>
+  <data name="Common_AllProperties" xml:space="preserve">
+    <value>すべてのプロパティ...</value>
+  </data>
+  <data name="Common_ApplyClass" xml:space="preserve">
+    <value>クラスを適用</value>
+  </data>
+  <data name="Common_Back" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="Common_BackgroundColor" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="Common_BackgroundImage" xml:space="preserve">
+    <value>背景イメージ</value>
+  </data>
+  <data name="Common_BestFit" xml:space="preserve">
+    <value>ベストフィット</value>
+  </data>
+  <data name="Common_Black" xml:space="preserve">
+    <value>黒</value>
+  </data>
+  <data name="Common_Blue" xml:space="preserve">
+    <value>青</value>
+  </data>
+  <data name="Common_BorderColor" xml:space="preserve">
+    <value>ボーダーの色</value>
+  </data>
+  <data name="Common_BorderStyle" xml:space="preserve">
+    <value>ボーダーのスタイル</value>
+  </data>
+  <data name="Common_BorderWidth" xml:space="preserve">
+    <value>ボーダーの幅</value>
+  </data>
+  <data name="Common_Bottom" xml:space="preserve">
+    <value>ボタン</value>
+  </data>
+  <data name="Common_bytes" xml:space="preserve">
+    <value>バイト</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_CellCss" xml:space="preserve">
+    <value>セル　CSS</value>
+  </data>
+  <data name="Common_ClassID" xml:space="preserve">
+    <value>クラスIDを特定</value>
+  </data>
+  <data name="Common_ClassIDText" xml:space="preserve">
+    <value>クラスID</value>
+  </data>
+  <data name="Common_Clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="Common_ClearClass" xml:space="preserve">
+    <value>クラスをクリア</value>
+  </data>
+  <data name="Common_Client_AlertFile" xml:space="preserve">
+    <value>アップロードするファイルを選択して下さい</value>
+  </data>
+  <data name="Common_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="Common_ConfirmDelete" xml:space="preserve">
+    <value>"""選択したアイテムを削除してもよろしいですか？
+まだ使用中の可能性があります。 削除すると、一部のページが正しく表示されません。
+"""" OK """"を押して削除を確認してください。 """</value>
+  </data>
+  <data name="Common_ConstrainProportions" xml:space="preserve">
+    <value>比率を制限する？</value>
+  </data>
+  <data name="Common_ControlButtons" xml:space="preserve">
+    <value>ボタンのコントロール</value>
+  </data>
+  <data name="Common_Copy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Common_Create" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="Common_CreateNewFolder" xml:space="preserve">
+    <value>新しいフォルダー名の入力</value>
+  </data>
+  <data name="Common_CreateThumbnail" xml:space="preserve">
+    <value>サムネイルの作成</value>
+  </data>
+  <data name="Common_CssClass" xml:space="preserve">
+    <value>CSS　クラス</value>
+  </data>
+  <data name="Common_CustomTargets" xml:space="preserve">
+    <value>カスタム目標</value>
+  </data>
+  <data name="Common_Decrease" xml:space="preserve">
+    <value>現象</value>
+  </data>
+  <data name="Common_Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Common_DimensionUnit" xml:space="preserve">
+    <value>ディメンション単位</value>
+  </data>
+  <data name="Common_FileExists" xml:space="preserve">
+    <value>目標と同じ名前のファイルがすでに存在しています！</value>
+  </data>
+  <data name="Common_FileListSummary" xml:space="preserve">
+    <value>現在のディレクトリの内容を一覧表示するテーブル</value>
+  </data>
+  <data name="Common_Forward" xml:space="preserve">
+    <value>進める</value>
+  </data>
+  <data name="Common_Green" xml:space="preserve">
+    <value>緑</value>
+  </data>
+  <data name="Common_GridPagerText" xml:space="preserve">
+    <value>{4} ページ &lt;strong&gt;{0}&lt;/strong&gt; of &lt;strong&gt;{1}&lt;/strong&gt;. 項目 &lt;strong&gt;{2}&lt;/strong&gt; to &lt;strong&gt;{3}&lt;/strong&gt; of &lt;strong&gt;{5}&lt;/strong&gt;</value>
+  </data>
+  <data name="Common_GridSortToolTip" xml:space="preserve">
+    <value>ここをクリックしてソート</value>
+  </data>
+  <data name="Common_GridView" xml:space="preserve">
+    <value>グリッドビュー</value>
+  </data>
+  <data name="Common_Height" xml:space="preserve">
+    <value>高さ</value>
+  </data>
+  <data name="Common_ImageEditor" xml:space="preserve">
+    <value>イメージエディター</value>
+  </data>
+  <data name="Common_ImageFieldSet" xml:space="preserve">
+    <value>画像のプロパティ</value>
+  </data>
+  <data name="Common_ImageTitleText" xml:space="preserve">
+    <value>タイトルテキスト</value>
+  </data>
+  <data name="Common_Increase" xml:space="preserve">
+    <value>増加</value>
+  </data>
+  <data name="Common_Insert" xml:space="preserve">
+    <value>挿入</value>
+  </data>
+  <data name="Common_InvalidCharactersInPath" xml:space="preserve">
+    <value>フォルダ名に無効な文字があります。</value>
+  </data>
+  <data name="Common_InvalidFileExtension" xml:space="preserve">
+    <value>アップロードされたファイルの拡張子が無効です。 有効なファイルを提供してください！</value>
+  </data>
+  <data name="Common_InvalidFileSize" xml:space="preserve">
+    <value>アップロードされたファイルのサイズが許可されている最大サイズを超えています</value>
+  </data>
+  <data name="Common_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="Common_LookIn" xml:space="preserve">
+    <value>見る</value>
+  </data>
+  <data name="Common_Margin" xml:space="preserve">
+    <value>マージン</value>
+  </data>
+  <data name="Common_MaxFileSize" xml:space="preserve">
+    <value>許容される最大サイズのファイル</value>
+  </data>
+  <data name="Common_MessageCannotWriteToFolder" xml:space="preserve">
+    <value>ターゲットフォルダに書き込めません！</value>
+  </data>
+  <data name="Common_MessageNoValidDimensions" xml:space="preserve">
+    <value>有効な画像サイズを入力してください</value>
+  </data>
+  <data name="Common_MessageSourceNotLocal" xml:space="preserve">
+    <value>指定された変換イメージファイルは、別のサーバー上にあります。</value>
+  </data>
+  <data name="Common_Middle" xml:space="preserve">
+    <value>真ん中</value>
+  </data>
+  <data name="Common_NameExists" xml:space="preserve">
+    <value>同じ名前のオブジェクトがすでにこのディレクトリに存在しています。</value>
+  </data>
+  <data name="Common_NewFolder" xml:space="preserve">
+    <value>新しいフォルダー</value>
+  </data>
+  <data name="Common_NewImageName" xml:space="preserve">
+    <value>新しい画像の名前</value>
+  </data>
+  <data name="Common_No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="Common_NoColor" xml:space="preserve">
+    <value>色無し</value>
+  </data>
+  <data name="Common_None" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="Common_NonExistingFolder" xml:space="preserve">
+    <value>存在しないフォルダに移動しようとしているか、このフォルダを表示するための適切な権限がありません。 管理者に連絡してください</value>
+  </data>
+  <data name="Common_NoPermissionsToCreateFolder" xml:space="preserve">
+    <value>アプリケーションに十分な権限がないため、選択したフォルダを作成できませんでした。 管理者に連絡してください</value>
+  </data>
+  <data name="Common_NoPermissionsToDeleteFile" xml:space="preserve">
+    <value>アプリケーションに十分な権限がないため、選択したファイルを削除できませんでした。 管理者に連絡してください。</value>
+  </data>
+  <data name="Common_NoPermissionsToDeleteFolder" xml:space="preserve">
+    <value>アプリケーションに十分な権限がないため、選択したフォルダを削除できませんでした。 管理者に連絡してください。</value>
+  </data>
+  <data name="Common_NoStyle" xml:space="preserve">
+    <value>スタイルなし</value>
+  </data>
+  <data name="Common_NoUploadedFile" xml:space="preserve">
+    <value>アップロードするファイルを選択して下さい</value>
+  </data>
+  <data name="Common_Open" xml:space="preserve">
+    <value>開ける</value>
+  </data>
+  <data name="Common_Orange" xml:space="preserve">
+    <value>オレンジ</value>
+  </data>
+  <data name="Common_OverwriteExisting" xml:space="preserve">
+    <value>ファイルが存在する場合は上書きしますか？</value>
+  </data>
+  <data name="Common_Paste" xml:space="preserve">
+    <value>貼り付け</value>
+  </data>
+  <data name="Common_PasteHtmlMessage" xml:space="preserve">
+    <value>貼り付けたいHtmlコンテンツを挿入してください</value>
+  </data>
+  <data name="Common_PasteMarkdownMessage" xml:space="preserve">
+    <value>ペーストしたいMarkdownコンテンツを挿入してください</value>
+  </data>
+  <data name="Common_Percent" xml:space="preserve">
+    <value>パーセント</value>
+  </data>
+  <data name="Common_Pixel" xml:space="preserve">
+    <value>ピクセル</value>
+  </data>
+  <data name="Common_PresetTargets" xml:space="preserve">
+    <value>プリセットターケット</value>
+  </data>
+  <data name="Common_Preview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="Common_Properties" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="Common_PropertiesPanel" xml:space="preserve">
+    <value>プロパティパネル</value>
+  </data>
+  <data name="Common_Red" xml:space="preserve">
+    <value>赤</value>
+  </data>
+  <data name="Common_Refresh" xml:space="preserve">
+    <value>リフレッシュ</value>
+  </data>
+  <data name="Common_Remove" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Common_Rename" xml:space="preserve">
+    <value>名前を変更する</value>
+  </data>
+  <data name="Common_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="Common_Select" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="Common_SelectFile" xml:space="preserve">
+    <value>ファイルを選択</value>
+  </data>
+  <data name="Common_Set" xml:space="preserve">
+    <value>セット</value>
+  </data>
+  <data name="Common_SortByExtTitle" xml:space="preserve">
+    <value>拡張子で並べ替える</value>
+  </data>
+  <data name="Common_SortByFilename" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="Common_SortByFilenameTitle" xml:space="preserve">
+    <value>ファイル名で並べ替える</value>
+  </data>
+  <data name="Common_SortBySize" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="Common_SortBySizeTitle" xml:space="preserve">
+    <value>サイズで並べ替える</value>
+  </data>
+  <data name="Common_StyleBuilder" xml:space="preserve">
+    <value>スタイルビルダー</value>
+  </data>
+  <data name="Common_TableCss" xml:space="preserve">
+    <value>テーブル　CSS</value>
+  </data>
+  <data name="Common_Target" xml:space="preserve">
+    <value>目標</value>
+  </data>
+  <data name="Common_TargetBlank" xml:space="preserve">
+    <value>新しいウィンドウ</value>
+  </data>
+  <data name="Common_TargetMedia" xml:space="preserve">
+    <value>メディアの硝子</value>
+  </data>
+  <data name="Common_TargetParent" xml:space="preserve">
+    <value>親ウィウンドウ</value>
+  </data>
+  <data name="Common_TargetSearch" xml:space="preserve">
+    <value>ガラスを探す</value>
+  </data>
+  <data name="Common_TargetSelf" xml:space="preserve">
+    <value>同じウィンドウ</value>
+  </data>
+  <data name="Common_TargetTop" xml:space="preserve">
+    <value>ブラウザーウィウンドウ</value>
+  </data>
+  <data name="Common_ThumbnailsView" xml:space="preserve">
+    <value>サムネイルビュー</value>
+  </data>
+  <data name="Common_Top" xml:space="preserve">
+    <value>トップ</value>
+  </data>
+  <data name="Common_Up" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="Common_Upload" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="Common_UploadFile" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="Common_Uploading" xml:space="preserve">
+    <value>アップロード中</value>
+  </data>
+  <data name="Common_UseControlVMessage" xml:space="preserve">
+    <value>CTRL + Vを押して、クリーニングしたいコンテンツの下に貼り付けてください</value>
+  </data>
+  <data name="Common_White" xml:space="preserve">
+    <value>白</value>
+  </data>
+  <data name="Common_Width" xml:space="preserve">
+    <value>幅</value>
+  </data>
+  <data name="Common_Yellow" xml:space="preserve">
+    <value>黄色</value>
+  </data>
+  <data name="Common_Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="Common_ZoomIn" xml:space="preserve">
+    <value>ズームイン</value>
+  </data>
+  <data name="Common_ZoomOut" xml:space="preserve">
+    <value>ズームアウト</value>
+  </data>
+  <data name="DocumentManager_DocumentPropertiesLegend" xml:space="preserve">
+    <value>書類のプロパティ</value>
+  </data>
+  <data name="DocumentManager_Title" xml:space="preserve">
+    <value>書類のマネジャー</value>
+  </data>
+  <data name="DocumentManager_Tooltip" xml:space="preserve">
+    <value>ツールチップ</value>
+  </data>
+  <data name="FindAndReplace_AllReplaced" xml:space="preserve">
+    <value>テキスト内の{0}個の出来事が置換されました！</value>
+  </data>
+  <data name="FindAndReplace_CaseSensitive" xml:space="preserve">
+    <value>センシティブなケース</value>
+  </data>
+  <data name="FindAndReplace_Down" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="FindAndReplace_EntireText" xml:space="preserve">
+    <value>文章全体</value>
+  </data>
+  <data name="FindAndReplace_Find" xml:space="preserve">
+    <value>見つける</value>
+  </data>
+  <data name="FindAndReplace_FindNext" xml:space="preserve">
+    <value>次を見つける</value>
+  </data>
+  <data name="FindAndReplace_MatchCase" xml:space="preserve">
+    <value>合致するケース</value>
+  </data>
+  <data name="FindAndReplace_MatchWholeWords" xml:space="preserve">
+    <value>単語全体でマッチ</value>
+  </data>
+  <data name="FindAndReplace_NotFound" xml:space="preserve">
+    <value>検索文字列が見つかりませんでした。</value>
+  </data>
+  <data name="FindAndReplace_NotSupported" xml:space="preserve">
+    <value>find関数はこのブラウザではサポートされていません！</value>
+  </data>
+  <data name="FindAndReplace_Replace" xml:space="preserve">
+    <value>置き換え</value>
+  </data>
+  <data name="FindAndReplace_ReplaceAll" xml:space="preserve">
+    <value>全て置き換え</value>
+  </data>
+  <data name="FindAndReplace_ReplaceWith" xml:space="preserve">
+    <value>と置き換え</value>
+  </data>
+  <data name="FindAndReplace_Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="FindAndReplace_SearchDirection" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="FindAndReplace_SearchIn" xml:space="preserve">
+    <value>内で検索</value>
+  </data>
+  <data name="FindAndReplace_SearchOptions" xml:space="preserve">
+    <value>検索オプション</value>
+  </data>
+  <data name="FindAndReplace_SearchText" xml:space="preserve">
+    <value>見つける</value>
+  </data>
+  <data name="FindAndReplace_Selection" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="FindAndReplace_Title" xml:space="preserve">
+    <value>Find &amp;amp; 置き換え</value>
+  </data>
+  <data name="FindReplaceSettings_Find" xml:space="preserve">
+    <value>見つける</value>
+  </data>
+  <data name="FindReplaceSettings_FindAndReplace" xml:space="preserve">
+    <value>見つけて置き換え</value>
+  </data>
+  <data name="FindReplaceSettings_MatchCase" xml:space="preserve">
+    <value>合致するケース</value>
+  </data>
+  <data name="FindReplaceSettings_Title" xml:space="preserve">
+    <value>見つけて置き換え</value>
+  </data>
+  <data name="FlashManager_AlertClassID" xml:space="preserve">
+    <value>クラスIDを提供下さい。</value>
+  </data>
+  <data name="FlashManager_AlertWidthHeight" xml:space="preserve">
+    <value>フラッシュファイルの幅と高さを指定してください！</value>
+  </data>
+  <data name="FlashManager_Baseline" xml:space="preserve">
+    <value>ベースライン</value>
+  </data>
+  <data name="FlashManager_CenterBottom" xml:space="preserve">
+    <value>中央底辺</value>
+  </data>
+  <data name="FlashManager_CenterCenter" xml:space="preserve">
+    <value>中央の中央</value>
+  </data>
+  <data name="FlashManager_CenterTop" xml:space="preserve">
+    <value>中央の上</value>
+  </data>
+  <data name="FlashManager_Custom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="FlashManager_High" xml:space="preserve">
+    <value>高い</value>
+  </data>
+  <data name="FlashManager_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="FlashManager_LeftBottom" xml:space="preserve">
+    <value>左底辺</value>
+  </data>
+  <data name="FlashManager_LeftCenter" xml:space="preserve">
+    <value>左中央</value>
+  </data>
+  <data name="FlashManager_LeftTop" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="FlashManager_Loop" xml:space="preserve">
+    <value>ループ</value>
+  </data>
+  <data name="FlashManager_Low" xml:space="preserve">
+    <value>低い</value>
+  </data>
+  <data name="FlashManager_Medium" xml:space="preserve">
+    <value>ミディアム</value>
+  </data>
+  <data name="FlashManager_Middle" xml:space="preserve">
+    <value>真ん中</value>
+  </data>
+  <data name="FlashManager_Play" xml:space="preserve">
+    <value>プレイ</value>
+  </data>
+  <data name="FlashManager_Quality" xml:space="preserve">
+    <value>品質</value>
+  </data>
+  <data name="FlashManager_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="FlashManager_RightBottom" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="FlashManager_RightCenter" xml:space="preserve">
+    <value>右中央</value>
+  </data>
+  <data name="FlashManager_RightTop" xml:space="preserve">
+    <value>右上</value>
+  </data>
+  <data name="FlashManager_TextTop" xml:space="preserve">
+    <value>文章トップ</value>
+  </data>
+  <data name="FlashManager_Top" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="FormatCodeBlock_DisplayLineNumbers" xml:space="preserve">
+    <value>列数を表示</value>
+  </data>
+  <data name="FormatCodeBlock_PasteSourceCode" xml:space="preserve">
+    <value>ソースコードを貼り付け</value>
+  </data>
+  <data name="FormatCodeBlock_SelectLanguage" xml:space="preserve">
+    <value>言語を選択</value>
+  </data>
+  <data name="ImageEditor_AddText" xml:space="preserve">
+    <value>文章を追加</value>
+  </data>
+  <data name="ImageEditor_AddText_Color" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="ImageEditor_AddText_ColorToolTip" xml:space="preserve">
+    <value>追加字の文字色</value>
+  </data>
+  <data name="ImageEditor_AddText_CurrentColorText" xml:space="preserve">
+    <value>(現在の色は {0})</value>
+  </data>
+  <data name="ImageEditor_AddText_FontFamily" xml:space="preserve">
+    <value>フォントファミリー</value>
+  </data>
+  <data name="ImageEditor_AddText_FontFamilyToolTip" xml:space="preserve">
+    <value>追加字のフォントファミリー</value>
+  </data>
+  <data name="ImageEditor_AddText_FontSize" xml:space="preserve">
+    <value>フォントサイズ</value>
+  </data>
+  <data name="ImageEditor_AddText_FontSizeToolTip" xml:space="preserve">
+    <value>追加字の文章サイズ</value>
+  </data>
+  <data name="ImageEditor_AddText_PickColorToolTip" xml:space="preserve">
+    <value>色を選択</value>
+  </data>
+  <data name="ImageEditor_AddText_SampleText" xml:space="preserve">
+    <value>文章はここです</value>
+  </data>
+  <data name="ImageEditor_AddText_Title" xml:space="preserve">
+    <value>文章を挿入</value>
+  </data>
+  <data name="ImageEditor_Common_FileExists" xml:space="preserve">
+    <value>目標と同じ名前のファイル</value>
+  </data>
+  <data name="ImageEditor_Common_Position" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="ImageEditor_Common_SliderDrag" xml:space="preserve">
+    <value>ﾊﾞﾘｭｰを変更するにはドラッグして下さい</value>
+  </data>
+  <data name="ImageEditor_Common_SwapWidthHeight" xml:space="preserve">
+    <value>幅と高さを交換</value>
+  </data>
+  <data name="ImageEditor_InsertImage_Title" xml:space="preserve">
+    <value>画像を挿入</value>
+  </data>
+  <data name="ImageEditor_Opacity" xml:space="preserve">
+    <value>不透明度</value>
+  </data>
+  <data name="ImageEditor_Opacity_TextboxToolTip" xml:space="preserve">
+    <value>0〜100％の間の値を入力してください</value>
+  </data>
+  <data name="ImageEditor_Opacity_Title" xml:space="preserve">
+    <value>不透明度</value>
+  </data>
+  <data name="ImageEditor_OpacityNotSupported" xml:space="preserve">
+    <value>現在の画像フォーマットは不透明度をサポートしていません。</value>
+  </data>
+  <data name="ImageEditor_Print" xml:space="preserve">
+    <value>印刷イメージ</value>
+  </data>
+  <data name="ImageEditor_Print_Button" xml:space="preserve">
+    <value>印刷</value>
+  </data>
+  <data name="ImageEditor_Print_Title" xml:space="preserve">
+    <value>印刷イメージ</value>
+  </data>
+  <data name="ImageEditor_Redo" xml:space="preserve">
+    <value>やり直し</value>
+  </data>
+  <data name="ImageEditor_Reset" xml:space="preserve">
+    <value>画像の保存</value>
+  </data>
+  <data name="ImageEditor_Resize" xml:space="preserve">
+    <value>サイズ変更</value>
+  </data>
+  <data name="ImageEditor_Resize_Button" xml:space="preserve">
+    <value>サイズ変更</value>
+  </data>
+  <data name="ImageEditor_Resize_Percentage" xml:space="preserve">
+    <value>パーセンテージ</value>
+  </data>
+  <data name="ImageEditor_Resize_PercentageToolTip" xml:space="preserve">
+    <value>元の幅と高さのパーセンテージ</value>
+  </data>
+  <data name="ImageEditor_Resize_PresetSizes" xml:space="preserve">
+    <value>プリセットサイズ</value>
+  </data>
+  <data name="ImageEditor_Resize_PresetSizesToolTip" xml:space="preserve">
+    <value>幅と高さのプリセットを選択</value>
+  </data>
+  <data name="ImageEditor_Resize_Title" xml:space="preserve">
+    <value>サイズの変更</value>
+  </data>
+  <data name="ImageEditor_Rotate" xml:space="preserve">
+    <value>回転</value>
+  </data>
+  <data name="ImageEditor_Rotate_DropDownToolTip" xml:space="preserve">
+    <value>回転角度を選択</value>
+  </data>
+  <data name="ImageEditor_Rotate_Title" xml:space="preserve">
+    <value>回転</value>
+  </data>
+  <data name="ImageEditor_RotateLeft" xml:space="preserve">
+    <value>左に90度回転</value>
+  </data>
+  <data name="ImageEditor_RotateRight" xml:space="preserve">
+    <value>右に90度回転</value>
+  </data>
+  <data name="ImageEditor_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ImageEditor_Save_ClientRadioText" xml:space="preserve">
+    <value>画像をダウンロード</value>
+  </data>
+  <data name="ImageEditor_Save_FileNameLabel" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="ImageEditor_Save_FileNameToolTip" xml:space="preserve">
+    <value>ファイル名を入力</value>
+  </data>
+  <data name="ImageEditor_Save_ServerRadioText" xml:space="preserve">
+    <value>画像をサーバーに保存</value>
+  </data>
+  <data name="ImageEditor_Save_Title" xml:space="preserve">
+    <value>画像を保存</value>
+  </data>
+  <data name="ImageEditor_SaveAs" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ImageEditor_StatusBar_LastAction" xml:space="preserve">
+    <value>最後の行動</value>
+  </data>
+  <data name="ImageEditor_StatusBar_Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="ImageEditor_StatusBar_Zoom" xml:space="preserve">
+    <value>ズーム</value>
+  </data>
+  <data name="ImageEditor_Undo" xml:space="preserve">
+    <value>やり直し</value>
+  </data>
+  <data name="ImageEditor_Zoom" xml:space="preserve">
+    <value>ズーム</value>
+  </data>
+  <data name="ImageEditor_Zoom_ActualSizeToolTip" xml:space="preserve">
+    <value>100％にズーム</value>
+  </data>
+  <data name="ImageEditor_Zoom_BestFitToolTip" xml:space="preserve">
+    <value>編集可能な領域に画像をフィット</value>
+  </data>
+  <data name="ImageEditor_Zoom_TextboxToolTip" xml:space="preserve">
+    <value>0〜100％の間の値を入力してください</value>
+  </data>
+  <data name="ImageEditor_Zoom_Title" xml:space="preserve">
+    <value>ズーム</value>
+  </data>
+  <data name="ImageManager_AlertDimensions" xml:space="preserve">
+    <value>サムネイルの幅または高さのいずれかを指定してください。</value>
+  </data>
+  <data name="ImageManager_AlertHeight" xml:space="preserve">
+    <value>有効な画像の高さを指定してください。</value>
+  </data>
+  <data name="ImageManager_AlertWidth" xml:space="preserve">
+    <value>有効な画像の幅を指定してください。</value>
+  </data>
+  <data name="ImageManager_Title" xml:space="preserve">
+    <value>イメージマネージャ</value>
+  </data>
+  <data name="ImageMap_AlertDeleteAllAreas" xml:space="preserve">
+    <value>すべての領域を削除してもよろしいですか？</value>
+  </data>
+  <data name="ImageMap_AlertDeleteArea" xml:space="preserve">
+    <value>この領域を削除してもよろしいですか？</value>
+  </data>
+  <data name="ImageMap_AlertInvalidAreaProperties" xml:space="preserve">
+    <value>無効な領域のプロパティ。 URLを入力してください。</value>
+  </data>
+  <data name="ImageMap_AlertInvalidProperties" xml:space="preserve">
+    <value>無効なプロパティ！</value>
+  </data>
+  <data name="ImageMap_AlertWrongAreaDimensions" xml:space="preserve">
+    <value>間違った領域寸法が検出されました。 このエリアをスキップする。</value>
+  </data>
+  <data name="ImageMap_AreaFieldSet" xml:space="preserve">
+    <value>選択されたエリアのプロパティ</value>
+  </data>
+  <data name="ImageMap_ChooseImage" xml:space="preserve">
+    <value>画像を選択</value>
+  </data>
+  <data name="ImageMap_Circle" xml:space="preserve">
+    <value>サークル</value>
+  </data>
+  <data name="ImageMap_DefineAreaPropertiesLegend" xml:space="preserve">
+    <value>エリアのプロパティを定義する</value>
+  </data>
+  <data name="ImageMap_HowToAdd" xml:space="preserve">
+    <value>イメージの上にドラッグすると、新しいエリアを作成できます。</value>
+  </data>
+  <data name="ImageMap_NewArea" xml:space="preserve">
+    <value>新しいエリア</value>
+  </data>
+  <data name="ImageMap_Polygon" xml:space="preserve">
+    <value>ポリゴン</value>
+  </data>
+  <data name="ImageMap_Rectangle" xml:space="preserve">
+    <value>長方形</value>
+  </data>
+  <data name="ImageMap_RemoveAllAreas" xml:space="preserve">
+    <value>全てを削除</value>
+  </data>
+  <data name="ImageMap_RemoveArea" xml:space="preserve">
+    <value>エリアを削除</value>
+  </data>
+  <data name="ImageMap_SelectAreaShape" xml:space="preserve">
+    <value>エリアの形を選択</value>
+  </data>
+  <data name="ImageMap_SelectImage" xml:space="preserve">
+    <value>イメージマップを作成するには、イメージを選択してください。</value>
+  </data>
+  <data name="ImageMap_ShapeAlt" xml:space="preserve">
+    <value>右下隅をドラッグしてエリアのサイズを変更します。</value>
+  </data>
+  <data name="ImageMap_Title" xml:space="preserve">
+    <value>タイトル文章</value>
+  </data>
+  <data name="ImageMap_UpdateArea" xml:space="preserve">
+    <value>エリアを更新</value>
+  </data>
+  <data name="InsertExternalVideo_AdvancedMode" xml:space="preserve">
+    <value>アドバンスモード</value>
+  </data>
+  <data name="InsertExternalVideo_AspectRatio" xml:space="preserve">
+    <value>アスペクト比</value>
+  </data>
+  <data name="InsertExternalVideo_AutoplaySetting" xml:space="preserve">
+    <value>ロード時にビデオを自動的に再生する</value>
+  </data>
+  <data name="InsertExternalVideo_EmbedCode" xml:space="preserve">
+    <value>埋め込みコード</value>
+  </data>
+  <data name="InsertExternalVideo_EmbedVideoSettings" xml:space="preserve">
+    <value>動画の設定を埋め込む</value>
+  </data>
+  <data name="InsertExternalVideo_FullscreenSetting" xml:space="preserve">
+    <value>全画面表示ボタンを有効にする</value>
+  </data>
+  <data name="InsertExternalVideo_PasteVideoURL" xml:space="preserve">
+    <value>YoutubeまたはVimeoの動画URLを貼り付ける</value>
+  </data>
+  <data name="InsertExternalVideo_PrivacySetting" xml:space="preserve">
+    <value>プライバシー拡張モードを有効にする</value>
+  </data>
+  <data name="InsertExternalVideo_ShowTitleSetting" xml:space="preserve">
+    <value>動画が再生される前にタイトルを表示する</value>
+  </data>
+  <data name="InsertExternalVideo_ToggleAdvancedModeEmbedCode" xml:space="preserve">
+    <value>アドバンスモードの埋め込みコードの切り替え</value>
+  </data>
+  <data name="InsertSelectDialog_AddOption" xml:space="preserve">
+    <value>オプションを追加</value>
+  </data>
+  <data name="InsertSelectDialog_ManageOptions" xml:space="preserve">
+    <value>オプションの追加/削除</value>
+  </data>
+  <data name="InsertSelectDialog_Multiple" xml:space="preserve">
+    <value>複数</value>
+  </data>
+  <data name="InsertSelectDialog_Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="InsertSelectDialog_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="InsertSelectDialog_PixelsOrPercents" xml:space="preserve">
+    <value>ピクセル, %</value>
+  </data>
+  <data name="InsertSelectDialog_RemoveOption" xml:space="preserve">
+    <value>オプションを削除</value>
+  </data>
+  <data name="InsertSelectDialog_Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="InsertSelectDialog_Text" xml:space="preserve">
+    <value>文章</value>
+  </data>
+  <data name="InsertSelectDialog_Value" xml:space="preserve">
+    <value>バリュー</value>
+  </data>
+  <data name="InsertTable_CellPadding" xml:space="preserve">
+    <value>セルの埋め込み</value>
+  </data>
+  <data name="InsertTable_CellSpacing" xml:space="preserve">
+    <value>セルのスペース</value>
+  </data>
+  <data name="InsertTable_Columns" xml:space="preserve">
+    <value>コラム</value>
+  </data>
+  <data name="InsertTable_Rows" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="InsertTable_Title" xml:space="preserve">
+    <value>表を挿入</value>
+  </data>
+  <data name="LinkManager_AnchorTab" xml:space="preserve">
+    <value>アンカー</value>
+  </data>
+  <data name="LinkManager_EmailTab" xml:space="preserve">
+    <value>eメール</value>
+  </data>
+  <data name="LinkManager_EmailTooltip" xml:space="preserve">
+    <value>ツールチップ</value>
+  </data>
+  <data name="LinkManager_ExistingAnchor" xml:space="preserve">
+    <value>存在するアンカー</value>
+  </data>
+  <data name="LinkManager_GenerateId" xml:space="preserve">
+    <value>IDを作成</value>
+  </data>
+  <data name="LinkManager_HyperlinkTab" xml:space="preserve">
+    <value>ハイパーリンク</value>
+  </data>
+  <data name="LinkManager_LinkAddress" xml:space="preserve">
+    <value>アドレス</value>
+  </data>
+  <data name="LinkManager_LinkName" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="LinkManager_LinkSubject" xml:space="preserve">
+    <value>件名</value>
+  </data>
+  <data name="LinkManager_LinkTarget" xml:space="preserve">
+    <value>目標</value>
+  </data>
+  <data name="LinkManager_LinkText" xml:space="preserve">
+    <value>リンク文章</value>
+  </data>
+  <data name="LinkManager_LinkTooltip" xml:space="preserve">
+    <value>ツールチップ</value>
+  </data>
+  <data name="LinkManager_LinkType" xml:space="preserve">
+    <value>タイプ</value>
+  </data>
+  <data name="LinkManager_Other" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="LinkManager_Title" xml:space="preserve">
+    <value>ハイパーリンクマネジジャー</value>
+  </data>
+  <data name="MediaManager_AlertValue" xml:space="preserve">
+    <value>有効なプロパティ値を入力してください。</value>
+  </data>
+  <data name="MediaManager_AlertWidthHeight" xml:space="preserve">
+    <value>メディアファイルの幅と高さを指定してください！</value>
+  </data>
+  <data name="MediaManager_Align" xml:space="preserve">
+    <value>整列</value>
+  </data>
+  <data name="MediaManager_AllowChangeDisplaySize" xml:space="preserve">
+    <value>このプロパティは、表示サイズを変更できるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_AllowScan" xml:space="preserve">
+    <value>このプロパティは、スキャンをサポートするファイル（早送りおよび巻き戻し）に対してスキャンが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_AnimationAtStart" xml:space="preserve">
+    <value>このプロパティは、最初のイメージが表示される前にアニメーションを実行するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Arrowhourglass" xml:space="preserve">
+    <value>標準的な矢印と小さな砂時計</value>
+  </data>
+  <data name="MediaManager_AudioStream" xml:space="preserve">
+    <value>このプロパティは、現在のオーディオストリームのストリーム番号を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_AutoRewind" xml:space="preserve">
+    <value>このプロパティは、クリップの再生が終了した後、またはその他の方法で停止したときに、Windows Media Playerコントロールが自動的にクリップの開始ポイントに戻るかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_AutoSize" xml:space="preserve">
+    <value>このプロパティは、&lt;B&gt; DisplaySize &lt;/ B&gt;プロパティで指定されたサイズで現在のメディアアイテムに対応するためにWindows Media Playerコントロールのサイズが自動的に変更されるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_AutoStart" xml:space="preserve">
+    <value>このプロパティは、クリップの再生を自動的に開始するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Balance" xml:space="preserve">
+    <value>このプロパティは、ステレオバランスを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Baseline" xml:space="preserve">
+    <value>ベースライン</value>
+  </data>
+  <data name="MediaManager_Bottom" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="MediaManager_Caption2" xml:space="preserve">
+    <value>キャプション２</value>
+  </data>
+  <data name="MediaManager_CCActive" xml:space="preserve">
+    <value>このプロパティは、字幕がオンかオフかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ClickToPlay" xml:space="preserve">
+    <value>このプロパティは、ユーザーがビデオ画像をクリックして再生をオンまたはオフに切り替えることができるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ColorKey" xml:space="preserve">
+    <value>このプロパティは、DVD再生で使用されるカラーキーを指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Crosshair" xml:space="preserve">
+    <value>十字線</value>
+  </data>
+  <data name="MediaManager_CurrentAngle" xml:space="preserve">
+    <value>このプロパティは、現在のカメラアングルを識別する番号を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CurrentAudioStream" xml:space="preserve">
+    <value>このプロパティは、現在のオーディオストリームを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CurrentCCService" xml:space="preserve">
+    <value>このプロパティは、現在のクローズドキャプションサービスを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CurrentMarker" xml:space="preserve">
+    <value>このプロパティは、現在のマーカー番号を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CurrentPosition" xml:space="preserve">
+    <value>このプロパティは、クリップの現在の位置を秒単位で指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CurrentSubpictureStream" xml:space="preserve">
+    <value>このプロパティは、現在のサブピクチャストリームを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_CursorType" xml:space="preserve">
+    <value>このプロパティは、カーソルタイプを指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Custom" xml:space="preserve">
+    <value>慣例</value>
+  </data>
+  <data name="MediaManager_Customh" xml:space="preserve">
+    <value>慣例-</value>
+  </data>
+  <data name="MediaManager_DefaultCaption1" xml:space="preserve">
+    <value>デフォルト.キャプション１</value>
+  </data>
+  <data name="MediaManager_DefaultFrame" xml:space="preserve">
+    <value>このプロパティは、デフォルトのターゲットHTTPフレームを表す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Description" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;b&gt;説明: &lt;/b&gt;</value>
+  </data>
+  <data name="MediaManager_DesignTime" xml:space="preserve">
+    <value>設計時に指定されたサイズ</value>
+  </data>
+  <data name="MediaManager_DisplayBackColor" xml:space="preserve">
+    <value>このプロパティは、表示パネルの背景色を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_DisplayForeColor" xml:space="preserve">
+    <value>このプロパティは、表示パネルの前景色を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_DisplayMode" xml:space="preserve">
+    <value>このプロパティは、ステータスバーに秒（Yes）またはフレーム（No）の現在の位置を表示するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_DisplaySize" xml:space="preserve">
+    <value>このプロパティは、画像表示ウィンドウのサイズを指定または取得します。</value>
+  </data>
+  <data name="MediaManager_DoublepointedNESW" xml:space="preserve">
+    <value>二重矢印 NE-SW</value>
+  </data>
+  <data name="MediaManager_DoublepointedNS" xml:space="preserve">
+    <value>二重矢印 N-S</value>
+  </data>
+  <data name="MediaManager_DoublepointedNWSE" xml:space="preserve">
+    <value>二重矢印 NW-SE</value>
+  </data>
+  <data name="MediaManager_DoublepointedWE" xml:space="preserve">
+    <value>W-Eを指す二重矢印</value>
+  </data>
+  <data name="MediaManager_DoubleSourceImage" xml:space="preserve">
+    <value>ソースイメージのサイズを2倍にする</value>
+  </data>
+  <data name="MediaManager_EnableContextMenu" xml:space="preserve">
+    <value>このプロパティは、ユーザーがマウスの右ボタンをクリックしたときにコンテキストメニューを表示するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Enabled" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_EnableFullScreenControls" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerがコントロールをフルスクリーンモードで表示するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_EnablePositionControls" xml:space="preserve">
+    <value>このプロパティは、コントロールバーの位置コントロールが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_EnableTracker" xml:space="preserve">
+    <value>このプロパティは、トラックバーコントロールが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_EntireScreen" xml:space="preserve">
+    <value>スクリーン全体のサイズ</value>
+  </data>
+  <data name="MediaManager_ExtendedDataServices" xml:space="preserve">
+    <value>拡張データサービス（XDS）</value>
+  </data>
+  <data name="MediaManager_Fourpointedarrow" xml:space="preserve">
+    <value>四角い矢印</value>
+  </data>
+  <data name="MediaManager_HalfScreen" xml:space="preserve">
+    <value>スクリーンの半分のサイズ</value>
+  </data>
+  <data name="MediaManager_HalfSourceImage" xml:space="preserve">
+    <value>幅と高さはソースイメージの半分です</value>
+  </data>
+  <data name="MediaManager_Handpointing" xml:space="preserve">
+    <value>人差し指で指差ししている手</value>
+  </data>
+  <data name="MediaManager_Hidden" xml:space="preserve">
+    <value>このプロパティは、ブラウザにプレーヤーが表示されているかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Hourglass" xml:space="preserve">
+    <value>砂時計</value>
+  </data>
+  <data name="MediaManager_InvokeURLs" xml:space="preserve">
+    <value>このプロパティは、Windows Media PlayerコントロールがブラウザでURLを自動的に呼び出すかどうかを示す値を指定または取得します（URLが反転します）。</value>
+  </data>
+  <data name="MediaManager_Language" xml:space="preserve">
+    <value>このプロパティは、各国語サポートに使用される現在のロケールを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_MediaPropertiesLegend" xml:space="preserve">
+    <value>メディアのプロパティ</value>
+  </data>
+  <data name="MediaManager_Middle" xml:space="preserve">
+    <value>中間</value>
+  </data>
+  <data name="MediaManager_Mute" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールの現在のミュート状態を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_None" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="MediaManager_Nosubpicturestream" xml:space="preserve">
+    <value>サブピクチャストリームはありません</value>
+  </data>
+  <data name="MediaManager_PlayCount" xml:space="preserve">
+    <value>このプロパティは、クリップの再生回数を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_PreviewMode" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerがプレビューモードであるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_QuarterScreen" xml:space="preserve">
+    <value>画面の4分の1</value>
+  </data>
+  <data name="MediaManager_Rate" xml:space="preserve">
+    <value>このプロパティは、クリップの再生レートを指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="MediaManager_Samesize" xml:space="preserve">
+    <value>ソースイメージと同じサイズ</value>
+  </data>
+  <data name="MediaManager_SelectionEnd" xml:space="preserve">
+    <value>このプロパティは、再生が停止する現在のクリップ内の時間を指定または取得します。 このプロパティは、&lt;B&gt; ReadyState &lt;/ B&gt;プロパティ（読み取り専用）の値が4になるまで設定または取得できません。</value>
+  </data>
+  <data name="MediaManager_SelectionStart" xml:space="preserve">
+    <value>このプロパティは、再生が開始される現在のクリップ内の時間を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SelectProperty" xml:space="preserve">
+    <value>プロパティの選択</value>
+  </data>
+  <data name="MediaManager_SendErrorEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールがエラーイベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendKeyboardEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールがキーボードイベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendMouseClickEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールがマウスクリックイベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendMouseMoveEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールがマウス移動イベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendOpenStateChangeEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールが開いた状態の変更イベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendPlayStateChangeEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールが再生状態変更イベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SendWarningEvents" xml:space="preserve">
+    <value>このプロパティは、Windows Media Playerコントロールが警告イベントを送信するかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowAudioControls" xml:space="preserve">
+    <value>このプロパティは、オーディオコントロールがコントロールバーに表示されるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowCaptioning" xml:space="preserve">
+    <value>このプロパティは、クローズドキャプション領域が表示され、クローズドキャプションが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowControls" xml:space="preserve">
+    <value>このプロパティは、コントロールバーが表示されているかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowDisplay" xml:space="preserve">
+    <value>このプロパティは、表示パネルが表示可能かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowGotoBar" xml:space="preserve">
+    <value>このプロパティは、移動先バーが表示されるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowPositionControls" xml:space="preserve">
+    <value>このプロパティは、位置コントロールがコントロールバーに表示されるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowStatusBar" xml:space="preserve">
+    <value>このプロパティは、ステータスバーが表示されているかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ShowTracker" xml:space="preserve">
+    <value>このプロパティは、トラックバーが表示されているかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_SixteenthScreen" xml:space="preserve">
+    <value>画面のサイズの1/16</value>
+  </data>
+  <data name="MediaManager_SlashedCircle" xml:space="preserve">
+    <value>丸い円</value>
+  </data>
+  <data name="MediaManager_Standardarrow" xml:space="preserve">
+    <value>標準矢印</value>
+  </data>
+  <data name="MediaManager_Streamisvalid" xml:space="preserve">
+    <value>ストリームが有効です</value>
+  </data>
+  <data name="MediaManager_SubpictureOn" xml:space="preserve">
+    <value>このプロパティは、サブピクチャが表示されるかどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Text1" xml:space="preserve">
+    <value>テキスト１</value>
+  </data>
+  <data name="MediaManager_Text2" xml:space="preserve">
+    <value>テキスト２</value>
+  </data>
+  <data name="MediaManager_TextTop" xml:space="preserve">
+    <value>テキストトップ</value>
+  </data>
+  <data name="MediaManager_Title" xml:space="preserve">
+    <value>メディアマネージャ</value>
+  </data>
+  <data name="MediaManager_TransparentAtStart" xml:space="preserve">
+    <value>このプロパティは、再生開始前と再生終了後にWindows Media Playerコントロールが透明かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_ValidateAudio" xml:space="preserve">
+    <value>現在のオーディオストリームを示す0〜7の値を入力してください。ストリームが選択されていない場合は0xFFFFFFFFを入力してください。</value>
+  </data>
+  <data name="MediaManager_ValidateLCID" xml:space="preserve">
+    <value>各国語サポートのロケールを識別するLCIDに対応する数値を指定してください。</value>
+  </data>
+  <data name="MediaManager_ValidateNumber" xml:space="preserve">
+    <value>数値のみを入力してください。</value>
+  </data>
+  <data name="MediaManager_ValidateNumber10" xml:space="preserve">
+    <value>マイナス10.00〜プラス10.00の範囲の値を入力してください。</value>
+  </data>
+  <data name="MediaManager_ValidateNumber10000" xml:space="preserve">
+    <value>マイナス10,000〜プラス10,000の値を入力してください。</value>
+  </data>
+  <data name="MediaManager_ValidateNumberHex" xml:space="preserve">
+    <value>16進数値を指定してください。</value>
+  </data>
+  <data name="MediaManager_Value" xml:space="preserve">
+    <value>価値</value>
+  </data>
+  <data name="MediaManager_Verticalarrow" xml:space="preserve">
+    <value>垂直矢印</value>
+  </data>
+  <data name="MediaManager_VideoBorder3D" xml:space="preserve">
+    <value>このプロパティは、3次元ビデオボーダーエフェクトが有効かどうかを示す値を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_VideoBorderColor" xml:space="preserve">
+    <value>このプロパティは、ビデオの境界線の色を指定または取得します。</value>
+  </data>
+  <data name="MediaManager_VideoBorderWidth" xml:space="preserve">
+    <value>このプロパティは、ビデオ枠の幅をピクセル単位で指定または取得します。</value>
+  </data>
+  <data name="MediaManager_Volume" xml:space="preserve">
+    <value>このプロパティは、ボリュームを100分の1デシベル単位で指定または取得します。</value>
+  </data>
+  <data name="MobileImageProperties_Description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="MobileImageProperties_Title" xml:space="preserve">
+    <value>画像プロパティ</value>
+  </data>
+  <data name="MobileLinkManager_LinkTarget" xml:space="preserve">
+    <value>目標</value>
+  </data>
+  <data name="MobileLinkManager_LinkText" xml:space="preserve">
+    <value>リンクテキスト</value>
+  </data>
+  <data name="MobileLinkManager_RemoveLink" xml:space="preserve">
+    <value>リンクを削除</value>
+  </data>
+  <data name="MobileLinkManager_Title" xml:space="preserve">
+    <value>リンクを挿入</value>
+  </data>
+  <data name="MobileTableProperties_CellSpacing" xml:space="preserve">
+    <value>セル間隔</value>
+  </data>
+  <data name="MobileTableProperties_Title" xml:space="preserve">
+    <value>テーブルのプロパティ</value>
+  </data>
+  <data name="PageProperties_BackColor" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="PageProperties_BaseLocation" xml:space="preserve">
+    <value>ベースの場所</value>
+  </data>
+  <data name="PageProperties_BodyAttributes" xml:space="preserve">
+    <value>ボディ属性</value>
+  </data>
+  <data name="PageProperties_BottomMargin" xml:space="preserve">
+    <value>下余白</value>
+  </data>
+  <data name="PageProperties_ClassName" xml:space="preserve">
+    <value>クラス名</value>
+  </data>
+  <data name="PageProperties_Description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="PageProperties_Keywords" xml:space="preserve">
+    <value>キーワード</value>
+  </data>
+  <data name="PageProperties_LeftMargin" xml:space="preserve">
+    <value>左余白</value>
+  </data>
+  <data name="PageProperties_PageAttributes" xml:space="preserve">
+    <value>ページ属性</value>
+  </data>
+  <data name="PageProperties_PageTitle" xml:space="preserve">
+    <value>ページタイトル</value>
+  </data>
+  <data name="PageProperties_RightMargin" xml:space="preserve">
+    <value>右余白</value>
+  </data>
+  <data name="PageProperties_TopMargin" xml:space="preserve">
+    <value>上余白</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>この文字列は削除しないでください。 外部リソースファイルがApp_GlobalResourcesに存在するかどうかを確認するには、RadEditorが必要です。</value>
+  </data>
+  <data name="SetImageProperties_Constrain" xml:space="preserve">
+    <value>制限する</value>
+  </data>
+  <data name="SetImageProperties_HorizontalSpacing" xml:space="preserve">
+    <value>水平間隔</value>
+  </data>
+  <data name="SetImageProperties_ImageAlignment" xml:space="preserve">
+    <value>画像整列</value>
+  </data>
+  <data name="SetImageProperties_ImageSrc" xml:space="preserve">
+    <value>画像を選択</value>
+  </data>
+  <data name="SetImageProperties_LinkToOriginal" xml:space="preserve">
+    <value>オリジナルにリンク</value>
+  </data>
+  <data name="SetImageProperties_LongDescription" xml:space="preserve">
+    <value>長い説明</value>
+  </data>
+  <data name="SetImageProperties_OpenInNewWindow" xml:space="preserve">
+    <value>新しいウィンドウで開く</value>
+  </data>
+  <data name="SetImageProperties_Title" xml:space="preserve">
+    <value>画像プロパティ</value>
+  </data>
+  <data name="SetImageProperties_VerticalSpacing" xml:space="preserve">
+    <value>垂直間隔</value>
+  </data>
+  <data name="SilverlightManager_AutoUpgrade" xml:space="preserve">
+    <value>自動アップグレード</value>
+  </data>
+  <data name="SilverlightManager_EnableHtmlAccess" xml:space="preserve">
+    <value>HTMLアクセスを有効にする</value>
+  </data>
+  <data name="SilverlightManager_Windowless" xml:space="preserve">
+    <value>窓なし</value>
+  </data>
+  <data name="SizeMargins_Title" xml:space="preserve">
+    <value>サイズと余白</value>
+  </data>
+  <data name="StyleBuilder_Absolute" xml:space="preserve">
+    <value>絶対の</value>
+  </data>
+  <data name="StyleBuilder_Alignment" xml:space="preserve">
+    <value>整列</value>
+  </data>
+  <data name="StyleBuilder_AllowFloatingObjects" xml:space="preserve">
+    <value>浮動オブジェクトを許可する</value>
+  </data>
+  <data name="StyleBuilder_AllowTextToFlow" xml:space="preserve">
+    <value>テキストのフローを許可する</value>
+  </data>
+  <data name="StyleBuilder_AlwaysUseScrollbars" xml:space="preserve">
+    <value>常にスクロールバーを使用する</value>
+  </data>
+  <data name="StyleBuilder_BackgroundTab" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="StyleBuilder_Baseline" xml:space="preserve">
+    <value>基準線</value>
+  </data>
+  <data name="StyleBuilder_Block" xml:space="preserve">
+    <value>ブロック要素として</value>
+  </data>
+  <data name="StyleBuilder_Bold" xml:space="preserve">
+    <value>大胆な</value>
+  </data>
+  <data name="StyleBuilder_Bolder" xml:space="preserve">
+    <value>ボルダー</value>
+  </data>
+  <data name="StyleBuilder_BorderTab" xml:space="preserve">
+    <value>ボルダー</value>
+  </data>
+  <data name="StyleBuilder_Both" xml:space="preserve">
+    <value>両</value>
+  </data>
+  <data name="StyleBuilder_Bullets" xml:space="preserve">
+    <value>箇条書き</value>
+  </data>
+  <data name="StyleBuilder_Capitalization" xml:space="preserve">
+    <value>大文字</value>
+  </data>
+  <data name="StyleBuilder_Capitalize" xml:space="preserve">
+    <value>大文字</value>
+  </data>
+  <data name="StyleBuilder_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="StyleBuilder_Circle" xml:space="preserve">
+    <value>丸</value>
+  </data>
+  <data name="StyleBuilder_Clipping" xml:space="preserve">
+    <value>クリッピング</value>
+  </data>
+  <data name="StyleBuilder_Collapse" xml:space="preserve">
+    <value>崩壊</value>
+  </data>
+  <data name="StyleBuilder_CollapseBorder" xml:space="preserve">
+    <value>境を崩す</value>
+  </data>
+  <data name="StyleBuilder_Collapsed" xml:space="preserve">
+    <value>崩壊</value>
+  </data>
+  <data name="StyleBuilder_Color" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="StyleBuilder_Content" xml:space="preserve">
+    <value>内容</value>
+  </data>
+  <data name="StyleBuilder_ContentIsClipped" xml:space="preserve">
+    <value>コンテンツがクリップされる</value>
+  </data>
+  <data name="StyleBuilder_ContentIsNotClipped" xml:space="preserve">
+    <value>コンテンツがクリップされない</value>
+  </data>
+  <data name="StyleBuilder_Custom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="StyleBuilder_CustomBullet" xml:space="preserve">
+    <value>箇条書きをカスタム</value>
+  </data>
+  <data name="StyleBuilder_Dashed" xml:space="preserve">
+    <value>ダッシュ</value>
+  </data>
+  <data name="StyleBuilder_Disk" xml:space="preserve">
+    <value>ディスク</value>
+  </data>
+  <data name="StyleBuilder_Display" xml:space="preserve">
+    <value>ディスプレー</value>
+  </data>
+  <data name="StyleBuilder_DoNotAllow" xml:space="preserve">
+    <value>許可しない</value>
+  </data>
+  <data name="StyleBuilder_DoNotUseBgrImage" xml:space="preserve">
+    <value>背景画像を使わない</value>
+  </data>
+  <data name="StyleBuilder_DontAllowTextOnSides" xml:space="preserve">
+    <value>横にテキスト使用を許可しない</value>
+  </data>
+  <data name="StyleBuilder_Dotted" xml:space="preserve">
+    <value>点在</value>
+  </data>
+  <data name="StyleBuilder_DoubleLine" xml:space="preserve">
+    <value>二重線</value>
+  </data>
+  <data name="StyleBuilder_EdgesTab" xml:space="preserve">
+    <value>エッジ</value>
+  </data>
+  <data name="StyleBuilder_Effects" xml:space="preserve">
+    <value>エフェクト</value>
+  </data>
+  <data name="StyleBuilder_FixedBackground" xml:space="preserve">
+    <value>固定背景</value>
+  </data>
+  <data name="StyleBuilder_FlowControl" xml:space="preserve">
+    <value>フロー制御</value>
+  </data>
+  <data name="StyleBuilder_FontAttributes" xml:space="preserve">
+    <value>フォント属性</value>
+  </data>
+  <data name="StyleBuilder_FontFamily" xml:space="preserve">
+    <value>ファミリー</value>
+  </data>
+  <data name="StyleBuilder_FontName" xml:space="preserve">
+    <value>フォント名</value>
+  </data>
+  <data name="StyleBuilder_FontSize" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="StyleBuilder_FontTab" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="StyleBuilder_Groove" xml:space="preserve">
+    <value>溝</value>
+  </data>
+  <data name="StyleBuilder_Hidden" xml:space="preserve">
+    <value>隠された</value>
+  </data>
+  <data name="StyleBuilder_Horizontal" xml:space="preserve">
+    <value>水平</value>
+  </data>
+  <data name="StyleBuilder_Image" xml:space="preserve">
+    <value>画像</value>
+  </data>
+  <data name="StyleBuilder_Indentation" xml:space="preserve">
+    <value>インデント</value>
+  </data>
+  <data name="StyleBuilder_Inline" xml:space="preserve">
+    <value>流入要素として</value>
+  </data>
+  <data name="StyleBuilder_Inset" xml:space="preserve">
+    <value>挿入</value>
+  </data>
+  <data name="StyleBuilder_Inside" xml:space="preserve">
+    <value>内側（テキストはインデントされていません）</value>
+  </data>
+  <data name="StyleBuilder_Italics" xml:space="preserve">
+    <value>イタリック</value>
+  </data>
+  <data name="StyleBuilder_Justification" xml:space="preserve">
+    <value>正当化</value>
+  </data>
+  <data name="StyleBuilder_Justify" xml:space="preserve">
+    <value>正当化する</value>
+  </data>
+  <data name="StyleBuilder_Larger" xml:space="preserve">
+    <value>より大きい</value>
+  </data>
+  <data name="StyleBuilder_LayoutTab" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
+  <data name="StyleBuilder_LeftToRight" xml:space="preserve">
+    <value>左から右へ</value>
+  </data>
+  <data name="StyleBuilder_Letters" xml:space="preserve">
+    <value>文字</value>
+  </data>
+  <data name="StyleBuilder_Lighter" xml:space="preserve">
+    <value>ライター</value>
+  </data>
+  <data name="StyleBuilder_Lines" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="StyleBuilder_ListsTab" xml:space="preserve">
+    <value>リスト</value>
+  </data>
+  <data name="StyleBuilder_Lowercase" xml:space="preserve">
+    <value>小文字</value>
+  </data>
+  <data name="StyleBuilder_Medium" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="StyleBuilder_Middle" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="StyleBuilder_Normal" xml:space="preserve">
+    <value>ノーマル</value>
+  </data>
+  <data name="StyleBuilder_NotSet" xml:space="preserve">
+    <value>&amp;lt;セットされない&amp;gt;</value>
+  </data>
+  <data name="StyleBuilder_OnEitherSide" xml:space="preserve">
+    <value>両側に</value>
+  </data>
+  <data name="StyleBuilder_OnlyOnLeft" xml:space="preserve">
+    <value>左のみ</value>
+  </data>
+  <data name="StyleBuilder_OnlyOnRight" xml:space="preserve">
+    <value>右のみ</value>
+  </data>
+  <data name="StyleBuilder_Outset" xml:space="preserve">
+    <value>最初</value>
+  </data>
+  <data name="StyleBuilder_Outside" xml:space="preserve">
+    <value>外側（テキストはインデントされています）</value>
+  </data>
+  <data name="StyleBuilder_Overflow" xml:space="preserve">
+    <value>オーバーフロー</value>
+  </data>
+  <data name="StyleBuilder_Overline" xml:space="preserve">
+    <value>オーバーライン</value>
+  </data>
+  <data name="StyleBuilder_Padding" xml:space="preserve">
+    <value>詰め物</value>
+  </data>
+  <data name="StyleBuilder_Position" xml:space="preserve">
+    <value>ポジション</value>
+  </data>
+  <data name="StyleBuilder_Relative" xml:space="preserve">
+    <value>相対</value>
+  </data>
+  <data name="StyleBuilder_Ridge" xml:space="preserve">
+    <value>畝</value>
+  </data>
+  <data name="StyleBuilder_RightToLeft" xml:space="preserve">
+    <value>右から左</value>
+  </data>
+  <data name="StyleBuilder_SameForAll" xml:space="preserve">
+    <value>すべて同じ</value>
+  </data>
+  <data name="StyleBuilder_Scrolling" xml:space="preserve">
+    <value>スクロール</value>
+  </data>
+  <data name="StyleBuilder_ScrollingBackground" xml:space="preserve">
+    <value>背景をスクロール</value>
+  </data>
+  <data name="StyleBuilder_SmallCaps" xml:space="preserve">
+    <value>スモールキャップ</value>
+  </data>
+  <data name="StyleBuilder_Smaller" xml:space="preserve">
+    <value>より小さい</value>
+  </data>
+  <data name="StyleBuilder_SolidLine" xml:space="preserve">
+    <value>実線</value>
+  </data>
+  <data name="StyleBuilder_SpacingBetween" xml:space="preserve">
+    <value>間の間隔</value>
+  </data>
+  <data name="StyleBuilder_Specific" xml:space="preserve">
+    <value>特定</value>
+  </data>
+  <data name="StyleBuilder_Square" xml:space="preserve">
+    <value>平方</value>
+  </data>
+  <data name="StyleBuilder_Strikethrough" xml:space="preserve">
+    <value>打ち間違い</value>
+  </data>
+  <data name="StyleBuilder_Style" xml:space="preserve">
+    <value>スタイル</value>
+  </data>
+  <data name="StyleBuilder_Sub" xml:space="preserve">
+    <value>サブ</value>
+  </data>
+  <data name="StyleBuilder_Super" xml:space="preserve">
+    <value>スーパー</value>
+  </data>
+  <data name="StyleBuilder_TextBottom" xml:space="preserve">
+    <value>テキストボタン</value>
+  </data>
+  <data name="StyleBuilder_TextDirection" xml:space="preserve">
+    <value>テキストの方向</value>
+  </data>
+  <data name="StyleBuilder_TextFlow" xml:space="preserve">
+    <value>テキストフロー</value>
+  </data>
+  <data name="StyleBuilder_TextTab" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="StyleBuilder_TextTop" xml:space="preserve">
+    <value>テキストトップ</value>
+  </data>
+  <data name="StyleBuilder_Thick" xml:space="preserve">
+    <value>厚い</value>
+  </data>
+  <data name="StyleBuilder_Thin" xml:space="preserve">
+    <value>薄い</value>
+  </data>
+  <data name="StyleBuilder_ToTheLeft" xml:space="preserve">
+    <value>左に</value>
+  </data>
+  <data name="StyleBuilder_ToTheRight" xml:space="preserve">
+    <value>右に</value>
+  </data>
+  <data name="StyleBuilder_UnBulleted" xml:space="preserve">
+    <value>箇条書きされていない</value>
+  </data>
+  <data name="StyleBuilder_Underline" xml:space="preserve">
+    <value>アンダーライン</value>
+  </data>
+  <data name="StyleBuilder_Uppercase" xml:space="preserve">
+    <value>大文字</value>
+  </data>
+  <data name="StyleBuilder_UseScrollbarsIfNeeded" xml:space="preserve">
+    <value>必要に応じてスクロールバーを使用する</value>
+  </data>
+  <data name="StyleBuilder_Vertical" xml:space="preserve">
+    <value>垂直</value>
+  </data>
+  <data name="StyleBuilder_Visibility" xml:space="preserve">
+    <value>可視性</value>
+  </data>
+  <data name="StyleBuilder_Visible" xml:space="preserve">
+    <value>見える</value>
+  </data>
+  <data name="StyleBuilder_Words" xml:space="preserve">
+    <value>単語</value>
+  </data>
+  <data name="TableWizard_AccessibilityOptions" xml:space="preserve">
+    <value>アクセシビリティオプション</value>
+  </data>
+  <data name="TableWizard_AddHexColor" xml:space="preserve">
+    <value>16進カラーを追加…</value>
+  </data>
+  <data name="TableWizard_Additional" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="TableWizard_Alignment" xml:space="preserve">
+    <value>整列</value>
+  </data>
+  <data name="TableWizard_AllFourSides" xml:space="preserve">
+    <value>すべての4つの側面</value>
+  </data>
+  <data name="TableWizard_AllRowsAndColomns" xml:space="preserve">
+    <value>すべての行と列</value>
+  </data>
+  <data name="TableWizard_ApplySpecialFormatsTo" xml:space="preserve">
+    <value>特別なフォーマットを適用する</value>
+  </data>
+  <data name="TableWizard_AssociateCellsWithHeaders" xml:space="preserve">
+    <value>セルをヘッダーに関連付ける</value>
+  </data>
+  <data name="TableWizard_Baseline" xml:space="preserve">
+    <value>ベースライン</value>
+  </data>
+  <data name="TableWizard_Betweenall" xml:space="preserve">
+    <value>すべての行と列の間</value>
+  </data>
+  <data name="TableWizard_BetweenColumns" xml:space="preserve">
+    <value>列間</value>
+  </data>
+  <data name="TableWizard_Betweengroup" xml:space="preserve">
+    <value>行と列のグループ間</value>
+  </data>
+  <data name="TableWizard_BetweenRows" xml:space="preserve">
+    <value>行間</value>
+  </data>
+  <data name="TableWizard_Border" xml:space="preserve">
+    <value>境界</value>
+  </data>
+  <data name="TableWizard_Bottom" xml:space="preserve">
+    <value>ボトム</value>
+  </data>
+  <data name="TableWizard_BottomSide" xml:space="preserve">
+    <value>底面のみ</value>
+  </data>
+  <data name="TableWizard_Caption" xml:space="preserve">
+    <value>キャプション</value>
+  </data>
+  <data name="TableWizard_CaptionAlign" xml:space="preserve">
+    <value>キャプションの整列</value>
+  </data>
+  <data name="TableWizard_CellPadding" xml:space="preserve">
+    <value>セルの埋め込み</value>
+  </data>
+  <data name="TableWizard_CellSpacing" xml:space="preserve">
+    <value>セル間隔</value>
+  </data>
+  <data name="TableWizard_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="TableWizard_Columns" xml:space="preserve">
+    <value>コラム</value>
+  </data>
+  <data name="TableWizard_ColumnSettings" xml:space="preserve">
+    <value>コラム番号とコラムスパン</value>
+  </data>
+  <data name="TableWizard_ColumnSpan" xml:space="preserve">
+    <value>コラムスパン</value>
+  </data>
+  <data name="TableWizard_Content" xml:space="preserve">
+    <value>コンテンツ</value>
+  </data>
+  <data name="TableWizard_ContentAlignment" xml:space="preserve">
+    <value>コンテンツの整列</value>
+  </data>
+  <data name="TableWizard_Custom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="TableWizard_Customh" xml:space="preserve">
+    <value>カスタム-</value>
+  </data>
+  <data name="TableWizard_Dimensions" xml:space="preserve">
+    <value>寸法</value>
+  </data>
+  <data name="TableWizard_FirstColumn" xml:space="preserve">
+    <value>最初のコラム</value>
+  </data>
+  <data name="TableWizard_Frame" xml:space="preserve">
+    <value>フレーム</value>
+  </data>
+  <data name="TableWizard_HeadingColumns" xml:space="preserve">
+    <value>見出し列</value>
+  </data>
+  <data name="TableWizard_HeadingRow" xml:space="preserve">
+    <value>見出し行</value>
+  </data>
+  <data name="TableWizard_HeadingRows" xml:space="preserve">
+    <value>見出し行</value>
+  </data>
+  <data name="TableWizard_HeadingsLabel" xml:space="preserve">
+    <value>見出し</value>
+  </data>
+  <data name="TableWizard_Horizontal" xml:space="preserve">
+    <value>水平</value>
+  </data>
+  <data name="TableWizard_InvalidCellHeight" xml:space="preserve">
+    <value>セルの高さが無効です。</value>
+  </data>
+  <data name="TableWizard_InvalidCellWidth" xml:space="preserve">
+    <value>セル幅が無効です。</value>
+  </data>
+  <data name="TableWizard_InvalidTableHeight" xml:space="preserve">
+    <value>テーブルの高さが無効です。</value>
+  </data>
+  <data name="TableWizard_InvalidTableWidth" xml:space="preserve">
+    <value>テーブルの幅が無効です。</value>
+  </data>
+  <data name="TableWizard_LastColumn" xml:space="preserve">
+    <value>最後のコラム</value>
+  </data>
+  <data name="TableWizard_LastRow" xml:space="preserve">
+    <value>最後の行</value>
+  </data>
+  <data name="TableWizard_Layout" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
+  <data name="TableWizard_LeftAndRightSide" xml:space="preserve">
+    <value>左右両側のみ</value>
+  </data>
+  <data name="TableWizard_LeftSide" xml:space="preserve">
+    <value>左側</value>
+  </data>
+  <data name="TableWizard_Middle" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="TableWizard_NoBorders" xml:space="preserve">
+    <value>境なし</value>
+  </data>
+  <data name="TableWizard_NoCSSClassLayout" xml:space="preserve">
+    <value>CSSクラスレイアウトなし</value>
+  </data>
+  <data name="TableWizard_NoInteriorBorders" xml:space="preserve">
+    <value>内装なし</value>
+  </data>
+  <data name="TableWizard_NoTextWrapping" xml:space="preserve">
+    <value>テキストの折り返しなし</value>
+  </data>
+  <data name="TableWizard_NoWrapping" xml:space="preserve">
+    <value>ラッピングなし</value>
+  </data>
+  <data name="TableWizard_OtherOptionsLabel" xml:space="preserve">
+    <value>その他のオプション</value>
+  </data>
+  <data name="TableWizard_PixelsOrPercents" xml:space="preserve">
+    <value>ピクセル、％</value>
+  </data>
+  <data name="TableWizard_PromptColor" xml:space="preserve">
+    <value>カスタムカラーのHEX値を入力してください</value>
+  </data>
+  <data name="TableWizard_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="TableWizard_RightSide" xml:space="preserve">
+    <value>右手側のみ</value>
+  </data>
+  <data name="TableWizard_Rows" xml:space="preserve">
+    <value>行</value>
+  </data>
+  <data name="TableWizard_RowSettings" xml:space="preserve">
+    <value>行番号と行スパン</value>
+  </data>
+  <data name="TableWizard_RowSpan" xml:space="preserve">
+    <value>行スパン</value>
+  </data>
+  <data name="TableWizard_SelectAll" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="TableWizard_Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="TableWizard_Summary" xml:space="preserve">
+    <value>サマリー</value>
+  </data>
+  <data name="TableWizard_Tab1HeaderText" xml:space="preserve">
+    <value>テーブルデザイン</value>
+  </data>
+  <data name="TableWizard_Tab2HeaderText" xml:space="preserve">
+    <value>表のプロパティ</value>
+  </data>
+  <data name="TableWizard_Tab3HeaderText" xml:space="preserve">
+    <value>セルのプロパティ</value>
+  </data>
+  <data name="TableWizard_Tab4HeaderText" xml:space="preserve">
+    <value>アクセシビリティ</value>
+  </data>
+  <data name="TableWizard_TableBorderControlSizeOverflow" xml:space="preserve">
+    <value>境界線のサイズを最大値（1000）より大きい値に設定しようとしています。 1000に設定されます。</value>
+  </data>
+  <data name="TableWizard_TableControls" xml:space="preserve">
+    <value>テーブルコントロール</value>
+  </data>
+  <data name="TableWizard_TableDesignPreviewLabel" xml:space="preserve">
+    <value>テーブルデザインのプレビュー</value>
+  </data>
+  <data name="TableWizard_Title" xml:space="preserve">
+    <value>テーブルウィザード</value>
+  </data>
+  <data name="TableWizard_TopAndBottomSide" xml:space="preserve">
+    <value>上下の辺のみ</value>
+  </data>
+  <data name="TableWizard_TopSide" xml:space="preserve">
+    <value>トップサイドのみ</value>
+  </data>
+  <data name="TableWizard_UseColor" xml:space="preserve">
+    <value>色を使う</value>
+  </data>
+  <data name="TableWizard_Vertical" xml:space="preserve">
+    <value>垂直</value>
+  </data>
+</root>

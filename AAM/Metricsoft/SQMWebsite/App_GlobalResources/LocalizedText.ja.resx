@@ -1,0 +1,858 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionPageLink" xml:space="preserve">
+    <value>完了ページへ行く</value>
+  </data>
+  <data name="ActionPageLinkToolTip" xml:space="preserve">
+    <value>この対策の完了は、元のモジュールページで実施する必要があります。 元のページに戻る場合は、ここをクリックしてください。</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>アクティブ</value>
+  </data>
+  <data name="AddANewIncident" xml:space="preserve">
+    <value>新規災害追加</value>
+  </data>
+  <data name="AddAnother" xml:space="preserve">
+    <value>他を追加</value>
+  </data>
+  <data name="AddAnotherFinalCorrectiveAction" xml:space="preserve">
+    <value>他の対策を追加</value>
+  </data>
+  <data name="AddCause" xml:space="preserve">
+    <value>原因を追加</value>
+  </data>
+  <data name="AddProblemSeries" xml:space="preserve">
+    <value>問題点を追加</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="AltLocationCode" xml:space="preserve">
+    <value>他の事業所コード</value>
+  </data>
+  <data name="Approvals" xml:space="preserve">
+    <value>承認</value>
+  </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>アセスメント</value>
+  </data>
+  <data name="AssessmentBy" xml:space="preserve">
+    <value>アセスメント実施者</value>
+  </data>
+  <data name="AssessmentDate" xml:space="preserve">
+    <value>アセスメントの日付</value>
+  </data>
+  <data name="AssessmentDateFrom" xml:space="preserve">
+    <value>アセスメントの日付：</value>
+  </data>
+  <data name="AssessmentExceptionUpdateConfirm" xml:space="preserve">
+    <value>確認行動の戻し（アセスメントの例外状態の更新）</value>
+  </data>
+  <data name="AssessmentIncompleteMsg" xml:space="preserve">
+    <value>アセスメントを終了する為にはこのページのすべての要求項目にインプットする必要があります。</value>
+  </data>
+  <data name="AssessmentRequiredsIndicatedMsg" xml:space="preserve">
+    <value>アセスメントは保存されましたが、終了するためにはすべての要求項目にインプットする必要があります。赤線が引かれた項目をインプットして下さい。</value>
+  </data>
+  <data name="AssessmentRequiredsMsg" xml:space="preserve">
+    <value>保存する為にはこのページのすべての要求項目をインプットする必要があります。</value>
+  </data>
+  <data name="AssessmentReturn" xml:space="preserve">
+    <value>保存ボタンを押さ無かった場合、変更点が保存されない場合があります。このページを離れますか？</value>
+  </data>
+  <data name="AssessmentType" xml:space="preserve">
+    <value>アセスメントタイプ</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>課題実行者</value>
+  </data>
+  <data name="AssignTask" xml:space="preserve">
+    <value>課題</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>添付</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>可能</value>
+  </data>
+  <data name="BillingCurrency" xml:space="preserve">
+    <value>請求通貨</value>
+  </data>
+  <data name="BodyPart" xml:space="preserve">
+    <value>本文</value>
+  </data>
+  <data name="BusinessLocation" xml:space="preserve">
+    <value>事業所</value>
+  </data>
+  <data name="BusinessOrg" xml:space="preserve">
+    <value>事業構造</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="CancelSaveConfirm" xml:space="preserve">
+    <value>確認行動を戻す（保存せずキャンセル）；</value>
+  </data>
+  <data name="CaseType" xml:space="preserve">
+    <value>ケースタイプ</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>ｶﾃｺﾞﾘｰ</value>
+  </data>
+  <data name="Causation" xml:space="preserve">
+    <value>因果関係</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>パスワードの変更</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="CloseAudit" xml:space="preserve">
+    <value>このアセスメントは完了です</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="CloseWindowNoSave" xml:space="preserve">
+    <value>保存せずこのウィンドウを閉じる</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>会社</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="ContactPhoneNumber" xml:space="preserve">
+    <value>連絡先電話番号</value>
+  </data>
+  <data name="CorrectiveAction" xml:space="preserve">
+    <value>最終是正対策</value>
+  </data>
+  <data name="CorrectiveActions" xml:space="preserve">
+    <value>最終是正対策</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>費用</value>
+  </data>
+  <data name="CountryRegion" xml:space="preserve">
+    <value>国　/　地域</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>データ</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="DateSpan" xml:space="preserve">
+    <value>日付スパン：</value>
+  </data>
+  <data name="DayOfWeek" xml:space="preserve">
+    <value>曜日</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>日</value>
+  </data>
+  <data name="DaysWithoutLostTimeCase" xml:space="preserve">
+    <value>無休業災害日数</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="DeleteIncident" xml:space="preserve">
+    <value>災害を削除</value>
+  </data>
+  <data name="DeleteItem" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Deleting" xml:space="preserve">
+    <value>削除してます</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>部署</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="DetectedLocation" xml:space="preserve">
+    <value>検出された場所</value>
+  </data>
+  <data name="DisplayPasswordEditFields" xml:space="preserve">
+    <value>パスワード編集フィールドの表示</value>
+  </data>
+  <data name="DisplayPrompt" xml:space="preserve">
+    <value>素早い表示</value>
+  </data>
+  <data name="Disposition" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>実行済み</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>納期</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="EditIncident" xml:space="preserve">
+    <value>災害を編集</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>編集中</value>
+  </data>
+  <data name="EditIssue" xml:space="preserve">
+    <value>問題を編集</value>
+  </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>発行日</value>
+  </data>
+  <data name="EHSAudits" xml:space="preserve">
+    <value>EHS監査</value>
+  </data>
+  <data name="EHSIncidents" xml:space="preserve">
+    <value>EHS災害</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>eメールアドレス</value>
+  </data>
+  <data name="EnergyInput" xml:space="preserve">
+    <value>エネルギー入力</value>
+  </data>
+  <data name="ENVDataDefaultValue" xml:space="preserve">
+    <value>デフォルト値-</value>
+  </data>
+  <data name="ENVDataDeleteMsg" xml:space="preserve">
+    <value>この入力は、報告期間が確定すると削除されます</value>
+  </data>
+  <data name="ENVDataPeriodSelect" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="ENVDataValidate1" xml:space="preserve">
+    <value>いくつかのMetircへのインプットが削除の為マークされました。保存しますか？</value>
+  </data>
+  <data name="ENVDataValidate2" xml:space="preserve">
+    <value>この報告月は以前に承認されていますが、いくつかMetricへのインプットがされています。保存しますか？</value>
+  </data>
+  <data name="ENVDataValidate3" xml:space="preserve">
+    <value>Metricへのインプット</value>
+  </data>
+  <data name="ENVProfileAddMetric" xml:space="preserve">
+    <value>Metricを追加</value>
+  </data>
+  <data name="ENVProfileCopyConfirm" xml:space="preserve">
+    <value>確認行動の戻し（選択したプロフィールからMetiricへコピー）</value>
+  </data>
+  <data name="ENVProfileDeleteConfirm" xml:space="preserve">
+    <value>このMetricと今日までに収集されたデータを削除</value>
+  </data>
+  <data name="ENVProfileDeleteConfirm2" xml:space="preserve">
+    <value>この行動はもとに戻せません</value>
+  </data>
+  <data name="ENVProfileMetricHasHistoryMsg" xml:space="preserve">
+    <value>このメトリックのデータは既に存在します。 削除の代わりに無効にしてください</value>
+  </data>
+  <data name="ENVProfileRequiredsMsg" xml:space="preserve">
+    <value>保存の前にすべての要求項目(*)にインプットして下さい</value>
+  </data>
+  <data name="ENVProfileUpdateMetric" xml:space="preserve">
+    <value>Metricの更新</value>
+  </data>
+  <data name="ENVProfileValidate1" xml:space="preserve">
+    <value>Metiricのプロフィール</value>
+  </data>
+  <data name="ENVProfileValidate2" xml:space="preserve">
+    <value>最終承認者が必要です</value>
+  </data>
+  <data name="ENVReportCriteriaMsg" xml:space="preserve">
+    <value>レポート条件の選択に誤りがあります。 少なくとも1つの場所が選択されていることと、日付からのレポートが有効であることを確認してください</value>
+  </data>
+  <data name="ENVReportViewOpenMsg" xml:space="preserve">
+    <value>選択したレポートを開く、または実行する際にエラーが発生しました</value>
+  </data>
+  <data name="EventCategory" xml:space="preserve">
+    <value>イベントカテゴリー</value>
+  </data>
+  <data name="Evidence" xml:space="preserve">
+    <value>完了証拠/書類</value>
+  </data>
+  <data name="ExpectedReturnDate" xml:space="preserve">
+    <value>予想戻し日付</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="ExportDataToExcelFormat" xml:space="preserve">
+    <value>エクセルフォーマットへのエクスポート日付</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>FROM</value>
+  </data>
+  <data name="FYYearToDate" xml:space="preserve">
+    <value>期</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>非活動</value>
+  </data>
+  <data name="Incident" xml:space="preserve">
+    <value>災害</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_1" xml:space="preserve">
+    <value>承認レベル１</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_2" xml:space="preserve">
+    <value>承認レベル２</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_3" xml:space="preserve">
+    <value>承認レベル３</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_35" xml:space="preserve">
+    <value>承認レベル３５</value>
+  </data>
+  <data name="INCIDENT_APPROVAL_4" xml:space="preserve">
+    <value>承認レベル４</value>
+  </data>
+  <data name="IncidentDate" xml:space="preserve">
+    <value>災害発生日</value>
+  </data>
+  <data name="IncidentID" xml:space="preserve">
+    <value>災害No.</value>
+  </data>
+  <data name="IncidentType" xml:space="preserve">
+    <value>災害のタイプ</value>
+  </data>
+  <data name="InitialAction" xml:space="preserve">
+    <value>暫定処置</value>
+  </data>
+  <data name="InjuryType" xml:space="preserve">
+    <value>怪我のタイプ</value>
+  </data>
+  <data name="InspectionDate" xml:space="preserve">
+    <value>検査日</value>
+  </data>
+  <data name="InspectionLocation" xml:space="preserve">
+    <value>場所</value>
+  </data>
+  <data name="InvoiceUOM" xml:space="preserve">
+    <value>請求書UOM</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>問題</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="KeyWordSearch" xml:space="preserve">
+    <value>キーワード検索</value>
+  </data>
+  <data name="KeyWordSearchDesc" xml:space="preserve">
+    <value>検索の絞り込みに役立つように、タイトルまたは説明フィールドにキーワードを入力してください。 単語をスペースで区切ります</value>
+  </data>
+  <data name="LanguageCulture" xml:space="preserve">
+    <value>言語　/　文化</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>最終更新</value>
+  </data>
+  <data name="ListAssessments" xml:space="preserve">
+    <value>アセスメントをリストする</value>
+  </data>
+  <data name="ListAssessmentSchedules" xml:space="preserve">
+    <value>アセスメントのスケジュールをリストする</value>
+  </data>
+  <data name="ListIncidents" xml:space="preserve">
+    <value>災害をリストする</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>場所</value>
+  </data>
+  <data name="LocationCode" xml:space="preserve">
+    <value>場所コード</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>場所</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>場所のタイプ</value>
+  </data>
+  <data name="LockThisField" xml:space="preserve">
+    <value>この項目を自動更新からプロテクトする</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>ログアウト</value>
+  </data>
+  <data name="LogoutConfirm" xml:space="preserve">
+    <value>確認も戻し（確認して下さい。　ログアウトしますか？）</value>
+  </data>
+  <data name="LostTimeHistory" xml:space="preserve">
+    <value>休業の歴史</value>
+  </data>
+  <data name="MediaVideos" xml:space="preserve">
+    <value>メディアの管理 - ビデオ</value>
+  </data>
+  <data name="MediaVideosInstruct" xml:space="preserve">
+    <value>下記のビデオを追加または更新</value>
+  </data>
+  <data name="Metric" xml:space="preserve">
+    <value>Metric</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>新規</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="NoMetricDefinedBusLoc" xml:space="preserve">
+    <value>現時点ではMetric上このビジネス場所は定義されていません。</value>
+  </data>
+  <data name="NoMetricProfile" xml:space="preserve">
+    <value>この場所に対しMetricのプロフィールはありません。</value>
+  </data>
+  <data name="NoMetricsDefined" xml:space="preserve">
+    <value>このプロフィールに対し、Metric上の定義がありません。</value>
+  </data>
+  <data name="NumericInputConfirm" xml:space="preserve">
+    <value>数値入力のみ（これは「数値だけを入力してください」）;</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>オープン</value>
+  </data>
+  <data name="PartNumber" xml:space="preserve">
+    <value>部品番号</value>
+  </data>
+  <data name="PercentChange" xml:space="preserve">
+    <value>パーセントの変更</value>
+  </data>
+  <data name="PersonAccountable" xml:space="preserve">
+    <value>説明責任者</value>
+  </data>
+  <data name="PersonResponsible" xml:space="preserve">
+    <value>責任者</value>
+  </data>
+  <data name="Plant" xml:space="preserve">
+    <value>工場</value>
+  </data>
+  <data name="PreventativeAction" xml:space="preserve">
+    <value>予防行動</value>
+  </data>
+  <data name="PreventativeMeasure" xml:space="preserve">
+    <value>予防対策</value>
+  </data>
+  <data name="PreviousYear" xml:space="preserve">
+    <value>前年</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>印刷</value>
+  </data>
+  <data name="PrivilegeGroup" xml:space="preserve">
+    <value>優先グループ</value>
+  </data>
+  <data name="ProblemArea" xml:space="preserve">
+    <value>問題エリア</value>
+  </data>
+  <data name="ProblemStatement" xml:space="preserve">
+    <value>問題の説明</value>
+  </data>
+  <data name="ProceduresFollowed" xml:space="preserve">
+    <value>作業手順に沿っていた</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>質問</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>質問文章</value>
+  </data>
+  <data name="Reassign" xml:space="preserve">
+    <value>再割り当て</value>
+  </data>
+  <data name="ReassignToolTip" xml:space="preserve">
+    <value>この課題を他の人に再割り当てする</value>
+  </data>
+  <data name="ReceiptNumber" xml:space="preserve">
+    <value>レシート番号</value>
+  </data>
+  <data name="Recommendation" xml:space="preserve">
+    <value>推奨</value>
+  </data>
+  <data name="RecommendationType" xml:space="preserve">
+    <value>推奨タイプ</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>リフレッシュ</value>
+  </data>
+  <data name="ReportDate" xml:space="preserve">
+    <value>報告日付</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>要求された</value>
+  </data>
+  <data name="RequiredFieldsMustBeCompleted" xml:space="preserve">
+    <value>要求された項目は完了しないといけません</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>解決</value>
+  </data>
+  <data name="ResponsibleLocation" xml:space="preserve">
+    <value>責任場所</value>
+  </data>
+  <data name="ResponsiblePerson" xml:space="preserve">
+    <value>責任者</value>
+  </data>
+  <data name="ReturnToList" xml:space="preserve">
+    <value>リストに戻る</value>
+  </data>
+  <data name="RootCause" xml:space="preserve">
+    <value>原因</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveAndCreateReport" xml:space="preserve">
+    <value>保存し報告書を作る</value>
+  </data>
+  <data name="SaveAndReturn" xml:space="preserve">
+    <value>保存し戻る</value>
+  </data>
+  <data name="SaveError" xml:space="preserve">
+    <value>変更を保存しようとしてエラーが発生しました</value>
+  </data>
+  <data name="SaveMetric" xml:space="preserve">
+    <value>Metricを保存</value>
+  </data>
+  <data name="SaveProfile" xml:space="preserve">
+    <value>プロフィールを保存</value>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>更新内容は保存されました。</value>
+  </data>
+  <data name="SaveUserPrefs" xml:space="preserve">
+    <value>ユーザーの設定を保存する</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>保存中</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>点数</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>選択</value>
+  </data>
+  <data name="SelectAChart" xml:space="preserve">
+    <value>チャートを選択</value>
+  </data>
+  <data name="SelectAssessmentStatus" xml:space="preserve">
+    <value>リストの評価ステータスを選択する</value>
+  </data>
+  <data name="SelectAssessmentTypes" xml:space="preserve">
+    <value>リストの評価タイプを選択する</value>
+  </data>
+  <data name="SelectIncidentTypes" xml:space="preserve">
+    <value>リストの災害タイプを選択する</value>
+  </data>
+  <data name="SelectOrgRegion" xml:space="preserve">
+    <value>組織/地域...</value>
+  </data>
+  <data name="SelectOrgRegionInstruct" xml:space="preserve">
+    <value>ビジネス組織および/または国の地域に基づいて、報告する場所を選択します</value>
+  </data>
+  <data name="SelectOrgRegionTitle" xml:space="preserve">
+    <value>組織または地域を選択</value>
+  </data>
+  <data name="SelectRange" xml:space="preserve">
+    <value>レンジを選択</value>
+  </data>
+  <data name="SelectResponsibleSupplierLocations" xml:space="preserve">
+    <value>担当/サプライヤの場所を選択</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状態</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="SupplierLocation" xml:space="preserve">
+    <value>サプライヤの場所</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>目標</value>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+    <value>目標値</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>課題</value>
+  </data>
+  <data name="TaskCompleteConfirm" xml:space="preserve">
+    <value>確認行動の戻し（完了としてこの課題を更新）；</value>
+  </data>
+  <data name="TaskCreateConfirm" xml:space="preserve">
+    <value>確認行動の戻し（課題を設定）；</value>
+  </data>
+  <data name="TaskReAssignConfirm" xml:space="preserve">
+    <value>確認行動の戻し（この課題を再割り当て）；</value>
+  </data>
+  <data name="TimeOfIncident" xml:space="preserve">
+    <value>災害の時間</value>
+  </data>
+  <data name="Timestamp" xml:space="preserve">
+    <value>タイプスタンプ</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>題</value>
+  </data>
+  <data name="TitleRequired" xml:space="preserve">
+    <value>項目のタイトルをつけて下さい。</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>宛先</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>タイプ</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>未定義</value>
+  </data>
+  <data name="UpdateStatus" xml:space="preserve">
+    <value>更新状態</value>
+  </data>
+  <data name="UploadError" xml:space="preserve">
+    <value>アップロードするフィールドを選択して下さい</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>価値</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="VideoAdd" xml:space="preserve">
+    <value>ビデオを追加</value>
+  </data>
+  <data name="VideoAttachments" xml:space="preserve">
+    <value>添付ビデオ</value>
+  </data>
+  <data name="VideoDate" xml:space="preserve">
+    <value>ビデオの日付</value>
+  </data>
+  <data name="VideoDateDesc" xml:space="preserve">
+    <value>ビデオが撮られた日付</value>
+  </data>
+  <data name="VideoDateFrom" xml:space="preserve">
+    <value>ビデオの日付：</value>
+  </data>
+  <data name="VideoDelete" xml:space="preserve">
+    <value>ビデオと関連する全ての添付を削除</value>
+  </data>
+  <data name="VideoDeleted" xml:space="preserve">
+    <value>ビデオは削除されました</value>
+  </data>
+  <data name="VideoDescription" xml:space="preserve">
+    <value>ビデオの説明</value>
+  </data>
+  <data name="VideoDownload" xml:space="preserve">
+    <value>ビデオのダウンロード</value>
+  </data>
+  <data name="VideoEdit" xml:space="preserve">
+    <value>ビデオ情報の編集</value>
+  </data>
+  <data name="VideoErrorDeleting" xml:space="preserve">
+    <value>ビデオ削除のエラー</value>
+  </data>
+  <data name="VideoLibary" xml:space="preserve">
+    <value>ビデオライブラリー</value>
+  </data>
+  <data name="VideoList" xml:space="preserve">
+    <value>ビデオのリスト</value>
+  </data>
+  <data name="VideoOwn" xml:space="preserve">
+    <value>個人のビデオ</value>
+  </data>
+  <data name="VideoOwner" xml:space="preserve">
+    <value>ビデオ所有者</value>
+  </data>
+  <data name="VideoReleaseFormsDesc" xml:space="preserve">
+    <value>&lt;br&gt;(リリースフォームは、個々の非従業員または未成年者を撮影する場合にのみ必要です)</value>
+  </data>
+  <data name="VideoReleaseFormsRequired" xml:space="preserve">
+    <value>リリースフォームや追加書類は必要ですか？</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="VideoSelectOwner" xml:space="preserve">
+    <value>所有者によりビデオを選択</value>
+  </data>
+  <data name="VideoSelectSource" xml:space="preserve">
+    <value>ソースやアップロードによりビデオを選択</value>
+  </data>
+  <data name="VideoSelectStatus" xml:space="preserve">
+    <value>状態によりビデオを選択</value>
+  </data>
+  <data name="VideoSelectType" xml:space="preserve">
+    <value>リストのビデオタイプを選択</value>
+  </data>
+  <data name="VideoSourceType" xml:space="preserve">
+    <value>ビデオソースタイプ</value>
+  </data>
+  <data name="VideoSpeakerAudio" xml:space="preserve">
+    <value>ビデオにスピーカーの音声はありますか？</value>
+  </data>
+  <data name="VideoTextAdded" xml:space="preserve">
+    <value>ビデオに文字を追加したいですか？</value>
+  </data>
+  <data name="VideoTextDisclaimer" xml:space="preserve">
+    <value>ビデオのポイント（例：1:45）と追加するテキストを入力します。 テキストは箇条書きまたは短い文章でなければならず、必要に応じてポイントを強調したり、スピーカーを識別したりする必要があります。 1画面につき4つの箇条書きにしてください。 すべてのテキストはHelvetica 10ポイントフォントで表示されます。 すべてのテキストは、ビデオがローカルでのみ使用されている場合を除き、英語で入力する必要があります。</value>
+  </data>
+  <data name="VideoType" xml:space="preserve">
+    <value>ビデオタイプ</value>
+  </data>
+  <data name="VideoUpload" xml:space="preserve">
+    <value>ビデオのアップロード</value>
+  </data>
+  <data name="VideoUploadInstruction" xml:space="preserve">
+    <value>動画をアップロードするには、すべてのファイル情報を入力し、[参照]をクリックして、デスクトップや端末から適切なファイルを検索するか、端末から動画を撮影します。</value>
+  </data>
+  <data name="ViewStatistics" xml:space="preserve">
+    <value>統計情報を見る：</value>
+  </data>
+  <data name="YearToDate" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
+</root>

@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutDialog" xml:space="preserve">
+    <value>RadEditorについて</value>
+  </data>
+  <data name="AbsolutePosition" xml:space="preserve">
+    <value>絶対的な位置を設定する</value>
+  </data>
+  <data name="AjaxSpellCheck" xml:space="preserve">
+    <value>AJAXスペルチェッカー</value>
+  </data>
+  <data name="AlignmentSelector" xml:space="preserve">
+    <value>アライメントセレクタ</value>
+  </data>
+  <data name="ApplyClass" xml:space="preserve">
+    <value>CSSクラスを適用する</value>
+  </data>
+  <data name="BackColor" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="CellBorder" xml:space="preserve">
+    <value>セル境界</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>クリップボード</value>
+  </data>
+  <data name="ColorPicker" xml:space="preserve">
+    <value>カラーピッカー</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>コンテンツ</value>
+  </data>
+  <data name="ConvertToLower" xml:space="preserve">
+    <value>小文字に変換</value>
+  </data>
+  <data name="ConvertToUpper" xml:space="preserve">
+    <value>大文字に変換</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="CSDialog" xml:space="preserve">
+    <value>コンプライアンスチェック</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>カット</value>
+  </data>
+  <data name="DecreaseSize" xml:space="preserve">
+    <value>サイズを小さくする</value>
+  </data>
+  <data name="DeleteCell" xml:space="preserve">
+    <value>セルを削除</value>
+  </data>
+  <data name="DeleteColumn" xml:space="preserve">
+    <value>コラムを削除</value>
+  </data>
+  <data name="DeleteRow" xml:space="preserve">
+    <value>行を削除</value>
+  </data>
+  <data name="DeleteTable" xml:space="preserve">
+    <value>テーブルを削除</value>
+  </data>
+  <data name="DeleteTableItems" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="DocumentManager" xml:space="preserve">
+    <value>ドキュメントマネジャー</value>
+  </data>
+  <data name="EditContent" xml:space="preserve">
+    <value>コンテンツを編集</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>押された</value>
+  </data>
+  <data name="FindAndReplace" xml:space="preserve">
+    <value>検索と置換</value>
+  </data>
+  <data name="Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="FontName" xml:space="preserve">
+    <value>フォント名</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="FormatBlock" xml:space="preserve">
+    <value>パラグラフスタイル</value>
+  </data>
+  <data name="FormatCodeBlock" xml:space="preserve">
+    <value>フォーマットコードブロック</value>
+  </data>
+  <data name="FormatPainter" xml:space="preserve">
+    <value>フォーマットペインター</value>
+  </data>
+  <data name="FormatPainterApply" xml:space="preserve">
+    <value>フォーマットを適用する</value>
+  </data>
+  <data name="FormatPainterClear" xml:space="preserve">
+    <value>フォーマットをクリア</value>
+  </data>
+  <data name="FormatPainterCopy" xml:space="preserve">
+    <value>フォーマットをコピー</value>
+  </data>
+  <data name="FormatSets" xml:space="preserve">
+    <value>フォーマットを設定</value>
+  </data>
+  <data name="FormatStripper" xml:space="preserve">
+    <value>フォーマットストリッパー</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>ホーム</value>
+  </data>
+  <data name="ImageBorder" xml:space="preserve">
+    <value>画像の境界線</value>
+  </data>
+  <data name="ImageEditor" xml:space="preserve">
+    <value>イメージエディタ</value>
+  </data>
+  <data name="ImageManager" xml:space="preserve">
+    <value>イメージマネージャ</value>
+  </data>
+  <data name="ImageMapDialog" xml:space="preserve">
+    <value>イメージマップエディタ</value>
+  </data>
+  <data name="ImageSizeMargins" xml:space="preserve">
+    <value>サイズと余白</value>
+  </data>
+  <data name="IncreaseSize" xml:space="preserve">
+    <value>サイズを大きくする</value>
+  </data>
+  <data name="Indent" xml:space="preserve">
+    <value>インデント</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>挿入</value>
+  </data>
+  <data name="InsertAnchor" xml:space="preserve">
+    <value>アンカーを挿入</value>
+  </data>
+  <data name="InsertColumnLeft" xml:space="preserve">
+    <value>列を左に挿入する</value>
+  </data>
+  <data name="InsertColumnRight" xml:space="preserve">
+    <value>列を右に挿入する</value>
+  </data>
+  <data name="InsertCustomLink" xml:space="preserve">
+    <value>カスタムリンク</value>
+  </data>
+  <data name="InsertDate" xml:space="preserve">
+    <value>日付を挿入</value>
+  </data>
+  <data name="InsertEmailLink" xml:space="preserve">
+    <value>メールリンクを挿入</value>
+  </data>
+  <data name="InsertExternalVideo" xml:space="preserve">
+    <value>外部ビデオを挿入する</value>
+  </data>
+  <data name="InsertFormButton" xml:space="preserve">
+    <value>ボタンを挿入</value>
+  </data>
+  <data name="InsertFormCheckbox" xml:space="preserve">
+    <value>チェックボックスを挿入</value>
+  </data>
+  <data name="InsertFormElement" xml:space="preserve">
+    <value>フォーム要素を挿入する</value>
+  </data>
+  <data name="InsertFormForm" xml:space="preserve">
+    <value>フォームを挿入</value>
+  </data>
+  <data name="InsertFormHidden" xml:space="preserve">
+    <value>隠しを挿入する</value>
+  </data>
+  <data name="InsertFormPassword" xml:space="preserve">
+    <value>パスワードを挿入</value>
+  </data>
+  <data name="InsertFormRadio" xml:space="preserve">
+    <value>ラジオを挿入</value>
+  </data>
+  <data name="InsertFormReset" xml:space="preserve">
+    <value>リセットを挿入</value>
+  </data>
+  <data name="InsertFormSelect" xml:space="preserve">
+    <value>セレクトを挿入</value>
+  </data>
+  <data name="InsertFormSubmit" xml:space="preserve">
+    <value>送信を挿入</value>
+  </data>
+  <data name="InsertFormText" xml:space="preserve">
+    <value>テキストボックスを挿入</value>
+  </data>
+  <data name="InsertFormTextarea" xml:space="preserve">
+    <value>テキストエリアを挿入</value>
+  </data>
+  <data name="InsertGroupbox" xml:space="preserve">
+    <value>グループボックスを挿入</value>
+  </data>
+  <data name="InsertHorizontalRule" xml:space="preserve">
+    <value>水平ルール</value>
+  </data>
+  <data name="InsertImage" xml:space="preserve">
+    <value>画像を挿入</value>
+  </data>
+  <data name="InsertLink" xml:space="preserve">
+    <value>リンクを挿入</value>
+  </data>
+  <data name="InsertOrderedList" xml:space="preserve">
+    <value>番号付きリスト</value>
+  </data>
+  <data name="InsertParagraph" xml:space="preserve">
+    <value>新しいパラグラフ</value>
+  </data>
+  <data name="InsertRowAbove" xml:space="preserve">
+    <value>行を上に挿入</value>
+  </data>
+  <data name="InsertRowBelow" xml:space="preserve">
+    <value>行を下に挿入</value>
+  </data>
+  <data name="InsertSnippet" xml:space="preserve">
+    <value>コードスニペットを挿入する</value>
+  </data>
+  <data name="InsertSymbol" xml:space="preserve">
+    <value>シンボルを挿入</value>
+  </data>
+  <data name="InsertTable" xml:space="preserve">
+    <value>テーブルを挿入</value>
+  </data>
+  <data name="InsertTableDialog" xml:space="preserve">
+    <value>テーブルを挿入</value>
+  </data>
+  <data name="InsertTableItems" xml:space="preserve">
+    <value>挿入</value>
+  </data>
+  <data name="InsertTableLight" xml:space="preserve">
+    <value>テーブルを挿入</value>
+  </data>
+  <data name="InsertTime" xml:space="preserve">
+    <value>時間を挿入</value>
+  </data>
+  <data name="InsertUnorderedList" xml:space="preserve">
+    <value>箇条書きリスト</value>
+  </data>
+  <data name="Italic" xml:space="preserve">
+    <value>イタリック</value>
+  </data>
+  <data name="JustifyFull" xml:space="preserve">
+    <value>正当化する</value>
+  </data>
+  <data name="JustifyNone" xml:space="preserve">
+    <value>整列を削除</value>
+  </data>
+  <data name="LinkManager" xml:space="preserve">
+    <value>ハイパーリンクマネージャ</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>リンク</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>メディア</value>
+  </data>
+  <data name="MediaManager" xml:space="preserve">
+    <value>メディアマネジャー</value>
+  </data>
+  <data name="MergeColumns" xml:space="preserve">
+    <value>セルを水平に結合する</value>
+  </data>
+  <data name="MergeRows" xml:space="preserve">
+    <value>セルを垂直に結合する</value>
+  </data>
+  <data name="MergeSplitCells" xml:space="preserve">
+    <value>セルの結合と分割</value>
+  </data>
+  <data name="MobileEdit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="MobileTableProperties" xml:space="preserve">
+    <value>テーブルのプロパティ</value>
+  </data>
+  <data name="ModuleManager" xml:space="preserve">
+    <value>モジュールマネジャー</value>
+  </data>
+  <data name="Outdent" xml:space="preserve">
+    <value>インデントを戻す</value>
+  </data>
+  <data name="PageProperties" xml:space="preserve">
+    <value>ページのプロパティ</value>
+  </data>
+  <data name="Paragraph" xml:space="preserve">
+    <value>パラグラフスタイル</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>貼り付け</value>
+  </data>
+  <data name="PasteAsHtml" xml:space="preserve">
+    <value>HTMLとして貼り付け</value>
+  </data>
+  <data name="PasteFromWord" xml:space="preserve">
+    <value>Wordから貼り付け</value>
+  </data>
+  <data name="PasteFromWordNoFontsNoSizes" xml:space="preserve">
+    <value>Wordからの貼り付け、ストリップフォント</value>
+  </data>
+  <data name="PasteHtml" xml:space="preserve">
+    <value>HTMLの貼り付け</value>
+  </data>
+  <data name="PasteMarkdown" xml:space="preserve">
+    <value>マークダウンの貼り付け</value>
+  </data>
+  <data name="PastePlainText" xml:space="preserve">
+    <value>プレーンテキストを貼り付け</value>
+  </data>
+  <data name="PasteStrip" xml:space="preserve">
+    <value>オプションの貼り付け</value>
+  </data>
+  <data name="Preferences" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>印刷</value>
+  </data>
+  <data name="Proofing" xml:space="preserve">
+    <value>校正</value>
+  </data>
+  <data name="RealFontSize" xml:space="preserve">
+    <value>実際のフォントサイズ</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>やり直し</value>
+  </data>
+  <data name="RepeatLastCommand" xml:space="preserve">
+    <value>最後のコマンドを繰り返します</value>
+  </data>
+  <data name="ReservedResource" xml:space="preserve">
+    <value>この文字列は削除しないでください。 外部リソースファイルがApp_GlobalResourcesに存在するかどうかを確認するには、RadEditorが必要です。</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>レビュー</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全て選択</value>
+  </data>
+  <data name="SetCellProperties" xml:space="preserve">
+    <value>セルのプロパティ</value>
+  </data>
+  <data name="SetImageProperties" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="SetLinkProperties" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="SetTableProperties" xml:space="preserve">
+    <value>テーブルのプロパティ</value>
+  </data>
+  <data name="SilverlightManager" xml:space="preserve">
+    <value>Silverlightマネージャ</value>
+  </data>
+  <data name="SizeMargins" xml:space="preserve">
+    <value>サイズを余白</value>
+  </data>
+  <data name="SpellCheck" xml:space="preserve">
+    <value>スペルチェッカー</value>
+  </data>
+  <data name="SplitCell" xml:space="preserve">
+    <value>垂直方向にセルを分割</value>
+  </data>
+  <data name="SplitCellHorizontal" xml:space="preserve">
+    <value>水平方向にセルを分割</value>
+  </data>
+  <data name="StrikeThrough" xml:space="preserve">
+    <value>打ち間違い</value>
+  </data>
+  <data name="StripAll" xml:space="preserve">
+    <value>すべての書式を取り除く</value>
+  </data>
+  <data name="StripCss" xml:space="preserve">
+    <value>CSSの書式設定を取り除く</value>
+  </data>
+  <data name="StripFont" xml:space="preserve">
+    <value>フォント要素を取り除く</value>
+  </data>
+  <data name="StripSpan" xml:space="preserve">
+    <value>スパン要素を取り除く</value>
+  </data>
+  <data name="StripWord" xml:space="preserve">
+    <value>ワードフォーマットを取り除く</value>
+  </data>
+  <data name="StyleBuilder" xml:space="preserve">
+    <value>スタイルビルダー</value>
+  </data>
+  <data name="Styles" xml:space="preserve">
+    <value>スタイル</value>
+  </data>
+  <data name="Subscript" xml:space="preserve">
+    <value>添字</value>
+  </data>
+  <data name="Superscript" xml:space="preserve">
+    <value>読み仮名</value>
+  </data>
+  <data name="TableBorder" xml:space="preserve">
+    <value>テーブルの境界</value>
+  </data>
+  <data name="Tables" xml:space="preserve">
+    <value>テーブル</value>
+  </data>
+  <data name="TableWizard" xml:space="preserve">
+    <value>テーブルウィザード</value>
+  </data>
+  <data name="TemplateManager" xml:space="preserve">
+    <value>テンプレートマネジャー</value>
+  </data>
+  <data name="ToggleDocking" xml:space="preserve">
+    <value>フローティングツールバー/モジュールをすべてドッキングする</value>
+  </data>
+  <data name="ToggleEditMode" xml:space="preserve">
+    <value>編集モードを切り替える</value>
+  </data>
+  <data name="ToggleFloatingToolbar" xml:space="preserve">
+    <value>フローティングツールバーを切り替える</value>
+  </data>
+  <data name="ToggleScreenMode" xml:space="preserve">
+    <value>フルスクリーンモードを切り替える</value>
+  </data>
+  <data name="ToggleTableBorder" xml:space="preserve">
+    <value>境界の表示/非表示</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>下線</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="Unlink" xml:space="preserve">
+    <value>リンクの削除</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>ビュー</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>ズーム</value>
+  </data>
+</root>

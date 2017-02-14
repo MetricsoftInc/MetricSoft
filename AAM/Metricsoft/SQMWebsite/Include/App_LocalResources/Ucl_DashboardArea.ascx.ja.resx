@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnAddChartResource1.Text" xml:space="preserve">
+    <value>チャートを追加</value>
+  </data>
+  <data name="btnRefreshDashboardResource1.Text" xml:space="preserve">
+    <value>ビューの更新</value>
+  </data>
+  <data name="btnRefreshDashboardResource1.ToolTip" xml:space="preserve">
+    <value>ダッシュボードの表示を更新する</value>
+  </data>
+  <data name="btnTestViewResource1.Text" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="btnViewLayoutResource1.Text" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
+  <data name="btnViewSaveResource1.Text" xml:space="preserve">
+    <value>表示を保存</value>
+  </data>
+  <data name="cbVINewRowResource1.Text" xml:space="preserve">
+    <value>新しい行を開始する</value>
+  </data>
+  <data name="ddlDateIntervalResource1.ToolTip" xml:space="preserve">
+    <value>日付ごとにポイントを計算するチャートのインターバルを選択する</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.EmptyMessage" xml:space="preserve">
+    <value>チャートタイプ</value>
+  </data>
+  <data name="ddlVIGaugeTypeResource1.ToolTip" xml:space="preserve">
+    <value>チャート又はグラフタイプの選択</value>
+  </data>
+  <data name="ddlVIScopeResource1.EmptyMessage" xml:space="preserve">
+    <value>メトリックまたはカテゴリの場合</value>
+  </data>
+  <data name="ddlVIScopeResource1.ToolTip" xml:space="preserve">
+    <value>カテゴリ、タイプ、または特定の指標で指標を選択する</value>
+  </data>
+  <data name="ddlVISeqResource1.ToolTip" xml:space="preserve">
+    <value>表示順序</value>
+  </data>
+  <data name="ddlVISeriesOrderResource1.ToolTip" xml:space="preserve">
+    <value>データ系列の順序付け</value>
+  </data>
+  <data name="ddlVIStatResource1.EmptyMessage" xml:space="preserve">
+    <value>統計</value>
+  </data>
+  <data name="ddlVIStatResource1.ToolTip" xml:space="preserve">
+    <value>表示する基準を選択</value>
+  </data>
+  <data name="ddlVIXAxisScaleResource1.ToolTip" xml:space="preserve">
+    <value>自動スケーリングを選択するか、最小/最大スケーリング値を入力してください</value>
+  </data>
+  <data name="Label1Resource1.Text" xml:space="preserve">
+    <value>展望</value>
+  </data>
+  <data name="lblDateIntervalResource1.Text" xml:space="preserve">
+    <value>間隔：</value>
+  </data>
+  <data name="lblDfltParamsResource1.Text" xml:space="preserve">
+    <value>表示基準</value>
+  </data>
+  <data name="lblLastUpdateResource1.Text" xml:space="preserve">
+    <value>最終更新者</value>
+  </data>
+  <data name="lblPerspectiveResource1.Text" xml:space="preserve">
+    <value>探索したい詳細な分析を表すビューを選択します。 ビューは、表示されるシステムトピックまたはデータタイプに従って表示されます。</value>
+  </data>
+  <data name="lblViewAvailabilityResource1.Text" xml:space="preserve">
+    <value>可能性</value>
+  </data>
+  <data name="lblViewDescResource1.Text" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="lblViewLoadErrorResource1.Text" xml:space="preserve">
+    <value>選択したビューを開く際にエラーが発生しました。</value>
+  </data>
+  <data name="lblViewNameResource1.Text" xml:space="preserve">
+    <value>ビューの名前</value>
+  </data>
+  <data name="lblViewResource1.Text" xml:space="preserve">
+    <value>ビュー：</value>
+  </data>
+  <data name="LblViewSaveErrorResource1.Text" xml:space="preserve">
+    <value>変更を保存中にエラーが発生しました。</value>
+  </data>
+  <data name="lblVISeqResource1.Text" xml:space="preserve">
+    <value>チャート</value>
+  </data>
+  <data name="lblVIXAxisResource1.Text" xml:space="preserve">
+    <value>可変軸</value>
+  </data>
+  <data name="lblWorkingResource1.Text" xml:space="preserve">
+    <value>ビューを読み込んでいます - しばらくお待ちください…</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>ローディング中</value>
+  </data>
+  <data name="RadComboBoxItemResource10.Text" xml:space="preserve">
+    <value>環境YTDパフォーマンス</value>
+  </data>
+  <data name="RadComboBoxItemResource11.Text" xml:space="preserve">
+    <value>安全衛生</value>
+  </data>
+  <data name="RadComboBoxItemResource12.Text" xml:space="preserve">
+    <value>安全衛生YTDパフォーマンス</value>
+  </data>
+  <data name="RadComboBoxItemResource13.Text" xml:space="preserve">
+    <value>品質</value>
+  </data>
+  <data name="RadComboBoxItemResource14.Text" xml:space="preserve">
+    <value>所有者</value>
+  </data>
+  <data name="RadComboBoxItemResource18.Text" xml:space="preserve">
+    <value>デフォルト無し</value>
+  </data>
+  <data name="RadComboBoxItemResource19.Text" xml:space="preserve">
+    <value>現在の使用/上書きの許可</value>
+  </data>
+  <data name="RadComboBoxItemResource20.Text" xml:space="preserve">
+    <value>現在の使用/オーバーライドの使用</value>
+  </data>
+  <data name="RadComboBoxItemResource21.Text" xml:space="preserve">
+    <value>場所を選択</value>
+  </data>
+  <data name="RadComboBoxItemResource22.Text" xml:space="preserve">
+    <value>タイムスパンを選択</value>
+  </data>
+  <data name="RadComboBoxItemResource24.Text" xml:space="preserve">
+    <value>エリアを選択</value>
+  </data>
+  <data name="RadComboBoxItemResource27.Text" xml:space="preserve">
+    <value>棒グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource28.Text" xml:space="preserve">
+    <value>積み上げ棒グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource29.Text" xml:space="preserve">
+    <value>バーパレートチャート</value>
+  </data>
+  <data name="RadComboBoxItemResource30.Text" xml:space="preserve">
+    <value>列ゲージ</value>
+  </data>
+  <data name="RadComboBoxItemResource31.Text" xml:space="preserve">
+    <value>列ゲージ配列</value>
+  </data>
+  <data name="RadComboBoxItemResource32.Text" xml:space="preserve">
+    <value>縦棒グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource33.Text" xml:space="preserve">
+    <value>積み上げ縦棒グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource34.Text" xml:space="preserve">
+    <value>グループ化縦棒グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource35.Text" xml:space="preserve">
+    <value>列パレート図</value>
+  </data>
+  <data name="RadComboBoxItemResource36.Text" xml:space="preserve">
+    <value>折れ線グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource37.Text" xml:space="preserve">
+    <value>折れ線グラフ配列</value>
+  </data>
+  <data name="RadComboBoxItemResource38.Text" xml:space="preserve">
+    <value>円グラフ</value>
+  </data>
+  <data name="RadComboBoxItemResource39.Text" xml:space="preserve">
+    <value>円グラフ配列</value>
+  </data>
+  <data name="RadComboBoxItemResource4.Text" xml:space="preserve">
+    <value>前年度の年度</value>
+  </data>
+  <data name="RadComboBoxItemResource40.Text" xml:space="preserve">
+    <value>ラジアルゲージ</value>
+  </data>
+  <data name="RadComboBoxItemResource41.Text" xml:space="preserve">
+    <value>ラジアルゲージ配列</value>
+  </data>
+  <data name="RadComboBoxItemResource42.Text" xml:space="preserve">
+    <value>合計</value>
+  </data>
+  <data name="RadComboBoxItemResource45.Text" xml:space="preserve">
+    <value>経過日数</value>
+  </data>
+  <data name="RadComboBoxItemResource46.Text" xml:space="preserve">
+    <value>全て合計</value>
+  </data>
+  <data name="RadComboBoxItemResource47.Text" xml:space="preserve">
+    <value>対策と場所による指示</value>
+  </data>
+  <data name="RadComboBoxItemResource48.Text" xml:space="preserve">
+    <value>場所と対策による指示</value>
+  </data>
+  <data name="RadComboBoxItemResource49.Text" xml:space="preserve">
+    <value>期間と場所による指示</value>
+  </data>
+  <data name="RadComboBoxItemResource5.Text" xml:space="preserve">
+    <value>FYメトリクスの有効範囲</value>
+  </data>
+  <data name="RadComboBoxItemResource50.Text" xml:space="preserve">
+    <value>期間別の指示</value>
+  </data>
+  <data name="RadComboBoxItemResource51.Text" xml:space="preserve">
+    <value>年と場所による指示</value>
+  </data>
+  <data name="RadComboBoxItemResource52.Text" xml:space="preserve">
+    <value>年と対策による指示</value>
+  </data>
+  <data name="RadComboBoxItemResource53.Text" xml:space="preserve">
+    <value>自動スケール</value>
+  </data>
+  <data name="RadComboBoxItemResource54.Text" xml:space="preserve">
+    <value>スケールを設定</value>
+  </data>
+  <data name="RadComboBoxItemResource55.Text" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="RadComboBoxItemResource57.Text" xml:space="preserve">
+    <value>現在値</value>
+  </data>
+  <data name="RadComboBoxItemResource6.Text" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="RadComboBoxItemResource7.Text" xml:space="preserve">
+    <value>年で</value>
+  </data>
+  <data name="RadComboBoxItemResource8.Text" xml:space="preserve">
+    <value>月で</value>
+  </data>
+  <data name="RadComboBoxItemResource9.Text" xml:space="preserve">
+    <value>環境基準</value>
+  </data>
+  <data name="tbVIHeightResource1.ToolTip" xml:space="preserve">
+    <value>高さ</value>
+  </data>
+  <data name="tbVIWidthResource1.ToolTip" xml:space="preserve">
+    <value>幅</value>
+  </data>
+  <data name="tbVIXAxisLabelResource1.ToolTip" xml:space="preserve">
+    <value>可変軸ラベル</value>
+  </data>
+  <data name="tbVIXAxisMaxResource1.ToolTip" xml:space="preserve">
+    <value>軸の最大値</value>
+  </data>
+  <data name="tbVIXAxisMinResource1.ToolTip" xml:space="preserve">
+    <value>軸の最小値または原点値</value>
+  </data>
+  <data name="tbVIXAxisUnitResource1.ToolTip" xml:space="preserve">
+    <value>スケール単位</value>
+  </data>
+</root>
