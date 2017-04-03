@@ -1224,6 +1224,14 @@ namespace SQM.Website
                         try
                         {
                             //section for Injury Type data.
+                            string answerText = null;
+                            //var strAnswerValue = new PSsqmEntities();
+                            strAnswerValue = (from a in entities.INCIDENT_ANSWER
+                                          where a.INCIDENT_ID == incident.INCIDENT_ID &&
+                                          a.INCIDENT_QUESTION_ID == 12 
+                                          select a.ANSWER_VALUE).FirstOrDefault();
+                            
+
                             strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 12); // Injury Type data.
 
                             if (strEmployeeDate != null)
@@ -1361,7 +1369,7 @@ namespace SQM.Website
                             strAnswerValue = (from IR in entities.INCFORM_ROOT5Y
                                               join IC in entities.INCFORM_CAUSATION on IR.INCIDENT_ID equals IC.INCIDENT_ID
                                               join XT in entities.XLAT on IC.CAUSEATION_CD equals XT.XLAT_CODE
-                                              where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true
+                                              where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true && XT.XLAT_LANGUAGE == "en"
                                               select XT.DESCRIPTION).FirstOrDefault();
                                               
                            
