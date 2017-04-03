@@ -101,7 +101,7 @@ namespace SQM.Website.Reports
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-12HourReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
+			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-Flash Report-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();
@@ -123,7 +123,7 @@ namespace SQM.Website.Reports
 				query = query.Replace(" ", "+");
 				string iid = EncryptionManager.Decrypt(query);
 				pageData = PopulateByIncidentId(Convert.ToDecimal(iid));
-			}
+			  }
 			else
 			{
 				return null;

@@ -953,6 +953,10 @@ namespace SQM.Website
             DateTime dtDueDate;
             string strAnswerValue;
             PLANT plant = null;
+            //Declare variables for files.
+            string strEmployeeDate = "";
+            string strEmployeeTaskDate = "";
+            string strJobTitle ="";
 
             try
             {
@@ -972,6 +976,7 @@ namespace SQM.Website
                 string strCorrectiveAction;
                 string strResponsiblePerson;
                 string strDueDate;
+               
 
                 ICell cellNumeric;
                 ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
@@ -984,11 +989,17 @@ namespace SQM.Website
                 row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
                 row1.CreateCell(3).SetCellValue(Resources.LocalizedText.IncidentType); // really the Issue Type
                 row1.CreateCell(4).SetCellValue(Resources.LocalizedText.Location); // Really the plant name
-                row1.CreateCell(5).SetCellValue(Resources.LocalizedText.Description);
-                row1.CreateCell(6).SetCellValue("Root Cause Operational Control");
-                row1.CreateCell(7).SetCellValue(Resources.LocalizedText.CorrectiveAction);
-                row1.CreateCell(8).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
-                row1.CreateCell(9).SetCellValue(Resources.LocalizedText.DueDate);
+                row1.CreateCell(5).SetCellValue("LTA/Recordable/Medical Treatment");
+                row1.CreateCell(6).SetCellValue("Injury Type");
+                row1.CreateCell(7).SetCellValue("Body Part Affected");
+                row1.CreateCell(8).SetCellValue("How long has the associate been employed ?");
+                row1.CreateCell(9).SetCellValue("How long has the associate been doing this specific job/task?");
+                row1.CreateCell(10).SetCellValue("Occupation/Job title");
+                row1.CreateCell(11).SetCellValue(Resources.LocalizedText.Description);
+                row1.CreateCell(12).SetCellValue("Root Cause Operational Control");
+                row1.CreateCell(13).SetCellValue(Resources.LocalizedText.CorrectiveAction);
+                row1.CreateCell(14).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
+                row1.CreateCell(15).SetCellValue(Resources.LocalizedText.DueDate);
 
                 int rownum1 = 0;
                 for (int irows = 0; irows < incidentList.Count; irows++)
@@ -1045,6 +1056,10 @@ namespace SQM.Website
                         strDescription =  WebSiteCommon.StripHTML(strDescription);
                     }
                     catch { strDescription = ""; }
+
+
+
+
 
                     if (incidentList[irows].Incident.INCIDENT_ANSWER.Where(l => l.INCIDENT_QUESTION_ID == 54 && l.ANSWER_VALUE == "Yes").Count() > 0)
                     {
@@ -1119,13 +1134,18 @@ namespace SQM.Website
                                     row1.CreateCell(2).SetCellValue(strReportDate);
                                     row1.CreateCell(3).SetCellValue(strIncidentType);
                                     row1.CreateCell(4).SetCellValue(strPlantname);
-                                    row1.CreateCell(5).SetCellValue(strDescription);
-                                    row1.Cells[5].CellStyle.WrapText = true;
-                                    row1.CreateCell(6).SetCellValue(strRootCauseOC);
-                                    row1.CreateCell(7).SetCellValue(strCorrectiveAction);
-                                    row1.Cells[7].CellStyle.WrapText = true;
-                                    row1.CreateCell(8).SetCellValue(strResponsiblePerson);
-                                    row1.CreateCell(9).SetCellValue(strDueDate);
+                                    row1.CreateCell(5).SetCellValue("");
+                                    row1.CreateCell(6).SetCellValue("");
+                                    row1.CreateCell(7).SetCellValue("");
+                                    row1.CreateCell(8).SetCellValue("");
+                                    row1.CreateCell(9).SetCellValue("");
+                                    row1.CreateCell(10).SetCellValue("");
+                                    row1.CreateCell(11).SetCellValue(strDescription);
+                                    row1.Cells[11].CellStyle.WrapText = true;
+                                    row1.CreateCell(12).SetCellValue("");
+                                    row1.CreateCell(13).SetCellValue("");
+                                    row1.CreateCell(14).SetCellValue("");
+                                    row1.CreateCell(15).SetCellValue("");
                                 }
                             }
                             else
@@ -1137,12 +1157,18 @@ namespace SQM.Website
                                 row1.CreateCell(2).SetCellValue(strReportDate);
                                 row1.CreateCell(3).SetCellValue(strIncidentType);
                                 row1.CreateCell(4).SetCellValue(strPlantname);
-                                row1.CreateCell(5).SetCellValue(strDescription);
-                                row1.Cells[5].CellStyle.WrapText = true;
-                                row1.CreateCell(6).SetCellValue(strRootCauseOC);
+                                row1.CreateCell(5).SetCellValue("");
+                                row1.CreateCell(6).SetCellValue("");
                                 row1.CreateCell(7).SetCellValue("");
                                 row1.CreateCell(8).SetCellValue("");
                                 row1.CreateCell(9).SetCellValue("");
+                                row1.CreateCell(10).SetCellValue("");
+                                row1.CreateCell(11).SetCellValue(strDescription);
+                                row1.Cells[11].CellStyle.WrapText = true;
+                                row1.CreateCell(12).SetCellValue("");
+                                row1.CreateCell(13).SetCellValue("");
+                                row1.CreateCell(14).SetCellValue("");
+                                row1.CreateCell(15).SetCellValue("");
                             }
                         }
                         else
@@ -1153,12 +1179,18 @@ namespace SQM.Website
                             row1.CreateCell(2).SetCellValue(strReportDate);
                             row1.CreateCell(3).SetCellValue(strIncidentType);
                             row1.CreateCell(4).SetCellValue(strPlantname);
-                            row1.CreateCell(5).SetCellValue(strDescription);
-                            row1.Cells[5].CellStyle.WrapText = true;
+                            row1.CreateCell(5).SetCellValue("");
                             row1.CreateCell(6).SetCellValue("");
                             row1.CreateCell(7).SetCellValue("");
                             row1.CreateCell(8).SetCellValue("");
                             row1.CreateCell(9).SetCellValue("");
+                            row1.CreateCell(10).SetCellValue("");
+                            row1.CreateCell(11).SetCellValue(strDescription);
+                            row1.Cells[11].CellStyle.WrapText = true;
+                            row1.CreateCell(12).SetCellValue("");
+                            row1.CreateCell(13).SetCellValue("");
+                            row1.CreateCell(14).SetCellValue("");
+                            row1.CreateCell(15).SetCellValue("");
                         }
                     }
                     else
@@ -1171,40 +1203,216 @@ namespace SQM.Website
                         row1.CreateCell(2).SetCellValue(strReportDate);
                         row1.CreateCell(3).SetCellValue(strIncidentType);
                         row1.CreateCell(4).SetCellValue(strPlantname);
-                        row1.CreateCell(5).SetCellValue(strDescription);
-                        row1.Cells[5].CellStyle.WrapText = true;
+
                         try
                         {
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 78); // root cause operational control
-                            if (strAnswerValue != null)
+                            //section for Recordable data.
+                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 62); // Recordable data.
+
+                            if (strEmployeeDate != null)
+                            {
+                                row1.CreateCell(5).SetCellValue(strAnswerValue);
+                                row1.Cells[5].CellStyle.WrapText = true;
+                            }
+                            else
+                                row1.CreateCell(5).SetCellValue("");
+                        }
+                        catch { row1.CreateCell(5).SetCellValue(""); }
+
+
+
+                        try
+                        {
+                            //section for Injury Type data.
+                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 12); // Injury Type data.
+
+                            if (strEmployeeDate != null)
+                            {
                                 row1.CreateCell(6).SetCellValue(strAnswerValue);
+                               
+                            }
                             else
                                 row1.CreateCell(6).SetCellValue("");
                         }
                         catch { row1.CreateCell(6).SetCellValue(""); }
+
+
                         try
                         {
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
-                            if (strAnswerValue != null)
+                            //section for Body Part Affected data.
+                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 13); // Body Part Affected data.
+
+                            if (strEmployeeDate != null)
                             {
                                 row1.CreateCell(7).SetCellValue(strAnswerValue);
-                                row1.Cells[7].CellStyle.WrapText = true;
+                               
                             }
                             else
                                 row1.CreateCell(7).SetCellValue("");
                         }
                         catch { row1.CreateCell(7).SetCellValue(""); }
+
+
+                        //section for Employee date.
                         try
                         {
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 64); // responsible person
-                            if (strAnswerValue != null)
-                                row1.CreateCell(8).SetCellValue(strAnswerValue);
+     
+                            DateTime? EmployeeDate = new DateTime();
+                            PERSON ObjPerson = new PERSON();
+                            //Get the values from task status.
+                            EmployeeDate = (from P in entities.PERSON
+                                         join TS in entities.TASK_STATUS on P.PERSON_ID equals TS.RESPONSIBLE_ID
+                                         where TS.RECORD_ID == incident.INCIDENT_ID
+                                         select P.CREATE_DT).FirstOrDefault();
+
+                            ObjPerson.CREATE_DT = EmployeeDate;
+                            strEmployeeDate = Convert.ToDateTime (ObjPerson.CREATE_DT).ToString("MM/dd/yyyy");
+
+                            if (strEmployeeDate == "01/01/0001")
+                            {
+                                strEmployeeDate = "";
+                            }
+                        
+                           
+
+                            //test = EmployeeDate;
+                            // strEmployeeDate = Convert.ToString(EmployeeDate.ToString("MM/dd/yyyy"));
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
+                            if (strEmployeeDate != null)
+                            {
+                                row1.CreateCell(8).SetCellValue(strEmployeeDate);
+                                row1.Cells[8].CellStyle.WrapText = true;
+                            }
                             else
                                 row1.CreateCell(8).SetCellValue("");
                         }
                         catch { row1.CreateCell(8).SetCellValue(""); }
 
-                        row1.CreateCell(9).SetCellValue(strDueDate);
+                        //section for Employee task date.
+                        try
+                        {
+                            DateTime? EmployeeTaskDate = new DateTime();
+
+                            TASK_STATUS ObjTaskStatus = new TASK_STATUS();
+                            //Get the values from task status.
+                            EmployeeTaskDate = (from TS in entities.TASK_STATUS
+                                               where TS.RECORD_ID == incident.INCIDENT_ID
+                                               select TS.CREATE_DT).FirstOrDefault();
+
+                            ObjTaskStatus.CREATE_DT = EmployeeTaskDate;
+                            strEmployeeTaskDate = Convert.ToDateTime(ObjTaskStatus.CREATE_DT).ToString("MM/dd/yyyy");
+
+                            if (strEmployeeTaskDate == "01/01/0001")
+                            {
+                                strEmployeeTaskDate = "";
+                            }
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
+                            if (strEmployeeTaskDate != null)
+                            {
+                                row1.CreateCell(9).SetCellValue(strEmployeeTaskDate);
+                             
+                            }
+                            else
+                                row1.CreateCell(9).SetCellValue("");
+                        }
+
+                        catch { row1.CreateCell(9).SetCellValue(""); }
+
+
+
+                        //section for Employee task date.
+                        try
+                        {
+
+                            //Get the values from task status.
+                            strJobTitle = (from P in entities.PERSON
+                                           join TS in entities.TASK_STATUS on P.PERSON_ID equals TS.RESPONSIBLE_ID
+                                           where TS.RECORD_ID == incident.INCIDENT_ID
+                                           select P.JOB_TITLE).FirstOrDefault();
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
+                            if (strJobTitle != null)
+                            {
+                                row1.CreateCell(10).SetCellValue(strJobTitle);
+                                //row1.Cells[7].CellStyle.WrapText = true;
+                            }
+                            else
+                                row1.CreateCell(10).SetCellValue("");
+                        }
+
+                        catch { row1.CreateCell(10).SetCellValue(""); }
+
+
+
+                        row1.CreateCell(11).SetCellValue(strDescription);
+                        row1.Cells[11].CellStyle.WrapText = true;
+
+
+
+
+                        try
+                        {
+                            // root cause operational control
+                            //Declare the varible and get the values for INJURY_CAUSE only.
+                            string XLAT_GROUP = "INJURY_CAUSE";
+
+                            strAnswerValue = (from IR in entities.INCFORM_ROOT5Y
+                                              join IC in entities.INCFORM_CAUSATION on IR.INCIDENT_ID equals IC.INCIDENT_ID
+                                              join XT in entities.XLAT on IC.CAUSEATION_CD equals XT.XLAT_CODE
+                                              where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true
+                                              select XT.DESCRIPTION).FirstOrDefault();
+                                              
+                           
+                          
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 78); // root cause operational control
+                            if (strAnswerValue != null)
+                                row1.CreateCell(12).SetCellValue(strAnswerValue);
+                            else
+                                row1.CreateCell(12).SetCellValue("");
+                        }
+                        catch { row1.CreateCell(12).SetCellValue(""); }
+                        try
+                        {
+
+                            string answerText = null;
+
+                            //Get the values from task status.
+                            strAnswerValue = (from a in entities.TASK_STATUS
+                                          where a.RECORD_TYPE == 40 &&
+                                          a.RECORD_ID == incident.INCIDENT_ID
+                                          select a.DESCRIPTION).FirstOrDefault();
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
+                            if (strAnswerValue != null)
+                            {
+                                row1.CreateCell(13).SetCellValue(strAnswerValue);
+                                row1.Cells[13].CellStyle.WrapText = true;
+                            }
+                            else
+                                row1.CreateCell(13).SetCellValue("");
+                        }
+                        catch { row1.CreateCell(13).SetCellValue(""); }
+                        try
+                        {
+                            //get the responsible person name with the help of relation with task status reponsible id.
+                            strAnswerValue = (from TS in entities.TASK_STATUS
+                                              join P in entities.PERSON on TS.RESPONSIBLE_ID equals P.PERSON_ID
+                                              where TS.RECORD_ID == incident.INCIDENT_ID
+                                              select P.FIRST_NAME.Trim() + " " + P.LAST_NAME.Trim()
+                                              ).FirstOrDefault();
+
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 64); // responsible person
+                            if (strAnswerValue != null)
+                                row1.CreateCell(14).SetCellValue(strAnswerValue);
+                            else
+                                row1.CreateCell(14).SetCellValue("");
+                        }
+                        catch { row1.CreateCell(14).SetCellValue(""); }
+                                 
+                        row1.CreateCell(15).SetCellValue(strDueDate);
                     }
 
                 }
@@ -1214,11 +1422,17 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(2);
                 sheet1.AutoSizeColumn(3);
                 sheet1.AutoSizeColumn(4);
-                sheet1.SetColumnWidth(5, 10000); // text fields should not auto size
+                sheet1.AutoSizeColumn(5);
                 sheet1.AutoSizeColumn(6);
-                sheet1.SetColumnWidth(7, 10000); // text fields should not auto size
+                sheet1.AutoSizeColumn(7);
                 sheet1.AutoSizeColumn(8);
                 sheet1.AutoSizeColumn(9);
+                sheet1.AutoSizeColumn(10);
+                sheet1.SetColumnWidth(11, 10000); // text fields should not auto size
+                sheet1.AutoSizeColumn(12);
+                sheet1.AutoSizeColumn(13);
+                sheet1.AutoSizeColumn(14);
+                sheet1.AutoSizeColumn(15);
 
                 GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
             }

@@ -1,564 +1,564 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <settings>
-    <encryptKey>
-        <xlat code="KEY" short="7lf6k+baSnwFogI4/IAGwz83t5HFo2Q=" long="7lf6k+baSnwFogI4/IAGwz83t5HFo2Q="/>
-    </encryptKey>
-    <statusCode>
-        <xlat code="A" short="Active" long="Active"/>
-        <xlat code="I" short="Inactive" long="Inactive"/>
-    </statusCode>
-  <statusCodeDelete>
-    <xlat code="A" short="Active" long="Active"/>
-    <xlat code="I" short="Inactive" long="Inactive"/>
-    <xlat code="D" short="DELETE" long="DELETE"/>
-  </statusCodeDelete>
-  <recordStatus>
-    <xlat code="A" short="Open" long="Open"/>
-    <xlat code="C" short="Closed" long="Closed"/>
-  </recordStatus>
-  <taskStatus>
-    <xlat code="A" short="Open" long="Open"/>
-    <xlat code="C" short="Complete" long="Complete"/>
-    <xlat code="D" short="Delete" long="Delete"/>
-  </taskStatus>
-  <incidentStatus>
-    <xlat code="A" short="Open" long="Open"/>
-    <xlat code="P" short="In Progress" long="In Progress"/>
-    <xlat code="C" short="Closed" long="Closed"/>
-    <xlat code="U" short="Audited" long="Audited"/>
-    <xlat code="F" short="Awaiting Funding" long="Awaiting Funding"/>
-    <xlat code="I" short="Inactive" long="Inactive"/>
-    <xlat code="N" short="Data Incomplete" long="Data Incomplete"/>
-    <xlat code="C8" short="8D Complete" long="8D Complete"/>
-  </incidentStatus>
-  <auditStatus>
-	<xlat code="A" short="Open" long="Open"/>
-	<xlat code="E" short="Expired" long="Expired"/>
-	<xlat code="I" short="In Progress" long="In Progress"/>
-	<xlat code="C" short="Complete" long="Complete"/>
-	<xlat code="X" short="Closed" long="Closed"/>
-  </auditStatus>
+	<encryptKey>
+		<xlat code="KEY" short="7lf6k+baSnwFogI4/IAGwz83t5HFo2Q=" long="7lf6k+baSnwFogI4/IAGwz83t5HFo2Q="/>
+	</encryptKey>
+	<statusCode>
+		<xlat code="A" short="Active" long="Active"/>
+		<xlat code="I" short="Inactive" long="Inactive"/>
+	</statusCode>
+	<statusCodeDelete>
+		<xlat code="A" short="Active" long="Active"/>
+		<xlat code="I" short="Inactive" long="Inactive"/>
+		<xlat code="D" short="DELETE" long="DELETE"/>
+	</statusCodeDelete>
+	<recordStatus>
+		<xlat code="A" short="Open" long="Open"/>
+		<xlat code="C" short="Closed" long="Closed"/>
+	</recordStatus>
+	<taskStatus>
+		<xlat code="A" short="Open" long="Open"/>
+		<xlat code="C" short="Complete" long="Complete"/>
+		<xlat code="D" short="Delete" long="Delete"/>
+	</taskStatus>
+	<incidentStatus>
+		<xlat code="A" short="Open" long="Open"/>
+		<xlat code="P" short="In Progress" long="In Progress"/>
+		<xlat code="C" short="Closed" long="Closed"/>
+		<xlat code="U" short="Audited" long="Audited"/>
+		<xlat code="F" short="Awaiting Funding" long="Awaiting Funding"/>
+		<xlat code="I" short="Inactive" long="Inactive"/>
+		<xlat code="N" short="Data Incomplete" long="Data Incomplete"/>
+		<xlat code="C8" short="8D Complete" long="8D Complete"/>
+	</incidentStatus>
+	<auditStatus>
+		<xlat code="A" short="Open" long="Open"/>
+		<xlat code="E" short="Expired" long="Expired"/>
+		<xlat code="I" short="In Progress" long="In Progress"/>
+		<xlat code="C" short="Complete" long="Complete"/>
+		<xlat code="X" short="Closed" long="Closed"/>
+	</auditStatus>
 	<effDates>
 		<xlat code="MIN" short="01/01/1900" long="01/01/1900"/>
 		<xlat code="MAX" short="01/01/3000" long="01/01/3000"/>
 	</effDates>
-  <locationType>
-    <xlat code="P" short="Production" long="Production"/>
-    <xlat code="T" short="Tech Center" long="Technical Center"/>
-    <xlat code="F" short="Administrative" long="Administrative"/>
-    <xlat code="W" short="Warehouse" long="Warehouse"/>
-    <xlat code="X" short="QAI Testing" long="QAI Testing"/>
-  </locationType>
-  <stdUnits>
-    <xlat code="ENGY" short="1" long="Kilowat/Hr"/>
-    <xlat code="WEIT" short="17" long="Kilogram"/>
-    <xlat code="VOL" short="11" long="Cubic Meter"/>
-    <xlat code="EUTL" short="11" long="Cubic Meter"/>
-    <xlat code="CUR" short="EUR" long="Euro"/>
-  </stdUnits>
-  <countryCode>
-    <xlat code="AL" short="Albania" long="Albania"/>
-    <xlat code="AR" short="Argentina" long="Argentina"/>
-    <xlat code="AU" short="Australia" long="Australia"/>
-    <xlat code="BE" short="Belgium" long="Belgium"/>
-    <xlat code="BO" short="Bolivia" long="Bolivia"/>
-    <xlat code="BR" short="Brazil" long="Brazil"/>
-    <xlat code="CA" short="Canada" long="Canada"/>
-    <xlat code="CL" short="Chile" long="Chile"/>
-    <xlat code="CN" short="China" long="China"/>
-    <xlat code="CO" short="Colombia" long="Colombia"/>
-    <xlat code="CR" short="Costa Rica" long="Costa Rica"/>
-    <xlat code="CZ" short="Czech Republic" long="Czech Republic"/>
-    <xlat code="DE" short="Germany" long="Germany"/>
-    <xlat code="DK" short="Denmark" long="Denmark"/>
-    <xlat code="DO" short="Dominican Republic" long="Dominican Republic"/>
-    <xlat code="EC" short="Ecuador" long="Ecuador"/>
-    <xlat code="EE" short="Estonia" long="Estonia"/>
-    <xlat code="FI" short="Finland" long="Finland"/>
-    <xlat code="FR" short="France" long="France"/>
-    <xlat code="GB" short="Greate Britain" long="Great Britain"/>
-    <xlat code="GR" short="Greece" long="Greece"/>
-    <xlat code="HK" short="Hong Kong" long="Hong Kong"/>
-    <xlat code="HU" short="Hungary" long="Hungary"/>
-    <xlat code="ID" short="Indonesia" long="Indonesia"/>
-    <xlat code="IE" short="Ireland" long="Ireland"/>
-    <xlat code="IL" short="Israel" long="Israel"/>
-    <xlat code="IN" short="India" long="India"/>
-    <xlat code="IS" short="Iceland" long="Iceland"/>
-    <xlat code="IT" short="Italy" long="Italy"/>
-    <xlat code="JP" short="Japan" long="Japan"/>
-    <xlat code="LV" short="Latvia" long="Latvia"/>
-    <xlat code="LT" short="Lithuania" long="Lithuania"/>
-    <xlat code="LU" short="Luxembourg" long="Luxembourg"/>
-    <xlat code="MX" short="Mexico" long="Mexico"/>
-    <xlat code="NL" short="Netherlands" long="Netherlands"/>
-    <xlat code="NZ" short="New Zealand" long="New Zealand"/>
-    <xlat code="NO" short="Norway" long="Norway"/>
-    <xlat code="PE" short="Peru" long="Peru"/>
-    <xlat code="PH" short="Philippines" long="Philippines"/>
-    <xlat code="PL" short="Poland" long="Poland"/>
-    <xlat code="PT" short="Portugal" long="Portugal"/>
-    <xlat code="RO" short="Romania" long="Romania"/>
-    <xlat code="RU" short="Russia" long="Russia"/>
-    <xlat code="RS" short="Serbia" long="Serbia"/>
-    <xlat code="SG" short="Singapore" long="Singapore"/>
-    <xlat code="SK" short="Slovakia" long="Slovakia"/>
-    <xlat code="SI" short="Slovenia" long="Slovenia"/>
-    <xlat code="ZA" short="South Africa" long="South Africa"/>
-    <xlat code="KP" short="South Korea" long="South Korea"/>
-    <xlat code="ES" short="Spain" long="Spain"/>
-    <xlat code="SE" short="Sweden" long="Sweden"/>
-    <xlat code="CH" short="Switzerland" long="Switzerland"/>
-    <xlat code="TH" short="Thailand" long="Thailand"/>
-    <xlat code="TR" short="Turkey" long="Turkey"/>
-    <xlat code="US" short="United States" long="United States"/>
-    <xlat code="VE" short="Venezuela" long="Venezuela"/> 
-  </countryCode>
-  <timeZone>
-      <xlat code="GMT" short="GMT Standard Time" long="(GMT) Greenwich Mean Time"/>
-      <xlat code="090" short="Greenwich Standard Time" long="(GMT) Casablanca, Monrovia"/>
-      <xlat code="100" short="Central Europe Standard Time" long="(GMT+1:00) Sarajevo, Skopje, Warsaw, Zagreb"/>
-      <xlat code="105" short="Romance Standard Time" long="(GMT+1:00) Brussels, Copenhagen, Madrid, Paris"/>
-      <xlat code="110" short="W. Europe Standard Time" long="(GMT+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"/>
-      <xlat code="113" short="W. Central Africa Standard Time" long="(GMT+1:00) West Central Africa"/>
-      <xlat code="115" short="E. Europe Standard Time" long="(GMT+2:00) Eastern European Time"/>
-      <xlat code="120" short="Egypt Standard Time" long="(GMT+2:00) Arabic/Egypt Standard Time"/>
-      <xlat code="125" short="FLE Standard Time" long="(GMT+2:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius"/>
-      <xlat code="130" short="GTB Standard Time" long="(GMT+2:00) Athens, Istanbul, Minsk"/>
-      <xlat code="135" short="Israel Standard Time" long="(GMT+2:00) Jerusalem"/>
-      <xlat code="140" short="South Africa Standard Time" long="(GMT+2:00) Harare, Pretoria"/>
-      <xlat code="145" short="Russian Standard Time" long="(GMT+3:00) Moscow, St. Petersburg, Volgograd"/>
-      <xlat code="150" short="Arab Standard Time" long="(GMT+3:00) Kuwait, Riyadh"/>
-      <xlat code="155" short="E. Africa Standard Time" long="(GMT+3:00) Nairobi"/>
-      <xlat code="158" short="Arabic Standard Time" long="(GMT+3:00) Baghdad"/>
-      <xlat code="160" short="Iran Standard Time" long="(GMT+3:30) Tehran"/>
-      <xlat code="165" short="Arabian Standard Time" long="(GMT+4:00) Abu Dhabi, Muscat"/>
-      <xlat code="170" short="Caucasus Standard Time" long="(GMT+4:00) Baku, Tbilisi, Yerevan"/>
-      <xlat code="175" short="Transitional Islamic State of Afghanistan Standard Time" long="(GMT+4:30) Kabul"/>
-      <xlat code="180" short="Ekaterinburg Standard Time" long="(GMT+5:00) Ekaterinburg"/>
-      <xlat code="185" short="West Asia Standard Time" long="(GMT+5:00) Islamabad, Karachi, Tashkent"/>
-      <xlat code="190" short="India Standard Time" long="(GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi"/>
-      <xlat code="193" short="Nepal Standard Time" long="(GMT+5:45) Kathmandu"/>
-      <xlat code="195" short="Central Asia Standard Time" long="(GMT+6:00) Astana, Dhaka"/>
-      <xlat code="200" short="Sri Lanka Standard Time" long="(GMT+6:00) Sri Jayawardenepura"/>
-      <xlat code="201" short="N. Central Asia Standard Time" long="(GMT+6:00) Almaty, Novosibirsk"/>
-      <xlat code="203" short="Myanmar Standard Time" long="(GMT+6:30) Yangon Rangoon"/>
-      <xlat code="205" short="S.E. Asia Standard Time" long="(GMT+7:00) Bangkok, Hanoi, Jakarta"/>
-      <xlat code="207" short="North Asia Standard Time" long="(GMT+7:00) Krasnoyarsk"/>
-      <xlat code="210" short="China Standard Time" long="(GMT+8:00) Beijing, Chongqing, Hong Kong SAR, Urumqi"/>
-      <xlat code="215" short="Singapore Standard Time" long="(GMT+8:00) Kuala Lumpur, Singapore"/>
-      <xlat code="220" short="Taipei Standard Time" long="(GMT+8:00) Taipei"/>
-      <xlat code="225" short="W. Australia Standard Time" long="(GMT+8:00) Perth"/>
-      <xlat code="227" short="North Asia East Standard Time" long="(GMT+8:00) Irkutsk, Ulaanbaatar"/>
-      <xlat code="230" short="Korea Standard Time" long="(GMT+9:00) Seoul"/>
-      <xlat code="235" short="Tokyo Standard Time" long="(GMT+9:00) Osaka, Sapporo, Tokyo"/>
-      <xlat code="240" short="Yakutsk Standard Time" long="(GMT+9:00) Yakutsk"/>
-      <xlat code="245" short="A.U.S. Central Standard Time" long="(GMT+9:30) Darwin"/>
-      <xlat code="250" short="Cen. Australia Standard Time" long="(GMT+9:30) Adelaide"/>
-      <xlat code="255" short="A.U.S. Eastern Standard Time" long="(GMT+10:00) Canberra, Melbourne, Sydney"/>
-      <xlat code="260" short="E. Australia Standard Time" long="(GMT+10:00) Brisbane"/>
-      <xlat code="265" short="Tasmania Standard Time" long="(GMT+10:00) Hobart"/>
-      <xlat code="270" short="Vladivostok Standard Time" long="(GMT+10:00) Vladivostok"/>
-      <xlat code="275" short="West Pacific Standard Time" long="(GMT+10:00) Guam, Port Moresby"/>
-      <xlat code="280" short="Central Pacific Standard Time" long="(GMT+11:00) Magadan, Solomon Islands, New Caledonia"/>
-      <xlat code="285" short="Fiji Islands Standard Time" long="(GMT+12:00) Fiji Islands, Kamchatka, Marshall Islands"/>
-      <xlat code="290" short="New Zealand Standard Time" long="(GMT+12:00) Auckland, Wellington"/>
-      <xlat code="300" short="Tonga Standard Time" long="(GMT+13:00) Nuku'alofa"/>
-      <xlat code="000" short="Dateline Standard Time" long="(GMT-12:00) International Date Line West"/>
-      <xlat code="001" short="Samoa Standard Time" long="(GMT-11:00) Midway Island, Samoa"/>
-      <xlat code="002" short="Hawaiian Standard Time" long="(GMT-10:00) Hawaii Standard Time"/>
-      <xlat code="003" short="Alaskan Standard Time" long="(GMT-9:00) Alaska Standard Time"/>
-      <xlat code="004" short="Pacific Standard Time" long="(GMT-8:00) Pacific Standard Time"/>
-      <xlat code="010" short="Mountain Standard Time" long="(GMT-7:00) Mountain Standard Time"/>
-      <xlat code="013" short="Mexico Standard Time2" long="(GMT-7:00) Chihuahua, La Paz, Mazatlan"/>
-      <xlat code="015" short="U.S. Mountain Standard Time" long="(GMT-7:00) Arizona"/>
-      <xlat code="020" short="Central Standard Time" long="(GMT-6:00) Central Standard Time"/>
-      <xlat code="025" short="Canada Central Standard Time" long="(GMT-6:00) Saskatchewan"/>
-      <xlat code="030" short="Mexico Standard Time" long="(GMT-6:00) Guadalajara, Mexico City, Monterrey"/>
-      <xlat code="033" short="Central America Standard Time" long="(GMT-6:00) Central America"/>
-      <xlat code="035" short="Eastern Standard Time" long="(GMT-5:00) Eastern Standard Time"/>
-      <xlat code="040" short="U.S. Eastern Standard Time" long="(GMT-5:00) Indiana (East)"/>
-      <xlat code="045" short="S.A. Pacific Standard Time" long="(GMT-5:00) Bogota, Lima, Quito"/>
-      <xlat code="050" short="Atlantic Standard Time" long="(GMT-4:00) Atlantic Time (Canada)"/>
-      <xlat code="055" short="S.A. Western Standard Time" long="(GMT-4:00) Caracas, La Paz"/>
-      <xlat code="056" short="Pacific S.A. Standard Time" long="(GMT-4:00) Santiago"/>
-      <xlat code="060" short="Newfoundland and Labrador Standard Time" long="(GMT-3:30) Canada Newfoundland Time"/>
-      <xlat code="065" short="E. South America Standard Time" long="(GMT-3:00) Brazil Eastern Time"/>
-      <xlat code="070" short="S.A. Eastern Standard Time" long="(GMT-3:00) Buenos Aires, Georgetown"/>
-      <xlat code="073" short="Greenland Standard Time" long="(GMT-3:00) Greenland"/>
-      <xlat code="075" short="Mid-Atlantic Standard Time" long="(GMT-2:00) Mid-Atlantic"/>
-      <xlat code="080" short="Azores Standard Time" long="(GMT-1:00) Azores"/>
-      <xlat code="083" short="Cape Verde Standard Time" long="(GMT-1:00) Cape Verde Islands"/>
-  </timeZone>
-  <powerSourcedRegion>
-    <xlat code="ASCC-AK" short="ASCC Alaska Grid" long="ASCC Alaska Grid"/>
-    <xlat code="HCC-HI" short="HICC Oahu" long="HICC Oahu"/>
-    <xlat code="MRO-EAST" short="MRO East" long="MRO East"/>
-    <xlat code="MRO-WEST" short="MRO West" long="MRO West"/>
-    <xlat code="NPCC-NEWENGLAND" short="NPCC New England" long="NPCC New England"/>
-    <xlat code="NPCC-NYC" short="NPCC NYC/Westchester" long="NPCC NYC/Westchester"/>
-    <xlat code="NPCC-NY" short="NPCC Upstate NY" long="NPCC Upstate NY"/>
-    <xlat code="RFC-EAST" short="RFC East" long="RFC East"/>
-    <xlat code="RFC-MI" short="RFC Michigan" long="RFC Michigan"/>
-    <xlat code="RFC-WEST" short="RFC West" long="RFC West"/>
-    <xlat code="SERC-MIDWEST" short="SERC Midwest" long="SERC Midwest"/>
-    <xlat code="SERC-MS" short="SERC Mississippi Valley" long="SERC Mississippi Valley"/>
-    <xlat code="SERC-SOUTH" short="SERC South" long="SERC South"/>
-    <xlat code="SERC-TN" short="SERC Tennessee Valley" long="SERC Tennessee Valley"/>
-    <xlat code="SERC-VA" short="SERC Virginia/Carolina" long="SERC Virginia/Carolina"/>
-    <xlat code="SPP-NORTH" short="SPP North" long="SPP North"/>
-    <xlat code="SPP-SOUTH" short="SPP South" long="SPP South"/>
-    <xlat code="WECC-CA" short="WECC California" long="WECC California"/>
-    <xlat code="WECC-NORTHWEST" short="WECC Northwest" long="WECC Northwest"/>
-    <xlat code="WECC-ROCK" short="WECC Rockies" long="WECC Rockies"/>
-    <xlat code="WECC-SOUTHWEST" short="WECC Southwest" long="WECC Southwest"/>
-  </powerSourcedRegion>
-  <yesNo>
-      <xlat code="Y" short="Y" long="Yes"/>
-      <xlat code="N" short="N" long="No"/>
-  </yesNo>
-  <checked>
-    <xlat code="True" short="X" long="[X]"/>
-    <xlat code="False" short=" " long="[ ]"/>
-  </checked>
-  <docScope>
-    <xlat code="SYS" short="System-wide Document" long="Document applies to all system users"/>
-    <xlat code="EHS" short="EHS System Document" long="Environmental Health &amp; Safety document"/>
-    <xlat code="SQM" short="Quality System Document" long="Quality system document"/>
-    <xlat code="BLI" short="Business Location Information" long="Business background/information"/>
-  </docScope>
-  <docDisplayType>
-    <xlat code="2" short="Reference" long="Reference Information"/>
-    <xlat code="10" short="Communication" long="Communication"/>
-    <xlat code="15" short="User Communication" long="User Communication"/>
-    <xlat code="31" short="EH&amp;S Home Page Posting" long="Post to the application Home Page"/>
-    <xlat code="32" short="Quality Home Page Posting" long="Post to the application Home Page"/>
-  </docDisplayType>
-  <partProcess>
-    <xlat code="MATL" short="Material" long="Raw Material"/>
-    <xlat code="PRCS" short="Process" long="Special Process"/>
-    <xlat code="" short="Other" long="Other"/>
-  </partProcess>
-  <planType>
-    <xlat code="ACP" short="Acceptance" long="Acceptance Testing"/>
-    <xlat code="PPAP" short="PPAP" long="Pre-Production"/>
-    <xlat code="PROD" short="Production" long="Production"/>
-    <xlat code="CSS" short="Controlled" long="Controlled Shipping"/>
-  </planType>
-  <sampleUnit>
-    <xlat code="PCT" short="Percent" long="Percent"/>
-    <xlat code="ITM" short="Items" long="Items"/>
-    <xlat code="OBV" short="Readings" long="Readings"/>
-  </sampleUnit>
-  <sampleRate>
-    <xlat code="HR" short="Hour" long="Hour"/>
-    <xlat code="SHF" short="Shift" long="Shift"/>
-    <xlat code="DAY" short="Daily" long="Daily"/>
-    <xlat code="CON" short="Container" long="Container"/>
-    <xlat code="LOT" short="Lot/Batch" long="Lot or Batch"/>
-    <xlat code="RCT" short="Receipt" long="Receipt"/>
-    <xlat code="RAN" short="Randomly" long="Randomly"/>
-  </sampleRate>
-  <UOMCategory>
-    <xlat code="LINE" short="Linear" long="Linear measurement"/>
-    <xlat code="AREA" short="Area" long="Area Units"/>
-    <xlat code="VOL" short="Dry Volume" long="Dry Volume Units"/>
-    <xlat code="MECH" short="Mechanical" long="Mechanical Units"/>
-    <xlat code="ENGY" short="Energy" long="Energy"/>
-    <xlat code="WEIT" short="Weight" long="Weight"/>
-    <xlat code="CONT" short="Count" long="Counts"/>
-    <xlat code="CUST" short="Custom" long="Custom conversion"/>
-    <xlat code="SAFE" short="Safety" long="Safety"/>
-  </UOMCategory>
-  <costType>
-    <xlat code="COST" short="Actual Cost" long="Actual Cost"/>
-    <xlat code="CREDIT" short="Credited" long="Credited Amount"/>
-  </costType>
-  <regulatoryStatus>
-    <xlat code="HZ" short="Hazardous" long="Hazardous material"/>
-    <xlat code="NH" short="Non-Hazardous" long="Non-Hazardous material"/>
-  </regulatoryStatus>
-  <disposal>
-    <xlat code="D" short="Disposed" long="Disposed"/>
-    <xlat code="R" short="Recycled" long="Recycled"/>
-  </disposal>
-  <measureType>
-    <xlat code="VAR" short="Variable" long="Variable (discrete value)"/>
-    <xlat code="ATR" short="Attribute" long="Attribute (count)"/>
-    <xlat code="PRC" short="Process" long="Process Value"/>
-  </measureType>
-  <measureCategoryEHS>
-    <xlat code="ENGY" short="Energy" long="Energy"/>
-    <xlat code="EUTL" short="Water" long="Water"/>
-    <xlat code="EWMR" short="Mineral Waste" long="Mineral wastes"/>
-    <xlat code="EWMC" short="Metals Waste" long="Metals/Metal-containing wastes"/>
-    <xlat code="EWCH" short="Chemical Waste" long="Chemical wastes"/>
-    <xlat code="EWSG" short="Sludge" long="Sludge and residue wastes"/>
-    <xlat code="EWGN" short="General Waste" long="General waste and refuse"/>
-    <xlat code="PROD" short="Accounting" long="Plant accounting"/>
-    <xlat code="SAFE" short="Safety" long="Helth &amp; Safety" />
-    <xlat code="FACT" short="Factor" long="Normalization factor e.g. qty consumed/produced/sold, revenue..." />
-	<xlat code="SEWG" short="Sewage" long="Sewage"/>
-  </measureCategoryEHS>
-  <invoiceSpan>
-    <xlat code="MINDATE" short="6" long="6" />
-    <xlat code="MAXDATE" short="2" long="2" />
-  </invoiceSpan>
-  <measureCategorySQM>
-    <xlat code="QPRD" short="Product" long="Product measurements"/>
-    <xlat code="QPCS" short="Process" long="Process readings/measurements"/>
-  </measureCategorySQM>
-  <partAttributeCategory>
-    <xlat code="FAMILY" short="Family" long="Part Family"/>
-    <xlat code="TYPE" short="Type" long="Part Type"/>
-    <xlat code="SIDE" short="Side" long="Assembly Side"/>
-    <xlat code="LOCPOS" short="Location" long="Assembly Location/Position"/>
-  </partAttributeCategory>
-  <specType>
-    <xlat code="BLT" short="Bilateral" long="Bilateral (2 sided)"/>
-    <xlat code="ULT" short="Unilateral" long="Variable (single sided)"/>
-    <xlat code="TAR" short="Target" long="Target"/>
-    <xlat code="PF" short="Pass/Fail" long="Pass/Fail"/>
-  </specType>
-  <chartTypeVAR>
-    <xlat code="XMR" short="X and Moving Range" long="X and Moving Range"/>
-    <xlat code="XBR" short="Xbar and Range" long="Xbar and Range"/>
-    <xlat code="XBS" short="Xbar and Sigma" long="Xbar and Std Deviation"/>
-  </chartTypeVAR>
-  <chartTypeATT>
-    <xlat code="U" short="u Chart" long="Avg Number Non-Conforming"/>
-    <xlat code="C" short="C" long="Number Non-Conforming"/>
-    <xlat code="NP" short="Np" long="Percentage Defective"/>
-    <xlat code="P" short="p" long="Number Defective"/>
-     <chartTypeVAR>
-    <xlat code="XMR" short="X and Moving Range" long="X and Moving Range"/>
-    <xlat code="XBR" short="Xbar and Range" long="Xbar and Range"/>
-    <xlat code="XBS" short="Xbar and Sigma" long="Xbar and Std Deviation"/>
-  </chartTypeVAR>
-  </chartTypeATT>
-  <COAForm>
-    <xlat code="COA" short="COA" long="Quality Certificate of Analysis (shipping, controlled shipping)"/>
-    <xlat code="PPAP" short="PPAP" long="Production Part Approval (PPAP)"/>
-    <xlat code="SAE" short="AS9102" long="First Article Inspection (SAE AS9102)"/>
-    <xlat code="CPK" short="CPK" long="Process Capability Report"/>
-  </COAForm>
-  <inboxType>
-    <xlat code="PC" short="Problem Case" long ="Problem Cases"/>
-    <xlat code="QI" short="Quality Issue" long ="Quality Issues"/>
-    <xlat code="HS" short="Health/Safety Incident" long ="Health and Safety Incidents"/>
-    <xlat code="EV" short="Facility Data Recording" long ="Environmental Metrics Recording"/>
-  </inboxType>
-  <incidentType>
-    <xlat code="QI" short="Quality Issue" long ="Quality Issue"/>
-    <xlat code="EHS" short="Environmental Health and Safety Incident" long ="Environmental Health and Safety Incident"/>
-  </incidentType>
-  <incidentSeverity>
-    <xlat code="IR" short="Inspection Results" long ="Inspection Results"/>
-    <xlat code="NM" short="Near Miss" long ="Near Miss"/>
-    <xlat code="RC" short="Recordable" long ="Recordable"/>
-  </incidentSeverity>
-  <qualityActivity>
-    <xlat code="RCV" short="Receiving Inspection" long ="Received Material Issue"/>
-    <xlat code="PRQ" short="Production Quality" long ="Production Quality Issue"/>
-    <xlat code="CST" short="Customer Incident" long ="Customer Reported Incident"/>
-  </qualityActivity>
-  <EHSIncidentActivity>
-    <xlat code="40" short="Health &amp; Safety Incident" long ="Health &amp; Safety Incident Closure"/>
-    <xlat code="45" short="Preventative Action" long = "Preventative Action Closure"/>
-	<xlat code="50" short="Plant Audit" long = "Audit Completion"/>
-  </EHSIncidentActivity>
-  <problemArea>
-    <xlat code="" short="All" long ="All"/>
-    <xlat code="PRQ" short="Product Quality" long ="Product Quality"/>
-    <xlat code="PKG" short="Packaging" long ="Packaging or Dunnage"/>
-    <xlat code="RCV" short="Shipping / Receiving" long ="Shipping &amp; Receiving"/>
-    <xlat code="CST" short="Customer Satisfaction" long ="Customer Satisfaction"/>
-  </problemArea>
-  <NCDisposition>
-    <xlat code="NO" short="No Action Required" long="Completed - No further action required"/>
-    <xlat code="PND" short="Pending" long="Awaiting review"/>
-    <xlat code="QTN" short="Quarantine" long="Quarantine or Hold"/>
-    <xlat code="RWK" short="Rework" long="Send to Rework"/>
-    <xlat code="RTN" short="Return" long="Return to Vendor"/>
-    <xlat code="SCP" short="Scrap" long="Scrap"/>
-  </NCDisposition>
-  <verifyStatus>
-    <xlat code="" short="" long=""/>
-    <xlat code="V" short="Complete" long="Completely Effective"/>
-    <xlat code="P" short="Partial" long="Partially Effective"/>
-    <xlat code="N" short="None" long="Not Effective"/>
-    <xlat code="R" short="Re-Test" long="Re-Test Required"/>
-  </verifyStatus>
-  <issueResponsible>
-    <xlat code="IN" short="Internal" long="Internal"/>
-    <xlat code="SP" short="Supplier" long="External Supplier"/>
-    <xlat code="CS" short="Customer" long="External Customer"/>
-    <xlat code="TR" short="Carrier" long="In-Transit Carrier"/>
-    <xlat code="UN" short="Unknown" long="Unknown"/>
-  </issueResponsible>
-  <issueTask>
-    <xlat code="MRB" short="Material Review" long="Submit material review request"/>
-    <xlat code="QTN" short="Quarantine" long="Submit material review request"/>
-    <xlat code="RWK" short="Rework" long="Initiate or complete a Problem Case"/>
-    <xlat code="RTN" short="Return" long="Initiate or complete a Problem Case"/>
-    <xlat code="SCP" short="Scrap" long="Initiate or complete a Problem Case"/>
-  </issueTask>
-  <taskRecordType>
-    <xlat code="10" short="Quality Incident" long="Internal Quality Incident"/>
-    <xlat code="11" short="Customer Quality Incident" long="Quality Problem Reported By Or Impacting A Customer Location"/>
-    <xlat code="12" short="Supplier Quality Incident" long="Quality Problem Attributed To Supplier Materials Or Performance"/>
-    <xlat code="21" short="Problem Control Activity" long="Responsibility For Completion Of A Problem Control Activity"/>
-    <xlat code="30" short="Environmental Data Input" long="Entry Of Environmental Data Inputs For A Reporting Period"/>
-    <xlat code="31" short="Environmental Data Approval" long="Approval Of Environmental Data Inputs For A Reporting Period"/>
-    <xlat code="33" short="Finalize Environmental Data Input" long="Finalize Environmental Data Inputs"/>
-    <xlat code="40" short="Health And Safety Incident" long="Review Or Closure Of A Health/Safety Incident"/>
-    <xlat code="45" short="Risk Managment Preventative Actions" long="Implement Corrective Action Recommendations"/>
-  </taskRecordType>
-  <caseStep>
-    <xlat code="0" short="Identification" long="Identify Problem Case Information"/>
-    <xlat code="1" short="Team Selection" long="Select Team Members"/>
-    <xlat code="2" short="Definition" long="Problem Definition"/>
-    <xlat code="3" short="Containment" long="Contain The Problem"/>
-    <xlat code="4" short="Root Cause" long="Determine Root Cause"/>
-    <xlat code="5" short="Corrective Action" long="Select Corrective Actions"/>
-    <xlat code="6" short="Verification" long="Verify Corrective Action Effectiveness"/>
-    <xlat code="7" short="Prevention" long="Apply Preventative Measures"/>
-    <xlat code="8" short="Closure" long="Close The Case And Notify The Team"/>
-  </caseStep>
-  <taskType>
-    <xlat code="A" short="Approval" long="approve task resolution"/>
-    <xlat code="C" short="Complete" long="completion or closure"/>
-    <xlat code="R" short="Review" long="review and respond"/>
-    <xlat code="8" short="Wait" long="awaiting issue closure"/>
-  </taskType>
-  <causeTypeQS>
-  </causeTypeQS>
-  <causeTypeEHS>
-    <xlat code="EHS001" short="Chemical Safety" long="Chemical Safety"/>
-    <xlat code="EHS002" short="Confined Space" long="Confined Space"/>
-    <xlat code="EHS003" short="Contractor Safety" long="Contractor Safety"/>
-    <xlat code="EHS004" short="Electrical Safety" long="Electrical Safety"/>
-    <xlat code="EHS005" short="Energy Control and Power Lockout (ECPL)" long="Energy Control and Power Lockout (ECPL)"/>
-    <xlat code="EHS006" short="Ergonomics Process" long="Ergonomics Process"/>
-    <xlat code="EHS007" short="General Safety" long="General Safety"/>
-    <xlat code="EHS008" short="Housekeeping" long="Housekeeping"/>
-    <xlat code="EHS009" short="Machine Guarding" long="Machine Guarding"/>
-    <xlat code="EHS010" short="Maintenance" long="Maintenance"/>
-    <xlat code="EHS011" short="Personal Protective Equipment (PPE)" long="Personal Protective Equipment (PPE)"/>
-    <xlat code="EHS012" short="PMHV Pedestrian Safety" long="PMHV Pedestrian Safety"/>
-    <xlat code="EHS013" short="Rules and Work Permits" long="Rules and Work Permits"/>
-    <xlat code="EHS014" short="Working and Walking Surfaces" long="Working and Walking Surfaces"/>
-    <xlat code="EHS015" short="Working at Heights" long="Working at Heights"/>
-  </causeTypeEHS>
-  <PPPType>
-    <xlat code="P1" short="People" long="People"/>
-    <xlat code="P2" short="Process" long="Process"/>
-    <xlat code="P3" short="Product" long="Product"/>
-  </PPPType>
-  <actionType>
-    <xlat code="1" short="Verbal" long="Verbal"/>
-    <xlat code="2" short="Visual" long="Visual"/>
-    <xlat code="3" short="Written" long="Written"/>
-    <xlat code="4" short="Process Control" long="Process Control"/>
-    <xlat code="5" short="Poka yoke" long="Mistake Proofing"/>
-    <xlat code="6" short="Design" long="Design Change"/>
-  </actionType>
-  <viewPerspective>
-    <xlat code="0" short="Corporate Goals &amp; Achievement" long="Corporate Goals &amp; Achievement"/>
-    <xlat code="E" short="Environmental" long="Environmental"/>
-    <xlat code="HS" short="Health &amp; Safety" long="Health &amp; Safety"/>
-    <xlat code="QS" short="Quality" long="Quality"/>
-  </viewPerspective>
-  <statScopeE>
-    <xlat code="" short="Environmental" long="Environmental"/>
-    <xlat code="eeff" short="Energy Efficiency (eeff)" long="Energy Efficiency (eeff)"/>
-    <xlat code="eSeff" short="Energy Spend Ratio (eSeff)" long="Energy Spend Ratio (eSeff)"/>
-    <xlat code="EUTL" short="Water Usage" long="Water Usage"/>
-    <xlat code="co2" short="co2 Emissions" long="co2 Emissions"/>
-  </statScopeE>
-  <statScopeHS>
-    <xlat code="" short="Health &amp; Safety" long="Health &amp; Safety"/>
-    <xlat code="rcr" short="Recordable Case Rate (rcr)" long="Recordable Case Rate (rcr)"/>
-    <xlat code="ltcr" short="Lost Time Case Rate (ltcr)" long="Lost Time Case Rate (ltcr)"/>
-    <xlat code="ltsr" short="Severity Rate (ltsr)" long="Severity Rate (ltsr)"/>
-    <xlat code="62" short="Recordable Case" long="Recordable Case"/>
-    <xlat code="63" short="Lost Time Case" long="Lost Time Case"/>
-  </statScopeHS>
-  <statScopeQS>
-    <xlat code="" short="Quality" long="Quality"/>
-    <xlat code="ppm" short="Parts Per Million (ppm)" long="Defective Parts Per Million (ppm)"/>
-    <xlat code="totNcQty" short="Total NC Quantity" long="Total NC Quantity"/>
-    <xlat code="totQty" short="Item Quantity" long="Item Quantity"/>
-    <xlat code="PROBLEM_AREA" short="Problem Area" long="Problem Area"/>
-    <xlat code="NONCONF_ID" short="Non-Conformance" long="Non-Conformance"/>
-    <xlat code="SEVERITY" short="Incident Severity" long="Incident Severity"/>
-  </statScopeQS>
-  <chartSeriesColor>
-    <xlat code="1" short="#800080" long="purple"/>
-    <xlat code="2" short="#FFA500" long="orange"/>
-    <xlat code="3" short="#808000" long="olive"/>
-    <xlat code="4" short="#A52A2A" long="brown"/>
-    <xlat code="5" short="#00FFFF" long="cyan"/>
-    <xlat code="6" short="#1E90FF" long="dodgerblue"/>
-    <xlat code="7" short="#B22222" long="firebrick"/>
-    <xlat code="8" short="#696969" long="dimgray"/>
-  </chartSeriesColor>
-  <chartSeriesColorAlt>
-    <xlat code="1" short="#B0C4DE" long="lightsteelblue"/>
-    <xlat code="2" short="#F08080" long="lightcoral"/>
-    <xlat code="3" short="#90EE90" long="lightgreen"/>
-    <xlat code="4" short="#C0C0C0" long="silver"/>
-    <xlat code="5" short="#F0E68C" long="khaki"/>
-    <xlat code="6" short="#5F9EA0" long="cadetblue"/>
-    <xlat code="7" short="#A52A2A" long="brown"/>
-    <xlat code="8" short="#696969" long="dimgray"/>
-  </chartSeriesColorAlt>
-  <chartSeriesColorDim>
-    <xlat code="1" short="#708090" long="slategray"/>
-    <xlat code="2" short="#8B4513" long="saddlebrown"/>
-    <xlat code="3" short="#B22222" long="firebrick"/>
-    <xlat code="4" short="#2F4F4F" long="darkslategray"/>
-    <xlat code="5" short="#D2B48C" long="tan"/>
-    <xlat code="6" short="#9370DB" long="mediumpurple"/>
-    <xlat code="7" short="#A9A9A9" long="darkgray"/>
-    <xlat code="8" short="#B8860B" long="darkgoldenrod"/>
-  </chartSeriesColorDim>
-  <chartSeriesColorAttr>
-    <xlat code="1" short="#CD853F" long="peru"/>
-    <xlat code="2" short="#2E8B57" long="seagreen"/>
-    <xlat code="3" short="#0000CD" long="mediumblue"/>
-  </chartSeriesColorAttr>
-  <chartSeriesColorOverlay>
-    <xlat code="1" short="#CD853F" long="cyan"/>
-    <xlat code="2" short="#2E8B57" long="red"/>
-  </chartSeriesColorOverlay>
-  <userRole>
-    <xlat code="1" short="QAI Admin" long="System Administrator"/>
-    <xlat code="100" short="Company Admin" long="Company Administrator"/>
-    <xlat code="150" short="Plant Admin" long="Plant Administrator"/>
-    <xlat code="300" short="Data Originator" long="Data Originator"/>
-    <xlat code="400" short="Trading Partner" long="Trading Partner"/>
-    <xlat code="500" short="Data Viewer" long="Reporting User"/>
-  </userRole>
-  <sysModule>
-    <sys prod="CQM" mod="home" topic="91" role="300" desc="Change Location"/>
-    <sys prod="CQM" mod="home" topic="92" role="300" desc="Delegate Tasks"/>
-    <sys prod="SQM" mod="" topic="200" role="" desc="Quality"/>
-    <sys prod="EHS" mod="" topic="300" role="" desc="EH&amp;S"/>
-    <sys prod="SQM" mod="RCV" topic="211" role="" desc="Incoming Material"/>
-    <sys prod="EHS" mod="ENV" topic="311" role="" desc="Environmental Data"/>
-    <sys prod="SQM" mod="CST" topic="212" role="" desc="Reject Avoidance"/>
-    <sys prod="EHS" mod="HSN" topic="312" role="" desc="H&amp;S Incidents"/>
-    <sys prod="SQM" mod="PRC" topic="221" role="" desc="Problem Control"/>
-    <sys prod="EHS" mod="HSN" topic="313" role="" desc="Preventative Actions"/>
-  </sysModule>
-  <passwordComplexity>
-	<xlat code="0" short="" long="Password must be at least 3 characters."></xlat>
-	<xlat code="1" short="" long="Password must be at least 6 characters, contain at least 1 letter, and contain 1 number or special character."></xlat>
-	<xlat code="2" short="" long="Password must be at least 6 characters, contain at least 1 lower case letter, contain at least 1 number and contain 1 upper case letter or special character."></xlat>
-	<xlat code="3" short="" long="Password must be at least 8 characters and contain at least 1 lower case letter, 1 upper case letter, 1 number and 1 special character."></xlat>
-	<xlat code="4" short="" long="Password must be at least 8 characters and contain at least 2 lower case letter, 2 upper case letter, 2 number and 2 special character."></xlat>
-  </passwordComplexity>
+	<locationType>
+		<xlat code="P" short="Production" long="Production"/>
+		<xlat code="T" short="Tech Center" long="Technical Center"/>
+		<xlat code="F" short="Administrative" long="Administrative"/>
+		<xlat code="W" short="Warehouse" long="Warehouse"/>
+		<xlat code="X" short="QAI Testing" long="QAI Testing"/>
+	</locationType>
+	<stdUnits>
+		<xlat code="ENGY" short="1" long="Kilowat/Hr"/>
+		<xlat code="WEIT" short="17" long="Kilogram"/>
+		<xlat code="VOL" short="11" long="Cubic Meter"/>
+		<xlat code="EUTL" short="11" long="Cubic Meter"/>
+		<xlat code="CUR" short="EUR" long="Euro"/>
+	</stdUnits>
+	<countryCode>
+		<xlat code="AL" short="Albania" long="Albania"/>
+		<xlat code="AR" short="Argentina" long="Argentina"/>
+		<xlat code="AU" short="Australia" long="Australia"/>
+		<xlat code="BE" short="Belgium" long="Belgium"/>
+		<xlat code="BO" short="Bolivia" long="Bolivia"/>
+		<xlat code="BR" short="Brazil" long="Brazil"/>
+		<xlat code="CA" short="Canada" long="Canada"/>
+		<xlat code="CL" short="Chile" long="Chile"/>
+		<xlat code="CN" short="China" long="China"/>
+		<xlat code="CO" short="Colombia" long="Colombia"/>
+		<xlat code="CR" short="Costa Rica" long="Costa Rica"/>
+		<xlat code="CZ" short="Czech Republic" long="Czech Republic"/>
+		<xlat code="DK" short="Denmark" long="Denmark"/>
+		<xlat code="DO" short="Dominican Republic" long="Dominican Republic"/>
+		<xlat code="EC" short="Ecuador" long="Ecuador"/>
+		<xlat code="EE" short="Estonia" long="Estonia"/>
+		<xlat code="FI" short="Finland" long="Finland"/>
+		<xlat code="FR" short="France" long="France"/>
+		<xlat code="DE" short="Germany" long="Germany"/>
+		<xlat code="GB" short="Great Britain" long="Great Britain"/>
+		<xlat code="GR" short="Greece" long="Greece"/>
+		<xlat code="HK" short="Hong Kong" long="Hong Kong"/>
+		<xlat code="HU" short="Hungary" long="Hungary"/>
+		<xlat code="IS" short="Iceland" long="Iceland"/>
+		<xlat code="IN" short="India" long="India"/>
+		<xlat code="ID" short="Indonesia" long="Indonesia"/>
+		<xlat code="IE" short="Ireland" long="Ireland"/>
+		<xlat code="IL" short="Israel" long="Israel"/>
+		<xlat code="IT" short="Italy" long="Italy"/>
+		<xlat code="JP" short="Japan" long="Japan"/>
+		<xlat code="LV" short="Latvia" long="Latvia"/>
+		<xlat code="LT" short="Lithuania" long="Lithuania"/>
+		<xlat code="LU" short="Luxembourg" long="Luxembourg"/>
+		<xlat code="MX" short="Mexico" long="Mexico"/>
+		<xlat code="NL" short="Netherlands" long="Netherlands"/>
+		<xlat code="NZ" short="New Zealand" long="New Zealand"/>
+		<xlat code="NO" short="Norway" long="Norway"/>
+		<xlat code="PE" short="Peru" long="Peru"/>
+		<xlat code="PH" short="Philippines" long="Philippines"/>
+		<xlat code="PL" short="Poland" long="Poland"/>
+		<xlat code="PT" short="Portugal" long="Portugal"/>
+		<xlat code="RO" short="Romania" long="Romania"/>
+		<xlat code="RU" short="Russia" long="Russia"/>
+		<xlat code="RS" short="Serbia" long="Serbia"/>
+		<xlat code="SG" short="Singapore" long="Singapore"/>
+		<xlat code="SK" short="Slovakia" long="Slovakia"/>
+		<xlat code="SI" short="Slovenia" long="Slovenia"/>
+		<xlat code="ZA" short="South Africa" long="South Africa"/>
+		<xlat code="KP" short="South Korea" long="South Korea"/>
+		<xlat code="ES" short="Spain" long="Spain"/>
+		<xlat code="SE" short="Sweden" long="Sweden"/>
+		<xlat code="CH" short="Switzerland" long="Switzerland"/>
+		<xlat code="TH" short="Thailand" long="Thailand"/>
+		<xlat code="TR" short="Turkey" long="Turkey"/>
+		<xlat code="US" short="United States" long="United States"/>
+		<xlat code="VE" short="Venezuela" long="Venezuela"/>
+	</countryCode>
+	<timeZone>
+		<xlat code="GMT" short="GMT Standard Time" long="(GMT) Greenwich Mean Time"/>
+		<xlat code="090" short="Greenwich Standard Time" long="(GMT) Casablanca, Monrovia"/>
+		<xlat code="100" short="Central Europe Standard Time" long="(GMT+1:00) Sarajevo, Skopje, Warsaw, Zagreb"/>
+		<xlat code="105" short="Romance Standard Time" long="(GMT+1:00) Brussels, Copenhagen, Madrid, Paris"/>
+		<xlat code="110" short="W. Europe Standard Time" long="(GMT+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna"/>
+		<xlat code="113" short="W. Central Africa Standard Time" long="(GMT+1:00) West Central Africa"/>
+		<xlat code="115" short="E. Europe Standard Time" long="(GMT+2:00) Eastern European Time"/>
+		<xlat code="120" short="Egypt Standard Time" long="(GMT+2:00) Arabic/Egypt Standard Time"/>
+		<xlat code="125" short="FLE Standard Time" long="(GMT+2:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius"/>
+		<xlat code="130" short="GTB Standard Time" long="(GMT+2:00) Athens, Istanbul, Minsk"/>
+		<xlat code="135" short="Israel Standard Time" long="(GMT+2:00) Jerusalem"/>
+		<xlat code="140" short="South Africa Standard Time" long="(GMT+2:00) Harare, Pretoria"/>
+		<xlat code="145" short="Russian Standard Time" long="(GMT+3:00) Moscow, St. Petersburg, Volgograd"/>
+		<xlat code="150" short="Arab Standard Time" long="(GMT+3:00) Kuwait, Riyadh"/>
+		<xlat code="155" short="E. Africa Standard Time" long="(GMT+3:00) Nairobi"/>
+		<xlat code="158" short="Arabic Standard Time" long="(GMT+3:00) Baghdad"/>
+		<xlat code="160" short="Iran Standard Time" long="(GMT+3:30) Tehran"/>
+		<xlat code="165" short="Arabian Standard Time" long="(GMT+4:00) Abu Dhabi, Muscat"/>
+		<xlat code="170" short="Caucasus Standard Time" long="(GMT+4:00) Baku, Tbilisi, Yerevan"/>
+		<xlat code="175" short="Transitional Islamic State of Afghanistan Standard Time" long="(GMT+4:30) Kabul"/>
+		<xlat code="180" short="Ekaterinburg Standard Time" long="(GMT+5:00) Ekaterinburg"/>
+		<xlat code="185" short="West Asia Standard Time" long="(GMT+5:00) Islamabad, Karachi, Tashkent"/>
+		<xlat code="190" short="India Standard Time" long="(GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi"/>
+		<xlat code="193" short="Nepal Standard Time" long="(GMT+5:45) Kathmandu"/>
+		<xlat code="195" short="Central Asia Standard Time" long="(GMT+6:00) Astana, Dhaka"/>
+		<xlat code="200" short="Sri Lanka Standard Time" long="(GMT+6:00) Sri Jayawardenepura"/>
+		<xlat code="201" short="N. Central Asia Standard Time" long="(GMT+6:00) Almaty, Novosibirsk"/>
+		<xlat code="203" short="Myanmar Standard Time" long="(GMT+6:30) Yangon Rangoon"/>
+		<xlat code="205" short="S.E. Asia Standard Time" long="(GMT+7:00) Bangkok, Hanoi, Jakarta"/>
+		<xlat code="207" short="North Asia Standard Time" long="(GMT+7:00) Krasnoyarsk"/>
+		<xlat code="210" short="China Standard Time" long="(GMT+8:00) Beijing, Chongqing, Hong Kong SAR, Urumqi"/>
+		<xlat code="215" short="Singapore Standard Time" long="(GMT+8:00) Kuala Lumpur, Singapore"/>
+		<xlat code="220" short="Taipei Standard Time" long="(GMT+8:00) Taipei"/>
+		<xlat code="225" short="W. Australia Standard Time" long="(GMT+8:00) Perth"/>
+		<xlat code="227" short="North Asia East Standard Time" long="(GMT+8:00) Irkutsk, Ulaanbaatar"/>
+		<xlat code="230" short="Korea Standard Time" long="(GMT+9:00) Seoul"/>
+		<xlat code="235" short="Tokyo Standard Time" long="(GMT+9:00) Osaka, Sapporo, Tokyo"/>
+		<xlat code="240" short="Yakutsk Standard Time" long="(GMT+9:00) Yakutsk"/>
+		<xlat code="245" short="A.U.S. Central Standard Time" long="(GMT+9:30) Darwin"/>
+		<xlat code="250" short="Cen. Australia Standard Time" long="(GMT+9:30) Adelaide"/>
+		<xlat code="255" short="A.U.S. Eastern Standard Time" long="(GMT+10:00) Canberra, Melbourne, Sydney"/>
+		<xlat code="260" short="E. Australia Standard Time" long="(GMT+10:00) Brisbane"/>
+		<xlat code="265" short="Tasmania Standard Time" long="(GMT+10:00) Hobart"/>
+		<xlat code="270" short="Vladivostok Standard Time" long="(GMT+10:00) Vladivostok"/>
+		<xlat code="275" short="West Pacific Standard Time" long="(GMT+10:00) Guam, Port Moresby"/>
+		<xlat code="280" short="Central Pacific Standard Time" long="(GMT+11:00) Magadan, Solomon Islands, New Caledonia"/>
+		<xlat code="285" short="Fiji Islands Standard Time" long="(GMT+12:00) Fiji Islands, Kamchatka, Marshall Islands"/>
+		<xlat code="290" short="New Zealand Standard Time" long="(GMT+12:00) Auckland, Wellington"/>
+		<xlat code="300" short="Tonga Standard Time" long="(GMT+13:00) Nuku'alofa"/>
+		<xlat code="000" short="Dateline Standard Time" long="(GMT-12:00) International Date Line West"/>
+		<xlat code="001" short="Samoa Standard Time" long="(GMT-11:00) Midway Island, Samoa"/>
+		<xlat code="002" short="Hawaiian Standard Time" long="(GMT-10:00) Hawaii Standard Time"/>
+		<xlat code="003" short="Alaskan Standard Time" long="(GMT-9:00) Alaska Standard Time"/>
+		<xlat code="004" short="Pacific Standard Time" long="(GMT-8:00) Pacific Standard Time"/>
+		<xlat code="010" short="Mountain Standard Time" long="(GMT-7:00) Mountain Standard Time"/>
+		<xlat code="013" short="Mexico Standard Time2" long="(GMT-7:00) Chihuahua, La Paz, Mazatlan"/>
+		<xlat code="015" short="U.S. Mountain Standard Time" long="(GMT-7:00) Arizona"/>
+		<xlat code="020" short="Central Standard Time" long="(GMT-6:00) Central Standard Time"/>
+		<xlat code="025" short="Canada Central Standard Time" long="(GMT-6:00) Saskatchewan"/>
+		<xlat code="030" short="Mexico Standard Time" long="(GMT-6:00) Guadalajara, Mexico City, Monterrey"/>
+		<xlat code="033" short="Central America Standard Time" long="(GMT-6:00) Central America"/>
+		<xlat code="035" short="Eastern Standard Time" long="(GMT-5:00) Eastern Standard Time"/>
+		<xlat code="040" short="U.S. Eastern Standard Time" long="(GMT-5:00) Indiana (East)"/>
+		<xlat code="045" short="S.A. Pacific Standard Time" long="(GMT-5:00) Bogota, Lima, Quito"/>
+		<xlat code="050" short="Atlantic Standard Time" long="(GMT-4:00) Atlantic Time (Canada)"/>
+		<xlat code="055" short="S.A. Western Standard Time" long="(GMT-4:00) Caracas, La Paz"/>
+		<xlat code="056" short="Pacific S.A. Standard Time" long="(GMT-4:00) Santiago"/>
+		<xlat code="060" short="Newfoundland and Labrador Standard Time" long="(GMT-3:30) Canada Newfoundland Time"/>
+		<xlat code="065" short="E. South America Standard Time" long="(GMT-3:00) Brazil Eastern Time"/>
+		<xlat code="070" short="S.A. Eastern Standard Time" long="(GMT-3:00) Buenos Aires, Georgetown"/>
+		<xlat code="073" short="Greenland Standard Time" long="(GMT-3:00) Greenland"/>
+		<xlat code="075" short="Mid-Atlantic Standard Time" long="(GMT-2:00) Mid-Atlantic"/>
+		<xlat code="080" short="Azores Standard Time" long="(GMT-1:00) Azores"/>
+		<xlat code="083" short="Cape Verde Standard Time" long="(GMT-1:00) Cape Verde Islands"/>
+	</timeZone>
+	<powerSourcedRegion>
+		<xlat code="ASCC-AK" short="ASCC Alaska Grid" long="ASCC Alaska Grid"/>
+		<xlat code="HCC-HI" short="HICC Oahu" long="HICC Oahu"/>
+		<xlat code="MRO-EAST" short="MRO East" long="MRO East"/>
+		<xlat code="MRO-WEST" short="MRO West" long="MRO West"/>
+		<xlat code="NPCC-NEWENGLAND" short="NPCC New England" long="NPCC New England"/>
+		<xlat code="NPCC-NYC" short="NPCC NYC/Westchester" long="NPCC NYC/Westchester"/>
+		<xlat code="NPCC-NY" short="NPCC Upstate NY" long="NPCC Upstate NY"/>
+		<xlat code="RFC-EAST" short="RFC East" long="RFC East"/>
+		<xlat code="RFC-MI" short="RFC Michigan" long="RFC Michigan"/>
+		<xlat code="RFC-WEST" short="RFC West" long="RFC West"/>
+		<xlat code="SERC-MIDWEST" short="SERC Midwest" long="SERC Midwest"/>
+		<xlat code="SERC-MS" short="SERC Mississippi Valley" long="SERC Mississippi Valley"/>
+		<xlat code="SERC-SOUTH" short="SERC South" long="SERC South"/>
+		<xlat code="SERC-TN" short="SERC Tennessee Valley" long="SERC Tennessee Valley"/>
+		<xlat code="SERC-VA" short="SERC Virginia/Carolina" long="SERC Virginia/Carolina"/>
+		<xlat code="SPP-NORTH" short="SPP North" long="SPP North"/>
+		<xlat code="SPP-SOUTH" short="SPP South" long="SPP South"/>
+		<xlat code="WECC-CA" short="WECC California" long="WECC California"/>
+		<xlat code="WECC-NORTHWEST" short="WECC Northwest" long="WECC Northwest"/>
+		<xlat code="WECC-ROCK" short="WECC Rockies" long="WECC Rockies"/>
+		<xlat code="WECC-SOUTHWEST" short="WECC Southwest" long="WECC Southwest"/>
+	</powerSourcedRegion>
+	<yesNo>
+		<xlat code="Y" short="Y" long="Yes"/>
+		<xlat code="N" short="N" long="No"/>
+	</yesNo>
+	<checked>
+		<xlat code="True" short="X" long="[X]"/>
+		<xlat code="False" short=" " long="[ ]"/>
+	</checked>
+	<docScope>
+		<xlat code="SYS" short="System-wide Document" long="Document applies to all system users"/>
+		<xlat code="EHS" short="EHS System Document" long="Environmental Health &amp; Safety document"/>
+		<xlat code="SQM" short="Quality System Document" long="Quality system document"/>
+		<xlat code="BLI" short="Business Location Information" long="Business background/information"/>
+	</docScope>
+	<docDisplayType>
+		<xlat code="2" short="Reference" long="Reference Information"/>
+		<xlat code="10" short="Communication" long="Communication"/>
+		<xlat code="15" short="User Communication" long="User Communication"/>
+		<xlat code="31" short="EH&amp;S Home Page Posting" long="Post to the application Home Page"/>
+		<xlat code="32" short="Quality Home Page Posting" long="Post to the application Home Page"/>
+	</docDisplayType>
+	<partProcess>
+		<xlat code="MATL" short="Material" long="Raw Material"/>
+		<xlat code="PRCS" short="Process" long="Special Process"/>
+		<xlat code="" short="Other" long="Other"/>
+	</partProcess>
+	<planType>
+		<xlat code="ACP" short="Acceptance" long="Acceptance Testing"/>
+		<xlat code="PPAP" short="PPAP" long="Pre-Production"/>
+		<xlat code="PROD" short="Production" long="Production"/>
+		<xlat code="CSS" short="Controlled" long="Controlled Shipping"/>
+	</planType>
+	<sampleUnit>
+		<xlat code="PCT" short="Percent" long="Percent"/>
+		<xlat code="ITM" short="Items" long="Items"/>
+		<xlat code="OBV" short="Readings" long="Readings"/>
+	</sampleUnit>
+	<sampleRate>
+		<xlat code="HR" short="Hour" long="Hour"/>
+		<xlat code="SHF" short="Shift" long="Shift"/>
+		<xlat code="DAY" short="Daily" long="Daily"/>
+		<xlat code="CON" short="Container" long="Container"/>
+		<xlat code="LOT" short="Lot/Batch" long="Lot or Batch"/>
+		<xlat code="RCT" short="Receipt" long="Receipt"/>
+		<xlat code="RAN" short="Randomly" long="Randomly"/>
+	</sampleRate>
+	<UOMCategory>
+		<xlat code="LINE" short="Linear" long="Linear measurement"/>
+		<xlat code="AREA" short="Area" long="Area Units"/>
+		<xlat code="VOL" short="Dry Volume" long="Dry Volume Units"/>
+		<xlat code="MECH" short="Mechanical" long="Mechanical Units"/>
+		<xlat code="ENGY" short="Energy" long="Energy"/>
+		<xlat code="WEIT" short="Weight" long="Weight"/>
+		<xlat code="CONT" short="Count" long="Counts"/>
+		<xlat code="CUST" short="Custom" long="Custom conversion"/>
+		<xlat code="SAFE" short="Safety" long="Safety"/>
+	</UOMCategory>
+	<costType>
+		<xlat code="COST" short="Actual Cost" long="Actual Cost"/>
+		<xlat code="CREDIT" short="Credited" long="Credited Amount"/>
+	</costType>
+	<regulatoryStatus>
+		<xlat code="HZ" short="Hazardous" long="Hazardous material"/>
+		<xlat code="NH" short="Non-Hazardous" long="Non-Hazardous material"/>
+	</regulatoryStatus>
+	<disposal>
+		<xlat code="D" short="Disposed" long="Disposed"/>
+		<xlat code="R" short="Recycled" long="Recycled"/>
+	</disposal>
+	<measureType>
+		<xlat code="VAR" short="Variable" long="Variable (discrete value)"/>
+		<xlat code="ATR" short="Attribute" long="Attribute (count)"/>
+		<xlat code="PRC" short="Process" long="Process Value"/>
+	</measureType>
+	<measureCategoryEHS>
+		<xlat code="ENGY" short="Energy" long="Energy"/>
+		<xlat code="EUTL" short="Water" long="Water"/>
+		<xlat code="EWMR" short="Mineral Waste" long="Mineral wastes"/>
+		<xlat code="EWMC" short="Metals Waste" long="Metals/Metal-containing wastes"/>
+		<xlat code="EWCH" short="Chemical Waste" long="Chemical wastes"/>
+		<xlat code="EWSG" short="Sludge" long="Sludge and residue wastes"/>
+		<xlat code="EWGN" short="General Waste" long="General waste and refuse"/>
+		<xlat code="PROD" short="Accounting" long="Plant accounting"/>
+		<xlat code="SAFE" short="Safety" long="Helth &amp; Safety" />
+		<xlat code="FACT" short="Factor" long="Normalization factor e.g. qty consumed/produced/sold, revenue..." />
+		<xlat code="SEWG" short="Sewage" long="Sewage"/>
+	</measureCategoryEHS>
+	<invoiceSpan>
+		<xlat code="MINDATE" short="6" long="6" />
+		<xlat code="MAXDATE" short="2" long="2" />
+	</invoiceSpan>
+	<measureCategorySQM>
+		<xlat code="QPRD" short="Product" long="Product measurements"/>
+		<xlat code="QPCS" short="Process" long="Process readings/measurements"/>
+	</measureCategorySQM>
+	<partAttributeCategory>
+		<xlat code="FAMILY" short="Family" long="Part Family"/>
+		<xlat code="TYPE" short="Type" long="Part Type"/>
+		<xlat code="SIDE" short="Side" long="Assembly Side"/>
+		<xlat code="LOCPOS" short="Location" long="Assembly Location/Position"/>
+	</partAttributeCategory>
+	<specType>
+		<xlat code="BLT" short="Bilateral" long="Bilateral (2 sided)"/>
+		<xlat code="ULT" short="Unilateral" long="Variable (single sided)"/>
+		<xlat code="TAR" short="Target" long="Target"/>
+		<xlat code="PF" short="Pass/Fail" long="Pass/Fail"/>
+	</specType>
+	<chartTypeVAR>
+		<xlat code="XMR" short="X and Moving Range" long="X and Moving Range"/>
+		<xlat code="XBR" short="Xbar and Range" long="Xbar and Range"/>
+		<xlat code="XBS" short="Xbar and Sigma" long="Xbar and Std Deviation"/>
+	</chartTypeVAR>
+	<chartTypeATT>
+		<xlat code="U" short="u Chart" long="Avg Number Non-Conforming"/>
+		<xlat code="C" short="C" long="Number Non-Conforming"/>
+		<xlat code="NP" short="Np" long="Percentage Defective"/>
+		<xlat code="P" short="p" long="Number Defective"/>
+		<chartTypeVAR>
+			<xlat code="XMR" short="X and Moving Range" long="X and Moving Range"/>
+			<xlat code="XBR" short="Xbar and Range" long="Xbar and Range"/>
+			<xlat code="XBS" short="Xbar and Sigma" long="Xbar and Std Deviation"/>
+		</chartTypeVAR>
+	</chartTypeATT>
+	<COAForm>
+		<xlat code="COA" short="COA" long="Quality Certificate of Analysis (shipping, controlled shipping)"/>
+		<xlat code="PPAP" short="PPAP" long="Production Part Approval (PPAP)"/>
+		<xlat code="SAE" short="AS9102" long="First Article Inspection (SAE AS9102)"/>
+		<xlat code="CPK" short="CPK" long="Process Capability Report"/>
+	</COAForm>
+	<inboxType>
+		<xlat code="PC" short="Problem Case" long ="Problem Cases"/>
+		<xlat code="QI" short="Quality Issue" long ="Quality Issues"/>
+		<xlat code="HS" short="Health/Safety Incident" long ="Health and Safety Incidents"/>
+		<xlat code="EV" short="Facility Data Recording" long ="Environmental Metrics Recording"/>
+	</inboxType>
+	<incidentType>
+		<xlat code="QI" short="Quality Issue" long ="Quality Issue"/>
+		<xlat code="EHS" short="Environmental Health and Safety Incident" long ="Environmental Health and Safety Incident"/>
+	</incidentType>
+	<incidentSeverity>
+		<xlat code="IR" short="Inspection Results" long ="Inspection Results"/>
+		<xlat code="NM" short="Near Miss" long ="Near Miss"/>
+		<xlat code="RC" short="Recordable" long ="Recordable"/>
+	</incidentSeverity>
+	<qualityActivity>
+		<xlat code="RCV" short="Receiving Inspection" long ="Received Material Issue"/>
+		<xlat code="PRQ" short="Production Quality" long ="Production Quality Issue"/>
+		<xlat code="CST" short="Customer Incident" long ="Customer Reported Incident"/>
+	</qualityActivity>
+	<EHSIncidentActivity>
+		<xlat code="40" short="Health &amp; Safety Incident" long ="Health &amp; Safety Incident Closure"/>
+		<xlat code="45" short="Preventative Action" long = "Preventative Action Closure"/>
+		<xlat code="50" short="Plant Audit" long = "Audit Completion"/>
+	</EHSIncidentActivity>
+	<problemArea>
+		<xlat code="" short="All" long ="All"/>
+		<xlat code="PRQ" short="Product Quality" long ="Product Quality"/>
+		<xlat code="PKG" short="Packaging" long ="Packaging or Dunnage"/>
+		<xlat code="RCV" short="Shipping / Receiving" long ="Shipping &amp; Receiving"/>
+		<xlat code="CST" short="Customer Satisfaction" long ="Customer Satisfaction"/>
+	</problemArea>
+	<NCDisposition>
+		<xlat code="NO" short="No Action Required" long="Completed - No further action required"/>
+		<xlat code="PND" short="Pending" long="Awaiting review"/>
+		<xlat code="QTN" short="Quarantine" long="Quarantine or Hold"/>
+		<xlat code="RWK" short="Rework" long="Send to Rework"/>
+		<xlat code="RTN" short="Return" long="Return to Vendor"/>
+		<xlat code="SCP" short="Scrap" long="Scrap"/>
+	</NCDisposition>
+	<verifyStatus>
+		<xlat code="" short="" long=""/>
+		<xlat code="V" short="Complete" long="Completely Effective"/>
+		<xlat code="P" short="Partial" long="Partially Effective"/>
+		<xlat code="N" short="None" long="Not Effective"/>
+		<xlat code="R" short="Re-Test" long="Re-Test Required"/>
+	</verifyStatus>
+	<issueResponsible>
+		<xlat code="IN" short="Internal" long="Internal"/>
+		<xlat code="SP" short="Supplier" long="External Supplier"/>
+		<xlat code="CS" short="Customer" long="External Customer"/>
+		<xlat code="TR" short="Carrier" long="In-Transit Carrier"/>
+		<xlat code="UN" short="Unknown" long="Unknown"/>
+	</issueResponsible>
+	<issueTask>
+		<xlat code="MRB" short="Material Review" long="Submit material review request"/>
+		<xlat code="QTN" short="Quarantine" long="Submit material review request"/>
+		<xlat code="RWK" short="Rework" long="Initiate or complete a Problem Case"/>
+		<xlat code="RTN" short="Return" long="Initiate or complete a Problem Case"/>
+		<xlat code="SCP" short="Scrap" long="Initiate or complete a Problem Case"/>
+	</issueTask>
+	<taskRecordType>
+		<xlat code="10" short="Quality Incident" long="Internal Quality Incident"/>
+		<xlat code="11" short="Customer Quality Incident" long="Quality Problem Reported By Or Impacting A Customer Location"/>
+		<xlat code="12" short="Supplier Quality Incident" long="Quality Problem Attributed To Supplier Materials Or Performance"/>
+		<xlat code="21" short="Problem Control Activity" long="Responsibility For Completion Of A Problem Control Activity"/>
+		<xlat code="30" short="Environmental Data Input" long="Entry Of Environmental Data Inputs For A Reporting Period"/>
+		<xlat code="31" short="Environmental Data Approval" long="Approval Of Environmental Data Inputs For A Reporting Period"/>
+		<xlat code="33" short="Finalize Environmental Data Input" long="Finalize Environmental Data Inputs"/>
+		<xlat code="40" short="Health And Safety Incident" long="Review Or Closure Of A Health/Safety Incident"/>
+		<xlat code="45" short="Risk Managment Preventative Actions" long="Implement Corrective Action Recommendations"/>
+	</taskRecordType>
+	<caseStep>
+		<xlat code="0" short="Identification" long="Identify Problem Case Information"/>
+		<xlat code="1" short="Team Selection" long="Select Team Members"/>
+		<xlat code="2" short="Definition" long="Problem Definition"/>
+		<xlat code="3" short="Containment" long="Contain The Problem"/>
+		<xlat code="4" short="Root Cause" long="Determine Root Cause"/>
+		<xlat code="5" short="Corrective Action" long="Select Corrective Actions"/>
+		<xlat code="6" short="Verification" long="Verify Corrective Action Effectiveness"/>
+		<xlat code="7" short="Prevention" long="Apply Preventative Measures"/>
+		<xlat code="8" short="Closure" long="Close The Case And Notify The Team"/>
+	</caseStep>
+	<taskType>
+		<xlat code="A" short="Approval" long="approve task resolution"/>
+		<xlat code="C" short="Complete" long="completion or closure"/>
+		<xlat code="R" short="Review" long="review and respond"/>
+		<xlat code="8" short="Wait" long="awaiting issue closure"/>
+	</taskType>
+	<causeTypeQS>
+	</causeTypeQS>
+	<causeTypeEHS>
+		<xlat code="EHS001" short="Chemical Safety" long="Chemical Safety"/>
+		<xlat code="EHS002" short="Confined Space" long="Confined Space"/>
+		<xlat code="EHS003" short="Contractor Safety" long="Contractor Safety"/>
+		<xlat code="EHS004" short="Electrical Safety" long="Electrical Safety"/>
+		<xlat code="EHS005" short="Energy Control and Power Lockout (ECPL)" long="Energy Control and Power Lockout (ECPL)"/>
+		<xlat code="EHS006" short="Ergonomics Process" long="Ergonomics Process"/>
+		<xlat code="EHS007" short="General Safety" long="General Safety"/>
+		<xlat code="EHS008" short="Housekeeping" long="Housekeeping"/>
+		<xlat code="EHS009" short="Machine Guarding" long="Machine Guarding"/>
+		<xlat code="EHS010" short="Maintenance" long="Maintenance"/>
+		<xlat code="EHS011" short="Personal Protective Equipment (PPE)" long="Personal Protective Equipment (PPE)"/>
+		<xlat code="EHS012" short="PMHV Pedestrian Safety" long="PMHV Pedestrian Safety"/>
+		<xlat code="EHS013" short="Rules and Work Permits" long="Rules and Work Permits"/>
+		<xlat code="EHS014" short="Working and Walking Surfaces" long="Working and Walking Surfaces"/>
+		<xlat code="EHS015" short="Working at Heights" long="Working at Heights"/>
+	</causeTypeEHS>
+	<PPPType>
+		<xlat code="P1" short="People" long="People"/>
+		<xlat code="P2" short="Process" long="Process"/>
+		<xlat code="P3" short="Product" long="Product"/>
+	</PPPType>
+	<actionType>
+		<xlat code="1" short="Verbal" long="Verbal"/>
+		<xlat code="2" short="Visual" long="Visual"/>
+		<xlat code="3" short="Written" long="Written"/>
+		<xlat code="4" short="Process Control" long="Process Control"/>
+		<xlat code="5" short="Poka yoke" long="Mistake Proofing"/>
+		<xlat code="6" short="Design" long="Design Change"/>
+	</actionType>
+	<viewPerspective>
+		<xlat code="0" short="Corporate Goals &amp; Achievement" long="Corporate Goals &amp; Achievement"/>
+		<xlat code="E" short="Environmental" long="Environmental"/>
+		<xlat code="HS" short="Health &amp; Safety" long="Health &amp; Safety"/>
+		<xlat code="QS" short="Quality" long="Quality"/>
+	</viewPerspective>
+	<statScopeE>
+		<xlat code="" short="Environmental" long="Environmental"/>
+		<xlat code="eeff" short="Energy Efficiency (eeff)" long="Energy Efficiency (eeff)"/>
+		<xlat code="eSeff" short="Energy Spend Ratio (eSeff)" long="Energy Spend Ratio (eSeff)"/>
+		<xlat code="EUTL" short="Water Usage" long="Water Usage"/>
+		<xlat code="co2" short="co2 Emissions" long="co2 Emissions"/>
+	</statScopeE>
+	<statScopeHS>
+		<xlat code="" short="Health &amp; Safety" long="Health &amp; Safety"/>
+		<xlat code="rcr" short="Recordable Case Rate (rcr)" long="Recordable Case Rate (rcr)"/>
+		<xlat code="ltcr" short="Lost Time Case Rate (ltcr)" long="Lost Time Case Rate (ltcr)"/>
+		<xlat code="ltsr" short="Severity Rate (ltsr)" long="Severity Rate (ltsr)"/>
+		<xlat code="62" short="Recordable Case" long="Recordable Case"/>
+		<xlat code="63" short="Lost Time Case" long="Lost Time Case"/>
+	</statScopeHS>
+	<statScopeQS>
+		<xlat code="" short="Quality" long="Quality"/>
+		<xlat code="ppm" short="Parts Per Million (ppm)" long="Defective Parts Per Million (ppm)"/>
+		<xlat code="totNcQty" short="Total NC Quantity" long="Total NC Quantity"/>
+		<xlat code="totQty" short="Item Quantity" long="Item Quantity"/>
+		<xlat code="PROBLEM_AREA" short="Problem Area" long="Problem Area"/>
+		<xlat code="NONCONF_ID" short="Non-Conformance" long="Non-Conformance"/>
+		<xlat code="SEVERITY" short="Incident Severity" long="Incident Severity"/>
+	</statScopeQS>
+	<chartSeriesColor>
+		<xlat code="1" short="#800080" long="purple"/>
+		<xlat code="2" short="#FFA500" long="orange"/>
+		<xlat code="3" short="#808000" long="olive"/>
+		<xlat code="4" short="#A52A2A" long="brown"/>
+		<xlat code="5" short="#00FFFF" long="cyan"/>
+		<xlat code="6" short="#1E90FF" long="dodgerblue"/>
+		<xlat code="7" short="#B22222" long="firebrick"/>
+		<xlat code="8" short="#696969" long="dimgray"/>
+	</chartSeriesColor>
+	<chartSeriesColorAlt>
+		<xlat code="1" short="#B0C4DE" long="lightsteelblue"/>
+		<xlat code="2" short="#F08080" long="lightcoral"/>
+		<xlat code="3" short="#90EE90" long="lightgreen"/>
+		<xlat code="4" short="#C0C0C0" long="silver"/>
+		<xlat code="5" short="#F0E68C" long="khaki"/>
+		<xlat code="6" short="#5F9EA0" long="cadetblue"/>
+		<xlat code="7" short="#A52A2A" long="brown"/>
+		<xlat code="8" short="#696969" long="dimgray"/>
+	</chartSeriesColorAlt>
+	<chartSeriesColorDim>
+		<xlat code="1" short="#708090" long="slategray"/>
+		<xlat code="2" short="#8B4513" long="saddlebrown"/>
+		<xlat code="3" short="#B22222" long="firebrick"/>
+		<xlat code="4" short="#2F4F4F" long="darkslategray"/>
+		<xlat code="5" short="#D2B48C" long="tan"/>
+		<xlat code="6" short="#9370DB" long="mediumpurple"/>
+		<xlat code="7" short="#A9A9A9" long="darkgray"/>
+		<xlat code="8" short="#B8860B" long="darkgoldenrod"/>
+	</chartSeriesColorDim>
+	<chartSeriesColorAttr>
+		<xlat code="1" short="#CD853F" long="peru"/>
+		<xlat code="2" short="#2E8B57" long="seagreen"/>
+		<xlat code="3" short="#0000CD" long="mediumblue"/>
+	</chartSeriesColorAttr>
+	<chartSeriesColorOverlay>
+		<xlat code="1" short="#CD853F" long="cyan"/>
+		<xlat code="2" short="#2E8B57" long="red"/>
+	</chartSeriesColorOverlay>
+	<userRole>
+		<xlat code="1" short="QAI Admin" long="System Administrator"/>
+		<xlat code="100" short="Company Admin" long="Company Administrator"/>
+		<xlat code="150" short="Plant Admin" long="Plant Administrator"/>
+		<xlat code="300" short="Data Originator" long="Data Originator"/>
+		<xlat code="400" short="Trading Partner" long="Trading Partner"/>
+		<xlat code="500" short="Data Viewer" long="Reporting User"/>
+	</userRole>
+	<sysModule>
+		<sys prod="CQM" mod="home" topic="91" role="300" desc="Change Location"/>
+		<sys prod="CQM" mod="home" topic="92" role="300" desc="Delegate Tasks"/>
+		<sys prod="SQM" mod="" topic="200" role="" desc="Quality"/>
+		<sys prod="EHS" mod="" topic="300" role="" desc="EH&amp;S"/>
+		<sys prod="SQM" mod="RCV" topic="211" role="" desc="Incoming Material"/>
+		<sys prod="EHS" mod="ENV" topic="311" role="" desc="Environmental Data"/>
+		<sys prod="SQM" mod="CST" topic="212" role="" desc="Reject Avoidance"/>
+		<sys prod="EHS" mod="HSN" topic="312" role="" desc="H&amp;S Incidents"/>
+		<sys prod="SQM" mod="PRC" topic="221" role="" desc="Problem Control"/>
+		<sys prod="EHS" mod="HSN" topic="313" role="" desc="Preventative Actions"/>
+	</sysModule>
+	<passwordComplexity>
+		<xlat code="0" short="" long="Password must be at least 3 characters."></xlat>
+		<xlat code="1" short="" long="Password must be at least 6 characters, contain at least 1 letter, and contain 1 number or special character."></xlat>
+		<xlat code="2" short="" long="Password must be at least 6 characters, contain at least 1 lower case letter, contain at least 1 number and contain 1 upper case letter or special character."></xlat>
+		<xlat code="3" short="" long="Password must be at least 8 characters and contain at least 1 lower case letter, 1 upper case letter, 1 number and 1 special character."></xlat>
+		<xlat code="4" short="" long="Password must be at least 8 characters and contain at least 2 lower case letter, 2 upper case letter, 2 number and 2 special character."></xlat>
+	</passwordComplexity>
 </settings>
 
 
