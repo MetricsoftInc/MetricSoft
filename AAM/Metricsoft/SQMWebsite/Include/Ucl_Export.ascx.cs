@@ -976,7 +976,8 @@ namespace SQM.Website
                 string strCorrectiveAction;
                 string strResponsiblePerson;
                 string strDueDate;
-               
+                string XLAT_LANGUAGE = "en";
+                bool isRecordable;
 
                 ICell cellNumeric;
                 ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
@@ -1206,10 +1207,23 @@ namespace SQM.Website
 
                         try
                         {
+                          
                             //section for Recordable data.
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 62); // Recordable data.
+                            isRecordable = (from II in entities.INCFORM_INJURYILLNESS
+                                            where II.INCIDENT_ID == incident.INCIDENT_ID
+                                            select II.RECORDABLE).First();
 
-                            if (strEmployeeDate != null)
+                            //condition for check if recordable is true or false.
+                            if (isRecordable == true)
+                            {
+                                strAnswerValue = "Yes";
+                            }
+                            else
+                            {
+                                strAnswerValue = "No";
+                            }
+
+                            if (strAnswerValue != null)
                             {
                                 row1.CreateCell(5).SetCellValue(strAnswerValue);
                                 row1.Cells[5].CellStyle.WrapText = true;
@@ -1219,20 +1233,18 @@ namespace SQM.Website
                         }
                         catch { row1.CreateCell(5).SetCellValue(""); }
 
-
-
                         try
                         {
                             //section for Injury Type data.
-                            string answerText = null;
-                            //var strAnswerValue = new PSsqmEntities();
-                            strAnswerValue = (from a in entities.INCIDENT_ANSWER
-                                          where a.INCIDENT_ID == incident.INCIDENT_ID &&
-                                          a.INCIDENT_QUESTION_ID == 12 
-                                          select a.ANSWER_VALUE).FirstOrDefault();
-                            
+                            // Injury Type data.
 
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 12); // Injury Type data.
+                            string XLAT_GROUP = "INJURY_TYPE";
+
+                            strAnswerValue = (from II in entities.INCFORM_INJURYILLNESS
+                                              join XT in entities.XLAT on II.INJURY_TYPE equals XT.XLAT_CODE
+                                              where II.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && XT.XLAT_LANGUAGE == XLAT_LANGUAGE
+                                              select XT.DESCRIPTION).FirstOrDefault();
+
 
                             if (strEmployeeDate != null)
                             {
@@ -1248,7 +1260,14 @@ namespace SQM.Website
                         try
                         {
                             //section for Body Part Affected data.
-                            strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 13); // Body Part Affected data.
+                            //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 13); // Body Part Affected data.
+
+                            string XLAT_GROUP = "INJURY_PART";
+
+                            strAnswerValue = (from II in entities.INCFORM_INJURYILLNESS
+                                              join XT in entities.XLAT on II.INJURY_BODY_PART equals XT.XLAT_CODE
+                                              where II.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && XT.XLAT_LANGUAGE == XLAT_LANGUAGE
+                                              select XT.DESCRIPTION).FirstOrDefault();
 
                             if (strEmployeeDate != null)
                             {
@@ -1369,7 +1388,7 @@ namespace SQM.Website
                             strAnswerValue = (from IR in entities.INCFORM_ROOT5Y
                                               join IC in entities.INCFORM_CAUSATION on IR.INCIDENT_ID equals IC.INCIDENT_ID
                                               join XT in entities.XLAT on IC.CAUSEATION_CD equals XT.XLAT_CODE
-                                              where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true && XT.XLAT_LANGUAGE == "en"
+                                              where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true && XT.XLAT_LANGUAGE == XLAT_LANGUAGE
                                               select XT.DESCRIPTION).FirstOrDefault();
                                               
                            
