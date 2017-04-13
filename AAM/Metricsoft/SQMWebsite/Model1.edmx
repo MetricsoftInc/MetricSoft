@@ -1512,6 +1512,7 @@
           <Property Name="LOCATION_LIST" Type="varchar" MaxLength="1000" />
           <Property Name="ALERT_DESC" Type="nvarchar" />
           <Property Name="COMMENTS" Type="nvarchar" />
+          <Property Name="CEO_COMMENTS" Type="varchar" MaxLength="4000" />
           <Property Name="ALERT_TYPE" Type="varchar" MaxLength="12" />
           <Property Name="CREATE_DT" Type="datetime" />
           <Property Name="CREATE_BY" Type="varchar" MaxLength="100" />
@@ -8850,6 +8851,7 @@
           <Property Type="String" Name="LOCATION_LIST" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ALERT_DESC" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CEO_COMMENTS" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ALERT_TYPE" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CREATE_DT" Precision="3" />
           <Property Type="String" Name="CREATE_BY" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -11494,6 +11496,7 @@
                 <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
                 <ScalarProperty Name="ALERT_TYPE" ColumnName="ALERT_TYPE" />
                 <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+                <ScalarProperty Name="CEO_COMMENTS" ColumnName="CEO_COMMENTS" />
                 <ScalarProperty Name="ALERT_DESC" ColumnName="ALERT_DESC" />
                 <ScalarProperty Name="LOCATION_LIST" ColumnName="LOCATION_LIST" />
                 <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
