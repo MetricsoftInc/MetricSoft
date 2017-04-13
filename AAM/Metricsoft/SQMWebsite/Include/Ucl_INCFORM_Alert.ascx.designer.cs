@@ -130,6 +130,24 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblNotifyGroup;
         
         /// <summary>
+        /// lblCeoComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCeoComments;
+        
+        /// <summary>
+        /// tbCeoComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbCeoComments;
+        
+        /// <summary>
         /// lblResponsibleGroup control.
         /// </summary>
         /// <remarks>
