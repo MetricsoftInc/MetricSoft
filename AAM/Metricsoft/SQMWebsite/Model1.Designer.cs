@@ -21573,6 +21573,30 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String CEO_COMMENTS
+        {
+            get
+            {
+                return _CEO_COMMENTS;
+            }
+            set
+            {
+                OnCEO_COMMENTSChanging(value);
+                ReportPropertyChanging("CEO_COMMENTS");
+                _CEO_COMMENTS = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CEO_COMMENTS");
+                OnCEO_COMMENTSChanged();
+            }
+        }
+        private global::System.String _CEO_COMMENTS;
+        partial void OnCEO_COMMENTSChanging(global::System.String value);
+        partial void OnCEO_COMMENTSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String ALERT_TYPE
         {
             get
