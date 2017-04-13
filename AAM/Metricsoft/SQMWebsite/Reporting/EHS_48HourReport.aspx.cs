@@ -43,7 +43,7 @@ namespace SQM.Website.Reports
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-InvestigationReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
+			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-48HourReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();
@@ -139,15 +139,17 @@ namespace SQM.Website.Reports
 					var hdrFont = new Font(headerFont.BaseFont, 18, 0, darkGrayColor);
 
 					cell = new PdfPCell { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT, VerticalAlignment = Element.ALIGN_MIDDLE };
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
-					table1.AddCell(cell);
+                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
+                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, hdrFont));
+                    table1.AddCell(cell).HorizontalAlignment=Element.ALIGN_CENTER;
 
 					var versionFont = new Font(textItalicFont.BaseFont, 8, 0, darkGrayColor);
 					cell = new PdfPCell() { Padding = 2f, PaddingBottom = 2, Border = 0 };
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
-					table1.AddCell(cell);
+                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
+                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, versionFont));
+                    table1.AddCell(cell).HorizontalAlignment = Element.ALIGN_CENTER;
 
 
 					document.Add(table1);

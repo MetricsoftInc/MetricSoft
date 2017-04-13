@@ -101,7 +101,7 @@ namespace SQM.Website.Reports
 			Response.ClearContent();
 			Response.ClearHeaders();
 			Response.ContentType = "application/pdf";
-			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-Flash Report-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
+			Response.AddHeader("Content-Disposition", "attachment; filename=Incident-12HourReport-" + SessionManager.UserContext.LocalTime.ToString("yyyy-MM-dd") + ".pdf");
 
 			Response.BinaryWrite(strS);
 			Response.End();
@@ -123,7 +123,7 @@ namespace SQM.Website.Reports
 				query = query.Replace(" ", "+");
 				string iid = EncryptionManager.Decrypt(query);
 				pageData = PopulateByIncidentId(Convert.ToDecimal(iid));
-			  }
+			}
 			else
 			{
 				return null;
@@ -192,15 +192,19 @@ namespace SQM.Website.Reports
 					var hdrFont = new Font(headerFont.BaseFont, 18, 0, darkGrayColor);
 
 					cell = new PdfPCell { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT, VerticalAlignment = Element.ALIGN_MIDDLE };
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
-					table1.AddCell(cell);
+					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
+					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, hdrFont));
+                    //cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, hdrFont));
+                    table1.AddCell(cell);
 
 					var versionFont = new Font(textItalicFont.BaseFont, 8, 0, darkGrayColor);
 					cell = new PdfPCell() { Padding = 2f, PaddingBottom = 2, Border = 0 };
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
-					cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
-					table1.AddCell(cell);
+					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
+					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, versionFont));
+                    //cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "VERSION").DESCRIPTION, versionFont));
+                    table1.AddCell(cell);
 					cell = new PdfPCell() { Padding = 2f, PaddingBottom = 2, Border = 0 };
 					cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INSTRUCTION").DESCRIPTION, labelTxtFont));
 					table1.AddCell(cell);
@@ -263,8 +267,9 @@ namespace SQM.Website.Reports
 
 					document.Close();
 				}
-				catch
+				catch(Exception Ex)
 				{
+                    Ex.Message.ToString();
 				}
 
 				return output.ToArray();
