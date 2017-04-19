@@ -22110,6 +22110,30 @@ namespace SQM.Website
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String SEVERITY_LEVEL
+        {
+            get
+            {
+                return _SEVERITY_LEVEL;
+            }
+            set
+            {
+                OnSEVERITY_LEVELChanging(value);
+                ReportPropertyChanging("SEVERITY_LEVEL");
+                _SEVERITY_LEVEL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SEVERITY_LEVEL");
+                OnSEVERITY_LEVELChanged();
+            }
+        }
+        private global::System.String _SEVERITY_LEVEL;
+        partial void OnSEVERITY_LEVELChanging(global::System.String value);
+        partial void OnSEVERITY_LEVELChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public Nullable<global::System.Decimal> STEP
         {
             get
@@ -23628,6 +23652,126 @@ namespace SQM.Website
         private global::System.Boolean _RESTRICTED_TIME;
         partial void OnRESTRICTED_TIMEChanging(global::System.Boolean value);
         partial void OnRESTRICTED_TIMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EMP_STATUS
+        {
+            get
+            {
+                return _EMP_STATUS;
+            }
+            set
+            {
+                OnEMP_STATUSChanging(value);
+                ReportPropertyChanging("EMP_STATUS");
+                _EMP_STATUS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EMP_STATUS");
+                OnEMP_STATUSChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EMP_STATUS;
+        partial void OnEMP_STATUSChanging(Nullable<global::System.Int32> value);
+        partial void OnEMP_STATUSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ASSOCIATE_MONTHS
+        {
+            get
+            {
+                return _ASSOCIATE_MONTHS;
+            }
+            set
+            {
+                OnASSOCIATE_MONTHSChanging(value);
+                ReportPropertyChanging("ASSOCIATE_MONTHS");
+                _ASSOCIATE_MONTHS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ASSOCIATE_MONTHS");
+                OnASSOCIATE_MONTHSChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ASSOCIATE_MONTHS;
+        partial void OnASSOCIATE_MONTHSChanging(Nullable<global::System.Int32> value);
+        partial void OnASSOCIATE_MONTHSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ASSOCIATE_YEAR
+        {
+            get
+            {
+                return _ASSOCIATE_YEAR;
+            }
+            set
+            {
+                OnASSOCIATE_YEARChanging(value);
+                ReportPropertyChanging("ASSOCIATE_YEAR");
+                _ASSOCIATE_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ASSOCIATE_YEAR");
+                OnASSOCIATE_YEARChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ASSOCIATE_YEAR;
+        partial void OnASSOCIATE_YEARChanging(Nullable<global::System.Int32> value);
+        partial void OnASSOCIATE_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> HIRE_MONTHS
+        {
+            get
+            {
+                return _HIRE_MONTHS;
+            }
+            set
+            {
+                OnHIRE_MONTHSChanging(value);
+                ReportPropertyChanging("HIRE_MONTHS");
+                _HIRE_MONTHS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HIRE_MONTHS");
+                OnHIRE_MONTHSChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _HIRE_MONTHS;
+        partial void OnHIRE_MONTHSChanging(Nullable<global::System.Int32> value);
+        partial void OnHIRE_MONTHSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> HIRE_YEAR
+        {
+            get
+            {
+                return _HIRE_YEAR;
+            }
+            set
+            {
+                OnHIRE_YEARChanging(value);
+                ReportPropertyChanging("HIRE_YEAR");
+                _HIRE_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HIRE_YEAR");
+                OnHIRE_YEARChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _HIRE_YEAR;
+        partial void OnHIRE_YEARChanging(Nullable<global::System.Int32> value);
+        partial void OnHIRE_YEARChanged();
 
         #endregion
 

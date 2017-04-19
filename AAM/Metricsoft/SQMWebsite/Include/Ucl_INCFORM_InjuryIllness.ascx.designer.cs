@@ -580,6 +580,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoInside;
         
         /// <summary>
+        /// belowMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl belowMAX;
+        
+        /// <summary>
         /// lbDirectSupvSM control.
         /// </summary>
         /// <remarks>
@@ -605,6 +614,42 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdoDirectSupv;
+        
+        /// <summary>
+        /// aboveMAX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl aboveMAX;
+        
+        /// <summary>
+        /// lblEmpStatusSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpStatusSM;
+        
+        /// <summary>
+        /// lblEmpStatusXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmpStatusXS;
+        
+        /// <summary>
+        /// rdoEmpStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rdoEmpStatus;
         
         /// <summary>
         /// divJobCode control.
@@ -769,6 +814,15 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.RadioButtonList rdoTrainingProvided;
         
         /// <summary>
+        /// divJobTenure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divJobTenure;
+        
+        /// <summary>
         /// lbTaskYearsSM control.
         /// </summary>
         /// <remarks>
@@ -830,6 +884,78 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDropDownList rddlEmploymentTenure;
+        
+        /// <summary>
+        /// divAssociateDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAssociateDate;
+        
+        /// <summary>
+        /// lbAssociateDateSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbAssociateDateSM;
+        
+        /// <summary>
+        /// lbAssociateDateXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbAssociateDateXS;
+        
+        /// <summary>
+        /// radAssociateSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMonthYearPicker radAssociateSelect;
+        
+        /// <summary>
+        /// divHireDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divHireDate;
+        
+        /// <summary>
+        /// lbHireDateSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbHireDateSM;
+        
+        /// <summary>
+        /// lbHireDateXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbHireDateXS;
+        
+        /// <summary>
+        /// radHireSelect control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadMonthYearPicker radHireSelect;
         
         /// <summary>
         /// lbInjuryTypeSM control.

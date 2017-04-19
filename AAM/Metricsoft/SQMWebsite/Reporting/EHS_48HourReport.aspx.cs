@@ -12,8 +12,8 @@ namespace SQM.Website.Reports
 
 	public partial class EHS_48HourReport : System.Web.UI.Page
 	{
-
-		static float baseWidth = 540f;
+        int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        static float baseWidth = 540f;
 		static float mult = 1.0f;
 
 		public List<XLAT> reportXLAT
@@ -142,14 +142,14 @@ namespace SQM.Website.Reports
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
                     cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, hdrFont));
-                    table1.AddCell(cell).HorizontalAlignment=Element.ALIGN_CENTER;
+                    table1.AddCell(cell);
 
 					var versionFont = new Font(textItalicFont.BaseFont, 8, 0, darkGrayColor);
 					cell = new PdfPCell() { Padding = 2f, PaddingBottom = 2, Border = 0 };
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
                     cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, versionFont));
-                    table1.AddCell(cell).HorizontalAlignment = Element.ALIGN_CENTER;
+                    table1.AddCell(cell);
 
 
 					document.Add(table1);

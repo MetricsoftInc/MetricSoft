@@ -28,7 +28,7 @@ namespace SQM.Website.Reports
 		public string bodyPart;
 		public string specificBodyPart;
 		public string severity;
-
+        public string severityLevel;
 		public List<byte[]> photoData;
 		public List<string> photoCaptions;
 
@@ -61,7 +61,8 @@ namespace SQM.Website.Reports
 			bodyPart = "";
 			specificBodyPart = "";
 			severity = "N/A";
-			incident = null;
+            severityLevel = "N/A";
+            incident = null;
 			answerList = new List<INCIDENT_ANSWER>();
 			containList = new List<INCFORM_CONTAIN>();
 			root5YList = new List<INCFORM_ROOT5Y>();
@@ -75,7 +76,8 @@ namespace SQM.Website.Reports
 
 	public partial class EHS_12HourReport : System.Web.UI.Page
 	{
-		public List<XLAT> reportXLAT
+        int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        public List<XLAT> reportXLAT
 		{
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
 			set { ViewState["ReportXLAT"] = value; }
@@ -257,7 +259,7 @@ namespace SQM.Website.Reports
 					document.Add(IDSection(pageData));
 					document.Add(HeaderSection(pageData));
 					document.Add(IncidentSection(pageData));
-					document.Add(ContainmentSection(pageData));
+					//document.Add(ContainmentSection(pageData));
 					if (pageData.incident.INCFORM_INJURYILLNESS != null)
 					{
 						document.Add(ProcedureSection(pageData));
@@ -334,7 +336,14 @@ namespace SQM.Website.Reports
 			tableHeader.AddCell(cell);
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
-			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_TENURE").DESCRIPTION_SHORT, detailTxtBoldFont));
+            if (pageData.incident.INCIDENT_ID > maxINCIDENT)
+            {
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "HIRE_DATE").DESCRIPTION_SHORT, detailTxtBoldFont));
+            }
+            else {
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_TENURE").DESCRIPTION_SHORT, detailTxtBoldFont));
+            }
+            
 			cell.AddElement(new Paragraph(pageData.jobTenure, detailTxtFont));
 			tableHeader.AddCell(cell);
 			return tableHeader;
@@ -386,7 +395,9 @@ namespace SQM.Website.Reports
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_SEVERITY").DESCRIPTION, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.severity, detailTxtFont));
-			tableIncident.AddCell(cell);
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "SEVERITY_LEVEL").DESCRIPTION, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.severityLevel, detailTxtFont));
+            tableIncident.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
@@ -613,11 +624,39 @@ namespace SQM.Website.Reports
 						}
 						catch { }
 
-						d.jobTenure = SQMBasePage.GetXLAT(reportXLAT, "INJURY_TENURE",d.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION;
-						d.injuryType = SQMBasePage.GetXLAT(reportXLAT, "INJURY_TYPE", d.incident.INCFORM_INJURYILLNESS.INJURY_TYPE).DESCRIPTION;
+                        if (d.incident.INCIDENT_ID > maxINCIDENT)
+                        {
+                            if (d.incident.INCFORM_INJURYILLNESS.HIRE_MONTHS != null)
+                            {
+                                d.jobTenure = ((d.incident.INCFORM_INJURYILLNESS.HIRE_MONTHS) + "/" + (d.incident.INCFORM_INJURYILLNESS.HIRE_YEAR)).ToString();
+                            }
+                            else
+                            {
+                                d.jobTenure = string.Empty;
+                            }
+
+                            if (d.incident.INCFORM_INJURYILLNESS.EMP_STATUS == 0)
+                            {
+                                d.employeeType = "Contractor";
+                            }
+                            else if (d.incident.INCFORM_INJURYILLNESS.EMP_STATUS == 1)
+                            {
+                                d.employeeType = "Employee";
+                            }
+                            else {
+                                d.employeeType = "Temporary";
+                            }
+                        }
+                        else
+                        {
+                            d.jobTenure = SQMBasePage.GetXLAT(reportXLAT, "INJURY_TENURE",d.incident.INCFORM_INJURYILLNESS.JOB_TENURE).DESCRIPTION;
+                            d.employeeType = d.incident.INCFORM_INJURYILLNESS.COMPANY_SUPERVISED ? "Employee" : "Non-Employee";  // td - make XLAT
+                        }
+
+                        d.injuryType = SQMBasePage.GetXLAT(reportXLAT, "INJURY_TYPE", d.incident.INCFORM_INJURYILLNESS.INJURY_TYPE).DESCRIPTION;
 						d.bodyPart = SQMBasePage.GetXLAT(reportXLAT, "INJURY_PART", d.incident.INCFORM_INJURYILLNESS.INJURY_BODY_PART).DESCRIPTION_SHORT;
 						d.specificBodyPart = SQMBasePage.GetXLAT(reportXLAT, "INJURY_PART", d.incident.INCFORM_INJURYILLNESS.INJURY_BODY_PART).DESCRIPTION;
-						d.employeeType = d.incident.INCFORM_INJURYILLNESS.COMPANY_SUPERVISED ? "Employee" : "Non-Employee";  // td - make XLAT
+						
 
 						if ((bool)d.incident.INCFORM_INJURYILLNESS.FIRST_AID)
 						{
@@ -635,7 +674,9 @@ namespace SQM.Website.Reports
 								d.severity = SQMBasePage.GetXLAT(reportXLAT, "INCIDENT_SEVERITY", "FATALITY").DESCRIPTION;
 							}
 						}
-					}
+                        decimal id = d.incident.INCFORM_INJURYILLNESS.INCIDENT_ID;
+                        d.severityLevel= (from i in entities.INCFORM_APPROVAL where i.INCIDENT_ID == id select i.SEVERITY_LEVEL).First();
+                    }
 
 					// Containment
 					foreach (INCFORM_CONTAIN cc in EHSIncidentMgr.GetContainmentList(iid, null, false))

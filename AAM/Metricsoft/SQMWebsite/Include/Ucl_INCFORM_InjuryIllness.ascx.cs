@@ -13,9 +13,10 @@ using System.Threading;
 
 namespace SQM.Website
 {
-	public partial class Ucl_INCFORM_InjuryIllness : System.Web.UI.UserControl
+    public partial class Ucl_INCFORM_InjuryIllness : System.Web.UI.UserControl
 	{
-		const Int32 MaxTextLength = 4000;
+        int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        const Int32 MaxTextLength = 4000;
 
 		static List<PLANT> plantList;
 		static List<PERSON> personList;
@@ -277,7 +278,7 @@ namespace SQM.Website
 
 		public void PopulateInitialForm()
 		{
-
+           
 			entities = new PSsqmEntities();
 			decimal typeId = (IsEditContext) ? EditIncidentTypeId : SelectedTypeId;
 			INCIDENT incident = null;
@@ -286,8 +287,30 @@ namespace SQM.Website
 			string deptSelect = EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault().VALUE;
 			string addFields = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_ADD_FIELDS").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_ADD_FIELDS").FirstOrDefault().VALUE;
 
+            if (EditIncidentId > maxINCIDENT || EditIncidentId == 0)
+            {
+                belowMAX.Visible = false;
+                aboveMAX.Visible = true;
+                divJobTenure.Visible = false;
+                divEmploymentTenure.Visible = false;
+                divAssociateDate.Visible = true;
+                divHireDate.Visible = true;
+            }
+            else
+            {
+                belowMAX.Visible = true;
+                aboveMAX.Visible = false;
+                divJobTenure.Visible = true;
+                //divEmploymentTenure.Visible = true;
+                if (addFields.Contains("employment"))
+                {
+                    divEmploymentTenure.Visible = true;  
+                }
+                divAssociateDate.Visible = false;
+                divHireDate.Visible = false;
+            }
 
-			if (deptSelect.ToLower() == "text")
+            if (deptSelect.ToLower() == "text")
 			{
 				tbDepartment.Visible = true;
 				rddlDeptTest.Visible = false;
@@ -306,10 +329,16 @@ namespace SQM.Website
 			{
 				divProcedures.Visible = true;
 			}
-			if (addFields.Contains("employment"))
-			{
-				divEmploymentTenure.Visible = true;
-			}
+			//if (addFields.Contains("employment"))
+			//{
+   //             if (EditIncidentId > maxINCIDENT || EditIncidentId == 0)
+   //             {
+   //                 divEmploymentTenure.Visible = false;
+   //             }
+   //             else {
+   //                 divEmploymentTenure.Visible = true;
+   //             }
+			//}
 
 			if (IsEditContext == true)
 			{
@@ -341,7 +370,10 @@ namespace SQM.Website
 					PopulateDepartmentDropDown((decimal)incident.DETECT_PLANT_ID);
 
 					PopulateJobcodeDropDown();
-					PopulateJobTenureDropDown();
+                    if (EditIncidentId <= maxINCIDENT)
+                    {
+                        PopulateJobTenureDropDown();
+                    }
 					PopulateShiftDropDown();
 					PopulateInjuryTypeDropDown();
 					PopulateBodyPartDropDown();
@@ -385,15 +417,42 @@ namespace SQM.Website
 						rdoInside.SelectedValue = (!string.IsNullOrEmpty(injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG) && injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG.ToUpper() == "INSIDE BUILDING") ? "1" : "0";
 
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
-						rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
-						rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
+
+                        if (EditIncidentId > maxINCIDENT)
+                        {
+                            rdoEmpStatus.SelectedValue = injuryIllnessDetails.EMP_STATUS.ToString();
+                        }
+                        else {
+                            rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
+                        }
+                        rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
 						rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
 						rdoTrainingProvided.SelectedValue = (injuryIllnessDetails.TRAINING_PROVIDED == true) ? "1" : "0";
-						if (rddlJobTenure.FindItemByValue(injuryIllnessDetails.JOB_TENURE) != null)
-							rddlJobTenure.SelectedValue = injuryIllnessDetails.JOB_TENURE;
-						if (rddlEmploymentTenure.FindItemByValue(injuryIllnessDetails.EMPLOYMENT_TENURE) != null)
-							rddlEmploymentTenure.SelectedValue = injuryIllnessDetails.EMPLOYMENT_TENURE;
-						rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
+                        if (EditIncidentId > maxINCIDENT)
+                        {
+                            if (injuryIllnessDetails.ASSOCIATE_YEAR != null)
+                            {
+                                int AssociateMonth = Convert.ToInt32(injuryIllnessDetails.ASSOCIATE_MONTHS);
+                                int AssociateYear = Convert.ToInt32(injuryIllnessDetails.ASSOCIATE_YEAR);
+                                radAssociateSelect.SelectedDate = Convert.ToDateTime(AssociateMonth + "/1/" + AssociateYear);
+                            }
+                            if (injuryIllnessDetails.HIRE_YEAR != null)
+                            {
+                                int HireMonth = Convert.ToInt32(injuryIllnessDetails.HIRE_MONTHS);
+                                int HireYear = Convert.ToInt32(injuryIllnessDetails.HIRE_YEAR);
+                                radHireSelect.SelectedDate = Convert.ToDateTime(HireMonth + "/1/" + HireYear);
+                            }
+                        }
+                        else {
+                            if (rddlJobTenure.FindItemByValue(injuryIllnessDetails.JOB_TENURE) != null)
+                                rddlJobTenure.SelectedValue = injuryIllnessDetails.JOB_TENURE;
+                            if (rddlEmploymentTenure.FindItemByValue(injuryIllnessDetails.EMPLOYMENT_TENURE) != null)
+                                rddlEmploymentTenure.SelectedValue = injuryIllnessDetails.EMPLOYMENT_TENURE;
+                        }
+
+                        
+                        
+                        rdoFirstAid.SelectedValue = (injuryIllnessDetails.FIRST_AID == true) ? "1" : "0";
 						rdoRecordable.SelectedValue = (injuryIllnessDetails.RECORDABLE == true) ? "1" : "0";
 						rdoFatality.SelectedValue = (injuryIllnessDetails.FATALITY == true) ? "1" : "0";
 
@@ -438,15 +497,19 @@ namespace SQM.Website
 					lbSupervisor.Text = "";
 					tbSupervisorStatement.Text = "";
 					rdoInside.SelectedValue = "";
-					rdoDirectSupv.SelectedValue = "";
-					rdoErgConcern.SelectedValue = "";
+                    rdoDirectSupv.SelectedValue = "";
+                    rdoEmpStatus.SelectedValue = "";
+
+                    rdoErgConcern.SelectedValue = "";
 					rdoStdProcsFollowed.SelectedValue = "";
 					rdoTrainingProvided.SelectedValue = "";
 					rdoFirstAid.SelectedValue = "";
 					rdoRecordable.SelectedValue = "";
 					cbLostTime.Checked = cbRestrictedTime.Checked = false;
-					rddlJobTenure.Items.Clear();
-					rddlEmploymentTenure.Items.Clear();
+                    rddlJobTenure.Items.Clear();
+                    rddlEmploymentTenure.Items.Clear();
+                    radAssociateSelect.SelectedDate = null;
+                    radHireSelect.SelectedDate = null;
 					rddlInjuryType.Items.Clear();
 					rddlBodyPart.Items.Clear();
 					lbSupervisorLabel.Visible = false;
@@ -467,8 +530,9 @@ namespace SQM.Website
 					//rtpIncidentTime.Culture = rdpIncidentDate.Culture;
 
 					PopulateJobcodeDropDown();
-					PopulateJobTenureDropDown();
-					PopulateShiftDropDown();
+                    //PopulateJobTenureDropDown();
+
+                    PopulateShiftDropDown();
 
 					PopulateDepartmentDropDown(IncidentLocationId);
 
@@ -724,17 +788,17 @@ namespace SQM.Website
 			rddlJobCode.Items.Insert(0, new DropDownListItem("", ""));
 		}
 
-		void PopulateJobTenureDropDown()
-		{
-			bool categorize = EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault() != null && EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault().VALUE.ToUpper() == "Y" ? true : false;
-			List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[2] { "INJURY_TENURE", "EMPLOYMENT_TENURE" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
-			
-			SQMBasePage.SetCategorizedDropDownItems(rddlJobTenure, xlatList.Where(l => l.XLAT_GROUP == "INJURY_TENURE").ToList(), categorize);
+        void PopulateJobTenureDropDown()
+        {
+            bool categorize = EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault() != null && EHSSettings.Where(s => s.SETTING_CD == "INJURYPART_CATEGORIZE").FirstOrDefault().VALUE.ToUpper() == "Y" ? true : false;
+            List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[2] { "INJURY_TENURE", "EMPLOYMENT_TENURE" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
 
-			SQMBasePage.SetCategorizedDropDownItems(rddlEmploymentTenure, xlatList.Where(l => l.XLAT_GROUP == "EMPLOYMENT_TENURE").ToList(), categorize);
-		}
+            SQMBasePage.SetCategorizedDropDownItems(rddlJobTenure, xlatList.Where(l => l.XLAT_GROUP == "INJURY_TENURE").ToList(), categorize);
 
-		void PopulateDepartmentDropDown(decimal plantId)
+            SQMBasePage.SetCategorizedDropDownItems(rddlEmploymentTenure, xlatList.Where(l => l.XLAT_GROUP == "EMPLOYMENT_TENURE").ToList(), categorize);
+        }
+
+        void PopulateDepartmentDropDown(decimal plantId)
 		{
 			rddlDeptTest.Items.Clear();
 
@@ -1529,10 +1593,40 @@ namespace SQM.Website
 			else
 				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside Building";
 
-			if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
-				newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+            if (EditIncidentId > maxINCIDENT)
+            {
 
-			if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
+                if (!String.IsNullOrEmpty(rdoEmpStatus.SelectedValue))
+                    newInjryIllnessDetails.EMP_STATUS = (Convert.ToInt32(rdoEmpStatus.SelectedValue));
+                if (radAssociateSelect.SelectedDate != null)
+                {
+                    string AssociateDate = radAssociateSelect.SelectedDate.ToString();
+                    var strMonthYear = AssociateDate.Split('/');
+                    newInjryIllnessDetails.ASSOCIATE_MONTHS = Convert.ToInt32(strMonthYear[0]);
+                    var AssociateYear = strMonthYear[2].Split(' ');
+                    newInjryIllnessDetails.ASSOCIATE_YEAR = Convert.ToInt32(AssociateYear[0]);
+                }
+
+                if (radHireSelect.SelectedDate != null)
+                {
+                    string HireDate = radHireSelect.SelectedDate.ToString();
+                    var strMonthYear = HireDate.Split('/');
+                    newInjryIllnessDetails.HIRE_MONTHS = Convert.ToInt32(strMonthYear[0]);
+                    var HireYear = strMonthYear[2].Split(' ');
+                    newInjryIllnessDetails.HIRE_YEAR = Convert.ToInt32(HireYear[0]);
+                }
+            }
+            else {
+                if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
+                    newInjryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+                if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
+                    newInjryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
+                if (!string.IsNullOrEmpty(rddlEmploymentTenure.SelectedValue))
+                    newInjryIllnessDetails.EMPLOYMENT_TENURE = rddlEmploymentTenure.SelectedValue;
+            }
+
+
+            if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
 				newInjryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
 
 			if (!String.IsNullOrEmpty(rdoStdProcsFollowed.SelectedValue))
@@ -1541,12 +1635,7 @@ namespace SQM.Website
 			if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
 				newInjryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
 
-			if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
-				newInjryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
-			if (!string.IsNullOrEmpty(rddlEmploymentTenure.SelectedValue))
-				newInjryIllnessDetails.EMPLOYMENT_TENURE = rddlEmploymentTenure.SelectedValue;
-
-			if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
+            if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
 				newInjryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
 
 			if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))
@@ -1724,10 +1813,51 @@ namespace SQM.Website
 				else
 					injuryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside Building";
 
-				if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
-					injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+                if (EditIncidentId > maxINCIDENT)
+                {
+                    if (!String.IsNullOrEmpty(rdoEmpStatus.SelectedValue))
+                        injuryIllnessDetails.EMP_STATUS = (Convert.ToInt32(rdoEmpStatus.SelectedValue));
+                    if (radAssociateSelect.SelectedDate != null)
+                    {
+                        string AssociateDate = radAssociateSelect.SelectedDate.ToString();
+                        var strMonthYear = AssociateDate.Split('/');
+                        injuryIllnessDetails.ASSOCIATE_MONTHS = Convert.ToInt32(strMonthYear[0]);
+                        var AssociateYear = strMonthYear[2].Split(' ');
+                        injuryIllnessDetails.ASSOCIATE_YEAR = Convert.ToInt32(AssociateYear[0]);
+                    }
+                    else
+                    {
+                        injuryIllnessDetails.ASSOCIATE_MONTHS = null;
+                        injuryIllnessDetails.ASSOCIATE_YEAR = null;
+                    }
 
-				if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
+                    if (radHireSelect.SelectedDate != null)
+                    {
+                        string HireDate = radHireSelect.SelectedDate.ToString();
+                        var strMonthYear = HireDate.Split('/');
+                        injuryIllnessDetails.HIRE_MONTHS = Convert.ToInt32(strMonthYear[0]);
+                        var HireYear = strMonthYear[2].Split(' ');
+                        injuryIllnessDetails.HIRE_YEAR = Convert.ToInt32(HireYear[0]);
+                    }
+                    else
+                    {
+                        injuryIllnessDetails.HIRE_MONTHS = null;
+                        injuryIllnessDetails.HIRE_YEAR = null;
+                    }
+                }
+                else {
+                    if (!String.IsNullOrEmpty(rdoDirectSupv.SelectedValue))
+                        injuryIllnessDetails.COMPANY_SUPERVISED = Convert.ToBoolean((Convert.ToInt32(rdoDirectSupv.SelectedValue)));
+                    if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
+                        injuryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
+                    if (!string.IsNullOrEmpty(rddlEmploymentTenure.SelectedValue))
+                        injuryIllnessDetails.EMPLOYMENT_TENURE = rddlEmploymentTenure.SelectedValue;
+                }
+
+
+
+
+                if (!String.IsNullOrEmpty(rdoErgConcern.SelectedValue))
 					injuryIllnessDetails.ERGONOMIC_CONCERN = Convert.ToBoolean((Convert.ToInt32(rdoErgConcern.SelectedValue)));
 
 				if (!String.IsNullOrEmpty(rdoStdProcsFollowed.SelectedValue))
@@ -1736,12 +1866,9 @@ namespace SQM.Website
 				if (!String.IsNullOrEmpty(rdoTrainingProvided.SelectedValue))
 					injuryIllnessDetails.TRAINING_PROVIDED = Convert.ToBoolean((Convert.ToInt32(rdoTrainingProvided.SelectedValue)));
 
-				if (!string.IsNullOrEmpty(rddlJobTenure.SelectedValue))
-					injuryIllnessDetails.JOB_TENURE = rddlJobTenure.SelectedValue;
-				if (!string.IsNullOrEmpty(rddlEmploymentTenure.SelectedValue))
-					injuryIllnessDetails.EMPLOYMENT_TENURE = rddlEmploymentTenure.SelectedValue;
+                
 
-				if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
+                if (!String.IsNullOrEmpty(rdoFirstAid.SelectedValue))
 					injuryIllnessDetails.FIRST_AID = Convert.ToBoolean((Convert.ToInt32(rdoFirstAid.SelectedValue)));
 
 				if (!String.IsNullOrEmpty(rdoRecordable.SelectedValue))

@@ -491,7 +491,7 @@
 					</asp:RadioButtonList></span>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="belowMAX" runat="server" visible="false">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>
 					<asp:Label ID="lbDirectSupvSM" runat="server" Text="Directly Supervised by AAM" meta:resourcekey="lbDirectSupvResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
@@ -509,6 +509,26 @@
 					</asp:RadioButtonList></span>
 			</div>
 		</div>
+        <div class="row" id="aboveMAX" runat="server" visible="false">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
+				<span>
+					<asp:Label ID="lblEmpStatusSM" runat="server" Text="Employee Status" meta:resourcekey="lblEmployeeSatus"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more">
+				<br />
+				<span>
+					<asp:Label ID="lblEmpStatusXS" runat="server" Text="Employee Status" meta:resourcekey="lblEmployeeSatus"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 greyControlColX">
+				<span>
+					<asp:RadioButtonList ID="rdoEmpStatus" CssClass="radioListHorizontal" RepeatColumns="3" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
+						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Employee %>"></asp:ListItem>
+						<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, Contractor %>"></asp:ListItem>
+                        <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, Temporary %>"></asp:ListItem>
+					</asp:RadioButtonList></span>
+			</div>
+		</div>
+
 		<div class="row" id="divJobCode" runat="server" visible="false">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" >
 				<span>
@@ -593,7 +613,7 @@
 					</asp:RadioButtonList></span>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="divJobTenure" runat="server" visible="false">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
 				<span>
 					<asp:Label ID="lbTaskYearsSM" runat="server" Text="How long has associate been doing this job/specific task ?" meta:resourcekey="lbTaskYearsResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
@@ -612,7 +632,7 @@
 				<span>
 					<asp:Label ID="lbEmploymentTenureSM" runat="server" Text="How long has associate been employed ?" meta:resourcekey="lbEmploymentTenureResource1"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
 			</div>
-			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;">
+			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;"> 
 				<br />
 				<span>
 					<asp:Label ID="lbEmploymentTenureXS" runat="server" Text="How long has associate been employed ?" meta:resourcekey="lbEmploymentTenureResource1"></asp:Label><span class="requiredCloseStar">*</span></span>
@@ -621,6 +641,35 @@
 				<telerik:RadDropDownList ID="rddlEmploymentTenure" Skin="Metro" ZIndex="9000" ExpandDirection="Up"  Width="278px" DropDownHeight="250px" runat="server" OnClientSelectedIndexChanged="ChangeUpdate"></telerik:RadDropDownList>
 			</div>
 		</div>
+        <div class="row" id="divAssociateDate" runat="server" visible="false">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
+				<span>
+					<asp:Label ID="lbAssociateDateSM" runat="server" Text="Date Associate Began Doing This Task ?" meta:resourcekey="lbAssociateDate"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;"> 
+				<br />
+				<span>
+					<asp:Label ID="lbAssociateDateXS" runat="server" Text="Date Associate Began Doing This Task?" meta:resourcekey="lbAssociateDate"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 40px;">
+				<telerik:RadMonthYearPicker ID="radAssociateSelect" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+			</div>
+		</div>
+        <div class="row" id="divHireDate" runat="server" visible="false">
+			<div class="col-sm-4 hidden-xs text-left tanLabelCol" style="height: 40px;">
+				<span>
+					<asp:Label ID="lbHireDateSM" runat="server" Text="Hire Date" meta:resourcekey="lbHireDate"></asp:Label><span class="requiredCloseStarFloat">*</span></span>
+			</div>
+			<div class="col-xs-12 visible-xs text-left-more" style="height: 40px;"> 
+				<br />
+				<span>
+					<asp:Label ID="lbHireDateXS" runat="server" Text="Hire Date" meta:resourcekey="lbHireDate"></asp:Label><span class="requiredCloseStar">*</span></span>
+			</div>
+			<div class="col-xs-12 col-sm-8 text-left greyControlColX" style="height: 40px;">
+				<telerik:RadMonthYearPicker ID="radHireSelect" runat="server" CssClass="textStd" Width=165px Skin="Metro"><dateinput dateformat="M/d/yyyy" displaydateformat="M/d/yyyy" labelwidth="64px" width=""><emptymessagestyle resize="None" /><readonlystyle resize="None" /><focusedstyle resize="None" /><disabledstyle resize="None" /><invalidstyle resize="None" /><hoveredstyle resize="None" /><enabledstyle resize="None" /></dateinput><datepopupbutton cssclass="" hoverimageurl="" imageurl="" /><monthyearnavigationsettings dateisoutofrangemessage="<%$ Resources:LocalizedText, Cancel %>"></monthyearnavigationsettings></telerik:RadMonthYearPicker>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="col-sm-4 hidden-xs text-left tanLabelCol">
 				<span>

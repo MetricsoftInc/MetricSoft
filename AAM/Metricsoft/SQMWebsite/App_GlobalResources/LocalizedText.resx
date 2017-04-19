@@ -972,4 +972,13 @@
   <data name="IncidentReportIncomplete" xml:space="preserve">
     <value>This Incident does not have sufficient information or steps completed to be approved.</value>
   </data>
+  <data name="Contractor" xml:space="preserve">
+    <value>Contractor</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="Temporary" xml:space="preserve">
+    <value>Temporary</value>
+  </data>
 </root>
