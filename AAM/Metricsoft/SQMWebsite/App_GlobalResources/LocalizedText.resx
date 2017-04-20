@@ -976,9 +976,9 @@
     <value>Contractor</value>
   </data>
   <data name="Employee" xml:space="preserve">
-    <value>Employee</value>
+    <value>Permanent Employee</value>
   </data>
   <data name="Temporary" xml:space="preserve">
-    <value>Temporary</value>
+    <value>Temporary Employee</value>
   </data>
 </root>

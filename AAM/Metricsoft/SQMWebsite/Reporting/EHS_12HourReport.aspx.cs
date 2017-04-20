@@ -240,10 +240,10 @@ namespace SQM.Website.Reports
                                 if (i == 0) {
                                     if (isVideoAvailable == true)
                                     {
-                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is vedio available? Yes)", detailTxtBoldFont)));
+                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is video available? Yes)", detailTxtBoldFont)));
                                     }
                                     else {
-                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is vedio available? No)", detailTxtBoldFont)));
+                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is video available? No)", detailTxtBoldFont)));
                                     }
                                    
                                 }
