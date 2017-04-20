@@ -77,6 +77,7 @@ namespace SQM.Website.Reports
 	public partial class EHS_12HourReport : System.Web.UI.Page
 	{
         int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        bool isVideoAvailable = false;
         public List<XLAT> reportXLAT
 		{
 			get { return ViewState["ReportXLAT"] == null ? null : (List<XLAT>)ViewState["ReportXLAT"]; }
@@ -113,7 +114,8 @@ namespace SQM.Website.Reports
 
 		private byte[] BuildPdf()
 		{
-			reportXLAT = SQMBasePage.SelectXLATList(new string[10] { "HS_5PHASE", "HS_L2REPORT", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE", "INJURY_PART", "INJURY_TYPE","INCIDENT_SEVERITY", "INCIDENT_APPROVALS" }, 1);
+            isVideoAvailable = false;
+            reportXLAT = SQMBasePage.SelectXLATList(new string[10] { "HS_5PHASE", "HS_L2REPORT", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE", "INJURY_PART", "INJURY_TYPE","INCIDENT_SEVERITY", "INCIDENT_APPROVALS" }, 1);
 
 			AlertData pageData;
 
@@ -229,13 +231,23 @@ namespace SQM.Website.Reports
 						if (pageData.photoData != null && pageData.photoData.Count() > 0)
 						{
 							table4.AddCell(new PdfPCell(new Phrase("Photos", detailHdrFont)) { Padding = 5f, Border = 0, Colspan = 3 });
-							table4.SpacingBefore = 5f;
-							var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
+                            table4.SpacingBefore = 5f;
+                            var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
 
 							int i = 0;
 							for (i = 0; i < pageData.photoData.Count; i++)
 							{
-								var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
+                                if (i == 0) {
+                                    if (isVideoAvailable == true)
+                                    {
+                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is vedio available? Yes)", detailTxtBoldFont)));
+                                    }
+                                    else {
+                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is vedio available? No)", detailTxtBoldFont)));
+                                    }
+                                   
+                                }
+                                var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
 
 								iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
 								//photo.ScaleToFit(176f, 132f);
@@ -709,6 +721,12 @@ namespace SQM.Website.Reports
 						d.actionList.Add(ac);
 					}
 
+                    foreach (var v in entities.ATTACHMENT) {
+                        if ( v.RECORD_ID == iid && (v.FILE_NAME.ToLower().Contains(".mp4") || v.FILE_NAME.ToLower().Contains(".MOV"))) {
+                            isVideoAvailable = true;
+                            break;
+                        }
+                    }
 					var files = (from a in entities.ATTACHMENT
 								 where
 									(a.RECORD_ID == iid && a.RECORD_TYPE == 40 && a.DISPLAY_TYPE > 0) &&
