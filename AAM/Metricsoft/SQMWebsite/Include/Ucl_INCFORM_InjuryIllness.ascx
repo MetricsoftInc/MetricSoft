@@ -522,9 +522,9 @@
 			<div class="col-xs-12 col-sm-8 greyControlColX">
 				<span>
 					<asp:RadioButtonList ID="rdoEmpStatus" CssClass="radioListHorizontal" RepeatColumns="3" RepeatDirection="Horizontal" runat="server" onclick="ChangeUpdate()">
-						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText,  Employee %>"></asp:ListItem>
+						<asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Employee %>"></asp:ListItem>
 						<asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, Contractor %>"></asp:ListItem>
-                        <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, Temporary  %>"></asp:ListItem>
+                        <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, Temporary %>"></asp:ListItem>
 					</asp:RadioButtonList></span>
 			</div>
 		</div>

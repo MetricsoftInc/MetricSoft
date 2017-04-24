@@ -85,6 +85,96 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Repeater rptApprovals;
         
         /// <summary>
+        /// pnlSeverityDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSeverityDescription;
+        
+        /// <summary>
+        /// lblSeverityLevel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSeverityLevel;
+        
+        /// <summary>
+        /// lblSeverityLevelDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSeverityLevelDescription;
+        
+        /// <summary>
+        /// pnlSeverity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSeverity;
+        
+        /// <summary>
+        /// lbApproverSeverityLevel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbApproverSeverityLevel;
+        
+        /// <summary>
+        /// chkSeverityLevel00 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSeverityLevel00;
+        
+        /// <summary>
+        /// chkSeverityLevel01 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSeverityLevel01;
+        
+        /// <summary>
+        /// chkSeverityLevel02 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSeverityLevel02;
+        
+        /// <summary>
+        /// chkSeverityLevel03 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSeverityLevel03;
+        
+        /// <summary>
+        /// chkSeverityLevel04 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkSeverityLevel04;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

@@ -149,10 +149,24 @@ namespace SQM.Website.Reports
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
                     //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
                     cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, versionFont));
+                    cell.Colspan = 2;
                     table1.AddCell(cell);
 
+                    PdfPTable plantTable = new PdfPTable(3);
+                    cell = new PdfPCell() { Padding = 1f, Border = 0 };
+                    cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation), labelTxtFont));
+                    plantTable.AddCell(cell);
+                    cell = new PdfPCell() { Padding = 2f, Border = 0 };
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INCIDENT_OCCUR").DESCRIPTION_SHORT, detailHdrFont));
+                    cell.AddElement(new Paragraph(string.Format(pageData.incidentType + " - Incident ID: {0}", pageData.incidentNumber), detailTxtFont));
+                    plantTable.AddCell(cell);
+                    cell = new PdfPCell() { Padding = 2f, Border = 0 };
+                    cell.AddElement(new Paragraph("Date", detailTxtBoldFont));
+                    cell.AddElement(new Paragraph(pageData.incidentDate, detailTxtFont));
+                    plantTable.AddCell(cell);
 
-					document.Add(table1);
+                    document.Add(table1);
+                    document.Add(plantTable);
 					document.Add(ReviewSection(pageData));
 					document.Add(ContainmentSection(pageData));
 					document.Add(CauseSection(pageData));

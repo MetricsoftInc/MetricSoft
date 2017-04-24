@@ -238,14 +238,7 @@ namespace SQM.Website.Reports
 							for (i = 0; i < pageData.photoData.Count; i++)
 							{
                                 if (i == 0) {
-                                    if (isVideoAvailable == true)
-                                    {
-                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is video available? Yes)", detailTxtBoldFont)));
-                                    }
-                                    else {
-                                        table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo | Is video available? No)", detailTxtBoldFont)));
-                                    }
-                                   
+                                   table4.AddCell(new PdfPCell(new Phrase("(Choose 1 photo)", detailTxtBoldFont)));
                                 }
                                 var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
 
@@ -263,7 +256,15 @@ namespace SQM.Website.Reports
 							for (int j = 0; j < 3 - currentCol; j++)
 								table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
 						}
-					}
+                        if (isVideoAvailable == true)
+                        {
+                            table4.AddCell(new PdfPCell(new Phrase("(Is video available? Yes)", detailTxtBoldFont)));
+                        }
+                        else
+                        {
+                            table4.AddCell(new PdfPCell(new Phrase("(Is video available? No)", detailTxtBoldFont)));
+                        }
+                    }
 					catch { }
 
 					document.Add(table1);
@@ -653,10 +654,10 @@ namespace SQM.Website.Reports
                             }
                             else if (d.incident.INCFORM_INJURYILLNESS.EMP_STATUS == 1)
                             {
-                                d.employeeType = "Employee";
+                                d.employeeType = "Permanent Employee";
                             }
                             else {
-                                d.employeeType = "Temporary";
+                                d.employeeType = "Temporary Employee";
                             }
                         }
                         else

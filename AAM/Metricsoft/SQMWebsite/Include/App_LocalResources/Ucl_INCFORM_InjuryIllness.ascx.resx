@@ -201,6 +201,9 @@
   <data name="lbTrainingProvidedResource1.Text" xml:space="preserve">
     <value>Was Training for this Task Provided?</value>
   </data>
+  <data name="lblEmployeeSatus.Text" xml:space="preserve">
+    <value>Employee Status</value>
+  </data>
   <data name="lbWitnessColResource1.Text" xml:space="preserve">
     <value>Witness </value>
   </data>

@@ -502,15 +502,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contractor.
-        /// </summary>
-        internal static string Contractor {
-            get {
-                return ResourceManager.GetString("Contractor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Final Corrective Action.
         /// </summary>
         internal static string CorrectiveAction {
@@ -808,15 +799,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Permanent Employee.
-        /// </summary>
-        internal static string Employee {
-            get {
-                return ResourceManager.GetString("Employee", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Energy input.
         /// </summary>
         internal static string EnergyInput {
@@ -1033,6 +1015,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (First Aid) small injury requiring on-site treatment e.g. plaster, bandage or cold compress..
+        /// </summary>
+        internal static string FirstAid {
+            get {
+                return ResourceManager.GetString("FirstAid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From.
         /// </summary>
         internal static string From {
@@ -1236,6 +1227,42 @@ namespace Resources {
         internal static string KeyWordSearchDesc {
             get {
                 return ResourceManager.GetString("KeyWordSearchDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L1 - (Minor) Cut &lt; 10 stitches, strain, bruise, bone crack, dislocation requiring outside treatment..
+        /// </summary>
+        internal static string L1_Minor {
+            get {
+                return ResourceManager.GetString("L1_Minor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L2 - (Significant) Cuts requiring 10 or more stitches, simple fracture, 2nd degree burn ..
+        /// </summary>
+        internal static string L2_Significant {
+            get {
+                return ResourceManager.GetString("L2_Significant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L3 - (Severe) Any amputation, open fracture, loss of function, 3rd degree burn..
+        /// </summary>
+        internal static string L3_Severe {
+            get {
+                return ResourceManager.GetString("L3_Severe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L4 - (Major) Fatality or life changing disability..
+        /// </summary>
+        internal static string L4_Major {
+            get {
+                return ResourceManager.GetString("L4_Major", resourceCulture);
             }
         }
         
@@ -2181,15 +2208,6 @@ namespace Resources {
         internal static string TaskUpdateConfirm {
             get {
                 return ResourceManager.GetString("TaskUpdateConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Temporary Employee.
-        /// </summary>
-        internal static string Temporary {
-            get {
-                return ResourceManager.GetString("Temporary", resourceCulture);
             }
         }
         

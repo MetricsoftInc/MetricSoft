@@ -11,8 +11,10 @@ namespace SQM.Website
 {
 	public enum AccessMode { None, Limited, View, Partner, Update, Plant, Admin, SA };
 	public enum LoginStatus { Success, SSOUndefined, PasswordMismatch, Inactive, Locked, PersonUndefined, CompanyUndefined, SessionError, SessionInUse};
-	public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, approve5=385, release=390, release1=391, release2=392, release3=393, release4=394, release5=395, notify=400, view=500, none=900 }
-	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata, media }
+
+    // First_add, l1, l2, l3 and l4 values are for SEVERITY_LEVEL.
+    public enum SysPriv { sysadmin=1, admin=100, config=200, originate=300, update=320, action=350, approve=380, approve1=381, approve2=382, approve3=383, approve4=384, approve5=385, release=390, release1=391, release2=392, release3=393, release4=394, release5=395, notify=400, view=500, none=900, first_add=396, l1=397, l2=398, l3=399, l4=401 }
+	public enum SysScope { system, busorg, busloc, dashboard, inbox, envdata, console, incident, prevent, audit, ehsdata, media}
 	public enum NotifyCycle { None = 0, notifyNext = 22};
 
 	public static class CultureSettings
@@ -799,6 +801,7 @@ namespace SQM.Website
 						}
 						else
 						{
+
 							this.PrivList = SQMModelMgr.SelectPrivGroupPerson(this.Person.PRIV_GROUP, "COMMON");
 
 							SessionManager.EffLocation = new BusinessLocation().Initialize(SQMModelMgr.LookupCompany((decimal)this.Person.COMPANY_ID), SQMModelMgr.LookupBusOrg((decimal)this.Person.BUS_ORG_ID), SQMModelMgr.LookupPlant((decimal)this.Person.PLANT_ID));

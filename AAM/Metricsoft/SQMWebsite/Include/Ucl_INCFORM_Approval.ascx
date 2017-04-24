@@ -4,7 +4,8 @@
 <script type="text/javascript">
 
 	window.onload = function () {
-		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "";
+	    document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "";
+
 	}
 	window.onbeforeunload = function () {
 		if (document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value == '1') {
@@ -15,10 +16,66 @@
 		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "1";
 		return true;
 	}
-	function ChangeClear(sender, args) {
-		document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+    function ChangeClear(sender, args) {
+        <%--var chkseverity = false;
+        if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
+            if (!$(".cb input:checkbox").is(':checked')) {
+                chkseverity = true;
+            }
+            if (chkseverity == true) {
+                alert('Please approve the report for distribution and check the severity levels !');
+                return false;
+            }
+            else {
+                document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+            }
+        }--%>
+        document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
+	    
 	}
-
+   
+    //only one checkbox checked at a time.
+    $(document).ready(function () {
+        $('#chkDiv').each(function () {
+            $(this).find('.cb').each(function () {
+                $(".cb input:checkbox").on('change', function () {
+                    $(".cb input:checkbox").not(this).prop('checked', false);
+                });
+            });
+        });
+        if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
+            $(".cb input:checkbox").removeAttr('disabled');
+        }
+        else {
+            $(".cb input:checkbox").attr('disabled', true);
+        }
+    });
+   
+    $(document.body).on('mouseover', '#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_btnSave_input', function () {
+        if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_pnlSeverity').is(":visible")) {
+            var chkseverity = false;
+            if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
+                if (!$(".cb input:checkbox").is(':checked')) {
+                    chkseverity = true;
+                }
+                if (chkseverity == true) {
+                    alert('Please approve the report for distribution and check the severity levels !');
+                    return false;
+                }
+            }
+        }
+    })
+    
+    $(document.body).on('change', '#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted', function () {
+        if ($(this).is(':checked')) {
+            $(".cb input:checkbox").removeAttr('disabled');
+        }
+        else {
+            $(".cb input:checkbox").prop('checked', false);
+            $(".cb input:checkbox").attr('disabled', true);
+        }
+    })
+    
 </script>
 
 <asp:Panel ID="pnlApproval" Visible="False" runat="server" meta:resourcekey="pnlApprovalResource1">
@@ -70,7 +127,7 @@
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span>
-						<asp:CheckBox ID="cbIsAccepted" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
+						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
 						</span>
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
@@ -99,6 +156,31 @@
 		</asp:Repeater>
 
 		</telerik:RadAjaxPanel>
+
+        <asp:Panel ID="pnlSeverityDescription" Visible="False" runat="server" meta:resourcekey="pnlApprovalSeverityDescription">
+        <asp:Label runat="server" ID="lblSeverityLevel" SkinID="Metro" Font-Bold="true" Text="Severity Level" ></asp:Label>
+        <asp:Label runat="server" ID="lblSeverityLevelDescription" SkinID="Metro" style="margin-left:120px;" Font-Bold="false"></asp:Label>
+        <br /><br /> <br />
+        </asp:Panel>
+       
+        <asp:Panel ID="pnlSeverity" Visible="False" runat="server" meta:resourcekey="pnlApprovalSeverity">
+         <div class="row" id="severityDiv" >
+                    <div class="col-xs-12 col-sm-12 text-left">
+                        <asp:Label ID="lbApproverSeverityLevel" runat="server" meta:resourcekey="lbApproverSeverityLevelResource1" SkinID="Metro" Font-Bold="true" Text="Severity Level"></asp:Label>
+                        <br />
+                        </div>
+                    <div class="col-xs-12 col-sm-12 text-left" id="chkDiv">                     
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel00" class="cb custom-label" Text="<%$ Resources:LocalizedText, FirstAid %>" /><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel01" class="cb custom-label" Text="<%$ Resources:LocalizedText, L1_Minor %> "/><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel02" class="cb custom-label" Text="<%$ Resources:LocalizedText, L2_Significant %>" /><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel03" CssClass="cb custom-label" Text="<%$ Resources:LocalizedText, L3_Severe %> " /><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel04" CssClass="cb custom-label" Text="<%$ Resources:LocalizedText, L4_Major %>" /><br />
+                    </div>
+                </div>
+        
+           <br /><br />
+            </asp:Panel>
+               
 		<center>
 			<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 				OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" Visibl="false" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>

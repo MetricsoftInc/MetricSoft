@@ -981,4 +981,19 @@
   <data name="Temporary" xml:space="preserve">
     <value>Temporary Employee</value>
   </data>
+  <data name="FirstAid" xml:space="preserve">
+    <value>First Aid - small injury requiring on-site treatment e.g. plaster, bandage or cold compress.</value>
+  </data>
+  <data name="L1_Minor" xml:space="preserve">
+    <value>Level 1 (Minor) requiring outside treatment - cut less than 10 stiches, bruise, pain on body.</value>
+  </data>
+  <data name="L2_Significant" xml:space="preserve">
+    <value>Level 2 (Significant) - simple fracture, 2nd degree burn, cut more than 10 stiches.</value>
+  </data>
+  <data name="L3_Severe" xml:space="preserve">
+    <value>Level 3 (Severe) - open fracture, 3rd. degree burn, loss of functions damage to eye, brain contusion.</value>
+  </data>
+  <data name="L4_Major" xml:space="preserve">
+    <value>Level 4 (Major) - fatality, life changing disability.</value>
+  </data>
 </root>
