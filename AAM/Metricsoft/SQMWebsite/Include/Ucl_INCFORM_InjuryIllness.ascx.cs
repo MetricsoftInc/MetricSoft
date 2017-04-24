@@ -286,7 +286,8 @@ namespace SQM.Website
 			string psersonSelect = EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "PERSONINPUT").FirstOrDefault().VALUE;
 			string deptSelect = EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "DEPTINPUT").FirstOrDefault().VALUE;
 			string addFields = EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_ADD_FIELDS").FirstOrDefault() == null ? "" : EHSSettings.Where(s => s.SETTING_CD == "INCIDENT_ADD_FIELDS").FirstOrDefault().VALUE;
-
+        
+            //Condition for manage the UI for old and new incident.
             if (EditIncidentId > maxINCIDENT || EditIncidentId == 0)
             {
                 belowMAX.Visible = false;
@@ -370,6 +371,7 @@ namespace SQM.Website
 					PopulateDepartmentDropDown((decimal)incident.DETECT_PLANT_ID);
 
 					PopulateJobcodeDropDown();
+                    //condition for manage the new incident and old incident values.
                     if (EditIncidentId <= maxINCIDENT)
                     {
                         PopulateJobTenureDropDown();
@@ -418,6 +420,7 @@ namespace SQM.Website
 
 						tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 
+                        //condition for manage the data for old and new incident.
                         if (EditIncidentId > maxINCIDENT)
                         {
                             rdoEmpStatus.SelectedValue = injuryIllnessDetails.EMP_STATUS.ToString();
@@ -428,6 +431,8 @@ namespace SQM.Website
                         rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
 						rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
 						rdoTrainingProvided.SelectedValue = (injuryIllnessDetails.TRAINING_PROVIDED == true) ? "1" : "0";
+
+                        //condition for manage the data for old and new incident.
                         if (EditIncidentId > maxINCIDENT)
                         {
                             if (injuryIllnessDetails.ASSOCIATE_YEAR != null)
@@ -1282,7 +1287,7 @@ namespace SQM.Website
 			btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
 			CurrentSubnav = btn.CommandArgument;
 
-			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = true;
+			btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = btnSubnavAlert.Enabled = true;
 			btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
 			btnSubnavSave.Visible = btnDeleteInc.Visible = false;
 
@@ -1592,7 +1597,6 @@ namespace SQM.Website
 				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Outside Building";
 			else
 				newInjryIllnessDetails.INSIDE_OUTSIDE_BLDNG = "Inside Building";
-
             if (EditIncidentId > maxINCIDENT)
             {
 
