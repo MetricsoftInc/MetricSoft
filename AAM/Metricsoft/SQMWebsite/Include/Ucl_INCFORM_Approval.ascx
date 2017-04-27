@@ -28,6 +28,7 @@
                     $(".cb input:checkbox").not(this).prop('checked', false);
                 });
             });
+            $(".aspNetDisabled").addClass("custom-label");
         });
         if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
             $(".cb input:checkbox").removeAttr('disabled');
