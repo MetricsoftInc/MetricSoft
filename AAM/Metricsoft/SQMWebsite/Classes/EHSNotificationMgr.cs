@@ -448,9 +448,14 @@ namespace SQM.Website
 							"<br/><br/>" +
 							XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION + (appUrl + incidentActionPath) + XLATList.Where(x => x.XLAT_GROUP == "NOTIFY_TASK_ASSIGN" && x.XLAT_CODE == "EMAIL_08").FirstOrDefault().DESCRIPTION_SHORT;
 
-			rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, ccList, "web", null, mailSettings);
-			WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
+            //get the envoirment details from the configration file.
+            string environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
 
+            if (environment == "Prod")
+            {
+                rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, ccList, "web", null, mailSettings);
+                WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
+            }
 			/*
 			foreach (PERSON person in notifyList)
 			{
