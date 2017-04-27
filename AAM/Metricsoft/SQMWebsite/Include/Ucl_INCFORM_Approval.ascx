@@ -17,21 +17,7 @@
 		return true;
 	}
     function ChangeClear(sender, args) {
-        <%--var chkseverity = false;
-        if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
-            if (!$(".cb input:checkbox").is(':checked')) {
-                chkseverity = true;
-            }
-            if (chkseverity == true) {
-                alert('Please approve the report for distribution and check the severity levels !');
-                return false;
-            }
-            else {
-                document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
-            }
-        }--%>
         document.getElementById(('<%=hfChangeUpdate.ClientID%>')).value = "0";
-	    
 	}
    
     //only one checkbox checked at a time.
@@ -51,20 +37,6 @@
         }
     });
    
-    $(document.body).on('mouseover', '#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_btnSave_input', function () {
-        if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_pnlSeverity').is(":visible")) {
-            var chkseverity = false;
-            if ($('#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted').is(':checked')) {
-                if (!$(".cb input:checkbox").is(':checked')) {
-                    chkseverity = true;
-                }
-                if (chkseverity == true) {
-                    alert('Please approve the report for distribution and check the severity levels !');
-                    return false;
-                }
-            }
-        }
-    })
     
     $(document.body).on('change', '#ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclapproval_rptApprovals_ctl09_cbIsAccepted', function () {
         if ($(this).is(':checked')) {
@@ -127,7 +99,10 @@
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span>
-						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
+						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup"
+                             runat="server" Font-Bold="False" 
+                            meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro"
+                             onChange="return ChangeUpdate();" />
 						</span>
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">
@@ -173,14 +148,16 @@
                         <asp:CheckBox runat="server" ID="chkSeverityLevel00" class="cb custom-label" Text="<%$ Resources:LocalizedText, FirstAid %>" /><br />
                         <asp:CheckBox runat="server" ID="chkSeverityLevel01" class="cb custom-label" Text="<%$ Resources:LocalizedText, L1_Minor %> "/><br />
                         <asp:CheckBox runat="server" ID="chkSeverityLevel02" class="cb custom-label" Text="<%$ Resources:LocalizedText, L2_Significant %>" /><br />
-                        <asp:CheckBox runat="server" ID="chkSeverityLevel03" CssClass="cb custom-label" Text="<%$ Resources:LocalizedText, L3_Severe %> " /><br />
-                        <asp:CheckBox runat="server" ID="chkSeverityLevel04" CssClass="cb custom-label" Text="<%$ Resources:LocalizedText, L4_Major %>" /><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel03" class="cb custom-label" Text="<%$ Resources:LocalizedText, L3_Severe %> " /><br />
+                        <asp:CheckBox runat="server" ID="chkSeverityLevel04" class="cb custom-label" Text="<%$ Resources:LocalizedText, L4_Major %>" /><br />
                     </div>
                 </div>
         
            <br /><br />
             </asp:Panel>
-               
+               <div id="ResponseMsg" class="labelEmphasis">
+                   <asp:Label ID="lblResponseMsg" runat="server" Text=""></asp:Label>
+               </div>
 		<center>
 			<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
 				OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" Visibl="false" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Save %>"/>

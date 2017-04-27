@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
@@ -130,6 +131,7 @@ namespace SQM.Website
                         if ((this.Page.FindControl(targetID).ID == "btnSave") ||
                             (this.Page.FindControl(targetID).ID == "btnNext"))
                             IsFullPagePostback = true;
+
                     //Maintain SEVERITY-LEVEL section visible after full page postback.
                     if (!IsFullPagePostback)
                     {
@@ -142,7 +144,7 @@ namespace SQM.Website
                             {
                                 status = 1;
                             }
-                            else if (targetID.Contains("CorrectiveActionApproval")) 
+                            else if (targetID.Contains("CorrectiveActionApproval"))
                             {
                                 status = 2;
                             }
@@ -153,8 +155,12 @@ namespace SQM.Website
                         }
                         else
                         {
-                            status = 0;                            
+                            status = 0;
                         }
+
+                        //Update SEVERITY_LEVEL value.
+
+
                     }
                 }
             }
@@ -193,24 +199,24 @@ namespace SQM.Website
                     {
                         incident = LocalIncident.ISSUE_TYPE;
                     }
-                    if(incident == null)
+                    if (incident == null)
                     {
                         incident = "";
                     }
                     //To Display severity-level section only for Injury/Illness type incidents.
                     if (incident == "Injury/Illness")
                     {
-                        if(status == 0)
+                        if (status == 0)
                         {
                             pnlSeverityDescription.Visible = false;
                             pnlSeverity.Visible = false;
                         }
-                        else if(status == 1) //Display severity level and checkBox on Flash Report SignOff only.
+                        else if (status == 1) //Display severity level and checkBox on Flash Report SignOff only.
                         {
                             pnlSeverity.Visible = true;
                             pnlSeverityDescription.Visible = false;
                         }
-                        else if(status == 2)//Display severity level with description on Investigation Report Signoff only.
+                        else if (status == 2)//Display severity level with description on Investigation Report Signoff only.
                         {
                             pnlSeverity.Visible = false;
                             pnlSeverityDescription.Visible = true;
@@ -221,6 +227,18 @@ namespace SQM.Website
                     if (res == null)
                     {
                         res = "";
+                    }
+                    else
+                    {
+                        chkSeverityLevel00.Enabled = false;
+
+                        chkSeverityLevel01.Enabled = false;
+
+                        chkSeverityLevel02.Enabled = false;
+
+                        chkSeverityLevel03.Enabled = false;
+
+                        chkSeverityLevel04.Enabled = false;
                     }
                     if (res == SysPriv.first_add.ToString())
                     {
@@ -249,7 +267,7 @@ namespace SQM.Website
                     }
 
                 }
-                catch(Exception ex) { string s = ex.Message; }
+                catch (Exception ex) { string s = ex.Message; }
 
             InitializeForm(entities);
         }
@@ -368,14 +386,28 @@ namespace SQM.Website
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            AddUpdateINCFORM_APPROVAL(IncidentId, "save");
-            string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
-            ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+            
+                if (AddUpdateINCFORM_APPROVAL(IncidentId, "save") >= 0)
+                {
+                    string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+                }
+            else
+            {
+                lblResponseMsg.Text = "Please approve the report for distribution and check the severity levels !";
+            }
+
             InitializeForm(new PSsqmEntities());
+            
         }
 
         public int AddUpdateINCFORM_APPROVAL(decimal incidentId, string option)
         {
+            //To get approvertype from usercontext. -NIHARIKA SAXENA
+            var approveerType = (SessionManager.UserContext.PrivList.Where(p => p.PRIV <= 100).FirstOrDefault()).PRIV_GROUP.ToString();
+            //Check status of severityLevel of Global Safety Group
+            bool severityLevel = false;
+
             var itemList = new List<INCFORM_APPROVAL>();
             int status = 0;
             int numRequired = 0;
@@ -383,6 +415,8 @@ namespace SQM.Website
             int approvalCount = 0;
             bool isRequired;
             bool isChanged = false;
+
+           
 
             List<INCFORM_APPROVAL> approvalList = new List<INCFORM_APPROVAL>();
 
@@ -412,17 +446,34 @@ namespace SQM.Website
                     approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
                     approval.APPROVER_TITLE = hfrole.Value;
 
-                    //Update SEVERITY_LEVEL value.
+
+                    //Update SEVERITY_LEVEL value. - 
                     if (chkSeverityLevel00.Checked)
+                    {
+                        severityLevel = chkSeverityLevel00.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.first_add.ToString();
+                    }
                     else if (chkSeverityLevel01.Checked)
+                    {
+                        severityLevel = chkSeverityLevel01.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l1.ToString();
+                    }
+
                     else if (chkSeverityLevel02.Checked)
+                    {
+                        severityLevel = chkSeverityLevel02.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l2.ToString();
+                    }
                     else if (chkSeverityLevel03.Checked)
+                    {
+                        severityLevel = chkSeverityLevel03.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l3.ToString();
+                    }
                     else if (chkSeverityLevel04.Checked)
+                    {
+                        severityLevel = chkSeverityLevel04.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l4.ToString();
+                    }
 
                     approvalList.Add(approval);
 
@@ -459,8 +510,33 @@ namespace SQM.Website
                     }
                 }
 
-                //status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND STEP = " + ApprovalStep.ToString());
-                status = ctx.SaveChanges();
+                if (approveerType == "Global Safety Group")
+                {
+                   
+                    if (severityLevel)
+                    {
+                        lblResponseMsg.Text = "";
+                        chkSeverityLevel00.Enabled = false;
+
+                        chkSeverityLevel01.Enabled = false;
+
+                        chkSeverityLevel02.Enabled = false;
+
+                        chkSeverityLevel03.Enabled = false;
+
+                        chkSeverityLevel04.Enabled = false;
+
+                        //status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVAL WHERE INCIDENT_ID = " + incidentId.ToString() + " AND STEP = " + ApprovalStep.ToString());
+                        status = ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        status = -1;
+                    }
+                }else
+                {
+                    status = ctx.SaveChanges();
+                }
 
                 bool notifyStepComplete = false;
                 string incidentStep = "";
@@ -524,12 +600,16 @@ namespace SQM.Website
                                 List<string> infoList = new List<string>();
                                 infoList.Add(approval.APPROVER_TITLE);
                                 infoList.Add(priorApproval.APPROVER_TITLE);
-                                EHSNotificationMgr.NotifyIncidentSignoffRequired(LocalIncident, approval, ApprovalStep.STEP_HEADING_TEXT, approval.ITEM_SEQ >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
+
+                             
+                                    EHSNotificationMgr.NotifyIncidentSignoffRequired(LocalIncident, approval, ApprovalStep.STEP_HEADING_TEXT, approval.ITEM_SEQ >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
+                                
                             }
                             priorApproval = approval;
                         }
                     }
                 }
+
 
             }
 
