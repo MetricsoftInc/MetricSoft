@@ -451,7 +451,7 @@ namespace SQM.Website
             //get the envoirment details from the configration file.
             string environment = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
 
-            if (environment == "Prod")
+            if (environment == "prod")
             {
                 rtn = WebSiteCommon.SendEmail(emailTo, emailSubject, emailBody, ccList, "web", null, mailSettings);
                 WriteEmailLog(entities, emailTo, mailSettings.Find(x => x.SETTING_CD == "MailFrom").VALUE, emailSubject, emailBody, (int)TaskRecordType.HealthSafetyIncident, incident.INCIDENT_ID, "incident task assignment", rtn, "");
