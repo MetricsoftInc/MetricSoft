@@ -45,13 +45,17 @@ namespace SQM.Website
 			int status = 0;
 
 			INCIDENT incident = EHSIncidentMgr.SelectIncidentById(ctx, IncidentId, true);
-			PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
-			if (plant != null)
-				IncidentLocationTZ = plant.LOCAL_TIMEZONE;
+            //if incident is not null populate the form
+            if (incident != null)
+            {
+                PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
+                if (plant != null)
+                    IncidentLocationTZ = plant.LOCAL_TIMEZONE;
 
-			BindCausation(incident);
+                BindCausation(incident);
 
-			pnlCausation.Enabled = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED);
+                pnlCausation.Enabled = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED);
+            }
 
 			return status;
 		}
