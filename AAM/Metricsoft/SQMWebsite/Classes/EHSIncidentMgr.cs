@@ -1174,8 +1174,12 @@ namespace SQM.Website
 				cause.ITEM_TYPE = 1;
 				cause.PROBLEM_SERIES = 0;
 				cause.ITEM_SEQ = 0;
-				cause.ITEM_DESCRIPTION = incident.DESCRIPTION;
-				rootCauseList.Insert(0, cause);
+                //Get ITEM_DESCRIPTION if incident is not null
+                if (incident != null)
+                {
+                    cause.ITEM_DESCRIPTION = incident.DESCRIPTION;
+                    rootCauseList.Insert(0, cause);
+                }
 			}
 
 			return rootCauseList;
