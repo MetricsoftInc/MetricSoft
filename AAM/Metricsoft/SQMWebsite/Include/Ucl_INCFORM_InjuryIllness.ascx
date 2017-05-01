@@ -914,8 +914,11 @@
 				<asp:LinkButton ID="btnSubnavApproval" runat="server" Text="<%$ Resources:LocalizedText, Approvals %>" CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 							OnClick="btnSubnav_Click" CommandArgument="10"/>
 
-				<asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
-					OnClick="btnSubnav_Click" CommandArgument="11" visible="false"/>
+                <%--  To enable Preventative Measures at browser back button visible false is deleted.--%>
+				<%--<asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="11" visible="false"/>--%>
+                <asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="11" />
 			</center>
 		</div>
 		<br />
