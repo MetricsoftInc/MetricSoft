@@ -151,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Approvals.
+        ///   Looks up a localized string similar to Incident Closure.
         /// </summary>
         internal static string Approvals {
             get {
@@ -502,6 +502,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contractor.
+        /// </summary>
+        internal static string Contractor {
+            get {
+                return ResourceManager.GetString("Contractor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Final Corrective Action.
         /// </summary>
         internal static string CorrectiveAction {
@@ -511,7 +520,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Corrective Action Signoff.
+        ///   Looks up a localized string similar to Investigation Report Signoff.
         /// </summary>
         internal static string CorrectiveActionApproval {
             get {
@@ -799,6 +808,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Permanent Employee.
+        /// </summary>
+        internal static string Employee {
+            get {
+                return ResourceManager.GetString("Employee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Energy input.
         /// </summary>
         internal static string EnergyInput {
@@ -1015,7 +1033,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (First Aid) small injury requiring on-site treatment e.g. plaster, bandage or cold compress..
+        ///   Looks up a localized string similar to First Aid - small injury requiring on-site treatment e.g. plaster, bandage or cold compress..
         /// </summary>
         internal static string FirstAid {
             get {
@@ -1150,7 +1168,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Initial Action Signoff.
+        ///   Looks up a localized string similar to Flash Report Signoff.
         /// </summary>
         internal static string InitialActionApproval {
             get {
@@ -1231,7 +1249,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to L1 - (Minor) Cut &lt; 10 stitches, strain, bruise, bone crack, dislocation requiring outside treatment..
+        ///   Looks up a localized string similar to Level 1 (Minor) requiring outside treatment - cut less than 10 stiches, bruise, pain on body..
         /// </summary>
         internal static string L1_Minor {
             get {
@@ -1240,7 +1258,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to L2 - (Significant) Cuts requiring 10 or more stitches, simple fracture, 2nd degree burn ..
+        ///   Looks up a localized string similar to Level 2 (Significant) - simple fracture, 2nd degree burn, cut more than 10 stiches..
         /// </summary>
         internal static string L2_Significant {
             get {
@@ -1249,7 +1267,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to L3 - (Severe) Any amputation, open fracture, loss of function, 3rd degree burn..
+        ///   Looks up a localized string similar to Level 3 (Severe) - open fracture, 3rd. degree burn, loss of functions damage to eye, brain contusion..
         /// </summary>
         internal static string L3_Severe {
             get {
@@ -1258,7 +1276,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to L4 - (Major) Fatality or life changing disability..
+        ///   Looks up a localized string similar to Level 4 (Major) - fatality, life changing disability..
         /// </summary>
         internal static string L4_Major {
             get {
@@ -2208,6 +2226,15 @@ namespace Resources {
         internal static string TaskUpdateConfirm {
             get {
                 return ResourceManager.GetString("TaskUpdateConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary Employee.
+        /// </summary>
+        internal static string Temporary {
+            get {
+                return ResourceManager.GetString("Temporary", resourceCulture);
             }
         }
         

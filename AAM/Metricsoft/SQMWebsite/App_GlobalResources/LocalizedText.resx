@@ -133,7 +133,7 @@
     <value>All</value>
   </data>
   <data name="Approvals" xml:space="preserve">
-    <value>Approvals</value>
+    <value>Incident Closure</value>
   </data>
   <data name="Assessment" xml:space="preserve">
     <value>Assessment</value>
@@ -916,10 +916,10 @@
     <value>Perform a ReAudit on this assessment</value>
   </data>
   <data name="CorrectiveActionApproval" xml:space="preserve">
-    <value>Corrective Action Signoff</value>
+    <value>Investigation Report Signoff</value>
   </data>
   <data name="InitialActionApproval" xml:space="preserve">
-    <value>Initial Action Signoff</value>
+    <value>Flash Report Signoff</value>
   </data>
   <data name="Severity" xml:space="preserve">
     <value>Severity</value>
