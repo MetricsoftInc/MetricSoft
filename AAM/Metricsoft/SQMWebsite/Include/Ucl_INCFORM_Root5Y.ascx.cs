@@ -246,14 +246,25 @@ namespace SQM.Website
 			{
 				Button btnAdd = (Button)e.Item.FindControl("btnAddStatement");
 				RadButton btnSave = (RadButton)e.Item.FindControl("btnSave");
-				btnSave.Visible = btnAdd.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.action, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
-				if (RootCauseLevels() < 2)
-					btnAdd.Visible = false;
+                //Save button is visible when localincident is not null
+                if (LocalIncident != null)
+                {
+                    btnSave.Visible = btnAdd.Visible = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(LocalIncident, IsEditContext, SysPriv.action, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+                    if (RootCauseLevels() < 2)
+                        btnAdd.Visible = false;
+                }
+                else
+                {
+                    btnAdd.Visible = false;
+                    btnSave.Visible = false;
+                }
 			}
 
 			if (e.Item.ItemType == ListItemType.Header)
 			{
 				Label lp = (Label)e.Item.FindControl("lblProblemDesc");
+                // Get Description if incident is not null
+                if(LocalIncident!=null)
 				lp.Text = LocalIncident.DESCRIPTION;
 			}
 		}
