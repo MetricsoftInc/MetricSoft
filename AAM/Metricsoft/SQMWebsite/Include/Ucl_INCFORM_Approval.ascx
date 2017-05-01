@@ -100,10 +100,7 @@
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span>
-						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup"
-                             runat="server" Font-Bold="False" 
-                            meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro"
-                             onChange="return ChangeUpdate();" />
+						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
 						</span>
 					</div>
 					<div class="col-xs-12 col-sm-2 text-left">

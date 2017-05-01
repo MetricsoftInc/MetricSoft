@@ -279,18 +279,30 @@ namespace SQM.Website
 
             pnlApproval.Visible = true;
             divStatus.Visible = false;
-
-            // check if incident approval status is greater than this
-            if (LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP)
+            try
             {
-                PageMode = PageUseMode.ViewOnly;
+                //If localIncident is not null then populate the form
+                if (LocalIncident != null)
+                {
+                    // check if incident approval status is greater than this
+                    bool result = LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP;
+                    if (result)
+                         {
+                            PageMode = PageUseMode.ViewOnly;
+                         }
+
+                     incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1);
+                     canApproveAny = false;
+                    rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
+
+                    rptApprovals.DataBind();
+                }
+               else
+               {
+                    btnSave.Visible = false;
+               }
             }
-
-            incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1);
-            canApproveAny = false;
-            rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
-
-            rptApprovals.DataBind();
+            catch (Exception ex) { string s = ex.Message; }
         }
 
         private void SetUserAccess(string currentFormName)
