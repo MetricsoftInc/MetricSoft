@@ -79,78 +79,86 @@ namespace SQM.Website
 
             localCtx = ctx;
             LocalIncident = EHSIncidentMgr.SelectIncidentById(localCtx, IncidentId);
-            if (LocalIncident == null)
+            //populate form when LocalIncident is not null 
+            //if (LocalIncident == null)
+            //{
+            //    return;
+            //}
+            if (LocalIncident != null)
             {
-                return;
-            }
-
-            //To get Privilege information and if Privilege is CEO-Group then CEO-Comments section is editable.
-            string PrivInfo = SessionManager.UserContext.Person.PRIV_GROUP.ToString();
-            if (PrivInfo == "CEO-GROUP")            
-            {
-                tbCeoComments.ReadOnly = false;
-                        
-            }
-           
-            INCFORM_ALERT incidentAlert = EHSIncidentMgr.LookupIncidentAlert(localCtx, IncidentId);
-
-            SQMBasePage.SetLocationList(ddlLocations, SQMModelMgr.SelectBusinessLocationList(1m, 0, true), 0);
-
-            ddlNotifyGroup.DataSource = SQMModelMgr.SelectPrivGroupList("A", true);
-            ddlNotifyGroup.DataValueField = "PRIV_GROUP";
-            ddlNotifyGroup.DataTextField = "DESCRIPTION";
-            ddlNotifyGroup.DataBind();
-
-            ddlResponsibleGroup.DataSource = SQMModelMgr.SelectPrivGroupList("A", true);
-            ddlResponsibleGroup.DataValueField = "PRIV_GROUP";
-            ddlResponsibleGroup.DataTextField = "DESCRIPTION";
-            ddlResponsibleGroup.DataBind();
-
-            rdpDueDate = SQMBasePage.SetRadDateCulture(rdpDueDate, "");
-            rdpDueDate.SelectedDate = DateTime.UtcNow.AddDays(1);
-
-            List<NOTIFYACTION> notifyList = SQMModelMgr.SelectNotifyActionList(localCtx, null, null);
-            NOTIFYACTION dfltNotify = notifyList.Where(l => l.NOTIFY_SCOPE == "IN-0" && l.SCOPE_TASK == "400").FirstOrDefault();  // get default alert notification groups
-
-            btnSave.Enabled = false;
-
-            pnlAlert.Enabled = btnSave.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, true, SysPriv.admin, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
-
-            if (incidentAlert == null)
-            {
-                if (dfltNotify != null)
+                //To get Privilege information and if Privilege is CEO-Group then CEO-Comments section is editable.
+                string PrivInfo = SessionManager.UserContext.Person.PRIV_GROUP.ToString();
+                if (PrivInfo == "CEO-GROUP")
                 {
-                    ddlNotifyGroup.Items.Where(i => dfltNotify.NOTIFY_DIST.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
+                    tbCeoComments.ReadOnly = false;
+
                 }
-                lblAlertStatus.Text = "";
+
+                INCFORM_ALERT incidentAlert = EHSIncidentMgr.LookupIncidentAlert(localCtx, IncidentId);
+
+                SQMBasePage.SetLocationList(ddlLocations, SQMModelMgr.SelectBusinessLocationList(1m, 0, true), 0);
+
+                ddlNotifyGroup.DataSource = SQMModelMgr.SelectPrivGroupList("A", true);
+                ddlNotifyGroup.DataValueField = "PRIV_GROUP";
+                ddlNotifyGroup.DataTextField = "DESCRIPTION";
+                ddlNotifyGroup.DataBind();
+
+                ddlResponsibleGroup.DataSource = SQMModelMgr.SelectPrivGroupList("A", true);
+                ddlResponsibleGroup.DataValueField = "PRIV_GROUP";
+                ddlResponsibleGroup.DataTextField = "DESCRIPTION";
+                ddlResponsibleGroup.DataBind();
+
+                rdpDueDate = SQMBasePage.SetRadDateCulture(rdpDueDate, "");
+                rdpDueDate.SelectedDate = DateTime.UtcNow.AddDays(1);
+
+                List<NOTIFYACTION> notifyList = SQMModelMgr.SelectNotifyActionList(localCtx, null, null);
+                NOTIFYACTION dfltNotify = notifyList.Where(l => l.NOTIFY_SCOPE == "IN-0" && l.SCOPE_TASK == "400").FirstOrDefault();  // get default alert notification groups
+
+                btnSave.Enabled = false;
+
+                pnlAlert.Enabled = btnSave.Visible = EHSIncidentMgr.CanUpdateIncident(LocalIncident, true, SysPriv.admin, LocalIncident.INCFORM_LAST_STEP_COMPLETED);
+
+                if (incidentAlert == null)
+                {
+                    if (dfltNotify != null)
+                    {
+                        ddlNotifyGroup.Items.Where(i => dfltNotify.NOTIFY_DIST.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
+                    }
+                    lblAlertStatus.Text = "";
+                }
+                else
+                {
+                    ddlLocations.Items.Where(i => incidentAlert.LOCATION_LIST.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
+                    tbAlertDesc.Text = incidentAlert.ALERT_DESC;
+                    tbComments.Text = incidentAlert.COMMENTS;
+
+                    // Get CEO-comments value from database and display it.
+                    tbCeoComments.Text = incidentAlert.CEO_COMMENTS;
+
+                    ddlNotifyGroup.Items.Where(i => incidentAlert.ALERT_GROUP.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
+                    if ((ddlResponsibleGroup.FindItemByValue(incidentAlert.RESPONSIBLE_GROUP)) != null)
+                    {
+                        ddlResponsibleGroup.SelectedValue = incidentAlert.RESPONSIBLE_GROUP;
+                    }
+                    rdpDueDate.SelectedDate = incidentAlert.DUE_DT;
+                    lblAlertStatus.Text = XLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == "0").FirstOrDefault().DESCRIPTION;
+                }
+
+                lblNotifyGroup.Text = "";
+                foreach (RadComboBoxItem item in ddlNotifyGroup.Items.Where(i => i.Checked == true).ToList())
+                {
+                    lblNotifyGroup.Text += string.IsNullOrEmpty(lblNotifyGroup.Text) ? item.Text : (", " + item.Text);
+                }
+
+                if (BindTAlertaskList(EHSIncidentMgr.GetAlertTaskList(localCtx, LocalIncident.INCIDENT_ID)) > 0)
+                {
+                    btnSave.Enabled = true;
+                }
             }
             else
             {
-                ddlLocations.Items.Where(i => incidentAlert.LOCATION_LIST.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
-                tbAlertDesc.Text = incidentAlert.ALERT_DESC;
-                tbComments.Text = incidentAlert.COMMENTS;
-
-                // Get CEO-comments value from database and display it.
-                tbCeoComments.Text = incidentAlert.CEO_COMMENTS;
-
-                ddlNotifyGroup.Items.Where(i => incidentAlert.ALERT_GROUP.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
-                if ((ddlResponsibleGroup.FindItemByValue(incidentAlert.RESPONSIBLE_GROUP)) != null)
-                {
-                    ddlResponsibleGroup.SelectedValue = incidentAlert.RESPONSIBLE_GROUP;
-                }
-                rdpDueDate.SelectedDate = incidentAlert.DUE_DT;
-                lblAlertStatus.Text = XLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == "0").FirstOrDefault().DESCRIPTION;
-            }
-
-            lblNotifyGroup.Text = "";
-            foreach (RadComboBoxItem item in ddlNotifyGroup.Items.Where(i => i.Checked == true).ToList())
-            {
-                lblNotifyGroup.Text += string.IsNullOrEmpty(lblNotifyGroup.Text) ? item.Text : (", " + item.Text);
-            }
-
-            if (BindTAlertaskList(EHSIncidentMgr.GetAlertTaskList(localCtx, LocalIncident.INCIDENT_ID)) > 0)
-            {
-                btnSave.Enabled = true;
+                btnSave.Visible = false;
+                pnlAlert.Visible = false;
             }
         }
 
