@@ -1093,7 +1093,25 @@ namespace SQM.Website
 			return comments;
 		}
 
-		public static int AttachmentCount(decimal incidentId)
+        /// <summary>
+        /// Function for getting the data for attachment for FinalCorrectiveAction & Preventative Measures.
+        /// </summary>
+        /// <param name="incidentId"></param>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        public static int AttachmentCounts(decimal incidentId, int record)
+        {
+            int count = 0;
+
+            using (PSsqmEntities entities = new PSsqmEntities())
+            {
+                count = (from a in entities.ATTACHMENT where (a.RECORD_TYPE == 40 && a.RECORD_ID == incidentId && a.INCIDENT_SECTION == record) select a).Count();
+            }
+
+            return count;
+        }
+
+        public static int AttachmentCount(decimal incidentId)
 		{
 			int count = 0;
 
