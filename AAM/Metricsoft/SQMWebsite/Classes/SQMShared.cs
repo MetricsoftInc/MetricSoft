@@ -46,6 +46,13 @@ namespace SQM.Shared
             get;
             set;
         }
+
+        //to get attached files type
+        public int incident_section
+        {
+            get;
+            set;
+        }
         public DocumentScope CreateNew(string scope, int recordType, string sessionID, decimal recordID, string recordStep)
         {
             this.Scope = scope;
