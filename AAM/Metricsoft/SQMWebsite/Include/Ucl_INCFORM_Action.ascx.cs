@@ -9,7 +9,7 @@ using System.Text;
 using System.Web;
 using System.Globalization;
 using System.Threading;
-
+using SQM.Shared;
 
 namespace SQM.Website
 {
@@ -46,8 +46,12 @@ namespace SQM.Website
 			get { return ViewState["SelectedTypeId"] == null ? 0 : (decimal)ViewState["SelectedTypeId"]; }
 			set { ViewState["SelectedTypeId"] = value; }
 		}
-
-		public decimal IncidentId
+        public int CurrentStep
+        {
+            get { return ViewState["CurrentStep"] == null ? 0 : (int)ViewState["CurrentStep"]; }
+            set { ViewState["CurrentStep"] = value; }
+        }
+        public decimal IncidentId
 		{
 			get { return ViewState["IncidentId"] == null ? 0 : (decimal)ViewState["IncidentId"]; }
 			set { ViewState["IncidentId"] = value; }
@@ -171,9 +175,62 @@ namespace SQM.Website
 			}
 		}
 
-		void InitializeForm()
+        protected void SaveAttachments(decimal incidentId)
+        {
+            if (uploaderFinalCorrectiveAction != null)
+            {
+                string recordStep = (this.CurrentStep + 1).ToString();
+
+                // Add files to database
+                SessionManager.DocumentContext = new DocumentScope().CreateNew(
+                    SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, "BLI", 0, "",
+                    SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID, "", 0
+                    );
+                SessionManager.DocumentContext.RecordType = 40;
+                SessionManager.DocumentContext.RecordID = incidentId;
+                SessionManager.DocumentContext.RecordStep = "1";
+                SessionManager.DocumentContext.incident_section = (int)Incident_Section.FinalCorrectiveAttachment;
+
+                uploaderFinalCorrectiveAction.SaveFilesFinalCorrectiveAction();
+            }
+        }
+        private void GetAttachments(decimal incidentId)
+        {
+            uploaderFinalCorrectiveAction.SetAttachmentRecordStep("1");
+            uploaderFinalCorrectiveAction.SetReportOption(false);
+            uploaderFinalCorrectiveAction.SetDescription(false);
+            // Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
+            //uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval" };
+            //uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval" };
+
+            int attCnt = EHSIncidentMgr.AttachmentCounts(incidentId, 1);//Apply 1 for getting the attachment for  Final Corrective Action section.
+            int px = 128;
+
+            if (attCnt > 0)
+            {
+                px = px + (attCnt * 30) + 35;
+                uploaderFinalCorrectiveAction.GetUploadedFilesIncidentSection(40, incidentId, "", (int)Incident_Section.FinalCorrectiveAttachment);
+            }
+            else
+            {
+
+                uploaderFinalCorrectiveAction.GetBlinkATTACHMENT();
+            }
+
+            /*
+
+   */
+            // Set the html Div height based on number of attachments to be displayed in the grid:
+            //dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+            //dvAttach.Style.Add("height", px.ToString() + "px !important");
+        }
+
+        void InitializeForm()
 		{
-			IncidentId = (IsEditContext) ? IncidentId : NewIncidentId;
+            //call function for get the attachment files for  Final Corrective Action.
+            GetAttachments(IncidentId);
+
+            IncidentId = (IsEditContext) ? IncidentId : NewIncidentId;
 			lblStatusMsg.Visible = false;
 
 			LocalIncident = EHSIncidentMgr.SelectIncidentById(new PSsqmEntities(), IncidentId);
@@ -435,13 +492,13 @@ namespace SQM.Website
 		}
 
 		public int AddUpdateINCFORM_ACTION(decimal incidentId)
-		{
-			int status = 0;
+		{          
+            int status = 0;
 			lblStatusMsg.Visible = false;
 			List<TASK_STATUS> actionList = GetActionListFromGrid();
 			bool allFieldsComplete = true;
-
-			foreach (TASK_STATUS action in actionList)
+          
+            foreach (TASK_STATUS action in actionList)
 			{
 				if (string.IsNullOrEmpty(action.DESCRIPTION) || !action.DUE_DT.HasValue || !action.RESPONSIBLE_ID.HasValue)
 				{
@@ -460,11 +517,11 @@ namespace SQM.Website
 			{
 				status = SaveActions(incidentId, actionList);
 			}
-
-			return status;
+            SaveAttachments(incidentId);
+            return status;
 		}
 
-		private int SaveActions(decimal incidentId, List<TASK_STATUS> actionList)
+        private int SaveActions(decimal incidentId, List<TASK_STATUS> actionList)
 		{
 
 			PSsqmEntities entities = new PSsqmEntities();

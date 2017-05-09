@@ -2,6 +2,10 @@
 
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 
+<%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
+<%@ Register src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="AttachVideoPanel" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_RadScriptBlock.ascx" TagName="RadScript" TagPrefix="Ucl" %>
+
 <script type="text/javascript">
 
 	window.onload = function () {
@@ -212,7 +216,21 @@
 				</table>
 			</FooterTemplate>
 		</asp:Repeater>
-			<div class="row">
+     
+
+
+		<div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 10px;">
+			<center>
+				<br />
+				<asp:Label ID="lbAttachemnt" runat="server" CssClass="sectionTitlesSmall" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label>
+				<br />
+				<Ucl:UploadAttachment ID="uploaderFinalCorrectiveAction" runat="server" />
+			</center>
+		</div>
+
+         
+
+			<div class="row"  style="margin-top: 10px;">
 				<center>
 					<span>
 						<telerik:RadButton ID="btnSave" runat="server" Text="<%$ Resources:LocalizedText, Save %>" CssClass="UseSubmitAction" Skin="Metro" 
@@ -225,8 +243,11 @@
 
 	</telerik:RadAjaxPanel>
 
+    
+
 	</div>
 
 </asp:Panel>
+
 
 
