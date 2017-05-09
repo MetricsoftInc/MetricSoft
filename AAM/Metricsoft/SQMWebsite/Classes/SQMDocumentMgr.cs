@@ -259,7 +259,7 @@ namespace SQM.Website.Classes
 		#endregion
 
 		#region attachment
-		public static ATTACHMENT AddAttachment(String filename, String description, decimal? display_type, string docScope, int recordType, decimal recordID, string recordStep, string sessionID, Stream file)
+		public static ATTACHMENT AddAttachment(String filename, String description, decimal? display_type, string docScope, int recordType, decimal recordID, string recordStep, string sessionID, Stream file, int Incident_Section)
 		{
 			ATTACHMENT ret = null;
 			try
@@ -284,8 +284,10 @@ namespace SQM.Website.Classes
 					d.RECORD_ID = recordID; // we might not have the record id when the attaachment is created 
 					d.RECORD_STEP = recordStep;
 					d.SESSION_ID = sessionID;
+                    d.INCIDENT_SECTION = Incident_Section;
 
-					if (display_type.HasValue)
+
+                    if (display_type.HasValue)
 					{
 						d.DISPLAY_TYPE = display_type.Value;
 					}
