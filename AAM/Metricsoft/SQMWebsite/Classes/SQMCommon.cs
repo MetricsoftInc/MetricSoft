@@ -33,7 +33,7 @@ namespace SQM.Website
     class BusinessOrgUndefinedError : System.Exception { }
     class PlantUndefinedError : System.Exception { }
     class ParentEntityUndefinedError : System.Exception { }
-
+    public enum Incident_Section { IncidentAttachment, FinalCorrectiveAttachment, PreventativeMeasuresAttachment }
     public static class WebSiteCommon
     {
         public static string Sanitize(string sourceText, char subChar, bool skip)
