@@ -1,6 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Ucl_INCFORM_Alert.ascx.cs" Inherits="SQM.Website.Ucl_INCFORM_Alert" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
+
+<%@ Register Src="~/Include/Ucl_RadAsyncUpload.ascx" TagName="UploadAttachment" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="AttachVideoPanel" TagPrefix="Ucl" %>
+
+
 <script type="text/javascript">
 
     window.onload = function () {
@@ -191,6 +196,14 @@
                     </td>
                 </tr>
             </table>
+            <div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 10px;">
+                <center>
+				<br />
+				<asp:Label ID="lbAttachemnt" runat="server" CssClass="sectionTitlesSmall" Text="<%$ Resources:LocalizedText, Attachments %>"></asp:Label>
+				<br />
+				<Ucl:UploadAttachment ID="uploaderPreventativeMeasures" runat="server" />
+			</center>
+            </div>
             <div class="row" style="margin-top: 10px;">
                 <center>
 					<span>
@@ -203,7 +216,24 @@
 
         </telerik:RadAjaxPanel>
 
+<%--        <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
+        </telerik:RadAjaxPanel>--%>
+
     </div>
+
+</asp:Panel>
+
+
+<asp:Panel ID="pnlBaseForm2" Visible="False" runat="server">
+
+	<br />
+
+	
+	
+          
+
+
+	<br />
 
 </asp:Panel>
 

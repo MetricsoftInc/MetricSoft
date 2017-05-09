@@ -8,6 +8,7 @@ using System.Text;
 using System.Web;
 using System.Globalization;
 using System.Threading;
+using SQM.Shared;
 
 namespace SQM.Website
 {
@@ -28,7 +29,11 @@ namespace SQM.Website
             get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
             set { ViewState["LocalIncident"] = value; }
         }
-
+        public int CurrentStep
+        {
+            get { return ViewState["CurrentStep"] == null ? 0 : (int)ViewState["CurrentStep"]; }
+            set { ViewState["CurrentStep"] = value; }
+        }
         public List<XLAT> XLATList
         {
             get { return ViewState["AlertXLATList"] == null ? null : (List<XLAT>)ViewState["AlertXLATList"]; }
@@ -68,6 +73,7 @@ namespace SQM.Website
         public void PopulateInitialForm(PSsqmEntities ctx)
         {
             XLATList = SQMBasePage.SelectXLATList(new string[1] { "TASK_STATUS" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
+           
             InitializeForm(ctx);
         }
 
@@ -76,7 +82,7 @@ namespace SQM.Website
         {
             lblStatusMsg.Visible = false;
             pnlAlert.Visible = true;
-
+            //pnlBaseForm2.Visible = true;
             localCtx = ctx;
             LocalIncident = EHSIncidentMgr.SelectIncidentById(localCtx, IncidentId);
             //populate form when LocalIncident is not null 
@@ -86,6 +92,8 @@ namespace SQM.Website
             //}
             if (LocalIncident != null)
             {
+                GetAttachments(IncidentId);
+
                 //To get Privilege information and if Privilege is CEO-Group then CEO-Comments section is editable.
                 string PrivInfo = SessionManager.UserContext.Person.PRIV_GROUP.ToString();
                 if (PrivInfo == "CEO-GROUP")
@@ -162,6 +170,57 @@ namespace SQM.Website
             }
         }
 
+        private void GetAttachments(decimal incidentId)
+        {
+            uploaderPreventativeMeasures.SetAttachmentRecordStep("1");
+            uploaderPreventativeMeasures.SetReportOption(false);
+            uploaderPreventativeMeasures.SetDescription(false);
+            // Specifying postback triggers allows uploaderPreventativeMeasures to persist on other postbacks (e.g. 8D checkbox toggle)
+          //  uploaderPreventativeMeasures.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval", "btnSubnavAlert" };
+
+            int attCnt = EHSIncidentMgr.AttachmentCount(incidentId); //add values 2 for getting the PreventativeMeasures attachment.
+            int px = 128;
+
+            if (attCnt > 0)
+            {
+                px = px + (attCnt * 30) + 35;
+                //uploaderPreventativeMeasures.GetUploadedFilesforPreventativeMeasures(40, incidentId, "");
+                uploaderPreventativeMeasures.GetUploadedFilesIncidentSection(40, incidentId, "", (int)Incident_Section.PreventativeMeasuresAttachment);
+            }
+            else
+            {
+                uploaderPreventativeMeasures.GetBlinkATTACHMENT();
+            }
+
+            /*
+
+			*/
+            // Set the html Div height based on number of attachments to be displayed in the grid:
+            //dvAttachLbl.Style.Add("height", px.ToString() + "px !important");
+            //dvAttach.Style.Add("height", px.ToString() + "px !important");
+        }
+
+        protected void SaveAttachments(decimal incidentId)
+        {
+            if (uploaderPreventativeMeasures != null)
+            {
+                string recordStep = (this.CurrentStep + 1).ToString();
+
+                // Add files to database
+                SessionManager.DocumentContext = new DocumentScope().CreateNew(
+                    SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, "BLI", 0, "",
+                    SessionManager.UserContext.WorkingLocation.Plant.PLANT_ID, "", 0
+                    );
+                SessionManager.DocumentContext.RecordType = 40;
+                SessionManager.DocumentContext.RecordID = incidentId;
+                SessionManager.DocumentContext.RecordStep = "1";
+
+                SessionManager.DocumentContext.incident_section = (int)Incident_Section.PreventativeMeasuresAttachment;
+                uploaderPreventativeMeasures.SaveFilesPreventativeMeasures();
+            }
+        }
+
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
             AddUpdateINCFORM_ALERT(LocalIncident.INCIDENT_ID);
@@ -172,6 +231,7 @@ namespace SQM.Website
 
         public int AddUpdateINCFORM_ALERT(decimal incidentId)
         {
+            
             lblStatusMsg.Visible = false;
             int status = 0;
             bool allFieldsComplete = true;
@@ -188,8 +248,9 @@ namespace SQM.Website
                 incidentAlert.CREATE_BY = SessionManager.UserContext.UserName();
                 localCtx.AddToINCFORM_ALERT(incidentAlert);
                 lblAlertStatus.Text = XLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == "0").FirstOrDefault().DESCRIPTION;
-            }
 
+            }
+            SaveAttachments(incidentId);
             incidentAlert.LOCATION_LIST = "";
             foreach (RadComboBoxItem item in ddlLocations.Items.Where(i => i.Checked == true && i.Value.Contains("BU") == false).ToList())
             {
@@ -207,9 +268,11 @@ namespace SQM.Website
             incidentAlert.COMMENTS = tbComments.Text;
             incidentAlert.DUE_DT = rdpDueDate.SelectedDate;
 
+        
+
             // Update CEO-Comments value.
             incidentAlert.CEO_COMMENTS = tbCeoComments.Text.Trim();
-
+          
             // send general notifications
             if (incidentAlert.INCIDENT_ALERT_ID < 1)
             {
@@ -222,7 +285,7 @@ namespace SQM.Website
 
             // send specific task assignments
             EHSNotificationMgr.NotifyIncidentAlertTaskAssignment(LocalIncident, alertTaskList.Where(l => l.RESPONSIBLE_ID.HasValue).ToList());
-
+           
             return status;
         }
 
@@ -291,6 +354,8 @@ namespace SQM.Website
 
             return alertTaskList.Count;
         }
+
+
 
         protected void rgAlertTaskList_ItemDataBound(object sender, GridItemEventArgs e)
         {
