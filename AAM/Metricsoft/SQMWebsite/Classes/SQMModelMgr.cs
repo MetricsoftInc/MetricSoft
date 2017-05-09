@@ -415,7 +415,17 @@ namespace SQM.Website
                     name = pSource.Name;
                     System.Reflection.PropertyInfo pTarget = targetType.GetProperty(name);
                     if (pTarget != null)
-                        pTarget.SetValue(oTarget, pSource.GetValue(oSource, null), null);
+                       if(name != "PERSONReference")
+                        {
+                            pTarget.SetValue(oTarget, pSource.GetValue(oSource, null), null);
+                            //PSsqmEntities Obj = new PSsqmEntities();
+
+
+                            //PERSON o = new PERSON();
+                            //o.per
+
+                        }
+                       
                 }
             }
             catch 
