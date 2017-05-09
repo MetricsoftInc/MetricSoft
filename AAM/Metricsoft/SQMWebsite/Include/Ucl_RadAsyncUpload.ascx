@@ -10,8 +10,9 @@
 		//alert(document.getElementById('<%=tbAttachDesc.ClientID%>').value);
 		//var desc = document.getElementById('<%=tbAttachDesc.ClientID%>').value;
 		//alert(desc);
-		var radAsyncUpload = $find('<%=raUpload.ClientID%>');
-		//alert(radAsyncUpload);
+	    var radAsyncUpload = $find('<%=raUpload.ClientID%>');
+
+
 		//document.getElementById('<%=hfDescriptions.ClientID%>').value += (desc + '|');
 		//alert(document.getElementById('<%=hfDescriptions.ClientID%>').value);
 

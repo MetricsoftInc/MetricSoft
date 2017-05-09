@@ -69,7 +69,8 @@ namespace SQM.Website
 
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-			string script =
+          
+                string script =
 			"function pageLoad() {\n" +
 			"	var radAsyncUpload = $find('<%=raUpload.ClientID%>')\n" +
 			"   var hfDescriptions = document.getElementById('<%= hfDescriptions.ClientID%>');\n" +
@@ -156,12 +157,113 @@ namespace SQM.Website
 		}
 
 
+        //Get the file details for FinalCorrectiveAction section.
+        public void GetUploadedFilesforFinalCorrectiveAction(int recordType, decimal recordId)
+        {
+            GetUploadedFilesforFinalCorrectiveAction(recordType, recordId, "");
+        }
+
+        //get the ATTACHMENT table null
+        public void GetBlinkATTACHMENT()
+        {
+            rgFiles.DataSource = null;
+        }
+
+        //Get the file details for FinalCorrectiveAction section.
+        public void GetUploadedFilesforFinalCorrectiveAction(int recordType, decimal recordId, string recordStep)
+        {
+            _recordType = recordType;
+            _recordId = recordId;
+
+            int FinalCorrectiveAttachment = (int)Incident_Section.FinalCorrectiveAttachment;
+
+            var entities = new PSsqmEntities();
+
+            var files = (from a in entities.ATTACHMENT
+                         where a.RECORD_TYPE == recordType && a.RECORD_ID == recordId && a.INCIDENT_SECTION == FinalCorrectiveAttachment //Add one more condition for FinalCorrectiveAttachment file sections.
+                         orderby a.FILE_NAME
+                         select new
+                         {
+                             AttachmentId = a.ATTACHMENT_ID,
+                             RecordStep = a.RECORD_STEP,
+                             FileName = a.FILE_NAME,
+                             Description = a.FILE_DESC,
+                             Size = a.FILE_SIZE,
+                             DisplayType = a.DISPLAY_TYPE
+                         }).ToList();
+
+            if (!string.IsNullOrEmpty(recordStep))
+            {
+                if (recordType == 40 && recordStep == "2") // Special case to cover second page incident attachments originally entered with no recordstep
+                    rgFiles.DataSource = files.Where(f => (f.RecordStep == "2" || f.RecordStep == ""));
+                else
+                    rgFiles.DataSource = files.Where(f => f.RecordStep == recordStep);
+            }
+            else
+            {
+                rgFiles.DataSource = files;
+            }
+            rgFiles.DataBind();
+
+            rgFiles.Visible = (files.Count > 0);
+
+            tbAttachDesc.Text = "";
+        }
+
+        //Get the file details for PreventativeMeasures section.
+        public void GetUploadedFilesforPreventativeMeasures(int recordType, decimal recordId)
+        {
+            GetUploadedFilesforPreventativeMeasures(recordType, recordId, "");
+        }
+
+        //Get the file details for PreventativeMeasures section.
+        public void GetUploadedFilesforPreventativeMeasures(int recordType, decimal recordId, string recordStep)
+        {
+            _recordType = recordType;
+            _recordId = recordId;
+
+            int PreventativeMeasuresAttachment = (int)Incident_Section.PreventativeMeasuresAttachment;
+
+            var entities = new PSsqmEntities();
+
+            var files = (from a in entities.ATTACHMENT
+                         where a.RECORD_TYPE == recordType && a.RECORD_ID == recordId  && a.INCIDENT_SECTION == PreventativeMeasuresAttachment //Add one more condition for PreventativeMeasures file sections.
+                         orderby a.FILE_NAME
+                         select new
+                         {
+                             AttachmentId = a.ATTACHMENT_ID,
+                             RecordStep = a.RECORD_STEP,
+                             FileName = a.FILE_NAME,
+                             Description = a.FILE_DESC,
+                             Size = a.FILE_SIZE,
+                             DisplayType = a.DISPLAY_TYPE
+                         }).ToList();
+
+            if (!string.IsNullOrEmpty(recordStep))
+            {
+                if (recordType == 40 && recordStep == "2") // Special case to cover second page incident attachments originally entered with no recordstep
+                    rgFiles.DataSource = files.Where(f => (f.RecordStep == "2" || f.RecordStep == ""));
+                else
+                    rgFiles.DataSource = files.Where(f => f.RecordStep == recordStep);
+            }
+            else
+            {
+                rgFiles.DataSource = files;
+            }
+            rgFiles.DataBind();
+
+            rgFiles.Visible = (files.Count > 0);
+
+            tbAttachDesc.Text = "";
+        }
+
+
         public void GetUploadedFiles(int recordType, decimal recordId)
         {
             GetUploadedFiles(recordType, recordId, "");
         }
-
-		public void GetUploadedFiles(int recordType, decimal recordId, string recordStep)
+    
+        public void GetUploadedFiles(int recordType, decimal recordId, string recordStep)
 		{
 			_recordType = recordType;
 			_recordId = recordId;
@@ -199,7 +301,9 @@ namespace SQM.Website
 			tbAttachDesc.Text = "";
 		}
 
-		public void GetUploadedFilesProblemCase(List<ATTACHMENT> attachList)
+       
+
+        public void GetUploadedFilesProblemCase(List<ATTACHMENT> attachList)
 		{
 			var files = (from a in attachList
 						 orderby a.FILE_NAME
@@ -250,7 +354,8 @@ namespace SQM.Website
 					SessionManager.DocumentContext.RecordID,
 					SessionManager.DocumentContext.RecordStep,
 					Session.SessionID,
-					file.InputStream
+					file.InputStream,
+                   (int)Incident_Section.IncidentAttachment
 					);
 				i++;
 			}
@@ -265,21 +370,188 @@ namespace SQM.Website
 			}
 		}
 
-		protected void rgFiles_OnDeleteCommand(object source, GridCommandEventArgs e)
+        public void SaveFilesFinalCorrectiveAction()
+        {
+            string[] descriptions;
+
+            //if (trAttachDesc.Visible == true)
+            //	descriptions = tbAttachDesc.Text.Split('|');
+            //else 
+            //	descriptions = hfDescriptions.Value.Split('|');
+
+            if (hfDescriptions.Value.Length > 0)
+                descriptions = hfDescriptions.Value.Split('|');
+            else if (tbAttachDesc.Text.Length > 0)
+                descriptions = tbAttachDesc.Text.Split('|');
+            else
+                descriptions = "".Split('|');
+
+            int i = 0;
+            foreach (UploadedFile file in raUpload.UploadedFiles)
+            {
+                string description = (i < descriptions.Count()) ? descriptions[i] : "";
+                decimal displayType = (file.FileName.ToLower().Contains(".jpeg") || file.FileName.ToLower().Contains(".jpg") ||
+                    file.FileName.ToLower().Contains(".gif") || file.FileName.ToLower().Contains(".png")) ||
+                    file.FileName.ToLower().Contains(".bmp") ? 1 : 0;
+                SQMDocumentMgr.AddAttachment(
+                    file.FileName,
+                    description,
+                    displayType,
+                    "",
+                    SessionManager.DocumentContext.RecordType,
+                    SessionManager.DocumentContext.RecordID,
+                    SessionManager.DocumentContext.RecordStep,
+                    Session.SessionID,
+                    file.InputStream,
+                   (int)Incident_Section.FinalCorrectiveAttachment
+                    );
+                i++;
+            }
+
+            // Update "display" status of existing files
+            foreach (GridDataItem item in rgFiles.Items)
+            {
+                decimal attachmentId = Convert.ToDecimal(item.GetDataKeyValue("AttachmentId"));
+                CheckBox cb = (CheckBox)item["DisplayTypeColumn"].FindControl("checkBox");
+                decimal displayType = (cb.Checked) ? 1 : 0;
+                SQMDocumentMgr.UpdateAttachmentDisplayType(attachmentId, displayType);
+            }
+        }
+
+
+        public void SaveFilesPreventativeMeasures()
+        {
+            string[] descriptions;
+
+            //if (trAttachDesc.Visible == true)
+            //	descriptions = tbAttachDesc.Text.Split('|');
+            //else 
+            //	descriptions = hfDescriptions.Value.Split('|');
+
+            if (hfDescriptions.Value.Length > 0)
+                descriptions = hfDescriptions.Value.Split('|');
+            else if (tbAttachDesc.Text.Length > 0)
+                descriptions = tbAttachDesc.Text.Split('|');
+            else
+                descriptions = "".Split('|');
+
+            int i = 0;
+            foreach (UploadedFile file in raUpload.UploadedFiles)
+            {
+                string description = (i < descriptions.Count()) ? descriptions[i] : "";
+                decimal displayType = (file.FileName.ToLower().Contains(".jpeg") || file.FileName.ToLower().Contains(".jpg") ||
+                    file.FileName.ToLower().Contains(".gif") || file.FileName.ToLower().Contains(".png")) ||
+                    file.FileName.ToLower().Contains(".bmp") ? 1 : 0;
+                SQMDocumentMgr.AddAttachment(
+                    file.FileName,
+                    description,
+                    displayType,
+                    "",
+                    SessionManager.DocumentContext.RecordType,
+                    SessionManager.DocumentContext.RecordID,
+                    SessionManager.DocumentContext.RecordStep,
+                    Session.SessionID,
+                    file.InputStream,
+                    (int)Incident_Section.PreventativeMeasuresAttachment
+                    );
+                i++;
+            }
+
+            // Update "display" status of existing files
+            foreach (GridDataItem item in rgFiles.Items)
+            {
+                decimal attachmentId = Convert.ToDecimal(item.GetDataKeyValue("AttachmentId"));
+                CheckBox cb = (CheckBox)item["DisplayTypeColumn"].FindControl("checkBox");
+                decimal displayType = (cb.Checked) ? 1 : 0;
+                SQMDocumentMgr.UpdateAttachmentDisplayType(attachmentId, displayType);
+            }
+        }
+
+        protected void rgFiles_OnDeleteCommand(object source, GridCommandEventArgs e)
 		{
-			GridEditableItem item = (GridEditableItem)e.Item;
-			decimal attachmentId = (decimal)item.GetDataKeyValue("AttachmentId");
-			ATTACHMENT attach = SQMDocumentMgr.DeleteAttachment(attachmentId);
 
-			this.GetUploadedFiles(_recordType, _recordId);
+            //Declare variables for manage the conditions for delete the files from all the incident sections.
+            string Incident = "uploader"; //for incident step.
+            string IncidentFinalCorrectiveAction = "uploaderFinalCorrectiveAction";//for FinalCorrectiveAction step.
+            string IncidentPreventativeMeasures = "uploaderPreventativeMeasures"; // for PreventativeMeasures step.
+            string uploaderID = ID;
 
-            if (OnAttachmentDelete != null  &&  attach != null)
+
+            GridEditableItem item = (GridEditableItem)e.Item;
+            decimal attachmentId = (decimal)item.GetDataKeyValue("AttachmentId");
+            ATTACHMENT attach = SQMDocumentMgr.DeleteAttachment(attachmentId);
+
+           
+            //after delete display attached files according to uploader id.
+            if (uploaderID == Incident)
+                this.GetUploadedFilesIncidentSection(_recordType, _recordId, "", (int)Incident_Section.IncidentAttachment);
+            else if (uploaderID == IncidentFinalCorrectiveAction)
+                this.GetUploadedFilesIncidentSection(_recordType, _recordId, "", (int)Incident_Section.FinalCorrectiveAttachment);
+            else if (uploaderID == IncidentPreventativeMeasures)
+                this.GetUploadedFilesIncidentSection(_recordType, _recordId, "", (int)Incident_Section.PreventativeMeasuresAttachment);
+            else
+                this.GetUploadedFiles(_recordType, _recordId);
+
+            if (OnAttachmentDelete != null && attach != null)
             {
                 OnAttachmentDelete(attach);
             }
-		} 
+        }
 
-		protected void rgFiles_ItemDataBound(object sender, GridItemEventArgs e)
+        public void GetUploadedFilesIncidentSection(int recordType, decimal recordId, string recordStep, int incident_section)
+        {
+            _recordType = recordType;
+            _recordId = recordId;
+
+            var entities = new PSsqmEntities();
+
+            var files = (from a in entities.ATTACHMENT
+                         where a.RECORD_TYPE == recordType && a.RECORD_ID == recordId && a.INCIDENT_SECTION == incident_section
+                         orderby a.FILE_NAME
+                         select new
+                         {
+                             AttachmentId = a.ATTACHMENT_ID,
+                             RecordStep = a.RECORD_STEP,
+                             FileName = a.FILE_NAME,
+                             Description = a.FILE_DESC,
+                             Size = a.FILE_SIZE,
+                             DisplayType = a.DISPLAY_TYPE
+                         }).ToList();
+
+            if (!string.IsNullOrEmpty(recordStep))
+            {
+                if (recordType == 40 && recordStep == "2") // Special case to cover second page incident attachments originally entered with no recordstep
+                    rgFiles.DataSource = files.Where(f => (f.RecordStep == "2" || f.RecordStep == ""));
+                else
+                    rgFiles.DataSource = files.Where(f => f.RecordStep == recordStep);
+            }
+            else
+            {
+                rgFiles.DataSource = files;
+            }
+            rgFiles.DataBind();
+
+            rgFiles.Visible = (files.Count > 0);
+
+            tbAttachDesc.Text = "";
+        }
+
+        //Comment code for just backup for old delete file features.
+        //protected void rgFiles_OnDeleteCommand(object source, GridCommandEventArgs e)
+        //{
+        //    GridEditableItem item = (GridEditableItem)e.Item;
+        //    decimal attachmentId = (decimal)item.GetDataKeyValue("AttachmentId");
+        //    ATTACHMENT attach = SQMDocumentMgr.DeleteAttachment(attachmentId);
+
+        //    this.GetUploadedFiles(_recordType, _recordId);
+
+        //    if (OnAttachmentDelete != null && attach != null)
+        //    {
+        //        OnAttachmentDelete(attach);
+        //    }
+        //}
+
+        protected void rgFiles_ItemDataBound(object sender, GridItemEventArgs e)
 		{
 			if (e.Item is GridDataItem)
 			{
