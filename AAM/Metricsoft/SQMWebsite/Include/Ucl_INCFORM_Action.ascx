@@ -217,8 +217,8 @@
 			</FooterTemplate>
 		</asp:Repeater>
      
-
-
+            </telerik:RadAjaxPanel>
+        <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
 		<div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 10px;">
 			<center>
 				<br />
@@ -228,7 +228,7 @@
 			</center>
 		</div>
 
-         
+         </telerik:RadAjaxPanel>
 
 			<div class="row"  style="margin-top: 10px;">
 				<center>
@@ -241,7 +241,6 @@
 			</div>
 		<asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
 
-	</telerik:RadAjaxPanel>
 
     
 

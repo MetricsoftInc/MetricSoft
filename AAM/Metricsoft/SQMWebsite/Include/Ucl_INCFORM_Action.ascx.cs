@@ -517,7 +517,12 @@ namespace SQM.Website
 			{
 				status = SaveActions(incidentId, actionList);
 			}
-            SaveAttachments(incidentId);
+            //Apply condition if the data will not save into the DB.
+            if (allFieldsComplete)
+            {
+                SaveAttachments(incidentId);
+            }
+            
             return status;
 		}
 
