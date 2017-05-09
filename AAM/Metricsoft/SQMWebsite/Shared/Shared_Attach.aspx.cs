@@ -36,7 +36,7 @@ namespace SQM.Website.Shared
   
                 Stream stream = flFileUpload.FileContent;
                // string sessionID = Session.SessionID;
-                ATTACHMENT d = SQMDocumentMgr.AddAttachment(flFileUpload.FileName, tbFileDescription.Text, 0, "", SessionManager.DocumentContext.RecordType, SessionManager.DocumentContext.RecordID, SessionManager.DocumentContext.RecordStep, Session.SessionID, stream);
+                ATTACHMENT d = SQMDocumentMgr.AddAttachment(flFileUpload.FileName, tbFileDescription.Text, 0, "", SessionManager.DocumentContext.RecordType, SessionManager.DocumentContext.RecordID, SessionManager.DocumentContext.RecordStep, Session.SessionID, stream, 0);//apply 0 for incident attchment.
                 if (d != null)
                 {
                     Bind_gvUploadedFiles();
