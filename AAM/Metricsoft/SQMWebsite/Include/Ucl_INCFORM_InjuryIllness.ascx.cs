@@ -914,7 +914,7 @@ namespace SQM.Website
 			uploader.SetReportOption(false);
 			uploader.SetDescription(false);
 			// Specifying postback triggers allows uploader to persist on other postbacks (e.g. 8D checkbox toggle)
-			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval"};
+			uploader.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval" };
 
 			int attCnt = EHSIncidentMgr.AttachmentCount(incidentId);
 			int px = 128;
@@ -922,7 +922,7 @@ namespace SQM.Website
 			if (attCnt > 0)
 			{
 				px = px + (attCnt * 30) + 35;
-				uploader.GetUploadedFiles(40, incidentId, "");
+				uploader.GetUploadedFilesIncidentSection(40, incidentId, "",0);//values 0 denotes for incident section.
 			}
 
 			/*
@@ -1346,7 +1346,9 @@ namespace SQM.Website
 					uclaction.IsEditContext = true;
 					uclaction.IncidentId = EditIncidentId;
 					uclaction.PopulateInitialForm();
-					break;
+            
+                   
+                    break;
 				// approval steps
 				case "2.5":
 					lblFormTitle.Text = btnSubnavInitialActionApproval.Text;
@@ -1356,7 +1358,8 @@ namespace SQM.Website
 					uclapproval.IncidentId = EditIncidentId;
 					uclapproval.Visible = true;
 					uclapproval.PopulateInitialForm(incidentStepList.Where(s => s.INCIDENT_TYPE_ID == (decimal)EHSIncidentTypeId.InjuryIllness && s.STEP == 2.5m).FirstOrDefault());
-					break;
+                 
+                    break;
 				case "5.5":
 					lblFormTitle.Text = btnSubnavCorrectiveActionApproval.Text;
 					btnSubnavCorrectiveActionApproval.Enabled = false;
