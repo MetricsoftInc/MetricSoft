@@ -196,10 +196,6 @@
                     </td>
                 </tr>
             </table>
-
-             </telerik:RadAjaxPanel>
-            <%--To upload files--%>
-           <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
             <div id="dvAttach" runat="server" class="borderSoft" style="margin-top: 10px;">
                 <center>
 				<br />
@@ -208,7 +204,6 @@
 				<Ucl:UploadAttachment ID="uploaderPreventativeMeasures" runat="server" />
 			</center>
             </div>
-                </telerik:RadAjaxPanel>
             <div class="row" style="margin-top: 10px;">
                 <center>
 					<span>
@@ -216,9 +211,10 @@
 							OnClientClicked="ChangeClear" OnClick="btnSave_Click" AutoPostBack="true" SingleClick="true" SingleClickText="<%$ Resources:LocalizedText, Submit %>"/>
 					</span>
 				</center>
+                <asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
             </div>
-         <asp:Label ID="lblStatusMsg" runat="server" CssClass="labelEmphasis"></asp:Label>
-       
+
+        </telerik:RadAjaxPanel>
 
 <%--        <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
         </telerik:RadAjaxPanel>--%>
