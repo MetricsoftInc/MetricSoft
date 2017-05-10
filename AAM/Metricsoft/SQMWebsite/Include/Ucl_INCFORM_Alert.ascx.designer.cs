@@ -238,6 +238,15 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadGrid rgAlertTaskList;
         
         /// <summary>
+        /// rapAttach control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel rapAttach;
+        
+        /// <summary>
         /// dvAttach control.
         /// </summary>
         /// <remarks>
