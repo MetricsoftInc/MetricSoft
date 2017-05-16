@@ -1002,6 +1002,10 @@ namespace SQM.Website
             rddlInjuryType.Items.Clear();
 
             List<EHSMetaData> injtype = EHSMetaDataMgr.SelectMetaDataList("INJURY_TYPE").OrderBy(P=>P.SortOrder).ToList();
+
+            injtype = injtype.Where(x => !x.Value.Contains("IT_NEW_")).ToList();
+
+
             if (injtype != null && injtype.Count > 0)
             {
                 rddlInjuryType.Items.Add(new DropDownListItem("", ""));
