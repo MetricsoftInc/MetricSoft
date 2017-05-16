@@ -996,4 +996,68 @@
   <data name="L4_Major" xml:space="preserve">
     <value>Level 4 (Major) - fatality, life changing disability.</value>
   </data>
+  <data name="ChangeLostTime" xml:space="preserve">
+    <value>Change to Lost Time</value>
+  </data>
+  <data name="ChangeRecordable" xml:space="preserve">
+    <value>Change to Recordable</value>
+  </data>
+  <data name="ChangeRestrictedDuty" xml:space="preserve">
+    <value>Change to Restricted Duty</value>
+  </data>
+  <data name="EmployeeExamined" xml:space="preserve">
+    <value>Employee  examined by on-site medical consulting group</value>
+  </data>
+  <data name="EmployeeReceivedFirstAidOnSite" xml:space="preserve">
+    <value>Employee  received first aid on site</value>
+  </data>
+  <data name="EmployeeSentToHospital" xml:space="preserve">
+    <value>Employee  sent to hospital</value>
+  </data>
+  <data name="lblAgeOfAssociate" xml:space="preserve">
+    <value>Age of Associate (US and Europe  - DO NOT ENTER)</value>
+  </data>
+  <data name="lblAssetNumber" xml:space="preserve">
+    <value>Asset Number</value>
+  </data>
+  <data name="lblBusinessType" xml:space="preserve">
+    <value>Business Type</value>
+  </data>
+  <data name="lblChangeInMedicalStatus" xml:space="preserve">
+    <value>Change in Medical Status ?</value>
+  </data>
+  <data name="lblDesignNumber" xml:space="preserve">
+    <value>Design Number (for NSK designs only)</value>
+  </data>
+  <data name="lblEquipmentManufacturerDate" xml:space="preserve">
+    <value>Equipment Manufacturer Date (MM/DD/YYYY)</value>
+  </data>
+  <data name="lblEquipmentManufacturerName" xml:space="preserve">
+    <value>Equipment Manufacturer Name</value>
+  </data>
+  <data name="lblInitialTreatmentGiven" xml:space="preserve">
+    <value>Initial  Treatment Given</value>
+  </data>
+  <data name="lblMacroProcessType" xml:space="preserve">
+    <value>Macro Process Type</value>
+  </data>
+  <data name="lblSpecificProcessType" xml:space="preserve">
+    <value>Specific Process Type</value>
+  </data>
+  <data name="lblTypeOfIncident" xml:space="preserve">
+    <value>Type of Incident (what happened?)</value>
+  </data>
+  <data name="LostTimeLog" xml:space="preserve">
+    <value>Yes – see Lost Time Log below</value>
+  </data>
+  <data name="TNSKNumber" xml:space="preserve">
+    <value>TNSK#(defined by TNSK )</value>
+  </data>
+  <data name="IncidentDate_01" xml:space="preserve">
+    <value>Incident Date (MM/DD/YYYY)</value>
+    <comment>Updated data key for incident date.</comment>
+  </data>
+  <data name="TypeOfInjury_New" xml:space="preserve">
+    <value>Type of Injury(what was the result?)</value>
+  </data>
 </root>

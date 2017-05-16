@@ -1987,6 +1987,75 @@ namespace SQM.Website
 
 			return metaList;
 		}
-	#endregion
-	}
+        /// <summary>
+        /// To call value of nested dropdown list.
+        /// </summary>
+        /// <param name="GroupValue"></param>
+        /// <param name="XLAT_CODE"></param>
+        /// <returns></returns>
+        public static List<EHSMetaData> SelectMetaDataList(string GroupValue, string XLAT_CODE)
+        {
+            var entities = new PSsqmEntities();
+            var metaList = new List<EHSMetaData>();
+            string XLAT_GROUP;
+
+
+            string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+            string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+
+            if (language == "en")
+            {
+               
+                  metaList = (from x in entities.XLAT
+                            where x.XLAT_LANGUAGE == language && x.XLAT_GROUP == GroupValue && x.STATUS == "A"&& x.XLAT_CODE.Contains(XLAT_CODE)
+                            orderby x.XLAT_CODE
+                            select new EHSMetaData()
+                            {
+                                Language = x.XLAT_LANGUAGE,
+                                MetaDataType = x.XLAT_GROUP,
+                                Text = !string.IsNullOrEmpty(x.DESCRIPTION_SHORT) ? x.DESCRIPTION_SHORT.Trim().Replace("\r\n", "") : "",
+                                TextLong = !string.IsNullOrEmpty(x.DESCRIPTION) ? x.DESCRIPTION.Trim().Replace("\r\n", "") : "",
+                                Value = !string.IsNullOrEmpty(x.XLAT_CODE) ? x.XLAT_CODE.Trim().Replace("\r\n", "") : "",
+                                Status = x.STATUS,
+                                SortOrder = x.SORT_ORDER,
+                                IsHeading = (bool)x.IS_HEADING
+                            }).ToList();
+            }
+            else
+            {
+                var tempList = (from x in entities.XLAT
+                                where (x.XLAT_LANGUAGE == language || x.XLAT_LANGUAGE == "en") && x.XLAT_CODE == GroupValue && x.STATUS == "A" && x.XLAT_CODE.Contains(XLAT_CODE)
+                                orderby x.XLAT_CODE
+                                select new EHSMetaData()
+                                {
+                                    Language = x.XLAT_LANGUAGE,
+                                    MetaDataType = x.XLAT_GROUP,
+                                    Text = !string.IsNullOrEmpty(x.DESCRIPTION_SHORT) ? x.DESCRIPTION_SHORT.Trim().Replace("\r\n", "") : "",
+                                    TextLong = !string.IsNullOrEmpty(x.DESCRIPTION) ? x.DESCRIPTION.Trim().Replace("\r\n", "") : "",
+                                    Value = !string.IsNullOrEmpty(x.XLAT_CODE) ? x.XLAT_CODE.Trim().Replace("\r\n", "") : "",
+                                    Status = x.STATUS,
+                                    SortOrder = x.SORT_ORDER,
+                                    IsHeading = (bool)x.IS_HEADING
+                                }).ToList();
+
+                EHSMetaData XLATlang = null;
+                foreach (EHSMetaData xlat in tempList.Where(x => x.Language == "en").ToList())
+                {
+                    XLATlang = tempList.Where(l => l.MetaDataType == xlat.MetaDataType && l.Value == xlat.Value && l.Language == language).FirstOrDefault();
+                    if (XLATlang != null)
+                        metaList.Add(XLATlang);
+                    else
+                    {
+                        XLATlang = new EHSMetaData();
+                        XLATlang = (EHSMetaData)SQMModelMgr.CopyObjectValues(XLATlang, xlat, false);
+                        XLATlang.Language = language;  // substitute english xlat if localized version does not exist
+                        metaList.Add(xlat);
+                    }
+                }
+            }
+
+            return metaList;
+        }
+        #endregion
+    }
 }

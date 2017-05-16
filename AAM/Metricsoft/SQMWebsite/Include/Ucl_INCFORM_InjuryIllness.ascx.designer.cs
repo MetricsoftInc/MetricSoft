@@ -193,6 +193,33 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDatePicker rdpReportDate;
         
         /// <summary>
+        /// lblTNSKSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTNSKSM;
+        
+        /// <summary>
+        /// lblTNSKXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTNSKXS;
+        
+        /// <summary>
+        /// RTXT_TNSK control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RTXT_TNSK;
+        
+        /// <summary>
         /// lbDescriptionSM control.
         /// </summary>
         /// <remarks>
@@ -344,6 +371,204 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvShift;
+        
+        /// <summary>
+        /// RadAjaxPanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxPanel RadAjaxPanel1;
+        
+        /// <summary>
+        /// lblBusinessTypeSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBusinessTypeSM;
+        
+        /// <summary>
+        /// lblBusinessTypeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBusinessTypeXS;
+        
+        /// <summary>
+        /// RDDL_BusinessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList RDDL_BusinessType;
+        
+        /// <summary>
+        /// lblMacroProcessTypeSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMacroProcessTypeSM;
+        
+        /// <summary>
+        /// lblMacroProcessTypeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMacroProcessTypeXS;
+        
+        /// <summary>
+        /// RDDL_MacroProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList RDDL_MacroProcessType;
+        
+        /// <summary>
+        /// lblSpecificProcessTypeSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSpecificProcessTypeSM;
+        
+        /// <summary>
+        /// lblSpecificProcessTypeXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSpecificProcessTypeXS;
+        
+        /// <summary>
+        /// RDDL_SpecificProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList RDDL_SpecificProcessType;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerNameSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerNameSM;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerNameXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerNameXS;
+        
+        /// <summary>
+        /// TXT_EquipmentManufacturerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox TXT_EquipmentManufacturerName;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerDateSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerDateSM;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerDateXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerDateXS;
+        
+        /// <summary>
+        /// RDP_EquipmentManufacturerDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker RDP_EquipmentManufacturerDate;
+        
+        /// <summary>
+        /// lblDesignNumberSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDesignNumberSM;
+        
+        /// <summary>
+        /// lbllblDesignNumberXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbllblDesignNumberXS;
+        
+        /// <summary>
+        /// RTXT_DesignNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RTXT_DesignNumber;
+        
+        /// <summary>
+        /// lblAssetNumberSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssetNumberSM;
+        
+        /// <summary>
+        /// lblAssetNumberXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssetNumberXS;
+        
+        /// <summary>
+        /// RTXT_AssetNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RTXT_AssetNumber;
         
         /// <summary>
         /// lblDeptTestSM control.
@@ -922,6 +1147,33 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadMonthYearPicker radAssociateSelect;
         
         /// <summary>
+        /// lblAgeOfAssociateSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAgeOfAssociateSM;
+        
+        /// <summary>
+        /// lblAgeOfAssociateXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAgeOfAssociateXS;
+        
+        /// <summary>
+        /// RtxtAgeOfAssociate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RtxtAgeOfAssociate;
+        
+        /// <summary>
         /// divHireDate control.
         /// </summary>
         /// <remarks>
@@ -985,6 +1237,33 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadDropDownList rddlInjuryType;
         
         /// <summary>
+        /// lblTypeOfIncidentSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTypeOfIncidentSM;
+        
+        /// <summary>
+        /// lblTypeOfIncidentXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTypeOfIncidentXS;
+        
+        /// <summary>
+        /// RDDL_TypeOfIncident control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList RDDL_TypeOfIncident;
+        
+        /// <summary>
         /// lbBodyPartSM control.
         /// </summary>
         /// <remarks>
@@ -1037,6 +1316,69 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdoReoccur;
+        
+        /// <summary>
+        /// lblInitialTreatmentGivenSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInitialTreatmentGivenSM;
+        
+        /// <summary>
+        /// lblInitialTreatmentGivenXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInitialTreatmentGivenXS;
+        
+        /// <summary>
+        /// CBL_InitialTreatmentGiven control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CBL_InitialTreatmentGiven;
+        
+        /// <summary>
+        /// lblStatusMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatusMsg;
+        
+        /// <summary>
+        /// lblChangeInMedicalStatusSM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChangeInMedicalStatusSM;
+        
+        /// <summary>
+        /// lblChangeInMedicalStatusXS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChangeInMedicalStatusXS;
+        
+        /// <summary>
+        /// CBL_ChangeInMedicalStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CBL_ChangeInMedicalStatus;
         
         /// <summary>
         /// rapSeverity control.

@@ -412,11 +412,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change to Lost Time.
+        /// </summary>
+        internal static string ChangeLostTime {
+            get {
+                return ResourceManager.GetString("ChangeLostTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Password.
         /// </summary>
         internal static string ChangePassword {
             get {
                 return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change to Recordable.
+        /// </summary>
+        internal static string ChangeRecordable {
+            get {
+                return ResourceManager.GetString("ChangeRecordable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change to Restricted Duty.
+        /// </summary>
+        internal static string ChangeRestrictedDuty {
+            get {
+                return ResourceManager.GetString("ChangeRestrictedDuty", resourceCulture);
             }
         }
         
@@ -817,6 +844,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee  examined by on-site medical consulting group.
+        /// </summary>
+        internal static string EmployeeExamined {
+            get {
+                return ResourceManager.GetString("EmployeeExamined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee  received first aid on site.
+        /// </summary>
+        internal static string EmployeeReceivedFirstAidOnSite {
+            get {
+                return ResourceManager.GetString("EmployeeReceivedFirstAidOnSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee  sent to hospital.
+        /// </summary>
+        internal static string EmployeeSentToHospital {
+            get {
+                return ResourceManager.GetString("EmployeeSentToHospital", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Energy input.
         /// </summary>
         internal static string EnergyInput {
@@ -1087,6 +1141,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incident Date (MM/DD/YYYY).
+        /// </summary>
+        internal static string IncidentDate_01 {
+            get {
+                return ResourceManager.GetString("IncidentDate_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incident ID.
         /// </summary>
         internal static string IncidentID {
@@ -1303,6 +1366,105 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age of Associate (US and Europe  - DO NOT ENTER).
+        /// </summary>
+        internal static string lblAgeOfAssociate {
+            get {
+                return ResourceManager.GetString("lblAgeOfAssociate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asset Number.
+        /// </summary>
+        internal static string lblAssetNumber {
+            get {
+                return ResourceManager.GetString("lblAssetNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Business Type.
+        /// </summary>
+        internal static string lblBusinessType {
+            get {
+                return ResourceManager.GetString("lblBusinessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change in Medical Status ?.
+        /// </summary>
+        internal static string lblChangeInMedicalStatus {
+            get {
+                return ResourceManager.GetString("lblChangeInMedicalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Design Number (for NSK designs only).
+        /// </summary>
+        internal static string lblDesignNumber {
+            get {
+                return ResourceManager.GetString("lblDesignNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equipment Manufacturer Date (MM/DD/YYYY).
+        /// </summary>
+        internal static string lblEquipmentManufacturerDate {
+            get {
+                return ResourceManager.GetString("lblEquipmentManufacturerDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equipment Manufacturer Name.
+        /// </summary>
+        internal static string lblEquipmentManufacturerName {
+            get {
+                return ResourceManager.GetString("lblEquipmentManufacturerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial  Treatment Given.
+        /// </summary>
+        internal static string lblInitialTreatmentGiven {
+            get {
+                return ResourceManager.GetString("lblInitialTreatmentGiven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Macro Process Type.
+        /// </summary>
+        internal static string lblMacroProcessType {
+            get {
+                return ResourceManager.GetString("lblMacroProcessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specific Process Type.
+        /// </summary>
+        internal static string lblSpecificProcessType {
+            get {
+                return ResourceManager.GetString("lblSpecificProcessType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of Incident (what happened?).
+        /// </summary>
+        internal static string lblTypeOfIncident {
+            get {
+                return ResourceManager.GetString("lblTypeOfIncident", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List assessments.
         /// </summary>
         internal static string ListAssessments {
@@ -1398,6 +1560,15 @@ namespace Resources {
         internal static string LostTimeHistory {
             get {
                 return ResourceManager.GetString("LostTimeHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes – see Lost Time Log below.
+        /// </summary>
+        internal static string LostTimeLog {
+            get {
+                return ResourceManager.GetString("LostTimeLog", resourceCulture);
             }
         }
         
@@ -2275,6 +2446,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TNSK#(defined by TNSK ).
+        /// </summary>
+        internal static string TNSKNumber {
+            get {
+                return ResourceManager.GetString("TNSKNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         internal static string To {
@@ -2289,6 +2469,15 @@ namespace Resources {
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of Injury(what was the result?).
+        /// </summary>
+        internal static string TypeOfInjury_New {
+            get {
+                return ResourceManager.GetString("TypeOfInjury_New", resourceCulture);
             }
         }
         

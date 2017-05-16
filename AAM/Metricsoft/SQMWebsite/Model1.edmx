@@ -49,6 +49,7 @@
           <Property Name="UPLOADED_DT" Type="datetime" />
           <Property Name="OWNER_ID" Type="numeric" Precision="35" Scale="0" />
           <Property Name="SESSION_ID" Type="varchar" MaxLength="50" />
+          <Property Name="INCIDENT_SECTION" Type="int" />
         </EntityType>
         <EntityType Name="ATTACHMENT_FILE">
           <Key>
@@ -895,6 +896,17 @@
           <Property Name="ASSOCIATE_YEAR" Type="int" />
           <Property Name="HIRE_MONTHS" Type="int" />
           <Property Name="HIRE_YEAR" Type="int" />
+          <Property Name="BUSINESS_TYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="MACRO_PROCESS_TYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="SPECIFIC_PROCESS_TYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="EQUIPEMENT_MANUFACTURER_DATE" Type="date" />
+          <Property Name="DESIGN_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="ASSET_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="AGE_OF_ASSOCIATE" Type="varchar" MaxLength="50" />
+          <Property Name="TYPE_OF_INCIDENT" Type="nvarchar" MaxLength="50" />
+          <Property Name="INITIAL_TREATMENT_GIVEN" Type="nvarchar" MaxLength="50" />
+          <Property Name="CHANGE_MEDICAL_STATUS" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="INCFORM_LOSTTIME_HIST">
           <Key>
@@ -1006,6 +1018,7 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="int" Nullable="false" />
           <Property Name="LAST_APPROVAL_STEP" Type="numeric" Precision="8" Scale="2" />
+          <Property Name="TNSKNumber" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -5367,6 +5380,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Type="Decimal" Name="OWNER_ID" Precision="35" Scale="0" />
           <Property Type="String" Name="SESSION_ID" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ATTACHMENT_FILE" Relationship="PSsqmModel.FK_ATTACHMENTS_DATA_ATTACHMENTS" FromRole="ATTACHMENT" ToRole="ATTACHMENT_FILE" />
+          <Property Name="INCIDENT_SECTION" Type="Int32" />
         </EntityType>
         <EntityType Name="ATTACHMENT_FILE">
           <Key>
@@ -9310,6 +9324,17 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="ASSOCIATE_YEAR" Type="Int32" />
           <Property Name="HIRE_MONTHS" Type="Int32" />
           <Property Name="HIRE_YEAR" Type="Int32" />
+          <Property Name="BUSINESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MACRO_PROCESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SPECIFIC_PROCESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EQUIPEMENT_MANUFACTURER_DATE" Type="DateTime" Precision="0" />
+          <Property Name="DESIGN_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ASSET_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AGE_OF_ASSOCIATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TYPE_OF_INCIDENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="INITIAL_TREATMENT_GIVEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CHANGE_MEDICAL_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="INCFORM_STEP_PRIV">
           <Key>
@@ -9404,6 +9429,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <NavigationProperty Name="INCIDENT_ANSWER" Relationship="PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT" FromRole="INCIDENT" ToRole="INCIDENT_ANSWER" />
           <NavigationProperty Name="PROB_OCCUR" Relationship="PSsqmModel.FK_PROB_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="PROB_OCCUR" />
           <NavigationProperty Name="QI_OCCUR" Relationship="PSsqmModel.FK_QI_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="QI_OCCUR" />
+          <Property Name="TNSKNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_INCIDENT_COMPANY">
           <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="1" />
@@ -9635,6 +9661,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="ATTACHMENT">
             <EntityTypeMapping TypeName="PSsqmModel.ATTACHMENT">
               <MappingFragment StoreEntitySet="ATTACHMENT">
+                <ScalarProperty Name="INCIDENT_SECTION" ColumnName="INCIDENT_SECTION" />
                 <ScalarProperty Name="SESSION_ID" ColumnName="SESSION_ID" />
                 <ScalarProperty Name="OWNER_ID" ColumnName="OWNER_ID" />
                 <ScalarProperty Name="UPLOADED_DT" ColumnName="UPLOADED_DT" />
@@ -11751,6 +11778,17 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCFORM_INJURYILLNESS">
             <EntityTypeMapping TypeName="PSsqmModel.INCFORM_INJURYILLNESS">
               <MappingFragment StoreEntitySet="INCFORM_INJURYILLNESS">
+                <ScalarProperty Name="CHANGE_MEDICAL_STATUS" ColumnName="CHANGE_MEDICAL_STATUS" />
+                <ScalarProperty Name="INITIAL_TREATMENT_GIVEN" ColumnName="INITIAL_TREATMENT_GIVEN" />
+                <ScalarProperty Name="TYPE_OF_INCIDENT" ColumnName="TYPE_OF_INCIDENT" />
+                <ScalarProperty Name="AGE_OF_ASSOCIATE" ColumnName="AGE_OF_ASSOCIATE" />
+                <ScalarProperty Name="ASSET_NUMBER" ColumnName="ASSET_NUMBER" />
+                <ScalarProperty Name="DESIGN_NUMBER" ColumnName="DESIGN_NUMBER" />
+                <ScalarProperty Name="EQUIPEMENT_MANUFACTURER_DATE" ColumnName="EQUIPEMENT_MANUFACTURER_DATE" />
+                <ScalarProperty Name="EQUIPMENT_MANUFACTURER_NAME" ColumnName="EQUIPMENT_MANUFACTURER_NAME" />
+                <ScalarProperty Name="SPECIFIC_PROCESS_TYPE" ColumnName="SPECIFIC_PROCESS_TYPE" />
+                <ScalarProperty Name="MACRO_PROCESS_TYPE" ColumnName="MACRO_PROCESS_TYPE" />
+                <ScalarProperty Name="BUSINESS_TYPE" ColumnName="BUSINESS_TYPE" />
                 <ScalarProperty Name="HIRE_YEAR" ColumnName="HIRE_YEAR" />
                 <ScalarProperty Name="HIRE_MONTHS" ColumnName="HIRE_MONTHS" />
                 <ScalarProperty Name="ASSOCIATE_YEAR" ColumnName="ASSOCIATE_YEAR" />
@@ -11843,6 +11881,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="INCIDENT">
             <EntityTypeMapping TypeName="PSsqmModel.INCIDENT">
               <MappingFragment StoreEntitySet="INCIDENT">
+                <ScalarProperty Name="TNSKNumber" ColumnName="TNSKNumber" />
                 <ScalarProperty Name="LAST_APPROVAL_STEP" ColumnName="LAST_APPROVAL_STEP" />
                 <ScalarProperty Name="INCFORM_LAST_STEP_COMPLETED" ColumnName="INCFORM_LAST_STEP_COMPLETED" />
                 <ScalarProperty Name="LAST_UPD_DT" ColumnName="LAST_UPD_DT" />
