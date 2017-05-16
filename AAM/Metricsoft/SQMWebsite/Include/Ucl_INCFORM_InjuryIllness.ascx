@@ -980,8 +980,8 @@
                     <asp:Label ID="lblInitialTreatmentGivenXS" runat="server" Text="Initial Treatment Given" meta:resourcekey="lblInitialTreatmentGiven"></asp:Label><span class="requiredCloseStar">*</span></span>
             </div>
 
-            <div class="col-xs-12 col-sm-8 text-left greyControlColX">
-                <span>
+            <div class="col-xs-12 col-sm-8 text-left">
+                <span style="margin-left:-7px;    display: block;">
                     <asp:CheckBoxList ID="CBL_InitialTreatmentGiven" runat="server" CssClass="radioListHorizontal" RepeatColumns="1" RepeatDirection="Vertical" AutoPostBack="false" onclick="ChangeUpdate()" OnSelectedIndexChanged="CBL_InitialTreatmentGiven_SelectedIndexChanged">
                         <asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, EmployeeReceivedFirstAidOnSite %>"></asp:ListItem>
                         <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, EmployeeSentToHospital %>"></asp:ListItem>
@@ -1001,8 +1001,8 @@
                 <span>
                     <asp:Label ID="lblChangeInMedicalStatusXS" runat="server" Text="Change in Medical Status ?" meta:resourcekey="lblChangeInMedicalStatus"></asp:Label></span>
             </div>
-            <div class="col-xs-12 col-sm-8 text-left greyControlColX">
-                <span>
+            <div class="col-xs-12 col-sm-8 text-left">
+                <span style="margin-left:-7px;     display: block;">
                     <asp:CheckBoxList ID="CBL_ChangeInMedicalStatus" CssClass="radioListHorizontal" RepeatColumns="1" RepeatDirection="Vertical" runat="server" AutoPostBack="False" onclick="ChangeUpdate()" OnSelectedIndexChanged="CBL_ChangeInMedicalStatus_SelectedIndexChanged">
                         <asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, LostTimeLog %>"></asp:ListItem>
                         <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, ChangeRecordable %>"></asp:ListItem>
