@@ -1110,8 +1110,13 @@ namespace SQM.Website
 				client.Host = _mailServer;
 				client.EnableSsl = _mailEnableSsl;
 
-				//client.Send(msg);
-			}
+                string EmailEnvoirment = ConfigurationManager.AppSettings["environment"];
+
+                if (EmailEnvoirment.Equals("prod", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    client.Send(msg);
+                }
+            }
 			catch (Exception ex)
 			{
 				//SQMLogger.LogException(ex);
@@ -1236,7 +1241,15 @@ namespace SQM.Website
                 client.Host = _mailServer;
                 client.EnableSsl = _mailEnableSsl;
 
-              //  client.Send(msg);
+                string EmailEnvoirment = ConfigurationManager.AppSettings["environment"];
+
+                if (EmailEnvoirment.Equals("prod", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    client.Send(msg);
+                }
+
+
+               
             }
             catch (Exception ex)
             {
