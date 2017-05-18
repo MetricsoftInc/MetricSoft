@@ -1317,14 +1317,14 @@ namespace SQM.Website
             if (context == "new")
             {
                 uclcontain.Visible = uclroot5y.Visible = uclaction.Visible = uclapproval.Visible = uclVideoPanel.Visible = false;
-                btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+                btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible=btnSubnavCEOComment.Visible = btnSubnavVideo.Visible = false;
                 btnSubnavInitialActionApproval.Visible = btnSubnavCorrectiveActionApproval.Visible = false;
                 btnDeleteInc.Visible = false;
                 uploader.SetViewMode(true);
             }
             else if (context == "alert")
             {
-                btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible = btnSubnavVideo.Visible = false;
+                btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = btnSubnavAlert.Visible=btnSubnavCEOComment.Visible = btnSubnavVideo.Visible = false;
                 btnSubnavInitialActionApproval.Visible = btnSubnavCorrectiveActionApproval.Visible = false;
                 uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = true;
                 uploader.SetViewMode(false);
@@ -1369,8 +1369,8 @@ namespace SQM.Website
 
                 btnSubnavVideo.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 1.1m);
                 btnSubnavVideo.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavVideo.Text;
-                btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 11.0m);
-                btnSubnavAlert.Visible = true;
+                btnSubnavCEOComment.Visible= btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 11.0m);
+                btnSubnavCEOComment.Visible= btnSubnavAlert.Visible = true;
                 //btnSubnavAlert.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "AttachVideo").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "PreventativeMeasure").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavAlert.Text;
                 btnSubnavAlert.Text = XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "PreventativeMeasure").Count() > 0 ? XLATList.Where(x => x.XLAT_GROUP == "INCIDENT_STEP" && x.XLAT_CODE == "PreventativeMeasure").FirstOrDefault().DESCRIPTION_SHORT : btnSubnavAlert.Text;
 
@@ -1479,12 +1479,12 @@ namespace SQM.Website
             btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
             CurrentSubnav = btn.CommandArgument;
 
-            btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = btnSubnavAlert.Enabled = true;
-            btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass = btnSubnavVideo.CssClass = "buttonLink";
+            btnSubnavIncident.Enabled = btnSubnavApproval.Enabled = btnSubnavAction.Enabled = btnSubnavRootCause.Enabled = btnSubnavCausation.Enabled = btnSubnavContainment.Enabled = btnSubnavVideo.Enabled = btnSubnavAlert.Enabled=btnSubnavCEOComment.Enabled = true;
+            btnSubnavIncident.CssClass = btnSubnavContainment.CssClass = btnSubnavRootCause.CssClass = btnSubnavCausation.CssClass = btnSubnavAction.CssClass = btnSubnavApproval.CssClass = btnSubnavAlert.CssClass= btnSubnavCEOComment.CssClass = btnSubnavVideo.CssClass = "buttonLink";
             btnSubnavSave.Visible = btnDeleteInc.Visible = false;
 
             btnSubnavVideo.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 1.1m);
-            btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 11.0m);
+            btnSubnavCEOComment.Visible= btnSubnavAlert.Visible = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 11.0m);
 
             btnSubnavInitialActionApproval.Visible = btnSubnavInitialActionApproval.Enabled = EHSIncidentMgr.IsStepActive(incidentStepList, (decimal)EHSIncidentTypeId.InjuryIllness, 2.5m);
             btnSubnavInitialActionApproval.CssClass = "buttonLink";
@@ -1577,6 +1577,16 @@ namespace SQM.Website
                     lblFormTitle.Text = btnSubnavAlert.Text;
                     btnSubnavAlert.Enabled = false;
                     btnSubnavAlert.CssClass = "buttonLinkDisabled";
+                    uclAlert.IncidentId = EditIncidentId;
+                    uclAlert.Visible = true;
+                    uclAlert.PopulateInitialForm(entities);
+                    break;
+		
+		//CEO Comment link
+                case "12":
+                    lblFormTitle.Text = btnSubnavAlert.Text;
+                    btnSubnavCEOComment.Enabled = false;
+                    btnSubnavCEOComment.CssClass = "buttonLinkDisabled";
                     uclAlert.IncidentId = EditIncidentId;
                     uclAlert.Visible = true;
                     uclAlert.PopulateInitialForm(entities);

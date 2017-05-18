@@ -1220,6 +1220,9 @@
 					OnClick="btnSubnav_Click" CommandArgument="11" visible="false"/>--%>
                 <asp:LinkButton ID="btnSubnavAlert" runat="server" Text="<%$ Resources:LocalizedText, PreventativeMeasure %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
 					OnClick="btnSubnav_Click" CommandArgument="11" />
+                  <%--  To enable CEOComment.--%>
+                  <asp:LinkButton ID="btnSubnavCEOComment" runat="server" Text="<%$ Resources:LocalizedText, CEOComments %>"  CssClass="buttonLink" style="font-weight:bold; margin-right: 8px;"
+					OnClick="btnSubnav_Click" CommandArgument="12" />
 			</center>
         </div>
 
