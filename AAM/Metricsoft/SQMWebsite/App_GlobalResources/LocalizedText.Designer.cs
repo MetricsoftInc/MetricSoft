@@ -412,6 +412,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CEO Comment.
+        /// </summary>
+        internal static string CEOComments {
+            get {
+                return ResourceManager.GetString("CEOComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change to Lost Time.
         /// </summary>
         internal static string ChangeLostTime {
