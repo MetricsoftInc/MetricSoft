@@ -23,7 +23,7 @@ namespace SQM.Website
             get { return ViewState["IncidentId"] == null ? 0 : (decimal)ViewState["IncidentId"]; }
             set { ViewState["IncidentId"] = value; }
         }
-
+        protected bool IsFullPagePostback = false;//To get focus on CEOcomment section
         public INCIDENT LocalIncident
         {
             get { return ViewState["LocalIncident"] == null ? null : (INCIDENT)ViewState["LocalIncident"]; }
@@ -48,6 +48,39 @@ namespace SQM.Website
                 // to determine whether or not to refresh its page controls, or just data bind instead.  
                 // Here we are using the "__EVENTTARGET" form event property to see if this user control is loading 
                 // because of certain page control events that are supposed to be fired off as actual postbacks.  
+
+                //code segment added for CEOComment and Preventative Measures
+                IsFullPagePostback = false;
+                var targetID = Request.Form["__EVENTTARGET"];
+                if (!string.IsNullOrEmpty(targetID))
+                {
+                    var targetControl = this.Page.FindControl(targetID);
+
+                    if (targetControl != null)
+                        if ((this.Page.FindControl(targetID).ID == "btnSave") ||
+                            (this.Page.FindControl(targetID).ID == "btnNext"))
+                            IsFullPagePostback = true;
+
+                    if (!IsFullPagePostback)
+                    { 
+                        // If link is CEO comment then focus on CEO Comment Section.
+                        if (targetID.Contains("CEOComment"))
+                        {                           
+                            tbCeoComments.Focus(); 
+                            //If Priv Group is other than CEO GROUP then CEO Comment box will be highlighted
+                            string PrivInfo = SessionManager.UserContext.Person.PRIV_GROUP;
+                            if (!(PrivInfo == "CEO-GROUP"))
+                            {
+                                tbCeoComments.BorderColor = System.Drawing.Color.Gray;
+                            }
+                        }
+                        else
+                        {
+                            tbCeoComments.BorderColor = System.Drawing.Color.Empty;
+                        }
+
+                    }
+                }
             }
 
             if (IncidentId != null)
