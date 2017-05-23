@@ -15,7 +15,9 @@ namespace SQM.Website
 		protected int currentProblemSeries = 0;
 		protected int currentItemSeq = 0;
 
-		public PageUseMode PageMode { get; set; }
+        int max_INCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        int max_NewIncident = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncidentIDforInjuryType"]);
+        public PageUseMode PageMode { get; set; }
 
 		public bool IsEditContext
 		{
@@ -51,8 +53,8 @@ namespace SQM.Website
                 PLANT plant = SQMModelMgr.LookupPlant(ctx, (decimal)incident.DETECT_PLANT_ID, "");
                 if (plant != null)
                     IncidentLocationTZ = plant.LOCAL_TIMEZONE;
-
-                BindCausation(incident);
+             
+                    BindCausation(incident);
 
                 pnlCausation.Enabled = PageMode == PageUseMode.ViewOnly ? false : EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.originate, incident.INCFORM_LAST_STEP_COMPLETED);
             }
@@ -104,9 +106,22 @@ namespace SQM.Website
 
 					INCFORM_CAUSATION causation = incident.INCFORM_CAUSATION == null || incident.INCFORM_CAUSATION.Count == 0 ? null : incident.INCFORM_CAUSATION.ElementAt(0);
 
+
+
 					ddlCausation.Items.Clear();
 					ddlCausation.Items.Add(new RadComboBoxItem("", ""));
-					foreach (EHSMetaData xlat in EHSMetaDataMgr.SelectMetaDataList("INJURY_CAUSE").ToList())
+                 
+                    var ListCausation = EHSMetaDataMgr.SelectMetaDataList("INJURY_CAUSE").ToList();
+                    if (IncidentId > max_NewIncident)
+                    {
+                        ListCausation = ListCausation.Where(p => p.Value.Contains("NEW_IC_")).ToList();
+                    }
+                    else
+                    {
+                        ListCausation = ListCausation.Where(p =>!p.Value.Contains("NEW_IC_")).ToList();
+                    }
+
+                        foreach (EHSMetaData xlat in ListCausation)
 					{
 						ddlCausation.Items.Add(new Telerik.Web.UI.RadComboBoxItem(xlat.TextLong, xlat.Value));
 					}
