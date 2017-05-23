@@ -31,6 +31,8 @@ namespace SQM.Website.Reports
         public string severityLevel;
 		public List<byte[]> photoData;
 		public List<string> photoCaptions;
+        public string TNSKNumber;
+
 
 		public INCIDENT incident;
 		public List<INCIDENT_ANSWER> answerList;
@@ -77,6 +79,8 @@ namespace SQM.Website.Reports
 	public partial class EHS_12HourReport : System.Web.UI.Page
 	{
         int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+        int maxIncidentforInjuryType = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncidentIDforInjuryType"]);
+
         bool isVideoAvailable = false;
         public List<XLAT> reportXLAT
 		{
@@ -115,7 +119,7 @@ namespace SQM.Website.Reports
 		private byte[] BuildPdf()
 		{
             isVideoAvailable = false;
-            reportXLAT = SQMBasePage.SelectXLATList(new string[10] { "HS_5PHASE", "HS_L2REPORT", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE", "INJURY_PART", "INJURY_TYPE","INCIDENT_SEVERITY", "INCIDENT_APPROVALS" }, 1);
+            reportXLAT = SQMBasePage.SelectXLATList(new string[31] {"INCIDENT_TYPE", "HS_5PHASE", "ITG", "HS_L2REPORT", "TRUEFALSE", "SHIFT", "INJURY_TENURE", "INJURY_CAUSE", "INJURY_PART", "INJURY_TYPE","INCIDENT_SEVERITY", "INCIDENT_APPROVALS" , "BusinessType", "BT_01", "BT_02", "BT_03", "BT_04", "MPT_S_01", "MPT_S_16", "MPT_S_18", "MPT_S_19", "MPT_B_09", "MPT_B_10", "MPT_B_23", "MPT_P_05", "MPT_P_06", "MPT_P_10", "MPT_P_11", "MPT_P_13", "MPT_AEL_1", "MPT_AEL_2" }, 1);
 
 			AlertData pageData;
 
@@ -195,6 +199,7 @@ namespace SQM.Website.Reports
 					PdfPCell cell = null;
 					var hdrFont = new Font(headerFont.BaseFont, 18, 0, darkGrayColor);
 
+                    //adin new section for the heading.
 					cell = new PdfPCell { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT, VerticalAlignment = Element.ALIGN_MIDDLE };
 					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
 					//cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
@@ -218,11 +223,11 @@ namespace SQM.Website.Reports
 					cell.AddElement(new Paragraph(String.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "PLANT").DESCRIPTION_SHORT + ":  {0}", pageData.incidentLocation), labelTxtFont));
 					table1.AddCell(cell);
 
-					//
-					// Table 4 - Photos
-					//
+                    //
+                    // Table 4 - Photos
+                    //
 
-					var table4 = new PdfPTable(new float[] { 540f, }); //new PdfPTable(new float[] { 180f, 180f, 180f });
+                    var table4 = new PdfPTable(new float[] { 540f, }); //new PdfPTable(new float[] { 180f, 180f, 180f });
 					table4.TotalWidth = 540f;
 					table4.LockedWidth = true;
 
@@ -234,6 +239,7 @@ namespace SQM.Website.Reports
                             table4.SpacingBefore = 5f;
                             var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
 
+                            //Section for showing the image is attached or not.
 							int i = 0;
 							for (i = 0; i < pageData.photoData.Count; i++)
 							{
@@ -256,6 +262,7 @@ namespace SQM.Website.Reports
 							for (int j = 0; j < 3 - currentCol; j++)
 								table4.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
 						}
+                        //Condition for validate the video available or not in the report section.
                         if (isVideoAvailable == true)
                         {
                             table4.AddCell(new PdfPCell(new Phrase("(Is video available? Yes)", detailTxtBoldFont)));
@@ -315,40 +322,133 @@ namespace SQM.Website.Reports
 			PdfPCell cell;
 			INCIDENT_ANSWER answer = null;
 
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            #region FIELDS FOR NEW DATA 
+
+            if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
+            {
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
+                cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+                var TNSK = pageData.incident.TNSKNumber;
+                if (string.IsNullOrEmpty(TNSK))
+                {
+                    TNSK = "NA";
+                }
+                // cell.AddElement(new Paragraph("Age of Associate (US and Europe - DO NOT ENTER)", detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TNSK").DESCRIPTION_SHORT, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(TNSK, detailTxtFont));
+                tableHeader.AddCell(cell);
+            }
+            #endregion
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			//cell.AddElement(new Paragraph(String.Format("Date" + ":  {0}", pageData.incidentDate), detailTxtFont));
-			cell.AddElement(new Paragraph("Date", detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.incidentDate, detailTxtFont));
+            //cell.AddElement(new Paragraph(String.Format("Date" + ":  {0}", pageData.incidentDate), detailTxtFont));
+            //cell.AddElement(new Paragraph("Date", detailTxtBoldFont));
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "ACTION_DT").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.incidentDate, detailTxtFont));
 			tableHeader.AddCell(cell);
+
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-			cell.AddElement(new Paragraph("Time", detailTxtBoldFont));
+            cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            cell.AddElement(new Paragraph("Time", detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.incidentTime, detailTxtFont));
 			tableHeader.AddCell(cell);
 			cell = FormatHeaderCell(pageData, (decimal)EHSQuestionId.Shift);
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
 			tableHeader.AddCell(cell);
 
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+#region FIELDS FOR NEW DATA 
+
+            if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
+            {
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+                var bt_value = pageData.incident.INCFORM_INJURYILLNESS.BUSINESS_TYPE;
+
+                bt_value = SQMBasePage.GetXLAT(reportXLAT, "BusinessType", bt_value).DESCRIPTION;
+
+                if (string.IsNullOrEmpty(bt_value))
+                {
+                    bt_value = "NA";
+                }
+                //  cell.AddElement(new Paragraph("Business Type", detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "BT").DESCRIPTION_SHORT, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(bt_value, detailTxtFont));
+                tableHeader.AddCell(cell);
+
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+                var mpt_value = SQMBasePage.GetXLAT(reportXLAT, pageData.incident.INCFORM_INJURYILLNESS.BUSINESS_TYPE, pageData.incident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE).DESCRIPTION;
+                if (string.IsNullOrEmpty(mpt_value))
+                {
+                    mpt_value = "NA";
+                }
+                // cell.AddElement(new Paragraph("Macro Process Type", detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "MPT").DESCRIPTION_SHORT, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(mpt_value, detailTxtFont));
+                tableHeader.AddCell(cell);
+
+
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+                var spt_value = SQMBasePage.GetXLAT(reportXLAT, pageData.incident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE, pageData.incident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE).DESCRIPTION;
+                if (string.IsNullOrEmpty(spt_value))
+                {
+                    spt_value = "NA";
+                }
+                // cell.AddElement(new Paragraph("Specific Process Type", detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "SPT").DESCRIPTION_SHORT, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(spt_value, detailTxtFont));
+                tableHeader.AddCell(cell);
+            }
+#endregion
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.Colspan = 3;
 			cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "LOCATION").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.incidentDept, detailTxtFont));
 			tableHeader.AddCell(cell);
 
+
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthLeft = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "EMPLOYEETYPE").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.employeeType, detailTxtFont));
 			tableHeader.AddCell(cell);
+
+
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "JOBCODE").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.jobDescription, detailTxtFont));
 			tableHeader.AddCell(cell);
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+
+            #region FIELDS FOR NEW DATA 
+
+            if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
+            {
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+                var Age_value = pageData.incident.INCFORM_INJURYILLNESS.ASSET_NUMBER;
+                if (string.IsNullOrEmpty(Age_value))
+                {
+                    Age_value = "NA";
+                }
+                // cell.AddElement(new Paragraph("Age of Associate (US and Europe - DO NOT ENTER)", detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "AgeAsso").DESCRIPTION_SHORT, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(Age_value, detailTxtFont));
+                tableHeader.AddCell(cell);
+            }
+            #endregion
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            //get the max incident values from configration file and manage the section as per the values.
             if (pageData.incident.INCIDENT_ID > maxINCIDENT)
             {
                 cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "HIRE_DATE").DESCRIPTION_SHORT, detailTxtBoldFont));
@@ -420,13 +520,32 @@ namespace SQM.Website.Reports
 			cell.AddElement(new Paragraph(pageData.specificBodyPart, detailTxtFont));
 			tableIncident.AddCell(cell);
 
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_TYPE").DESCRIPTION, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.injuryType, detailTxtFont));
-			tableIncident.AddCell(cell);
 
-			return tableIncident;
+            #region FIELDS FOR NEW DATA 
+            if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
+            {
+                var TI_value = pageData.incident.INCFORM_INJURYILLNESS.TYPE_OF_INCIDENT;
+                if (string.IsNullOrEmpty(TI_value))
+                {
+                    TI_value = "NA";
+                }
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TI").DESCRIPTION, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "INCIDENT_TYPE", TI_value).DESCRIPTION, detailTxtFont));
+
+
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "ITGiven").DESCRIPTION, detailTxtBoldFont));
+                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "ITG", pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN).DESCRIPTION, detailTxtFont));
+            }
+            #endregion
+            tableIncident.AddCell(cell);
+
+          
+
+                return tableIncident;
 		}
 
 		PdfPTable ContainmentSection(AlertData pageData)
@@ -524,6 +643,8 @@ namespace SQM.Website.Reports
 			cell.Colspan = 3;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "REVIEW").DESCRIPTION, detailHdrFont));
 			tableReview.AddCell(cell);
+
+
 
 			foreach (EHSIncidentApproval approval in pageData.approvalList.Where(l => l.approval.APPROVER_PERSON_ID.HasValue).ToList())
 			{
@@ -687,6 +808,7 @@ namespace SQM.Website.Reports
 								d.severity = SQMBasePage.GetXLAT(reportXLAT, "INCIDENT_SEVERITY", "FATALITY").DESCRIPTION;
 							}
 						}
+                        //get the severity level value from database.
                         decimal id = d.incident.INCFORM_INJURYILLNESS.INCIDENT_ID;
                         d.severityLevel= (from i in entities.INCFORM_APPROVAL where i.INCIDENT_ID == id select i.SEVERITY_LEVEL).First();
                     }
@@ -721,7 +843,7 @@ namespace SQM.Website.Reports
 						}
 						d.actionList.Add(ac);
 					}
-
+                    // Verify the video availble or not in the data for each incedent.
                     foreach (var v in entities.ATTACHMENT) {
                         if ( v.RECORD_ID == iid && (v.FILE_NAME.ToLower().Contains(".mp4") || v.FILE_NAME.ToLower().Contains(".MOV"))) {
                             isVideoAvailable = true;
