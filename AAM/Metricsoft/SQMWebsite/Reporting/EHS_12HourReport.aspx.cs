@@ -435,7 +435,7 @@ namespace SQM.Website.Reports
             {
                 cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
                 cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
-                var Age_value = pageData.incident.INCFORM_INJURYILLNESS.ASSET_NUMBER;
+                var Age_value = pageData.incident.INCFORM_INJURYILLNESS.AGE_OF_ASSOCIATE;
                 if (string.IsNullOrEmpty(Age_value))
                 {
                     Age_value = "NA";
@@ -506,24 +506,31 @@ namespace SQM.Website.Reports
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_SEVERITY").DESCRIPTION, detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.severity, detailTxtFont));
+			cell.AddElement(new Paragraph(pageData.severity == null?"NA": pageData.severity, detailTxtFont));
+
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "SEVERITY_LEVEL").DESCRIPTION, detailTxtBoldFont));
-            cell.AddElement(new Paragraph(pageData.severityLevel, detailTxtFont));
+            //cell.AddElement(new Paragraph(pageData.severityLevel == null ? "NA" : pageData.severityLevel, detailTxtFont));
+
+            string level = SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", pageData.severityLevel).DESCRIPTION;
+            cell.AddElement(new Paragraph(level == null ? "NA" :level, detailTxtFont));
             tableIncident.AddCell(cell);
 
 			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_PART").DESCRIPTION, detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.bodyPart, detailTxtFont));
+			cell.AddElement(new Paragraph(pageData.bodyPart == null ? "NA" :pageData.bodyPart, detailTxtFont));
+
+
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_PART_SPECIFIC").DESCRIPTION, detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.specificBodyPart, detailTxtFont));
+			cell.AddElement(new Paragraph(pageData.specificBodyPart == null ? "NA" :pageData.specificBodyPart, detailTxtFont));
 			tableIncident.AddCell(cell);
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
 			cell.BorderWidthTop = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_TYPE").DESCRIPTION, detailTxtBoldFont));
-			cell.AddElement(new Paragraph(pageData.injuryType, detailTxtFont));
+			cell.AddElement(new Paragraph(pageData.injuryType == null ? "NA" : pageData.injuryType, detailTxtFont));
 
             #region FIELDS FOR NEW DATA 
             if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
@@ -538,7 +545,27 @@ namespace SQM.Website.Reports
 
 
                 cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "ITGiven").DESCRIPTION, detailTxtBoldFont));
-                cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "ITG", pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN).DESCRIPTION, detailTxtFont));
+
+          
+
+                string ITG = pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN;
+                string[] value = new string[4];
+                if (!string.IsNullOrEmpty(ITG) )
+                {
+                    var data = ITG.Split(',');
+                    int index = 0;
+                    foreach (var item in data)
+                    {
+
+                        value[index] = SQMBasePage.GetXLAT(reportXLAT, "ITG", item).DESCRIPTION;
+                        index++;
+                    }
+                }
+                string result = string.Join(", ", value.Where(x => x != null).ToList());
+               
+                cell.AddElement(new Paragraph(result == null ? "NA" :result, detailTxtFont));
+
+                //cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "ITG", pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN).DESCRIPTION, detailTxtFont));
             }
             #endregion
             tableIncident.AddCell(cell);
