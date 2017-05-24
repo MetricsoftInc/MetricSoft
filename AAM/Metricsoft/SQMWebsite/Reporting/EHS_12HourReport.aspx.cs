@@ -561,7 +561,7 @@ namespace SQM.Website.Reports
                         index++;
                     }
                 }
-                string result = string.Join(", ", value.Where(x => x != null).ToList());
+                string result = string.Join(",\n", value.Where(x => x != null).ToList());
                
                 cell.AddElement(new Paragraph(result == null ? "NA" :result, detailTxtFont));
 
