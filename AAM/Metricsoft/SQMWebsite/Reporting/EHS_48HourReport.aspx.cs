@@ -341,7 +341,25 @@ namespace SQM.Website.Reports
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
             cell.Colspan = 3;
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "MedicalStatus").DESCRIPTION, detailTxtBoldFont));
-            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "CMS", pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN).DESCRIPTION, detailTxtFont));
+
+            string CMS = pageData.incident.INCFORM_INJURYILLNESS.CHANGE_MEDICAL_STATUS;
+            string[] value = new string[3];
+            if (!string.IsNullOrEmpty(CMS))
+            {
+                var data = CMS.Split(',');
+                int index = 0;
+                foreach (var item in data)
+                {
+                 
+                    value[index] = SQMBasePage.GetXLAT(reportXLAT, "CMS", item).DESCRIPTION;
+                    index++;
+                }
+            }
+
+
+            string result = string.Join(",", value.Where(x => x != null).ToList());
+
+            cell.AddElement(new Paragraph(result, detailTxtFont));
             tableIncident.AddCell(cell);
 
 
