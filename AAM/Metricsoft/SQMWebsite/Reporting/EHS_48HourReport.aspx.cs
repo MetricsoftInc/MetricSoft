@@ -343,7 +343,7 @@ namespace SQM.Website.Reports
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "MedicalStatus").DESCRIPTION, detailTxtBoldFont));
 
             string CMS = pageData.incident.INCFORM_INJURYILLNESS.CHANGE_MEDICAL_STATUS;
-            string[] value = new string[3];
+            string[] value = new string[4];
             if (!string.IsNullOrEmpty(CMS))
             {
                 var data = CMS.Split(',');
@@ -357,7 +357,7 @@ namespace SQM.Website.Reports
             }
 
 
-            string result = string.Join(",", value.Where(x => x != null).ToList());
+            string result = string.Join(", \n", value.Where(x => x != null).ToList());
 
             cell.AddElement(new Paragraph(result, detailTxtFont));
             tableIncident.AddCell(cell);

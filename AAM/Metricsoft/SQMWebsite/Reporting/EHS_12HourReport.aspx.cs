@@ -549,7 +549,7 @@ namespace SQM.Website.Reports
           
 
                 string ITG = pageData.incident.INCFORM_INJURYILLNESS.INITIAL_TREATMENT_GIVEN;
-                string[] value = new string[4];
+                string[] value = new string[3];
                 if (!string.IsNullOrEmpty(ITG) )
                 {
                     var data = ITG.Split(',');
