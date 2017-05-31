@@ -1892,9 +1892,9 @@ namespace SQM.Website
                                         if (injuryIncident.BUSINESS_TYPE != null)
                                         {
                                             strBusinessType = injuryIncident.BUSINESS_TYPE;
-                                            string BT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
+                                            //string BT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
 
-                                            string Macro_Process = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==BT && X.XLAT_CODE==strMacroProcessType select X.DESCRIPTION).FirstOrDefault());
+                                            string Macro_Process = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==strBusinessType && X.XLAT_CODE==strMacroProcessType select X.DESCRIPTION).FirstOrDefault());
                                             row1.CreateCell(36).SetCellValue(Macro_Process);
                                         }
                                         else
@@ -1922,27 +1922,11 @@ namespace SQM.Website
                                         if (!(string.IsNullOrEmpty(injuryIncident.MACRO_PROCESS_TYPE)))
                                         {
                                             strMacroProcessType = injuryIncident.MACRO_PROCESS_TYPE;
-                                            if (!(string.IsNullOrEmpty(injuryIncident.BUSINESS_TYPE)))
-                                            {
-                                                strBusinessType = injuryIncident.BUSINESS_TYPE;
-                                                string BT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
-
-                                                string Macro_Process = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == BT && X.XLAT_CODE == strMacroProcessType select X.DESCRIPTION).FirstOrDefault());
-                                                if (!(string.IsNullOrEmpty(Macro_Process)))
-                                                { string SPT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==Macro_Process &&  X.XLAT_CODE==strSpecificProcessType select X.DESCRIPTION).FirstOrDefault());
+                                           
+                                                { string SPT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==strMacroProcessType &&  X.XLAT_CODE==strSpecificProcessType select X.DESCRIPTION).FirstOrDefault());
                                                     row1.CreateCell(37).SetCellValue(SPT);
                                                 }
-                                                else
-                                                {
-
-                                                    row1.CreateCell(37).SetCellValue("");
-                                                }
-                                            }
-                                            else
-                                            {
-
-                                                row1.CreateCell(37).SetCellValue("");
-                                            }
+                                               
                                         }
                                         else
                                         {
@@ -1953,7 +1937,7 @@ namespace SQM.Website
                                     else
                                     {       strSpecificProcessType = "";
                                     row1.CreateCell(37).SetCellValue(strSpecificProcessType);//Specific Process Type
-                                }
+                                    }
                                 }
                                 catch
                                 {
