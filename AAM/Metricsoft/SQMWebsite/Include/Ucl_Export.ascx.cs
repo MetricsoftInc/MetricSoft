@@ -19,11 +19,15 @@ namespace SQM.Website
 
         public event ExportClick OnExportClick;
 
+        //only incident which have incident_id greater than Maxincident can have newly added columns in exported report. 
+        int maxIncidentforInjuryType = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncidentIDforInjuryType"]);
+        int maxINCIDENT = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["maxIncident"]);
+
         public LinkButton LnkExport
         {
             get { return lnkExport; }
         }
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -91,7 +95,7 @@ namespace SQM.Website
 
             EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange, "E");
             esMgr.LoadMetricHistory(plantIDs, dtFrom, dtTo, DateIntervalType.month, true);
-			List<MetricData> metric_history = esMgr.MetricHst.OrderBy(l => l.MetricRec.PLANT_ID).ThenBy(l => l.MetricRec.PERIOD_YEAR).ThenBy(l => l.MetricRec.PERIOD_MONTH).ThenBy(l => l.Measure.MEASURE_CATEGORY).ThenBy(l => l.Measure.MEASURE_CD).ToList();
+            List<MetricData> metric_history = esMgr.MetricHst.OrderBy(l => l.MetricRec.PLANT_ID).ThenBy(l => l.MetricRec.PERIOD_YEAR).ThenBy(l => l.MetricRec.PERIOD_MONTH).ThenBy(l => l.Measure.MEASURE_CATEGORY).ThenBy(l => l.Measure.MEASURE_CD).ToList();
 
             GenerateExportHistoryExcel(entities, metric_history, true);
         }
@@ -106,19 +110,19 @@ namespace SQM.Website
             EHSProfile profile = new EHSProfile();
             EHS_MEASURE measure = null;
             EHS_PROFILE_MEASURE prmr = null;
-			List<EHS_PROFILE_MEASURE> prmrList = null;
-			string measureName = "";
+            List<EHS_PROFILE_MEASURE> prmrList = null;
+            string measureName = "";
 
             string[] notWasteCategories = new string[] { "ENGY", "EUTL", "SAFE", "PROD" };
 
             List<EHS_PROFILE_MEASURE> profileMeasureList = new List<EHS_PROFILE_MEASURE>();
 
-			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
-			string altDunsLabel = "";
-			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
-			{
-				altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
-			}
+            List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
+            string altDunsLabel = "";
+            if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
+            {
+                altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
+            }
 
             HSSFWorkbook hssfworkbook = InitializeWorkbook();
 
@@ -155,11 +159,11 @@ namespace SQM.Website
                 row.CreateCell(14).SetCellValue("Waste Code");
                 row.CreateCell(15).SetCellValue("UN Disposal Code");
                 row.CreateCell(16).SetCellValue("Regulatory Status");
-				row.CreateCell(17).SetCellValue("Metric Inputs");
-				if (!string.IsNullOrEmpty(altDunsLabel))
-				{
-					row.CreateCell(18).SetCellValue(altDunsLabel);
-				}
+                row.CreateCell(17).SetCellValue("Metric Inputs");
+                if (!string.IsNullOrEmpty(altDunsLabel))
+                {
+                    row.CreateCell(18).SetCellValue(altDunsLabel);
+                }
 
                 int rownum = 0;
                 foreach (MetricData ms in metric_history)
@@ -169,7 +173,7 @@ namespace SQM.Website
                     prmr = null;
                     if (plant == null || plant.PLANT_ID != ms.MetricRec.PLANT_ID)
                     {
-						plant = SQMModelMgr.LookupPlant(entities, ms.MetricRec.PLANT_ID, "");
+                        plant = SQMModelMgr.LookupPlant(entities, ms.MetricRec.PLANT_ID, "");
                         profile.Profile = (from p in entities.EHS_PROFILE.Include("EHS_PROFILE_MEASURE")
                                            where (p.PLANT_ID == plant.PLANT_ID)
                                            select p).SingleOrDefault();
@@ -177,32 +181,32 @@ namespace SQM.Website
 
                     try
                     {
-						if (profile.Profile != null)
-						{
-							measure = ms.Measure as EHS_MEASURE;
-							prmrList = profile.Profile.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == ms.Measure.MEASURE_ID).ToList();
-							prmr = prmrList.FirstOrDefault();
-							measureName = measure.MEASURE_NAME;
-							/*
+                        if (profile.Profile != null)
+                        {
+                            measure = ms.Measure as EHS_MEASURE;
+                            prmrList = profile.Profile.EHS_PROFILE_MEASURE.Where(m => m.MEASURE_ID == ms.Measure.MEASURE_ID).ToList();
+                            prmr = prmrList.FirstOrDefault();
+                            measureName = measure.MEASURE_NAME;
+                            /*
 							if (prmrList.Count > 1)
 							{
 								measureName += (" (" + prmrList.Count.ToString() + ")");
 							}
 							*/
-						}
+                        }
                     }
                     catch
                     {
                         ;
                     }
-                    if (measure == null || prmr == null  ||  measure.MEASURE_CATEGORY == "PROD")
+                    if (measure == null || prmr == null || measure.MEASURE_CATEGORY == "PROD")
                     {
                         continue;
                     }
 
                     ++rownum;
                     UOM uom = null;
-					uom_id = ms.MetricRec.UOM_ID;
+                    uom_id = ms.MetricRec.UOM_ID;
                     uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == uom_id);
                     if (uom != null)
                         uom_cd = uom.UOM_CD;
@@ -210,7 +214,7 @@ namespace SQM.Website
                         uom_cd = "";
                     try
                     {
-						uom_id = Convert.ToDecimal(ms.MetricRec.INPUT_UOM_ID.ToString());
+                        uom_id = Convert.ToDecimal(ms.MetricRec.INPUT_UOM_ID.ToString());
                         uom = SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == uom_id);
                         if (uom != null)
                             uom_input_cd = uom.UOM_CD;
@@ -218,7 +222,7 @@ namespace SQM.Website
                             uom_input_cd = "";
                     }
                     catch { uom_input_cd = ""; }
-                    
+
 
                     row = sheet1.CreateRow(rownum);
                     try
@@ -247,7 +251,7 @@ namespace SQM.Website
                     }
                     try
                     {
-						row.CreateCell(3).SetCellValue(measureName);
+                        row.CreateCell(3).SetCellValue(measureName);
                     }
                     catch
                     {
@@ -255,7 +259,7 @@ namespace SQM.Website
                     }
                     try
                     {
-						row.CreateCell(4).SetCellValue(ms.MetricRec.PERIOD_YEAR);
+                        row.CreateCell(4).SetCellValue(ms.MetricRec.PERIOD_YEAR);
                     }
                     catch
                     {
@@ -263,7 +267,7 @@ namespace SQM.Website
                     }
                     try
                     {
-						row.CreateCell(5).SetCellValue(ms.MetricRec.PERIOD_MONTH);
+                        row.CreateCell(5).SetCellValue(ms.MetricRec.PERIOD_MONTH);
                     }
                     catch
                     {
@@ -273,7 +277,7 @@ namespace SQM.Website
                     {
                         cellNumeric = row.CreateCell(6);
                         cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_VALUE));
+                        cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_VALUE));
                     }
                     catch
                     {
@@ -291,7 +295,7 @@ namespace SQM.Website
                     {
                         cellNumeric = row.CreateCell(8);
                         cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.INPUT_VALUE));
+                        cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.INPUT_VALUE));
                     }
                     catch
                     {
@@ -309,7 +313,7 @@ namespace SQM.Website
                     {
                         cellNumeric = row.CreateCell(10);
                         cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_COST));
+                        cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_COST));
                     }
                     catch
                     {
@@ -317,7 +321,7 @@ namespace SQM.Website
                     }
                     try
                     {
-						row.CreateCell(11).SetCellValue(ms.MetricRec.CURRENCY_CODE);
+                        row.CreateCell(11).SetCellValue(ms.MetricRec.CURRENCY_CODE);
                     }
                     catch
                     {
@@ -327,7 +331,7 @@ namespace SQM.Website
                     {
                         cellNumeric = row.CreateCell(12);
                         cellNumeric.CellStyle = cellStyleNumeric;
-						cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.INPUT_COST));
+                        cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.INPUT_COST));
                     }
                     catch
                     {
@@ -335,7 +339,7 @@ namespace SQM.Website
                     }
                     try
                     {
-						row.CreateCell(13).SetCellValue(ms.MetricRec.INPUT_CURRENCY_CODE);
+                        row.CreateCell(13).SetCellValue(ms.MetricRec.INPUT_CURRENCY_CODE);
                     }
                     catch
                     {
@@ -359,35 +363,35 @@ namespace SQM.Website
                         else
                             row.CreateCell(16).SetCellValue(WebSiteCommon.GetXlatValue("regulatoryStatus", prmr.REG_STATUS));
 
-						string inputNames = "";
-						foreach (EHS_PROFILE_MEASURE pr in prmrList)
-						{
-							if (!string.IsNullOrEmpty(pr.MEASURE_PROMPT))
-								inputNames += inputNames.Length == 0 ? pr.MEASURE_PROMPT : (", " + pr.MEASURE_PROMPT);
-							else
-								inputNames += inputNames.Length == 0 ? measureName : (", " + measureName);
-						}
-						try
-						{
-							row.CreateCell(17).SetCellValue(inputNames);
-							row.Cells[17].CellStyle.WrapText = true;
-						}
-						catch
-						{
-							row.CreateCell(17).SetCellValue("");
-						}
+                        string inputNames = "";
+                        foreach (EHS_PROFILE_MEASURE pr in prmrList)
+                        {
+                            if (!string.IsNullOrEmpty(pr.MEASURE_PROMPT))
+                                inputNames += inputNames.Length == 0 ? pr.MEASURE_PROMPT : (", " + pr.MEASURE_PROMPT);
+                            else
+                                inputNames += inputNames.Length == 0 ? measureName : (", " + measureName);
+                        }
+                        try
+                        {
+                            row.CreateCell(17).SetCellValue(inputNames);
+                            row.Cells[17].CellStyle.WrapText = true;
+                        }
+                        catch
+                        {
+                            row.CreateCell(17).SetCellValue("");
+                        }
 
-						if (!string.IsNullOrEmpty(altDunsLabel))
-						{
-							try
-							{
-								row.CreateCell(18).SetCellValue(plant.ALT_DUNS_CODE);
-							}
-							catch
-							{
-								row.CreateCell(18).SetCellValue("");
-							}
-						}
+                        if (!string.IsNullOrEmpty(altDunsLabel))
+                        {
+                            try
+                            {
+                                row.CreateCell(18).SetCellValue(plant.ALT_DUNS_CODE);
+                            }
+                            catch
+                            {
+                                row.CreateCell(18).SetCellValue("");
+                            }
+                        }
                     }
                     catch
                     {
@@ -412,11 +416,11 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(14);
                 sheet1.AutoSizeColumn(15);
                 sheet1.AutoSizeColumn(16);
-				sheet1.AutoSizeColumn(17);
-				if (!string.IsNullOrEmpty(altDunsLabel))
-				{
-					sheet1.AutoSizeColumn(18);
-				}
+                sheet1.AutoSizeColumn(17);
+                if (!string.IsNullOrEmpty(altDunsLabel))
+                {
+                    sheet1.AutoSizeColumn(18);
+                }
 
                 IRow row2 = sheet2.CreateRow(0);
                 row2.CreateCell(0).SetCellValue("Plant Name");
@@ -442,20 +446,20 @@ namespace SQM.Website
                 int periodYrMo = 0;
                 rownum = 0;
                 int cell = 0;
-                foreach (MetricData ms in metric_history.Where(l=> l.Measure.MEASURE_CATEGORY == "PROD").ToList())
+                foreach (MetricData ms in metric_history.Where(l => l.Measure.MEASURE_CATEGORY == "PROD").ToList())
                 {
                     try
                     {
-						if ((ms.MetricRec.PERIOD_YEAR + ms.MetricRec.PERIOD_MONTH) != periodYrMo || ms.MetricRec.PLANT_ID != plantID)
+                        if ((ms.MetricRec.PERIOD_YEAR + ms.MetricRec.PERIOD_MONTH) != periodYrMo || ms.MetricRec.PLANT_ID != plantID)
                         {
-							periodYrMo = ms.MetricRec.PERIOD_YEAR + ms.MetricRec.PERIOD_MONTH;
+                            periodYrMo = ms.MetricRec.PERIOD_YEAR + ms.MetricRec.PERIOD_MONTH;
                             plantID = ms.MetricRec.PLANT_ID;
-							plant = SQMModelMgr.LookupPlant(entities, ms.MetricRec.PLANT_ID, "");
+                            plant = SQMModelMgr.LookupPlant(entities, ms.MetricRec.PLANT_ID, "");
                             ++rownum;
                             row2 = sheet2.CreateRow(rownum);
                             if (appendApprovals)
                             {
-								pac = EHSModel.LookupPlantAccounting(entities, ms.MetricRec.PLANT_ID, ms.MetricRec.PERIOD_YEAR, ms.MetricRec.PERIOD_MONTH, false);
+                                pac = EHSModel.LookupPlantAccounting(entities, ms.MetricRec.PLANT_ID, ms.MetricRec.PERIOD_YEAR, ms.MetricRec.PERIOD_MONTH, false);
                             }
                         }
 
@@ -470,7 +474,7 @@ namespace SQM.Website
                         }
                         try
                         {
-							row2.CreateCell(1).SetCellValue(ms.MetricRec.PERIOD_YEAR);
+                            row2.CreateCell(1).SetCellValue(ms.MetricRec.PERIOD_YEAR);
                         }
                         catch
                         {
@@ -478,7 +482,7 @@ namespace SQM.Website
                         }
                         try
                         {
-							row2.CreateCell(2).SetCellValue(ms.MetricRec.PERIOD_MONTH);
+                            row2.CreateCell(2).SetCellValue(ms.MetricRec.PERIOD_MONTH);
                         }
                         catch
                         {
@@ -486,7 +490,7 @@ namespace SQM.Website
                         }
 
                         cellNumeric = null;
-						switch (ms.MetricRec.MEASURE_ID.ToString())
+                        switch (ms.MetricRec.MEASURE_ID.ToString())
                         {
                             case "1000000":
                                 cellNumeric = row2.CreateCell(cell = 3);
@@ -580,7 +584,7 @@ namespace SQM.Website
                         {
                             try
                             {
-								cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_VALUE));
+                                cellNumeric.SetCellValue(Convert.ToDouble(ms.MetricRec.MEASURE_VALUE));
                             }
                             catch
                             {
@@ -610,7 +614,7 @@ namespace SQM.Website
                     sheet2.AutoSizeColumn(11);
                     sheet2.AutoSizeColumn(12);
                 }
-                
+
                 GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
             }
             catch (Exception ex)
@@ -634,7 +638,7 @@ namespace SQM.Website
             decimal uom_id = 0;
 
             PLANT plant = null;
-           // EHSProfile profile = new EHSProfile();
+            // EHSProfile profile = new EHSProfile();
             EHS_MEASURE measure = null;
             EHS_PROFILE_MEASURE prmr = null;
             EHS_PROFILE_INPUT input = null;
@@ -649,13 +653,13 @@ namespace SQM.Website
             EHSCalcsCtl esMgr = new EHSCalcsCtl().CreateNew(SessionManager.FYStartDate().Month, DateSpanOption.SelectRange, "E");
             esMgr.LoadMetricInputs(dtFrom, dtTo, plantIDs, "");
 
-			List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
-			string altDunsLabel = "";
-			if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
-			{
-				altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
-			}
-           
+            List<SETTINGS> sets = SQMSettings.SelectSettingsGroup("EHS", "USER");
+            string altDunsLabel = "";
+            if (sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").FirstOrDefault() != null)
+            {
+                altDunsLabel = sets.Where(s => s.SETTING_CD == "EXPORT_ALTDUNS").First().VALUE;
+            }
+
             try
             {
                 string filename = "MetricInputs.xls";
@@ -683,12 +687,12 @@ namespace SQM.Website
                 row.CreateCell(7).SetCellValue("Input UOM");
                 row.CreateCell(8).SetCellValue("Input Cost");
                 row.CreateCell(9).SetCellValue("Input Currency");
-				if (!string.IsNullOrEmpty(altDunsLabel))
-				{
-					row.CreateCell(10).SetCellValue(altDunsLabel);
-				}
+                if (!string.IsNullOrEmpty(altDunsLabel))
+                {
+                    row.CreateCell(10).SetCellValue(altDunsLabel);
+                }
 
-              
+
                 int rownum = 0;
                 for (int irows = 0; irows < esMgr.InputsList.Count; irows++)
                 {
@@ -702,7 +706,7 @@ namespace SQM.Website
                     {
                         ;
                     }
-                    if (measure == null || prmr == null  || input.EHS_PROFILE_MEASURE.EHS_MEASURE.MEASURE_CATEGORY == "PROD")
+                    if (measure == null || prmr == null || input.EHS_PROFILE_MEASURE.EHS_MEASURE.MEASURE_CATEGORY == "PROD")
                     {
                         continue;
                     }
@@ -806,7 +810,7 @@ namespace SQM.Website
                     {
                         row.CreateCell(8).SetCellValue("");
                     }
-                    
+
                     try
                     {
                         row.CreateCell(9).SetCellValue(input.CURRENCY_CODE);
@@ -816,17 +820,17 @@ namespace SQM.Website
                         row.CreateCell(9).SetCellValue("");
                     }
 
-					if (!string.IsNullOrEmpty(altDunsLabel))
-					{
-						try
-						{
-							row.CreateCell(10).SetCellValue(plant.ALT_DUNS_CODE);
-						}
-						catch
-						{
-							row.CreateCell(10).SetCellValue("");
-						}
-					}
+                    if (!string.IsNullOrEmpty(altDunsLabel))
+                    {
+                        try
+                        {
+                            row.CreateCell(10).SetCellValue(plant.ALT_DUNS_CODE);
+                        }
+                        catch
+                        {
+                            row.CreateCell(10).SetCellValue("");
+                        }
+                    }
                 }
 
                 sheet1.AutoSizeColumn(0);
@@ -839,11 +843,11 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(7);
                 sheet1.AutoSizeColumn(8);
                 sheet1.AutoSizeColumn(9);
-				if (!string.IsNullOrEmpty(altDunsLabel))
-				{
-					sheet1.AutoSizeColumn(10);
-				}
-                
+                if (!string.IsNullOrEmpty(altDunsLabel))
+                {
+                    sheet1.AutoSizeColumn(10);
+                }
+
                 IRow row2 = sheet2.CreateRow(0);
                 row2.CreateCell(0).SetCellValue("Plant Name");
                 row2.CreateCell(1).SetCellValue("Peroid Year");
@@ -941,7 +945,7 @@ namespace SQM.Website
                 //Response.Write("Error processing the file:" + ex.Message.ToString());
                 //Response.End();
             }
-          
+
         }
         #endregion
 
@@ -956,7 +960,8 @@ namespace SQM.Website
             //Declare variables for files.
             string strEmployeeDate = "";
             string strEmployeeTaskDate = "";
-            string strJobTitle ="";
+            string strJobTitle = "";
+
 
             try
             {
@@ -978,6 +983,45 @@ namespace SQM.Website
                 string strDueDate;
                 string XLAT_LANGUAGE = "en";
                 bool isRecordable;
+
+                
+                string strTimeOfIncident;//time of Incident
+                string strShift;//Shift
+                string strDepartment;
+                string strInvolvedPersonName;
+                string strInvolvedPersonStatement;
+                string strSupervisorStatement;
+                string strInsideOrOutsideBuilding;
+                string strEmployeeStatus;
+               
+                bool isErgonomicConcerns;
+                bool isStandardWorkProcedures;
+                string strProceduresFollowed;
+                bool isTrainingProvided;
+                string strDateAssociateBegan;
+
+                bool isReoccur;
+                bool isFirstAid;
+                bool isFatality;
+                bool isLostTime;
+                bool isRestrictedTime;
+
+                bool maxIncident = false;//If incident id is greater than 'maxIncident' then following columns will be visible.
+
+                string strTNSK;
+                string strBusinessType;
+                string strMacroProcessType;
+                string strSpecificProcessType;
+                string strEquipmentManufacturerName;
+                string strEquipmentManufacturerDate;
+                string strDesignNumber;
+                string strAssetNumber;
+                string strAgeofAssociate;
+                string strTypeofIncident;
+                string strInitialTreatmentGiven;
+                string strChangeMedicalStatus;
+
+
 
                 ICell cellNumeric;
                 ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
@@ -1002,21 +1046,63 @@ namespace SQM.Website
                 row1.CreateCell(14).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
                 row1.CreateCell(15).SetCellValue(Resources.LocalizedText.DueDate);
 
+                row1.CreateCell(16).SetCellValue("Time Of Incident");//time of Incident
+                row1.CreateCell(17).SetCellValue("Shift");//Shift
+                row1.CreateCell(18).SetCellValue("Department");//Department
+                row1.CreateCell(19).SetCellValue("Involved Person's Name");//Involved Person's Name
+                row1.CreateCell(20).SetCellValue("Involved Person's Statement");//Involved Person's Statement
+                row1.CreateCell(21).SetCellValue("Supervisor's Statement");//Supervisor's Statement
+                row1.CreateCell(22).SetCellValue("Inside or Outside Building");//Inside or Outside Building"
+                row1.CreateCell(23).SetCellValue("Employee Status");//Employee Status"
+              
+                row1.CreateCell(24).SetCellValue("Ergonomic Concerns");//Ergonomic Concerns
+                row1.CreateCell(25).SetCellValue("Standard Work Procedures Followed ?");//Standard Work Procedures Followed ?
+                row1.CreateCell(26).SetCellValue("Procedures Followed");//Procedures Followed
+                row1.CreateCell(27).SetCellValue("Was Training for this Task Provided?");//Was Training for this Task Provided?
+                row1.CreateCell(28).SetCellValue("Date Associate Began Doing This Task ? ");//Date Associate Began Doing This Task ? 
+
+                row1.CreateCell(29).SetCellValue("Reoccurrence");//Reoccurrence
+                row1.CreateCell(30).SetCellValue("First Aid?");//First Aid?
+                row1.CreateCell(31).SetCellValue("Fatality?");// Fatality?
+                row1.CreateCell(32).SetCellValue("Lost Time?");// Lost Time?
+                row1.CreateCell(33).SetCellValue("Restricted Time?");// Restricted Time?
+
+                row1.CreateCell(34).SetCellValue("TNSK#(Definded by TNSK)");//TNSK#(Definded by TNSK)
+                row1.CreateCell(35).SetCellValue("Business Type");//Business Type
+                row1.CreateCell(36).SetCellValue("Macro Process Type");//Macro Process Type
+                row1.CreateCell(37).SetCellValue("Specific Process Type");//Specific Process Type
+                row1.CreateCell(38).SetCellValue("Equipment Manufacturer Name");//Equipment Manufacturer Name
+                row1.CreateCell(39).SetCellValue("Equipment Manufacturer Date(MM / DD / YYYY)");//Equipment Manufacturer Date(MM / DD / YYYY)
+                row1.CreateCell(40).SetCellValue("Design Number(for NSK designs only)");//Design Number(for NSK designs only
+                row1.CreateCell(41).SetCellValue("Asset Number");// Asset Number
+                row1.CreateCell(42).SetCellValue("Age of Associate (US and Europe  - DO NOT ENTER)");// Age of Associate (US and Europe  - DO NOT ENTER)
+                row1.CreateCell(43).SetCellValue("Type of Incident");// Type of Incident(what happened ?)
+                row1.CreateCell(44).SetCellValue(" Initial Treatment Given");// Initial Treatment Given
+                row1.CreateCell(45).SetCellValue(" Change in Medical Status");// Change in Medical Status ?
+
+
+
                 int rownum1 = 0;
                 for (int irows = 0; irows < incidentList.Count; irows++)
                 {
                     INCIDENT incident = incidentList[irows].Incident;
 
-					if (incident.INCIDENT_DT != null)
-					{
-						try
-						{
-							strIncidentDate = incident.INCIDENT_DT.ToString("MM/dd/yyyy");
-						}
-						catch { strIncidentDate = ""; }
-					}
-					else
-						strIncidentDate = "";
+                    //maxIncident
+                    if (incident.INCIDENT_ID > maxIncidentforInjuryType)
+                    {
+                        maxIncident = true;
+                    }
+
+                    if (incident.INCIDENT_DT != null)
+                    {
+                        try
+                        {
+                            strIncidentDate = incident.INCIDENT_DT.ToString("MM/dd/yyyy");
+                        }
+                        catch { strIncidentDate = ""; }
+                    }
+                    else
+                        strIncidentDate = "";
 
                     strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 2); // Due date
                     if (strAnswerValue != null && strAnswerValue != "")
@@ -1034,16 +1120,16 @@ namespace SQM.Website
                     else
                         strDueDate = "";
 
-					if (incident.CREATE_DT.HasValue)
-					{
-						try
-						{
-							strReportDate = Convert.ToDateTime(incident.CREATE_DT).ToString("MM/dd/yyyy");
-						}
-						catch { strReportDate = ""; }
-					}
-					else
-						strReportDate = "";
+                    if (incident.CREATE_DT.HasValue)
+                    {
+                        try
+                        {
+                            strReportDate = Convert.ToDateTime(incident.CREATE_DT).ToString("MM/dd/yyyy");
+                        }
+                        catch { strReportDate = ""; }
+                    }
+                    else
+                        strReportDate = "";
 
                     try { strIncidentType = incident.ISSUE_TYPE; }
                     catch { strIncidentType = ""; }
@@ -1051,10 +1137,10 @@ namespace SQM.Website
                     try { strPlantname = incidentList[irows].Plant.PLANT_NAME; }
                     catch { strPlantname = ""; }
 
-                    try 
-                    { 
+                    try
+                    {
                         strDescription = StringHtmlExtensions.TruncateHtml(incident.DESCRIPTION, 10000, "...");
-                        strDescription =  WebSiteCommon.StripHTML(strDescription);
+                        strDescription = WebSiteCommon.StripHTML(strDescription);
                     }
                     catch { strDescription = ""; }
 
@@ -1147,6 +1233,42 @@ namespace SQM.Website
                                     row1.CreateCell(13).SetCellValue("");
                                     row1.CreateCell(14).SetCellValue("");
                                     row1.CreateCell(15).SetCellValue("");
+                                    row1.CreateCell(16).SetCellValue("");//time of Incident
+                                    row1.CreateCell(17).SetCellValue("");
+                                    row1.CreateCell(18).SetCellValue("");
+                                    row1.CreateCell(19).SetCellValue("");
+                                    row1.CreateCell(20).SetCellValue("");
+                                    row1.CreateCell(21).SetCellValue("");
+                                    row1.CreateCell(22).SetCellValue("");
+                                    row1.CreateCell(23).SetCellValue("");
+                                    row1.CreateCell(24).SetCellValue("");
+                                    row1.CreateCell(25).SetCellValue("");
+                                    row1.CreateCell(26).SetCellValue("");
+                                    row1.CreateCell(27).SetCellValue("");
+                                    row1.CreateCell(28).SetCellValue("");
+                                    row1.CreateCell(29).SetCellValue("");
+                                    row1.CreateCell(30).SetCellValue("");
+                                    row1.CreateCell(31).SetCellValue("");
+                                    row1.CreateCell(32).SetCellValue("");
+                                    row1.CreateCell(33).SetCellValue("");
+                                
+
+                                    //If incident is newly created
+                                    if (maxIncident)
+                                    {
+                                        row1.CreateCell(34).SetCellValue("");//TNSK#(Definded by TNSK)
+                                        row1.CreateCell(35).SetCellValue("");//Business Type
+                                        row1.CreateCell(36).SetCellValue("");//Macro Process Type                                      
+                                        row1.CreateCell(37).SetCellValue("");//Specific Process Type
+                                        row1.CreateCell(38).SetCellValue("");//Equipment Manufacturer Name
+                                        row1.CreateCell(39).SetCellValue("");//Equipment Manufacturer Date(MM / DD / YYYY)
+                                        row1.CreateCell(40).SetCellValue("");//Design Number(for NSK designs only
+                                        row1.CreateCell(41).SetCellValue("");// Asset Number
+                                        row1.CreateCell(42).SetCellValue("");// Age of Associate (US and Europe  - DO NOT ENTER)
+                                        row1.CreateCell(43).SetCellValue("");// Type of Incident(what happened ?)
+                                        row1.CreateCell(44).SetCellValue("");// Initial Treatment Given
+                                        row1.CreateCell(45).SetCellValue("");// Change in Medical Status ?
+                                    }
                                 }
                             }
                             else
@@ -1170,6 +1292,42 @@ namespace SQM.Website
                                 row1.CreateCell(13).SetCellValue("");
                                 row1.CreateCell(14).SetCellValue("");
                                 row1.CreateCell(15).SetCellValue("");
+                                row1.CreateCell(16).SetCellValue("");//time of Incident
+                                row1.CreateCell(17).SetCellValue("");
+                                row1.CreateCell(18).SetCellValue("");
+                                row1.CreateCell(19).SetCellValue("");
+                                row1.CreateCell(20).SetCellValue("");
+                                row1.CreateCell(21).SetCellValue("");
+                                row1.CreateCell(22).SetCellValue("");
+                                row1.CreateCell(23).SetCellValue("");
+                                row1.CreateCell(24).SetCellValue("");
+                                row1.CreateCell(25).SetCellValue("");
+                                row1.CreateCell(26).SetCellValue("");
+                                row1.CreateCell(27).SetCellValue("");
+                                row1.CreateCell(28).SetCellValue("");
+                                row1.CreateCell(29).SetCellValue("");
+                                row1.CreateCell(30).SetCellValue("");
+                                row1.CreateCell(31).SetCellValue("");
+                                row1.CreateCell(32).SetCellValue("");
+                                row1.CreateCell(33).SetCellValue("");
+                               
+
+                                //If incident id greater than maxIncident
+                                if (maxIncident)
+                                {
+                                    row1.CreateCell(34).SetCellValue("");//TNSK#(Definded by TNSK)
+                                    row1.CreateCell(35).SetCellValue("");//Business Type
+                                    row1.CreateCell(36).SetCellValue("");//Macro Process Type                                      
+                                    row1.CreateCell(37).SetCellValue("");//Specific Process Type
+                                    row1.CreateCell(38).SetCellValue("");//Equipment Manufacturer Name
+                                    row1.CreateCell(39).SetCellValue("");//Equipment Manufacturer Date(MM / DD / YYYY)
+                                    row1.CreateCell(40).SetCellValue("");//Design Number(for NSK designs only
+                                    row1.CreateCell(41).SetCellValue("");// Asset Number
+                                    row1.CreateCell(42).SetCellValue("");// Age of Associate (US and Europe  - DO NOT ENTER)
+                                    row1.CreateCell(43).SetCellValue("");// Type of Incident(what happened ?)
+                                    row1.CreateCell(44).SetCellValue("");// Initial Treatment Given
+                                    row1.CreateCell(45).SetCellValue("");// Change in Medical Status ?
+                                }
                             }
                         }
                         else
@@ -1192,6 +1350,43 @@ namespace SQM.Website
                             row1.CreateCell(13).SetCellValue("");
                             row1.CreateCell(14).SetCellValue("");
                             row1.CreateCell(15).SetCellValue("");
+                            row1.CreateCell(16).SetCellValue("");//time of Incident
+                            row1.CreateCell(17).SetCellValue("");
+                            row1.CreateCell(18).SetCellValue("");
+                            row1.CreateCell(19).SetCellValue("");
+                            row1.CreateCell(20).SetCellValue("");
+                            row1.CreateCell(21).SetCellValue("");
+                            row1.CreateCell(22).SetCellValue("");
+                            row1.CreateCell(23).SetCellValue("");
+                            row1.CreateCell(24).SetCellValue("");
+                            row1.CreateCell(25).SetCellValue("");
+                            row1.CreateCell(26).SetCellValue("");
+                            row1.CreateCell(27).SetCellValue("");
+                            row1.CreateCell(28).SetCellValue("");
+                            row1.CreateCell(29).SetCellValue("");
+                            row1.CreateCell(30).SetCellValue("");
+                            row1.CreateCell(31).SetCellValue("");
+                            row1.CreateCell(32).SetCellValue("");
+                            row1.CreateCell(33).SetCellValue("");
+                         
+
+
+                            //If incident id greater than maxIncident
+                            if (maxIncident)
+                            {
+                                row1.CreateCell(34).SetCellValue("");//TNSK#(Definded by TNSK)
+                                row1.CreateCell(35).SetCellValue("");//Business Type
+                                row1.CreateCell(36).SetCellValue("");//Macro Process Type                                      
+                                row1.CreateCell(37).SetCellValue("");//Specific Process Type
+                                row1.CreateCell(38).SetCellValue("");//Equipment Manufacturer Name
+                                row1.CreateCell(39).SetCellValue("");//Equipment Manufacturer Date(MM / DD / YYYY)
+                                row1.CreateCell(40).SetCellValue("");//Design Number(for NSK designs only
+                                row1.CreateCell(41).SetCellValue("");// Asset Number
+                                row1.CreateCell(42).SetCellValue("");// Age of Associate (US and Europe  - DO NOT ENTER)
+                                row1.CreateCell(43).SetCellValue("");// Type of Incident(what happened ?)
+                                row1.CreateCell(44).SetCellValue("");// Initial Treatment Given
+                                row1.CreateCell(45).SetCellValue("");// Change in Medical Status ?
+                            }
                         }
                     }
                     else
@@ -1207,7 +1402,7 @@ namespace SQM.Website
 
                         try
                         {
-                          
+
                             //section for Recordable data.
                             isRecordable = (from II in entities.INCFORM_INJURYILLNESS
                                             where II.INCIDENT_ID == incident.INCIDENT_ID
@@ -1249,7 +1444,7 @@ namespace SQM.Website
                             if (strEmployeeDate != null)
                             {
                                 row1.CreateCell(6).SetCellValue(strAnswerValue);
-                               
+
                             }
                             else
                                 row1.CreateCell(6).SetCellValue("");
@@ -1272,7 +1467,7 @@ namespace SQM.Website
                             if (strEmployeeDate != null)
                             {
                                 row1.CreateCell(7).SetCellValue(strAnswerValue);
-                               
+
                             }
                             else
                                 row1.CreateCell(7).SetCellValue("");
@@ -1283,24 +1478,24 @@ namespace SQM.Website
                         //section for Employee date.
                         try
                         {
-     
+
                             DateTime? EmployeeDate = new DateTime();
                             PERSON ObjPerson = new PERSON();
                             //Get the values from task status.
                             EmployeeDate = (from P in entities.PERSON
-                                         join TS in entities.TASK_STATUS on P.PERSON_ID equals TS.RESPONSIBLE_ID
-                                         where TS.RECORD_ID == incident.INCIDENT_ID
-                                         select P.CREATE_DT).FirstOrDefault();
+                                            join TS in entities.TASK_STATUS on P.PERSON_ID equals TS.RESPONSIBLE_ID
+                                            where TS.RECORD_ID == incident.INCIDENT_ID
+                                            select P.CREATE_DT).FirstOrDefault();
 
                             ObjPerson.CREATE_DT = EmployeeDate;
-                            strEmployeeDate = Convert.ToDateTime (ObjPerson.CREATE_DT).ToString("MM/dd/yyyy");
+                            strEmployeeDate = Convert.ToDateTime(ObjPerson.CREATE_DT).ToString("MM/dd/yyyy");
 
                             if (strEmployeeDate == "01/01/0001")
                             {
                                 strEmployeeDate = "";
                             }
-                        
-                           
+
+
 
                             //test = EmployeeDate;
                             // strEmployeeDate = Convert.ToString(EmployeeDate.ToString("MM/dd/yyyy"));
@@ -1324,8 +1519,8 @@ namespace SQM.Website
                             TASK_STATUS ObjTaskStatus = new TASK_STATUS();
                             //Get the values from task status.
                             EmployeeTaskDate = (from TS in entities.TASK_STATUS
-                                               where TS.RECORD_ID == incident.INCIDENT_ID
-                                               select TS.CREATE_DT).FirstOrDefault();
+                                                where TS.RECORD_ID == incident.INCIDENT_ID
+                                                select TS.CREATE_DT).FirstOrDefault();
 
                             ObjTaskStatus.CREATE_DT = EmployeeTaskDate;
                             strEmployeeTaskDate = Convert.ToDateTime(ObjTaskStatus.CREATE_DT).ToString("MM/dd/yyyy");
@@ -1339,7 +1534,7 @@ namespace SQM.Website
                             if (strEmployeeTaskDate != null)
                             {
                                 row1.CreateCell(9).SetCellValue(strEmployeeTaskDate);
-                             
+
                             }
                             else
                                 row1.CreateCell(9).SetCellValue("");
@@ -1347,6 +1542,566 @@ namespace SQM.Website
 
                         catch { row1.CreateCell(9).SetCellValue(""); }
 
+                        //new columns are added.
+                     
+                        INCFORM_INJURYILLNESS injuryIncident = (from II in entities.INCFORM_INJURYILLNESS where II.INCIDENT_ID == incident.INCIDENT_ID select II).FirstOrDefault();
+
+                        if (injuryIncident != null)
+                        {
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.INCIDENT_TIME.ToString())))
+                                    strTimeOfIncident = injuryIncident.INCIDENT_TIME.ToString();
+                                else
+                                    strTimeOfIncident = "";
+                                row1.CreateCell(16).SetCellValue(strTimeOfIncident);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(16).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.SHIFT )))
+                                {
+                                    strShift = injuryIncident.SHIFT;
+                                    if (strShift == "01"||strShift=="1")
+                                    {
+                                        row1.CreateCell(17).SetCellValue("First Shift");
+                                    }
+                                    else if (strShift == "02" || strShift == "2")
+                                    {
+                                        row1.CreateCell(17).SetCellValue("Second Shift");
+                                    }
+                                    else if (strShift == "03"|| strShift == "3")
+                                    {
+                                        row1.CreateCell(17).SetCellValue("Third Shift");
+                                    }
+                                }
+
+                                else
+                                {
+                                    strShift = "";
+                                    row1.CreateCell(17).SetCellValue(strShift);
+                                }
+                            }
+                            catch
+                            {
+                                row1.CreateCell(17).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.DEPARTMENT)))
+                                    strDepartment = injuryIncident.DEPARTMENT;
+                                else
+                                    strDepartment = "";
+                                row1.CreateCell(18).SetCellValue(strDepartment);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(18).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.INVOLVED_PERSON_NAME)))
+                                    strInvolvedPersonName = injuryIncident.INVOLVED_PERSON_NAME;
+                                else
+                                    strInvolvedPersonName = "";
+                                row1.CreateCell(19).SetCellValue(strInvolvedPersonName);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(19).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.INVOLVED_PERSON_STATEMENT)))
+                                    strInvolvedPersonStatement = injuryIncident.INVOLVED_PERSON_STATEMENT;
+                                else
+                                    strInvolvedPersonStatement = "";
+                                row1.CreateCell(20).SetCellValue(strInvolvedPersonStatement);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(20).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.SUPERVISOR_STATEMENT)))
+                                    strSupervisorStatement = injuryIncident.SUPERVISOR_STATEMENT;
+                                else
+                                    strSupervisorStatement = "";
+                                row1.CreateCell(21).SetCellValue(strSupervisorStatement);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(21).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.INSIDE_OUTSIDE_BLDNG )))
+                                    strInsideOrOutsideBuilding = injuryIncident.INSIDE_OUTSIDE_BLDNG;
+                                else
+                                    strInsideOrOutsideBuilding = "";
+                                row1.CreateCell(22).SetCellValue(strInsideOrOutsideBuilding);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(22).SetCellValue("");
+                            }
+                            
+                           
+                            try
+                            {
+                                if (incident.INCIDENT_ID > maxINCIDENT)
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.EMP_STATUS.ToString())))
+                                    {
+                                        strEmployeeStatus = injuryIncident.EMP_STATUS.ToString();
+                                       if(strEmployeeStatus=="2")
+                                        {
+                                            row1.CreateCell(23).SetCellValue("Temporary Employee");
+                                        }
+                                       else if(strEmployeeStatus == "1")
+                                        {
+                                            row1.CreateCell(23).SetCellValue("Contractor Employee");
+                                        }
+                                       else if (strEmployeeStatus == "0")
+                                        {
+                                            row1.CreateCell(23).SetCellValue("Permanent Employee");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        strEmployeeStatus = "";
+                                        row1.CreateCell(23).SetCellValue(strEmployeeStatus);
+                                    }
+                                }
+                                else
+                                {
+                                    if(injuryIncident.COMPANY_SUPERVISED!=null)
+                                    {
+                                        strEmployeeStatus = Convert.ToString(injuryIncident.COMPANY_SUPERVISED);
+                                        if(strEmployeeStatus=="True")
+                                        {
+                                            row1.CreateCell(23).SetCellValue("Yes");
+                                        }
+                                        else if (strEmployeeStatus == "False")
+                                        {
+                                            row1.CreateCell(23).SetCellValue("No");
+                                        }
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                row1.CreateCell(23).SetCellValue("");
+                            }                            
+
+                            try
+                            {
+                                if (injuryIncident.ERGONOMIC_CONCERN)
+                                    isErgonomicConcerns = injuryIncident.ERGONOMIC_CONCERN;
+                                else
+                                    isErgonomicConcerns = false;
+                                row1.CreateCell(24).SetCellValue(isErgonomicConcerns);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(24).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (injuryIncident.STD_PROCS_FOLLOWED!=null)
+                                {
+                                    isStandardWorkProcedures = injuryIncident.STD_PROCS_FOLLOWED;
+                                    if (isStandardWorkProcedures)
+                                    { row1.CreateCell(25).SetCellValue("Standard"); }
+                                    else
+                                        row1.CreateCell(25).SetCellValue("Non-standard");
+                                }
+                                else
+                                {
+                                  //  isStandardWorkProcedures = false;
+                                    row1.CreateCell(25).SetCellValue("");
+                                }
+                            }
+                            catch
+                            {
+                                row1.CreateCell(25).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (!(string.IsNullOrEmpty(injuryIncident.STD_PROCS_DESC)))
+                                    strProceduresFollowed = injuryIncident.STD_PROCS_DESC;
+                                else
+                                    strProceduresFollowed = "";
+                                row1.CreateCell(26).SetCellValue(strProceduresFollowed);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(26).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (injuryIncident.TRAINING_PROVIDED)
+                                    isTrainingProvided = injuryIncident.TRAINING_PROVIDED;
+                                else
+                                    isTrainingProvided = false;
+                                row1.CreateCell(27).SetCellValue(isTrainingProvided);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(27).SetCellValue("");
+                            }
+
+                            try
+                            {                               
+                                if ((injuryIncident.ASSOCIATE_MONTHS != null) && (injuryIncident.ASSOCIATE_YEAR != null))
+                                { strDateAssociateBegan = (injuryIncident.ASSOCIATE_MONTHS).ToString() + "/" + (injuryIncident.ASSOCIATE_YEAR).ToString(); }
+                                else
+                                    strDateAssociateBegan = "";
+                                row1.CreateCell(28).SetCellValue(strDateAssociateBegan);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(28).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if ((injuryIncident.REOCCUR).HasValue)
+                                {
+                                    isReoccur = bool.Parse((injuryIncident.REOCCUR).ToString());
+                                    row1.CreateCell(29).SetCellValue(isReoccur);
+                                }
+                                else
+                                { row1.CreateCell(29).SetCellValue(""); }
+                            }
+                            catch
+                            {
+                                row1.CreateCell(29).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (injuryIncident.FIRST_AID != null)
+                                    isFirstAid = injuryIncident.FIRST_AID;
+                                else
+                                    isFirstAid = false;
+                                row1.CreateCell(30).SetCellValue(isFirstAid);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(30).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (injuryIncident.FATALITY.HasValue)
+                                    isFatality = bool.Parse((injuryIncident.FATALITY).ToString());
+                                else
+                                    isFatality = false;
+                                row1.CreateCell(31).SetCellValue(isFatality);
+
+                            }
+                            catch
+                            {
+                                row1.CreateCell(31).SetCellValue("");
+                            }
+                            try
+                            {
+                                if (injuryIncident.RESTRICTED_TIME != null)
+                                    isRestrictedTime = injuryIncident.RESTRICTED_TIME;
+                                else
+                                    isRestrictedTime = false;
+                                row1.CreateCell(33).SetCellValue(isRestrictedTime);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(33).SetCellValue("");
+                            }
+
+                            try
+                            {
+                                if (injuryIncident.LOST_TIME != null)
+                                    isLostTime = injuryIncident.LOST_TIME;
+                                else
+                                    isLostTime = false;
+
+                                row1.CreateCell(32).SetCellValue(isLostTime);
+                            }
+                            catch
+                            {
+                                row1.CreateCell(32).SetCellValue("");
+                            }
+
+                            if (incident.INCIDENT_ID > maxIncidentforInjuryType)
+                            {
+                                //try
+                                //{
+                                INCIDENT incidnt = (from I in entities.INCIDENT where I.INCIDENT_ID == incident.INCIDENT_ID select I).FirstOrDefault();
+
+                                if (incidnt != null)
+                                {
+                                    try
+                                    {
+                                        if (!(string.IsNullOrEmpty(incidnt.TNSKNumber)))
+                                            strTNSK = incidnt.TNSKNumber;
+                                        else
+                                            strTNSK = "";
+
+                                        row1.CreateCell(34).SetCellValue(strTNSK);//TNSK#(Definded by TNSK)                                      
+                                    }
+                                    catch
+                                    {
+                                        row1.CreateCell(34).SetCellValue("");
+                                    }
+                                }
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.BUSINESS_TYPE)))
+                                    { strBusinessType = injuryIncident.BUSINESS_TYPE;
+                                        string BT =Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
+                                        row1.CreateCell(35).SetCellValue(BT);
+                                    }
+                                    else
+                                    { strBusinessType = "";
+                                    row1.CreateCell(35).SetCellValue(strBusinessType);//Business Type
+                                    }
+
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(35).SetCellValue("");//Business Type
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.MACRO_PROCESS_TYPE)))
+                                    { strMacroProcessType = injuryIncident.MACRO_PROCESS_TYPE;
+                                        if (injuryIncident.BUSINESS_TYPE != null)
+                                        {
+                                            strBusinessType = injuryIncident.BUSINESS_TYPE;
+                                            string BT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
+
+                                            string Macro_Process = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==BT && X.XLAT_CODE==strMacroProcessType select X.DESCRIPTION).FirstOrDefault());
+                                            row1.CreateCell(36).SetCellValue(Macro_Process);
+                                        }
+                                        else
+                                        {
+                                            strMacroProcessType = "";
+                                            row1.CreateCell(36).SetCellValue(strMacroProcessType);//Macro Process Type
+                                        }
+                                    }
+                                    else
+                                    { strMacroProcessType = "";
+                                    row1.CreateCell(36).SetCellValue(strMacroProcessType);//Macro Process Type
+                                    }
+
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(36).SetCellValue("");//Macro Process Type
+
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.SPECIFIC_PROCESS_TYPE)))
+                                    { strSpecificProcessType = injuryIncident.SPECIFIC_PROCESS_TYPE;
+                                        if (!(string.IsNullOrEmpty(injuryIncident.MACRO_PROCESS_TYPE)))
+                                        {
+                                            strMacroProcessType = injuryIncident.MACRO_PROCESS_TYPE;
+                                            if (!(string.IsNullOrEmpty(injuryIncident.BUSINESS_TYPE)))
+                                            {
+                                                strBusinessType = injuryIncident.BUSINESS_TYPE;
+                                                string BT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == "BusinessType" && X.XLAT_CODE == strBusinessType select X.DESCRIPTION).FirstOrDefault());
+
+                                                string Macro_Process = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP == BT && X.XLAT_CODE == strMacroProcessType select X.DESCRIPTION).FirstOrDefault());
+                                                if (!(string.IsNullOrEmpty(Macro_Process)))
+                                                { string SPT = Convert.ToString((from X in entities.XLAT where X.XLAT_GROUP==Macro_Process &&  X.XLAT_CODE==strSpecificProcessType select X.DESCRIPTION).FirstOrDefault());
+                                                    row1.CreateCell(37).SetCellValue(SPT);
+                                                }
+                                                else
+                                                {
+
+                                                    row1.CreateCell(37).SetCellValue("");
+                                                }
+                                            }
+                                            else
+                                            {
+
+                                                row1.CreateCell(37).SetCellValue("");
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            row1.CreateCell(37).SetCellValue("");
+                                        }
+                                    }
+                                    else
+                                    {       strSpecificProcessType = "";
+                                    row1.CreateCell(37).SetCellValue(strSpecificProcessType);//Specific Process Type
+                                }
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(37).SetCellValue("");//Specific Process Type
+                                }
+
+                                try
+                                {
+                                    if (injuryIncident.EQUIPEMENT_MANUFACTURER_DATE != null)
+                                    { DateTime Manufature_Date = DateTime.Parse((injuryIncident.EQUIPEMENT_MANUFACTURER_DATE).ToString());
+                                        strEquipmentManufacturerDate = Manufature_Date.ToString("MM-dd-yyyy");
+                                    }
+                                    else
+                                        strEquipmentManufacturerDate = "";
+
+                                    row1.CreateCell(39).SetCellValue(strEquipmentManufacturerDate);//Equipment Manufacturer Date(MM / DD / YYYY)
+
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(39).SetCellValue("");//Equipment Manufacturer Date(MM / DD / YYYY)
+
+                                }
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.EQUIPMENT_MANUFACTURER_NAME)))
+                                        strEquipmentManufacturerName = injuryIncident.EQUIPMENT_MANUFACTURER_NAME;
+                                    else
+                                        strEquipmentManufacturerName = "";
+                                    row1.CreateCell(38).SetCellValue(strEquipmentManufacturerName);//Equipment Manufacturer Name
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(38).SetCellValue("");//Equipment Manufacturer Name
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.DESIGN_NUMBER)))
+                                        strDesignNumber = injuryIncident.DESIGN_NUMBER;
+                                    else
+                                        strDesignNumber = "";
+                                    row1.CreateCell(40).SetCellValue(strDesignNumber);//Design Number(for NSK designs only                                           
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(40).SetCellValue("");//Design Number(for NSK designs only                                          
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.ASSET_NUMBER)))
+                                        strAssetNumber = injuryIncident.ASSET_NUMBER;
+                                    else
+                                        strAssetNumber = "";
+                                    row1.CreateCell(41).SetCellValue(strAssetNumber);// Asset Number
+
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(41).SetCellValue("");// Asset Number
+
+                                }
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.AGE_OF_ASSOCIATE )))
+                                        strAgeofAssociate = injuryIncident.AGE_OF_ASSOCIATE;
+                                    else
+                                        strAgeofAssociate = "";
+                                    row1.CreateCell(42).SetCellValue(strAgeofAssociate);// Age of Associate (US and Europe  - DO NOT ENTER)                                         
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(42).SetCellValue("");// Age of Associate (US and Europe  - DO NOT ENTER)
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.TYPE_OF_INCIDENT)))
+                                    { strTypeofIncident = injuryIncident.TYPE_OF_INCIDENT;
+
+                                        string Incident_type = Convert.ToString((from x in entities.XLAT where x.XLAT_GROUP== "INCIDENT_TYPE" && x.XLAT_CODE==strTypeofIncident select x.DESCRIPTION ).FirstOrDefault());
+                                        row1.CreateCell(43).SetCellValue(Incident_type);
+                                    }
+                                    else
+                                    {
+                                        strTypeofIncident = "";
+                                        row1.CreateCell(43).SetCellValue(strTypeofIncident);// Type of Incident(what happened ?)
+                                    }
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(43).SetCellValue("");// Type of Incident(what happened ?)                                         
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.INITIAL_TREATMENT_GIVEN)))
+                                    { strInitialTreatmentGiven = injuryIncident.INITIAL_TREATMENT_GIVEN;
+                                        string[] treatment_Given = strInitialTreatmentGiven.Split(',');
+                                        string result = "";
+                                        foreach (var word in treatment_Given)
+                                        {
+                                            result =result+" "+ Convert.ToString((from x in entities.XLAT where x.XLAT_GROUP == "ITG" && x.XLAT_CODE == word select x.DESCRIPTION).FirstOrDefault())+",";
+                                           
+                                        }
+                                        string Treatment = (result.TrimEnd(',')).Trim();
+                                        row1.CreateCell(44).SetCellValue(Treatment);
+                                    }
+                                    else
+                                    {
+                                        strInitialTreatmentGiven = "";
+                                        row1.CreateCell(44).SetCellValue(strInitialTreatmentGiven);// Initial Treatment Given
+                                    }
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(44).SetCellValue("");// Initial Treatment Given
+                                }
+
+                                try
+                                {
+                                    if (!(string.IsNullOrEmpty(injuryIncident.CHANGE_MEDICAL_STATUS)))
+                                    { strChangeMedicalStatus = injuryIncident.CHANGE_MEDICAL_STATUS;
+                                        string[] Medical_status = strChangeMedicalStatus.Split(',');
+                                        string result = "";
+                                        foreach (var word in Medical_status)
+                                        {
+                                            result = result + " " + Convert.ToString((from x in entities.XLAT where x.XLAT_GROUP == "CMS" && x.XLAT_CODE == word select x.DESCRIPTION).FirstOrDefault())+",";
+                                        }
+                                        string Medical_Sta = (result.TrimEnd(',')).Trim();
+                                        row1.CreateCell(45).SetCellValue(Medical_Sta);
+                                    }
+                                    else
+                                    {
+                                        strChangeMedicalStatus = "";
+
+                                        row1.CreateCell(45).SetCellValue(strChangeMedicalStatus);// Change in Medical Status ?
+                                    }
+                                }
+                                catch
+                                {
+                                    row1.CreateCell(45).SetCellValue("");// Change in Medical Status ?
+                                }
+
+                            }
+
+                        }
 
 
                         //section for Employee task date.
@@ -1376,9 +2131,6 @@ namespace SQM.Website
                         row1.CreateCell(11).SetCellValue(strDescription);
                         row1.Cells[11].CellStyle.WrapText = true;
 
-
-
-
                         try
                         {
                             // root cause operational control
@@ -1390,9 +2142,9 @@ namespace SQM.Website
                                               join XT in entities.XLAT on IC.CAUSEATION_CD equals XT.XLAT_CODE
                                               where IR.INCIDENT_ID == incident.INCIDENT_ID && XT.XLAT_GROUP == XLAT_GROUP && IR.IS_ROOTCAUSE == true && XT.XLAT_LANGUAGE == XLAT_LANGUAGE
                                               select XT.DESCRIPTION).FirstOrDefault();
-                                              
-                           
-                          
+
+
+
 
                             //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 78); // root cause operational control
                             if (strAnswerValue != null)
@@ -1408,9 +2160,9 @@ namespace SQM.Website
 
                             //Get the values from task status.
                             strAnswerValue = (from a in entities.TASK_STATUS
-                                          where a.RECORD_TYPE == 40 &&
-                                          a.RECORD_ID == incident.INCIDENT_ID
-                                          select a.DESCRIPTION).FirstOrDefault();
+                                              where a.RECORD_TYPE == 40 &&
+                                              a.RECORD_ID == incident.INCIDENT_ID
+                                              select a.DESCRIPTION).FirstOrDefault();
 
                             //strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(incident, 69); // corrective actions
                             if (strAnswerValue != null)
@@ -1438,8 +2190,10 @@ namespace SQM.Website
                                 row1.CreateCell(14).SetCellValue("");
                         }
                         catch { row1.CreateCell(14).SetCellValue(""); }
-                                 
+
                         row1.CreateCell(15).SetCellValue(strDueDate);
+
+
                     }
 
                 }
@@ -1460,6 +2214,36 @@ namespace SQM.Website
                 sheet1.AutoSizeColumn(13);
                 sheet1.AutoSizeColumn(14);
                 sheet1.AutoSizeColumn(15);
+                sheet1.AutoSizeColumn(16);
+                sheet1.AutoSizeColumn(17);
+                sheet1.AutoSizeColumn(18);
+                sheet1.AutoSizeColumn(19);
+                sheet1.AutoSizeColumn(20);
+                sheet1.AutoSizeColumn(21);
+                sheet1.AutoSizeColumn(22);
+                sheet1.AutoSizeColumn(23);
+                sheet1.AutoSizeColumn(24);
+                sheet1.AutoSizeColumn(25);
+                sheet1.AutoSizeColumn(26);
+                sheet1.AutoSizeColumn(27);
+                sheet1.AutoSizeColumn(28);
+                sheet1.AutoSizeColumn(29);
+                sheet1.AutoSizeColumn(30);
+                sheet1.AutoSizeColumn(31);
+                sheet1.AutoSizeColumn(32);
+                sheet1.AutoSizeColumn(33);
+                sheet1.AutoSizeColumn(34);
+                sheet1.AutoSizeColumn(35);
+                sheet1.AutoSizeColumn(36);
+                sheet1.AutoSizeColumn(37);
+                sheet1.AutoSizeColumn(38);
+                sheet1.AutoSizeColumn(39);
+                sheet1.AutoSizeColumn(40);
+                sheet1.AutoSizeColumn(41);
+                sheet1.AutoSizeColumn(42);
+                sheet1.AutoSizeColumn(43);
+                sheet1.AutoSizeColumn(44);
+                sheet1.AutoSizeColumn(45);              
 
                 GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
             }
@@ -1507,9 +2291,9 @@ namespace SQM.Website
                 row1.CreateCell(1).SetCellValue(Resources.LocalizedText.InspectionDate);
                 row1.CreateCell(2).SetCellValue(Resources.LocalizedText.ReportDate);
                 row1.CreateCell(3).SetCellValue(Resources.LocalizedText.Location); // Really the plant name
-                row1.CreateCell(4).SetCellValue("Inspection Category"); 
+                row1.CreateCell(4).SetCellValue("Inspection Category");
                 row1.CreateCell(5).SetCellValue("Recommendation Type");
-                row1.CreateCell(6).SetCellValue("Recommendation Description"); 
+                row1.CreateCell(6).SetCellValue("Recommendation Description");
                 row1.CreateCell(7).SetCellValue(Resources.LocalizedText.Description);
                 row1.CreateCell(8).SetCellValue(Resources.LocalizedText.ResponsiblePerson);
                 row1.CreateCell(9).SetCellValue(Resources.LocalizedText.DueDate);
@@ -1517,7 +2301,7 @@ namespace SQM.Website
                 row1.CreateCell(11).SetCellValue("Date Actions Applied");
                 row1.CreateCell(12).SetCellValue("Corrective Actions Summary");
                 row1.CreateCell(13).SetCellValue("Recorded By");
-            
+
                 int rownum1 = 0;
                 for (int irows = 0; irows < incidentList.Count; irows++)
                 {
@@ -1567,7 +2351,7 @@ namespace SQM.Website
                     row1.CreateCell(1).SetCellValue(strIncidentDate);
                     row1.CreateCell(2).SetCellValue(strReportDate);
                     row1.CreateCell(3).SetCellValue(strPlantname);
-                   
+
                     try
                     {
                         strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 81); // inspect category
@@ -1604,7 +2388,7 @@ namespace SQM.Website
                         strDescription = WebSiteCommon.StripHTML(strDescription);
                     }
                     catch { strDescription = ""; }
-                   
+
                     row1.CreateCell(7).SetCellValue(strDescription);
                     row1.Cells[7].CellStyle.WrapText = true;
 
@@ -1619,9 +2403,9 @@ namespace SQM.Website
                             row1.CreateCell(8).SetCellValue("");
                     }
                     catch { row1.CreateCell(8).SetCellValue(""); }
-                   
-                   try
-                   {
+
+                    try
+                    {
                         strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 92); // projected completion date
                         if (!string.IsNullOrEmpty(strAnswerValue))
                             row1.CreateCell(9).SetCellValue(Convert.ToDateTime(strAnswerValue).ToString("MM/dd/yyyy"));
@@ -1630,42 +2414,42 @@ namespace SQM.Website
                     }
                     catch { row1.CreateCell(9).SetCellValue(""); }
 
-                   try
-                   {
-                       row1.CreateCell(10).SetCellValue(WebSiteCommon.GetXlatValue("incidentStatus",data.Status));
-                   }
-                   catch { row1.CreateCell(10).SetCellValue(""); }
+                    try
+                    {
+                        row1.CreateCell(10).SetCellValue(WebSiteCommon.GetXlatValue("incidentStatus", data.Status));
+                    }
+                    catch { row1.CreateCell(10).SetCellValue(""); }
 
-                   try
-                   {
-                       strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 85); // action applied date
-                       if (!string.IsNullOrEmpty(strAnswerValue))
-                           row1.CreateCell(11).SetCellValue(Convert.ToDateTime(strAnswerValue).ToString("MM/dd/yyyy"));
-                       else
-                           row1.CreateCell(11).SetCellValue("");
-                   }
-                   catch { row1.CreateCell(11).SetCellValue(""); }
+                    try
+                    {
+                        strAnswerValue = EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 85); // action applied date
+                        if (!string.IsNullOrEmpty(strAnswerValue))
+                            row1.CreateCell(11).SetCellValue(Convert.ToDateTime(strAnswerValue).ToString("MM/dd/yyyy"));
+                        else
+                            row1.CreateCell(11).SetCellValue("");
+                    }
+                    catch { row1.CreateCell(11).SetCellValue(""); }
 
-                   try
-                   {    // actions summary
-                       strDescription = StringHtmlExtensions.TruncateHtml(EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 86), 10000, "...");
-                       strDescription = WebSiteCommon.StripHTML(strDescription);
-                   }
-                   catch { strDescription = ""; }
+                    try
+                    {    // actions summary
+                        strDescription = StringHtmlExtensions.TruncateHtml(EHSIncidentMgr.SelectIncidentAnswer(data.Incident, 86), 10000, "...");
+                        strDescription = WebSiteCommon.StripHTML(strDescription);
+                    }
+                    catch { strDescription = ""; }
 
-                   row1.CreateCell(12).SetCellValue(strDescription);
-                   row1.Cells[12].CellStyle.WrapText = true;
+                    row1.CreateCell(12).SetCellValue(strDescription);
+                    row1.Cells[12].CellStyle.WrapText = true;
 
-                   try
-                   {
-                       if (data.Incident.CREATE_PERSON.HasValue)
-                       {
-                           row1.CreateCell(13).SetCellValue(SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson(entities, (decimal)data.Incident.CREATE_PERSON, "", false)));
-                       }
-                       else
-                           row1.CreateCell(13).SetCellValue("");
-                   }
-                   catch { row1.CreateCell(13).SetCellValue(""); }
+                    try
+                    {
+                        if (data.Incident.CREATE_PERSON.HasValue)
+                        {
+                            row1.CreateCell(13).SetCellValue(SQMModelMgr.FormatPersonListItem(SQMModelMgr.LookupPerson(entities, (decimal)data.Incident.CREATE_PERSON, "", false)));
+                        }
+                        else
+                            row1.CreateCell(13).SetCellValue("");
+                    }
+                    catch { row1.CreateCell(13).SetCellValue(""); }
                 }
 
                 sheet1.AutoSizeColumn(0);
@@ -1694,115 +2478,115 @@ namespace SQM.Website
         }
         #endregion
 
-		#region GHGreport
-		public void ExportGHGReportExcel(EHSModel.GHGResultList GHGTable)
-		{
+        #region GHGreport
+        public void ExportGHGReportExcel(EHSModel.GHGResultList GHGTable)
+        {
 
-			try
-			{
-				string filename = "GHGReport.xls";
-				Response.ContentType = "application/vnd.ms-excel";
-				Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", filename));
-				Response.Clear();
-				HSSFWorkbook hssfworkbook = InitializeWorkbook();
-				ISheet sheet1 = hssfworkbook.CreateSheet("GHG Emissions");
+            try
+            {
+                string filename = "GHGReport.xls";
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", filename));
+                Response.Clear();
+                HSSFWorkbook hssfworkbook = InitializeWorkbook();
+                ISheet sheet1 = hssfworkbook.CreateSheet("GHG Emissions");
 
-				ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
-				cellStyleNumeric.DataFormat = HSSFDataFormat.GetBuiltinFormat("0.00");
+                ICellStyle cellStyleNumeric = hssfworkbook.CreateCellStyle();
+                cellStyleNumeric.DataFormat = HSSFDataFormat.GetBuiltinFormat("0.00");
 
-				//// create the header - Plant Name, DUNS Code, Measure, Measure Name, Period Year, Period Month, Period from Date, Period To Date, Value, UOM, UOM Name, Input Value, Cost, Currency, Input Cost, Input Currency
+                //// create the header - Plant Name, DUNS Code, Measure, Measure Name, Period Year, Period Month, Period from Date, Period To Date, Value, UOM, UOM Name, Input Value, Cost, Currency, Input Cost, Input Currency
 
-				int rownum = 0;
-				IRow row = sheet1.CreateRow(rownum);
+                int rownum = 0;
+                IRow row = sheet1.CreateRow(rownum);
 
-				row.CreateCell(0).SetCellValue("Plant Name");
-				row.CreateCell(1).SetCellValue("Emissions Scope");
-				row.CreateCell(2).SetCellValue("Fuel");
-				row.CreateCell(3).SetCellValue("Quantity");
-				row.CreateCell(4).SetCellValue("UOM");
-				row.CreateCell(5).SetCellValue("Gas");
-				row.CreateCell(6).SetCellValue("GWP Factor");
-				row.CreateCell(7).SetCellValue("GHG Factor");
-				row.CreateCell(8).SetCellValue("Emissions");
-				row.CreateCell(9).SetCellValue("UOM");
+                row.CreateCell(0).SetCellValue("Plant Name");
+                row.CreateCell(1).SetCellValue("Emissions Scope");
+                row.CreateCell(2).SetCellValue("Fuel");
+                row.CreateCell(3).SetCellValue("Quantity");
+                row.CreateCell(4).SetCellValue("UOM");
+                row.CreateCell(5).SetCellValue("Gas");
+                row.CreateCell(6).SetCellValue("GWP Factor");
+                row.CreateCell(7).SetCellValue("GHG Factor");
+                row.CreateCell(8).SetCellValue("Emissions");
+                row.CreateCell(9).SetCellValue("UOM");
 
 
-				foreach (PLANT plant in GHGTable.ResultList.Select(l => l.Plant).Distinct().ToList())
-				{
-					List<EHSModel.GHGResult> fuelList = GHGTable.ResultList.Where(l => l.Plant.PLANT_ID == plant.PLANT_ID).ToList();
+                foreach (PLANT plant in GHGTable.ResultList.Select(l => l.Plant).Distinct().ToList())
+                {
+                    List<EHSModel.GHGResult> fuelList = GHGTable.ResultList.Where(l => l.Plant.PLANT_ID == plant.PLANT_ID).ToList();
 
-					// scope 1
-					foreach (EHSModel.GHGResult ghgRrec in fuelList.Where(l => l.EFMType != "P" && l.EFMType != "HW" && l.EFMType != "STEAM" && l.GasSeq == 1).Distinct().ToList())
-					{
-						foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRrec.EFMType).ToList())
-						{
-							row = sheet1.CreateRow(++rownum);
-							try
-							{
-								row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
-								row.CreateCell(1).SetCellValue("1");
-								row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
-								row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
-								row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
-								row.CreateCell(5).SetCellValue(rslt.GasCode);
-								row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
-								row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
-								row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
-								row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
-							}
-							catch
-							{
-							}
-						}
-					}
+                    // scope 1
+                    foreach (EHSModel.GHGResult ghgRrec in fuelList.Where(l => l.EFMType != "P" && l.EFMType != "HW" && l.EFMType != "STEAM" && l.GasSeq == 1).Distinct().ToList())
+                    {
+                        foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRrec.EFMType).ToList())
+                        {
+                            row = sheet1.CreateRow(++rownum);
+                            try
+                            {
+                                row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
+                                row.CreateCell(1).SetCellValue("1");
+                                row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
+                                row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
+                                row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
+                                row.CreateCell(5).SetCellValue(rslt.GasCode);
+                                row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
+                                row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
+                                row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
+                                row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
 
-					// scope 2
-					foreach (EHSModel.GHGResult ghgRec in fuelList.Where(l => l.EFMType == "P" || l.EFMType == "HW" || l.EFMType == "STEAM" && l.GasSeq == 1).Distinct().ToList())
-					{
-						foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRec.EFMType).ToList())
-						{
-							row = sheet1.CreateRow(++rownum);
-							try
-							{
-								row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
-								row.CreateCell(1).SetCellValue("2");
-								row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
-								row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
-								row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
-								row.CreateCell(5).SetCellValue(rslt.GasCode);
-								row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
-								row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
-								row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
-								row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
-							}
-							catch
-							{
-							}
-						}
-					}
-				}
+                    // scope 2
+                    foreach (EHSModel.GHGResult ghgRec in fuelList.Where(l => l.EFMType == "P" || l.EFMType == "HW" || l.EFMType == "STEAM" && l.GasSeq == 1).Distinct().ToList())
+                    {
+                        foreach (EHSModel.GHGResult rslt in fuelList.Where(r => r.Plant.PLANT_ID == plant.PLANT_ID && r.EFMType == ghgRec.EFMType).ToList())
+                        {
+                            row = sheet1.CreateRow(++rownum);
+                            try
+                            {
+                                row.CreateCell(0).SetCellValue(plant.PLANT_NAME);
+                                row.CreateCell(1).SetCellValue("2");
+                                row.CreateCell(2).SetCellValue(SessionManager.EFMList.Where(l => l.EFM_TYPE == rslt.EFMType).Select(l => l.DESCRIPTION).FirstOrDefault());
+                                row.CreateCell(3).SetCellValue(SQMBasePage.FormatValue(rslt.MetricValue, 4));
+                                row.CreateCell(4).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.MetricUOM).UOM_CD);
+                                row.CreateCell(5).SetCellValue(rslt.GasCode);
+                                row.CreateCell(6).SetCellValue(SQMBasePage.FormatValue(rslt.GWPFactor, 4));
+                                row.CreateCell(7).SetCellValue(SQMBasePage.FormatValue(rslt.GHGFactor, 9));
+                                row.CreateCell(8).SetCellValue(SQMBasePage.FormatValue(rslt.GHGValue, 4));
+                                row.CreateCell(9).SetCellValue(SessionManager.UOMList.FirstOrDefault(l => l.UOM_ID == rslt.GHGUOM).UOM_CD);
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
+                }
 
-				sheet1.AutoSizeColumn(0);
-				sheet1.AutoSizeColumn(1);
-				sheet1.AutoSizeColumn(2);
-				sheet1.AutoSizeColumn(3);
-				sheet1.AutoSizeColumn(4);
-				sheet1.AutoSizeColumn(5);
-				sheet1.AutoSizeColumn(6);
-				sheet1.AutoSizeColumn(7);
-				sheet1.AutoSizeColumn(8);
-				sheet1.AutoSizeColumn(9);
+                sheet1.AutoSizeColumn(0);
+                sheet1.AutoSizeColumn(1);
+                sheet1.AutoSizeColumn(2);
+                sheet1.AutoSizeColumn(3);
+                sheet1.AutoSizeColumn(4);
+                sheet1.AutoSizeColumn(5);
+                sheet1.AutoSizeColumn(6);
+                sheet1.AutoSizeColumn(7);
+                sheet1.AutoSizeColumn(8);
+                sheet1.AutoSizeColumn(9);
 
-				GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
-			}
-			catch (Exception ex)
-			{
-				//Response.Write("Error processing the file:" + ex.Message.ToString());
-				//Response.End();
-			}
+                GetExcelStream(hssfworkbook).WriteTo(Response.OutputStream);
+            }
+            catch (Exception ex)
+            {
+                //Response.Write("Error processing the file:" + ex.Message.ToString());
+                //Response.End();
+            }
 
-		}
-		#endregion
+        }
+        #endregion
     }
 
 }
