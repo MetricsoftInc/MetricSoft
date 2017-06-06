@@ -599,6 +599,7 @@ namespace SQM.Website
                         }
 
                         SetSeverityControls(injuryIllnessDetails);
+                        RecordableHist(injuryIllnessDetails.RECORDABLE == true ? true : false);
                     }
 
 
@@ -606,7 +607,7 @@ namespace SQM.Website
 
                     GetAttachments(EditIncidentId);
 
-                    RecordableHist(injuryIllnessDetails.RECORDABLE == true ? true : false);
+                  
                 }
             }
             else
@@ -1672,11 +1673,14 @@ namespace SQM.Website
                     incidentId = (IsEditContext) ? EditIncidentId : NewIncidentId;
                 IsEditContext = true;
 
-                if (TheINCFORM.LOST_TIME == true || TheINCFORM.RESTRICTED_TIME == true)
+                if (TheINCFORM != null)
                 {
-                    uclRecordableHist.IncidentId = TheIncident.INCIDENT_ID;
-                    uclRecordableHist.WorkStatusIncident = TheIncident;
-                    uclRecordableHist.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+                    if (TheINCFORM.LOST_TIME == true || TheINCFORM.RESTRICTED_TIME == true)
+                    {
+                        uclRecordableHist.IncidentId = TheIncident.INCIDENT_ID;
+                        uclRecordableHist.WorkStatusIncident = TheIncident;
+                        uclRecordableHist.AddUpdateINCFORM_LOSTTIME_HIST(incidentId);
+                    }
                 }
             }
 

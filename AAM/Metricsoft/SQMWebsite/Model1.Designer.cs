@@ -167,6 +167,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_PROB_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "PROB_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.PROB_OCCUR), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_QI_OCCUR_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "QI_OCCUR", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.QI_OCCUR), true)]
 [assembly: EdmRelationshipAttribute("PSsqmModel", "FK_CURRENCY_XREF_CURRENCY", "CURRENCY", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.CURRENCY), "CURRENCY_XREF", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.CURRENCY_XREF), true)]
+[assembly: EdmRelationshipAttribute("PSsqmModel", "FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SQM.Website.INCIDENT), "INCIDENT_TIMELINE_ANSWER", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SQM.Website.INCIDENT_TIMELINE_ANSWER), true)]
 
 #endregion
 
@@ -2473,6 +2474,22 @@ namespace SQM.Website
             }
         }
         private ObjectSet<CURRENCY_XREF> _CURRENCY_XREF;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<INCIDENT_TIMELINE_ANSWER> INCIDENT_TIMELINE_ANSWER
+        {
+            get
+            {
+                if ((_INCIDENT_TIMELINE_ANSWER == null))
+                {
+                    _INCIDENT_TIMELINE_ANSWER = base.CreateObjectSet<INCIDENT_TIMELINE_ANSWER>("INCIDENT_TIMELINE_ANSWER");
+                }
+                return _INCIDENT_TIMELINE_ANSWER;
+            }
+        }
+        private ObjectSet<INCIDENT_TIMELINE_ANSWER> _INCIDENT_TIMELINE_ANSWER;
 
         #endregion
 
@@ -3604,6 +3621,14 @@ namespace SQM.Website
         public void AddToCURRENCY_XREF(CURRENCY_XREF cURRENCY_XREF)
         {
             base.AddObject("CURRENCY_XREF", cURRENCY_XREF);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the INCIDENT_TIMELINE_ANSWER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToINCIDENT_TIMELINE_ANSWER(INCIDENT_TIMELINE_ANSWER iNCIDENT_TIMELINE_ANSWER)
+        {
+            base.AddObject("INCIDENT_TIMELINE_ANSWER", iNCIDENT_TIMELINE_ANSWER);
         }
 
         #endregion
@@ -26695,6 +26720,28 @@ namespace SQM.Website
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT_TIMELINE_ANSWER")]
+        public EntityCollection<INCIDENT_TIMELINE_ANSWER> INCIDENT_TIMELINE_ANSWER
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<INCIDENT_TIMELINE_ANSWER>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT_TIMELINE_ANSWER");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_TIMELINE_ANSWER>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT_TIMELINE_ANSWER", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -28406,6 +28453,205 @@ namespace SQM.Website
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<INCIDENT_QUESTION>("PSsqmModel.FK_INCIDENT_QUESTION_INCIDENT_QUESTION_TYPE", "INCIDENT_QUESTION", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="PSsqmModel", Name="INCIDENT_TIMELINE_ANSWER")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class INCIDENT_TIMELINE_ANSWER : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new INCIDENT_TIMELINE_ANSWER object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="iNCIDENT_ID">Initial value of the INCIDENT_ID property.</param>
+        /// <param name="iNCIDENT_QUESTION_ID">Initial value of the INCIDENT_QUESTION_ID property.</param>
+        public static INCIDENT_TIMELINE_ANSWER CreateINCIDENT_TIMELINE_ANSWER(global::System.Int32 id, global::System.Decimal iNCIDENT_ID, global::System.Decimal iNCIDENT_QUESTION_ID)
+        {
+            INCIDENT_TIMELINE_ANSWER iNCIDENT_TIMELINE_ANSWER = new INCIDENT_TIMELINE_ANSWER();
+            iNCIDENT_TIMELINE_ANSWER.ID = id;
+            iNCIDENT_TIMELINE_ANSWER.INCIDENT_ID = iNCIDENT_ID;
+            iNCIDENT_TIMELINE_ANSWER.INCIDENT_QUESTION_ID = iNCIDENT_QUESTION_ID;
+            return iNCIDENT_TIMELINE_ANSWER;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ID;
+        partial void OnIDChanging(global::System.Int32 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_ID
+        {
+            get
+            {
+                return _INCIDENT_ID;
+            }
+            set
+            {
+                OnINCIDENT_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_ID");
+                _INCIDENT_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_ID");
+                OnINCIDENT_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_ID;
+        partial void OnINCIDENT_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal INCIDENT_QUESTION_ID
+        {
+            get
+            {
+                return _INCIDENT_QUESTION_ID;
+            }
+            set
+            {
+                OnINCIDENT_QUESTION_IDChanging(value);
+                ReportPropertyChanging("INCIDENT_QUESTION_ID");
+                _INCIDENT_QUESTION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INCIDENT_QUESTION_ID");
+                OnINCIDENT_QUESTION_IDChanged();
+            }
+        }
+        private global::System.Decimal _INCIDENT_QUESTION_ID;
+        partial void OnINCIDENT_QUESTION_IDChanging(global::System.Decimal value);
+        partial void OnINCIDENT_QUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ANSWER_VALUE
+        {
+            get
+            {
+                return _ANSWER_VALUE;
+            }
+            set
+            {
+                OnANSWER_VALUEChanging(value);
+                ReportPropertyChanging("ANSWER_VALUE");
+                _ANSWER_VALUE = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ANSWER_VALUE");
+                OnANSWER_VALUEChanged();
+            }
+        }
+        private global::System.String _ANSWER_VALUE;
+        partial void OnANSWER_VALUEChanging(global::System.String value);
+        partial void OnANSWER_VALUEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ORIGINAL_QUESTION_TEXT
+        {
+            get
+            {
+                return _ORIGINAL_QUESTION_TEXT;
+            }
+            set
+            {
+                OnORIGINAL_QUESTION_TEXTChanging(value);
+                ReportPropertyChanging("ORIGINAL_QUESTION_TEXT");
+                _ORIGINAL_QUESTION_TEXT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ORIGINAL_QUESTION_TEXT");
+                OnORIGINAL_QUESTION_TEXTChanged();
+            }
+        }
+        private global::System.String _ORIGINAL_QUESTION_TEXT;
+        partial void OnORIGINAL_QUESTION_TEXTChanging(global::System.String value);
+        partial void OnORIGINAL_QUESTION_TEXTChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("PSsqmModel", "FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT")]
+        public INCIDENT INCIDENT
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<INCIDENT> INCIDENTReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<INCIDENT>("PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT", "INCIDENT", value);
                 }
             }
         }

@@ -896,17 +896,17 @@
           <Property Name="ASSOCIATE_YEAR" Type="int" />
           <Property Name="HIRE_MONTHS" Type="int" />
           <Property Name="HIRE_YEAR" Type="int" />
-          <Property Name="BUSINESS_TYPE" Type="nvarchar" MaxLength="50" />
-          <Property Name="MACRO_PROCESS_TYPE" Type="nvarchar" MaxLength="50" />
-          <Property Name="SPECIFIC_PROCESS_TYPE" Type="nvarchar" MaxLength="50" />
-          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="BUSINESS_TYPE" Type="nvarchar" MaxLength="500" />
+          <Property Name="MACRO_PROCESS_TYPE" Type="nvarchar" MaxLength="500" />
+          <Property Name="SPECIFIC_PROCESS_TYPE" Type="nvarchar" MaxLength="500" />
+          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="nvarchar" MaxLength="500" />
           <Property Name="EQUIPEMENT_MANUFACTURER_DATE" Type="date" />
-          <Property Name="DESIGN_NUMBER" Type="varchar" MaxLength="50" />
-          <Property Name="ASSET_NUMBER" Type="varchar" MaxLength="50" />
-          <Property Name="AGE_OF_ASSOCIATE" Type="varchar" MaxLength="50" />
-          <Property Name="TYPE_OF_INCIDENT" Type="nvarchar" MaxLength="50" />
-          <Property Name="INITIAL_TREATMENT_GIVEN" Type="nvarchar" MaxLength="50" />
-          <Property Name="CHANGE_MEDICAL_STATUS" Type="nvarchar" MaxLength="50" />
+          <Property Name="DESIGN_NUMBER" Type="nvarchar" MaxLength="500" />
+          <Property Name="ASSET_NUMBER" Type="nvarchar" MaxLength="500" />
+          <Property Name="AGE_OF_ASSOCIATE" Type="nvarchar" MaxLength="500" />
+          <Property Name="TYPE_OF_INCIDENT" Type="nvarchar" MaxLength="500" />
+          <Property Name="INITIAL_TREATMENT_GIVEN" Type="nvarchar" MaxLength="500" />
+          <Property Name="CHANGE_MEDICAL_STATUS" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="INCFORM_LOSTTIME_HIST">
           <Key>
@@ -1018,7 +1018,7 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="int" Nullable="false" />
           <Property Name="LAST_APPROVAL_STEP" Type="numeric" Precision="8" Scale="2" />
-          <Property Name="TNSKNumber" Type="varchar" MaxLength="20" />
+          <Property Name="TNSKNumber" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -1092,6 +1092,16 @@
           <Property Name="INCIDENT_QUESTION_TYPE_ID" Type="numeric" Precision="18" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="HAS_MULTIPLE_CHOICES" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INCIDENT_TIMELINE_ANSWER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INCIDENT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="INCIDENT_QUESTION_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
+          <Property Name="ANSWER_VALUE" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ORIGINAL_QUESTION_TEXT" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="INCIDENT_TYPE">
           <Key>
@@ -3037,6 +3047,18 @@ warning 6002: The table/view 'NSK.dbo.vw_MetricDataByPlant' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_INCIDENT_TIMELINE_ANSWER_INCIDENT">
+          <End Role="INCIDENT" Type="Self.INCIDENT" Multiplicity="1" />
+          <End Role="INCIDENT_TIMELINE_ANSWER" Type="Self.INCIDENT_TIMELINE_ANSWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TIMELINE_ANSWER">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_INCIDENT_TYPE_COMPANY_COMPANY">
           <End Role="COMPANY" Type="Self.COMPANY" Multiplicity="1" />
           <End Role="INCIDENT_TYPE_COMPANY" Type="Self.INCIDENT_TYPE_COMPANY" Multiplicity="*" />
@@ -3956,6 +3978,7 @@ warning 6002: The table/view 'NSK.dbo.vw_MetricDataByPlant' does not have a prim
           <EntitySet Name="INCIDENT_QUESTION_CONTROL_ACTION" EntityType="Self.INCIDENT_QUESTION_CONTROL_ACTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_QUESTION_LANG" EntityType="Self.INCIDENT_QUESTION_LANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_QUESTION_TYPE" EntityType="Self.INCIDENT_QUESTION_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INCIDENT_TIMELINE_ANSWER" EntityType="Self.INCIDENT_TIMELINE_ANSWER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_TYPE" EntityType="Self.INCIDENT_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_TYPE_COMPANY" EntityType="Self.INCIDENT_TYPE_COMPANY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INCIDENT_TYPE_COMPANY_QUESTION" EntityType="Self.INCIDENT_TYPE_COMPANY_QUESTION" Schema="dbo" store:Type="Tables" />
@@ -4319,6 +4342,10 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION" Association="Self.FK_INCIDENT_QUESTION_LANG_INCIDENT_QUESTION">
             <End Role="INCIDENT_QUESTION" EntitySet="INCIDENT_QUESTION" />
             <End Role="INCIDENT_QUESTION_LANG" EntitySet="INCIDENT_QUESTION_LANG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" Association="Self.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCIDENT_TIMELINE_ANSWER" EntitySet="INCIDENT_TIMELINE_ANSWER" />
           </AssociationSet>
           <AssociationSet Name="FK_INCIDENT_TYPE_COMPANY_COMPANY" Association="Self.FK_INCIDENT_TYPE_COMPANY_COMPANY">
             <End Role="COMPANY" EntitySet="COMPANY" />
@@ -5338,6 +5365,11 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <AssociationSet Name="FK_CURRENCY_XREF_CURRENCY" Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY">
             <End Role="CURRENCY" EntitySet="CURRENCY" />
             <End Role="CURRENCY_XREF" EntitySet="CURRENCY_XREF" />
+          </AssociationSet>
+          <EntitySet Name="INCIDENT_TIMELINE_ANSWER" EntityType="PSsqmModel.INCIDENT_TIMELINE_ANSWER" />
+          <AssociationSet Name="FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" Association="PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT">
+            <End Role="INCIDENT" EntitySet="INCIDENT" />
+            <End Role="INCIDENT_TIMELINE_ANSWER" EntitySet="INCIDENT_TIMELINE_ANSWER" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ADDRESS">
@@ -9324,17 +9356,17 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="ASSOCIATE_YEAR" Type="Int32" />
           <Property Name="HIRE_MONTHS" Type="Int32" />
           <Property Name="HIRE_YEAR" Type="Int32" />
-          <Property Name="BUSINESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MACRO_PROCESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SPECIFIC_PROCESS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BUSINESS_TYPE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MACRO_PROCESS_TYPE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SPECIFIC_PROCESS_TYPE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EQUIPMENT_MANUFACTURER_NAME" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="EQUIPEMENT_MANUFACTURER_DATE" Type="DateTime" Precision="0" />
-          <Property Name="DESIGN_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ASSET_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AGE_OF_ASSOCIATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TYPE_OF_INCIDENT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="INITIAL_TREATMENT_GIVEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CHANGE_MEDICAL_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DESIGN_NUMBER" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ASSET_NUMBER" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AGE_OF_ASSOCIATE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TYPE_OF_INCIDENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="INITIAL_TREATMENT_GIVEN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CHANGE_MEDICAL_STATUS" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="INCFORM_STEP_PRIV">
           <Key>
@@ -9429,7 +9461,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <NavigationProperty Name="INCIDENT_ANSWER" Relationship="PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT" FromRole="INCIDENT" ToRole="INCIDENT_ANSWER" />
           <NavigationProperty Name="PROB_OCCUR" Relationship="PSsqmModel.FK_PROB_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="PROB_OCCUR" />
           <NavigationProperty Name="QI_OCCUR" Relationship="PSsqmModel.FK_QI_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="QI_OCCUR" />
-          <Property Name="TNSKNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TNSKNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INCIDENT_TIMELINE_ANSWER" Relationship="PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" FromRole="INCIDENT" ToRole="INCIDENT_TIMELINE_ANSWER" />
         </EntityType>
         <Association Name="FK_INCIDENT_COMPANY">
           <End Type="PSsqmModel.COMPANY" Role="COMPANY" Multiplicity="1" />
@@ -9632,6 +9665,29 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Principal>
             <Dependent Role="CURRENCY_XREF">
               <PropertyRef Name="CURRENCY_CODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="INCIDENT_TIMELINE_ANSWER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="INCIDENT_QUESTION_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
+          <Property Name="ANSWER_VALUE" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ORIGINAL_QUESTION_TEXT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="INCIDENT" Relationship="PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" FromRole="INCIDENT_TIMELINE_ANSWER" ToRole="INCIDENT" />
+        </EntityType>
+        <Association Name="FK_INCIDENT_TIMELINE_ANSWER_INCIDENT">
+          <End Type="PSsqmModel.INCIDENT" Role="INCIDENT" Multiplicity="1" />
+          <End Type="PSsqmModel.INCIDENT_TIMELINE_ANSWER" Role="INCIDENT_TIMELINE_ANSWER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="INCIDENT">
+              <PropertyRef Name="INCIDENT_ID" />
+            </Principal>
+            <Dependent Role="INCIDENT_TIMELINE_ANSWER">
+              <PropertyRef Name="INCIDENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11922,6 +11978,17 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="INCIDENT_TIMELINE_ANSWER">
+            <EntityTypeMapping TypeName="PSsqmModel.INCIDENT_TIMELINE_ANSWER">
+              <MappingFragment StoreEntitySet="INCIDENT_TIMELINE_ANSWER">
+                <ScalarProperty Name="ORIGINAL_QUESTION_TEXT" ColumnName="ORIGINAL_QUESTION_TEXT" />
+                <ScalarProperty Name="ANSWER_VALUE" ColumnName="ANSWER_VALUE" />
+                <ScalarProperty Name="INCIDENT_QUESTION_ID" ColumnName="INCIDENT_QUESTION_ID" />
+                <ScalarProperty Name="INCIDENT_ID" ColumnName="INCIDENT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -12233,6 +12300,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
         <AssociationConnector Association="PSsqmModel.FK_QI_OCCUR_INCIDENT" />
         <EntityTypeShape EntityType="PSsqmModel.CURRENCY_XREF" Width="1.5" PointX="7.360492327884069" PointY="23.053492139584147" />
         <AssociationConnector Association="PSsqmModel.FK_CURRENCY_XREF_CURRENCY" />
+        <EntityTypeShape EntityType="PSsqmModel.INCIDENT_TIMELINE_ANSWER" Width="1.5" PointX="14.25" PointY="24.25" />
+        <AssociationConnector Association="PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" />
         </Diagram>
     </Diagrams>
   </Designer>
