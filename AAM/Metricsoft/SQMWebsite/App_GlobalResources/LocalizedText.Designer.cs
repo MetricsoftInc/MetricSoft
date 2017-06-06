@@ -871,7 +871,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee  sent to hospital.
+        ///   Looks up a localized string similar to Employee sent to outside medical facility.
         /// </summary>
         internal static string EmployeeSentToHospital {
             get {

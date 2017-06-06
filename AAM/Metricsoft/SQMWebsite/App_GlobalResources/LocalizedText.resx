@@ -1015,7 +1015,7 @@
     <value>Employee  received first aid on site</value>
   </data>
   <data name="EmployeeSentToHospital" xml:space="preserve">
-    <value>Employee  sent to hospital</value>
+    <value>Employee sent to outside medical facility</value>
   </data>
   <data name="lblAgeOfAssociate" xml:space="preserve">
     <value>Age of Associate (US and Europe  - DO NOT ENTER)</value>
