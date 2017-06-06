@@ -381,7 +381,7 @@
         <div class="row" id="EquipmentManufacturerDateRow">
             <div class="col-sm-4 hidden-xs text-left tanLabelCol">
                 <span>
-                    <asp:Label ID="lblEquipmentManufacturerDateSM" runat="server" Text="<%$ Resources:LocalizedText, lblEquipmentManufacturerDate %>"></asp:Label><span class="requiredStarFloat">*</span></span>
+                    <asp:Label ID="lblEquipmentManufacturerDateSM" runat="server" Text="<%$ Resources:LocalizedText, lblEquipmentManufacturerDate %>"></asp:Label></span>
             </div>
             <div class="col-xs-12 visible-xs text-left-more">
                 <br />
