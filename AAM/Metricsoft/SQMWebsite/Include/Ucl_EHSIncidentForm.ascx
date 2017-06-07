@@ -66,102 +66,28 @@
         border-color: #fff;
         box-shadow: none !important;
     }
-    .k-state-selected { border-radius:0px !important;
+
+    .k-state-selected {
+        border-radius: 0px !important;
     }
- .k-popup .k-list .k-item {
-   
-    width: 65px !important;
-    float: left !important;
-    text-align: center !important;
-    margin-top:-1px !important;
-}
+
+    .k-popup .k-list .k-item {
+        width: 65px !important;
+        float: left !important;
+        text-align: center !important;
+        margin-top: -1px !important;
+    }
 
     input[name="desc_TimePicker"] {
         width: 370px;
         height: 65px;
         border: 1px solid #aaa;
     }
+
     .k-list-container.k-list-scroller.k-popup.k-group.k-reset {
-    width: 230px !important; background-color:#fff !important;    height: auto !important;
-
-}
-        ul li.k-item {
-        border-right: 1px solid #999 !important;
-    }
-
-        ul li.k-item:nth-child(3n) {
-            border-right: 0px solid #999 !important;
-        }
-
-    .k-icon.k-i-clock {background-image: url('/images/watch.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        text-indent: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 22px;
-        height: 22px;
-        display: block;
-    }
-    .k-icon.k-i-clock:hover {
-            background-image: url('/images/hover-watch.png');
-        }
-
-    .k-i-clock::before {
-    content: "\e107";
-    display: none;
-}
-.k-icon.k-i-calendar {background-image: url('/images/calender.jpg');
-        background-repeat: no-repeat;
-        background-position: center;
-        text-indent: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 22px;
-        height: 22px;
-        display: block;
-    }
-    .k-icon.k-i-calendar:hover {
-            background-image: url('/images/hover-calender.jpg');
-        }
-
-    .k-i-calendar::before {
-    content: "\e107";
-    display: none;
-}
-
-
-    /*.timepicker_html, .k-input {
-        width: 375px !important;
-        display: block;
-        border: 1px solid #aaa;
-        padding: 3px 3px 1px !important;
-        float: left;
-    }
-
-    .desc_html {
-        width: 100%;
-        height: 100px;
-        border: 1px solid #aaa;
-        padding: 2px 2px 1px;
-    }
-
-    .k-list.k-reset {
+        width: 230px !important;
         background-color: #fff !important;
-        width: 225px !important;
-        box-shadow: 4px 4px 4px #ccc;
-        padding: 0;
-        margin-top: 65px;
-        margin-bottom: -35px;
-
-    }
-
-    .k-popup .k-list .k-item {
-        float: left;
-        list-style: none;
-        width: 75px;
-        padding: 2px 6px;
-        text-align: center;
+        height: auto !important;
     }
 
     ul li.k-item {
@@ -171,14 +97,6 @@
         ul li.k-item:nth-child(3n) {
             border-right: 0px solid #999 !important;
         }
-
-    .k-popup .k-list .k-item:hover {
-        background-color: #e5e5e5;
-    }
-
-    .k-select {
-        float: left;
-    }
 
     .k-icon.k-i-clock {
         background-image: url('/images/watch.png');
@@ -194,7 +112,33 @@
 
         .k-icon.k-i-clock:hover {
             background-image: url('/images/hover-watch.png');
-        }*/
+        }
+
+    .k-i-clock::before {
+        content: "\e107";
+        display: none;
+    }
+
+    .k-icon.k-i-calendar {
+        background-image: url('/images/calender.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 22px;
+        height: 22px;
+        display: block;
+    }
+
+        .k-icon.k-i-calendar:hover {
+            background-image: url('/images/hover-calender.jpg');
+        }
+
+    .k-i-calendar::before {
+        content: "\e107";
+        display: none;
+    }
 </style>
 
 <script type="text/javascript">
@@ -225,13 +169,27 @@
         }
     }
     function ChangeUpdate(sender, args) {
+
+      
+
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
         return true;
     }
     function ChangeClear(sender, args) {
+       
+
+        var date = $('.velidate_date').find('input').val();
+        var time = $('.velidate_time').find('input').val();
+        var text = $('.velidate_txt').find('input').val();
+
+        if (date == "" && time == "" && text == undefined)
+        {
+            alert("Please fill timeline details.");
+        }
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
     }
     function CheckChange() {
+       
         var ret = true;
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value == '1') {
             ret = confirm('You have unsaved changes on this page. \n\n Are you sure you want to leave this page ?');
