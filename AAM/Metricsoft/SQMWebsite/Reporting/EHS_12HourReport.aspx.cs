@@ -409,23 +409,23 @@ namespace SQM.Website.Reports
 #endregion
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.Colspan = 3;
 			cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
 			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "LOCATION").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.incidentDept, detailTxtFont));
 			tableHeader.AddCell(cell);
 
 
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthLeft = cell.BorderWidthBottom = .25f;
-			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "EMPLOYEETYPE").DESCRIPTION_SHORT, detailTxtBoldFont));
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "EMPLOYEETYPE").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.employeeType, detailTxtFont));
 			tableHeader.AddCell(cell);
 
 
-			cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
-			cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "JOBCODE").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "JOBCODE").DESCRIPTION_SHORT, detailTxtBoldFont));
 			cell.AddElement(new Paragraph(pageData.jobDescription, detailTxtFont));
 			tableHeader.AddCell(cell);
 
@@ -447,13 +447,15 @@ namespace SQM.Website.Reports
             }
             #endregion
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-			cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             //get the max incident values from configration file and manage the section as per the values.
             if (pageData.incident.INCIDENT_ID > maxINCIDENT)
             {
                 cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "HIRE_DATE").DESCRIPTION_SHORT, detailTxtBoldFont));
             }
             else {
+                cell.Colspan = 3;
                 cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INJURY_TENURE").DESCRIPTION_SHORT, detailTxtBoldFont));
             }
             
