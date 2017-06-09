@@ -24,6 +24,21 @@
         width: 80%;
     }
 
+    .linkButton {
+        cursor: pointer;
+        font-size: Smaller;
+        margin: 7px;
+        background: url(/images/plus.png) no-repeat 5px 0px;
+        padding-left: 25px;
+        padding-top: 0px;
+        padding-bottom: 4px;
+        border: 0;
+        FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        color: #191970;
+        text-decoration: underline;
+    }
 
 
     #tbl_timeline {
@@ -143,8 +158,9 @@
 
 <script type="text/javascript">
 
-    function CeoCommentRow() {
-        alert("Date saved.");
+
+    function afterSelectTabError(msg) {
+        alert(msg);
     }
 
     function OnEditorClientLoad(editor) {
@@ -168,28 +184,25 @@
             return 'You have unsaved changes on this page.';
         }
     }
-    function ChangeUpdate(sender, args) {
-
-      
-
+    //function ChangeUpdate(sender, args) {
+    function ChangeUpdate() {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
         return true;
     }
     function ChangeClear(sender, args) {
-       
+
 
         var date = $('.velidate_date').find('input').val();
         var time = $('.velidate_time').find('input').val();
         var text = $('.velidate_txt').find('input').val();
 
-        if (date == "" && time == "" && text == undefined)
-        {
+        if (date == "" && time == "" && text == undefined) {
             alert("Please fill timeline details.");
         }
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
     }
     function CheckChange() {
-       
+
         var ret = true;
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value == '1') {
             ret = confirm('You have unsaved changes on this page. \n\n Are you sure you want to leave this page ?');
@@ -200,12 +213,43 @@
         return ret;
     }
 
-    $(document).ready(function () {
-
+    function onloadPage(values) {
         try {
+            var TimeLine_Date1, TimeLine_Time1, TimeLine_Text1 = [];
+            var value1 = values.split('|');
+            TimeLine_Date1 = value1[2].split(',');
+            TimeLine_Time1 = value1[0].split(',');
+            TimeLine_Text1 = value1[1].split(',');
+            for (var i = 0; i < TimeLine_Date1.length - 1; i++) {
+                var row = "<tr>" +
+                    "<td><input name = 'DatePiker' value='" + TimeLine_Date1[i] + "' class='dp_" + i + "' id='dp_" + i + "' ></input></td>" +
+                    "<td><input name = 'TimePiker' value='" + TimeLine_Time1[i] + "' class='tp_" + i + "' id='tp_" + i + "' ></input></td>" +
+                    "<td><input name = 'desc_TimePicker' value='" + TimeLine_Text1[i] + "' type='textarea' row='2' col='20' CssClass = 'WarnIfChanged' Width = 280 id='txt_" + i + "'></input></td>" +
+                    "<td><input type='button' class='BtnMinus' value='(-)' id='btn_" + i + "'/></td></tr>";
+                $(row).appendTo($("#tbl_timeline"))
+
+                $(".tp_" + i).kendoTimePicker({
+                    interval: 60
+                });
+                $(".dp_" + i).kendoDatePicker({
+                    animation: false
+                });
+            }
+        } catch (ex) {
+            console.log(ex.message);
+        }
+
+    }
+
+    function onloadPage1() {
+        // alert("onloadPage()");
+        try {
+
+
 
             for (var i = 0; i < TimeLine_Time.length; i++) {
 
+                console.log(TimeLine_Date[i], TimeLine_Time[i], TimeLine_Text[i]);
 
                 var row = "<tr>" +
                     "<td><input name = 'DatePiker' value='" + TimeLine_Date[i] + "' class='dp_" + i + "' id='dp_" + i + "' ></input></td>" +
@@ -220,22 +264,25 @@
                 $(".dp_" + i).kendoDatePicker({
                     animation: false
                 });
+
+
             }
 
         } catch (ex) {
             console.log(ex.message);
         }
+
+    }
+
+
+    $(document).ready(function () {
         var rowCount = 0;
+        onloadPage1();
 
         $("#ctl00_ContentPlaceHolder_Body_uclIncidentForm_addrows").click(function () {
             var rowCount = $('#tbl_timeline tr').length;
-
             console.log(rowCount);
-
             var newId = ++rowCount;
-
-
-            //  var row = "<tr><td><input type='time' id='txt_'" + newId + " value='name' text = 'name' class='timepicker_html'></input></td><td><input type='textarea' row='6' col='20' id='txt_'" + newId + " value='name' class='desc_html'></input></td><td><input type='button' class='BtnMinus' value='(-)' id='btn_'" + newId + "/></td></tr>";
             var row =
                 "<tr>" +
                 "<td><input name = 'DatePiker' value=''  id='dp_" + newId + "' class='dp_" + newId + "'></input></td>" +
@@ -269,6 +316,7 @@
 <div id="divIncidentForm" runat="server">
     <%--<asp:ScriptManager ID="ScriptManager1" AsyncPostBackTimeOut="36000" runat="server" />--%>
     <asp:HiddenField ID="hfChangeUpdate" runat="server" Value="" />
+    <asp:HiddenField ID="HiddenField1" runat="server" Value="" />
 
     <table style="width: 100%" class="textStd">
         <tr>
@@ -313,8 +361,10 @@
                             </div>
                             <div id="divForm" runat="server" visible="False">
 
-                                <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
-                                </asp:Panel>
+                                <telerik:RadAjaxPanel ID="ajaxPanel" runat="server" meta:resourcekey="pnlFormResource1">
+                                    <%--  <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
+                                    </asp:Panel>--%>
+                                </telerik:RadAjaxPanel>
 
 
                                 <div id="divSubnav" runat="server">
@@ -384,6 +434,45 @@
         </tr>
     </table>
 </div>
+<script type="text/javascript">
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    prm.add_endRequest(function (s, e) {
+        var rowCount = 0;
 
-<div id="divIncidentReportForm" runat="server" visible="false">
-</div>
+
+
+
+
+        $("#ctl00_ContentPlaceHolder_Body_uclIncidentForm_addrows").click(function () {
+            var rowCount = $('#tbl_timeline tr').length;
+
+            console.log(rowCount);
+
+            var newId = ++rowCount;
+
+
+            //  var row = "<tr><td><input type='time' id='txt_'" + newId + " value='name' text = 'name' class='timepicker_html'></input></td><td><input type='textarea' row='6' col='20' id='txt_'" + newId + " value='name' class='desc_html'></input></td><td><input type='button' class='BtnMinus' value='(-)' id='btn_'" + newId + "/></td></tr>";
+            var row =
+                "<tr>" +
+                "<td><input name = 'DatePiker' value=''  id='dp_" + newId + "' class='dp_" + newId + "'></input></td>" +
+                "<td><input name = 'TimePiker' value=''  id='tp_" + newId + "' class='tp_" + newId + "'></input></td>" +
+                "<td><input name = 'desc_TimePicker' value=''   id='txt_" + newId + "' class='desc_html' type='textarea' row='6' col='20'></input></td>" +
+                "<td><input type='button' class='BtnMinus' value='(-)' id='btn_" + newId + "'/></td>" +
+                "</tr>";
+            console.log(newId);
+            $(row).appendTo($("#tbl_timeline"));
+
+            $(".tp_" + newId).kendoTimePicker({
+                interval: 60
+            });
+            $(".dp_" + newId).kendoDatePicker({
+                animation: false
+            });
+        });
+
+        $("#tbl_timeline").on("click", ".BtnMinus", deleteRow);
+    });
+
+
+
+</script>

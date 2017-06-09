@@ -15,7 +15,7 @@ namespace SQM.Website
     public partial class Ucl_EHSIncidentForm : System.Web.UI.UserControl
     {
         const Int32 MaxTextLength = 4000;
-
+        int countPB = 1;
         int[] requiredToCloseFields = new int[] {
                 (int)EHSQuestionId.Containment,
                 (int)EHSQuestionId.RootCause,
@@ -188,6 +188,8 @@ namespace SQM.Website
                 incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1m);
                 XLATList = SQMBasePage.SelectXLATList(new string[1] { "INCIDENT_STEP" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
             }
+
+
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -255,24 +257,24 @@ namespace SQM.Website
                 IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
             }
 
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
             divForm.Visible = true;
-            //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+            //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
             lblResults.Visible = false;
 
             if (PageMode == PageUseMode.ViewOnly)
             {
-                pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+                ajaxPanel.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
             }
             else
             {
-                pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+                ajaxPanel.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
             }
 
 
             questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
-            pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 
             foreach (var q in questions)
             {
@@ -311,14 +313,14 @@ namespace SQM.Website
                     {
                         if (!lableStatus)
                         {
-                            pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\">"));
+                            pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\" id=" + q.QuestionId + "> "));
                             pnl.Controls.Add(new Label() { ID = "Label" + qid, Text = q.QuestionText, AssociatedControlID = qid });
                             pnl.Controls.Add(new LiteralControl("</td>"));
                             lableStatus = true;
                         }
                         if (!timelineStarts)
                         {
-                            pnl.Controls.Add(new LiteralControl("<td class=\"tanCell\" style=\"width: 10px;rowspan=\"2\" padding-left: 0 !important;\">"));
+                            pnl.Controls.Add(new LiteralControl("<td  class=\"tanCell\" style=\"width: 10px;rowspan=\"2\" padding-left: 0 !important;\">"));
                             if (!string.IsNullOrEmpty(q.HelpText))
                                 AddToolTip(pnl, q);
                             pnl.Controls.Add(new LiteralControl("</td><td class=\"tanCell\" style=\"width: 10px;rowspan=\"2\" padding-left: 0 !important;\">"));
@@ -327,12 +329,12 @@ namespace SQM.Website
                             if (q.IsRequiredClose)
                                 pnl.Controls.Add(new LiteralControl("<span class=\"requiredCloseStar\">&bull;</span>"));
                             pnl.Controls.Add(new LiteralControl("</td><td class=\"greyCell\">"));
-                            pnl.Controls.Add(new LiteralControl("<table id=\"tbl_timeline\" runat=\"server\"><tr><td>"));
+                            pnl.Controls.Add(new LiteralControl("<table id=\"tbl_timeline\" runat=\"server\"><tr id=\"velidateIt\"><td name=" + q.QuestionId + ">"));
                             timelineStarts = true;
                         }
                         else
                         {
-                            pnl.Controls.Add(new LiteralControl("<td>"));
+                            pnl.Controls.Add(new LiteralControl("<td name=" + q.QuestionId + ">"));
 
                             if (q.QuestionType == EHSIncidentQuestionType.TextBox)
                             {
@@ -348,10 +350,10 @@ namespace SQM.Website
                         {
                             timelineComplete = false;
                             pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" colspan=\"3\" style=\"width: 30%;\">"));
-                            Button btn = new Button();
+                            Label btn = new Label();
                             btn.Text = "Add Another Timeline";
                             int count = pnl.Controls.OfType<Label>().ToList().Count;
-                            btn.CssClass = "buttonAdd";
+                            btn.CssClass = "linkButton";
                             btn.ID = "addrows";
                             pnl.Controls.Add(btn);
                             pnl.Controls.Add(new LiteralControl("</td></tr>"));
@@ -434,7 +436,7 @@ namespace SQM.Website
                             RadTextBox tb;
                             if (q.QuestionText == "Timeline")
                             {
-                                tb = new RadTextBox() { ID = qid, TextMode = InputMode.MultiLine, Skin = "Metro", Width = 370, Rows = 4, MaxLength = MaxTextLength, CssClass = "WarnIfChanged" };
+                                tb = new RadTextBox() { ID = qid, TextMode = InputMode.MultiLine, Skin = "Metro", Width = 370, Rows = 4, MaxLength = MaxTextLength, CssClass = "WarnIfChanged velidate_txt" };
 
                             }
                             else
@@ -550,7 +552,7 @@ namespace SQM.Website
                             RadDatePicker rdp;
                             if (q.QuestionText == "Timeline")
                             {
-                                rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged" };
+                                rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_date", };
                             }
                             else
                             {
@@ -626,7 +628,7 @@ namespace SQM.Website
                             RadTimePicker rtp;
                             if (q.QuestionText == "Timeline")
                             {
-                                rtp = new RadTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged" };
+                                rtp = new RadTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_time" };
                             }
                             else
                             {
@@ -830,7 +832,7 @@ namespace SQM.Website
                             var rblYN = new RadioButtonList() { ID = qid, CssClass = "WarnIfChanged" };
                             rblYN.RepeatDirection = RepeatDirection.Horizontal;
                             rblYN.RepeatColumns = 2;
-                            rblYN.AutoPostBack = true;
+                            rblYN.AutoPostBack = false;
                             rblYN.Items.Add(new ListItem(Resources.LocalizedText.Yes, "Yes"));
                             rblYN.Items.Add(new ListItem(Resources.LocalizedText.No, "No"));
                             if (shouldPopulate)
@@ -883,42 +885,73 @@ namespace SQM.Website
                     if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
                         pnl.Visible = false;
 
-                    pnlForm.Controls.Add(pnl);
+                    ajaxPanel.Controls.Add(pnl);
                 }
             }
 
-            pnlForm.Controls.Add(new LiteralControl("</table>"));
-            pnlForm.Controls.Add(new LiteralControl("<br/>"));
+            ajaxPanel.Controls.Add(new LiteralControl("</table>"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
 
-            if (incident != null)
+            string getretrunvalue = "";
+            if (Page.IsPostBack)
             {
-                List<EHSIncidentQuestion> objQuestionsData = questions.Where(p => p.QuestionText == "Timeline").ToList();
 
-                List<INCIDENT_TIMELINE_ANSWER> objTimelineAns = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == incident.INCIDENT_ID).ToList();
-                foreach (var item in objQuestionsData)
+                if (countPB > 1)
+                //onloadPage
                 {
 
-                    foreach (var value in objTimelineAns)
+                    if (incident != null)
                     {
-                        if (item.QuestionType == EHSIncidentQuestionType.Time && item.QuestionId == value.INCIDENT_QUESTION_ID)
-                            Page.ClientScript.RegisterArrayDeclaration("TimeLine_Time", "'" + value.ANSWER_VALUE + "'");
+                        getretrunvalue = getDataTimeLine(incident);
                     }
 
-                    foreach (var value in objTimelineAns)
-                    {
-                        if (item.QuestionType == EHSIncidentQuestionType.TextBox && item.QuestionId == value.INCIDENT_QUESTION_ID)
-                            Page.ClientScript.RegisterArrayDeclaration("TimeLine_Text", "'" + value.ANSWER_VALUE + "'");
+                    if (getretrunvalue != "")
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
+                    countPB = 1;
+                }
+                countPB++;
+            }
+            else
+            {
+
+                if (incident != null)
+                {
+                    List<EHSIncidentQuestion> objQuestionsData = questions.Where(p => p.QuestionText == "Timeline").ToList();
 
 
-                    }
-                    foreach (var value in objTimelineAns)
+                    List<INCIDENT_TIMELINE_ANSWER> objTimelineAns = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == incident.INCIDENT_ID).ToList();
+                    foreach (var item in objQuestionsData)
                     {
-                        if (item.QuestionType == EHSIncidentQuestionType.Date && item.QuestionId == value.INCIDENT_QUESTION_ID)
-                            Page.ClientScript.RegisterArrayDeclaration("TimeLine_Date", "'" + value.ANSWER_VALUE + "'");
+                        //  var Value = objTimelineAns.Where(p=>p.INCIDENT_QUESTION_ID==item.QuestionId && item.QuestionType == EHSIncidentQuestionType.Time).Select(p => p.ANSWER_VALUE).ToList();
+
+                        foreach (var value in objTimelineAns)
+                        {
+                            if (item.QuestionType == EHSIncidentQuestionType.Time && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                            {
+                                Page.ClientScript.RegisterArrayDeclaration("TimeLine_Time", "'" + value.ANSWER_VALUE + "'");
+
+                            }
+
+                        }
+
+                        foreach (var value in objTimelineAns)
+                        {
+                            if (item.QuestionType == EHSIncidentQuestionType.TextBox && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                            {
+                                Page.ClientScript.RegisterArrayDeclaration("TimeLine_Text", "'" + value.ANSWER_VALUE + "'");
+                            }
+                        }
+                        foreach (var value in objTimelineAns)
+                        {
+                            if (item.QuestionType == EHSIncidentQuestionType.Date && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                            {
+                                Page.ClientScript.RegisterArrayDeclaration("TimeLine_Date", "'" + value.ANSWER_VALUE + "'");
+                            }
+                        }
                     }
                 }
-            }
 
+            }
             UpdateAnswersFromForm();
 
             UpdateButtonText();
@@ -927,7 +960,58 @@ namespace SQM.Website
 
         }
 
+        public string getDataTimeLine(INCIDENT incident)
+        {
+            string Objtime = "";
+            string ObjTextBox = "";
+            string ObjDate = "";
 
+            if (incident != null)
+            {
+                List<EHSIncidentQuestion> objQuestionsData = questions.Where(p => p.QuestionText == "Timeline").ToList();
+
+                List<INCIDENT_TIMELINE_ANSWER> objTimelineAns = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == incident.INCIDENT_ID).ToList();
+                foreach (var item in objQuestionsData)
+                {
+                    //  var Value = objTimelineAns.Where(p=>p.INCIDENT_QUESTION_ID==item.QuestionId && item.QuestionType == EHSIncidentQuestionType.Time).Select(p => p.ANSWER_VALUE).ToList();
+
+                    foreach (var value in objTimelineAns)
+                    {
+                        if (item.QuestionType == EHSIncidentQuestionType.Time && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                        {
+                            Objtime += string.Format("{0},", value.ANSWER_VALUE);
+                        }
+
+                    }
+
+
+                    foreach (var value in objTimelineAns)
+                    {
+                        if (item.QuestionType == EHSIncidentQuestionType.TextBox && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                        {
+
+                            ObjTextBox += string.Format("{0},", value.ANSWER_VALUE);
+                            //Page.ClientScript.RegisterArrayDeclaration("TimeLine_Text1", "'" + value.ANSWER_VALUE + "'");
+                        }
+                    }
+
+
+                    foreach (var value in objTimelineAns)
+                    {
+                        if (item.QuestionType == EHSIncidentQuestionType.Date && item.QuestionId == value.INCIDENT_QUESTION_ID)
+                        {
+                            ObjDate += string.Format("{0},", value.ANSWER_VALUE);
+                            //Page.ClientScript.RegisterArrayDeclaration("TimeLine_Date1", "'" + value.ANSWER_VALUE + "'");
+                        }
+                    }
+
+
+                }
+
+            }
+
+            return Objtime + "|" + ObjTextBox + "|" + ObjDate;
+        }
         public void GetForm()
         {
 
@@ -943,9 +1027,9 @@ namespace SQM.Website
                 incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
             }
 
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
             divForm.Visible = true;
-            //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+            //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
             lblResults.Visible = false;
 
             if (typeId == 10)
@@ -959,9 +1043,9 @@ namespace SQM.Website
                 if (IsEditContext == true)
                     preventionLocationForm.PopulateForm();
 
-                pnlForm.Controls.Add(new LiteralControl("<br/>"));
-                pnlForm.Controls.Add(preventionLocationForm);
-                pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+                ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
+                ajaxPanel.Controls.Add(preventionLocationForm);
+                ajaxPanel.Controls.Add(new LiteralControl("<br/><br/>"));
                 //btnSaveReturn.Visible = false;
                 //btnSaveContinue.Visible = false;
                 return;
@@ -969,7 +1053,7 @@ namespace SQM.Website
 
             questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
-            pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 
             foreach (var q in questions)
             {
@@ -1415,11 +1499,11 @@ namespace SQM.Website
                 if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
                     pnl.Visible = false;
 
-                pnlForm.Controls.Add(pnl);
+                ajaxPanel.Controls.Add(pnl);
             }
 
-            pnlForm.Controls.Add(new LiteralControl("</table>"));
-            pnlForm.Controls.Add(new LiteralControl("<br/>"));
+            ajaxPanel.Controls.Add(new LiteralControl("</table>"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
 
             UpdateAnswersFromForm();
 
@@ -1450,7 +1534,7 @@ namespace SQM.Website
 
             int chInt = (int)EHSQuestionId.Create8D;
             string chString = chInt.ToString();
-            CheckBox create8dCh = (CheckBox)pnlForm.FindControl(chString);
+            CheckBox create8dCh = (CheckBox)ajaxPanel.FindControl(chString);
 
             if (create8dCh != null && create8dCh.Checked == true)
             {
@@ -1543,19 +1627,19 @@ namespace SQM.Website
             // Close checkbox
             int chInt = (int)EHSQuestionId.CloseIncident;
             string chString = chInt.ToString();
-            CheckBox closeCh = (CheckBox)pnlForm.FindControl(chString);
+            CheckBox closeCh = (CheckBox)ajaxPanel.FindControl(chString);
 
             if (closeCh != null)
             {
                 // Completion date
                 int cdInt = (int)EHSQuestionId.CompletionDate;
                 string cdString = cdInt.ToString();
-                RadDatePicker cdFormControl = (RadDatePicker)pnlForm.FindControl(cdString);
+                RadDatePicker cdFormControl = (RadDatePicker)ajaxPanel.FindControl(cdString);
 
                 // Completed by
                 int cbInt = (int)EHSQuestionId.CompletedBy;
                 string cbString = cbInt.ToString();
-                RadTextBox cbFormControl = (RadTextBox)pnlForm.FindControl(cbString);
+                RadTextBox cbFormControl = (RadTextBox)ajaxPanel.FindControl(cbString);
 
                 if (closeCh.Checked)
                 {
@@ -1608,7 +1692,7 @@ namespace SQM.Website
             int score = 0;
             foreach (int fId in requiredToCloseFields)
             {
-                var field = pnlForm.FindControl(fId.ToString());
+                var field = ajaxPanel.FindControl(fId.ToString());
                 if (field == null)   //mt - need to enable close if field was not included in the incident meta-data
                 {
                     score++;
@@ -1703,9 +1787,9 @@ namespace SQM.Website
             {
                 foreach (INCIDENT_QUESTION_CONTROL control in question.QuestionControls)
                 {
-                    Panel containerControl = (Panel)pnlForm.FindControl("Panel" + control.INCIDENT_QUESTION_AFFECTED_ID);
-                    Label formLabel = (Label)pnlForm.FindControl("Label" + control.INCIDENT_QUESTION_AFFECTED_ID);
-                    var formControl = pnlForm.FindControl(control.INCIDENT_QUESTION_AFFECTED_ID.ToString());
+                    Panel containerControl = (Panel)ajaxPanel.FindControl("Panel" + control.INCIDENT_QUESTION_AFFECTED_ID);
+                    Label formLabel = (Label)ajaxPanel.FindControl("Label" + control.INCIDENT_QUESTION_AFFECTED_ID);
+                    var formControl = ajaxPanel.FindControl(control.INCIDENT_QUESTION_AFFECTED_ID.ToString());
 
                     string answer = question.AnswerText;
                     var triggerVal = control.TRIGGER_VALUE;
@@ -1725,7 +1809,7 @@ namespace SQM.Website
                         // Check for optional secondary criteria on control question
                         if (control.SECONDARY_QUESTION_ID != null && control.SECONDARY_TRIGGER_VALUE != null)
                         {
-                            var secondaryControl = pnlForm.FindControl(control.SECONDARY_QUESTION_ID.ToString());
+                            var secondaryControl = ajaxPanel.FindControl(control.SECONDARY_QUESTION_ID.ToString());
 
                             if (secondaryControl is RadDropDownList)
                             {
@@ -1868,9 +1952,9 @@ namespace SQM.Website
                 Skin = "Metro",
                 HideEvent = ToolTipHideEvent.LeaveTargetAndToolTip
             };
-            pnlForm.Controls.Add(new LiteralControl("<span style=\"float: right;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<span style=\"float: right;\">"));
             container.Controls.Add(imgHelp);
-            pnlForm.Controls.Add(new LiteralControl("</span>"));
+            ajaxPanel.Controls.Add(new LiteralControl("</span>"));
             container.Controls.Add(rttHelp);
         }
 
@@ -1950,7 +2034,7 @@ namespace SQM.Website
             if (EditIncidentId > 0)
             {
                 divForm.Visible = false;
-                //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+                //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
                 //btnSaveReturn.Visible = false;
                 //btnSaveContinue.Visible = false;
@@ -1975,7 +2059,7 @@ namespace SQM.Website
             if (shouldReturn == true)
             {
                 divForm.Visible = false;
-                //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+                //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
                 pnlAddEdit.Visible = false;
                 //btnSaveReturn.Visible = false;
@@ -2000,9 +2084,22 @@ namespace SQM.Website
                     // Add context - step 0
                     theIncident = CreateNewIncident();
                     EditIncidentId = incidentId = theIncident.INCIDENT_ID;
+
+                    addTimeLine((int)incidentId, questions);
+
                     IsEditContext = true;
                     //EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
                     EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
+
+                    string getretrunvalue = "";
+                    if (theIncident != null)
+                    {
+                        getretrunvalue = getDataTimeLine(theIncident);
+                    }
+
+                    if (getretrunvalue != "")
+                    { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
+
                 }
                 else
                 {
@@ -2060,7 +2157,7 @@ namespace SQM.Website
                 {
                     ;
                 }
-                var control = pnlForm.FindControl(q.QuestionId.ToString());
+                var control = ajaxPanel.FindControl(q.QuestionId.ToString());
                 string answer = "";
                 if (control != null)
                 {
@@ -2241,56 +2338,56 @@ namespace SQM.Website
             var desc_TimePicker = Request.Form.GetValues("desc_timePicker");
             var DatePicker = Request.Form.GetValues("DatePiker");
 
-            var incidentAnswer = new INCIDENT_TIMELINE_ANSWER();
+            var data1 = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == incidentId).ToList();
 
-            questions = questions.Where(p => p.QuestionText == "Timeline").ToList();
-            if (TimePiker != null || desc_TimePicker != null || DatePicker != null)
+            foreach (var item in data1)
             {
-                var data1 = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == incidentId).ToList();
-
-                foreach (var item in data1)
-                {
-                    entities.INCIDENT_TIMELINE_ANSWER.DeleteObject(item);
-                    entities.SaveChanges();
-                }
+                entities.INCIDENT_TIMELINE_ANSWER.DeleteObject(item);
+                entities.SaveChanges();
             }
 
-            for (int i = 0; i <= TimePiker.Length - 1; i++)
+            if (TimePiker != null && desc_TimePicker != null && DatePicker != null)
             {
-                if ( !string.IsNullOrEmpty( TimePiker[i]) || !string.IsNullOrEmpty(desc_TimePicker[i]) || !string.IsNullOrEmpty(DatePicker[i]))
+                var incidentAnswer = new INCIDENT_TIMELINE_ANSWER();
+                questions = questions.Where(p => p.QuestionText == "Timeline").ToList();
+
+                for (int i = 0; i <= TimePiker.Length - 1; i++)
                 {
-                    incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
+                    if (!string.IsNullOrEmpty(TimePiker[i]) || !string.IsNullOrEmpty(desc_TimePicker[i]) || !string.IsNullOrEmpty(DatePicker[i]))
                     {
-                        INCIDENT_ID = incidentId,
-                        INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.Time && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
-                        ANSWER_VALUE = TimePiker[i],
-                        ORIGINAL_QUESTION_TEXT = "Timeline"
-                    };
-                    entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
+                        incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
+                        {
+                            INCIDENT_ID = incidentId,
+                            INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.Time && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
+                            ANSWER_VALUE = TimePiker[i],
+                            ORIGINAL_QUESTION_TEXT = "Timeline"
+                        };
+                        entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
 
-                    incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
-                    {
-                        INCIDENT_ID = incidentId,
-                        INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.TextBox && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
-                        ANSWER_VALUE = desc_TimePicker[i],
-                        ORIGINAL_QUESTION_TEXT = "Timeline"
-                    };
-                    entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
-                    // entities.SaveChanges();
-                    incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
-                    {
-                        INCIDENT_ID = incidentId,
-                        INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.Date && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
-                        ANSWER_VALUE = DatePicker[i],
-                        ORIGINAL_QUESTION_TEXT = "Timeline"
-                    };
-                    entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
-                    // entities.SaveChanges();
+                        incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
+                        {
+                            INCIDENT_ID = incidentId,
+                            INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.TextBox && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
+                            ANSWER_VALUE = desc_TimePicker[i],
+                            ORIGINAL_QUESTION_TEXT = "Timeline"
+                        };
+                        entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
+                        // entities.SaveChanges();
+                        incidentAnswer = new INCIDENT_TIMELINE_ANSWER()
+                        {
+                            INCIDENT_ID = incidentId,
+                            INCIDENT_QUESTION_ID = (questions.Where(p => p.QuestionType == EHSIncidentQuestionType.Date && p.QuestionText == "Timeline").Select(p => p.QuestionId).FirstOrDefault()),
+                            ANSWER_VALUE = DatePicker[i],
+                            ORIGINAL_QUESTION_TEXT = "Timeline"
+                        };
+                        entities.INCIDENT_TIMELINE_ANSWER.AddObject(incidentAnswer);
+                        // entities.SaveChanges();
 
 
 
 
-                    entities.SaveChanges();
+                        entities.SaveChanges();
+                    }
                 }
             }
         }
@@ -2323,6 +2420,8 @@ namespace SQM.Website
             {
                 incidentId = newIncident.INCIDENT_ID;
             }
+
+
 
             return newIncident;
         }
@@ -2580,7 +2679,7 @@ namespace SQM.Website
         {
             LinkButton btn = (LinkButton)sender;
 
-            pnlForm.Visible = divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
+            ajaxPanel.Visible = divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
             btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
             CurrentSubnav = btn.CommandArgument;
 
@@ -2689,24 +2788,48 @@ namespace SQM.Website
                     btnSubnavIncident.Visible = true;
                     btnSubnavIncident.Enabled = false;
                     btnSubnavIncident.CssClass = "buttonLinkDisabled";
-                    if (pnlForm.Visible == false)
+                    if (ajaxPanel.Visible == false)
                     {
                         BuildForm();
-                        pnlForm.Visible = true;
+                        ajaxPanel.Visible = true;
+                        FillTimeLineOnTabSelection();
                     }
                     btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
                     btnDelete.Visible = EHSIncidentMgr.CanDeleteIncident(CreatePersonId, IncidentStepCompleted);
                     break;
             }
         }
-        #endregion
 
+        public void FillTimeLineOnTabSelection()
+        {
+            try
+            {
+                INCIDENT incidentAfterTabClick = null;
+                if (EditIncidentId > 0)
+                {
+                    incidentAfterTabClick = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
+                }
+                string getretrunvalue = "";
+                if (incidentAfterTabClick != null)
+                {
+                    getretrunvalue = getDataTimeLine(incidentAfterTabClick);
+                }
+
+                if (getretrunvalue != "")
+                { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "Error", "afterSelectTabError('" + ex.Message.ToString() + "')", true);
+            }
+        }
+        #endregion
 
 
 
         public void ClearControls()
         {
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
         }
 
         protected void RefreshPageContext()
