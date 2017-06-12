@@ -2100,6 +2100,8 @@ namespace SQM.Website
                     if (getretrunvalue != "")
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
 
+
+
                 }
                 else
                 {
@@ -2114,6 +2116,11 @@ namespace SQM.Website
                 {
                     shouldCreate8d = AddOrUpdateAnswers(questions, incidentId);
                     SaveAttachments(incidentId);
+                    if (IsEditContext)
+                    {
+                        uploader.GetUploadedFiles(40, EditIncidentId, "");
+                        uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
+                    }
                 }
             }
             else if (CurrentStep == 1)

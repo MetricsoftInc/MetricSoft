@@ -158,6 +158,7 @@
 
 <script type="text/javascript">
 
+ 
 
     function afterSelectTabError(msg) {
         alert(msg);
@@ -192,14 +193,16 @@
     function ChangeClear(sender, args) {
 
 
-        var date = $('.velidate_date').find('input').val();
-        var time = $('.velidate_time').find('input').val();
-        var text = $('.velidate_txt').find('input').val();
+        //var date = $('.velidate_date').find('input').val();
+        //var time = $('.velidate_time').find('input').val();
+        //var text = $('.velidate_txt').find('input').val();
 
-        if (date == "" && time == "" && text == undefined) {
-            alert("Please fill timeline details.");
-        }
+        //if (date == "" && time == "" && text == undefined) {
+        //    alert("Please fill timeline details.");
+        //    return false;
+        //}
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
+
     }
     function CheckChange() {
 
