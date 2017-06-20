@@ -9,6 +9,7 @@
 <%@ Register Src="~/Include/Ucl_INCFORM_Approval.ascx" TagName="Approval" TagPrefix="Ucl" %>
 <%@ Register Src="~/Include/Ucl_AttachVideoPanel.ascx" TagName="AttachVideoPanel" TagPrefix="Ucl" %>
 
+
 <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common.min.css" />
 <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.rtl.min.css" />
 <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2017.2.504/styles/kendo.silver.min.css" />
@@ -158,7 +159,9 @@
 
 <script type="text/javascript">
 
- 
+   
+
+    
 
     function afterSelectTabError(msg) {
         alert(msg);
@@ -178,6 +181,7 @@
     }
 
     window.onload = function () {
+       
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = "";
     }
     window.onbeforeunload = function () {
@@ -186,23 +190,31 @@
         }
     }
     //function ChangeUpdate(sender, args) {
-    function ChangeUpdate() {
+    function ChangeUpdate()
+    {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
+       // alert(document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value);
+        // For selection change of Number of Fire Extinguishers Used value update on Type of Fire.
+        if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119') != null)
+        {
+            if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value <  3)
+            {
+                document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').value = "Small Fire ";
+            }
+            else if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value > 2)
+            {
+                document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').value = "Fire ";
+            }
+            else
+            {
+                document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').value = " ";
+            }
+        }
         return true;
     }
-    function ChangeClear(sender, args) {
-
-
-        //var date = $('.velidate_date').find('input').val();
-        //var time = $('.velidate_time').find('input').val();
-        //var text = $('.velidate_txt').find('input').val();
-
-        //if (date == "" && time == "" && text == undefined) {
-        //    alert("Please fill timeline details.");
-        //    return false;
-        //}
+    function ChangeClear(sender, args)
+    {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '0';
-
     }
     function CheckChange() {
 
@@ -215,7 +227,7 @@
         }
         return ret;
     }
-
+    //To create timeline grid for saved data.
     function onloadPage(values) {
         try {
             var TimeLine_Date1, TimeLine_Time1, TimeLine_Text1 = [];
@@ -245,11 +257,7 @@
     }
 
     function onloadPage1() {
-        // alert("onloadPage()");
         try {
-
-
-
             for (var i = 0; i < TimeLine_Time.length; i++) {
 
                 console.log(TimeLine_Date[i], TimeLine_Time[i], TimeLine_Text[i]);
@@ -267,8 +275,6 @@
                 $(".dp_" + i).kendoDatePicker({
                     animation: false
                 });
-
-
             }
 
         } catch (ex) {
@@ -314,7 +320,6 @@
     };
 
 </script>
-
 
 <div id="divIncidentForm" runat="server">
     <%--<asp:ScriptManager ID="ScriptManager1" AsyncPostBackTimeOut="36000" runat="server" />--%>
@@ -437,23 +442,17 @@
         </tr>
     </table>
 </div>
+
 <script type="text/javascript">
+
+    //This script is to maintain control state after post back of the page so that links controls will work as it is after postback as well.
     var prm = Sys.WebForms.PageRequestManager.getInstance();
     prm.add_endRequest(function (s, e) {
         var rowCount = 0;
-
-
-
-
-
+        
         $("#ctl00_ContentPlaceHolder_Body_uclIncidentForm_addrows").click(function () {
             var rowCount = $('#tbl_timeline tr').length;
-
-            console.log(rowCount);
-
             var newId = ++rowCount;
-
-
             //  var row = "<tr><td><input type='time' id='txt_'" + newId + " value='name' text = 'name' class='timepicker_html'></input></td><td><input type='textarea' row='6' col='20' id='txt_'" + newId + " value='name' class='desc_html'></input></td><td><input type='button' class='BtnMinus' value='(-)' id='btn_'" + newId + "/></td></tr>";
             var row =
                 "<tr>" +
