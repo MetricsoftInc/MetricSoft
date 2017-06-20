@@ -193,7 +193,7 @@
     function ChangeUpdate()
     {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
-       // alert(document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value);
+        //alert(document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value);
         // For selection change of Number of Fire Extinguishers Used value update on Type of Fire.
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119') != null)
         {
@@ -205,10 +205,11 @@
             {
                 document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').value = "Fire ";
             }
-            else
+            if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value =="")
             {
                 document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').value = " ";
             }
+         
         }
         return true;
     }
@@ -287,7 +288,7 @@
     $(document).ready(function () {
         var rowCount = 0;
         onloadPage1();
-
+        document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_120').disabled = true;
         $("#ctl00_ContentPlaceHolder_Body_uclIncidentForm_addrows").click(function () {
             var rowCount = $('#tbl_timeline tr').length;
             console.log(rowCount);
