@@ -20,7 +20,7 @@
     function TNSKRow() {
         $('#rowTNSK').css("display", "none");
     }
-    //EquipmentManufacturerName
+    //Equipment Manufacturer Date (MM/DD/YYYY)
     function EquipmentManufacturerNameRow()
     {
         $('#EquipmentManufacturerNameRow').css("display", "none");
@@ -389,7 +389,7 @@
                     <asp:Label ID="lblEquipmentManufacturerDateXS" runat="server" Text="Report Date"></asp:Label><span class="requiredStar">*</span></span>
             </div>
             <div class="col-xs-12 col-sm-8 text-left greyControlColX">
-                <telerik:RadDatePicker ID="RDP_EquipmentManufacturerDate" Skin="Metro" Width="278px" runat="server">
+                <telerik:RadDatePicker  MinDate="1/1/1970" ID="RDP_EquipmentManufacturerDate" Skin="Metro" Width="278px" runat="server">
                     <Calendar EnableWeekends="True" FastNavigationNextText="&amp;lt;&amp;lt;" UsetanLabelColsAsSelectors="False" UseRowHeadersAsSelectors="False">
                     </Calendar>
                     <DateInput DateFormat="M/d/yyyy" DisplayDateFormat="M/d/yyyy" LabelWidth="64px" Width="" OnClientDateChanged="ChangeUpdate">
