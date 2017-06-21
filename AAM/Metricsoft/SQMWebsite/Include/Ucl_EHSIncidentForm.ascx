@@ -370,10 +370,8 @@
                             </div>
                             <div id="divForm" runat="server" visible="False">
 
-                                <telerik:RadAjaxPanel ID="ajaxPanel" runat="server" meta:resourcekey="pnlFormResource1">
-                                    <%--  <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
-                                    </asp:Panel>--%>
-                                </telerik:RadAjaxPanel>
+                                <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
+                                    </asp:Panel>
 
 
                                 <div id="divSubnav" runat="server">
@@ -443,7 +441,9 @@
         </tr>
     </table>
 </div>
+<div id="divIncidentReportForm" runat="server" visible="false">
 
+</div>
 <script type="text/javascript">
 
     //This script is to maintain control state after post back of the page so that links controls will work as it is after postback as well.
