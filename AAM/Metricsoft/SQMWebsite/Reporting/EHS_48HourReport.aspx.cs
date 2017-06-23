@@ -176,7 +176,7 @@ namespace SQM.Website.Reports
 
                     #region FIELDS FOR NEW DATA 
 
-                    if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType)
+                    if (pageData.incident.INCIDENT_ID > maxIncidentforInjuryType && pageData.incident.ISSUE_TYPE == "Injury/Illness")
                     {
                         document.Add(IDSection(pageData));
                         document.Add(HeaderSection(pageData));
