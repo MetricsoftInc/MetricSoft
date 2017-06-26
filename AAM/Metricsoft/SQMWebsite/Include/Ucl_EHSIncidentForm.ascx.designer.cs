@@ -139,13 +139,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
-        /// ajaxPanel control.
+        /// pnlForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxPanel ajaxPanel;
+        protected global::System.Web.UI.WebControls.Panel pnlForm;
         
         /// <summary>
         /// divSubnav control.

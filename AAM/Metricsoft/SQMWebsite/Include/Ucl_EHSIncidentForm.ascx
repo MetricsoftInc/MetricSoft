@@ -370,10 +370,10 @@
                             </div>
                             <div id="divForm" runat="server" visible="False">
 
-                                <telerik:RadAjaxPanel ID="ajaxPanel" runat="server" meta:resourcekey="pnlFormResource1">
-                                    <%--  <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
-                                    </asp:Panel>--%>
-                                </telerik:RadAjaxPanel>
+                            <%--    <telerik:RadAjaxPanel ID="ajaxPanel" runat="server" meta:resourcekey="pnlFormResource1">--%>
+                                  <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
+                                    </asp:Panel>
+                               <%-- </telerik:RadAjaxPanel>--%>
 
 
                                 <div id="divSubnav" runat="server">
