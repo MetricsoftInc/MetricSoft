@@ -234,7 +234,8 @@ namespace SQM.Website
         }
 
         public void BuildForm()
-        {
+        {   
+            //Variables for timeline.
             bool lableStatus = false;
             bool timelineStarts = false;
             bool timelineComplete = false;
@@ -257,6 +258,7 @@ namespace SQM.Website
                 IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
             }
 
+            // Replace panel to ajax Panel.
             ajaxPanel.Controls.Clear();
             divForm.Visible = true;
             //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
@@ -278,10 +280,10 @@ namespace SQM.Website
 
             foreach (var q in questions)
             {
-
-                if (q.QuestionText == "Fire Extinguishing Media Used")
+               
+                if (q.QuestionId == 99)
                 {
-                    continue;
+                    //Need to skip question Id 99/'Fire Extinguishing Media Used' to remove redundancy.
                 }
                 else
                 {
@@ -308,11 +310,13 @@ namespace SQM.Website
                     string qid = q.QuestionId.ToString();
 
                     var pnl = new Panel() { ID = "Panel" + qid };
-
+                    
+                    //Add new widget as Timeline. 
                     if (q.QuestionText == "Timeline")
                     {
                         if (!lableStatus)
                         {
+                            //To print Label Test
                             pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\" id=" + q.QuestionId + "> "));
                             pnl.Controls.Add(new Label() { ID = "Label" + qid, Text = q.QuestionText, AssociatedControlID = qid });
                             pnl.Controls.Add(new LiteralControl("</td>"));
@@ -334,6 +338,7 @@ namespace SQM.Website
                         }
                         else
                         {
+                            //To create controls of widget.
                             pnl.Controls.Add(new LiteralControl("<td name=" + q.QuestionId + ">"));
 
                             if (q.QuestionType == EHSIncidentQuestionType.TextBox)
@@ -341,13 +346,14 @@ namespace SQM.Website
                                 timelineStarts = false;
                             }
 
-                            //
+                            
                         }
                     }
                     else
                     {
                         if (timelineComplete)
                         {
+                            //for add more timeline link.
                             timelineComplete = false;
                             pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" colspan=\"3\" style=\"width: 30%;\">"));
                             Label btn = new Label();
@@ -436,12 +442,8 @@ namespace SQM.Website
                             RadTextBox tb;
                             if (q.QuestionText == "Timeline")
                             {
+                                //update height and width of control for timeline.
                                 tb = new RadTextBox() { ID = qid, TextMode = InputMode.MultiLine, Skin = "Metro", Width = 370, Rows = 4, MaxLength = MaxTextLength, CssClass = "WarnIfChanged velidate_txt" };
-
-                            }
-                            if (q.QuestionText == "Type of Fire")
-                            {
-                                tb = new RadTextBox() { ID = qid, ReadOnly=true,  Skin = "Metro", Width = 370, CssClass = "WarnIfChanged" };
 
                             }
                             else
@@ -449,8 +451,6 @@ namespace SQM.Website
                                 tb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 
                             }
-
-
                             if (shouldPopulate)
                                 tb.Text = q.AnswerText;
                             tb.ClientEvents.OnValueChanged = "ChangeUpdate";
@@ -516,26 +516,14 @@ namespace SQM.Website
                             break;
 
                         case EHSIncidentQuestionType.Dropdown:
-                            var rddl = new RadDropDownList();
-                            if (q.QuestionText == "Number of Fire Extinguishers Used")
-                            {
-                                 rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged numberOFExtUsed", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
-
-                            }
-                            else
-                            {
-                                 rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
-
-                            }
-
-                          //  var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
+                            var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
                             rddl.Items.Add(new DropDownListItem("", ""));
 
                             if (q.QuestionId == (decimal)EHSQuestionId.Department)
                             {
                                 rddl = HandleDepartmentList(q, incident, shouldPopulate, rddl);
                             }
-
+                           
                             if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
                             {
                                 // Check for any category headings
@@ -571,6 +559,7 @@ namespace SQM.Website
                             RadDatePicker rdp;
                             if (q.QuestionText == "Timeline")
                             {
+                                //update width of control for timeline.
                                 rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_date", };
                             }
                             else
@@ -647,6 +636,7 @@ namespace SQM.Website
                             RadTimePicker rtp;
                             if (q.QuestionText == "Timeline")
                             {
+                                //update  width of control for timeline.
                                 rtp = new RadTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_time" };
                             }
                             else
@@ -883,7 +873,7 @@ namespace SQM.Website
                     }
                     #endregion
 
-
+                    //Ending of Timeline widget.
                     if (q.QuestionText == "Timeline")
                     {
 
@@ -910,7 +900,7 @@ namespace SQM.Website
 
             ajaxPanel.Controls.Add(new LiteralControl("</table>"));
             ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
-
+            //To generate grid of timeline controls on page load and on submit of page.
             string getretrunvalue = "";
             if (Page.IsPostBack)
             {
@@ -932,7 +922,7 @@ namespace SQM.Website
             }
             else
             {
-
+                
                 if (incident != null)
                 {
                     List<EHSIncidentQuestion> objQuestionsData = questions.Where(p => p.QuestionText == "Timeline").ToList();
@@ -978,7 +968,8 @@ namespace SQM.Website
             RefreshPageContext();
 
         }
-
+   
+        //To get data of timeline to bind data on page submit.
         public string getDataTimeLine(INCIDENT incident)
         {
             string Objtime = "";
@@ -2103,13 +2094,14 @@ namespace SQM.Website
                     // Add context - step 0
                     theIncident = CreateNewIncident();
                     EditIncidentId = incidentId = theIncident.INCIDENT_ID;
-
+                    // to add timeline data while creating new instance of incident.
                     addTimeLine((int)incidentId, questions);
 
                     IsEditContext = true;
                     //EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
                     EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 
+                    //To generate grid after saving data for timeline widget.
                     string getretrunvalue = "";
                     if (theIncident != null)
                     {
@@ -2118,8 +2110,6 @@ namespace SQM.Website
 
                     if (getretrunvalue != "")
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
-
-
 
                 }
                 else
@@ -2135,11 +2125,6 @@ namespace SQM.Website
                 {
                     shouldCreate8d = AddOrUpdateAnswers(questions, incidentId);
                     SaveAttachments(incidentId);
-                    if (IsEditContext)
-                    {
-                        uploader.GetUploadedFiles(40, EditIncidentId, "");
-                        uploader.SetViewMode(EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted));
-                    }
                 }
             }
             else if (CurrentStep == 1)
@@ -2346,8 +2331,7 @@ namespace SQM.Website
                     shouldCreate8d = true;
             }
             entities.SaveChanges();
-
-
+            //To add data of timeline widget on update of page.
             addTimeLine((int)incidentId, questions);
 
             return shouldCreate8d;
@@ -2818,6 +2802,7 @@ namespace SQM.Website
                     {
                         BuildForm();
                         ajaxPanel.Visible = true;
+                        //To fill data of timeline when loading page while selecting of tabs.
                         FillTimeLineOnTabSelection();
                     }
                     btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
@@ -2825,7 +2810,7 @@ namespace SQM.Website
                     break;
             }
         }
-
+        //Fill timeline on tab selection 
         public void FillTimeLineOnTabSelection()
         {
             try

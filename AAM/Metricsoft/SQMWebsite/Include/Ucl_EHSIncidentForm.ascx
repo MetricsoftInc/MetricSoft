@@ -193,7 +193,8 @@
     function ChangeUpdate()
     {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
-      
+        //alert(document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value);
+        // For selection change of Number of Fire Extinguishers Used value update on Type of Fire.
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119') != null)
         {
             if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value <  3)
@@ -369,8 +370,10 @@
                             </div>
                             <div id="divForm" runat="server" visible="False">
 
-                                <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
-                                    </asp:Panel>
+                                <telerik:RadAjaxPanel ID="ajaxPanel" runat="server" meta:resourcekey="pnlFormResource1">
+                                    <%--  <asp:Panel ID="pnlForm" runat="server" meta:resourcekey="pnlFormResource1">
+                                    </asp:Panel>--%>
+                                </telerik:RadAjaxPanel>
 
 
                                 <div id="divSubnav" runat="server">
@@ -440,9 +443,7 @@
         </tr>
     </table>
 </div>
-<div id="divIncidentReportForm" runat="server" visible="false">
 
-</div>
 <script type="text/javascript">
 
     //This script is to maintain control state after post back of the page so that links controls will work as it is after postback as well.
@@ -474,4 +475,7 @@
 
         $("#tbl_timeline").on("click", ".BtnMinus", deleteRow);
     });
+
+
+
 </script>

@@ -139,13 +139,13 @@ namespace SQM.Website {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divForm;
         
         /// <summary>
-        /// pnlForm control.
+        /// ajaxPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlForm;
+        protected global::Telerik.Web.UI.RadAjaxPanel ajaxPanel;
         
         /// <summary>
         /// divSubnav control.
@@ -335,14 +335,5 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSubnavAlert;
-        
-        /// <summary>
-        /// divIncidentReportForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncidentReportForm;
     }
 }
