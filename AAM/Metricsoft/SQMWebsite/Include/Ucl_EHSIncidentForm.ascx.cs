@@ -234,8 +234,7 @@ namespace SQM.Website
         }
 
         public void BuildForm()
-        {   
-            //Variables for timeline.
+        {
             bool lableStatus = false;
             bool timelineStarts = false;
             bool timelineComplete = false;
@@ -258,32 +257,31 @@ namespace SQM.Website
                 IncidentStepCompleted = incident.INCFORM_LAST_STEP_COMPLETED;
             }
 
-            // Replace panel to ajax Panel.
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
             divForm.Visible = true;
-            //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+            //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
             lblResults.Visible = false;
 
             if (PageMode == PageUseMode.ViewOnly)
             {
-                pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
+                ajaxPanel.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = false;
             }
             else
             {
-                pnlForm.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
+                ajaxPanel.Enabled = btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(incident, IsEditContext, SysPriv.action, IncidentStepCompleted);
             }
 
 
             questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
-            pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 
             foreach (var q in questions)
             {
-               
-                if (q.QuestionId == 99)
+
+                if (q.QuestionText == "Fire Extinguishing Media Used")
                 {
-                    //Need to skip question Id 99/'Fire Extinguishing Media Used' to remove redundancy.
+                    continue;
                 }
                 else
                 {
@@ -310,13 +308,11 @@ namespace SQM.Website
                     string qid = q.QuestionId.ToString();
 
                     var pnl = new Panel() { ID = "Panel" + qid };
-                    
-                    //Add new widget as Timeline. 
+
                     if (q.QuestionText == "Timeline")
                     {
                         if (!lableStatus)
                         {
-                            //To print Label Test
                             pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" style=\"width: 30%;\" id=" + q.QuestionId + "> "));
                             pnl.Controls.Add(new Label() { ID = "Label" + qid, Text = q.QuestionText, AssociatedControlID = qid });
                             pnl.Controls.Add(new LiteralControl("</td>"));
@@ -338,7 +334,6 @@ namespace SQM.Website
                         }
                         else
                         {
-                            //To create controls of widget.
                             pnl.Controls.Add(new LiteralControl("<td name=" + q.QuestionId + ">"));
 
                             if (q.QuestionType == EHSIncidentQuestionType.TextBox)
@@ -346,14 +341,13 @@ namespace SQM.Website
                                 timelineStarts = false;
                             }
 
-                            
+                            //
                         }
                     }
                     else
                     {
                         if (timelineComplete)
                         {
-                            //for add more timeline link.
                             timelineComplete = false;
                             pnl.Controls.Add(new LiteralControl("<tr><td class=\"tanCell\" colspan=\"3\" style=\"width: 30%;\">"));
                             Label btn = new Label();
@@ -442,8 +436,12 @@ namespace SQM.Website
                             RadTextBox tb;
                             if (q.QuestionText == "Timeline")
                             {
-                                //update height and width of control for timeline.
                                 tb = new RadTextBox() { ID = qid, TextMode = InputMode.MultiLine, Skin = "Metro", Width = 370, Rows = 4, MaxLength = MaxTextLength, CssClass = "WarnIfChanged velidate_txt" };
+
+                            }
+                            if (q.QuestionText == "Type of Fire")
+                            {
+                                tb = new RadTextBox() { ID = qid, ReadOnly=true,  Skin = "Metro", Width = 370, CssClass = "WarnIfChanged" };
 
                             }
                             else
@@ -451,6 +449,8 @@ namespace SQM.Website
                                 tb = new RadTextBox() { ID = qid, Width = 550, TextMode = InputMode.MultiLine, Rows = 6, MaxLength = MaxTextLength, Skin = "Metro", CssClass = "WarnIfChanged" };
 
                             }
+
+
                             if (shouldPopulate)
                                 tb.Text = q.AnswerText;
                             tb.ClientEvents.OnValueChanged = "ChangeUpdate";
@@ -516,14 +516,26 @@ namespace SQM.Website
                             break;
 
                         case EHSIncidentQuestionType.Dropdown:
-                            var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
+                            var rddl = new RadDropDownList();
+                            if (q.QuestionText == "Number of Fire Extinguishers Used")
+                            {
+                                 rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged numberOFExtUsed", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
+
+                            }
+                            else
+                            {
+                                 rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
+
+                            }
+
+                          //  var rddl = new RadDropDownList() { ID = qid, CssClass = "WarnIfChanged", Width = 550, Skin = "Metro", ValidationGroup = "Val", AutoPostBack = false };
                             rddl.Items.Add(new DropDownListItem("", ""));
 
                             if (q.QuestionId == (decimal)EHSQuestionId.Department)
                             {
                                 rddl = HandleDepartmentList(q, incident, shouldPopulate, rddl);
                             }
-                           
+
                             if (q.AnswerChoices != null && q.AnswerChoices.Count > 0)
                             {
                                 // Check for any category headings
@@ -559,7 +571,6 @@ namespace SQM.Website
                             RadDatePicker rdp;
                             if (q.QuestionText == "Timeline")
                             {
-                                //update width of control for timeline.
                                 rdp = new RadDatePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_date", };
                             }
                             else
@@ -636,7 +647,6 @@ namespace SQM.Website
                             RadTimePicker rtp;
                             if (q.QuestionText == "Timeline")
                             {
-                                //update  width of control for timeline.
                                 rtp = new RadTimePicker() { ID = qid, Skin = "Metro", CssClass = "WarnIfChanged velidate_time" };
                             }
                             else
@@ -873,7 +883,7 @@ namespace SQM.Website
                     }
                     #endregion
 
-                    //Ending of Timeline widget.
+
                     if (q.QuestionText == "Timeline")
                     {
 
@@ -894,13 +904,13 @@ namespace SQM.Website
                     if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.system))
                         pnl.Visible = false;
 
-                    pnlForm.Controls.Add(pnl);
+                    ajaxPanel.Controls.Add(pnl);
                 }
             }
 
-            pnlForm.Controls.Add(new LiteralControl("</table>"));
-            pnlForm.Controls.Add(new LiteralControl("<br/>"));
-            //To generate grid of timeline controls on page load and on submit of page.
+            ajaxPanel.Controls.Add(new LiteralControl("</table>"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
+
             string getretrunvalue = "";
             if (Page.IsPostBack)
             {
@@ -922,7 +932,7 @@ namespace SQM.Website
             }
             else
             {
-                
+
                 if (incident != null)
                 {
                     List<EHSIncidentQuestion> objQuestionsData = questions.Where(p => p.QuestionText == "Timeline").ToList();
@@ -968,8 +978,7 @@ namespace SQM.Website
             RefreshPageContext();
 
         }
-   
-        //To get data of timeline to bind data on page submit.
+
         public string getDataTimeLine(INCIDENT incident)
         {
             string Objtime = "";
@@ -1037,9 +1046,9 @@ namespace SQM.Website
                 incident = (from inc in entities.INCIDENT where inc.INCIDENT_ID == EditIncidentId select inc).FirstOrDefault();
             }
 
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
             divForm.Visible = true;
-            //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
+            //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = true;
             lblResults.Visible = false;
 
             if (typeId == 10)
@@ -1053,9 +1062,9 @@ namespace SQM.Website
                 if (IsEditContext == true)
                     preventionLocationForm.PopulateForm();
 
-                pnlForm.Controls.Add(new LiteralControl("<br/>"));
-                pnlForm.Controls.Add(preventionLocationForm);
-                pnlForm.Controls.Add(new LiteralControl("<br/><br/>"));
+                ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
+                ajaxPanel.Controls.Add(preventionLocationForm);
+                ajaxPanel.Controls.Add(new LiteralControl("<br/><br/>"));
                 //btnSaveReturn.Visible = false;
                 //btnSaveContinue.Visible = false;
                 return;
@@ -1063,7 +1072,7 @@ namespace SQM.Website
 
             questions = EHSIncidentMgr.SelectIncidentQuestionList(typeId, companyId, CurrentStep);
 
-            pnlForm.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/><table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse;\">"));
 
             foreach (var q in questions)
             {
@@ -1509,11 +1518,11 @@ namespace SQM.Website
                 if (q.QuestionId == (decimal)EHSQuestionId.CostToImplement && !UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
                     pnl.Visible = false;
 
-                pnlForm.Controls.Add(pnl);
+                ajaxPanel.Controls.Add(pnl);
             }
 
-            pnlForm.Controls.Add(new LiteralControl("</table>"));
-            pnlForm.Controls.Add(new LiteralControl("<br/>"));
+            ajaxPanel.Controls.Add(new LiteralControl("</table>"));
+            ajaxPanel.Controls.Add(new LiteralControl("<br/>"));
 
             UpdateAnswersFromForm();
 
@@ -1544,7 +1553,7 @@ namespace SQM.Website
 
             int chInt = (int)EHSQuestionId.Create8D;
             string chString = chInt.ToString();
-            CheckBox create8dCh = (CheckBox)pnlForm.FindControl(chString);
+            CheckBox create8dCh = (CheckBox)ajaxPanel.FindControl(chString);
 
             if (create8dCh != null && create8dCh.Checked == true)
             {
@@ -1637,19 +1646,19 @@ namespace SQM.Website
             // Close checkbox
             int chInt = (int)EHSQuestionId.CloseIncident;
             string chString = chInt.ToString();
-            CheckBox closeCh = (CheckBox)pnlForm.FindControl(chString);
+            CheckBox closeCh = (CheckBox)ajaxPanel.FindControl(chString);
 
             if (closeCh != null)
             {
                 // Completion date
                 int cdInt = (int)EHSQuestionId.CompletionDate;
                 string cdString = cdInt.ToString();
-                RadDatePicker cdFormControl = (RadDatePicker)pnlForm.FindControl(cdString);
+                RadDatePicker cdFormControl = (RadDatePicker)ajaxPanel.FindControl(cdString);
 
                 // Completed by
                 int cbInt = (int)EHSQuestionId.CompletedBy;
                 string cbString = cbInt.ToString();
-                RadTextBox cbFormControl = (RadTextBox)pnlForm.FindControl(cbString);
+                RadTextBox cbFormControl = (RadTextBox)ajaxPanel.FindControl(cbString);
 
                 if (closeCh.Checked)
                 {
@@ -1702,7 +1711,7 @@ namespace SQM.Website
             int score = 0;
             foreach (int fId in requiredToCloseFields)
             {
-                var field = pnlForm.FindControl(fId.ToString());
+                var field = ajaxPanel.FindControl(fId.ToString());
                 if (field == null)   //mt - need to enable close if field was not included in the incident meta-data
                 {
                     score++;
@@ -1797,9 +1806,9 @@ namespace SQM.Website
             {
                 foreach (INCIDENT_QUESTION_CONTROL control in question.QuestionControls)
                 {
-                    Panel containerControl = (Panel)pnlForm.FindControl("Panel" + control.INCIDENT_QUESTION_AFFECTED_ID);
-                    Label formLabel = (Label)pnlForm.FindControl("Label" + control.INCIDENT_QUESTION_AFFECTED_ID);
-                    var formControl = pnlForm.FindControl(control.INCIDENT_QUESTION_AFFECTED_ID.ToString());
+                    Panel containerControl = (Panel)ajaxPanel.FindControl("Panel" + control.INCIDENT_QUESTION_AFFECTED_ID);
+                    Label formLabel = (Label)ajaxPanel.FindControl("Label" + control.INCIDENT_QUESTION_AFFECTED_ID);
+                    var formControl = ajaxPanel.FindControl(control.INCIDENT_QUESTION_AFFECTED_ID.ToString());
 
                     string answer = question.AnswerText;
                     var triggerVal = control.TRIGGER_VALUE;
@@ -1819,7 +1828,7 @@ namespace SQM.Website
                         // Check for optional secondary criteria on control question
                         if (control.SECONDARY_QUESTION_ID != null && control.SECONDARY_TRIGGER_VALUE != null)
                         {
-                            var secondaryControl = pnlForm.FindControl(control.SECONDARY_QUESTION_ID.ToString());
+                            var secondaryControl = ajaxPanel.FindControl(control.SECONDARY_QUESTION_ID.ToString());
 
                             if (secondaryControl is RadDropDownList)
                             {
@@ -1962,9 +1971,9 @@ namespace SQM.Website
                 Skin = "Metro",
                 HideEvent = ToolTipHideEvent.LeaveTargetAndToolTip
             };
-            pnlForm.Controls.Add(new LiteralControl("<span style=\"float: right;\">"));
+            ajaxPanel.Controls.Add(new LiteralControl("<span style=\"float: right;\">"));
             container.Controls.Add(imgHelp);
-            pnlForm.Controls.Add(new LiteralControl("</span>"));
+            ajaxPanel.Controls.Add(new LiteralControl("</span>"));
             container.Controls.Add(rttHelp);
         }
 
@@ -2044,7 +2053,7 @@ namespace SQM.Website
             if (EditIncidentId > 0)
             {
                 divForm.Visible = false;
-                //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+                //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
                 //btnSaveReturn.Visible = false;
                 //btnSaveContinue.Visible = false;
@@ -2069,7 +2078,7 @@ namespace SQM.Website
             if (shouldReturn == true)
             {
                 divForm.Visible = false;
-                //divForm.Visible = pnlForm.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
+                //divForm.Visible = ajaxPanel.Visible = pnlContainment.Visible = pnlRootCause.Visible = pnlAction.Visible = pnlApproval.Visible = false;
 
                 pnlAddEdit.Visible = false;
                 //btnSaveReturn.Visible = false;
@@ -2094,14 +2103,13 @@ namespace SQM.Website
                     // Add context - step 0
                     theIncident = CreateNewIncident();
                     EditIncidentId = incidentId = theIncident.INCIDENT_ID;
-                    // to add timeline data while creating new instance of incident.
+
                     addTimeLine((int)incidentId, questions);
 
                     IsEditContext = true;
                     //EHSNotificationMgr.NotifyOnCreate(incidentId, selectedPlantId);
                     EHSNotificationMgr.NotifyIncidentStatus(theIncident, ((int)SysPriv.originate).ToString(), "");
 
-                    //To generate grid after saving data for timeline widget.
                     string getretrunvalue = "";
                     if (theIncident != null)
                     {
@@ -2110,6 +2118,8 @@ namespace SQM.Website
 
                     if (getretrunvalue != "")
                     { ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "update", "onloadPage('" + getretrunvalue + "')", true); }
+
+
 
                 }
                 else
@@ -2173,7 +2183,7 @@ namespace SQM.Website
                 {
                     ;
                 }
-                var control = pnlForm.FindControl(q.QuestionId.ToString());
+                var control = ajaxPanel.FindControl(q.QuestionId.ToString());
                 string answer = "";
                 if (control != null)
                 {
@@ -2336,7 +2346,8 @@ namespace SQM.Website
                     shouldCreate8d = true;
             }
             entities.SaveChanges();
-            //To add data of timeline widget on update of page.
+
+
             addTimeLine((int)incidentId, questions);
 
             return shouldCreate8d;
@@ -2694,7 +2705,7 @@ namespace SQM.Website
         {
             LinkButton btn = (LinkButton)sender;
 
-            pnlForm.Visible = divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
+            ajaxPanel.Visible = divSubnavPage.Visible = uclcontain.Visible = uclroot5y.Visible = uclCausation.Visible = uclaction.Visible = uclapproval.Visible = uclAlert.Visible = uclVideoPanel.Visible = false;
             btnSubnavIncident.Visible = btnSubnavContainment.Visible = btnSubnavRootCause.Visible = btnSubnavCausation.Visible = btnSubnavAction.Visible = btnSubnavApproval.Visible = true;
             CurrentSubnav = btn.CommandArgument;
 
@@ -2803,11 +2814,10 @@ namespace SQM.Website
                     btnSubnavIncident.Visible = true;
                     btnSubnavIncident.Enabled = false;
                     btnSubnavIncident.CssClass = "buttonLinkDisabled";
-                    if (pnlForm.Visible == false)
+                    if (ajaxPanel.Visible == false)
                     {
                         BuildForm();
-                        pnlForm.Visible = true;
-                        //To fill data of timeline when loading page while selecting of tabs.
+                        ajaxPanel.Visible = true;
                         FillTimeLineOnTabSelection();
                     }
                     btnSubnavSave.Visible = btnSubnavSave.Enabled = EHSIncidentMgr.CanUpdateIncident(null, true, SysPriv.originate, IncidentStepCompleted);
@@ -2815,7 +2825,7 @@ namespace SQM.Website
                     break;
             }
         }
-        //Fill timeline on tab selection 
+
         public void FillTimeLineOnTabSelection()
         {
             try
@@ -2845,7 +2855,7 @@ namespace SQM.Website
 
         public void ClearControls()
         {
-            pnlForm.Controls.Clear();
+            ajaxPanel.Controls.Clear();
         }
 
         protected void RefreshPageContext()

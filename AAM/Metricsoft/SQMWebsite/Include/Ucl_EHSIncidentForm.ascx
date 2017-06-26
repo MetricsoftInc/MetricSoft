@@ -193,8 +193,7 @@
     function ChangeUpdate()
     {
         document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_hfChangeUpdate').value = '1';
-        //alert(document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value);
-        // For selection change of Number of Fire Extinguishers Used value update on Type of Fire.
+      
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119') != null)
         {
             if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_119').value <  3)
@@ -475,7 +474,4 @@
 
         $("#tbl_timeline").on("click", ".BtnMinus", deleteRow);
     });
-
-
-
 </script>
