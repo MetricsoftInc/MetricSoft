@@ -240,7 +240,7 @@ namespace SQM.Website.Reports
             cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             cell.Colspan = 2;
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INCIDENT&POSITION").DESCRIPTION_SHORT, detailTxtBoldFont));
-            cell.AddElement(new Paragraph(pageData.equipmentInvolved, detailTxtFont));
+            cell.AddElement(new Paragraph(pageData.incidentAndPositionTitle, detailTxtFont));
             tableHeader.AddCell(cell);
 
             return tableHeader;
