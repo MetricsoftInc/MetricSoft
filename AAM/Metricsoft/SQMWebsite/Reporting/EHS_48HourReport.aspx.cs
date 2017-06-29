@@ -2,6 +2,7 @@
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace SQM.Website.Reports
         public iTextSharp.text.Font labelTxtFont;
         public iTextSharp.text.Font colHdrFont;
         string baseApplicationUrl;
+        private bool isVideoAvailable = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -72,6 +74,298 @@ namespace SQM.Website.Reports
                 return null;
             }
 
+            if (pageData.incidentType == "Fire/Small Fire")
+            {
+                return BuildFirePdf(pageData);
+            }
+            else
+            {
+                return BuildInjuryIllenessPdf(pageData);
+            }
+
+        }
+
+        #region Fire/SmallFire Report
+        private byte[] BuildFirePdf(AlertData pageData)
+        {
+            string customerLogo = "";
+            if (System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"] != null)
+                customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"].ToString();
+            if (string.IsNullOrEmpty(customerLogo))
+            {
+                if (System.Configuration.ConfigurationManager.AppSettings["CustomerLogo"] != null)
+                    customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogo"].ToString();
+            }
+            if (string.IsNullOrEmpty(customerLogo))
+                customerLogo = "MetricsoftLogo.png";
+
+            string logoUrl = baseApplicationUrl + "images/company/" + customerLogo;
+
+            BaseColor darkGrayColor = new BaseColor(0.25f, 0.25f, 0.25f);
+            BaseColor lightGrayColor = new BaseColor(0.5f, 0.5f, 0.5f);
+            BaseColor whiteColor = new BaseColor(1.0f, 1.0f, 1.0f);
+            BaseColor blackColor = new BaseColor(0.0f, 0.0f, 0.0f);
+            BaseColor redColor = new BaseColor(1.0f, 0f, 0f);
+
+            Font textFont = GetTextFont();
+            Font headerFont = GetHeaderFont();
+            Font labelFont = GetLabelFont();
+            Font colHeaderFont = GetTextFont();
+            Font textItalicFont = GetTextFont();
+
+            detailHdrFont = new Font(headerFont.BaseFont, 13, 0, lightGrayColor);
+            detailTxtFont = new Font(textFont.BaseFont, 10, 0, blackColor);
+            labelTxtFont = new Font(labelFont.BaseFont, 12, 0, blackColor);
+            colHdrFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.UNDERLINE + iTextSharp.text.Font.BOLD, blackColor);
+            detailTxtItalicFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.ITALIC, blackColor);
+            detailTxtBoldItalicFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD + iTextSharp.text.Font.ITALIC, redColor);
+            detailTxtBoldFont = new Font(colHeaderFont.BaseFont, 10, iTextSharp.text.Font.BOLD, blackColor);
+
+            // Create new PDF document
+            //Document document = new Document(PageSize.A4, 35f, 35f, 35f, 35f);
+            Document document = new Document(iTextSharp.text.PageSize.A4.Rotate(), 10, 10, 10, 10);  // landscape document ?
+            mult = 1.3f;
+
+            using (MemoryStream output = new MemoryStream())
+            {
+
+                PdfWriter.GetInstance(document, output);
+
+                try
+                {
+                    document.Open();
+
+                    //
+                    // Table 1 - Header
+                    //
+
+                    var table1 = new PdfPTable(new float[] { 162f, 378f });
+                    table1.TotalWidth = baseWidth * mult;
+                    table1.LockedWidth = true;
+                    table1.DefaultCell.Border = 0;
+                    table1.DefaultCell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                    table1.DefaultCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+                    table1.SpacingAfter = 5f;
+
+                    iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(logoUrl);
+                    img.ScaleToFit(102f, 51f);
+                    var imgCell = new PdfPCell() { Border = 0 };
+                    imgCell.AddElement(img);
+                    table1.AddCell(imgCell);
+                    PdfPCell cell = null;
+                    var hdrFont = new Font(headerFont.BaseFont, 18, 0, darkGrayColor);
+
+                    BaseColor RedColor = new BaseColor(255, 0, 0);
+
+                    var TitleFont = new Font(textItalicFont.BaseFont, 18, 0, RedColor);
+                    cell = new PdfPCell { Border = 0, HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_MIDDLE, };
+                    cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "FireTitle").DESCRIPTION, TitleFont));
+                    table1.AddCell(cell);
+
+                    document.Add(table1);
+                    document.Add(FireIncidentSection(pageData));
+                    document.Add(FireDiscription(pageData));
+                    document.Add(FireTimeline(pageData));
+                    document.Add(ContainmentSection(pageData));
+                    document.Add(CauseSection(pageData));
+                    document.Add(ActionSection(pageData));
+                    document.Add(FirePhotoSection(pageData));
+                    document.Close();
+                }
+                catch
+                {
+                }
+
+                return output.ToArray();
+            }
+        }
+        PdfPTable FireIncidentSection(AlertData pageData)
+        {
+            PdfPTable tableHeader = new PdfPTable(3);
+            tableHeader.TotalWidth = baseWidth * mult;
+            tableHeader.LockedWidth = true;
+            tableHeader.SpacingBefore = 15f;
+            PdfPCell cell;
+            INCIDENT_ANSWER answer = null;
+
+            cell = new PdfPCell() { Padding = 1f, PaddingBottom = 5f, Border = 0 };
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "INCIDENTTYPE").DESCRIPTION, detailHdrFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 1f, PaddingBottom = 5f, Border = 0 };
+            cell.Colspan = 2;
+            cell.AddElement(new Paragraph(pageData.incidentType + "(" + pageData.incidentNumber + ")", labelTxtFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "PLANT").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.incidentLocation, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.Colspan = 2;
+            cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "LOCATION").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.incidentDept, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            //FireDate 		
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "FIREINCIDENTDATE").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.incidentDate, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthRight = cell.BorderWidthBottom = cell.BorderWidthTop = .25f;
+            cell.AddElement(new Paragraph("Time", detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.incidentTime, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.AddElement(new Paragraph("Shift", detailTxtBoldFont));
+            cell = FormatHeaderCell(pageData, (decimal)EHSQuestionId.Shift);
+            cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "EQUIPMENTINVOLVED").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.equipmentInvolved, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+            cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            cell.Colspan = 2;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "INCIDENT&POSITION").DESCRIPTION_SHORT, detailTxtBoldFont));
+            cell.AddElement(new Paragraph(pageData.equipmentInvolved, detailTxtFont));
+            tableHeader.AddCell(cell);
+
+            return tableHeader;
+        }
+        PdfPTable FireDiscription(AlertData pageData)
+        {
+            PdfPTable tblDescription = new PdfPTable(new float[] { 162f, 378f });
+            tblDescription.TotalWidth = baseWidth * mult;
+            tblDescription.LockedWidth = true;
+            tblDescription.SpacingAfter = 5f;
+            PdfPCell cell;
+
+            INCIDENT_ANSWER answer = null;
+            cell = new PdfPCell() { Padding = 1f, PaddingBottom = 5f, Border = 0 };
+            cell.Colspan = 3;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DESCRIPTION").DESCRIPTION, detailHdrFont));
+            tblDescription.AddCell(cell);
+
+            cell = new PdfPCell() { Padding = 1f, PaddingBottom = 9f, Border = 0 };
+            cell.Colspan = 3;
+            cell.AddElement(new Paragraph(pageData.incidentDescription, detailTxtFont));
+
+            tblDescription.AddCell(cell);
+
+            return tblDescription;
+        }
+        PdfPTable FireTimeline(AlertData pageData)
+        {
+            PdfPTable tblTimeLine = new PdfPTable(3);
+            tblTimeLine.TotalWidth = baseWidth * mult;
+            tblTimeLine.LockedWidth = true;
+            tblTimeLine.SpacingAfter = 5f;
+            PdfPCell cell;
+
+            cell = new PdfPCell() { Padding = 1f, PaddingBottom = 5f, Border = 0 };
+            cell.Colspan = 3;
+            cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TIMLINE").DESCRIPTION, detailHdrFont));
+            tblTimeLine.AddCell(cell);
+
+
+            foreach (Timeline timeline in pageData.objTimeLine.ToList())
+            {
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthBottom = .25f;
+                cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "DATE").DESCRIPTION_SHORT), detailTxtBoldFont));
+                cell.AddElement(new Paragraph(timeline.Date, detailTxtFont));
+                tblTimeLine.AddCell(cell);
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthBottom = .25f;
+                cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "TIME").DESCRIPTION_SHORT), detailTxtBoldFont));
+                cell.AddElement(new Paragraph(timeline.Time, detailTxtFont));
+                tblTimeLine.AddCell(cell);
+
+                cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
+                cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+                cell.AddElement(new Paragraph(string.Format(SQMBasePage.GetXLAT(reportXLAT, "HS_5PHASE", "DESCRIPTION").DESCRIPTION_SHORT), detailTxtBoldFont));
+                cell.AddElement(new Paragraph(timeline.Text, detailTxtFont));
+                tblTimeLine.AddCell(cell);
+            }
+
+
+
+            return tblTimeLine;
+        }
+        PdfPTable FirePhotoSection(AlertData pageData)
+        {
+            BaseColor darkGrayColor = new BaseColor(0.25f, 0.25f, 0.25f);
+            Font textFont = GetTextFont();
+
+            var tblPhoto = new PdfPTable(new float[] { baseWidth });
+            tblPhoto.TotalWidth = baseWidth * mult;
+            tblPhoto.LockedWidth = true;
+            tblPhoto.SpacingBefore = 15f;
+            try
+            {
+                if (pageData.photoData != null && pageData.photoData.Count() > 0)
+                {
+                    tblPhoto.AddCell(new PdfPCell(new Phrase("Photos", detailHdrFont)) { Padding = 5f, Border = 0, Colspan = 3 });
+                    tblPhoto.SpacingBefore = 5f;
+                    var captionFont = new Font(textFont.BaseFont, 11, 0, darkGrayColor);
+
+                    //Section for showing the image is attached or not.
+                    int i = 0;
+                    for (i = 0; i < pageData.photoData.Count; i++)
+                    {
+                        //if (i == 0)
+                        //{
+                        //    tblPhoto.AddCell(new PdfPCell(new Phrase("(Choose 1 photo)", detailTxtBoldFont)));
+                        //}
+                        var photoCell = new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 };
+
+                        iTextSharp.text.Image photo = iTextSharp.text.Image.GetInstance(pageData.photoData[i]);
+                        //photo.ScaleToFit(176f, 132f);
+                        //photo.ScaleToFit(264f, 198f);
+                        photoCell.AddElement(photo);
+
+                        photoCell.AddElement(new Phrase(pageData.photoCaptions[i], captionFont));
+
+                        tblPhoto.AddCell(photoCell);
+                    }
+                    // pad remaining cells in row or else table will be corrupt
+                    int currentCol = i % 3;
+                    for (int j = 0; j < 3 - currentCol; j++)
+                        tblPhoto.AddCell(new PdfPCell() { PaddingLeft = 0, PaddingRight = 4, PaddingTop = 8, PaddingBottom = 8, Border = 0 });
+                }
+                //Condition for validate the video available or not in the report section.
+                if (isVideoAvailable == true)
+                {
+                    tblPhoto.AddCell(new PdfPCell(new Phrase("(Is video available? Yes)", detailTxtBoldFont)));
+                }
+                else
+                {
+                    tblPhoto.AddCell(new PdfPCell(new Phrase("(Is video available? No)", detailTxtBoldFont)));
+                }
+            }
+            catch { }
+            return tblPhoto;
+        }
+        #endregion End Fire/SmallFire Report
+
+        private byte[] BuildInjuryIllenessPdf(AlertData pageData)
+
+        {
             string customerLogo = "";
             if (System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"] != null)
                 customerLogo = System.Configuration.ConfigurationManager.AppSettings["CustomerLogoLarge"].ToString();
@@ -140,15 +434,11 @@ namespace SQM.Website.Reports
                     var hdrFont = new Font(headerFont.BaseFont, 18, 0, darkGrayColor);
 
                     cell = new PdfPCell { Border = 0, HorizontalAlignment = Element.ALIGN_LEFT, VerticalAlignment = Element.ALIGN_MIDDLE };
-                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(0), hdrFont));
-                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, ',').ElementAt(1), hdrFont));
                     cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "TITLE").DESCRIPTION, hdrFont));
                     table1.AddCell(cell);
 
                     var versionFont = new Font(textItalicFont.BaseFont, 8, 0, darkGrayColor);
                     cell = new PdfPCell() { Padding = 2f, PaddingBottom = 2, Border = 0 };
-                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(0), versionFont));
-                    //cell.AddElement(new Paragraph(WebSiteCommon.SplitString(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, ',').ElementAt(1), versionFont));
                     cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L4REPORT", "VERSION").DESCRIPTION, versionFont));
                     cell.Colspan = 2;
                     table1.AddCell(cell);
@@ -210,7 +500,6 @@ namespace SQM.Website.Reports
             tableContain.AddCell(cell);
             return tableContain;
         }
-
         PdfPTable HeaderSection(AlertData pageData)
         {
             PdfPTable tableIncident = new PdfPTable(new float[] { 180f, 180f, 180f });
@@ -229,8 +518,8 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
-           // cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            // cell.BorderWidthTop = cell.BorderWidthLeft = .25f;
+            // cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
             var TNSK = pageData.incident.TNSKNumber;
             if (string.IsNullOrEmpty(TNSK))
             {
@@ -243,7 +532,7 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             var bt_value = pageData.incident.INCFORM_INJURYILLNESS.BUSINESS_TYPE;
 
             bt_value = SQMBasePage.GetXLAT(reportXLAT, "BusinessType", bt_value).DESCRIPTION;
@@ -259,7 +548,7 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-         //   cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            //   cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             var mpt_value = SQMBasePage.GetXLAT(reportXLAT, pageData.incident.INCFORM_INJURYILLNESS.BUSINESS_TYPE, pageData.incident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE).DESCRIPTION;
             if (string.IsNullOrEmpty(mpt_value))
             {
@@ -273,7 +562,7 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             var spt_value = SQMBasePage.GetXLAT(reportXLAT, pageData.incident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE, pageData.incident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE).DESCRIPTION;
             if (string.IsNullOrEmpty(spt_value))
             {
@@ -285,8 +574,8 @@ namespace SQM.Website.Reports
             tableIncident.AddCell(cell);
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-          //  cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
-             var EMN_value = pageData.incident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME;
+            //  cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            var EMN_value = pageData.incident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME;
 
             if (string.IsNullOrEmpty(EMN_value))
             {
@@ -310,11 +599,11 @@ namespace SQM.Website.Reports
                 ShowDate = EMD_value.Value.ToShortDateString();
             }
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "EMD").DESCRIPTION, detailTxtBoldFont));
-            cell.AddElement(new Paragraph(  ShowDate, detailTxtFont));
+            cell.AddElement(new Paragraph(ShowDate, detailTxtFont));
             tableIncident.AddCell(cell);
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             var DN_value = pageData.incident.INCFORM_INJURYILLNESS.DESIGN_NUMBER;
             if (string.IsNullOrEmpty(DN_value))
             {
@@ -326,7 +615,7 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
+            // cell.BorderWidthBottom = cell.BorderWidthTop = cell.BorderWidthLeft = cell.BorderWidthRight = .25f;
             var ASN_value = pageData.incident.INCFORM_INJURYILLNESS.ASSET_NUMBER;
             if (string.IsNullOrEmpty(ASN_value))
             {
@@ -350,7 +639,7 @@ namespace SQM.Website.Reports
                 int index = 0;
                 foreach (var item in data)
                 {
-                 
+
                     value[index] = SQMBasePage.GetXLAT(reportXLAT, "CMS", item).DESCRIPTION;
                     index++;
                 }
@@ -365,7 +654,7 @@ namespace SQM.Website.Reports
 
 
             cell = new PdfPCell() { Padding = 2f, PaddingBottom = 5f, Border = 0 };
-           // cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
+            // cell.BorderWidthLeft = cell.BorderWidthRight = cell.BorderWidthBottom = .25f;
             var Age_value = pageData.incident.INCFORM_INJURYILLNESS.ASSET_NUMBER;
             if (string.IsNullOrEmpty(Age_value))
             {
@@ -375,7 +664,7 @@ namespace SQM.Website.Reports
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "AgeAsso").DESCRIPTION_SHORT, detailTxtBoldFont));
             cell.AddElement(new Paragraph(Age_value, detailTxtFont));
             tableIncident.AddCell(cell);
-            
+
             return tableIncident;
         }
         PdfPCell FormatHeaderCell(AlertData pageData, decimal questionID)
@@ -401,8 +690,6 @@ namespace SQM.Website.Reports
 
             return cell;
         }
-
-
         PdfPTable ContainmentSection(AlertData pageData)
         {
             PdfPTable tableContain = new PdfPTable(new float[] { 420f, 110f, 110f });
@@ -449,7 +736,6 @@ namespace SQM.Website.Reports
 
             return tableContain;
         }
-
         PdfPTable CauseSection(AlertData pageData)
         {
             PdfPTable tableCause = new PdfPTable(new float[] { 270f, 270f });
@@ -530,7 +816,6 @@ namespace SQM.Website.Reports
 
             return tableCause;
         }
-
         PdfPTable ActionSection(AlertData pageData)
         {
             PdfPTable tableAction = new PdfPTable(new float[] { 220f, 150f, 120f, 110f, 200 });
@@ -604,7 +889,6 @@ namespace SQM.Website.Reports
 
             return tableAction;
         }
-
         PdfPTable AlertSection(AlertData pageData)
         {
             PdfPTable tableAlert = new PdfPTable(new float[] { 300f, 120f, 110f, 110f });
@@ -684,7 +968,6 @@ namespace SQM.Website.Reports
 
             return tableAlert;
         }
-
         PdfPTable ReviewSection(AlertData pageData)
         {
             PdfPTable tableReview = new PdfPTable(new float[] { 180f, 180f, 180f });
@@ -727,7 +1010,6 @@ namespace SQM.Website.Reports
 
             return tableReview;
         }
-
         AlertData PopulateByIncidentId(decimal iid)
         {
             AlertData d = new AlertData();
@@ -761,9 +1043,19 @@ namespace SQM.Website.Reports
                             d.incidentTime = Convert.ToDateTime(answer.ANSWER_VALUE).ToShortTimeString();
                     }
 
+                    //if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
+                    //{
+                    //    answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT, "SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+                    //}
+
                     if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Shift).SingleOrDefault()) != null)
                     {
-                        answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT, "SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
+                        if (d.incident.ISSUE_TYPE == "Fire/Small Fire")
+                        {
+                            answer.ANSWER_VALUE = answer.ANSWER_VALUE;
+                        }
+                        else
+                            answer.ANSWER_VALUE = SQMBasePage.GetXLAT(reportXLAT, "SHIFT", answer.ANSWER_VALUE).DESCRIPTION;
                     }
 
                     if ((answer = d.answerList.Where(a => a.INCIDENT_QUESTION_ID == (decimal)EHSQuestionId.Department).SingleOrDefault()) != null)
@@ -872,6 +1164,23 @@ namespace SQM.Website.Reports
                     d.incidentAlert = EHSIncidentMgr.LookupIncidentAlert(entities, d.incident.INCIDENT_ID);
                     d.alertList = EHSIncidentMgr.GetAlertItemList(entities, d.incident.INCIDENT_ID);
 
+                    string equpmentInvolved = d.answerList.Where(p => p.ORIGINAL_QUESTION_TEXT == "Equipment Involved" && p.INCIDENT_ID == d.incident.INCIDENT_ID).Select(p => p.ANSWER_VALUE).FirstOrDefault();
+
+                    if (string.IsNullOrEmpty(equpmentInvolved))
+                    {
+                        equpmentInvolved = "NA";
+                    }
+                    d.equipmentInvolved = equpmentInvolved;
+
+                    string incidentAndPositionTitle = d.answerList.Where(p => p.ORIGINAL_QUESTION_TEXT == "Person who found the incident and position title" && p.INCIDENT_ID == d.incident.INCIDENT_ID).Select(p => p.ANSWER_VALUE).FirstOrDefault();
+
+                    if (string.IsNullOrEmpty(incidentAndPositionTitle))
+                    {
+                        incidentAndPositionTitle = "NA";
+                    }
+
+                    d.incidentAndPositionTitle = incidentAndPositionTitle;
+
 
                     var files = (from a in entities.ATTACHMENT
                                  where
@@ -888,6 +1197,62 @@ namespace SQM.Website.Reports
 
 
                     d.approvalList = EHSIncidentMgr.GetApprovalList(entities, (decimal)d.incident.ISSUE_TYPE_ID, 5.5m, iid, null, 0);
+
+                    List<INCIDENT_TIMELINE_ANSWER> incidentTimeLine = entities.INCIDENT_TIMELINE_ANSWER.Where(p => p.INCIDENT_ID == d.incident.INCIDENT_ID).ToList();
+                    List<INCIDENT_ANSWER> incidentAnswer = entities.INCIDENT_ANSWER.Where(p => p.INCIDENT_ID == d.incident.INCIDENT_ID && p.ORIGINAL_QUESTION_TEXT == "Timeline").ToList();
+
+                    List<Timeline> objTimeLine = new List<Timeline>();
+
+                    for (int i = 0; i < incidentAnswer.Count(); i += 3)
+                    {
+                        DateTime _date = Convert.ToDateTime(incidentAnswer[i + 0].ANSWER_VALUE);
+                        string date = _date.ToString(format: "MM/dd/yyyy");
+
+                        DateTime time = Convert.ToDateTime(incidentAnswer[i + 1].ANSWER_VALUE);
+                        string displayTime = time.ToString("hh:mm tt");
+
+                        var obj = new Timeline()
+                        {
+                            Date = date.ToString()
+                        ,
+                            Time = displayTime
+                         ,
+                            Text = incidentAnswer[i + 2].ANSWER_VALUE
+                        };
+
+                        objTimeLine.Add(obj);
+
+                    }
+                    for (int i = 0; i < incidentTimeLine.Count(); i += 3)
+                    {
+                        DateTime _date = Convert.ToDateTime(incidentTimeLine[i + 2].ANSWER_VALUE);
+                        string date = _date.ToString(format: "MM/dd/yyyy");
+
+                        DateTime time = Convert.ToDateTime(incidentTimeLine[i + 0].ANSWER_VALUE);
+                        string displayTime = time.ToString("hh:mm tt");
+
+                        var obj = new Timeline()
+                        {
+                            Time = displayTime
+                        ,
+                            Text = incidentTimeLine[i + 1].ANSWER_VALUE
+                         ,
+                            Date = date
+                        };
+
+                        objTimeLine.Add(obj);
+
+                    }
+
+
+                    d.objTimeLine = objTimeLine.Select(p => new Timeline()
+                    {
+                        Date = p.Date,
+                        Text = p.Text,
+                        Time = p.Time
+                    }).ToList();
+
+
 
                     if (files.Count > 0)
                     {
@@ -908,8 +1273,6 @@ namespace SQM.Website.Reports
 
             return d;
         }
-
-
         public iTextSharp.text.Font GetHeaderFont()
         {
             var fontName = "Oswald-Regular";
@@ -920,7 +1283,6 @@ namespace SQM.Website.Reports
             }
             return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         }
-
         public iTextSharp.text.Font GetLabelFont()
         {
             var fontName = "Ubuntu";
@@ -931,7 +1293,6 @@ namespace SQM.Website.Reports
             }
             return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         }
-
         public iTextSharp.text.Font GetTextFont()
         {
             var fontName = "Ubuntu";
@@ -945,3 +1306,4 @@ namespace SQM.Website.Reports
 
     }
 }
+

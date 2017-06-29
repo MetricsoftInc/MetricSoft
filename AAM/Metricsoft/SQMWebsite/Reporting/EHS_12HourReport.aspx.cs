@@ -37,7 +37,7 @@ namespace SQM.Website.Reports
         public string typeOfFire;
         public string equipmentInvolved;
         public string typeOfFireExtinguisher;
-
+        public string incidentAndPositionTitle;
         public INCIDENT incident;
         public List<INCIDENT_ANSWER> answerList;
         public List<INCFORM_CONTAIN> containList;
@@ -47,6 +47,7 @@ namespace SQM.Website.Reports
         public List<IncidentAlertItem> alertList;
         public List<TASK_STATUS> actionList;
         public List<EHSIncidentApproval> approvalList;
+        public List<Timeline> objTimeLine;
 
         public AlertData()
         {
@@ -1008,8 +1009,6 @@ namespace SQM.Website.Reports
             cell.AddElement(new Paragraph(SQMBasePage.GetXLAT(reportXLAT, "HS_L2REPORT", "REVIEW").DESCRIPTION, detailHdrFont));
             tableReview.AddCell(cell);
 
-
-
             foreach (EHSIncidentApproval approval in pageData.approvalList.Where(l => l.approval.APPROVER_PERSON_ID.HasValue).ToList())
             {
                 ++row;
@@ -1296,8 +1295,9 @@ namespace SQM.Website.Reports
                         }
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    throw ex;
                 }
             }
 
