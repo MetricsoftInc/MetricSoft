@@ -83,10 +83,7 @@ namespace SQM.Website
                 }
             }
 
-            if (IncidentId != null)
-            {
-
-            }
+           
         }
 
 
@@ -447,7 +444,7 @@ namespace SQM.Website
                         {
                             if (ddl.Items.FindItemByValue(responsiblePerson.PERSON_ID.ToString()) != null)
                             {
-                                ddl.SelectedValue = responsiblePerson.ToString();
+                                ddl.SelectedValue = responsiblePerson.PERSON_ID.ToString();
                             }
                             else
                             {
