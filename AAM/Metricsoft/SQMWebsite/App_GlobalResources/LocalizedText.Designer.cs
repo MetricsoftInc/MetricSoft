@@ -2284,11 +2284,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Severity.
+        ///   Looks up a localized string similar to Severity Type.
         /// </summary>
         internal static string Severity {
             get {
                 return ResourceManager.GetString("Severity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Severity Level.
+        /// </summary>
+        internal static string SeverityLevel {
+            get {
+                return ResourceManager.GetString("SeverityLevel", resourceCulture);
             }
         }
         
@@ -2307,6 +2316,15 @@ namespace Resources {
         internal static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SeverityLevel.
+        /// </summary>
+        internal static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
             }
         }
         

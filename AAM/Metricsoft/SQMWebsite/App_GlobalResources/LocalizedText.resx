@@ -925,7 +925,7 @@
     <value>Flash Report Signoff</value>
   </data>
   <data name="Severity" xml:space="preserve">
-    <value>Severity</value>
+    <value>Severity Type</value>
   </data>
   <data name="String1" xml:space="preserve">
     <value>(determined when the incident and any lost/restricted time is saved)</value>
@@ -1062,5 +1062,11 @@
   </data>
   <data name="TypeOfInjury_New" xml:space="preserve">
     <value>Type of Injury(what was the result?)</value>
+  </data>
+  <data name="SeverityLevel" xml:space="preserve">
+    <value> Severity Level</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>SeverityLevel</value>
   </data>
 </root>
