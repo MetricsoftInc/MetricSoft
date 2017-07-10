@@ -487,13 +487,17 @@ namespace SQM.Website
 
                         tbSupervisorStatement.Text = injuryIllnessDetails.SUPERVISOR_STATEMENT;
 
-                        if (EditIncidentId > maxINCIDENT)
+                        //check for null value for emp_status.
+                        if (injuryIllnessDetails.EMP_STATUS != null)
                         {
-                            rdoEmpStatus.SelectedValue = Convert.ToString(injuryIllnessDetails.EMP_STATUS);
-                        }
-                        else
-                        {
-                            rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
+                            if (EditIncidentId > maxINCIDENT)
+                            {
+                                rdoEmpStatus.SelectedValue = Convert.ToString(injuryIllnessDetails.EMP_STATUS);
+                            }
+                            else
+                            {
+                                rdoDirectSupv.SelectedValue = (injuryIllnessDetails.COMPANY_SUPERVISED == true) ? "1" : "0";
+                            }
                         }
                         rdoErgConcern.SelectedValue = (injuryIllnessDetails.ERGONOMIC_CONCERN == true) ? "1" : "0"; ;
                         rdoStdProcsFollowed.SelectedValue = (injuryIllnessDetails.STD_PROCS_FOLLOWED == true) ? "1" : "0";
