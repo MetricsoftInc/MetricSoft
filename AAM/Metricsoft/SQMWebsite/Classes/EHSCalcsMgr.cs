@@ -1117,27 +1117,32 @@ namespace SQM.Website
             return this;
         }
 
-        public List<EHSIncidentData> SelectIncidentList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string> severityList, DateTime fromDate, DateTime toDate, string incidentStatus, bool selectAttachments, decimal createID)
+        public List<EHSIncidentData> SelectIncidentList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string> severityList, DateTime fromDate, DateTime toDate, string incidentStatus,bool selectAttachments, decimal createID)
         {
             try
             {
-				this.IncidentHst = (from i in this.Entities.INCIDENT 
+               
+                this.IncidentHst = (from i in this.Entities.INCIDENT
                                     join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
                                     join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
-									join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i
-									from d in d_i.DefaultIfEmpty()
+                                    join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i
+                                    from d in d_i.DefaultIfEmpty()
                                     where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
-									&& (createID == 0  ||  i.CREATE_PERSON == createID)
+                                    && (createID == 0 || i.CREATE_PERSON == createID)
                                     && incidentTypeList.Contains((decimal)i.ISSUE_TYPE_ID) && plantIdList.Contains((decimal)i.DETECT_PLANT_ID))
                                     select new EHSIncidentData
                                     {
                                         Incident = i,
                                         Plant = p,
                                         Person = r,
-										InjuryDetail = d
+                                        InjuryDetail = d,
+                                       
                                     }).ToList();
 
-				if (severityList != null && severityList.Count > 0)
+                this.IncidentHst = IncidentHst.GroupBy(c => c.Incident.INCIDENT_ID, (key, c) => c.FirstOrDefault()).ToList();
+
+
+                if (severityList != null && severityList.Count > 0)
 				{
 					this.IncidentHst = this.IncidentHst.Where(l => l.MatchSeverity(severityList) == true).ToList();
 				}
@@ -1160,7 +1165,9 @@ namespace SQM.Website
                         this.IncidentHst = this.IncidentHst.Where(l => l.Status == "A").ToList();
                     else if (incidentStatus == "C")  // get closed incidents
                         this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C").ToList();
- 
+
+
+
                     if (selectAttachments)
                     {
                         List<ATTACHMENT> attachList = (from a in this.Entities.ATTACHMENT
@@ -1186,7 +1193,106 @@ namespace SQM.Website
             return this.IncidentHst;
         }
 
-		public List<EHSIncidentData> SelectPreventativeList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string>inspectionCatetoryList, List<string> recommendTypeList, DateTime fromDate, DateTime toDate, List<string> statusList, bool selectAttachments, decimal createID)
+      /// <summary>
+      /// New overload for Incident list page with severity check.
+      /// </summary>
+      /// <param name="plantIdList"></param>
+      /// <param name="incidentTypeList"></param>
+      /// <param name="severityList"></param>
+      /// <param name="fromDate"></param>
+      /// <param name="toDate"></param>
+      /// <param name="incidentStatus"></param>
+      /// <param name="severityLevel"></param>
+      /// <param name="selectAttachments"></param>
+      /// <param name="createID"></param>
+      /// <returns></returns>
+        public List<EHSIncidentData> SelectIncidentList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string> severityList, DateTime fromDate, DateTime toDate, string incidentStatus, List<string> severityLevel, bool selectAttachments, decimal createID)
+        {
+            try
+            {
+                //Add New join for severity level check 
+                this.IncidentHst = (from i in this.Entities.INCIDENT
+                                    join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
+                                    join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
+                                    join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i
+                                    join a in this.Entities.INCFORM_APPROVAL on i.INCIDENT_ID equals a.INCIDENT_ID
+                                    from d in d_i.DefaultIfEmpty()
+                                    where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
+                                    && (createID == 0 || i.CREATE_PERSON == createID)
+                                    && incidentTypeList.Contains((decimal)i.ISSUE_TYPE_ID) && plantIdList.Contains((decimal)i.DETECT_PLANT_ID))
+                                    select new EHSIncidentData
+                                    {
+                                        Incident = i,
+                                        Plant = p,
+                                        Person = r,
+                                        InjuryDetail = d,
+                                        Approval = a
+                                    }).ToList();
+
+                this.IncidentHst = IncidentHst.GroupBy(c => c.Incident.INCIDENT_ID, (key, c) => c.FirstOrDefault()).ToList();
+
+
+                if (severityList != null && severityList.Count > 0)
+                {
+                    this.IncidentHst = this.IncidentHst.Where(l => l.MatchSeverity(severityList) == true).ToList();
+                }
+
+                if (this.IncidentHst != null)
+                {
+                    decimal[] ids = this.IncidentHst.Select(i => i.Incident.INCIDENT_ID).Distinct().ToArray();
+                    var qaList = (from a in this.Entities.INCIDENT_ANSWER.Include("INCIDENT_QUESTION")
+                                  where (ids.Contains(a.INCIDENT_ID) && this.TopicSelects.Contains(a.INCIDENT_QUESTION_ID))
+                                  select a).ToList();
+                    foreach (EHSIncidentData data in this.IncidentHst)
+                    {
+                        data.EntryList = new List<INCIDENT_ANSWER>();
+                        data.EntryList.AddRange(qaList.Where(l => l.INCIDENT_ID == data.Incident.INCIDENT_ID).ToList());
+                        data.DeriveStatus();
+                        data.DaysElapsed();
+                    }
+
+                    if (incidentStatus == "A")  // get open incidents
+                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "A").ToList();
+                    else if (incidentStatus == "C")  // get closed incidents
+                        this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C").ToList();
+
+                    //if (!string.IsNullOrEmpty(severityLevel))
+                    //{
+                    //    this.IncidentHst = this.IncidentHst.Where(p=>p.Approval.SEVERITY_LEVEL == severityLevel).ToList();
+                    //}
+
+                    if (severityLevel != null && severityLevel.Count > 0)
+                    {
+                        this.IncidentHst = this.IncidentHst.Where(l => severityLevel.Contains(l.Approval.SEVERITY_LEVEL) && l.Approval.APPROVER_TITLE == "Global Safety Group").ToList();
+                    }
+
+
+                    if (selectAttachments)
+                    {
+                        List<ATTACHMENT> attachList = (from a in this.Entities.ATTACHMENT
+                                                       where
+                                                       (a.RECORD_TYPE == 40 && ids.Contains(a.RECORD_ID)
+                                                       && a.FILE_NAME.ToLower().Contains(".jpg") || a.FILE_NAME.ToLower().Contains(".jpeg") ||
+                                                       a.FILE_NAME.ToLower().Contains(".gif") || a.FILE_NAME.ToLower().Contains(".png") ||
+                                                       a.FILE_NAME.ToLower().Contains(".bmp"))
+                                                       select a).OrderBy(l => l.ATTACHMENT_ID).ToList();
+                        foreach (EHSIncidentData data in this.IncidentHst)
+                        {
+                            data.AttachList = new List<ATTACHMENT>();
+                            data.AttachList.AddRange(attachList.Where(l => l.RECORD_ID == data.Incident.INCIDENT_ID).ToList());
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //SQMLogger.LogException(e);
+            }
+
+            return this.IncidentHst;
+        }
+
+        public List<EHSIncidentData> SelectPreventativeList(List<decimal> plantIdList, List<decimal> incidentTypeList, List<string>inspectionCatetoryList, List<string> recommendTypeList, DateTime fromDate, DateTime toDate, List<string> statusList, bool selectAttachments, decimal createID)
 		{
 			try
 			{
@@ -1367,12 +1473,15 @@ namespace SQM.Website
 			bool tasksAssigned = false;
 			try
 			{
-				this.AuditHst = (from a in this.Entities.AUDIT
+                var listData = (from aed in this.Entities.GetAuditExceptionData() select aed).ToList();
+
+                this.AuditHst = (from a in this.Entities.AUDIT
 								 join p in this.Entities.PLANT on a.DETECT_PLANT_ID equals p.PLANT_ID
 								 join r in this.Entities.PERSON on a.AUDIT_PERSON equals r.PERSON_ID
 								 join t in this.Entities.AUDIT_TYPE on a.AUDIT_TYPE_ID equals t.AUDIT_TYPE_ID
 								 where ((a.AUDIT_DT >= fromDate && a.AUDIT_DT <= toDate)
 								 && auditTypeList.Contains((decimal)a.AUDIT_TYPE_ID) && plantIdList.Contains((decimal)a.DETECT_PLANT_ID))
+                                 && listData.Contains(a.AUDIT_ID)
 								 select new EHSAuditData
 								 {
 									 Audit = a,
@@ -1405,73 +1514,75 @@ namespace SQM.Website
 					// now we need to build a list of only the Audits that have negative responses
 					foreach (EHSAuditData data in this.AuditHst)
 					{
-						answerIsNegative = false;
-						tasksAssigned = false;
-						foreach (AUDIT_ANSWER auditAnswer in data.Audit.AUDIT_ANSWER)
-						{
-							// for each answer in the audit get the answer value
-							string answer = (auditAnswer.ANSWER_VALUE == null) ? "" : auditAnswer.ANSWER_VALUE;
-							if (answer.Length > 0)
-							{
-								// get the original question info for the answer
-								AUDIT_QUESTION question = (from q in this.Entities.AUDIT_QUESTION
-														   where q.AUDIT_QUESTION_ID == auditAnswer.AUDIT_QUESTION_ID
-														   select q).FirstOrDefault();
-								if (question != null)
-								{
-									// if this is a question type that we care about, get the possible choices for an answer
-									QuestionType = (EHSAuditQuestionType)question.AUDIT_QUESTION_TYPE_ID;
-									if (QuestionType == EHSAuditQuestionType.RadioPercentage || QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft
-										|| QuestionType == EHSAuditQuestionType.Radio || QuestionType == EHSAuditQuestionType.RadioCommentLeft)
-									{
-										List<EHSAuditAnswerChoice> choices = (from qc in this.Entities.AUDIT_QUESTION_CHOICE
-																			  where qc.AUDIT_QUESTION_ID == question.AUDIT_QUESTION_ID
-																			  orderby qc.SORT_ORDER
-																			  select new EHSAuditAnswerChoice
-																			  {
-																				  Value = qc.QUESTION_CHOICE_VALUE,
-																				  IsCategoryHeading = qc.IS_CATEGORY_HEADING,
-																				  ChoiceWeight = qc.CHOICE_WEIGHT,
-																				  ChoicePositive = qc.CHOICE_POSITIVE
-																			  }).ToList();
-										if (choices.Count > 0)
-										{
-											// set the flag if there are any negative answers
-											foreach (EHSAuditAnswerChoice choice in choices)
-											{
-												// AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
-												try
-												{
-													choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
-												}
-												catch
-												{
-													choice.Text = choice.Value;
-												}
-												if (choice.Value.Equals(answer) && !choice.ChoicePositive)
-													answerIsNegative = true;
-											}
-										}
-									}
-								}
-							}
-							// see if there are any tasks assigned to the answer
-							if (includeWithTasks)
-							{
-								List<decimal> taskIds = (from a in this.Entities.TASK_STATUS
-														 where a.RECORD_TYPE == 50 && a.RECORD_ID == data.Audit.AUDIT_ID && a.RECORD_SUBID == auditAnswer.AUDIT_QUESTION_ID
-														 select a.TASK_ID).ToList();
-								if (taskIds.Count > 0)
-									tasksAssigned = true;
-							}
-						}
-						// add the audit to the list only if there are negative answers
-						// also include if there are tasks assigned
-						if (answerIsNegative || tasksAssigned)
-						{
-							auditList.Add(data);
-						}
-					}
+                        //answerIsNegative = false;
+                        //tasksAssigned = false;
+                        //foreach (AUDIT_ANSWER auditAnswer in data.Audit.AUDIT_ANSWER)
+                        //{
+                        //    // for each answer in the audit get the answer value
+                        //    string answer = (auditAnswer.ANSWER_VALUE == null) ? "" : auditAnswer.ANSWER_VALUE;
+                        //    if (answer.Length > 0)
+                        //    {
+                        //        // get the original question info for the answer
+                        //        AUDIT_QUESTION question = (from q in this.Entities.AUDIT_QUESTION
+                        //                                   where q.AUDIT_QUESTION_ID == auditAnswer.AUDIT_QUESTION_ID
+                        //                                   select q).FirstOrDefault();
+                        //        if (question != null)
+                        //        {
+                        //            // if this is a question type that we care about, get the possible choices for an answer
+                        //            QuestionType = (EHSAuditQuestionType)question.AUDIT_QUESTION_TYPE_ID;
+                        //            if (QuestionType == EHSAuditQuestionType.RadioPercentage || QuestionType == EHSAuditQuestionType.RadioPercentageCommentLeft
+                        //                || QuestionType == EHSAuditQuestionType.Radio || QuestionType == EHSAuditQuestionType.RadioCommentLeft)
+                        //            {
+                        //                List<EHSAuditAnswerChoice> choices = (from qc in this.Entities.AUDIT_QUESTION_CHOICE
+                        //                                                      where qc.AUDIT_QUESTION_ID == question.AUDIT_QUESTION_ID
+                        //                                                      orderby qc.SORT_ORDER
+                        //                                                      select new EHSAuditAnswerChoice
+                        //                                                      {
+                        //                                                          Value = qc.QUESTION_CHOICE_VALUE,
+                        //                                                          IsCategoryHeading = qc.IS_CATEGORY_HEADING,
+                        //                                                          ChoiceWeight = qc.CHOICE_WEIGHT,
+                        //                                                          ChoicePositive = qc.CHOICE_POSITIVE
+                        //                                                      }).ToList();
+                        //                if (choices.Count > 0)
+                        //                {
+                        //                    // set the flag if there are any negative answers
+                        //                    foreach (EHSAuditAnswerChoice choice in choices)
+                        //                    {
+                        //                        // AW 2016 try to convert the value with the AQ XLAT.  If it isn't there, then just use the default text for now.  We will add true audit language during the Audit Maint project
+                        //                        try
+                        //                        {
+                        //                            choice.Text = xlats.Where(x => x.Value == choice.Value).FirstOrDefault().TextLong;
+                        //                        }
+                        //                        catch
+                        //                        {
+                        //                            choice.Text = choice.Value;
+                        //                        }
+                        //                        if (choice.Value.Equals(answer) && !choice.ChoicePositive)
+                        //                            answerIsNegative = true;
+                        //                    }
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //    // see if there are any tasks assigned to the answer
+                        //    if (includeWithTasks)
+                        //    {
+                        //        List<decimal> taskIds = (from a in this.Entities.TASK_STATUS
+                        //                                 where a.RECORD_TYPE == 50 && a.RECORD_ID == data.Audit.AUDIT_ID && a.RECORD_SUBID == auditAnswer.AUDIT_QUESTION_ID
+                        //                                 select a.TASK_ID).ToList();
+                        //        if (taskIds.Count > 0)
+                        //            tasksAssigned = true;
+                        //    }
+                        //}
+                        //// add the audit to the list only if there are negative answers
+                        //// also include if there are tasks assigned
+                        //if (answerIsNegative || tasksAssigned)
+                        //{
+                        //    auditList.Add(data);
+                        //}
+
+                        auditList.Add(data);
+                    }
 				}
 			}
 			catch (Exception e)

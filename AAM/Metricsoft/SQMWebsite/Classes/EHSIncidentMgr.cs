@@ -151,6 +151,7 @@ namespace SQM.Website
 
     public class EHSIncidentData
     {
+        public INCFORM_APPROVAL Approval { get; set; }
         public INCIDENT Incident
         {
             get;
@@ -435,7 +436,19 @@ namespace SQM.Website
 
             return inType;
         }
-
+                
+        //Function to fetch value of severity level.
+        public static List<XLAT> PopulateSeverityLevel()
+        {
+            List<XLAT> lstSeverityLevel = new List<XLAT>();
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                List<XLAT> xlatList = SQMBasePage.SelectXLATList(new string[1] { "HS_L2REPORT" }, 1);
+                var severityLevel = new string[] { "l1", "l2", "l3", "l4", "first_add" };
+                lstSeverityLevel = xlatList.Where(l => l.XLAT_GROUP == "HS_L2REPORT" && severityLevel.Contains(l.XLAT_CODE)).ToList();
+            }
+            return lstSeverityLevel;
+        }
         public static decimal SelectIncidentTypeIdByIncidentId(decimal incidentId)
         {
             decimal? incidentTypeId;
