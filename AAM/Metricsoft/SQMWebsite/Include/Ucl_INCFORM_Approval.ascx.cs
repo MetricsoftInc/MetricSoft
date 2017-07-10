@@ -458,30 +458,30 @@ namespace SQM.Website
                     approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
                     approval.APPROVER_TITLE = hfrole.Value;
 
-
+                  
                     //Update SEVERITY_LEVEL value. - 
-                    if (chkSeverityLevel00.Checked)
+                    if (chkSeverityLevel00.Checked && chkSeverityLevel00.Visible==true)
                     {
                         severityLevel = chkSeverityLevel00.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.first_add.ToString();
                     }
-                    else if (chkSeverityLevel01.Checked)
+                    else if (chkSeverityLevel01.Checked && chkSeverityLevel01.Visible == true)
                     {
                         severityLevel = chkSeverityLevel01.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l1.ToString();
                     }
 
-                    else if (chkSeverityLevel02.Checked)
+                    else if (chkSeverityLevel02.Checked && chkSeverityLevel02.Visible == true)
                     {
                         severityLevel = chkSeverityLevel02.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l2.ToString();
                     }
-                    else if (chkSeverityLevel03.Checked)
+                    else if (chkSeverityLevel03.Checked && chkSeverityLevel03.Visible == true)
                     {
                         severityLevel = chkSeverityLevel03.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l3.ToString();
                     }
-                    else if (chkSeverityLevel04.Checked)
+                    else if (chkSeverityLevel04.Checked && chkSeverityLevel04.Visible == true)
                     {
                         severityLevel = chkSeverityLevel04.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.l4.ToString();
