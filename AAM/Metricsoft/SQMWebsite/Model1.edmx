@@ -981,8 +981,8 @@
           <Property Name="INCIDENT_ID" Type="numeric" Precision="35" Scale="0" Nullable="false" />
           <Property Name="INCIDENT_WITNESS_ID" Type="numeric" Precision="35" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WITNESS_NO" Type="int" Nullable="false" />
-          <Property Name="WITNESS_NAME" Type="varchar" MaxLength="100" />
-          <Property Name="WITNESS_STATEMENT" Type="varchar" MaxLength="4000" />
+          <Property Name="WITNESS_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="WITNESS_STATEMENT" Type="nvarchar" MaxLength="4000" />
           <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="100" />
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="WITNESS_PERSON" Type="numeric" Precision="35" Scale="0" />
@@ -1972,32 +1972,6 @@
           <Property Name="ENCRYPT_VALUE" Type="bit" Nullable="false" />
           <Property Name="LANGUAGE" Type="varchar" MaxLength="10" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'NSK.dbo.Sheet1$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Sheet1$">
-          <Property Name="PRMR_ID" Type="float" />
-          <Property Name="PERIOD_YEAR" Type="float" />
-          <Property Name="PERIOD_MONTH" Type="float" />
-          <Property Name="INPUT_DT" Type="datetime" />
-          <Property Name="EFF_FROM_DT" Type="datetime" />
-          <Property Name="EFF_TO_DT" Type="datetime" />
-          <Property Name="MEASURE_VALUE" Type="float" />
-          <Property Name="UOM" Type="float" />
-          <Property Name="MEASURE_COST" Type="float" />
-          <Property Name="CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
-          <Property Name="LAST_UPD_DT" Type="datetime" />
-          <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="255" />
-          <Property Name="STATUS" Type="nvarchar" MaxLength="255" />
-          <Property Name="CONVERSION_FACTOR" Type="nvarchar" MaxLength="255" />
-          <Property Name="ROLLUP_DT" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_EFF_FROM_DT" Type="float" />
-          <Property Name="ORIGINAL_EFF_TO_DT" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_MEASURE_VALUE" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_MEASURE_COST" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_UOM" Type="nvarchar" MaxLength="255" />
-          <Property Name="ORIGINAL_CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
-          <Property Name="UOM_FACTOR" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="SQM_ACCESS">
           <Key>
             <PropertyRef Name="SSO_ID" />
@@ -2118,6 +2092,7 @@ warning 6013: The table/view 'NSK.dbo.Sheet1$' does not have a primary key defin
           <Property Name="TASK_CATEGORY" Type="varchar" MaxLength="20" />
           <Property Name="TASK_VERIFICATION" Type="nvarchar" MaxLength="4000" />
           <Property Name="TASK_CRITERIA" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ROOTCAUSE" Type="int" />
         </EntityType>
         <EntityType Name="UN_DISPOSAL">
           <Key>
@@ -3906,6 +3881,11 @@ warning 6002: The table/view 'NSK.dbo.vw_MetricDataByPlant' does not have a prim
         <Function Name="ADV_SET_EXCEPTION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetAuditExceptionData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAUDITTYPETOPICQUESTION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AUDIT_TYPE_ID" Type="int" Mode="In" />
+          <Parameter Name="AUDIT_ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="POPULATE_SQLERRM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="PSsqmModelStoreContainer">
           <EntitySet Name="ACTIVE_CUSTOMER" EntityType="Self.ACTIVE_CUSTOMER" Schema="dbo" store:Type="Tables" />
@@ -5371,6 +5351,11 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             <End Role="INCIDENT" EntitySet="INCIDENT" />
             <End Role="INCIDENT_TIMELINE_ANSWER" EntitySet="INCIDENT_TIMELINE_ANSWER" />
           </AssociationSet>
+          <FunctionImport Name="GetAuditExceptionData" ReturnType="Collection(Decimal)" />
+          <FunctionImport Name="GetAUDITTYPETOPICQUESTION" ReturnType="Collection(PSsqmModel.GetAUDITTYPETOPICQUESTION_Result)">
+            <Parameter Name="AUDIT_TYPE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="AUDIT_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="ADDRESS">
           <Key>
@@ -8316,8 +8301,8 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Name="INCIDENT_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" />
           <Property Name="INCIDENT_WITNESS_ID" Type="Decimal" Nullable="false" Precision="35" Scale="0" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WITNESS_NO" Type="Int32" Nullable="false" />
-          <Property Name="WITNESS_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="WITNESS_STATEMENT" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="WITNESS_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WITNESS_STATEMENT" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_BY" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LAST_UPD_DT" Type="DateTime" Precision="3" />
           <Property Name="WITNESS_PERSON" Type="Decimal" Precision="35" Scale="0" />
@@ -8979,6 +8964,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <Property Type="String" Name="TASK_VERIFICATION" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="TASK_CRITERIA" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PERSON" Relationship="PSsqmModel.FK_TASK_STATUS_PERSON" FromRole="TASK_STATUS" ToRole="PERSON" />
+          <Property Name="ROOTCAUSE" Type="Int32" />
         </EntityType>
         <Association Name="FK_TASK_STATUS_PERSON">
           <End Type="PSsqmModel.PERSON" Role="PERSON" Multiplicity="0..1" />
@@ -9691,6 +9677,13 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetAUDITTYPETOPICQUESTION_Result">
+          <Property Type="Decimal" Name="AUDIT_TYPE_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="AUDIT_TOPIC_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Decimal" Name="AUDIT_QUESTION_ID" Nullable="false" Precision="35" Scale="0" />
+          <Property Type="Int16" Name="SORT_ORDER" Nullable="true" />
+          <Property Type="Boolean" Name="INACTIVE" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11643,6 +11636,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <EntitySetMapping Name="TASK_STATUS">
             <EntityTypeMapping TypeName="PSsqmModel.TASK_STATUS">
               <MappingFragment StoreEntitySet="TASK_STATUS">
+                <ScalarProperty Name="ROOTCAUSE" ColumnName="ROOTCAUSE" />
                 <ScalarProperty Name="TASK_CRITERIA" ColumnName="TASK_CRITERIA" />
                 <ScalarProperty Name="TASK_VERIFICATION" ColumnName="TASK_VERIFICATION" />
                 <ScalarProperty Name="TASK_CATEGORY" ColumnName="TASK_CATEGORY" />
@@ -11989,6 +11983,18 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAuditExceptionData" FunctionName="PSsqmModel.Store.GetAuditExceptionData" />
+          <FunctionImportMapping FunctionImportName="GetAUDITTYPETOPICQUESTION" FunctionName="PSsqmModel.Store.GetAUDITTYPETOPICQUESTION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PSsqmModel.GetAUDITTYPETOPICQUESTION_Result">
+                <ScalarProperty Name="AUDIT_TYPE_ID" ColumnName="AUDIT_TYPE_ID" />
+                <ScalarProperty Name="AUDIT_TOPIC_ID" ColumnName="AUDIT_TOPIC_ID" />
+                <ScalarProperty Name="AUDIT_QUESTION_ID" ColumnName="AUDIT_QUESTION_ID" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="INACTIVE" ColumnName="INACTIVE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

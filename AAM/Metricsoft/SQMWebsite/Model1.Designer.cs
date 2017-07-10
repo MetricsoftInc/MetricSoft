@@ -3633,6 +3633,48 @@ namespace SQM.Website
 
         #endregion
 
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<Nullable<global::System.Decimal>> GetAuditExceptionData()
+        {
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetAuditExceptionData");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="aUDIT_TYPE_ID">No Metadata Documentation available.</param>
+        /// <param name="aUDIT_ID">No Metadata Documentation available.</param>
+        public ObjectResult<GetAUDITTYPETOPICQUESTION_Result> GetAUDITTYPETOPICQUESTION(Nullable<global::System.Int32> aUDIT_TYPE_ID, Nullable<global::System.Int32> aUDIT_ID)
+        {
+            ObjectParameter aUDIT_TYPE_IDParameter;
+            if (aUDIT_TYPE_ID.HasValue)
+            {
+                aUDIT_TYPE_IDParameter = new ObjectParameter("AUDIT_TYPE_ID", aUDIT_TYPE_ID);
+            }
+            else
+            {
+                aUDIT_TYPE_IDParameter = new ObjectParameter("AUDIT_TYPE_ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter aUDIT_IDParameter;
+            if (aUDIT_ID.HasValue)
+            {
+                aUDIT_IDParameter = new ObjectParameter("AUDIT_ID", aUDIT_ID);
+            }
+            else
+            {
+                aUDIT_IDParameter = new ObjectParameter("AUDIT_ID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<GetAUDITTYPETOPICQUESTION_Result>("GetAUDITTYPETOPICQUESTION", aUDIT_TYPE_IDParameter, aUDIT_IDParameter);
+        }
+
+        #endregion
+
     }
 
     #endregion
@@ -50935,6 +50977,30 @@ namespace SQM.Website
         private global::System.String _TASK_CRITERIA;
         partial void OnTASK_CRITERIAChanging(global::System.String value);
         partial void OnTASK_CRITERIAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ROOTCAUSE
+        {
+            get
+            {
+                return _ROOTCAUSE;
+            }
+            set
+            {
+                OnROOTCAUSEChanging(value);
+                ReportPropertyChanging("ROOTCAUSE");
+                _ROOTCAUSE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ROOTCAUSE");
+                OnROOTCAUSEChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ROOTCAUSE;
+        partial void OnROOTCAUSEChanging(Nullable<global::System.Int32> value);
+        partial void OnROOTCAUSEChanged();
 
         #endregion
 
@@ -53486,6 +53552,165 @@ namespace SQM.Website
         #endregion
 
     
+    }
+
+    #endregion
+
+    #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="PSsqmModel", Name="GetAUDITTYPETOPICQUESTION_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class GetAUDITTYPETOPICQUESTION_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new GetAUDITTYPETOPICQUESTION_Result object.
+        /// </summary>
+        /// <param name="aUDIT_TYPE_ID">Initial value of the AUDIT_TYPE_ID property.</param>
+        /// <param name="aUDIT_TOPIC_ID">Initial value of the AUDIT_TOPIC_ID property.</param>
+        /// <param name="aUDIT_QUESTION_ID">Initial value of the AUDIT_QUESTION_ID property.</param>
+        /// <param name="iNACTIVE">Initial value of the INACTIVE property.</param>
+        public static GetAUDITTYPETOPICQUESTION_Result CreateGetAUDITTYPETOPICQUESTION_Result(global::System.Decimal aUDIT_TYPE_ID, global::System.Decimal aUDIT_TOPIC_ID, global::System.Decimal aUDIT_QUESTION_ID, global::System.Boolean iNACTIVE)
+        {
+            GetAUDITTYPETOPICQUESTION_Result getAUDITTYPETOPICQUESTION_Result = new GetAUDITTYPETOPICQUESTION_Result();
+            getAUDITTYPETOPICQUESTION_Result.AUDIT_TYPE_ID = aUDIT_TYPE_ID;
+            getAUDITTYPETOPICQUESTION_Result.AUDIT_TOPIC_ID = aUDIT_TOPIC_ID;
+            getAUDITTYPETOPICQUESTION_Result.AUDIT_QUESTION_ID = aUDIT_QUESTION_ID;
+            getAUDITTYPETOPICQUESTION_Result.INACTIVE = iNACTIVE;
+            return getAUDITTYPETOPICQUESTION_Result;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TYPE_ID
+        {
+            get
+            {
+                return _AUDIT_TYPE_ID;
+            }
+            set
+            {
+                OnAUDIT_TYPE_IDChanging(value);
+                ReportPropertyChanging("AUDIT_TYPE_ID");
+                _AUDIT_TYPE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDIT_TYPE_ID");
+                OnAUDIT_TYPE_IDChanged();
+            }
+        }
+        private global::System.Decimal _AUDIT_TYPE_ID;
+        partial void OnAUDIT_TYPE_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TYPE_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_TOPIC_ID
+        {
+            get
+            {
+                return _AUDIT_TOPIC_ID;
+            }
+            set
+            {
+                OnAUDIT_TOPIC_IDChanging(value);
+                ReportPropertyChanging("AUDIT_TOPIC_ID");
+                _AUDIT_TOPIC_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDIT_TOPIC_ID");
+                OnAUDIT_TOPIC_IDChanged();
+            }
+        }
+        private global::System.Decimal _AUDIT_TOPIC_ID;
+        partial void OnAUDIT_TOPIC_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_TOPIC_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AUDIT_QUESTION_ID
+        {
+            get
+            {
+                return _AUDIT_QUESTION_ID;
+            }
+            set
+            {
+                OnAUDIT_QUESTION_IDChanging(value);
+                ReportPropertyChanging("AUDIT_QUESTION_ID");
+                _AUDIT_QUESTION_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AUDIT_QUESTION_ID");
+                OnAUDIT_QUESTION_IDChanged();
+            }
+        }
+        private global::System.Decimal _AUDIT_QUESTION_ID;
+        partial void OnAUDIT_QUESTION_IDChanging(global::System.Decimal value);
+        partial void OnAUDIT_QUESTION_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> SORT_ORDER
+        {
+            get
+            {
+                return _SORT_ORDER;
+            }
+            set
+            {
+                OnSORT_ORDERChanging(value);
+                ReportPropertyChanging("SORT_ORDER");
+                _SORT_ORDER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORT_ORDER");
+                OnSORT_ORDERChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _SORT_ORDER;
+        partial void OnSORT_ORDERChanging(Nullable<global::System.Int16> value);
+        partial void OnSORT_ORDERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean INACTIVE
+        {
+            get
+            {
+                return _INACTIVE;
+            }
+            set
+            {
+                OnINACTIVEChanging(value);
+                ReportPropertyChanging("INACTIVE");
+                _INACTIVE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("INACTIVE");
+                OnINACTIVEChanged();
+            }
+        }
+        private global::System.Boolean _INACTIVE;
+        partial void OnINACTIVEChanging(global::System.Boolean value);
+        partial void OnINACTIVEChanged();
+
+        #endregion
+
     }
 
     #endregion
