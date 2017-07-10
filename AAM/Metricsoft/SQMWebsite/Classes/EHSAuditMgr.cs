@@ -681,10 +681,13 @@ namespace SQM.Website
 									where a.AUDIT_ID == auditId
 									select a.AUDIT_QUESTION_ID).ToList();
 
-					// need to only select questions that appear in the specific audit
-					activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
+                    // need to only select questions that appear in the specific audit
+                    var listAuditTypeTopicQuestion = (from attq in entities.GetAUDITTYPETOPICQUESTION((int)auditTypeId, (int)auditId) select attq.AUDIT_QUESTION_ID).ToList();
+
+                    activeQuestionList = (from q in entities.AUDIT_TYPE_TOPIC_QUESTION
 										  where auditAnswers.Contains(q.AUDIT_QUESTION_ID) && q.AUDIT_TYPE_ID == auditTypeId
-										  orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER
+                                          && listAuditTypeTopicQuestion.Contains(q.AUDIT_QUESTION_ID)
+                                          orderby q.AUDIT_TOPIC_ID, q.SORT_ORDER, q.AUDIT_QUESTION_ID
 										  select q
 				  ).ToList();
 				}
