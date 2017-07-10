@@ -16,78 +16,78 @@
 <asp:Content ID="HeaderContent" ContentPlaceHolderID="head" runat="server">
 	<script type="text/javascript">
 
-		$(window).load(function () {
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-		});
+	    $(window).load(function () {
+	        document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
+	        document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
+	    });
 
-		$(window).resize(function () {
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
-			document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
-		});
+	    $(window).resize(function () {
+	        document.getElementById('ctl00_ContentPlaceHolder_Body_hfwidth').value = $(window).width();
+	        document.getElementById('ctl00_ContentPlaceHolder_Body_hfheight').value = $(window).height();
+	    });
 
-		function OpenNewIncidentWindow() {
-			$find("<%=winNewIncident.ClientID %>").show();
-		    }
+	    function OpenNewIncidentWindow() {
+	        $find("<%=winNewIncident.ClientID %>").show();
+		}
 
 		function StandardConfirm(sender, args) {
 
-			// Some pages will have no validators, so skip
-			if (typeof Page_ClientValidate === "function") {
-				var validated = Page_ClientValidate('Val');
+		    // Some pages will have no validators, so skip
+		    if (typeof Page_ClientValidate === "function") {
+		        var validated = Page_ClientValidate('Val');
 
-				if (!validated)
-					alert("Please fill out all required fields.");
-			}
+		        if (!validated)
+		            alert("Please fill out all required fields.");
+		    }
 		}
 		function DeleteConfirm(button, args) {
-			args.set_cancel(!confirm("Delete incident - are you sure?  Incidents cannot be undeleted."));
+		    args.set_cancel(!confirm("Delete incident - are you sure?  Incidents cannot be undeleted."));
 		}
 
 		function DeleteConfirmItem(button, args) {
-			args.set_cancel(!confirm("Delete item - are you sure?  Items cannot be undeleted."));
+		    args.set_cancel(!confirm("Delete item - are you sure?  Items cannot be undeleted."));
 		}
 
 		// For prevention verification
 
 		function PVOnClientClicked(sender, eventArgs) {
 
-			var radGrid = $find(sender.get_id().replace("rbSelectAll", "rgPlantContacts"));
-			var masterTable = radGrid.get_masterTableView();
-			var i;
+		    var radGrid = $find(sender.get_id().replace("rbSelectAll", "rgPlantContacts"));
+		    var masterTable = radGrid.get_masterTableView();
+		    var i;
 
-			if (sender.get_text() === "Select All") {
-				//sender.set_text("Clear All");
-				for (i = 0; i < masterTable.get_dataItems().length; i++) {
-					masterTable.selectItem(i);
-				}
-			} else {
-				//sender.set_text("Select All");
-				for (i = 0; i < masterTable.get_dataItems().length; i++) {
-					masterTable.get_dataItems()[i].set_selected(false);
-				}
-			}
+		    if (sender.get_text() === "Select All") {
+		        //sender.set_text("Clear All");
+		        for (i = 0; i < masterTable.get_dataItems().length; i++) {
+		            masterTable.selectItem(i);
+		        }
+		    } else {
+		        //sender.set_text("Select All");
+		        for (i = 0; i < masterTable.get_dataItems().length; i++) {
+		            masterTable.get_dataItems()[i].set_selected(false);
+		        }
+		    }
 
 		}
 
 		function PVRowSelectedChanged(sender, eventArgs) {
 
-			var radGrid = sender;
-			var masterTable = radGrid.get_masterTableView();
-			var count = 0;
+		    var radGrid = sender;
+		    var masterTable = radGrid.get_masterTableView();
+		    var count = 0;
 
-			for (var i = 0; i < masterTable.get_dataItems().length; i++) {
-				if (masterTable.get_dataItems()[i].get_selected() === true)
-					count++;
-			}
+		    for (var i = 0; i < masterTable.get_dataItems().length; i++) {
+		        if (masterTable.get_dataItems()[i].get_selected() === true)
+		            count++;
+		    }
 
-			var radButton = $find(sender.get_id().replace("rgPlantContacts", "rbSelectAll"));
+		    var radButton = $find(sender.get_id().replace("rgPlantContacts", "rbSelectAll"));
 
-			if (count === 0)
-				radButton.set_text("Select All");
+		    if (count === 0)
+		        radButton.set_text("Select All");
 
-			if (count === masterTable.get_dataItems().length)
-				radButton.set_text("Clear All");
+		    if (count === masterTable.get_dataItems().length)
+		        radButton.set_text("Clear All");
 
 		}
 	</script>
@@ -156,7 +156,7 @@
 						</div>
 						<div class="row-fluid">
 							<span style="float: left; width: 160px;">
-								<asp:Label runat="server" ID="lblSeverity" CssClass="prompt" Text="Severity"></asp:Label>
+								<asp:Label runat="server" ID="lblSeverity" CssClass="prompt" Text="Severity Type"></asp:Label>
 							</span>&nbsp;&nbsp;
 										<br class="visible-xs-block" />
 							<telerik:RadComboBox ID="rcbSeverity" runat="server" CheckBoxes="True" EnableCheckAllItemsCheckBox="True" ZIndex="9000" Skin="Metro" Height="150px" Width="256px" OnClientLoad="DisableComboSeparators"></telerik:RadComboBox>
@@ -175,6 +175,16 @@
 
 							<div class="clearfix visible-xs"></div>
 							<br class="visible-xs-block" />
+						</div>
+                        <div class="row-fluid">
+							<span style="float: left; width: 160px;">
+								<asp:Label runat="server" ID="lblSeverityLevel" CssClass="prompt" text ="Severity Level"></asp:Label>
+							</span>&nbsp;&nbsp;
+									<br class="visible-xs-block" />
+							<telerik:RadComboBox ID="rcbSeverityLevel" runat="server" Style="margin-right: 15px;" CheckBoxes="true" EnableCheckAllItemsCheckBox="true" ToolTip="<%$ Resources:LocalizedText, SelectIncidentTypes %>" Width="256" ZIndex="9000" Skin="Metro" AutoPostBack="false"></telerik:RadComboBox>
+
+							<div class="clearfix visible-xs"></div>
+							<br class="visible-xs-block" style="margin-top: 7px;" />
 						</div>
 					</asp:PlaceHolder>
 
@@ -248,6 +258,7 @@
 							</span>
 						</span>
 					</div>
+
 				</div>
 				<br />
 				<%--	$$$$$$$$$$$$$$ Incident Selection END $$$$$$$$$$$$$$$$$$$$$$$ --%>
