@@ -46,18 +46,21 @@ namespace SQM.Website
 			this.lblSeverity.Text = Resources.LocalizedText.Severity + ":";
 			this.lblStatus.Text = Resources.LocalizedText.Status + ": ";
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
-            this.lblSeverityLevel.Text = Resources.LocalizedText.SeverityLevel + ":";
-
-			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
-
+           
+            companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
 			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbIncidentType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbSeverity);
+           
+            //Add new control for Filter by severity level check.
+            this.lblSeverityLevel.Text = Resources.LocalizedText.SeverityLevel + ":";
             RadPersistenceManager1.PersistenceSettings.AddSetting(rcbSeverityLevel);
-			this.Mode = IncidentMode.Incident;
+
+
+            this.Mode = IncidentMode.Incident;
 		}
 
 		protected void Page_PreRender(object sender, EventArgs e)
@@ -270,6 +273,7 @@ namespace SQM.Website
 			pnlChartSection.Style.Add("display", "none");
 			lblChartType.Visible = ddlChartType.Visible = false;
 
+            //Bind data with severity level dropdown.
             var severityList = EHSIncidentMgr.PopulateSeverityLevel();
             rcbSeverityLevel = SQMBasePage.SetComboBoxItemsFromXLAT(rcbSeverityLevel, severityList, "SHORT");
 
@@ -478,6 +482,7 @@ namespace SQM.Website
 				severityList.Clear();
 				rcbSeverity.Items.ToList().ForEach(i => i.Checked = false);
 			}
+            //Get selected values of severity level filter dropdownlist.
 			selectedValue = rcbStatusSelect.SelectedValue;
             selectSeverityLevel = rcbSeverityLevel.Items.Where(c => c.Checked).Select(c => c.Value).ToList();
 
