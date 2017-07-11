@@ -152,6 +152,7 @@
 						<span style="white-space: nowrap;">
 						<asp:Label ID="lblType" runat="server" meta:resourcekey="lblTypeResource1" Text='<%# (string)Eval("QIIssue.OCCUR_DESC") %>'></asp:Label>
 						</span>
+                      
 					</ItemTemplate>
 				</telerik:GridTemplateColumn>
 				<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, Description %>" SortExpression="Incident.DESCRIPTION" UniqueName="TemplateColumn4">
@@ -512,6 +513,8 @@
 							<b><asp:Label ID="lblType" runat="server" meta:resourcekey="lblTypeResource2" Text='<%# (string)Eval("Incident.ISSUE_TYPE") %>'></asp:Label></b>
 							<br />
 							<asp:Label ID="lblSeverity" runat="server" Visible="false" CssClass="refText"></asp:Label>
+                            <br />
+                            	<asp:Label ID="lblSeverityLevel" runat="server" Visible="false" CssClass="refText"></asp:Label>
 						</ItemTemplate>
 					</telerik:GridTemplateColumn>
 					<telerik:GridTemplateColumn FilterControlAltText="Filter TemplateColumn4 column" HeaderText="<%$ Resources:LocalizedText, Description %>" SortExpression="Incident.DESCRIPTION" UniqueName="TemplateColumn4">

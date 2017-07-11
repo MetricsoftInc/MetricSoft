@@ -677,8 +677,10 @@ namespace SQM.Website
 
 			if (IncidentXLATList == null || IncidentXLATList.Count == 0)
 			{
-				IncidentXLATList = SQMBasePage.SelectXLATList(new string[5] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS", "INCIDENT_SEVERITY" });
-				foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
+                // Add HS_L2REPORT in array to get data of severity level.
+                IncidentXLATList = SQMBasePage.SelectXLATList(new string[6] { "STATUS", "INCIDENT_STATUS", "PREVACTION_STATUS", "WORK_STATUS", "INCIDENT_SEVERITY","HS_L2REPORT" });
+
+                foreach (INCIDENT_TYPE type in EHSIncidentMgr.SelectIncidentTypeList(SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID, SessionManager.UserContext.Language.NLS_LANGUAGE).ToList())
 				{
 					IncidentXLATList.Add(SQMBasePage.CreateXLAT(SessionManager.UserContext.Language.NLS_LANGUAGE, "INCIDENT_TYPE", type.INCIDENT_TYPE_ID.ToString(), type.TITLE, type.TITLE));
 				}
@@ -755,7 +757,13 @@ namespace SQM.Website
 						lbl = (Label)e.Item.FindControl("lblReportedBy");
 						lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
 					}
-
+                    //Add SeverityLevel label under Type column of incident list - rgIncidentList.
+                    if (data.Approval != null)
+                    {
+                        lbl = (Label)e.Item.FindControl("lblSeverityLevel");
+                        lbl.Visible = true;
+                        lbl.Text = IncidentXLATList.Where(l => l.XLAT_CODE == data.Approval.SEVERITY_LEVEL).FirstOrDefault().DESCRIPTION_SHORT;
+                    }
 					lbl = (Label)e.Item.FindControl("lblIncStatus");
 					if (data.Incident.INCFORM_LAST_STEP_COMPLETED <= 0)
 					{
