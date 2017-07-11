@@ -1214,15 +1214,13 @@ namespace SQM.Website
                 this.IncidentHst = (from i in this.Entities.INCIDENT
                                     join p in this.Entities.PLANT on i.DETECT_PLANT_ID equals p.PLANT_ID
                                     join r in this.Entities.PERSON on i.CREATE_PERSON equals r.PERSON_ID
-                                    join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i
-                                    join a in this.Entities.INCFORM_APPROVAL on i.INCIDENT_ID equals a.INCIDENT_ID
-                                    from d in d_i.DefaultIfEmpty()
+                                    join d in this.Entities.INCFORM_INJURYILLNESS on i.INCIDENT_ID equals d.INCIDENT_ID into d_i from d in d_i.DefaultIfEmpty()
+                                    join a in this.Entities.INCFORM_APPROVAL on i.INCIDENT_ID equals a.INCIDENT_ID into a_i from a in a_i.DefaultIfEmpty()
                                     where ((i.INCIDENT_DT >= fromDate && i.INCIDENT_DT <= toDate)
                                     && (createID == 0 || i.CREATE_PERSON == createID)
                                     && incidentTypeList.Contains((decimal)i.ISSUE_TYPE_ID) && plantIdList.Contains((decimal)i.DETECT_PLANT_ID))
                                     select new EHSIncidentData
-                                    {
-                                        Incident = i,
+                                    {   Incident = i,
                                         Plant = p,
                                         Person = r,
                                         InjuryDetail = d,
@@ -1230,8 +1228,6 @@ namespace SQM.Website
                                     }).ToList();
 
                 this.IncidentHst = IncidentHst.GroupBy(c => c.Incident.INCIDENT_ID, (key, c) => c.FirstOrDefault()).ToList();
-
-
                 if (severityList != null && severityList.Count > 0)
                 {
                     this.IncidentHst = this.IncidentHst.Where(l => l.MatchSeverity(severityList) == true).ToList();
@@ -1256,13 +1252,9 @@ namespace SQM.Website
                     else if (incidentStatus == "C")  // get closed incidents
                         this.IncidentHst = this.IncidentHst.Where(l => l.Status == "C").ToList();
 
-                    //if (!string.IsNullOrEmpty(severityLevel))
-                    //{
-                    //    this.IncidentHst = this.IncidentHst.Where(p=>p.Approval.SEVERITY_LEVEL == severityLevel).ToList();
-                    //}
-
                     if (severityLevel != null && severityLevel.Count > 0)
                     {
+                        this.IncidentHst = this.IncidentHst.Where(p => p.Approval != null).ToList();
                         this.IncidentHst = this.IncidentHst.Where(l => severityLevel.Contains(l.Approval.SEVERITY_LEVEL) && l.Approval.APPROVER_TITLE == "Global Safety Group").ToList();
                     }
 
