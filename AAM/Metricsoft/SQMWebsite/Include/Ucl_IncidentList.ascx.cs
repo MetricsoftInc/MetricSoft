@@ -758,7 +758,7 @@ namespace SQM.Website
 						lbl.Text = SQMModelMgr.FormatPersonListItem(data.Person);
 					}
                     //Add SeverityLevel label under Type column of incident list - rgIncidentList.
-                    if (data.Approval != null)
+                    if (data.Approval != null && !string.IsNullOrEmpty(data.Approval.SEVERITY_LEVEL))
                     {
                         lbl = (Label)e.Item.FindControl("lblSeverityLevel");
                         lbl.Visible = true;

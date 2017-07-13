@@ -206,7 +206,7 @@ namespace SQM.Website
             uploaderPreventativeMeasures.SetReportOption(false);
             uploaderPreventativeMeasures.SetDescription(false);
             // Specifying postback triggers allows uploaderPreventativeMeasures to persist on other postbacks (e.g. 8D checkbox toggle)
-          //  uploaderPreventativeMeasures.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval", "btnSubnavAlert" };
+            //  uploaderPreventativeMeasures.RAUpload.PostbackTriggers = new string[] { "btnSubnavSave", "btnSaveReturn", "btnSaveContinue", "btnDelete", "btnDeleteInc", "btnSubnavIncident", "btnSubnavContainment", "btnSubnavRootCause", "btnSubnavAction", "btnSubnavApproval", "btnSubnavAlert" };
 
             int attCnt = EHSIncidentMgr.AttachmentCount(incidentId); //add values 2 for getting the PreventativeMeasures attachment.
             int px = 128;
