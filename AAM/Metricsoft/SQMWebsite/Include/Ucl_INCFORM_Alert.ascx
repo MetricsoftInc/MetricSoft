@@ -35,8 +35,8 @@
         if (document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclAlert_hfChangeUpdate')) {
             document.getElementById('ctl00_ContentPlaceHolder_Body_uclIncidentForm_uclAlert_hfChangeUpdate').value = '0';
         }
-    }  
-    
+    }
+
 </script>
 
 
@@ -62,11 +62,46 @@
                 </tr>
                 <tr>
                     <td class="columnHeader">
-                        <asp:Label ID="lblAlertDesc" runat="server" Text="Similar / Affected Processes"></asp:Label>
+                        <%--To Change name of Similar/Affected Processes to Process Description --%>
+                        <asp:Label ID="lblAlertDesc" runat="server" Text="Process Description"></asp:Label>
                     </td>
-                    <td class="required">&nbsp;</td>
+                    <td >&nbsp;</td>
                     <td class="tableDataAlt">
-                        <asp:TextBox ID="tbAlertDesc" runat="server" Height="65px" Rows="4" SkinID="Metro" TextMode="MultiLine" Width="98%" onChange="ChangeUpdate()"></asp:TextBox>
+                        <%--  <asp:TextBox ID="tbAlertDesc" runat="server" Height="65px" Rows="4" SkinID="Metro" TextMode="MultiLine" Width="98%" onChange="ChangeUpdate()"></asp:TextBox>--%>
+                        <table>
+                            <tr runat="server" id="BusinessType">
+                                <td class="columnHeader">
+                                    <asp:Label ID="lblBusinessType" runat="server" Text="Business Type"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblBusinessTypeVal" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="MacroProcessType">
+                                <td class="columnHeader">
+                                    <asp:Label ID="lblMacroProcessType" runat="server" Text="Macro Process Type"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblMacroProcessTypeVal" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="SpecificProcessType">
+                                <td class="columnHeader">
+                                    <asp:Label ID="lblSpecificProcessType" runat="server" Text="Specific Process Type"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblSpecificProcessTypeVal" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                            <tr runat="server" id="EquipmentManufacturerName">
+                                <td class="columnHeader">
+                                    <asp:Label ID="lblEquipmentManufacturerName" runat="server" Text="Equipment Manufacturer Name"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblEquipmentManufacturerNameVal" runat="server" Text=""></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -78,7 +113,8 @@
                         <asp:TextBox ID="tbComments" runat="server" Height="65px" Rows="4" SkinID="Metro" TextMode="MultiLine" Width="98%" onChange="ChangeUpdate()"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <%--To Hide Display of Notify User Group(s) section--%>
+                <tr style="display: none;">
                     <td class="columnHeader">
                         <asp:Label ID="lblNotifyGroupHdr" runat="server" Text="Notify User Group(s)"></asp:Label>
                     </td>
@@ -88,7 +124,7 @@
                         <asp:Label ID="lblNotifyGroup" runat="server" Visible="true" Text=""></asp:Label>
                     </td>
                 </tr>
-                
+
                 <%--To Display CEO Comments section--%>
                 <tr>
                     <td class="columnHeader">
@@ -216,9 +252,8 @@
 
         </telerik:RadAjaxPanel>
 
-<%--        <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
+        <%--        <telerik:RadAjaxPanel ID="rapAttach" runat="server" HorizontalAlign="NotSet">
         </telerik:RadAjaxPanel>--%>
-
     </div>
 
 </asp:Panel>
@@ -226,14 +261,14 @@
 
 <asp:Panel ID="pnlBaseForm2" Visible="False" runat="server">
 
-	<br />
-
-	
-	
-          
+    <br />
 
 
-	<br />
+
+
+
+
+    <br />
 
 </asp:Panel>
 

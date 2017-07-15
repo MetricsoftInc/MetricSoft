@@ -76,13 +76,112 @@ namespace SQM.Website {
         protected global::System.Web.UI.WebControls.Label lblAlertDesc;
         
         /// <summary>
-        /// tbAlertDesc control.
+        /// BusinessType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbAlertDesc;
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow BusinessType;
+        
+        /// <summary>
+        /// lblBusinessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBusinessType;
+        
+        /// <summary>
+        /// lblBusinessTypeVal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBusinessTypeVal;
+        
+        /// <summary>
+        /// MacroProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow MacroProcessType;
+        
+        /// <summary>
+        /// lblMacroProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMacroProcessType;
+        
+        /// <summary>
+        /// lblMacroProcessTypeVal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMacroProcessTypeVal;
+        
+        /// <summary>
+        /// SpecificProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow SpecificProcessType;
+        
+        /// <summary>
+        /// lblSpecificProcessType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSpecificProcessType;
+        
+        /// <summary>
+        /// lblSpecificProcessTypeVal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSpecificProcessTypeVal;
+        
+        /// <summary>
+        /// EquipmentManufacturerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow EquipmentManufacturerName;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerName;
+        
+        /// <summary>
+        /// lblEquipmentManufacturerNameVal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEquipmentManufacturerNameVal;
         
         /// <summary>
         /// lblComments control.

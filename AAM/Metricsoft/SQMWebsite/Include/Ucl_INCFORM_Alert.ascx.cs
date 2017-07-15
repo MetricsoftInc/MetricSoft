@@ -62,11 +62,14 @@ namespace SQM.Website
                             IsFullPagePostback = true;
 
                     if (!IsFullPagePostback)
-                    { 
+                    {
+
+
+
                         // If link is CEO comment then focus on CEO Comment Section.
                         if (targetID.Contains("CEOComment"))
-                        {                           
-                            tbCeoComments.Focus(); 
+                        {
+                            tbCeoComments.Focus();
                             //If Priv Group is other than CEO GROUP then CEO Comment box will be highlighted
                             string PrivInfo = SessionManager.UserContext.Person.PRIV_GROUP;
                             if (!(PrivInfo == "CEO-GROUP"))
@@ -83,7 +86,7 @@ namespace SQM.Website
                 }
             }
 
-           
+
         }
 
 
@@ -102,8 +105,8 @@ namespace SQM.Website
 
         public void PopulateInitialForm(PSsqmEntities ctx)
         {
-            XLATList = SQMBasePage.SelectXLATList(new string[1] { "TASK_STATUS" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
-           
+            XLATList = SQMBasePage.SelectXLATList(new string[20] { "TASK_STATUS", "BusinessType", "BT_01", "BT_02", "BT_03", "BT_04", "MPT_S_01", "MPT_S_16", "MPT_S_18", "MPT_S_19", "MPT_B_09", "MPT_B_10", "MPT_B_23", "MPT_P_05", "MPT_P_06", "MPT_P_10", "MPT_P_11", "MPT_P_13", "MPT_AEL_1", "MPT_AEL_2" }, SessionManager.UserContext.Person.PREFERRED_LANG_ID.HasValue ? (int)SessionManager.UserContext.Person.PREFERRED_LANG_ID : 1);
+
             InitializeForm(ctx);
         }
 
@@ -167,7 +170,8 @@ namespace SQM.Website
                 else
                 {
                     ddlLocations.Items.Where(i => incidentAlert.LOCATION_LIST.Split(',').Contains(i.Value)).ToList().ForEach(i => i.Checked = true);
-                    tbAlertDesc.Text = incidentAlert.ALERT_DESC;
+                    //  tbAlertDesc.Text = incidentAlert.ALERT_DESC;
+
                     tbComments.Text = incidentAlert.COMMENTS;
 
                     // Get CEO-comments value from database and display it.
@@ -183,6 +187,45 @@ namespace SQM.Website
                 }
 
                 lblNotifyGroup.Text = "";
+                //Apply condotional code to desplay data in grid of Process Description
+                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE))
+                {
+                    BusinessType.Style.Add("display", "none");
+                }
+                else
+                {
+                    lblBusinessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                }
+
+                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE))
+                {
+                    MacroProcessType.Style.Add("display", "none");
+                }
+                else
+                {
+                    lblMacroProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                }
+
+                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE))
+                {
+                    SpecificProcessType.Style.Add("display", "none");
+                }
+                else
+                {
+                    lblSpecificProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                }
+
+
+                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME))
+                {
+                    EquipmentManufacturerName.Style.Add("display", "none");
+                }
+                else
+                {
+                    lblEquipmentManufacturerNameVal.Text = LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME;
+                }
+
+
                 foreach (RadComboBoxItem item in ddlNotifyGroup.Items.Where(i => i.Checked == true).ToList())
                 {
                     lblNotifyGroup.Text += string.IsNullOrEmpty(lblNotifyGroup.Text) ? item.Text : (", " + item.Text);
@@ -261,7 +304,7 @@ namespace SQM.Website
 
         public int AddUpdateINCFORM_ALERT(decimal incidentId)
         {
-            
+
             lblStatusMsg.Visible = false;
             int status = 0;
             bool allFieldsComplete = true;
@@ -294,15 +337,15 @@ namespace SQM.Website
             }
 
             incidentAlert.RESPONSIBLE_GROUP = ddlResponsibleGroup.SelectedValue;
-            incidentAlert.ALERT_DESC = tbAlertDesc.Text;
+            //  incidentAlert.ALERT_DESC = tbAlertDesc.Text;
             incidentAlert.COMMENTS = tbComments.Text;
             incidentAlert.DUE_DT = rdpDueDate.SelectedDate;
 
-        
+
 
             // Update CEO-Comments value.
             incidentAlert.CEO_COMMENTS = tbCeoComments.Text.Trim();
-          
+
             // send general notifications
             if (incidentAlert.INCIDENT_ALERT_ID < 1)
             {
@@ -315,7 +358,7 @@ namespace SQM.Website
 
             // send specific task assignments
             EHSNotificationMgr.NotifyIncidentAlertTaskAssignment(LocalIncident, alertTaskList.Where(l => l.RESPONSIBLE_ID.HasValue).ToList());
-           
+
             return status;
         }
 
@@ -341,7 +384,7 @@ namespace SQM.Website
                     task = new TASK_STATUS();
                     task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
                     task.RECORD_ID = LocalIncident.INCIDENT_ID;
-                    task.DESCRIPTION = tbAlertDesc.Text;
+                    //  task.DESCRIPTION = tbAlertDesc.Text;
                     task.DETAIL = tbComments.Text;
                     task.RECORD_SUBID = Convert.ToDecimal(sel);
                     task.DUE_DT = rdpDueDate.SelectedDate;
@@ -496,7 +539,7 @@ namespace SQM.Website
                     task = alertTaskList.Where(l => l.TASK_ID.ToString() == hf.Value).FirstOrDefault();  // existing
                 }
 
-                task.DESCRIPTION = tbAlertDesc.Text;
+                //  task.DESCRIPTION = tbAlertDesc.Text;
                 task.DETAIL = tbComments.Text;
                 task.DUE_DT = rdpDueDate.SelectedDate;
                 if (!string.IsNullOrEmpty(ddl.SelectedValue))
