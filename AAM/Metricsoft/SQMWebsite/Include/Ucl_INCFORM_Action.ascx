@@ -76,13 +76,15 @@
 					</tr>
 					<tr id="trActionType" runat="server" visible="false">
 						<td class="columnHeader">
-							<asp:LinkButton ID="lnkSelectActionType" runat="server"  ToolTip="Select corrective action type" CSSClass="buttonComment"  text="Action Type"  CommandArgument="ActionType"  ></asp:LinkButton>
+                            <%-- Remove action link and apply lable for action type for NSK client.  --%>
+                            <asp:Label ID="lbl_SelectActionType" runat="server"  Text="Action Type"></asp:Label>
+						<%--	<asp:LinkButton ID="lnkSelectActionType" runat="server"  ToolTip="Select corrective action type" CSSClass="buttonComment"  text="Action Type"  CommandArgument="ActionType"  ></asp:LinkButton>--%>
 							<br />
 							<asp:Label ID="lblSelectActionType" runat="server" CssClass="instructText" Text="Indicate the type of corrective action to be implemeted and explain why other choices were or were not chosen..."></asp:Label>
 						</td>
 						<td class="tableDataAlt">&nbsp;</td>
 						<td class="tableDataAlt">
-							<asp:Panel ID="pnlActionType" runat="server" Visible="false">
+							<asp:Panel ID="pnlActionType" runat="server">
 								<telerik:RadGrid ID="rgActionTypeList" runat="server" Skin="Metro" AllowSorting="True" AllowPaging="False" 
 									AutoGenerateColumns="False" OnItemDataBound="rgActionTypeList_ItemDataBound" Width="98%" GroupPanelPosition="Top">
 									<MasterTableView>
