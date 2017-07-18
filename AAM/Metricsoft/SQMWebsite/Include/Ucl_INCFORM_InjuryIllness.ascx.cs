@@ -405,7 +405,8 @@ namespace SQM.Website
                 if (incident != null)
                 {
                     string lang;
-                    if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
+                    lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+                    //if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
                         pnlLocalDesc.Visible = true;
 
                     IncidentLocationId = Convert.ToDecimal(incident.DETECT_PLANT_ID);
@@ -651,7 +652,8 @@ namespace SQM.Website
                     Severity_Changed(rdoFirstAid, null);
 
                     string lang;
-                    if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
+                    lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString() ;
+                    //if ((lang = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString()) != "en")
                         pnlLocalDesc.Visible = true;
 
                     rdpIncidentDate = SQMBasePage.SetRadDateCulture(rdpIncidentDate, "");
@@ -1623,10 +1625,12 @@ namespace SQM.Website
             if (!IsEditContext)
             {
                 incidentDescription = tbDescription.Text;
+                localDescription = tbLocalDescription.Text;
             }
             else
             {
                 incidentDescription = tbDescription.Text;
+                localDescription = tbLocalDescription.Text;
                 incidentId = EditIncidentId;
             }
 
@@ -1645,7 +1649,7 @@ namespace SQM.Website
             if (!IsEditContext)
             {
                 incidentDescription = tbDescription.Text;
-
+                localDescription = tbLocalDescription.Text;
                 TheIncident = CreateNewIncident();
                 EditIncidentId = incidentId = TheIncident.INCIDENT_ID;
                 theincidentId = TheIncident.INCIDENT_ID;
@@ -1658,7 +1662,7 @@ namespace SQM.Website
             else
             {
                 incidentDescription = tbDescription.Text;
-
+                localDescription = tbLocalDescription.Text;
                 incidentId = EditIncidentId;
                 if (incidentId > 0)
                 {

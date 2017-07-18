@@ -146,7 +146,7 @@
                 <asp:Label runat="server" ID="lblIncidentLocation" class="textStd"></asp:Label>
                 <%--				<br />--%>
 				&nbsp;/&nbsp;
-				<asp:Label ID="lblIncidentType" class="textStd" runat="server">Type:  </asp:Label>
+				<asp:Label ID="lblIncidentType" class="textStd" runat="server">Type: </asp:Label>
             </div>
         </div>
     </asp:Panel>
@@ -256,16 +256,16 @@
         </div>
 
 
-        <asp:Panel ID="pnlLocalDesc" runat="server" Visible="False">
+        <asp:Panel ID="pnlLocalDesc" runat="server">
             <div class="row">
                 <div class="col-sm-4 hidden-xs text-left tanLabelColHigh">
                     <span class="labelMultiLineText">
-                        <asp:Label ID="lbLocalDescSM" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
+                        <asp:Label ID="lbLocalDescSM" runat="server" Text="Japanese Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
                 </div>
                 <div class="col-xs-12 visible-xs text-left-more">
                     <br />
                     <span>
-                        <asp:Label ID="lbLocalDescXS" runat="server" Text="Local Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStar">*</span></span>
+                        <asp:Label ID="lbLocalDescXS" runat="server" Text="Japanese Description" meta:resourcekey="lbLocalDescResource1"></asp:Label><span class="requiredStar">*</span></span>
                 </div>
                 <div class="col-xs-12 col-sm-8 text-left greyControlColX">
                     <asp:TextBox ID="tbLocalDescription" Rows="5" Height="95px" Width="80%" TextMode="MultiLine" SkinID="Metro" runat="server" onChange="ChangeUpdate()"></asp:TextBox>
