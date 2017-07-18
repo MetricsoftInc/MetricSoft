@@ -292,7 +292,7 @@
     <value>部署</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>説明</value>
+    <value>英語の説明</value>
   </data>
   <data name="DetectedLocation" xml:space="preserve">
     <value>検出された場所</value>

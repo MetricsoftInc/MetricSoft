@@ -700,7 +700,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to English Description.
         /// </summary>
         internal static string Description {
             get {

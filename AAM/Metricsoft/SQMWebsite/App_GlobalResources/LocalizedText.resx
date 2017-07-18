@@ -256,7 +256,7 @@
     <value>Department</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>English Description</value>
   </data>
   <data name="DetectedLocation" xml:space="preserve">
     <value>Detected Location</value>
