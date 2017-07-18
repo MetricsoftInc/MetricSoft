@@ -160,7 +160,7 @@
     <value>職種/職種名</value>
   </data>
   <data name="lbLocalDescResource1.Text" xml:space="preserve">
-    <value>現地の説明</value>
+    <value>日本語の説明</value>
   </data>
   <data name="lbLostTimeResource1.Text" xml:space="preserve">
     <value>休業又は制限された時間？</value>

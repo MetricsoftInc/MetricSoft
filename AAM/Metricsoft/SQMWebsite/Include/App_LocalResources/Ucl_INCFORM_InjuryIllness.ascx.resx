@@ -157,15 +157,15 @@
     <value>Involved Person's Statement</value>
   </data>
   <data name="lbLocalDescResource1.Text" xml:space="preserve">
-    <value>Local Description</value>
+    <value>Japanese Description</value>
   </data>
   <data name="lbLostTimeResource1.Text" xml:space="preserve">
     <value>Lost Time?</value>
   </data>
-	<data name="lbRestrictedTimeResource1.Text" xml:space="preserve">
+  <data name="lbRestrictedTimeResource1.Text" xml:space="preserve">
     <value>Restricted Time?</value>
   </data>
-	<data name="lbRecordableHistResource1.Text" xml:space="preserve">
+  <data name="lbRecordableHistResource1.Text" xml:space="preserve">
     <value>Lost And Restricted Time History</value>
   </data>
   <data name="lblSubmittedResource1.Text" xml:space="preserve">
@@ -192,7 +192,7 @@
   <data name="lbTaskYearsResource1.Text" xml:space="preserve">
     <value>How long has associate been doing this job/specific task ?</value>
   </data>
-	<data name="lbEmploymentTenureResource1.Text" xml:space="preserve">
+  <data name="lbEmploymentTenureResource1.Text" xml:space="preserve">
     <value>How long has associate been employed ?</value>
   </data>
   <data name="lbJobCode.Text" xml:space="preserve">
