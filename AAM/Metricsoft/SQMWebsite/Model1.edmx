@@ -1018,7 +1018,7 @@
           <Property Name="LAST_UPD_DT" Type="datetime" />
           <Property Name="INCFORM_LAST_STEP_COMPLETED" Type="int" Nullable="false" />
           <Property Name="LAST_APPROVAL_STEP" Type="numeric" Precision="8" Scale="2" />
-          <Property Name="TNSKNumber" Type="varchar" MaxLength="500" />
+          <Property Name="TNSKNumber" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="INCIDENT_ANSWER">
           <Key>
@@ -1972,6 +1972,32 @@
           <Property Name="ENCRYPT_VALUE" Type="bit" Nullable="false" />
           <Property Name="LANGUAGE" Type="varchar" MaxLength="10" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'NSK.dbo.Sheet1$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Sheet1$">
+          <Property Name="PRMR_ID" Type="float" />
+          <Property Name="PERIOD_YEAR" Type="float" />
+          <Property Name="PERIOD_MONTH" Type="float" />
+          <Property Name="INPUT_DT" Type="datetime" />
+          <Property Name="EFF_FROM_DT" Type="datetime" />
+          <Property Name="EFF_TO_DT" Type="datetime" />
+          <Property Name="MEASURE_VALUE" Type="float" />
+          <Property Name="UOM" Type="float" />
+          <Property Name="MEASURE_COST" Type="float" />
+          <Property Name="CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="LAST_UPD_DT" Type="datetime" />
+          <Property Name="LAST_UPD_BY" Type="nvarchar" MaxLength="255" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="255" />
+          <Property Name="CONVERSION_FACTOR" Type="nvarchar" MaxLength="255" />
+          <Property Name="ROLLUP_DT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_EFF_FROM_DT" Type="float" />
+          <Property Name="ORIGINAL_EFF_TO_DT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_MEASURE_VALUE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_MEASURE_COST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_UOM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ORIGINAL_CURRENCY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="UOM_FACTOR" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="SQM_ACCESS">
           <Key>
             <PropertyRef Name="SSO_ID" />
@@ -9447,7 +9473,7 @@ FROM [dbo].[vw_MetricDataByPlant] AS [vw_MetricDataByPlant]</DefiningQuery>
           <NavigationProperty Name="INCIDENT_ANSWER" Relationship="PSsqmModel.FK_INCIDENT_ANSWER_INCIDENT" FromRole="INCIDENT" ToRole="INCIDENT_ANSWER" />
           <NavigationProperty Name="PROB_OCCUR" Relationship="PSsqmModel.FK_PROB_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="PROB_OCCUR" />
           <NavigationProperty Name="QI_OCCUR" Relationship="PSsqmModel.FK_QI_OCCUR_INCIDENT" FromRole="INCIDENT" ToRole="QI_OCCUR" />
-          <Property Name="TNSKNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TNSKNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="INCIDENT_TIMELINE_ANSWER" Relationship="PSsqmModel.FK_INCIDENT_TIMELINE_ANSWER_INCIDENT" FromRole="INCIDENT" ToRole="INCIDENT_TIMELINE_ANSWER" />
         </EntityType>
         <Association Name="FK_INCIDENT_COMPANY">
