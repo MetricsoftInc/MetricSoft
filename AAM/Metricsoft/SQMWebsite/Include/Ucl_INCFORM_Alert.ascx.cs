@@ -188,41 +188,75 @@ namespace SQM.Website
 
                 lblNotifyGroup.Text = "";
                 //Apply condotional code to desplay data in grid of Process Description
-                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE))
+                if (LocalIncident.INCFORM_INJURYILLNESS != null)
+                {
+                    if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE))
+                    {
+                        BusinessType.Style.Add("display", "none");
+                    }
+                    else
+                    {
+                        lblBusinessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                        //  display: block;
+                    //    BusinessType.Style.Add("display", "block");
+                    }
+                }
+                else
                 {
                     BusinessType.Style.Add("display", "none");
                 }
-                else
-                {
-                    lblBusinessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.BUSINESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
-                }
 
-                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE))
+
+                if (LocalIncident.INCFORM_INJURYILLNESS != null)
+                {
+                    if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE))
+                    {
+                        MacroProcessType.Style.Add("display", "none");
+                    }
+                    else
+                    {
+                        lblMacroProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                      //  MacroProcessType.Style.Add("display", "block");
+                    }
+                }
+                else
                 {
                     MacroProcessType.Style.Add("display", "none");
                 }
-                else
-                {
-                    lblMacroProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.MACRO_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
-                }
 
-                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE))
+                if (LocalIncident.INCFORM_INJURYILLNESS != null)
+                {
+                    if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE))
+                    {
+                        SpecificProcessType.Style.Add("display", "none");
+
+                    }
+                    else
+                    {
+                        lblSpecificProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                        //SpecificProcessType.Style.Add("display", "block");
+                    }
+                }
+                else
                 {
                     SpecificProcessType.Style.Add("display", "none");
                 }
-                else
+
+                if (LocalIncident.INCFORM_INJURYILLNESS != null)
                 {
-                    lblSpecificProcessTypeVal.Text = XLATList.Where(p => p.XLAT_CODE == LocalIncident.INCFORM_INJURYILLNESS.SPECIFIC_PROCESS_TYPE).Select(p => p.DESCRIPTION_SHORT).FirstOrDefault();
+                    if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME))
+                    {
+                        EquipmentManufacturerName.Style.Add("display", "none");
+                    }
+                    else
+                    {
+                        lblEquipmentManufacturerNameVal.Text = LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME;
+                       // EquipmentManufacturerName.Style.Add("display", "block");
+                    }
                 }
-
-
-                if (string.IsNullOrEmpty(LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME))
+                else
                 {
                     EquipmentManufacturerName.Style.Add("display", "none");
-                }
-                else
-                {
-                    lblEquipmentManufacturerNameVal.Text = LocalIncident.INCFORM_INJURYILLNESS.EQUIPMENT_MANUFACTURER_NAME;
                 }
 
 
