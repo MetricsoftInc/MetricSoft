@@ -122,8 +122,10 @@ namespace SQM.Website
 					decimal targetRecID;
 					if (decimal.TryParse(targetRec, out targetRecID))
 					{
-						UpdateDisplayState(DisplayState.IncidentAlert, targetRecID);
-					}
+                       // Change this from alert mode to edit mode on email url requiest because of client requirement.
+                        //UpdateDisplayState(DisplayState.IncidentAlert, targetRecID);
+                        UpdateDisplayState(DisplayState.IncidentNotificationEdit, targetRecID);
+                    }
 				}
 				else if (SessionManager.ReturnStatus == true && SessionManager.ReturnObject is string)
 				{
