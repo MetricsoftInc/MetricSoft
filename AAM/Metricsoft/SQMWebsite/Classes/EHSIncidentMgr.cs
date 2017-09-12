@@ -1700,6 +1700,7 @@ namespace SQM.Website
                         status = ctx.ExecuteStoreCommand("DELETE FROM ATTACHMENT WHERE ATTACHMENT_ID IN (" + String.Join(",", attachmentIds) + ")");
                     }
                     status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE RECORD_TYPE = 40 AND RECORD_ID" + delCmd);
+                    status = ctx.ExecuteStoreCommand("DELETE FROM TASK_STATUS WHERE RECORD_TYPE = 45 AND RECORD_ID" + delCmd);
                     status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_LOSTTIME_HIST WHERE INCIDENT_ID" + delCmd);
                     status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_CONTAIN WHERE INCIDENT_ID" + delCmd);
                     status = ctx.ExecuteStoreCommand("DELETE FROM INCFORM_ACTION WHERE INCIDENT_ID" + delCmd);
