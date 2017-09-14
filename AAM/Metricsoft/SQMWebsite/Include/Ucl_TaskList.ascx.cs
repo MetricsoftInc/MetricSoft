@@ -11,13 +11,13 @@ namespace SQM.Website
 {
     public partial class Ucl_TaskList : System.Web.UI.UserControl
     {
-		public event EditItemClick OnTaskListClick;
+        public event EditItemClick OnTaskListClick;
 
-		private List<XLAT> TaskXLATList
-		{
-			get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
-			set { ViewState["TaskXLATList"] = value; }
-		}
+        private List<XLAT> TaskXLATList
+        {
+            get { return ViewState["TaskXLATList"] == null ? new List<XLAT>() : (List<XLAT>)ViewState["TaskXLATList"]; }
+            set { ViewState["TaskXLATList"] = value; }
+        }
 
         public DateTime TaskScheduleSelectedDate
         {
@@ -36,8 +36,8 @@ namespace SQM.Website
         #endregion
 
         public event EditItemClick OnTaskClick;
-		public event GridItemClick OnTaskListItemClick;
-		public event GridActionCommand OnTaskListCommand;
+        public event GridItemClick OnTaskListItemClick;
+        public event GridActionCommand OnTaskListCommand;
 
         #region task
         protected void lnkTask_Click(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace SQM.Website
                 ImageButton btn = (ImageButton)sender;
                 cmd = btn.CommandArgument.ToString().Trim();
             }
-            else 
+            else
             {
                 LinkButton lnk = (LinkButton)sender;
                 cmd = lnk.CommandArgument.ToString().Trim();
@@ -69,67 +69,67 @@ namespace SQM.Website
                     case TaskRecordType.ProfileInputApproval:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-						SessionManager.ReturnPath = Request.Path.ToString();
+                        SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_MetricInput.aspx");
                         break;
                     case TaskRecordType.ProfileInputFinalize:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-						SessionManager.ReturnPath = Request.Path.ToString();
+                        SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_Console.aspx");
                         break;
                         break;
                     case TaskRecordType.HealthSafetyIncident:
-						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
-						{
-							TASK_STATUS task = new TASK_STATUS();
-							task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
-							task.TASK_ID = Convert.ToDecimal(args[2]);
-							task.TASK_STEP = args[3];
-							SessionManager.ReturnObject = task;
-							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Path.ToString();
-							Response.Redirect("/Home/TaskAction.aspx");
-						}
-						else
-						{
-							SessionManager.ReturnObject = args[1];
-							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Path.ToString();
-							Response.Redirect("/EHS/EHS_Incidents.aspx");
-						}
+                        if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // incident action
+                        {
+                            TASK_STATUS task = new TASK_STATUS();
+                            task.RECORD_TYPE = (int)TaskRecordType.HealthSafetyIncident;
+                            task.TASK_ID = Convert.ToDecimal(args[2]);
+                            task.TASK_STEP = args[3];
+                            SessionManager.ReturnObject = task;
+                            SessionManager.ReturnStatus = true;
+                            SessionManager.ReturnPath = Request.Path.ToString();
+                            Response.Redirect("/Home/TaskAction.aspx");
+                        }
+                        else
+                        {
+                            SessionManager.ReturnObject = args[1];
+                            SessionManager.ReturnStatus = true;
+                            SessionManager.ReturnPath = Request.Path.ToString();
+                            Response.Redirect("/EHS/EHS_Incidents.aspx");
+                        }
                         break;
                     case TaskRecordType.PreventativeAction:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-						SessionManager.ReturnPath = Request.Path.ToString();
+                        SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/EHS/EHS_PrevActions.aspx?s=1");
                         break;
-					case TaskRecordType.Audit:
-						if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // audit action
-						{
-							TASK_STATUS task = new TASK_STATUS();
-							task.RECORD_TYPE = (int)TaskRecordType.Audit;
-							task.TASK_ID = Convert.ToDecimal(args[2]);
-							task.TASK_STEP = args[3];
-							SessionManager.ReturnObject = task;
-							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Path.ToString();
-							Response.Redirect("/Home/TaskAction.aspx");
-						}
-						else
-						{
-							SessionManager.ReturnObject = args[1];
-							SessionManager.ReturnStatus = true;
-							SessionManager.ReturnPath = Request.Path.ToString();
-							//Response.Redirect("/EHS/EHS_Audits.aspx");
-							Response.Redirect("/EHS/EHS_Assessments.aspx");
-						}
-						break;
+                    case TaskRecordType.Audit:
+                        if (args.Length == 4 && args[3] == ((int)SysPriv.action).ToString())  // audit action
+                        {
+                            TASK_STATUS task = new TASK_STATUS();
+                            task.RECORD_TYPE = (int)TaskRecordType.Audit;
+                            task.TASK_ID = Convert.ToDecimal(args[2]);
+                            task.TASK_STEP = args[3];
+                            SessionManager.ReturnObject = task;
+                            SessionManager.ReturnStatus = true;
+                            SessionManager.ReturnPath = Request.Path.ToString();
+                            Response.Redirect("/Home/TaskAction.aspx");
+                        }
+                        else
+                        {
+                            SessionManager.ReturnObject = args[1];
+                            SessionManager.ReturnStatus = true;
+                            SessionManager.ReturnPath = Request.Path.ToString();
+                            //Response.Redirect("/EHS/EHS_Audits.aspx");
+                            Response.Redirect("/EHS/EHS_Assessments.aspx");
+                        }
+                        break;
                     case TaskRecordType.CurrencyInput:
                         SessionManager.ReturnObject = args[1];
                         SessionManager.ReturnStatus = true;
-						SessionManager.ReturnPath = Request.Path.ToString();
+                        SessionManager.ReturnPath = Request.Path.ToString();
                         Response.Redirect("/Admin/Administrate_CurrencyInput.aspx");
                         break;
                     default:
@@ -142,22 +142,22 @@ namespace SQM.Website
 
         #region scehedule
 
-		public void SetTaskScheduleCulture(string langOverride)
-		{
-			string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
-			string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
-			if (CultureSettings.gregorianCalendarOverrides.Contains(language))
-				scdTaskSchedule.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
-		}
+        public void SetTaskScheduleCulture(string langOverride)
+        {
+            string uicult = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+            string language = (!string.IsNullOrEmpty(uicult)) ? uicult.Substring(0, 2) : "en";
+            if (CultureSettings.gregorianCalendarOverrides.Contains(language))
+                scdTaskSchedule.Culture.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar();
+        }
 
         public void BindTaskSchedule(List<TaskItem> taskList, DateTime selectedDate, bool enableItemLinks)
         {
             pnlTaskSchedule.Visible = true;
             hfScheduleScope.Value = enableItemLinks.ToString().ToLower();
 
-			SetTaskScheduleCulture("");
+            SetTaskScheduleCulture("");
             scdTaskSchedule.SelectedDate = selectedDate;
-  
+
             foreach (TaskItem taskItem in taskList)
             {
                 taskItem.StartDate = Convert.ToDateTime(taskItem.Task.DUE_DT).AddHours(9);  // want task to display at 9 am
@@ -177,35 +177,35 @@ namespace SQM.Website
 
         protected void scdTaskSchedule_OnDataBound(object sender, Telerik.Web.UI.SchedulerEventArgs e)
         {
-			try
-			{
-				e.Appointment.AllowDelete = false;
-				e.Appointment.AllowEdit = true;
-				e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 10000, "...");
-				e.Appointment.Description = WebSiteCommon.StripHTML(e.Appointment.Description);
+            try
+            {
+                e.Appointment.AllowDelete = false;
+                e.Appointment.AllowEdit = true;
+                e.Appointment.Description = StringHtmlExtensions.TruncateHtml(e.Appointment.Description, 10000, "...");
+                e.Appointment.Description = WebSiteCommon.StripHTML(e.Appointment.Description);
 
-				if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < SessionManager.UserContext.LocalTime.Date)
-				{
-					// past due active link
-					e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light pink
-				}
-				else if (string.IsNullOrEmpty(e.Appointment.ID.ToString()))
-				{
-					// inactive link
-					e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#F0FFFF");   // azure
-				}
-				else
-				{
-					// active link
-					e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFE0");   // yellow  
-				}
+                if (e.Appointment.End.Date >= e.Appointment.Start.Date && e.Appointment.Start.Date < SessionManager.UserContext.LocalTime.Date)
+                {
+                    // past due active link
+                    e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffe6e6");  // light pink
+                }
+                else if (string.IsNullOrEmpty(e.Appointment.ID.ToString()))
+                {
+                    // inactive link
+                    e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#F0FFFF");   // azure
+                }
+                else
+                {
+                    // active link
+                    e.Appointment.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFFE0");   // yellow  
+                }
 
-				e.Appointment.End = e.Appointment.Start.AddHours(2);
-			}
-			catch
-			{
-				;
-			}
+                e.Appointment.End = e.Appointment.Start.AddHours(2);
+            }
+            catch
+            {
+                ;
+            }
         }
 
         protected void scdTaskSchedule_OnCreated(object sender, AppointmentCreatedEventArgs e)
@@ -218,21 +218,22 @@ namespace SQM.Website
                     btn.Visible = true;
                 }
 
-                if (hfScheduleScope.Value == false.ToString().ToLower()  || string.IsNullOrEmpty(e.Appointment.ID.ToString()))       // only enable task link if schedule scope is by USER  (i.e. disable if PLANT view)
-					{
-						//Control div = (Control)e.Container.FindControl("divInactive");
-						//div.Visible = true;
-						LinkButton lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem");
-						lnk.Enabled = false;
-						//lnk.Visible = false; 
-						lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem2");
-						//lnk.Visible = false;
-						lnk.Enabled = false;
-					}
+                if (hfScheduleScope.Value == false.ToString().ToLower() || string.IsNullOrEmpty(e.Appointment.ID.ToString()))       // only enable task link if schedule scope is by USER  (i.e. disable if PLANT view)
+                {
+                    //Control div = (Control)e.Container.FindControl("divInactive");
+                    //div.Visible = true;
+                    LinkButton lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem");
+                    lnk.Enabled = false;
+                    //lnk.Visible = false; 
+                    lnk = (LinkButton)e.Container.FindControl("lnkScheduleItem2");
+                    //lnk.Visible = false;
+                    lnk.Enabled = false;
+                }
             }
-            catch {
-				;
-			}
+            catch
+            {
+                ;
+            }
         }
 
         // todo:  rename and make generic for use by both calendar and taskstrip
@@ -290,16 +291,16 @@ namespace SQM.Website
             {
                 try
                 {
-					if (e.Item.DataItem != null)
-					{
-						TaskItem item = (TaskItem)e.Item.DataItem;
-						if (item.Person != null && (item.NotifyType == TaskNotification.Escalation || item.NotifyType == TaskNotification.Delegate))
-						{
-							item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
-						}
-						item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 10000, "...");
-						item.Description = WebSiteCommon.StripHTML(item.Description);
-					}
+                    if (e.Item.DataItem != null)
+                    {
+                        TaskItem item = (TaskItem)e.Item.DataItem;
+                        if (item.Person != null && (item.NotifyType == TaskNotification.Escalation || item.NotifyType == TaskNotification.Delegate))
+                        {
+                            item.Description += " (" + SQMModelMgr.FormatPersonListItem(item.Person) + ")";
+                        }
+                        item.Description = StringHtmlExtensions.TruncateHtml(item.Description, 10000, "...");
+                        item.Description = WebSiteCommon.StripHTML(item.Description);
+                    }
                 }
                 catch
                 { }
@@ -307,143 +308,144 @@ namespace SQM.Website
         }
         #endregion
 
-		#region tasklist
+        #region tasklist
 
-		public void BindTaskList(List<TASK_STATUS> taskList, string context)
-		{
-			if (TaskXLATList == null || TaskXLATList.Count == 0)
-				TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
+        public void BindTaskList(List<TASK_STATUS> taskList, string context)
+        {
+            if (TaskXLATList == null || TaskXLATList.Count == 0)
+                TaskXLATList = SQMBasePage.SelectXLATList(new string[4] { "TASK_STATUS", "RECORD_TYPE", "INCIDENT_STATUS", "NOTIFY_SCOPE_TASK" });
 
-			pnlTaskSchedule.Visible = pnlTaskStrip.Visible = false;
-			pnlTaskList.Visible = true;
+            pnlTaskSchedule.Visible = pnlTaskStrip.Visible = false;
+            pnlTaskList.Visible = true;
 
-			rgTaskList.DataSource = taskList;
-			rgTaskList.DataBind();
+            rgTaskList.DataSource = taskList;
+            rgTaskList.DataBind();
 
-			if (taskList.Count > 0)
-			{
-				rgTaskList.Visible = true;
-				lblTaskListEmpty.Visible = false;
-			}
-			else
-			{
-				rgTaskList.Visible = false;
-				lblTaskListEmpty.Visible = true;
-			}
-		}
+            if (taskList.Count > 0)
+            {
+                rgTaskList.Visible = true;
+                lblTaskListEmpty.Visible = false;
+            }
+            else
+            {
+                rgTaskList.Visible = false;
+                lblTaskListEmpty.Visible = true;
+            }
+        }
 
-		protected void rgTaskList_ItemDataBound(object sender, GridItemEventArgs e)
-		{
-			if (e.Item is GridDataItem)
-			{
-				GridDataItem item = (GridDataItem)e.Item;
-				HiddenField hf;
-				Label lbl;
+        protected void rgTaskList_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                GridDataItem item = (GridDataItem)e.Item;
+                HiddenField hf;
+                Label lbl;
 
-				try
-				{
-					TASK_STATUS task = (TASK_STATUS)e.Item.DataItem;
+                try
+                {
+                    TASK_STATUS task = (TASK_STATUS)e.Item.DataItem;
 
-					LinkButton lnk = (LinkButton)e.Item.FindControl("lbTaskId");
-					lnk.Text = WebSiteCommon.FormatID(task.TASK_ID, 6);
+                    LinkButton lnk = (LinkButton)e.Item.FindControl("lbTaskId");
+                    lnk.Text = WebSiteCommon.FormatID(task.TASK_ID, 6);
+                    if (task.DESCRIPTION != null)
+                    {
+                        if (task.DESCRIPTION.Length > 120)
+                        {
+                            lbl = (Label)e.Item.FindControl("lblDescription");
+                            lbl.Text = task.DESCRIPTION.Substring(0, 117) + "...";
+                        }
+                    }
+                    lbl = (Label)e.Item.FindControl("lblTaskType");
 
-					if (task.DESCRIPTION.Length > 120)
-					{
-						lbl = (Label)e.Item.FindControl("lblDescription");
-						lbl.Text = task.DESCRIPTION.Substring(0, 117) + "...";
-					}
+                    lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == task.RECORD_TYPE.ToString()).FirstOrDefault().DESCRIPTION;
+                    if (task.TASK_STEP == "350" || task.TASK_STEP == "400")
+                    {
+                        if (task.RECORD_TYPE == (int)TaskRecordType.Audit && task.RECORD_SUBID > 0)
+                        {
+                            lbl.Text += ("&nbsp;Exception");
+                        }
+                        lbl.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == task.TASK_STEP).FirstOrDefault().DESCRIPTION);
+                    }
 
-					lbl = (Label)e.Item.FindControl("lblTaskType");
+                    lbl = (Label)e.Item.FindControl("lblCreateDT");
+                    if (task.CREATE_DT.HasValue)
+                    {
+                        lbl.Text = Convert.ToDateTime(task.CREATE_DT).ToShortDateString();
+                    }
+                    lbl = (Label)e.Item.FindControl("lblDueDT");
+                    if (task.DUE_DT.HasValue)
+                    {
+                        lbl.Text = Convert.ToDateTime(task.DUE_DT).ToShortDateString();
+                    }
 
-					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "RECORD_TYPE" && l.XLAT_CODE == task.RECORD_TYPE.ToString()).FirstOrDefault().DESCRIPTION;
-					if (task.TASK_STEP == "350"  ||  task.TASK_STEP == "400")
-					{
-						if (task.RECORD_TYPE == (int)TaskRecordType.Audit && task.RECORD_SUBID > 0)
-						{
-							lbl.Text += ("&nbsp;Exception");
-						}
-						lbl.Text += (" - " + TaskXLATList.Where(l => l.XLAT_GROUP == "NOTIFY_SCOPE_TASK" && l.XLAT_CODE == task.TASK_STEP).FirstOrDefault().DESCRIPTION);
-					}
+                    lbl = (Label)e.Item.FindControl("lblStatus");
+                    lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
 
-					lbl = (Label)e.Item.FindControl("lblCreateDT");
-					if (task.CREATE_DT.HasValue)
-					{
-						lbl.Text = Convert.ToDateTime(task.CREATE_DT).ToShortDateString();
-					}
-					lbl = (Label)e.Item.FindControl("lblDueDT");
-					if (task.DUE_DT.HasValue)
-					{
-						lbl.Text = Convert.ToDateTime(task.DUE_DT).ToShortDateString();
-					}
+                    lbl = (Label)e.Item.FindControl("lblResponsiblePerson");
+                    PERSON responsiblePerson = new PERSON();
+                    try
+                    {
+                        PSsqmEntities entities = new PSsqmEntities();
+                        responsiblePerson = SQMModelMgr.LookupPerson((decimal)task.RESPONSIBLE_ID, "");
+                    }
+                    catch { }
 
-					lbl = (Label)e.Item.FindControl("lblStatus");
-					lbl.Text = TaskXLATList.Where(l => l.XLAT_GROUP == "TASK_STATUS" && l.XLAT_CODE == ((int)TaskMgr.CalculateTaskStatus(task)).ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+                    if (responsiblePerson != null)
+                    {
+                        lbl.Text = SQMModelMgr.FormatPersonListItem(responsiblePerson, false, "LF");
+                    }
 
-					lbl = (Label)e.Item.FindControl("lblResponsiblePerson");
-					PERSON responsiblePerson = new PERSON();
-					try
-					{
-						PSsqmEntities entities = new PSsqmEntities();
-						responsiblePerson = SQMModelMgr.LookupPerson((decimal)task.RESPONSIBLE_ID, "");
-					}
-					catch { }
+                }
+                catch
+                {
+                }
+            }
+        }
 
-					if (responsiblePerson != null)
-					{
-						lbl.Text = SQMModelMgr.FormatPersonListItem(responsiblePerson, false, "LF");
-					}
+        protected void lbTaskListItem_Click(Object sender, EventArgs e)
+        {
+            if (OnTaskListItemClick != null)
+            {
+                LinkButton lnk = (LinkButton)sender;
+                OnTaskListItemClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
+            }
+        }
 
-				}
-				catch
-				{
-				}
-			}
-		}
+        protected void rgTaskList_SortCommand(object sender, GridSortCommandEventArgs e)
+        {
+            if (OnTaskListCommand != null)
+            {
+                OnTaskListCommand("sort");
+            }
+        }
+        protected void rgTaskList_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            if (OnTaskListCommand != null)
+            {
+                OnTaskListCommand("index");
+            }
+        }
+        protected void rgTaskList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+        {
+            if (OnTaskListCommand != null)
+            {
+                OnTaskListCommand("size");
+            }
+        }
+        #endregion
 
-		protected void lbTaskListItem_Click(Object sender, EventArgs e)
-		{
-			if (OnTaskListItemClick != null)
-			{
-				LinkButton lnk = (LinkButton)sender;
-				OnTaskListItemClick(Convert.ToDecimal(lnk.CommandArgument.ToString().Trim()));
-			}
-		}
+        #region taskwin
 
-		protected void rgTaskList_SortCommand(object sender, GridSortCommandEventArgs e)
-		{
-			if (OnTaskListCommand != null)
-			{
-				OnTaskListCommand("sort");
-			}
-		}
-		protected void rgTaskList_PageIndexChanged(object sender, GridPageChangedEventArgs e)
-		{
-			if (OnTaskListCommand != null)
-			{
-				OnTaskListCommand("index");
-			}
-		}
-		protected void rgTaskList_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
-		{
-			if (OnTaskListCommand != null)
-			{
-				OnTaskListCommand("size");
-			}
-		}
-		#endregion
+        public void TaskWindow(int recordType, decimal recordID, decimal subID, string taskStep, string description, decimal locationID)
+        {
+            uclTask.BindTaskAdd(recordType, recordID, subID, taskStep, "T", description, locationID, "");
+            string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
+        }
+        #endregion
 
-		#region taskwin
-
-		public void TaskWindow(int recordType, decimal recordID, decimal subID, string taskStep, string description, decimal locationID)
-		{
-			uclTask.BindTaskAdd(recordType, recordID, subID, taskStep, "T", description, locationID, "");
-			string script = "function f(){OpenTaskWindow(); Sys.Application.remove_load(f);}Sys.Application.add_load(f);";
-			ScriptManager.RegisterStartupScript(Page, Page.GetType(), "key", script, true);
-		}
-		#endregion
-
-		#region common
-		public void SetRepeaterDisplay(Repeater rpt, Label lblAlert, System.Web.UI.HtmlControls.HtmlGenericControl divScroll, int rowsToScroll, int gridRowCount, string className)
+        #region common
+        public void SetRepeaterDisplay(Repeater rpt, Label lblAlert, System.Web.UI.HtmlControls.HtmlGenericControl divScroll, int rowsToScroll, int gridRowCount, string className)
         {
             if (rpt.Items.Count == 0)
             {
