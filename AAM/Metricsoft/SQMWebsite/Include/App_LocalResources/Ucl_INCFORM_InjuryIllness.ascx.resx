@@ -202,7 +202,8 @@
     <value>Was Training for this Task Provided?</value>
   </data>
   <data name="lblEmployeeSatus.Text" xml:space="preserve">
-    <value>Employee Status</value>
+    <value>Injured Person (IP) Status</value>
+    <comment>Employee Status</comment>
   </data>
   <data name="lbWitnessColResource1.Text" xml:space="preserve">
     <value>Witness </value>
