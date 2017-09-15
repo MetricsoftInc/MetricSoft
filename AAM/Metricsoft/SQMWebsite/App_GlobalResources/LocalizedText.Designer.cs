@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contractor.
+        ///   Looks up a localized string similar to Contractor &lt;br&gt;(Extension of Workforce).
         /// </summary>
         internal static string Contractor {
             get {
@@ -1726,6 +1726,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Outside Contractor&lt;br&gt;(Project Contractor).
+        /// </summary>
+        internal static string OutsideContractor {
+            get {
+                return ResourceManager.GetString("OutsideContractor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Part Number.
         /// </summary>
         internal static string PartNumber {
@@ -1866,6 +1875,15 @@ namespace Resources {
         internal static string ProceduresFollowed {
             get {
                 return ResourceManager.GetString("ProceduresFollowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Contractor.
+        /// </summary>
+        internal static string ProjectContractor {
+            get {
+                return ResourceManager.GetString("ProjectContractor", resourceCulture);
             }
         }
         
@@ -2428,7 +2446,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Temporary Employee.
+        ///   Looks up a localized string similar to Extension of Workforce Contractor.
         /// </summary>
         internal static string Temporary {
             get {

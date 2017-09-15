@@ -976,13 +976,14 @@
     <value>This Incident does not have sufficient information or steps completed to be approved.</value>
   </data>
   <data name="Contractor" xml:space="preserve">
-    <value>Contractor</value>
+    <value>Contractor &lt;br&gt;(Extension of Workforce)</value>
   </data>
   <data name="Employee" xml:space="preserve">
     <value>Permanent Employee</value>
   </data>
   <data name="Temporary" xml:space="preserve">
-    <value>Temporary Employee</value>
+    <value>Extension of Workforce Contractor</value>
+    <comment>Temporary Employee</comment>
   </data>
   <data name="FirstAid" xml:space="preserve">
     <value>First Aid - small injury requiring on-site treatment e.g. plaster, bandage or cold compress.</value>
@@ -1068,5 +1069,11 @@
   </data>
   <data name="String" xml:space="preserve">
     <value>SeverityLevel</value>
+  </data>
+  <data name="ProjectContractor" xml:space="preserve">
+    <value>Project Contractor</value>
+  </data>
+  <data name="OutsideContractor" xml:space="preserve">
+    <value>Outside Contractor&lt;br&gt;(Project Contractor)</value>
   </data>
 </root>
