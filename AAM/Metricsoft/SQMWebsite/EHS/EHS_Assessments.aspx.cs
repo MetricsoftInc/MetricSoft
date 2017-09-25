@@ -59,8 +59,9 @@ namespace SQM.Website.EHS
 			this.lblStatus.Text = Resources.LocalizedText.Status + ":";
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
 			this.lblAuditType.Text = Resources.LocalizedText.AssessmentType + ":";
+            this.lblAssessmentID.Text = Resources.LocalizedText.AssessmentID + ":";
 
-			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
+            RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclAuditList.AuditListEhsGrid);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbAuditType);
@@ -511,11 +512,16 @@ namespace SQM.Website.EHS
 				selectedValue = rcbStatusSelect.SelectedValue;
 			}
 
-			SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
+            string assessmentID = RTXT_AssessmentID.Text;
+
+          decimal assessment_ID = Convert.ToDecimal(assessmentID == "" ? "0" : assessmentID);
+
+
+            SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			//HSCalcs().ObjAny = cbShowImage.Checked;
 
-			HSCalcs().ehsCtl.SelectAuditList(plantIDS, typeList, fromDate, toDate, selectedValue);
+			HSCalcs().ehsCtl.SelectAuditList(plantIDS, typeList, fromDate, toDate, selectedValue, assessment_ID);
 
 			// may want to access only the ones assigned to that person
 			//if (accessLevel < AccessMode.Admin)

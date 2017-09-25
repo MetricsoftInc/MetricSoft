@@ -139,6 +139,24 @@ namespace SQM.Website.EHS {
         protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
         
         /// <summary>
+        /// lblAssessmentID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAssessmentID;
+        
+        /// <summary>
+        /// RTXT_AssessmentID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox RTXT_AssessmentID;
+        
+        /// <summary>
         /// lblAuditDate control.
         /// </summary>
         /// <remarks>
