@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessment ID.
+        /// </summary>
+        internal static string AssessmentID {
+            get {
+                return ResourceManager.GetString("AssessmentID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The assessment has been saved, but you must complete all required fields on this page to close the assessment..
         /// </summary>
         internal static string AssessmentIncompleteMsg {
@@ -1969,6 +1978,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recommendation ID.
+        /// </summary>
+        internal static string RecommendationID {
+            get {
+                return ResourceManager.GetString("RecommendationID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recommendation Type.
         /// </summary>
         internal static string RecommendationType {
@@ -2446,7 +2464,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extension of Workforce Contractor.
+        ///   Looks up a localized string similar to Temporary Employee.
         /// </summary>
         internal static string Temporary {
             get {

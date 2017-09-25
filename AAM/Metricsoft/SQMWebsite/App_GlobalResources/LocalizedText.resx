@@ -982,7 +982,7 @@
     <value>Permanent Employee</value>
   </data>
   <data name="Temporary" xml:space="preserve">
-    <value>Extension of Workforce Contractor</value>
+    <value>Temporary Employee</value>
     <comment>Temporary Employee</comment>
   </data>
   <data name="FirstAid" xml:space="preserve">
@@ -1075,5 +1075,11 @@
   </data>
   <data name="OutsideContractor" xml:space="preserve">
     <value>Outside Contractor&lt;br&gt;(Project Contractor)</value>
+  </data>
+  <data name="AssessmentID" xml:space="preserve">
+    <value>Assessment ID</value>
+  </data>
+  <data name="RecommendationID" xml:space="preserve">
+    <value>Recommendation ID</value>
   </data>
 </root>
