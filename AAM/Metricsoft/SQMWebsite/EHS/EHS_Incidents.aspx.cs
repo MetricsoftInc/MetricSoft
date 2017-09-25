@@ -46,7 +46,8 @@ namespace SQM.Website
 			this.lblSeverity.Text = Resources.LocalizedText.Severity + ":";
 			this.lblStatus.Text = Resources.LocalizedText.Status + ": ";
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
-           
+            this.lblIncidentID.Text = Resources.LocalizedText.IncidentID + ":";
+
             companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
 			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
@@ -58,7 +59,6 @@ namespace SQM.Website
             //Add new control for Filter by severity level check.
             this.lblSeverityLevel.Text = Resources.LocalizedText.SeverityLevel + ":";
             RadPersistenceManager1.PersistenceSettings.AddSetting(rcbSeverityLevel);
-
 
             this.Mode = IncidentMode.Incident;
 		}
@@ -468,7 +468,7 @@ namespace SQM.Website
 			var typeList = new List<decimal>();
 			List<string> severityList  = new List<string>();
             List<string> selectSeverityLevel = new List<string>();
-
+            decimal incidentID;
             if (HSCalcs() == null)
 			{
 				foreach (RadComboBoxItem item in rcbIncidentType.Items)
@@ -488,11 +488,15 @@ namespace SQM.Website
 			selectedValue = rcbStatusSelect.SelectedValue;
             selectSeverityLevel = rcbSeverityLevel.Items.Where(c => c.Checked).Select(c => c.Value).ToList();
 
+            string incidentid = RTXT_IncidentID.Text;
+
+            incidentID = Convert.ToDecimal(incidentid == "" ?"0" : incidentid);
+
             SetHSCalcs(new SQMMetricMgr().CreateNew(SessionManager.PrimaryCompany(), "0", fromDate, toDate, new decimal[0]));
 			HSCalcs().ehsCtl = new EHSCalcsCtl().CreateNew(1, DateSpanOption.SelectRange, "0");
 			HSCalcs().ObjAny = cbShowImage.Checked;
 
-			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, severityList, fromDate, toDate, selectedValue, selectSeverityLevel, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
+			HSCalcs().ehsCtl.SelectIncidentList(plantIDS, typeList, severityList, fromDate, toDate, selectedValue, selectSeverityLevel, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0, incidentID);
 				
 			if (!UserContext.CheckUserPrivilege(SysPriv.admin, SysScope.incident))
 				HSCalcs().ehsCtl.IncidentHst = (from i in HSCalcs().ehsCtl.IncidentHst where i.Incident.ISSUE_TYPE_ID != 10 select i).ToList();

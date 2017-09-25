@@ -40,8 +40,9 @@ namespace SQM.Website
 			this.lblToDate.Text = Resources.LocalizedText.To + ":";
 			*/
 			companyId = SessionManager.UserContext.WorkingLocation.Company.COMPANY_ID;
+            lblRecID.Text = Resources.LocalizedText.RecommendationID + ":";
 
-			RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
+            RadPersistenceManager1.PersistenceSettings.AddSetting(ddlPlantSelect);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(rcbStatusSelect);
 			//RadPersistenceManager1.PersistenceSettings.AddSetting(ddlChartType);
 			RadPersistenceManager1.PersistenceSettings.AddSetting(uclIncidentList.IncidentListEhsGrid);
@@ -400,12 +401,14 @@ namespace SQM.Website
 			var typeList = new List<decimal>();
 			typeList = EHSIncidentMgr.SelectPreventativeTypeList(SessionManager.PrimaryCompany().COMPANY_ID).Select(l => l.INCIDENT_TYPE_ID).ToList();
 
+            var rec_id = RTXT_RecID.Text;
+
 			List<string> inspectionCatetoryList = new List<string>();
 			inspectionCatetoryList.AddRange(rcbInspectionType.Items.Where(c => c.Checked).Select(c => c.Value).ToList());
 			List<string> recommendationTypeList = new List<string>();
 			recommendationTypeList.AddRange(rcbRecommendType.Items.Where(c => c.Checked).Select(c => c.Value).ToList());
 			List<string> statusList = SQMBasePage.GetComboBoxCheckedItems(rcbStatusSelect).Select(l => l.Value).ToList();
-			HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0);
+			HSCalcs().ehsCtl.SelectPreventativeList(plantIDS, typeList, inspectionCatetoryList, recommendationTypeList, fromDate, toDate, statusList, cbShowImage.Checked, cbCreatedByMe.Checked ? SessionManager.UserContext.Person.PERSON_ID : 0, Convert.ToDecimal(rec_id == "" ? "0" : rec_id));
 
 			if (HSCalcs().ehsCtl.IncidentHst != null)
 			{

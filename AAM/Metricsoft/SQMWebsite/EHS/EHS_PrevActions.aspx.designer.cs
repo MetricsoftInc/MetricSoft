@@ -148,6 +148,24 @@ namespace SQM.Website {
         protected global::Telerik.Web.UI.RadComboBox rcbStatusSelect;
         
         /// <summary>
+        /// lblRecID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRecID;
+        
+        /// <summary>
+        /// RTXT_RecID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox RTXT_RecID;
+        
+        /// <summary>
         /// lblIncidentDate control.
         /// </summary>
         /// <remarks>
