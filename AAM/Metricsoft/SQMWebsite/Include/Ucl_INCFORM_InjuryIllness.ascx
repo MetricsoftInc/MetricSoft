@@ -109,7 +109,8 @@
 </script>
 
 <style>
-    .radioListHorizontal input { vertical-align:top;
+    .radioListHorizontal input {
+        vertical-align: top;
     }
 </style>
 
@@ -457,7 +458,8 @@
         <div class="row">
             <div class="col-sm-4 hidden-xs text-left tanLabelCol">
                 <span>
-                    <asp:Label ID="lbInvolvedPersonSM" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label><span class="requiredStarFloat">*</span></span>
+                    <asp:Label ID="lbInvolvedPersonSM" runat="server" Text="Involved Person's Name" meta:resourcekey="lbInvolvedPersonResource1"></asp:Label>
+                    <span class="requiredCloseStarFloat">*</span></span>
             </div>
             <div class="col-xs-12 visible-xs text-left-more">
                 <br />
@@ -703,8 +705,7 @@
                             <asp:ListItem Value="1" Text="<%$ Resources:LocalizedText, Employee %>"></asp:ListItem>
                             <asp:ListItem Value="0" Text="<%$ Resources:LocalizedText, Contractor %>"></asp:ListItem>
                             <asp:ListItem Value="2" Text="<%$ Resources:LocalizedText, Temporary %>"></asp:ListItem>
-                            <asp:ListItem Value="3" Text="<%$ Resources:LocalizedText, ProjectContractor %>"></asp:ListItem>
-                            <asp:ListItem Value="4" Text="<%$ Resources:LocalizedText, OutsideContractor %>"></asp:ListItem>
+                            <asp:ListItem Value="3" Text="<%$ Resources:LocalizedText, OutsideContractor %>"></asp:ListItem>
                         </asp:RadioButtonList></span>
                 </div>
             </div>

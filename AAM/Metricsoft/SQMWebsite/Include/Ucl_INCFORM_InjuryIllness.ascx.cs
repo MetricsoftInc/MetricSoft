@@ -471,10 +471,10 @@ namespace SQM.Website
                             lbSupervisorLabel.Visible = true;
                         }
 
-                        if (!string.IsNullOrEmpty(injuryIllnessDetails.INVOLVED_PERSON_NAME))
-                        {
+                        //if (!string.IsNullOrEmpty(injuryIllnessDetails.INVOLVED_PERSON_NAME))
+                        //{
                             tbInvolvedPerson.Text = injuryIllnessDetails.INVOLVED_PERSON_NAME;
-                        }
+                        //}
 
                         if (rddlDeptTest.FindItemByValue(injuryIllnessDetails.DEPT_ID.ToString()) != null)
                             rddlDeptTest.SelectedValue = injuryIllnessDetails.DEPT_ID.ToString();
@@ -1798,10 +1798,10 @@ namespace SQM.Website
             }
 
             // involved person input
-            if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
-            {
+            //if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
+            //{
                 newInjryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
-            }
+            //}
 
             newInjryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
@@ -2038,10 +2038,10 @@ namespace SQM.Website
                 }
 
                 // involved person input
-                if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
-                {
-                    injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
-                }
+                //if (!string.IsNullOrEmpty(tbInvolvedPerson.Text.Trim()))
+                //{
+                injuryIllnessDetails.INVOLVED_PERSON_NAME = tbInvolvedPerson.Text.Trim();
+                //}
 
                 injuryIllnessDetails.INVOLVED_PERSON_STATEMENT = tbInvPersonStatement.Text;
 
