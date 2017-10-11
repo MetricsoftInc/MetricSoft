@@ -25,7 +25,7 @@ namespace SQM.Website
         protected string incidentType;
         protected bool IsFullPagePostback = false;
         protected bool canApproveAny = false;
-
+        int MaxIncidentForNewFeature = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["MaxIncidentForNewFeature"]);
         protected int status = 0;//for Severity level section
         PSsqmEntities entities;
 
@@ -287,20 +287,26 @@ namespace SQM.Website
                     // check if incident approval status is greater than this
                     bool result = LocalIncident.LAST_APPROVAL_STEP.HasValue && LocalIncident.LAST_APPROVAL_STEP > ApprovalStep.STEP;
                     if (result)
-                         {
-                            PageMode = PageUseMode.ViewOnly;
-                         }
+                    {
+                        PageMode = PageUseMode.ViewOnly;
+                    }
 
-                     incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1);
-                     canApproveAny = false;
-                    rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
-
+                    incidentStepList = EHSIncidentMgr.SelectIncidentSteps(entities, -1);
+                    canApproveAny = false;
+                    if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+                    {
+                        rptApprovals.DataSource = EHSIncidentMgr.GetApprovalListAR(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
+                    }
+                    else
+                    {
+                        rptApprovals.DataSource = EHSIncidentMgr.GetApprovalList(entities, (decimal)LocalIncident.ISSUE_TYPE_ID, ApprovalStep.STEP, IncidentId, DateTime.UtcNow, 0);
+                    }
                     rptApprovals.DataBind();
                 }
-               else
-               {
+                else
+                {
                     btnSave.Visible = false;
-               }
+                }
             }
             catch (Exception ex) { string s = ex.Message; }
         }
@@ -316,7 +322,16 @@ namespace SQM.Website
             {
                 try
                 {
-                    EHSIncidentApproval approvalRec = (EHSIncidentApproval)e.Item.DataItem;
+                    EHSIncidentApproval approvalRec = null;
+                    EHSIncidentApprovalList approvalRecNew = null;
+                    if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+                    {
+                        approvalRecNew = (EHSIncidentApprovalList)e.Item.DataItem;
+                    }
+                    else
+                    {
+                        approvalRec = (EHSIncidentApproval)e.Item.DataItem;
+                    }
                     bool canApprove = false;
 
 
@@ -325,27 +340,61 @@ namespace SQM.Website
                     Label lb = (Label)e.Item.FindControl("lbItemSeq");
                     Label lbjobd = (Label)e.Item.FindControl("lbApproverJob");
                     HiddenField hfrole = (HiddenField)e.Item.FindControl("hfRoleDesc");
+                    HiddenField hfINCFORM_APPROVER_LIST_ID = (HiddenField)e.Item.FindControl("hfINCFORM_APPROVER_LIST_ID");
+                    HiddenField hfAPPROVERType = (HiddenField)e.Item.FindControl("hfAPPROVERType");
                     CheckBox cba = (CheckBox)e.Item.FindControl("cbIsAccepted");
                     RadDatePicker rda = (RadDatePicker)e.Item.FindControl("rdpAcceptDate");
 
-                    lbjobd.Text = hfrole.Value = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
-                    lbm.Text = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION;
+
+
 
                     HiddenField hf = (HiddenField)e.Item.FindControl("hfApprovalID");
-                    hf.Value = approvalRec.approval.INCIDENT_APPROVAL_ID == null ? "0" : approvalRec.approval.INCIDENT_APPROVAL_ID.ToString();
-                    hf = (HiddenField)e.Item.FindControl("hfItemSeq");
-                    hf.Value = approvalRec.approval.ITEM_SEQ.ToString();
-                    hf = (HiddenField)e.Item.FindControl("hfPersonID");
-                    hf.Value = approvalRec.approval.APPROVER_PERSON_ID.ToString();
-                    hf = (HiddenField)e.Item.FindControl("hfReqdComplete");
-                    hf.Value = approvalRec.stepPriv.REQUIRED_COMPLETE.ToString();
-                    lb.Visible = false;
-                    lba.Text = !string.IsNullOrEmpty(approvalRec.approval.APPROVER_PERSON) ? approvalRec.approval.APPROVER_PERSON : "";
-                    cba.Checked = approvalRec.approval.IsAccepted;
-                    rda.SelectedDate = approvalRec.approval.APPROVAL_DATE;
+                    if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+                    {
+                        lbjobd.Text = hfrole.Value = approvalRecNew.approverList.DESCRIPTION;
+                        lbm.Text = approvalRecNew.approverList.DESCRIPTION_QUESTION;
+                        hfINCFORM_APPROVER_LIST_ID.Value = approvalRecNew.approverList.INCFORM_APPROVER_LIST_ID.ToString();
+                        hfAPPROVERType.Value = approvalRecNew.approverList.TYPE.ToString();
+                    }
+                    else
+                    {
+                        lbm.Text = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION;
+                        lbjobd.Text = hfrole.Value = XLATList.Where(l => l.XLAT_CODE == approvalRec.stepPriv.PRIV.ToString()).FirstOrDefault().DESCRIPTION_SHORT;
+                    }
 
-                    canApprove = SessionManager.CheckUserPrivilege((SysPriv)approvalRec.stepPriv.PRIV, SysScope.incident);
 
+                    if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+                    {
+                        hf.Value = approvalRecNew.approval.INCIDENT_APPROVAL_ID == null ? "0" : approvalRecNew.approval.INCIDENT_APPROVAL_ID.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfItemSeq");
+                        hf.Value = approvalRecNew.approval.ITEM_SEQ.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfPersonID");
+                        hf.Value = approvalRecNew.approval.APPROVER_PERSON_ID.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfReqdComplete");
+
+                        hf.Value = approvalRecNew.approverList.REQUIRED_COMPLETE.ToString();
+                        lb.Visible = false;
+                        lba.Text = !string.IsNullOrEmpty(approvalRecNew.approval.APPROVER_PERSON) ? approvalRecNew.approval.APPROVER_PERSON : SessionManager.UserContext.Person.FIRST_NAME + " " + SessionManager.UserContext.Person.LAST_NAME;
+                        cba.Checked = approvalRecNew.approval.IsAccepted;
+                        rda.SelectedDate = approvalRecNew.approval.APPROVAL_DATE;
+                        canApprove = SessionManager.CheckUserPrivilege((SysPriv)approvalRecNew.approverList.PRIV, SysScope.incident);
+                    }
+                    else
+                    {
+                        hf.Value = approvalRec.approval.INCIDENT_APPROVAL_ID == null ? "0" : approvalRec.approval.INCIDENT_APPROVAL_ID.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfItemSeq");
+                        hf.Value = approvalRec.approval.ITEM_SEQ.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfPersonID");
+                        hf.Value = approvalRec.approval.APPROVER_PERSON_ID.ToString();
+                        hf = (HiddenField)e.Item.FindControl("hfReqdComplete");
+
+                        hf.Value = approvalRec.stepPriv.REQUIRED_COMPLETE.ToString();
+                        lb.Visible = false;
+                        lba.Text = !string.IsNullOrEmpty(approvalRec.approval.APPROVER_PERSON) ? approvalRec.approval.APPROVER_PERSON : "";
+                        cba.Checked = approvalRec.approval.IsAccepted;
+                        rda.SelectedDate = approvalRec.approval.APPROVAL_DATE;
+                        canApprove = SessionManager.CheckUserPrivilege((SysPriv)approvalRec.stepPriv.PRIV, SysScope.incident);
+                    }
                     if (cba.Checked)
                     {
                         cba.Enabled = false;        // don't allow removing approval once it was given
@@ -355,23 +404,93 @@ namespace SQM.Website
                         if (canApprove && PageMode == PageUseMode.Active)
                         {
                             canApproveAny = true;
-                            lba.Text = SessionManager.UserContext.UserName();
+
                             cba.Enabled = true;
-                            if ((SysPriv)approvalRec.stepPriv.PRIV == SysPriv.approve || (SysPriv)approvalRec.stepPriv.PRIV == SysPriv.release || approvalRec.stepPriv.SIGN_MULTIPLE == 1)  // can approve at top approval level
+                            PSsqmEntities entities = new PSsqmEntities();
+                            if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
                             {
-                                foreach (RepeaterItem item in rptApprovals.Items)
+                                PERSON person = (from p in entities.PERSON
+                                                 where p.PERSON_ID == approvalRecNew.approverList.PERSON_ID
+                                                 select p).FirstOrDefault();
+                                lba.Text = (person.FIRST_NAME + " " + person.LAST_NAME);
+                                if ((SysPriv)approvalRecNew.approverList.PRIV == SysPriv.approve || (SysPriv)approvalRecNew.approverList.PRIV == SysPriv.release || approvalRecNew.approverList.SIGN_MULTIPLE == 1)  // can approve at top approval level
                                 {
-                                    PlaceHolder ph = (PlaceHolder)item.FindControl("phOnBehalfOf");
-                                    ph.Visible = true;
-                                    lba = (Label)item.FindControl("lbApprover");
-                                    lba.Text = SessionManager.UserContext.UserName();
-                                    cba = (CheckBox)item.FindControl("cbIsAccepted");
-                                    if (cba.Checked)
-                                        cba.Enabled = false;
-                                    else
-                                        cba.Enabled = true;
+                                    foreach (RepeaterItem item in rptApprovals.Items)
+                                    {
+                                        PlaceHolder ph = (PlaceHolder)item.FindControl("phOnBehalfOf");
+                                        ph.Visible = true;
+                                        lba = (Label)item.FindControl("lbApprover");
+                                        lba.Text = SessionManager.UserContext.UserName();
+                                        cba = (CheckBox)item.FindControl("cbIsAccepted");
+                                        if (cba.Checked)
+                                            cba.Enabled = false;
+                                        else
+                                        {
+                                            cba.Enabled = true;
+                                        }
+
+                                    }
                                 }
                             }
+                            else
+                            {
+                                canApproveAny = true;
+                                lba.Text = SessionManager.UserContext.UserName();
+                                cba.Enabled = true;
+                                if ((SysPriv)approvalRec.stepPriv.PRIV == SysPriv.approve || (SysPriv)approvalRec.stepPriv.PRIV == SysPriv.release || approvalRec.stepPriv.SIGN_MULTIPLE == 1)  // can approve at top approval level
+                                {
+                                    foreach (RepeaterItem item in rptApprovals.Items)
+                                    {
+                                        PlaceHolder ph = (PlaceHolder)item.FindControl("phOnBehalfOf");
+                                        ph.Visible = true;
+                                        lba = (Label)item.FindControl("lbApprover");
+                                        lba.Text = SessionManager.UserContext.UserName();
+                                        cba = (CheckBox)item.FindControl("cbIsAccepted");
+                                        if (cba.Checked)
+                                            cba.Enabled = false;
+                                        else
+                                            cba.Enabled = true;
+                                    }
+                                }
+                            }
+
+                            INCFORM_APPROVER_LIST applist = (from p in entities.INCFORM_APPROVER_LIST
+                                                             where p.INCFORM_APPROVER_LIST_ID == approvalRecNew.approverList.INCFORM_APPROVER_LIST_ID
+                                                             select p).FirstOrDefault();
+                            if (applist != null)
+                            {
+                                if (applist.PERSON_ID == SessionManager.UserContext.Person.PERSON_ID)
+                                {
+                                    cba.Enabled = true;
+                                }
+                                else if (SessionManager.UserContext.Person.PRIV_GROUP == "admin")
+                                {
+                                    cba.Enabled = true;
+                                }
+                                else
+                                {
+                                    cba.Enabled = false;
+                                }
+                            }
+                            else
+                            {
+                                if ((SysPriv)approvalRec.stepPriv.PRIV == SysPriv.approve || (SysPriv)approvalRec.stepPriv.PRIV == SysPriv.release || approvalRec.stepPriv.SIGN_MULTIPLE == 1)  // can approve at top approval level
+                                {
+                                    foreach (RepeaterItem item in rptApprovals.Items)
+                                    {
+                                        PlaceHolder ph = (PlaceHolder)item.FindControl("phOnBehalfOf");
+                                        ph.Visible = true;
+                                        lba = (Label)item.FindControl("lbApprover");
+                                        lba.Text = SessionManager.UserContext.UserName();
+                                        cba = (CheckBox)item.FindControl("cbIsAccepted");
+                                        if (cba.Checked)
+                                            cba.Enabled = false;
+                                        else
+                                            cba.Enabled = true;
+                                    }
+                                }
+                            }
+
                         }
                         else
                         {
@@ -398,19 +517,19 @@ namespace SQM.Website
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            
-                if (AddUpdateINCFORM_APPROVAL(IncidentId, "save") >= 0)
-                {
-                    string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
-                    ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
-                }
+
+            if (AddUpdateINCFORM_APPROVAL(IncidentId, "save") >= 0)
+            {
+                string script = string.Format("alert('{0}');", Resources.LocalizedText.SaveSuccess);
+                ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "alert", script, true);
+            }
             else
             {
                 lblResponseMsg.Text = "Please approve the report for distribution and check the severity levels !";
             }
 
             InitializeForm(new PSsqmEntities());
-            
+
         }
 
         public int AddUpdateINCFORM_APPROVAL(decimal incidentId, string option)
@@ -428,7 +547,7 @@ namespace SQM.Website
             bool isRequired;
             bool isChanged = false;
 
-           
+
 
             List<INCFORM_APPROVAL> approvalList = new List<INCFORM_APPROVAL>();
 
@@ -455,12 +574,16 @@ namespace SQM.Website
                     RadDatePicker rda = (RadDatePicker)item.FindControl("rdpAcceptDate");
                     HiddenField hfrole = (HiddenField)item.FindControl("hfRoleDesc");
                     HiddenField hf = (HiddenField)item.FindControl("hfItemSeq");
+                    HiddenField hfINCFORM_APPROVER_LIST_ID = (HiddenField)item.FindControl("hfINCFORM_APPROVER_LIST_ID");
                     approval.ITEM_SEQ = Convert.ToInt32(hf.Value);
                     approval.APPROVER_TITLE = hfrole.Value;
+                    if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+                    {
+                        approval.INCFORM_APPROVER_LIST_ID = Convert.ToDecimal(hfINCFORM_APPROVER_LIST_ID.Value);
+                    }
 
-                  
                     //Update SEVERITY_LEVEL value. - 
-                    if (chkSeverityLevel00.Checked && chkSeverityLevel00.Visible==true)
+                    if (chkSeverityLevel00.Checked && chkSeverityLevel00.Visible == true)
                     {
                         severityLevel = chkSeverityLevel00.Checked;
                         approval.SEVERITY_LEVEL = SysPriv.first_add.ToString();
@@ -524,7 +647,7 @@ namespace SQM.Website
 
                 if (approveerType == "Global Safety Group")
                 {
-                   
+
                     if (severityLevel)
                     {
                         lblResponseMsg.Text = "";
@@ -545,7 +668,8 @@ namespace SQM.Website
                     {
                         status = -1;
                     }
-                }else
+                }
+                else
                 {
                     status = ctx.SaveChanges();
                 }
@@ -612,10 +736,7 @@ namespace SQM.Website
                                 List<string> infoList = new List<string>();
                                 infoList.Add(approval.APPROVER_TITLE);
                                 infoList.Add(priorApproval.APPROVER_TITLE);
-
-                             
-                                    EHSNotificationMgr.NotifyIncidentSignoffRequired(LocalIncident, approval, ApprovalStep.STEP_HEADING_TEXT, approval.ITEM_SEQ >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
-                                
+                                EHSNotificationMgr.NotifyIncidentSignoffRequired(LocalIncident, approval, ApprovalStep.STEP_HEADING_TEXT, approval.ITEM_SEQ >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
                             }
                             priorApproval = approval;
                         }
@@ -624,7 +745,66 @@ namespace SQM.Website
 
 
             }
+            if (IncidentId > MaxIncidentForNewFeature && ApprovalStep.STEP < 6)
+            {
+                bool isNotify = false;
+                if (isChanged)
+                {
+                    using (PSsqmEntities ctx = new PSsqmEntities())
+                    {
 
+                        //foreach (RepeaterItem item in rptApprovals.Items)
+                        //{
+                        //    CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
+                        //    HiddenField hfINCFORM_APPROVER_LIST_ID = (HiddenField)item.FindControl("hfINCFORM_APPROVER_LIST_ID");
+                        //    HiddenField hfAPPROVERType = (HiddenField)item.FindControl("hfAPPROVERType");
+                        //    if (cba.Checked && (hfAPPROVERType.Value == "A" || hfAPPROVERType.Value == "N"))
+                        //    {
+                        //        isNotify = true;
+                        //    }
+                        //    else if (!cba.Checked && (hfAPPROVERType.Value == "A" || hfAPPROVERType.Value == "N"))
+                        //    {
+                        //        isNotify = false;
+                        //        break;
+                        //    }
+                        //}
+                        //if (isNotify)
+                        //{
+
+                        foreach (RepeaterItem item in rptApprovals.Items)
+                        {
+                            HiddenField hfrole = (HiddenField)item.FindControl("hfRoleDesc");
+                            CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
+                            HiddenField hfINCFORM_APPROVER_LIST_ID = (HiddenField)item.FindControl("hfINCFORM_APPROVER_LIST_ID");
+                            List<string> infoList = new List<string>();
+                            infoList.Add(hfrole.Value);
+                            decimal? applistid = Convert.ToDecimal(hfINCFORM_APPROVER_LIST_ID.Value);
+                            INCFORM_APPROVER_LIST appList = (from i in ctx.INCFORM_APPROVER_LIST where i.INCFORM_APPROVER_LIST_ID == applistid select i).FirstOrDefault();
+                            PERSON person = (from i in ctx.PERSON where i.PERSON_ID == appList.PERSON_ID select i).FirstOrDefault();
+                            if (!cba.Checked)
+                            {
+                                if (person != null)
+                                EHSNotificationMgr.NotifyApprover(LocalIncident, person.PERSON_ID, ApprovalStep.STEP_HEADING_TEXT, appList.PRIV >= 390 ? "SIGNOFF" : "APPROVAL", infoList);
+                            }
+                        }
+                        //CheckBox cba = (CheckBox)item.FindControl("cbIsAccepted");
+                        //HiddenField hfINCFORM_APPROVER_LIST_ID = (HiddenField)item.FindControl("hfINCFORM_APPROVER_LIST_ID");
+                        //HiddenField hfAPPROVERType = (HiddenField)item.FindControl("hfAPPROVERType");
+                        //if (!cba.Checked && (hfAPPROVERType.Value == "R"))
+                        //{
+                        //    decimal? applistid = Convert.ToDecimal(hfINCFORM_APPROVER_LIST_ID.Value);
+                        //    INCFORM_APPROVER_LIST appList = (from i in ctx.INCFORM_APPROVER_LIST where i.INCFORM_APPROVER_LIST_ID == applistid select i).FirstOrDefault();
+                        //    if (appList.PERSON_ID != null)
+                        //    {
+                        //        PERSON person = (from i in ctx.PERSON where i.PERSON_ID == appList.PERSON_ID select i).FirstOrDefault();
+                        //        EHSNotificationMgr.NotifyRegionalApprover(person.PERSON_ID, "Notify Regional Approver");
+                        //    }
+                        //}
+
+                        //}
+                    }
+                }
+            }
             return status;
         }
 

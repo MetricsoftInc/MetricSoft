@@ -100,6 +100,8 @@
 					</div>
 					<div class="col-xs-12  col-sm-1 text-left">
 						<span>
+                            <asp:HiddenField ID="hfINCFORM_APPROVER_LIST_ID" runat="server" />
+                            <asp:HiddenField ID="hfAPPROVERType" runat="server" />
 						<asp:CheckBox ID="cbIsAccepted" CssClass="SGroup" runat="server" Font-Bold="False" meta:resourcekey="cbIsAcceptedResource1" SkinID="Metro" onChange="return ChangeUpdate();" />
 						</span>
 					</div>
