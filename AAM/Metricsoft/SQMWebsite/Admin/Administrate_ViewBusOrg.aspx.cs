@@ -225,7 +225,7 @@ namespace SQM.Website
         }
         protected void tab_Click(string tabID, string cmdArg)
         {
-            pnlSubLists.Visible = pnlPartProgram.Visible = pnlBusOrgEdit.Visible = pnlAdminEdit.Visible = pnlEscalation.Visible = false;
+            pnlSubLists.Visible = pnlPartProgram.Visible = pnlBusOrgEdit.Visible = pnlAdminEdit.Visible = pnlEscalation.Visible= false;
 
             if (tabID != null)
             {
@@ -252,6 +252,7 @@ namespace SQM.Website
                         pnlEscalation.Visible = true;
 						UpdateNotifyActionList("");
                         break;
+                     
                     default:
                         pnlBusOrgEdit.Visible = true;
                         DisplayBusOrg();
@@ -621,6 +622,10 @@ namespace SQM.Website
         }
         #endregion
 
+
+       
+
+    
         // manage current session object  (formerly was page static variable)
         OrgData LocalOrg()
         {

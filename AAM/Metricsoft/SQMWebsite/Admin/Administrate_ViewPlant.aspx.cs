@@ -9,10 +9,10 @@ using SQM.Shared;
 
 namespace SQM.Website
 {
-    public partial class Administrate_ViewPlant : SQMBasePage 
+    public partial class Administrate_ViewPlant : SQMBasePage
     {
-      
-       // static List<LOCAL_LANGUAGE> langList;
+
+        // static List<LOCAL_LANGUAGE> langList;
 
         public bool isEditMode
         {
@@ -36,7 +36,7 @@ namespace SQM.Website
             uclAdminEdit.OnEditSaveClick += uclAdminEdit_OnSaveClick;
             uclAdminEdit.OnEditCancelClick += uclAdminEdit_OnCancelClick;
 
-			uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
+            uclNotifyList.OnNotifyActionCommand += UpdateNotifyActionList;
         }
 
         private void uclAdminTabs_OnTabClick(string tabID, string cmdArg)
@@ -61,16 +61,16 @@ namespace SQM.Website
                 uclSearchBar.SetButtonsVisible(false, false, false, false, false, true);
                 uclSearchBar.SetButtonsEnabled(false, false, false, false, false, true);
                 uclSearchBar.ReturnButton.Text = lblViewBusOrgText.Text;
-                if (SessionManager.IsEffLocationPrimary() &&  SessionManager.EffLocation.Plant != null)
+                if (SessionManager.IsEffLocationPrimary() && SessionManager.EffLocation.Plant != null)
                     divNavArea.Visible = true;
                 else
                     divNavArea.Visible = false;
 
                 //if (SessionManager.EffLocation.Plant != null)
-               // {
-                    ClearTempData();
-                    SetupPage();
-               // }
+                // {
+                ClearTempData();
+                SetupPage();
+                // }
             }
             else
             {
@@ -108,7 +108,7 @@ namespace SQM.Website
             ddl.DataBind();
             ddl.SelectedIndex = 0;
 
-            if (SessionManager.EffLocation != null  &&  SessionManager.EffLocation.BusinessOrg != null  &&  ddl.Items.FindByValue(SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID.ToString()) != null)
+            if (SessionManager.EffLocation != null && SessionManager.EffLocation.BusinessOrg != null && ddl.Items.FindByValue(SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID.ToString()) != null)
             {
                 ddl.SelectedValue = SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID.ToString();
             }
@@ -132,12 +132,12 @@ namespace SQM.Website
             ddl.DataBind();
             ddl.SelectedValue = "035";
 
-			ddlLocalLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
-			ddlLocalLanguage.DataTextField = "LANGUAGE_NAME";
-			ddlLocalLanguage.DataValueField = "LANGUAGE_ID";
-			ddlLocalLanguage.DataBind();
-			ddlLocalLanguage.SelectedIndex = 0;
- 
+            ddlLocalLanguage.DataSource = SQMModelMgr.SelectLanguageList(entities, true);
+            ddlLocalLanguage.DataTextField = "LANGUAGE_NAME";
+            ddlLocalLanguage.DataValueField = "LANGUAGE_ID";
+            ddlLocalLanguage.DataBind();
+            ddlLocalLanguage.SelectedIndex = 0;
+
             SetStatusList("ddlPlantStatus", "A");
 
             tab_Click("lbPLantDetail_tab", "");
@@ -147,7 +147,7 @@ namespace SQM.Website
         {
             List<BUSINESS_ORG> parent_orgs = SQMModelMgr.SelectBusOrgList(entities, SessionManager.EffLocation.Company.COMPANY_ID, 0, true);
             DropDownList ddl = (DropDownList)hfBase.FindControl("ddlParentBusOrg");
-           
+
             if (plant.BUS_ORG_ID > 0)
                 ddl.SelectedValue = plant.BUS_ORG_ID.ToString();
 
@@ -160,8 +160,8 @@ namespace SQM.Website
             if (ddlPowerSourcedRegion.Items.FindByValue(plant.COMP_INT_ID) != null)
                 ddlPowerSourcedRegion.SelectedValue = plant.COMP_INT_ID;
 
-			if (ddlLocalLanguage.Items.FindByValue(plant.LOCAL_LANGUAGE.ToString()) != null)
-				ddlLocalLanguage.SelectedValue = plant.LOCAL_LANGUAGE.ToString();
+            if (ddlLocalLanguage.Items.FindByValue(plant.LOCAL_LANGUAGE.ToString()) != null)
+                ddlLocalLanguage.SelectedValue = plant.LOCAL_LANGUAGE.ToString();
 
             ddl = (DropDownList)hfBase.FindControl("ddlPlantCurrencyCodes");
             if (!string.IsNullOrEmpty(plant.CURRENCY_CODE))
@@ -170,11 +170,11 @@ namespace SQM.Website
             ddl = (DropDownList)hfBase.FindControl("ddlPlantTimezone");
             if (!string.IsNullOrEmpty(plant.LOCAL_TIMEZONE))
                 ddl.SelectedValue = plant.LOCAL_TIMEZONE;
-           /*
-            ddl = (DropDownList)hfBase.FindControl("ddlPlantLanguage");
-            if (plant.LOCAL_LANGUAGE.HasValue)
-                ddl.SelectedValue = plant.LOCAL_LANGUAGE.ToString();
-            */
+            /*
+             ddl = (DropDownList)hfBase.FindControl("ddlPlantLanguage");
+             if (plant.LOCAL_LANGUAGE.HasValue)
+                 ddl.SelectedValue = plant.LOCAL_LANGUAGE.ToString();
+             */
             SetStatusList("ddlPlantStatus", plant.STATUS);
         }
 
@@ -208,20 +208,20 @@ namespace SQM.Website
         {
             uclAdminTabs.PlantPanel.Visible = true;
             uclSubLists.ToggleVisible(null);
-            pnlAdminEdit.Visible = pnlPlantEdit.Visible = pnlPlantDocs.Visible = pnlEscalation.Visible = pnlB2B.Visible = false;
+            pnlAdminEdit.Visible = pnlPlantEdit.Visible = pnlPlantDocs.Visible = pnlEscalation.Visible = pnlB2B.Visible = pnlAddRegionalApprover.Visible = pnlAddApprover.Visible = false;
             SetActiveTab(SessionManager.CurrentSecondaryTab = tabID);
 
             if (tabID != null)
             {
                 isEditMode = false;
                 // setup for ps_admin.js to toggle the tab active/inactive display
-               SessionManager.CurrentSecondaryTab = tabID;
+                SessionManager.CurrentSecondaryTab = tabID;
 
                 switch (cmdArg)
                 {
-					case "user":
-						Response.Redirect("/Admin/Administrate_ViewUser.aspx?loc=" + SessionManager.EffLocation.Plant.PLANT_ID.ToString());
-						break;
+                    case "user":
+                        Response.Redirect("/Admin/Administrate_ViewUser.aspx?loc=" + SessionManager.EffLocation.Plant.PLANT_ID.ToString());
+                        break;
                     case "dept":
                         DoDeptList();
                         pnlSubLists.Visible = true;
@@ -244,12 +244,22 @@ namespace SQM.Website
                         break;
                     case "notify":
                         pnlEscalation.Visible = true;
-						UpdateNotifyActionList("");
+                        UpdateNotifyActionList("");
                         break;
                     case "docs":
                         pnlPlantDocs.Visible = true;
                         uclDocMgr.BindDocMgr("BLI", 0, SessionManager.EffLocation.Plant.PLANT_ID);
                         break;
+                    case "approve":
+                        pnlAddApprover.Visible = true;
+                        //AddFirstEntryApproverListActionList();
+                        UpdateApproverListActionList("");
+                        break;
+                    case "regionalapprover":
+                        pnlAddRegionalApprover.Visible = true;
+                        UpdateRegionalApproverListActionList("");
+                        break;
+
                     default:
                         pnlPlantEdit.Visible = true;
                         if (SessionManager.EffLocation.Plant != null)
@@ -259,10 +269,10 @@ namespace SQM.Website
             }
         }
 
-		private void UpdateNotifyActionList(string cmd)
-		{
-			uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, null, SessionManager.EffLocation.Plant.PLANT_ID).OrderBy(n=> n.NOTIFY_SCOPE).ThenBy(n=> n.SCOPE_TASK).ToList(), SessionManager.EffLocation, "plant");
-		}
+        private void UpdateNotifyActionList(string cmd)
+        {
+            uclNotifyList.BindNotfyPlan(SQMModelMgr.SelectNotifyActionList(entities, null, SessionManager.EffLocation.Plant.PLANT_ID).OrderBy(n => n.NOTIFY_SCOPE).ThenBy(n => n.SCOPE_TASK).ToList(), SessionManager.EffLocation, "plant");
+        }
 
         private void uclAdminEdit_OnSaveClick(string cmd)
         {
@@ -304,17 +314,17 @@ namespace SQM.Website
         protected void lnkPlantView_Click(object sender, EventArgs e)
         {
             PLANT plant = (PLANT)SessionManager.EffLocation.Plant;
-    
+
             TextBox tbPlantName = (TextBox)hfBase.FindControl("tbPlantName"); tbPlantName.Text = plant.PLANT_NAME;
             TextBox tbPlantDesc = (TextBox)hfBase.FindControl("tbPlantDesc"); tbPlantDesc.Text = plant.DISP_PLANT_NAME;
             TextBox tbPlantLocCode = (TextBox)hfBase.FindControl("tbPlantLocCode"); tbPlantLocCode.Text = plant.DUNS_CODE;
-			TextBox tbAltPlantCode = (TextBox)hfBase.FindControl("tbAltPlantCode"); tbAltPlantCode.Text = plant.ALT_DUNS_CODE;
+            TextBox tbAltPlantCode = (TextBox)hfBase.FindControl("tbAltPlantCode"); tbAltPlantCode.Text = plant.ALT_DUNS_CODE;
             cbTrackFinData.Checked = (bool)plant.TRACK_FIN_DATA;
             cbTrackEWData.Checked = (bool)plant.TRACK_EW_DATA;
             Label lblLastUpdate = (Label)hfBase.FindControl("lblPlantLastUpdate"); lblLastUpdate.Text = plant.LAST_UPD_BY;
             lblPlantLastUpdateDate.Text = SQMBasePage.FormatDate(WebSiteCommon.LocalTime((DateTime)plant.LAST_UPD_DT, SessionManager.UserContext.TimeZoneID), "d", false);
-           // Label lblLastUpdateDate = (Label)hfBase.FindControl("lblPlantLastUpdateDate"); lblLastUpdateDate.Text = WebSiteCommon.LocalTime((DateTime)plant.LAST_UPD_DT, SessionManager.UserContext.TimeZoneID).ToString();
-            
+            // Label lblLastUpdateDate = (Label)hfBase.FindControl("lblPlantLastUpdateDate"); lblLastUpdateDate.Text = WebSiteCommon.LocalTime((DateTime)plant.LAST_UPD_DT, SessionManager.UserContext.TimeZoneID).ToString();
+
             LoadPlantSelects(plant);
 
             if (plant.ADDRESS != null)
@@ -330,25 +340,25 @@ namespace SQM.Website
                 }
             }
 
-			int [] recList = new int[5] {30, 40, 45, 50, 90};
-			PLANT_ACTIVE pa = null;
-			List<PLANT_ACTIVE> plantActiveList = new List<PLANT_ACTIVE>();
-			foreach (int recType in recList)
-			{
-				PLANT_ACTIVE plantActive = new PLANT_ACTIVE();
-				plantActive.PLANT_ID = plant.PLANT_ID;
-				plantActive.RECORD_TYPE = recType;
-				plantActive.ENABLE_EMAIL = true;
-				if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == recType).FirstOrDefault()) != null)
-				{
-					plantActive.EFF_START_DATE = pa.EFF_START_DATE;
-					plantActive.EFF_END_DATE = pa.EFF_END_DATE;
-					plantActive.ENABLE_EMAIL = pa.ENABLE_EMAIL;
-					plantActive.ENABLE_INACTIVE_HIST = pa.ENABLE_INACTIVE_HIST;
-				}
-				plantActiveList.Add(plantActive);
-			}
-			BindPlantActive(plantActiveList);
+            int[] recList = new int[5] { 30, 40, 45, 50, 90 };
+            PLANT_ACTIVE pa = null;
+            List<PLANT_ACTIVE> plantActiveList = new List<PLANT_ACTIVE>();
+            foreach (int recType in recList)
+            {
+                PLANT_ACTIVE plantActive = new PLANT_ACTIVE();
+                plantActive.PLANT_ID = plant.PLANT_ID;
+                plantActive.RECORD_TYPE = recType;
+                plantActive.ENABLE_EMAIL = true;
+                if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == recType).FirstOrDefault()) != null)
+                {
+                    plantActive.EFF_START_DATE = pa.EFF_START_DATE;
+                    plantActive.EFF_END_DATE = pa.EFF_END_DATE;
+                    plantActive.ENABLE_EMAIL = pa.ENABLE_EMAIL;
+                    plantActive.ENABLE_INACTIVE_HIST = pa.ENABLE_INACTIVE_HIST;
+                }
+                plantActiveList.Add(plantActive);
+            }
+            BindPlantActive(plantActiveList);
 
             LocalOrg().EditObject = plant;
         }
@@ -362,7 +372,7 @@ namespace SQM.Website
 
             TextBox tbPlantName = (TextBox)hfBase.FindControl("tbPlantName");
             TextBox tbPlantDesc = (TextBox)hfBase.FindControl("tbPlantDesc");
-            TextBox tbOrgLocCode = (TextBox)hfBase.FindControl("tbOrgLocCode"); 
+            TextBox tbOrgLocCode = (TextBox)hfBase.FindControl("tbOrgLocCode");
             TextBox tbPlantLocCode = (TextBox)hfBase.FindControl("tbPlantLocCode");
 
             DropDownList ddlParentBusOrg = (DropDownList)hfBase.FindControl("ddlParentBusOrg");
@@ -390,17 +400,17 @@ namespace SQM.Website
                 plant.PLANT_NAME = tbPlantName.Text.Trim();
                 plant.DISP_PLANT_NAME = tbPlantDesc.Text.Trim();
                 plant.DUNS_CODE = tbPlantLocCode.Text.Trim();
-				plant.ALT_DUNS_CODE = tbAltPlantCode.Text.Trim();
+                plant.ALT_DUNS_CODE = tbAltPlantCode.Text.Trim();
                 plant.LOCATION_CODE = ddlCountryCode.SelectedValue;
                 if (plant.LOCATION_CODE == "US")
                     plant.COMP_INT_ID = ddlPowerSourcedRegion.SelectedValue;
                 else
                     plant.COMP_INT_ID = "";
 
-				if (!string.IsNullOrEmpty(ddlLocalLanguage.SelectedValue))
-					plant.LOCAL_LANGUAGE = Convert.ToInt32(ddlLocalLanguage.SelectedValue);
-				else
-					plant.LOCAL_LANGUAGE = null;
+                if (!string.IsNullOrEmpty(ddlLocalLanguage.SelectedValue))
+                    plant.LOCAL_LANGUAGE = Convert.ToInt32(ddlLocalLanguage.SelectedValue);
+                else
+                    plant.LOCAL_LANGUAGE = null;
 
                 plant.LOCATION_TYPE = ddlLocationType.SelectedValue;
                 plant.TRACK_FIN_DATA = cbTrackFinData.Checked;
@@ -408,7 +418,7 @@ namespace SQM.Website
                 plant.BUS_ORG_ID = Int32.Parse(ddlParentBusOrg.SelectedValue);
                 plant.CURRENCY_CODE = ddlPlantCurrecyCodes.SelectedValue;
                 plant.LOCAL_TIMEZONE = ddlPlantTimeZone.SelectedValue;
-               // plant.LOCAL_LANGUAGE = Convert.ToInt32(ddlPlantLanguage.SelectedValue);
+                // plant.LOCAL_LANGUAGE = Convert.ToInt32(ddlPlantLanguage.SelectedValue);
                 plant.STATUS = ddlStatus.SelectedValue;
 
                 if (plant.ADDRESS == null || plant.ADDRESS.Count == 0)
@@ -429,46 +439,46 @@ namespace SQM.Website
                 address.POSTAL_CODE = tbPostal.Text;
                 address.COUNTRY = ddlCountryCode.SelectedValue;
 
-				foreach (GridItem item in rgPlantActive.Items)
-				{
-					PLANT_ACTIVE plantActive = null;
-					PLANT_ACTIVE pa = null;
+                foreach (GridItem item in rgPlantActive.Items)
+                {
+                    PLANT_ACTIVE plantActive = null;
+                    PLANT_ACTIVE pa = null;
 
-					HiddenField hfRecType = (HiddenField)item.FindControl("hfRecordType");
-					RadMonthYearPicker rdp1 = (RadMonthYearPicker)item.FindControl("rdpStartDate");
-					RadMonthYearPicker rdp2 = (RadMonthYearPicker)item.FindControl("rdpStopDate");
-					CheckBox cb1 = (CheckBox)item.FindControl("cbEnableEmail");
-					CheckBox cb2 = (CheckBox)item.FindControl("cbViewInactiveHist");
+                    HiddenField hfRecType = (HiddenField)item.FindControl("hfRecordType");
+                    RadMonthYearPicker rdp1 = (RadMonthYearPicker)item.FindControl("rdpStartDate");
+                    RadMonthYearPicker rdp2 = (RadMonthYearPicker)item.FindControl("rdpStopDate");
+                    CheckBox cb1 = (CheckBox)item.FindControl("cbEnableEmail");
+                    CheckBox cb2 = (CheckBox)item.FindControl("cbViewInactiveHist");
 
-					try
-					{
-						if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == Convert.ToInt32(hfRecType.Value)).FirstOrDefault()) != null)
-						{
-							pa.EFF_START_DATE = rdp1.SelectedDate;
-							pa.EFF_END_DATE = rdp2.SelectedDate;
-							pa.ENABLE_EMAIL = cb1.Checked;
-							pa.ENABLE_INACTIVE_HIST = cb2.Checked;
-						}
-						else
-						{
-							plantActive = new PLANT_ACTIVE();
-							plantActive.PLANT_ID = plant.PLANT_ID;
-							plantActive.RECORD_TYPE = Convert.ToInt32(hfRecType.Value);
-							plantActive.EFF_START_DATE = rdp1.SelectedDate;
-							plantActive.EFF_END_DATE = rdp2.SelectedDate;
-							plantActive.ENABLE_EMAIL = cb1.Checked;
-							plantActive.ENABLE_INACTIVE_HIST = cb2.Checked;
-							plant.PLANT_ACTIVE.Add(plantActive);
-							//entities.AddToPLANT_ACTIVE(plantActive);
-						}
-					}
-					catch { }
-				}
+                    try
+                    {
+                        if ((pa = plant.PLANT_ACTIVE.Where(p => p.RECORD_TYPE == Convert.ToInt32(hfRecType.Value)).FirstOrDefault()) != null)
+                        {
+                            pa.EFF_START_DATE = rdp1.SelectedDate;
+                            pa.EFF_END_DATE = rdp2.SelectedDate;
+                            pa.ENABLE_EMAIL = cb1.Checked;
+                            pa.ENABLE_INACTIVE_HIST = cb2.Checked;
+                        }
+                        else
+                        {
+                            plantActive = new PLANT_ACTIVE();
+                            plantActive.PLANT_ID = plant.PLANT_ID;
+                            plantActive.RECORD_TYPE = Convert.ToInt32(hfRecType.Value);
+                            plantActive.EFF_START_DATE = rdp1.SelectedDate;
+                            plantActive.EFF_END_DATE = rdp2.SelectedDate;
+                            plantActive.ENABLE_EMAIL = cb1.Checked;
+                            plantActive.ENABLE_INACTIVE_HIST = cb2.Checked;
+                            plant.PLANT_ACTIVE.Add(plantActive);
+                            //entities.AddToPLANT_ACTIVE(plantActive);
+                        }
+                    }
+                    catch { }
+                }
 
                 if (SQMModelMgr.UpdatePlant(entities, plant, SessionManager.UserContext.UserName()) != null)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alertResult('hfAlertSaveSuccess');", true);
-					lbPlantSave_Click(lbPlantCancel1, null);
+                    lbPlantSave_Click(lbPlantCancel1, null);
                 }
                 else
                 {
@@ -485,7 +495,7 @@ namespace SQM.Website
             LocalOrg().EditObject = null;
             SetupPage();
         }
-        
+
         private void ErrorAlert(string errorType)
         {
             HiddenField hf = (HiddenField)hfBase.FindControl("hfErr" + errorType);
@@ -494,57 +504,57 @@ namespace SQM.Website
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('" + hf.Value + "');", true);
             }
         }
-        
-        #endregion  
 
-		#region plantactive
-		private void BindPlantActive(List<PLANT_ACTIVE> plantActiveList)
-		{
-			if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.system)  &&  SessionManager.UserContext.Person.PERSON_ID == 1)
-				rgPlantActive.Enabled = true;
-			else
-				rgPlantActive.Enabled = false;
+        #endregion
 
-			rgPlantActive.DataSource = plantActiveList;
-			rgPlantActive.DataBind();
-		}
+        #region plantactive
+        private void BindPlantActive(List<PLANT_ACTIVE> plantActiveList)
+        {
+            if (SessionManager.CheckUserPrivilege(SysPriv.admin, SysScope.system) && SessionManager.UserContext.Person.PERSON_ID == 1)
+                rgPlantActive.Enabled = true;
+            else
+                rgPlantActive.Enabled = false;
 
-		protected void rgPlantActive_ItemDataBound(object sender, GridItemEventArgs e)
-		{
-			if (e.Item is GridDataItem)
-			{
-				try
-				{
-					GridDataItem item = (GridDataItem)e.Item;
-					PLANT_ACTIVE plantActive = (PLANT_ACTIVE)e.Item.DataItem;
+            rgPlantActive.DataSource = plantActiveList;
+            rgPlantActive.DataBind();
+        }
 
-					HiddenField hf = (HiddenField)item.FindControl("hPlantID");
+        protected void rgPlantActive_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                try
+                {
+                    GridDataItem item = (GridDataItem)e.Item;
+                    PLANT_ACTIVE plantActive = (PLANT_ACTIVE)e.Item.DataItem;
 
-					Label lbl = (Label)item.FindControl("lblModule");
-					lbl.Text = ((TaskRecordType)plantActive.RECORD_TYPE).ToString();
+                    HiddenField hf = (HiddenField)item.FindControl("hPlantID");
 
-					RadMonthYearPicker rdp = (RadMonthYearPicker)item.FindControl("rdpStartDate");
-					rdp.SelectedDate = plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE : null;
+                    Label lbl = (Label)item.FindControl("lblModule");
+                    lbl.Text = ((TaskRecordType)plantActive.RECORD_TYPE).ToString();
 
-					rdp = (RadMonthYearPicker)item.FindControl("rdpStopDate");
-					rdp.SelectedDate = plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE : null;
+                    RadMonthYearPicker rdp = (RadMonthYearPicker)item.FindControl("rdpStartDate");
+                    rdp.SelectedDate = plantActive.EFF_START_DATE.HasValue ? plantActive.EFF_START_DATE : null;
 
-					CheckBox cb = (CheckBox)item.FindControl("cbEnableEmail");
-					cb.Checked = (bool)plantActive.ENABLE_EMAIL;
+                    rdp = (RadMonthYearPicker)item.FindControl("rdpStopDate");
+                    rdp.SelectedDate = plantActive.EFF_END_DATE.HasValue ? plantActive.EFF_END_DATE : null;
 
-					cb = (CheckBox)item.FindControl("cbViewInactiveHist");
-					cb.Checked = (bool)plantActive.ENABLE_INACTIVE_HIST;
-				}
-				catch
-				{
-				}
-			}
-		}
-		#endregion
+                    CheckBox cb = (CheckBox)item.FindControl("cbEnableEmail");
+                    cb.Checked = (bool)plantActive.ENABLE_EMAIL;
 
-		#region department
+                    cb = (CheckBox)item.FindControl("cbViewInactiveHist");
+                    cb.Checked = (bool)plantActive.ENABLE_INACTIVE_HIST;
+                }
+                catch
+                {
+                }
+            }
+        }
+        #endregion
 
-		private void DoDeptList()
+        #region department
+
+        private void DoDeptList()
         {
             PLANT plant = (PLANT)SessionManager.EffLocation.Plant;
             LocalOrg().DeptList = SQMModelMgr.SelectDepartmentList(entities, (decimal)plant.COMPANY_ID, (decimal)plant.BUS_ORG_ID, plant.PLANT_ID);
@@ -602,7 +612,7 @@ namespace SQM.Website
         private void DoLaborList()
         {
             PLANT plant = (PLANT)SessionManager.EffLocation.Plant;
-            
+
             LocalOrg().LaborList = SQMModelMgr.SelectLaborTypeList(entities, (decimal)plant.COMPANY_ID, (decimal)plant.BUS_ORG_ID, plant.PLANT_ID);
 
             uclSubLists.BindLaborList(LocalOrg().LaborList);
@@ -690,7 +700,7 @@ namespace SQM.Website
                 PLANT_LINE lineNew = new PLANT_LINE();
                 lineNew = uclAdminEdit.ReadPlantLine(lineNew);
                 SQMModelMgr.CreatePlantLine(entities, plant, lineNew, SessionManager.UserContext.UserName());
-               // plant.PLANT_LINE.Load();
+                // plant.PLANT_LINE.Load();
             }
             else
             {
@@ -733,7 +743,32 @@ namespace SQM.Website
             uclCustList.BindSuppPartList(tradeList, LocalOrg().PersonList);
         }
         #endregion
+        #region approver
+        private void UpdateApproverListActionList(string cmd)
+        {
+            AddApprover.BindApproverListA(SQMModelMgr.SelectINCFORMAPPROVERLIST(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, SessionManager.EffLocation.Plant.PLANT_ID, "A").ToList(), SessionManager.EffLocation, "busorg");
+            AddApprover.BindApproverListR(SQMModelMgr.SelectINCFORMAPPROVERLIST(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, SessionManager.EffLocation.Plant.PLANT_ID, "R").ToList(), SessionManager.EffLocation, "busorg");
+        }
 
+        private void AddFirstEntryApproverListActionList()
+        {
+            using (PSsqmEntities entities = new PSsqmEntities())
+            {
+                int count = (from p in entities.INCFORM_APPROVER_LIST where p.PLANT_ID == SessionManager.EffLocation.Plant.PLANT_ID && p.TYPE == "A" select p).Count();
+                if (count <= 0)
+                {
+                    AddApprover.SaveFirstApproverItem();
+                }
+            }
+
+        }
+        #endregion
+        #region regionalapprover
+        private void UpdateRegionalApproverListActionList(string cmd)
+        {
+            AddRegionalApprover.BindRegionalApproverList(SQMModelMgr.SelectINCFORMREGIONALAPPROVERLIST(entities, SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID, SessionManager.EffLocation.Plant.PLANT_ID).ToList(), SessionManager.EffLocation, "busorg");
+        }
+        #endregion
         // manage current session object  (formerly was page static variable)
         OrgData LocalOrg()
         {

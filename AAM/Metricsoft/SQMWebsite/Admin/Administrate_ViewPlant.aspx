@@ -8,6 +8,8 @@
 <%@ Register src="~/Include/Ucl_DocMgr.ascx" TagName="DocMgr" TagPrefix="Ucl" %>
 <%@ Register src="~/Include/Ucl_B2BList.ascx" TagName="B2BList" TagPrefix="Ucl" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<%@ Register Src="~/Include/Ucl_AddApprover.ascx" TagName="AddApprover" TagPrefix="Ucl" %>
+<%@ Register Src="~/Include/Ucl_AddRegionalApprover.ascx" TagName="AddRegionalApprover" TagPrefix="Ucl" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder_Body" runat="server">
 
      <div class="admin_tabs">
@@ -339,6 +341,12 @@
 						<asp:Panel runat="server" ID="pnlEscalation">
                                 <Ucl:NotifyList id="uclNotifyList" runat="server"/>
                         </asp:Panel>
+                         <asp:Panel runat="server" ID="pnlAddApprover">
+        <Ucl:AddApprover ID="AddApprover" runat="server" />
+    </asp:Panel>
+                        <asp:Panel runat="server" ID="pnlAddRegionalApprover"> 
+        <Ucl:AddRegionalApprover ID="AddRegionalApprover" runat="server" />
+    </asp:Panel>
                     </div>
                 </form>
             </td>

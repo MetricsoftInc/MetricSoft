@@ -632,5 +632,41 @@ namespace SQM.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::SQM.Website.Ucl_NotifyList uclNotifyList;
+        
+        /// <summary>
+        /// pnlAddApprover control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAddApprover;
+        
+        /// <summary>
+        /// AddApprover control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Include.Ucl_AddApprover AddApprover;
+        
+        /// <summary>
+        /// pnlAddRegionalApprover control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAddRegionalApprover;
+        
+        /// <summary>
+        /// AddRegionalApprover control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::SQM.Website.Include.Ucl_AddRegionalApprover AddRegionalApprover;
     }
 }
