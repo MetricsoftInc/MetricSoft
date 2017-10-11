@@ -50,6 +50,13 @@ namespace SQM.Website
         public INCFORM_STEP_PRIV stepPriv { get; set; }
     }
 
+    [Serializable]
+    public class EHSIncidentApprovalList
+    {
+        public INCFORM_APPROVAL approval { get; set; }
+        public EHSIncidentMgr.INCFORM_APPROVER_LISTWITHLOG approverList { get; set; }
+    }
+
 
     public class EHSIncidentTimeAccounting
     {
@@ -436,7 +443,7 @@ namespace SQM.Website
 
             return inType;
         }
-                
+
         //Function to fetch value of severity level.
         public static List<XLAT> PopulateSeverityLevel()
         {
@@ -1586,9 +1593,225 @@ namespace SQM.Website
                 }
             }
 
+
             return approvalList;
         }
 
+        [Serializable]
+        public class INCFORM_APPROVER_LISTWITHLOG
+        {
+            public decimal? INCFORM_APPROVER_LIST_ID { get; set; }
+            public decimal? BUS_ORG_ID { get; set; }
+            public decimal? PLANT_ID { get; set; }
+            public decimal? COMPANY_ID { get; set; }
+            public string SSO_ID { get; set; }
+            public decimal? PERSON_ID { get; set; }
+            public string DESCRIPTION { get; set; }
+            public decimal? STEP { get; set; }
+            public int? PRIV { get; set; }
+            public string DESCRIPTION_QUESTION { get; set; }
+            public bool? REQUIRED_COMPLETE { get; set; }
+            public int? SIGN_MULTIPLE { get; set; }
+            public DateTime? CREATED_DATE { get; set; }
+            public string TYPE { get; set; }
+            public decimal? STEPFLASH { get; set; }
+
+        }
+        public static List<EHSIncidentApprovalList> GetApprovalListAR(PSsqmEntities ctx, decimal typeID, decimal step, decimal incidentID, DateTime? defaultDate, int approvalLevel)
+        {
+            // get required approvals for this step
+            decimal incidentTypeID = typeID;
+
+            // use default 0 incident type if specific type not defined in the priv table
+            if ((from p in ctx.INCFORM_STEP_PRIV where p.INCIDENT_TYPE == typeID select p.PRIV).Count() == 0)
+            {
+                incidentTypeID = 0;
+            }
+            List<EHSIncidentApprovalList> approvalListA = null;
+            List<EHSIncidentApprovalList> approvalListR = null;
+            List<EHSIncidentApprovalList> approvalListN = null;
+            INCIDENT incident = (from i in ctx.INCIDENT where i.INCIDENT_ID == incidentID select i).FirstOrDefault();
+            if (incident != null)
+            {
+                //if (incident.DETECT_BUS_ORG_ID != SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID && incident.DETECT_PLANT_ID != SessionManager.EffLocation.Plant.PLANT_ID)
+                //{
+
+                IQueryable<INCFORM_APPROVER_LISTWITHLOG> INCFORMAPPROVERLIST = from t in ctx.INCFORM_APPROVER_LIST
+                                                                               select new INCFORM_APPROVER_LISTWITHLOG
+                                                                               {
+                                                                                   INCFORM_APPROVER_LIST_ID = t.INCFORM_APPROVER_LIST_ID,
+                                                                                   BUS_ORG_ID = t.BUS_ORG_ID,
+                                                                                   PLANT_ID = t.PLANT_ID,
+                                                                                   COMPANY_ID = t.COMPANY_ID,
+                                                                                   SSO_ID = t.SSO_ID,
+                                                                                   PERSON_ID = t.PERSON_ID,
+                                                                                   DESCRIPTION = t.DESCRIPTION,
+                                                                                   STEP = t.STEP,
+                                                                                   PRIV = t.PRIV,
+                                                                                   DESCRIPTION_QUESTION = t.DESCRIPTION_QUESTION,
+                                                                                   REQUIRED_COMPLETE = t.REQUIRED_COMPLETE,
+                                                                                   SIGN_MULTIPLE = t.SIGN_MULTIPLE,
+                                                                                   CREATED_DATE = t.CREATED_DATE,
+                                                                                   TYPE = t.TYPE,
+                                                                                   STEPFLASH = t.STEPFLASH
+
+                                                                               };
+                var listData = (from i in ctx.INCFORM_APPROVAL where i.INCIDENT_ID==incident.INCIDENT_ID select i.INCFORM_APPROVER_LIST_ID).ToList();
+                IQueryable<INCFORM_APPROVER_LISTWITHLOG> INCFORMAPPROVERLISTLog = from t in ctx.INCFORM_APPROVER_LIST_LOG where listData.Contains(t.INCFORM_APPROVER_LIST_ID)
+                                                                                  select new INCFORM_APPROVER_LISTWITHLOG
+                                                                                  {
+                                                                                      INCFORM_APPROVER_LIST_ID = t.INCFORM_APPROVER_LIST_ID,
+                                                                                      BUS_ORG_ID = t.BUS_ORG_ID,
+                                                                                      PLANT_ID = t.PLANT_ID,
+                                                                                      COMPANY_ID = t.COMPANY_ID,
+                                                                                      SSO_ID = t.SSO_ID,
+                                                                                      PERSON_ID = t.PERSON_ID,
+                                                                                      DESCRIPTION = t.DESCRIPTION,
+                                                                                      STEP = t.STEP,
+                                                                                      PRIV = t.PRIV,
+                                                                                      DESCRIPTION_QUESTION = t.DESCRIPTION_QUESTION,
+                                                                                      REQUIRED_COMPLETE = t.REQUIRED_COMPLETE,
+                                                                                      SIGN_MULTIPLE = t.SIGN_MULTIPLE,
+                                                                                      CREATED_DATE = t.CREATED_DATE,
+                                                                                      TYPE = t.TYPE,
+                                                                                      STEPFLASH = t.STEPFLASH
+                                                                                  };
+                IEnumerable<INCFORM_APPROVER_LISTWITHLOG> unionINCFORMAPPROVERLIST = INCFORMAPPROVERLIST.Union(INCFORMAPPROVERLISTLog).ToList();
+
+                //var INCFORMAPPROVERLIST = from p in ctx.INCFORM_APPROVER_LIST select p;
+                //var INCFORMAPPROVERLISTLog = from p in ctx.INCFORM_APPROVER_LIST_LOG select p;
+                //var unionINCFORMAPPROVERLIST= INCFORMAPPROVERLIST.Union(INCFORMAPPROVERLISTLog).ToList();
+                if (step == Convert.ToDecimal(5.50))
+                {
+                    approvalListA = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEP == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "A"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+
+                    approvalListR = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEP == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "R"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+
+                    approvalListN = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEP == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "N"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+                }
+                else
+                {
+                    approvalListA = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEPFLASH == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "A"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+
+                    approvalListR = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEPFLASH == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "R"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+
+                    approvalListN = (from p in unionINCFORMAPPROVERLIST
+                                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID && p.STEPFLASH == a.STEP).DefaultIfEmpty()
+                                     where p.PLANT_ID == incident.DETECT_PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                                     && p.TYPE == "N"
+                                     select new EHSIncidentApprovalList
+                                     {
+                                         approverList = p,
+                                         approval = a
+                                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+                }
+                //}
+                //else
+                //{
+                //    approvalListA = (from p in ctx.INCFORM_APPROVER_LIST
+                //                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                //                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID).DefaultIfEmpty()
+                //                     where p.BUS_ORG_ID == SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID && p.PLANT_ID == SessionManager.EffLocation.Plant.PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                //                     && p.TYPE == "A"
+                //                     select new EHSIncidentApprovalList
+                //                     {
+                //                         approverList = p,
+                //                         approval = a
+                //                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+                //    approvalListR = (from p in ctx.INCFORM_APPROVER_LIST
+                //                     join a in ctx.INCFORM_APPROVAL on p.INCFORM_APPROVER_LIST_ID equals a.INCFORM_APPROVER_LIST_ID into p_a
+                //                     from a in p_a.Where(a => a.INCIDENT_ID == incidentID && a.ITEM_SEQ == p.PRIV && a.INCFORM_APPROVER_LIST_ID == p.INCFORM_APPROVER_LIST_ID).DefaultIfEmpty()
+                //                     where p.BUS_ORG_ID == SessionManager.EffLocation.BusinessOrg.BUS_ORG_ID && p.PLANT_ID == SessionManager.EffLocation.Plant.PLANT_ID && (p.CREATED_DATE <= incident.CLOSE_DATE || incident.CLOSE_DATE == null)
+                //                     && p.TYPE == "R"
+                //                     select new EHSIncidentApprovalList
+                //                     {
+                //                         approverList = p,
+                //                         approval = a
+                //                     }).OrderBy(l => l.approverList.INCFORM_APPROVER_LIST_ID).ToList();
+
+                //}
+                if (approvalListN != null)
+                {
+                    foreach (EHSIncidentApprovalList rec in approvalListN)
+                    {
+                        approvalListA.Add(rec);
+                    }
+                }
+                if (approvalListR != null)
+                {
+                    foreach (EHSIncidentApprovalList rec in approvalListR)
+                    {
+                        approvalListA.Add(rec);
+                    }
+                }
+            }
+            if (approvalListA != null)
+            {
+                foreach (EHSIncidentApprovalList rec in approvalListA)
+                {
+                    if (rec.approval == null)//&& !incident.CLOSE_DATE.HasValue
+                    {
+                        INCFORM_APPROVAL approval = new INCFORM_APPROVAL();
+                        approval.INCIDENT_ID = incidentID;
+                        approval.STEP = step;
+                        approval.ITEM_SEQ = (int)rec.approverList.PRIV;
+                        approval.APPROVAL_LEVEL = 0;
+                        approval.APPROVAL_MESSAGE = "";
+                        approval.APPROVER_TITLE = "";
+                        approval.APPROVAL_DATE = defaultDate != null ? defaultDate : DateTime.UtcNow;
+                        approval.IsAccepted = false;
+                        rec.approval = approval;
+                    }
+                }
+            }
+            return approvalListA;
+        }
 
         public static void CreateOrUpdateTask(INCIDENT incident, TASK_STATUS task, DateTime? defaultDate)
         {
