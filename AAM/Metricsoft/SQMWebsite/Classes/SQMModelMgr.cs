@@ -11,7 +11,7 @@ using System.Web.Configuration;
 
 namespace SQM.Website
 {
-	public enum LockField { priv, lang, plant, email};	// person record field locks
+    public enum LockField { priv, lang, plant, email };	// person record field locks
 
 
     #region helperclasses
@@ -80,8 +80,8 @@ namespace SQM.Website
         }
     }
 
-	[Serializable]
-	public class BusinessLocation
+    [Serializable]
+    public class BusinessLocation
     {
         public COMPANY Company
         {
@@ -129,7 +129,8 @@ namespace SQM.Website
             this.BusinessOrg = null;
             this.Plant = null;
             this.Company = SQMModelMgr.LookupCompany(companyID);
-            if (busOrgID > 0) {
+            if (busOrgID > 0)
+            {
                 this.BusinessOrg = SQMModelMgr.LookupBusOrg(busOrgID);
                 if (plantID > 0)
                     this.Plant = SQMModelMgr.LookupPlant(plantID);
@@ -140,7 +141,7 @@ namespace SQM.Website
         {
             // is the user'S HR company a supplier ?
             if (excludePrimary)
-                return this.Company.IS_SUPPLIER == true &&  !IsPrimaryCompany() ? true : false;
+                return this.Company.IS_SUPPLIER == true && !IsPrimaryCompany() ? true : false;
             else
                 return this.Company.IS_SUPPLIER == true ? true : false;
         }
@@ -148,7 +149,7 @@ namespace SQM.Website
         {
             // is the user'S HR company a supplier ?
             if (excludePrimary)
-                return this.Company.IS_CUSTOMER == true  &&  !IsPrimaryCompany() ? true : false;
+                return this.Company.IS_CUSTOMER == true && !IsPrimaryCompany() ? true : false;
             else
                 return this.Company.IS_CUSTOMER == true ? true : false;
         }
@@ -165,7 +166,7 @@ namespace SQM.Website
         {
             if (this.Company.COMPANY_NAME == this.Plant.PLANT_NAME)
                 return (this.Plant.PLANT_NAME);
-            else 
+            else
                 return (this.Company.COMPANY_NAME + ", " + this.Plant.PLANT_NAME);
         }
     }
@@ -206,14 +207,14 @@ namespace SQM.Website
         public decimal ListSeq
         {
             get;
-            set; 
+            set;
         }
         public bool IsNew
         {
             get;
             set;
         }
-        public List<BusinessLocation> B2BList 
+        public List<BusinessLocation> B2BList
         {
             get;
             set;
@@ -221,7 +222,7 @@ namespace SQM.Website
 
         public string PartDisplayNum(string partPerspective)
         {
-            if (partPerspective == "CST"  &&  !string.IsNullOrEmpty(this.Part.DRAWING_REF))
+            if (partPerspective == "CST" && !string.IsNullOrEmpty(this.Part.DRAWING_REF))
                 return this.Part.DRAWING_REF;
             else
                 return this.Part.PART_NUM;
@@ -268,8 +269,8 @@ namespace SQM.Website
         }
     }
 
-	[Serializable]
-	public class ReceiptData
+    [Serializable]
+    public class ReceiptData
     {
         public RECEIPT Receipt
         {
@@ -299,27 +300,140 @@ namespace SQM.Website
     }
 
 
-	[Serializable]
-	public class PersonData
-	{
-		public decimal PersonId
-		{
-			get;
-			set;
-		}
-		public string PersonName
-		{
-			get;
-			set;
-		}
-		public string PersonEmail
-		{
-			get;
-			set;
-		}
-	}
+    [Serializable]
+    public class PersonData
+    {
+        public decimal PersonId
+        {
+            get;
+            set;
+        }
+        public string PersonName
+        {
+            get;
+            set;
+        }
+        public string PersonEmail
+        {
+            get;
+            set;
+        }
+    }
     #endregion
+    [Serializable]
+    public class INCFORMAPPROVERLIST
+    {
+        public decimal INCFORM_APPROVER_LIST_ID
+        {
+            get;
+            set;
+        }
+        public decimal BUS_ORG_ID
+        {
+            get;
+            set;
+        }
+        public decimal COMPANY_ID
+        {
+            get;
+            set;
+        }
+        public string SSO_ID
+        {
+            get;
+            set;
+        }
+        public decimal? PERSON_ID
+        {
+            get;
+            set;
+        }
+        public string DESCRIPTION
+        {
+            get;
+            set;
+        }
+        public string Name
+        {
+            get;
+            set;
+        }
+        public decimal? STEP
+        {
+            get;
+            set;
+        }
+        public int? PRIV
+        {
+            get;
+            set;
+        }
+        public string DESCRIPTION_QUESTION
+        {
+            get;
+            set;
+        }
+        public string TYPE
+        {
+            get;
+            set;
+        }
+    }
 
+    [Serializable]
+    public class INCFORMREGIONALAPPROVERLIST
+    {
+        public decimal INCFORM_REGIONAL_APPROVER_LIST_ID
+        {
+            get;
+            set;
+        }
+        public decimal BUS_ORG_ID
+        {
+            get;
+            set;
+        }
+        public decimal COMPANY_ID
+        {
+            get;
+            set;
+        }
+        public string SSO_ID
+        {
+            get;
+            set;
+        }
+        public decimal? PERSON_ID
+        {
+            get;
+            set;
+        }
+        public string DESCRIPTION
+        {
+            get;
+            set;
+        }
+        public string Name
+        {
+            get;
+            set;
+        }
+        public decimal? STEP
+        {
+            get;
+            set;
+        }
+        public int? PRIV
+        {
+            get;
+            set;
+        }
+        public string DESCRIPTION_QUESTION
+        {
+            get;
+            set;
+        }
+    }
 
     public class SQMModelMgr
     {
@@ -415,7 +529,7 @@ namespace SQM.Website
                     name = pSource.Name;
                     System.Reflection.PropertyInfo pTarget = targetType.GetProperty(name);
                     if (pTarget != null)
-                       if(name != "PERSONReference")
+                        if (name != "PERSONReference")
                         {
                             pTarget.SetValue(oTarget, pSource.GetValue(oSource, null), null);
                             //PSsqmEntities Obj = new PSsqmEntities();
@@ -425,10 +539,10 @@ namespace SQM.Website
                             //o.per
 
                         }
-                       
+
                 }
             }
-            catch 
+            catch
             {
                 ;
             }
@@ -436,18 +550,18 @@ namespace SQM.Website
             return oTarget;
         }
 
-		public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state)
-		{
-			return SetObjectTimestamp(oTarget, updBy, state, null);
-		}
+        public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state)
+        {
+            return SetObjectTimestamp(oTarget, updBy, state, null);
+        }
 
-        public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state, DateTime ? defaultDate)
+        public static object SetObjectTimestamp(object oTarget, string updBy, System.Data.EntityState state, DateTime? defaultDate)
         {
             // set the record create and update time stamps
             // naming conventions appear to be standardized accross all SQM tables
             if (oTarget == null)
                 return oTarget;
-            
+
             DateTime utcDate = defaultDate != null ? (DateTime)defaultDate : DateTime.UtcNow;
 
             Type type = oTarget.GetType();
@@ -485,17 +599,17 @@ namespace SQM.Website
             try
             {
                 if (langID > 0)
-                    lang = (from l in ctx.LOCAL_LANGUAGE 
-                             where (l.LANGUAGE_ID == langID)
+                    lang = (from l in ctx.LOCAL_LANGUAGE
+                            where (l.LANGUAGE_ID == langID)
                             select l).Single();
                 else
-                    lang = (from l in ctx.LOCAL_LANGUAGE 
-                             where (l.LANGUAGE_CD == langCode)
+                    lang = (from l in ctx.LOCAL_LANGUAGE
+                            where (l.LANGUAGE_CD == langCode)
                             select l).Single();
             }
             catch
             {
-                if (createNew  &&  (langID <= 0  &&  !string.IsNullOrEmpty(langCode)))
+                if (createNew && (langID <= 0 && !string.IsNullOrEmpty(langCode)))
                 {
                     lang = new LOCAL_LANGUAGE();
                     int newID = (from l in ctx.LOCAL_LANGUAGE select (l.LANGUAGE_ID)).Max();
@@ -503,7 +617,7 @@ namespace SQM.Website
                     lang.LANGUAGE_CD = langCode;
                 }
             }
-            
+
             return lang;
         }
 
@@ -525,244 +639,245 @@ namespace SQM.Website
                 ;
             }
 
-             return langList;
+            return langList;
         }
 
-		public static LOCAL_LANGUAGE LookupPersonLanguage(PSsqmEntities ctx, PERSON person)
-		{
-			LOCAL_LANGUAGE lang = (from l in ctx.LOCAL_LANGUAGE
-								   where (person.PREFERRED_LANG_ID == null && l.LANGUAGE_ID == 1) ||  l.LANGUAGE_ID == person.PREFERRED_LANG_ID 
-								   select l).SingleOrDefault();
-			return lang;
-		}
+        public static LOCAL_LANGUAGE LookupPersonLanguage(PSsqmEntities ctx, PERSON person)
+        {
+            LOCAL_LANGUAGE lang = (from l in ctx.LOCAL_LANGUAGE
+                                   where (person.PREFERRED_LANG_ID == null && l.LANGUAGE_ID == 1) || l.LANGUAGE_ID == person.PREFERRED_LANG_ID
+                                   select l).SingleOrDefault();
+            return lang;
+        }
 
         #endregion
 
         #region person
 
-		public static bool PersonFieldLocked(PERSON person, LockField lockfield)
-		{
-			bool isLocked = false;
+        public static bool PersonFieldLocked(PERSON person, LockField lockfield)
+        {
+            bool isLocked = false;
 
-			if (!string.IsNullOrEmpty(person.LOCKS))
-			{
-				if (person.LOCKS.Contains(lockfield.ToString()))
-					isLocked = true;
-			}
+            if (!string.IsNullOrEmpty(person.LOCKS))
+            {
+                if (person.LOCKS.Contains(lockfield.ToString()))
+                    isLocked = true;
+            }
 
-			return isLocked;
-		}
+            return isLocked;
+        }
 
-		public static List<JOBCODE> SelectJobcodeList(string status, string privGroup)
-		{
-			List<JOBCODE> jobcodeList = new List<JOBCODE>();
+        public static List<JOBCODE> SelectJobcodeList(string status, string privGroup)
+        {
+            List<JOBCODE> jobcodeList = new List<JOBCODE>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				jobcodeList = (from j in ctx.JOBCODE
-							   where (
-								(string.IsNullOrEmpty(status) || j.STATUS == status)
-								&& (string.IsNullOrEmpty(privGroup)  ||  !string.IsNullOrEmpty(j.PRIV_GROUP))
-							   )
-							   select j).ToList();
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                jobcodeList = (from j in ctx.JOBCODE
+                               where (
+                                (string.IsNullOrEmpty(status) || j.STATUS == status)
+                                && (string.IsNullOrEmpty(privGroup) || !string.IsNullOrEmpty(j.PRIV_GROUP))
+                               )
+                               select j).ToList();
+            }
 
-			return jobcodeList;
-		}
+            return jobcodeList;
+        }
 
-		public static PRIVGROUP LookupPrivGroup(SQM.Website.PSsqmEntities ctx, string privGroup, bool createNew)
-		{
-			PRIVGROUP priv = null;
+        public static PRIVGROUP LookupPrivGroup(SQM.Website.PSsqmEntities ctx, string privGroup, bool createNew)
+        {
+            PRIVGROUP priv = null;
 
-			try
-			{
-				priv = (from p in ctx.PRIVGROUP
-						where (p.PRIV_GROUP == privGroup)
-						select p).Single();
-			}
-			catch
-			{
-				if (createNew && (!string.IsNullOrEmpty(privGroup)))
-				{
-					priv = new PRIVGROUP();
-					priv.PRIV_GROUP = privGroup;
-				}
-			}
-			if (priv == null && createNew && !string.IsNullOrEmpty(privGroup))
-			{
-				priv = new PRIVGROUP();
-				priv.PRIV_GROUP = privGroup;
-			}
-			return priv;
-		}
+            try
+            {
+                priv = (from p in ctx.PRIVGROUP
+                        where (p.PRIV_GROUP == privGroup)
+                        select p).Single();
+            }
+            catch
+            {
+                if (createNew && (!string.IsNullOrEmpty(privGroup)))
+                {
+                    priv = new PRIVGROUP();
+                    priv.PRIV_GROUP = privGroup;
+                }
+            }
+            if (priv == null && createNew && !string.IsNullOrEmpty(privGroup))
+            {
+                priv = new PRIVGROUP();
+                priv.PRIV_GROUP = privGroup;
+            }
+            return priv;
+        }
 
-		public static List<PRIVGROUP> SelectPrivGroupList(string status, bool includeAdmin)
-		{
-			List<PRIVGROUP> groupList = new List<PRIVGROUP>();
+        public static List<PRIVGROUP> SelectPrivGroupList(string status, bool includeAdmin)
+        {
+            List<PRIVGROUP> groupList = new List<PRIVGROUP>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				groupList = (from g in ctx.PRIVGROUP 
-							 where ((string.IsNullOrEmpty(status) || g.STATUS == status) && (includeAdmin || g.PRIV_GROUP != "admin"))
-							 select g).ToList();
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                groupList = (from g in ctx.PRIVGROUP
+                             where ((string.IsNullOrEmpty(status) || g.STATUS == status) && (includeAdmin || g.PRIV_GROUP != "admin"))
+                             select g).ToList();
+            }
 
-			return groupList;
-		}
+            return groupList;
+        }
 
-		public static List<PRIVGROUP> SelectPrivGroupList(SysPriv[] priv, SysScope scope, string status)
-		{
-			List<PRIVGROUP> groupList = new List<PRIVGROUP>();
+        public static List<PRIVGROUP> SelectPrivGroupList(SysPriv[] priv, SysScope scope, string status)
+        {
+            List<PRIVGROUP> groupList = new List<PRIVGROUP>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				string privScope = scope.ToString();
-				groupList = (from g in ctx.PRIVGROUP
-							  join v in ctx.PRIVLIST on g.PRIV_GROUP equals v.PRIV_GROUP
-							   where 
-								(string.IsNullOrEmpty(status) || g.STATUS == status)
-								&& (priv.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
-							 select g).GroupBy(l => l.PRIV_GROUP).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                string privScope = scope.ToString();
+                groupList = (from g in ctx.PRIVGROUP
+                             join v in ctx.PRIVLIST on g.PRIV_GROUP equals v.PRIV_GROUP
+                             where
+                              (string.IsNullOrEmpty(status) || g.STATUS == status)
+                              && (priv.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
+                             select g).GroupBy(l => l.PRIV_GROUP).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
+            }
 
-			return groupList;
-		}
+            return groupList;
+        }
 
-		public static string FormatPrivGroup(PRIVGROUP privGroup)
-		{
-			return (privGroup.PRIV_GROUP + "  /  " + privGroup.DESCRIPTION);
-		}
+        public static string FormatPrivGroup(PRIVGROUP privGroup)
+        {
+            return (privGroup.PRIV_GROUP + "  /  " + privGroup.DESCRIPTION);
+        }
 
-		public static PRIVGROUP UpdatePrivGroup(SQM.Website.PSsqmEntities ctx, PRIVGROUP privGroup)
-		{
-			PRIVGROUP retPrivGroup = null;
-			if (privGroup.EntityState == EntityState.Detached)
-			{
-				privGroup.STATUS = "A";
-				ctx.AddToPRIVGROUP(privGroup);
-			}
+        public static PRIVGROUP UpdatePrivGroup(SQM.Website.PSsqmEntities ctx, PRIVGROUP privGroup)
+        {
+            PRIVGROUP retPrivGroup = null;
+            if (privGroup.EntityState == EntityState.Detached)
+            {
+                privGroup.STATUS = "A";
+                ctx.AddToPRIVGROUP(privGroup);
+            }
 
-			if (ctx.SaveChanges() >= 0)
-			{
-				retPrivGroup = privGroup;
-			}
+            if (ctx.SaveChanges() >= 0)
+            {
+                retPrivGroup = privGroup;
+            }
 
-			return retPrivGroup;
-		}
-		public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
-		{
-			return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
-		}
+            return retPrivGroup;
+        }
+        public static JOBCODE LookupJobcode(PSsqmEntities ctx, string jobcode)
+        {
+            return (from j in ctx.JOBCODE where (j.JOBCODE_CD == jobcode) select j).SingleOrDefault();
+        }
 
-		public static string FormatJobcode(JOBCODE jobcode)
-		{
-			return (jobcode.JOBCODE_CD + "  /  " + jobcode.JOB_DESC);
-		}
+        public static string FormatJobcode(JOBCODE jobcode)
+        {
+            return (jobcode.JOBCODE_CD + "  /  " + jobcode.JOB_DESC);
+        }
 
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID)
-		{
-			return SelectPrivGroupPersonList(priv, scope, plantID, false);
-		}
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID, bool activeOnly)
-		{
-			List<PERSON> personList = new List<PERSON>();
+        public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID)
+        {
+            return SelectPrivGroupPersonList(priv, scope, plantID, false);
+        }
+        public static List<PERSON> SelectPrivGroupPersonList(SysPriv priv, SysScope scope, decimal plantID, bool activeOnly)
+        {
+            List<PERSON> personList = new List<PERSON>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				string privScope = scope.ToString();
-				string addPlant = "," + plantID.ToString() + ",";
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                string privScope = scope.ToString();
+                string addPlant = "," + plantID.ToString() + ",";
 
-				personList = (from p in ctx.PERSON
-							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
-							  join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
-							  where g.PRIV_GROUP == p.PRIV_GROUP
-									&& (v.PRIV == (int)priv && v.SCOPE == privScope)
-									&& (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
-									&& (!activeOnly || p.STATUS == "A")
-							  select p).ToList();
-			}
+                personList = (from p in ctx.PERSON
+                              join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
+                              join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
+                              where g.PRIV_GROUP == p.PRIV_GROUP
+                                    && (v.PRIV == (int)priv && v.SCOPE == privScope)
+                                    && (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
+                                    && (!activeOnly || p.STATUS == "A")
+                              select p).ToList();
+            }
 
-			return personList;
-		}
+            return personList;
+        }
 
-		public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope, decimal plantID, bool activeOnly)
-		{
-			List<PERSON> personList = new List<PERSON>();
+        public static List<PERSON> SelectPrivGroupPersonList(SysPriv[] privList, SysScope scope, decimal plantID, bool activeOnly)
+        {
+            List<PERSON> personList = new List<PERSON>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				string privScope = scope.ToString();
-				string addPlant = "," + plantID.ToString() + ",";
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                string privScope = scope.ToString();
+                string addPlant = "," + plantID.ToString() + ",";
 
-				personList = (from p in ctx.PERSON
-							  join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
-							  join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
-							  where g.PRIV_GROUP == p.PRIV_GROUP
-									&& (privList.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
-									&& (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
-									&& (!activeOnly || p.STATUS == "A")
-							  select p).GroupBy(l => l.PERSON_ID).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
-			}
+                personList = (from p in ctx.PERSON
+                              join g in ctx.PRIVGROUP on p.PRIV_GROUP equals g.PRIV_GROUP
+                              join v in ctx.PRIVLIST on p.PRIV_GROUP equals v.PRIV_GROUP
+                              where g.PRIV_GROUP == p.PRIV_GROUP
+                                    && (privList.Contains((SysPriv)v.PRIV) && v.SCOPE == privScope)
+                                    && (plantID == 0 || p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant))
+                                    && (!activeOnly || p.STATUS == "A")
+                              select p).GroupBy(l => l.PERSON_ID).Select(m => m.FirstOrDefault()).ToList(); // AW 01/2016
+            }
 
-			return personList;
-		}
+            return personList;
+        }
 
-		public static List<PERSON> SelectPrivgroupPersonList(string[] privGroups)
-		{
-			List<PERSON> personList = new List<PERSON>();
+        public static List<PERSON> SelectPrivgroupPersonList(string[] privGroups)
+        {
+            List<PERSON> personList = new List<PERSON>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				personList = (from p in ctx.PERSON
-							  where privGroups.Contains(p.PRIV_GROUP)
-							  select p).ToList();
-			}
-			return personList;
-		}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                personList = (from p in ctx.PERSON
+                              where privGroups.Contains(p.PRIV_GROUP)
+                              select p).ToList();
+            }
+            return personList;
+        }
 
-		public static List<PERSON> SelectBusOrgPrivgroupPersonList(decimal orgID, string[] privGroups)
-		{
-			List<PERSON> personList = new List<PERSON>();
+        public static List<PERSON> SelectBusOrgPrivgroupPersonList(decimal orgID, string[] privGroups)
+        {
+            List<PERSON> personList = new List<PERSON>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				personList = (from p in ctx.PERSON 
-							  where p.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                personList = (from p in ctx.PERSON
+                              where p.BUS_ORG_ID == orgID && privGroups.Contains(p.PRIV_GROUP)
+                              select p).ToList();
+            }
 
-			return personList;
-		}
+            return personList;
+        }
 
-		public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups, bool HRPlantOnly)
-		{
-			List<PERSON> personList = new List<PERSON>();
+        public static List<PERSON> SelectPlantPrivgroupPersonList(decimal plantID, string[] privGroups, bool HRPlantOnly)
+        {
+            List<PERSON> personList = new List<PERSON>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				if (HRPlantOnly)	// only fetch the persons having 'plant' as their HR location
-				{
-					personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
-				}
-				else
-				{
-					// fetch persons having 'plant; HR location AND 'plant' as an accesible location
-					string addPlant = "," + plantID.ToString() + ",";
-					personList = (from p in ctx.PERSON where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
-				}
-			}
-			return personList;
-		}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                if (HRPlantOnly)    // only fetch the persons having 'plant' as their HR location
+                {
+                    personList = (from p in ctx.PERSON where p.PLANT_ID == plantID && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+                }
+                else
+                {
+                    // fetch persons having 'plant; HR location AND 'plant' as an accesible location
+                    string addPlant = "," + plantID.ToString() + ",";
+                    personList = (from p in ctx.PERSON where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && privGroups.Contains(p.PRIV_GROUP) select p).ToList();
+                }
+            }
+            return personList;
+        }
 
-		public static List<SQM_ACCESS> SearchUserList(string[] statusList)
-		{
-			List<SQM_ACCESS> userList = new List<SQM_ACCESS>();
+        public static List<SQM_ACCESS> SearchUserList(string[] statusList)
+        {
+            List<SQM_ACCESS> userList = new List<SQM_ACCESS>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				userList = (from u in ctx.SQM_ACCESS where (statusList.Count() == 0 ||  statusList.Contains(u.STATUS)) select u).ToList();
-			}
-			return userList;
-		}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                userList = (from u in ctx.SQM_ACCESS where (statusList.Count() == 0 || statusList.Contains(u.STATUS)) select u).ToList();
+            }
+            return userList;
+        }
 
         public static SQM_ACCESS LookupCredentials(SQM.Website.PSsqmEntities ctx, string SSOID, string pwd, bool activeOnly)
         {
@@ -772,8 +887,8 @@ namespace SQM.Website
             {
                 if (activeOnly)
                     access = (from A in ctx.SQM_ACCESS
-							  where (A.SSO_ID.ToUpper() == SSOID.ToUpper() && (A.STATUS == "A" || A.STATUS == "P"))
-                            select A).Single();
+                              where (A.SSO_ID.ToUpper() == SSOID.ToUpper() && (A.STATUS == "A" || A.STATUS == "P"))
+                              select A).Single();
                 else
                     access = (from A in ctx.SQM_ACCESS
                               where (A.SSO_ID.ToUpper() == SSOID.ToUpper())
@@ -786,26 +901,26 @@ namespace SQM.Website
             return access;
         }
 
-		public static SQM_ACCESS LookupCredentialsByEmail(SQM.Website.PSsqmEntities ctx, string email, bool activeOnly)
-		{
-			SQM_ACCESS access = null;
+        public static SQM_ACCESS LookupCredentialsByEmail(SQM.Website.PSsqmEntities ctx, string email, bool activeOnly)
+        {
+            SQM_ACCESS access = null;
 
-			try
-			{
-				if (activeOnly)
-					access = (from A in ctx.SQM_ACCESS
-							  where (A.RECOVERY_EMAIL.ToLower() == email.ToLower() && (A.STATUS == "A" || A.STATUS == "P"))
-							  select A).Single();
-				else
-					access = (from A in ctx.SQM_ACCESS
-							  where (A.RECOVERY_EMAIL.ToLower() == email.ToLower())
-							  select A).Single();
-			}
-			catch
-			{
-			}
-			return access;
-		}
+            try
+            {
+                if (activeOnly)
+                    access = (from A in ctx.SQM_ACCESS
+                              where (A.RECOVERY_EMAIL.ToLower() == email.ToLower() && (A.STATUS == "A" || A.STATUS == "P"))
+                              select A).Single();
+                else
+                    access = (from A in ctx.SQM_ACCESS
+                              where (A.RECOVERY_EMAIL.ToLower() == email.ToLower())
+                              select A).Single();
+            }
+            catch
+            {
+            }
+            return access;
+        }
 
         public static PERSON LookupPerson(decimal personID, string SSOID)
         {
@@ -822,13 +937,13 @@ namespace SQM.Website
             try
             {
                 if (personID == 0)
-					person = (from P in ctx.PERSON 
-                                where (P.SSO_ID.ToUpper() == SSOID.ToUpper())
-                                select P).Single();
+                    person = (from P in ctx.PERSON
+                              where (P.SSO_ID.ToUpper() == SSOID.ToUpper())
+                              select P).Single();
                 else
-					person = (from P in ctx.PERSON 
-                                where (P.PERSON_ID == personID)
-                                select P).Single();
+                    person = (from P in ctx.PERSON
+                              where (P.PERSON_ID == personID)
+                              select P).Single();
             }
             catch
             {
@@ -841,173 +956,173 @@ namespace SQM.Website
             return person;
         }
 
-		public static PERSON LookupPersonByEmail(SQM.Website.PSsqmEntities ctx, string email)
-		{
-			PERSON person = null;
+        public static PERSON LookupPersonByEmail(SQM.Website.PSsqmEntities ctx, string email)
+        {
+            PERSON person = null;
 
-			try
-			{
-					person = (from P in ctx.PERSON
-							  where (P.EMAIL == email)
-							  select P).Single();
-			}
-			catch
-			{
-			}
+            try
+            {
+                person = (from P in ctx.PERSON
+                          where (P.EMAIL == email)
+                          select P).Single();
+            }
+            catch
+            {
+            }
 
-			return person;
-		}
+            return person;
+        }
 
-		public static PERSON LookupPersonByEmpID(SQM.Website.PSsqmEntities ctx, string empID)
-		{
-			PERSON person = null;
+        public static PERSON LookupPersonByEmpID(SQM.Website.PSsqmEntities ctx, string empID)
+        {
+            PERSON person = null;
 
-			try
-			{
-				person = (from P in ctx.PERSON
-						  where (P.EMP_ID == empID)
-						  select P).Single();
-			}
-			catch
-			{
-			}
+            try
+            {
+                person = (from P in ctx.PERSON
+                          where (P.EMP_ID == empID)
+                          select P).Single();
+            }
+            catch
+            {
+            }
 
-			return person;
-		}
+            return person;
+        }
 
-		public static List<PERSON> GetSupvHierarchy(PERSON empPerson, int numLevels, bool includeEmpPerson)
-		{
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				return GetSupvHierarchy(ctx, empPerson, numLevels, includeEmpPerson);
-			}
-		}
+        public static List<PERSON> GetSupvHierarchy(PERSON empPerson, int numLevels, bool includeEmpPerson)
+        {
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                return GetSupvHierarchy(ctx, empPerson, numLevels, includeEmpPerson);
+            }
+        }
 
-		public static List<PERSON> GetSupvHierarchy(PSsqmEntities ctx, PERSON empPerson, int numLevels, bool includeEmpPerson)
-		{
-			List<PERSON> empChain = new List<PERSON>();
-			if (includeEmpPerson)
-				empChain.Add(empPerson);
+        public static List<PERSON> GetSupvHierarchy(PSsqmEntities ctx, PERSON empPerson, int numLevels, bool includeEmpPerson)
+        {
+            List<PERSON> empChain = new List<PERSON>();
+            if (includeEmpPerson)
+                empChain.Add(empPerson);
 
-			PERSON person = empPerson;
-			int level = 0;
-			while (person != null  &&  ++level <= numLevels)
-			{
-				person = (from p in ctx.PERSON where p.EMP_ID == person.SUPV_EMP_ID select p).FirstOrDefault();
-				if (person != null)
-				{
-					empChain.Add(person);
-				}
-			}
+            PERSON person = empPerson;
+            int level = 0;
+            while (person != null && ++level <= numLevels)
+            {
+                person = (from p in ctx.PERSON where p.EMP_ID == person.SUPV_EMP_ID select p).FirstOrDefault();
+                if (person != null)
+                {
+                    empChain.Add(person);
+                }
+            }
 
-			return empChain;
-		}
+            return empChain;
+        }
 
-		public static List<PERSON> SelectPersonListBySupvID(string supvEmpID)
-		{
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				return (from p in ctx.PERSON where (p.SUPV_EMP_ID == supvEmpID) select p).ToList();
-			}
-		}
+        public static List<PERSON> SelectPersonListBySupvID(string supvEmpID)
+        {
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                return (from p in ctx.PERSON where (p.SUPV_EMP_ID == supvEmpID) select p).ToList();
+            }
+        }
 
-		public static List<PRIVLIST> SelectPrivList(string privGroup)
-		{
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				return (from v in ctx.PRIVLIST where (v.PRIV_GROUP == privGroup) select v).OrderBy(l => l.SCOPE).ToList();
-			}
-		}
+        public static List<PRIVLIST> SelectPrivList(string privGroup)
+        {
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                return (from v in ctx.PRIVLIST where (v.PRIV_GROUP == privGroup) select v).OrderBy(l => l.SCOPE).ToList();
+            }
+        }
 
-		public static List<PRIVLIST> SelectPrivGroupPerson(string privGroup, string commonGroup)
-		{
-			List<PRIVLIST> privList = new List<PRIVLIST>();
+        public static List<PRIVLIST> SelectPrivGroupPerson(string privGroup, string commonGroup)
+        {
+            List<PRIVLIST> privList = new List<PRIVLIST>();
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				try
-				{
-					privList = (from v in ctx.PRIVLIST
-								where (v.PRIV_GROUP == privGroup)
-								select v).ToList();
-					// append common privs ...
-					if (!string.IsNullOrEmpty(commonGroup))
-					{
-						privList.AddRange((from v in ctx.PRIVLIST
-										   where (v.PRIV_GROUP == commonGroup)
-										   select v).ToList());
-					}
-				}
-				catch { }
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                try
+                {
+                    privList = (from v in ctx.PRIVLIST
+                                where (v.PRIV_GROUP == privGroup)
+                                select v).ToList();
+                    // append common privs ...
+                    if (!string.IsNullOrEmpty(commonGroup))
+                    {
+                        privList.AddRange((from v in ctx.PRIVLIST
+                                           where (v.PRIV_GROUP == commonGroup)
+                                           select v).ToList());
+                    }
+                }
+                catch { }
+            }
 
-			return privList;
-		}
+            return privList;
+        }
 
-		public static PRIVLIST LookupPrivList(string privGroup, int priv, string scope, bool createNew)
-		{
-			PSsqmEntities ctx = new PSsqmEntities();
+        public static PRIVLIST LookupPrivList(string privGroup, int priv, string scope, bool createNew)
+        {
+            PSsqmEntities ctx = new PSsqmEntities();
 
-			PRIVLIST privList = null;
+            PRIVLIST privList = null;
 
-			try
-			{
-				privList = (from p in ctx.PRIVLIST
-						where (p.PRIV_GROUP == privGroup && p.PRIV == priv && p.SCOPE == scope)
-						select p).Single();
-			}
-			catch
-			{
-				if (createNew && (!string.IsNullOrEmpty(privGroup)))
-				{
-					privList = new PRIVLIST();
-					privList.PRIV_GROUP = privGroup;
-				}
-			}
-			if (privList == null && createNew && !string.IsNullOrEmpty(privGroup))
-			{
-				privList = new PRIVLIST();
-				privList.PRIV_GROUP = privGroup;
-			}
-			return privList;
+            try
+            {
+                privList = (from p in ctx.PRIVLIST
+                            where (p.PRIV_GROUP == privGroup && p.PRIV == priv && p.SCOPE == scope)
+                            select p).Single();
+            }
+            catch
+            {
+                if (createNew && (!string.IsNullOrEmpty(privGroup)))
+                {
+                    privList = new PRIVLIST();
+                    privList.PRIV_GROUP = privGroup;
+                }
+            }
+            if (privList == null && createNew && !string.IsNullOrEmpty(privGroup))
+            {
+                privList = new PRIVLIST();
+                privList.PRIV_GROUP = privGroup;
+            }
+            return privList;
 
-		}
+        }
 
-		public static PRIVLIST UpdatePrivList(SQM.Website.PSsqmEntities ctx, PRIVLIST privList)
-		{
-			PRIVLIST retPrivList = null;
-			if (privList.EntityState == EntityState.Detached)
-			{
-				ctx.AddToPRIVLIST(privList);
-			}
+        public static PRIVLIST UpdatePrivList(SQM.Website.PSsqmEntities ctx, PRIVLIST privList)
+        {
+            PRIVLIST retPrivList = null;
+            if (privList.EntityState == EntityState.Detached)
+            {
+                ctx.AddToPRIVLIST(privList);
+            }
 
-			if (ctx.SaveChanges() >= 0)
-			{
-				retPrivList = privList;
-			}
+            if (ctx.SaveChanges() >= 0)
+            {
+                retPrivList = privList;
+            }
 
-			return retPrivList;
-		}
-		public static int DeletePrivList(string privGroup, int priv, string scope)
-		{
-			int status = 0;
+            return retPrivList;
+        }
+        public static int DeletePrivList(string privGroup, int priv, string scope)
+        {
+            int status = 0;
 
-			using (PSsqmEntities ctx = new PSsqmEntities())
-			{
-				try
-				{
-					status = ctx.ExecuteStoreCommand("DELETE FROM PRIVLIST WHERE PRIV_GROUP = {0} AND PRIV = {1} AND SCOPE = {2}", privGroup, priv, scope);
-				}
-				catch (Exception ex)
-				{
-					SQMLogger.LogException(ex);
-				}
-			}
+            using (PSsqmEntities ctx = new PSsqmEntities())
+            {
+                try
+                {
+                    status = ctx.ExecuteStoreCommand("DELETE FROM PRIVLIST WHERE PRIV_GROUP = {0} AND PRIV = {1} AND SCOPE = {2}", privGroup, priv, scope);
+                }
+                catch (Exception ex)
+                {
+                    SQMLogger.LogException(ex);
+                }
+            }
 
-			return status;
-		}
+            return status;
+        }
 
-		public static PERSON NewPerson(string SSOID, decimal companyID)
+        public static PERSON NewPerson(string SSOID, decimal companyID)
         {
             PERSON person = new PERSON();
             person.SSO_ID = SSOID;
@@ -1025,7 +1140,7 @@ namespace SQM.Website
 
             using (PSsqmEntities entities = new PSsqmEntities())
             {
-                count = (from P in entities.PERSON where (P.COMPANY_ID == companyID &&  P.ROLE > 1) select P).Count();
+                count = (from P in entities.PERSON where (P.COMPANY_ID == companyID && P.ROLE > 1) select P).Count();
             }
 
             return count;
@@ -1033,31 +1148,51 @@ namespace SQM.Website
 
         public static string FormatPersonListItem(PERSON person)
         {
-			return FormatPersonListItem(person, false, "LF");
+            return FormatPersonListItem(person, false, "LF");
         }
-		public static string FormatPersonListItem(PERSON person, bool fullName)
-		{
-			return FormatPersonListItem(person, fullName, "FL");
-		}
-		public static string FormatPersonListItem(PERSON person, bool fullName, string nameOrder)
-		{
-			if (person != null)
-			{
-				if (fullName)
-				{
-					return (person.FIRST_NAME + " " + person.MIDDLE_NAME + " " + person.LAST_NAME);
-				}
-				else
-				{
-					if (nameOrder == "LF")
-						return (person.LAST_NAME + ", " + person.FIRST_NAME);
-					else 
-						return (person.FIRST_NAME + " " + person.LAST_NAME);
-				}
-			}
-			else
-				return "";
-		}
+        public static string FormatPersonListItem(PERSON person, bool fullName)
+        {
+            return FormatPersonListItem(person, fullName, "FL");
+        }
+        public static string FormatPersonListItem(PERSON person, bool fullName, string nameOrder)
+        {
+            if (person != null)
+            {
+                if (fullName)
+                {
+                    return (person.FIRST_NAME + " " + person.MIDDLE_NAME + " " + person.LAST_NAME);
+                }
+                else
+                {
+                    if (nameOrder == "LF")
+                        return (person.LAST_NAME + ", " + person.FIRST_NAME);
+                    else
+                        return (person.FIRST_NAME + " " + person.LAST_NAME);
+                }
+            }
+            else
+                return "";
+        }
+
+        public static string FormatPersonListItemWithEmail(PERSON person, bool fullName, string nameOrder)
+        {
+            if (person != null)
+            {
+                if (fullName)
+                {
+                    return (person.FIRST_NAME + " " + person.MIDDLE_NAME + " " + person.LAST_NAME + ((person.EMAIL == "") ? "" : "(" + person.EMAIL + ")"));
+                }
+                else
+                {
+                    if (nameOrder == "LF")
+                        return (person.LAST_NAME + ", " + person.FIRST_NAME + ((person.EMAIL == "") ? "" : "(" + person.EMAIL + ")"));
+                    else
+                        return (person.FIRST_NAME + " " + person.LAST_NAME + ((person.EMAIL == "") ? "" : "(" + person.EMAIL + ")"));
+                }
+            }
+            else
+                return "";
+        }
 
 
         public static bool CanDelegate(PERSON fromPerson, PERSON toPerson)
@@ -1073,13 +1208,13 @@ namespace SQM.Website
             using (PSsqmEntities entities = new PSsqmEntities())
             {
                 if (companyID > 0)
-					personList = (from P in entities.PERSON 
-                              where (P.COMPANY_ID == companyID  &&  P.ROLE > 1)
-                              select P).ToList();
+                    personList = (from P in entities.PERSON
+                                  where (P.COMPANY_ID == companyID && P.ROLE > 1)
+                                  select P).ToList();
                 else if (busOrgID > 0)
-					personList = (from P in entities.PERSON  
+                    personList = (from P in entities.PERSON
                                   where (P.BUS_ORG_ID == busOrgID && P.ROLE > 1)
-                              select P).ToList();
+                                  select P).ToList();
 
                 if (activeOnly)
                     personList = personList.Where(l => l.STATUS == "A").ToList();
@@ -1095,7 +1230,7 @@ namespace SQM.Website
 
             foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
             {
-                if (person.ROLE <= 100 ||  person.BUS_ORG_ID == busOrgID)
+                if (person.ROLE <= 100 || person.BUS_ORG_ID == busOrgID)
                     personList.Add(person);
             }
 
@@ -1108,7 +1243,7 @@ namespace SQM.Website
 
             foreach (PERSON person in SelectPersonList(companyID, 0, true, false))
             {
-                if (PersonPlantAccess(person, plantID)  &&  (string.IsNullOrEmpty(appContext)))
+                if (PersonPlantAccess(person, plantID) && (string.IsNullOrEmpty(appContext)))
                     personList.Add(person);
             }
 
@@ -1133,8 +1268,8 @@ namespace SQM.Website
                 {
                     if (PersonPlantAccess(person, location.Plant.PLANT_ID) && (string.IsNullOrEmpty(appContext)))
                     {
-                            if (!personList.Contains(person))
-                                personList.Add(person);
+                        if (!personList.Contains(person))
+                            personList.Add(person);
                     }
                 }
             }
@@ -1144,54 +1279,54 @@ namespace SQM.Website
 
         public static List<PERSON> SelectPlantPersonList(decimal companyID, decimal plantID)
         {
-			PSsqmEntities ctx = new PSsqmEntities();
+            PSsqmEntities ctx = new PSsqmEntities();
             List<PERSON> personList = new List<PERSON>();
-			string addPlant = "," + plantID.ToString() + ",";
+            string addPlant = "," + plantID.ToString() + ",";
 
-			personList = (from p in ctx.PERSON
-						  where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && p.STATUS == "A"
-						  select p).OrderBy(l=> l.LAST_NAME).ThenBy(l=> l.FIRST_NAME).ToList();
+            personList = (from p in ctx.PERSON
+                          where (p.PLANT_ID == plantID || p.NEW_LOCATION_CD.Contains(addPlant)) && p.STATUS == "A"
+                          select p).OrderBy(l => l.LAST_NAME).ThenBy(l => l.FIRST_NAME).ToList();
 
             return personList;
         }
 
-		public static List<PersonData> SelectPlantPersonDataList(decimal companyID, decimal plantID)
-		{
-			//List<PERSON> personList = new List<PERSON>();
-			List<PersonData> personDataList = new List<PersonData>();
-			
+        public static List<PersonData> SelectPlantPersonDataList(decimal companyID, decimal plantID)
+        {
+            //List<PERSON> personList = new List<PERSON>();
+            List<PersonData> personDataList = new List<PersonData>();
 
-			foreach (PERSON person in SelectPlantPersonList(companyID, plantID))
+
+            foreach (PERSON person in SelectPlantPersonList(companyID, plantID))
             {
-					PersonData prsdta = new PersonData();
+                PersonData prsdta = new PersonData();
 
-					prsdta.PersonId = person.PERSON_ID;
-					prsdta.PersonName = string.Format("{0}-{1}, {2}", Convert.ToString(person.PERSON_ID), person.LAST_NAME, person.FIRST_NAME);
-					prsdta.PersonEmail = person.EMAIL;
+                prsdta.PersonId = person.PERSON_ID;
+                prsdta.PersonName = string.Format("{0}-{1}, {2}", Convert.ToString(person.PERSON_ID), person.LAST_NAME, person.FIRST_NAME);
+                prsdta.PersonEmail = person.EMAIL;
 
-					personDataList.Add(prsdta);
+                personDataList.Add(prsdta);
             }
-			return personDataList;
+            return personDataList;
         }
 
 
         public static bool PersonPlantAccess(PERSON person, decimal plantID)
         {
-            bool canAccess = person.ROLE <= 100 ||  person.PLANT_ID == plantID ? true : false;    // company admin and person's hr location have access automatically
+            bool canAccess = person.ROLE <= 100 || person.PLANT_ID == plantID ? true : false;    // company admin and person's hr location have access automatically
 
-            if (!canAccess &&  !string.IsNullOrEmpty(person.NEW_LOCATION_CD))
+            if (!canAccess && !string.IsNullOrEmpty(person.NEW_LOCATION_CD))
             {
                 string[] locs = person.NEW_LOCATION_CD.Split(',');
                 foreach (string locid in locs)
                 {
-					if (!string.IsNullOrEmpty(locid))
-					{
-						if (locid.Trim() == plantID.ToString().Trim())
-						{
-							canAccess = true;
-							break;
-						}
-					}
+                    if (!string.IsNullOrEmpty(locid))
+                    {
+                        if (locid.Trim() == plantID.ToString().Trim())
+                        {
+                            canAccess = true;
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -1216,24 +1351,24 @@ namespace SQM.Website
             if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON 
-                                  where (p.COMPANY_ID == companyID &&  p.ROLE > 1 && p.STATUS == "A")
-                               select p).ToList();
+                    personList = (from p in ctx.PERSON
+                                  where (p.COMPANY_ID == companyID && p.ROLE > 1 && p.STATUS == "A")
+                                  select p).ToList();
                 else
-					personList = (from p in ctx.PERSON 
-                                  where (p.COMPANY_ID == companyID  &&  p.ROLE > 1)
-                               select p).ToList();
+                    personList = (from p in ctx.PERSON
+                                  where (p.COMPANY_ID == companyID && p.ROLE > 1)
+                                  select p).ToList();
             }
             else
             {
                 if (activeOnly)
-					personList = (from p in ctx.PERSON 
-                                  where (p.COMPANY_ID == companyID  &&  p.ROLE > 1) && (p.STATUS == "A") && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
-                               select p).ToList();
+                    personList = (from p in ctx.PERSON
+                                  where (p.COMPANY_ID == companyID && p.ROLE > 1) && (p.STATUS == "A") && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
+                                  select p).ToList();
                 else
-					personList = (from p in ctx.PERSON 
-                                  where (p.COMPANY_ID == companyID &&  p.ROLE > 1) && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
-                               select p).ToList();
+                    personList = (from p in ctx.PERSON
+                                  where (p.COMPANY_ID == companyID && p.ROLE > 1) && ((p.SSO_ID.ToUpper().Contains(searchCriteria.ToUpper())) || (p.LAST_NAME.ToUpper().Contains(searchCriteria.ToUpper())))
+                                  select p).ToList();
             }
 
             return personList;
@@ -1244,22 +1379,22 @@ namespace SQM.Website
             PERSON updatedPerson = null;
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, updateBy, person.EntityState);
 
-            if (person.EntityState == EntityState.Detached ||  person.EntityState == EntityState.Added)
+            if (person.EntityState == EntityState.Detached || person.EntityState == EntityState.Added)
             {
                 SQM_ACCESS access = LookupCredentials(ctx, person.SSO_ID, "", false);
                 if (access == null)     // user access not defined (ie. new user)
                 {
                     access = new SQM_ACCESS();
                     access.SSO_ID = person.SSO_ID;
-					// access.PASSWORD = person.SSO_ID;    // temporary !! need to set up random password
-					string key = GetPasswordKey();
-					access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
+                    // access.PASSWORD = person.SSO_ID;    // temporary !! need to set up random password
+                    string key = GetPasswordKey();
+                    access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
                     access.RECOVERY_EMAIL = person.EMAIL;
-					// AW 201310 - we want to update the access status when updating the person status, but not if they are being forced to update password
-					if (person.STATUS == "I")
-						access.STATUS = person.STATUS;
-					else
-						access.STATUS = "P"; // force password update on login
+                    // AW 201310 - we want to update the access status when updating the person status, but not if they are being forced to update password
+                    if (person.STATUS == "I")
+                        access.STATUS = person.STATUS;
+                    else
+                        access.STATUS = "P"; // force password update on login
                     ctx.SQM_ACCESS.AddObject(access);
                 }
             }
@@ -1276,19 +1411,19 @@ namespace SQM.Website
         {
             person = (PERSON)SQMModelMgr.SetObjectTimestamp((object)person, updateBy, person.EntityState);
 
-			if (person.EntityState == EntityState.Detached  || person.EntityState == EntityState.Added)
-			{
-				if (!person.PREFERRED_LANG_ID.HasValue)
-					person.PREFERRED_LANG_ID = 1;
-				if (string.IsNullOrEmpty(person.PREFERRED_TIMEZONE))
-					person.PREFERRED_TIMEZONE = "035";
-				if (string.IsNullOrEmpty(person.STATUS))
-					person.STATUS = "A";
-				ctx.AddToPERSON(person);
-			}
+            if (person.EntityState == EntityState.Detached || person.EntityState == EntityState.Added)
+            {
+                if (!person.PREFERRED_LANG_ID.HasValue)
+                    person.PREFERRED_LANG_ID = 1;
+                if (string.IsNullOrEmpty(person.PREFERRED_TIMEZONE))
+                    person.PREFERRED_TIMEZONE = "035";
+                if (string.IsNullOrEmpty(person.STATUS))
+                    person.STATUS = "A";
+                ctx.AddToPERSON(person);
+            }
 
             SQM_ACCESS access = null;
-			string key = "";
+            string key = "";
 
             // todo check if person SSOID has changed 
             access = LookupCredentials(ctx, person.SSO_ID, "", false);
@@ -1297,24 +1432,24 @@ namespace SQM.Website
             {
                 access = new SQM_ACCESS();
                 access.SSO_ID = person.SSO_ID;
-				key = GetPasswordKey();
-				if (string.IsNullOrEmpty(defaultPwd))
-				{
-					access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
-					access.STATUS = "P"; // force password update on login
-				}
-				else 
-				{
-					access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
-					access.STATUS = "A"; // assume user is enabled
-					//ABW 20160115 - Determine if we are forcing password reset for new employees
-					SETTINGS forcePasswordReset = SQMSettings.SelectSettingByCode(ctx, "COMPANY", "TASK", "PasswordChangeOnNew");
-					if (forcePasswordReset != null)
-					{
-						if (forcePasswordReset.VALUE.ToUpper().Equals("Y"))
-							access.STATUS = "P";
-					}
-				}
+                key = GetPasswordKey();
+                if (string.IsNullOrEmpty(defaultPwd))
+                {
+                    access.PASSWORD = WebSiteCommon.Encrypt(WebSiteCommon.GeneratePassword(8, 8), key);
+                    access.STATUS = "P"; // force password update on login
+                }
+                else
+                {
+                    access.PASSWORD = WebSiteCommon.Encrypt(defaultPwd, key);
+                    access.STATUS = "A"; // assume user is enabled
+                                         //ABW 20160115 - Determine if we are forcing password reset for new employees
+                    SETTINGS forcePasswordReset = SQMSettings.SelectSettingByCode(ctx, "COMPANY", "TASK", "PasswordChangeOnNew");
+                    if (forcePasswordReset != null)
+                    {
+                        if (forcePasswordReset.VALUE.ToUpper().Equals("Y"))
+                            access.STATUS = "P";
+                    }
+                }
 
                 access.RECOVERY_EMAIL = person.EMAIL;
 
@@ -1341,97 +1476,97 @@ namespace SQM.Website
             return person;
         }
 
-		public static SQM_ACCESS UpdateCredentials(SQM.Website.PSsqmEntities ctx, SQM_ACCESS access, string updateBy, out int status)
+        public static SQM_ACCESS UpdateCredentials(SQM.Website.PSsqmEntities ctx, SQM_ACCESS access, string updateBy, out int status)
         {
             access = (SQM_ACCESS)SQMModelMgr.SetObjectTimestamp((object)access, updateBy, access.EntityState);
-			status = ctx.SaveChanges();
+            status = ctx.SaveChanges();
             return access;
         }
 
-		public static string GetPasswordKey()
-		{
-			string pwdKey = "";
-			List<SETTINGS> settings = SQMSettings.SelectSettingsGroup("ENCRYPT", "ENCRYPT");
-			if (settings != null)
-			{
-				pwdKey = settings[0].VALUE;
-			}
-			return pwdKey;
-		}
+        public static string GetPasswordKey()
+        {
+            string pwdKey = "";
+            List<SETTINGS> settings = SQMSettings.SelectSettingsGroup("ENCRYPT", "ENCRYPT");
+            if (settings != null)
+            {
+                pwdKey = settings[0].VALUE;
+            }
+            return pwdKey;
+        }
 
-		public static int ChangeUserPassword(string SSOID, string userName, string curPassword, string strPassword)
-		{
-			string newPassword = strPassword.Trim();
+        public static int ChangeUserPassword(string SSOID, string userName, string curPassword, string strPassword)
+        {
+            string newPassword = strPassword.Trim();
 
-			// encrypt the new password for storage and query the useractivity table if/when it had been used in the past
-			string KeyString = GetPasswordKey();
-			string password = WebSiteCommon.Encrypt(newPassword, KeyString);
-			
-			SQM.Website.PSsqmEntities ctx = new PSsqmEntities();
-			SQM_ACCESS access = SQMModelMgr.LookupCredentials(ctx, SSOID, curPassword, true);
+            // encrypt the new password for storage and query the useractivity table if/when it had been used in the past
+            string KeyString = GetPasswordKey();
+            string password = WebSiteCommon.Encrypt(newPassword, KeyString);
 
-			// AW - for now, we want to allow if the password = the password OR the encrypted password
-			if ((WebSiteCommon.Encrypt(curPassword, KeyString) != access.PASSWORD) && (curPassword != access.PASSWORD))
-				return 10;
+            SQM.Website.PSsqmEntities ctx = new PSsqmEntities();
+            SQM_ACCESS access = SQMModelMgr.LookupCredentials(ctx, SSOID, curPassword, true);
 
-			int passComplexity = checkPasswordComplexity(newPassword);
-			if (passComplexity > 0)
-				return passComplexity;
+            // AW - for now, we want to allow if the password = the password OR the encrypted password
+            if ((WebSiteCommon.Encrypt(curPassword, KeyString) != access.PASSWORD) && (curPassword != access.PASSWORD))
+                return 10;
 
-			access.PASSWORD = password;
-			if (access.STATUS == "P")
-				access.STATUS = "A";
-			int ctxstatus = 0;
-			SQM_ACCESS newaccess = SQMModelMgr.UpdateCredentials(ctx, access, userName, out ctxstatus);
+            int passComplexity = checkPasswordComplexity(newPassword);
+            if (passComplexity > 0)
+                return passComplexity;
 
-			if (ctxstatus != 1)
-				return ctxstatus;
-			else
-			{
-				SessionManager.UserContext.Credentials = newaccess;
-				return 0;
-			}
-		}
+            access.PASSWORD = password;
+            if (access.STATUS == "P")
+                access.STATUS = "A";
+            int ctxstatus = 0;
+            SQM_ACCESS newaccess = SQMModelMgr.UpdateCredentials(ctx, access, userName, out ctxstatus);
 
-		public static int checkPasswordComplexity(string password)
-		{
-			int passError = 0;
+            if (ctxstatus != 1)
+                return ctxstatus;
+            else
+            {
+                SessionManager.UserContext.Credentials = newaccess;
+                return 0;
+            }
+        }
 
-			string strength =  SQMSettings.SelectSettingByCode(new PSsqmEntities(), "COMPANY", "TASK", "PasswordComplexity").VALUE; // WebConfigurationManager.AppSettings["PasswordComplexity"];
+        public static int checkPasswordComplexity(string password)
+        {
+            int passError = 0;
 
-			int specialCount = System.Text.RegularExpressions.Regex.Matches(password, @"\W").Count;
-			int numericCount = System.Text.RegularExpressions.Regex.Matches(password, @"\d").Count;
-			int upperCount = System.Text.RegularExpressions.Regex.Matches(password, @"[A-Z]").Count;
-			int lowerCount = System.Text.RegularExpressions.Regex.Matches(password, @"[a-z]").Count;
-			switch (strength)
-			{
-				case "0": // weak
-					if (password.Length < 3)
-						passError = 100;
-					break;
-				case "1": // simple
-					if (password.Length < 6 || (upperCount + lowerCount) < 1 || (numericCount + specialCount) < 1)
-						passError = 110;
-					break;
-				case "2": // moderate
-					if (password.Length < 6 || lowerCount < 1 || numericCount < 1 || (upperCount + specialCount) < 1)
-						passError = 120;
-					break;
-				case "3": // strong
-					if (password.Length < 8 || lowerCount < 1 || upperCount < 1 || numericCount < 1 || specialCount < 1)
-						passError = 130;
-					break;
-				case "4": // extreme
-					if (password.Length < 8 || lowerCount < 2 || upperCount < 2 || numericCount < 2 || specialCount < 2)
-						passError = 140;
-					break;
-				default: // simple
-					if (password.Length < 6 || (upperCount + lowerCount) < 1 || (numericCount + specialCount) < 1) 
-						passError = 110;
-					break;
-			}
-			return passError;
-		}
+            string strength = SQMSettings.SelectSettingByCode(new PSsqmEntities(), "COMPANY", "TASK", "PasswordComplexity").VALUE; // WebConfigurationManager.AppSettings["PasswordComplexity"];
+
+            int specialCount = System.Text.RegularExpressions.Regex.Matches(password, @"\W").Count;
+            int numericCount = System.Text.RegularExpressions.Regex.Matches(password, @"\d").Count;
+            int upperCount = System.Text.RegularExpressions.Regex.Matches(password, @"[A-Z]").Count;
+            int lowerCount = System.Text.RegularExpressions.Regex.Matches(password, @"[a-z]").Count;
+            switch (strength)
+            {
+                case "0": // weak
+                    if (password.Length < 3)
+                        passError = 100;
+                    break;
+                case "1": // simple
+                    if (password.Length < 6 || (upperCount + lowerCount) < 1 || (numericCount + specialCount) < 1)
+                        passError = 110;
+                    break;
+                case "2": // moderate
+                    if (password.Length < 6 || lowerCount < 1 || numericCount < 1 || (upperCount + specialCount) < 1)
+                        passError = 120;
+                    break;
+                case "3": // strong
+                    if (password.Length < 8 || lowerCount < 1 || upperCount < 1 || numericCount < 1 || specialCount < 1)
+                        passError = 130;
+                    break;
+                case "4": // extreme
+                    if (password.Length < 8 || lowerCount < 2 || upperCount < 2 || numericCount < 2 || specialCount < 2)
+                        passError = 140;
+                    break;
+                default: // simple
+                    if (password.Length < 6 || (upperCount + lowerCount) < 1 || (numericCount + specialCount) < 1)
+                        passError = 110;
+                    break;
+            }
+            return passError;
+        }
 
         #endregion
 
@@ -1440,24 +1575,24 @@ namespace SQM.Website
         public static COMPANY LookupPrimaryCompany(PSsqmEntities entities)
         {
             COMPANY primaryCompany = null;
-                try
+            try
+            {
+                primaryCompany = (from c in entities.COMPANY.Include("COMPANY_ACTIVITY")
+                                  where (c.IS_PRIMARY == true)
+                                  select c).Single();
+                if (primaryCompany.COMPANY_ACTIVITY == null)
                 {
-                    primaryCompany = (from c in entities.COMPANY.Include("COMPANY_ACTIVITY") 
-                                      where (c.IS_PRIMARY == true)
-                                      select c).Single();
-                    if (primaryCompany.COMPANY_ACTIVITY == null)
-                    {
-                        primaryCompany.COMPANY_ACTIVITY = new COMPANY_ACTIVITY();
-                        primaryCompany.COMPANY_ACTIVITY.COMPANY_ID = primaryCompany.COMPANY_ID;
-                        primaryCompany.COMPANY_ACTIVITY.EFF_STARTUP_DT = primaryCompany.CREATE_DT;
-                        entities.AddToCOMPANY_ACTIVITY(primaryCompany.COMPANY_ACTIVITY);
-                    }
+                    primaryCompany.COMPANY_ACTIVITY = new COMPANY_ACTIVITY();
+                    primaryCompany.COMPANY_ACTIVITY.COMPANY_ID = primaryCompany.COMPANY_ID;
+                    primaryCompany.COMPANY_ACTIVITY.EFF_STARTUP_DT = primaryCompany.CREATE_DT;
+                    entities.AddToCOMPANY_ACTIVITY(primaryCompany.COMPANY_ACTIVITY);
                 }
-                catch (Exception e)
-                {
-                    //SQMLogger.LogException(e);
-                }
- 
+            }
+            catch (Exception e)
+            {
+                //SQMLogger.LogException(e);
+            }
+
             return primaryCompany;
         }
 
@@ -1479,13 +1614,13 @@ namespace SQM.Website
             try
             {
                 if (companyID == 0)
-                    company = (from c in ctx.COMPANY.Include("COMPANY_ACTIVITY") 
-                                   where (c.ULT_DUNS_CODE == companyCode)
-                                   select c).Single();
+                    company = (from c in ctx.COMPANY.Include("COMPANY_ACTIVITY")
+                               where (c.ULT_DUNS_CODE == companyCode)
+                               select c).Single();
                 else
-                    company = (from c in ctx.COMPANY.Include("COMPANY_ACTIVITY") 
-                           where (c.COMPANY_ID == companyID)
-                           select c).Single();
+                    company = (from c in ctx.COMPANY.Include("COMPANY_ACTIVITY")
+                               where (c.COMPANY_ID == companyID)
+                               select c).Single();
 
             }
             catch (Exception ex)
@@ -1515,16 +1650,16 @@ namespace SQM.Website
             try
             {
                 if (activeOnly)
-                    companyList = (from c in ctx.COMPANY   
-                                where (c.STATUS == "A")
-                                select c).ToList();
+                    companyList = (from c in ctx.COMPANY
+                                   where (c.STATUS == "A")
+                                   select c).ToList();
                 else
-                    companyList = (from c in ctx.COMPANY 
-                                    select c).ToList();
+                    companyList = (from c in ctx.COMPANY
+                                   select c).ToList();
                 if (isCustomer)
                     companyList = companyList.Where(l => l.IS_CUSTOMER == true).ToList();
-                if (isSupplier) 
-                    companyList  = companyList.Where(l => l.IS_SUPPLIER == true).ToList();
+                if (isSupplier)
+                    companyList = companyList.Where(l => l.IS_SUPPLIER == true).ToList();
             }
             catch
             {
@@ -1543,21 +1678,21 @@ namespace SQM.Website
             return company;
         }
 
-		public static ACTIVE_CUSTOMER LookupActiveCustomer(SQM.Website.PSsqmEntities ctx, string companyCode)
-		{
-			ACTIVE_CUSTOMER activeCustomer = null;
-			try
-			{
-				activeCustomer = (from c in ctx.ACTIVE_CUSTOMER
-						   where (c.ULT_DUNS_CODE == companyCode)
-						   select c).SingleOrDefault();
-			}
-			catch (Exception ex)
-			{
-			}
+        public static ACTIVE_CUSTOMER LookupActiveCustomer(SQM.Website.PSsqmEntities ctx, string companyCode)
+        {
+            ACTIVE_CUSTOMER activeCustomer = null;
+            try
+            {
+                activeCustomer = (from c in ctx.ACTIVE_CUSTOMER
+                                  where (c.ULT_DUNS_CODE == companyCode)
+                                  select c).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+            }
 
-			return activeCustomer;
-		}
+            return activeCustomer;
+        }
 
 
         public static BUSINESS_ORG LookupBusOrg(SQM.Website.PSsqmEntities ctx, decimal companyID, string busOrgCode, bool findTopLevel, bool createNew)
@@ -1566,11 +1701,11 @@ namespace SQM.Website
             try
             {
                 if (findTopLevel)
-                    busOrg = (from bu in ctx.BUSINESS_ORG 
+                    busOrg = (from bu in ctx.BUSINESS_ORG
                               where (bu.COMPANY_ID == companyID) && (bu.PARENT_BUS_ORG_ID == bu.BUS_ORG_ID)
                               select bu).Single();
                 else
-                    busOrg = (from bu in ctx.BUSINESS_ORG 
+                    busOrg = (from bu in ctx.BUSINESS_ORG
                               where (bu.DUNS_CODE == busOrgCode) && (bu.COMPANY_ID == companyID)
                               select bu).Single();
             }
@@ -1602,9 +1737,9 @@ namespace SQM.Website
             BUSINESS_ORG busOrg = null;
             try
             {
-                busOrg = (from bu in ctx.BUSINESS_ORG 
-                              where (bu.BUS_ORG_ID == busOrgID)
-                              select bu).Single();
+                busOrg = (from bu in ctx.BUSINESS_ORG
+                          where (bu.BUS_ORG_ID == busOrgID)
+                          select bu).Single();
             }
             catch
             {
@@ -1633,9 +1768,9 @@ namespace SQM.Website
             {
             }
 
-            if (busOrg == null  &&  createNew)
+            if (busOrg == null && createNew)
             {
-               busOrg = CreateBusOrg(ctx, company.COMPANY_ID, busOrgCode);
+                busOrg = CreateBusOrg(ctx, company.COMPANY_ID, busOrgCode);
             }
 
             return busOrg;
@@ -1649,7 +1784,7 @@ namespace SQM.Website
             {
                 using (PSsqmEntities entities = new PSsqmEntities())
                 {
-                    parentOrg = (from bu in entities.BUSINESS_ORG 
+                    parentOrg = (from bu in entities.BUSINESS_ORG
                                  where (bu.COMPANY_ID == busOrg.COMPANY_ID) && (bu.BUS_ORG_ID == busOrg.PARENT_BUS_ORG_ID)
                                  select bu).Single();
                 }
@@ -1684,36 +1819,36 @@ namespace SQM.Website
             ctx.BUSINESS_ORG.AddObject(busOrg);
             ctx.SaveChanges();
             busOrg.PARENT_BUS_ORG_ID = busOrg.BUS_ORG_ID;     // toplevel bu references self as parent ?
-            
+
             ctx.SaveChanges();
 
             return busOrg;
         }
 
-         public static List<BUSINESS_ORG> SelectBusOrgList(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal parentBusOrgID, bool activeOnly)
+        public static List<BUSINESS_ORG> SelectBusOrgList(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal parentBusOrgID, bool activeOnly)
         {
             List<BUSINESS_ORG> orgList = null;
             try
             {
                 if (parentBusOrgID == 0)
                 {
-                        if (activeOnly)
-                            orgList = (from bu in ctx.BUSINESS_ORG 
-                                       where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A")
-                                       select bu).ToList();
-                        else
-                            orgList = (from bu in ctx.BUSINESS_ORG 
-                                       where (bu.COMPANY_ID == companyID)
-                                       select bu).ToList();
+                    if (activeOnly)
+                        orgList = (from bu in ctx.BUSINESS_ORG
+                                   where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A")
+                                   select bu).ToList();
+                    else
+                        orgList = (from bu in ctx.BUSINESS_ORG
+                                   where (bu.COMPANY_ID == companyID)
+                                   select bu).ToList();
                 }
                 else
                 {
                     if (activeOnly)
-                        orgList = (from bu in ctx.BUSINESS_ORG 
+                        orgList = (from bu in ctx.BUSINESS_ORG
                                    where (bu.COMPANY_ID == companyID) && (bu.PARENT_BUS_ORG_ID == parentBusOrgID) && (bu.STATUS == "A")
-                               select bu).ToList();
+                                   select bu).ToList();
                     else
-                        orgList = (from bu in ctx.BUSINESS_ORG 
+                        orgList = (from bu in ctx.BUSINESS_ORG
                                    where (bu.COMPANY_ID == companyID) && (bu.PARENT_BUS_ORG_ID == parentBusOrgID)
                                    select bu).ToList();
                 }
@@ -1725,35 +1860,35 @@ namespace SQM.Website
             return orgList;
         }
 
-         public static List<BUSINESS_ORG> SearchBusOrgList(SQM.Website.PSsqmEntities ctx, decimal companyID, string searchCriteria, bool activeOnly)
-         {
-             List<BUSINESS_ORG> orgList = null;
+        public static List<BUSINESS_ORG> SearchBusOrgList(SQM.Website.PSsqmEntities ctx, decimal companyID, string searchCriteria, bool activeOnly)
+        {
+            List<BUSINESS_ORG> orgList = null;
 
-             if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
-             {
-                 if (activeOnly)
-                     orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
-                                where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A")
-                                select bu).ToList();
-                 else
-                     orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
-                                where (bu.COMPANY_ID == companyID) 
-                                select bu).ToList();
-             }
-             else
-             {
-                 if (activeOnly)
-                     orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
-                                where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A") && ((bu.ORG_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (bu.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
-                                select bu).ToList();
-                 else
-                     orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
-                                where (bu.COMPANY_ID == companyID) && ((bu.ORG_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (bu.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
-                                select bu).ToList();
-             }
+            if (string.IsNullOrEmpty(searchCriteria) || searchCriteria == "%")
+            {
+                if (activeOnly)
+                    orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
+                               where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A")
+                               select bu).ToList();
+                else
+                    orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
+                               where (bu.COMPANY_ID == companyID)
+                               select bu).ToList();
+            }
+            else
+            {
+                if (activeOnly)
+                    orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
+                               where (bu.COMPANY_ID == companyID) && (bu.STATUS == "A") && ((bu.ORG_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (bu.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
+                               select bu).ToList();
+                else
+                    orgList = (from bu in ctx.BUSINESS_ORG.Include("plant")
+                               where (bu.COMPANY_ID == companyID) && ((bu.ORG_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (bu.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
+                               select bu).ToList();
+            }
 
-             return orgList;
-         }
+            return orgList;
+        }
 
         public static PLANT LookupPlant(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal busOrgID, decimal plantID, string plantCode, bool createNew)
         {
@@ -1764,23 +1899,23 @@ namespace SQM.Website
                 {
                     if (plantID > 0)
                         plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
-                                where (pl.COMPANY_ID == companyID) && (pl.PLANT_ID == plantID)
-                                select pl).Single();
+                                 where (pl.COMPANY_ID == companyID) && (pl.PLANT_ID == plantID)
+                                 select pl).Single();
                     else
-						plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
-                                where (pl.COMPANY_ID == companyID) && (pl.DUNS_CODE == plantCode)
-                                select pl).Single();
+                        plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
+                                 where (pl.COMPANY_ID == companyID) && (pl.DUNS_CODE == plantCode)
+                                 select pl).Single();
                 }
                 else
                 {
                     if (plantID > 0)
                         plant = (from pl in ctx.PLANT.Include("Address")
-                                where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID == busOrgID) &&  (pl.PLANT_ID == plantID)
-                                select pl).Single();
+                                 where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID == busOrgID) && (pl.PLANT_ID == plantID)
+                                 select pl).Single();
                     else
                         plant = (from pl in ctx.PLANT.Include("Address")
-                                where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID == busOrgID) && (pl.DUNS_CODE == plantCode)
-                                select pl).Single();
+                                 where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID == busOrgID) && (pl.DUNS_CODE == plantCode)
+                                 select pl).Single();
                 }
                 plant.PLANT_LINE.Load();
             }
@@ -1789,14 +1924,14 @@ namespace SQM.Website
                 if (createNew)
                 {
                     plant = new PLANT();
-					plant.STATUS = "A";
+                    plant.STATUS = "A";
                     plant.COMPANY_ID = companyID;
                     plant.BUS_ORG_ID = busOrgID;
                     plant.DUNS_CODE = plantCode;
-					plant.LOCAL_LANGUAGE = 1;
-					plant.LOCATION_CODE = "";
-					plant.TRACK_EW_DATA = true;
-					plant.TRACK_FIN_DATA = true;
+                    plant.LOCAL_LANGUAGE = 1;
+                    plant.LOCATION_CODE = "";
+                    plant.TRACK_EW_DATA = true;
+                    plant.TRACK_FIN_DATA = true;
 
                 }
             }
@@ -1826,35 +1961,35 @@ namespace SQM.Website
                              where (pl.PLANT_ID == plantID)
                              select pl).Single();
                 else
-					plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
+                    plant = (from pl in ctx.PLANT.Include("Address").Include("PLANT_ACTIVE")
                              where (pl.DUNS_CODE == dunsCode)
                              select pl).Single();
             }
             catch (Exception e)
             {
-              //  SQMLogger.LogException(e);
+                //  SQMLogger.LogException(e);
             }
 
             return plant;
         }
 
-		public static PLANT LookupPlant(SQM.Website.PSsqmEntities ctx, string dunsCode, string altDunsCode)
-		{
-			PLANT plant = null;
+        public static PLANT LookupPlant(SQM.Website.PSsqmEntities ctx, string dunsCode, string altDunsCode)
+        {
+            PLANT plant = null;
 
-			try
-			{
-				plant = (from pl in ctx.PLANT.Include("Address")
-							where (pl.DUNS_CODE == dunsCode  || pl.ALT_DUNS_CODE == altDunsCode)
-							select pl).SingleOrDefault();
-			}
-			catch (Exception e)
-			{
-				//  SQMLogger.LogException(e);
-			}
+            try
+            {
+                plant = (from pl in ctx.PLANT.Include("Address")
+                         where (pl.DUNS_CODE == dunsCode || pl.ALT_DUNS_CODE == altDunsCode)
+                         select pl).SingleOrDefault();
+            }
+            catch (Exception e)
+            {
+                //  SQMLogger.LogException(e);
+            }
 
-			return plant;
-		}
+            return plant;
+        }
 
         public static List<PLANT> LoadPlantList(BUSINESS_ORG busOrg)
         {
@@ -1872,14 +2007,14 @@ namespace SQM.Website
             List<PLANT> plantList = null;
             try
             {
-                 if (busOrgID == 0)
-                        plantList = (from pl in ctx.PLANT.Include("Address")
-                                     where (pl.COMPANY_ID == companyID  &&  pl.BUS_ORG_ID != null)
-                                     select pl).ToList();
-                    else
-                        plantList = (from pl in ctx.PLANT.Include("Address")
-                                     where (pl.BUS_ORG_ID == busOrgID)
-                                     select pl).ToList();
+                if (busOrgID == 0)
+                    plantList = (from pl in ctx.PLANT.Include("Address")
+                                 where (pl.COMPANY_ID == companyID && pl.BUS_ORG_ID != null)
+                                 select pl).ToList();
+                else
+                    plantList = (from pl in ctx.PLANT.Include("Address")
+                                 where (pl.BUS_ORG_ID == busOrgID)
+                                 select pl).ToList();
             }
             catch
             {
@@ -1896,7 +2031,7 @@ namespace SQM.Website
             {
                 if (activeOnly)
                     plantList = (from pl in ctx.PLANT
-                                 where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID != null) &&  (pl.STATUS == "A")
+                                 where (pl.COMPANY_ID == companyID) && (pl.BUS_ORG_ID != null) && (pl.STATUS == "A")
                                  select pl).ToList();
                 else
                 {
@@ -1906,20 +2041,20 @@ namespace SQM.Website
                                      select pl).ToList();
                     else
                         plantList = (from pl in ctx.PLANT
-                                    where (pl.COMPANY_ID == companyID)
-                                    select pl).ToList();
+                                     where (pl.COMPANY_ID == companyID)
+                                     select pl).ToList();
                 }
             }
             else
             {
                 if (activeOnly)
-                    plantList = (from pl in ctx.PLANT 
-                               where (pl.COMPANY_ID == companyID) && (pl.STATUS == "A") && ((pl.PLANT_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (pl.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
-                               select pl).ToList();
+                    plantList = (from pl in ctx.PLANT
+                                 where (pl.COMPANY_ID == companyID) && (pl.STATUS == "A") && ((pl.PLANT_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (pl.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
+                                 select pl).ToList();
                 else
-                    plantList = (from pl in ctx.PLANT 
-                               where (pl.COMPANY_ID == companyID) && ((pl.PLANT_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (pl.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
-                               select pl).ToList();
+                    plantList = (from pl in ctx.PLANT
+                                 where (pl.COMPANY_ID == companyID) && ((pl.PLANT_NAME.ToUpper().Contains(searchCriteria.ToUpper())) || (pl.DUNS_CODE.ToUpper().Contains(searchCriteria.ToUpper())))
+                                 select pl).ToList();
             }
 
             return plantList;
@@ -1983,7 +2118,7 @@ namespace SQM.Website
                             locationList = (from p in entities.PLANT
                                             join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID
                                             join b in entities.BUSINESS_ORG on p.BUS_ORG_ID equals b.BUS_ORG_ID into b_p
-                                            where (c.IS_SUPPLIER == true &&  c.COMPANY_ID > 1  && p.BUS_ORG_ID > 0)
+                                            where (c.IS_SUPPLIER == true && c.COMPANY_ID > 1 && p.BUS_ORG_ID > 0)
                                             from b in b_p.DefaultIfEmpty()
                                             join a in entities.ADDRESS on p.PLANT_ID equals a.PLANT_ID into a_p
                                             from a in a_p.DefaultIfEmpty()
@@ -2000,7 +2135,7 @@ namespace SQM.Website
                             locationList = (from p in entities.PLANT
                                             join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID
                                             join b in entities.BUSINESS_ORG on p.BUS_ORG_ID equals b.BUS_ORG_ID into b_p
-                                            where (c.IS_CUSTOMER == true && c.COMPANY_ID > 1 &&  p.BUS_ORG_ID > 0)
+                                            where (c.IS_CUSTOMER == true && c.COMPANY_ID > 1 && p.BUS_ORG_ID > 0)
                                             from b in b_p.DefaultIfEmpty()
                                             join a in entities.ADDRESS on p.PLANT_ID equals a.PLANT_ID into a_p
                                             from a in a_p.DefaultIfEmpty()
@@ -2018,7 +2153,7 @@ namespace SQM.Website
                         if (busOrgID == 0)
                         {
                             locationList = (from p in entities.PLANT
-                                            join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID 
+                                            join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID
                                             join b in entities.BUSINESS_ORG on p.BUS_ORG_ID equals b.BUS_ORG_ID into b_p
                                             where (p.COMPANY_ID == companyID && p.BUS_ORG_ID > 0)
                                             from b in b_p.DefaultIfEmpty()
@@ -2029,13 +2164,13 @@ namespace SQM.Website
                                                 Company = c,
                                                 Plant = p,
                                                 BusinessOrg = b,
-                                                Address = a 
+                                                Address = a
                                             }).ToList();
                         }
                         else
                         {
                             locationList = (from p in entities.PLANT.Include("Address")
-                                            join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID 
+                                            join c in entities.COMPANY on p.COMPANY_ID equals c.COMPANY_ID
                                             join b in entities.BUSINESS_ORG on p.BUS_ORG_ID equals b.BUS_ORG_ID
                                             where (b.COMPANY_ID == companyID && b.BUS_ORG_ID == busOrgID)
                                             join a in entities.ADDRESS on p.PLANT_ID equals a.PLANT_ID into a_p
@@ -2069,7 +2204,7 @@ namespace SQM.Website
 
             if (checkInternal)
             {
-                if (person.ROLE <= 100 ||  string.IsNullOrEmpty(person.NEW_LOCATION_CD))
+                if (person.ROLE <= 100 || string.IsNullOrEmpty(person.NEW_LOCATION_CD))
                 {
                     userLocationList.AddRange(locationList.Where(l => l.Company.COMPANY_ID == SessionManager.PrimaryCompany().COMPANY_ID).ToList());
                 }
@@ -2078,10 +2213,10 @@ namespace SQM.Website
                     try
                     {
                         string[] locs = person.NEW_LOCATION_CD.Split(',');
-						decimal[] plantArray = Array.ConvertAll(locs.Where(s => !string.IsNullOrEmpty(s)).ToArray(), new Converter<string, decimal>(decimal.Parse));
+                        decimal[] plantArray = Array.ConvertAll(locs.Where(s => !string.IsNullOrEmpty(s)).ToArray(), new Converter<string, decimal>(decimal.Parse));
                         userLocationList.AddRange(locationList.Where(l => plantArray.Contains(l.Plant.PLANT_ID)).ToList());
                     }
-                    catch { ; }
+                    catch {; }
                 }
             }
 
@@ -2112,12 +2247,12 @@ namespace SQM.Website
             return userLocationList;
         }
 
-		public static DEPARTMENT LookupDepartment(SQM.Website.PSsqmEntities ctx, decimal deptID)
-		{
-			DEPARTMENT dept = (from d in ctx.DEPARTMENT where d.DEPT_ID == deptID select d).SingleOrDefault();
+        public static DEPARTMENT LookupDepartment(SQM.Website.PSsqmEntities ctx, decimal deptID)
+        {
+            DEPARTMENT dept = (from d in ctx.DEPARTMENT where d.DEPT_ID == deptID select d).SingleOrDefault();
 
-			return dept;
-		}
+            return dept;
+        }
 
         public static DEPARTMENT LookupDepartment(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal busOrgID, decimal plantID, decimal deptID, string deptCode, bool createNew)
         {
@@ -2164,10 +2299,10 @@ namespace SQM.Website
             DEPARTMENT dept = null;
             try
             {
-                if (plant != null  &&  plant.PLANT_ID > 0)     // plant-level dept (pass busOrg as null)
+                if (plant != null && plant.PLANT_ID > 0)     // plant-level dept (pass busOrg as null)
                     dept = deptList.FirstOrDefault(d => (d.DEPT_CODE == deptCode) && (d.PLANT_ID == plant.PLANT_ID));
                 else     // bu-level dept  (pass plant as null)
-                    dept = deptList.FirstOrDefault(d => (d.DEPT_CODE == deptCode) && (d.BUS_ORG_ID == busOrg.BUS_ORG_ID)  &&  (d.PLANT_ID == null));
+                    dept = deptList.FirstOrDefault(d => (d.DEPT_CODE == deptCode) && (d.BUS_ORG_ID == busOrg.BUS_ORG_ID) && (d.PLANT_ID == null));
 
             }
             catch
@@ -2184,10 +2319,10 @@ namespace SQM.Website
             return dept;
         }
 
-		public static List<DEPARTMENT> SelectDepartmentList(SQM.Website.PSsqmEntities ctx, decimal plantID)
-		{
-			return SelectDepartmentList(ctx, 0, 0, plantID);
-		}
+        public static List<DEPARTMENT> SelectDepartmentList(SQM.Website.PSsqmEntities ctx, decimal plantID)
+        {
+            return SelectDepartmentList(ctx, 0, 0, plantID);
+        }
 
         public static List<DEPARTMENT> SelectDepartmentList(SQM.Website.PSsqmEntities ctx, decimal companyID, decimal busOrgID, decimal plantID)
         {
@@ -2195,12 +2330,12 @@ namespace SQM.Website
             try
             {
                 if (plantID > 0)
-                        deptList = (from d in ctx.DEPARTMENT
-                                    where (d.PLANT_ID == plantID)
-                                    select d).ToList();
-                else 
                     deptList = (from d in ctx.DEPARTMENT
-                                where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) &&  (d.PLANT_ID == null) 
+                                where (d.PLANT_ID == plantID)
+                                select d).ToList();
+                else
+                    deptList = (from d in ctx.DEPARTMENT
+                                where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == null)
                                 select d).ToList();
             }
             catch
@@ -2278,7 +2413,7 @@ namespace SQM.Website
                                  where (l.COMPANY_ID == companyID) && (l.PLANT_ID == plantID)
                                  select l).ToList();
                 }
-                else 
+                else
                 {
                     laborList = (from l in ctx.LABOR_TYPE
                                  where (l.COMPANY_ID == companyID) && (l.BUS_ORG_ID == busOrgID) && (l.PLANT_ID == null)
@@ -2311,13 +2446,13 @@ namespace SQM.Website
                 else
                 {
                     if (laborID > 0)
-                        labor = (from d in ctx.LABOR_TYPE 
-                                where (d.LABOR_TYP_ID == laborID)
-                                select d).Single();
+                        labor = (from d in ctx.LABOR_TYPE
+                                 where (d.LABOR_TYP_ID == laborID)
+                                 select d).Single();
                     else
-                        labor = (from d in ctx.LABOR_TYPE 
-                                where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == null) && (d.LABOR_CODE == laborCode)
-                                select d).Single();
+                        labor = (from d in ctx.LABOR_TYPE
+                                 where (d.COMPANY_ID == companyID) && (d.BUS_ORG_ID == busOrgID) && (d.PLANT_ID == null) && (d.LABOR_CODE == laborCode)
+                                 select d).Single();
                 }
             }
             catch
@@ -2338,17 +2473,17 @@ namespace SQM.Website
             LABOR_TYPE labor = null;
             try
             {
-                if (plant != null  &&  plant.PLANT_ID > 0)     // plant-level labor 
+                if (plant != null && plant.PLANT_ID > 0)     // plant-level labor 
                     labor = laborList.FirstOrDefault(l => (l.LABOR_CODE == laborCode) && (l.BUS_ORG_ID == busOrg.BUS_ORG_ID) && (l.PLANT_ID == plant.PLANT_ID));
                 else     // bu-level labor
                     labor = laborList.FirstOrDefault(l => (l.LABOR_CODE == laborCode) && (l.BUS_ORG_ID == busOrg.BUS_ORG_ID) && (l.PLANT_ID == null));
-   
+
             }
             catch
             {
             }
 
-            if (labor == null  &&  createNew)
+            if (labor == null && createNew)
             {
                 labor = new LABOR_TYPE();
                 labor.LABOR_CODE = laborCode;
@@ -2364,11 +2499,11 @@ namespace SQM.Website
 
             if (laborList.Count > 0)
             {
-                for (int l = 0; l<laborList.Count; l++)
+                for (int l = 0; l < laborList.Count; l++)
                 {
                     LABOR_TYPE labor = laborList[l];
                     labor = (LABOR_TYPE)SetObjectTimestamp((object)labor, "sqmload", labor.EntityState);
-                    if (labor.EntityState == EntityState.Detached ||  labor.EntityState == EntityState.Modified)
+                    if (labor.EntityState == EntityState.Detached || labor.EntityState == EntityState.Modified)
                     {
                         labor.COMPANY_ID = company.COMPANY_ID;
                         labor.BUS_ORG_ID = busOrg.BUS_ORG_ID;
@@ -2419,9 +2554,9 @@ namespace SQM.Website
             try
             {
                 if (lineID > 0)
-                    line = (from d in ctx.PLANT_LINE 
-                             where (d.PLANT_LINE_ID == lineID)
-                             select d).Single();
+                    line = (from d in ctx.PLANT_LINE
+                            where (d.PLANT_LINE_ID == lineID)
+                            select d).Single();
                 else
                     line = (from d in ctx.PLANT_LINE
                             where (d.PLANT_ID == plantID) && (d.PLANT_LINE_NAME == lineName)
@@ -2447,8 +2582,8 @@ namespace SQM.Website
             {
                 if (lineID > 0)
                     line = plant.PLANT_LINE.FirstOrDefault(l => (l.PLANT_LINE_ID == lineID));
-                else    
-                     line = plant.PLANT_LINE.FirstOrDefault(l => (l.PLANT_LINE_NAME == lineName));
+                else
+                    line = plant.PLANT_LINE.FirstOrDefault(l => (l.PLANT_LINE_NAME == lineName));
 
             }
             catch
@@ -2484,9 +2619,9 @@ namespace SQM.Website
         {
             List<PLANT_LINE> lineList = new List<PLANT_LINE>();
 
-            lineList = (from pl in ctx.PLANT_LINE 
-                            where (pl.PLANT_ID == plantID)
-                            select pl).ToList();
+            lineList = (from pl in ctx.PLANT_LINE
+                        where (pl.PLANT_ID == plantID)
+                        select pl).ToList();
 
             return lineList;
         }
@@ -2496,9 +2631,9 @@ namespace SQM.Website
             List<PRODUCT_LINE> prodlineList = new List<PRODUCT_LINE>();
             try
             {
-                prodlineList = (from pl in ctx.PRODUCT_LINE 
-                                  where (pl.COMPANY_ID == companyID && pl.BUS_ORG_ID == busOrgID)
-                                  select pl).ToList();
+                prodlineList = (from pl in ctx.PRODUCT_LINE
+                                where (pl.COMPANY_ID == companyID && pl.BUS_ORG_ID == busOrgID)
+                                select pl).ToList();
             }
             catch (Exception ex)
             {
@@ -2516,7 +2651,7 @@ namespace SQM.Website
                 string delCmd = "";
                 foreach (PRODUCT_LINE prod in prodlineList)
                 {
-                    if (prod.EntityState == EntityState.Deleted || prod.STATUS == true.ToString()  ||  String.IsNullOrEmpty(prod.PRODUCT_LINE_CODE))
+                    if (prod.EntityState == EntityState.Deleted || prod.STATUS == true.ToString() || String.IsNullOrEmpty(prod.PRODUCT_LINE_CODE))
                         delCmd += ("," + prod.PROD_LINE_ID.ToString());
                     else
                     {
@@ -2526,11 +2661,11 @@ namespace SQM.Website
                             ctx.PRODUCT_LINE.AddObject(prod);
                         else
                         {
-                           PRODUCT_LINE updateProd = (from pl in ctx.PRODUCT_LINE 
-                                  where (pl.PROD_LINE_ID == prod.PROD_LINE_ID)
-                                  select pl).Single();
+                            PRODUCT_LINE updateProd = (from pl in ctx.PRODUCT_LINE
+                                                       where (pl.PROD_LINE_ID == prod.PROD_LINE_ID)
+                                                       select pl).Single();
 
-                            updateProd = (PRODUCT_LINE) CopyObjectValues(updateProd, prod, false);
+                            updateProd = (PRODUCT_LINE)CopyObjectValues(updateProd, prod, false);
                         }
 
                     }
@@ -2553,65 +2688,65 @@ namespace SQM.Website
 
         #region teams
 
-		public static List<NOTIFYACTION> SelectNotifyActionList(SQM.Website.PSsqmEntities ctx, decimal ? busorgID, decimal ? plantID)
-		{
-			List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
+        public static List<NOTIFYACTION> SelectNotifyActionList(SQM.Website.PSsqmEntities ctx, decimal? busorgID, decimal? plantID)
+        {
+            List<NOTIFYACTION> notifyList = new List<NOTIFYACTION>();
 
-			if (busorgID.HasValue || plantID.HasValue)
-			{
-				notifyList = (from n in ctx.NOTIFYACTION
-							  where ((busorgID.HasValue && n.BUS_ORG_ID == busorgID) || (plantID.HasValue && n.PLANT_ID == plantID))
-							  select n).ToList();
-			}
-			else
-			{
-				notifyList = (from n in ctx.NOTIFYACTION
-							  where (n.BUS_ORG_ID == null && n.PLANT_ID == null)
-							  select n).ToList();
-			}
+            if (busorgID.HasValue || plantID.HasValue)
+            {
+                notifyList = (from n in ctx.NOTIFYACTION
+                              where ((busorgID.HasValue && n.BUS_ORG_ID == busorgID) || (plantID.HasValue && n.PLANT_ID == plantID))
+                              select n).ToList();
+            }
+            else
+            {
+                notifyList = (from n in ctx.NOTIFYACTION
+                              where (n.BUS_ORG_ID == null && n.PLANT_ID == null)
+                              select n).ToList();
+            }
 
-			return notifyList;
-		}
+            return notifyList;
+        }
 
-		public static NOTIFYACTION LookupNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
-		{
-			NOTIFYACTION notifyAction = (from n in ctx.NOTIFYACTION where n.NOTIFYACTION_ID == notifyActionID select n).SingleOrDefault();
+        public static NOTIFYACTION LookupNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
+        {
+            NOTIFYACTION notifyAction = (from n in ctx.NOTIFYACTION where n.NOTIFYACTION_ID == notifyActionID select n).SingleOrDefault();
 
-			return notifyAction;
-		}
+            return notifyAction;
+        }
 
-		public static int DeleteNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
-		{
-			int status = 0;
+        public static int DeleteNotifyAction(SQM.Website.PSsqmEntities ctx, decimal notifyActionID)
+        {
+            int status = 0;
 
-			try
-			{
-				ctx.ExecuteStoreCommand("DELETE FROM NOTIFYACTION WHERE NOTIFYACTION_ID = " + notifyActionID.ToString());
-			}
-			catch
-			{
-				status = -1;
-			}
+            try
+            {
+                ctx.ExecuteStoreCommand("DELETE FROM NOTIFYACTION WHERE NOTIFYACTION_ID = " + notifyActionID.ToString());
+            }
+            catch
+            {
+                status = -1;
+            }
 
-			return status;
-		}
+            return status;
+        }
 
-		public static NOTIFYACTION UpdateNotifyAction(SQM.Website.PSsqmEntities ctx, NOTIFYACTION notifyAction)
-		{
-			NOTIFYACTION retAction = null;
-			if (notifyAction.EntityState == EntityState.Detached)
-			{
-				notifyAction.STATUS = "A";
-				ctx.AddToNOTIFYACTION(notifyAction);
-			}
+        public static NOTIFYACTION UpdateNotifyAction(SQM.Website.PSsqmEntities ctx, NOTIFYACTION notifyAction)
+        {
+            NOTIFYACTION retAction = null;
+            if (notifyAction.EntityState == EntityState.Detached)
+            {
+                notifyAction.STATUS = "A";
+                ctx.AddToNOTIFYACTION(notifyAction);
+            }
 
-			if (ctx.SaveChanges() >= 0)
-			{
-				retAction = notifyAction;
-			}
+            if (ctx.SaveChanges() >= 0)
+            {
+                retAction = notifyAction;
+            }
 
-			return retAction;
-		}
+            return retAction;
+        }
 
         #endregion
 
@@ -2656,18 +2791,18 @@ namespace SQM.Website
                 {
                     if (!string.IsNullOrEmpty(filterByCode))
                         attributeList = (from pa in entities.PART_ATTRIBUTE
-                                     where (pa.ATTRIBUTE_CATEGORY == attributeCategory  &&  pa.ATTRIBUTE_CD.ToUpper().Contains(filterByCode.ToUpper()))
-                                     select pa).ToList();
-                    else 
+                                         where (pa.ATTRIBUTE_CATEGORY == attributeCategory && pa.ATTRIBUTE_CD.ToUpper().Contains(filterByCode.ToUpper()))
+                                         select pa).ToList();
+                    else
                         attributeList = (from pa in entities.PART_ATTRIBUTE
-                                     where (pa.ATTRIBUTE_CATEGORY == attributeCategory)
-                                     select pa).ToList();
+                                         where (pa.ATTRIBUTE_CATEGORY == attributeCategory)
+                                         select pa).ToList();
 
                     if (activeOnly)
                         attributeList = attributeList.Where(l => l.STATUS != "I").ToList();
 
                 }
-                catch { ; }
+                catch {; }
             }
 
             return attributeList;
@@ -2687,12 +2822,12 @@ namespace SQM.Website
                 }
                 else
                 {
-                    programList = (from pp in entities.PART_PROGRAM 
+                    programList = (from pp in entities.PART_PROGRAM
                                    select pp).ToList();
                 }
 
                 if (busorgID > 0)
-                    programList = programList.FindAll(l => l.BUS_ORG_ID == busorgID  ||  l.BUS_ORG_ID == null  ||  l.BUS_ORG_ID < 0);
+                    programList = programList.FindAll(l => l.BUS_ORG_ID == busorgID || l.BUS_ORG_ID == null || l.BUS_ORG_ID < 0);
             }
 
             return programList;
@@ -2722,7 +2857,7 @@ namespace SQM.Website
                                     where (p.COMPANY_ID == companyID)
                                     from m in m_p.DefaultIfEmpty()
                                     from u in u_p.DefaultIfEmpty()
-                                    where u.PLANT_ID == plantID && u.CUST_PLANT_ID == partnerID 
+                                    where u.PLANT_ID == plantID && u.CUST_PLANT_ID == partnerID
                                     join l in entities.PLANT on u.CUST_PLANT_ID equals l.PLANT_ID into l_u
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
@@ -2764,7 +2899,7 @@ namespace SQM.Website
                                     where (p.COMPANY_ID == companyID)
                                     from m in m_p.DefaultIfEmpty()
                                     from u in u_p.DefaultIfEmpty()
-                                    where u.PLANT_ID == plantID && u.SUPP_PLANT_ID == partnerID 
+                                    where u.PLANT_ID == plantID && u.SUPP_PLANT_ID == partnerID
                                     join l in entities.PLANT on u.SUPP_PLANT_ID equals l.PLANT_ID into l_u
                                     from l in l_u.DefaultIfEmpty()
                                     join c in entities.COMPANY on l.COMPANY_ID equals c.COMPANY_ID into c_l
@@ -2842,7 +2977,7 @@ namespace SQM.Website
                 else if (programID > 0)
                 {
                     // get all parts for a specific program
-                    partList = (from p in entities.PART 
+                    partList = (from p in entities.PART
                                 join m in entities.PART_PROGRAM on p.PROGRAM_ID equals m.PROGRAM_ID
                                 join u in entities.STREAM on p.PART_ID equals u.PART_ID into u_p
                                 where (p.COMPANY_ID == companyID && p.PROGRAM_ID == programID)
@@ -2873,10 +3008,10 @@ namespace SQM.Website
 
                 if (plantID > 0)
                 {
-                    partList = partList.FindAll(l => l.Used != null  &&  (l.Used.PLANT_ID == plantID  ||  l.Used.SUPP_PLANT_ID == plantID  ||  l.Used.CUST_PLANT_ID == plantID));
+                    partList = partList.FindAll(l => l.Used != null && (l.Used.PLANT_ID == plantID || l.Used.SUPP_PLANT_ID == plantID || l.Used.CUST_PLANT_ID == plantID));
                 }
 
- 
+
                 switch (relationshipType)
                 {
                     case 0:  // internal
@@ -2891,7 +3026,7 @@ namespace SQM.Website
                     default:
                         break;
                 }
- 
+
                 decimal seq = 0;
                 foreach (PartData part in partList)
                 {
@@ -2904,7 +3039,7 @@ namespace SQM.Website
 
             return partList;
         }
-        
+
         public static PART LookupPart(SQM.Website.PSsqmEntities ctx, decimal partID, string partNum, decimal companyID, bool createNew)
         {
             PART part = null;
@@ -2913,11 +3048,11 @@ namespace SQM.Website
                 if (partID > 0)
                 {
                     if (companyID == 0)
-                            part = (from pt in ctx.PART
+                        part = (from pt in ctx.PART
                                 where (pt.PART_ID == partID)
                                 select pt).Single();
-                        else
-                            part = (from pt in ctx.PART
+                    else
+                        part = (from pt in ctx.PART
                                 where (pt.PART_ID == partID) && (pt.COMPANY_ID == companyID)
                                 select pt).Single();
                 }
@@ -3011,7 +3146,7 @@ namespace SQM.Website
             {
                 count = (from r in ctx.RECEIPT select r).Count();
             }
-            catch { ; }
+            catch {; }
 
             return count;
         }
@@ -3024,7 +3159,7 @@ namespace SQM.Website
             {
                 if (custPlantIDS.Length > 0 && suppPlantIDS.Length > 0)
                     receiptList = (from r in ctx.RECEIPT
-                                   join p in ctx.PART on r.PART_ID equals p.PART_ID 
+                                   join p in ctx.PART on r.PART_ID equals p.PART_ID
                                    join cl in ctx.PLANT on r.CUST_LOCATION equals cl.PLANT_ID
                                    join sl in ctx.PLANT on r.SUPP_LOCATION equals sl.PLANT_ID
                                    join o in ctx.QI_OCCUR on r.RECEIPT_NUMBER equals o.REF_OPERATION into ro
@@ -3042,17 +3177,17 @@ namespace SQM.Website
                     receiptList = (from r in ctx.RECEIPT
                                    join p in ctx.PART on r.PART_ID equals p.PART_ID
                                    join cl in ctx.PLANT on r.CUST_LOCATION equals cl.PLANT_ID
-                                   join sl in ctx.PLANT on r.SUPP_LOCATION equals sl.PLANT_ID 
+                                   join sl in ctx.PLANT on r.SUPP_LOCATION equals sl.PLANT_ID
                                    join o in ctx.QI_OCCUR on r.RECEIPT_NUMBER equals o.REF_OPERATION into ro
-                                    where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate
-                                        && custPlantIDS.Contains(r.CUST_LOCATION))
+                                   where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate
+                                       && custPlantIDS.Contains(r.CUST_LOCATION))
                                    select new ReceiptData
                                    {
                                        Receipt = r,
                                        Part = p,
                                        CustomerPlant = cl,
                                        SupplierPlant = sl,
-                                       IssueList =  new List<QI_OCCUR> {ro.FirstOrDefault()}
+                                       IssueList = new List<QI_OCCUR> { ro.FirstOrDefault() }
                                    }).ToList();
                 else if (suppPlantIDS.Length > 0)
                     receiptList = (from r in ctx.RECEIPT
@@ -3060,8 +3195,8 @@ namespace SQM.Website
                                    join cl in ctx.PLANT on r.CUST_LOCATION equals cl.PLANT_ID
                                    join sl in ctx.PLANT on r.SUPP_LOCATION equals sl.PLANT_ID
                                    join o in ctx.QI_OCCUR on r.RECEIPT_NUMBER equals o.REF_OPERATION into ro
-                                    where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate
-                                        &&  suppPlantIDS.Contains(r.SUPP_LOCATION))
+                                   where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate
+                                       && suppPlantIDS.Contains(r.SUPP_LOCATION))
                                    select new ReceiptData
                                    {
                                        Receipt = r,
@@ -3076,7 +3211,7 @@ namespace SQM.Website
                                    join cl in ctx.PLANT on r.CUST_LOCATION equals cl.PLANT_ID
                                    join sl in ctx.PLANT on r.SUPP_LOCATION equals sl.PLANT_ID
                                    join o in ctx.QI_OCCUR on r.RECEIPT_NUMBER equals o.REF_OPERATION into ro
-                                    where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate)
+                                   where (r.RECEIPT_DT >= fromDate && r.RECEIPT_DT <= toDate)
                                    select new ReceiptData
                                    {
                                        Receipt = r,
@@ -3085,11 +3220,11 @@ namespace SQM.Website
                                        SupplierPlant = sl,
                                        IssueList = new List<QI_OCCUR> { ro.FirstOrDefault() }
                                    }).ToList();
-               
+
                 if (partIDS.Length > 0)
                     receiptList = receiptList.Where(r => partIDS.Contains(r.Receipt.PART_ID)).ToList();
             }
-            catch { ; }
+            catch {; }
 
             return receiptList;
         }
@@ -3110,7 +3245,7 @@ namespace SQM.Website
                 {
                     if (partID > 0)
                         receipt = (from r in ctx.RECEIPT
-                                   where (r.RECEIPT_NUMBER == receiptNum  &&  r.PART_ID == partID)
+                                   where (r.RECEIPT_NUMBER == receiptNum && r.PART_ID == partID)
                                    select r).FirstOrDefault();
                     else
                         receipt = (from r in ctx.RECEIPT
@@ -3152,6 +3287,279 @@ namespace SQM.Website
 
             return receipt;
         }
+        #endregion
+        #region Approver
+        public static INCFORMAPPROVERLIST LookupINCFORMAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID, string type)
+        {
+            //INCFORMAPPROVERLIST approverAction = (from n in ctx.INCFORM_APPROVER_LIST where n.INCFORM_APPROVER_LIST_ID == approverActionID select n).SingleOrDefault();
+            INCFORMAPPROVERLIST approverAction = (from a in ctx.INCFORM_APPROVER_LIST
+                                                  join p in ctx.PERSON on a.PERSON_ID equals p.PERSON_ID
+                                                  where (a.INCFORM_APPROVER_LIST_ID == approverActionID) && a.TYPE == type
+                                                  select new INCFORMAPPROVERLIST
+                                                  {
+                                                      INCFORM_APPROVER_LIST_ID = a.INCFORM_APPROVER_LIST_ID,
+                                                      BUS_ORG_ID = a.BUS_ORG_ID,
+                                                      COMPANY_ID = a.COMPANY_ID,
+                                                      SSO_ID = a.SSO_ID,
+                                                      PERSON_ID = a.PERSON_ID,
+                                                      DESCRIPTION = a.DESCRIPTION,
+                                                      Name = p.FIRST_NAME + " " + p.MIDDLE_NAME + " " + p.LAST_NAME + ((p.EMAIL == "") ? "" : "(" + p.EMAIL + ")"),
+                                                      STEP = a.STEP,
+                                                      PRIV = a.PRIV,
+                                                      DESCRIPTION_QUESTION = a.DESCRIPTION_QUESTION,
+                                                      TYPE = a.TYPE
+                                                  }).SingleOrDefault();
+
+            return approverAction;
+        }
+        public static INCFORM_APPROVER_LIST SelectINCFORMAPPROVERSLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID)
+        {
+            INCFORM_APPROVER_LIST approverAction = (from n in ctx.INCFORM_APPROVER_LIST where n.INCFORM_APPROVER_LIST_ID == approverActionID select n).SingleOrDefault();
+
+            return approverAction;
+        }
+        public static int DeleteINCFORMAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID)
+        {
+            int status = 0;
+
+            try
+            {
+                ctx.ExecuteStoreCommand("insert into INCFORM_APPROVER_LIST_LOG select * from INCFORM_APPROVER_LIST where INCFORM_APPROVER_LIST_ID = " + approverActionID.ToString());
+                ctx.ExecuteStoreCommand("DELETE FROM INCFORM_APPROVER_LIST WHERE INCFORM_APPROVER_LIST_ID = " + approverActionID.ToString());
+            }
+            catch
+            {
+                status = -1;
+            }
+
+            return status;
+        }
+
+        public static List<INCFORMAPPROVERLIST> SelectINCFORMAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal? busorgID, decimal? plantID, string type)
+        {
+            List<INCFORMAPPROVERLIST> approverList = new List<INCFORMAPPROVERLIST>();
+            approverList = (from a in ctx.INCFORM_APPROVER_LIST
+                                // join p in ctx.PERSON on a.PERSON_ID equals p.PERSON_ID
+                            where ((busorgID.HasValue && a.PLANT_ID == plantID)) && a.TYPE == type
+                            select new INCFORMAPPROVERLIST
+                            {
+                                INCFORM_APPROVER_LIST_ID = a.INCFORM_APPROVER_LIST_ID,
+                                BUS_ORG_ID = a.BUS_ORG_ID,
+                                COMPANY_ID = a.COMPANY_ID,
+                                SSO_ID = a.SSO_ID,
+                                PERSON_ID = a.PERSON_ID,
+                                DESCRIPTION = a.DESCRIPTION,//,
+                                TYPE=a.TYPE
+                                //Name = p.FIRST_NAME + " " + p.MIDDLE_NAME + " " + p.LAST_NAME + ((p.EMAIL == "") ? "" : "(" + p.EMAIL + ")")
+                            }).ToList();
+
+            List<INCFORMAPPROVERLIST> approverListN = new List<INCFORMAPPROVERLIST>();
+            if (type == "A")
+            {
+                approverListN = (from a in ctx.INCFORM_APPROVER_LIST
+                                     // join p in ctx.PERSON on a.PERSON_ID equals p.PERSON_ID
+                                 where ((busorgID.HasValue && a.PLANT_ID == plantID)) && a.TYPE == "N"
+                                 select new INCFORMAPPROVERLIST
+                                 {
+                                     INCFORM_APPROVER_LIST_ID = a.INCFORM_APPROVER_LIST_ID,
+                                     BUS_ORG_ID = a.BUS_ORG_ID,
+                                     COMPANY_ID = a.COMPANY_ID,
+                                     SSO_ID = a.SSO_ID,
+                                     PERSON_ID = a.PERSON_ID,
+                                     DESCRIPTION = a.DESCRIPTION,//,
+                                     TYPE = a.TYPE//Name = p.FIRST_NAME + " " + p.MIDDLE_NAME + " " + p.LAST_NAME + ((p.EMAIL == "") ? "" : "(" + p.EMAIL + ")")
+                                 }).ToList();
+            }
+            if (approverListN != null)
+            {
+                foreach (INCFORMAPPROVERLIST rec in approverListN)
+                {
+                    approverList.Add(rec);
+                }
+            }
+
+
+            return approverList;
+        }
+
+
+
+        public static INCFORM_APPROVER_LIST UpdateApproverAction(SQM.Website.PSsqmEntities ctx, INCFORM_APPROVER_LIST approverAction, bool flag)
+        {
+            INCFORM_APPROVER_LIST retAction = null;
+
+            if (approverAction.EntityState == EntityState.Detached)
+            {
+                ctx.AddToINCFORM_APPROVER_LIST(approverAction);
+            }
+
+            if (ctx.SaveChanges() >= 0)
+            {
+                if (flag)
+                {
+                    SQM.Website.PSsqmEntities entity = new PSsqmEntities();
+                    var privGroup = from p in ctx.PERSON
+                                    where p.PERSON_ID == approverAction.PERSON_ID
+                                    select p.PRIV_GROUP;
+                    PRIVLIST privlist = null;
+                    privlist = (from p in ctx.PRIVLIST
+                                where (p.PRIV <= 100 && p.SCOPE == "system" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                                select p).SingleOrDefault();
+                    if (privlist == null)
+                    {
+                        privlist = (from p in ctx.PRIVLIST
+                                    where (p.PRIV == 1 && p.SCOPE == "system" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                                    select p).SingleOrDefault();
+                    }
+                    if (privlist == null)
+                    {
+                        privlist = (from p in ctx.PRIVLIST
+                                    where (p.PRIV == approverAction.PRIV && p.SCOPE == "incident" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                                    select p).SingleOrDefault();
+                    }
+                    if (privlist == null)
+                    {
+                        PRIVLIST privlistIn = null;
+                        privlistIn = new PRIVLIST();
+                        privlistIn.PRIV_GROUP = privGroup.FirstOrDefault();
+                        privlistIn.PRIV = Convert.ToInt32(approverAction.PRIV);
+                        privlistIn.SCOPE = "incident";
+                        if (privlistIn.EntityState == EntityState.Detached)
+                        {
+                            entity.AddToPRIVLIST(privlistIn);
+                        }
+                        entity.SaveChanges();
+                    }
+                }
+
+                //select* from PRIVLIST where priv_group = 'Global Safety Group' and priv = '394' and SCOPE = 'incident'
+                retAction = approverAction;
+            }
+
+            return retAction;
+        }
+
+        #endregion
+
+        #region REGIONALApprover
+        public static INCFORMREGIONALAPPROVERLIST LookupINCFORMREGIONALAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID)
+        {
+            INCFORMREGIONALAPPROVERLIST approverAction = (from a in ctx.INCFORM_APPROVER_LIST
+                                                          join p in ctx.PERSON on a.PERSON_ID equals p.PERSON_ID
+                                                          where (a.INCFORM_APPROVER_LIST_ID == approverActionID) && a.TYPE == "R"
+                                                          select new INCFORMREGIONALAPPROVERLIST
+                                                          {
+                                                              INCFORM_REGIONAL_APPROVER_LIST_ID = a.INCFORM_APPROVER_LIST_ID,
+                                                              BUS_ORG_ID = a.BUS_ORG_ID,
+                                                              COMPANY_ID = a.COMPANY_ID,
+                                                              SSO_ID = a.SSO_ID,
+                                                              PERSON_ID = a.PERSON_ID,
+                                                              DESCRIPTION = a.DESCRIPTION,
+                                                              Name = p.FIRST_NAME + " " + p.MIDDLE_NAME + " " + p.LAST_NAME + ((p.EMAIL == "") ? "" : "(" + p.EMAIL + ")"),
+                                                              STEP = a.STEP,
+                                                              PRIV = a.PRIV,
+                                                              DESCRIPTION_QUESTION = a.DESCRIPTION_QUESTION
+                                                          }).SingleOrDefault();
+
+            return approverAction;
+        }
+        public static INCFORM_APPROVER_LIST SelectINCFORMREGIONALAPPROVERSLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID)
+        {
+            INCFORM_APPROVER_LIST approverAction = (from n in ctx.INCFORM_APPROVER_LIST where n.INCFORM_APPROVER_LIST_ID == approverActionID select n).SingleOrDefault();
+
+            return approverAction;
+        }
+        public static int DeleteINCFORMREGIONALAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal approverActionID)
+        {
+            int status = 0;
+
+            try
+            {
+                ctx.ExecuteStoreCommand("DELETE FROM INCFORM_REGIONAL_APPROVER_LIST WHERE INCFORM_APPROVER_LIST = " + approverActionID.ToString());
+            }
+            catch
+            {
+                status = -1;
+            }
+
+            return status;
+        }
+
+        public static List<INCFORMREGIONALAPPROVERLIST> SelectINCFORMREGIONALAPPROVERLIST(SQM.Website.PSsqmEntities ctx, decimal? busorgID, decimal? plantID)
+        {
+            List<INCFORMREGIONALAPPROVERLIST> approverList = new List<INCFORMREGIONALAPPROVERLIST>();
+
+            approverList = (from a in ctx.INCFORM_APPROVER_LIST
+                            join p in ctx.PERSON on a.PERSON_ID equals p.PERSON_ID
+                            where ((busorgID.HasValue && a.PLANT_ID == plantID)) && a.TYPE == "R"
+                            select new INCFORMREGIONALAPPROVERLIST
+                            {
+                                INCFORM_REGIONAL_APPROVER_LIST_ID = a.INCFORM_APPROVER_LIST_ID,
+                                BUS_ORG_ID = a.BUS_ORG_ID,
+                                COMPANY_ID = a.COMPANY_ID,
+                                SSO_ID = a.SSO_ID,
+                                PERSON_ID = a.PERSON_ID,
+                                DESCRIPTION = a.DESCRIPTION,
+                                Name = p.FIRST_NAME + " " + p.MIDDLE_NAME + " " + p.LAST_NAME + ((p.EMAIL == "") ? "" : "(" + p.EMAIL + ")")
+                            }).ToList();
+
+
+            return approverList;
+        }
+
+
+
+        public static INCFORM_APPROVER_LIST UpdateRegionalApproverAction(SQM.Website.PSsqmEntities ctx, INCFORM_APPROVER_LIST approverAction)
+        {
+            INCFORM_APPROVER_LIST retAction = null;
+
+            if (approverAction.EntityState == EntityState.Detached)
+            {
+                ctx.AddToINCFORM_APPROVER_LIST(approverAction);
+            }
+
+            if (ctx.SaveChanges() >= 0)
+            {
+                SQM.Website.PSsqmEntities entity = new PSsqmEntities();
+                var privGroup = from p in ctx.PERSON
+                                where p.PERSON_ID == approverAction.PERSON_ID
+                                select p.PRIV_GROUP;
+                PRIVLIST privlist = null;
+                privlist = (from p in ctx.PRIVLIST
+                            where (p.PRIV <= 100 && p.SCOPE == "system" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                            select p).SingleOrDefault();
+                if (privlist == null)
+                {
+                    privlist = (from p in ctx.PRIVLIST
+                                where (p.PRIV == 1 && p.SCOPE == "system" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                                select p).SingleOrDefault();
+                }
+                if (privlist == null)
+                {
+                    privlist = (from p in ctx.PRIVLIST
+                                where (p.PRIV == approverAction.PRIV && p.SCOPE == "incident" && p.PRIV_GROUP == privGroup.FirstOrDefault())
+                                select p).SingleOrDefault();
+                }
+                if (privlist == null)
+                {
+                    PRIVLIST privlistIn = null;
+                    privlistIn = new PRIVLIST();
+                    privlistIn.PRIV_GROUP = privGroup.FirstOrDefault();
+                    privlistIn.PRIV = Convert.ToInt32(approverAction.PRIV);
+                    privlistIn.SCOPE = "incident";
+                    if (privlistIn.EntityState == EntityState.Detached)
+                    {
+                        entity.AddToPRIVLIST(privlistIn);
+                    }
+                    entity.SaveChanges();
+                }
+                //select* from PRIVLIST where priv_group = 'Global Safety Group' and priv = '394' and SCOPE = 'incident'
+                retAction = approverAction;
+            }
+
+            return retAction;
+        }
+
         #endregion
     }
 }
