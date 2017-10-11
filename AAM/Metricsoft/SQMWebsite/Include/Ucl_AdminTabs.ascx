@@ -61,6 +61,7 @@
                     onclick="tab_Click">Notifications</asp:LinkButton>
                 </td>
            </tr>
+          
         </table>
     </asp:Panel>
 
@@ -97,6 +98,18 @@
                     onclick="tab_Click">Notifications</asp:LinkButton>
                 </td>
            </tr>
+              <tr align="center" height="24">
+                <td runat="server" class="optMenu">
+                    <asp:LinkButton ID="lbApprovers_tab" runat="server" class="optNav clickable"  CommandArgument="approve" 
+                    onclick="tab_Click">Approvers</asp:LinkButton>
+                </td>
+           </tr> 
+          <%-- <tr align="center" height="24">
+                <td runat="server" class="optMenu">
+                    <asp:LinkButton ID="lbRegionalApprovers_tab" runat="server" class="optNav clickable"  CommandArgument="regionalapprover" 
+                    onclick="tab_Click">Regional  Approvers</asp:LinkButton>
+                </td>
+           </tr>--%>
         </table>
     </asp:Panel>
  
